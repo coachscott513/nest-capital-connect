@@ -17,12 +17,14 @@ const HeroSection = () => {
           Connecting renters with quality multi-unit homes and guiding them towards first-time homeownership in Albany, Troy, Schenectady, & Saratoga.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <button
-            onClick={() => scrollToSection('renters')}
+          <a
+            href="https://scottalvarez.remax.com/index.php?advanced=1&display=&custombox=&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt"
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200 transform hover:scale-105"
           >
             Find Your Nest
-          </button>
+          </a>
           <button
             onClick={() => scrollToSection('owners')}
             className="bg-transparent border-2 border-white text-white hover:bg-blue-50 hover:text-blue-500 px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
