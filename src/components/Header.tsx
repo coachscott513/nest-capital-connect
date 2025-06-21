@@ -35,6 +35,12 @@ const Header = () => {
             For Owners
           </button>
           <button
+            onClick={() => scrollToSection('first-time-buyers')}
+            className="text-white hover:text-blue-200 transition-colors duration-200"
+          >
+            First-Time Buyers
+          </button>
+          <button
             onClick={() => scrollToSection('contact')}
             className="text-white hover:text-blue-200 transition-colors duration-200"
           >
@@ -65,6 +71,12 @@ const Header = () => {
                 className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
               >
                 For Owners
+              </button>
+              <button
+                onClick={() => scrollToSection('first-time-buyers')}
+                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
+              >
+                First-Time Buyers
               </button>
               <button
                 onClick={() => scrollToSection('contact')}
