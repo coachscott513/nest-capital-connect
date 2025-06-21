@@ -1,4 +1,5 @@
 
+
 const NeighborhoodsSection = () => {
   const neighborhoods = [
     {
@@ -15,7 +16,8 @@ const NeighborhoodsSection = () => {
     {
       name: "Schenectady, NY",
       description: "A city on the rise with diverse communities.",
-      link: "Find Schenectady Rentals"
+      link: "Find Schenectady Rentals",
+      url: "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady&min=0&max=100000000&beds=0&baths=0&types%5B%5D=6&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre7dfb1&sortby=listings.price+DESC&rtype=map"
     },
     {
       name: "Saratoga Springs, NY",
@@ -65,3 +67,4 @@ const NeighborhoodsSection = () => {
 };
 
 export default NeighborhoodsSection;
+
