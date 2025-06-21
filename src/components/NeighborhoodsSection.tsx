@@ -4,7 +4,8 @@ const NeighborhoodsSection = () => {
     {
       name: "Albany, NY",
       description: "The vibrant heart of the Capital Region.",
-      link: "Explore Albany Rentals"
+      link: "Explore Albany Rentals",
+      url: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&pak=county%3Ag40_dre6kenh&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt"
     },
     {
       name: "Troy, NY", 
@@ -41,9 +42,20 @@ const NeighborhoodsSection = () => {
               <p className="text-slate-600 mb-4">
                 {neighborhood.description}
               </p>
-              <button className="text-blue-500 hover:text-blue-600 hover:underline transition-colors">
-                {neighborhood.link}
-              </button>
+              {neighborhood.url ? (
+                <a 
+                  href={neighborhood.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-600 hover:underline transition-colors"
+                >
+                  {neighborhood.link}
+                </a>
+              ) : (
+                <button className="text-blue-500 hover:text-blue-600 hover:underline transition-colors">
+                  {neighborhood.link}
+                </button>
+              )}
             </div>
           ))}
         </div>
