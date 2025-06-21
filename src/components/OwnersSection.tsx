@@ -43,16 +43,10 @@ const OwnersSection = () => {
                 <span><strong>Future Sales Opportunity:</strong> Build a relationship with a team ready to help you sell your property when the time is right.</span>
               </li>
             </ul>
-            <button 
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200 mt-8"
-            >
-              List Your Property Now
-            </button>
           </div>
           <div className="order-1 md:order-2">
             <h3 className="text-2xl font-semibold mb-6 text-slate-800">How It Works:</h3>
-            <ol className="space-y-4 text-lg">
+            <ol className="space-y-4 text-lg mb-8">
               <li className="flex items-start">
                 <span className="text-blue-600 font-bold text-2xl mr-3">1.</span>
                 <p><strong>Create Your Listing:</strong> Easily add property details and high-quality photos/videos.</p>
@@ -70,6 +64,12 @@ const OwnersSection = () => {
                 <p><strong>Future Sales:</strong> When you're ready, we'll connect you with serious buyers – many of whom are our successfully placed tenants.</p>
               </li>
             </ol>
+            <button 
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
+            >
+              List Your Property Now
+            </button>
           </div>
         </div>
       </div>
