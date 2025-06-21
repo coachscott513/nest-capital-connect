@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { collection, addDoc, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
@@ -9,7 +8,7 @@ export interface Lead {
   email: string;
   phone?: string;
   message: string;
-  type: 'renter' | 'owner' | 'buyer';
+  type: 'renter' | 'owner' | 'buyer' | 'seller';
   location?: string;
   bedrooms?: string;
   priceRange?: string;
