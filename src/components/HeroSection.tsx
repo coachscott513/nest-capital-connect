@@ -10,11 +10,17 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="hero-gradient text-white min-h-screen flex items-center justify-center text-center relative overflow-hidden rounded-bl-[4rem] rounded-br-[4rem]">
-      <div className="container mx-auto px-4 py-16 animate-fade-in">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-          Your Journey to the Perfect Nest Starts Here.
+    <section className="hero-gradient text-white min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden rounded-bl-[4rem] rounded-br-[4rem]">
+      <div className="absolute top-16 left-0 right-0">
+        <h1 className="text-4xl md:text-6xl font-bold text-white">
+          Capital District Nest
         </h1>
+      </div>
+      
+      <div className="container mx-auto px-4 py-16 animate-fade-in">
+        <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+          Your Journey to the Perfect Nest Starts Here.
+        </h2>
         <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
           Connecting renters with quality multi-unit homes and guiding them towards first-time homeownership in Albany, Troy, Schenectady, & Saratoga.
         </p>
