@@ -1,21 +1,57 @@
 
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useFirestore } from "@/hooks/useFirestore";
 
 const RentersSection = () => {
   const { toast } = useToast();
+  const { addLead, loading } = useFirestore();
   const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
     location: '',
     bedrooms: '',
     priceRange: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Search Submitted!",
-      description: "This is a demo - we'll connect you with real search results soon.",
-    });
+    
+    if (!formData.name || !formData.email) {
+      toast({
+        title: "Missing Information",
+        description: "Please provide your name and email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      await addLead({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: `Looking for rental: ${formData.bedrooms} bedrooms in ${formData.location}, price range: ${formData.priceRange}`,
+        type: 'renter',
+        location: formData.location,
+        bedrooms: formData.bedrooms,
+        priceRange: formData.priceRange
+      });
+
+      toast({
+        title: "Search Submitted!",
+        description: "We've received your rental search criteria and will be in touch soon.",
+      });
+      
+      setFormData({ name: '', email: '', phone: '', location: '', bedrooms: '', priceRange: '' });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your search. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -69,6 +105,50 @@ const RentersSection = () => {
             <h3 className="text-2xl font-semibold mb-6 text-slate-800">Find Your Perfect Rental</h3>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
+                <label htmlFor="name" className="block text-slate-600 text-sm font-medium mb-2">
+                  Your Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder="Enter your full name"
+                  className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-slate-600 text-sm font-medium mb-2">
+                  Your Email *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="Enter your email address"
+                  className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-slate-600 text-sm font-medium mb-2">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="Enter your phone number"
+                  className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                />
+              </div>
+              <div>
                 <label htmlFor="location" className="block text-slate-600 text-sm font-medium mb-2">
                   Location (e.g., Albany, Troy, Schenectady, Saratoga)
                 </label>
@@ -116,9 +196,10 @@ const RentersSection = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+                disabled={loading}
+                className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
               >
-                Search Rentals
+                {loading ? 'Submitting...' : 'Search Rentals'}
               </button>
             </form>
           </div>

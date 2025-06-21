@@ -1,22 +1,50 @@
 
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useFirestore } from "@/hooks/useFirestore";
 
 const ContactSection = () => {
   const { toast } = useToast();
+  const { addLead, loading } = useFirestore();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for your message. We'll get back to you soon.",
-    });
-    setFormData({ name: '', email: '', message: '' });
+    
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      await addLead({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        type: 'buyer' // Default to buyer for general contact
+      });
+
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for your message. We'll get back to you soon.",
+      });
+      
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -63,7 +91,7 @@ const ContactSection = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-slate-600 text-sm font-medium mb-2">
-                  Your Name
+                  Your Name *
                 </label>
                 <input
                   type="text"
@@ -77,7 +105,7 @@ const ContactSection = () => {
               </div>
               <div>
                 <label htmlFor="email" className="block text-slate-600 text-sm font-medium mb-2">
-                  Your Email
+                  Your Email *
                 </label>
                 <input
                   type="email"
@@ -91,7 +119,7 @@ const ContactSection = () => {
               </div>
               <div>
                 <label htmlFor="message" className="block text-slate-600 text-sm font-medium mb-2">
-                  Your Message
+                  Your Message *
                 </label>
                 <textarea
                   id="message"
@@ -105,9 +133,10 @@ const ContactSection = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+                disabled={loading}
+                className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
               >
-                Send Message
+                {loading ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
