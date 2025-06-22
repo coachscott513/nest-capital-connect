@@ -10,7 +10,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="hero-gradient text-white min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden rounded-bl-[4rem] rounded-br-[4rem]">
+    <section className="hero-gradient text-white min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden rounded-bl-[4rem] rounded-br-[4rem]" role="banner">
       <div className="absolute top-36 md:top-20 left-0 right-0">
         <h1 className="text-4xl md:text-6xl font-bold text-white">
           Capital District Nest
@@ -26,13 +26,17 @@ const HeroSection = () => {
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
           <PropertySearchDialog>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-12 py-4 rounded-lg text-lg font-semibold transition-colors duration-200 transform hover:scale-105">
+            <button 
+              className="bg-blue-500 hover:bg-blue-600 text-white px-12 py-4 rounded-lg text-lg font-semibold transition-colors duration-200 transform hover:scale-105"
+              aria-label="Search for rental properties in the Capital District"
+            >
               Find Your Nest
             </button>
           </PropertySearchDialog>
           <button
             onClick={() => scrollToSection('owners')}
             className="bg-transparent border-2 border-white text-white hover:bg-blue-50 hover:text-blue-500 px-12 py-4 rounded-lg text-lg font-semibold transition-all duration-200 transform hover:scale-105"
+            aria-label="Learn about listing your property with Capital District Nest"
           >
             List Your Property
           </button>
