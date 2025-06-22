@@ -11,7 +11,7 @@ const HeroSection = () => {
 
   return (
     <section className="hero-gradient text-white min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden rounded-bl-[4rem] rounded-br-[4rem]">
-      <div className="absolute top-16 left-0 right-0">
+      <div className="absolute top-20 md:top-16 left-0 right-0">
         <h1 className="text-4xl md:text-6xl font-bold text-white">
           Capital District Nest
         </h1>
