@@ -1,4 +1,6 @@
 
+import PropertySearchDialog from "./PropertySearchDialog";
+
 const RentersSection = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -40,12 +42,11 @@ const RentersSection = () => {
                 <span><strong>Path to Homeownership:</strong> Get exclusive guidance and resources when you're ready to buy your first home.</span>
               </li>
             </ul>
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
-            >
-              Start Your Rental Search
-            </button>
+            <PropertySearchDialog>
+              <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200">
+                Start Your Rental Search
+              </button>
+            </PropertySearchDialog>
           </div>
         </div>
       </div>
