@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 
 const RealEstateAnalyzer = () => {
@@ -30,6 +29,13 @@ const RealEstateAnalyzer = () => {
 
   const formatCurrencySimple = (num: number) => 
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+
+  // New helper function for HTML content
+  const formatCurrencyForHTML = (num: number): string => {
+    const val = Number(num);
+    if (isNaN(val)) return '$0.00';
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
+  };
 
   const generateRentInputs = () => {
     const container = document.getElementById('rentInputs');
@@ -81,7 +87,7 @@ const RealEstateAnalyzer = () => {
     if (totalProjectCostEl) totalProjectCostEl.textContent = formatCurrencySimple(totalProjectCost);
     if (downPaymentAmountEl) downPaymentAmountEl.textContent = formatCurrencySimple(downPaymentAmount);
     if (loanAmountEl) loanAmountEl.textContent = formatCurrencySimple(loanAmount);
-    if (initialCashEl) initialCashEl.innerHTML = formatCurrency(initialCash).props.children;
+    if (initialCashEl) initialCashEl.textContent = formatCurrencyForHTML(initialCash);
 
     // Flip Scenario Calculations
     const holdingPeriod = getVal('holdingPeriod');
@@ -110,7 +116,7 @@ const RealEstateAnalyzer = () => {
     const flipROIEl = document.getElementById('flipROI');
     
     if (totalFlipCostsEl) totalFlipCostsEl.textContent = formatCurrencySimple(totalFlipCosts);
-    if (flipProfitEl) flipProfitEl.innerHTML = formatCurrency(flipProfit).props.children;
+    if (flipProfitEl) flipProfitEl.textContent = formatCurrencyForHTML(flipProfit);
     if (flipROIEl) {
       flipROIEl.innerHTML = (isFinite(flipROI) ? flipROI.toFixed(2) : '∞') + '%';
       flipROIEl.className = `font-semibold text-lg ${flipROI >= 0 ? 'text-green-600' : 'text-red-600'}`;
@@ -172,8 +178,8 @@ const RealEstateAnalyzer = () => {
     if (grossRentEl) grossRentEl.textContent = formatCurrencySimple(grossRent);
     if (noiEl) noiEl.textContent = formatCurrencySimple(noi);
     if (mortgagePaymentEl) mortgagePaymentEl.textContent = formatCurrencySimple(annualMortgagePayment);
-    if (annualCashFlowEl) annualCashFlowEl.innerHTML = formatCurrency(annualCashFlow).props.children;
-    if (monthlyCashFlowEl) monthlyCashFlowEl.innerHTML = formatCurrency(monthlyCashFlow).props.children;
+    if (annualCashFlowEl) annualCashFlowEl.textContent = formatCurrencyForHTML(annualCashFlow);
+    if (monthlyCashFlowEl) monthlyCashFlowEl.textContent = formatCurrencyForHTML(monthlyCashFlow);
     if (cocReturnEl) {
       cocReturnEl.innerHTML = (isFinite(cocReturn) ? cocReturn.toFixed(2) : '∞') + '%';
       cocReturnEl.className = `font-semibold text-lg ${cocReturn >= 0 ? 'text-green-600' : 'text-red-600'}`;
