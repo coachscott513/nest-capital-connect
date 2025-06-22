@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useSupabase } from "@/hooks/useSupabase";
@@ -25,6 +26,8 @@ const ContactSection = () => {
     }
 
     try {
+      console.log('Submitting contact form with data:', formData);
+      
       await addLead({
         name: formData.name,
         email: formData.email,
@@ -33,6 +36,8 @@ const ContactSection = () => {
         type: 'seller' // This section is specifically for sellers
       });
 
+      console.log('Contact form submitted successfully');
+      
       toast({
         title: "Message Sent!",
         description: "Thank you for your message. We'll get back to you soon.",
@@ -130,7 +135,7 @@ const ContactSection = () => {
               </div>
             </div>
             <div className="bg-white p-8 rounded-xl shadow-lg">
-              <h3 className="text-2xl font-semibold mb-6 text-slate-800">Send Us a Message</h3>
+              <h3 className="text-2xl font-semibent mb-6 text-slate-800">Send Us a Message</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-slate-600 text-sm font-medium mb-2">
