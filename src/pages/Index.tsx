@@ -1,8 +1,9 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import UserProfile from '@/components/UserProfile';
 import HeroSection from '@/components/HeroSection';
 import NeighborhoodsSection from '@/components/NeighborhoodsSection';
@@ -18,6 +19,19 @@ import Header from '@/components/Header';
 
 const Index = () => {
   const { user, loading } = useAuth();
+  const { toast } = useToast();
+  const [hasShownWelcome, setHasShownWelcome] = useState(false);
+
+  useEffect(() => {
+    // Show welcome message for newly confirmed users
+    if (user && !hasShownWelcome) {
+      toast({
+        title: "Welcome!",
+        description: "Your account has been confirmed successfully.",
+      });
+      setHasShownWelcome(true);
+    }
+  }, [user, hasShownWelcome, toast]);
 
   if (loading) {
     return (
