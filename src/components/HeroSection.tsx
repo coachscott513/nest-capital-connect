@@ -18,9 +18,6 @@ const HeroSection = () => {
       </div>
       
       <div className="container mx-auto px-4 py-16 animate-fade-in">
-        <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-          Your Journey to the Perfect Nest Starts Here.
-        </h2>
         <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
           Connecting renters with quality multi-unit homes and guiding them towards first-time homeownership in Albany, Troy, Schenectady, & Saratoga.
         </p>
