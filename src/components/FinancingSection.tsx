@@ -15,19 +15,30 @@ const FinancingSection = () => {
   const [principalInterest, setPrincipalInterest] = useState(0);
   const [propertyTax, setPropertyTax] = useState(0);
   const [homeInsurance, setHomeInsurance] = useState(0);
-  const [amortizationSchedule, setAmortizationSchedule] = useState([]);
+  const [amortizationSchedule, setAmortizationSchedule] = useState<Array<{
+    month: number;
+    principal: number;
+    interest: number;
+    balance: number;
+  }>>([]);
   
-  const chartRef = useRef(null);
-  const chartInstanceRef = useRef(null);
+  const chartRef = useRef<HTMLCanvasElement>(null);
+  const chartInstanceRef = useRef<Chart | null>(null);
 
-  const formatCurrency = (value) => {
+  const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD'
     }).format(value);
   };
 
-  const createOrUpdateChart = (p_i, tax, insurance) => {
+  const createOrUpdateChart = (p_i: number, tax: number, insurance: number) => {
+    // Only proceed if canvas element is available
+    if (!chartRef.current) {
+      console.log('Canvas ref not available yet');
+      return;
+    }
+
     const chartData = {
       labels: ['Principal & Interest', 'Property Tax', 'Home Insurance'],
       datasets: [{
@@ -41,39 +52,43 @@ const FinancingSection = () => {
     if (chartInstanceRef.current) {
       chartInstanceRef.current.data = chartData;
       chartInstanceRef.current.update();
-    } else if (chartRef.current) {
-      chartInstanceRef.current = new Chart(chartRef.current, {
-        type: 'doughnut',
-        data: chartData,
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '60%',
-          plugins: {
-            legend: {
-              display: false
-            },
-            tooltip: {
-              callbacks: {
-                label: function (context) {
-                  let label = context.label || '';
-                  if (label) {
-                    label += ': ';
+    } else {
+      try {
+        chartInstanceRef.current = new Chart(chartRef.current, {
+          type: 'doughnut',
+          data: chartData,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    let label = context.label || '';
+                    if (label) {
+                      label += ': ';
+                    }
+                    if (context.parsed !== null) {
+                      label += formatCurrency(context.parsed);
+                    }
+                    return label;
                   }
-                  if (context.parsed !== null) {
-                    label += formatCurrency(context.parsed);
-                  }
-                  return label;
                 }
               }
             }
           }
-        }
-      });
+        });
+      } catch (error) {
+        console.error('Error creating chart:', error);
+      }
     }
   };
 
-  const generateAmortizationSchedule = (principal, monthlyRate, numPayments, monthlyPayment) => {
+  const generateAmortizationSchedule = (principal: number, monthlyRate: number, numPayments: number, monthlyPayment: number) => {
     const schedule = [];
     let remainingBalance = principal;
     
@@ -102,7 +117,8 @@ const FinancingSection = () => {
       setPropertyTax(0);
       setHomeInsurance(0);
       setAmortizationSchedule([]);
-      createOrUpdateChart(0, 0, 0);
+      // Use setTimeout to ensure DOM is ready before chart operations
+      setTimeout(() => createOrUpdateChart(0, 0, 0), 100);
       return;
     }
 
@@ -122,11 +138,12 @@ const FinancingSection = () => {
     setPropertyTax(monthlyPropertyTax);
     setHomeInsurance(monthlyHomeInsurance);
     
-    createOrUpdateChart(principalAndInterest, monthlyPropertyTax, monthlyHomeInsurance);
+    // Use setTimeout to ensure DOM is ready before chart operations
+    setTimeout(() => createOrUpdateChart(principalAndInterest, monthlyPropertyTax, monthlyHomeInsurance), 100);
     generateAmortizationSchedule(loanAmount, monthlyInterestRate, numberOfPayments, principalAndInterest);
   };
 
-  const handleDownPaymentChange = (value) => {
+  const handleDownPaymentChange = (value: number) => {
     setDownPayment(value);
     if (homePrice > 0) {
       const percent = Math.round((value / homePrice) * 100);
@@ -134,13 +151,13 @@ const FinancingSection = () => {
     }
   };
 
-  const handleDownPaymentSliderChange = (percent) => {
+  const handleDownPaymentSliderChange = (percent: number) => {
     setDownPaymentPercent(percent);
     const downPaymentAmount = (homePrice * percent) / 100;
     setDownPayment(Math.round(downPaymentAmount));
   };
 
-  const handleHomePriceChange = (value) => {
+  const handleHomePriceChange = (value: number) => {
     setHomePrice(value);
     const downPaymentAmount = (value * downPaymentPercent) / 100;
     setDownPayment(Math.round(downPaymentAmount));
@@ -154,6 +171,7 @@ const FinancingSection = () => {
     return () => {
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();
+        chartInstanceRef.current = null;
       }
     };
   }, []);
@@ -316,7 +334,7 @@ const FinancingSection = () => {
                       ))}
                       {amortizationSchedule.length === 0 && (
                         <tr>
-                          <td colSpan="4" className="text-center p-4">Enter valid numbers to see amortization schedule.</td>
+                          <td colSpan={4} className="text-center p-4">Enter valid numbers to see amortization schedule.</td>
                         </tr>
                       )}
                     </tbody>
