@@ -33,7 +33,7 @@ const ContactSection = () => {
         email: formData.email,
         phone: formData.phone || undefined,
         message: formData.message,
-        type: 'seller' // This section is specifically for sellers
+        type: 'seller'
       });
 
       console.log('Contact form submitted successfully');
@@ -65,11 +65,16 @@ const ContactSection = () => {
     <>
       <style dangerouslySetInnerHTML={{
         __html: `
+          .widgetWrapper.col-sm-6 ~ .p-t-3.p-b-3.m-t-1.m-b-1.center {
+            clear: both;
+          }
+          
           .kv-content-section span {
             text-transform: uppercase;
             font-weight: 400;
             letter-spacing: 2px;
           }
+          
           .kv-content-section span:after {
             content: "";
             display: block;
@@ -79,16 +84,19 @@ const ContactSection = () => {
             height: 1px;
             background-color: #444;
           }
+          
           .kv-content-section h2 {
             font-weight: bold;
             font-size: 2.5rem;
             margin-bottom: 1.3rem;
           }
+          
           .kv-content-section p {
             font-size: 1.1rem;
             max-width: 750px;
             margin: 0 auto 2rem;
           }
+          
           @media only screen and (max-width: 544px) {
             .kv-content-section h2 {
               font-size: 2rem;
@@ -97,13 +105,34 @@ const ContactSection = () => {
               font-size: 1rem;
             }
           }
+          
+          .p-t-3 { padding-top: 3rem; }
+          .p-b-3 { padding-bottom: 3rem; }
+          .center { text-align: center; }
+          .fw-600 { font-weight: 600; }
+          .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+          }
+          .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+          }
+          .btn-primary:hover {
+            background-color: #2563eb;
+          }
         `
       }} />
       
-      <section id="contact" className="kv-content-section py-16 px-4 text-center bg-slate-200">
-        <div className="container max-w-5xl mx-auto">
+      <section id="contact" className="kv-content-section p-t-3 p-b-3 center bg-slate-200">
+        <div className="container max-w-5xl mx-auto px-4">
           <span className="text-slate-600">Thinking of Selling?</span>
-          <h2 className="text-slate-800">Get your home sold fast and for Top Dollar!</h2>
+          <h2 className="fw-600 text-slate-800">Get your home sold fast and for Top Dollar!</h2>
           <p className="text-slate-600">
             Listing your home doesn't have to be stressful or overwhelming! You can count on great service with years of experience through each transaction. Contact me today to determine the next steps in fulfilling this rewarding experience.
           </p>
@@ -135,7 +164,7 @@ const ContactSection = () => {
               </div>
             </div>
             <div className="bg-white p-8 rounded-xl shadow-lg">
-              <h3 className="text-2xl font-semibent mb-6 text-slate-800">Send Us a Message</h3>
+              <h3 className="text-2xl font-semibold mb-6 text-slate-800">Send Us a Message</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-slate-600 text-sm font-medium mb-2">
