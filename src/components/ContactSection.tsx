@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useSupabase } from "@/hooks/useSupabase";
@@ -15,8 +14,11 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submission started');
+    console.log('Form data:', formData);
     
     if (!formData.name || !formData.email || !formData.message) {
+      console.log('Validation failed - missing required fields');
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields.",
@@ -55,6 +57,7 @@ const ContactSection = () => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    console.log('Input changed:', e.target.name, e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
