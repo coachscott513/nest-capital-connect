@@ -1,11 +1,11 @@
 
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useFirestore } from "@/hooks/useFirestore";
+import { useSupabase } from "@/hooks/useSupabase";
 
 const ContactSection = () => {
   const { toast } = useToast();
-  const { addLead, loading } = useFirestore();
+  const { addLead, loading } = useSupabase();
   const [formData, setFormData] = useState({
     name: '',
     email: '',

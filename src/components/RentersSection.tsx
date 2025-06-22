@@ -1,11 +1,11 @@
 
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useFirestore } from "@/hooks/useFirestore";
+import { useSupabase } from "@/hooks/useSupabase";
 
 const RentersSection = () => {
   const { toast } = useToast();
-  const { addLead, loading } = useFirestore();
+  const { addLead, loading } = useSupabase();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,7 +36,7 @@ const RentersSection = () => {
         type: 'renter',
         location: formData.location,
         bedrooms: formData.bedrooms,
-        priceRange: formData.priceRange
+        price_range: formData.priceRange
       });
 
       toast({
