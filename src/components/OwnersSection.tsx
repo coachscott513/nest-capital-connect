@@ -1,6 +1,4 @@
 
-import RealEstateAnalyzer from './RealEstateAnalyzer';
-
 const OwnersSection = () => {
   return (
     <section id="owners" className="py-16 px-4 bg-slate-100">
@@ -74,9 +72,6 @@ const OwnersSection = () => {
             </button>
           </div>
         </div>
-        
-        {/* Real Estate Analyzer */}
-        <RealEstateAnalyzer />
       </div>
     </section>
   );
