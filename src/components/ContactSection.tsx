@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useSupabase } from "@/hooks/useSupabase";
@@ -9,6 +8,7 @@ const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     message: ''
   });
 
@@ -28,8 +28,9 @@ const ContactSection = () => {
       await addLead({
         name: formData.name,
         email: formData.email,
+        phone: formData.phone || undefined,
         message: formData.message,
-        type: 'seller'
+        type: 'seller' // This section is specifically for sellers
       });
 
       toast({
@@ -37,8 +38,9 @@ const ContactSection = () => {
         description: "Thank you for your message. We'll get back to you soon.",
       });
       
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', message: '' });
     } catch (error) {
+      console.error('Contact form submission error:', error);
       toast({
         title: "Error",
         description: "There was a problem sending your message. Please try again.",
@@ -159,6 +161,19 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
+                  <label htmlFor="phone" className="block text-slate-600 text-sm font-medium mb-2">
+                    Your Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  />
+                </div>
+                <div>
                   <label htmlFor="message" className="block text-slate-600 text-sm font-medium mb-2">
                     Your Message *
                   </label>
@@ -177,7 +192,7 @@ const ContactSection = () => {
                   disabled={loading}
                   className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
                 >
-                  {loading ? 'Sending...' : 'Contact Us'}
+                  {loading ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </div>
