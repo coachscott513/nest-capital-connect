@@ -4,7 +4,7 @@ const NeighborhoodsSection = () => {
       name: "Albany, NY",
       description: "The vibrant heart of the Capital Region.",
       link: "Explore Albany Rentals",
-      url: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&pak=county%3Ag40_dre6kenh&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt"
+      url: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=6&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map&leadid=948"
     },
     {
       name: "Troy, NY", 
