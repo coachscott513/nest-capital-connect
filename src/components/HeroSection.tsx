@@ -19,7 +19,7 @@ const HeroSection = () => {
       
       <div className="container mx-auto px-4 py-16 animate-fade-in">
         <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
-          Connecting renters with quality multi-unit homes and guiding them towards first-time homeownership in Albany, Troy, Schenectady, & Saratoga.
+          Connecting Renters, Landlords and Investors in the Albany, Troy, Schenectady and Saratoga
         </p>
         
         {/* Property Search Iframe */}
