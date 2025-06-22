@@ -16,12 +16,6 @@ const MissionSection = () => {
           <p>
             For <strong>owners</strong>, we provide a cost-effective, technology-driven solution for listing properties and vetting ideal tenants, with the added benefit of a trusted partner ready to facilitate future property sales. We're here to dominate the market by creating a win-win ecosystem where trust, technology, and transparency lead the way.
           </p>
-          <button 
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="bg-transparent border-2 border-blue-500 text-blue-500 hover:bg-blue-50 px-8 py-3 rounded-lg font-semibold transition-all duration-200 mt-6 inline-block"
-          >
-            Get Started with Us
-          </button>
         </div>
       </div>
     </section>
