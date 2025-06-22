@@ -3,8 +3,8 @@ import React from 'react';
 import HeroSection from '@/components/HeroSection';
 import NeighborhoodsSection from '@/components/NeighborhoodsSection';
 import RentersSection from '@/components/RentersSection';
-import OwnersSection from '@/components/OwnersSection';
 import FirstTimeBuyersSection from '@/components/FirstTimeBuyersSection';
+import OwnersSection from '@/components/OwnersSection';
 import FinancingSection from '@/components/FinancingSection';
 import MissionSection from '@/components/MissionSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
@@ -19,8 +19,8 @@ const Index = () => {
       <HeroSection />
       <NeighborhoodsSection />
       <RentersSection />
-      <OwnersSection />
       <FirstTimeBuyersSection />
+      <OwnersSection />
       <FinancingSection />
       <MissionSection />
       <TestimonialsSection />
