@@ -15,7 +15,17 @@ const Header = () => {
 
   return (
     <header className="absolute top-0 left-0 right-0 z-50 p-6">
-      <nav className="flex items-center justify-end max-w-7xl mx-auto">
+      <nav className="flex items-center justify-between max-w-7xl mx-auto">
+        {/* Logo and Brand */}
+        <div className="flex items-center space-x-3">
+          <img 
+            src="/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png" 
+            alt="Capital District Nest Logo" 
+            className="h-12 w-12"
+          />
+          <h1 className="text-2xl font-bold text-white">Capital District Nest</h1>
+        </div>
+
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-6">
           <button
