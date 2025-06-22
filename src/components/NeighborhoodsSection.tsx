@@ -1,4 +1,3 @@
-
 const NeighborhoodsSection = () => {
   const neighborhoods = [
     {
@@ -23,7 +22,7 @@ const NeighborhoodsSection = () => {
       name: "Saratoga Springs, NY",
       description: "Elegance, culture, and thriving downtown life.",
       link: "View Saratoga Rentals",
-      url: "https://scottalvarez.remax.com/index.php?advanced=1&display=Saratoga+Springs&min=0&max=100000000&beds=0&baths=0&types%5B%5D=6&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=city%3Ag30_dree8r57&sortby=listings.price+DESC&rtype=map"
+      url: "https://scottalvarez.remax.com/index.php?advanced=1&display=Saratoga+Springs&min=0&max=100000000&beds=0&baths=0&types%5B%5D=6&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=city%3Ag30_dree8r57&sortby=listings.price+ASC&rtype=map"
     }
   ];
 
