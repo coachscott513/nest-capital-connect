@@ -31,7 +31,7 @@ const PropertySearchDialog = ({ children }: PropertySearchDialogProps) => {
     albany: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=2500&beds=0&baths=0&types%5B%5D=6&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=grid&leadid=948",
     schenectady: "", // To be added later
     rensselaer: "", // To be added later
-    saratoga: "", // To be added later
+    saratoga: "https://scottalvarez.remax.com/index.php?advanced=1&display=Saratoga&min=0&max=2500&beds=0&baths=0&types%5B%5D=6&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dremppmy&sortby=listings.price+ASC&rtype=grid&leadid=948",
   };
 
   const buyingLinks = {
