@@ -32,15 +32,25 @@ const HeroSection = () => {
           Connecting Renters, Landlords and Investors in the Albany, Troy, Schenectady and Saratoga
         </p>
         
-        {/* Property Search Iframe - Optimized for mobile */}
+        {/* Property Search Iframe - Enhanced for mobile visibility */}
         <div className="mb-4 md:mb-6 flex justify-center">
-          <iframe 
-            style={{width: "100%", maxWidth: "960px", height: "250px"}} 
-            src="https://scottalvarez.remax.com/wide.php" 
-            allowTransparency={true} 
-            frameBorder="0"
-            className="w-full max-w-full rounded-lg shadow-lg h-[250px] md:h-[300px]"
-          />
+          <div className="w-full max-w-4xl">
+            <iframe 
+              style={{
+                width: "100%", 
+                height: "400px",
+                minHeight: "350px",
+                border: "2px solid rgba(255, 255, 255, 0.2)",
+                borderRadius: "12px"
+              }} 
+              src="https://scottalvarez.remax.com/wide.php" 
+              allowTransparency={true} 
+              frameBorder="0"
+              scrolling="auto"
+              className="w-full rounded-lg shadow-2xl bg-white/5 backdrop-blur-sm"
+              title="Property Search"
+            />
+          </div>
         </div>
 
         {/* Google Earth Link - Mobile optimized */}
