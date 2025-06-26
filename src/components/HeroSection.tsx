@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
+import AddressInputDialog from "./AddressInputDialog";
 
 const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {
@@ -10,13 +11,10 @@ const HeroSection = () => {
     }
   };
 
-  const handleGoogleEarthSearch = () => {
-    const address = prompt("Enter an address to view on Google Earth:");
-    if (address) {
-      const encodedAddress = encodeURIComponent(address);
-      const googleEarthUrl = `https://earth.google.com/web/search/${encodedAddress}`;
-      window.open(googleEarthUrl, '_blank');
-    }
+  const handleGoogleEarthSearch = (address: string) => {
+    const encodedAddress = encodeURIComponent(address);
+    const googleEarthUrl = `https://earth.google.com/web/search/${encodedAddress}`;
+    window.open(googleEarthUrl, '_blank');
   };
 
   return (
@@ -46,17 +44,9 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Google Earth Link - Mobile optimized */}
+        {/* Google Earth Link - Mobile optimized with drawer */}
         <div className="mb-6 md:mb-8">
-          <Button
-            onClick={handleGoogleEarthSearch}
-            variant="outline"
-            size="lg"
-            className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50 px-4 md:px-8 py-3 md:py-4 text-base md:text-lg w-full max-w-sm md:min-w-[300px] md:w-auto"
-          >
-            <MapPin className="mr-2 md:mr-3 h-5 w-5 md:h-6 md:w-6" />
-            View Address on Google Earth
-          </Button>
+          <AddressInputDialog onAddressSubmit={handleGoogleEarthSearch} />
         </div>
       </div>
     </section>
