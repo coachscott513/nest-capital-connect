@@ -21,13 +21,11 @@ const HeroSection = () => {
 
   return (
     <section className="hero-gradient text-white min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden rounded-bl-[4rem] rounded-br-[4rem]" role="banner">
-      <div className="absolute top-20 md:top-20 left-0 right-0 px-4">
-        <h1 className="text-3xl md:text-6xl font-bold text-white leading-tight">
+      <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
+        <h1 className="text-3xl md:text-6xl font-bold text-white leading-tight mb-6 md:mb-8">
           Capital District Nest
         </h1>
-      </div>
-      
-      <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in mt-16 md:mt-0">
+        
         <p className="text-lg md:text-2xl mb-6 md:mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
           Connecting Renters, Landlords and Investors in the Albany, Troy, Schenectady and Saratoga
         </p>
