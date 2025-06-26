@@ -1,3 +1,4 @@
+
 import React from 'react';
 import HeroSection from '@/components/HeroSection';
 import NeighborhoodsSection from '@/components/NeighborhoodsSection';
@@ -8,6 +9,7 @@ import OwnersSection from '@/components/OwnersSection';
 import MissionSection from '@/components/MissionSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import ContactSection from '@/components/ContactSection';
+import TwoColumnSection from '@/components/TwoColumnSection';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import SEOHead from '@/components/SEOHead';
@@ -67,6 +69,7 @@ const Index = () => {
         <MissionSection />
         <TestimonialsSection />
         <ContactSection />
+        <TwoColumnSection />
       </main>
       
       <Footer />
