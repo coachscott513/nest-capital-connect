@@ -43,14 +43,15 @@ const HeroSection = () => {
           />
         </div>
 
-        {/* Google Earth Link */}
+        {/* Google Earth Link - Made larger and wider */}
         <div className="mb-8">
           <Button
             onClick={handleGoogleEarthSearch}
             variant="outline"
-            className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50"
+            size="lg"
+            className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50 px-8 py-4 text-lg min-w-[300px]"
           >
-            <MapPin className="mr-2 h-4 w-4" />
+            <MapPin className="mr-3 h-6 w-6" />
             View Address on Google Earth
           </Button>
         </div>
