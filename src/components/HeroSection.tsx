@@ -21,37 +21,37 @@ const HeroSection = () => {
 
   return (
     <section className="hero-gradient text-white min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden rounded-bl-[4rem] rounded-br-[4rem]" role="banner">
-      <div className="absolute top-36 md:top-20 left-0 right-0">
-        <h1 className="text-4xl md:text-6xl font-bold text-white">
+      <div className="absolute top-20 md:top-20 left-0 right-0 px-4">
+        <h1 className="text-3xl md:text-6xl font-bold text-white leading-tight">
           Capital District Nest
         </h1>
       </div>
       
-      <div className="container mx-auto px-4 py-16 animate-fade-in">
-        <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
+      <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in mt-16 md:mt-0">
+        <p className="text-lg md:text-2xl mb-6 md:mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
           Connecting Renters, Landlords and Investors in the Albany, Troy, Schenectady and Saratoga
         </p>
         
-        {/* Property Search Iframe - Fixed for mobile */}
-        <div className="mb-4 flex justify-center">
+        {/* Property Search Iframe - Optimized for mobile */}
+        <div className="mb-4 md:mb-6 flex justify-center">
           <iframe 
-            style={{width: "100%", maxWidth: "960px", height: "300px"}} 
+            style={{width: "100%", maxWidth: "960px", height: "250px"}} 
             src="https://scottalvarez.remax.com/wide.php" 
             allowTransparency={true} 
             frameBorder="0"
-            className="w-full max-w-full rounded-lg shadow-lg"
+            className="w-full max-w-full rounded-lg shadow-lg h-[250px] md:h-[300px]"
           />
         </div>
 
-        {/* Google Earth Link - Made larger and wider */}
-        <div className="mb-8">
+        {/* Google Earth Link - Mobile optimized */}
+        <div className="mb-6 md:mb-8">
           <Button
             onClick={handleGoogleEarthSearch}
             variant="outline"
             size="lg"
-            className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50 px-8 py-4 text-lg min-w-[300px]"
+            className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50 px-4 md:px-8 py-3 md:py-4 text-base md:text-lg w-full max-w-sm md:min-w-[300px] md:w-auto"
           >
-            <MapPin className="mr-3 h-6 w-6" />
+            <MapPin className="mr-2 md:mr-3 h-5 w-5 md:h-6 md:w-6" />
             View Address on Google Earth
           </Button>
         </div>
