@@ -6,6 +6,7 @@ import RentersSection from '@/components/RentersSection';
 import FirstTimeBuyersSection from '@/components/FirstTimeBuyersSection';
 import FinancingSection from '@/components/FinancingSection';
 import OwnersSection from '@/components/OwnersSection';
+import ListingAlertsSection from '@/components/ListingAlertsSection';
 import MissionSection from '@/components/MissionSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import ContactSection from '@/components/ContactSection';
@@ -65,6 +66,7 @@ const Index = () => {
         <FirstTimeBuyersSection />
         <FinancingSection />
         <OwnersSection />
+        <ListingAlertsSection />
         <MissionSection />
         <TestimonialsSection />
         <ContactSection />
