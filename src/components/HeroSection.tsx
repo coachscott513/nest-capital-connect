@@ -1,11 +1,21 @@
 
 import { Button } from "@/components/ui/button";
+import { MapPin } from "lucide-react";
 
 const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleGoogleEarthSearch = () => {
+    const address = prompt("Enter an address to view on Google Earth:");
+    if (address) {
+      const encodedAddress = encodeURIComponent(address);
+      const googleEarthUrl = `https://earth.google.com/web/search/${encodedAddress}`;
+      window.open(googleEarthUrl, '_blank');
     }
   };
 
@@ -22,15 +32,27 @@ const HeroSection = () => {
           Connecting Renters, Landlords and Investors in the Albany, Troy, Schenectady and Saratoga
         </p>
         
-        {/* Property Search Iframe */}
-        <div className="mb-8 flex justify-center">
+        {/* Property Search Iframe - Fixed for mobile */}
+        <div className="mb-4 flex justify-center">
           <iframe 
-            style={{width: "960px", height: "300px"}} 
+            style={{width: "100%", maxWidth: "960px", height: "300px"}} 
             src="https://scottalvarez.remax.com/wide.php" 
             allowTransparency={true} 
             frameBorder="0"
-            className="max-w-full"
+            className="w-full max-w-full rounded-lg shadow-lg"
           />
+        </div>
+
+        {/* Google Earth Link */}
+        <div className="mb-8">
+          <Button
+            onClick={handleGoogleEarthSearch}
+            variant="outline"
+            className="bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50"
+          >
+            <MapPin className="mr-2 h-4 w-4" />
+            View Address on Google Earth
+          </Button>
         </div>
       </div>
     </section>
