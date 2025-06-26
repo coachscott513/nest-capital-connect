@@ -30,17 +30,16 @@ const HeroSection = () => {
           Connecting Renters, Landlords and Investors in the Albany, Troy, Schenectady and Saratoga
         </p>
         
-        {/* Property Search Iframe - Simplified and working */}
+        {/* Property Search Iframe - New compact version */}
         <div className="mb-6 md:mb-8 w-full max-w-4xl mx-auto">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 flex justify-center">
             <iframe 
-              src="https://scottalvarez.remax.com/wide.php" 
-              width="100%"
-              height="350"
+              src="https://scottalvarez.remax.com/embedsmall.php"
+              width="280"
+              height="680"
               frameBorder="0"
-              scrolling="yes"
               allowTransparency={true}
-              className="w-full h-[350px] md:h-[400px] rounded border-0"
+              className="rounded border-0"
               title="Property Search Tool"
               loading="lazy"
             />
