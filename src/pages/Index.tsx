@@ -1,3 +1,4 @@
+
 import React from 'react';
 import HeroSection from '@/components/HeroSection';
 import NeighborhoodsSection from '@/components/NeighborhoodsSection';
@@ -8,6 +9,7 @@ import OwnersSection from '@/components/OwnersSection';
 import MissionSection from '@/components/MissionSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import ContactSection from '@/components/ContactSection';
+import SaratogaRentalsSection from '@/components/SaratogaRentalsSection';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import SEOHead from '@/components/SEOHead';
@@ -60,6 +62,7 @@ const Index = () => {
       <main role="main">
         <HeroSection />
         <NeighborhoodsSection />
+        <SaratogaRentalsSection />
         <RentersSection />
         <FirstTimeBuyersSection />
         <FinancingSection />
