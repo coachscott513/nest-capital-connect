@@ -19,6 +19,7 @@ import SEOHead from '@/components/SEOHead';
 import LocalBusinessSchema from '@/components/LocalBusinessSchema';
 import InternalLinkingNav from '@/components/InternalLinkingNav';
 import AnimatedCapitalDistrictMap from '@/components/AnimatedCapitalDistrictMap';
+import MeetTheTeamSection from '@/components/MeetTheTeamSection';
 
 const Index = () => {
   const structuredData = {
@@ -143,6 +144,7 @@ const Index = () => {
         <FinancingSection />
         <OwnersSection />
         <MissionSection />
+        <MeetTheTeamSection />
         <TestimonialsSection />
         <ContactSection />
       </main>
