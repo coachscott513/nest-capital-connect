@@ -13,6 +13,9 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: LinkedInBot
+Allow: /
+
 User-agent: *
 Allow: /
 Crawl-delay: 2
@@ -23,3 +26,19 @@ Sitemap: https://your-domain.com/sitemap.xml
 # Disallow admin or private areas (add as needed)
 # Disallow: /admin/
 # Disallow: /private/
+
+# Allow important pages
+Allow: /#albany-rentals
+Allow: /#troy-rentals
+Allow: /#schenectady-rentals
+Allow: /#saratoga-rentals
+Allow: /#renters
+Allow: /#owners
+Allow: /#first-time-buyers
+Allow: /#contact
+
+# Request-rate limiting
+Request-rate: 1/10s
+
+# Host declaration
+Host: https://your-domain.com

@@ -7,14 +7,18 @@ interface SEOHeadProps {
   keywords?: string;
   canonical?: string;
   structuredData?: object;
+  ogImage?: string;
+  ogType?: string;
 }
 
 const SEOHead = ({ 
-  title = "Capital District Nest - Your Go-To for Rentals & Homeownership in Albany, Troy, Schenectady & Saratoga",
-  description = "Connecting renters with quality multi-unit homes and guiding them towards first-time homeownership in Albany, Troy, Schenectady, & Saratoga.",
-  keywords = "Albany rentals, Troy rentals, Schenectady rentals, Saratoga Springs rentals, Capital District real estate, first time home buyers",
+  title = "Capital District Nest - #1 Rentals & Real Estate in Albany, Troy, Schenectady & Saratoga Springs NY",
+  description = "Find premium rental properties and expert real estate services in Albany, Troy, Schenectady, and Saratoga Springs. Top-rated property management, first-time buyer assistance, and investment opportunities in New York's Capital District.",
+  keywords = "Albany NY rentals, Troy NY apartments, Schenectady NY housing, Saratoga Springs NY real estate, Capital District property management, NY first time home buyers, rental properties Albany, multi-unit homes NY",
   canonical = "https://your-domain.com",
-  structuredData
+  structuredData,
+  ogImage = "https://your-domain.com/og-image-capital-district.jpg",
+  ogType = "website"
 }: SEOHeadProps) => {
   
   useEffect(() => {
@@ -22,16 +26,22 @@ const SEOHead = ({
     document.title = title;
     
     // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', description);
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
     }
+    metaDescription.setAttribute('content', description);
     
     // Update meta keywords
-    const metaKeywords = document.querySelector('meta[name="keywords"]');
-    if (metaKeywords) {
-      metaKeywords.setAttribute('content', keywords);
+    let metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (!metaKeywords) {
+      metaKeywords = document.createElement('meta');
+      metaKeywords.setAttribute('name', 'keywords');
+      document.head.appendChild(metaKeywords);
     }
+    metaKeywords.setAttribute('content', keywords);
     
     // Update canonical URL
     let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
@@ -41,22 +51,92 @@ const SEOHead = ({
       document.head.appendChild(canonicalLink);
     }
     canonicalLink.href = canonical;
+
+    // Add robots meta
+    let robotsMeta = document.querySelector('meta[name="robots"]');
+    if (!robotsMeta) {
+      robotsMeta = document.createElement('meta');
+      robotsMeta.setAttribute('name', 'robots');
+      robotsMeta.setAttribute('content', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+      document.head.appendChild(robotsMeta);
+    }
+
+    // Add author meta
+    let authorMeta = document.querySelector('meta[name="author"]');
+    if (!authorMeta) {
+      authorMeta = document.createElement('meta');
+      authorMeta.setAttribute('name', 'author');
+      authorMeta.setAttribute('content', 'Capital District Nest - Real Estate Professionals');
+      document.head.appendChild(authorMeta);
+    }
+
+    // Add language meta
+    let languageMeta = document.querySelector('meta[http-equiv="content-language"]');
+    if (!languageMeta) {
+      languageMeta = document.createElement('meta');
+      languageMeta.setAttribute('http-equiv', 'content-language');
+      languageMeta.setAttribute('content', 'en-US');
+      document.head.appendChild(languageMeta);
+    }
+
+    // Update Open Graph tags
+    const ogTags = [
+      { property: 'og:title', content: title },
+      { property: 'og:description', content: description },
+      { property: 'og:type', content: ogType },
+      { property: 'og:url', content: canonical },
+      { property: 'og:image', content: ogImage },
+      { property: 'og:site_name', content: 'Capital District Nest' },
+      { property: 'og:locale', content: 'en_US' }
+    ];
+
+    ogTags.forEach(({ property, content }) => {
+      let ogMeta = document.querySelector(`meta[property="${property}"]`);
+      if (!ogMeta) {
+        ogMeta = document.createElement('meta');
+        ogMeta.setAttribute('property', property);
+        document.head.appendChild(ogMeta);
+      }
+      ogMeta.setAttribute('content', content);
+    });
+
+    // Update Twitter Card tags
+    const twitterTags = [
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: title },
+      { name: 'twitter:description', content: description },
+      { name: 'twitter:image', content: ogImage },
+      { name: 'twitter:site', content: '@CapitalDistrictNest' }
+    ];
+
+    twitterTags.forEach(({ name, content }) => {
+      let twitterMeta = document.querySelector(`meta[name="${name}"]`);
+      if (!twitterMeta) {
+        twitterMeta = document.createElement('meta');
+        twitterMeta.setAttribute('name', name);
+        document.head.appendChild(twitterMeta);
+      }
+      twitterMeta.setAttribute('content', content);
+    });
     
     // Add structured data if provided
+    let structuredDataScript: HTMLScriptElement | null = null;
     if (structuredData) {
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.textContent = JSON.stringify(structuredData);
-      document.head.appendChild(script);
-      
-      // Cleanup function to remove the script when component unmounts
-      return () => {
-        document.head.removeChild(script);
-      };
+      structuredDataScript = document.createElement('script');
+      structuredDataScript.type = 'application/ld+json';
+      structuredDataScript.textContent = JSON.stringify(structuredData);
+      document.head.appendChild(structuredDataScript);
     }
-  }, [title, description, keywords, canonical, structuredData]);
+    
+    // Cleanup function
+    return () => {
+      if (structuredDataScript) {
+        document.head.removeChild(structuredDataScript);
+      }
+    };
+  }, [title, description, keywords, canonical, structuredData, ogImage, ogType]);
 
-  return null; // This component doesn't render anything
+  return null;
 };
 
 export default SEOHead;
