@@ -144,8 +144,8 @@ const Index = () => {
         <FinancingSection />
         <OwnersSection />
         <MissionSection />
-        <MeetTheTeamSection />
         <TestimonialsSection />
+        <MeetTheTeamSection />
         <ContactSection />
       </main>
       
