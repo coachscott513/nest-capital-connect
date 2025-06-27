@@ -5,7 +5,7 @@ const AnimatedCapitalDistrictMap = () => {
   const [activeAreas, setActiveAreas] = useState<string[]>([]);
 
   const areas = [
-    // Major cities
+    // Major cities - spread wider
     { 
       id: 'albany', 
       name: 'Albany', 
@@ -17,24 +17,24 @@ const AnimatedCapitalDistrictMap = () => {
     { 
       id: 'troy', 
       name: 'Troy', 
-      cx: 240, 
-      cy: 170, 
+      cx: 260, 
+      cy: 160, 
       color: '#86efac',
       size: 12
     },
     { 
       id: 'schenectady', 
       name: 'Schenectady', 
-      cx: 120, 
-      cy: 200, 
+      cx: 100, 
+      cy: 190, 
       color: '#fcd34d',
       size: 12
     },
     { 
       id: 'saratoga', 
       name: 'Saratoga Springs', 
-      cx: 200, 
-      cy: 100, 
+      cx: 220, 
+      cy: 80, 
       color: '#fca5a5',
       size: 12
     },
@@ -42,8 +42,8 @@ const AnimatedCapitalDistrictMap = () => {
     { 
       id: 'cohoes', 
       name: 'Cohoes', 
-      cx: 210, 
-      cy: 180, 
+      cx: 220, 
+      cy: 170, 
       color: '#c4b5fd',
       size: 8
     },
@@ -58,40 +58,40 @@ const AnimatedCapitalDistrictMap = () => {
     { 
       id: 'rensselaer', 
       name: 'Rensselaer', 
-      cx: 200, 
-      cy: 240, 
+      cx: 210, 
+      cy: 250, 
       color: '#bef264',
       size: 8
     },
     { 
       id: 'colonie', 
       name: 'Colonie', 
-      cx: 160, 
-      cy: 180, 
+      cx: 150, 
+      cy: 170, 
       color: '#fdba74',
       size: 10
     },
     { 
       id: 'guilderland', 
       name: 'Guilderland', 
-      cx: 140, 
-      cy: 240, 
+      cx: 130, 
+      cy: 250, 
       color: '#f9a8d4',
       size: 8
     },
     { 
       id: 'rotterdam', 
       name: 'Rotterdam', 
-      cx: 100, 
-      cy: 220, 
+      cx: 80, 
+      cy: 210, 
       color: '#a5b4fc',
       size: 6
     },
     { 
       id: 'niskayuna', 
       name: 'Niskayuna', 
-      cx: 140, 
-      cy: 160, 
+      cx: 130, 
+      cy: 150, 
       color: '#5eead4',
       size: 6
     },
@@ -99,41 +99,138 @@ const AnimatedCapitalDistrictMap = () => {
       id: 'ballston-spa', 
       name: 'Ballston Spa', 
       cx: 180, 
-      cy: 120, 
+      cy: 110, 
       color: '#fcd34d',
       size: 6
     },
     { 
       id: 'mechanicville', 
       name: 'Mechanicville', 
-      cx: 220, 
-      cy: 140, 
+      cx: 240, 
+      cy: 130, 
       color: '#fca5a5',
       size: 5
     },
     { 
       id: 'hoosick-falls', 
       name: 'Hoosick Falls', 
-      cx: 280, 
-      cy: 120, 
+      cx: 320, 
+      cy: 110, 
       color: '#c4b5fd',
       size: 5
     },
     { 
       id: 'greenwich', 
       name: 'Greenwich', 
-      cx: 260, 
-      cy: 80, 
+      cx: 280, 
+      cy: 70, 
       color: '#86efac',
       size: 5
     },
     { 
       id: 'glens-falls', 
       name: 'Glens Falls', 
-      cx: 240, 
-      cy: 60, 
+      cx: 260, 
+      cy: 50, 
       color: '#67e8f9',
       size: 8
+    },
+    // New towns to widen coverage
+    { 
+      id: 'clifton-park', 
+      name: 'Clifton Park', 
+      cx: 200, 
+      cy: 140, 
+      color: '#93c5fd',
+      size: 7
+    },
+    { 
+      id: 'latham', 
+      name: 'Latham', 
+      cx: 170, 
+      cy: 200, 
+      color: '#86efac',
+      size: 6
+    },
+    { 
+      id: 'delmar', 
+      name: 'Delmar', 
+      cx: 160, 
+      cy: 260, 
+      color: '#fcd34d',
+      size: 5
+    },
+    { 
+      id: 'voorheesville', 
+      name: 'Voorheesville', 
+      cx: 140, 
+      cy: 280, 
+      color: '#fca5a5',
+      size: 4
+    },
+    { 
+      id: 'duanesburg', 
+      name: 'Duanesburg', 
+      cx: 60, 
+      cy: 240, 
+      color: '#c4b5fd',
+      size: 4
+    },
+    { 
+      id: 'altamont', 
+      name: 'Altamont', 
+      cx: 120, 
+      cy: 270, 
+      color: '#67e8f9',
+      size: 4
+    },
+    { 
+      id: 'cambridge', 
+      name: 'Cambridge', 
+      cx: 300, 
+      cy: 90, 
+      color: '#bef264',
+      size: 5
+    },
+    { 
+      id: 'stillwater', 
+      name: 'Stillwater', 
+      cx: 250, 
+      cy: 100, 
+      color: '#fdba74',
+      size: 5
+    },
+    { 
+      id: 'wynantskill', 
+      name: 'Wynantskill', 
+      cx: 280, 
+      cy: 190, 
+      color: '#f9a8d4',
+      size: 4
+    },
+    { 
+      id: 'east-greenbush', 
+      name: 'East Greenbush', 
+      cx: 230, 
+      cy: 260, 
+      color: '#a5b4fc',
+      size: 6
+    },
+    { 
+      id: 'brunswick', 
+      name: 'Brunswick', 
+      cx: 270, 
+      cy: 200, 
+      color: '#5eead4',
+      size: 5
+    },
+    { 
+      id: 'bethlehem', 
+      name: 'Bethlehem', 
+      cx: 180, 
+      cy: 280, 
+      color: '#93c5fd',
+      size: 6
     }
   ];
 
