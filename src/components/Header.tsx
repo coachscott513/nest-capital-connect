@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -27,22 +29,29 @@ const Header = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-6">
           <button
-            onClick={() => scrollToSection('renters')}
+            onClick={() => scrollToSection('investment-properties')}
             className="text-white hover:text-blue-200 transition-colors duration-200"
           >
-            For Renters
+            Investment Properties
           </button>
+          <button
+            onClick={() => scrollToSection('rehab-properties')}
+            className="text-white hover:text-blue-200 transition-colors duration-200"
+          >
+            Rehab Properties
+          </button>
+          <Link
+            to="/rentals"
+            className="text-white hover:text-blue-200 transition-colors duration-200"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Rentals & First-Time Buyers
+          </Link>
           <button
             onClick={() => scrollToSection('owners')}
             className="text-white hover:text-blue-200 transition-colors duration-200"
           >
             For Owners
-          </button>
-          <button
-            onClick={() => scrollToSection('first-time-buyers')}
-            className="text-white hover:text-blue-200 transition-colors duration-200"
-          >
-            First-Time Buyers
           </button>
           <button
             onClick={() => scrollToSection('contact')}
@@ -65,22 +74,29 @@ const Header = () => {
           <div className="absolute top-full left-0 right-0 bg-blue-600 p-4 md:hidden">
             <div className="flex flex-col space-y-4">
               <button
-                onClick={() => scrollToSection('renters')}
+                onClick={() => scrollToSection('investment-properties')}
                 className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
               >
-                For Renters
+                Investment Properties
               </button>
+              <button
+                onClick={() => scrollToSection('rehab-properties')}
+                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
+              >
+                Rehab Properties
+              </button>
+              <Link
+                to="/rentals"
+                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Rentals & First-Time Buyers
+              </Link>
               <button
                 onClick={() => scrollToSection('owners')}
                 className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
               >
                 For Owners
-              </button>
-              <button
-                onClick={() => scrollToSection('first-time-buyers')}
-                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
-              >
-                First-Time Buyers
               </button>
               <button
                 onClick={() => scrollToSection('contact')}

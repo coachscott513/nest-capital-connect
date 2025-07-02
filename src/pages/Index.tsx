@@ -2,17 +2,13 @@
 import React from 'react';
 import HeroSection from '@/components/HeroSection';
 import NeighborhoodsSection from '@/components/NeighborhoodsSection';
-import RentersSection from '@/components/RentersSection';
-import FirstTimeBuyersSection from '@/components/FirstTimeBuyersSection';
+import InvestmentPropertiesSection from '@/components/InvestmentPropertiesSection';
+import RehabPropertiesSection from '@/components/RehabPropertiesSection';
 import FinancingSection from '@/components/FinancingSection';
 import OwnersSection from '@/components/OwnersSection';
 import MissionSection from '@/components/MissionSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import ContactSection from '@/components/ContactSection';
-import SaratogaRentalsSection from '@/components/SaratogaRentalsSection';
-import AlbanyRentalsSection from '@/components/AlbanyRentalsSection';
-import SchenectadyRentalsSection from '@/components/SchenectadyRentalsSection';
-import TroyRentalsSection from '@/components/TroyRentalsSection';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import SEOHead from '@/components/SEOHead';
@@ -26,7 +22,7 @@ const Index = () => {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Capital District Nest",
-    "description": "Premier real estate services connecting renters with quality homes and guiding first-time buyers in Albany, Troy, Schenectady, and Saratoga Springs, NY.",
+    "description": "Investment property specialists for rental properties, rehab projects, and multi-unit buildings in Albany, Troy, Schenectady, and Saratoga Springs, NY.",
     "url": "https://your-domain.com",
     "telephone": "+1-518-XXX-XXXX",
     "email": "info@capitaldistrict.com",
@@ -64,12 +60,12 @@ const Index = () => {
       }
     ],
     "serviceType": [
-      "Property Rental Services",
-      "Real Estate Sales", 
-      "First-Time Homebuyer Assistance",
-      "Property Management",
-      "Mortgage Pre-Approval Assistance",
-      "Real Estate Investment Consulting"
+      "Investment Property Sales",
+      "Multi-Unit Property Acquisition", 
+      "Property Rehabilitation Services",
+      "Real Estate Investment Consulting",
+      "Fix & Flip Properties",
+      "Buy & Hold Investment Analysis"
     ],
     "openingHours": "Mo-Su 08:00-20:00",
     "priceRange": "$$",
@@ -103,9 +99,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white">
       <SEOHead 
-        title="Capital District Nest - #1 Rentals & Real Estate in Albany, Troy, Schenectady & Saratoga Springs NY"
-        description="Find premium rental properties and expert real estate services in Albany, Troy, Schenectady, and Saratoga Springs. Top-rated property management, first-time buyer assistance, and investment opportunities in New York's Capital District."
-        keywords="Albany NY rentals, Troy NY apartments, Schenectady NY housing, Saratoga Springs NY real estate, Capital District property management, NY first time home buyers, rental properties Albany, multi-unit homes NY, real estate investment Capital District, property rental services NY"
+        title="Capital District Investment Properties - Multi-Unit, Rehab & Rental Properties in NY"
+        description="Specialized investment property services for multi-unit buildings, rehab projects, and rental properties in Albany, Troy, Schenectady, and Saratoga Springs. Expert investment analysis and property acquisition."
+        keywords="investment properties Albany NY, multi-unit properties Troy NY, rehab properties Schenectady NY, rental properties Saratoga Springs NY, real estate investment Capital District, fix and flip properties NY, buy and hold investments, property rehabilitation NY"
         structuredData={structuredData}
       />
       
@@ -135,12 +131,8 @@ const Index = () => {
         </section>
         
         <NeighborhoodsSection />
-        <AlbanyRentalsSection />
-        <TroyRentalsSection />
-        <SchenectadyRentalsSection />
-        <SaratogaRentalsSection />
-        <RentersSection />
-        <FirstTimeBuyersSection />
+        <InvestmentPropertiesSection />
+        <RehabPropertiesSection />
         <FinancingSection />
         <OwnersSection />
         <MissionSection />
