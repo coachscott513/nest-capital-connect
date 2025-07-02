@@ -1,99 +1,126 @@
 import React from 'react';
-import { Building, TrendingUp, Wrench, DollarSign } from 'lucide-react';
+import { Building, MapPin, Home, TrendingUp, Users, DollarSign } from 'lucide-react';
 
 const InvestmentPropertiesSection = () => {
-  const investmentTypes = [
+  const areaButtons = [
     {
-      icon: <Building className="w-12 h-12 text-blue-500" />,
-      title: "Multi-Unit Properties",
-      description: "Duplex, triplex, and apartment buildings for rental income generation.",
-      features: ["Immediate cash flow", "Multiple revenue streams", "Tax advantages", "Appreciation potential"]
+      icon: <Building className="w-6 h-6" />,
+      title: "Albany",
+      description: "Investment Properties",
+      href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map&leadid=948",
+      gradient: "from-blue-500 to-blue-600"
     },
     {
-      icon: <TrendingUp className="w-12 h-12 text-green-500" />,
-      title: "Buy & Hold Investments",
-      description: "Long-term rental properties for steady passive income.",
-      features: ["Stable monthly income", "Property appreciation", "Mortgage paydown", "Portfolio diversification"]
+      icon: <MapPin className="w-6 h-6" />,
+      title: "Troy",
+      description: "Investment Properties", 
+      href: "#",
+      gradient: "from-green-500 to-green-600"
     },
     {
-      icon: <Wrench className="w-12 h-12 text-orange-500" />,
-      title: "Fix & Flip Properties",
-      description: "Distressed properties for renovation and resale profit.",
-      features: ["Quick profit potential", "Market value creation", "Active investment strategy", "High ROI opportunities"]
+      icon: <Home className="w-6 h-6" />,
+      title: "Schenectady",
+      description: "Investment Properties",
+      href: "#",
+      gradient: "from-purple-500 to-purple-600"
     },
     {
-      icon: <DollarSign className="w-12 h-12 text-purple-500" />,
-      title: "BRRRR Strategy",
-      description: "Buy, Rehab, Rent, Refinance, Repeat for wealth building.",
-      features: ["Infinite returns", "Scale your portfolio", "Tax-efficient growth", "Cash recycling"]
+      icon: <TrendingUp className="w-6 h-6" />,
+      title: "Saratoga",
+      description: "Investment Properties",
+      href: "#",
+      gradient: "from-orange-500 to-orange-600"
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      title: "Multi-Unit",
+      description: "Properties",
+      href: "#",
+      gradient: "from-red-500 to-red-600"
+    },
+    {
+      icon: <DollarSign className="w-6 h-6" />,
+      title: "Financing",
+      description: "Options",
+      href: "#",
+      gradient: "from-indigo-500 to-indigo-600"
     }
   ];
 
   return (
-    <section id="investment-properties" className="py-16 px-4 bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 text-slate-800">
+    <section id="investment-properties" className="py-20 px-4 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-bold mb-6 text-white">
             Investment & Rental Properties
           </h2>
-          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-            Build wealth through strategic real estate investments. We specialize in identifying profitable 
-            opportunities in multi-unit properties, fix & flips, and buy & hold investments across the Capital District.
+          <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
+            Discover profitable real estate opportunities across the Capital District. From multi-unit properties 
+            to fix & flip investments, we connect you with the best deals in Albany, Troy, Schenectady, and Saratoga.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          {investmentTypes.map((type, index) => (
-            <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="flex items-center mb-6">
-                {type.icon}
-                <h3 className="text-2xl font-semibold ml-4 text-slate-800">
-                  {type.title}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {areaButtons.map((area, index) => (
+            <a
+              key={index}
+              href={area.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative overflow-hidden rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br ${area.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+              <div className="relative p-8 text-center">
+                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${area.gradient} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  {area.icon}
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-white transition-colors">
+                  {area.title}
                 </h3>
+                <p className="text-slate-300 group-hover:text-slate-200 transition-colors">
+                  {area.description}
+                </p>
+                <div className="mt-4 w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                  <div className={`h-full bg-gradient-to-r ${area.gradient} w-0 group-hover:w-full transition-all duration-500 ease-out`}></div>
+                </div>
               </div>
-              <p className="text-slate-600 mb-6 text-lg">
-                {type.description}
-              </p>
-              <ul className="space-y-3">
-                {type.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center text-slate-600">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </a>
           ))}
         </div>
 
-        <div className="bg-white p-8 rounded-xl shadow-lg text-center">
-          <h3 className="text-2xl font-bold mb-4 text-slate-800">
-            Ready to Start Your Investment Journey?
-          </h3>
-          <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
-            Let's analyze your investment goals and find the perfect properties to build your real estate portfolio. 
-            From market analysis to financing options, we'll guide you every step of the way.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <button
-              onClick={() => {
-                const element = document.getElementById('contact');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200 transform hover:scale-105"
-            >
-              Get Investment Analysis
-            </button>
-            <a 
-              href="https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=6&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map&leadid=948"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-transparent border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
-            >
-              Browse Investment Properties
-            </a>
+        <div className="text-center">
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+            <h3 className="text-3xl font-bold mb-4 text-white">
+              Ready to Build Your Portfolio?
+            </h3>
+            <p className="text-slate-300 mb-8 max-w-3xl mx-auto text-lg">
+              Get personalized investment analysis and discover properties that match your investment strategy. 
+              Our local expertise helps you make informed decisions in the Capital District market.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+              <button
+                onClick={() => {
+                  const element = document.getElementById('contact');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+              >
+                Get Investment Analysis
+              </button>
+              <button
+                onClick={() => {
+                  const element = document.getElementById('contact');
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+              >
+                Schedule Consultation
+              </button>
+            </div>
           </div>
         </div>
       </div>
