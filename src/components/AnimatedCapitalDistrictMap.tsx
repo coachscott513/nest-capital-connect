@@ -1,259 +1,109 @@
 
 import React, { useEffect, useState } from 'react';
+import { MapPin, Users, TrendingUp } from 'lucide-react';
 
 const AnimatedCapitalDistrictMap = () => {
   const [activeAreas, setActiveAreas] = useState<string[]>([]);
+  const [hoveredArea, setHoveredArea] = useState<string | null>(null);
 
   const areas = [
-    // Major cities - spread wider
     { 
       id: 'albany', 
       name: 'Albany', 
       cx: 180, 
       cy: 220, 
-      color: '#93c5fd',
-      size: 14
+      color: 'from-blue-400 to-blue-600',
+      size: 18,
+      population: '97K',
+      properties: '2.3K'
     },
     { 
       id: 'troy', 
       name: 'Troy', 
       cx: 260, 
       cy: 160, 
-      color: '#86efac',
-      size: 12
+      color: 'from-emerald-400 to-emerald-600',
+      size: 16,
+      population: '51K',
+      properties: '1.8K'
     },
     { 
       id: 'schenectady', 
       name: 'Schenectady', 
       cx: 100, 
       cy: 190, 
-      color: '#fcd34d',
-      size: 12
+      color: 'from-amber-400 to-orange-500',
+      size: 16,
+      population: '65K',
+      properties: '1.9K'
     },
     { 
       id: 'saratoga', 
       name: 'Saratoga Springs', 
       cx: 220, 
       cy: 80, 
-      color: '#fca5a5',
-      size: 12
-    },
-    // Additional cities and towns
-    { 
-      id: 'cohoes', 
-      name: 'Cohoes', 
-      cx: 220, 
-      cy: 170, 
-      color: '#c4b5fd',
-      size: 8
+      color: 'from-rose-400 to-pink-600',
+      size: 16,
+      population: '28K',
+      properties: '890'
     },
     { 
-      id: 'watervliet', 
-      name: 'Watervliet', 
-      cx: 190, 
-      cy: 190, 
-      color: '#67e8f9',
-      size: 6
-    },
-    { 
-      id: 'rensselaer', 
-      name: 'Rensselaer', 
-      cx: 210, 
-      cy: 250, 
-      color: '#bef264',
-      size: 8
+      id: 'clifton-park', 
+      name: 'Clifton Park', 
+      cx: 200, 
+      cy: 140, 
+      color: 'from-indigo-400 to-purple-600',
+      size: 12,
+      population: '36K',
+      properties: '650'
     },
     { 
       id: 'colonie', 
       name: 'Colonie', 
       cx: 150, 
       cy: 170, 
-      color: '#fdba74',
-      size: 10
+      color: 'from-teal-400 to-cyan-600',
+      size: 14,
+      population: '85K',
+      properties: '1.2K'
+    },
+    { 
+      id: 'cohoes', 
+      name: 'Cohoes', 
+      cx: 220, 
+      cy: 170, 
+      color: 'from-violet-400 to-purple-600',
+      size: 10,
+      population: '17K',
+      properties: '420'
     },
     { 
       id: 'guilderland', 
       name: 'Guilderland', 
       cx: 130, 
       cy: 250, 
-      color: '#f9a8d4',
-      size: 8
-    },
-    { 
-      id: 'rotterdam', 
-      name: 'Rotterdam', 
-      cx: 80, 
-      cy: 210, 
-      color: '#a5b4fc',
-      size: 6
-    },
-    { 
-      id: 'niskayuna', 
-      name: 'Niskayuna', 
-      cx: 130, 
-      cy: 150, 
-      color: '#5eead4',
-      size: 6
-    },
-    { 
-      id: 'ballston-spa', 
-      name: 'Ballston Spa', 
-      cx: 180, 
-      cy: 110, 
-      color: '#fcd34d',
-      size: 6
-    },
-    { 
-      id: 'mechanicville', 
-      name: 'Mechanicville', 
-      cx: 240, 
-      cy: 130, 
-      color: '#fca5a5',
-      size: 5
-    },
-    { 
-      id: 'hoosick-falls', 
-      name: 'Hoosick Falls', 
-      cx: 320, 
-      cy: 110, 
-      color: '#c4b5fd',
-      size: 5
-    },
-    { 
-      id: 'greenwich', 
-      name: 'Greenwich', 
-      cx: 280, 
-      cy: 70, 
-      color: '#86efac',
-      size: 5
-    },
-    { 
-      id: 'glens-falls', 
-      name: 'Glens Falls', 
-      cx: 260, 
-      cy: 50, 
-      color: '#67e8f9',
-      size: 8
-    },
-    // New towns to widen coverage
-    { 
-      id: 'clifton-park', 
-      name: 'Clifton Park', 
-      cx: 200, 
-      cy: 140, 
-      color: '#93c5fd',
-      size: 7
-    },
-    { 
-      id: 'latham', 
-      name: 'Latham', 
-      cx: 170, 
-      cy: 200, 
-      color: '#86efac',
-      size: 6
-    },
-    { 
-      id: 'delmar', 
-      name: 'Delmar', 
-      cx: 160, 
-      cy: 260, 
-      color: '#fcd34d',
-      size: 5
-    },
-    { 
-      id: 'voorheesville', 
-      name: 'Voorheesville', 
-      cx: 140, 
-      cy: 280, 
-      color: '#fca5a5',
-      size: 4
-    },
-    { 
-      id: 'duanesburg', 
-      name: 'Duanesburg', 
-      cx: 60, 
-      cy: 240, 
-      color: '#c4b5fd',
-      size: 4
-    },
-    { 
-      id: 'altamont', 
-      name: 'Altamont', 
-      cx: 120, 
-      cy: 270, 
-      color: '#67e8f9',
-      size: 4
-    },
-    { 
-      id: 'cambridge', 
-      name: 'Cambridge', 
-      cx: 300, 
-      cy: 90, 
-      color: '#bef264',
-      size: 5
-    },
-    { 
-      id: 'stillwater', 
-      name: 'Stillwater', 
-      cx: 250, 
-      cy: 100, 
-      color: '#fdba74',
-      size: 5
-    },
-    { 
-      id: 'wynantskill', 
-      name: 'Wynantskill', 
-      cx: 280, 
-      cy: 190, 
-      color: '#f9a8d4',
-      size: 4
-    },
-    { 
-      id: 'east-greenbush', 
-      name: 'East Greenbush', 
-      cx: 230, 
-      cy: 260, 
-      color: '#a5b4fc',
-      size: 6
-    },
-    { 
-      id: 'brunswick', 
-      name: 'Brunswick', 
-      cx: 270, 
-      cy: 200, 
-      color: '#5eead4',
-      size: 5
-    },
-    { 
-      id: 'bethlehem', 
-      name: 'Bethlehem', 
-      cx: 180, 
-      cy: 280, 
-      color: '#93c5fd',
-      size: 6
+      color: 'from-pink-400 to-rose-600',
+      size: 12,
+      population: '36K',
+      properties: '680'
     }
   ];
 
   useEffect(() => {
     const animateAreas = () => {
-      // Randomly select 2-5 areas to light up
-      const numberOfAreas = Math.floor(Math.random() * 4) + 2;
+      const numberOfAreas = Math.floor(Math.random() * 3) + 2;
       const shuffledAreas = [...areas].sort(() => Math.random() - 0.5);
       const selectedAreas = shuffledAreas.slice(0, numberOfAreas).map(area => area.id);
       
       setActiveAreas(selectedAreas);
       
-      // Clear after 2.5 seconds, then wait 1.5 seconds before next animation
       setTimeout(() => {
         setActiveAreas([]);
-      }, 2500);
+      }, 3000);
     };
 
-    // Initial animation
-    const initialTimeout = setTimeout(animateAreas, 500);
-    
-    // Repeat animation every 5 seconds
-    const interval = setInterval(animateAreas, 5000);
+    const initialTimeout = setTimeout(animateAreas, 1000);
+    const interval = setInterval(animateAreas, 6000);
 
     return () => {
       clearTimeout(initialTimeout);
@@ -261,153 +111,237 @@ const AnimatedCapitalDistrictMap = () => {
     };
   }, []);
 
+  const getActiveArea = () => areas.find(area => area.id === hoveredArea);
+
   return (
-    <div className="w-full max-w-4xl mx-auto p-8 bg-slate-800 rounded-lg shadow-lg">
-      <h3 className="text-2xl font-semibold text-center mb-6 text-slate-200">
-        Capital District Region
-      </h3>
-      
-      <div className="relative">
-        <svg
-          viewBox="0 0 400 350"
-          className="w-full h-auto"
-          style={{ filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3))' }}
-        >
-          {/* Background map outline */}
-          <rect
-            x="20"
-            y="20"
-            width="360"
-            height="310"
-            fill="#334155"
-            stroke="#64748b"
-            strokeWidth="2"
-            rx="12"
-          />
+    <div className="relative w-full max-w-6xl mx-auto">
+      {/* Glassmorphism container */}
+      <div className="relative bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+        {/* Background pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.1),transparent)] pointer-events-none"></div>
+        
+        <div className="relative p-8">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent mb-2">
+              Capital District Region
+            </h3>
+            <p className="text-slate-400 text-lg">Interactive investment opportunities map</p>
+          </div>
           
-          {/* Rivers and geographical features */}
-          <path
-            d="M 60 140 Q 120 160 180 180 Q 240 200 300 220 Q 340 230 370 240"
-            stroke="#475569"
-            strokeWidth="4"
-            fill="none"
-            opacity="0.8"
-          />
-          
-          <path
-            d="M 200 40 Q 210 120 220 180 Q 230 240 240 310"
-            stroke="#475569"
-            strokeWidth="3"
-            fill="none"
-            opacity="0.8"
-          />
-
-          <path
-            d="M 100 80 Q 150 100 200 120 Q 250 140 300 160"
-            stroke="#475569"
-            strokeWidth="2"
-            fill="none"
-            opacity="0.6"
-          />
-
-          {/* City areas with animations */}
-          {areas.map((area) => (
-            <g key={area.id}>
-              {/* Pulsing ring effect when active */}
-              {activeAreas.includes(area.id) && (
-                <>
-                  <circle
-                    cx={area.cx}
-                    cy={area.cy}
-                    r={area.size + 15}
-                    fill={area.color}
-                    opacity="0.4"
-                    className="animate-ping"
+          <div className="grid lg:grid-cols-3 gap-8 items-center">
+            {/* Map SVG */}
+            <div className="lg:col-span-2">
+              <div className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-white/5 p-6">
+                <svg
+                  viewBox="0 0 400 350"
+                  className="w-full h-auto"
+                  style={{ filter: 'drop-shadow(0 8px 25px rgba(0, 0, 0, 0.4))' }}
+                >
+                  {/* Enhanced background */}
+                  <defs>
+                    <radialGradient id="mapGradient" cx="50%" cy="50%" r="60%">
+                      <stop offset="0%" stopColor="#1e293b" />
+                      <stop offset="100%" stopColor="#0f172a" />
+                    </radialGradient>
+                    <filter id="glow">
+                      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                      <feMerge> 
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  
+                  <rect
+                    x="20"
+                    y="20"
+                    width="360"
+                    height="310"
+                    fill="url(#mapGradient)"
+                    stroke="rgba(148, 163, 184, 0.3)"
+                    strokeWidth="1"
+                    rx="16"
                   />
-                  <circle
-                    cx={area.cx}
-                    cy={area.cy}
-                    r={area.size + 25}
-                    fill={area.color}
-                    opacity="0.3"
-                    className="animate-ping"
-                    style={{ animationDelay: '0.3s' }}
+                  
+                  {/* Stylized geographic lines */}
+                  <path
+                    d="M 60 140 Q 120 160 180 180 Q 240 200 300 220"
+                    stroke="rgba(59, 130, 246, 0.3)"
+                    strokeWidth="2"
+                    fill="none"
+                    className="animate-pulse"
                   />
-                </>
+                  <path
+                    d="M 200 40 Q 210 120 220 180 Q 230 240 240 310"
+                    stroke="rgba(16, 185, 129, 0.3)"
+                    strokeWidth="2"
+                    fill="none"
+                    className="animate-pulse"
+                    style={{ animationDelay: '1s' }}
+                  />
+
+                  {/* City areas with modern design */}
+                  {areas.map((area) => {
+                    const isActive = activeAreas.includes(area.id);
+                    const isHovered = hoveredArea === area.id;
+                    
+                    return (
+                      <g key={area.id}>
+                        {/* Animated rings for active areas */}
+                        {isActive && (
+                          <>
+                            <circle
+                              cx={area.cx}
+                              cy={area.cy}
+                              r={area.size + 20}
+                              fill="none"
+                              stroke="rgba(59, 130, 246, 0.4)"
+                              strokeWidth="2"
+                              className="animate-ping"
+                            />
+                            <circle
+                              cx={area.cx}
+                              cy={area.cy}
+                              r={area.size + 35}
+                              fill="none"
+                              stroke="rgba(59, 130, 246, 0.2)"
+                              strokeWidth="1"
+                              className="animate-ping"
+                              style={{ animationDelay: '0.5s' }}
+                            />
+                          </>
+                        )}
+                        
+                        {/* Main city circle with gradient */}
+                        <circle
+                          cx={area.cx}
+                          cy={area.cy}
+                          r={area.size}
+                          fill={isActive || isHovered ? "url(#cityGradient)" : "rgba(148, 163, 184, 0.4)"}
+                          stroke={isActive || isHovered ? "rgba(255, 255, 255, 0.8)" : "rgba(148, 163, 184, 0.6)"}
+                          strokeWidth={isActive || isHovered ? "3" : "1"}
+                          className={`transition-all duration-500 cursor-pointer ${
+                            isActive || isHovered ? 'filter-[url(#glow)]' : ''
+                          }`}
+                          style={{
+                            transform: isActive || isHovered ? 'scale(1.2)' : 'scale(1)',
+                            transformOrigin: `${area.cx}px ${area.cy}px`
+                          }}
+                          onMouseEnter={() => setHoveredArea(area.id)}
+                          onMouseLeave={() => setHoveredArea(null)}
+                        />
+                        
+                        {/* City name with enhanced typography */}
+                        <text
+                          x={area.cx}
+                          y={area.cy + area.size + 25}
+                          textAnchor="middle"
+                          className={`text-xs font-semibold transition-all duration-300 ${
+                            isActive || isHovered 
+                              ? 'fill-white drop-shadow-lg' 
+                              : 'fill-slate-300'
+                          }`}
+                          style={{
+                            fontSize: area.size > 14 ? '12px' : '10px',
+                            textShadow: isActive || isHovered ? '0 0 10px rgba(255,255,255,0.5)' : 'none'
+                          }}
+                        >
+                          {area.name}
+                        </text>
+                      </g>
+                    );
+                  })}
+                  
+                  {/* Enhanced compass */}
+                  <g transform="translate(350, 290)">
+                    <circle r="18" fill="rgba(30, 41, 59, 0.8)" stroke="rgba(148, 163, 184, 0.4)" strokeWidth="1" />
+                    <circle r="12" fill="none" stroke="rgba(59, 130, 246, 0.6)" strokeWidth="1" />
+                    <text x="0" y="-6" textAnchor="middle" className="text-xs fill-blue-400 font-bold">N</text>
+                    <text x="0" y="10" textAnchor="middle" className="text-xs fill-slate-400">S</text>
+                    <text x="-8" y="2" textAnchor="middle" className="text-xs fill-slate-400">W</text>
+                    <text x="8" y="2" textAnchor="middle" className="text-xs fill-slate-400">E</text>
+                  </g>
+                </svg>
+              </div>
+            </div>
+            
+            {/* Info Panel */}
+            <div className="space-y-6">
+              {/* Active area info */}
+              {hoveredArea && getActiveArea() && (
+                <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 animate-fade-in">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${getActiveArea()?.color}`}></div>
+                    <h4 className="text-xl font-bold text-white">{getActiveArea()?.name}</h4>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="text-center">
+                      <div className="flex items-center justify-center mb-2">
+                        <Users className="w-4 h-4 text-blue-400" />
+                      </div>
+                      <p className="text-2xl font-bold text-white">{getActiveArea()?.population}</p>
+                      <p className="text-xs text-slate-400">Population</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="flex items-center justify-center mb-2">
+                        <TrendingUp className="w-4 h-4 text-emerald-400" />
+                      </div>
+                      <p className="text-2xl font-bold text-white">{getActiveArea()?.properties}</p>
+                      <p className="text-xs text-slate-400">Properties</p>
+                    </div>
+                  </div>
+                </div>
               )}
               
-              {/* Main city circle */}
-              <circle
-                cx={area.cx}
-                cy={area.cy}
-                r={area.size}
-                fill={activeAreas.includes(area.id) ? area.color : '#64748b'}
-                stroke="#1e293b"
-                strokeWidth="2"
-                className={`transition-all duration-500 ${
-                  activeAreas.includes(area.id) 
-                    ? 'animate-pulse scale-110' 
-                    : 'hover:scale-105'
-                }`}
-                style={{
-                  filter: activeAreas.includes(area.id) 
-                    ? `drop-shadow(0 0 12px ${area.color})` 
-                    : 'none'
-                }}
-              />
+              {/* Stats Overview */}
+              <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6">
+                <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-blue-400" />
+                  Market Overview
+                </h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-300">Total Cities</span>
+                    <span className="text-white font-semibold">{areas.length}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-300">Active Listings</span>
+                    <span className="text-white font-semibold">8.5K+</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-300">Investment Properties</span>
+                    <span className="text-white font-semibold">1.2K+</span>
+                  </div>
+                </div>
+              </div>
               
-              {/* City label */}
-              <text
-                x={area.cx}
-                y={area.cy + area.size + 20}
-                textAnchor="middle"
-                className={`text-xs font-medium transition-all duration-300 ${
-                  activeAreas.includes(area.id) 
-                    ? 'fill-slate-200 font-semibold' 
-                    : 'fill-slate-400'
-                } ${area.size < 8 ? 'text-[10px]' : ''}`}
-              >
-                {area.name}
-              </text>
-            </g>
-          ))}
+              {/* Call to Action */}
+              <div className="text-center">
+                <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                  Explore Properties
+                </button>
+              </div>
+            </div>
+          </div>
           
-          {/* Decorative elements */}
-          <circle cx="350" cy="50" r="12" fill="#fbbf24" opacity="0.8" />
-          <text x="350" y="35" textAnchor="middle" className="text-sm fill-amber-400">
-            ☀
-          </text>
-          
-          {/* Compass rose */}
-          <g transform="translate(350, 290)">
-            <circle r="15" fill="#475569" stroke="#64748b" strokeWidth="1" opacity="0.9" />
-            <text x="0" y="-8" textAnchor="middle" className="text-xs fill-slate-300 font-semibold">N</text>
-            <text x="0" y="12" textAnchor="middle" className="text-xs fill-slate-300 font-semibold">S</text>
-            <text x="-8" y="3" textAnchor="middle" className="text-xs fill-slate-300 font-semibold">W</text>
-            <text x="8" y="3" textAnchor="middle" className="text-xs fill-slate-300 font-semibold">E</text>
-          </g>
-        </svg>
-      </div>
-      
-      <div className="mt-6 text-center">
-        <p className="text-base text-slate-300 mb-4">
-          Discover the diverse communities across New York's Capital District region
-        </p>
-        <div className="flex justify-center flex-wrap gap-2">
-          {areas.slice(0, 8).map((area) => (
-            <div
-              key={area.id}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                activeAreas.includes(area.id) ? 'scale-125 shadow-lg' : ''
-              }`}
-              style={{ backgroundColor: area.color }}
-              title={area.name}
-            />
-          ))}
+          {/* Activity indicators */}
+          <div className="mt-8 flex justify-center">
+            <div className="flex gap-2">
+              {areas.slice(0, 6).map((area) => (
+                <div
+                  key={area.id}
+                  className={`w-3 h-3 rounded-full transition-all duration-500 ${
+                    activeAreas.includes(area.id) 
+                      ? `bg-gradient-to-r ${area.color} shadow-lg scale-125` 
+                      : 'bg-slate-600 hover:bg-slate-500'
+                  }`}
+                  title={area.name}
+                />
+              ))}
+            </div>
+          </div>
         </div>
-        <p className="text-sm text-slate-400 mt-2">
-          {areas.length} communities and growing
-        </p>
       </div>
     </div>
   );
