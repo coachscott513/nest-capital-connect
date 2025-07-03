@@ -13,6 +13,8 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import SEOHead from '@/components/SEOHead';
 import LocalBusinessSchema from '@/components/LocalBusinessSchema';
+import RealEstateSchema from '@/components/RealEstateSchema';
+import CoreWebVitalsOptimizer from '@/components/CoreWebVitalsOptimizer';
 import InternalLinkingNav from '@/components/InternalLinkingNav';
 import AnimatedCapitalDistrictMap from '@/components/AnimatedCapitalDistrictMap';
 import MeetTheTeamSection from '@/components/MeetTheTeamSection';
@@ -175,6 +177,9 @@ const Index = () => {
       />
       
       <LocalBusinessSchema />
+      <RealEstateSchema type="agent" />
+      <RealEstateSchema type="organization" />
+      <CoreWebVitalsOptimizer />
       
       <script type="application/ld+json">
         {JSON.stringify(breadcrumbData)}

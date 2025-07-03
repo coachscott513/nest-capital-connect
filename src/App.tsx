@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Rentals from "./pages/Rentals";
+import Communities from "./pages/Communities";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -29,6 +30,16 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/rentals" element={<Rentals />} />
+            <Route path="/communities/:city" element={<Communities />} />
+            <Route path="/investment-properties" element={<Index />} />
+            <Route path="/rehab-properties" element={<Index />} />
+            <Route path="/financing" element={<Index />} />
+            <Route path="/albany-rentals" element={<Rentals />} />
+            <Route path="/troy-rentals" element={<Rentals />} />
+            <Route path="/schenectady-rentals" element={<Rentals />} />
+            <Route path="/saratoga-rentals" element={<Rentals />} />
+            <Route path="/contact" element={<Index />} />
+            <Route path="/about" element={<Index />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
