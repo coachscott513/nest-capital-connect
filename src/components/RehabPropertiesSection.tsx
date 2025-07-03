@@ -144,7 +144,7 @@ const RehabPropertiesSection = () => {
             <div className="space-y-4 text-lg text-gray-700">
               <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
                 <span className="font-medium text-gray-600">Purchase Price:</span>
-                <span className="font-bold text-blue-700">$50,000</span>
+                <span className="font-bold text-blue-700">$80,000</span>
               </div>
               <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
                 <span className="font-medium text-gray-600">After Repair Value (ARV):</span>
@@ -152,20 +152,96 @@ const RehabPropertiesSection = () => {
               </div>
               <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
                 <span className="font-medium text-gray-600">Required Down Payment (20%):</span>
-                <span className="font-bold text-green-700">$10,000</span>
-              </div>
-              <div className="bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-medium text-gray-600">Maximum Repairs Available (up to 70% of ARV):</span>
-                  <span className="font-bold text-green-700">$90,000</span>
-                </div>
-                <p className="text-sm text-gray-500">
-                  (Calculated as $200,000 * 0.70 = $140,000. Since we lend up to 100% of repairs, and the total loan including purchase price is $50,000 (purchase) + $90,000 (repairs) = $140,000, this fits the 70% ARV cap.)
-                </p>
+                <span className="font-bold text-green-700">$16,000</span>
+                <span className="text-sm text-gray-500">($80,000 * 0.20)</span>
               </div>
               <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                <span className="font-medium text-gray-600">Approximate Monthly Carrying Costs:</span>
+                <span className="font-medium text-gray-600">Maximum Repairs Available (up to 70% of ARV):</span>
+                <span className="font-bold text-green-700">$60,000</span>
+                <span className="text-sm text-gray-500">(Calculated as $200,000 * 0.70 = $140,000. Total loan needed $80,000 (purchase) + $60,000 (repairs) = $140,000, which fits the 70% ARV cap.)</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Approximate Monthly Carrying Costs (Interest-Only during flip):</span>
                 <span className="font-bold text-red-600">$500</span>
+              </div>
+
+              <hr className="my-6 border-gray-300" />
+
+              {/* One-Time Sale Scenario */}
+              <h5 className="text-xl md:text-2xl font-bold text-blue-700 mb-4">
+                One-Time Sale Scenario (Flip)
+              </h5>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Estimated Total Project Cost:</span>
+                <span className="font-bold text-gray-800">$143,000</span>
+                <span className="text-sm text-gray-500">(Purchase $80k + Repairs $60k + 6 months Carrying Costs $3k)</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Estimated Selling Costs (e.g., 8% of ARV):</span>
+                <span className="font-bold text-red-600">$16,000</span>
+                <span className="text-sm text-gray-500">($200,000 * 0.08)</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">One-Time Sale Profit (at ARV):</span>
+                <span className="font-bold text-green-700">$41,000</span>
+                <span className="text-sm text-gray-500">($200,000 ARV - $143,000 Project Cost - $16,000 Selling Costs)</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Cash on Cash Return (Sale):</span>
+                <span className="font-bold text-green-700">256.25%</span>
+                <span className="text-sm text-gray-500">($41,000 Profit / $16,000 Down Payment)</span>
+              </div>
+
+              <hr className="my-6 border-gray-300" />
+
+              {/* Rental Scenario */}
+              <h5 className="text-xl md:text-2xl font-bold text-blue-700 mb-4">
+                Rental Scenario (Hold) - After Refinance
+              </h5>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">New Loan Amount (65% LTV of ARV):</span>
+                <span className="font-bold text-blue-700">$130,000</span>
+                <span className="text-sm text-gray-500">($200,000 ARV * 0.65)</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Cash Out / (Cash In) at Refinance:</span>
+                <span className="font-bold text-red-600">($10,000)</span>
+                <span className="text-sm text-gray-500">(New Loan $130,000 - Initial Loan $140,000. This indicates a cash-in to reduce the loan balance.)</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Estimated Monthly Mortgage Payment (7% interest, 30-yr fixed):</span>
+                <span className="font-bold text-red-600">$865.05</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Estimated Monthly Rental Income:</span>
+                <span className="font-bold text-green-700">$2,400</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Estimated Monthly Expenses (Post-Refinance):</span>
+                <span className="font-bold text-red-600">$1,455.05</span>
+                <span className="text-sm text-gray-500">(Mortgage $865.05 + Taxes $250 + Insurance $100 + Maint./Vacancy $240)</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Estimated Monthly Profit (Cash Flow):</span>
+                <span className="font-bold text-green-700">$944.95</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Estimated Annual Profit (Cash Flow):</span>
+                <span className="font-bold text-green-700">$11,339.40</span>
+                <span className="text-sm text-gray-500">($944.95 * 12 months)</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Cash on Cash Return (Rental, Annual):</span>
+                <span className="font-bold text-green-700">70.87%</span>
+                <span className="text-sm text-gray-500">($11,339.40 Annual Profit / $16,000 Down Payment)</span>
+              </div>
+              <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
+                <span className="font-medium text-gray-600">Estimated 5-Year Profit (Cash Flow):</span>
+                <span className="font-bold text-green-700">$56,697.00</span>
+                <span className="text-sm text-gray-500">($11,339.40 * 5 years)</span>
+              </div>
+              <div className="text-sm text-gray-500 mt-4 italic">
+                *Note: These calculations are approximations and do not include potential property appreciation, or other variable costs. Consult with a financial advisor for personalized projections.
               </div>
             </div>
           </div>
