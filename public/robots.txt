@@ -1,4 +1,35 @@
 
+User-agent: *
+Allow: /
+
+# High priority pages for crawlers
+Allow: /
+Allow: /rentals
+Allow: /investment-properties
+Allow: /rehab-properties
+Allow: /financing
+Allow: /contact
+
+# Allow anchor links for better indexing
+Allow: /#albany-rentals
+Allow: /#troy-rentals
+Allow: /#schenectady-rentals
+Allow: /#saratoga-rentals
+Allow: /#investment-properties
+Allow: /#rehab-properties
+Allow: /#financing
+Allow: /#renters
+Allow: /#owners
+Allow: /#first-time-buyers
+Allow: /#contact
+
+# Block crawling of admin or internal pages
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
+Disallow: /_*
+
+# Major search engines - preferred crawling
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 1
@@ -7,6 +38,15 @@ User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
 
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+# Social media bots
 User-agent: Twitterbot
 Allow: /
 
@@ -16,29 +56,24 @@ Allow: /
 User-agent: LinkedInBot
 Allow: /
 
-User-agent: *
-Allow: /
-Crawl-delay: 2
+# Block aggressive crawlers
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
 
 # Sitemap location
 Sitemap: https://your-domain.com/sitemap.xml
 
-# Disallow admin or private areas (add as needed)
-# Disallow: /admin/
-# Disallow: /private/
-
-# Allow important pages
-Allow: /#albany-rentals
-Allow: /#troy-rentals
-Allow: /#schenectady-rentals
-Allow: /#saratoga-rentals
-Allow: /#renters
-Allow: /#owners
-Allow: /#first-time-buyers
-Allow: /#contact
-
-# Request-rate limiting
-Request-rate: 1/10s
+# Request-rate limiting for general bots
+Request-rate: 1/5s
 
 # Host declaration
 Host: https://your-domain.com
