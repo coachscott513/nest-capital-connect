@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Home, Hammer, Building, Calculator } from "lucide-react";
+import { Home, Hammer, Building, Calculator, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {
@@ -89,8 +89,8 @@ const HeroSection = () => {
         </div>
 
         {/* Contact Information & RE/MAX Solutions Logo */}
-        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 max-w-4xl mx-auto border border-white/20">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 max-w-5xl mx-auto border border-white/20">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             {/* RE/MAX Solutions Logo */}
             <div className="flex items-center space-x-4">
               <div className="bg-white rounded-lg p-3">
@@ -117,22 +117,62 @@ const HeroSection = () => {
             </div>
 
             {/* Phone Number & Email */}
-            <div className="text-center md:text-right">
+            <div className="text-center lg:text-right">
               <p className="text-white text-sm opacity-90 mb-1">Call Now for Expert Investment Advice</p>
               <a 
                 href="tel:+15185227265" 
-                className="text-white text-3xl md:text-4xl font-bold hover:text-blue-200 transition-colors duration-200 flex items-center justify-center md:justify-end mb-2"
+                className="text-white text-3xl md:text-4xl font-bold hover:text-blue-200 transition-colors duration-200 flex items-center justify-center lg:justify-end mb-2"
               >
                 📞 (518) 522-7265
               </a>
               <a 
                 href="mailto:scottalvarez@remax.net" 
-                className="text-white text-lg md:text-xl font-semibold hover:text-blue-200 transition-colors duration-200 flex items-center justify-center md:justify-end"
+                className="text-white text-lg md:text-xl font-semibold hover:text-blue-200 transition-colors duration-200 flex items-center justify-center lg:justify-end mb-3"
               >
                 ✉️ scottalvarez@remax.net
               </a>
-              <p className="text-white text-sm opacity-90 mt-1">Available 7 Days a Week</p>
+              <p className="text-white text-sm opacity-90">Available 7 Days a Week</p>
             </div>
+          </div>
+
+          {/* Large Social Media Icons */}
+          <div className="mt-8 pt-6 border-t border-white/20">
+            <p className="text-white text-center text-lg font-semibold mb-4">Connect With Us</p>
+            <div className="flex justify-center items-center gap-6">
+              <a 
+                href="https://www.facebook.com/scottalvarez.remax" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-blue-600 hover:bg-blue-700 p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg"
+              >
+                <Facebook className="w-8 h-8 text-white" />
+              </a>
+              <a 
+                href="https://www.instagram.com/scottalvarez.remax" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg"
+              >
+                <Instagram className="w-8 h-8 text-white" />
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/scottalvarez" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-blue-700 hover:bg-blue-800 p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg"
+              >
+                <Linkedin className="w-8 h-8 text-white" />
+              </a>
+              <a 
+                href="https://twitter.com/scottalvarez" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-blue-400 hover:bg-blue-500 p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg"
+              >
+                <Twitter className="w-8 h-8 text-white" />
+              </a>
+            </div>
+            <p className="text-white text-center text-sm opacity-80 mt-3">Follow for market updates & investment tips</p>
           </div>
         </div>
       </div>
