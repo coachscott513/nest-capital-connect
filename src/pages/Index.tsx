@@ -120,18 +120,7 @@ const Index = () => {
         <NeighborhoodsSection />
         <InternalLinkingNav />
         
-        {/* Animated Map Section */}
-        <section className="py-12 px-4 bg-slate-50">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6 text-slate-800">
-              Discover the Capital District
-            </h2>
-            <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
-              Our service area spans across four vibrant communities, each offering unique opportunities for renters, buyers, and investors.
-            </p>
-            <AnimatedCapitalDistrictMap />
-          </div>
-        </section>
+        
         <FinancingSection />
         <OwnersSection />
         <MissionSection />
