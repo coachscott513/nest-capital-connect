@@ -21,14 +21,14 @@ const InvestmentPropertiesSection = () => {
       icon: <Home className="w-6 h-6" />,
       title: "Schenectady",
       description: "Investment Properties",
-      href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map&leadid=948",
+      href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre7dfb1&sortby=listings.price+ASC&rtype=map",
       gradient: "from-purple-500 to-purple-600"
     },
     {
       icon: <TrendingUp className="w-6 h-6" />,
       title: "Saratoga",
       description: "Investment Properties",
-      href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map&leadid=948",
+      href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Saratoga&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dremppmy&sortby=listings.price+ASC&rtype=map",
       gradient: "from-orange-500 to-orange-600"
     },
     {
