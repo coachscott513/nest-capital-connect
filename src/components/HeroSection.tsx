@@ -116,14 +116,20 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Phone Number */}
+            {/* Phone Number & Email */}
             <div className="text-center md:text-right">
               <p className="text-white text-sm opacity-90 mb-1">Call Now for Expert Investment Advice</p>
               <a 
                 href="tel:+15185227265" 
-                className="text-white text-3xl md:text-4xl font-bold hover:text-blue-200 transition-colors duration-200 flex items-center justify-center md:justify-end"
+                className="text-white text-3xl md:text-4xl font-bold hover:text-blue-200 transition-colors duration-200 flex items-center justify-center md:justify-end mb-2"
               >
                 📞 (518) 522-7265
+              </a>
+              <a 
+                href="mailto:scottalvarez@remax.net" 
+                className="text-white text-lg md:text-xl font-semibold hover:text-blue-200 transition-colors duration-200 flex items-center justify-center md:justify-end"
+              >
+                ✉️ scottalvarez@remax.net
               </a>
               <p className="text-white text-sm opacity-90 mt-1">Available 7 Days a Week</p>
             </div>
