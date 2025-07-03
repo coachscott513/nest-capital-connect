@@ -14,35 +14,35 @@ const InvestmentPropertiesSection = () => {
       icon: <MapPin className="w-6 h-6" />,
       title: "Troy",
       description: "Investment Properties", 
-      href: "#",
+      href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map&leadid=948",
       gradient: "from-green-500 to-green-600"
     },
     {
       icon: <Home className="w-6 h-6" />,
       title: "Schenectady",
       description: "Investment Properties",
-      href: "#",
+      href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map&leadid=948",
       gradient: "from-purple-500 to-purple-600"
     },
     {
       icon: <TrendingUp className="w-6 h-6" />,
       title: "Saratoga",
       description: "Investment Properties",
-      href: "#",
+      href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map&leadid=948",
       gradient: "from-orange-500 to-orange-600"
     },
     {
       icon: <Users className="w-6 h-6" />,
       title: "Multi-Unit",
       description: "Properties",
-      href: "#",
+      href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map&leadid=948",
       gradient: "from-red-500 to-red-600"
     },
     {
       icon: <DollarSign className="w-6 h-6" />,
       title: "Financing",
       description: "Options",
-      href: "#",
+      href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map&leadid=948",
       gradient: "from-indigo-500 to-indigo-600"
     }
   ];
