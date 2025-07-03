@@ -120,10 +120,10 @@ const HeroSection = () => {
             <div className="text-center md:text-right">
               <p className="text-white text-sm opacity-90 mb-1">Call Now for Expert Investment Advice</p>
               <a 
-                href="tel:+15181234567" 
+                href="tel:+15185227265" 
                 className="text-white text-3xl md:text-4xl font-bold hover:text-blue-200 transition-colors duration-200 flex items-center justify-center md:justify-end"
               >
-                📞 (518) 123-4567
+                📞 (518) 522-7265
               </a>
               <p className="text-white text-sm opacity-90 mt-1">Available 7 Days a Week</p>
             </div>
