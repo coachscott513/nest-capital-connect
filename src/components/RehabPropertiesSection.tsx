@@ -66,6 +66,80 @@ const RehabPropertiesSection = () => {
           ))}
         </div>
 
+        {/* Fix & Flip Loan Feature */}
+        <div className="bg-gradient-to-br from-green-500 to-green-600 p-8 rounded-xl shadow-lg text-white mb-8">
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold mb-4">
+              🔥 Fix & Flip Loan Program
+            </h3>
+            <p className="text-green-100 text-lg">
+              The Fix & Flip is going to be a killer for investors. Fast funding, flexible terms, and maximum profit potential.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+              <h4 className="text-xl font-bold mb-4">Loan Features</h4>
+              <ul className="space-y-3">
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-green-200 rounded-full mr-3"></div>
+                  <span>20% down first time, 15% second time, 10% after that</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-green-200 rounded-full mr-3"></div>
+                  <span>Up to 100% of repairs cost (up to 70% ARV)</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-green-200 rounded-full mr-3"></div>
+                  <span>Close in 2-3 weeks</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-green-200 rounded-full mr-3"></div>
+                  <span>No contractor required - DIY friendly</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-green-200 rounded-full mr-3"></div>
+                  <span>Interest only while flipping</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-green-200 rounded-full mr-3"></div>
+                  <span>No tax returns required</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-2 h-2 bg-green-200 rounded-full mr-3"></div>
+                  <span>Can purchase through LLC</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+              <h4 className="text-xl font-bold mb-4">Example Deal</h4>
+              <div className="space-y-3">
+                <div className="border-b border-green-200/30 pb-2">
+                  <span className="font-semibold">Purchase Price:</span>
+                  <span className="float-right">$50,000</span>
+                </div>
+                <div className="border-b border-green-200/30 pb-2">
+                  <span className="font-semibold">ARV:</span>
+                  <span className="float-right">$200,000</span>
+                </div>
+                <div className="border-b border-green-200/30 pb-2">
+                  <span className="font-semibold">Down Payment:</span>
+                  <span className="float-right">$10,000</span>
+                </div>
+                <div className="border-b border-green-200/30 pb-2">
+                  <span className="font-semibold">Repair Budget:</span>
+                  <span className="float-right">$90,000</span>
+                </div>
+                <div className="pt-2">
+                  <span className="font-semibold">Monthly Carrying:</span>
+                  <span className="float-right">~$500</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="bg-white p-8 rounded-xl shadow-lg">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>

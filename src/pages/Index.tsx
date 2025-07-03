@@ -116,6 +116,8 @@ const Index = () => {
       <main role="main">
         <HeroSection />
         <InvestmentPropertiesSection />
+        <NeighborhoodsSection />
+        <RehabPropertiesSection />
         <InternalLinkingNav />
         
         {/* Animated Map Section */}
@@ -130,9 +132,6 @@ const Index = () => {
             <AnimatedCapitalDistrictMap />
           </div>
         </section>
-        
-        <NeighborhoodsSection />
-        <RehabPropertiesSection />
         <FinancingSection />
         <OwnersSection />
         <MissionSection />
