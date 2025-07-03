@@ -198,7 +198,7 @@ const FinancingSection = () => {
       <section className="py-16 bg-gray-50">
         <div className="w-full max-w-6xl mx-auto px-4">
           <div className="text-center mb-10">
-            <h2 className="text-4xl font-bold text-gray-800">Single Family Home Mortgage Calculator</h2>
+            <h2 className="text-4xl font-bold text-gray-800">Mortgage Calculator</h2>
             <p className="text-lg text-gray-600 mt-2">Estimate your monthly payments for your new home.</p>
           </div>
 
