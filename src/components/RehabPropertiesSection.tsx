@@ -132,14 +132,14 @@ const RehabPropertiesSection = () => {
             </ul>
           </div>
 
-          {/* Example Section */}
-          <div className="bg-green-50 p-6 rounded-lg shadow-md border border-green-200">
+          {/* Example Section - Base Calculations */}
+          <div className="bg-green-50 p-6 rounded-lg shadow-md border border-green-200 mb-8">
             <h4 className="text-2xl md:text-3xl font-bold text-blue-700 mb-6 flex items-center">
               <svg className="w-7 h-7 mr-3 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
                 <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
               </svg>
-              Example Scenario
+              Example Scenario - Base Calculations
             </h4>
             <div className="space-y-4 text-lg text-gray-700">
               <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
@@ -164,13 +164,18 @@ const RehabPropertiesSection = () => {
                 <span className="font-medium text-gray-600">Approximate Monthly Carrying Costs (Interest-Only during flip):</span>
                 <span className="font-bold text-red-600">$500</span>
               </div>
+            </div>
+          </div>
 
-              <hr className="my-6 border-gray-300" />
-
-              {/* One-Time Sale Scenario */}
-              <h5 className="text-xl md:text-2xl font-bold text-blue-700 mb-4">
-                One-Time Sale Scenario (Flip)
-              </h5>
+          {/* One-Time Sale Scenario */}
+          <div className="bg-blue-50 p-6 rounded-lg shadow-md border border-blue-200 mb-8">
+            <h4 className="text-xl md:text-2xl font-bold text-blue-700 mb-6 flex items-center">
+              <svg className="w-6 h-6 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+              </svg>
+              One-Time Sale Scenario (Flip)
+            </h4>
+            <div className="space-y-4 text-lg text-gray-700">
               <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
                 <span className="font-medium text-gray-600">Estimated Total Project Cost:</span>
                 <span className="font-bold text-gray-800">$143,000</span>
@@ -191,13 +196,18 @@ const RehabPropertiesSection = () => {
                 <span className="font-bold text-green-700">256.25%</span>
                 <span className="text-sm text-gray-500">($41,000 Profit / $16,000 Down Payment)</span>
               </div>
+            </div>
+          </div>
 
-              <hr className="my-6 border-gray-300" />
-
-              {/* Rental Scenario */}
-              <h5 className="text-xl md:text-2xl font-bold text-blue-700 mb-4">
-                Rental Scenario (Hold) - After Refinance
-              </h5>
+          {/* Rental Scenario */}
+          <div className="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 mb-8">
+            <h4 className="text-xl md:text-2xl font-bold text-blue-700 mb-6 flex items-center">
+              <svg className="w-6 h-6 mr-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+              </svg>
+              Rental Scenario (Hold) - After Refinance
+            </h4>
+            <div className="space-y-4 text-lg text-gray-700">
               <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
                 <span className="font-medium text-gray-600">New Loan Amount (65% LTV of ARV):</span>
                 <span className="font-bold text-blue-700">$130,000</span>
