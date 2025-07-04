@@ -197,7 +197,9 @@ const RealEstateAnalyzer = () => {
     if (mortgagePaymentEl) mortgagePaymentEl.textContent = formatCurrencySimple(annualMortgagePayment);
     if (annualCashFlowEl) {
       const annualCashFlowPercent = cashLeftInDeal > 0 ? ((annualCashFlow / cashLeftInDeal) * 100).toFixed(2) : '∞';
-      annualCashFlowEl.innerHTML = `${formatCurrencyForHTML(annualCashFlow)} <span class="text-sm font-medium text-gray-600">(${annualCashFlowPercent}%)</span>`;
+      // Debug info to show calculation
+      const debugInfo = `Cash Left: ${formatCurrencySimple(cashLeftInDeal)}`;
+      annualCashFlowEl.innerHTML = `${formatCurrencyForHTML(annualCashFlow)} <span class="text-sm font-medium text-gray-600">(${annualCashFlowPercent}%) <br/><span class="text-xs text-gray-500">${debugInfo}</span></span>`;
     }
     if (monthlyCashFlowEl) {
       const annualCashFlowPercent = cashLeftInDeal > 0 ? ((annualCashFlow / cashLeftInDeal) * 100) : 0;
