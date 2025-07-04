@@ -192,14 +192,26 @@ const RealEstateAnalyzer = () => {
     if (grossRentEl) grossRentEl.textContent = formatCurrencySimple(grossRent);
     if (noiEl) noiEl.textContent = formatCurrencySimple(noi);
     if (mortgagePaymentEl) mortgagePaymentEl.textContent = formatCurrencySimple(annualMortgagePayment);
-    if (annualCashFlowEl) annualCashFlowEl.textContent = formatCurrencyForHTML(annualCashFlow);
-    if (monthlyCashFlowEl) monthlyCashFlowEl.textContent = formatCurrencyForHTML(monthlyCashFlow);
+    if (annualCashFlowEl) {
+      const annualCashFlowPercent = denominatorForReturns > 0 ? ((annualCashFlow / denominatorForReturns) * 100).toFixed(2) : '0';
+      annualCashFlowEl.innerHTML = `${formatCurrencyForHTML(annualCashFlow)} <span class="text-sm font-medium text-gray-600">(${annualCashFlowPercent}%)</span>`;
+    }
+    if (monthlyCashFlowEl) {
+      const annualCashFlowPercent = denominatorForReturns > 0 ? ((annualCashFlow / denominatorForReturns) * 100).toFixed(2) : '0';
+      const monthlyCashFlowPercent = (parseFloat(annualCashFlowPercent) / 12).toFixed(2);
+      monthlyCashFlowEl.innerHTML = `${formatCurrencyForHTML(monthlyCashFlow)} <span class="text-sm font-medium text-gray-600">(${monthlyCashFlowPercent}%)</span>`;
+    }
     if (cocReturnEl) {
       cocReturnEl.innerHTML = (isFinite(cocReturn) ? cocReturn.toFixed(2) : '∞') + '%';
       cocReturnEl.className = `font-semibold text-lg ${cocReturn >= 0 ? 'text-green-600' : 'text-red-600'}`;
     }
     if (fiveYearReturnEl) {
-      fiveYearReturnEl.innerHTML = (isFinite(fiveYearTotalReturn) ? fiveYearTotalReturn.toFixed(2) : '∞') + '%';
+      const fiveYearCashFlow = annualCashFlow * 5;
+      const appreciationRate = 0.03;
+      const propertyAppreciation = arv * Math.pow(1 + appreciationRate, 5) - arv;
+      const totalFiveYearProfit = fiveYearCashFlow + propertyAppreciation;
+      
+      fiveYearReturnEl.innerHTML = `${formatCurrencyForHTML(totalFiveYearProfit)} <span class="text-sm font-medium text-gray-600">(${(isFinite(fiveYearTotalReturn) ? fiveYearTotalReturn.toFixed(2) : '∞')}%)</span>`;
       fiveYearReturnEl.className = `font-semibold text-lg ${fiveYearTotalReturn >= 0 ? 'text-green-600' : 'text-red-600'}`;
     }
     if (capRateEl) capRateEl.textContent = capRate.toFixed(2) + '%';
@@ -568,8 +580,8 @@ const RealEstateAnalyzer = () => {
                 <span className="font-semibold text-lg" id="cocReturn">0%</span>
               </div>
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700">5-Year Total Return</span>
-                <span className="font-semibold text-lg" id="fiveYearReturn">0%</span>
+                <span className="font-medium text-gray-700">5-Year Total Profit</span>
+                <span className="font-semibold text-lg" id="fiveYearReturn">$0 (0%)</span>
               </div>
               <div className="flex justify-between items-center py-2">
                 <span className="font-medium text-gray-700">Capitalization (Cap) Rate</span>
