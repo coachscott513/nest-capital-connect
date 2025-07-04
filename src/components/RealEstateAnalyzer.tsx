@@ -214,8 +214,8 @@ const RealEstateAnalyzer = () => {
       const propertyAppreciation = arv * Math.pow(1 + appreciationRate, 5) - arv;
       const totalFiveYearProfit = fiveYearCashFlow + propertyAppreciation;
       
-      const percentageDisplay = (isFinite(fiveYearTotalReturn) ? fiveYearTotalReturn.toFixed(2) : '∞');
-      fiveYearReturnEl.innerHTML = `${formatCurrencyForHTML(totalFiveYearProfit)} <span class="text-sm font-medium text-gray-600">(${percentageDisplay}%)</span>`;
+      const totalReturnPercentage = (isFinite(fiveYearTotalReturn) ? fiveYearTotalReturn.toFixed(2) : '∞');
+      fiveYearReturnEl.innerHTML = `${formatCurrencyForHTML(totalFiveYearProfit)} <span class="text-sm font-medium text-gray-600">(Total Return: ${totalReturnPercentage}%)</span>`;
       fiveYearReturnEl.className = `font-semibold text-lg ${fiveYearTotalReturn >= 0 ? 'text-green-600' : 'text-red-600'}`;
     }
     if (capRateEl) capRateEl.textContent = capRate.toFixed(2) + '%';
