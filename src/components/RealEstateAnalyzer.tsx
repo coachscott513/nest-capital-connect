@@ -154,22 +154,25 @@ const RealEstateAnalyzer = () => {
     const annualCashFlow = noi - annualMortgagePayment;
     const monthlyCashFlow = annualCashFlow / 12;
 
+    // Calculate cash left in deal after refinance (BRRRR calculation)
+    const cashLeftInDeal = Math.max(0, totalProjectCost - loanAmount);
+    
     let cocReturn = 0;
-    if (denominatorForReturns > 0) {
-      cocReturn = (annualCashFlow / denominatorForReturns) * 100;
+    if (cashLeftInDeal > 0) {
+      cocReturn = (annualCashFlow / cashLeftInDeal) * 100;
     } else if (annualCashFlow > 0) {
-      cocReturn = Infinity;
+      cocReturn = Infinity; // Infinite returns if no cash left in deal
     }
 
-    // Calculate 5-Year Total Return
+    // Calculate 5-Year Total Return based on cash left in deal
     let fiveYearTotalReturn = 0;
-    if (denominatorForReturns > 0) {
+    if (cashLeftInDeal > 0) {
       // 5 years of cash flow + potential appreciation (assuming 3% annual appreciation)
       const fiveYearCashFlow = annualCashFlow * 5;
       const appreciationRate = 0.03; // 3% annual appreciation
       const propertyAppreciation = arv * Math.pow(1 + appreciationRate, 5) - arv;
       const totalReturn = fiveYearCashFlow + propertyAppreciation;
-      fiveYearTotalReturn = (totalReturn / denominatorForReturns) * 100;
+      fiveYearTotalReturn = (totalReturn / cashLeftInDeal) * 100;
     } else if (annualCashFlow > 0) {
       fiveYearTotalReturn = Infinity;
     }
@@ -193,12 +196,12 @@ const RealEstateAnalyzer = () => {
     if (noiEl) noiEl.textContent = formatCurrencySimple(noi);
     if (mortgagePaymentEl) mortgagePaymentEl.textContent = formatCurrencySimple(annualMortgagePayment);
     if (annualCashFlowEl) {
-      const annualCashFlowPercent = denominatorForReturns > 0 ? ((annualCashFlow / denominatorForReturns) * 100).toFixed(2) : '0';
+      const annualCashFlowPercent = cashLeftInDeal > 0 ? ((annualCashFlow / cashLeftInDeal) * 100).toFixed(2) : '∞';
       annualCashFlowEl.innerHTML = `${formatCurrencyForHTML(annualCashFlow)} <span class="text-sm font-medium text-gray-600">(${annualCashFlowPercent}%)</span>`;
     }
     if (monthlyCashFlowEl) {
-      const annualCashFlowPercent = denominatorForReturns > 0 ? ((annualCashFlow / denominatorForReturns) * 100).toFixed(2) : '0';
-      const monthlyCashFlowPercent = (parseFloat(annualCashFlowPercent) / 12).toFixed(2);
+      const annualCashFlowPercent = cashLeftInDeal > 0 ? ((annualCashFlow / cashLeftInDeal) * 100) : 0;
+      const monthlyCashFlowPercent = (annualCashFlowPercent / 12).toFixed(2);
       monthlyCashFlowEl.innerHTML = `${formatCurrencyForHTML(monthlyCashFlow)} <span class="text-sm font-medium text-gray-600">(${monthlyCashFlowPercent}%)</span>`;
     }
     if (cocReturnEl) {
@@ -211,7 +214,8 @@ const RealEstateAnalyzer = () => {
       const propertyAppreciation = arv * Math.pow(1 + appreciationRate, 5) - arv;
       const totalFiveYearProfit = fiveYearCashFlow + propertyAppreciation;
       
-      fiveYearReturnEl.innerHTML = `${formatCurrencyForHTML(totalFiveYearProfit)} <span class="text-sm font-medium text-gray-600">(${(isFinite(fiveYearTotalReturn) ? fiveYearTotalReturn.toFixed(2) : '∞')}%)</span>`;
+      const percentageDisplay = (isFinite(fiveYearTotalReturn) ? fiveYearTotalReturn.toFixed(2) : '∞');
+      fiveYearReturnEl.innerHTML = `${formatCurrencyForHTML(totalFiveYearProfit)} <span class="text-sm font-medium text-gray-600">(${percentageDisplay}%)</span>`;
       fiveYearReturnEl.className = `font-semibold text-lg ${fiveYearTotalReturn >= 0 ? 'text-green-600' : 'text-red-600'}`;
     }
     if (capRateEl) capRateEl.textContent = capRate.toFixed(2) + '%';
