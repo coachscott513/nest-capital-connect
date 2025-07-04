@@ -160,6 +160,19 @@ const RealEstateAnalyzer = () => {
     } else if (annualCashFlow > 0) {
       cocReturn = Infinity;
     }
+
+    // Calculate 5-Year Total Return
+    let fiveYearTotalReturn = 0;
+    if (denominatorForReturns > 0) {
+      // 5 years of cash flow + potential appreciation (assuming 3% annual appreciation)
+      const fiveYearCashFlow = annualCashFlow * 5;
+      const appreciationRate = 0.03; // 3% annual appreciation
+      const propertyAppreciation = arv * Math.pow(1 + appreciationRate, 5) - arv;
+      const totalReturn = fiveYearCashFlow + propertyAppreciation;
+      fiveYearTotalReturn = (totalReturn / denominatorForReturns) * 100;
+    } else if (annualCashFlow > 0) {
+      fiveYearTotalReturn = Infinity;
+    }
     
     let capRate = 0;
     if (purchasePrice > 0) {
@@ -173,6 +186,7 @@ const RealEstateAnalyzer = () => {
     const annualCashFlowEl = document.getElementById('annualCashFlow');
     const monthlyCashFlowEl = document.getElementById('monthlyCashFlow');
     const cocReturnEl = document.getElementById('cocReturn');
+    const fiveYearReturnEl = document.getElementById('fiveYearReturn');
     const capRateEl = document.getElementById('capRate');
     
     if (grossRentEl) grossRentEl.textContent = formatCurrencySimple(grossRent);
@@ -183,6 +197,10 @@ const RealEstateAnalyzer = () => {
     if (cocReturnEl) {
       cocReturnEl.innerHTML = (isFinite(cocReturn) ? cocReturn.toFixed(2) : '∞') + '%';
       cocReturnEl.className = `font-semibold text-lg ${cocReturn >= 0 ? 'text-green-600' : 'text-red-600'}`;
+    }
+    if (fiveYearReturnEl) {
+      fiveYearReturnEl.innerHTML = (isFinite(fiveYearTotalReturn) ? fiveYearTotalReturn.toFixed(2) : '∞') + '%';
+      fiveYearReturnEl.className = `font-semibold text-lg ${fiveYearTotalReturn >= 0 ? 'text-green-600' : 'text-red-600'}`;
     }
     if (capRateEl) capRateEl.textContent = capRate.toFixed(2) + '%';
   };
@@ -548,6 +566,10 @@ const RealEstateAnalyzer = () => {
               <div className="flex justify-between items-center py-2 border-b border-gray-100">
                 <span className="font-medium text-gray-700">Cash on Cash Return (CoC)</span>
                 <span className="font-semibold text-lg" id="cocReturn">0%</span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="font-medium text-gray-700">5-Year Total Return</span>
+                <span className="font-semibold text-lg" id="fiveYearReturn">0%</span>
               </div>
               <div className="flex justify-between items-center py-2">
                 <span className="font-medium text-gray-700">Capitalization (Cap) Rate</span>
