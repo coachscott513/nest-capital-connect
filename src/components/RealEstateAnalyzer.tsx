@@ -1,602 +1,844 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import { Bar, Pie } from 'react-chartjs-2';
 
-const RealEstateAnalyzer = () => {
-  const [currentPropertyId, setCurrentPropertyId] = useState<string | null>(null);
-  const [localProperties, setLocalProperties] = useState<any[]>([]);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deletePropertyId, setDeletePropertyId] = useState<string | null>(null);
-  const [numUnits, setNumUnits] = useState(2);
-  const formRef = useRef<HTMLFormElement>(null);
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 
-  const getVal = (id: string, isString = false): any => {
-    const el = document.getElementById(id) as HTMLInputElement;
-    if (!el) return isString ? '' : 0;
-    return isString ? el.value : parseFloat(el.value) || 0;
+interface FormData {
+  propertyAddress: string;
+  propertyType: 'SFH' | 'Multi';
+  numUnits: number;
+  purchasePrice: number;
+  arv: number;
+  estimatedTotalRent: number;
+  rehabCosts: number;
+  acquisitionCosts: number;
+  sellingCosts: number;
+  holdingPeriod: number;
+  monthlyTaxes: number;
+  monthlyInsurance: number;
+  propertyManagement: number;
+  vacancyRate: number;
+  repairsCapEx: number;
+  acquisitionLTV: number;
+  acquisitionInterestRate: number;
+  refiLTV: number;
+  refiInterestRate: number;
+  refiClosingCosts: number;
+}
+
+interface AnalysisResults {
+  flipTotalCost: number;
+  flipSalePrice: number;
+  flipNetProfit: number;
+  flipROI: number;
+  rentalGrossRent: number;
+  rentalOperatingExpenses: number;
+  rentalNOI: number;
+  rentalDebtService: number;
+  rentalCashFlow: number;
+  rentalAnnualCashFlow: number;
+  rentalCoC: number;
+  rentalCapRate: number;
+  brrrrInitialCash: number;
+  brrrrRefiLoan: number;
+  brrrrCashOut: number;
+  brrrrCashLeft: number;
+  brrrrPostRefiCoC: number;
+}
+
+const RealEstateAnalyzer: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    propertyAddress: '',
+    propertyType: 'SFH',
+    numUnits: 2,
+    purchasePrice: 0,
+    arv: 0,
+    estimatedTotalRent: 0,
+    rehabCosts: 0,
+    acquisitionCosts: 3.0,
+    sellingCosts: 6.0,
+    holdingPeriod: 4,
+    monthlyTaxes: 0,
+    monthlyInsurance: 0,
+    propertyManagement: 8.0,
+    vacancyRate: 5.0,
+    repairsCapEx: 0,
+    acquisitionLTV: 80,
+    acquisitionInterestRate: 8.0,
+    refiLTV: 75,
+    refiInterestRate: 6.5,
+    refiClosingCosts: 2.0
+  });
+
+  const [unitRents, setUnitRents] = useState<number[]>([]);
+  const [results, setResults] = useState<AnalysisResults | null>(null);
+
+  const formatNumber = (num: number): string => {
+    if (typeof num !== 'number' || isNaN(num)) return 'N/A';
+    if (!isFinite(num)) return 'Infinite';
+    return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
-  const setVal = (id: string, value: any) => {
-    const el = document.getElementById(id) as HTMLInputElement;
-    if (el) el.value = value === undefined ? '' : value;
+  const calculatePMT = (principal: number, annualInterestRate: number, loanTermYears: number): number => {
+    const monthlyRate = annualInterestRate / 12;
+    const numPayments = loanTermYears * 12;
+
+    if (principal === 0 || numPayments === 0) return 0;
+    if (monthlyRate === 0) return principal / numPayments;
+
+    return (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -numPayments));
   };
 
-  const formatCurrency = (num: number) => {
-    const val = Number(num);
-    if (isNaN(val)) return '$0.00';
-    const style = val < 0 ? 'text-red-600' : 'text-green-600';
-    const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
-    return <span className={style}>{formatted}</span>;
+  const handleInputChange = (field: keyof FormData, value: string | number) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: typeof value === 'string' ? value : Number(value)
+    }));
   };
 
-  const formatCurrencySimple = (num: number) => 
-    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
-
-  // New helper function for HTML content
-  const formatCurrencyForHTML = (num: number): string => {
-    const val = Number(num);
-    if (isNaN(val)) return '$0.00';
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
-  };
-
-  const generateRentInputs = () => {
-    const container = document.getElementById('rentInputs');
-    if (!container) return;
+  const handlePropertyTypeChange = (type: 'SFH' | 'Multi') => {
+    setFormData(prev => ({
+      ...prev,
+      propertyType: type
+    }));
     
-    const existingRents: { [key: number]: number } = {};
-    for (let i = 1; i <= 4; i++) {
-      const input = document.getElementById(`rentUnit${i}`) as HTMLInputElement;
-      if (input) {
-        existingRents[i] = getVal(`rentUnit${i}`);
+    if (type === 'SFH') {
+      setUnitRents([]);
+    } else {
+      setUnitRents(new Array(formData.numUnits).fill(0));
+    }
+  };
+
+  const handleNumUnitsChange = (numUnits: number) => {
+    setFormData(prev => ({
+      ...prev,
+      numUnits
+    }));
+    setUnitRents(new Array(numUnits).fill(0));
+  };
+
+  const updateUnitRent = (index: number, value: number) => {
+    const newUnitRents = [...unitRents];
+    newUnitRents[index] = value;
+    setUnitRents(newUnitRents);
+    
+    const totalRent = newUnitRents.reduce((sum, rent) => sum + rent, 0);
+    setFormData(prev => ({
+      ...prev,
+      estimatedTotalRent: totalRent
+    }));
+  };
+
+  const calculateAnalysis = (): AnalysisResults | null => {
+    try {
+      const {
+        purchasePrice, arv, rehabCosts, acquisitionCosts, sellingCosts, holdingPeriod,
+        monthlyTaxes, monthlyInsurance, propertyManagement, vacancyRate, repairsCapEx,
+        acquisitionLTV, acquisitionInterestRate, refiLTV, refiInterestRate, refiClosingCosts,
+        estimatedTotalRent
+      } = formData;
+
+      const totalAcquisitionPlusRehab = purchasePrice + rehabCosts;
+      const loanAmountAcquisition = totalAcquisitionPlusRehab * (acquisitionLTV / 100);
+      const loanTermYears = 30;
+      const cashDownPayment = totalAcquisitionPlusRehab * (1 - acquisitionLTV / 100);
+      const acquisitionClosingCosts = loanAmountAcquisition * (acquisitionCosts / 100);
+      const monthlyDebtServiceAcquisitionDuringHolding = calculatePMT(loanAmountAcquisition, acquisitionInterestRate / 100, loanTermYears);
+      const totalHoldingCosts = (monthlyTaxes + monthlyInsurance + monthlyDebtServiceAcquisitionDuringHolding) * holdingPeriod;
+
+      // Flip Analysis
+      const initialCashOutlayFlip = cashDownPayment + acquisitionClosingCosts;
+      const estimatedSalePriceFlip = arv;
+      const sellingCostsAmount = estimatedSalePriceFlip * (sellingCosts / 100);
+      const totalExpensesFlip = purchasePrice + rehabCosts + acquisitionClosingCosts + totalHoldingCosts + sellingCostsAmount;
+      const netProfitFlip = estimatedSalePriceFlip - totalExpensesFlip;
+      const roiFlip = (initialCashOutlayFlip > 0) ? (netProfitFlip / initialCashOutlayFlip) * 100 : (netProfitFlip > 0 ? Infinity : 0);
+
+      // Rental Analysis
+      const monthlyPropertyManagementCost = estimatedTotalRent * (propertyManagement / 100);
+      const monthlyVacancyCost = estimatedTotalRent * (vacancyRate / 100);
+      const totalMonthlyOperatingExpenses = monthlyTaxes + monthlyInsurance + monthlyPropertyManagementCost + monthlyVacancyCost + repairsCapEx;
+      const noiMonthly = estimatedTotalRent - totalMonthlyOperatingExpenses;
+      const noiAnnual = noiMonthly * 12;
+      const monthlyDebtServiceRental = calculatePMT(loanAmountAcquisition, acquisitionInterestRate / 100, loanTermYears);
+      const monthlyCashFlowRental = noiMonthly - monthlyDebtServiceRental;
+      const annualCashFlowRental = monthlyCashFlowRental * 12;
+      const initialCashInvestedRental = cashDownPayment + acquisitionClosingCosts;
+
+      let cocReturnRental = 0;
+      if (initialCashInvestedRental > 0) {
+        cocReturnRental = (annualCashFlowRental / initialCashInvestedRental) * 100;
+      } else if (annualCashFlowRental > 0) {
+        cocReturnRental = Infinity;
       }
-    }
-    
-    container.innerHTML = '';
-    for (let i = 1; i <= numUnits; i++) {
-      const div = document.createElement('div');
-      div.className = 'input-group';
-      const rentValue = existingRents[i] || 1100;
-      div.innerHTML = `
-        <label for="rentUnit${i}" class="block text-sm font-medium text-gray-700 mb-2">Rent for Unit ${i}</label>
-        <input type="number" id="rentUnit${i}" value="${rentValue}" 
-               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-               oninput="window.calculateAnalysis && window.calculateAnalysis()">
-      `;
-      container.appendChild(div);
+
+      const capRate = purchasePrice > 0 ? (noiAnnual / purchasePrice) * 100 : 0;
+
+      // BRRRR Analysis
+      const refiLoanAmount = arv * (refiLTV / 100);
+      const refiClosingCostsDollars = refiLoanAmount * (refiClosingCosts / 100);
+      const cashPulledOut = refiLoanAmount - (loanAmountAcquisition + refiClosingCostsDollars);
+      const cashLeftInDeal = initialCashInvestedRental - cashPulledOut;
+      const monthlyDebtServiceRefi = calculatePMT(refiLoanAmount, refiInterestRate / 100, loanTermYears);
+      const monthlyCashFlowPostRefi = noiMonthly - monthlyDebtServiceRefi;
+      const annualCashFlowPostRefi = monthlyCashFlowPostRefi * 12;
+
+      let postRefiCoC = 0;
+      if (cashLeftInDeal > 0) {
+        postRefiCoC = (annualCashFlowPostRefi / cashLeftInDeal) * 100;
+      } else if (cashLeftInDeal <= 0 && annualCashFlowPostRefi > 0) {
+        postRefiCoC = Infinity;
+      }
+
+      return {
+        flipTotalCost: totalExpensesFlip,
+        flipSalePrice: estimatedSalePriceFlip,
+        flipNetProfit: netProfitFlip,
+        flipROI: roiFlip,
+        rentalGrossRent: estimatedTotalRent,
+        rentalOperatingExpenses: totalMonthlyOperatingExpenses,
+        rentalNOI: noiMonthly,
+        rentalDebtService: monthlyDebtServiceRental,
+        rentalCashFlow: monthlyCashFlowRental,
+        rentalAnnualCashFlow: annualCashFlowRental,
+        rentalCoC: cocReturnRental,
+        rentalCapRate: capRate,
+        brrrrInitialCash: initialCashInvestedRental,
+        brrrrRefiLoan: refiLoanAmount,
+        brrrrCashOut: cashPulledOut,
+        brrrrCashLeft: cashLeftInDeal,
+        brrrrPostRefiCoC: postRefiCoC
+      };
+    } catch (error) {
+      console.error('Calculation Error:', error);
+      return null;
     }
   };
 
-  const calculate = () => {
-    // Core Financial Inputs
-    const purchasePrice = getVal('purchasePrice');
-    const downPaymentPerc = getVal('downPayment') / 100;
-    const purchaseClosingCostsPerc = getVal('purchaseClosingCosts') / 100;
-    const rehabCosts = getVal('rehabCosts');
-    const arv = getVal('arv');
-    const loanToARVPerc = getVal('loanToARV') / 100;
-    const purchaseClosingCostsVal = purchasePrice * purchaseClosingCostsPerc;
-    const downPaymentAmount = purchasePrice * downPaymentPerc;
-    const totalProjectCost = purchasePrice + purchaseClosingCostsVal + rehabCosts;
-    const loanAmount = arv * loanToARVPerc;
-    const initialCash = totalProjectCost - loanAmount;
-
-    // Update funding breakdown
-    const totalProjectCostEl = document.getElementById('totalProjectCost');
-    const downPaymentAmountEl = document.getElementById('downPaymentAmount');
-    const loanAmountEl = document.getElementById('loanAmount');
-    const initialCashEl = document.getElementById('initialCash');
-    
-    if (totalProjectCostEl) totalProjectCostEl.textContent = formatCurrencySimple(totalProjectCost);
-    if (downPaymentAmountEl) downPaymentAmountEl.textContent = formatCurrencySimple(downPaymentAmount);
-    if (loanAmountEl) loanAmountEl.textContent = formatCurrencySimple(loanAmount);
-    if (initialCashEl) initialCashEl.textContent = formatCurrencyForHTML(initialCash);
-
-    // Flip Scenario Calculations
-    const holdingPeriod = getVal('holdingPeriod');
-    const rehabLoanInterestPerc = getVal('rehabLoanInterest') / 100;
-    const saleClosingCostsPerc = getVal('saleClosingCosts') / 100;
-    const totalLoanInterest = (loanAmount * rehabLoanInterestPerc / 12) * holdingPeriod;
-    const saleClosingCostsVal = arv * saleClosingCostsPerc;
-    const totalFlipCosts = totalProjectCost + totalLoanInterest + saleClosingCostsVal;
-    const flipProfit = arv - totalFlipCosts;
-    
-    let denominatorForReturns = initialCash;
-    if (denominatorForReturns <= 0) {
-      denominatorForReturns = downPaymentAmount + purchaseClosingCostsVal;
-    }
-
-    let flipROI = 0;
-    if (denominatorForReturns > 0) {
-      flipROI = (flipProfit / denominatorForReturns) * 100;
-    } else if (flipProfit > 0) {
-      flipROI = Infinity;
-    }
-    
-    // Update flip analysis
-    const totalFlipCostsEl = document.getElementById('totalFlipCosts');
-    const flipProfitEl = document.getElementById('flipProfit');
-    const flipROIEl = document.getElementById('flipROI');
-    
-    if (totalFlipCostsEl) totalFlipCostsEl.textContent = formatCurrencySimple(totalFlipCosts);
-    if (flipProfitEl) flipProfitEl.textContent = formatCurrencyForHTML(flipProfit);
-    if (flipROIEl) {
-      flipROIEl.innerHTML = (isFinite(flipROI) ? flipROI.toFixed(2) : '∞') + '%';
-      flipROIEl.className = `font-semibold text-lg ${flipROI >= 0 ? 'text-green-600' : 'text-red-600'}`;
-    }
-
-    // Rental Scenario Calculations
-    const annualTaxes = getVal('annualTaxes');
-    const annualInsurance = getVal('annualInsurance');
-    let totalMonthlyRent = 0;
-    for (let i = 1; i <= numUnits; i++) {
-      totalMonthlyRent += getVal(`rentUnit${i}`);
-    }
-    const grossRent = totalMonthlyRent * 12;
-
-    const vacancyRate = getVal('vacancyRate') / 100;
-    const repairsRate = getVal('repairsRate') / 100;
-    const managementFee = getVal('managementFee') / 100;
-
-    const vacancyCost = grossRent * vacancyRate;
-    const effectiveGrossIncome = grossRent - vacancyCost;
-    const managementCost = effectiveGrossIncome * managementFee;
-    const repairsCost = grossRent * repairsRate;
-
-    const totalOperatingExpenses = repairsCost + managementCost + annualTaxes + annualInsurance;
-    const noi = effectiveGrossIncome - totalOperatingExpenses;
-    
-    // Mortgage Calculation
-    const refiLoanRate = getVal('refiLoanRate') / 100 / 12;
-    const refiLoanTerm = getVal('refiLoanTerm') * 12;
-    let monthlyMortgagePayment = 0;
-    if(refiLoanRate > 0 && loanAmount > 0) { 
-      monthlyMortgagePayment = loanAmount * refiLoanRate * (Math.pow(1 + refiLoanRate, refiLoanTerm)) / (Math.pow(1 + refiLoanRate, refiLoanTerm) - 1);
-    }
-    const annualMortgagePayment = monthlyMortgagePayment * 12;
-    const annualCashFlow = noi - annualMortgagePayment;
-    const monthlyCashFlow = annualCashFlow / 12;
-
-    // Calculate cash left in deal after refinance (BRRRR calculation)
-    const cashLeftInDeal = Math.max(0, totalProjectCost - loanAmount);
-    
-    let cocReturn = 0;
-    if (cashLeftInDeal > 0) {
-      cocReturn = (annualCashFlow / cashLeftInDeal) * 100;
-    } else if (annualCashFlow > 0) {
-      cocReturn = Infinity; // Infinite returns if no cash left in deal
-    }
-
-    // Calculate 5-Year Total Return based on cash left in deal
-    let fiveYearTotalReturn = 0;
-    if (cashLeftInDeal > 0) {
-      // 5 years of cash flow + potential appreciation (assuming 3% annual appreciation)
-      const fiveYearCashFlow = annualCashFlow * 5;
-      const appreciationRate = 0.03; // 3% annual appreciation
-      const propertyAppreciation = arv * Math.pow(1 + appreciationRate, 5) - arv;
-      const totalReturn = fiveYearCashFlow + propertyAppreciation;
-      fiveYearTotalReturn = (totalReturn / cashLeftInDeal) * 100;
-    } else if (annualCashFlow > 0) {
-      fiveYearTotalReturn = Infinity;
-    }
-    
-    let capRate = 0;
-    if (purchasePrice > 0) {
-      capRate = (noi / purchasePrice) * 100;
-    }
-
-    // Update rental analysis
-    const grossRentEl = document.getElementById('grossRent');
-    const noiEl = document.getElementById('noi');
-    const mortgagePaymentEl = document.getElementById('mortgagePayment');
-    const annualCashFlowEl = document.getElementById('annualCashFlow');
-    const monthlyCashFlowEl = document.getElementById('monthlyCashFlow');
-    const cocReturnEl = document.getElementById('cocReturn');
-    const fiveYearReturnEl = document.getElementById('fiveYearReturn');
-    const capRateEl = document.getElementById('capRate');
-    
-    if (grossRentEl) grossRentEl.textContent = formatCurrencySimple(grossRent);
-    if (noiEl) noiEl.textContent = formatCurrencySimple(noi);
-    if (mortgagePaymentEl) mortgagePaymentEl.textContent = formatCurrencySimple(annualMortgagePayment);
-    if (annualCashFlowEl) {
-      const annualCashFlowPercent = cashLeftInDeal > 0 ? ((annualCashFlow / cashLeftInDeal) * 100).toFixed(2) : '∞';
-      // Debug info to show calculation
-      const debugInfo = `Cash Left: ${formatCurrencySimple(cashLeftInDeal)}`;
-      annualCashFlowEl.innerHTML = `${formatCurrencyForHTML(annualCashFlow)} <span class="text-sm font-medium text-gray-600">(${annualCashFlowPercent}%) <br/><span class="text-xs text-gray-500">${debugInfo}</span></span>`;
-    }
-    if (monthlyCashFlowEl) {
-      const annualCashFlowPercent = cashLeftInDeal > 0 ? ((annualCashFlow / cashLeftInDeal) * 100) : 0;
-      const monthlyCashFlowPercent = (annualCashFlowPercent / 12).toFixed(2);
-      monthlyCashFlowEl.innerHTML = `${formatCurrencyForHTML(monthlyCashFlow)} <span class="text-sm font-medium text-gray-600">(${monthlyCashFlowPercent}%)</span>`;
-    }
-    if (cocReturnEl) {
-      cocReturnEl.innerHTML = (isFinite(cocReturn) ? cocReturn.toFixed(2) : '∞') + '%';
-      cocReturnEl.className = `font-semibold text-lg ${cocReturn >= 0 ? 'text-green-600' : 'text-red-600'}`;
-    }
-    if (fiveYearReturnEl) {
-      const fiveYearCashFlow = annualCashFlow * 5;
-      const appreciationRate = 0.03;
-      const propertyAppreciation = arv * Math.pow(1 + appreciationRate, 5) - arv;
-      const totalFiveYearProfit = fiveYearCashFlow + propertyAppreciation;
-      
-      const totalReturnPercentage = (isFinite(fiveYearTotalReturn) ? fiveYearTotalReturn.toFixed(2) : '∞');
-      fiveYearReturnEl.innerHTML = `${formatCurrencyForHTML(totalFiveYearProfit)} <span class="text-sm font-medium text-gray-600">(Total Return: ${totalReturnPercentage}%)</span>`;
-      fiveYearReturnEl.className = `font-semibold text-lg ${fiveYearTotalReturn >= 0 ? 'text-green-600' : 'text-red-600'}`;
-    }
-    if (capRateEl) capRateEl.textContent = capRate.toFixed(2) + '%';
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const analysisResults = calculateAnalysis();
+    setResults(analysisResults);
   };
 
-  const resetForm = () => {
-    if (formRef.current) {
-      formRef.current.reset();
-    }
-    setVal('purchasePrice', '60000');
-    setVal('downPayment', '20');
-    setVal('purchaseClosingCosts', '3');
-    setVal('rehabCosts', '45000');
-    setVal('arv', '180000');
-    setVal('loanToARV', '70');
-    setVal('annualTaxes', '2400');
-    setVal('annualInsurance', '1200');
-    setVal('holdingPeriod', '6');
-    setVal('rehabLoanInterest', '10');
-    setVal('saleClosingCosts', '8');
-    setVal('numUnits', '2');
-    setVal('vacancyRate', '5');
-    setVal('repairsRate', '5');
-    setVal('managementFee', '10');
-    setVal('refiLoanRate', '7.5');
-    setVal('refiLoanTerm', '30');
-    setCurrentPropertyId(null);
-    setNumUnits(2);
-    setTimeout(() => {
-      generateRentInputs();
-      calculate();
-    }, 100);
-  };
+  const flipChartData = results ? {
+    labels: ['Purchase Price', 'Rehab Costs', 'Holding Costs', 'Selling Costs', 'Net Profit'],
+    datasets: [{
+      label: 'Flip Financials ($)',
+      data: [
+        formData.purchasePrice,
+        formData.rehabCosts,
+        (formData.monthlyTaxes + formData.monthlyInsurance) * formData.holdingPeriod,
+        results.flipSalePrice * (formData.sellingCosts / 100),
+        results.flipNetProfit
+      ],
+      backgroundColor: [
+        '#00509E',
+        '#007BBF', 
+        '#0097DA',
+        '#E2002A',
+        results.flipNetProfit >= 0 ? '#4CAF50' : '#F44336'
+      ]
+    }]
+  } : null;
 
-  useEffect(() => {
-    // Expose calculate function globally for inline handlers
-    (window as any).calculateAnalysis = calculate;
-    
-    // Initialize form
-    setTimeout(() => {
-      generateRentInputs();
-      calculate();
-    }, 100);
+  const rentalChartData = results ? {
+    labels: ['Gross Rent', 'Operating Expenses', 'Debt Service', 'Cash Flow'],
+    datasets: [{
+      label: 'Monthly Rental Financials ($)',
+      data: [
+        results.rentalGrossRent,
+        results.rentalOperatingExpenses,
+        results.rentalDebtService,
+        results.rentalCashFlow
+      ],
+      backgroundColor: [
+        '#4CAF50',
+        '#F44336',
+        '#FF9800',
+        results.rentalCashFlow >= 0 ? '#2196F3' : '#F44336'
+      ]
+    }]
+  } : null;
 
-    return () => {
-      delete (window as any).calculateAnalysis;
-    };
-  }, []);
-
-  useEffect(() => {
-    generateRentInputs();
-  }, [numUnits]);
-
-  const handleNumUnitsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newNumUnits = parseInt(e.target.value);
-    setNumUnits(newNumUnits);
-    setTimeout(calculate, 100);
-  };
+  const brrrrChartData = results ? {
+    labels: ['Initial Cash Invested', 'Cash Pulled Out', 'Cash Left in Deal'],
+    datasets: [{
+      data: [
+        results.brrrrInitialCash,
+        results.brrrrCashOut,
+        results.brrrrCashLeft
+      ],
+      backgroundColor: [
+        '#00509E',
+        '#4CAF50',
+        '#FFC107'
+      ]
+    }]
+  } : null;
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-lg mt-8">
-      <div className="text-center mb-8">
-        <h3 className="text-3xl font-bold text-gray-800 mb-2">Real Estate Deal Analyzer</h3>
-        <p className="text-gray-600">Evaluate Your Fix & Flip or Buy & Hold Scenarios</p>
-      </div>
-
-      <form ref={formRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <div className="bg-gray-50 p-6 rounded-lg">
-          <div className="flex justify-between items-center mb-6 border-b pb-3">
-            <h4 className="text-xl font-bold text-gray-700">Property & Financial Inputs</h4>
-            <button 
-              type="button"
-              onClick={resetForm}
-              className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition"
-            >
-              Reset Form
-            </button>
-          </div>
-          
-          <div className="input-group mb-4">
-            <label htmlFor="propertyName" className="block text-sm font-medium text-gray-700 mb-2">
-              Property Name (e.g., 123 Main St)
-            </label>
-            <input 
-              type="text" 
-              id="propertyName" 
-              placeholder="Enter a name for this deal"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          
-          <hr className="my-4"/>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="input-group">
-              <label htmlFor="purchasePrice" className="block text-sm font-medium text-gray-700 mb-2">Purchase Price</label>
-              <input 
-                type="number" 
-                id="purchasePrice" 
-                defaultValue="60000"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="downPayment" className="block text-sm font-medium text-gray-700 mb-2">Down Payment (%)</label>
-              <input 
-                type="number" 
-                id="downPayment" 
-                defaultValue="20"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="purchaseClosingCosts" className="block text-sm font-medium text-gray-700 mb-2">Purchase Closing Costs (%)</label>
-              <input 
-                type="number" 
-                id="purchaseClosingCosts" 
-                defaultValue="3"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="rehabCosts" className="block text-sm font-medium text-gray-700 mb-2">Estimated Rehab Costs</label>
-              <input 
-                type="number" 
-                id="rehabCosts" 
-                defaultValue="45000"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-            <div className="input-group md:col-span-2">
-              <label htmlFor="arv" className="block text-sm font-medium text-gray-700 mb-2">After Repair Value (ARV)</label>
-              <input 
-                type="number" 
-                id="arv" 
-                defaultValue="180000"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-          </div>
-          
-          <hr className="my-6"/>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="input-group">
-              <label htmlFor="loanToARV" className="block text-sm font-medium text-gray-700 mb-2">Loan to ARV (%)</label>
-              <input 
-                type="number" 
-                id="loanToARV" 
-                defaultValue="70"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="annualTaxes" className="block text-sm font-medium text-gray-700 mb-2">Annual Property Taxes</label>
-              <input 
-                type="number" 
-                id="annualTaxes" 
-                defaultValue="2400"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="annualInsurance" className="block text-sm font-medium text-gray-700 mb-2">Annual Insurance</label>
-              <input 
-                type="number" 
-                id="annualInsurance" 
-                defaultValue="1200"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-          </div>
-          
-          <hr className="my-6"/>
-          
-          <h5 className="text-lg font-semibold text-gray-700 mb-4">Flip Scenario Inputs</h5>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="input-group">
-              <label htmlFor="holdingPeriod" className="block text-sm font-medium text-gray-700 mb-2">Holding Period (Months)</label>
-              <input 
-                type="number" 
-                id="holdingPeriod" 
-                defaultValue="6"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="rehabLoanInterest" className="block text-sm font-medium text-gray-700 mb-2">Loan Interest Rate (%)</label>
-              <input 
-                type="number" 
-                id="rehabLoanInterest" 
-                defaultValue="10"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="saleClosingCosts" className="block text-sm font-medium text-gray-700 mb-2">Sale Closing Costs (%)</label>
-              <input 
-                type="number" 
-                id="saleClosingCosts" 
-                defaultValue="8"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-          </div>
-          
-          <hr className="my-6"/>
-          
-          <h5 className="text-lg font-semibold text-gray-700 mb-4">Rental Scenario Inputs</h5>
-          <div className="input-group mb-4">
-            <label htmlFor="numUnits" className="block text-sm font-medium text-gray-700 mb-2">Number of Units</label>
-            <select 
-              id="numUnits" 
-              value={numUnits}
-              onChange={handleNumUnitsChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
-          
-          <div id="rentInputs" className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4"></div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            <div className="input-group">
-              <label htmlFor="vacancyRate" className="block text-sm font-medium text-gray-700 mb-2">Vacancy Rate (%)</label>
-              <input 
-                type="number" 
-                id="vacancyRate" 
-                defaultValue="5"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="repairsRate" className="block text-sm font-medium text-gray-700 mb-2">Repairs & Maint. (%)</label>
-              <input 
-                type="number" 
-                id="repairsRate" 
-                defaultValue="5"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="managementFee" className="block text-sm font-medium text-gray-700 mb-2">Property Mgmt. Fee (%)</label>
-              <input 
-                type="number" 
-                id="managementFee" 
-                defaultValue="10"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="input-group">
-              <label htmlFor="refiLoanRate" className="block text-sm font-medium text-gray-700 mb-2">Refinance Interest Rate (%)</label>
-              <input 
-                type="number" 
-                id="refiLoanRate" 
-                defaultValue="7.5"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="refiLoanTerm" className="block text-sm font-medium text-gray-700 mb-2">Refinance Term (Years)</label>
-              <input 
-                type="number" 
-                id="refiLoanTerm" 
-                defaultValue="30"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                onChange={calculate}
-              />
-            </div>
-          </div>
+    <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 md:p-10 max-w-6xl mx-auto mb-8">
+      <header className="flex flex-col sm:flex-row justify-between items-center mb-8 pb-6 border-b border-gray-200">
+        <h3 className="text-3xl sm:text-4xl font-extrabold text-red-600 mb-4 sm:mb-0">
+          Property Investment Analyzer
+        </h3>
+        <div className="w-32 sm:w-40 h-12 bg-gradient-to-r from-red-600 to-blue-600 rounded-md flex items-center justify-center">
+          <span className="text-white font-bold">REMAX</span>
         </div>
+      </header>
 
-        {/* Output Section */}
-        <div className="space-y-6">
-          {/* Funding Breakdown */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h4 className="text-xl font-semibold mb-4 text-blue-700 border-b pb-2">Funding Breakdown</h4>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700">Total Project Cost</span>
-                <span className="font-semibold text-lg text-gray-900" id="totalProjectCost">$0</span>
+      <form onSubmit={handleSubmit}>
+        {/* Property Information Section */}
+        <section className="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+          <h4 className="text-2xl font-semibold text-blue-700 mb-4 pb-2 border-b border-gray-300">
+            Property Information
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="col-span-full">
+              <label htmlFor="propertyAddress" className="block text-sm font-medium text-gray-700 mb-1">
+                Property Address:
+              </label>
+              <input
+                type="text"
+                id="propertyAddress"
+                value={formData.propertyAddress}
+                onChange={(e) => handleInputChange('propertyAddress', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="e.g., 123 Main St, Anytown"
+                required
+              />
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <label className="text-sm font-medium text-gray-700">Property Type:</label>
+              <div className="flex space-x-4">
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="propertyType"
+                    value="SFH"
+                    checked={formData.propertyType === 'SFH'}
+                    onChange={() => handlePropertyTypeChange('SFH')}
+                    className="form-radio text-red-600 mr-2"
+                  />
+                  <span>Single Family</span>
+                </label>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="propertyType"
+                    value="Multi"
+                    checked={formData.propertyType === 'Multi'}
+                    onChange={() => handlePropertyTypeChange('Multi')}
+                    className="form-radio text-red-600 mr-2"
+                  />
+                  <span>Multi-Unit</span>
+                </label>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700">Down Payment</span>
-                <span className="font-semibold text-lg text-gray-900" id="downPaymentAmount">$0</span>
+            </div>
+
+            {formData.propertyType === 'Multi' && (
+              <>
+                <div>
+                  <label htmlFor="numUnits" className="block text-sm font-medium text-gray-700 mb-1">
+                    Number of Units (Max 8):
+                  </label>
+                  <select
+                    id="numUnits"
+                    value={formData.numUnits}
+                    onChange={(e) => handleNumUnitsChange(Number(e.target.value))}
+                    className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    {[2, 3, 4, 5, 6, 7, 8].map(num => (
+                      <option key={num} value={num}>{num} Units</option>
+                    ))}
+                  </select>
+                </div>
+                
+                <div className="col-span-full">
+                  <h5 className="text-lg font-semibold text-gray-700 mb-3 border-b border-gray-200 pb-1">
+                    Individual Unit Rents:
+                  </h5>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {unitRents.map((rent, index) => (
+                      <div key={index} className="flex items-center gap-2 p-2 bg-white rounded-md shadow-sm">
+                        <label className="text-sm font-medium text-gray-700 w-16">
+                          Unit {index + 1}:
+                        </label>
+                        <input
+                          type="number"
+                          value={rent}
+                          onChange={(e) => updateUnitRent(index, Number(e.target.value))}
+                          className="flex-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="e.g., 1200"
+                          min="0"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
+            <div>
+              <label htmlFor="purchasePrice" className="block text-sm font-medium text-gray-700 mb-1">
+                Purchase Price ($):
+              </label>
+              <input
+                type="number"
+                id="purchasePrice"
+                value={formData.purchasePrice || ''}
+                onChange={(e) => handleInputChange('purchasePrice', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="200000"
+                min="0"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="arv" className="block text-sm font-medium text-gray-700 mb-1">
+                After Repair Value (ARV) ($):
+              </label>
+              <input
+                type="number"
+                id="arv"
+                value={formData.arv || ''}
+                onChange={(e) => handleInputChange('arv', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="350000"
+                min="0"
+                required
+              />
+            </div>
+
+            {formData.propertyType === 'SFH' && (
+              <div className="col-span-full">
+                <label htmlFor="estimatedTotalRent" className="block text-sm font-medium text-gray-700 mb-1">
+                  Estimated Monthly Rent ($):
+                </label>
+                <input
+                  type="number"
+                  id="estimatedTotalRent"
+                  value={formData.estimatedTotalRent || ''}
+                  onChange={(e) => handleInputChange('estimatedTotalRent', e.target.value)}
+                  className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="2500"
+                  min="0"
+                  required
+                />
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700">Rehab Loan Amount</span>
-                <span className="font-semibold text-lg text-gray-900" id="loanAmount">$0</span>
+            )}
+          </div>
+        </section>
+
+        {/* Costs & Expenses Section */}
+        <section className="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+          <h4 className="text-2xl font-semibold text-blue-700 mb-4 pb-2 border-b border-gray-300">
+            Costs & Expenses
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="rehabCosts" className="block text-sm font-medium text-gray-700 mb-1">
+                Estimated Rehab Costs ($):
+              </label>
+              <input
+                type="number"
+                id="rehabCosts"
+                value={formData.rehabCosts || ''}
+                onChange={(e) => handleInputChange('rehabCosts', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="50000"
+                min="0"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="acquisitionCosts" className="block text-sm font-medium text-gray-700 mb-1">
+                Acquisition Closing Costs (% of Loan):
+              </label>
+              <input
+                type="number"
+                id="acquisitionCosts"
+                value={formData.acquisitionCosts || ''}
+                onChange={(e) => handleInputChange('acquisitionCosts', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="3.0"
+                min="0"
+                step="0.1"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="sellingCosts" className="block text-sm font-medium text-gray-700 mb-1">
+                Selling Costs (% of ARV):
+              </label>
+              <input
+                type="number"
+                id="sellingCosts"
+                value={formData.sellingCosts || ''}
+                onChange={(e) => handleInputChange('sellingCosts', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="6.0"
+                min="0"
+                step="0.1"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="holdingPeriod" className="block text-sm font-medium text-gray-700 mb-1">
+                Holding Period (Months):
+              </label>
+              <input
+                type="number"
+                id="holdingPeriod"
+                value={formData.holdingPeriod || ''}
+                onChange={(e) => handleInputChange('holdingPeriod', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="4"
+                min="0"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="monthlyTaxes" className="block text-sm font-medium text-gray-700 mb-1">
+                Monthly Property Taxes ($):
+              </label>
+              <input
+                type="number"
+                id="monthlyTaxes"
+                value={formData.monthlyTaxes || ''}
+                onChange={(e) => handleInputChange('monthlyTaxes', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="300"
+                min="0"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="monthlyInsurance" className="block text-sm font-medium text-gray-700 mb-1">
+                Monthly Insurance ($):
+              </label>
+              <input
+                type="number"
+                id="monthlyInsurance"
+                value={formData.monthlyInsurance || ''}
+                onChange={(e) => handleInputChange('monthlyInsurance', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="100"
+                min="0"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="propertyManagement" className="block text-sm font-medium text-gray-700 mb-1">
+                Property Management (% of Rent):
+              </label>
+              <input
+                type="number"
+                id="propertyManagement"
+                value={formData.propertyManagement || ''}
+                onChange={(e) => handleInputChange('propertyManagement', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="8.0"
+                min="0"
+                step="0.1"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="vacancyRate" className="block text-sm font-medium text-gray-700 mb-1">
+                Vacancy Rate (% of Rent):
+              </label>
+              <input
+                type="number"
+                id="vacancyRate"
+                value={formData.vacancyRate || ''}
+                onChange={(e) => handleInputChange('vacancyRate', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="5.0"
+                min="0"
+                step="0.1"
+                required
+              />
+            </div>
+
+            <div className="col-span-full">
+              <label htmlFor="repairsCapEx" className="block text-sm font-medium text-gray-700 mb-1">
+                Monthly Repairs & CapEx Reserve ($):
+              </label>
+              <input
+                type="number"
+                id="repairsCapEx"
+                value={formData.repairsCapEx || ''}
+                onChange={(e) => handleInputChange('repairsCapEx', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="200"
+                min="0"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Financing Details Section */}
+        <section className="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+          <h4 className="text-2xl font-semibold text-blue-700 mb-4 pb-2 border-b border-gray-300">
+            Financing Details
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="acquisitionLTV" className="block text-sm font-medium text-gray-700 mb-1">
+                Acquisition Loan LTV (%):
+              </label>
+              <input
+                type="number"
+                id="acquisitionLTV"
+                value={formData.acquisitionLTV || ''}
+                onChange={(e) => handleInputChange('acquisitionLTV', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="80"
+                min="0"
+                max="100"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="acquisitionInterestRate" className="block text-sm font-medium text-gray-700 mb-1">
+                Acquisition Interest Rate (% Annual):
+              </label>
+              <input
+                type="number"
+                id="acquisitionInterestRate"
+                value={formData.acquisitionInterestRate || ''}
+                onChange={(e) => handleInputChange('acquisitionInterestRate', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="8.0"
+                min="0"
+                step="0.1"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="refiLTV" className="block text-sm font-medium text-gray-700 mb-1">
+                Refinance Loan LTV (% of ARV):
+              </label>
+              <input
+                type="number"
+                id="refiLTV"
+                value={formData.refiLTV || ''}
+                onChange={(e) => handleInputChange('refiLTV', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="75"
+                min="0"
+                max="100"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="refiInterestRate" className="block text-sm font-medium text-gray-700 mb-1">
+                Refinance Interest Rate (% Annual):
+              </label>
+              <input
+                type="number"
+                id="refiInterestRate"
+                value={formData.refiInterestRate || ''}
+                onChange={(e) => handleInputChange('refiInterestRate', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="6.5"
+                min="0"
+                step="0.1"
+                required
+              />
+            </div>
+
+            <div className="col-span-full">
+              <label htmlFor="refiClosingCosts" className="block text-sm font-medium text-gray-700 mb-1">
+                Refinance Closing Costs (% of Refi Loan):
+              </label>
+              <input
+                type="number"
+                id="refiClosingCosts"
+                value={formData.refiClosingCosts || ''}
+                onChange={(e) => handleInputChange('refiClosingCosts', e.target.value)}
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                placeholder="2.0"
+                min="0"
+                step="0.1"
+                required
+              />
+            </div>
+          </div>
+        </section>
+
+        <div className="text-center mt-8">
+          <button 
+            type="submit" 
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+          >
+            Analyze Property
+          </button>
+        </div>
+      </form>
+
+      {results && (
+        <section className="mt-10 p-6 bg-blue-50 rounded-lg border border-blue-600">
+          <h4 className="text-2xl font-semibold text-blue-700 mb-4 pb-2 border-b border-blue-600">
+            Analysis Results
+          </h4>
+
+          {/* Overall Summary */}
+          <div className="mb-8 p-4 bg-white rounded-md shadow-sm">
+            <h5 className="text-xl font-bold text-gray-800 mb-3">Overall Investment Summary</h5>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+              <div className="p-3 bg-green-100 rounded-lg shadow-sm">
+                <p className="text-sm text-gray-600">Flip ROI</p>
+                <p className="text-2xl font-bold text-green-700">{formatNumber(results.flipROI)}%</p>
               </div>
-              <div className="flex justify-between items-center py-2">
-                <span className="font-bold text-blue-600">Total Cash to/from Client</span>
-                <span className="font-bold text-lg text-blue-600" id="initialCash">$0</span>
+              <div className="p-3 bg-blue-100 rounded-lg shadow-sm">
+                <p className="text-sm text-gray-600">Rental CoC</p>
+                <p className="text-2xl font-bold text-blue-700">{formatNumber(results.rentalCoC)}%</p>
+              </div>
+              <div className="p-3 bg-purple-100 rounded-lg shadow-sm">
+                <p className="text-sm text-gray-600">BRRRR CoC</p>
+                <p className="text-2xl font-bold text-purple-700">{formatNumber(results.brrrrPostRefiCoC)}%</p>
               </div>
             </div>
           </div>
 
           {/* Flip Analysis */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h4 className="text-xl font-semibold mb-4 text-green-700 border-b pb-2">Flip Analysis</h4>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700">Total Costs for Flip</span>
-                <span className="font-semibold text-lg text-gray-900" id="totalFlipCosts">$0</span>
+          <div className="mb-6">
+            <h5 className="text-xl font-semibold text-gray-800 mb-3">Flip Property Analysis</h5>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Total Project Cost:</span>
+                <strong className="text-red-600">${formatNumber(results.flipTotalCost)}</strong>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-bold text-green-600">Estimated Profit</span>
-                <span className="font-bold text-lg" id="flipProfit">$0</span>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Estimated Sale Price:</span>
+                <strong className="text-red-600">${formatNumber(results.flipSalePrice)}</strong>
               </div>
-              <div className="flex justify-between items-center py-2">
-                <span className="font-medium text-gray-700">Return on Investment (ROI)</span>
-                <span className="font-semibold text-lg" id="flipROI">0%</span>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Estimated Net Profit:</span>
+                <strong className="text-red-600">${formatNumber(results.flipNetProfit)}</strong>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Return on Investment (ROI):</span>
+                <strong className="text-red-600">{formatNumber(results.flipROI)}%</strong>
               </div>
             </div>
+            {flipChartData && (
+              <div className="mt-6 h-64">
+                <Bar data={flipChartData} options={{ responsive: true, maintainAspectRatio: false }} />
+              </div>
+            )}
           </div>
 
           {/* Rental Analysis */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h4 className="text-xl font-semibold mb-4 text-purple-700 border-b pb-2">Rental (Buy & Hold) Analysis</h4>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700">Gross Potential Rent (Annual)</span>
-                <span className="font-semibold text-lg text-gray-900" id="grossRent">$0</span>
+          <div className="mb-6">
+            <h5 className="text-xl font-semibold text-gray-800 mb-3">Rental Property Analysis</h5>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Monthly Gross Rent:</span>
+                <strong className="text-red-600">${formatNumber(results.rentalGrossRent)}</strong>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700">Net Operating Income (NOI)</span>
-                <span className="font-semibold text-lg text-gray-900" id="noi">$0</span>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Monthly Operating Expenses:</span>
+                <strong className="text-red-600">${formatNumber(results.rentalOperatingExpenses)}</strong>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700">Annual Mortgage Payment</span>
-                <span className="font-semibold text-lg text-gray-900" id="mortgagePayment">$0</span>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Net Operating Income (NOI):</span>
+                <strong className="text-red-600">${formatNumber(results.rentalNOI)}</strong>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-bold text-green-600">Annual Cash Flow</span>
-                <span className="font-bold text-lg" id="annualCashFlow">$0</span>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Monthly Debt Service:</span>
+                <strong className="text-red-600">${formatNumber(results.rentalDebtService)}</strong>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700">Monthly Cash Flow</span>
-                <span className="font-semibold text-lg" id="monthlyCashFlow">$0</span>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Monthly Cash Flow:</span>
+                <strong className="text-red-600">${formatNumber(results.rentalCashFlow)}</strong>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700">Cash on Cash Return (CoC)</span>
-                <span className="font-semibold text-lg" id="cocReturn">0%</span>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Annual Cash Flow:</span>
+                <strong className="text-red-600">${formatNumber(results.rentalAnnualCashFlow)}</strong>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                <span className="font-medium text-gray-700">5-Year Total Profit</span>
-                <span className="font-semibold text-lg" id="fiveYearReturn">$0 (0%)</span>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Cash-on-Cash Return:</span>
+                <strong className="text-red-600">{formatNumber(results.rentalCoC)}%</strong>
               </div>
-              <div className="flex justify-between items-center py-2">
-                <span className="font-medium text-gray-700">Capitalization (Cap) Rate</span>
-                <span className="font-semibold text-lg text-gray-900" id="capRate">0%</span>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Cap Rate:</span>
+                <strong className="text-red-600">{formatNumber(results.rentalCapRate)}%</strong>
               </div>
             </div>
+            {rentalChartData && (
+              <div className="mt-6 h-64">
+                <Bar data={rentalChartData} options={{ responsive: true, maintainAspectRatio: false }} />
+              </div>
+            )}
           </div>
-        </div>
-      </form>
+
+          {/* BRRRR Analysis */}
+          <div>
+            <h5 className="text-xl font-semibold text-gray-800 mb-3">BRRRR Strategy Analysis</h5>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Initial Cash Invested:</span>
+                <strong className="text-red-600">${formatNumber(results.brrrrInitialCash)}</strong>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Refinance Loan Amount:</span>
+                <strong className="text-red-600">${formatNumber(results.brrrrRefiLoan)}</strong>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Cash Pulled Out:</span>
+                <strong className="text-red-600">${formatNumber(results.brrrrCashOut)}</strong>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-200">
+                <span className="font-medium">Cash Left in Deal:</span>
+                <strong className="text-red-600">${formatNumber(results.brrrrCashLeft)}</strong>
+              </div>
+              <div className="flex justify-between py-2 border-b border-gray-200 col-span-full">
+                <span className="font-medium">Post-Refi Cash-on-Cash Return:</span>
+                <strong className="text-red-600">{formatNumber(results.brrrrPostRefiCoC)}%</strong>
+              </div>
+            </div>
+            {brrrrChartData && (
+              <div className="mt-6 h-64">
+                <Pie data={brrrrChartData} options={{ responsive: true, maintainAspectRatio: false }} />
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <footer className="text-center mt-10 pt-6 border-t border-gray-200 text-gray-600 text-sm">
+        <p className="mb-2">
+          Disclaimer: This analyzer is for informational purposes only. Not financial advice. 
+          Consult professionals before making investment decisions.
+        </p>
+        <p>&copy; 2025 Remax - Capital District Real Estate</p>
+      </footer>
     </div>
   );
 };

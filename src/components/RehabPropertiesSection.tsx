@@ -1,5 +1,6 @@
 import React from 'react';
 import { Hammer, Calculator, ClipboardCheck, Home } from 'lucide-react';
+import RealEstateAnalyzer from './RealEstateAnalyzer';
 
 const RehabPropertiesSection = () => {
   const rehabServices = [
@@ -65,6 +66,9 @@ const RehabPropertiesSection = () => {
             </div>
           ))}
         </div>
+
+        {/* Property Investment Analyzer */}
+        <RealEstateAnalyzer />
 
         {/* Fix & Flip Loan Program */}
         <div className="bg-white shadow-xl rounded-lg p-6 md:p-10 border border-gray-200 mb-8">
