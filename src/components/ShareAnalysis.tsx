@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Share2, Mail, Link, Download, Copy, Facebook, Twitter, MessageSquare, Instagram, Linkedin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import jsPDF from 'jspdf';
 
 interface AnalysisResults {
   flipTotalCost: number;
@@ -191,21 +192,103 @@ Contact Scott Alvarez at (518) 522-7265
   };
 
   const handleDownloadPDF = () => {
-    // Create a simple text version for download
-    const content = generateShareableContent();
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `investment-analysis-${propertyAddress.replace(/[^a-zA-Z0-9]/g, '-')}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    const pdf = new jsPDF();
+    const pageWidth = pdf.internal.pageSize.width;
+    const margin = 20;
+    const lineHeight = 7;
+    let currentY = margin;
+
+    // Helper function to add text with wrapping
+    const addText = (text: string, fontSize = 10, isBold = false) => {
+      pdf.setFontSize(fontSize);
+      if (isBold) {
+        pdf.setFont(undefined, 'bold');
+      } else {
+        pdf.setFont(undefined, 'normal');
+      }
+      
+      const lines = pdf.splitTextToSize(text, pageWidth - 2 * margin);
+      if (currentY + lines.length * lineHeight > pdf.internal.pageSize.height - margin) {
+        pdf.addPage();
+        currentY = margin;
+      }
+      
+      pdf.text(lines, margin, currentY);
+      currentY += lines.length * lineHeight + 2;
+    };
+
+    // Title
+    addText('PROPERTY INVESTMENT ANALYSIS', 16, true);
+    addText(propertyAddress, 14, true);
+    currentY += 5;
+
+    // Investment Overview
+    addText('INVESTMENT OVERVIEW', 12, true);
+    addText(`Purchase Price: $${formatNumber(purchasePrice)}`);
+    addText(`After Repair Value (ARV): $${formatNumber(arv)}`);
+    addText(`Monthly Rental Income: $${formatNumber(estimatedTotalRent)}`);
+    currentY += 5;
+
+    // Fix & Flip Analysis
+    addText('FIX & FLIP ANALYSIS', 12, true);
+    addText(`Net Profit: $${formatNumber(results.flipNetProfit)}`);
+    addText(`Return on Investment: ${formatNumber(results.flipROI)}%`);
+    addText(`Project Total Cost: $${formatNumber(results.flipTotalCost)}`);
+    currentY += 5;
+
+    // Buy & Hold Rental
+    addText('BUY & HOLD RENTAL', 12, true);
+    addText(`Monthly Cash Flow: $${formatNumber(results.rentalCashFlow)}`);
+    addText(`Annual Cash Flow: $${formatNumber(results.rentalAnnualCashFlow)}`);
+    addText(`Cash-on-Cash Return: ${formatNumber(results.rentalCoC)}%`);
+    addText(`Cap Rate: ${formatNumber(results.rentalCapRate)}%`);
+    currentY += 5;
+
+    // BRRRR Strategy
+    addText('BRRRR STRATEGY', 12, true);
+    addText(`Post-Refi Cash-on-Cash: ${formatNumber(results.brrrrPostRefiCoC)}%`);
+    addText(`Cash Left in Deal: $${formatNumber(results.brrrrCashLeft)}`);
+    addText(`Cash Pulled Out: $${formatNumber(results.brrrrCashOut)}`);
+    currentY += 10;
+
+    // Contact Information
+    addText('CAPITAL DISTRICT NEST', 14, true);
+    addText('Scott Alvarez - Investment Property Specialist', 12, true);
+    addText('RE/MAX Solutions', 12);
+    currentY += 5;
+    
+    addText('Contact Information:', 11, true);
+    addText('Phone: (518) 522-7265');
+    addText('Email: scottalvarez@remax.net');
+    addText('Serving Albany, Troy, Schenectady & Saratoga Springs');
+    currentY += 5;
+
+    addText('Social Media:', 11, true);
+    addText('Facebook: @scottalvarez.remax');
+    addText('Instagram: @scottalvarez.remax');
+    addText('LinkedIn: /in/scottalvarez');
+    addText('YouTube: @scottalvarez');
+    currentY += 5;
+
+    addText('SPECIALIZING IN:', 11, true);
+    addText('✓ Multi-Unit Investment Properties');
+    addText('✓ Fix & Flip Projects with Proven Loan Programs');
+    addText('✓ Rental Property Management & APT Listings');
+    addText('✓ Investment Property Financing Solutions');
+    currentY += 5;
+
+    addText('Expert Analysis | Proven Results | 7 Days a Week Service', 10, true);
+    currentY += 5;
+    
+    addText('*This analysis is for informational purposes only. Consult with qualified professionals before making investment decisions.', 8);
+
+    // Save the PDF
+    const fileName = `investment-analysis-${propertyAddress.replace(/[^a-zA-Z0-9]/g, '-')}.pdf`;
+    pdf.save(fileName);
     
     toast({
-      title: "Analysis Downloaded!",
-      description: "Analysis summary saved to your device",
+      title: "PDF Downloaded!",
+      description: "Investment analysis saved as PDF",
     });
   };
 
@@ -281,7 +364,7 @@ Contact Scott Alvarez at (518) 522-7265
           <Download className="w-8 h-8 text-purple-600" />
           <div className="text-left">
             <div className="font-medium text-gray-800">Download</div>
-            <div className="text-sm text-gray-600">Save as text file</div>
+            <div className="text-sm text-gray-600">Save as PDF file</div>
           </div>
         </button>
 
