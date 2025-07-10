@@ -45,7 +45,7 @@ const HeroSection = () => {
         </h1>
         
         <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 max-w-3xl mx-auto leading-relaxed">
-          Your trusted partner for <span className="text-red-500 font-semibold">investment properties</span>, <span className="text-red-500 font-semibold">rehab projects</span>, and <span className="text-red-500 font-semibold">rental solutions</span> in Albany, Troy, Schenectady, and Saratoga Springs
+          Your trusted partner for <span className="bg-red-600 text-white px-3 py-1 rounded font-semibold">investment properties</span>, <span className="bg-red-600 text-white px-3 py-1 rounded font-semibold">rehab projects</span>, and <span className="bg-red-600 text-white px-3 py-1 rounded font-semibold">rental solutions</span> in Albany, Troy, Schenectady, and Saratoga Springs
         </p>
 
         {/* Service Cards */}
@@ -60,7 +60,7 @@ const HeroSection = () => {
                 {service.icon}
               </div>
               <h3 className="text-xl font-semibold mb-2">
-                <span className="text-red-500">{service.title}</span>
+                <span className="bg-red-600 text-white px-3 py-1 rounded font-semibold">{service.title}</span>
               </h3>
               <p className="text-sm opacity-90 text-white">
                 {service.description}
