@@ -67,9 +67,6 @@ const RehabPropertiesSection = () => {
           ))}
         </div>
 
-        {/* Property Investment Analyzer */}
-        <RealEstateAnalyzer />
-
         {/* Fix & Flip Loan Program */}
         <div className="bg-white shadow-xl rounded-lg p-6 md:p-10 border border-gray-200 mb-8">
           {/* Header Section */}
@@ -300,22 +297,14 @@ const RehabPropertiesSection = () => {
             </div>
             <div className="text-center">
               <h4 className="text-xl font-semibold mb-4 text-slate-800">
-                Start Your Rehab Project
+                Analyze Your Investment
               </h4>
               <p className="text-slate-600 mb-6">
-                Ready to transform a property into profit? Let's discuss your rehab investment goals.
+                Use our BRRRR calculator to analyze your rehab investment potential and returns.
               </p>
-              <button
-                onClick={() => {
-                  const element = document.getElementById('contact');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-                className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 transform hover:scale-105"
-              >
-                Schedule Consultation
-              </button>
+              
+              {/* Property Investment Analyzer */}
+              <RealEstateAnalyzer />
             </div>
           </div>
         </div>
