@@ -13,7 +13,7 @@ const HeroSection = () => {
   const services = [
     {
       icon: <Building className="w-8 h-8" />,
-      title: "Investment Properties",
+      title: "Multi Unit",
       description: "Multi-unit buildings and high-yield rental properties",
       sectionId: "investment-properties"
     },
@@ -25,7 +25,7 @@ const HeroSection = () => {
     },
     {
       icon: <Home className="w-8 h-8" />,
-      title: "Rental Properties",
+      title: "APT's for Rent",
       description: "Premium rental listings across the Capital District",
       sectionId: "neighborhoods"
     },
@@ -45,7 +45,7 @@ const HeroSection = () => {
         </h1>
         
         <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 max-w-3xl mx-auto leading-relaxed">
-          Your trusted partner for <span className="bg-red-600 text-white px-3 py-1 rounded font-semibold border-2 border-white">investments</span>, <span className="bg-red-600 text-white px-3 py-1 rounded font-semibold border-2 border-white">rehab projects</span>, and <span className="bg-red-600 text-white px-3 py-1 rounded font-semibold border-2 border-white">rental solutions</span> in Albany, Troy, Schenectady, and Saratoga Springs
+          Your trusted partner for <span className="bg-red-600 text-white px-3 py-1 rounded font-semibold border-2 border-white">multi unit</span>, <span className="bg-red-600 text-white px-3 py-1 rounded font-semibold border-2 border-white">rehab projects</span>, and <span className="bg-red-600 text-white px-3 py-1 rounded font-semibold border-2 border-white">rental solutions</span> in Albany, Troy, Schenectady, and Saratoga Springs
         </p>
 
         {/* Service Cards */}
