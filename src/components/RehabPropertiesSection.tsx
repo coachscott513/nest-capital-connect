@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Hammer, Calculator, ClipboardCheck, Home } from 'lucide-react';
 import RealEstateAnalyzer from './RealEstateAnalyzer';
 
 const RehabPropertiesSection = () => {
+  const [showAnalyzer, setShowAnalyzer] = useState(false);
   const rehabServices = [
     {
       icon: <ClipboardCheck className="w-8 h-8 text-blue-500" />,
@@ -302,9 +303,19 @@ const RehabPropertiesSection = () => {
               <p className="text-slate-600 mb-6">
                 Use our BRRRR calculator to analyze your rehab investment potential and returns.
               </p>
+              <button
+                onClick={() => setShowAnalyzer(!showAnalyzer)}
+                className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 transform hover:scale-105"
+              >
+                {showAnalyzer ? 'Hide Calculator' : 'Analyze your Rehab'}
+              </button>
               
-              {/* Property Investment Analyzer */}
-              <RealEstateAnalyzer />
+              {/* Property Investment Analyzer - Conditionally Rendered */}
+              {showAnalyzer && (
+                <div className="mt-8">
+                  <RealEstateAnalyzer />
+                </div>
+              )}
             </div>
           </div>
         </div>
