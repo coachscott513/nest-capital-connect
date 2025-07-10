@@ -18,6 +18,8 @@ import CoreWebVitalsOptimizer from '@/components/CoreWebVitalsOptimizer';
 import InternalLinkingNav from '@/components/InternalLinkingNav';
 import AnimatedCapitalDistrictMap from '@/components/AnimatedCapitalDistrictMap';
 import MeetTheTeamSection from '@/components/MeetTheTeamSection';
+import SEOAnalyzer from '@/components/SEOAnalyzer';
+import { AdSenseCompliance } from '@/components/AdSenseOptimizer';
 
 const Index = () => {
   const structuredData = {
@@ -180,6 +182,7 @@ const Index = () => {
       <RealEstateSchema type="agent" />
       <RealEstateSchema type="organization" />
       <CoreWebVitalsOptimizer />
+      <AdSenseCompliance />
       
       <script type="application/ld+json">
         {JSON.stringify(breadcrumbData)}
@@ -204,6 +207,9 @@ const Index = () => {
       </main>
       
       <Footer />
+      
+      {/* SEO and Analytics Components */}
+      <SEOAnalyzer />
     </div>
   );
 };

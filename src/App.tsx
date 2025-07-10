@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Rentals from "./pages/Rentals";
 import Communities from "./pages/Communities";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./components/PrivacyPolicy";
 
 const App = () => {
   // Create QueryClient inside the component to avoid initialization issues
@@ -40,6 +41,8 @@ const App = () => {
             <Route path="/saratoga-rentals" element={<Rentals />} />
             <Route path="/contact" element={<Index />} />
             <Route path="/about" element={<Index />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<PrivacyPolicy />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
