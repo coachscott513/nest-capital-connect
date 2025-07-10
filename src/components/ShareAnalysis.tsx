@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Share2, Mail, Link, Download, Copy, Facebook, Twitter, MessageSquare } from 'lucide-react';
+import { Share2, Mail, Link, Download, Copy, Facebook, Twitter, MessageSquare, Instagram, Linkedin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface AnalysisResults {
@@ -48,27 +48,59 @@ const ShareAnalysis: React.FC<ShareAnalysisProps> = ({
 
   const generateShareableContent = () => {
     const summary = `
-🏠 Property Investment Analysis - ${propertyAddress}
+🏠 PROPERTY INVESTMENT ANALYSIS
+${propertyAddress}
 
-💰 Investment Summary:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💰 INVESTMENT OVERVIEW
 • Purchase Price: $${formatNumber(purchasePrice)}
-• After Repair Value: $${formatNumber(arv)}
-• Monthly Rent: $${formatNumber(estimatedTotalRent)}
+• After Repair Value (ARV): $${formatNumber(arv)}
+• Monthly Rental Income: $${formatNumber(estimatedTotalRent)}
 
-📊 Key Metrics:
-• Flip ROI: ${formatNumber(results.flipROI)}%
-• Rental Cash-on-Cash: ${formatNumber(results.rentalCoC)}%
-• BRRRR Strategy CoC: ${formatNumber(results.brrrrPostRefiCoC)}%
+📊 INVESTMENT STRATEGIES - KEY METRICS
+
+🔄 FIX & FLIP ANALYSIS
+• Net Profit: $${formatNumber(results.flipNetProfit)}
+• Return on Investment: ${formatNumber(results.flipROI)}%
+• Project Total Cost: $${formatNumber(results.flipTotalCost)}
+
+🏠 BUY & HOLD RENTAL
 • Monthly Cash Flow: $${formatNumber(results.rentalCashFlow)}
+• Annual Cash Flow: $${formatNumber(results.rentalAnnualCashFlow)}
+• Cash-on-Cash Return: ${formatNumber(results.rentalCoC)}%
 • Cap Rate: ${formatNumber(results.rentalCapRate)}%
 
-💵 Financial Breakdown:
-• Net Flip Profit: $${formatNumber(results.flipNetProfit)}
-• Annual Cash Flow: $${formatNumber(results.rentalAnnualCashFlow)}
-• Cash Left in BRRRR: $${formatNumber(results.brrrrCashLeft)}
+🔁 BRRRR STRATEGY
+• Post-Refi Cash-on-Cash: ${formatNumber(results.brrrrPostRefiCoC)}%
+• Cash Left in Deal: $${formatNumber(results.brrrrCashLeft)}
+• Cash Pulled Out: $${formatNumber(results.brrrrCashOut)}
 
-📈 Analysis by Capital District Nest
-Your Investment Property Specialists in Albany, Troy, Schenectady & Saratoga Springs NY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📞 CAPITAL DISTRICT NEST
+Scott Alvarez - Investment Property Specialist
+RE/MAX Solutions
+
+📱 Call Now: (518) 522-7265
+📧 Email: scottalvarez@remax.net
+🌐 Serving Albany, Troy, Schenectady & Saratoga Springs
+
+🔗 Social Media:
+Facebook: @scottalvarez.remax
+Instagram: @scottalvarez.remax
+LinkedIn: /in/scottalvarez
+YouTube: @scottalvarez
+
+💼 SPECIALIZING IN:
+✓ Multi-Unit Investment Properties
+✓ Fix & Flip Projects with Proven Loan Programs
+✓ Rental Property Management & APT Listings
+✓ Investment Property Financing Solutions
+
+📈 Expert Analysis | Proven Results | 7 Days a Week Service
+
+*This analysis is for informational purposes only. Consult with qualified professionals before making investment decisions.*
     `.trim();
 
     return summary;
@@ -127,19 +159,32 @@ Your Investment Property Specialists in Albany, Troy, Schenectady & Saratoga Spr
     window.open(mailtoUrl);
   };
 
-  const handleSocialShare = (platform: 'facebook' | 'twitter') => {
-    const content = `Check out this property investment analysis for ${propertyAddress}! 
-💰 Flip ROI: ${formatNumber(results.flipROI)}% 
-📈 Rental CoC: ${formatNumber(results.rentalCoC)}% 
-🏠 Monthly Cash Flow: $${formatNumber(results.rentalCashFlow)}`;
+  const handleSocialShare = (platform: 'facebook' | 'twitter' | 'linkedin' | 'instagram') => {
+    const shortContent = `🏠 Investment Analysis: ${propertyAddress}
+💰 Flip ROI: ${formatNumber(results.flipROI)}% | 📈 Rental CoC: ${formatNumber(results.rentalCoC)}%
+🏠 Monthly Cash Flow: $${formatNumber(results.rentalCashFlow)}
+
+Contact Scott Alvarez at (518) 522-7265
+#RealEstate #Investment #CapitalDistrict #Albany`;
     
     const url = window.location.href;
     
     let shareUrl = '';
     if (platform === 'facebook') {
-      shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(content)}`;
+      shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shortContent)}`;
     } else if (platform === 'twitter') {
-      shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(content)}&url=${encodeURIComponent(url)}`;
+      shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shortContent)}&url=${encodeURIComponent(url)}&hashtags=RealEstate,Investment,CapitalDistrict`;
+    } else if (platform === 'linkedin') {
+      shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&summary=${encodeURIComponent(shortContent)}`;
+    } else if (platform === 'instagram') {
+      // Instagram doesn't support direct sharing, so copy to clipboard
+      navigator.clipboard.writeText(shortContent + '\n\n' + url).then(() => {
+        toast({
+          title: "Content Copied!",
+          description: "Content copied to clipboard. Paste in Instagram story or post.",
+        });
+      });
+      return;
     }
     
     window.open(shareUrl, '_blank', 'width=600,height=400');
@@ -263,6 +308,49 @@ Your Investment Property Specialists in Albany, Troy, Schenectady & Saratoga Spr
             <div className="text-sm text-gray-600">Share on Twitter</div>
           </div>
         </button>
+
+        {/* LinkedIn Share */}
+        <button
+          onClick={() => handleSocialShare('linkedin')}
+          className="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+        >
+          <Linkedin className="w-8 h-8 text-blue-700" />
+          <div className="text-left">
+            <div className="font-medium text-gray-800">LinkedIn</div>
+            <div className="text-sm text-gray-600">Share on LinkedIn</div>
+          </div>
+        </button>
+
+        {/* Instagram Share */}
+        <button
+          onClick={() => handleSocialShare('instagram')}
+          className="flex items-center space-x-3 p-4 bg-gradient-to-br from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 rounded-lg transition-colors"
+        >
+          <Instagram className="w-8 h-8 text-purple-600" />
+          <div className="text-left">
+            <div className="font-medium text-gray-800">Instagram</div>
+            <div className="text-sm text-gray-600">Copy for Instagram</div>
+          </div>
+        </button>
+      </div>
+
+      {/* Brand Footer */}
+      <div className="mt-6 pt-4 border-t border-gray-200">
+        <div className="bg-gradient-to-r from-blue-600 to-red-600 rounded-lg p-4 text-white text-center">
+          <div className="flex items-center justify-center space-x-4 mb-2">
+            <div className="bg-white rounded px-3 py-1">
+              <span className="text-red-600 font-bold">RE/MAX</span>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg">Capital District Nest</h4>
+              <p className="text-sm opacity-90">Scott Alvarez - Investment Property Specialist</p>
+            </div>
+          </div>
+          <div className="text-sm">
+            <p className="mb-1">📱 (518) 522-7265 | 📧 scottalvarez@remax.net</p>
+            <p className="opacity-90">Serving Albany, Troy, Schenectady & Saratoga Springs</p>
+          </div>
+        </div>
       </div>
 
       <div className="mt-6 pt-4 border-t border-gray-200">
