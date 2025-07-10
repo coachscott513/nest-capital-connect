@@ -141,6 +141,8 @@ const RealEstateAnalyzer: React.FC = () => {
 
   const calculateAnalysis = (): AnalysisResults | null => {
     try {
+      console.log('Starting calculation with formData:', formData);
+      
       const {
         purchasePrice, arv, rehabCosts, acquisitionCosts, sellingCosts, holdingPeriod,
         monthlyTaxes, monthlyInsurance, propertyManagement, vacancyRate, repairsCapEx,
@@ -148,29 +150,76 @@ const RealEstateAnalyzer: React.FC = () => {
         estimatedTotalRent
       } = formData;
 
-      const totalAcquisitionPlusRehab = purchasePrice + rehabCosts;
-      const loanAmountAcquisition = totalAcquisitionPlusRehab * (acquisitionLTV / 100);
+      // Convert string inputs to numbers and handle empty values
+      const numericData = {
+        purchasePrice: Number(purchasePrice) || 0,
+        arv: Number(arv) || 0,
+        rehabCosts: Number(rehabCosts) || 0,
+        acquisitionCosts: Number(acquisitionCosts) || 0,
+        sellingCosts: Number(sellingCosts) || 0,
+        holdingPeriod: Number(holdingPeriod) || 0,
+        monthlyTaxes: Number(monthlyTaxes) || 0,
+        monthlyInsurance: Number(monthlyInsurance) || 0,
+        propertyManagement: Number(propertyManagement) || 0,
+        vacancyRate: Number(vacancyRate) || 0,
+        repairsCapEx: Number(repairsCapEx) || 0,
+        acquisitionLTV: Number(acquisitionLTV) || 0,
+        acquisitionInterestRate: Number(acquisitionInterestRate) || 0,
+        refiLTV: Number(refiLTV) || 0,
+        refiInterestRate: Number(refiInterestRate) || 0,
+        refiClosingCosts: Number(refiClosingCosts) || 0,
+        estimatedTotalRent: Number(estimatedTotalRent) || 0
+      };
+
+      console.log('Converted numeric data:', numericData);
+
+      // Validate required fields
+      if (numericData.purchasePrice <= 0 || numericData.arv <= 0 || numericData.estimatedTotalRent <= 0) {
+        console.log('Missing required fields');
+        return null;
+      }
+
+      const totalAcquisitionPlusRehab = numericData.purchasePrice + numericData.rehabCosts;
+      const loanAmountAcquisition = totalAcquisitionPlusRehab * (numericData.acquisitionLTV / 100);
       const loanTermYears = 30;
-      const cashDownPayment = totalAcquisitionPlusRehab * (1 - acquisitionLTV / 100);
-      const acquisitionClosingCosts = loanAmountAcquisition * (acquisitionCosts / 100);
-      const monthlyDebtServiceAcquisitionDuringHolding = calculatePMT(loanAmountAcquisition, acquisitionInterestRate / 100, loanTermYears);
-      const totalHoldingCosts = (monthlyTaxes + monthlyInsurance + monthlyDebtServiceAcquisitionDuringHolding) * holdingPeriod;
+      const cashDownPayment = totalAcquisitionPlusRehab * (1 - numericData.acquisitionLTV / 100);
+      const acquisitionClosingCosts = loanAmountAcquisition * (numericData.acquisitionCosts / 100);
+      const monthlyDebtServiceAcquisitionDuringHolding = calculatePMT(loanAmountAcquisition, numericData.acquisitionInterestRate / 100, loanTermYears);
+      const totalHoldingCosts = (numericData.monthlyTaxes + numericData.monthlyInsurance + monthlyDebtServiceAcquisitionDuringHolding) * numericData.holdingPeriod;
+
+      console.log('Key calculations:', {
+        totalAcquisitionPlusRehab,
+        loanAmountAcquisition,
+        cashDownPayment,
+        acquisitionClosingCosts,
+        monthlyDebtServiceAcquisitionDuringHolding,
+        totalHoldingCosts
+      });
 
       // Flip Analysis
       const initialCashOutlayFlip = cashDownPayment + acquisitionClosingCosts;
-      const estimatedSalePriceFlip = arv;
-      const sellingCostsAmount = estimatedSalePriceFlip * (sellingCosts / 100);
-      const totalExpensesFlip = purchasePrice + rehabCosts + acquisitionClosingCosts + totalHoldingCosts + sellingCostsAmount;
+      const estimatedSalePriceFlip = numericData.arv;
+      const sellingCostsAmount = estimatedSalePriceFlip * (numericData.sellingCosts / 100);
+      const totalExpensesFlip = numericData.purchasePrice + numericData.rehabCosts + acquisitionClosingCosts + totalHoldingCosts + sellingCostsAmount;
       const netProfitFlip = estimatedSalePriceFlip - totalExpensesFlip;
       const roiFlip = (initialCashOutlayFlip > 0) ? (netProfitFlip / initialCashOutlayFlip) * 100 : (netProfitFlip > 0 ? Infinity : 0);
 
+      console.log('Flip Analysis:', {
+        initialCashOutlayFlip,
+        estimatedSalePriceFlip,
+        sellingCostsAmount,
+        totalExpensesFlip,
+        netProfitFlip,
+        roiFlip
+      });
+
       // Rental Analysis
-      const monthlyPropertyManagementCost = estimatedTotalRent * (propertyManagement / 100);
-      const monthlyVacancyCost = estimatedTotalRent * (vacancyRate / 100);
-      const totalMonthlyOperatingExpenses = monthlyTaxes + monthlyInsurance + monthlyPropertyManagementCost + monthlyVacancyCost + repairsCapEx;
-      const noiMonthly = estimatedTotalRent - totalMonthlyOperatingExpenses;
+      const monthlyPropertyManagementCost = numericData.estimatedTotalRent * (numericData.propertyManagement / 100);
+      const monthlyVacancyCost = numericData.estimatedTotalRent * (numericData.vacancyRate / 100);
+      const totalMonthlyOperatingExpenses = numericData.monthlyTaxes + numericData.monthlyInsurance + monthlyPropertyManagementCost + monthlyVacancyCost + numericData.repairsCapEx;
+      const noiMonthly = numericData.estimatedTotalRent - totalMonthlyOperatingExpenses;
       const noiAnnual = noiMonthly * 12;
-      const monthlyDebtServiceRental = calculatePMT(loanAmountAcquisition, acquisitionInterestRate / 100, loanTermYears);
+      const monthlyDebtServiceRental = calculatePMT(loanAmountAcquisition, numericData.acquisitionInterestRate / 100, loanTermYears);
       const monthlyCashFlowRental = noiMonthly - monthlyDebtServiceRental;
       const annualCashFlowRental = monthlyCashFlowRental * 12;
       const initialCashInvestedRental = cashDownPayment + acquisitionClosingCosts;
@@ -182,14 +231,25 @@ const RealEstateAnalyzer: React.FC = () => {
         cocReturnRental = Infinity;
       }
 
-      const capRate = purchasePrice > 0 ? (noiAnnual / purchasePrice) * 100 : 0;
+      const capRate = numericData.purchasePrice > 0 ? (noiAnnual / numericData.purchasePrice) * 100 : 0;
+
+      console.log('Rental Analysis:', {
+        monthlyPropertyManagementCost,
+        monthlyVacancyCost,
+        totalMonthlyOperatingExpenses,
+        noiMonthly,
+        monthlyDebtServiceRental,
+        monthlyCashFlowRental,
+        cocReturnRental,
+        capRate
+      });
 
       // BRRRR Analysis
-      const refiLoanAmount = arv * (refiLTV / 100);
-      const refiClosingCostsDollars = refiLoanAmount * (refiClosingCosts / 100);
+      const refiLoanAmount = numericData.arv * (numericData.refiLTV / 100);
+      const refiClosingCostsDollars = refiLoanAmount * (numericData.refiClosingCosts / 100);
       const cashPulledOut = refiLoanAmount - (loanAmountAcquisition + refiClosingCostsDollars);
       const cashLeftInDeal = initialCashInvestedRental - cashPulledOut;
-      const monthlyDebtServiceRefi = calculatePMT(refiLoanAmount, refiInterestRate / 100, loanTermYears);
+      const monthlyDebtServiceRefi = calculatePMT(refiLoanAmount, numericData.refiInterestRate / 100, loanTermYears);
       const monthlyCashFlowPostRefi = noiMonthly - monthlyDebtServiceRefi;
       const annualCashFlowPostRefi = monthlyCashFlowPostRefi * 12;
 
@@ -200,12 +260,22 @@ const RealEstateAnalyzer: React.FC = () => {
         postRefiCoC = Infinity;
       }
 
-      return {
+      console.log('BRRRR Analysis:', {
+        refiLoanAmount,
+        refiClosingCostsDollars,
+        cashPulledOut,
+        cashLeftInDeal,
+        monthlyDebtServiceRefi,
+        monthlyCashFlowPostRefi,
+        postRefiCoC
+      });
+
+      const finalResults = {
         flipTotalCost: totalExpensesFlip,
         flipSalePrice: estimatedSalePriceFlip,
         flipNetProfit: netProfitFlip,
         flipROI: roiFlip,
-        rentalGrossRent: estimatedTotalRent,
+        rentalGrossRent: numericData.estimatedTotalRent,
         rentalOperatingExpenses: totalMonthlyOperatingExpenses,
         rentalNOI: noiMonthly,
         rentalDebtService: monthlyDebtServiceRental,
@@ -219,6 +289,9 @@ const RealEstateAnalyzer: React.FC = () => {
         brrrrCashLeft: cashLeftInDeal,
         brrrrPostRefiCoC: postRefiCoC
       };
+
+      console.log('Final results:', finalResults);
+      return finalResults;
     } catch (error) {
       console.error('Calculation Error:', error);
       return null;
