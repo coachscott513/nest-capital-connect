@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
+import ShareAnalysis from './ShareAnalysis';
 
 // Register Chart.js components
 ChartJS.register(
@@ -901,6 +902,17 @@ const RealEstateAnalyzer: React.FC = () => {
                 <Pie data={brrrrChartData} options={{ responsive: true, maintainAspectRatio: false }} />
               </div>
             )}
+          </div>
+          
+          {/* Share Analysis Component */}
+          <div className="mt-8 text-center">
+            <ShareAnalysis 
+              results={results}
+              propertyAddress={formData.propertyAddress}
+              purchasePrice={formData.purchasePrice}
+              arv={formData.arv}
+              estimatedTotalRent={formData.estimatedTotalRent}
+            />
           </div>
         </section>
       )}
