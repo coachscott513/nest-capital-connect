@@ -4,6 +4,7 @@ import HeroSection from '@/components/HeroSection';
 import NeighborhoodsSection from '@/components/NeighborhoodsSection';
 import InvestmentPropertiesSection from '@/components/InvestmentPropertiesSection';
 import RehabPropertiesSection from '@/components/RehabPropertiesSection';
+import RehabInvestmentHowTo from '@/components/RehabInvestmentHowTo';
 import FinancingSection from '@/components/FinancingSection';
 import OwnersSection from '@/components/OwnersSection';
 import MissionSection from '@/components/MissionSection';
@@ -194,6 +195,7 @@ const Index = () => {
         <HeroSection />
         <InvestmentPropertiesSection />
         <RehabPropertiesSection />
+        <RehabInvestmentHowTo />
         <NeighborhoodsSection />
         <InternalLinkingNav />
         
