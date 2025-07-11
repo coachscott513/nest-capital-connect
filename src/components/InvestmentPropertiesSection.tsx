@@ -55,8 +55,8 @@ const InvestmentPropertiesSection = () => {
             Investment & Rental Properties
           </h2>
           <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
-            Discover profitable real estate opportunities across the Capital District. From multi-unit properties 
-            to fix & flip investments, we connect you with the best deals in Albany, Troy, Schenectady, and Saratoga.
+            Discover profitable real estate opportunities across the Capital District. From <a href="/investment-properties" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">multi-unit properties</a> 
+            to <a href="/rehab-properties" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">fix & flip investments</a>, we connect you with the best deals in <a href="/albany-rentals" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">Albany</a>, <a href="/troy-rentals" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">Troy</a>, <a href="/schenectady-rentals" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">Schenectady</a>, and <a href="/saratoga-rentals" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">Saratoga</a>. Need <a href="/financing" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">financing solutions</a>? We've got you covered.
           </p>
         </div>
 

@@ -21,6 +21,10 @@ import AnimatedCapitalDistrictMap from '@/components/AnimatedCapitalDistrictMap'
 import MeetTheTeamSection from '@/components/MeetTheTeamSection';
 import SEOAnalyzer from '@/components/SEOAnalyzer';
 import { AdSenseCompliance } from '@/components/AdSenseOptimizer';
+import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
+import RelatedContentSuggestions from '@/components/RelatedContentSuggestions';
+import NeighborhoodCrossLinks from '@/components/NeighborhoodCrossLinks';
+import CallToActionLinks from '@/components/CallToActionLinks';
 
 const Index = () => {
   const structuredData = {
@@ -189,20 +193,22 @@ const Index = () => {
         {JSON.stringify(breadcrumbData)}
       </script>
       
+      <BreadcrumbNavigation />
       <Header />
       
       <main role="main">
         <HeroSection />
         <InvestmentPropertiesSection />
+        <CallToActionLinks context="investment" className="py-8" />
         <RehabPropertiesSection />
         <RehabInvestmentHowTo />
         <NeighborhoodsSection />
+        <NeighborhoodCrossLinks showAll={true} />
         <InternalLinkingNav />
-        
-        
         <FinancingSection />
         <OwnersSection />
         <MissionSection />
+        <RelatedContentSuggestions currentPage="Capital District Real Estate" />
         <TestimonialsSection />
         <MeetTheTeamSection />
         <ContactSection />

@@ -45,7 +45,7 @@ const HeroSection = () => {
         </h1>
         
         <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 max-w-3xl mx-auto leading-relaxed">
-          Your trusted partner for <span className="text-red-500 font-semibold">multi unit</span>, <span className="text-red-500 font-semibold">rehab projects</span>, and <span className="text-red-500 font-semibold">rental solutions</span> in Albany, Troy, Schenectady, and Saratoga Springs
+          Your trusted partner for <a href="/investment-properties" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">multi unit</a>, <a href="/rehab-properties" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">rehab projects</a>, and <a href="/rentals" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">rental solutions</a> in <a href="/albany-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Albany</a>, <a href="/troy-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Troy</a>, <a href="/schenectady-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Schenectady</a>, and <a href="/saratoga-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Saratoga Springs</a>
         </p>
 
         {/* Service Cards */}

@@ -9,6 +9,10 @@ import AlbanyRentalsSection from '@/components/AlbanyRentalsSection';
 import SchenectadyRentalsSection from '@/components/SchenectadyRentalsSection';
 import TroyRentalsSection from '@/components/TroyRentalsSection';
 import ContactSection from '@/components/ContactSection';
+import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
+import RelatedContentSuggestions from '@/components/RelatedContentSuggestions';
+import NeighborhoodCrossLinks from '@/components/NeighborhoodCrossLinks';
+import CallToActionLinks from '@/components/CallToActionLinks';
 
 const Rentals = () => {
   const structuredData = {
@@ -41,6 +45,7 @@ const Rentals = () => {
         structuredData={structuredData}
       />
       
+      <BreadcrumbNavigation />
       <Header />
       
       <main role="main">
@@ -50,17 +55,20 @@ const Rentals = () => {
               Rentals & First-Time Homebuyers
             </h1>
             <p className="text-lg text-slate-600">
-              Quality rental properties and comprehensive support for first-time homebuyers across the Capital District.
+              Quality rental properties and comprehensive support for first-time homebuyers across the <a href="/investment-properties" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Capital District investment market</a>.
             </p>
           </div>
         </div>
         
         <AlbanyRentalsSection />
+        <CallToActionLinks context="rental" className="py-8" />
         <TroyRentalsSection />
         <SchenectadyRentalsSection />
         <SaratogaRentalsSection />
+        <NeighborhoodCrossLinks currentArea="rentals" />
         <RentersSection />
         <FirstTimeBuyersSection />
+        <RelatedContentSuggestions currentPage="Capital District Rentals" />
         <ContactSection />
       </main>
       

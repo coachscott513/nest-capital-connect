@@ -33,7 +33,7 @@ const NeighborhoodsSection = () => {
           Explore Capital District Neighborhoods
         </h2>
         <p className="text-lg mb-8 max-w-2xl mx-auto">
-          From the historic charm of Albany to the vibrant arts scene of Troy, the revitalized energy of Schenectady, and the elegant allure of Saratoga Springs, we've got you covered.
+          From the historic charm of <a href="/albany-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Albany rentals</a> to the vibrant arts scene of <a href="/troy-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Troy</a>, the revitalized energy of <a href="/schenectady-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Schenectady</a>, and the elegant allure of <a href="/saratoga-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Saratoga Springs</a>, we provide both <a href="/rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">rental opportunities</a> and <a href="/investment-properties" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">investment properties</a> across the Capital District.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {neighborhoods.map((neighborhood, index) => (

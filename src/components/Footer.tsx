@@ -16,8 +16,11 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto">
         <p>&copy; 2025 Capital District Nest. All rights reserved.</p>
         <div className="mt-4 text-sm space-x-4">
-          <button className="hover:underline transition-colors">Privacy Policy</button>
-          <button className="hover:underline transition-colors">Terms of Service</button>
+          <a href="/privacy-policy" className="hover:underline transition-colors">Privacy Policy</a>
+          <a href="/terms-of-service" className="hover:underline transition-colors">Terms of Service</a>
+          <a href="/investment-properties" className="hover:underline transition-colors">Investment Properties</a>
+          <a href="/rentals" className="hover:underline transition-colors">Rentals</a>
+          <a href="/financing" className="hover:underline transition-colors">Financing</a>
         </div>
         
         <div className="mt-6 border-t border-slate-700 pt-4">
