@@ -1,5 +1,6 @@
 import React from 'react';
 import { Building, MapPin, Home, TrendingUp, Users, DollarSign } from 'lucide-react';
+import LeadCaptureForm from './LeadCaptureForm';
 
 const InvestmentPropertiesSection = () => {
   const areaButtons = [
@@ -88,6 +89,16 @@ const InvestmentPropertiesSection = () => {
           ))}
         </div>
 
+        {/* Lead Capture Form */}
+        <div className="mb-12 max-w-3xl mx-auto">
+          <LeadCaptureForm 
+            type="investment"
+            title="Get Weekly Capital District Investment Picks"
+            description="See the 3 best underpriced multi-unit and rehab properties + free ROI analysis"
+            buttonText="Send Me This Week's Deals"
+          />
+        </div>
+
         <div className="text-center">
           <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
             <h3 className="text-3xl font-bold mb-4 text-white">
@@ -107,7 +118,7 @@ const InvestmentPropertiesSection = () => {
                 }}
                 className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
               >
-                Get Investment Analysis
+                Schedule Free Consultation
               </button>
               <button
                 onClick={() => {
@@ -118,7 +129,7 @@ const InvestmentPropertiesSection = () => {
                 }}
                 className="bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
               >
-                Schedule Consultation
+                View Current Inventory
               </button>
             </div>
           </div>

@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Home, Hammer, Building, Calculator, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import LeadCaptureForm from "./LeadCaptureForm";
 
 const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {
@@ -69,6 +70,17 @@ const HeroSection = () => {
           ))}
         </div>
 
+        {/* Lead Capture Form - Investment Focus */}
+        <div className="mb-8 max-w-2xl mx-auto">
+          <LeadCaptureForm 
+            type="investment"
+            title="Get This Week's Top Investment Deals"
+            description="See the 3 best underpriced properties in the Capital District + free market analysis"
+            buttonText="Send Me The Deals"
+            variant="hero"
+          />
+        </div>
+
         {/* Call to Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
           <Button 
@@ -76,15 +88,15 @@ const HeroSection = () => {
             size="lg"
             className="bg-white text-blue-600 hover:bg-gray-100 font-semibold px-8 py-3 text-lg"
           >
-            Explore Investments
+            Browse Multi-Unit Properties
           </Button>
           <Button 
-            onClick={() => scrollToSection('contact')}
+            onClick={() => scrollToSection('rehab-properties')}
             variant="outline"
             size="lg"
             className="border-white text-white hover:bg-white hover:text-blue-600 font-semibold px-8 py-3 text-lg"
           >
-            Get Started Today
+            View Rehab Opportunities
           </Button>
         </div>
 

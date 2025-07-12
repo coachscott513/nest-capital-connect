@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Hammer, Calculator, ClipboardCheck, Home } from 'lucide-react';
 import RealEstateAnalyzer from './RealEstateAnalyzer';
+import LeadCaptureForm from './LeadCaptureForm';
 
 const RehabPropertiesSection = () => {
   const [showAnalyzer, setShowAnalyzer] = useState(false);
@@ -258,6 +259,16 @@ const RehabPropertiesSection = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Lead Capture Form */}
+          <div className="mb-12 max-w-3xl mx-auto">
+            <LeadCaptureForm 
+              type="rehab"
+              title="Get Free Rehab Property Analysis"
+              description="Receive detailed ROI calculations and profit projections for any distressed property"
+              buttonText="Get My Free Analysis"
+            />
           </div>
 
           <div className="bg-white p-8 rounded-xl shadow-lg">
