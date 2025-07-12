@@ -39,6 +39,32 @@ const SEOSitemap = () => {
         lastmod: currentDate
       },
       
+      // Capital District Hub Pages
+      { 
+        url: '/albany-real-estate', 
+        changefreq: 'daily', 
+        priority: '0.9',
+        lastmod: currentDate
+      },
+      { 
+        url: '/troy-real-estate', 
+        changefreq: 'daily', 
+        priority: '0.9',
+        lastmod: currentDate
+      },
+      { 
+        url: '/schenectady-real-estate', 
+        changefreq: 'daily', 
+        priority: '0.9',
+        lastmod: currentDate
+      },
+      { 
+        url: '/saratoga-real-estate', 
+        changefreq: 'daily', 
+        priority: '0.9',
+        lastmod: currentDate
+      },
+      
       // Section anchors for single-page navigation
       { 
         url: '/#neighborhoods', 

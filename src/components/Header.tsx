@@ -50,6 +50,17 @@ const Header = () => {
           >
             Rentals & First-Time Buyers
           </Link>
+          <div className="relative group">
+            <button className="text-white hover:text-blue-200 transition-colors duration-200">
+              Markets
+            </button>
+            <div className="absolute top-full left-0 bg-blue-800 rounded-md shadow-lg p-2 hidden group-hover:block min-w-48">
+              <Link to="/albany-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Albany</Link>
+              <Link to="/troy-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Troy</Link>
+              <Link to="/schenectady-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Schenectady</Link>
+              <Link to="/saratoga-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Saratoga</Link>
+            </div>
+          </div>
           <Link
             to="/blog"
             className="text-white hover:text-blue-200 transition-colors duration-200"

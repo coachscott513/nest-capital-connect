@@ -12,6 +12,10 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./components/PrivacyPolicy";
+import AlbanyRealEstate from "./pages/AlbanyRealEstate";
+import TroyRealEstate from "./pages/TroyRealEstate";
+import SchenectadyRealEstate from "./pages/SchenectadyRealEstate";
+import SaratogaRealEstate from "./pages/SaratogaRealEstate";
 
 const App = () => {
   // Create QueryClient inside the component to avoid initialization issues
@@ -47,6 +51,12 @@ const App = () => {
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<PrivacyPolicy />} />
+            
+            {/* Capital District Hub Pages */}
+            <Route path="/albany-real-estate" element={<AlbanyRealEstate />} />
+            <Route path="/troy-real-estate" element={<TroyRealEstate />} />
+            <Route path="/schenectady-real-estate" element={<SchenectadyRealEstate />} />
+            <Route path="/saratoga-real-estate" element={<SaratogaRealEstate />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
