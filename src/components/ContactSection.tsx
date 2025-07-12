@@ -153,7 +153,7 @@ const ContactSection = () => {
                 <svg className="w-6 h-6 mr-3 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2 2A15.97 15.97 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-1.11 2.45L6.9 11.4A11 11 0 0 0 12.6 17.1l1.42-1.42a2 2 0 0 1 2.45-1.11c1.1.25 2.2.37 3.3.37a2 2 0 0 1 1.72 2z"></path>
                 </svg>
-                Phone: <a href="tel:518-676-8480" className="ml-2 text-blue-500 hover:underline">(518) 676-8480</a>
+                Phone: <a href="tel:518-522-7265" className="ml-2 text-blue-500 hover:underline">(518) 522-7265</a>
               </p>
               <p className="flex items-center justify-center">
                 <svg className="w-6 h-6 mr-3 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

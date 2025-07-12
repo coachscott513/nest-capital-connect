@@ -17,7 +17,7 @@ const LocalBusinessSchema = () => {
       ],
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+1-518-XXX-XXXX",
+        "telephone": "+1-518-522-7265",
         "contactType": "customer service",
         "areaServed": "US",
         "availableLanguage": "English"
@@ -30,7 +30,7 @@ const LocalBusinessSchema = () => {
       "name": "Capital District Nest",
       "description": "Professional real estate services specializing in rental properties, first-time home buying, and investment opportunities in Albany, Troy, Schenectady, and Saratoga Springs, NY.",
       "url": "https://your-domain.com",
-      "telephone": "+1-518-XXX-XXXX",
+      "telephone": "+1-518-522-7265",
       "address": {
         "@type": "PostalAddress",
         "addressRegion": "NY",
