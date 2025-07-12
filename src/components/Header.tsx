@@ -18,7 +18,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-blue-900/95 backdrop-blur-sm border-b border-blue-800/20 shadow-lg">
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
         {/* Logo and Site Name */}
-        <div className="flex items-center space-x-3">
+        <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
           <img 
             src="/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png" 
             alt="Capital District Nest Logo" 
@@ -27,7 +27,7 @@ const Header = () => {
           <span className="text-white font-semibold text-lg hidden sm:block">
             Capital District Nest
           </span>
-        </div>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-6">
