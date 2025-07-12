@@ -12,6 +12,20 @@ import SEOHead from '@/components/SEOHead';
 // Sample blog posts - you can replace with real data from Supabase later
 const blogPosts = [
   {
+    id: 0,
+    title: "Is 351 Oakland Ave in Schenectady, NY a Smart Buy at $224,900? (Quick Analysis)",
+    slug: "351-oakland-avenue-schenectady-analysis",
+    excerpt: "Explore 351 Oakland Ave, a beautifully updated 3-bed Ranch in Schenectady's desirable 12309 zip. See why this move-in ready home offers exceptional value.",
+    content: "Full content would go here...",
+    author: "Scott Rossi",
+    publishedAt: "2025-01-12",
+    readTime: "6 min read",
+    category: "Property Analysis",
+    tags: ["Schenectady", "Property Analysis", "Ranch Home", "Real Estate Value"],
+    featured: true,
+    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=400&fit=crop"
+  },
+  {
     id: 1,
     title: "Is 124 Hamilton St in Albany, NY a Smart Buy at $375,000? (Quick Analysis)",
     slug: "124-hamilton-st-albany-smart-buy-analysis", 

@@ -10,6 +10,84 @@ import SEOHead from '@/components/SEOHead';
 
 // Sample blog post data - you can replace with real data from Supabase later
 const blogPosts = {
+  "351-oakland-avenue-schenectady-analysis": {
+    id: 0,
+    title: "Is 351 Oakland Ave in Schenectady, NY a Smart Buy at $224,900? (Quick Analysis)",
+    slug: "351-oakland-avenue-schenectady-analysis",
+    excerpt: "Explore 351 Oakland Ave, a beautifully updated 3-bed Ranch in Schenectady's desirable 12309 zip. See why this move-in ready home offers exceptional value.",
+    content: `
+      <div class="mb-8">
+        <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=400&fit=crop" alt="351 Oakland Avenue Schenectady Ranch home exterior" class="w-full h-64 object-cover rounded-lg mb-4" />
+      </div>
+
+      <h2 class="text-2xl font-bold mb-6">🏡 Property Snapshot: 351 Oakland Avenue, Schenectady, NY 12309</h2>
+      
+      <div class="bg-muted p-6 rounded-lg mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <p><strong>Address:</strong> 351 Oakland Avenue, Schenectady, NY 12309</p>
+            <p><strong>Property Type:</strong> Single Family Residence (Ranch style)</p>
+            <p><strong>List Price:</strong> $224,900</p>
+            <p><strong>Bedrooms/Bathrooms:</strong> 3 Beds / 2 Full Baths</p>
+          </div>
+          <div>
+            <p><strong>Square Footage:</strong> 1,382 sqft</p>
+            <p><strong>Lot Size:</strong> 0.29 Acres</p>
+            <p><strong>Year Built:</strong> 1970</p>
+            <p><strong>Annual Taxes:</strong> $7,381</p>
+          </div>
+        </div>
+        <div class="mt-4">
+          <p><strong>Days on Market:</strong> Listed 07/11/2025 (Recently Listed!)</p>
+          <p><strong>Neighborhood:</strong> Quiet dead-end street in a desirable Schenectady area.</p>
+          <p><strong>Key Features:</strong> Hardwood floors, bright and open layout, first-floor laundry, central air, deck, attached garage.</p>
+        </div>
+      </div>
+
+      <h2 class="text-2xl font-bold mb-6">📊 Quick Value & Market Breakdown</h2>
+      
+      <p class="mb-4">This charming Ranch home presents compelling value, especially when compared to recent market trends in the 12309 ZIP code.</p>
+      
+      <h3 class="text-xl font-semibold mb-3">Price Analysis</h3>
+      <p class="mb-4"><strong>Price per Square Foot (PPSF):</strong> At $224,900 for 1,382 sqft, the price per square foot is approximately $162.73/sqft.</p>
+      
+      <p class="mb-6"><strong>Market Context:</strong> This is a competitive price for a move-in ready home in a desirable Schenectady neighborhood, especially considering the updates.</p>
+      
+      <h3 class="text-xl font-semibold mb-3">Market Comparison (ZIP Code 12309 Averages)</h3>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li><strong>Price:</strong> This home is listed at $224,900, significantly below the average price of $470,000 for single-family homes in 12309. This points to strong value.</li>
+        <li><strong>Taxes:</strong> Annual taxes are $7,381, which is lower than the 12309 average of $9,210. This contributes to more affordable monthly carrying costs.</li>
+        <li><strong>Year Built:</strong> Built in 1970, this home is newer than the average year built of 1961 for the area.</li>
+      </ul>
+      
+      <h3 class="text-xl font-semibold mb-3">Condition & Key Amenities</h3>
+      <p class="mb-4">The property description highlights it as "charming, beautifully updated, ranch," with "gleaming hardwood floors" and "tastefully updated" interiors. This suggests it's truly move-in ready, requiring minimal immediate effort from a new owner.</p>
+      
+      <p class="mb-6">Features like central air, a deck, and an attached garage add significant value and convenience.</p>
+      
+      <h2 class="text-2xl font-bold mb-4">🧠 Final Take: Exceptional Value in a Prime Location</h2>
+      
+      <p class="mb-4">351 Oakland Avenue stands out as a fantastic opportunity for homebuyers seeking a low-maintenance, updated homes Schenectady in a peaceful yet desirable Schenectady neighborhood. Its price point and lower taxes position it as a highly attractive option compared to the general <a href="/communities/schenectady" class="text-primary hover:underline">Schenectady market trends</a>.</p>
+      
+      <p class="mb-6">This is an ideal Ranch home Schenectady for those looking for easy, one-level living without the need for extensive renovations. Given its recent listing, it's unlikely to last long on the market for 3 bed 2 bath Schenectady properties.</p>
+      
+      <div class="bg-primary/10 p-6 rounded-lg">
+        <h3 class="text-xl font-semibold mb-4">📞 Ready to See This Home or Discuss Your Schenectady Home Search?</h3>
+        <p class="mb-4">Interested in viewing this property or exploring other <a href="/schenectady-rentals" class="text-primary hover:underline">Schenectady homes for sale</a>? Our team specializes in 12309 real estate value analysis and can help you find the perfect home.</p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="/contact" class="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors text-center font-medium">Book a 15-minute consultation with Scott today!</a>
+          <a href="/contact" class="inline-block bg-secondary text-secondary-foreground px-6 py-3 rounded-lg hover:bg-secondary/90 transition-colors text-center font-medium">Get notified about other move-in ready homes!</a>
+        </div>
+      </div>
+    `,
+    author: "Scott Rossi",
+    publishedAt: "2025-01-12",
+    readTime: "6 min read",
+    category: "Property Analysis",
+    tags: ["Schenectady", "Property Analysis", "Ranch Home", "Real Estate Value"],
+    featured: true,
+    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=400&fit=crop"
+  },
   "124-hamilton-st-albany-smart-buy-analysis": {
     id: 1,
     title: "Is 124 Hamilton St in Albany, NY a Smart Buy at $375,000? (Quick Analysis)",
