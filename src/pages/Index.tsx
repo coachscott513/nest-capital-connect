@@ -196,7 +196,7 @@ const Index = () => {
       <BreadcrumbNavigation />
       <Header />
       
-      <main role="main">
+      <main role="main" className="pt-20">
         <HeroSection />
         <InvestmentPropertiesSection />
         <CallToActionLinks context="investment" className="py-8" />
