@@ -5,6 +5,7 @@ import LeadCaptureForm from './LeadCaptureForm';
 
 const RehabPropertiesSection = () => {
   const [showAnalyzer, setShowAnalyzer] = useState(false);
+  const [showDetailedBreakdown, setShowDetailedBreakdown] = useState(false);
   const rehabServices = [
     {
       icon: <ClipboardCheck className="w-8 h-8 text-blue-500" />,
@@ -136,129 +137,184 @@ const RehabPropertiesSection = () => {
               </ul>
             </div>
 
-            {/* Example Section - Base Calculations */}
-            <div className="bg-green-50 p-6 rounded-lg shadow-md border border-green-200 mb-8">
-              <h4 className="text-2xl md:text-3xl font-bold text-blue-700 mb-6 flex items-center">
-                <svg className="w-7 h-7 mr-3 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
-                  <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
-                </svg>
-                Example Scenario - Base Calculations
+            {/* Condensed Key Highlights */}
+            <div className="bg-gradient-to-r from-green-50 to-blue-50 p-8 rounded-lg shadow-md border border-green-200 mb-8">
+              <h4 className="text-2xl md:text-3xl font-bold text-blue-700 mb-6 text-center">
+                🏠 Example: $80k Purchase → $200k ARV
               </h4>
-              <div className="space-y-4 text-lg text-gray-700">
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Purchase Price:</span>
-                  <span className="font-bold text-blue-700">$80,000</span>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div className="text-center bg-white p-4 rounded-lg shadow-sm">
+                  <div className="text-3xl font-bold text-green-600">$41,000</div>
+                  <div className="text-sm text-gray-600">Flip Profit</div>
+                  <div className="text-xs text-gray-500">256% ROI</div>
                 </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">After Repair Value (ARV):</span>
-                  <span className="font-bold text-blue-700">$200,000</span>
+                <div className="text-center bg-white p-4 rounded-lg shadow-sm">
+                  <div className="text-3xl font-bold text-blue-600">$945/mo</div>
+                  <div className="text-sm text-gray-600">Rental Cash Flow</div>
+                  <div className="text-xs text-gray-500">71% Annual ROI</div>
                 </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Required Down Payment (20%):</span>
-                  <span className="font-bold text-green-700">$16,000</span>
-                  <span className="text-sm text-gray-500">($80,000 * 0.20)</span>
+                <div className="text-center bg-white p-4 rounded-lg shadow-sm">
+                  <div className="text-3xl font-bold text-purple-600">$16,000</div>
+                  <div className="text-sm text-gray-600">Down Payment</div>
+                  <div className="text-xs text-gray-500">20% Required</div>
                 </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Maximum Repairs Available (up to 70% of ARV):</span>
-                  <span className="font-bold text-green-700">$60,000</span>
-                  <span className="text-sm text-gray-500">(Calculated as $200,000 * 0.70 = $140,000. Total loan needed $80,000 (purchase) + $60,000 (repairs) = $140,000, which fits the 70% ARV cap.)</span>
-                </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Approximate Monthly Carrying Costs (Interest-Only during flip):</span>
-                  <span className="font-bold text-red-600">$500</span>
-                </div>
+              </div>
+
+              <div className="text-center">
+                <button
+                  onClick={() => setShowDetailedBreakdown(!showDetailedBreakdown)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 inline-flex items-center gap-2"
+                >
+                  {showDetailedBreakdown ? '📊 Hide' : '📊 View'} Full Spreadsheet Breakdown
+                  <svg className={`w-4 h-4 transition-transform ${showDetailedBreakdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
               </div>
             </div>
 
-            {/* One-Time Sale Scenario */}
-            <div className="bg-blue-50 p-6 rounded-lg shadow-md border border-blue-200 mb-8">
-              <h4 className="text-xl md:text-2xl font-bold text-blue-700 mb-6 flex items-center">
-                <svg className="w-6 h-6 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
-                </svg>
-                One-Time Sale Scenario (Flip)
-              </h4>
-              <div className="space-y-4 text-lg text-gray-700">
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Estimated Total Project Cost:</span>
-                  <span className="font-bold text-gray-800">$143,000</span>
-                  <span className="text-sm text-gray-500">(Purchase $80k + Repairs $60k + 6 months Carrying Costs $3k)</span>
+            {/* Detailed Spreadsheet Breakdown - Collapsible */}
+            {showDetailedBreakdown && (
+              <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-200 mb-8">
+                <h4 className="text-2xl font-bold text-center text-gray-800 mb-8">
+                  📊 Complete Financial Breakdown Spreadsheet
+                </h4>
+                
+                {/* Base Numbers Table */}
+                <div className="mb-8">
+                  <h5 className="text-lg font-semibold text-gray-700 mb-4 bg-gray-50 p-3 rounded">📋 Base Property Info</h5>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-gray-100">
+                          <th className="border border-gray-300 p-3 text-left font-semibold">Item</th>
+                          <th className="border border-gray-300 p-3 text-right font-semibold">Amount</th>
+                          <th className="border border-gray-300 p-3 text-left font-semibold">Notes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="border border-gray-300 p-3">Purchase Price</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono">$80,000</td>
+                          <td className="border border-gray-300 p-3 text-sm text-gray-600">Distressed property</td>
+                        </tr>
+                        <tr className="bg-gray-50">
+                          <td className="border border-gray-300 p-3">After Repair Value (ARV)</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono">$200,000</td>
+                          <td className="border border-gray-300 p-3 text-sm text-gray-600">Comparable sales</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-gray-300 p-3">Down Payment (20%)</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-red-600">$16,000</td>
+                          <td className="border border-gray-300 p-3 text-sm text-gray-600">Your cash investment</td>
+                        </tr>
+                        <tr className="bg-gray-50">
+                          <td className="border border-gray-300 p-3">Max Repair Loan</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono">$60,000</td>
+                          <td className="border border-gray-300 p-3 text-sm text-gray-600">Up to 70% ARV cap</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Estimated Selling Costs (e.g., 8% of ARV):</span>
-                  <span className="font-bold text-red-600">$16,000</span>
-                  <span className="text-sm text-gray-500">($200,000 * 0.08)</span>
-                </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">One-Time Sale Profit (at ARV):</span>
-                  <span className="font-bold text-green-700">$41,000</span>
-                  <span className="text-sm text-gray-500">($200,000 ARV - $143,000 Project Cost - $16,000 Selling Costs)</span>
-                </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Cash on Cash Return (Sale):</span>
-                  <span className="font-bold text-green-700">256.25%</span>
-                  <span className="text-sm text-gray-500">($41,000 Profit / $16,000 Down Payment)</span>
-                </div>
-              </div>
-            </div>
 
-            {/* Rental Scenario */}
-            <div className="bg-purple-50 p-6 rounded-lg shadow-md border border-purple-200 mb-8">
-              <h4 className="text-xl md:text-2xl font-bold text-blue-700 mb-6 flex items-center">
-                <svg className="w-6 h-6 mr-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-                </svg>
-                Rental Scenario (Hold) - After Refinance
-              </h4>
-              <div className="space-y-4 text-lg text-gray-700">
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">New Loan Amount (65% LTV of ARV):</span>
-                  <span className="font-bold text-blue-700">$130,000</span>
-                  <span className="text-sm text-gray-500">($200,000 ARV * 0.65)</span>
+                {/* Flip Scenario Table */}
+                <div className="mb-8">
+                  <h5 className="text-lg font-semibold text-gray-700 mb-4 bg-green-50 p-3 rounded">🔄 Flip Scenario (Sell)</h5>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-green-100">
+                          <th className="border border-gray-300 p-3 text-left font-semibold">Cost/Revenue Item</th>
+                          <th className="border border-gray-300 p-3 text-right font-semibold">Amount</th>
+                          <th className="border border-gray-300 p-3 text-left font-semibold">Calculation</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="border border-gray-300 p-3">Sale Price (ARV)</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-green-600">$200,000</td>
+                          <td className="border border-gray-300 p-3 text-sm text-gray-600">Market value after repairs</td>
+                        </tr>
+                        <tr className="bg-gray-50">
+                          <td className="border border-gray-300 p-3">Total Project Cost</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-red-600">($143,000)</td>
+                          <td className="border border-gray-300 p-3 text-sm text-gray-600">$80k + $60k + $3k carrying costs</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-gray-300 p-3">Selling Costs (8%)</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-red-600">($16,000)</td>
+                          <td className="border border-gray-300 p-3 text-sm text-gray-600">Realtor, title, taxes</td>
+                        </tr>
+                        <tr className="bg-green-50 font-semibold">
+                          <td className="border border-gray-300 p-3">Net Profit</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-green-700">$41,000</td>
+                          <td className="border border-gray-300 p-3 text-sm text-gray-600">256% ROI on $16k down</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Cash Out / (Cash In) at Refinance:</span>
-                  <span className="font-bold text-red-600">($10,000)</span>
-                  <span className="text-sm text-gray-500">(New Loan $130,000 - Initial Loan $140,000. This indicates a cash-in to reduce the loan balance.)</span>
+
+                {/* Rental Scenario Table */}
+                <div className="mb-6">
+                  <h5 className="text-lg font-semibold text-gray-700 mb-4 bg-blue-50 p-3 rounded">🏠 BRRRR Scenario (Hold as Rental)</h5>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse border border-gray-300">
+                      <thead>
+                        <tr className="bg-blue-100">
+                          <th className="border border-gray-300 p-3 text-left font-semibold">Income/Expense Item</th>
+                          <th className="border border-gray-300 p-3 text-right font-semibold">Monthly</th>
+                          <th className="border border-gray-300 p-3 text-right font-semibold">Annual</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="border border-gray-300 p-3">Rental Income</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-green-600">$2,400</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-green-600">$28,800</td>
+                        </tr>
+                        <tr className="bg-gray-50">
+                          <td className="border border-gray-300 p-3">Mortgage Payment</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-red-600">($865)</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-red-600">($10,380)</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-gray-300 p-3">Property Taxes</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-red-600">($250)</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-red-600">($3,000)</td>
+                        </tr>
+                        <tr className="bg-gray-50">
+                          <td className="border border-gray-300 p-3">Insurance</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-red-600">($100)</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-red-600">($1,200)</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-gray-300 p-3">Maintenance/Vacancy (10%)</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-red-600">($240)</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-red-600">($2,880)</td>
+                        </tr>
+                        <tr className="bg-blue-50 font-semibold">
+                          <td className="border border-gray-300 p-3">Net Cash Flow</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-blue-700">$945</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-blue-700">$11,340</td>
+                        </tr>
+                        <tr className="bg-blue-100 font-bold">
+                          <td className="border border-gray-300 p-3">Cash-on-Cash ROI</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-blue-800">5.9%</td>
+                          <td className="border border-gray-300 p-3 text-right font-mono text-blue-800">70.9%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Estimated Monthly Mortgage Payment (7% interest, 30-yr fixed):</span>
-                  <span className="font-bold text-red-600">$865.05</span>
-                </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Estimated Monthly Rental Income:</span>
-                  <span className="font-bold text-green-700">$2,400</span>
-                </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Estimated Monthly Expenses (Post-Refinance):</span>
-                  <span className="font-bold text-red-600">$1,455.05</span>
-                  <span className="text-sm text-gray-500">(Mortgage $865.05 + Taxes $250 + Insurance $100 + Maint./Vacancy $240)</span>
-                </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Estimated Monthly Profit (Cash Flow):</span>
-                  <span className="font-bold text-green-700">$944.95</span>
-                </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Estimated Annual Profit (Cash Flow):</span>
-                  <span className="font-bold text-green-700">$11,339.40</span>
-                  <span className="text-sm text-gray-500">($944.95 * 12 months)</span>
-                </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Cash on Cash Return (Rental, Annual):</span>
-                  <span className="font-bold text-green-700">70.87%</span>
-                  <span className="text-sm text-gray-500">($11,339.40 Annual Profit / $16,000 Down Payment)</span>
-                </div>
-                <div className="flex justify-between items-center bg-white p-3 rounded-md shadow-sm border border-gray-100">
-                  <span className="font-medium text-gray-600">Estimated 5-Year Profit (Cash Flow):</span>
-                  <span className="font-bold text-green-700">$56,697.00</span>
-                  <span className="text-sm text-gray-500">($11,339.40 * 5 years)</span>
-                </div>
-                <div className="text-sm text-gray-500 mt-4 italic">
-                  *Note: These calculations are approximations and do not include potential property appreciation, or other variable costs. Consult with a financial advisor for personalized projections.
+
+                <div className="text-xs text-gray-500 italic text-center">
+                  *Calculations are estimates for illustration purposes. Actual results may vary based on market conditions, property condition, and other factors.
                 </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Lead Capture Form */}
