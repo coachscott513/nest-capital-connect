@@ -47,6 +47,13 @@ const Header = () => {
           >
             Rentals & First-Time Buyers
           </Link>
+          <Link
+            to="/blog"
+            className="text-white hover:text-blue-200 transition-colors duration-200"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Blog
+          </Link>
           <button
             onClick={() => scrollToSection('owners')}
             className="text-white hover:text-blue-200 transition-colors duration-200"
@@ -91,6 +98,13 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Rentals & First-Time Buyers
+              </Link>
+              <Link
+                to="/blog"
+                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog
               </Link>
               <button
                 onClick={() => scrollToSection('owners')}
