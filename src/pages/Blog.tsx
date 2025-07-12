@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -224,17 +225,19 @@ const Blog = () => {
                           {post.excerpt}
                         </CardDescription>
                       </CardHeader>
-                      <CardContent>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <User className="w-4 h-4 text-muted-foreground" />
-                            <span className="text-sm text-muted-foreground">{post.author}</span>
+                        <CardContent>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <User className="w-4 h-4 text-muted-foreground" />
+                              <span className="text-sm text-muted-foreground">{post.author}</span>
+                            </div>
+                            <Link to={`/blog/${post.slug}`}>
+                              <Button variant="outline" size="sm" className="group">
+                                Read More
+                                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                              </Button>
+                            </Link>
                           </div>
-                          <Button variant="outline" size="sm" className="group">
-                            Read More
-                            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                          </Button>
-                        </div>
                         <div className="flex flex-wrap gap-2 mt-4">
                           {post.tags.map((tag, index) => (
                             <Badge key={index} variant="outline" className="text-xs">
@@ -295,10 +298,12 @@ const Blog = () => {
                           <User className="w-3 h-3 text-muted-foreground" />
                           <span className="text-xs text-muted-foreground">{post.author}</span>
                         </div>
-                        <Button variant="outline" size="sm" className="group">
-                          Read
-                          <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
-                        </Button>
+                        <Link to={`/blog/${post.slug}`}>
+                          <Button variant="outline" size="sm" className="group">
+                            Read
+                            <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                        </Link>
                       </div>
                       <div className="flex flex-wrap gap-1">
                         {post.tags.slice(0, 3).map((tag, index) => (
