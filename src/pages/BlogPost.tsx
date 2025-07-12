@@ -10,8 +10,107 @@ import SEOHead from '@/components/SEOHead';
 
 // Sample blog post data - you can replace with real data from Supabase later
 const blogPosts = {
-  "albany-rental-market-2025-investment-opportunities": {
+  "124-hamilton-st-albany-smart-buy-analysis": {
     id: 1,
+    title: "Is 124 Hamilton St in Albany, NY a Smart Buy at $375,000? (Quick Analysis)",
+    slug: "124-hamilton-st-albany-smart-buy-analysis",
+    excerpt: "Dive into 124 Hamilton St, a 3-unit multi-family in Albany's Center Square. Is its $375K price tag a good deal for investors or owner-occupants? Get our quick analysis.",
+    content: `
+      <h2>🏡 Property Snapshot: 124 Hamilton St, Albany, NY 12207</h2>
+      
+      <p><strong>Address:</strong> 124 Hamilton St, Albany, NY 12207<br>
+      <strong>Property Type:</strong> Multi-Family (3 Units)<br>
+      <strong>List Price:</strong> $375,000<br>
+      <strong>Bedrooms/Bathrooms:</strong> 6 Beds / 3.5 Baths<br>
+      <strong>Square Footage:</strong> 4,584 sqft<br>
+      <strong>Lot Size:</strong> 0.049 acre (approx. 2,134 sqft)<br>
+      <strong>Year Built:</strong> 1846<br>
+      <strong>Days on Market:</strong> 26 days<br>
+      <strong>Neighborhood:</strong> Center Square, Albany</p>
+
+      <h2>📊 Quick Investment & Value Breakdown</h2>
+      
+      <p>Let's look at the numbers to see if 124 Hamilton St presents a good opportunity in today's Albany market.</p>
+
+      <h3>Price per Square Foot Analysis</h3>
+      <p>At $375,000 for 4,584 sqft, the <strong>price per square foot is approximately $82/sqft</strong>.</p>
+      
+      <p><strong>Market Context:</strong> Recent data for Albany shows the median price per square foot for all homes around $179-$201. For Center Square specifically, the median listing PPSF is $184. While this property is multi-family and very large, $82/sqft suggests a strong value opportunity in terms of raw space, potentially indicating either a need for significant updates or simply a fantastic deal.</p>
+
+      <h3>Estimated Rental Income Analysis</h3>
+      <p>For a true multi-family analysis, we need to estimate rental income. Based on market averages for similar units in Center Square, we're estimating $1,100-$1,300 per unit for 1-2 bedroom apartments.</p>
+      
+      <p><strong>Conservative Estimate:</strong> $1,200 per unit<br>
+      <strong>Monthly Gross Income:</strong> $1,200 × 3 units = $3,600/month<br>
+      <strong>Annual Gross Rent:</strong> $3,600 × 12 = $43,200/year</p>
+
+      <h3>Gross Rent Multiplier (GRM)</h3>
+      <p>GRM = Purchase Price ÷ Gross Annual Rent<br>
+      GRM = $375,000 ÷ $43,200 = <strong>8.68</strong></p>
+      
+      <p><strong>Verdict:</strong> A GRM under 10 is generally considered fair to good in many markets. For Albany, an 8.68 GRM suggests solid cash flow potential, especially if actual rents meet or exceed our estimate.</p>
+
+      <h3>Cap Rate Calculation</h3>
+      <p>To estimate Net Operating Income (NOI), we factor in typical multi-family expenses:</p>
+      
+      <ul>
+        <li><strong>Property Taxes:</strong> $6,000/year (estimated at ~1.6% of purchase price)</li>
+        <li><strong>Insurance:</strong> $2,500/year</li>
+        <li><strong>Vacancy (5%):</strong> $2,160/year</li>
+        <li><strong>Maintenance/Repairs (10%):</strong> $4,320/year</li>
+        <li><strong>Utilities (Common Areas):</strong> $1,500/year</li>
+      </ul>
+      
+      <p><strong>Total Estimated Expenses:</strong> $16,480/year<br>
+      <strong>Net Operating Income (NOI):</strong> $43,200 - $16,480 = $26,720/year<br>
+      <strong>Cap Rate:</strong> $26,720 ÷ $375,000 = <strong>7.12%</strong></p>
+
+      <h3>Market Comparison</h3>
+      <p>A 7.12% cap rate is very attractive for downtown Albany multi-family properties. Average cap rates for multi-family in the Northeast often hover in the 6-9% range, indicating strong potential return on investment.</p>
+
+      <p>Similar 2-4 unit properties in Center Square typically range from $300K-$450K depending on size, condition, and number of units. The $375K price point for 4,584 sqft and 3 units appears competitive given the low price per square foot.</p>
+
+      <h2>🧠 Final Take: Fairly Priced with Significant Upside</h2>
+      
+      <p>124 Hamilton St stands out due to its exceptionally low price per square foot for a multi-family property of this size in Center Square. The estimated <strong>7.12% Cap Rate</strong> and <strong>8.68 GRM</strong> point to a strong investment opportunity for cash flow.</p>
+
+      <h3>For Investors</h3>
+      <p>If the condition aligns with the price (i.e., doesn't require a full gut renovation), this property could be a consistent income generator with potential for value-add through strategic updates and rent optimization.</p>
+
+      <h3>For Owner-Occupants</h3>
+      <p>With 3 units, this property offers an excellent "house hacking" opportunity. You could live in one unit and use rental income from the other two to significantly offset your mortgage, potentially making homeownership in desirable Albany Center Square very affordable.</p>
+
+      <p>The 26 days on market isn't excessive for a multi-family property, suggesting it's still actively being considered. Given its location and strong financial metrics, <strong>124 Hamilton St is certainly worth a closer look</strong>.</p>
+
+      <h2>Key Investment Highlights</h2>
+      <ul>
+        <li>🏢 <strong>3 rental units</strong> in prime Center Square location</li>
+        <li>💰 <strong>$82/sqft</strong> - well below market average</li>
+        <li>📈 <strong>7.12% estimated cap rate</strong> - excellent for Albany market</li>
+        <li>🏠 <strong>House hacking potential</strong> for owner-occupants</li>
+        <li>🎯 <strong>Value-add opportunity</strong> through strategic improvements</li>
+      </ul>
+
+      <h2>Next Steps</h2>
+      <p>Interested in this property or similar Albany multi-family investments? Here's what we recommend:</p>
+      <ol>
+        <li>Schedule a property showing to assess actual condition</li>
+        <li>Review rent roll and actual expenses if available</li>
+        <li>Get pre-approved for investment property financing</li>
+        <li>Conduct professional property inspection</li>
+        <li>Analyze comparable recent sales in Center Square</li>
+      </ol>
+    `,
+    author: "Scott Alvarez",
+    publishedAt: "2025-01-12",
+    readTime: "6 min read",
+    category: "Property Analysis",
+    tags: ["Albany", "Center Square", "Multi-Family", "Investment Property", "Cap Rate Analysis", "124 Hamilton St", "Property Investment", "House Hacking"],
+    featured: true,
+    image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=800&h=450&fit=crop"
+  },
+  "albany-rental-market-2025-investment-opportunities": {
+    id: 2,
     title: "Albany Rental Market 2025: Top Investment Opportunities",
     slug: "albany-rental-market-2025-investment-opportunities",
     excerpt: "Discover the hottest neighborhoods in Albany for rental property investments and learn why the Capital District is attracting savvy investors.",
@@ -47,15 +146,15 @@ const blogPosts = {
       <p>Ready to explore investment opportunities in Albany? Our team has access to off-market deals and can provide detailed cash flow analysis for any property you're considering.</p>
     `,
     author: "Scott Alvarez",
-    publishedAt: "2025-01-12",
+    publishedAt: "2025-01-10",
     readTime: "5 min read",
     category: "Market Analysis",
     tags: ["Albany", "Real Estate Investing", "Rental Properties", "Market Analysis"],
     featured: true,
-    image: "/blog/albany-market-2025.jpg"
+    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=450&fit=crop"
   },
   "brrrr-strategy-capital-district-guide": {
-    id: 2,
+    id: 3,
     title: "Complete Guide to BRRRR Strategy in the Capital District",
     slug: "brrrr-strategy-capital-district-guide",
     excerpt: "Master the Buy, Rehab, Rent, Refinance, Repeat strategy with real examples from Troy, Schenectady, and Saratoga Springs properties.",
@@ -118,12 +217,12 @@ const blogPosts = {
       <p>Ready to implement the BRRRR strategy? We can help you identify suitable properties, connect with reliable contractors, and guide you through the entire process.</p>
     `,
     author: "Scott Alvarez",
-    publishedAt: "2025-01-10",
+    publishedAt: "2025-01-08",
     readTime: "8 min read",
     category: "Investment Strategy",
     tags: ["BRRRR", "Real Estate Strategy", "Capital District", "Property Investment"],
-    featured: true,
-    image: "/blog/brrrr-strategy-guide.jpg"
+    featured: false,
+    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&h=450&fit=crop"
   }
 };
 

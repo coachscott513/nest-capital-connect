@@ -12,91 +12,91 @@ import SEOHead from '@/components/SEOHead';
 const blogPosts = [
   {
     id: 1,
-    title: "Albany Rental Market 2025: Top Investment Opportunities",
-    slug: "albany-rental-market-2025-investment-opportunities", 
-    excerpt: "Discover the hottest neighborhoods in Albany for rental property investments and learn why the Capital District is attracting savvy investors.",
+    title: "Is 124 Hamilton St in Albany, NY a Smart Buy at $375,000? (Quick Analysis)",
+    slug: "124-hamilton-st-albany-smart-buy-analysis", 
+    excerpt: "Dive into 124 Hamilton St, a 3-unit multi-family in Albany's Center Square. Is its $375K price tag a good deal for investors or owner-occupants? Get our quick analysis.",
     content: "Full content would go here...",
     author: "Scott Alvarez",
     publishedAt: "2025-01-12",
+    readTime: "6 min read",
+    category: "Property Analysis",
+    tags: ["Albany", "Center Square", "Multi-Family", "Investment Property", "Cap Rate Analysis", "124 Hamilton St", "Property Investment", "House Hacking"],
+    featured: true,
+    image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=800&h=450&fit=crop"
+  },
+  {
+    id: 2,
+    title: "Albany Rental Market 2025: Top Investment Opportunities",
+    slug: "albany-rental-market-2025-investment-opportunities",
+    excerpt: "Discover the hottest neighborhoods in Albany for rental property investments and learn why the Capital District is attracting savvy investors.",
+    content: "Full content would go here...",
+    author: "Scott Alvarez",
+    publishedAt: "2025-01-10",
     readTime: "5 min read",
     category: "Market Analysis",
     tags: ["Albany", "Real Estate Investing", "Rental Properties", "Market Analysis"],
     featured: true,
-    image: "/blog/albany-market-2025.jpg"
+    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=450&fit=crop"
   },
   {
-    id: 2,
+    id: 3,
     title: "Complete Guide to BRRRR Strategy in the Capital District",
     slug: "brrrr-strategy-capital-district-guide",
     excerpt: "Master the Buy, Rehab, Rent, Refinance, Repeat strategy with real examples from Troy, Schenectady, and Saratoga Springs properties.",
     content: "Full content would go here...",
-    author: "Scott Alvarez", 
-    publishedAt: "2025-01-10",
+    author: "Scott Alvarez",
+    publishedAt: "2025-01-08",
     readTime: "8 min read",
     category: "Investment Strategy",
     tags: ["BRRRR", "Real Estate Strategy", "Capital District", "Property Investment"],
-    featured: true,
-    image: "/blog/brrrr-strategy-guide.jpg"
+    featured: false,
+    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&h=450&fit=crop"
   },
   {
-    id: 3,
+    id: 4,
     title: "First-Time Home Buyer Programs in New York State 2025",
     slug: "first-time-home-buyer-programs-ny-2025",
     excerpt: "Everything you need to know about down payment assistance, grants, and special loan programs available to first-time buyers in NY.",
     content: "Full content would go here...",
     author: "Scott Alvarez",
-    publishedAt: "2025-01-08", 
+    publishedAt: "2025-01-05", 
     readTime: "6 min read",
     category: "Home Buying",
     tags: ["First Time Buyers", "NY Programs", "Down Payment Assistance", "Home Buying"],
     featured: false,
-    image: "/blog/first-time-buyer-programs.jpg"
+    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=450&fit=crop"
   },
   {
-    id: 4,
+    id: 5,
     title: "Multi-Unit Property Analysis: 3 Recent Deals in Troy",
     slug: "multi-unit-property-analysis-troy-deals",
     excerpt: "See how we analyzed and acquired three profitable multi-unit properties in Troy, including cash flow projections and ROI calculations.",
     content: "Full content would go here...",
     author: "Scott Alvarez",
-    publishedAt: "2025-01-05",
+    publishedAt: "2025-01-03",
     readTime: "7 min read", 
     category: "Case Studies",
     tags: ["Multi-Unit", "Troy", "Cash Flow Analysis", "Property Analysis"],
     featured: false,
-    image: "/blog/troy-multi-unit-deals.jpg"
+    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&h=450&fit=crop"
   },
   {
-    id: 5,
+    id: 6,
     title: "Rehab Property Red Flags: What to Avoid in the Capital District",
     slug: "rehab-property-red-flags-capital-district",
     excerpt: "Learn the common mistakes that can turn a profitable flip into a money pit, with specific examples from our local market experience.",
     content: "Full content would go here...",
     author: "Scott Alvarez",
-    publishedAt: "2025-01-03",
+    publishedAt: "2025-01-01",
     readTime: "5 min read",
     category: "Rehab & Flipping",
     tags: ["Rehab Properties", "Fix and Flip", "Real Estate Mistakes", "Property Inspection"],
     featured: false,
-    image: "/blog/rehab-red-flags.jpg"
-  },
-  {
-    id: 6,
-    title: "Saratoga Springs Rental Market: Premium Properties Guide",
-    slug: "saratoga-springs-rental-market-premium-guide",
-    excerpt: "Why Saratoga Springs commands the highest rents in the Capital District and how to position your property for maximum returns.",
-    content: "Full content would go here...",
-    author: "Scott Alvarez", 
-    publishedAt: "2025-01-01",
-    readTime: "6 min read",
-    category: "Market Analysis",
-    tags: ["Saratoga Springs", "Premium Rentals", "Luxury Properties", "High-End Market"],
-    featured: false,
-    image: "/blog/saratoga-premium-rentals.jpg"
+    image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=800&h=450&fit=crop"
   }
 ];
 
-const categories = ["All", "Market Analysis", "Investment Strategy", "Home Buying", "Case Studies", "Rehab & Flipping"];
+const categories = ["All", "Property Analysis", "Market Analysis", "Investment Strategy", "Home Buying", "Case Studies", "Rehab & Flipping"];
 
 const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
