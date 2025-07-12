@@ -361,8 +361,8 @@ const BlogPost = () => {
                         <Button variant="outline" size="sm">
                           View Profile
                         </Button>
-                        <Button variant="outline" size="sm">
-                          Contact Scott
+                        <Button variant="outline" size="sm" asChild>
+                          <a href="tel:+15185227265">Contact Scott</a>
                         </Button>
                       </div>
                     </div>
@@ -378,8 +378,8 @@ const BlogPost = () => {
                     Get personalized investment advice and access to off-market deals in the Capital District.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button size="lg" className="bg-white text-primary hover:bg-white/90">
-                      Schedule Consultation
+                    <Button size="lg" className="bg-white text-primary hover:bg-white/90" asChild>
+                      <a href="tel:+15185227265">Schedule Consultation</a>
                     </Button>
                     <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
                       View Current Deals
