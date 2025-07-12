@@ -32,7 +32,7 @@ const HeroSection = () => {
     },
     {
       icon: <Calculator className="w-8 h-8" />,
-      title: "Financing Solutions",
+      title: "Financing",
       description: "Expert guidance on investment property financing",
       sectionId: "financing"
     }
