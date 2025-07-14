@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
@@ -8,6 +8,7 @@ import { MapPin, TrendingUp, School, ShoppingCart, Car, Home } from 'lucide-reac
 
 const Communities = () => {
   const { city } = useParams<{ city: string }>();
+  const navigate = useNavigate();
   
   const communityData: Record<string, any> = {
     albany: {
@@ -255,7 +256,8 @@ const Communities = () => {
                   if (element) {
                     element.scrollIntoView({ behavior: 'smooth' });
                   } else {
-                    window.location.href = '/#contact';
+                    // Use React Router navigation instead of window.location
+                    navigate('/#contact');
                   }
                 }}
                 className="bg-background hover:bg-muted text-foreground border border-border px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
