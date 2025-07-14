@@ -1,4 +1,7 @@
 
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 const Footer = () => {
   const capitalDistrictTowns = [
     // Albany County
@@ -16,11 +19,11 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto">
         <p>&copy; 2025 Capital District Nest. All rights reserved.</p>
         <div className="mt-4 text-sm space-x-4">
-          <a href="/privacy-policy" className="hover:underline transition-colors">Privacy Policy</a>
-          <a href="/terms-of-service" className="hover:underline transition-colors">Terms of Service</a>
-          <a href="/investment-properties" className="hover:underline transition-colors">Investment Properties</a>
-          <a href="/rentals" className="hover:underline transition-colors">Rentals</a>
-          <a href="/financing" className="hover:underline transition-colors">Financing</a>
+          <Link to="/privacy-policy" className="hover:underline transition-colors">Privacy Policy</Link>
+          <Link to="/terms-of-service" className="hover:underline transition-colors">Terms of Service</Link>
+          <Link to="/#investment-properties" className="hover:underline transition-colors">Investment Properties</Link>
+          <Link to="/rentals" className="hover:underline transition-colors">Rentals</Link>
+          <Link to="/#financing" className="hover:underline transition-colors">Financing</Link>
         </div>
         
         <div className="mt-6 border-t border-slate-700 pt-4">

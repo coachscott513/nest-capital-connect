@@ -16,6 +16,8 @@ import AlbanyRealEstate from "./pages/AlbanyRealEstate";
 import TroyRealEstate from "./pages/TroyRealEstate";
 import SchenectadyRealEstate from "./pages/SchenectadyRealEstate";
 import SaratogaRealEstate from "./pages/SaratogaRealEstate";
+import SEOAudit from "./pages/SEOAudit";
+import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const App = () => {
   // Create QueryClient inside the component to avoid initialization issues
@@ -53,10 +55,15 @@ const App = () => {
             <Route path="/terms-of-service" element={<PrivacyPolicy />} />
             
             {/* Capital District Hub Pages */}
-            <Route path="/albany-real-estate" element={<AlbanyRealEstate />} />
-            <Route path="/troy-real-estate" element={<TroyRealEstate />} />
-            <Route path="/schenectady-real-estate" element={<SchenectadyRealEstate />} />
-            <Route path="/saratoga-real-estate" element={<SaratogaRealEstate />} />
+            {/* Capital District Hub Pages - All Towns */}
+            {generateTownRoutes()}
+            
+            {/* Capital District Rental Pages - All Towns */}
+            {generateTownRentalRoutes()}
+            
+            {/* SEO Management */}
+            <Route path="/seo-audit" element={<SEOAudit />} />
+            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

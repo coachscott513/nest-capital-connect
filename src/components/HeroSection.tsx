@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Home, Hammer, Building, Calculator, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { Link } from "react-router-dom";
 import LeadCaptureForm from "./LeadCaptureForm";
 
 const HeroSection = () => {
@@ -46,7 +47,7 @@ const HeroSection = () => {
         </h1>
         
         <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 max-w-3xl mx-auto leading-relaxed">
-          Your trusted partner for <a href="/investment-properties" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">multi unit</a>, <a href="/rehab-properties" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">rehab projects</a>, and <a href="/rentals" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">rental solutions</a> in <a href="/albany-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Albany</a>, <a href="/troy-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Troy</a>, <a href="/schenectady-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Schenectady</a>, and <a href="/saratoga-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Saratoga Springs</a>
+          Your trusted partner for <Link to="/#investment-properties" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">multi unit</Link>, <Link to="/#rehab-properties" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">rehab projects</Link>, and <Link to="/rentals" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">rental solutions</Link> in <Link to="/albany-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Albany</Link>, <Link to="/troy-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Troy</Link>, <Link to="/schenectady-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Schenectady</Link>, and <Link to="/saratoga-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Saratoga Springs</Link>
         </p>
 
         {/* Service Cards */}
