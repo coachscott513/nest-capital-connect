@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin, DollarSign, Building2 } from "lucide-react";
+import { useAnalytics } from './AnalyticsTracker';
 
 interface LeadCaptureFormProps {
   type: "investment" | "rental" | "rehab" | "multi-unit";
@@ -34,6 +35,7 @@ const LeadCaptureForm = ({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { trackLeadFormSubmission, trackPropertyInquiry } = useAnalytics();
 
   const getFormContent = () => {
     switch (type) {
@@ -87,6 +89,12 @@ const LeadCaptureForm = ({
         });
 
       if (error) throw error;
+
+      // Track lead form submission
+      trackLeadFormSubmission(type, formData.location || 'Capital District');
+      
+      // Track property inquiry with specific details
+      trackPropertyInquiry(type, formData.location || 'Capital District');
 
       toast({
         title: "Success!",

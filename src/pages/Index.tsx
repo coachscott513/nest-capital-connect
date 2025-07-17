@@ -25,6 +25,7 @@ import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
 import RelatedContentSuggestions from '@/components/RelatedContentSuggestions';
 import NeighborhoodCrossLinks from '@/components/NeighborhoodCrossLinks';
 import CallToActionLinks from '@/components/CallToActionLinks';
+import EngagementTracker from '@/components/AnalyticsTracker';
 
 const Index = () => {
   const structuredData = {
@@ -176,6 +177,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <EngagementTracker pageTitle="Capital District Investment Properties - Home" />
       <SEOHead 
         title="Capital District Investment Properties | Multi-Unit, Rehab & Rental Properties Albany NY"
         description="Premier investment property specialists in Albany, Troy, Schenectady & Saratoga Springs NY. Expert services for multi-unit buildings, fix & flip properties, rental investments, and financing solutions. 20+ years experience in Capital District real estate."

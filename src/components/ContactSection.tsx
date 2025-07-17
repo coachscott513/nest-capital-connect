@@ -2,10 +2,13 @@
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useSupabase } from "@/hooks/useSupabase";
+import { useAnalytics } from './AnalyticsTracker';
+import { TrackedButton } from './TrackedButton';
 
 const ContactSection = () => {
   const { toast } = useToast();
   const { addLead, loading } = useSupabase();
+  const { trackLeadFormSubmission } = useAnalytics();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -40,6 +43,9 @@ const ContactSection = () => {
       });
 
       console.log('Contact form submitted successfully');
+      
+      // Track the lead form submission
+      trackLeadFormSubmission('Seller Contact Form', 'Contact Section');
       
       toast({
         title: "Message Sent!",
@@ -153,14 +159,32 @@ const ContactSection = () => {
                 <svg className="w-6 h-6 mr-3 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2 2A15.97 15.97 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-1.11 2.45L6.9 11.4A11 11 0 0 0 12.6 17.1l1.42-1.42a2 2 0 0 1 2.45-1.11c1.1.25 2.2.37 3.3.37a2 2 0 0 1 1.72 2z"></path>
                 </svg>
-                Phone: <a href="tel:518-522-7265" className="ml-2 text-blue-500 hover:underline">(518) 522-7265</a>
+                Phone: 
+                <TrackedButton
+                  trackingType="phone"
+                  trackingLabel="Contact Section Phone"
+                  href="tel:518-522-7265"
+                  variant="link"
+                  className="ml-2 text-blue-500 hover:underline p-0 h-auto"
+                >
+                  (518) 522-7265
+                </TrackedButton>
               </p>
               <p className="flex items-center justify-center">
                 <svg className="w-6 h-6 mr-3 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
                   <path d="M22 7L12 13L2 7"></path>
                 </svg>
-                Email: <a href="mailto:capitaldistrictnest@gmail.com" className="ml-2 text-blue-500 hover:underline">capitaldistrictnest@gmail.com</a>
+                Email: 
+                <TrackedButton
+                  trackingType="email"
+                  trackingLabel="Contact Section Email"
+                  href="mailto:capitaldistrictnest@gmail.com"
+                  variant="link"
+                  className="ml-2 text-blue-500 hover:underline p-0 h-auto"
+                >
+                  capitaldistrictnest@gmail.com
+                </TrackedButton>
               </p>
               <p className="flex items-center justify-center">
                 <svg className="w-6 h-6 mr-3 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
