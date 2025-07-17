@@ -55,10 +55,17 @@ const Header = () => {
               Markets
             </button>
             <div className="absolute top-full left-0 bg-blue-800 rounded-md shadow-lg p-2 hidden group-hover:block min-w-48">
-              <Link to="/albany-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Albany</Link>
-              <Link to="/troy-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Troy</Link>
-              <Link to="/schenectady-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Schenectady</Link>
-              <Link to="/saratoga-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Saratoga</Link>
+              <Link to="/markets" className="block px-3 py-2 text-white hover:bg-blue-700 rounded font-semibold">All Markets</Link>
+              <div className="border-t border-blue-700 my-1 px-3"></div>
+              <Link to="/markets/albany-single-family-homes" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Albany Homes</Link>
+              <Link to="/markets/schenectady-single-family-homes" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Schenectady Homes</Link>
+              <Link to="/markets/troy-single-family-homes" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Troy Homes</Link>
+              <Link to="/markets/saratoga-springs-single-family-homes" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Saratoga Homes</Link>
+              <div className="border-t border-blue-700 my-1 px-3"></div>
+              <Link to="/albany-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Albany Real Estate</Link>
+              <Link to="/troy-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Troy Real Estate</Link>
+              <Link to="/schenectady-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Schenectady Real Estate</Link>
+              <Link to="/saratoga-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Saratoga Real Estate</Link>
             </div>
           </div>
           <Link
@@ -113,6 +120,43 @@ const Header = () => {
               >
                 Rentals & First-Time Buyers
               </Link>
+              <Link
+                to="/markets"
+                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Markets
+              </Link>
+              <div className="pl-4 flex flex-col space-y-2 mt-2 mb-1">
+                <Link
+                  to="/markets/albany-single-family-homes"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Albany Homes
+                </Link>
+                <Link
+                  to="/markets/schenectady-single-family-homes"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Schenectady Homes
+                </Link>
+                <Link
+                  to="/markets/troy-single-family-homes"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Troy Homes
+                </Link>
+                <Link
+                  to="/markets/saratoga-springs-single-family-homes"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Saratoga Homes
+                </Link>
+              </div>
               <Link
                 to="/blog"
                 className="text-white hover:text-blue-200 transition-colors duration-200 text-left"

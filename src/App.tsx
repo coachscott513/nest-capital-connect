@@ -17,6 +17,8 @@ import TroyRealEstate from "./pages/TroyRealEstate";
 import SchenectadyRealEstate from "./pages/SchenectadyRealEstate";
 import SaratogaRealEstate from "./pages/SaratogaRealEstate";
 import SEOAudit from "./pages/SEOAudit";
+import Markets from "./pages/Markets";
+import SingleFamilyMarket from "./pages/SingleFamilyMarket";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const App = () => {
@@ -63,6 +65,10 @@ const App = () => {
             
             {/* SEO Management */}
             <Route path="/seo-audit" element={<SEOAudit />} />
+            
+            {/* Markets Section */}
+            <Route path="/markets" element={<Markets />} />
+            <Route path="/markets/:town" element={<SingleFamilyMarket />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
