@@ -13,6 +13,7 @@ import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
 import RelatedContentSuggestions from '@/components/RelatedContentSuggestions';
 import NeighborhoodCrossLinks from '@/components/NeighborhoodCrossLinks';
 import CallToActionLinks from '@/components/CallToActionLinks';
+import TownshipsSection from '@/components/TownshipsSection';
 
 const Rentals = () => {
   const structuredData = {
@@ -65,6 +66,7 @@ const Rentals = () => {
         <TroyRentalsSection />
         <SchenectadyRentalsSection />
         <SaratogaRentalsSection />
+        <TownshipsSection />
         <NeighborhoodCrossLinks currentArea="rentals" />
         <RentersSection />
         <FirstTimeBuyersSection />
