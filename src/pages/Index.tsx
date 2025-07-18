@@ -25,6 +25,7 @@ import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
 import RelatedContentSuggestions from '@/components/RelatedContentSuggestions';
 import NeighborhoodCrossLinks from '@/components/NeighborhoodCrossLinks';
 import CallToActionLinks from '@/components/CallToActionLinks';
+import YouTubeAnalysisSection from '@/components/YouTubeAnalysisSection';
 import EngagementTracker from '@/components/AnalyticsTracker';
 
 const Index = () => {
@@ -212,6 +213,7 @@ const Index = () => {
         <MissionSection />
         <RelatedContentSuggestions currentPage="Capital District Real Estate" />
         <TestimonialsSection />
+        <YouTubeAnalysisSection />
         <MeetTheTeamSection />
         <ContactSection />
       </main>
