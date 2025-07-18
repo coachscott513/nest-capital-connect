@@ -95,6 +95,15 @@ export const useAnalytics = () => {
     });
   };
 
+  const trackChartInteraction = (action: string, location: string, metadata?: Record<string, any>) => {
+    trackKeyEvent('chart_interaction', {
+      event_category: 'Market Data Engagement',
+      event_label: `${action} - ${location}`,
+      ...metadata,
+      value: 30,
+    });
+  };
+
   return {
     trackEvent,
     trackKeyEvent,
@@ -105,6 +114,7 @@ export const useAnalytics = () => {
     trackPropertyInquiry,
     trackCalendarBooking,
     trackDocumentDownload,
+    trackChartInteraction,
   };
 };
 
