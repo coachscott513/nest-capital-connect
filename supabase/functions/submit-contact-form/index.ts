@@ -1,0 +1,103 @@
+import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  phone?: string;
+  message?: string;
+  type: string;
+  location?: string;
+  bedrooms?: string;
+  price_range?: string;
+}
+
+const handler = async (req: Request): Promise<Response> => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  if (req.method !== 'POST') {
+    return new Response(JSON.stringify({ success: false, error: 'Method not allowed' }), {
+      status: 405,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+  try {
+    const formData: ContactFormData = await req.json();
+    console.log('Received form data:', formData);
+
+    // Validate required fields
+    if (!formData.name || !formData.email || !formData.type) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: 'Missing required fields: name, email, or type' 
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Insert lead into database
+    const { data, error } = await supabase
+      .from('leads')
+      .insert({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || null,
+        message: formData.message || null,
+        type: formData.type,
+        location: formData.location || null,
+        bedrooms: formData.bedrooms || null,
+        price_range: formData.price_range || null,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Database error:', error);
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: 'Failed to save form data' 
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    console.log('Successfully saved lead:', data);
+
+    return new Response(JSON.stringify({ 
+      success: true, 
+      message: 'Form submitted successfully',
+      data: data
+    }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+
+  } catch (error) {
+    console.error('Error processing form submission:', error);
+    return new Response(JSON.stringify({ 
+      success: false, 
+      error: 'Internal server error' 
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+};
+
+serve(handler);

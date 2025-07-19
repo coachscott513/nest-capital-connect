@@ -16,6 +16,27 @@ const ContactSection = () => {
     message: ''
   });
 
+  const submitContactForm = async (formData: any) => {
+    try {
+      const response = await fetch('https://akonlzlpbdoqmczidfwm.supabase.co/functions/v1/submit-contact-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+      const result = await response.json();
+      if (result.success) {
+        return { success: true, data: result.data };
+      } else {
+        throw new Error(result.error || 'Unknown error');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submission started');
@@ -34,25 +55,29 @@ const ContactSection = () => {
     try {
       console.log('Submitting contact form with data:', formData);
       
-      await addLead({
+      const submissionData = {
         name: formData.name,
         email: formData.email,
-        phone: formData.phone || undefined,
+        phone: formData.phone || null,
         message: formData.message,
         type: 'seller'
-      });
+      };
 
-      console.log('Contact form submitted successfully');
-      
-      // Track the lead form submission
-      trackLeadFormSubmission('Seller Contact Form', 'Contact Section');
-      
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for your message. We'll get back to you soon.",
-      });
-      
-      setFormData({ name: '', email: '', phone: '', message: '' });
+      const result = await submitContactForm(submissionData);
+
+      if (result.success) {
+        console.log('Contact form submitted successfully');
+        
+        // Track the lead form submission
+        trackLeadFormSubmission('Seller Contact Form', 'Contact Section');
+        
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for your message. We'll get back to you soon.",
+        });
+        
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      }
     } catch (error) {
       console.error('Contact form submission error:', error);
       toast({

@@ -75,44 +75,63 @@ const LeadCaptureForm = ({
   const formDescription = description || content.defaultDescription;
   const finalButtonText = buttonText || content.defaultButtonText;
 
+  const submitContactForm = async (formData: any) => {
+    try {
+      const response = await fetch('https://akonlzlpbdoqmczidfwm.supabase.co/functions/v1/submit-contact-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFrb25semxwYmRvcW1jemlkZndtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA1NTcxMjMsImV4cCI6MjA2NjEzMzEyM30.Aqc8YNgNPhnoKErL5FqnwHUnejVhuaRVGel9sm2PJHc`,
+        },
+        body: JSON.stringify(formData)
+      });
+      const result = await response.json();
+      if (result.success) {
+        return { success: true, data: result.data };
+      } else {
+        throw new Error(result.error || 'Unknown error');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase
-        .from('leads')
-        .insert({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone || null,
-          location: null, // Simplified - we'll collect this in follow-up
-          price_range: null, // Simplified - we'll collect this in follow-up
-          bedrooms: null, // Simplified - we'll collect this in follow-up
-          message: formData.message || null,
-          type
+      const submissionData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || null,
+        message: formData.message || null,
+        type
+      };
+
+      const result = await submitContactForm(submissionData);
+
+      if (result.success) {
+        // Track lead form submission
+        trackLeadFormSubmission(type, 'Capital District');
+        
+        // Track property inquiry with specific details
+        trackPropertyInquiry(type, 'Capital District');
+
+        toast({
+          title: "Success! Check your email",
+          description: "We'll send your first report within 15 minutes. Check your spam folder too!",
         });
 
-      if (error) throw error;
-
-      // Track lead form submission
-      trackLeadFormSubmission(type, 'Capital District');
-      
-      // Track property inquiry with specific details
-      trackPropertyInquiry(type, 'Capital District');
-
-      toast({
-        title: "Success! Check your email",
-        description: "We'll send your first report within 15 minutes. Check your spam folder too!",
-      });
-
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: ""
-      });
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: ""
+        });
+      }
 
     } catch (error) {
       console.error('Error submitting lead:', error);
