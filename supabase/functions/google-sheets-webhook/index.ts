@@ -29,13 +29,16 @@ serve(async (req) => {
     const requestData = await req.json();
     console.log('Received data:', requestData);
 
-    // Send data to Google Sheets via the webhook
-    const response = await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestData),
+    // Send data to Google Sheets via the webhook using GET with query parameters
+    const queryParams = new URLSearchParams();
+    Object.entries(requestData).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        queryParams.append(key, String(value));
+      }
+    });
+    
+    const response = await fetch(`${GOOGLE_SHEETS_WEBHOOK_URL}?${queryParams.toString()}`, {
+      method: 'GET',
     });
 
     const responseText = await response.text();
