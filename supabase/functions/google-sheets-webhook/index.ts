@@ -5,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const GOOGLE_SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbz21_2UZ4Jljj2ILdD4trcOCx5zOKj0qtMYQaLGZS07z9PS7o8ldS7-nfb7OSmFHBM4/exec"
+const GOOGLE_SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxJuOMNFYLXHzXsyDcBRy-Ug-rxutzRxHQk6hGRdnM/dev"
 
 serve(async (req) => {
   // Handle CORS preflight requests
