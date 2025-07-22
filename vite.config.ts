@@ -8,6 +8,22 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    watch: {
+      // Exclude node_modules and other unnecessary directories from being watched
+      ignored: [
+        '**/node_modules/**',
+        '**/.git/**',
+        '**/dist/**',
+        '**/coverage/**',
+        '**/.nyc_output/**',
+        '**/tmp/**',
+        '**/temp/**'
+      ]
+    },
+    fs: {
+      // Limit the files Vite can serve
+      strict: false
+    }
   },
   plugins: [
     react(),
