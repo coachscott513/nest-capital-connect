@@ -8,6 +8,7 @@ import { Calendar, Clock, User, Search, Filter, ArrowRight, BookOpen } from 'luc
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
+import troyQuadruplexImage from '@/assets/troy-quadruplex-45-south-lake.jpg';
 
 // Sample blog posts - you can replace with real data from Supabase later
 const blogPosts = [
@@ -224,7 +225,7 @@ const blogPosts = [
     category: "Property Analysis",
     tags: ["Troy", "Multi-Unit", "Investment Property", "Cash Flow", "4-Unit", "Quadruplex", "RPI Students", "HVCC", "45 South Lake Avenue"],
     featured: true,
-    image: "https://images.unsplash.com/photo-1560472354-6d07c7740b9c?w=800&h=400&fit=crop"
+    image: troyQuadruplexImage
   }
 ];
 
