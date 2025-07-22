@@ -108,6 +108,123 @@ const blogPosts = [
     tags: ["Rehab Properties", "Fix and Flip", "Real Estate Mistakes", "Property Inspection"],
     featured: false,
     image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=800&h=450&fit=crop"
+  },
+  {
+    id: 7,
+    title: "Cash-Flow Machine: 4-Unit Quadruplex at 45 South Lake Avenue, Troy NY",
+    slug: "45-south-lake-avenue-troy-quadruplex-investment",
+    excerpt: "Discover this exceptional 4-unit investment property generating over $72,000 annually. Located in Troy's quiet residential area, perfect for students and long-term tenants.",
+    content: `
+      <div class="max-w-4xl mx-auto prose prose-lg">
+        <p class="lead">A "cash-flow machine" in Troy, NY, is on the market! This 4-unit quadruplex at 45 South Lake Avenue, Troy, NY 12180, offers an incredible investment opportunity.</p>
+        
+        <h2>Property Highlights That Set This Investment Apart</h2>
+        
+        <h3>💰 Exceptional Income Generation</h3>
+        <p><strong>High Income:</strong> Generates over $6,000 in monthly rent with all leases in place, totaling <strong>$72,000 annually</strong>. With current market rents, this property demonstrates strong cash flow potential from day one.</p>
+        
+        <h3>🏠 Spacious & Well-Designed Units</h3>
+        <p><strong>Spacious Units:</strong> The property boasts 22 total rooms, 10 bedrooms, and 4 full bathrooms. The first-floor unit is exceptionally large, offering premium rental potential for families or professionals seeking more space.</p>
+        
+        <h3>✨ Attractive Features & Recent Upgrades</h3>
+        <ul>
+          <li><strong>Covered Porches:</strong> Huge, covered porches on both levels add tremendous curb appeal and provide valuable outdoor living space for tenants</li>
+          <li><strong>Recent Renovations:</strong> Two units have been recently remodeled, and new kitchen cabinets installed in another unit, reducing immediate capital expenditure needs</li>
+          <li><strong>Ample Parking:</strong> Off-street parking in the rear accommodates at least 6-7 vehicles - a rare find in Troy that tenants will pay premium for</li>
+        </ul>
+        
+        <h3>📍 Prime Location Advantages</h3>
+        <p><strong>Strategic Location:</strong> Situated in a quiet area with a strong rental history, attracting students from RPI and Hudson Valley Community College. This built-in tenant pipeline ensures consistent demand and reduced vacancy periods.</p>
+        
+        <h2>Financial Analysis</h2>
+        
+        <div class="bg-gray-50 p-6 rounded-lg my-6">
+          <h3 class="text-xl font-bold mb-4">Key Financial Metrics</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <p><strong>List Price:</strong> $470,000</p>
+              <p><strong>Annual Gross Rent:</strong> $72,000</p>
+              <p><strong>Gross Rent Multiplier:</strong> 6.5</p>
+              <p><strong>Annual Taxes:</strong> $13,058</p>
+            </div>
+            <div>
+              <p><strong>Square Footage:</strong> 4,483 sq ft</p>
+              <p><strong>Price per Sq Ft:</strong> $105</p>
+              <p><strong>Lot Size:</strong> 0.25 acres</p>
+              <p><strong>Built:</strong> 1910 (Historic charm)</p>
+            </div>
+          </div>
+        </div>
+        
+        <h2>Investment Potential Analysis</h2>
+        
+        <h3>Why This Property Works for Investors</h3>
+        <ol>
+          <li><strong>Immediate Cash Flow:</strong> With $6,000+ monthly income and reasonable expenses, this property should generate positive cash flow from acquisition</li>
+          <li><strong>Built-in Tenant Base:</strong> Troy's student population from RPI and HVCC creates consistent rental demand</li>
+          <li><strong>Value-Add Opportunities:</strong> Recent upgrades show the property's potential, with room for additional improvements to increase rents</li>
+          <li><strong>Historic Character:</strong> Built in 1910, this property offers the charm and character that tenants seek in Troy's rental market</li>
+        </ol>
+        
+        <h2>Property Infrastructure & Systems</h2>
+        
+        <h3>Utilities & Systems</h3>
+        <ul>
+          <li><strong>Separate Metering:</strong> Individual meters for electric, gas, and heat - tenants pay their own utilities, reducing owner expenses</li>
+          <li><strong>Heating System:</strong> Forced Air, Natural Gas - efficient and cost-effective</li>
+          <li><strong>Water/Sewer:</strong> Public systems - reliable municipal services</li>
+          <li><strong>School District:</strong> Troy School District</li>
+        </ul>
+        
+        <h2>Market Context: Why Troy Makes Sense</h2>
+        
+        <p>Troy continues to attract investors due to its:</p>
+        <ul>
+          <li>Proximity to major educational institutions (RPI, HVCC)</li>
+          <li>Historic architecture and character</li>
+          <li>Growing downtown revitalization efforts</li>
+          <li>Affordable entry point compared to Albany</li>
+          <li>Strong rental demand from students and young professionals</li>
+        </ul>
+        
+        <h2>Investment Considerations</h2>
+        
+        <h3>Strengths</h3>
+        <ul>
+          <li>Strong existing cash flow with $72K annual income</li>
+          <li>Recent renovations reduce immediate capex needs</li>
+          <li>Separate utilities minimize owner expenses</li>
+          <li>Ample parking adds tenant value</li>
+          <li>Proven rental history in desirable area</li>
+        </ul>
+        
+        <h3>Due Diligence Items</h3>
+        <ul>
+          <li>Review current lease terms and renewal likelihood</li>
+          <li>Inspect property systems (HVAC, electrical, plumbing)</li>
+          <li>Analyze local comparable rents for upside potential</li>
+          <li>Understand any deferred maintenance requirements</li>
+        </ul>
+        
+        <h2>The Bottom Line</h2>
+        
+        <p>At $470,000 with $72,000 in annual income, this Troy quadruplex represents a compelling investment opportunity. The combination of strong existing cash flow, recent improvements, and Troy's growing rental market make this a property worth serious consideration for both new and experienced investors.</p>
+        
+        <div class="bg-blue-50 p-6 rounded-lg my-6">
+          <h3 class="text-xl font-bold mb-2">Ready to Learn More?</h3>
+          <p>For more information or to schedule a showing, contact Scott J Alvarez with RE/MAX Solutions. Don't miss out on this fantastic investment property!</p>
+        </div>
+        
+        <p><em>This analysis is based on information provided and should be verified through professional inspection and due diligence. Real estate investments carry risk, and past performance doesn't guarantee future results.</em></p>
+      </div>
+    `,
+    author: "Scott Alvarez",
+    publishedAt: "2025-01-22",
+    readTime: "8 min read",
+    category: "Property Analysis",
+    tags: ["Troy", "Multi-Unit", "Investment Property", "Cash Flow", "4-Unit", "Quadruplex", "RPI Students", "HVCC", "45 South Lake Avenue"],
+    featured: true,
+    image: "https://images.unsplash.com/photo-1560472354-6d07c7740b9c?w=800&h=400&fit=crop"
   }
 ];
 
