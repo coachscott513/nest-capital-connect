@@ -226,6 +226,314 @@ const blogPosts = [
     tags: ["Troy", "Multi-Unit", "Investment Property", "Cash Flow", "4-Unit", "Quadruplex", "RPI Students", "HVCC", "45 South Lake Avenue"],
     featured: true,
     image: troyQuadruplexImage
+  },
+  {
+    id: 8,
+    title: "Investment Gold Mine: 4 New Scotland Avenue Albany - Near Medical Center Expansion",
+    slug: "4-new-scotland-avenue-albany-medical-center-investment",
+    excerpt: "Discover this versatile triplex at 4 New Scotland Avenue, Albany, positioned perfectly near Albany Medical Center's billion-dollar expansion. Commercial and residential potential.",
+    content: `
+      <div class="max-w-4xl mx-auto prose prose-lg">
+        <p class="lead">Prime Investment Opportunity: 4 New Scotland Avenue, Albany, NY 12208!</p>
+        
+        <p>Looking for a versatile property in a rapidly developing area? This triplex at 4 New Scotland Avenue, Albany, NY 12208, offers an exceptional opportunity for both residential and commercial use!</p>
+        
+        <h2>Location Advantages That Set This Apart</h2>
+        
+        <h3>🏥 Medical Center Proximity</h3>
+        <p><strong>Strategic Location:</strong> Situated near Albany Medical Center's billion-dollar expansion, positioning this property in the heart of Albany's largest economic development project. This expansion will bring thousands of new jobs and increased demand for nearby housing.</p>
+        
+        <h3>🏪 Commercial Hub</h3>
+        <p><strong>Retail Ecosystem:</strong> The property benefits from proximity to the new YMCA, CVS, Baldini's, Chipotle, Starbucks, and Panera - creating a thriving commercial corridor that attracts residents and workers.</p>
+        
+        <h3>🏢 Market Validation</h3>
+        <p><strong>Rent Comparables:</strong> With 365 new apartments across the street commanding premium rents, this property is positioned to benefit from the area's rental market strength and growing demand.</p>
+        
+        <h2>Property Specifications</h2>
+        
+        <div class="bg-gray-50 p-6 rounded-lg my-6">
+          <h3 class="text-xl font-bold mb-4">Key Details</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <p><strong>List Price:</strong> $299,000</p>
+              <p><strong>Above Grade Area:</strong> 1,680 sq ft</p>
+              <p><strong>Below Grade Area:</strong> 240 sq ft</p>
+              <p><strong>Total Living Area:</strong> 1,920 sq ft</p>
+            </div>
+            <div>
+              <p><strong>Configuration:</strong> 12 rooms, 6 bedrooms, 3 baths</p>
+              <p><strong>Lot Size:</strong> 0.03 acres</p>
+              <p><strong>Annual Taxes:</strong> $6,559 (estimated)</p>
+              <p><strong>Built:</strong> 1930</p>
+            </div>
+          </div>
+        </div>
+        
+        <h2>Investment Analysis</h2>
+        
+        <h3>Financial Metrics</h3>
+        <ul>
+          <li><strong>Price per Square Foot:</strong> $156 - competitive for the area</li>
+          <li><strong>Tax Rate:</strong> Approximately 2.2% of purchase price</li>
+          <li><strong>Market Time:</strong> 402 days on market indicates motivated seller</li>
+        </ul>
+        
+        <h3>Revenue Potential</h3>
+        <p>Based on area rental comps and proximity to major employers:</p>
+        <ul>
+          <li><strong>Unit 1 (2BR):</strong> Estimated $1,400-1,600/month</li>
+          <li><strong>Unit 2 (2BR):</strong> Estimated $1,400-1,600/month</li>
+          <li><strong>Unit 3 (2BR):</strong> Estimated $1,400-1,600/month</li>
+          <li><strong>Total Monthly:</strong> $4,200-4,800</li>
+          <li><strong>Annual Gross Rent:</strong> $50,400-57,600</li>
+        </ul>
+        
+        <h2>Why This Location Works</h2>
+        
+        <h3>Medical District Growth</h3>
+        <p>Albany Medical Center's expansion represents one of the largest healthcare investments in the region, creating:</p>
+        <ul>
+          <li>Thousands of new healthcare jobs</li>
+          <li>Increased demand for nearby housing</li>
+          <li>Long-term stability and growth potential</li>
+          <li>Higher-income professional tenants</li>
+        </ul>
+        
+        <h3>Commercial Development</h3>
+        <p>The surrounding commercial growth creates a walkable environment that attracts quality tenants who value:</p>
+        <ul>
+          <li>Convenience to daily services</li>
+          <li>Reduced transportation costs</li>
+          <li>Urban lifestyle amenities</li>
+        </ul>
+        
+        <h2>Investment Strategies</h2>
+        
+        <h3>Residential Strategy</h3>
+        <ul>
+          <li>Target medical professionals and hospital staff</li>
+          <li>Market proximity to work as key benefit</li>
+          <li>Consider furnished units for traveling nurses</li>
+        </ul>
+        
+        <h3>Mixed-Use Potential</h3>
+        <ul>
+          <li>Ground floor commercial conversion possibility</li>
+          <li>Professional office space demand from medical expansion</li>
+          <li>Retail opportunity given foot traffic</li>
+        </ul>
+        
+        <h2>Due Diligence Considerations</h2>
+        
+        <h3>Property Inspection Items</h3>
+        <ul>
+          <li>HVAC systems and efficiency</li>
+          <li>Electrical capacity for modern needs</li>
+          <li>Plumbing condition and water pressure</li>
+          <li>Roof condition and remaining life</li>
+        </ul>
+        
+        <h3>Market Research</h3>
+        <ul>
+          <li>Verify rental comps in immediate area</li>
+          <li>Research Albany Medical Center expansion timeline</li>
+          <li>Analyze parking regulations and availability</li>
+          <li>Review zoning for mixed-use potential</li>
+        </ul>
+        
+        <h2>Investment Outlook</h2>
+        
+        <p>This property represents a unique opportunity to capitalize on Albany's medical district expansion. The combination of:</p>
+        <ul>
+          <li>Strategic location near major economic driver</li>
+          <li>Versatile use options (residential/commercial)</li>
+          <li>Growing commercial corridor</li>
+          <li>Competitive pricing at $299,000</li>
+        </ul>
+        
+        <p>Makes this an attractive proposition for both new and experienced investors.</p>
+        
+        <div class="bg-blue-50 p-6 rounded-lg my-6">
+          <h3 class="text-xl font-bold mb-2">Ready to Explore This Opportunity?</h3>
+          <p>The combination of location, timing, and development activity makes this property worth serious consideration. Contact us for a detailed market analysis and property tour.</p>
+        </div>
+        
+        <p><em>Investment analysis based on current market data and development plans. All figures should be verified through independent research and professional inspection.</em></p>
+      </div>
+    `,
+    author: "Scott Alvarez",
+    publishedAt: "2025-01-20",
+    readTime: "7 min read",
+    category: "Property Analysis",
+    tags: ["Albany", "New Scotland Avenue", "Medical Center", "Triplex", "Mixed Use", "Investment Property", "Albany Medical Center"],
+    featured: true,
+    image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=400&fit=crop"
+  },
+  {
+    id: 9,
+    title: "Historic Stockade District Investment: 18 Ingersoll Avenue Schenectady Analysis",
+    slug: "18-ingersoll-avenue-schenectady-stockade-district-investment",
+    excerpt: "Rare opportunity in Schenectady's prestigious Stockade Historic District. This duplex at 18 Ingersoll Avenue offers historic charm with modern investment potential.",
+    content: `
+      <div class="max-w-4xl mx-auto prose prose-lg">
+        <p class="lead">Historic Stockade District Duplex: 18 Ingersoll Avenue, Schenectady, NY 12305!</p>
+        
+        <p>Don't miss this rare opportunity to own a beautifully maintained two-family property at 18 Ingersoll Avenue, Schenectady, NY 12305, located in the prestigious Stockade Historic District! This distinctive home blends historic character with modern updates.</p>
+        
+        <h2>The Stockade District Advantage</h2>
+        
+        <h3>🏛️ Historic Prestige</h3>
+        <p><strong>Prime Location:</strong> Situated in one of the Capital Region's most charming neighborhoods, the Stockade District is known for its:</p>
+        <ul>
+          <li>Historic significance and preserved architecture</li>
+          <li>Tree-lined streets and walkable community</li>
+          <li>Strong property values and investment stability</li>
+          <li>Desirable rental market for professionals and students</li>
+        </ul>
+        
+        <h3>🌊 Waterfront Proximity</h3>
+        <p><strong>Lifestyle Amenities:</strong> Just steps from the Mohawk River, Riverside Park, and downtown Schenectady's restaurants, shops, and Proctors Theatre, offering tenants an enviable lifestyle that commands premium rents.</p>
+        
+        <h2>Property Analysis</h2>
+        
+        <div class="bg-gray-50 p-6 rounded-lg my-6">
+          <h3 class="text-xl font-bold mb-4">Property Specifications</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <p><strong>List Price:</strong> $296,000</p>
+              <p><strong>Living Area:</strong> 1,654 sq ft</p>
+              <p><strong>Configuration:</strong> 8 rooms, 2 bedrooms, 2 baths</p>
+              <p><strong>Lot Size:</strong> 0.06 acres</p>
+            </div>
+            <div>
+              <p><strong>Annual Taxes:</strong> $2,134 (estimated)</p>
+              <p><strong>Built:</strong> 1900 (Historic charm)</p>
+              <p><strong>Days on Market:</strong> 84</p>
+              <p><strong>Parking:</strong> 2-car garage + off-street</p>
+            </div>
+          </div>
+        </div>
+        
+        <h3>Unit Breakdown</h3>
+        <p>Each unit features:</p>
+        <ul>
+          <li>Kitchen with modern updates</li>
+          <li>Living room with period details</li>
+          <li>Laundry hookups for convenience</li>
+          <li>Separate entrances for privacy</li>
+        </ul>
+        
+        <h2>Financial Analysis</h2>
+        
+        <h3>Revenue Potential</h3>
+        <p>Based on Stockade District rental comps:</p>
+        <ul>
+          <li><strong>Unit 1:</strong> Estimated $1,500-1,700/month</li>
+          <li><strong>Unit 2:</strong> Estimated $1,500-1,700/month</li>
+          <li><strong>Total Monthly:</strong> $3,000-3,400</li>
+          <li><strong>Annual Gross Rent:</strong> $36,000-40,800</li>
+        </ul>
+        
+        <h3>Key Metrics</h3>
+        <ul>
+          <li><strong>Price per Square Foot:</strong> $179</li>
+          <li><strong>Gross Rent Multiplier:</strong> 7.3-8.2 (reasonable for historic area)</li>
+          <li><strong>Cap Rate Estimate:</strong> 8-10% (after expenses)</li>
+          <li><strong>Tax Rate:</strong> Low at 0.7% of purchase price</li>
+        </ul>
+        
+        <h2>Market Advantages</h2>
+        
+        <h3>Stockade Rental Market</h3>
+        <p>The Stockade District attracts high-quality tenants:</p>
+        <ul>
+          <li><strong>Union College Faculty/Staff:</strong> Stable, long-term tenants</li>
+          <li><strong>Downtown Professionals:</strong> Walking distance to offices</li>
+          <li><strong>Healthcare Workers:</strong> Proximity to area hospitals</li>
+          <li><strong>Graduate Students:</strong> Quality housing near campus</li>
+        </ul>
+        
+        <h3>Neighborhood Stability</h3>
+        <ul>
+          <li>Historic designation protects property values</li>
+          <li>Active neighborhood association</li>
+          <li>Ongoing downtown revitalization efforts</li>
+          <li>Cultural attractions (Proctors Theatre, restaurants)</li>
+        </ul>
+        
+        <h2>Investment Strategies</h2>
+        
+        <h3>Owner-Occupant Strategy</h3>
+        <ul>
+          <li>Live in one unit, rent the other</li>
+          <li>Mortgage assistance from rental income</li>
+          <li>Build equity while enjoying historic charm</li>
+          <li>Tax benefits of owner-occupied investment</li>
+        </ul>
+        
+        <h3>Pure Investment Strategy</h3>
+        <ul>
+          <li>Target professional tenants for stability</li>
+          <li>Market historic character as premium feature</li>
+          <li>Leverage low taxes for better cash flow</li>
+          <li>Consider short-term rental potential for events</li>
+        </ul>
+        
+        <h2>Due Diligence Considerations</h2>
+        
+        <h3>Historic Property Factors</h3>
+        <ul>
+          <li>Research any historic preservation requirements</li>
+          <li>Verify condition of period features</li>
+          <li>Assess efficiency of heating/cooling systems</li>
+          <li>Understand any renovation restrictions</li>
+        </ul>
+        
+        <h3>Market Research</h3>
+        <ul>
+          <li>Verify Stockade rental comparables</li>
+          <li>Research seasonal demand patterns</li>
+          <li>Analyze Union College housing needs</li>
+          <li>Review downtown development plans</li>
+        </ul>
+        
+        <h2>Competitive Analysis</h2>
+        
+        <h3>Why This Property Stands Out</h3>
+        <ul>
+          <li><strong>Location:</strong> Prime Stockade address with river proximity</li>
+          <li><strong>Condition:</strong> Well-maintained with modern updates</li>
+          <li><strong>Parking:</strong> Garage plus off-street (rare in historic district)</li>
+          <li><strong>Price:</strong> Competitive at $296K for the location</li>
+        </ul>
+        
+        <h2>Investment Outlook</h2>
+        
+        <p>This property represents an excellent opportunity to enter the prestigious Stockade District market. The combination of:</p>
+        <ul>
+          <li>Historic charm with modern functionality</li>
+          <li>Strong rental market fundamentals</li>
+          <li>Low taxes and reasonable pricing</li>
+          <li>Multiple investment strategies possible</li>
+        </ul>
+        
+        <p>Makes this suitable for both first-time investors and those looking to add a premium property to their portfolio.</p>
+        
+        <div class="bg-blue-50 p-6 rounded-lg my-6">
+          <h3 class="text-xl font-bold mb-2">Stockade District Opportunity</h3>
+          <p>Properties in the Stockade rarely come available. The combination of location, condition, and pricing makes this worth immediate consideration. Contact us for a detailed analysis and property tour.</p>
+        </div>
+        
+        <p><em>Analysis based on current market conditions and comparable sales. Historic properties may have unique considerations requiring specialized expertise.</em></p>
+      </div>
+    `,
+    author: "Scott Alvarez",
+    publishedAt: "2025-01-18",
+    readTime: "6 min read",
+    category: "Property Analysis",
+    tags: ["Schenectady", "Stockade District", "Historic Property", "Duplex", "Ingersoll Avenue", "Union College", "Investment Property"],
+    featured: false,
+    image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=800&h=400&fit=crop"
   }
 ];
 
