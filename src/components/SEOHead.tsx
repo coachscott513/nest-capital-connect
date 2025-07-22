@@ -12,9 +12,9 @@ interface SEOHeadProps {
 }
 
 const SEOHead = ({ 
-  title = "Capital District Nest - #1 Rentals & Real Estate in Albany, Troy, Schenectady & Saratoga Springs NY",
-  description = "Find premium rental properties and expert real estate services in Albany, Troy, Schenectady, and Saratoga Springs. Top-rated property management, first-time buyer assistance, and investment opportunities in New York's Capital District.",
-  keywords = "Albany NY rentals, Troy NY apartments, Schenectady NY housing, Saratoga Springs NY real estate, Capital District property management, NY first time home buyers, rental properties Albany, multi-unit homes NY",
+  title = "Capital District Nest - #1 Properties For Sale & Rentals in Albany, Troy, Schenectady & Saratoga Springs NY",
+  description = "Find premium properties for sale, rental properties and expert real estate services in Albany, Troy, Schenectady, and Saratoga Springs. Top-rated property management, investment properties for sale, first-time buyer assistance, and investment opportunities in New York's Capital District.",
+  keywords = "Albany NY properties for sale, Troy NY properties for sale, Schenectady NY properties for sale, Saratoga Springs NY properties for sale, investment properties for sale Capital District, Albany NY rentals, Troy NY apartments, Schenectady NY housing, Saratoga Springs NY real estate, Capital District property management, NY first time home buyers, rental properties Albany, multi-unit homes NY, real estate for sale Capital District",
   canonical = "https://your-domain.com",
   structuredData,
   ogImage = "https://your-domain.com/og-image-capital-district.jpg",

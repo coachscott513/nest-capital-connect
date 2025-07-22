@@ -31,12 +31,16 @@ const SEOAnalyzer: React.FC = () => {
         const internalLinks = document.querySelectorAll('a[href^="/"], a[href^="#"]').length;
         const externalLinks = document.querySelectorAll('a[href^="http"]').length;
         
-        // Calculate keyword density for main target keywords
-        const mainKeywords = ['real estate', 'investment', 'property', 'albany', 'capital district'];
+        // Calculate keyword density for "for sale" optimization targeting 95% ranking
+        const forSaleKeywords = [
+          'for sale', 'properties for sale', 'investment properties for sale', 
+          'real estate for sale', 'homes for sale', 'capital district for sale',
+          'albany for sale', 'troy for sale', 'schenectady for sale'
+        ];
         const text = document.body.innerText.toLowerCase();
         let keywordCount = 0;
-        mainKeywords.forEach(keyword => {
-          keywordCount += (text.match(new RegExp(keyword, 'g')) || []).length;
+        forSaleKeywords.forEach(keyword => {
+          keywordCount += (text.match(new RegExp(keyword.replace(/\s+/g, '\\s+'), 'g')) || []).length;
         });
         const keywordDensity = (keywordCount / contentWords) * 100;
         
@@ -212,7 +216,7 @@ const SEOAnalyzer: React.FC = () => {
           </div>
           
           <div className="flex justify-between">
-            <span className="text-gray-600">Keyword Density:</span>
+            <span className="text-gray-600">"For Sale" Keywords:</span>
             <span className={`font-medium ${metrics.keywordDensity > 1 && metrics.keywordDensity < 3 ? 'text-green-600' : 'text-orange-600'}`}>
               {metrics.keywordDensity.toFixed(1)}%
             </span>

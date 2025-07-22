@@ -27,6 +27,8 @@ import NeighborhoodCrossLinks from '@/components/NeighborhoodCrossLinks';
 import CallToActionLinks from '@/components/CallToActionLinks';
 import YouTubeAnalysisSection from '@/components/YouTubeAnalysisSection';
 import EngagementTracker from '@/components/AnalyticsTracker';
+import ForSaleKeywordOptimizer from '@/components/ForSaleKeywordOptimizer';
+import CapitalDistrictSEOStrategy from '@/components/CapitalDistrictSEOStrategy';
 
 const Index = () => {
   const structuredData = {
@@ -179,10 +181,17 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white">
       <EngagementTracker pageTitle="Capital District Investment Properties - Home" />
-      <SEOHead 
-        title="Capital District Investment Properties | Multi-Unit, Rehab & Rental Properties Albany NY"
-        description="Premier investment property specialists in Albany, Troy, Schenectady & Saratoga Springs NY. Expert services for multi-unit buildings, fix & flip properties, rental investments, and financing solutions. 20+ years experience in Capital District real estate."
-        keywords="investment properties Albany NY, multi-unit buildings Troy NY, fix and flip properties Schenectady NY, rental properties Saratoga Springs NY, real estate investment Capital District NY, property rehabilitation NY, investment property financing, buy and hold properties NY, commercial real estate Albany, multi-family properties Troy, rental property management NY, real estate investors Capital District, property flipping Albany NY, investment analysis NY, ARV calculations, fix and flip loans NY, rental income properties, cash flow properties NY, real estate wholesaling Albany, property acquisition NY, investment property broker Albany, multi-unit apartment buildings NY, duplex properties Albany, triplex investment Troy, fourplex properties Schenectady, rental property ROI NY, investment property loans Albany, hard money lending NY, private money lenders Capital District, real estate investment education NY, property investment seminars Albany, first time real estate investors NY, experienced property investors Albany, real estate investment mentoring NY, property market analysis Capital District, rental market trends Albany NY, investment property calculator NY, cash on cash return properties Albany, cap rate analysis NY, real estate investment strategy Albany, property investment portfolio NY, passive income properties Albany, real estate investment opportunities Capital District, distressed properties Albany NY, foreclosure properties Troy NY, estate sale properties Schenectady NY, off market properties Saratoga Springs NY"
+      <ForSaleKeywordOptimizer 
+        pageTitle="Capital District Investment Properties For Sale"
+        location="Capital District"
+        propertyType="investment properties"
+        targetKeywords={["multi-unit properties for sale", "rental properties for sale", "fix and flip properties for sale"]}
+      />
+      <CapitalDistrictSEOStrategy pageType="landing" location="Capital District" propertyType="investment properties" />
+      <SEOHead
+        title="Capital District Investment Properties For Sale | Multi-Unit, Rehab & Rental Properties Albany NY"
+        description="Premier investment properties for sale specialists in Albany, Troy, Schenectady & Saratoga Springs NY. Expert services for multi-unit buildings for sale, fix & flip properties for sale, rental investments, and financing solutions. 20+ years experience in Capital District real estate for sale."
+        keywords="investment properties for sale Albany NY, investment properties for sale Troy NY, investment properties for sale Schenectady NY, investment properties for sale Saratoga Springs NY, multi-unit buildings for sale Troy NY, fix and flip properties for sale Schenectady NY, rental properties for sale Saratoga Springs NY, real estate for sale investment Capital District NY, properties for sale rehabilitation NY, investment property for sale financing, buy and hold properties for sale NY, commercial real estate for sale Albany, multi-family properties for sale Troy, rental property for sale management NY, real estate investors for sale Capital District, property for sale flipping Albany NY, investment analysis for sale NY, ARV calculations for sale, fix and flip loans for sale NY, rental income properties for sale, cash flow properties for sale NY, real estate wholesaling for sale Albany, property acquisition for sale NY, investment property broker for sale Albany, multi-unit apartment buildings for sale NY, duplex properties for sale Albany, triplex investment for sale Troy, fourplex properties for sale Schenectady, rental property ROI for sale NY, investment property loans for sale Albany, hard money lending for sale NY, private money lenders for sale Capital District, real estate investment education for sale NY, property investment seminars for sale Albany, first time real estate investors for sale NY, experienced property investors for sale Albany, real estate investment mentoring for sale NY, property market analysis for sale Capital District, rental market trends for sale Albany NY, investment property calculator for sale NY, cash on cash return properties for sale Albany, cap rate analysis for sale NY, real estate investment strategy for sale Albany, property investment portfolio for sale NY, passive income properties for sale Albany, real estate investment opportunities for sale Capital District, distressed properties for sale Albany NY, foreclosure properties for sale Troy NY, estate sale properties for sale Schenectady NY, off market properties for sale Saratoga Springs NY"
         structuredData={structuredData}
       />
       

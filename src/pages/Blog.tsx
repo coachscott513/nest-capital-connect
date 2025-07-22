@@ -8,6 +8,8 @@ import { Calendar, Clock, User, Search, Filter, ArrowRight, BookOpen } from 'luc
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
+import ForSaleKeywordOptimizer from '@/components/ForSaleKeywordOptimizer';
+import CapitalDistrictSEOStrategy from '@/components/CapitalDistrictSEOStrategy';
 import troyQuadruplexImage from '@/assets/troy-quadruplex-45-south-lake.jpg';
 
 // 36 Hyper-Local SEO Blog Posts for Capital District Investment Properties
@@ -15,113 +17,113 @@ const blogPosts = [
   // ALBANY POSTS (12 posts)
   {
     id: 0,
-    title: "Albany Investment Properties: Best Neighborhoods for Cash Flow in 2025",
-    slug: "albany-investment-properties-best-neighborhoods-2025",
-    excerpt: "Discover Albany's top neighborhoods for rental property investment. From Center Square to Pine Hills, find where smart investors are buying for maximum cash flow.",
-    content: "Full content analysis of Albany's investment hotspots...",
+    title: "Albany Investment Properties For Sale: Best Neighborhoods for Cash Flow in 2025",
+    slug: "albany-investment-properties-for-sale-best-neighborhoods-2025",
+    excerpt: "Discover Albany's top neighborhoods for rental property investment. From Center Square to Pine Hills, find where smart investors are buying properties for sale to maximize cash flow.",
+    content: "Full content analysis of Albany's investment hotspots for sale...",
     author: "Scott Alvarez",
     publishedAt: "2025-01-22",
     readTime: "8 min read",
     category: "Market Analysis",
-    tags: ["Albany", "Investment Properties", "Cash Flow", "Neighborhoods", "Real Estate Investing"],
+    tags: ["Albany", "Investment Properties", "Properties For Sale", "Cash Flow", "Neighborhoods", "Real Estate Investing"],
     featured: true,
     image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=400&fit=crop"
   },
   {
     id: 1,
-    title: "Center Square Albany: Multi-Family Investment Goldmine Analysis",
-    slug: "center-square-albany-multi-family-investment-analysis",
-    excerpt: "Why Center Square is Albany's premier neighborhood for multi-family investments. Historic charm meets modern rental demand in this walkable district.",
-    content: "Detailed analysis of Center Square investment opportunities...",
+    title: "Center Square Albany: Multi-Family Properties For Sale - Investment Goldmine Analysis",
+    slug: "center-square-albany-multi-family-properties-for-sale-investment-analysis",
+    excerpt: "Why Center Square is Albany's premier neighborhood for multi-family properties for sale. Historic charm meets modern rental demand in this walkable district.",
+    content: "Detailed analysis of Center Square investment opportunities for sale...",
     author: "Scott Alvarez",
     publishedAt: "2025-01-21",
     readTime: "7 min read",
     category: "Neighborhood Analysis",
-    tags: ["Albany", "Center Square", "Multi-Family", "Historic District", "Walkability"],
+    tags: ["Albany", "Center Square", "Multi-Family", "Properties For Sale", "Historic District", "Walkability"],
     featured: false,
     image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=800&h=450&fit=crop"
   },
   {
     id: 2,
-    title: "Pine Hills Albany: Student Rental Properties That Print Money",
-    slug: "pine-hills-albany-student-rental-properties-analysis",
-    excerpt: "Near UAlbany campus, Pine Hills offers consistent student rental demand. Learn which streets generate the highest ROI for savvy investors.",
-    content: "Complete guide to Pine Hills student rental market...",
+    title: "Pine Hills Albany: Student Rental Properties For Sale That Print Money",
+    slug: "pine-hills-albany-student-rental-properties-for-sale-analysis",
+    excerpt: "Near UAlbany campus, Pine Hills offers consistent student rental demand. Learn which properties for sale generate the highest ROI for savvy investors.",
+    content: "Complete guide to Pine Hills student rental market properties for sale...",
     author: "Scott Alvarez",
     publishedAt: "2025-01-20",
     readTime: "6 min read",
     category: "Student Housing",
-    tags: ["Albany", "Pine Hills", "Student Rentals", "UAlbany", "ROI Analysis"],
+    tags: ["Albany", "Pine Hills", "Student Rentals", "Properties For Sale", "UAlbany", "ROI Analysis"],
     featured: false,
     image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&h=450&fit=crop"
   },
   {
     id: 3,
-    title: "West Hill Albany: Emerging Investment Opportunity or Value Trap?",
-    slug: "west-hill-albany-investment-opportunity-analysis",
-    excerpt: "West Hill's transformation from overlooked to opportunity. Analyze the risks and rewards of investing in this rapidly changing Albany neighborhood.",
-    content: "In-depth West Hill investment analysis...",
+    title: "West Hill Albany: Properties For Sale - Emerging Investment Opportunity or Value Trap?",
+    slug: "west-hill-albany-properties-for-sale-investment-opportunity-analysis",
+    excerpt: "West Hill's transformation from overlooked to opportunity. Analyze the risks and rewards of investing in properties for sale in this rapidly changing Albany neighborhood.",
+    content: "In-depth West Hill investment analysis for properties for sale...",
     author: "Scott Alvarez",
     publishedAt: "2025-01-19",
     readTime: "7 min read",
     category: "Neighborhood Analysis",
-    tags: ["Albany", "West Hill", "Emerging Markets", "Value Investment", "Gentrification"],
+    tags: ["Albany", "West Hill", "Properties For Sale", "Emerging Markets", "Value Investment", "Gentrification"],
     featured: false,
     image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=450&fit=crop"
   },
   {
     id: 4,
-    title: "Albany 2-4 Unit Properties: House Hacking Paradise in the Capital District",
-    slug: "albany-2-4-unit-properties-house-hacking-guide",
-    excerpt: "Small multi-family properties in Albany perfect for house hacking. Live in one unit, rent the others, and build wealth through real estate.",
-    content: "Complete house hacking strategy for Albany...",
+    title: "Albany 2-4 Unit Properties For Sale: House Hacking Paradise in the Capital District",
+    slug: "albany-2-4-unit-properties-for-sale-house-hacking-guide",
+    excerpt: "Small multi-family properties for sale in Albany perfect for house hacking. Live in one unit, rent the others, and build wealth through real estate.",
+    content: "Complete house hacking strategy for Albany properties for sale...",
     author: "Scott Alvarez",
     publishedAt: "2025-01-18",
     readTime: "8 min read",
     category: "Investment Strategy",
-    tags: ["Albany", "House Hacking", "2-4 Units", "Multi-Family", "Live-In Investment"],
+    tags: ["Albany", "House Hacking", "2-4 Units", "Properties For Sale", "Multi-Family", "Live-In Investment"],
     featured: false,
     image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=800&h=450&fit=crop"
   },
   {
     id: 5,
-    title: "Delaware Avenue Albany: Luxury Rental Market Analysis",
-    slug: "delaware-avenue-albany-luxury-rental-market",
-    excerpt: "Delaware Avenue commands premium rents in Albany. Discover why this prestigious corridor attracts high-income tenants and delivers superior returns.",
-    content: "Delaware Avenue luxury rental analysis...",
+    title: "Delaware Avenue Albany: Luxury Properties For Sale - Premium Rental Market Analysis",
+    slug: "delaware-avenue-albany-luxury-properties-for-sale-rental-market",
+    excerpt: "Delaware Avenue commands premium rents in Albany. Discover why luxury properties for sale on this prestigious corridor attract high-income tenants and deliver superior returns.",
+    content: "Delaware Avenue luxury rental analysis for properties for sale...",
     author: "Scott Alvarez",
     publishedAt: "2025-01-17",
     readTime: "6 min read",
     category: "Luxury Rentals",
-    tags: ["Albany", "Delaware Avenue", "Luxury Rentals", "Premium Market", "High Income"],
+    tags: ["Albany", "Delaware Avenue", "Luxury Properties For Sale", "Premium Market", "High Income"],
     featured: false,
     image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&h=450&fit=crop"
   },
   {
     id: 6,
-    title: "New Scotland Avenue Albany: Medical District Investment Boom",
-    slug: "new-scotland-avenue-albany-medical-district-investment",
-    excerpt: "Albany Medical Center expansion drives demand on New Scotland Avenue. Hospital workers need housing - smart investors are capitalizing.",
-    content: "Medical district investment opportunities...",
+    title: "New Scotland Avenue Albany: Medical District Properties For Sale - Investment Boom",
+    slug: "new-scotland-avenue-albany-medical-district-properties-for-sale-investment",
+    excerpt: "Albany Medical Center expansion drives demand for properties for sale on New Scotland Avenue. Hospital workers need housing - smart investors are capitalizing.",
+    content: "Medical district investment opportunities for properties for sale...",
     author: "Scott Alvarez",
     publishedAt: "2025-01-16",
     readTime: "7 min read",
     category: "Medical District",
-    tags: ["Albany", "New Scotland Avenue", "Medical District", "Hospital Workers", "Healthcare Jobs"],
+    tags: ["Albany", "New Scotland Avenue", "Properties For Sale", "Medical District", "Hospital Workers", "Healthcare Jobs"],
     featured: false,
     image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=450&fit=crop"
   },
   {
     id: 7,
-    title: "Arbor Hill Albany: Affordable Investment Properties with Upside Potential",
-    slug: "arbor-hill-albany-affordable-investment-properties",
-    excerpt: "Arbor Hill offers Albany's most affordable entry point for investors. Community development initiatives signal long-term appreciation potential.",
-    content: "Arbor Hill investment opportunity analysis...",
+    title: "Arbor Hill Albany: Affordable Investment Properties For Sale with Upside Potential",
+    slug: "arbor-hill-albany-affordable-investment-properties-for-sale",
+    excerpt: "Arbor Hill offers Albany's most affordable investment properties for sale. Community development initiatives signal long-term appreciation potential for smart buyers.",
+    content: "Arbor Hill investment opportunity analysis for properties for sale...",
     author: "Scott Alvarez",
     publishedAt: "2025-01-15",
     readTime: "6 min read",
     category: "Affordable Investment",
-    tags: ["Albany", "Arbor Hill", "Affordable Properties", "Community Development", "Appreciation"],
+    tags: ["Albany", "Arbor Hill", "Affordable Properties For Sale", "Community Development", "Appreciation"],
     featured: false,
     image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace?w=800&h=450&fit=crop"
   },
@@ -183,15 +185,15 @@ const blogPosts = [
   },
   {
     id: 2,
-    title: "Albany Rental Market 2025: Top Investment Opportunities",
-    slug: "albany-rental-market-2025-investment-opportunities",
-    excerpt: "Discover the hottest neighborhoods in Albany for rental property investments and learn why the Capital District is attracting savvy investors.",
+    title: "Albany Rental Properties For Sale 2025: Top Investment Opportunities",
+    slug: "albany-rental-properties-for-sale-2025-investment-opportunities",
+    excerpt: "Discover the hottest neighborhoods in Albany for rental properties for sale and learn why the Capital District investment properties are attracting savvy buyers.",
     content: "Full content would go here...",
     author: "Scott Alvarez",
     publishedAt: "2025-01-10",
     readTime: "5 min read",
     category: "Market Analysis",
-    tags: ["Albany", "Real Estate Investing", "Rental Properties", "Market Analysis"],
+    tags: ["Albany", "Real Estate Investing", "Rental Properties For Sale", "Investment Properties For Sale", "Market Analysis"],
     featured: true,
     image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&h=450&fit=crop"
   },
@@ -1037,10 +1039,17 @@ const Blog = () => {
 
   return (
     <>
+      <ForSaleKeywordOptimizer 
+        pageTitle="Capital District Properties For Sale Blog"
+        location="Capital District"
+        propertyType="investment properties"
+        targetKeywords={["properties for sale blog", "investment properties for sale analysis", "real estate for sale insights"]}
+      />
+      <CapitalDistrictSEOStrategy pageType="blog" location="Capital District" propertyType="investment properties" />
       <SEOHead 
-        title="Real Estate Blog - Capital District Investment Insights | Capital District Nest"
-        description="Expert insights on Albany, Troy, Schenectady real estate investing. BRRRR strategy, market analysis, first-time buyer guides, and investment opportunities in the Capital District."
-        keywords="real estate blog, Albany investment, Troy properties, Capital District real estate, BRRRR strategy, property analysis, real estate market"
+        title="Properties For Sale Blog - Capital District Investment Insights | Capital District Nest"
+        description="Expert insights on properties for sale in Albany, Troy, Schenectady. Investment properties for sale analysis, BRRRR strategy, market analysis, first-time buyer guides, and properties for sale opportunities in the Capital District."
+        keywords="properties for sale blog, Albany properties for sale, Troy properties for sale, Capital District properties for sale, investment properties for sale, BRRRR strategy properties for sale, property analysis for sale, real estate for sale market blog"
         canonical="https://your-domain.com/blog"
       />
       
