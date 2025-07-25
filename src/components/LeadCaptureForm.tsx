@@ -119,6 +119,15 @@ const LeadCaptureForm = ({
         // Track property inquiry with specific details
         trackPropertyInquiry(type, 'Capital District');
 
+        // Track Google Ads conversion
+        if (typeof window !== 'undefined' && window.gtag) {
+          window.gtag('event', 'conversion', {
+            'send_to': 'AW-922988725/MCepCNv03PgaELXhjrgD',
+            'value': 1.0,
+            'currency': 'USD'
+          });
+        }
+
         toast({
           title: "Success! Check your email",
           description: "We'll send your first report within 15 minutes. Check your spam folder too!",

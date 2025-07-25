@@ -350,11 +350,15 @@
     <link rel="modulepreload" href="/src/main.tsx">
     
     <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-922988725"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLCCLEJ3M0"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+
+      // Google Ads conversion tracking
+      gtag('config', 'AW-922988725');
 
       gtag('config', 'G-BLCCLEJ3M0', {
         custom_map: {'custom_parameter': 'real_estate_category'},

@@ -70,6 +70,15 @@ const ContactSection = () => {
         
         // Track the lead form submission
         trackLeadFormSubmission('Seller Contact Form', 'Contact Section');
+
+        // Track Google Ads conversion
+        if (typeof window !== 'undefined' && window.gtag) {
+          window.gtag('event', 'conversion', {
+            'send_to': 'AW-922988725/MCepCNv03PgaELXhjrgD',
+            'value': 1.0,
+            'currency': 'USD'
+          });
+        }
         
         toast({
           title: "Message Sent!",
