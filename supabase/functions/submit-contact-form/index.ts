@@ -101,7 +101,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
 
       const emailResult = await resend.emails.send({
-        from: 'Capital District Real Estate <noreply@resend.dev>',
+        from: 'Capital District Real Estate <onboarding@resend.dev>',
         to: ['scottalvarez@remax.net'],
         subject: `🎉 New ${formData.type} lead from ${formData.name}`,
         html: emailHtml,
