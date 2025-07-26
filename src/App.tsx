@@ -16,6 +16,7 @@ import AlbanyRealEstate from "./pages/AlbanyRealEstate";
 import TroyRealEstate from "./pages/TroyRealEstate";
 import SchenectadyRealEstate from "./pages/SchenectadyRealEstate";
 import SaratogaRealEstate from "./pages/SaratogaRealEstate";
+import InvestmentLanding from "./pages/InvestmentLanding";
 import SEOAudit from "./pages/SEOAudit";
 import Markets from "./pages/Markets";
 import SingleFamilyMarket from "./pages/SingleFamilyMarket";
@@ -42,7 +43,7 @@ const App = () => {
             <Route path="/" element={<Index />} />
             <Route path="/rentals" element={<Rentals />} />
             <Route path="/communities/:city" element={<Communities />} />
-            <Route path="/investment-properties" element={<Index />} />
+            <Route path="/investment-properties" element={<InvestmentLanding />} />
             <Route path="/rehab-properties" element={<Index />} />
             <Route path="/financing" element={<Index />} />
             <Route path="/albany-rentals" element={<Rentals />} />
