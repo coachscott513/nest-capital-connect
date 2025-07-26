@@ -121,22 +121,50 @@ const InvestmentLanding = () => {
               </div>
             </div>
 
-            {/* Trust Signals */}
+            {/* Scott's Photo & Info */}
             <div className="bg-card border rounded-lg p-6">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Star className="w-8 h-8 text-primary" />
+                <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-primary/20">
+                  <img 
+                    src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952" 
+                    alt="Scott Alvarez - Investment Property Expert"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-primary">Troy Quadruplex Real Estate</h3>
-                  <p className="text-sm text-muted-foreground">RE/MAX Capital District</p>
+                  <h3 className="font-semibold text-primary">Scott Alvarez</h3>
+                  <p className="text-sm text-muted-foreground">Remax Solutions</p>
                 </div>
               </div>
               <blockquote className="text-muted-foreground italic">
-                "Working with Troy helped me find my first investment property. The ROI analysis was spot-on, 
+                "Working with Scott helped me find my first investment property. The ROI analysis was spot-on, 
                 and I've been getting consistent returns for 2 years now."
               </blockquote>
               <p className="text-sm text-muted-foreground mt-2">- Sarah M., Albany Investor</p>
+            </div>
+
+            {/* Large Contact Information */}
+            <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6 md:p-8">
+              <div className="text-center space-y-4">
+                <h3 className="text-xl font-semibold text-primary mb-4">Ready to Start Investing?</h3>
+                
+                <div className="space-y-3">
+                  <p className="text-primary text-sm opacity-90">Call Now for Expert Investment Advice</p>
+                  <a 
+                    href="tel:+15185227265" 
+                    className="text-primary text-3xl md:text-4xl font-bold hover:text-primary/80 transition-colors duration-200 flex items-center justify-center"
+                  >
+                    📞 (518) 522-7265
+                  </a>
+                  <a 
+                    href="mailto:scottalvarez@remax.net" 
+                    className="text-primary text-lg md:text-xl font-semibold hover:text-primary/80 transition-colors duration-200 flex items-center justify-center"
+                  >
+                    ✉️ scottalvarez@remax.net
+                  </a>
+                  <p className="text-primary text-sm opacity-90">Available 7 Days a Week</p>
+                </div>
+              </div>
             </div>
           </div>
 
