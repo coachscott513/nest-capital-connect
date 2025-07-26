@@ -117,37 +117,6 @@ const handler = async (req: Request): Promise<Response> => {
       // Don't fail the whole request if email fails
     }
 
-    // Also send data to Google Sheets
-    try {
-      const googleSheetsResponse = await fetch(`${supabaseUrl}/functions/v1/google-sheets-webhook`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabaseKey}`,
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone || '',
-          message: formData.message || '',
-          type: formData.type,
-          location: formData.location || '',
-          bedrooms: formData.bedrooms || '',
-          price_range: formData.price_range || '',
-          submitted_at: new Date().toISOString()
-        }),
-      });
-      
-      if (googleSheetsResponse.ok) {
-        console.log('Data successfully sent to Google Sheets');
-      } else {
-        console.error('Failed to send data to Google Sheets');
-      }
-    } catch (googleError) {
-      console.error('Error sending to Google Sheets:', googleError);
-      // Don't fail the whole request if Google Sheets fails
-    }
-
     return new Response(JSON.stringify({ 
       success: true, 
       message: 'Form submitted successfully',
