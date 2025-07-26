@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,6 +16,7 @@ const InvestmentLanding = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const { trackLeadFormSubmission, trackPropertyInquiry } = useAnalytics();
+  const navigate = useNavigate();
 
   const submitContactForm = async (formData: any) => {
     try {
@@ -72,6 +74,11 @@ const InvestmentLanding = () => {
         });
 
         setFormData({ name: "", email: "", phone: "" });
+        
+        // Redirect to homepage after successful submission
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
       }
     } catch (error) {
       console.error('Error submitting lead:', error);
