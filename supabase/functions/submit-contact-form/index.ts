@@ -1,5 +1,9 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import React from 'npm:react@18.3.1';
+import { Resend } from 'npm:resend@4.0.0';
+import { renderAsync } from 'npm:@react-email/components@0.0.22';
+import { LeadNotificationEmail } from './_templates/lead-notification.tsx';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -78,6 +82,40 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log('Successfully saved lead:', data);
+
+    // Send email notification to Scott
+    try {
+      const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+      
+      const emailHtml = await renderAsync(
+        React.createElement(LeadNotificationEmail, {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          type: formData.type,
+          location: formData.location,
+          bedrooms: formData.bedrooms,
+          price_range: formData.price_range,
+        })
+      );
+
+      const emailResult = await resend.emails.send({
+        from: 'Capital District Real Estate <noreply@resend.dev>',
+        to: ['scottalvarez@remax.net'],
+        subject: `🎉 New ${formData.type} lead from ${formData.name}`,
+        html: emailHtml,
+      });
+
+      if (emailResult.error) {
+        console.error('Email sending error:', emailResult.error);
+      } else {
+        console.log('Email notification sent successfully:', emailResult.data);
+      }
+    } catch (emailError) {
+      console.error('Error sending email notification:', emailError);
+      // Don't fail the whole request if email fails
+    }
 
     // Also send data to Google Sheets
     try {
