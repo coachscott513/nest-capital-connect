@@ -112,19 +112,34 @@ const InvestmentLanding = () => {
             <div className="space-y-6">
               <h2 className="text-2xl font-semibold text-primary">Why Choose Our Investment Properties?</h2>
               <div className="space-y-4">
-                {[
-                  "Access exclusive off-market listings before they hit the market",
-                  "Expert analysis on rehab potential and ROI calculations",
-                  "Get matched with a local investment expert",
-                  "Properties in prime Capital District locations",
-                  "Detailed market analysis and comps included",
-                  "Financing assistance and investor-friendly lenders"
-                ].map((benefit, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                    <p className="text-muted-foreground">{benefit}</p>
-                  </div>
-                ))}
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-muted-foreground">Access exclusive off-market listings before they hit the market</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-muted-foreground">Expert analysis on rehab potential and ROI calculations</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-muted-foreground">Get matched with a local investment expert</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-muted-foreground">Properties in prime Capital District locations</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-muted-foreground">Detailed market analysis and comps included</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <p className="text-muted-foreground">
+                    <a href="https://www.broadviewfcu.com/personal/home-lending-solutions/meet-the-mortgage-team/christie-hoyt/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline">
+                      Financing assistance and investor-friendly lenders
+                    </a>
+                  </p>
+                </div>
               </div>
             </div>
 
