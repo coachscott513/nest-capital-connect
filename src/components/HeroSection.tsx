@@ -30,33 +30,23 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Contact Information Section */}
+      {/* Calendly Booking Section */}
       <div className="container mx-auto px-4 py-16 lg:py-20">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-8">
-            Unlock Free Grants & Home Buyer Programs
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-8 text-center">
+            Book a Free Consultation
           </h2>
           
-          {/* Email - Large and Prominent */}
-          <div className="bg-primary/5 border-2 border-primary rounded-lg p-8 hover:bg-primary/10 transition-colors">
-            <p className="text-lg text-muted-foreground mb-2">Email</p>
-            <a 
-              href="mailto:Scott@capitaldistrictnest.com"
-              className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary hover:text-primary/80 transition-colors underline decoration-2"
-            >
-              Scott@capitaldistrictnest.com
-            </a>
-          </div>
-
-          {/* Phone Number - Large and Prominent */}
-          <div className="bg-primary/5 border-2 border-primary rounded-lg p-8 hover:bg-primary/10 transition-colors">
-            <p className="text-lg text-muted-foreground mb-2">Call</p>
-            <a 
-              href="tel:518-522-7265"
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary hover:text-primary/80 transition-colors underline decoration-2"
-            >
-              518-522-7265
-            </a>
+          {/* Calendly Inline Widget */}
+          <div className="bg-background border-2 border-primary/20 rounded-lg overflow-hidden">
+            <iframe
+              src="https://calendly.com/alvarez-team/new-meeting?embed_domain=localhost&embed_type=Inline"
+              width="100%"
+              height="700"
+              frameBorder="0"
+              title="Schedule a consultation"
+              className="w-full"
+            />
           </div>
         </div>
       </div>
