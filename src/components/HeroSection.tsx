@@ -1,201 +1,103 @@
 
 import { Button } from "@/components/ui/button";
-import { Home, Hammer, Building, Calculator, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import LeadCaptureForm from "./LeadCaptureForm";
 
 const HeroSection = () => {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const services = [
-    {
-      icon: <Building className="w-8 h-8" />,
-      title: "Multi Unit",
-      description: "Multi-unit buildings and high-yield rental properties",
-      sectionId: "investment-properties"
-    },
-    {
-      icon: <Hammer className="w-8 h-8" />,
-      title: "Rehab Projects",
-      description: "Fix & flip opportunities with our proven loan program",
-      sectionId: "rehab-properties"
-    },
-    {
-      icon: <Home className="w-8 h-8" />,
-      title: "APT's for Rent",
-      description: "Premium rental listings across the Capital District",
-      sectionId: "neighborhoods"
-    },
-    {
-      icon: <Calculator className="w-8 h-8" />,
-      title: "Financing",
-      description: "Expert guidance on investment property financing",
-      sectionId: "financing"
-    }
-  ];
-
   return (
-    <section className="hero-gradient text-white min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden rounded-bl-[4rem] rounded-br-[4rem]" role="banner">
-      <div className="container mx-auto px-4 py-8 md:py-16 animate-fade-in">
-        <h1 className="text-3xl md:text-6xl font-bold text-white leading-tight mb-6 md:mb-8">
-          Capital District Nest
-        </h1>
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-background" role="banner">
+      {/* Split Screen Layout - Ryan Serhant Style */}
+      <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center min-h-screen py-20">
         
-        <p className="text-lg md:text-2xl mb-8 md:mb-12 opacity-90 max-w-3xl mx-auto leading-relaxed">
-          Your trusted partner for <Link to="/#investment-properties" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">multi unit</Link>, <Link to="/#rehab-properties" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">rehab projects</Link>, and <Link to="/rentals" className="text-red-500 font-semibold hover:text-red-400 hover:underline transition-colors">rental solutions</Link> in <Link to="/albany-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Albany</Link>, <Link to="/troy-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Troy</Link>, <Link to="/schenectady-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Schenectady</Link>, and <Link to="/saratoga-rentals" className="text-white hover:text-blue-200 hover:underline transition-colors">Saratoga Springs</Link>
-        </p>
-
-        {/* Service Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 md:mb-12 max-w-6xl mx-auto">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              className="bg-white/10 backdrop-blur-sm rounded-lg p-6 hover:bg-white/20 transition-all duration-300 cursor-pointer hover:scale-105"
-              onClick={() => scrollToSection(service.sectionId)}
-            >
-              <div className="flex justify-center mb-4 text-white">
-                {service.icon}
-              </div>
-              <h3 className="text-xl font-semibold mb-2">
-                <span className="bg-red-600 text-white px-3 py-1 rounded font-semibold border-2 border-white">{service.title}</span>
-              </h3>
-              <p className="text-sm opacity-90 text-white">
-                {service.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Lead Capture Form - Investment Focus */}
-        <div className="mb-8 max-w-2xl mx-auto">
-          <LeadCaptureForm 
-            type="investment"
-            title="Get This Week's Top Investment Deals"
-            description="See the 3 best underpriced properties in the Capital District + free market analysis"
-            buttonText="Send Me The Deals"
-            variant="hero"
-          />
-        </div>
-
-        {/* Call to Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-          <Button 
-            onClick={() => scrollToSection('investment-properties')}
-            size="lg"
-            className="bg-white text-blue-600 hover:bg-gray-100 font-semibold px-8 py-3 text-lg"
-          >
-            Browse Multi-Unit Properties
-          </Button>
-          <Button 
-            onClick={() => scrollToSection('rehab-properties')}
-            variant="outline"
-            size="lg"
-            className="border-white text-white hover:bg-white hover:text-blue-600 font-semibold px-8 py-3 text-lg"
-          >
-            View Rehab Opportunities
-          </Button>
-        </div>
-
-        {/* Contact Information & RE/MAX Solutions Logo */}
-        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 max-w-5xl mx-auto border border-white/20">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-            {/* RE/MAX Solutions Logo */}
-            <div className="flex items-center space-x-4">
-              <div className="bg-white rounded-lg p-3">
-                <img 
-                  src="/remax-solutions-logo.png" 
-                  alt="RE/MAX Solutions Logo" 
-                  className="h-12 md:h-16 w-auto"
-                  onError={(e) => {
-                    // Fallback if logo doesn't exist
-                    const img = e.currentTarget as HTMLImageElement;
-                    const fallback = img.nextElementSibling as HTMLElement;
-                    img.style.display = 'none';
-                    if (fallback) fallback.style.display = 'block';
-                  }}
-                />
-                <div className="hidden bg-red-600 text-white px-4 py-2 rounded font-bold text-lg">
-                  RE/MAX Solutions
-                </div>
-              </div>
-              <div className="text-white">
-                <p className="text-sm opacity-90">Powered by</p>
-                <p className="font-semibold">RE/MAX Solutions</p>
-              </div>
-            </div>
-
-            {/* Phone Number & Email */}
-            <div className="text-center lg:text-right">
-              <p className="text-white text-sm opacity-90 mb-1">Call Now for Expert Investment Advice</p>
-              <a 
-                href="tel:+15185227265" 
-                className="text-white text-3xl md:text-4xl font-bold hover:text-blue-200 transition-colors duration-200 flex items-center justify-center lg:justify-end mb-2"
-              >
-                📞 (518) 522-7265
-              </a>
-              <a 
-                href="mailto:scottalvarez@remax.net" 
-                className="text-white text-lg md:text-xl font-semibold hover:text-blue-200 transition-colors duration-200 flex items-center justify-center lg:justify-end mb-3"
-              >
-                ✉️ scottalvarez@remax.net
-              </a>
-              <p className="text-white text-sm opacity-90">Available 7 Days a Week</p>
-            </div>
+        {/* Left Side - Bold Typography */}
+        <div className="space-y-8 animate-fade-in">
+          {/* Large Bold Name - Serhant Style */}
+          <div className="space-y-2">
+            <h1 className="text-6xl md:text-8xl font-black leading-none tracking-tight">
+              <span className="text-foreground">CAPITAL</span>
+              <br />
+              <span className="text-foreground">DISTRICT</span>
+              <br />
+              <span className="text-primary">NEST.</span>
+            </h1>
           </div>
 
-          {/* Large Social Media Icons */}
-          <div className="mt-8 pt-6 border-t border-white/20">
-            <p className="text-white text-center text-lg font-semibold mb-4">Connect With Us</p>
-            <div className="flex justify-center items-center gap-6">
-              <a 
-                href="https://www.facebook.com/scottalvarez.remax" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-blue-600 hover:bg-blue-700 p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg"
-              >
-                <Facebook className="w-8 h-8 text-white" />
+          {/* Description */}
+          <p className="text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed">
+            Premier real estate investment specialist and RE/MAX broker serving Albany, Troy, Schenectady, and Saratoga Springs. Expert in multi-unit properties, rehab opportunities, and rental investments.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button 
+              asChild
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-8 py-6 rounded-full"
+            >
+              <Link to="/investment-landing">
+                View Investment Properties
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button 
+              asChild
+              variant="outline"
+              size="lg"
+              className="border-2 border-foreground text-foreground hover:bg-foreground hover:text-background font-semibold text-lg px-8 py-6 rounded-full"
+            >
+              <a href="tel:+15185227265">
+                (518) 522-7265
               </a>
-              <a 
-                href="https://www.instagram.com/scottalvarez.remax" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg"
-              >
-                <Instagram className="w-8 h-8 text-white" />
-              </a>
-              <a 
-                href="https://www.linkedin.com/in/scottalvarez" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-blue-700 hover:bg-blue-800 p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg"
-              >
-                <Linkedin className="w-8 h-8 text-white" />
-              </a>
-              <a 
-                href="https://www.youtube.com/@scottalvarez" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-red-600 hover:bg-red-700 p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg"
-              >
-                <Youtube className="w-8 h-8 text-white" />
-              </a>
-              <a 
-                href="https://www.tiktok.com/@scottalvarez" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-black hover:bg-gray-800 p-4 rounded-full transition-all duration-300 hover:scale-110 shadow-lg"
-              >
-                <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z"/>
-                </svg>
-              </a>
+            </Button>
+          </div>
+
+          {/* Contact Info */}
+          <div className="space-y-2 pt-4">
+            <p className="text-sm text-muted-foreground">Available 7 Days a Week</p>
+            <a 
+              href="mailto:scottalvarez@remax.net" 
+              className="text-base text-muted-foreground hover:text-primary transition-colors font-medium"
+            >
+              scottalvarez@remax.net
+            </a>
+          </div>
+        </div>
+
+        {/* Right Side - Image */}
+        <div className="relative h-[600px] lg:h-[700px] rounded-2xl overflow-hidden shadow-2xl">
+          <img 
+            src="/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png"
+            alt="Capital District Real Estate Investment"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          {/* Overlay gradient for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          
+          {/* Floating Stats Card */}
+          <div className="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-xl">
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div>
+                <div className="text-2xl md:text-3xl font-bold text-primary">$50M+</div>
+                <div className="text-xs md:text-sm text-muted-foreground">Sales</div>
+              </div>
+              <div>
+                <div className="text-2xl md:text-3xl font-bold text-primary">200+</div>
+                <div className="text-xs md:text-sm text-muted-foreground">Properties</div>
+              </div>
+              <div>
+                <div className="text-2xl md:text-3xl font-bold text-primary">20+</div>
+                <div className="text-xs md:text-sm text-muted-foreground">Years</div>
+              </div>
             </div>
-            <p className="text-white text-center text-sm opacity-80 mt-3">Follow for market updates & investment tips</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block">
+        <div className="animate-bounce">
+          <div className="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center pt-2">
+            <div className="w-1 h-2 bg-muted-foreground rounded-full" />
           </div>
         </div>
       </div>

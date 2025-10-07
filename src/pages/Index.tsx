@@ -41,8 +41,8 @@ const Index = () => {
         "alternateName": ["Capital District Investment Properties", "CDN Real Estate"],
         "description": "Premier investment property specialists for rental properties, rehab projects, and multi-unit buildings in Albany, Troy, Schenectady, and Saratoga Springs, NY.",
         "url": "https://your-domain.com",
-        "telephone": "+1-518-XXX-XXXX",
-        "email": "info@capitaldistrict.com",
+        "telephone": "+1-518-522-7265",
+        "email": "scottalvarez@remax.net",
         "foundingDate": "2020",
         "address": {
           "@type": "PostalAddress",
@@ -110,9 +110,9 @@ const Index = () => {
           "worstRating": "1"
         },
         "sameAs": [
-          "https://www.facebook.com/CapitalDistrictNest",
-          "https://www.linkedin.com/company/capital-district-nest",
-          "https://www.instagram.com/capitaldistrict_nest"
+          "https://www.facebook.com/scottalvarez.remax",
+          "https://www.linkedin.com/in/scottalvarez",
+          "https://www.instagram.com/scottalvarez.remax"
         ]
       },
       {
@@ -130,7 +130,7 @@ const Index = () => {
         },
         "servesCuisine": "Real Estate Investment Services",
         "priceRange": "$$",
-        "telephone": "+1-518-XXX-XXXX"
+        "telephone": "+1-518-522-7265"
       },
       {
         "@type": "Service",
@@ -179,7 +179,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <EngagementTracker pageTitle="Capital District Investment Properties - Home" />
       <ForSaleKeywordOptimizer 
         pageTitle="Capital District Investment Properties For Sale"
@@ -189,9 +189,9 @@ const Index = () => {
       />
       <CapitalDistrictSEOStrategy pageType="landing" location="Capital District" propertyType="investment properties" />
       <SEOHead
-        title="Capital District Investment Properties For Sale | Multi-Unit, Rehab & Rental Properties Albany NY"
-        description="Premier investment properties for sale specialists in Albany, Troy, Schenectady & Saratoga Springs NY. Expert services for multi-unit buildings for sale, fix & flip properties for sale, rental investments, and financing solutions. 20+ years experience in Capital District real estate for sale."
-        keywords="investment properties for sale Albany NY, investment properties for sale Troy NY, investment properties for sale Schenectady NY, investment properties for sale Saratoga Springs NY, multi-unit buildings for sale Troy NY, fix and flip properties for sale Schenectady NY, rental properties for sale Saratoga Springs NY, real estate for sale investment Capital District NY, properties for sale rehabilitation NY, investment property for sale financing, buy and hold properties for sale NY, commercial real estate for sale Albany, multi-family properties for sale Troy, rental property for sale management NY, real estate investors for sale Capital District, property for sale flipping Albany NY, investment analysis for sale NY, ARV calculations for sale, fix and flip loans for sale NY, rental income properties for sale, cash flow properties for sale NY, real estate wholesaling for sale Albany, property acquisition for sale NY, investment property broker for sale Albany, multi-unit apartment buildings for sale NY, duplex properties for sale Albany, triplex investment for sale Troy, fourplex properties for sale Schenectady, rental property ROI for sale NY, investment property loans for sale Albany, hard money lending for sale NY, private money lenders for sale Capital District, real estate investment education for sale NY, property investment seminars for sale Albany, first time real estate investors for sale NY, experienced property investors for sale Albany, real estate investment mentoring for sale NY, property market analysis for sale Capital District, rental market trends for sale Albany NY, investment property calculator for sale NY, cash on cash return properties for sale Albany, cap rate analysis for sale NY, real estate investment strategy for sale Albany, property investment portfolio for sale NY, passive income properties for sale Albany, real estate investment opportunities for sale Capital District, distressed properties for sale Albany NY, foreclosure properties for sale Troy NY, estate sale properties for sale Schenectady NY, off market properties for sale Saratoga Springs NY"
+        title="Capital District Nest | Investment Properties & Real Estate in Albany, NY"
+        description="Premier real estate investment specialist in Albany, Troy, Schenectady & Saratoga Springs. Multi-unit properties, rehab opportunities, and rental solutions. Expert guidance with proven results."
+        keywords="investment properties Albany NY, multi-unit buildings Troy NY, real estate investment Capital District, rental properties Schenectady NY, fix and flip properties Saratoga Springs"
         structuredData={structuredData}
       />
       
@@ -208,8 +208,33 @@ const Index = () => {
       <BreadcrumbNavigation />
       <Header />
       
-      <main role="main" className="pt-20">
+      <main role="main">
         <HeroSection />
+        
+        {/* Stats Section - Ryan Serhant Style */}
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
+              <div className="space-y-2">
+                <div className="text-4xl md:text-5xl font-bold text-primary">$50M+</div>
+                <div className="text-sm md:text-base text-muted-foreground">Total Sales Volume</div>
+              </div>
+              <div className="space-y-2">
+                <div className="text-4xl md:text-5xl font-bold text-primary">200+</div>
+                <div className="text-sm md:text-base text-muted-foreground">Properties Sold</div>
+              </div>
+              <div className="space-y-2">
+                <div className="text-4xl md:text-5xl font-bold text-primary">95%</div>
+                <div className="text-sm md:text-base text-muted-foreground">Client Satisfaction</div>
+              </div>
+              <div className="space-y-2">
+                <div className="text-4xl md:text-5xl font-bold text-primary">20+</div>
+                <div className="text-sm md:text-base text-muted-foreground">Years Experience</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <InvestmentPropertiesSection />
         <CallToActionLinks context="investment" className="py-8" />
         <RehabPropertiesSection />
@@ -218,11 +243,7 @@ const Index = () => {
         <NeighborhoodCrossLinks showAll={true} />
         <InternalLinkingNav />
         <FinancingSection />
-        <OwnersSection />
-        <MissionSection />
-        <RelatedContentSuggestions currentPage="Capital District Real Estate" />
         <TestimonialsSection />
-        <YouTubeAnalysisSection />
         <MeetTheTeamSection />
         <ContactSection />
       </main>
