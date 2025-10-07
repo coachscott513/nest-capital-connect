@@ -151,7 +151,7 @@ const handler = async (req: Request): Promise<Response> => {
       });
     }
 
-    console.log('Successfully saved lead:', data);
+    console.log('Successfully saved lead with ID:', data.id);
 
     // Send email notification to Scott
     try {

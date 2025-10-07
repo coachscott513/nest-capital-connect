@@ -7,20 +7,57 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Shield, Lock, Users, Award } from 'lucide-react';
+import { z } from 'zod';
+
+// Validation schema for grants form
+const grantsFormSchema = z.object({
+  first_name: z.string().trim().min(1, "First name is required").max(100, "First name too long"),
+  last_name: z.string().trim().min(1, "Last name is required").max(100, "Last name too long"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email too long"),
+  phone: z.string().trim().regex(/^[0-9+\-\s()]+$/, "Invalid phone number").max(20, "Phone number too long"),
+  zip: z.string().trim().regex(/^\d{5}(-\d{4})?$/, "Invalid ZIP code").max(10),
+  target_area: z.string().min(1, "Target area is required"),
+  ftb: z.string().min(1, "First-time buyer status is required"),
+  occupancy_primary: z.string().min(1, "Occupancy status is required"),
+  household_size: z.string().min(1, "Household size is required"),
+  income_band: z.string().min(1, "Income band is required"),
+  credit_band: z.string().min(1, "Credit band is required"),
+  funds_band: z.string().min(1, "Funds on hand is required"),
+  debts_band: z.string().min(1, "Debt payments is required"),
+  target_price: z.string().min(1, "Target price is required"),
+  timeline: z.string().min(1, "Timeline is required"),
+  esig: z.string().trim().min(3, "E-signature must be at least 3 characters"),
+  // Optional fields
+  veteran: z.string().optional(),
+  course: z.string().optional(),
+  other_assistance: z.string().optional(),
+  referral: z.string().optional(),
+  sms_opt_in: z.string().optional(),
+});
 
 const GrantsAssistantWidget = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const { toast } = useToast();
 
+  // NOTE: Replace with your actual Zapier webhook URL
   const ZAPIER_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/YOUR_WEBHOOK_ID";
   const DEFAULT_UPLOAD_LINK = "https://your-upload-link.com";
   const DEFAULT_CALENDLY_LINK = "https://calendly.com/your-link/15min";
 
   const updateField = (name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear validation error for this field when user updates it
+    if (validationErrors[name]) {
+      setValidationErrors(prev => {
+        const updated = { ...prev };
+        delete updated[name];
+        return updated;
+      });
+    }
   };
 
   const nextStep = () => {
@@ -36,47 +73,69 @@ const GrantsAssistantWidget = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.esig || formData.esig.trim().length < 3) {
-      toast({
-        title: "Error",
-        description: "Please type your full name for the e-signature.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    const submissionData = {
-      ...formData,
-      source: 'CDN Grants Assistant (Web)',
-      timestamp: new Date().toISOString(),
-      page_url: window.location.href,
-      utm_source: new URLSearchParams(window.location.search).get('utm_source') || '',
-      utm_medium: new URLSearchParams(window.location.search).get('utm_medium') || '',
-      utm_campaign: new URLSearchParams(window.location.search).get('utm_campaign') || ''
-    };
-
+    // Validate all form data using zod
     try {
+      const validatedData = grantsFormSchema.parse(formData);
+      
+      setIsSubmitting(true);
+
+      const submissionData = {
+        ...validatedData,
+        source: 'CDN Grants Assistant (Web)',
+        timestamp: new Date().toISOString(),
+        page_url: window.location.href,
+        utm_source: new URLSearchParams(window.location.search).get('utm_source') || '',
+        utm_medium: new URLSearchParams(window.location.search).get('utm_medium') || '',
+        utm_campaign: new URLSearchParams(window.location.search).get('utm_campaign') || ''
+      };
+
+      // Check if webhook URL is still the placeholder
+      if (ZAPIER_WEBHOOK_URL.includes('YOUR_WEBHOOK_ID')) {
+        toast({
+          title: "Configuration Error",
+          description: "The grants assistant is not yet configured. Please contact support.",
+          variant: "destructive"
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
       const res = await fetch(ZAPIER_WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        mode: 'no-cors', // Zapier webhooks require no-cors
         body: JSON.stringify(submissionData)
       });
 
-      if (!res.ok) throw new Error('Webhook error');
-
+      // With no-cors mode, we can't check response status
       setShowSuccess(true);
       toast({
         title: "Success!",
         description: "Your NY Grants Plan is on the way. Check your email and text."
       });
     } catch (err) {
-      toast({
-        title: "Error",
-        description: "We had trouble submitting your info. Please try again or contact us directly.",
-        variant: "destructive"
-      });
+      if (err instanceof z.ZodError) {
+        // Convert zod errors to a format we can display
+        const errors: Record<string, string> = {};
+        err.errors.forEach(error => {
+          if (error.path.length > 0) {
+            errors[error.path[0] as string] = error.message;
+          }
+        });
+        setValidationErrors(errors);
+        
+        toast({
+          title: "Validation Error",
+          description: "Please check the form for errors and try again.",
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "We had trouble submitting your info. Please try again or contact us directly.",
+          variant: "destructive"
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -152,20 +211,30 @@ const GrantsAssistantWidget = () => {
                   <Input
                     id="first_name"
                     required
+                    maxLength={100}
                     value={formData.first_name || ''}
                     onChange={(e) => updateField('first_name', e.target.value)}
                     autoComplete="given-name"
+                    aria-invalid={!!validationErrors.first_name}
                   />
+                  {validationErrors.first_name && (
+                    <p className="text-sm text-destructive mt-1">{validationErrors.first_name}</p>
+                  )}
                 </div>
                 <div>
                   <Label htmlFor="last_name">Last Name*</Label>
                   <Input
                     id="last_name"
                     required
+                    maxLength={100}
                     value={formData.last_name || ''}
                     onChange={(e) => updateField('last_name', e.target.value)}
                     autoComplete="family-name"
+                    aria-invalid={!!validationErrors.last_name}
                   />
+                  {validationErrors.last_name && (
+                    <p className="text-sm text-destructive mt-1">{validationErrors.last_name}</p>
+                  )}
                 </div>
               </div>
 
@@ -176,10 +245,15 @@ const GrantsAssistantWidget = () => {
                     id="phone"
                     type="tel"
                     required
+                    maxLength={20}
                     placeholder="555-555-5555"
                     value={formData.phone || ''}
                     onChange={(e) => updateField('phone', e.target.value)}
+                    aria-invalid={!!validationErrors.phone}
                   />
+                  {validationErrors.phone && (
+                    <p className="text-sm text-destructive mt-1">{validationErrors.phone}</p>
+                  )}
                 </div>
                 <div>
                   <Label htmlFor="email">Email*</Label>
@@ -187,10 +261,15 @@ const GrantsAssistantWidget = () => {
                     id="email"
                     type="email"
                     required
+                    maxLength={255}
                     value={formData.email || ''}
                     onChange={(e) => updateField('email', e.target.value)}
                     autoComplete="email"
+                    aria-invalid={!!validationErrors.email}
                   />
+                  {validationErrors.email && (
+                    <p className="text-sm text-destructive mt-1">{validationErrors.email}</p>
+                  )}
                 </div>
               </div>
 
@@ -201,14 +280,19 @@ const GrantsAssistantWidget = () => {
                     id="zip"
                     required
                     maxLength={10}
+                    placeholder="12345"
                     value={formData.zip || ''}
                     onChange={(e) => updateField('zip', e.target.value)}
+                    aria-invalid={!!validationErrors.zip}
                   />
+                  {validationErrors.zip && (
+                    <p className="text-sm text-destructive mt-1">{validationErrors.zip}</p>
+                  )}
                 </div>
                 <div>
                   <Label htmlFor="target_area">Target Buy Area*</Label>
                   <Select required value={formData.target_area || ''} onValueChange={(v) => updateField('target_area', v)}>
-                    <SelectTrigger id="target_area">
+                    <SelectTrigger id="target_area" aria-invalid={!!validationErrors.target_area}>
                       <SelectValue placeholder="Select…" />
                     </SelectTrigger>
                     <SelectContent>
@@ -219,6 +303,9 @@ const GrantsAssistantWidget = () => {
                       <SelectItem value="Other NY County">Other NY County</SelectItem>
                     </SelectContent>
                   </Select>
+                  {validationErrors.target_area && (
+                    <p className="text-sm text-destructive mt-1">{validationErrors.target_area}</p>
+                  )}
                 </div>
               </div>
 
@@ -405,19 +492,6 @@ const GrantsAssistantWidget = () => {
                 </div>
               </div>
 
-              <div>
-                <Label htmlFor="gift_funds">Any gift funds expected?</Label>
-                <Select value={formData.gift_funds || ''} onValueChange={(v) => updateField('gift_funds', v)}>
-                  <SelectTrigger id="gift_funds">
-                    <SelectValue placeholder="Select…" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Yes">Yes</SelectItem>
-                    <SelectItem value="No">No</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
               <div className="flex justify-between">
                 <Button type="button" variant="outline" onClick={prevStep}>Back</Button>
                 <Button type="button" onClick={nextStep}>Next</Button>
@@ -435,69 +509,62 @@ const GrantsAssistantWidget = () => {
             <CardContent className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="property_type">Property type*</Label>
-                  <Select required value={formData.property_type || ''} onValueChange={(v) => updateField('property_type', v)}>
-                    <SelectTrigger id="property_type">
+                  <Label htmlFor="target_price">Target purchase price*</Label>
+                  <Select required value={formData.target_price || ''} onValueChange={(v) => updateField('target_price', v)}>
+                    <SelectTrigger id="target_price">
                       <SelectValue placeholder="Select…" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Single-family">Single-family</SelectItem>
-                      <SelectItem value="2-unit">2-unit</SelectItem>
-                      <SelectItem value="3-unit">3-unit</SelectItem>
-                      <SelectItem value="4-unit">4-unit</SelectItem>
-                      <SelectItem value="Condo">Condo</SelectItem>
-                      <SelectItem value="Co-op">Co-op</SelectItem>
-                      <SelectItem value="Manufactured on owned land">Manufactured on owned land</SelectItem>
-                      <SelectItem value="Manufactured on leased land">Manufactured on leased land</SelectItem>
+                      <SelectItem value="<$150k">&lt;$150k</SelectItem>
+                      <SelectItem value="$150–$199k">$150–$199k</SelectItem>
+                      <SelectItem value="$200–$249k">$200–$249k</SelectItem>
+                      <SelectItem value="$250–$299k">$250–$299k</SelectItem>
+                      <SelectItem value="$300–$349k">$300–$349k</SelectItem>
+                      <SelectItem value="$350–$399k">$350–$399k</SelectItem>
+                      <SelectItem value="$400k+">$400k+</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="price_band">Estimated price range*</Label>
-                  <Select required value={formData.price_band || ''} onValueChange={(v) => updateField('price_band', v)}>
-                    <SelectTrigger id="price_band">
+                  <Label htmlFor="timeline">When do you plan to buy?*</Label>
+                  <Select required value={formData.timeline || ''} onValueChange={(v) => updateField('timeline', v)}>
+                    <SelectTrigger id="timeline">
                       <SelectValue placeholder="Select…" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="<$175k">&lt;$175k</SelectItem>
-                      <SelectItem value="$175–$249k">$175–$249k</SelectItem>
-                      <SelectItem value="$250–$349k">$250–$349k</SelectItem>
-                      <SelectItem value="$350–$449k">$350–$449k</SelectItem>
-                      <SelectItem value="$450–$599k">$450–$599k</SelectItem>
-                      <SelectItem value="$600k+">$600k+</SelectItem>
+                      <SelectItem value="0–3 months">0–3 months</SelectItem>
+                      <SelectItem value="3–6 months">3–6 months</SelectItem>
+                      <SelectItem value="6–12 months">6–12 months</SelectItem>
+                      <SelectItem value="12+ months">12+ months</SelectItem>
+                      <SelectItem value="Just exploring">Just exploring</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
 
               <div>
-                <Label htmlFor="timeline">When are you hoping to buy?*</Label>
-                <Select required value={formData.timeline || ''} onValueChange={(v) => updateField('timeline', v)}>
-                  <SelectTrigger id="timeline">
+                <Label htmlFor="other_assistance">Already working with another lender or grant program?</Label>
+                <Select value={formData.other_assistance || ''} onValueChange={(v) => updateField('other_assistance', v)}>
+                  <SelectTrigger id="other_assistance">
                     <SelectValue placeholder="Select…" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="0–3 months">0–3 months</SelectItem>
-                    <SelectItem value="3–6 months">3–6 months</SelectItem>
-                    <SelectItem value="6–12 months">6–12 months</SelectItem>
-                    <SelectItem value="12+ months">12+ months</SelectItem>
+                    <SelectItem value="Yes">Yes</SelectItem>
+                    <SelectItem value="No">No</SelectItem>
+                    <SelectItem value="Not sure">Not sure</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div>
-                <Label htmlFor="rehab">Rehab or energy upgrades needed?</Label>
-                <Select value={formData.rehab || ''} onValueChange={(v) => updateField('rehab', v)}>
-                  <SelectTrigger id="rehab">
-                    <SelectValue placeholder="Select…" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="None">None</SelectItem>
-                    <SelectItem value="Light">Light</SelectItem>
-                    <SelectItem value="Extensive / 203k-style">Extensive / 203k-style</SelectItem>
-                    <SelectItem value="Energy efficiency focus">Energy efficiency focus</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="referral">How did you hear about us?</Label>
+                <Input
+                  id="referral"
+                  maxLength={200}
+                  value={formData.referral || ''}
+                  onChange={(e) => updateField('referral', e.target.value)}
+                  placeholder="Friend, Google, Facebook, etc."
+                />
               </div>
 
               <div className="flex justify-between">
@@ -508,42 +575,52 @@ const GrantsAssistantWidget = () => {
           </Card>
         )}
 
-        {/* STEP 5: Consent & Submit */}
+        {/* STEP 5: Consent & Signature */}
         {currentStep === 4 && (
           <Card>
             <CardHeader>
-              <CardTitle>Consent & Submit</CardTitle>
+              <CardTitle>Consent & E-Signature</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                By submitting, you agree to be contacted by Capital District Nest by phone/SMS/email. We are an Equal Housing Opportunity company and not a government agency. Program terms change; final eligibility is set by lenders/administrators.
-              </p>
-              
+              <div className="p-4 bg-muted/50 rounded-md text-sm space-y-2">
+                <p>
+                  By submitting this form, I consent to Capital District Real Estate contacting me via call, text, or email at the information provided (including automated messages). I understand:
+                </p>
+                <ul className="list-disc ml-6 space-y-1">
+                  <li>This is a request for information, not an application.</li>
+                  <li>Grants and programs have income/credit/property requirements.</li>
+                  <li>I may be connected with approved lenders or programs in my area.</li>
+                  <li>I can revoke consent at any time.</li>
+                </ul>
+              </div>
+
               <div>
-                <Label htmlFor="esig">E-signature (type full name)*</Label>
+                <Label htmlFor="esig">Type your full name to e-sign and submit*</Label>
                 <Input
                   id="esig"
                   required
-                  placeholder="Type your full legal name"
+                  minLength={3}
+                  maxLength={200}
                   value={formData.esig || ''}
                   onChange={(e) => updateField('esig', e.target.value)}
+                  placeholder="John Doe"
+                  aria-invalid={!!validationErrors.esig}
                 />
+                {validationErrors.esig && (
+                  <p className="text-sm text-destructive mt-1">{validationErrors.esig}</p>
+                )}
               </div>
 
               <div className="flex justify-between">
                 <Button type="button" variant="outline" onClick={prevStep}>Back</Button>
                 <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Submitting...' : 'Get My Eligibility Plan'}
+                  {isSubmitting ? 'Submitting...' : 'Submit & Get My Plan'}
                 </Button>
               </div>
             </CardContent>
           </Card>
         )}
       </form>
-
-      <footer className="mt-6 text-center text-sm text-muted-foreground">
-        Capital District Nest • Equal Housing Opportunity • © {new Date().getFullYear()}
-      </footer>
     </div>
   );
 };
