@@ -18,18 +18,19 @@ const ContactSection = () => {
 
   const submitContactForm = async (formData: any) => {
     try {
-      const response = await fetch('https://akonlzlpbdoqmczidfwm.supabase.co/functions/v1/submit-contact-form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
+      const { supabase } = await import('@/integrations/supabase/client');
+      const { data, error } = await supabase.functions.invoke('submit-contact-form', {
+        body: formData
       });
-      const result = await response.json();
-      if (result.success) {
-        return { success: true, data: result.data };
+
+      if (error) {
+        throw error;
+      }
+
+      if (data?.success) {
+        return { success: true, data: data.data };
       } else {
-        throw new Error(result.error || 'Unknown error');
+        throw new Error(data?.error || 'Unknown error');
       }
     } catch (error) {
       console.error('Submission error:', error);
@@ -39,11 +40,8 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submission started');
-    console.log('Form data:', formData);
     
     if (!formData.name || !formData.email || !formData.message) {
-      console.log('Validation failed - missing required fields');
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields.",
@@ -53,7 +51,6 @@ const ContactSection = () => {
     }
 
     try {
-      console.log('Submitting contact form with data:', formData);
       
       const submissionData = {
         name: formData.name,
@@ -66,8 +63,6 @@ const ContactSection = () => {
       const result = await submitContactForm(submissionData);
 
       if (result.success) {
-        console.log('Contact form submitted successfully');
-        
         // Track the lead form submission
         trackLeadFormSubmission('Seller Contact Form', 'Contact Section');
 
@@ -98,7 +93,6 @@ const ContactSection = () => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    console.log('Input changed:', e.target.name, e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value

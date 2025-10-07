@@ -77,19 +77,19 @@ const LeadCaptureForm = ({
 
   const submitContactForm = async (formData: any) => {
     try {
-      const response = await fetch('https://akonlzlpbdoqmczidfwm.supabase.co/functions/v1/submit-contact-form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFrb25semxwYmRvcW1jemlkZndtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA1NTcxMjMsImV4cCI6MjA2NjEzMzEyM30.Aqc8YNgNPhnoKErL5FqnwHUnejVhuaRVGel9sm2PJHc`,
-        },
-        body: JSON.stringify(formData)
+      // Use Supabase client to invoke edge function
+      const { data, error } = await supabase.functions.invoke('submit-contact-form', {
+        body: formData
       });
-      const result = await response.json();
-      if (result.success) {
-        return { success: true, data: result.data };
+
+      if (error) {
+        throw error;
+      }
+
+      if (data?.success) {
+        return { success: true, data: data.data };
       } else {
-        throw new Error(result.error || 'Unknown error');
+        throw new Error(data?.error || 'Unknown error');
       }
     } catch (error) {
       console.error('Submission error:', error);
@@ -143,10 +143,9 @@ const LeadCaptureForm = ({
       }
 
     } catch (error) {
-      console.error('Error submitting lead:', error);
       toast({
         title: "Oops! Something went wrong",
-        description: "Please try again or call us at (518) 555-0123",
+        description: "Please try again or call us at (518) 522-7265",
         variant: "destructive",
       });
     } finally {
