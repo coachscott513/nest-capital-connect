@@ -30,8 +30,26 @@ const HeroSection = () => {
         </div>
       </div>
 
+      {/* Grant Information */}
+      <div className="container mx-auto px-4 py-12 lg:py-16">
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-6">
+            Unlock Free Grants & Home Buyer Programs
+          </h2>
+          
+          <div className="space-y-4 text-lg">
+            <p className="text-foreground/90">
+              Learn more about <strong>free grant money for home buyers</strong>
+            </p>
+            <p className="text-foreground/90">
+              <strong>Zero to low down payment programs</strong> for first time home buyers
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Calendly Booking Section */}
-      <div className="container mx-auto px-4 py-16 lg:py-20">
+      <div className="container mx-auto px-4 pb-16 lg:pb-20">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl lg:text-4xl font-bold mb-8 text-center">
             Book a Free Consultation
