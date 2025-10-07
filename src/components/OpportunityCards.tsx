@@ -15,7 +15,7 @@ const OpportunityCards = () => {
       icon: Wrench,
       title: "Rehab & Fix-Flip",
       description: "Find properties with potential. Transform undervalued homes into profitable investments.",
-      link: "/investment-landing#rehab",
+      link: "/investment-landing",
       gradient: "from-accent/10 to-accent/5"
     },
     {
@@ -29,7 +29,7 @@ const OpportunityCards = () => {
       icon: DollarSign,
       title: "Financing Solutions",
       description: "Access fix & flip loans, traditional mortgages, and investor-friendly financing options.",
-      link: "/investment-landing#financing",
+      link: "/investment-landing",
       gradient: "from-primary/10 to-primary/5"
     },
     {
