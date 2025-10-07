@@ -199,25 +199,25 @@ const Index = () => {
       <main role="main">
         <HeroSection />
         
-        {/* Stats Section - Ryan Serhant Style */}
+        {/* Grants & Funding Stats Section */}
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">$50M+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Total Sales Volume</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">$25M+</div>
+                <div className="text-sm md:text-base text-muted-foreground">Grants Available</div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">200+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Properties Sold</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">$100M+</div>
+                <div className="text-sm md:text-base text-muted-foreground">Funding Available</div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">95%</div>
-                <div className="text-sm md:text-base text-muted-foreground">Client Satisfaction</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">15+</div>
+                <div className="text-sm md:text-base text-muted-foreground">Incentive Programs</div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">20+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Years Experience</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">$500K</div>
+                <div className="text-sm md:text-base text-muted-foreground">Max Grant Amount</div>
               </div>
             </div>
           </div>
