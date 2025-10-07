@@ -17,6 +17,7 @@ import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
 import EngagementTracker from '@/components/AnalyticsTracker';
 import ForSaleKeywordOptimizer from '@/components/ForSaleKeywordOptimizer';
 import CapitalDistrictSEOStrategy from '@/components/CapitalDistrictSEOStrategy';
+import GrantsAssistantWidget from '@/components/GrantsAssistantWidget';
 
 const Index = () => {
   const structuredData = {
@@ -224,6 +225,14 @@ const Index = () => {
         </section>
 
         <OpportunityCards />
+        
+        {/* Grants Assistant Widget */}
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4">
+            <GrantsAssistantWidget />
+          </div>
+        </section>
+        
         <TestimonialsSection />
         <MeetTheTeamSection />
         <ContactSection />
