@@ -54,8 +54,14 @@ const Header = () => {
             className="text-white hover:text-blue-200 transition-colors duration-200"
             onClick={() => setIsMenuOpen(false)}
           >
-            Rentals & First-Time Buyers
+            Rentals
           </Link>
+          <button
+            onClick={() => scrollToSection('contact')}
+            className="text-white hover:text-blue-200 transition-colors duration-200"
+          >
+            First-Time Home Buyers
+          </button>
           <div className="relative group">
             <button className="text-white hover:text-blue-200 transition-colors duration-200">
               Markets
@@ -81,12 +87,6 @@ const Header = () => {
           >
             Blog
           </Link>
-          <button
-            onClick={() => scrollToSection('owners')}
-            className="text-white hover:text-blue-200 transition-colors duration-200"
-          >
-            For Owners
-          </button>
           <button
             onClick={() => scrollToSection('contact')}
             className="text-white hover:text-blue-200 transition-colors duration-200"
@@ -124,8 +124,14 @@ const Header = () => {
                 className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Rentals & First-Time Buyers
+                Rentals
               </Link>
+              <button
+                onClick={() => scrollToSection('contact')}
+                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
+              >
+                First-Time Home Buyers
+              </button>
               <Link
                 to="/markets"
                 className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
@@ -170,12 +176,6 @@ const Header = () => {
               >
                 Blog
               </Link>
-              <button
-                onClick={() => scrollToSection('owners')}
-                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
-              >
-                For Owners
-              </button>
               <button
                 onClick={() => scrollToSection('contact')}
                 className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
