@@ -7,6 +7,7 @@ import { Calendar, Clock, User, ArrowLeft, Share2, BookOpen } from 'lucide-react
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
+import DOMPurify from 'dompurify';
 
 // Sample blog post data - you can replace with real data from Supabase later
 const blogPosts = {
@@ -406,7 +407,7 @@ const BlogPost = () => {
             <div className="max-w-4xl mx-auto">
               <div className="prose prose-lg max-w-none">
                 <div 
-                  dangerouslySetInnerHTML={{ __html: post.content }}
+                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
                   className="blog-content"
                 />
               </div>

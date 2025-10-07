@@ -281,14 +281,16 @@ Host: ${baseUrl}`;
   };
 
   useEffect(() => {
-    // Log sitemaps for development purposes
-    console.log('🔍 SEO Sitemap Generator Ready');
-    console.log('📄 Generated sitemap:', generateSitemap());
-    console.log('🤖 Generated robots.txt:', generateRobotsTxt());
-    console.log('💡 Call downloadSitemapFiles() in console to download files');
-    
-    // Make download function available globally for development
-    (window as any).downloadSitemapFiles = downloadSitemapFiles;
+    if (import.meta.env.DEV) {
+      // Log sitemaps for development purposes
+      console.log('🔍 SEO Sitemap Generator Ready');
+      console.log('📄 Generated sitemap:', generateSitemap());
+      console.log('🤖 Generated robots.txt:', generateRobotsTxt());
+      console.log('💡 Call downloadSitemapFiles() in console to download files');
+      
+      // Make download function available globally for development
+      (window as any).downloadSitemapFiles = downloadSitemapFiles;
+    }
   }, []);
   
   return null;

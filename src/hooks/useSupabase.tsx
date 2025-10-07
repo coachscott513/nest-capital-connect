@@ -21,7 +21,6 @@ export const useSupabase = () => {
   const addLead = async (leadData: Omit<Lead, 'id' | 'created_at'>) => {
     try {
       setLoading(true);
-      console.log('Attempting to add lead:', leadData);
       
       const { data, error } = await supabase
         .from('leads')
@@ -30,14 +29,14 @@ export const useSupabase = () => {
         .single();
 
       if (error) {
-        console.error('Supabase error details:', error);
         throw error;
       }
 
-      console.log('Lead added successfully:', data);
       return data.id;
     } catch (error) {
-      console.error('Error in addLead function:', error);
+      if (import.meta.env.DEV) {
+        console.error('Error in addLead function:', error);
+      }
       throw error;
     } finally {
       setLoading(false);
@@ -53,13 +52,14 @@ export const useSupabase = () => {
         .order('created_at', { ascending: false });
 
       if (error) {
-        console.error('Error fetching leads:', error);
         throw error;
       }
 
       return data;
     } catch (error) {
-      console.error('Error fetching leads:', error);
+      if (import.meta.env.DEV) {
+        console.error('Error fetching leads:', error);
+      }
       throw error;
     } finally {
       setLoading(false);
