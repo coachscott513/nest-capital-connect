@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight, MapPin, Home, TrendingUp, Calculator, Building, ChartBar } from 'lucide-react';
@@ -272,10 +273,9 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {relevantLinks.map((link, index) => (
             <div key={index} className="group">
-              <a 
-                href={link.url}
-                className="block p-4 rounded-lg border border-border hover:border-primary/50 transition-all duration-200 hover:shadow-md"
-                title={`Visit ${link.title} - ${link.description}`}
+              <Link
+                to={link.url}
+                className="block p-4 rounded-lg border border-border hover:border-primary/50 transition-all hover:shadow-md bg-card"
               >
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 mt-1">
@@ -306,7 +306,7 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
                     </div>
                   </div>
                 </div>
-              </a>
+              </Link>
             </div>
           ))}
         </div>
