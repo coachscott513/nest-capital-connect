@@ -38,20 +38,22 @@ const HeroSection = () => {
           </h2>
           
           {/* Email - Large and Prominent */}
-          <div className="bg-primary/5 border-2 border-primary rounded-lg p-8">
+          <div className="bg-primary/5 border-2 border-primary rounded-lg p-8 hover:bg-primary/10 transition-colors">
+            <p className="text-lg text-muted-foreground mb-2">Email</p>
             <a 
               href="mailto:Scott@capitaldistrictnest.com"
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary hover:text-primary/80 transition-colors break-all"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary hover:text-primary/80 transition-colors break-all underline decoration-2"
             >
               Scott@capitaldistrictnest.com
             </a>
           </div>
 
           {/* Phone Number - Large and Prominent */}
-          <div className="bg-primary/5 border-2 border-primary rounded-lg p-8">
+          <div className="bg-primary/5 border-2 border-primary rounded-lg p-8 hover:bg-primary/10 transition-colors">
+            <p className="text-lg text-muted-foreground mb-2">Call</p>
             <a 
               href="tel:518-522-7265"
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary hover:text-primary/80 transition-colors"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary hover:text-primary/80 transition-colors underline decoration-2"
             >
               518-522-7265
             </a>
