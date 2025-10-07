@@ -17,7 +17,9 @@ import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
 import EngagementTracker from '@/components/AnalyticsTracker';
 import ForSaleKeywordOptimizer from '@/components/ForSaleKeywordOptimizer';
 import CapitalDistrictSEOStrategy from '@/components/CapitalDistrictSEOStrategy';
-
+import RehabPropertiesSection from '@/components/RehabPropertiesSection';
+import FinancingSection from '@/components/FinancingSection';
+import OwnersSection from '@/components/OwnersSection';
 const Index = () => {
   const structuredData = {
     "@context": "https://schema.org",
@@ -223,11 +225,28 @@ const Index = () => {
           </div>
         </section>
 
-        <OpportunityCards />
+        <section id="investment-properties">
+          <OpportunityCards />
+        </section>
+        
+        <section id="rehab-properties">
+          <RehabPropertiesSection />
+        </section>
+
+        <section id="financing">
+          <FinancingSection />
+        </section>
         
         <TestimonialsSection />
         <MeetTheTeamSection />
-        <ContactSection />
+        
+        <section id="owners">
+          <OwnersSection />
+        </section>
+
+        <section id="contact">
+          <ContactSection />
+        </section>
       </main>
       
       <Footer />
