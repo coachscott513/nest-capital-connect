@@ -22,7 +22,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-blue-900/95 backdrop-blur-sm border-b border-blue-800/20 shadow-lg">
-      <nav className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
+      <nav className="flex items-center justify-between max-w-7xl mx-auto px-6 py-3">
         {/* Logo and Site Name */}
         <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
           <img 
@@ -36,60 +36,60 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex space-x-6">
+        <div className="hidden md:flex items-center space-x-1">
           <button
             onClick={() => scrollToSection('investment-properties')}
-            className="text-white hover:text-blue-200 transition-colors duration-200"
+            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
           >
             Investment Properties
           </button>
           <button
             onClick={() => scrollToSection('rehab-properties')}
-            className="text-white hover:text-blue-200 transition-colors duration-200"
+            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
           >
             Rehab Properties
           </button>
           <Link
             to="/rentals"
-            className="text-white hover:text-blue-200 transition-colors duration-200"
+            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
             onClick={() => setIsMenuOpen(false)}
           >
             Rentals
           </Link>
           <button
             onClick={() => scrollToSection('contact')}
-            className="text-white hover:text-blue-200 transition-colors duration-200"
+            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
           >
-            First-Time Home Buyers
+            First-Time Buyers
           </button>
           <div className="relative group">
-            <button className="text-white hover:text-blue-200 transition-colors duration-200">
+            <button className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
               Markets
             </button>
-            <div className="absolute top-full left-0 bg-blue-800 rounded-md shadow-lg p-2 hidden group-hover:block min-w-48">
-              <Link to="/markets" className="block px-3 py-2 text-white hover:bg-blue-700 rounded font-semibold">All Markets</Link>
-              <div className="border-t border-blue-700 my-1 px-3"></div>
-              <Link to="/markets/albany-single-family-homes" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Albany Homes</Link>
-              <Link to="/markets/schenectady-single-family-homes" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Schenectady Homes</Link>
-              <Link to="/markets/troy-single-family-homes" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Troy Homes</Link>
-              <Link to="/markets/saratoga-springs-single-family-homes" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Saratoga Homes</Link>
-              <div className="border-t border-blue-700 my-1 px-3"></div>
-              <Link to="/albany-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Albany Real Estate</Link>
-              <Link to="/troy-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Troy Real Estate</Link>
-              <Link to="/schenectady-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Schenectady Real Estate</Link>
-              <Link to="/saratoga-real-estate" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Saratoga Real Estate</Link>
+            <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-56 border border-blue-700/50">
+              <Link to="/markets" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md font-semibold text-sm">All Markets</Link>
+              <div className="border-t border-blue-700 my-2"></div>
+              <Link to="/markets/albany-single-family-homes" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Albany Homes</Link>
+              <Link to="/markets/schenectady-single-family-homes" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Schenectady Homes</Link>
+              <Link to="/markets/troy-single-family-homes" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Troy Homes</Link>
+              <Link to="/markets/saratoga-springs-single-family-homes" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Saratoga Homes</Link>
+              <div className="border-t border-blue-700 my-2"></div>
+              <Link to="/albany-real-estate" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Albany Real Estate</Link>
+              <Link to="/troy-real-estate" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Troy Real Estate</Link>
+              <Link to="/schenectady-real-estate" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Schenectady Real Estate</Link>
+              <Link to="/saratoga-real-estate" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Saratoga Real Estate</Link>
             </div>
           </div>
           <Link
             to="/blog"
-            className="text-white hover:text-blue-200 transition-colors duration-200"
+            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
             onClick={() => setIsMenuOpen(false)}
           >
             Blog
           </Link>
           <button
             onClick={() => scrollToSection('contact')}
-            className="text-white hover:text-blue-200 transition-colors duration-200"
+            className="text-white bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-md transition-colors duration-200 text-sm font-medium ml-2"
           >
             Contact
           </button>
