@@ -17,7 +17,6 @@ import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
 import EngagementTracker from '@/components/AnalyticsTracker';
 import ForSaleKeywordOptimizer from '@/components/ForSaleKeywordOptimizer';
 import CapitalDistrictSEOStrategy from '@/components/CapitalDistrictSEOStrategy';
-import GrantsAssistantWidget from '@/components/GrantsAssistantWidget';
 
 const Index = () => {
   const structuredData = {
@@ -178,9 +177,9 @@ const Index = () => {
       />
       <CapitalDistrictSEOStrategy pageType="landing" location="Capital District" propertyType="investment properties" />
       <SEOHead
-        title="Free Grants for Real Estate Investors NY | Capital District Nest - Albany Investment Properties"
-        description="Access $25M+ in free grants and $100M+ funding for NY real estate investors. Expert guidance on multi-unit properties, fix & flip, rental investments in Albany, Troy, Schenectady & Saratoga Springs. Apply for grants today."
-        keywords="free real estate grants NY, NY home buyer grants, investment property funding Albany, multi-unit property grants, fix and flip financing, rental property grants New York, real estate investor funding, Capital District grants, Albany real estate investment, first time investor grants"
+        title="Capital District Nest - Albany Investment Properties | Multi-Unit & Rental Properties"
+        description="Expert investment property specialists for multi-unit buildings, fix & flip, and rental properties in Albany, Troy, Schenectady & Saratoga Springs. Start building your portfolio today."
+        keywords="Albany investment properties, multi-unit properties Albany, rental properties Capital District, fix and flip Albany, investment real estate Troy, Schenectady investment properties, Saratoga Springs rentals"
         structuredData={structuredData}
       />
       
@@ -200,38 +199,31 @@ const Index = () => {
       <main role="main">
         <HeroSection />
         
-        {/* Grants & Funding Stats Section */}
+        {/* Investment Stats Section */}
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">$25M+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Grants Available</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">500+</div>
+                <div className="text-sm md:text-base text-muted-foreground">Properties Sold</div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">$100M+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Funding Available</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">$50M+</div>
+                <div className="text-sm md:text-base text-muted-foreground">Total Volume</div>
               </div>
               <div className="space-y-2">
                 <div className="text-4xl md:text-5xl font-bold text-primary">15+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Incentive Programs</div>
+                <div className="text-sm md:text-base text-muted-foreground">Years Experience</div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">$500K</div>
-                <div className="text-sm md:text-base text-muted-foreground">Max Grant Amount</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">4.8</div>
+                <div className="text-sm md:text-base text-muted-foreground">Client Rating</div>
               </div>
             </div>
           </div>
         </section>
 
         <OpportunityCards />
-        
-        {/* Grants Assistant Widget */}
-        <section className="py-16 bg-background">
-          <div className="container mx-auto px-4">
-            <GrantsAssistantWidget />
-          </div>
-        </section>
         
         <TestimonialsSection />
         <MeetTheTeamSection />
