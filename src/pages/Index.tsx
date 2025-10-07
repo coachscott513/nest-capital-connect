@@ -177,9 +177,9 @@ const Index = () => {
       />
       <CapitalDistrictSEOStrategy pageType="landing" location="Capital District" propertyType="investment properties" />
       <SEOHead
-        title="Capital District Nest | Investment Properties & Real Estate in Albany, NY"
-        description="Premier real estate investment specialist in Albany, Troy, Schenectady & Saratoga Springs. Multi-unit properties, rehab opportunities, and rental solutions. Expert guidance with proven results."
-        keywords="investment properties Albany NY, multi-unit buildings Troy NY, real estate investment Capital District, rental properties Schenectady NY, fix and flip properties Saratoga Springs"
+        title="Free Grants for Real Estate Investors NY | Capital District Nest - Albany Investment Properties"
+        description="Access $25M+ in free grants and $100M+ funding for NY real estate investors. Expert guidance on multi-unit properties, fix & flip, rental investments in Albany, Troy, Schenectady & Saratoga Springs. Apply for grants today."
+        keywords="free real estate grants NY, NY home buyer grants, investment property funding Albany, multi-unit property grants, fix and flip financing, rental property grants New York, real estate investor funding, Capital District grants, Albany real estate investment, first time investor grants"
         structuredData={structuredData}
       />
       

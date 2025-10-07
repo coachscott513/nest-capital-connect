@@ -12,8 +12,9 @@ const HeroSection = () => {
         <div className="absolute inset-0 z-0">
           <img 
             src={heroBackground}
-            alt="Capital District Real Estate"
+            alt="Free grants for New York real estate investors - Capital District investment properties and funding opportunities"
             className="w-full h-full object-cover"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-black/40" />
         </div>
@@ -32,9 +33,12 @@ const HeroSection = () => {
       {/* Investment Opportunities Section */}
       <div className="container mx-auto px-4 py-16 lg:py-20">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-bold text-center mb-3">
             Unlock Free Grants & Home Buyer Programs
           </h2>
+          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+            Access $25M+ in grants and $100M+ in funding for New York real estate investors. Get expert guidance on multi-unit properties, fix & flip financing, and rental investment opportunities.
+          </p>
           
           <LeadCaptureForm 
             type="investment"
