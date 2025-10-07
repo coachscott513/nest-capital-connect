@@ -1,13 +1,7 @@
 
 import React from 'react';
 import HeroSection from '@/components/HeroSection';
-import NeighborhoodsSection from '@/components/NeighborhoodsSection';
-import InvestmentPropertiesSection from '@/components/InvestmentPropertiesSection';
-import RehabPropertiesSection from '@/components/RehabPropertiesSection';
-import RehabInvestmentHowTo from '@/components/RehabInvestmentHowTo';
-import FinancingSection from '@/components/FinancingSection';
-import OwnersSection from '@/components/OwnersSection';
-import MissionSection from '@/components/MissionSection';
+import OpportunityCards from '@/components/OpportunityCards';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
@@ -16,16 +10,10 @@ import SEOHead from '@/components/SEOHead';
 import LocalBusinessSchema from '@/components/LocalBusinessSchema';
 import RealEstateSchema from '@/components/RealEstateSchema';
 import CoreWebVitalsOptimizer from '@/components/CoreWebVitalsOptimizer';
-import InternalLinkingNav from '@/components/InternalLinkingNav';
-import AnimatedCapitalDistrictMap from '@/components/AnimatedCapitalDistrictMap';
 import MeetTheTeamSection from '@/components/MeetTheTeamSection';
 import SEOAnalyzer from '@/components/SEOAnalyzer';
 import { AdSenseCompliance } from '@/components/AdSenseOptimizer';
 import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
-import RelatedContentSuggestions from '@/components/RelatedContentSuggestions';
-import NeighborhoodCrossLinks from '@/components/NeighborhoodCrossLinks';
-import CallToActionLinks from '@/components/CallToActionLinks';
-import YouTubeAnalysisSection from '@/components/YouTubeAnalysisSection';
 import EngagementTracker from '@/components/AnalyticsTracker';
 import ForSaleKeywordOptimizer from '@/components/ForSaleKeywordOptimizer';
 import CapitalDistrictSEOStrategy from '@/components/CapitalDistrictSEOStrategy';
@@ -212,7 +200,7 @@ const Index = () => {
         <HeroSection />
         
         {/* Stats Section - Ryan Serhant Style */}
-        <section className="py-16 bg-background">
+        <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
               <div className="space-y-2">
@@ -235,14 +223,7 @@ const Index = () => {
           </div>
         </section>
 
-        <InvestmentPropertiesSection />
-        <CallToActionLinks context="investment" className="py-8" />
-        <RehabPropertiesSection />
-        <RehabInvestmentHowTo />
-        <NeighborhoodsSection />
-        <NeighborhoodCrossLinks showAll={true} />
-        <InternalLinkingNav />
-        <FinancingSection />
+        <OpportunityCards />
         <TestimonialsSection />
         <MeetTheTeamSection />
         <ContactSection />
