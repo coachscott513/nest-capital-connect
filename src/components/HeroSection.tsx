@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
+import LeadCaptureForm from "./LeadCaptureForm";
 
 const HeroSection = () => {
   return (
@@ -22,9 +23,8 @@ const HeroSection = () => {
           <div className="max-w-3xl space-y-8 py-20">
             <div className="space-y-4">
               <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.9] tracking-tight">
-                <span className="block text-white">CAPITAL</span>
-                <span className="block text-white">DISTRICT</span>
-                <span className="block text-primary">NEST.</span>
+                <span className="block text-white">YOUR REAL ESTATE</span>
+                <span className="block text-primary">INVESTMENT PARTNER</span>
               </h1>
             </div>
 
@@ -70,26 +70,42 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* NY Investment Funding Stats */}
+      {/* NY Investment Funding Stats & Lead Capture */}
       <div className="container mx-auto px-4 lg:px-8 py-12 lg:py-16">
-        <div className="max-w-7xl mx-auto bg-muted/30 rounded-3xl p-8 lg:p-12">
+        <div className="max-w-7xl mx-auto">
           <h2 className="text-2xl lg:text-3xl font-bold text-center mb-8">New York Real Estate Investment Opportunities</h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            <div className="text-center space-y-2">
-              <div className="text-3xl lg:text-4xl font-bold text-primary">$25M+</div>
-              <div className="text-sm lg:text-base text-muted-foreground font-medium">Grants Available</div>
+          
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            {/* Stats Grid */}
+            <div className="bg-muted/30 rounded-3xl p-8 lg:p-12">
+              <div className="grid grid-cols-2 gap-6 lg:gap-8">
+                <div className="text-center space-y-2">
+                  <div className="text-3xl lg:text-4xl font-bold text-primary">$25M+</div>
+                  <div className="text-sm lg:text-base text-muted-foreground font-medium">Grants Available</div>
+                </div>
+                <div className="text-center space-y-2">
+                  <div className="text-3xl lg:text-4xl font-bold text-primary">$100M+</div>
+                  <div className="text-sm lg:text-base text-muted-foreground font-medium">Funding Available</div>
+                </div>
+                <div className="text-center space-y-2">
+                  <div className="text-3xl lg:text-4xl font-bold text-primary">15+</div>
+                  <div className="text-sm lg:text-base text-muted-foreground font-medium">Incentive Programs</div>
+                </div>
+                <div className="text-center space-y-2">
+                  <div className="text-3xl lg:text-4xl font-bold text-primary">$500K</div>
+                  <div className="text-sm lg:text-base text-muted-foreground font-medium">Max Grant Amount</div>
+                </div>
+              </div>
             </div>
-            <div className="text-center space-y-2">
-              <div className="text-3xl lg:text-4xl font-bold text-primary">$100M+</div>
-              <div className="text-sm lg:text-base text-muted-foreground font-medium">Funding Available</div>
-            </div>
-            <div className="text-center space-y-2">
-              <div className="text-3xl lg:text-4xl font-bold text-primary">15+</div>
-              <div className="text-sm lg:text-base text-muted-foreground font-medium">Incentive Programs</div>
-            </div>
-            <div className="text-center space-y-2">
-              <div className="text-3xl lg:text-4xl font-bold text-primary">$500K</div>
-              <div className="text-sm lg:text-base text-muted-foreground font-medium">Max Grant Amount</div>
+
+            {/* Lead Capture Chatbox */}
+            <div>
+              <LeadCaptureForm 
+                type="investment"
+                title="Get Your Free Investment Analysis"
+                description="Connect with us to explore funding opportunities and investment properties in the Capital District"
+                buttonText="Start Your Investment Journey"
+              />
             </div>
           </div>
         </div>
