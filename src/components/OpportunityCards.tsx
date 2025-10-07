@@ -17,7 +17,7 @@ const OpportunityCards = () => {
       icon: Building2,
       title: "Multi-Unit Properties",
       description: "Discover investment opportunities in duplexes, triplexes, and apartment buildings across the Capital District.",
-      action: () => scrollToSection('investment-properties'),
+      action: () => navigate('/investment-properties'),
       gradient: "from-primary/10 to-primary/5"
     },
     {
