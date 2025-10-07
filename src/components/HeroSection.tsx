@@ -42,7 +42,7 @@ const HeroSection = () => {
             <p className="text-lg text-muted-foreground mb-2">Email</p>
             <a 
               href="mailto:Scott@capitaldistrictnest.com"
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary hover:text-primary/80 transition-colors break-all underline decoration-2"
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary hover:text-primary/80 transition-colors underline decoration-2"
             >
               Scott@capitaldistrictnest.com
             </a>
