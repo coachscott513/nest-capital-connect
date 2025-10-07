@@ -207,11 +207,11 @@ const ContactSection = () => {
                 <TrackedButton
                   trackingType="email"
                   trackingLabel="Contact Section Email"
-                  href="mailto:capitaldistrictnest@gmail.com"
+                  href="mailto:scott@capitaldistrictnest.com"
                   variant="link"
                   className="ml-2 text-blue-500 hover:underline p-0 h-auto"
                 >
-                  capitaldistrictnest@gmail.com
+                  scott@capitaldistrictnest.com
                 </TrackedButton>
               </p>
               <p className="flex items-center justify-center">
