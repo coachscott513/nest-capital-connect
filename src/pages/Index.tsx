@@ -199,25 +199,25 @@ const Index = () => {
       <main role="main">
         <HeroSection />
         
-        {/* Investment Stats Section */}
+        {/* Grants & Financing Stats Section */}
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">500+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Properties Sold</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">$25M+</div>
+                <div className="text-sm md:text-base text-muted-foreground">Available Grants</div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">$50M+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Total Volume</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">$100M+</div>
+                <div className="text-sm md:text-base text-muted-foreground">Financing Programs</div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">15+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Years Experience</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">10%</div>
+                <div className="text-sm md:text-base text-muted-foreground">Min. Down Payment</div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">4.8</div>
-                <div className="text-sm md:text-base text-muted-foreground">Client Rating</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">100+</div>
+                <div className="text-sm md:text-base text-muted-foreground">First-Time Buyers Helped</div>
               </div>
             </div>
           </div>

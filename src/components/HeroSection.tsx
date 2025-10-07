@@ -30,22 +30,32 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Investment Opportunities Section */}
+      {/* Contact Information Section */}
       <div className="container mx-auto px-4 py-16 lg:py-20">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-bold text-center mb-3">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <h2 className="text-3xl lg:text-4xl font-bold mb-8">
             Unlock Free Grants & Home Buyer Programs
           </h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Access $25M+ in grants and $100M+ in funding for New York real estate investors. Get expert guidance on multi-unit properties, fix & flip financing, and rental investment opportunities.
-          </p>
           
-          <LeadCaptureForm 
-            type="investment"
-            title="Get Started Today"
-            description="Connect with us to explore funding opportunities and investment properties"
-            buttonText="Contact Us"
-          />
+          {/* Email - Large and Prominent */}
+          <div className="bg-primary/5 border-2 border-primary rounded-lg p-8">
+            <a 
+              href="mailto:Scott@capitaldistrictnest.com"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary hover:text-primary/80 transition-colors break-all"
+            >
+              Scott@capitaldistrictnest.com
+            </a>
+          </div>
+
+          {/* Phone Number - Large and Prominent */}
+          <div className="bg-primary/5 border-2 border-primary rounded-lg p-8">
+            <a 
+              href="tel:518-522-7265"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary hover:text-primary/80 transition-colors"
+            >
+              518-522-7265
+            </a>
+          </div>
         </div>
       </div>
     </section>
