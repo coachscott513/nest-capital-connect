@@ -1,49 +1,58 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Building2, Home, Wrench, DollarSign, Users, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const OpportunityCards = () => {
+  const navigate = useNavigate();
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const opportunities = [
     {
       icon: Building2,
       title: "Multi-Unit Properties",
       description: "Discover investment opportunities in duplexes, triplexes, and apartment buildings across the Capital District.",
-      link: "/investment-landing",
+      action: () => scrollToSection('investment-properties'),
       gradient: "from-primary/10 to-primary/5"
     },
     {
       icon: Wrench,
       title: "Rehab & Fix-Flip",
       description: "Find properties with potential. Transform undervalued homes into profitable investments.",
-      link: "/investment-landing",
+      action: () => scrollToSection('rehab-properties'),
       gradient: "from-accent/10 to-accent/5"
     },
     {
       icon: Home,
       title: "Rental Properties",
       description: "Build passive income with turnkey rental properties in high-demand neighborhoods.",
-      link: "/rentals",
+      action: () => navigate('/rentals'),
       gradient: "from-secondary/10 to-secondary/5"
     },
     {
       icon: DollarSign,
       title: "Financing Solutions",
       description: "Access fix & flip loans, traditional mortgages, and investor-friendly financing options.",
-      link: "/investment-landing",
+      action: () => scrollToSection('financing'),
       gradient: "from-primary/10 to-primary/5"
     },
     {
       icon: MapPin,
       title: "Capital District Markets",
       description: "Explore opportunities in Albany, Troy, Schenectady, and Saratoga Springs.",
-      link: "/markets",
+      action: () => navigate('/markets'),
       gradient: "from-accent/10 to-accent/5"
     },
     {
       icon: Users,
       title: "First-Time Buyers",
       description: "Start your real estate journey with expert guidance and first-time buyer resources.",
-      link: "/communities",
+      action: () => scrollToSection('contact'),
       gradient: "from-secondary/10 to-secondary/5"
     }
   ];
@@ -65,10 +74,10 @@ const OpportunityCards = () => {
           {opportunities.map((opportunity, index) => {
             const Icon = opportunity.icon;
             return (
-              <Link
+              <div
                 key={index}
-                to={opportunity.link}
-                className="group relative bg-card border border-border rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                onClick={opportunity.action}
+                className="group relative bg-card border border-border rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${opportunity.gradient} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                 
@@ -90,7 +99,7 @@ const OpportunityCards = () => {
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </Link>
+              </div>
             );
           })}
         </div>
