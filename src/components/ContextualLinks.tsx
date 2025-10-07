@@ -52,9 +52,9 @@ export const investmentLinks: ContextualLink[] = [
 ];
 
 export const rentalLinks: ContextualLink[] = [
-  { text: "Investment Analysis", href: "/investment-properties" },
-  { text: "Multi-Unit Properties", href: "/investment-properties" },
-  { text: "Financing Solutions", href: "/financing" },
+  { text: "Investment Analysis", href: "/#investment-properties" },
+  { text: "Multi-Unit Properties", href: "/#investment-properties" },
+  { text: "Financing Solutions", href: "/#financing" },
   { text: "Neighborhood Guide", href: "/communities" }
 ];
 

@@ -214,7 +214,7 @@ const Index = () => {
                 <div className="text-sm md:text-base text-muted-foreground">Financing Programs</div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">10%</div>
+                <div className="text-4xl md:text-5xl font-bold text-primary">0%</div>
                 <div className="text-sm md:text-base text-muted-foreground">Min. Down Payment</div>
               </div>
               <div className="space-y-2">
