@@ -21,7 +21,7 @@ const HeroSection = () => {
         <div className="relative z-10 text-center px-4">
           <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black text-white mb-4 tracking-tight">
             CAPITAL DISTRICT<br />
-            <span className="text-primary">NEST</span>
+            <span className="text-white">NEST</span>
           </h1>
           <p className="text-xl sm:text-2xl lg:text-3xl text-white font-light">
             Your Premier Investment Property Partner
