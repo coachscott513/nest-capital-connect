@@ -33,7 +33,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 py-16 lg:py-20">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl lg:text-4xl font-bold text-center mb-12">
-            New York Investment Opportunities
+            Unlock Free Grants & Home Buyer Programs
           </h2>
           
           <LeadCaptureForm 
