@@ -35,47 +35,46 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/rentals" element={<Rentals />} />
-            <Route path="/communities/:city" element={<Communities />} />
-            <Route path="/investment-properties" element={<InvestmentLanding />} />
-            <Route path="/rehab-properties" element={<Index />} />
-            <Route path="/financing" element={<Index />} />
-            <Route path="/albany-rentals" element={<Rentals />} />
-            <Route path="/troy-rentals" element={<Rentals />} />
-            <Route path="/schenectady-rentals" element={<Rentals />} />
-            <Route path="/saratoga-rentals" element={<Rentals />} />
-            <Route path="/contact" element={<Index />} />
-            <Route path="/about" element={<Index />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-of-service" element={<PrivacyPolicy />} />
-            
-            {/* Capital District Hub Pages */}
-            {/* Capital District Hub Pages - All Towns */}
-            {generateTownRoutes()}
-            
-            {/* Capital District Rental Pages - All Towns */}
-            {generateTownRentalRoutes()}
-            
-            {/* SEO Management */}
-            <Route path="/seo-audit" element={<SEOAudit />} />
-            
-            {/* Markets Section */}
-            <Route path="/markets" element={<Markets />} />
-            <Route path="/markets/:town" element={<SingleFamilyMarket />} />
-            
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/rentals" element={<Rentals />} />
+          <Route path="/communities/:city" element={<Communities />} />
+          <Route path="/investment-properties" element={<InvestmentLanding />} />
+          <Route path="/investment-landing" element={<InvestmentLanding />} />
+          <Route path="/rehab-properties" element={<Index />} />
+          <Route path="/financing" element={<Index />} />
+          <Route path="/albany-rentals" element={<Rentals />} />
+          <Route path="/troy-rentals" element={<Rentals />} />
+          <Route path="/schenectady-rentals" element={<Rentals />} />
+          <Route path="/saratoga-rentals" element={<Rentals />} />
+          <Route path="/contact" element={<Index />} />
+          <Route path="/about" element={<Index />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<PrivacyPolicy />} />
+          
+          {/* Capital District Hub Pages */}
+          {/* Capital District Hub Pages - All Towns */}
+          {generateTownRoutes()}
+          
+          {/* Capital District Rental Pages - All Towns */}
+          {generateTownRentalRoutes()}
+          
+          {/* SEO Management */}
+          <Route path="/seo-audit" element={<SEOAudit />} />
+          
+          {/* Markets Section */}
+          <Route path="/markets" element={<Markets />} />
+          <Route path="/markets/:town" element={<SingleFamilyMarket />} />
+          
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 };
