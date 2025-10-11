@@ -35,12 +35,13 @@ const AlbanyInvestmentProperties = () => {
               <div className="my-8 text-center bg-muted/30 p-6 rounded-lg">
                 <h3 className="text-xl font-semibold mb-2">Request Your Free Albany Investment Report</h3>
                 <p className="text-muted-foreground mb-4">Weekly cash-flow property alerts + ROI breakdowns, straight to your inbox.</p>
-                <iframe
-                  src="YOUR_BOLDTRAIL_FORM_URL?tag=CDN_Investment&campaign=Cashflow_List"
-                  title="Investment Leads"
-                  className="w-full max-w-[640px] h-[520px] border-0 rounded-xl mx-auto"
-                  loading="lazy"
-                />
+                <a
+                  href="/#contact"
+                  className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+                  aria-label="Contact us to request your Albany Investment Report"
+                >
+                  Contact Us
+                </a>
               </div>
 
               <h2 className="text-2xl font-semibold mb-3 mt-8">What You'll Receive</h2>
