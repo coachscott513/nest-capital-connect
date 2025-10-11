@@ -1,5 +1,6 @@
 
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface SEOHeadProps {
   title?: string;
@@ -11,15 +12,21 @@ interface SEOHeadProps {
   ogType?: string;
 }
 
+const BASE_URL = "https://capitaldistrictnest.com";
+
 const SEOHead = ({ 
-  title = "Capital District Nest - #1 Properties For Sale & Rentals in Albany, Troy, Schenectady & Saratoga Springs NY",
-  description = "Find premium properties for sale, rental properties and expert real estate services in Albany, Troy, Schenectady, and Saratoga Springs. Top-rated property management, investment properties for sale, first-time buyer assistance, and investment opportunities in New York's Capital District.",
-  keywords = "Albany NY properties for sale, Troy NY properties for sale, Schenectady NY properties for sale, Saratoga Springs NY properties for sale, investment properties for sale Capital District, Albany NY rentals, Troy NY apartments, Schenectady NY housing, Saratoga Springs NY real estate, Capital District property management, NY first time home buyers, rental properties Albany, multi-unit homes NY, real estate for sale Capital District",
-  canonical = "https://your-domain.com",
+  title = "Albany NY Homes for Sale | Capital District Nest | Capital Region Real Estate",
+  description = "Find homes for sale in Albany, Troy, Schenectady, and Saratoga Springs NY. Expert local real estate services, investment properties, first-time buyer assistance, and rental properties in New York's Capital District.",
+  keywords = "Albany NY homes for sale, Troy NY homes for sale, Schenectady NY homes for sale, Saratoga Springs NY real estate, Capital District homes, Albany real estate, investment properties Albany NY, Capital District property management, NY first time home buyers, rental properties Albany, multi-unit homes NY, Capital Region real estate",
+  canonical,
   structuredData,
-  ogImage = "https://your-domain.com/og-image-capital-district.jpg",
+  ogImage = `${BASE_URL}/og-image-capital-district.jpg`,
   ogType = "website"
 }: SEOHeadProps) => {
+  const location = useLocation();
+  
+  // Generate canonical URL dynamically if not provided
+  const canonicalUrl = canonical || `${BASE_URL}${location.pathname}`;
   
   useEffect(() => {
     // Update page title
@@ -50,7 +57,7 @@ const SEOHead = ({
       canonicalLink.rel = 'canonical';
       document.head.appendChild(canonicalLink);
     }
-    canonicalLink.href = canonical;
+    canonicalLink.href = canonicalUrl;
 
     // Add robots meta
     let robotsMeta = document.querySelector('meta[name="robots"]');
@@ -84,7 +91,7 @@ const SEOHead = ({
       { property: 'og:title', content: title },
       { property: 'og:description', content: description },
       { property: 'og:type', content: ogType },
-      { property: 'og:url', content: canonical },
+      { property: 'og:url', content: canonicalUrl },
       { property: 'og:image', content: ogImage },
       { property: 'og:site_name', content: 'Capital District Nest' },
       { property: 'og:locale', content: 'en_US' }
@@ -134,7 +141,7 @@ const SEOHead = ({
         document.head.removeChild(structuredDataScript);
       }
     };
-  }, [title, description, keywords, canonical, structuredData, ogImage, ogType]);
+  }, [title, description, keywords, canonicalUrl, structuredData, ogImage, ogType, location.pathname]);
 
   return null;
 };

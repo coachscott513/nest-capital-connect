@@ -28,10 +28,10 @@ const HeroSection = () => {
         
         <div className="container mx-auto max-w-5xl relative z-10">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white drop-shadow-lg">
-            Capital District Nest
+            Find Your Home in the Capital District
           </h1>
           <p className="text-xl md:text-2xl text-white/90 drop-shadow-md">
-            Search every property in Albany County — the local alternative to Zillow for smart buyers & investors.
+            Albany, Troy, Schenectady & Saratoga Springs Real Estate — Your Local Alternative to Zillow
           </p>
         </div>
       </section>
