@@ -9,6 +9,7 @@ const SellInvestmentProperty = () => {
         <title>Sell Your Investment Property in Albany | Quiet, Fast Options</title>
         <meta name="description" content="Sell your multi-unit, flip, or rental quickly. Investor buyers, off-market options, and full listing services." />
         <meta name="keywords" content="sell investment property albany, sell rental property albany, albany property valuation, investment property buyer albany" />
+        <link rel="canonical" href="https://capitaldistrictnest.com/sell-investment-property" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

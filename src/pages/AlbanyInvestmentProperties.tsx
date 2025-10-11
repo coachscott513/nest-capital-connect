@@ -9,6 +9,7 @@ const AlbanyInvestmentProperties = () => {
         <title>Albany Investment Properties | Cash-Flow Deals & ROI Analysis</title>
         <meta name="description" content="Find the best investment properties in Albany County. Multi-units, flips, and cash-flow deals—updated weekly." />
         <meta name="keywords" content="albany investment properties, albany rental properties for sale, albany multi family homes, cash flow properties albany" />
+        <link rel="canonical" href="https://capitaldistrictnest.com/albany-investment-properties" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

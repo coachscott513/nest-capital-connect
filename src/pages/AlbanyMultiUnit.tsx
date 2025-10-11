@@ -9,6 +9,7 @@ const AlbanyMultiUnit = () => {
         <title>Albany Multi-Family & Duplex Listings | High Cash Flow Opportunities</title>
         <meta name="description" content="Duplexes, triplexes, and small apartment buildings for sale in Albany County. ROI tools + weekly investor reports." />
         <meta name="keywords" content="albany multi unit properties, albany duplex for sale, albany triplex, albany apartment buildings" />
+        <link rel="canonical" href="https://capitaldistrictnest.com/albany-multi-unit" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

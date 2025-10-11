@@ -9,6 +9,7 @@ const CashFlowReport = () => {
         <title>Albany Weekly Cash-Flow Report | Free Investor Hot Sheet</title>
         <meta name="description" content="Subscribe to Albany's weekly investor Hot Sheet. Cash-flow deals, rents, and ROI snapshots delivered free." />
         <meta name="keywords" content="albany investment newsletter, cash flow report albany, weekly property analysis, albany real estate investor report" />
+        <link rel="canonical" href="https://capitaldistrictnest.com/cash-flow-report" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

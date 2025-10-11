@@ -10,6 +10,7 @@ const FirstTimeHomebuyers = () => {
         <title>Albany First-Time Home Buyer Grants & Low-Down Programs</title>
         <meta name="description" content="See every Albany-area grant, low-down, and first-time buyer option. Check eligibility in minutes." />
         <meta name="keywords" content="albany first time home buyer, albany down payment assistance, albany fha loans, albany grants" />
+        <link rel="canonical" href="https://capitaldistrictnest.com/first-time-buyer-programs-albany" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">

@@ -9,6 +9,7 @@ const AlbanyLand = () => {
         <title>Albany Land for Sale | Build, Subdivide, or Hold Long-Term</title>
         <meta name="description" content="Find land in Albany County—buildable lots, rural acreage, and investor parcels with local zoning notes." />
         <meta name="keywords" content="albany land for sale, buildable lots albany, albany ny land, residential lots albany county" />
+        <link rel="canonical" href="https://capitaldistrictnest.com/albany-land" />
       </Helmet>
 
       <div className="min-h-screen flex flex-col">
