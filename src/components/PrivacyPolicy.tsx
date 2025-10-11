@@ -90,6 +90,31 @@ const PrivacyPolicy: React.FC = () => {
             </div>
             
             <div className="mt-6 p-4 bg-white rounded border-l-4 border-blue-500">
+              <h4 className="font-semibold mb-2">Facebook Pixel and Advertising</h4>
+              <p className="text-sm text-gray-700">
+                This website uses the Facebook Pixel, a tracking code that allows us to measure the effectiveness of our advertising by understanding the actions people take on our website. The Facebook Pixel collects information about your visit, including:
+              </p>
+              <ul className="text-sm text-gray-700 mt-2 ml-4 list-disc">
+                <li>Pages you visit on our site</li>
+                <li>Actions you take (such as form submissions or button clicks)</li>
+                <li>Device information and IP address</li>
+                <li>Browser and operating system details</li>
+              </ul>
+              <p className="text-sm text-gray-700 mt-2">
+                Facebook uses this information to:
+              </p>
+              <ul className="text-sm text-gray-700 mt-2 ml-4 list-disc">
+                <li>Show you personalized ads on Facebook and Instagram based on your interests</li>
+                <li>Measure and optimize our advertising campaigns</li>
+                <li>Build custom audiences for targeted marketing</li>
+                <li>Track conversions and attribution from our ads</li>
+              </ul>
+              <p className="text-sm text-gray-700 mt-2">
+                You can opt out of personalized Facebook ads by adjusting your <a href="https://www.facebook.com/ads/preferences" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Facebook Ad Preferences</a> or by using the <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Digital Advertising Alliance opt-out tool</a>.
+              </p>
+            </div>
+
+            <div className="mt-4 p-4 bg-white rounded border-l-4 border-green-500">
               <h4 className="font-semibold mb-2">Google AdSense and Analytics</h4>
               <p className="text-sm text-gray-700">
                 This website uses Google AdSense to display advertisements. Google may use cookies to serve ads based on your visits to this site and other websites. You can opt out of personalized advertising by visiting Google's Ads Settings.
@@ -104,6 +129,16 @@ const PrivacyPolicy: React.FC = () => {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Third-Party Services</h2>
           <div className="space-y-4">
+            <div className="border border-gray-200 p-4 rounded-lg">
+              <h3 className="font-semibold">Meta (Facebook) Platforms</h3>
+              <p className="text-sm text-gray-600 mt-2">
+                Facebook Pixel, Facebook Ads, Instagram Ads - for advertising, remarketing, and conversion tracking. 
+                Meta may use cookies and similar technologies to track your activity across websites and apps for advertising purposes.
+              </p>
+              <p className="text-sm text-gray-600 mt-2">
+                Learn more about <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Meta's Privacy Policy</a>.
+              </p>
+            </div>
             <div className="border border-gray-200 p-4 rounded-lg">
               <h3 className="font-semibold">Google Services</h3>
               <p className="text-sm text-gray-600 mt-2">
@@ -212,8 +247,8 @@ const PrivacyPolicy: React.FC = () => {
 
         <footer className="border-t border-gray-200 pt-6">
           <p className="text-sm text-gray-500">
-            This Privacy Policy is compliant with GDPR, CCPA, and Google AdSense requirements. 
-            By using our website, you consent to the collection and use of information as described in this policy.
+            This Privacy Policy is compliant with GDPR, CCPA, Google AdSense, and Meta advertising requirements. 
+            By using our website, you consent to the collection and use of information as described in this policy, including the use of Facebook Pixel for advertising and analytics purposes.
           </p>
         </footer>
       </div>
