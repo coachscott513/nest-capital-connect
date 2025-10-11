@@ -17,7 +17,7 @@ const CashFlowReport = () => {
         <Header />
         
         <main className="flex-grow">
-          <section className="py-8 px-4">
+          <section className="py-12 px-4 bg-background">
             <div className="max-w-[1000px] mx-auto">
               <h1 className="text-3xl md:text-4xl font-bold mb-4">
                 Albany Weekly Cash-Flow Report — Free Investor Hot Sheet
@@ -33,25 +33,6 @@ const CashFlowReport = () => {
                 <li>Notes on financing, grants, or rehab approaches</li>
               </ul>
 
-              <div className="py-12 text-center" style={{ backgroundColor: '#000000', color: '#ffffff' }}>
-                <div className="container mx-auto max-w-3xl px-4">
-                  <h2 className="text-3xl font-semibold mb-5">
-                    Still have Questions?
-                  </h2>
-                  <p className="text-lg mb-6">
-                    Let us know if there&apos;s anything we can help answer to make this important time stress-free.
-                  </p>
-                  <div className="max-w-md mx-auto">
-                    <LeadCaptureForm 
-                      type="report"
-                      title="Get weekly opportunities"
-                      description="Subscribe free—quick signup, unsubscribe anytime."
-                      buttonText="Subscribe"
-                    />
-                  </div>
-                </div>
-              </div>
-
               <h2 className="text-2xl font-semibold mb-3 mt-8">Latest Highlights</h2>
               <p className="text-muted-foreground mb-3">See our latest analysis and sample numbers:</p>
               <ul className="list-disc ml-5 space-y-2 text-muted-foreground mb-6">
@@ -62,6 +43,24 @@ const CashFlowReport = () => {
             </div>
           </section>
 
+          <section className="py-12 text-center" style={{ backgroundColor: '#000000', color: '#ffffff' }}>
+            <div className="container mx-auto max-w-3xl px-4">
+              <h2 className="text-3xl font-semibold mb-5">
+                Still have Questions?
+              </h2>
+              <p className="text-lg mb-6">
+                Let us know if there&apos;s anything we can help answer to make this important time stress-free.
+              </p>
+              <div className="max-w-md mx-auto">
+                <LeadCaptureForm 
+                  type="report"
+                  title="Get weekly opportunities"
+                  description="Subscribe free—quick signup, unsubscribe anytime."
+                  buttonText="Subscribe"
+                />
+              </div>
+            </div>
+          </section>
         </main>
 
         <Footer />

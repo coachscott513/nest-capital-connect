@@ -17,7 +17,7 @@ const AlbanyLand = () => {
         <Header />
         
         <main className="flex-grow">
-          <section className="py-8 px-4">
+          <section className="py-12 px-4 bg-background">
             <div className="max-w-[1000px] mx-auto">
               <h1 className="text-3xl md:text-4xl font-bold mb-4">
                 Albany Land for Sale — Build, Subdivide, or Hold Long-Term
@@ -34,25 +34,6 @@ const AlbanyLand = () => {
                 <li>Subdivision or minor lot line adjustments</li>
               </ul>
 
-              <div className="py-12 text-center" style={{ backgroundColor: '#000000', color: '#ffffff' }}>
-                <div className="container mx-auto max-w-3xl px-4">
-                  <h2 className="text-3xl font-semibold mb-5">
-                    Still have Questions?
-                  </h2>
-                  <p className="text-lg mb-6">
-                    Let us know if there&apos;s anything we can help answer to make this important time stress-free.
-                  </p>
-                  <div className="max-w-md mx-auto">
-                    <LeadCaptureForm 
-                      type="land"
-                      title="Contact us now"
-                      description="Share your land goals and we’ll follow up fast with options."
-                      buttonText="Send message"
-                    />
-                  </div>
-                </div>
-              </div>
-
               <nav className="flex flex-wrap gap-2 items-center mt-8 pt-6 border-t border-border text-sm">
                 <a href="/albany-investment-properties" className="text-primary hover:underline">Investment</a>
                 <span className="text-muted-foreground">·</span>
@@ -63,6 +44,24 @@ const AlbanyLand = () => {
             </div>
           </section>
 
+          <section className="py-12 text-center" style={{ backgroundColor: '#000000', color: '#ffffff' }}>
+            <div className="container mx-auto max-w-3xl px-4">
+              <h2 className="text-3xl font-semibold mb-5">
+                Still have Questions?
+              </h2>
+              <p className="text-lg mb-6">
+                Let us know if there&apos;s anything we can help answer to make this important time stress-free.
+              </p>
+              <div className="max-w-md mx-auto">
+                <LeadCaptureForm 
+                  type="land"
+                  title="Contact us now"
+                  description="Share your land goals and we'll follow up fast with options."
+                  buttonText="Send message"
+                />
+              </div>
+            </div>
+          </section>
         </main>
 
         <Footer />

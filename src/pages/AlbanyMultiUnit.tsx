@@ -17,7 +17,7 @@ const AlbanyMultiUnit = () => {
         <Header />
         
         <main className="flex-grow">
-          <section className="py-8 px-4">
+          <section className="py-12 px-4 bg-background">
             <div className="max-w-[1000px] mx-auto">
               <h1 className="text-3xl md:text-4xl font-bold mb-4">
                 Albany Multi-Family & Duplex Investment Properties
@@ -33,25 +33,6 @@ const AlbanyMultiUnit = () => {
                 <li>Clear value-add (under-market rents, cosmetic updates)</li>
                 <li>Local property management availability</li>
               </ul>
-
-              <div className="py-12 text-center" style={{ backgroundColor: '#000000', color: '#ffffff' }}>
-                <div className="container mx-auto max-w-3xl px-4">
-                  <h2 className="text-3xl font-semibold mb-5">
-                    Still have Questions?
-                  </h2>
-                  <p className="text-lg mb-6">
-                    Let us know if there&apos;s anything we can help answer to make this important time stress-free.
-                  </p>
-                  <div className="max-w-md mx-auto">
-                    <LeadCaptureForm 
-                      type="multi-unit"
-                      title="Contact us now"
-                      description="Tell us your criteria and we’ll send matching multi-unit deals."
-                      buttonText="Send message"
-                    />
-                  </div>
-                </div>
-              </div>
 
               <h2 className="text-2xl font-semibold mb-3 mt-8">Financing Options</h2>
               <p className="text-muted-foreground mb-6">
@@ -70,6 +51,24 @@ const AlbanyMultiUnit = () => {
             </div>
           </section>
 
+          <section className="py-12 text-center" style={{ backgroundColor: '#000000', color: '#ffffff' }}>
+            <div className="container mx-auto max-w-3xl px-4">
+              <h2 className="text-3xl font-semibold mb-5">
+                Still have Questions?
+              </h2>
+              <p className="text-lg mb-6">
+                Let us know if there&apos;s anything we can help answer to make this important time stress-free.
+              </p>
+              <div className="max-w-md mx-auto">
+                <LeadCaptureForm 
+                  type="multi-unit"
+                  title="Contact us now"
+                  description="Tell us your criteria and we'll send matching multi-unit deals."
+                  buttonText="Send message"
+                />
+              </div>
+            </div>
+          </section>
         </main>
 
         <Footer />
