@@ -1,15 +1,13 @@
 import { Helmet } from "react-helmet";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import LeadCaptureForm from "@/components/LeadCaptureForm";
-import { DollarSign, Users, TrendingUp, Award } from "lucide-react";
 
 const SellInvestmentProperty = () => {
   return (
     <>
       <Helmet>
-        <title>Sell Your Investment Property Albany | Fast Cash Offers</title>
-        <meta name="description" content="Sell your investment property in Albany County. Get a free valuation, access to serious investors, and fast cash offers. Multi-family and rental property specialists." />
+        <title>Sell Your Investment Property in Albany | Quiet, Fast Options</title>
+        <meta name="description" content="Sell your multi-unit, flip, or rental quickly. Investor buyers, off-market options, and full listing services." />
         <meta name="keywords" content="sell investment property albany, sell rental property albany, albany property valuation, investment property buyer albany" />
       </Helmet>
 
@@ -17,93 +15,41 @@ const SellInvestmentProperty = () => {
         <Header />
         
         <main className="flex-grow">
-          {/* Hero Section */}
-          <section className="py-16 px-4 bg-gradient-to-br from-primary/5 to-primary/10">
-            <div className="container mx-auto max-w-6xl">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                  <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-                    Sell Your Investment Property
-                  </h1>
-                  <p className="text-xl text-muted-foreground mb-6">
-                    Get a free property valuation and connect with serious investors ready to make cash offers.
-                  </p>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <DollarSign className="w-6 h-6 text-primary mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Free Property Valuation</h3>
-                        <p className="text-sm text-muted-foreground">Get a detailed analysis of your property's market value and rental income potential</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <Users className="w-6 h-6 text-primary mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Access to Serious Investors</h3>
-                        <p className="text-sm text-muted-foreground">We have a database of active buyers looking for investment properties</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <TrendingUp className="w-6 h-6 text-primary mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Fast Cash Offers</h3>
-                        <p className="text-sm text-muted-foreground">Close in as little as 7-14 days with our investor network</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <LeadCaptureForm 
-                    type="seller"
-                    title="Get my property valuation"
-                    description="Receive a detailed valuation report and connect with serious investors"
-                    buttonText="Get my property valuation"
-                    boldtrailTag="CDN_Seller"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Why Sell With Us */}
-          <section className="py-16 px-4">
-            <div className="container mx-auto max-w-6xl">
-              <h2 className="text-3xl font-bold mb-8 text-center">Why Sell Your Investment Property With Us?</h2>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="p-6 border border-border rounded-lg">
-                  <Award className="w-12 h-12 text-primary mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">Investment Property Experts</h3>
-                  <p className="text-muted-foreground">We specialize in multi-family and rental properties - we know what investors want</p>
-                </div>
-                <div className="p-6 border border-border rounded-lg">
-                  <Users className="w-12 h-12 text-primary mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">Pre-Qualified Buyers</h3>
-                  <p className="text-muted-foreground">Our investor network is actively looking for properties like yours</p>
-                </div>
-                <div className="p-6 border border-border rounded-lg">
-                  <TrendingUp className="w-12 h-12 text-primary mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">Maximum Value</h3>
-                  <p className="text-muted-foreground">We market to investors who understand cap rates and cash flow</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* CTA Section */}
-          <section className="py-16 px-4 bg-primary/5">
-            <div className="container mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-bold mb-4">Ready to Sell?</h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Get your free property valuation and see what serious investors will pay for your property.
+          <section className="py-8 px-4">
+            <div className="max-w-[1000px] mx-auto">
+              <h1 className="text-3xl md:text-4xl font-bold mb-4">
+                Sell Your Investment Property in Albany — Quiet & Fast Options
+              </h1>
+              <p className="text-lg text-muted-foreground mb-6">
+                Whether you're exiting a flip, trading up via 1031, or offloading a tenant-occupied rental, we'll position your asset to the right buyers and minimize vacancy and disruption.
               </p>
-              <LeadCaptureForm 
-                type="seller"
-                title="Get my property valuation"
-                buttonText="Get my property valuation"
-                boldtrailTag="CDN_Seller"
-              />
+
+              <h2 className="text-2xl font-semibold mb-3 mt-8">Your Selling Options</h2>
+              <ul className="list-disc ml-5 space-y-2 text-muted-foreground mb-6">
+                <li>Quiet sale to our investor network</li>
+                <li>Full-market MLS listing for top dollar</li>
+                <li>Tenant-in-place sale to preserve cash-flow</li>
+                <li>Contractor touch-ups and staging for premium pricing</li>
+              </ul>
+
+              <div className="my-8 text-center bg-muted/30 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold mb-2">Request a Value & Exit Strategy</h3>
+                <p className="text-muted-foreground mb-4">Tell us the basics; we'll provide comps, buyer profile, and next steps.</p>
+                <iframe
+                  src="YOUR_BOLDTRAIL_FORM_URL?tag=CDN_Seller&campaign=Seller_Valuation"
+                  title="Seller Leads"
+                  className="w-full max-w-[640px] h-[520px] border-0 rounded-xl mx-auto"
+                  loading="lazy"
+                />
+              </div>
+
+              <nav className="flex flex-wrap gap-2 items-center mt-8 pt-6 border-t border-border text-sm">
+                <a href="/albany-investment-properties" className="text-primary hover:underline">Investment</a>
+                <span className="text-muted-foreground">·</span>
+                <a href="/albany-multi-unit" className="text-primary hover:underline">Multi-Unit</a>
+                <span className="text-muted-foreground">·</span>
+                <a href="/cash-flow-report" className="text-primary hover:underline">Cash-Flow Report</a>
+              </nav>
             </div>
           </section>
         </main>

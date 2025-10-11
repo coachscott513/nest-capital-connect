@@ -1,8 +1,6 @@
 import { Helmet } from "react-helmet";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import LeadCaptureForm from "@/components/LeadCaptureForm";
-import { TrendingUp, DollarSign, BarChart3, Mail } from "lucide-react";
 
 const CashFlowReport = () => {
   return (
@@ -17,147 +15,51 @@ const CashFlowReport = () => {
         <Header />
         
         <main className="flex-grow">
-          {/* Hero Section */}
-          <section className="py-16 px-4 bg-gradient-to-br from-primary/5 to-primary/10">
-            <div className="container mx-auto max-w-6xl">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                  <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-                    Weekly Cash-Flow Report
-                  </h1>
-                  <p className="text-xl text-muted-foreground mb-6">
-                    Free weekly investor insights with pre-analyzed properties, market trends, and cash-flow opportunities in Albany County.
-                  </p>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <DollarSign className="w-6 h-6 text-primary mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Top 3 Investment Deals</h3>
-                        <p className="text-sm text-muted-foreground">Hand-picked properties with the best cash-flow potential each week</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <BarChart3 className="w-6 h-6 text-primary mt-1" />
-                      <div>
-                        <h3 className="font-semibold">Market Analysis</h3>
-                        <p className="text-sm text-muted-foreground">Rental trends, cap rates, and neighborhood insights</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <TrendingUp className="w-6 h-6 text-primary mt-1" />
-                      <div>
-                        <h3 className="font-semibold">ROI Calculations</h3>
-                        <p className="text-sm text-muted-foreground">Complete financial analysis for every featured property</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <LeadCaptureForm 
-                    type="report"
-                    title="Subscribe to free weekly investor insights"
-                    description="Join 500+ investors receiving our weekly cash-flow report"
-                    buttonText="Subscribe to free weekly investor insights"
-                    boldtrailTag="CDN_Report"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* What You Get */}
-          <section className="py-16 px-4">
-            <div className="container mx-auto max-w-6xl">
-              <h2 className="text-3xl font-bold mb-8 text-center">What's Included in Each Report</h2>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="p-6 border border-border rounded-lg">
-                  <DollarSign className="w-12 h-12 text-primary mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">Featured Properties</h3>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>✓ 3-5 pre-analyzed investment properties</li>
-                    <li>✓ Cap rate and cash-on-cash return calculations</li>
-                    <li>✓ Estimated renovation costs</li>
-                    <li>✓ Rental income projections</li>
-                  </ul>
-                </div>
-                <div className="p-6 border border-border rounded-lg">
-                  <BarChart3 className="w-12 h-12 text-primary mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">Market Insights</h3>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>✓ Weekly market trends and statistics</li>
-                    <li>✓ Neighborhood hot spots</li>
-                    <li>✓ Rental rate updates</li>
-                    <li>✓ Days on market analysis</li>
-                  </ul>
-                </div>
-                <div className="p-6 border border-border rounded-lg">
-                  <Mail className="w-12 h-12 text-primary mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">Investor Tips</h3>
-                  <ul className="text-sm text-muted-foreground space-y-2">
-                    <li>✓ Financing strategies</li>
-                    <li>✓ Tax optimization tips</li>
-                    <li>✓ Property management insights</li>
-                    <li>✓ Local market updates</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Sample Report Preview */}
-          <section className="py-16 px-4 bg-muted/30">
-            <div className="container mx-auto max-w-4xl">
-              <h2 className="text-3xl font-bold mb-6 text-center">Recent Report Highlights</h2>
-              <div className="bg-card border rounded-lg p-8">
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">This Week's Top Deal</h3>
-                    <p className="text-muted-foreground mb-3">123 Main St, Albany - Duplex</p>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                      <div>
-                        <div className="font-semibold">Price</div>
-                        <div className="text-muted-foreground">$185,000</div>
-                      </div>
-                      <div>
-                        <div className="font-semibold">Cap Rate</div>
-                        <div className="text-primary font-semibold">8.2%</div>
-                      </div>
-                      <div>
-                        <div className="font-semibold">Monthly Cash Flow</div>
-                        <div className="text-primary font-semibold">$725</div>
-                      </div>
-                      <div>
-                        <div className="font-semibold">CoC Return</div>
-                        <div className="text-primary font-semibold">15.3%</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="border-t pt-4">
-                    <h4 className="font-semibold mb-2">Market Insight</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Multi-family inventory down 12% this month. Cap rates holding steady at 7-9% for well-maintained properties in established neighborhoods.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* CTA Section */}
-          <section className="py-16 px-4">
-            <div className="container mx-auto max-w-2xl text-center">
-              <h2 className="text-3xl font-bold mb-4">Start Receiving Your Free Report</h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Join hundreds of successful investors who rely on our weekly analysis to find the best deals in Albany County.
+          <section className="py-8 px-4">
+            <div className="max-w-[1000px] mx-auto">
+              <h1 className="text-3xl md:text-4xl font-bold mb-4">
+                Weekly Cash-Flow Report — Free Investor Newsletter
+              </h1>
+              <p className="text-lg text-muted-foreground mb-6">
+                Every week, we send you pre-analyzed investment properties, market trends, and actionable insights for Albany County real estate investors.
               </p>
-              <LeadCaptureForm 
-                type="report"
-                title="Subscribe to free weekly investor insights"
-                buttonText="Subscribe to free weekly investor insights"
-                boldtrailTag="CDN_Report"
-              />
+
+              <h2 className="text-2xl font-semibold mb-3 mt-8">What's Inside Each Report</h2>
+              <ul className="list-disc ml-5 space-y-2 text-muted-foreground mb-6">
+                <li>3-5 curated cash-flow properties (multi-units, flips, land)</li>
+                <li>Cap rate & cash-on-cash return breakdowns</li>
+                <li>Weekly rental market trends and inventory updates</li>
+                <li>Financing tips, tax strategies, and local market insights</li>
+              </ul>
+
+              <div className="my-8 text-center bg-muted/30 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold mb-2">Subscribe to the Free Weekly Investor Report</h3>
+                <p className="text-muted-foreground mb-4">Join hundreds of investors tracking the Capital District market.</p>
+                <iframe
+                  src="YOUR_BOLDTRAIL_FORM_URL?tag=CDN_Report&campaign=Weekly_Report"
+                  title="Cash Flow Report Signup"
+                  className="w-full max-w-[640px] h-[520px] border-0 rounded-xl mx-auto"
+                  loading="lazy"
+                />
+              </div>
+
+              <h2 className="text-2xl font-semibold mb-3 mt-8">Who Should Subscribe?</h2>
+              <ul className="list-disc ml-5 space-y-2 text-muted-foreground mb-6">
+                <li>Active investors tracking Albany County deals</li>
+                <li>Out-of-state buyers looking for local intel</li>
+                <li>First-time house-hackers exploring multi-units</li>
+                <li>Anyone considering selling or trading up their portfolio</li>
+              </ul>
+
+              <nav className="flex flex-wrap gap-2 items-center mt-8 pt-6 border-t border-border text-sm">
+                <a href="/albany-investment-properties" className="text-primary hover:underline">Investment</a>
+                <span className="text-muted-foreground">·</span>
+                <a href="/albany-multi-unit" className="text-primary hover:underline">Multi-Unit</a>
+                <span className="text-muted-foreground">·</span>
+                <a href="/albany-land" className="text-primary hover:underline">Land</a>
+                <span className="text-muted-foreground">·</span>
+                <a href="/sell-investment-property" className="text-primary hover:underline">Sell Investment</a>
+              </nav>
             </div>
           </section>
         </main>
