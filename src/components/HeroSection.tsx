@@ -35,14 +35,16 @@ const HeroSection = () => {
       </section>
 
       {/* Search Bar Section */}
-      <section className="py-8 px-4 bg-background">
+      <section className="py-8 px-4 bg-white">
         <div className="container mx-auto max-w-5xl">
+          <h2 className="text-2xl font-bold text-center mb-6 text-gray-900">Search All Properties</h2>
+          
           {/* RE/MAX IDX Search Embed */}
-          <div className="flex justify-center mx-auto mb-6">
+          <div className="flex justify-center mx-auto mb-6 bg-gray-50 p-4 rounded-xl border-2 border-gray-200">
             <iframe 
               src="https://scottalvarez.remax.com/wide.php" 
               allowTransparency={true}
-              className="w-full max-w-[960px] h-[300px] border border-border rounded-xl overflow-hidden shadow-lg"
+              className="w-full max-w-[960px] h-[320px] rounded-lg bg-white"
               title="Property Search"
             />
           </div>
