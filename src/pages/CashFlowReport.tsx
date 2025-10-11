@@ -31,15 +31,22 @@ const CashFlowReport = () => {
                 <li>Notes on financing, grants, or rehab approaches</li>
               </ul>
 
-              <div className="my-8 text-center bg-muted/30 p-8 rounded-lg">
-                <h3 className="text-2xl font-semibold mb-3">Subscribe Free</h3>
-                <p className="text-muted-foreground mb-6 text-lg">Unsubscribe anytime. No spam — just high-signal opportunities.</p>
-                <iframe
-                  src="https://scottalvarez.remax.com/contact.php"
-                  title="Cash Flow Report Subscription Form"
-                  className="w-full max-w-[700px] h-[600px] border-0 rounded-xl mx-auto shadow-lg"
-                  loading="lazy"
-                />
+              <div className="my-8 py-12 text-center">
+                <span className="uppercase font-normal tracking-[0.125rem] text-sm text-muted-foreground block mb-4 relative after:content-[''] after:block after:mt-4 after:max-w-[100px] after:mx-auto after:h-[1px] after:bg-border">
+                  Request Information
+                </span>
+                <h2 className="text-3xl md:text-[2.5rem] font-bold mb-5">
+                  Subscribe Free
+                </h2>
+                <p className="text-base md:text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
+                  Unsubscribe anytime. No spam — just high-signal opportunities.
+                </p>
+                <a
+                  href="/#contact"
+                  className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+                >
+                  Contact Us
+                </a>
               </div>
 
               <h2 className="text-2xl font-semibold mb-3 mt-8">Latest Highlights</h2>
