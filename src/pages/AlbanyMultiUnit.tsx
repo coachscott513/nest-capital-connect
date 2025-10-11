@@ -33,23 +33,20 @@ const AlbanyMultiUnit = () => {
                 <li>Local property management availability</li>
               </ul>
 
-              <div className="my-12 text-center">
-                <span className="uppercase font-normal tracking-[0.125rem] text-sm text-muted-foreground block mb-4 relative after:content-[''] after:block after:mt-4 after:max-w-[100px] after:mx-auto after:h-[1px] after:bg-border">
-                  Let's Connect
-                </span>
-                <h2 className="text-3xl md:text-[2.5rem] font-bold mb-5">
-                  Ready to Find Your Next Multi-Unit Property?
-                </h2>
-                <p className="text-base md:text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
-                  Contact us today to discuss your investment criteria.
-                </p>
-                <div className="max-w-[800px] mx-auto">
-                  <iframe
-                    src="https://scottalvarez.remax.com/contact.php"
-                    title="Multi-Unit Property Contact Form"
-                    style={{ width: '100%', height: '700px', border: 'none' }}
-                    scrolling="no"
-                  />
+              <div className="py-12 text-center" style={{ backgroundColor: '#000000', color: '#ffffff' }}>
+                <div className="container mx-auto max-w-3xl px-4">
+                  <h2 className="text-3xl font-semibold mb-5">
+                    Still have Questions?
+                  </h2>
+                  <p className="text-lg mb-6">
+                    Let us know if there&apos;s anything we can help answer to make this important time stress-free.
+                  </p>
+                  <a 
+                    href="https://scottalvarez.remax.com/contact.php"
+                    className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+                  >
+                    Contact
+                  </a>
                 </div>
               </div>
 
