@@ -33,7 +33,7 @@ const SellInvestmentProperty = () => {
                 <li>Contractor touch-ups and staging for premium pricing</li>
               </ul>
 
-              <div className="my-8 py-12 text-center">
+              <div className="my-12 text-center">
                 <span className="uppercase font-normal tracking-[0.125rem] text-sm text-muted-foreground block mb-4 relative after:content-[''] after:block after:mt-4 after:max-w-[100px] after:mx-auto after:h-[1px] after:bg-border">
                   Request Information
                 </span>
@@ -43,12 +43,14 @@ const SellInvestmentProperty = () => {
                 <p className="text-base md:text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
                   Tell us the basics; we&apos;ll provide comps, buyer profile, and next steps.
                 </p>
-                <a
-                  href="/#contact"
-                  className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
-                >
-                  Contact Us
-                </a>
+                <div className="max-w-[800px] mx-auto">
+                  <iframe
+                    src="https://scottalvarez.remax.com/contact.php"
+                    title="Sell Investment Property Contact Form"
+                    style={{ width: '100%', height: '700px', border: 'none' }}
+                    scrolling="no"
+                  />
+                </div>
               </div>
 
               <nav className="flex flex-wrap gap-2 items-center mt-8 pt-6 border-t border-border text-sm">

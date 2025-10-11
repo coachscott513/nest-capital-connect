@@ -33,7 +33,7 @@ const AlbanyMultiUnit = () => {
                 <li>Local property management availability</li>
               </ul>
 
-              <div className="my-8 py-12 text-center">
+              <div className="my-12 text-center">
                 <span className="uppercase font-normal tracking-[0.125rem] text-sm text-muted-foreground block mb-4 relative after:content-[''] after:block after:mt-4 after:max-w-[100px] after:mx-auto after:h-[1px] after:bg-border">
                   Request Information
                 </span>
@@ -43,12 +43,14 @@ const AlbanyMultiUnit = () => {
                 <p className="text-base md:text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
                   We&apos;ll send you the best-performing multi-unit deals weekly.
                 </p>
-                <a
-                  href="/#contact"
-                  className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
-                >
-                  Contact Us
-                </a>
+                <div className="max-w-[800px] mx-auto">
+                  <iframe
+                    src="https://scottalvarez.remax.com/contact.php"
+                    title="Multi-Unit Property Contact Form"
+                    style={{ width: '100%', height: '700px', border: 'none' }}
+                    scrolling="no"
+                  />
+                </div>
               </div>
 
               <h2 className="text-2xl font-semibold mb-3 mt-8">Financing Options</h2>
