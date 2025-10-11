@@ -41,12 +41,10 @@ const HeroSection = () => {
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-white">Search All Properties</h2>
           
           {/* RE/MAX IDX Search Embed */}
-          <div className="flex justify-center mx-auto mb-6">
+          <div className="w-full max-w-[960px] mx-auto mb-6">
             <iframe 
-              style={{ width: '960px', height: '300px' }}
+              className="w-full h-[300px] md:h-[300px]"
               src="https://scottalvarez.remax.com/wide.php" 
-              allowTransparency={true}
-              frameBorder="0"
               title="Property Search"
             />
           </div>
