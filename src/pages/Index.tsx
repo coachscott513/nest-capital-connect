@@ -20,6 +20,7 @@ import CapitalDistrictSEOStrategy from '@/components/CapitalDistrictSEOStrategy'
 import RehabPropertiesSection from '@/components/RehabPropertiesSection';
 import FinancingSection from '@/components/FinancingSection';
 import OwnersSection from '@/components/OwnersSection';
+import FeaturedAreasSection from '@/components/FeaturedAreasSection';
 const Index = () => {
   const structuredData = {
     "@context": "https://schema.org",
@@ -236,6 +237,8 @@ const Index = () => {
         <section id="financing">
           <FinancingSection />
         </section>
+        
+        <FeaturedAreasSection />
         
         <TestimonialsSection />
         <MeetTheTeamSection />

@@ -27,6 +27,12 @@ import AlbanyMultiUnit from "./pages/AlbanyMultiUnit";
 import AlbanyLand from "./pages/AlbanyLand";
 import SellInvestmentProperty from "./pages/SellInvestmentProperty";
 import CashFlowReport from "./pages/CashFlowReport";
+import HomesForSale from "./pages/HomesForSale";
+import TroyHomesForSale from "./pages/TroyHomesForSale";
+import AlbanyHomesForSale from "./pages/AlbanyHomesForSale";
+import SchenectadyHomesForSale from "./pages/SchenectadyHomesForSale";
+import SaratogaHomesForSale from "./pages/SaratogaHomesForSale";
+import PineHillsAlbany from "./pages/PineHillsAlbany";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -71,6 +77,14 @@ const App = () => {
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<PrivacyPolicy />} />
+          
+          {/* Hyperlocal SEO Pages - Homes for Sale */}
+          <Route path="/homes-for-sale" element={<HomesForSale />} />
+          <Route path="/homes-for-sale/troy" element={<TroyHomesForSale />} />
+          <Route path="/homes-for-sale/albany" element={<AlbanyHomesForSale />} />
+          <Route path="/homes-for-sale/schenectady" element={<SchenectadyHomesForSale />} />
+          <Route path="/homes-for-sale/saratoga-springs" element={<SaratogaHomesForSale />} />
+          <Route path="/homes-for-sale/albany/pine-hills" element={<PineHillsAlbany />} />
           
           {/* Capital District Hub Pages */}
           {/* Capital District Hub Pages - All Towns */}
