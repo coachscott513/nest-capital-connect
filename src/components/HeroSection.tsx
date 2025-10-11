@@ -1,76 +1,47 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    const q = searchQuery.trim();
-    if (!q) return;
-    // Google site search
-    const url = `https://www.google.com/search?q=${encodeURIComponent(`site:capitaldistrictnest.com ${q}`)}`;
-    window.location.href = url;
-  };
 
   const quickIntents = [
-    { text: "Investment", href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=grid&leadid=948", external: true },
-    { text: "Multi-Unit", href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=grid&leadid=948", external: true },
+    { text: "Investment", href: "/albany-investment-properties" },
+    { text: "Multi-Unit", href: "/albany-multi-unit" },
     { text: "Land", href: "/albany-land" },
-    { text: "First-Time Buyer", href: "/first-time-buyers" },
-    { text: "Sell Investment", href: "/#contact" },
-    { text: "Weekly Cash-Flow Report", href: "/markets" }
+    { text: "First-Time Buyers", href: "/first-time-buyer-programs-albany" },
+    { text: "Sell Investment", href: "/sell-investment-property" },
+    { text: "Cash-Flow Report", href: "/cash-flow-report" }
   ];
 
   return (
-    <section className="py-14 px-4 text-center bg-background" role="banner">
+    <section className="py-16 px-4 text-center bg-muted/30" role="banner">
       <div className="container mx-auto max-w-5xl">
-        <h1 className="text-4xl md:text-5xl font-bold mb-2">
+        <h1 className="text-[42px] font-bold mb-2 text-foreground">
           Capital District Nest
         </h1>
-        <p className="text-lg md:text-xl text-muted-foreground mb-5">
-          The local alternative to Zillow for smart buyers & investors in Albany County.
+        <p className="text-lg text-muted-foreground mb-5">
+          Search every property in Albany County — the local alternative to Zillow for smart buyers & investors.
         </p>
 
-        {/* Universal Search */}
-        <form onSubmit={handleSearch} className="flex gap-2 justify-center mx-auto mb-3.5 max-w-3xl">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search address, neighborhood, or topic (e.g., 'Albany duplex', 'first-time grants')"
-            aria-label="Search"
-            className="flex-1 px-4 py-3.5 text-base border border-border rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+        {/* RE/MAX IDX Search Embed */}
+        <div className="flex justify-center mx-auto mb-5">
+          <iframe 
+            src="https://scottalvarez.remax.com/wide.php" 
+            allowTransparency={true}
+            className="w-full max-w-[960px] h-[300px] border-0 rounded-xl overflow-hidden"
+            title="Property Search"
           />
-          <Button type="submit" className="px-4 py-3.5 rounded-xl font-semibold">
-            Search
-          </Button>
-        </form>
+        </div>
 
         {/* Quick intent buttons */}
         <div className="flex flex-wrap gap-2 justify-center mt-2">
           {quickIntents.map((intent, index) => (
-            intent.external ? (
-              <a
-                key={index}
-                href={intent.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3.5 py-2.5 border border-border rounded-full no-underline font-semibold text-sm hover:bg-accent transition-colors"
-              >
-                {intent.text}
-              </a>
-            ) : (
-              <button
-                key={index}
-                onClick={() => navigate(intent.href)}
-                className="px-3.5 py-2.5 border border-border rounded-full font-semibold text-sm hover:bg-accent transition-colors cursor-pointer bg-background"
-              >
-                {intent.text}
-              </button>
-            )
+            <button
+              key={index}
+              onClick={() => navigate(intent.href)}
+              className="px-3.5 py-2.5 border border-border rounded-full font-semibold text-sm text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors cursor-pointer bg-background"
+            >
+              {intent.text}
+            </button>
           ))}
         </div>
       </div>
