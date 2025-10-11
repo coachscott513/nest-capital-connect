@@ -31,15 +31,22 @@ const FirstTimeHomebuyers = () => {
                 <li>Seller concessions and inspection credits strategies</li>
               </ul>
 
-              <div className="my-8 text-center bg-muted/30 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold mb-2">Check My Eligibility</h3>
-                <p className="text-muted-foreground mb-4">Answer a few questions and we&apos;ll send your best program options.</p>
-                <iframe
-                  src="YOUR_BOLDTRAIL_FORM_URL?tag=CDN_FTB&campaign=FTB_Grants"
-                  title="First-Time Buyer Leads"
-                  className="w-full max-w-[640px] h-[520px] border-0 rounded-xl mx-auto"
-                  loading="lazy"
-                />
+              <div className="my-8 py-12 text-center">
+                <span className="uppercase font-normal tracking-[0.125rem] text-sm text-muted-foreground block mb-4 relative after:content-[''] after:block after:mt-4 after:max-w-[100px] after:mx-auto after:h-[1px] after:bg-border">
+                  Thinking of Selling?
+                </span>
+                <h2 className="text-3xl md:text-[2.5rem] font-bold mb-5">
+                  Get your home sold fast and for Top Dollar!
+                </h2>
+                <p className="text-base md:text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
+                  Listing your home doesn&apos;t have to be stressful or overwhelming! You can count on great service with years of experience through each transaction. Contact me today to determine the next steps in fulfilling this rewarding experience.
+                </p>
+                <a
+                  href="/#contact"
+                  className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+                >
+                  Contact Us
+                </a>
               </div>
 
               <h2 className="text-2xl font-semibold mb-3 mt-8">Next Steps</h2>
@@ -57,26 +64,6 @@ const FirstTimeHomebuyers = () => {
             </div>
           </section>
 
-          {/* Contact Section */}
-          <section className="py-12 px-4 bg-primary/5">
-            <div className="container mx-auto max-w-3xl text-center">
-              <span className="uppercase font-normal tracking-wider text-sm text-muted-foreground block mb-4">
-                Ready to Start Your Home Search?
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-5">
-                Let&apos;s Make Homeownership a Reality
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
-                Our team specializes in helping first-time buyers navigate grants, financing, and the home search process. Contact us today to check your eligibility and start your journey to homeownership.
-              </p>
-              <a 
-                href="/#contact" 
-                className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
-              >
-                Contact Us
-              </a>
-            </div>
-          </section>
         </main>
 
         <Footer />
