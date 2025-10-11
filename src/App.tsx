@@ -22,6 +22,11 @@ import Markets from "./pages/Markets";
 import SingleFamilyMarket from "./pages/SingleFamilyMarket";
 import Grants from "./pages/Grants";
 import FirstTimeHomebuyers from "./pages/FirstTimeHomebuyers";
+import AlbanyInvestmentProperties from "./pages/AlbanyInvestmentProperties";
+import AlbanyMultiUnit from "./pages/AlbanyMultiUnit";
+import AlbanyLand from "./pages/AlbanyLand";
+import SellInvestmentProperty from "./pages/SellInvestmentProperty";
+import CashFlowReport from "./pages/CashFlowReport";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -45,6 +50,12 @@ const App = () => {
           <Route path="/rentals" element={<Rentals />} />
           <Route path="/grants" element={<Grants />} />
           <Route path="/first-time-homebuyers" element={<FirstTimeHomebuyers />} />
+          <Route path="/first-time-buyer-programs-albany" element={<FirstTimeHomebuyers />} />
+          <Route path="/albany-investment-properties" element={<AlbanyInvestmentProperties />} />
+          <Route path="/albany-multi-unit" element={<AlbanyMultiUnit />} />
+          <Route path="/albany-land" element={<AlbanyLand />} />
+          <Route path="/sell-investment-property" element={<SellInvestmentProperty />} />
+          <Route path="/cash-flow-report" element={<CashFlowReport />} />
           <Route path="/communities/:city" element={<Communities />} />
           <Route path="/investment-properties" element={<InvestmentLanding />} />
           <Route path="/investment-landing" element={<InvestmentLanding />} />

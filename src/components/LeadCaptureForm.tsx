@@ -9,11 +9,12 @@ import { Mail, Phone, Shield, CheckCircle, ArrowRight } from "lucide-react";
 import { useAnalytics } from './AnalyticsTracker';
 
 interface LeadCaptureFormProps {
-  type: "investment" | "rental" | "rehab" | "multi-unit";
+  type: "investment" | "rental" | "rehab" | "multi-unit" | "land" | "seller" | "report";
   title?: string;
   description?: string;
   buttonText?: string;
   variant?: "modal" | "inline" | "hero";
+  boldtrailTag?: string;
 }
 
 const LeadCaptureForm = ({ 
@@ -21,7 +22,8 @@ const LeadCaptureForm = ({
   title, 
   description, 
   buttonText,
-  variant = "inline" 
+  variant = "inline",
+  boldtrailTag 
 }: LeadCaptureFormProps) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -67,6 +69,30 @@ const LeadCaptureForm = ({
           defaultButtonText: "Get Exclusive Access",
           leadMagnet: "Early Access to Premium Rentals"
         };
+      case "land":
+        return {
+          defaultTitle: "Get Albany land opportunities",
+          defaultDescription: "Receive new land listings with zoning details and development potential",
+          placeholder: "What type of land are you looking for?",
+          defaultButtonText: "Get Albany land opportunities",
+          leadMagnet: "Land Listings + Development Analysis"
+        };
+      case "seller":
+        return {
+          defaultTitle: "Get my property valuation",
+          defaultDescription: "Free property valuation and access to serious investors",
+          placeholder: "Tell us about your property",
+          defaultButtonText: "Get my property valuation",
+          leadMagnet: "Free Property Valuation + Investor Network"
+        };
+      case "report":
+        return {
+          defaultTitle: "Subscribe to free weekly investor insights",
+          defaultDescription: "Weekly cash-flow analysis, market trends, and new opportunities",
+          placeholder: "What markets interest you most?",
+          defaultButtonText: "Subscribe to free weekly investor insights",
+          leadMagnet: "Weekly Investor Report + Market Analysis"
+        };
     }
   };
 
@@ -107,7 +133,8 @@ const LeadCaptureForm = ({
         email: formData.email,
         phone: formData.phone || null,
         message: formData.message || null,
-        type
+        type,
+        boldtrailTag: boldtrailTag || `CDN_${type}`
       };
 
       const result = await submitContactForm(submissionData);
