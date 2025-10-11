@@ -61,6 +61,27 @@ const AlbanyInvestmentProperties = () => {
               </nav>
             </div>
           </section>
+
+          {/* Contact Section */}
+          <section className="py-12 px-4 bg-primary/5">
+            <div className="container mx-auto max-w-3xl text-center">
+              <span className="uppercase font-normal tracking-wider text-sm text-muted-foreground block mb-4">
+                Thinking of Selling?
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-5">
+                Get your home sold fast and for Top Dollar!
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
+                Listing your home doesn&apos;t have to be stressful or overwhelming! You can count on great service with years of experience through each transaction. Contact me today to determine the next steps in fulfilling this rewarding experience.
+              </p>
+              <a 
+                href="/#contact" 
+                className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+              >
+                Contact Us
+              </a>
+            </div>
+          </section>
         </main>
 
         <Footer />

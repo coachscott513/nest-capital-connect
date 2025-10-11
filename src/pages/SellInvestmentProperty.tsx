@@ -52,6 +52,27 @@ const SellInvestmentProperty = () => {
               </nav>
             </div>
           </section>
+
+          {/* Contact Section */}
+          <section className="py-12 px-4 bg-primary/5">
+            <div className="container mx-auto max-w-3xl text-center">
+              <span className="uppercase font-normal tracking-wider text-sm text-muted-foreground block mb-4">
+                Ready to Sell Your Investment?
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-5">
+                Get Your Property Valuation Today
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
+                Whether you&apos;re looking for a quick cash sale or want to maximize your return with a full market listing, we&apos;ll create the right exit strategy for your investment property.
+              </p>
+              <a 
+                href="/#contact" 
+                className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+              >
+                Contact Us
+              </a>
+            </div>
+          </section>
         </main>
 
         <Footer />

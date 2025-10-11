@@ -52,6 +52,27 @@ const AlbanyLand = () => {
               </nav>
             </div>
           </section>
+
+          {/* Contact Section */}
+          <section className="py-12 px-4 bg-primary/5">
+            <div className="container mx-auto max-w-3xl text-center">
+              <span className="uppercase font-normal tracking-wider text-sm text-muted-foreground block mb-4">
+                Looking for Land?
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-5">
+                Find the Perfect Parcel for Your Goals
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
+                Whether you&apos;re building your dream home or planning a development, we&apos;ll help you find land with the right zoning, utilities, and potential. Contact us to discuss your land search.
+              </p>
+              <a 
+                href="/#contact" 
+                className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
+              >
+                Contact Us
+              </a>
+            </div>
+          </section>
         </main>
 
         <Footer />
