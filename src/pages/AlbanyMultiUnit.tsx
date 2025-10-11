@@ -43,6 +43,8 @@ const AlbanyMultiUnit = () => {
                   </p>
                   <a 
                     href="https://scottalvarez.remax.com/contact.php"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
                   >
                     Contact
