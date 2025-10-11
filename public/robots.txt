@@ -70,13 +70,13 @@ User-agent: BLEXBot
 Disallow: /
 
 # Sitemap location
-Sitemap: https://your-domain.com/sitemap.xml
+Sitemap: https://capitaldistrictnest.com/sitemap.xml
 
 # Request-rate limiting for general bots
 Request-rate: 1/5s
 
 # Host declaration
-Host: https://your-domain.com
+Host: https://capitaldistrictnest.com
 
 # Additional SEO directives
 # Ensure proper indexing of important content sections
