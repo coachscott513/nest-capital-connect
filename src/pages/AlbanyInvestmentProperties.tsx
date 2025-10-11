@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import LeadCaptureForm from "@/components/LeadCaptureForm";
 
 const AlbanyInvestmentProperties = () => {
   return (
@@ -41,14 +42,14 @@ const AlbanyInvestmentProperties = () => {
                   <p className="text-lg mb-6">
                     Let us know if there&apos;s anything we can help answer to make this important time stress-free.
                   </p>
-                  <a 
-                    href="https://scottalvarez.remax.com/contact.php"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
-                  >
-                    Contact
-                  </a>
+                  <div className="max-w-md mx-auto">
+                    <LeadCaptureForm 
+                      type="investment"
+                      title="Contact us now"
+                      description="We’ll get back to you quickly about deals that fit your goals."
+                      buttonText="Send message"
+                    />
+                  </div>
                 </div>
               </div>
 
