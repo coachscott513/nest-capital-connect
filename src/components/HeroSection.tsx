@@ -41,16 +41,25 @@ const HeroSection = () => {
         <div className="container mx-auto max-w-5xl">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-white">Search All Properties</h2>
           
-          {/* On-site Mobile-Friendly Search */}
-          <div className="w-full max-w-[960px] mx-auto mb-6">
+          {/* Mobile: Dialog Search */}
+          <div className="md:hidden w-full max-w-[960px] mx-auto mb-6">
             <PropertySearchDialog>
-              <Button size="lg" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full">
                 Open Property Search
               </Button>
             </PropertySearchDialog>
             <p className="mt-3 text-center text-sm text-white/90">
               Choose rent/buy, property type, and county.
             </p>
+          </div>
+
+          {/* Desktop: Embedded Search */}
+          <div className="hidden md:block w-full max-w-[960px] mx-auto mb-6">
+            <iframe 
+              className="w-full h-[300px]"
+              src="https://scottalvarez.remax.com/wide.php" 
+              title="Property Search"
+            />
           </div>
 
           {/* Quick intent buttons */}
