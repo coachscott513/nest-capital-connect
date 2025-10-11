@@ -16,7 +16,7 @@ const AlbanyInvestmentProperties = () => {
       <div className="min-h-screen flex flex-col">
         <Header />
         
-        <main className="flex-grow">
+        <main className="flex-grow pt-20 md:pt-24">
           <section className="py-12 px-4 bg-background">
             <div className="max-w-[1000px] mx-auto">
               <h1 className="text-3xl md:text-4xl font-bold mb-4">
