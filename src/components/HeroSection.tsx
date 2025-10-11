@@ -20,9 +20,10 @@ const HeroSection = () => {
         className="relative py-24 px-4 text-center bg-cover bg-center bg-no-repeat" 
         role="banner"
         style={{ backgroundImage: `url(${heroBackground})` }}
+        aria-label="Capital District Nest - Albany Real Estate Search"
       >
         {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="absolute inset-0 bg-black/50" aria-hidden="true"></div>
         
         <div className="container mx-auto max-w-5xl relative z-10">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white drop-shadow-lg">

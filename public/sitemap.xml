@@ -1,172 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-  
-  <!-- Homepage - Highest Priority for SEO -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
   <url>
     <loc>https://capitaldistrictnest.com/</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-
-  <!-- Blog Section -->
+  
+  <!-- Main Investment Pages -->
+  <url>
+    <loc>https://capitaldistrictnest.com/albany-investment-properties</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://capitaldistrictnest.com/albany-multi-unit</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://capitaldistrictnest.com/albany-land</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://capitaldistrictnest.com/first-time-buyer-programs-albany</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://capitaldistrictnest.com/sell-investment-property</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://capitaldistrictnest.com/cash-flow-report</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Market Pages -->
+  <url>
+    <loc>https://capitaldistrictnest.com/albany-real-estate</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://capitaldistrictnest.com/troy-real-estate</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://capitaldistrictnest.com/schenectady-real-estate</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://capitaldistrictnest.com/saratoga-real-estate</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Rental Pages -->
+  <url>
+    <loc>https://capitaldistrictnest.com/rentals</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Blog -->
   <url>
     <loc>https://capitaldistrictnest.com/blog</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Blog Posts -->
-  <url>
-    <loc>https://capitaldistrictnest.com/blog/124-hamilton-st-albany-smart-buy-analysis</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
-  <!-- Main Service Pages - High SEO Value -->
+  <!-- Additional Pages -->
   <url>
-    <loc>https://capitaldistrictnest.com/rentals</loc>
+    <loc>https://capitaldistrictnest.com/grants</loc>
     <lastmod>2025-01-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-  
   <url>
     <loc>https://capitaldistrictnest.com/communities</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.7</priority>
   </url>
-
-  <!-- Authentication Pages -->
   <url>
-    <loc>https://capitaldistrictnest.com/auth</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  
-  <!-- Location-Based Pages - Critical for Local SEO -->
-  <url>
-    <loc>https://capitaldistrictnest.com/#albany-rentals</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.95</priority>
-  </url>
-  
-  <url>
-    <loc>https://capitaldistrictnest.com/#troy-rentals</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.95</priority>
-  </url>
-  
-  <url>
-    <loc>https://capitaldistrictnest.com/#schenectady-rentals</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.95</priority>
-  </url>
-  
-  <url>
-    <loc>https://capitaldistrictnest.com/#saratoga-rentals</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.95</priority>
-  </url>
-  
-  <!-- Service Sections - Important for User Journey SEO -->
-  <url>
-    <loc>https://capitaldistrictnest.com/#renters</loc>
+    <loc>https://capitaldistrictnest.com/markets</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://capitaldistrictnest.com/#first-time-buyers</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://capitaldistrictnest.com/#owners</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
+  <!-- Legal Pages -->
   <url>
-    <loc>https://capitaldistrictnest.com/#investment-properties</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://capitaldistrictnest.com/#rehab-properties</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://capitaldistrictnest.com/#financing</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Content and Resource Pages -->
-  <url>
-    <loc>https://capitaldistrictnest.com/#neighborhoods</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://capitaldistrictnest.com/#contact</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://capitaldistrictnest.com/#meet-the-team</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://capitaldistrictnest.com/#mission</loc>
+    <loc>https://capitaldistrictnest.com/privacy-policy</loc>
     <lastmod>2025-01-12</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.3</priority>
   </url>
-  
-  <!-- Future Content - Ready for Blog/Resources -->
-  <!-- Add your blog posts and resource pages here as you create them -->
-  <!-- Example for long-tail keyword content:
-  <url>
-    <loc>https://your-domain.com/blog/albany-rental-market-2025</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://your-domain.com/blog/first-time-buyer-guide-capital-district</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  -->
-
 </urlset>
