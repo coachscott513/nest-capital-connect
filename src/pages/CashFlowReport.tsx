@@ -34,13 +34,13 @@ const CashFlowReport = () => {
 
               <div className="my-12 text-center">
                 <span className="uppercase font-normal tracking-[0.125rem] text-sm text-muted-foreground block mb-4 relative after:content-[''] after:block after:mt-4 after:max-w-[100px] after:mx-auto after:h-[1px] after:bg-border">
-                  Request Information
+                  Let's Connect
                 </span>
                 <h2 className="text-3xl md:text-[2.5rem] font-bold mb-5">
-                  Subscribe Free
+                  Get Weekly Investment Opportunities
                 </h2>
                 <p className="text-base md:text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
-                  Unsubscribe anytime. No spam — just high-signal opportunities.
+                  Contact us today to start receiving weekly cash-flow reports.
                 </p>
                 <div className="max-w-[800px] mx-auto">
                   <iframe

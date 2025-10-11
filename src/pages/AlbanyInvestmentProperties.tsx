@@ -35,13 +35,13 @@ const AlbanyInvestmentProperties = () => {
 
               <div className="my-12 text-center">
                 <span className="uppercase font-normal tracking-[0.125rem] text-sm text-muted-foreground block mb-4 relative after:content-[''] after:block after:mt-4 after:max-w-[100px] after:mx-auto after:h-[1px] after:bg-border">
-                  Request Information
+                  Let's Connect
                 </span>
                 <h2 className="text-3xl md:text-[2.5rem] font-bold mb-5">
-                  Get Your Free Albany Investment Report
+                  Ready to Discuss Your Investment Goals?
                 </h2>
                 <p className="text-base md:text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
-                  Weekly cash-flow property alerts + ROI breakdowns, straight to your inbox.
+                  Reach out today and let's find your next opportunity together.
                 </p>
                 <div className="max-w-[800px] mx-auto">
                   <iframe
@@ -72,26 +72,6 @@ const AlbanyInvestmentProperties = () => {
             </div>
           </section>
 
-          {/* Contact Section */}
-          <section className="py-12 px-4 bg-primary/5">
-            <div className="container mx-auto max-w-3xl text-center">
-              <span className="uppercase font-normal tracking-wider text-sm text-muted-foreground block mb-4">
-                Thinking of Selling?
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-5">
-                Get your home sold fast and for Top Dollar!
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-[750px] mx-auto mb-8">
-                Listing your home doesn&apos;t have to be stressful or overwhelming! You can count on great service with years of experience through each transaction. Contact me today to determine the next steps in fulfilling this rewarding experience.
-              </p>
-              <a 
-                href="/#contact" 
-                className="inline-block px-8 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-colors"
-              >
-                Contact Us
-              </a>
-            </div>
-          </section>
         </main>
 
         <Footer />
