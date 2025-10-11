@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import HeroSection from "@/components/HeroSection";
 
 const FirstTimeHomebuyers = () => {
   return (
@@ -13,6 +14,7 @@ const FirstTimeHomebuyers = () => {
 
       <div className="min-h-screen flex flex-col">
         <Header />
+        <HeroSection />
         
         <main className="flex-grow">
           <section className="py-8 px-4">
