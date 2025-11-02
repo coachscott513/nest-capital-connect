@@ -208,6 +208,14 @@ const DelmarHomesForSale = () => {
               <p className="text-xl text-red-50 max-w-3xl mx-auto leading-relaxed">
                 Interactive maps, school data, and smart market insights for Albany's premier suburb.
               </p>
+              <div className="mt-6">
+                <Link to="/delmar-market-insights">
+                  <Button className="bg-white text-red-600 hover:bg-red-50 font-semibold px-8 py-6 text-lg">
+                    <TrendingUp className="w-5 h-5 mr-2" />
+                    View Full Market Analytics & Insights
+                  </Button>
+                </Link>
+              </div>
             </div>
 
             {/* Quick Stats */}
