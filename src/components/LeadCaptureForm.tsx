@@ -7,6 +7,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, Shield, CheckCircle, ArrowRight } from "lucide-react";
 import { useAnalytics } from './AnalyticsTracker';
+import { z } from 'zod';
+
+// Validation schema
+const leadFormSchema = z.object({
+  name: z.string().trim().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
+  email: z.string().trim().email('Invalid email address').max(255, 'Email must be less than 255 characters'),
+  phone: z.string().trim().max(20, 'Phone must be less than 20 characters').optional().or(z.literal('')),
+  message: z.string().trim().max(1000, 'Message must be less than 1000 characters').optional().or(z.literal(''))
+});
 
 interface LeadCaptureFormProps {
   type: "investment" | "rental" | "rehab" | "multi-unit" | "land" | "seller" | "report";
@@ -32,6 +41,7 @@ const LeadCaptureForm = ({
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const { toast } = useToast();
   const { trackLeadFormSubmission, trackPropertyInquiry } = useAnalytics();
 
@@ -125,6 +135,29 @@ const LeadCaptureForm = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setValidationErrors({});
+
+    // Client-side validation
+    try {
+      leadFormSchema.parse(formData);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const errors: Record<string, string> = {};
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            errors[err.path[0] as string] = err.message;
+          }
+        });
+        setValidationErrors(errors);
+        toast({
+          variant: "destructive",
+          title: "Validation Error",
+          description: "Please check your input and try again.",
+        });
+        return;
+      }
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -217,8 +250,11 @@ const LeadCaptureForm = ({
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
                 required
-                className="h-12 text-base"
+                className={`h-12 text-base ${validationErrors.name ? 'border-destructive' : ''}`}
               />
+              {validationErrors.name && (
+                <p className="text-sm text-destructive">{validationErrors.name}</p>
+              )}
             </div>
             
             <div className="space-y-2">
@@ -231,8 +267,11 @@ const LeadCaptureForm = ({
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
                 required
-                className="h-12 text-base"
+                className={`h-12 text-base ${validationErrors.email ? 'border-destructive' : ''}`}
               />
+              {validationErrors.email && (
+                <p className="text-sm text-destructive">{validationErrors.email}</p>
+              )}
             </div>
             
             <div className="space-y-2">
@@ -244,8 +283,11 @@ const LeadCaptureForm = ({
                 placeholder="For faster responses"
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                className="h-12 text-base"
+                className={`h-12 text-base ${validationErrors.phone ? 'border-destructive' : ''}`}
               />
+              {validationErrors.phone && (
+                <p className="text-sm text-destructive">{validationErrors.phone}</p>
+              )}
             </div>
             
             <div className="space-y-2">
@@ -256,8 +298,11 @@ const LeadCaptureForm = ({
                 placeholder={content.placeholder}
                 value={formData.message}
                 onChange={(e) => setFormData({...formData, message: e.target.value})}
-                className="min-h-[80px] text-base resize-none"
+                className={`min-h-[80px] text-base resize-none ${validationErrors.message ? 'border-destructive' : ''}`}
               />
+              {validationErrors.message && (
+                <p className="text-sm text-destructive">{validationErrors.message}</p>
+              )}
             </div>
           </div>
 
