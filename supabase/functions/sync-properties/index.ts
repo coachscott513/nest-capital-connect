@@ -78,9 +78,8 @@ async function scrapeProperties(url: string, firecrawlKey: string): Promise<Prop
 
     while ((match = listingPattern.exec(markdown)) !== null) {
       const priceStr = match[1].replace(/,/g, '');
-      const price = priceStr.includes('K') 
-        ? parseFloat(priceStr) * 1000 
-        : parseFloat(priceStr);
+      // Prices are in format like "269K" or "739K"
+      const price = parseFloat(priceStr) * 1000;
       const address = match[2].trim();
       const url = match[3];
 
