@@ -35,6 +35,9 @@ const DelmarMarketInsights = () => {
         {/* Large Market Metrics */}
         <DelmarMetricsGrid />
         
+        {/* Search CTA - Moved Higher */}
+        <DelmarSearchCTA />
+        
         {/* Interactive Map with Layers */}
         <DelmarInteractiveMap />
         
@@ -49,9 +52,6 @@ const DelmarMarketInsights = () => {
         
         {/* Crime & Safety */}
         <DelmarSafetyMap />
-        
-        {/* Search CTA */}
-        <DelmarSearchCTA />
         
         {/* Trend Charts & Lead Capture */}
         <DelmarTrendFooter />

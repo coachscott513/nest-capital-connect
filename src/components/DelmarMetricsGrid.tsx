@@ -54,7 +54,7 @@ const DelmarMetricsGrid = () => {
                 <div className={`w-16 h-16 ${metric.bgColor} rounded-full flex items-center justify-center mx-auto mb-4`}>
                   <Icon className={`w-8 h-8 ${metric.color}`} />
                 </div>
-                <div className={`text-5xl font-bold mb-2 ${metric.color}`}>
+                <div className={`text-4xl md:text-5xl font-bold mb-2 ${metric.color} break-words`}>
                   {metric.value}
                 </div>
                 <div className="text-sm text-muted-foreground font-medium">

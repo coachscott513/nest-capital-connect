@@ -1,14 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PropertySearchBar from "@/components/PropertySearchBar";
 
 const DelmarSearchCTA = () => {
+  const navigate = useNavigate();
+  
   const neighborhoods = [
     { name: "Bethlehem", path: "/communities" },
     { name: "Glenmont", path: "/communities" },
     { name: "Slingerlands", path: "/communities" },
   ];
+
+  const handleSearch = (filters: { priceRange?: string; beds?: string; keyword?: string }) => {
+    // Navigate to Delmar homes for sale page with filters applied
+    navigate('/delmar-homes-for-sale', { state: { filters } });
+  };
 
   return (
     <section className="py-16 px-6 bg-gradient-to-br from-red-50 to-red-100">
@@ -16,15 +23,15 @@ const DelmarSearchCTA = () => {
         <Card className="p-8 md:p-12">
           <div className="text-center mb-8">
             <h2 className="text-4xl font-bold text-foreground mb-4">
-              Find Your Next Home in Delmar
+              Search Delmar Homes for Sale
             </h2>
             <p className="text-lg text-muted-foreground mb-6">
-              Or explore nearby neighborhoods across the Capital District
+              Filter by price, bedrooms, and location to find your perfect home
             </p>
           </div>
 
           <div className="mb-8">
-            <PropertySearchBar onSearch={() => {}} />
+            <PropertySearchBar onSearch={handleSearch} />
           </div>
 
           <div className="text-center">

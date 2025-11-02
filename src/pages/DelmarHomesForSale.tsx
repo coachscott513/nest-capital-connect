@@ -13,10 +13,11 @@ import DelmarNeighborhoodInsights from "@/components/DelmarNeighborhoodInsights"
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Home, TrendingUp, ExternalLink, Bed, Bath, Ruler, Globe } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 const DelmarHomesForSale = () => {
+  const location = useLocation();
   const [allProperties, setAllProperties] = useState<any[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -24,6 +25,13 @@ const DelmarHomesForSale = () => {
   useEffect(() => {
     fetchDelmarProperties();
   }, []);
+
+  // Apply filters from navigation state if present
+  useEffect(() => {
+    if (location.state?.filters && allProperties.length > 0) {
+      handleSearch(location.state.filters);
+    }
+  }, [location.state, allProperties]);
 
   const fetchDelmarProperties = async () => {
     try {

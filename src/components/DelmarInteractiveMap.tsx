@@ -68,9 +68,13 @@ const DelmarInteractiveMap = () => {
           />
         </Card>
 
-        <div className="mt-6 text-center text-sm text-muted-foreground">
-          <p>
-            Map layers showing: {activeLayers.map(id => layers.find(l => l.id === id)?.label).join(", ")}
+        <div className="mt-6 p-4 bg-muted/50 rounded-lg">
+          <p className="text-sm text-muted-foreground mb-2">
+            <strong>Active Layers:</strong> {activeLayers.map(id => layers.find(l => l.id === id)?.label).join(", ")}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Toggle buttons above to view different neighborhood insights. The map shows Delmar's prime location near Four Corners, 
+            with easy access to top-rated schools, shopping, dining, and major commuter routes.
           </p>
         </div>
       </div>
