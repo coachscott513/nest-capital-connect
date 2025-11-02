@@ -6,8 +6,10 @@ import PropertyGrid from "@/components/PropertyGrid";
 import PropertySearchBar from "@/components/PropertySearchBar";
 import InteractivePropertyMap from "@/components/InteractivePropertyMap";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
-import { Card } from "@/components/ui/card";
-import { MapPin, Home, TrendingUp } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { MapPin, Home, TrendingUp, ExternalLink, Bed, Bath, Ruler } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // Sample property data - this would come from your Google Sheet/CSV in production
 const sampleProperties = [
@@ -243,6 +245,91 @@ const DelmarHomesForSale = () => {
                 <div className="text-red-50 text-sm">Top-Rated Schools</div>
               </Card>
             </div>
+          </div>
+        </section>
+
+        {/* Featured Listing */}
+        <section className="py-8 bg-gradient-to-br from-blue-50 to-blue-100 border-b border-blue-200">
+          <div className="max-w-7xl mx-auto px-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+              ⭐ Featured Listing in Bethlehem Central Schools
+            </h2>
+            <Card className="overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+                <div className="relative h-64 md:h-auto">
+                  <img 
+                    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=800&fit=crop" 
+                    alt="137A Elsmere Avenue, Delmar NY"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-4 left-4 bg-red-600 text-white px-4 py-2 rounded-lg font-bold">
+                    NEW LISTING
+                  </div>
+                </div>
+                <CardContent className="p-6 md:p-8 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                      137A Elsmere Avenue
+                    </h3>
+                    <p className="text-gray-600 mb-4 flex items-center gap-2">
+                      <MapPin className="h-4 w-4" />
+                      Delmar, NY 12054 • Bethlehem Central SD
+                    </p>
+                    <p className="text-3xl font-bold text-red-600 mb-6">
+                      $349,900
+                    </p>
+                    
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                      <div className="flex items-center gap-2">
+                        <Bed className="h-5 w-5 text-gray-500" />
+                        <div>
+                          <p className="text-sm text-gray-500">Beds</p>
+                          <p className="font-semibold">3</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Bath className="h-5 w-5 text-gray-500" />
+                        <div>
+                          <p className="text-sm text-gray-500">Baths</p>
+                          <p className="font-semibold">2</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Ruler className="h-5 w-5 text-gray-500" />
+                        <div>
+                          <p className="text-sm text-gray-500">Sq Ft</p>
+                          <p className="font-semibold">1,572</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p className="text-gray-700 mb-6">
+                      Beautiful home in top-rated Bethlehem Central School District. 
+                      0.27 acre lot, built 1967. Perfect opportunity in sought-after Delmar location.
+                    </p>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <Button asChild className="flex-1 bg-red-600 hover:bg-red-700">
+                      <Link to="/listings/137a-elsmere-ave-delmar-ny" className="flex items-center justify-center gap-2">
+                        View Details
+                      </Link>
+                    </Button>
+                    <Button asChild variant="outline" className="flex-1">
+                      <a 
+                        href="https://www.scottalvarez.com/property/137a-elsmere-ave-delmar-ny-12054"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2"
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                        Full Listing
+                      </a>
+                    </Button>
+                  </div>
+                </CardContent>
+              </div>
+            </Card>
           </div>
         </section>
 
