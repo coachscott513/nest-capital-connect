@@ -27,6 +27,7 @@ interface Property {
   property_taxes?: number;
   year_built?: number;
   property_type?: string;
+  boldtrail_url?: string;
 }
 
 interface PropertyListingTemplateProps {
@@ -229,6 +230,20 @@ const PropertyListingTemplate = ({ property }: PropertyListingTemplateProps) => 
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* BoldTrail Link */}
+            {property.boldtrail_url && (
+              <Button asChild size="lg" className="w-full">
+                <a 
+                  href={property.boldtrail_url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2"
+                >
+                  <ExternalLink className="h-5 w-5" />
+                  View Full Listing on ScottAlvarez.com
+                </a>
+              </Button>
+            )}
             <PropertyContactForm propertyAddress={fullAddress} mlsId={property.mls_id} />
           </div>
         </div>

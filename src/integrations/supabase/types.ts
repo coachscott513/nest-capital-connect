@@ -88,6 +88,7 @@ export type Database = {
           address: string
           baths: number
           beds: number
+          boldtrail_url: string | null
           city: string
           created_at: string
           days_on_market: number | null
@@ -112,6 +113,7 @@ export type Database = {
           address: string
           baths: number
           beds: number
+          boldtrail_url?: string | null
           city: string
           created_at?: string
           days_on_market?: number | null
@@ -136,6 +138,7 @@ export type Database = {
           address?: string
           baths?: number
           beds?: number
+          boldtrail_url?: string | null
           city?: string
           created_at?: string
           days_on_market?: number | null

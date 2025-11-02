@@ -15,6 +15,7 @@ interface Property {
   thumbnail: string;
   status: string;
   daysOnMarket: number;
+  boldtrailUrl?: string;
 }
 
 interface PropertyGridProps {
@@ -103,12 +104,25 @@ const PropertyGrid = ({ properties }: PropertyGridProps) => {
                 <MapPin className="w-4 h-4 mr-2" />
                 View on Map
               </Button>
-              <Button 
-                className="flex-1 bg-red-600 hover:bg-red-700 text-white"
-              >
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Details
-              </Button>
+              {property.boldtrailUrl ? (
+                <Button 
+                  asChild
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                >
+                  <a href={property.boldtrailUrl} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    View Listing
+                  </a>
+                </Button>
+              ) : (
+                <Button 
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                  disabled
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Details
+                </Button>
+              )}
             </div>
           </CardContent>
         </Card>
