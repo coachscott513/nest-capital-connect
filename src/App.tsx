@@ -34,6 +34,7 @@ import SchenectadyHomesForSale from "./pages/SchenectadyHomesForSale";
 import SaratogaHomesForSale from "./pages/SaratogaHomesForSale";
 import PineHillsAlbany from "./pages/PineHillsAlbany";
 import DelmarHomesForSale from "./pages/DelmarHomesForSale";
+import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 import PropertyListing from "./pages/PropertyListing";
 import ElsmereProperty from "./pages/137AElsmereAve";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
@@ -89,6 +90,7 @@ const App = () => {
           <Route path="/homes-for-sale/saratoga-springs" element={<SaratogaHomesForSale />} />
           <Route path="/homes-for-sale/albany/pine-hills" element={<PineHillsAlbany />} />
           <Route path="/delmar-homes-for-sale" element={<DelmarHomesForSale />} />
+          <Route path="/delmar-market-insights" element={<DelmarMarketInsights />} />
           
           {/* Capital District Hub Pages */}
           {/* Capital District Hub Pages - All Towns */}
