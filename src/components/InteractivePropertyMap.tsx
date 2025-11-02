@@ -42,21 +42,35 @@ const InteractivePropertyMap = ({ properties }: InteractivePropertyMapProps) => 
 
   return (
     <Card className="overflow-hidden border-gray-200">
-      {/* Map Preview - Using Google Static Maps or placeholder */}
+      {/* Map Preview - Click to view in Google Maps */}
       <div 
-        className="h-96 bg-gradient-to-br from-blue-100 to-blue-50 relative cursor-pointer group"
+        className="h-96 bg-gradient-to-br from-blue-100 via-gray-100 to-green-50 relative cursor-pointer group overflow-hidden"
         onClick={openMapView}
       >
-        {/* Embedded Google Maps using iframe */}
-        <iframe
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          loading="lazy"
-          allowFullScreen
-          referrerPolicy="no-referrer-when-downgrade"
-          src={`https://www.google.com/maps/embed/v1/view?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&center=${centerLat},${centerLng}&zoom=14`}
-        />
+        {/* Map-like grid pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="grid grid-cols-8 grid-rows-8 h-full w-full">
+            {Array.from({ length: 64 }).map((_, i) => (
+              <div key={i} className="border border-gray-300" />
+            ))}
+          </div>
+        </div>
+
+        {/* Property markers */}
+        <div className="absolute inset-0">
+          {properties.slice(0, 8).map((property, index) => (
+            <div
+              key={property.id}
+              className="absolute w-10 h-10 -ml-5 -mt-10"
+              style={{
+                left: `${20 + (index % 4) * 20}%`,
+                top: `${25 + Math.floor(index / 4) * 35}%`,
+              }}
+            >
+              <MapPin className="w-10 h-10 text-red-600 fill-red-500 drop-shadow-lg" />
+            </div>
+          ))}
+        </div>
         
         {/* Overlay with property count */}
         <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
