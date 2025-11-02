@@ -35,6 +35,7 @@ import SaratogaHomesForSale from "./pages/SaratogaHomesForSale";
 import PineHillsAlbany from "./pages/PineHillsAlbany";
 import DelmarHomesForSale from "./pages/DelmarHomesForSale";
 import PropertyListing from "./pages/PropertyListing";
+import ElsmereProperty from "./pages/137AElsmereAve";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -101,6 +102,7 @@ const App = () => {
           
           {/* Property Listings */}
           <Route path="/listings/:mlsId" element={<PropertyListing />} />
+          <Route path="/listings/137a-elsmere-ave-delmar-ny" element={<ElsmereProperty />} />
           
           {/* Markets Section */}
           <Route path="/markets" element={<Markets />} />
