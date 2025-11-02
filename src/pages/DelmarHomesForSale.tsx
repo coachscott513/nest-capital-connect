@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -6,103 +6,66 @@ import PropertyGrid from "@/components/PropertyGrid";
 import PropertySearchBar from "@/components/PropertySearchBar";
 import InteractivePropertyMap from "@/components/InteractivePropertyMap";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
+import DelmarSmartFilters from "@/components/DelmarSmartFilters";
+import DelmarMarketAnalytics from "@/components/DelmarMarketAnalytics";
+import DelmarSchoolDistrict from "@/components/DelmarSchoolDistrict";
+import DelmarNeighborhoodInsights from "@/components/DelmarNeighborhoodInsights";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Home, TrendingUp, ExternalLink, Bed, Bath, Ruler } from "lucide-react";
+import { MapPin, Home, TrendingUp, ExternalLink, Bed, Bath, Ruler, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
-
-// Sample property data - this would come from your Google Sheet/CSV in production
-const sampleProperties = [
-  {
-    id: "1",
-    address: "45 Oak Ridge Lane, Delmar, NY 12054",
-    price: 475000,
-    beds: 4,
-    baths: 2.5,
-    sqft: 2400,
-    latitude: 42.6217,
-    longitude: -73.8326,
-    thumbnail: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800",
-    status: "Active",
-    daysOnMarket: 12
-  },
-  {
-    id: "2",
-    address: "128 Delaware Avenue, Delmar, NY 12054",
-    price: 389000,
-    beds: 3,
-    baths: 2,
-    sqft: 1850,
-    latitude: 42.6187,
-    longitude: -73.8356,
-    thumbnail: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
-    status: "Active",
-    daysOnMarket: 5
-  },
-  {
-    id: "3",
-    address: "92 Kenwood Avenue, Delmar, NY 12054",
-    price: 525000,
-    beds: 4,
-    baths: 3,
-    sqft: 2650,
-    latitude: 42.6247,
-    longitude: -73.8296,
-    thumbnail: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
-    status: "Active",
-    daysOnMarket: 8
-  },
-  {
-    id: "4",
-    address: "215 Elsmere Avenue, Delmar, NY 12054",
-    price: 319000,
-    beds: 3,
-    baths: 1.5,
-    sqft: 1650,
-    latitude: 42.6167,
-    longitude: -73.8376,
-    thumbnail: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800",
-    status: "Pending",
-    daysOnMarket: 22
-  },
-  {
-    id: "5",
-    address: "67 Wemple Road, Delmar, NY 12054",
-    price: 595000,
-    beds: 5,
-    baths: 3.5,
-    sqft: 3200,
-    latitude: 42.6207,
-    longitude: -73.8306,
-    thumbnail: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
-    status: "Active",
-    daysOnMarket: 3
-  },
-  {
-    id: "6",
-    address: "184 Adams Street, Delmar, NY 12054",
-    price: 449000,
-    beds: 4,
-    baths: 2,
-    sqft: 2100,
-    latitude: 42.6197,
-    longitude: -73.8336,
-    thumbnail: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800",
-    status: "Active",
-    daysOnMarket: 15
-  }
-];
+import { supabase } from "@/integrations/supabase/client";
 
 const DelmarHomesForSale = () => {
-  const [filteredProperties, setFilteredProperties] = useState(sampleProperties);
+  const [allProperties, setAllProperties] = useState<any[]>([]);
+  const [filteredProperties, setFilteredProperties] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchDelmarProperties();
+  }, []);
+
+  const fetchDelmarProperties = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("properties")
+        .select("*")
+        .eq("city", "Delmar")
+        .eq("status", "active");
+
+      if (error) throw error;
+
+      const formattedProperties = data?.map((p) => ({
+        id: p.id,
+        address: p.address,
+        price: Number(p.price),
+        beds: p.beds,
+        baths: Number(p.baths),
+        sqft: p.sqft,
+        latitude: Number(p.latitude),
+        longitude: Number(p.longitude),
+        thumbnail: p.photos?.[0] || "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800",
+        status: p.status,
+        daysOnMarket: p.days_on_market || 0,
+        externalUrl: p.boldtrail_url,
+      })) || [];
+
+      setAllProperties(formattedProperties);
+      setFilteredProperties(formattedProperties);
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSearch = (filters: { priceRange?: string; beds?: string; keyword?: string }) => {
-    let filtered = [...sampleProperties];
+    let filtered = [...allProperties];
 
-    // Filter by price range
     if (filters.priceRange && filters.priceRange !== "any") {
       const [min, max] = filters.priceRange.split("-").map(Number);
-      filtered = filtered.filter(p => {
+      filtered = filtered.filter((p) => {
         if (max) {
           return p.price >= min && p.price <= max;
         }
@@ -110,20 +73,33 @@ const DelmarHomesForSale = () => {
       });
     }
 
-    // Filter by bedrooms
     if (filters.beds && filters.beds !== "any") {
       const minBeds = parseInt(filters.beds);
-      filtered = filtered.filter(p => p.beds >= minBeds);
+      filtered = filtered.filter((p) => p.beds >= minBeds);
     }
 
-    // Filter by keyword (address)
     if (filters.keyword) {
       const keyword = filters.keyword.toLowerCase();
-      filtered = filtered.filter(p => 
-        p.address.toLowerCase().includes(keyword)
-      );
+      filtered = filtered.filter((p) => p.address.toLowerCase().includes(keyword));
     }
 
+    setFilteredProperties(filtered);
+  };
+
+  const handleSmartFilters = (filters: any) => {
+    let filtered = [...allProperties];
+    
+    // For demo purposes, smart filters will show subset of data
+    // In production, these would filter based on actual property metadata
+    if (filters.bethlehem) {
+      // All Delmar properties are in Bethlehem Central SD
+      filtered = filtered;
+    }
+    if (filters.hasGoogleEarth) {
+      // Filter properties with valid coordinates
+      filtered = filtered.filter(p => p.latitude && p.longitude);
+    }
+    
     setFilteredProperties(filtered);
   };
 
@@ -219,11 +195,10 @@ const DelmarHomesForSale = () => {
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-8">
               <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                Delmar Homes for Sale
+                Explore Homes for Sale in Delmar, NY
               </h1>
               <p className="text-xl text-red-50 max-w-3xl mx-auto leading-relaxed">
-                Explore homes for sale in Delmar, NY — a charming Albany suburb known for its tree-lined streets, 
-                top-rated schools, and small-town feel just minutes from downtown Albany.
+                Interactive maps, school data, and smart market insights for Albany's premier suburb.
               </p>
             </div>
 
@@ -333,42 +308,57 @@ const DelmarHomesForSale = () => {
           </div>
         </section>
 
-        {/* Search Bar Section */}
+        {/* Search Bar & Smart Filters Section */}
         <section className="py-8 bg-gray-50 border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-6">
             <PropertySearchBar onSearch={handleSearch} />
+            <div className="mt-6">
+              <DelmarSmartFilters onFilterChange={handleSmartFilters} />
+            </div>
           </div>
         </section>
 
         {/* Main Content - Property Grid and Map */}
         <section className="py-12">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Property Grid - 2 columns on desktop */}
-              <div className="lg:col-span-2">
-                <div className="mb-6">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                    {filteredProperties.length} Homes Found
-                  </h2>
-                  <p className="text-gray-600">
-                    Showing the latest listings in Delmar, NY
-                  </p>
-                </div>
-                <PropertyGrid properties={filteredProperties} />
+            {loading ? (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
+                <p className="mt-4 text-gray-600">Loading Delmar properties...</p>
               </div>
-
-              {/* Interactive Map - 1 column on desktop */}
-              <div className="lg:col-span-1">
-                <div className="sticky top-24">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">
-                    Map View
-                  </h3>
-                  <InteractivePropertyMap properties={filteredProperties} />
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2">
+                  <div className="mb-6">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                      {filteredProperties.length} Homes Found
+                    </h2>
+                    <p className="text-gray-600 flex items-center gap-2">
+                      <Globe className="h-4 w-4" />
+                      All listings include Google Earth & Street View links
+                    </p>
+                  </div>
+                  <PropertyGrid properties={filteredProperties} />
+                </div>
+                <div className="lg:col-span-1">
+                  <div className="sticky top-24">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Map View</h3>
+                    <InteractivePropertyMap properties={filteredProperties} />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </section>
+
+        {/* Market Analytics Section */}
+        <DelmarMarketAnalytics properties={filteredProperties} />
+
+        {/* School District Section */}
+        <DelmarSchoolDistrict />
+
+        {/* Neighborhood Insights Section */}
+        <DelmarNeighborhoodInsights />
 
         {/* Contact Section - Blue Accents */}
         <section className="py-16 bg-blue-50 border-t border-blue-100">
