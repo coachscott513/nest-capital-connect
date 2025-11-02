@@ -1,5 +1,8 @@
 project_id = "akonlzlpbdoqmczidfwm"
 
+[functions.sync-properties]
+verify_jwt = false
+
 [functions.submit-contact-form]
 verify_jwt = false
 
