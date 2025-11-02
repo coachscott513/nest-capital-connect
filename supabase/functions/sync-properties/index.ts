@@ -43,6 +43,83 @@ async function geocodeAddress(address: string, apiKey: string): Promise<{ lat: n
   }
 }
 
+async function scrapePropertyDetails(url: string, firecrawlKey: string): Promise<Partial<Property>> {
+  try {
+    const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${firecrawlKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        url: url,
+        formats: ['markdown', 'html'],
+        onlyMainContent: true,
+      }),
+    });
+
+    if (!response.ok) {
+      console.error(`Failed to scrape ${url}`);
+      return {};
+    }
+
+    const data = await response.json();
+    const markdown = data.data?.markdown || '';
+    const html = data.data?.html || '';
+
+    // Extract property details from markdown
+    const details: Partial<Property> = {};
+
+    // Extract beds
+    const bedsMatch = markdown.match(/(\d+)\s*(?:bed|BR)/i);
+    if (bedsMatch) details.beds = parseInt(bedsMatch[1]);
+
+    // Extract baths
+    const bathsMatch = markdown.match(/(\d+(?:\.\d+)?)\s*(?:bath|BA)/i);
+    if (bathsMatch) details.baths = parseFloat(bathsMatch[1]);
+
+    // Extract sqft
+    const sqftMatch = markdown.match(/(\d{1,3}(?:,\d{3})*)\s*(?:sq\.?\s*ft|sqft)/i);
+    if (sqftMatch) details.sqft = parseInt(sqftMatch[1].replace(/,/g, ''));
+
+    // Extract year built
+    const yearMatch = markdown.match(/(?:built|year built)[:\s]*(\d{4})/i);
+    if (yearMatch) details.year_built = parseInt(yearMatch[1]);
+
+    // Extract lot size
+    const lotMatch = markdown.match(/lot[:\s]*([0-9,\.]+)\s*(?:acres?|sq\.?\s*ft)/i);
+    if (lotMatch) details.lot_size = lotMatch[1];
+
+    // Extract description (look for paragraph after property details)
+    const descMatch = markdown.match(/\n\n([A-Z][^#\n]{100,})/);
+    if (descMatch) details.description = descMatch[1].trim();
+
+    // Extract photos from HTML
+    const photoUrls: string[] = [];
+    const imgPattern = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
+    let imgMatch;
+    
+    while ((imgMatch = imgPattern.exec(html)) !== null) {
+      const src = imgMatch[1];
+      // Filter for actual property photos (exclude logos, icons, etc.)
+      if (src.includes('photo') || src.includes('image') || src.includes('img')) {
+        if (!src.includes('logo') && !src.includes('icon')) {
+          photoUrls.push(src);
+        }
+      }
+    }
+    
+    if (photoUrls.length > 0) {
+      details.photos = photoUrls.slice(0, 20); // Limit to 20 photos
+    }
+
+    return details;
+  } catch (error) {
+    console.error('Error scraping property details:', error);
+    return {};
+  }
+}
+
 async function scrapeProperties(url: string, firecrawlKey: string): Promise<Property[]> {
   console.log('Starting property scraping...');
   
@@ -90,10 +167,10 @@ async function scrapeProperties(url: string, firecrawlKey: string): Promise<Prop
       // Prices are in format like "269K" or "739K"
       const price = parseFloat(priceStr) * 1000;
       const address = match[2].trim();
-      const url = match[3];
+      const propertyUrl = match[3];
 
       // Extract MLS ID from URL
-      const mlsMatch = url.match(/property\/(\d+-\d+)/);
+      const mlsMatch = propertyUrl.match(/property\/(\d+-\d+)/);
       const mls_id = mlsMatch ? mlsMatch[1] : `temp-${Date.now()}-${properties.length}`;
 
       // Parse address
@@ -107,14 +184,14 @@ async function scrapeProperties(url: string, firecrawlKey: string): Promise<Prop
         state: 'NY',
         zip: '12054',
         price,
-        beds: 3, // Default values - would need detailed scraping
+        beds: 3, // Default values - will be updated
         baths: 2,
         sqft: 1500,
         latitude: 42.6211, // Default Delmar coords
         longitude: -73.8368,
         photos: [],
         status: 'active',
-        boldtrail_url: url,
+        boldtrail_url: propertyUrl,
       });
     }
 
@@ -158,6 +235,23 @@ async function scrapeProperties(url: string, firecrawlKey: string): Promise<Prop
     }
     
     console.log(`Total properties found: ${properties.length}`);
+    
+    // Now scrape details for each property
+    console.log('Scraping individual property details...');
+    for (let i = 0; i < properties.length; i++) {
+      const property = properties[i];
+      console.log(`Scraping details for ${property.address} (${i + 1}/${properties.length})`);
+      
+      const details = await scrapePropertyDetails(property.boldtrail_url, firecrawlKey);
+      
+      // Merge details into property
+      properties[i] = { ...property, ...details };
+      
+      // Small delay to avoid rate limiting
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    
+    console.log('Finished scraping all property details');
     return properties;
   } catch (error) {
     console.error('Error scraping properties:', error);
