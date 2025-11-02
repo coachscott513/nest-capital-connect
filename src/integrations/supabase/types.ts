@@ -83,6 +83,81 @@ export type Database = {
         }
         Relationships: []
       }
+      properties: {
+        Row: {
+          address: string
+          baths: number
+          beds: number
+          city: string
+          created_at: string
+          days_on_market: number | null
+          description: string | null
+          id: string
+          latitude: number
+          longitude: number
+          lot_size: string | null
+          mls_id: string
+          photos: string[] | null
+          price: number
+          property_taxes: number | null
+          property_type: string | null
+          sqft: number
+          state: string | null
+          status: string | null
+          updated_at: string
+          year_built: number | null
+          zip: string | null
+        }
+        Insert: {
+          address: string
+          baths: number
+          beds: number
+          city: string
+          created_at?: string
+          days_on_market?: number | null
+          description?: string | null
+          id?: string
+          latitude: number
+          longitude: number
+          lot_size?: string | null
+          mls_id: string
+          photos?: string[] | null
+          price: number
+          property_taxes?: number | null
+          property_type?: string | null
+          sqft: number
+          state?: string | null
+          status?: string | null
+          updated_at?: string
+          year_built?: number | null
+          zip?: string | null
+        }
+        Update: {
+          address?: string
+          baths?: number
+          beds?: number
+          city?: string
+          created_at?: string
+          days_on_market?: number | null
+          description?: string | null
+          id?: string
+          latitude?: number
+          longitude?: number
+          lot_size?: string | null
+          mls_id?: string
+          photos?: string[] | null
+          price?: number
+          property_taxes?: number | null
+          property_type?: string | null
+          sqft?: number
+          state?: string | null
+          status?: string | null
+          updated_at?: string
+          year_built?: number | null
+          zip?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

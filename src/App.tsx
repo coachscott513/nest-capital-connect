@@ -34,6 +34,7 @@ import SchenectadyHomesForSale from "./pages/SchenectadyHomesForSale";
 import SaratogaHomesForSale from "./pages/SaratogaHomesForSale";
 import PineHillsAlbany from "./pages/PineHillsAlbany";
 import DelmarHomesForSale from "./pages/DelmarHomesForSale";
+import PropertyListing from "./pages/PropertyListing";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -97,6 +98,9 @@ const App = () => {
           
           {/* SEO Management */}
           <Route path="/seo-audit" element={<SEOAudit />} />
+          
+          {/* Property Listings */}
+          <Route path="/listings/:mlsId" element={<PropertyListing />} />
           
           {/* Markets Section */}
           <Route path="/markets" element={<Markets />} />
