@@ -33,6 +33,7 @@ import AlbanyHomesForSale from "./pages/AlbanyHomesForSale";
 import SchenectadyHomesForSale from "./pages/SchenectadyHomesForSale";
 import SaratogaHomesForSale from "./pages/SaratogaHomesForSale";
 import PineHillsAlbany from "./pages/PineHillsAlbany";
+import DelmarHomesForSale from "./pages/DelmarHomesForSale";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -85,6 +86,7 @@ const App = () => {
           <Route path="/homes-for-sale/schenectady" element={<SchenectadyHomesForSale />} />
           <Route path="/homes-for-sale/saratoga-springs" element={<SaratogaHomesForSale />} />
           <Route path="/homes-for-sale/albany/pine-hills" element={<PineHillsAlbany />} />
+          <Route path="/delmar-homes-for-sale" element={<DelmarHomesForSale />} />
           
           {/* Capital District Hub Pages */}
           {/* Capital District Hub Pages - All Towns */}
