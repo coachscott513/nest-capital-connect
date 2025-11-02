@@ -2,9 +2,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Bed, Bath, Maximize, MapPin, ExternalLink } from "lucide-react";
-
+import { Link } from "react-router-dom";
 interface Property {
   id: string;
+  mlsId?: string;
   address: string;
   price: number;
   beds: number;
@@ -49,7 +50,7 @@ const PropertyGrid = ({ properties }: PropertyGridProps) => {
             />
             <div className="absolute top-4 right-4">
               <Badge 
-                className={property.status === "Active" ? "bg-green-600" : "bg-yellow-600"}
+                className={property.status?.toLowerCase() === "active" ? "bg-green-600" : "bg-yellow-600"}
               >
                 {property.status}
               </Badge>
@@ -104,7 +105,17 @@ const PropertyGrid = ({ properties }: PropertyGridProps) => {
                 <MapPin className="w-4 h-4 mr-2" />
                 View on Map
               </Button>
-              {property.boldtrailUrl ? (
+              {property.mlsId ? (
+                <Button 
+                  asChild
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                >
+                  <Link to={`/listings/${property.mlsId}`}>
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Details
+                  </Link>
+                </Button>
+              ) : property.boldtrailUrl ? (
                 <Button 
                   asChild
                   className="flex-1 bg-red-600 hover:bg-red-700 text-white"

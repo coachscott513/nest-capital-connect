@@ -38,6 +38,7 @@ const DelmarHomesForSale = () => {
 
       const formattedProperties = data?.map((p) => ({
         id: p.id,
+        mlsId: p.mls_id,
         address: p.address,
         price: Number(p.price),
         beds: p.beds,
@@ -48,9 +49,8 @@ const DelmarHomesForSale = () => {
         thumbnail: p.photos?.[0] || "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800",
         status: p.status,
         daysOnMarket: p.days_on_market || 0,
-        externalUrl: p.boldtrail_url,
+        boldtrailUrl: p.boldtrail_url,
       })) || [];
-
       setAllProperties(formattedProperties);
       setFilteredProperties(formattedProperties);
     } catch (error) {
