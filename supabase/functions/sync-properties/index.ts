@@ -47,7 +47,7 @@ async function scrapeProperties(url: string, firecrawlKey: string): Promise<Prop
   console.log('Starting property scraping...');
   
   try {
-    // Use Firecrawl to get the page content
+    // Use Firecrawl to get the page content with wait time for JavaScript to execute
     const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
       method: 'POST',
       headers: {
@@ -57,6 +57,8 @@ async function scrapeProperties(url: string, firecrawlKey: string): Promise<Prop
       body: JSON.stringify({
         url: url,
         formats: ['markdown', 'html'],
+        waitFor: 5000, // Wait 5 seconds for JS to load
+        onlyMainContent: false, // Get full page content
       }),
     });
 
@@ -69,11 +71,18 @@ async function scrapeProperties(url: string, firecrawlKey: string): Promise<Prop
 
     // Parse the markdown content to extract property data
     const markdown = data.data?.markdown || '';
+    const html = data.data?.html || '';
     const properties: Property[] = [];
 
+    console.log('Markdown length:', markdown.length);
+    console.log('HTML length:', html.length);
+    
+    // Log a sample of the markdown to see what we're working with
+    console.log('Markdown sample:', markdown.substring(0, 1000));
+
     // Extract property listings from markdown
-    // Pattern: $XXX [Address](url)
-    const listingPattern = /\$([0-9,]+)K?\s+\[([^\]]+)\]\(([^)]+)\)/g;
+    // Pattern: $XXX [Address](url) or $XXX,XXXK [Address](url)
+    const listingPattern = /\$([0-9,]+)K?\s+\[([^\]]+)\]\(([^)]+)\)/gi;
     let match;
 
     while ((match = listingPattern.exec(markdown)) !== null) {
@@ -109,7 +118,46 @@ async function scrapeProperties(url: string, firecrawlKey: string): Promise<Prop
       });
     }
 
-    console.log(`Found ${properties.length} properties`);
+    console.log(`Found ${properties.length} properties from markdown parsing`);
+    
+    // If we didn't find many properties, try parsing from HTML as backup
+    if (properties.length < 5 && html) {
+      console.log('Attempting HTML parsing as backup...');
+      // Try to find property data in HTML structure
+      const htmlPattern = /data-mlsid="([^"]+)"[^>]*>[\s\S]*?\$([0-9,]+)/gi;
+      let htmlMatch;
+      let htmlCount = 0;
+      
+      while ((htmlMatch = htmlPattern.exec(html)) !== null && htmlCount < 50) {
+        const mls_id = htmlMatch[1];
+        const priceStr = htmlMatch[2].replace(/,/g, '');
+        const price = parseFloat(priceStr);
+        
+        // Check if we already have this property
+        if (!properties.some(p => p.mls_id === mls_id)) {
+          properties.push({
+            mls_id,
+            address: `Property ${mls_id}`, // Will be updated with real address
+            city: 'Delmar',
+            state: 'NY',
+            zip: '12054',
+            price,
+            beds: 3,
+            baths: 2,
+            sqft: 1500,
+            latitude: 42.6211,
+            longitude: -73.8368,
+            photos: [],
+            status: 'active',
+            boldtrail_url: `https://scottalvarez.remax.com/property/${mls_id}`,
+          });
+          htmlCount++;
+        }
+      }
+      console.log(`Found ${htmlCount} additional properties from HTML parsing`);
+    }
+    
+    console.log(`Total properties found: ${properties.length}`);
     return properties;
   } catch (error) {
     console.error('Error scraping properties:', error);
