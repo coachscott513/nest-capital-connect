@@ -12,9 +12,31 @@ const AddressInputDialog = ({ onAddressSubmit }: AddressInputDialogProps) => {
   const [address, setAddress] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (address.trim()) {
-      onAddressSubmit(address.trim());
+      // Geocode the address to get coordinates
+      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+      const encodedAddress = encodeURIComponent(address.trim());
+      
+      try {
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`
+        );
+        const data = await response.json();
+        
+        if (data.results && data.results.length > 0) {
+          const { lat, lng } = data.results[0].geometry.location;
+          const earthUrl = `https://earth.google.com/web/@${lat},${lng},80a,0d,80y,0h,45t,0r`;
+          window.open(earthUrl, '_blank');
+        } else {
+          // Fallback to address search if geocoding fails
+          onAddressSubmit(address.trim());
+        }
+      } catch (error) {
+        console.error('Geocoding error:', error);
+        onAddressSubmit(address.trim());
+      }
+      
       setAddress("");
       setIsOpen(false);
     }

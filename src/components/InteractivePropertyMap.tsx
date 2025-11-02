@@ -27,8 +27,12 @@ const InteractivePropertyMap = ({ properties }: InteractivePropertyMapProps) => 
 
   const openMapView = () => {
     // Open Google Maps with all properties
-    const markers = properties.map(p => `${p.latitude},${p.longitude}`).join('|');
     const url = `https://www.google.com/maps/search/?api=1&query=${centerLat},${centerLng}`;
+    window.open(url, '_blank');
+  };
+
+  const openGoogleEarth = (lat: number, lng: number) => {
+    const url = `https://earth.google.com/web/@${lat},${lng},80a,0d,80y,0h,45t,0r`;
     window.open(url, '_blank');
   };
 
@@ -97,10 +101,7 @@ const InteractivePropertyMap = ({ properties }: InteractivePropertyMapProps) => 
             <div 
               key={property.id}
               className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
-              onClick={() => {
-                const url = `https://www.google.com/maps/search/?api=1&query=${property.latitude},${property.longitude}`;
-                window.open(url, '_blank');
-              }}
+              onClick={() => openGoogleEarth(property.latitude, property.longitude)}
             >
               <div className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
                 {index + 1}
