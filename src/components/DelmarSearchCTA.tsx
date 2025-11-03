@@ -1,21 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Link, useNavigate } from "react-router-dom";
-import PropertySearchBar from "@/components/PropertySearchBar";
+import { Link } from "react-router-dom";
+import PropertySearchDialog from "@/components/PropertySearchDialog";
 
 const DelmarSearchCTA = () => {
-  const navigate = useNavigate();
-  
   const neighborhoods = [
     { name: "Bethlehem", path: "/communities" },
     { name: "Glenmont", path: "/communities" },
     { name: "Slingerlands", path: "/communities" },
   ];
-
-  const handleSearch = (filters: { priceRange?: string; beds?: string; keyword?: string }) => {
-    // Navigate to Delmar homes for sale page with filters applied
-    navigate('/delmar-homes-for-sale', { state: { filters } });
-  };
 
   return (
     <section className="py-16 px-6 bg-gradient-to-br from-red-50 to-red-100">
@@ -30,8 +23,22 @@ const DelmarSearchCTA = () => {
             </p>
           </div>
 
-          <div className="mb-8">
-            <PropertySearchBar onSearch={handleSearch} />
+          {/* Mobile: Dialog Search */}
+          <div className="md:hidden w-full max-w-[960px] mx-auto mb-8">
+            <PropertySearchDialog>
+              <Button size="lg" className="w-full">
+                Open Property Search
+              </Button>
+            </PropertySearchDialog>
+          </div>
+
+          {/* Desktop: Embedded Search */}
+          <div className="hidden md:block w-full max-w-[960px] mx-auto mb-8">
+            <iframe 
+              className="w-full h-[300px]"
+              src="https://scottalvarez.remax.com/wide.php" 
+              title="Property Search"
+            />
           </div>
 
           <div className="text-center">
