@@ -35,9 +35,10 @@ const DelmarSearchCTA = () => {
           {/* Desktop: Embedded Search */}
           <div className="hidden md:block w-full max-w-[960px] mx-auto mb-8">
             <iframe 
-              className="w-full h-[300px]"
+              className="w-full h-[500px] border-0 rounded-lg"
               src="https://scottalvarez.remax.com/wide.php" 
               title="Property Search"
+              loading="lazy"
             />
           </div>
 
