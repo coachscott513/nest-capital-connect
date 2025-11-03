@@ -23,24 +23,16 @@ const DelmarSearchCTA = () => {
             </p>
           </div>
 
-          {/* Mobile: Dialog Search */}
-          <div className="md:hidden w-full max-w-[960px] mx-auto mb-8">
-            <PropertySearchDialog>
-              <Button size="lg" className="w-full">
-                Open Property Search
-              </Button>
-            </PropertySearchDialog>
-          </div>
-
-          {/* Desktop: Embedded Search */}
-          <div className="hidden md:block w-full max-w-[960px] mx-auto mb-8">
-            <iframe 
-              className="w-full h-[500px] border-0 rounded-lg"
-              src="https://scottalvarez.remax.com/wide.php" 
+          {/* Bold Trail Search Widget - Responsive */}
+          <div className="w-full max-w-[960px] mx-auto mb-8">
+            <iframe
+              className="w-full h-[640px] sm:h-[560px] md:h-[520px] border-0 rounded-lg"
+              src="https://scottalvarez.remax.com/wide.php"
               title="Property Search"
               loading="lazy"
             />
           </div>
+
 
           <div className="text-center">
             <p className="text-sm text-muted-foreground mb-4">
