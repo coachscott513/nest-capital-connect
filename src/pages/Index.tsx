@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
-import { Play, Info } from "lucide-react";
+import { Play, Info, MessageCircle } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 
 const Index = () => {
+  const newsCards = [
+    { img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500", title: "Top 5 Neighborhoods in Troy for 2024", meta: "Market Analysis • 5 min read" },
+    { img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500", title: "Commercial Lending 101: What Investors Need to Know", meta: "Education • 8 min read" },
+    { img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500", title: "Albany's Emerging Arts District: Investment Hotspot", meta: "Opportunity • 4 min read" },
+    { img: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=500", title: "First-Time Investor Success Story: From 0 to 4 Units", meta: "Case Study • 6 min read" },
+  ];
+
   const trendingListings = [
     { img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=500", match: "98% Match", info: "3 Bed • $220k", badge: "ROI+" },
     { img: "https://images.unsplash.com/photo-1570129477492-45f003f2df51?w=500", match: "86% Match", info: "Duplex • $180k" },
@@ -18,77 +25,81 @@ const Index = () => {
     { img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500", match: "New", info: "Albany • $120k" },
   ];
 
-  const multiUnitListings = [
-    { img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500", match: "12% Cap", info: "4-Unit • $425k", badge: "Cash Flow" },
-    { img: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=500", match: "Turnkey", info: "Triplex • $299k" },
-    { img: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=500", match: "Value Add", info: "Duplex • $175k" },
-    { img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500", match: "New", info: "6-Unit • $580k" },
-  ];
-
   return (
     <div className="min-h-screen bg-[#141414] text-[#e5e5e5] font-sans overflow-x-hidden">
       <SEOHead
-        title="Capital District Nest | Streaming View | Upstate NY Real Estate"
+        title="Capital District Nest | The Resource | Upstate NY Real Estate"
         description="The Netflix of real estate. Browse Albany, Troy, Schenectady & Saratoga properties like never before. Investment analysis and market data."
         keywords="Capital District real estate, Albany NY homes, Troy investment properties, real estate streaming"
       />
 
       {/* Navigation */}
-      <nav className="flex items-center justify-between px-[4%] py-5 fixed top-0 w-full z-50 bg-gradient-to-b from-black/70 to-transparent">
-        <Link to="/" className="text-[#E50914] text-xl md:text-2xl font-bold uppercase tracking-widest">
+      <nav className="flex items-center justify-between px-[4%] py-5 fixed top-0 w-[92%] z-[1000] bg-gradient-to-b from-black/90 to-transparent">
+        <Link to="/" className="text-[#E50914] text-[1.8rem] font-black uppercase tracking-wide">
           NEST
         </Link>
         <div className="hidden md:flex gap-5">
-          <Link to="/" className="text-white text-sm hover:text-gray-300 transition">Home</Link>
-          <Link to="/albany-multi-unit" className="text-white text-sm hover:text-gray-300 transition">Multi-Unit</Link>
-          <Link to="/investor-tools" className="text-white text-sm hover:text-gray-300 transition">Fix & Flip</Link>
-          <Link to="/investor-tools" className="text-white text-sm hover:text-gray-300 transition">My List</Link>
+          <Link to="/" className="text-white text-sm opacity-80 hover:opacity-100 transition-opacity">Home</Link>
+          <Link to="/albany-multi-unit" className="text-white text-sm opacity-80 hover:opacity-100 transition-opacity">Multi-Unit</Link>
+          <Link to="/investor-tools" className="text-white text-sm opacity-80 hover:opacity-100 transition-opacity">Fix & Flip</Link>
+          <Link to="/investor-tools" className="text-white text-sm opacity-80 hover:opacity-100 transition-opacity">My List</Link>
         </div>
       </nav>
 
       {/* Hero Billboard */}
       <div 
-        className="h-[80vh] w-full bg-cover bg-center relative"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1950&q=80')" }}
+        className="h-[85vh] w-full bg-cover bg-center relative"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1950&q=80')" }}
       >
-        {/* Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+        {/* Stronger gradient overlay */}
+        <div className="absolute inset-0" style={{ background: "radial-gradient(circle, rgba(0,0,0,0.4) 0%, #141414 100%), linear-gradient(to top, #141414 10%, transparent 60%)" }} />
         
         <div className="absolute inset-0 flex items-center px-[4%]">
-          <div className="max-w-lg mt-24">
-            <span className="inline-block bg-white/20 px-3 py-1.5 text-xs font-bold rounded uppercase mb-4 backdrop-blur-sm">
-              Featured Investment
+          <div className="max-w-[600px] mt-[50px] z-10">
+            <span className="inline-block bg-[#E50914] text-white px-3 py-1.5 text-xs font-bold rounded-sm uppercase tracking-wider mb-5">
+              The Resource
             </span>
-            <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-4">
-              The Washington Park Triplex
+            <h1 className="text-3xl md:text-[3.5rem] font-extrabold leading-[1.1] mb-4">
+              Capital District Nest
             </h1>
-            <p className="text-base md:text-lg mb-6 drop-shadow-lg">
-              A rare turnkey opportunity in the heart of Albany. 
-              Fully occupied, 12% cap rate potential, and historic charm. 
-              Watch the virtual tour now.
+            <p className="text-base md:text-xl text-[#d1d1d1] mb-6 leading-relaxed drop-shadow-lg">
+              Your streaming platform for real estate intelligence. Market analysis, investment tools, and property data for Albany, Troy, Schenectady & Saratoga.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <button className="flex items-center gap-2 bg-white text-black px-5 py-2.5 md:px-6 md:py-3 rounded font-bold hover:bg-white/75 transition">
+            <div className="flex flex-wrap gap-4">
+              <button className="flex items-center gap-2 bg-white text-black px-6 py-3 rounded font-bold hover:scale-105 transition-transform">
                 <Play className="w-5 h-5 fill-current" />
-                Play Tour
+                Watch Overview
               </button>
               <Link 
                 to="/investor-tools"
-                className="flex items-center gap-2 bg-[#6d6d6e]/70 text-white px-5 py-2.5 md:px-6 md:py-3 rounded font-bold hover:bg-[#6d6d6e]/40 transition"
+                className="flex items-center gap-2 bg-[#6d6d6e]/70 backdrop-blur text-white px-6 py-3 rounded font-bold hover:scale-105 transition-transform"
               >
                 <Info className="w-5 h-5" />
-                More Info
+                Investor Tools
               </Link>
             </div>
           </div>
         </div>
       </div>
 
+      {/* News & Resources Section */}
+      <section className="py-5 pl-[4%] relative z-20">
+        <h3 className="text-xl md:text-[1.4rem] font-medium text-[#e5e5e5] mb-4 border-l-4 border-[#E50914] pl-3">
+          Latest News & Resources
+        </h3>
+        <div className="flex gap-4 overflow-x-auto pb-5 pr-[4%] scrollbar-hide scroll-smooth">
+          {newsCards.map((card, i) => (
+            <NewsCard key={i} {...card} />
+          ))}
+        </div>
+      </section>
+
       {/* Trending Section */}
-      <section className="px-[4%] py-5 relative z-10 -mt-24">
-        <h3 className="text-lg md:text-xl font-medium text-[#e5e5e5] mb-3">Trending in Albany</h3>
-        <div className="flex gap-2.5 overflow-x-auto pb-5 scrollbar-hide">
+      <section className="py-5 pl-[4%] relative z-20">
+        <h3 className="text-xl md:text-[1.4rem] font-medium text-[#e5e5e5] mb-4 border-l-4 border-[#E50914] pl-3">
+          Trending in Albany
+        </h3>
+        <div className="flex gap-4 overflow-x-auto pb-5 pr-[4%] scrollbar-hide scroll-smooth">
           {trendingListings.map((listing, i) => (
             <ListingCard key={i} {...listing} />
           ))}
@@ -96,44 +107,35 @@ const Index = () => {
       </section>
 
       {/* Fix & Flip Section */}
-      <section className="px-[4%] py-5">
-        <h3 className="text-lg md:text-xl font-medium text-[#e5e5e5] mb-3">High ROI Fix & Flips</h3>
-        <div className="flex gap-2.5 overflow-x-auto pb-5 scrollbar-hide">
+      <section className="py-5 pl-[4%] relative z-20">
+        <h3 className="text-xl md:text-[1.4rem] font-medium text-[#e5e5e5] mb-4 border-l-4 border-[#E50914] pl-3">
+          High ROI Fix & Flips
+        </h3>
+        <div className="flex gap-4 overflow-x-auto pb-5 pr-[4%] scrollbar-hide scroll-smooth">
           {fixFlipListings.map((listing, i) => (
             <ListingCard key={i} {...listing} />
           ))}
         </div>
       </section>
 
-      {/* Multi-Unit Section */}
-      <section className="px-[4%] py-5">
-        <h3 className="text-lg md:text-xl font-medium text-[#e5e5e5] mb-3">Multi-Unit Investments</h3>
-        <div className="flex gap-2.5 overflow-x-auto pb-5 scrollbar-hide">
-          {multiUnitListings.map((listing, i) => (
-            <ListingCard key={i} {...listing} />
-          ))}
+      {/* Chatbot Button */}
+      <div className="fixed bottom-8 right-8 w-[60px] h-[60px] bg-[#E50914] rounded-full flex items-center justify-center shadow-lg cursor-pointer z-[2000] hover:scale-110 transition-transform">
+        <MessageCircle className="w-7 h-7 text-white" />
+      </div>
+
+      {/* Footer */}
+      <footer className="mt-12 py-12 px-[4%] bg-black text-[#808080] text-sm">
+        <div className="flex gap-5 mb-5">
+          <a href="https://facebook.com" className="text-white text-2xl hover:text-[#E50914] transition-colors">f</a>
+          <a href="https://instagram.com" className="text-white text-2xl hover:text-[#E50914] transition-colors">ig</a>
+          <a href="https://youtube.com" className="text-white text-2xl hover:text-[#E50914] transition-colors">yt</a>
         </div>
-      </section>
-
-      {/* Footer CTA */}
-      <section className="px-[4%] py-16 text-center">
-        <h2 className="text-xl md:text-2xl font-bold mb-4">Access Investor Tools</h2>
-        <p className="text-[#b3b3b3] mb-6">Cash flow calculators, amortization tables, and ROI analysis</p>
-        <Link 
-          to="/investor-tools"
-          className="inline-block bg-[#E50914] text-white px-8 py-3 rounded font-bold hover:bg-[#f40612] transition"
-        >
-          Open Calculator Suite
-        </Link>
-      </section>
-
-      {/* Simple Footer */}
-      <footer className="px-[4%] py-8 border-t border-[#333] text-center text-sm text-[#808080]">
-        <div className="flex flex-wrap justify-center gap-6 mb-4">
-          <Link to="/investor-tools" className="hover:text-white transition">Tools & Calculators</Link>
-          <Link to="/homes-for-sale" className="hover:text-white transition">Homes for Sale</Link>
-          <Link to="/rentals" className="hover:text-white transition">Rentals</Link>
-          <Link to="/blog" className="hover:text-white transition">News</Link>
+        <div className="flex flex-wrap gap-5 mb-5">
+          <Link to="/investor-tools" className="text-[#808080] hover:text-white transition-colors">Tools & Calculators</Link>
+          <Link to="/homes-for-sale" className="text-[#808080] hover:text-white transition-colors">Homes for Sale</Link>
+          <Link to="/rentals" className="text-[#808080] hover:text-white transition-colors">Rentals</Link>
+          <Link to="/blog" className="text-[#808080] hover:text-white transition-colors">News</Link>
+          <Link to="/privacy-policy" className="text-[#808080] hover:text-white transition-colors">Privacy</Link>
         </div>
         <p>© {new Date().getFullYear()} Capital District Nest. All rights reserved.</p>
       </footer>
@@ -141,10 +143,22 @@ const Index = () => {
   );
 };
 
+// News Card Component (wider, different hover)
+const NewsCard = ({ img, title, meta }: { img: string; title: string; meta: string }) => (
+  <div className="flex-shrink-0 w-[280px] md:w-[350px] h-[180px] md:h-[200px] relative rounded cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:z-50 group bg-[#222] overflow-hidden shadow-lg hover:shadow-2xl">
+    <img src={img} alt={title} className="w-full h-full object-cover opacity-60 group-hover:opacity-30 transition-opacity" />
+    <div className="absolute bottom-0 left-0 p-5 w-full">
+      <h4 className="text-sm md:text-[1.1rem] font-bold mb-1 leading-tight">{title}</h4>
+      <p className="text-xs text-[#aaa]">{meta}</p>
+    </div>
+  </div>
+);
+
+// Listing Card Component (standard size, pop effect)
 const ListingCard = ({ img, match, info, badge }: { img: string; match: string; info: string; badge?: string }) => (
   <div className="flex-shrink-0 w-[200px] md:w-[250px] h-[112px] md:h-[140px] relative rounded cursor-pointer transition-transform duration-300 ease-in-out hover:scale-[1.3] hover:z-50 group bg-[#333] overflow-hidden shadow-lg hover:shadow-2xl">
-    <img src={img} alt="Property" className="w-full h-full object-cover rounded" />
-    <div className="absolute bottom-0 left-0 right-0 p-2.5 bg-gradient-to-t from-black/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+    <img src={img} alt="Property" className="w-full h-full object-cover" />
+    <div className="absolute bottom-0 left-0 right-0 p-2.5 bg-gradient-to-t from-black/95 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
       <div className="text-[#46d369] font-bold text-xs md:text-sm">{match}</div>
       <div className="text-[10px] md:text-xs text-[#b3b3b3] mt-1 flex items-center gap-2">
         <span>{info}</span>
