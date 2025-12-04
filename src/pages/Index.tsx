@@ -3,11 +3,6 @@ import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import CommandCenter from "@/components/CommandCenter";
 
-const markets = [
-  "Albany", "Niskayuna", "Troy", "Schenectady", 
-  "Saratoga", "Latham", "Clifton Park", "Rensselaer"
-];
-
 const menuSections = [
   {
     category: "Assets",
@@ -142,13 +137,8 @@ const Index = () => {
         </p>
 
         <div className="flex justify-center gap-3 flex-wrap mb-12">
-          <div className="flex items-center gap-2 border border-[#004ecc] text-foreground px-4 py-2 rounded-full text-sm font-semibold">
-            <div className="w-1.5 h-1.5 bg-[#dc1c2e] rounded-full" />
-            Powered by RE/MAX
-          </div>
-          {["Econ & Business Degrees", "Specialized Investment Team"].map((badge) => (
-            <div key={badge} className="flex items-center gap-2 bg-border/50 text-muted-foreground px-4 py-2 rounded-full text-sm font-semibold">
-              <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+          {["Powered by RE/MAX", "Econ Degrees", "Fiduciary"].map((badge) => (
+            <div key={badge} className="flex items-center gap-2 bg-border/50 text-muted-foreground px-4 py-2 rounded-full text-sm font-semibold border border-border">
               {badge}
             </div>
           ))}
@@ -222,23 +212,33 @@ const Index = () => {
               Not Agents.<br />Portfolio Managers.
             </h2>
             <p className="text-muted-foreground leading-relaxed text-lg mb-8">
-              Most offices hire salespeople. We hire Strategists. Our team navigates the complex regulatory landscape of Albany, Troy, and Schenectady so your asset performs from Day 1.
+              Most offices hire salespeople. We hire Strategists. 
+              We don't just "show homes"—we identify assets that outperform the market.
             </p>
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-2 bg-border/50 text-muted-foreground px-4 py-2 rounded-full text-sm font-semibold w-fit">
-                🏛️ Albany ROP Navigation
+            <div className="flex flex-col gap-5">
+              <div className="flex gap-4">
+                <div className="bg-border/50 w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0">📈</div>
+                <div>
+                  <div className="text-foreground font-bold">Hidden Value ID</div>
+                  <div className="text-muted-foreground text-sm">Finding underpriced assets before the market sees them.</div>
+                </div>
               </div>
-              <div className="flex items-center gap-2 bg-border/50 text-muted-foreground px-4 py-2 rounded-full text-sm font-semibold w-fit">
-                🧱 Troy Historic Board Approvals
-              </div>
-              <div className="flex items-center gap-2 bg-border/50 text-muted-foreground px-4 py-2 rounded-full text-sm font-semibold w-fit">
-                📋 Schenectady Rental Certs
+              <div className="flex gap-4">
+                <div className="bg-border/50 w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0">💵</div>
+                <div>
+                  <div className="text-foreground font-bold">Cash Flow Engineering</div>
+                  <div className="text-muted-foreground text-sm">Optimizing rent rolls to maximize your Cap Rate.</div>
+                </div>
               </div>
             </div>
           </div>
           <div className="flex-1">
-            <div className="bg-card border border-border rounded-2xl w-full h-[300px] flex items-center justify-center text-muted-foreground">
-              [Image: Team analyzing blueprints/docs]
+            <div className="rounded-2xl overflow-hidden border border-border h-[300px] relative group">
+              <img 
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                alt="Analytics dashboard" 
+                className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
+              />
             </div>
           </div>
         </div>
@@ -268,8 +268,12 @@ const Index = () => {
             </p>
           </div>
           <div className="flex-1">
-            <div className="bg-card border border-border rounded-2xl w-full h-[300px] flex items-center justify-center text-muted-foreground">
-              [Image: Keys being handed over / Maintenance coordination]
+            <div className="rounded-2xl overflow-hidden border border-border h-[300px] relative group">
+              <img 
+                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                alt="Keys handover" 
+                className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
+              />
             </div>
           </div>
         </div>
@@ -326,19 +330,19 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Markets Grid */}
-      <section className="px-[5%] py-20 border-t border-border">
-        <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-10 text-center">
-          We cover the entire Capital District.
+      {/* Capital District Coverage */}
+      <section className="px-[5%] py-20 border-t border-border text-center">
+        <h2 className="text-xl text-muted-foreground font-semibold mb-8">
+          We cover the entire Capital District
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-          {markets.map((market) => (
-            <div
-              key={market}
-              className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+        <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
+          {["Albany", "Niskayuna", "Troy", "Schenectady", "Saratoga", "Latham"].map((city) => (
+            <span 
+              key={city} 
+              className="border border-border px-5 py-2.5 rounded-full text-muted-foreground"
             >
-              {market}
-            </div>
+              {city}
+            </span>
           ))}
         </div>
       </section>
