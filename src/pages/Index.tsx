@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const markets = [
   "Albany", "Niskayuna", "Troy", "Schenectady", 
@@ -16,13 +14,17 @@ const menuItems = [
   { label: "Calculators", href: "/investor-tools" },
   { label: "Financing", href: "/first-time-homebuyers" },
   { label: "Analytics", href: "/delmar-market-insights" },
-  { label: "Social", href: "/blog" },
   { label: "Learn", href: "/communities" },
+];
+
+const subLinks = [
   { label: "Support", href: "/contact" },
+  { label: "Log In", href: "/auth" },
+  { label: "Start Chat", href: "/first-time-homebuyers", highlight: true },
 ];
 
 const Index = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -34,95 +36,68 @@ const Index = () => {
         ogImage="/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png"
       />
 
-      {/* Navigation */}
-      <header className="sticky top-0 z-[1000] flex items-center justify-between px-5 md:px-10 h-20 bg-background border-b border-border">
-        {/* Mobile Menu Trigger */}
-        <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-          <SheetTrigger asChild>
-            <button className="md:hidden p-2 -ml-2 text-foreground hover:text-primary transition-colors">
-              <Menu className="w-6 h-6" />
-            </button>
-          </SheetTrigger>
-          <SheetContent side="left" className="w-[300px] bg-background border-r border-border p-0">
-            <div className="flex flex-col h-full">
-              {/* Sidebar Header */}
-              <div className="flex items-center justify-between p-5 border-b border-border">
-                <Link to="/" className="font-extrabold text-2xl tracking-tight" onClick={() => setSidebarOpen(false)}>
-                  CD<span className="text-primary">N</span>
-                </Link>
-              </div>
-              
-              {/* Sidebar Menu */}
-              <nav className="flex-1 py-6">
-                {menuItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    to={item.href}
-                    onClick={() => setSidebarOpen(false)}
-                    className="flex items-center px-6 py-4 text-foreground font-bold text-lg hover:bg-primary/10 hover:text-primary transition-colors border-b border-border/50"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-              
-              {/* Sidebar Footer */}
-              <div className="p-5 border-t border-border space-y-3">
-                <Link
-                  to="/auth"
-                  onClick={() => setSidebarOpen(false)}
-                  className="block w-full text-center py-3 text-foreground font-bold hover:text-primary transition-colors"
-                >
-                  Log In
-                </Link>
-                <Link
-                  to="/first-time-homebuyers"
-                  onClick={() => setSidebarOpen(false)}
-                  className="block w-full text-center bg-primary text-primary-foreground py-3 rounded-full font-extrabold hover:scale-105 transition-transform"
-                >
-                  Start Chat
-                </Link>
-              </div>
-            </div>
-          </SheetContent>
-        </Sheet>
-
-        <Link to="/" className="font-extrabold text-2xl tracking-tight md:mr-10 whitespace-nowrap">
-          CD<span className="text-primary">N</span>
-        </Link>
-
-        <ul className="hidden md:flex gap-7 list-none m-0 p-0 overflow-x-auto scrollbar-hide">
+      {/* Full-Screen Menu Overlay */}
+      <div
+        className={`fixed inset-0 bg-background z-[1500] flex flex-col pt-24 px-5 md:px-10 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          menuOpen ? "translate-y-0" : "-translate-y-full"
+        }`}
+      >
+        <ul className="flex flex-col gap-4 overflow-y-auto flex-1">
           {menuItems.map((item) => (
             <li key={item.label}>
               <Link
                 to={item.href}
-                className="text-foreground font-bold text-[0.95rem] hover:text-primary transition-colors whitespace-nowrap"
+                onClick={() => setMenuOpen(false)}
+                className="text-foreground text-3xl md:text-5xl font-bold tracking-tight hover:text-primary hover:pl-3 transition-all"
               >
                 {item.label}
               </Link>
             </li>
           ))}
         </ul>
-
-        <div className="hidden md:flex items-center gap-5 ml-10">
-          <Link to="/auth" className="text-foreground font-bold text-[0.95rem] hover:text-primary transition-colors">
-            Log In
-          </Link>
-          <Link
-            to="/first-time-homebuyers"
-            className="bg-foreground text-background px-6 py-2.5 rounded-3xl font-extrabold text-[0.95rem] whitespace-nowrap hover:scale-105 transition-transform"
-          >
-            Start Chat
-          </Link>
+        
+        <div className="flex flex-col gap-3 mt-8 pb-10">
+          {subLinks.map((link) => (
+            <Link
+              key={link.label}
+              to={link.href}
+              onClick={() => setMenuOpen(false)}
+              className={`text-lg font-semibold ${
+                link.highlight ? "text-primary" : "text-muted-foreground hover:text-foreground"
+              } transition-colors`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
+      </div>
 
-        {/* Mobile: Show CTA */}
-        <Link
-          to="/first-time-homebuyers"
-          className="md:hidden bg-foreground text-background px-5 py-2 rounded-3xl font-bold text-sm"
-        >
-          Start Chat
+      {/* Navigation Header */}
+      <header className="sticky top-0 z-[2000] flex items-center justify-between px-5 md:px-10 h-20 bg-background/90 backdrop-blur-md border-b border-border">
+        <Link to="/" className="font-extrabold text-lg md:text-xl tracking-tight uppercase">
+          Capital District <span className="text-primary">Nest</span>
         </Link>
+
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className={`flex items-center gap-2 border px-4 py-2 rounded-full font-bold text-sm transition-all ${
+            menuOpen
+              ? "border-primary text-primary"
+              : "border-foreground text-foreground hover:bg-foreground hover:text-background"
+          }`}
+        >
+          {menuOpen ? (
+            "Close ✕"
+          ) : (
+            <>
+              <div className="flex flex-col gap-1">
+                <div className="w-4 h-0.5 bg-current" />
+                <div className="w-4 h-0.5 bg-current" />
+              </div>
+              Menu
+            </>
+          )}
+        </button>
       </header>
 
       {/* Section 1: Live Agent */}
