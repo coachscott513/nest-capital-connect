@@ -6,6 +6,18 @@ const markets = [
   "Saratoga", "Latham", "Clifton Park", "Rensselaer"
 ];
 
+const menuItems = [
+  { label: "Invest", href: "/investment-landing" },
+  { label: "Markets", href: "/markets" },
+  { label: "Rentals", href: "/rentals" },
+  { label: "Calculators", href: "/investor-tools" },
+  { label: "Financing", href: "/first-time-homebuyers" },
+  { label: "Analytics", href: "/delmar-market-insights" },
+  { label: "Social", href: "/blog" },
+  { label: "Learn", href: "/communities" },
+  { label: "Support", href: "/contact" },
+];
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -18,17 +30,44 @@ const Index = () => {
       />
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-[1000] flex items-center justify-between px-[5%] py-5 bg-black/95 border-b border-border">
-        <div className="font-extrabold text-2xl tracking-tight uppercase">
+      <header className="sticky top-0 z-[1000] flex items-center justify-between px-5 md:px-10 h-20 bg-background border-b border-border">
+        <Link to="/" className="font-extrabold text-2xl tracking-tight mr-10 whitespace-nowrap">
           CD<span className="text-primary">N</span>
+        </Link>
+
+        <ul className="hidden md:flex gap-7 list-none m-0 p-0 overflow-x-auto scrollbar-hide">
+          {menuItems.map((item) => (
+            <li key={item.label}>
+              <Link
+                to={item.href}
+                className="text-foreground font-bold text-[0.95rem] hover:text-primary transition-colors whitespace-nowrap"
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="hidden md:flex items-center gap-5 ml-10">
+          <Link to="/auth" className="text-foreground font-bold text-[0.95rem] hover:text-primary transition-colors">
+            Log In
+          </Link>
+          <Link
+            to="/first-time-homebuyers"
+            className="bg-foreground text-background px-6 py-2.5 rounded-3xl font-extrabold text-[0.95rem] whitespace-nowrap hover:scale-105 transition-transform"
+          >
+            Start Chat
+          </Link>
         </div>
+
+        {/* Mobile: Show only CTA */}
         <Link
           to="/first-time-homebuyers"
-          className="bg-foreground text-background px-7 py-3 rounded-[30px] font-bold hover:scale-105 transition-transform"
+          className="md:hidden bg-foreground text-background px-5 py-2 rounded-3xl font-bold text-sm"
         >
           Start Chat
         </Link>
-      </nav>
+      </header>
 
       {/* Section 1: Live Agent */}
       <section className="flex flex-col lg:flex-row items-center gap-20 px-[5%] py-20 min-h-[90vh] border-b border-border justify-center">
