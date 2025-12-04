@@ -301,29 +301,29 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Regulatory Expertise Cards */}
+        {/* Investor Analysis Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-20 max-w-6xl mx-auto">
           <div className="bg-card p-8 rounded-xl border border-border">
-            <div className="text-3xl mb-4">🏛️</div>
-            <h3 className="text-xl font-bold mb-3">Albany ROP Navigation</h3>
+            <div className="text-3xl mb-4">📊</div>
+            <h3 className="text-xl font-bold mb-3">Cash Flow Modeling</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Evictions in Albany are impossible without a valid <strong className="text-foreground">Residential Occupancy Permit (ROP)</strong>. We manage the Code Enforcement inspections and paperwork before you even close.
+              We build <strong className="text-foreground">complete rent roll projections</strong> with realistic expense ratios, vacancy assumptions, and cap rate analysis before you make an offer.
             </p>
           </div>
 
           <div className="bg-card p-8 rounded-xl border border-border">
-            <div className="text-3xl mb-4">🧱</div>
-            <h3 className="text-xl font-bold mb-3">Troy Historic Boards</h3>
+            <div className="text-3xl mb-4">📈</div>
+            <h3 className="text-xl font-bold mb-3">Market Comparables</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Buying in the District? Exterior changes require <strong className="text-foreground">HDLRC approval</strong>. Our team knows exactly which materials and renovations get approved and which get fined.
+              We pull <strong className="text-foreground">neighborhood-level data</strong>—recent sales, rental rates, and price trends—so you know exactly what a property is worth today and tomorrow.
             </p>
           </div>
 
           <div className="bg-card p-8 rounded-xl border border-border">
-            <div className="text-3xl mb-4">📋</div>
-            <h3 className="text-xl font-bold mb-3">Schenectady Rental Certs</h3>
+            <div className="text-3xl mb-4">🎯</div>
+            <h3 className="text-xl font-bold mb-3">ROI Projections</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Schenectady requires a <strong className="text-foreground">Landlord Registration</strong> and rental certificate for every tenant turnover. We systemize this process so you never face a vacancy ban.
+              From <strong className="text-foreground">CoC returns to IRR</strong>, we calculate your actual returns factoring in financing costs, rehab budgets, and realistic appreciation scenarios.
             </p>
           </div>
         </div>
