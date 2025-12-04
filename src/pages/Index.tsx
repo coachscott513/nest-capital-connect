@@ -203,106 +203,117 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Portfolio Managers - Operational Excellence */}
+      {/* Portfolio Managers - Street-Level Economics */}
       <section className="px-[5%] py-20 border-t border-border">
         <div className="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
           <div className="flex-1">
-            <div className="text-primary font-bold text-sm mb-3 uppercase tracking-wide">Operational Excellence</div>
+            <div className="text-primary font-bold text-sm mb-3 uppercase tracking-widest">Street-Level Economics</div>
             <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-5">
               Not Agents.<br />Portfolio Managers.
             </h2>
             <p className="text-muted-foreground leading-relaxed text-lg mb-8">
-              Most offices hire salespeople. We hire Strategists. 
-              We don't just "show homes"—we identify assets that outperform the market.
+              A standard agent opens the door. We analyze the asset. 
+              Whether it's raw land in Niskayuna or a 3-family in Troy, we apply institutional-grade data to every transaction.
             </p>
-            <div className="flex flex-col gap-5">
-              <div className="flex gap-4">
-                <div className="bg-border/50 w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0">📈</div>
-                <div>
-                  <div className="text-foreground font-bold">Hidden Value ID</div>
-                  <div className="text-muted-foreground text-sm">Finding underpriced assets before the market sees them.</div>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="bg-border/50 w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0">💵</div>
-                <div>
-                  <div className="text-foreground font-bold">Cash Flow Engineering</div>
-                  <div className="text-muted-foreground text-sm">Optimizing rent rolls to maximize your Cap Rate.</div>
-                </div>
-              </div>
+            <div className="flex flex-wrap gap-3">
+              <div className="border border-border px-4 py-2 rounded-full text-sm text-foreground">🏠 Residential</div>
+              <div className="border border-border px-4 py-2 rounded-full text-sm text-foreground">🏙️ Multi-Unit</div>
+              <div className="border border-border px-4 py-2 rounded-full text-sm text-foreground">🌳 Land Development</div>
+              <div className="border border-border px-4 py-2 rounded-full text-sm text-foreground">🏗️ Commercial</div>
             </div>
           </div>
-          <div className="flex-1">
-            <div className="rounded-2xl overflow-hidden border border-border h-[300px] relative group">
-              <img 
-                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                alt="Analytics dashboard" 
-                className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
-              />
+          <div className="flex-1 flex justify-center">
+            <div className="bg-card w-full max-w-[400px] p-8 rounded-2xl border border-border">
+              <div className="flex justify-between mb-5">
+                <span className="font-bold">Asset Grade</span>
+                <span className="text-primary font-bold">A-</span>
+              </div>
+              <div className="flex items-end gap-3 h-24 mb-5">
+                <div className="bg-border w-full h-[40%] rounded" />
+                <div className="bg-border w-full h-[60%] rounded" />
+                <div className="bg-primary w-full h-[85%] rounded" />
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Projected Appreciation: <span className="text-foreground">High</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Asset Stewardship Section */}
-      <section className="px-[5%] py-20 border-t border-border bg-card/30">
+      {/* Asset Stewardship Section - Local Eyes */}
+      <section className="px-[5%] py-20 border-t border-border bg-[#080808]">
         <div className="flex flex-col lg:flex-row-reverse items-center gap-12 max-w-6xl mx-auto">
           <div className="flex-1">
-            <div className="text-primary font-bold text-sm mb-3 uppercase tracking-wide">Client Exclusive Perk</div>
+            <div className="text-primary font-bold text-sm mb-3 uppercase tracking-widest">Boots on the Ground</div>
             <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-5">
-              We Don't Just Sell.<br />We Steward.
+              Local Eyes.<br />Asset Protection.
             </h2>
             <p className="text-muted-foreground leading-relaxed text-lg mb-6">
-              Most agents disappear at closing. We stay.
+              Real estate is local. You can't manage a Schenectady rental from a spreadsheet in Boston.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              <strong className="text-foreground">The Nest Stewardship Program:</strong> For our VIP clients (including our Massachusetts investors), we handle the headaches for free.
+              <strong className="text-foreground">The Nest Stewardship:</strong> We are your local presence. We coordinate the repairs, check the furnace, and handle the tenants so your passive income stays passive.
             </p>
-            <ul className="space-y-3 text-muted-foreground mb-6">
-              <li>✅ We coordinate repairs & pest inspections.</li>
-              <li>✅ We triage tenant calls & complaints.</li>
-              <li>✅ We lease-up vacancies (1 month rent fee).</li>
-            </ul>
-            <p className="text-sm text-muted-foreground/70">
-              *We act as your boots-on-the-ground partner, not a generic property management co.
-            </p>
+            <div className="flex items-center gap-2 text-foreground font-semibold">
+              <span className="text-primary">●</span> Included for VIP Clients
+            </div>
           </div>
-          <div className="flex-1">
-            <div className="rounded-2xl overflow-hidden border border-border h-[300px] relative group">
-              <img 
-                src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                alt="Keys handover" 
-                className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity"
-              />
+          <div className="flex-1 flex justify-center">
+            <div className="bg-card w-full max-w-[400px] p-6 rounded-2xl border border-border">
+              <div className="text-xs text-muted-foreground uppercase tracking-wider mb-4">Property Status</div>
+              <div className="divide-y divide-border">
+                <div className="flex justify-between py-4">
+                  <span className="text-foreground">Unit 1 Leasing</span>
+                  <span className="text-primary">● Active</span>
+                </div>
+                <div className="flex justify-between py-4">
+                  <span className="text-foreground">Repair Request</span>
+                  <span className="text-muted-foreground">Resolved</span>
+                </div>
+                <div className="flex justify-between py-4">
+                  <span className="text-foreground">Rent Collection</span>
+                  <span className="text-primary">100%</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Live Buyer Requirements Ticker */}
+      {/* Liquidity Ticker - Buyer Matching */}
       <section className="px-[5%] py-20 border-t border-border">
         <div className="text-center max-w-[800px] mx-auto mb-10">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            We have the <span className="text-primary">Demand.</span>
+            We create <span className="text-primary">Liquidity.</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            We manage a private VIP list of cash-ready investors from NYC and Boston.
+            We match properties with buyers instantly. From first-time house hackers to commercial developers.
           </p>
         </div>
 
         <div className="bg-card border border-border rounded-2xl overflow-hidden max-w-[800px] mx-auto">
           <div className="bg-muted/50 px-6 py-4 font-bold border-b border-border flex justify-between items-center">
-            <span>🎯 LIVE BUYER REQUIREMENTS</span>
+            <span>🎯 BUYER MATCHING</span>
             <span className="text-primary text-sm flex items-center gap-1">
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              ACTIVE NOW
+              LIVE FEED
             </span>
           </div>
           <div className="divide-y divide-border">
             <div className="flex justify-between items-center px-6 py-4">
               <div>
-                <div className="font-bold">#NY-402</div>
-                <div className="text-sm text-muted-foreground">Troy / Center Sq</div>
+                <div className="font-bold">First-Time Investor</div>
+                <div className="text-sm text-muted-foreground">Looking in: <span className="text-muted-foreground/80">Troy / Lansingburgh</span></div>
+              </div>
+              <div className="text-right">
+                <div className="font-bold text-primary">$180k FHA</div>
+              </div>
+            </div>
+            <div className="flex justify-between items-center px-6 py-4">
+              <div>
+                <div className="font-bold">Cash Buyer (NYC)</div>
+                <div className="text-sm text-muted-foreground">Looking in: <span className="text-muted-foreground/80">Albany Center Sq</span></div>
               </div>
               <div className="text-right">
                 <div className="font-bold text-primary">$450k Cash</div>
@@ -310,11 +321,11 @@ const Index = () => {
             </div>
             <div className="flex justify-between items-center px-6 py-4">
               <div>
-                <div className="font-bold">#MA-118</div>
-                <div className="text-sm text-muted-foreground">Schenectady Multi</div>
+                <div className="font-bold">Developer</div>
+                <div className="text-sm text-muted-foreground">Looking in: <span className="text-muted-foreground/80">Schenectady Mixed-Use</span></div>
               </div>
               <div className="text-right">
-                <div className="font-bold text-primary">$225k Rehab</div>
+                <div className="font-bold text-primary">$1.2M+</div>
               </div>
             </div>
           </div>
@@ -325,7 +336,7 @@ const Index = () => {
             to="/sell-investment-property" 
             className="bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform inline-block"
           >
-            Get Cash Offer Analysis
+            Get Your Cash Offer Analysis
           </Link>
         </div>
       </section>
