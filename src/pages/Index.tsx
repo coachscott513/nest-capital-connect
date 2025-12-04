@@ -1,210 +1,197 @@
 import { Link } from "react-router-dom";
+import { MessageCircle } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
-import { Search } from "lucide-react";
 
-const pillCategories = [
-  { label: "Multi-Units", href: "/albany-multi-unit" },
-  { label: "Fix & Flip", href: "/investor-tools" },
-  { label: "Land", href: "/albany-land" },
+const navLinks = [
+  { label: "Grants", href: "/grants" },
+  { label: "Multi-Family", href: "/albany-multi-unit" },
   { label: "Commercial", href: "/albany-investment-properties" },
-  { label: "Condos", href: "/homes-for-sale" },
-  { label: "Rentals", href: "/rentals" },
-  { label: "Calculators", href: "/investor-tools" },
+  { label: "Learn", href: "/investor-tools" },
 ];
 
-const locations = [
-  { name: "Niskayuna", image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/schenectady-real-estate" },
-  { name: "Albany", image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/albany-real-estate" },
-  { name: "Schenectady", image: "https://images.unsplash.com/photo-1444723121867-c6001e34f543?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/schenectady-real-estate" },
-  { name: "Troy", image: "https://images.unsplash.com/photo-1522050212171-61b01dd24579?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/troy-real-estate" },
-  { name: "Saratoga", image: "https://images.unsplash.com/photo-1558036117-15d82a90b9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/saratoga-real-estate" },
+const portfolioAssets = [
+  {
+    ticker: "TROY-DUP",
+    description: "2 Units • Troy, NY",
+    price: "$185k",
+    bars: [40, 60, 50, 80, 95],
+  },
+  {
+    ticker: "ALB-FIXR",
+    description: "Project • Albany",
+    price: "$65k",
+    bars: [30, 40, 70, 60, 85],
+  },
+  {
+    ticker: "NISK-LND",
+    description: "3.5 Acres • Nisky",
+    price: "$92k",
+    bars: [20, 25, 30, 35, 40],
+  },
 ];
 
-const toolkitItems = [
-  { label: "ROI Calculator", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/investor-tools" },
-  { label: "2025 Market PDF", image: "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/markets" },
-  { label: "Grant Guide", image: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/grants" },
-  { label: "Join VIP List", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "#contact" },
-];
-
-const multiFamilyListings = [
-  { image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "98% Match", badgeColor: "text-green-400", location: "Albany", price: "$220k" },
-  { image: "https://images.unsplash.com/photo-1570129477492-45f003f2df51?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "12% Cap", badgeColor: "text-green-400", location: "Troy", price: "$185k" },
-  { image: "https://images.unsplash.com/photo-1600596542815-2495db98dada?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "New Listing", badgeColor: "text-white", location: "Schenectady", price: "$140k" },
-];
-
-const landCommercialListings = [
-  { image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "Developed", badgeColor: "text-green-400", type: "4 Acres", price: "$90k" },
-  { image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "Retail", badgeColor: "text-green-400", type: "Downtown", price: "$450k" },
-  { image: "https://images.unsplash.com/photo-1448630360428-65456885c650?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "Fixer", badgeColor: "text-white", type: "Mixed Use", price: "$110k" },
+const featureCards = [
+  {
+    icon: "💰",
+    title: "Fix & Flip Loans",
+    description: "Get up to 100% of rehab costs covered. Interest-only payments keep your cash flow positive.",
+  },
+  {
+    icon: "🏗️",
+    title: "Project Management",
+    description: "Don't want to swing the hammer? Access our vetted contractor network directly in the app.",
+  },
+  {
+    icon: "📊",
+    title: "Live Market Data",
+    description: "See real-time rental estimates and cap rates for every neighborhood in the Capital District.",
+  },
 ];
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-[#141414] text-[#e5e5e5] overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Capital District Nest | The Investor Hub"
-        description="Access off-market deals, download local grant applications, and analyze ROI with custom tools for Albany, Troy, Schenectady & Saratoga real estate."
-        keywords="Capital District real estate, Albany investment properties, Troy multi-family, Schenectady homes, investor tools"
+        title="Capital District Nest | Real Estate Investment Platform"
+        description="Commission-free access to off-market deals in the Capital District. Multi-unit properties, fix & flip opportunities, and $30k grants available."
+        keywords="investment properties Albany NY, multi-unit buildings Troy NY, fix and flip properties, real estate investment Capital District"
+        canonical="https://capitaldistrictnest.com"
+        ogImage="/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png"
       />
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-[1000] flex items-center justify-between px-[4%] py-4 bg-black/90">
-        <Link to="/" className="text-[#E50914] text-3xl font-black uppercase tracking-wide drop-shadow-lg">
-          NEST
+      <nav className="sticky top-0 z-[1000] flex items-center justify-between px-10 py-5 bg-background border-b border-transparent hover:border-border transition-colors">
+        <Link to="/" className="text-foreground font-extrabold text-xl tracking-tight">
+          CDN
         </Link>
-        <Search className="w-6 h-6 text-white cursor-pointer" />
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.label}
+              to={link.href}
+              className="text-foreground font-semibold text-sm hover:text-primary transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+        <Link
+          to="/first-time-homebuyers"
+          className="bg-foreground text-background px-7 py-3 rounded-3xl font-extrabold text-sm hover:scale-105 transition-transform"
+        >
+          Start Investing
+        </Link>
       </nav>
 
-      {/* Pill Navigation */}
-      <div className="fixed top-[70px] left-[4%] right-[4%] z-[900] flex gap-4 overflow-x-auto pb-2 scrollbar-hide bg-black/80 py-3 -ml-[4%] pl-[4%] pr-[4%] w-full">
-        {pillCategories.map((pill) => (
-          <Link
-            key={pill.label}
-            to={pill.href}
-            className="flex-shrink-0 px-4 py-2 text-sm text-white border border-white/50 bg-black/80 rounded-full whitespace-nowrap transition-all hover:bg-white hover:text-black hover:border-white font-medium"
-          >
-            {pill.label}
-          </Link>
-        ))}
-      </div>
+      {/* Hero Split Section */}
+      <section className="flex flex-col lg:flex-row items-center justify-between min-h-[85vh] px-[8%] py-16 lg:py-0">
+        {/* Hero Text */}
+        <div className="flex-1 max-w-[600px] lg:pr-12 z-10 mb-12 lg:mb-0">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium leading-[1.05] tracking-tight mb-6">
+            Investing for the<br />
+            <span className="text-primary">99%</span>
+          </h1>
+          <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-10">
+            Commission-free access to off-market deals in the Capital District.
+            Get your first $30k grant today.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Link
+              to="/grants"
+              className="bg-primary text-primary-foreground px-7 py-3 rounded-3xl font-extrabold text-sm hover:scale-105 transition-transform"
+            >
+              Get Your Free Stock
+            </Link>
+            <Link
+              to="/investor-tools"
+              className="bg-transparent border border-foreground text-foreground px-7 py-3 rounded-3xl font-extrabold text-sm hover:scale-105 transition-transform"
+            >
+              View Demo
+            </Link>
+          </div>
+          <p className="mt-5 text-xs text-muted-foreground/50">
+            *Capital District Nest is a licensed real estate broker. Investments involve risk.
+          </p>
+        </div>
 
-      {/* Hero Billboard */}
-      <div
-        className="relative h-[80vh] w-full bg-cover bg-center"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')" }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-black/50 to-black/40 flex items-center pl-[4%]">
-          <div className="max-w-[600px] mt-16">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
-              The Capital District<br />Investor Hub.
-            </h1>
-            <p className="text-lg md:text-xl mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-              Access off-market deals, download local grant applications, and analyze ROI with our custom tools.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                to="/markets"
-                className="inline-flex items-center px-6 py-3 bg-white text-black font-bold rounded transition-transform hover:scale-105"
-              >
-                ▶ Get Market Report
-              </Link>
-              <Link
-                to="/first-time-homebuyers"
-                className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur text-white font-bold rounded transition-transform hover:scale-105"
-              >
-                ℹ Financing Options
-              </Link>
+        {/* Phone Mockup */}
+        <div className="flex-1 flex items-center justify-center">
+          <div className="w-[340px] md:w-[380px] h-[680px] md:h-[750px] bg-card rounded-[40px] border-8 border-border relative overflow-hidden shadow-[0_0_60px_rgba(0,200,5,0.1)]">
+            <div className="p-5">
+              <div className="text-xl font-extrabold mb-1">Portfolio Value</div>
+              <div className="text-3xl md:text-4xl font-extrabold text-primary border-b border-border pb-5 mb-5">
+                $142,392.55{" "}
+                <span className="text-base text-primary">+12.4%</span>
+              </div>
+
+              <div className="text-xs text-muted-foreground mb-3 uppercase tracking-wide">
+                Your Properties
+              </div>
+
+              {/* Asset Rows */}
+              {portfolioAssets.map((asset) => (
+                <div
+                  key={asset.ticker}
+                  className="flex items-center justify-between py-4 border-b border-border cursor-pointer hover:bg-muted hover:px-2.5 hover:rounded-lg transition-all"
+                >
+                  <div className="flex flex-col">
+                    <span className="font-extrabold text-sm">{asset.ticker}</span>
+                    <span className="text-xs text-muted-foreground">{asset.description}</span>
+                  </div>
+                  {/* Sparkline */}
+                  <div className="flex items-end gap-0.5 w-24 h-8">
+                    {asset.bars.map((height, i) => (
+                      <div
+                        key={i}
+                        className="bg-primary w-[20%] rounded-sm"
+                        style={{ height: `${height}%` }}
+                      />
+                    ))}
+                  </div>
+                  <div className="font-bold text-sm">{asset.price}</div>
+                </div>
+              ))}
+
+              {/* Grant Notification */}
+              <div className="mt-8 bg-muted p-4 rounded-lg border-l-[3px] border-primary">
+                <div className="text-xs font-bold mb-1">NEW GRANT FOUND</div>
+                <div className="text-xs text-muted-foreground">
+                  You qualify for the Albany Rehab Program. Apply by Dec 31.
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Explore by Location */}
-      <section className="py-5 pl-[4%]">
-        <div className="flex items-center gap-3 mb-4">
-          <h2 className="text-xl font-medium">Explore by Location</h2>
-          <Link to="/communities" className="text-sm text-gray-500 hover:text-white">View All &gt;</Link>
-        </div>
-        <div className="flex gap-4 overflow-x-auto pb-4 pr-[4%] scrollbar-hide">
-          {locations.map((loc) => (
-            <Link
-              key={loc.name}
-              to={loc.href}
-              className="flex-shrink-0 w-40 text-center transition-transform hover:scale-110 group"
+      {/* Features Section (Light) */}
+      <section className="px-[8%] py-20 bg-foreground text-background">
+        <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-10">
+          Fractional investing,<br />full ownership.
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {featureCards.map((card) => (
+            <div
+              key={card.title}
+              className="bg-[#f5f5f5] text-background p-10 rounded border border-transparent hover:border-primary transition-colors"
             >
-              <img
-                src={loc.image}
-                alt={loc.name}
-                className="w-[140px] h-[140px] rounded-full object-cover mx-auto mb-2 border-[3px] border-transparent group-hover:border-white transition-all"
-              />
-              <span className="text-sm">{loc.name}</span>
-            </Link>
+              <div className="text-3xl mb-5">{card.icon}</div>
+              <div className="text-xl font-bold mb-2.5">{card.title}</div>
+              <div className="text-muted-foreground leading-relaxed">{card.description}</div>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Investor Toolkit */}
-      <section className="py-5 pl-[4%]">
-        <div className="flex items-center gap-3 mb-4">
-          <h2 className="text-xl font-medium">Investor Toolkit</h2>
-          <Link to="/investor-tools" className="text-sm text-gray-500 hover:text-white">Free Downloads &gt;</Link>
-        </div>
-        <div className="flex gap-4 overflow-x-auto pb-4 pr-[4%] scrollbar-hide">
-          {toolkitItems.map((tool) => (
-            <Link
-              key={tool.label}
-              to={tool.href}
-              className="flex-shrink-0 w-40 h-60 relative rounded overflow-hidden cursor-pointer transition-transform hover:scale-110 hover:z-50 group"
-            >
-              <img
-                src={tool.image}
-                alt={tool.label}
-                className="w-full h-full object-cover opacity-70"
-              />
-              <div className="absolute bottom-3 left-3 right-3 border-t-2 border-[#E50914] pt-2 text-center font-bold uppercase text-sm">
-                {tool.label}
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Multi-Family Opportunities */}
-      <section className="py-5 pl-[4%]">
-        <h2 className="text-xl font-medium mb-4">Multi-Family Opportunities</h2>
-        <div className="flex gap-3 overflow-x-auto pb-4 pr-[4%] scrollbar-hide">
-          {multiFamilyListings.map((listing, idx) => (
-            <Link
-              key={idx}
-              to="/albany-multi-unit"
-              className="flex-shrink-0 w-[260px] h-[147px] relative rounded overflow-hidden cursor-pointer transition-transform hover:scale-[1.3] hover:z-[100] hover:shadow-2xl group bg-[#222]"
-            >
-              <img src={listing.image} alt="Property" className="w-full h-full object-cover" />
-              <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className={`font-bold ${listing.badgeColor}`}>{listing.badge}</span>
-                <span className="text-white"> • {listing.location} • {listing.price}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Land & Commercial */}
-      <section className="py-5 pl-[4%]">
-        <h2 className="text-xl font-medium mb-4">Land & Commercial</h2>
-        <div className="flex gap-3 overflow-x-auto pb-4 pr-[4%] scrollbar-hide">
-          {landCommercialListings.map((listing, idx) => (
-            <Link
-              key={idx}
-              to="/albany-land"
-              className="flex-shrink-0 w-[260px] h-[147px] relative rounded overflow-hidden cursor-pointer transition-transform hover:scale-[1.3] hover:z-[100] hover:shadow-2xl group bg-[#222]"
-            >
-              <img src={listing.image} alt="Property" className="w-full h-full object-cover" />
-              <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className={`font-bold ${listing.badgeColor}`}>{listing.badge}</span>
-                <span className="text-white"> • {listing.type} • {listing.price}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Chatbot Button */}
-      <div className="fixed bottom-5 right-5 w-[60px] h-[60px] bg-[#E50914] rounded-full flex items-center justify-center text-3xl shadow-lg cursor-pointer z-[2000] transition-transform hover:scale-110">
-        💬
-      </div>
-
-      {/* Footer */}
-      <footer className="px-[4%] py-12 text-gray-500 text-sm">
-        <div className="flex flex-wrap gap-5 mb-5">
-          <Link to="/blog" className="hover:text-white">About</Link>
-          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-white">Social Media</a>
-          <Link to="/privacy-policy" className="hover:text-white">Terms</Link>
-          <a href="mailto:scott@remax.com" className="hover:text-white">Contact</a>
-        </div>
-        <div>© 2025 Capital District Nest.</div>
-      </footer>
+      {/* Floating Action Button */}
+      <Link
+        to="/contact"
+        className="fixed bottom-8 right-8 bg-primary text-primary-foreground px-8 py-4 rounded-full font-extrabold text-lg shadow-[0_10px_20px_rgba(0,200,5,0.3)] cursor-pointer z-[2000] flex items-center gap-2.5 hover:-translate-y-1 hover:scale-105 transition-transform"
+      >
+        <MessageCircle className="w-5 h-5" />
+        Live Help
+      </Link>
     </div>
   );
 };
