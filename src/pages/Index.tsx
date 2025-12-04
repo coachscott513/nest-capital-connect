@@ -143,72 +143,127 @@ const Index = () => {
         </button>
       </header>
 
-      {/* Section 1: Live Agent */}
-      <section className="flex flex-col lg:flex-row items-center gap-20 px-[5%] py-20 min-h-[90vh] border-b border-border justify-center">
-        <div className="flex-1 max-w-[600px]">
-          <div className="inline-flex items-center gap-2 bg-primary/15 text-primary px-3 py-1.5 rounded-full text-xs font-bold uppercase mb-5">
-            <div className="w-2 h-2 bg-primary rounded-full" />
-            Live Agent Active
-          </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-6">
-            Real answers.<br />Right <span className="text-primary">now.</span>
-          </h2>
-          <p className="text-xl text-muted-foreground font-light leading-relaxed mb-8">
-            Buyers and sellers ask us daily: "Can I see this specific house?" "What are the schools like in Niskayuna?"
-            <br /><br />
-            Stop talking to bots. Get instant access to a <strong className="text-foreground">live, licensed agent</strong> who knows the neighborhood, the schools, and the market reality.
-          </p>
-          <Link to="/contact" className="inline-block border-2 border-foreground text-foreground px-9 py-4 rounded-[30px] font-bold hover:bg-foreground hover:text-background transition-colors">
-            Ask a Question
+      {/* Mission Control - The New Tagline Section */}
+      <section className="text-center px-[5%] pt-20 pb-10 max-w-[900px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        <h1 className="text-4xl md:text-6xl lg:text-[4.5rem] font-medium leading-[1.1] tracking-tight mb-5">
+          Wall Street Tools.<br />
+          <strong className="text-primary font-medium">Main Street Soul.</strong>
+        </h1>
+        
+        <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mb-8 max-w-[700px] mx-auto">
+          The Capital District's first tech-enabled brokerage. We combine institutional-grade 
+          market data with the white-glove service of local, licensed experts.
+        </p>
+
+        {/* Trust Badges */}
+        <div className="flex justify-center gap-3 flex-wrap mb-12">
+          {["Licensed Brokerage", "Live Agents", "Fiduciary Standard", "Local Experts"].map((badge) => (
+            <div key={badge} className="flex items-center gap-2 bg-border/50 text-muted-foreground px-4 py-2 rounded-full text-sm font-semibold">
+              <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+              {badge}
+            </div>
+          ))}
+        </div>
+
+        {/* CTAs */}
+        <div className="flex items-center justify-center gap-5 flex-wrap">
+          <Link to="/markets" className="bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
+            View Market Data
+          </Link>
+          <Link to="/first-time-homebuyers" className="text-primary font-bold hover:underline">
+            Chat with an Agent →
           </Link>
         </div>
-        <div className="flex-1 flex justify-center">
-          <div className="bg-card border border-border rounded-3xl p-8 w-full max-w-[450px] shadow-[0_20px_50px_rgba(0,200,5,0.1)]">
-            <div className="text-center text-muted-foreground text-xs mb-4">Today, 2:14 PM</div>
-            <div className="bg-muted p-4 rounded-2xl mb-4 text-sm max-w-[80%]">
-              Hi, I'm looking at the multi-unit on Union St. What's the school district?
+      </section>
+
+      {/* Hero Section 1: VIP Experience */}
+      <section className="flex flex-col lg:flex-row items-center px-[5%] py-16 lg:min-h-[600px] border-t border-border">
+        <div className="flex-1 max-w-[550px] p-5">
+          <div className="text-primary font-bold text-sm mb-3">VIP EXPERIENCE</div>
+          <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-5">
+            Local knowledge.<br />Instant access.
+          </h2>
+          <p className="text-muted-foreground leading-relaxed text-lg mb-8">
+            Whether you need to know the school district in Niskayuna or the zoning laws in Troy, 
+            our team is ready. No bots. Just licensed professionals with degrees in Economics and Business.
+          </p>
+          <Link to="/first-time-homebuyers" className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
+            Start Live Chat
+          </Link>
+        </div>
+        <div className="flex-1 flex justify-center p-5">
+          <div className="bg-card border border-border rounded-2xl p-8 w-full max-w-[450px] shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+            <div className="text-xs text-muted-foreground uppercase tracking-widest mb-4">Live Support • Avg Response 2m</div>
+            <div className="bg-muted p-4 rounded-xl mb-3 text-foreground">
+              "Can we see the multi-unit on State St today?"
             </div>
-            <div className="bg-primary text-primary-foreground p-4 rounded-2xl mb-4 text-sm max-w-[80%] ml-auto">
-              That's Schenectady Schools, but it borders Niskayuna. I have the tax map open, want me to send it?
-            </div>
-            <div className="bg-muted p-4 rounded-2xl mb-4 text-sm max-w-[80%]">
-              Yes please! Also, what are the taxes?
-            </div>
-            <div className="bg-primary text-primary-foreground p-4 rounded-2xl text-sm max-w-[80%] ml-auto">
-              Checking now... Total is $6,400/yr.
+            <div className="bg-primary text-primary-foreground p-4 rounded-xl ml-auto w-fit">
+              "Absolutely. I have the keys. I'll meet you there at 4pm."
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section 2: Graduate-Level Analysis (Reversed) */}
-      <section className="flex flex-col lg:flex-row-reverse items-center gap-20 px-[5%] py-20 min-h-[90vh] border-b border-border justify-center">
-        <div className="flex-1 max-w-[600px]">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-6">
+      {/* Hero Section 2: Purchasing Power (Reversed) */}
+      <section className="flex flex-col lg:flex-row-reverse items-center px-[5%] py-16 lg:min-h-[600px] border-t border-border">
+        <div className="flex-1 max-w-[550px] p-5">
+          <div className="text-primary font-bold text-sm mb-3">PURCHASING POWER</div>
+          <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-5">
+            Financing made<br />transparent.
+          </h2>
+          <p className="text-muted-foreground leading-relaxed text-lg mb-8">
+            From FHA 3.5% down-payments to negotiating 6% seller concessions. 
+            We unlock grants and creative financing to maximize your leverage.
+          </p>
+          <Link to="/grants" className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
+            See Grant Eligibility
+          </Link>
+        </div>
+        <div className="flex-1 flex justify-center p-5">
+          <div className="bg-card border border-border rounded-2xl p-8 w-full max-w-[450px] shadow-[0_20px_40px_rgba(0,0,0,0.5)] text-center">
+            <div className="text-5xl md:text-6xl font-extrabold text-foreground leading-none">$30k</div>
+            <div className="text-primary font-bold mt-3">Down Payment Grant</div>
+            <hr className="border-0 border-t border-border my-5" />
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Rate</span>
+              <span className="font-semibold">6.1% Fixed</span>
+            </div>
+            <div className="flex justify-between text-sm mt-3">
+              <span className="text-muted-foreground">Closing Costs</span>
+              <span className="text-primary font-semibold">Covered (Seller)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Hero Section 3: Graduate Analysis */}
+      <section className="flex flex-col lg:flex-row items-center px-[5%] py-16 lg:min-h-[600px] border-t border-border">
+        <div className="flex-1 max-w-[550px] p-5">
+          <div className="text-primary font-bold text-sm mb-3">INVESTOR TOOLS</div>
+          <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-5">
             Graduate-level<br />analysis.
           </h2>
-          <p className="text-xl text-muted-foreground font-light leading-relaxed mb-8">
+          <p className="text-muted-foreground leading-relaxed text-lg mb-8">
             Investing isn't a guessing game. Our agents hold Bachelor's and Graduate degrees in Economics and Business.
-            <br /><br />
-            We don't just open the door; we run the <strong className="text-foreground">Rent Rolls</strong>, calculate the <strong className="text-foreground">ROI</strong>, and build the spreadsheets for you.
+            We run the Rent Rolls, calculate the ROI, and build the spreadsheets for you.
           </p>
-          <Link to="/investor-tools" className="inline-block border-2 border-foreground text-foreground px-9 py-4 rounded-[30px] font-bold hover:bg-foreground hover:text-background transition-colors">
+          <Link to="/investor-tools" className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
             View Investor Tools
           </Link>
         </div>
-        <div className="flex-1 flex justify-center">
-          <div className="bg-card border border-border rounded-xl p-6 w-full max-w-[500px]">
+        <div className="flex-1 flex justify-center p-5">
+          <div className="bg-card border border-border rounded-2xl p-6 w-full max-w-[500px] shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
             <div className="text-xl font-extrabold mb-5">Troy Triplex Analysis</div>
             <div className="flex justify-between py-4 border-b border-border">
-              <span>Monthly Rent Roll</span>
+              <span className="text-muted-foreground">Monthly Rent Roll</span>
               <span className="font-bold text-primary">$4,250</span>
             </div>
             <div className="flex justify-between py-4 border-b border-border">
-              <span>Operating Expenses</span>
+              <span className="text-muted-foreground">Operating Expenses</span>
               <span className="font-bold text-red-500">-$1,100</span>
             </div>
             <div className="flex justify-between py-4 border-b border-border">
-              <span>Est. Mortgage (7%)</span>
+              <span className="text-muted-foreground">Est. Mortgage (7%)</span>
               <span className="font-bold text-red-500">-$2,100</span>
             </div>
             <div className="flex justify-between pt-5">
@@ -219,54 +274,10 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Section 3: Buying Power */}
-      <section className="flex flex-col lg:flex-row items-center gap-20 px-[5%] py-20 min-h-[90vh] border-b border-border justify-center">
-        <div className="flex-1 max-w-[600px]">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-6">
-            Know your<br />buying power.
-          </h2>
-          <p className="text-xl text-muted-foreground font-light leading-relaxed mb-8">
-            "What will it cost per month?" "Can I get seller concessions?"
-            <br /><br />
-            We specialize in creative financing. From <strong className="text-foreground">FHA 3.5% Down</strong> programs to negotiating a <strong className="text-foreground">6% Sellers Concession</strong> to cover your closing costs. We make the math work.
-          </p>
-          <div className="flex gap-3 flex-wrap">
-            <span className="bg-muted px-4 py-2 rounded-full text-sm">FHA Loans</span>
-            <span className="bg-muted px-4 py-2 rounded-full text-sm">Grants</span>
-            <span className="bg-muted px-4 py-2 rounded-full text-sm">VA Loans</span>
-          </div>
-        </div>
-        <div className="flex-1 flex justify-center">
-          <div className="bg-card border border-border rounded-xl p-8 w-full max-w-[400px] text-center">
-            <div className="text-muted-foreground text-sm mb-3">PURCHASE POWER</div>
-            <div className="text-6xl md:text-7xl font-extrabold text-foreground leading-none">$30k</div>
-            <div className="text-primary font-bold mt-3">Grant Money Available</div>
-            <p className="text-muted-foreground text-sm mt-4">We help you apply for local down-payment assistance.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4: Freedom (Reversed) */}
-      <section className="flex flex-col lg:flex-row-reverse items-center gap-20 px-[5%] py-20 min-h-[90vh] border-b border-border justify-center">
-        <div className="flex-1 max-w-[600px]">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-6">
-            Your Freedom.<br />Our Expertise.
-          </h2>
-          <p className="text-xl text-muted-foreground font-light leading-relaxed">
-            Worried about being "locked in" with an agent? Confused by Buyer Agreements?
-            <br /><br />
-            We offer transparent, flexible representation. Whether you speak English, Spanish, or Italian, our <strong className="text-foreground">multilingual team</strong> ensures you understand every contract, every fee, and every option.
-          </p>
-        </div>
-        <div className="flex-1 flex justify-center">
-          <div className="text-[8rem]">🤝</div>
-        </div>
-      </section>
-
       {/* Markets Grid */}
-      <section className="px-[5%] py-20 border-b border-border">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-10 text-center">
-          We cover the<br />entire Capital District.
+      <section className="px-[5%] py-20 border-t border-border">
+        <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-10 text-center">
+          We cover the entire Capital District.
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
           {markets.map((market) => (
@@ -281,7 +292,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="px-[5%] py-12 text-center text-muted-foreground text-sm">
+      <footer className="px-[5%] py-12 text-center text-muted-foreground text-sm border-t border-border">
         <p>© 2025 Capital District Nest. Licensed Real Estate Broker.</p>
         <p className="mt-2">Providing VIP Service, Technology, and Professional Guidance.</p>
       </footer>
