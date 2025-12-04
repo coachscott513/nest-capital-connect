@@ -161,7 +161,7 @@ const Index = () => {
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
             Choose your <span className="text-primary">Path.</span>
           </h2>
-          <p className="text-muted-foreground text-lg">Select your goal. Get the specific tools you need.</p>
+          <p className="text-muted-foreground text-lg">Start where you are. We'll get you to the closing table.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
@@ -170,35 +170,35 @@ const Index = () => {
             className="bg-card p-8 rounded-xl border border-border hover:-translate-y-1 hover:border-primary transition-all cursor-pointer group"
           >
             <div className="text-3xl mb-4">💸</div>
-            <h3 className="text-xl font-bold mb-3">Free Funding</h3>
+            <h3 className="text-xl font-bold mb-3">Free Grants</h3>
             <p className="text-muted-foreground leading-relaxed mb-5">
-              Send me the <strong className="text-foreground">2025 Grant Application PDF</strong> and eligible neighborhood list.
+              Buying your first rental? Don't use all your own cash. Download the <strong className="text-foreground">2025 Down-Payment Assistance PDF</strong> ($30k available).
             </p>
-            <div className="text-primary font-bold group-hover:translate-x-1 transition-transform">Get Application →</div>
+            <div className="text-primary font-bold group-hover:translate-x-1 transition-transform">Check Eligibility →</div>
           </Link>
 
           <Link 
-            to="/auth" 
+            to="/first-time-homebuyers" 
+            className="bg-card p-8 rounded-xl border border-border hover:-translate-y-1 hover:border-primary transition-all cursor-pointer group"
+          >
+            <div className="text-3xl mb-4">🏦</div>
+            <h3 className="text-xl font-bold mb-3">Get Financed</h3>
+            <p className="text-muted-foreground leading-relaxed mb-5">
+              No pre-approval? No problem. We connect you with lenders who specialize in <strong className="text-foreground">FHA (3.5% down)</strong> and <strong className="text-foreground">Renovation Loans</strong>.
+            </p>
+            <div className="text-primary font-bold group-hover:translate-x-1 transition-transform">See Loan Options →</div>
+          </Link>
+
+          <Link 
+            to="/homes-for-sale" 
             className="bg-card p-8 rounded-xl border border-border hover:-translate-y-1 hover:border-primary transition-all cursor-pointer group"
           >
             <div className="text-3xl mb-4">🔐</div>
-            <h3 className="text-xl font-bold mb-3">VIP Off-Market</h3>
+            <h3 className="text-xl font-bold mb-3">Deal Access</h3>
             <p className="text-muted-foreground leading-relaxed mb-5">
-              I have capital ready. I want "Coming Soon" inventory before Zillow.
+              From your first duplex to a 10-unit portfolio. Get the list of <strong className="text-foreground">High Cash Flow</strong> properties before they hit Zillow.
             </p>
-            <div className="text-primary font-bold group-hover:translate-x-1 transition-transform">Join VIP List →</div>
-          </Link>
-
-          <Link 
-            to="/investor-tools" 
-            className="bg-card p-8 rounded-xl border border-border hover:-translate-y-1 hover:border-primary transition-all cursor-pointer group"
-          >
-            <div className="text-3xl mb-4">📊</div>
-            <h3 className="text-xl font-bold mb-3">Deal Analysis</h3>
-            <p className="text-muted-foreground leading-relaxed mb-5">
-              I found a property. I need a <strong className="text-foreground">Wall Street Pro-Forma</strong> to check the math.
-            </p>
-            <div className="text-primary font-bold group-hover:translate-x-1 transition-transform">Start Analysis →</div>
+            <div className="text-primary font-bold group-hover:translate-x-1 transition-transform">View Inventory →</div>
           </Link>
         </div>
       </section>
