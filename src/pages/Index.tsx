@@ -1,197 +1,177 @@
 import { Link } from "react-router-dom";
-import { MessageCircle } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 
-const navLinks = [
-  { label: "Grants", href: "/grants" },
-  { label: "Multi-Family", href: "/albany-multi-unit" },
-  { label: "Commercial", href: "/albany-investment-properties" },
-  { label: "Learn", href: "/investor-tools" },
-];
-
-const portfolioAssets = [
-  {
-    ticker: "TROY-DUP",
-    description: "2 Units • Troy, NY",
-    price: "$185k",
-    bars: [40, 60, 50, 80, 95],
-  },
-  {
-    ticker: "ALB-FIXR",
-    description: "Project • Albany",
-    price: "$65k",
-    bars: [30, 40, 70, 60, 85],
-  },
-  {
-    ticker: "NISK-LND",
-    description: "3.5 Acres • Nisky",
-    price: "$92k",
-    bars: [20, 25, 30, 35, 40],
-  },
-];
-
-const featureCards = [
-  {
-    icon: "💰",
-    title: "Fix & Flip Loans",
-    description: "Get up to 100% of rehab costs covered. Interest-only payments keep your cash flow positive.",
-  },
-  {
-    icon: "🏗️",
-    title: "Project Management",
-    description: "Don't want to swing the hammer? Access our vetted contractor network directly in the app.",
-  },
-  {
-    icon: "📊",
-    title: "Live Market Data",
-    description: "See real-time rental estimates and cap rates for every neighborhood in the Capital District.",
-  },
+const markets = [
+  "Albany", "Niskayuna", "Troy", "Schenectady", 
+  "Saratoga", "Latham", "Clifton Park", "Rensselaer"
 ];
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Capital District Nest | Real Estate Investment Platform"
-        description="Commission-free access to off-market deals in the Capital District. Multi-unit properties, fix & flip opportunities, and $30k grants available."
-        keywords="investment properties Albany NY, multi-unit buildings Troy NY, fix and flip properties, real estate investment Capital District"
+        title="Capital District Nest | The Modern Real Estate Company"
+        description="Real answers, right now. Get instant access to live, licensed agents who know the Capital District neighborhoods, schools, and market reality."
+        keywords="real estate Albany NY, Capital District homes, Niskayuna real estate, Troy homes for sale, licensed real estate agent"
         canonical="https://capitaldistrictnest.com"
         ogImage="/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png"
       />
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-[1000] flex items-center justify-between px-10 py-5 bg-background border-b border-transparent hover:border-border transition-colors">
-        <Link to="/" className="text-foreground font-extrabold text-xl tracking-tight">
-          CDN
-        </Link>
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              to={link.href}
-              className="text-foreground font-semibold text-sm hover:text-primary transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
+      <nav className="sticky top-0 z-[1000] flex items-center justify-between px-[5%] py-5 bg-black/95 border-b border-border">
+        <div className="font-extrabold text-2xl tracking-tight uppercase">
+          CD<span className="text-primary">N</span>
         </div>
         <Link
           to="/first-time-homebuyers"
-          className="bg-foreground text-background px-7 py-3 rounded-3xl font-extrabold text-sm hover:scale-105 transition-transform"
+          className="bg-foreground text-background px-7 py-3 rounded-[30px] font-bold hover:scale-105 transition-transform"
         >
-          Start Investing
+          Start Chat
         </Link>
       </nav>
 
-      {/* Hero Split Section */}
-      <section className="flex flex-col lg:flex-row items-center justify-between min-h-[85vh] px-[8%] py-16 lg:py-0">
-        {/* Hero Text */}
-        <div className="flex-1 max-w-[600px] lg:pr-12 z-10 mb-12 lg:mb-0">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium leading-[1.05] tracking-tight mb-6">
-            Investing for the<br />
-            <span className="text-primary">99%</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-10">
-            Commission-free access to off-market deals in the Capital District.
-            Get your first $30k grant today.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Link
-              to="/grants"
-              className="bg-primary text-primary-foreground px-7 py-3 rounded-3xl font-extrabold text-sm hover:scale-105 transition-transform"
-            >
-              Get Your Free Stock
-            </Link>
-            <Link
-              to="/investor-tools"
-              className="bg-transparent border border-foreground text-foreground px-7 py-3 rounded-3xl font-extrabold text-sm hover:scale-105 transition-transform"
-            >
-              View Demo
-            </Link>
+      {/* Section 1: Live Agent */}
+      <section className="flex flex-col lg:flex-row items-center gap-20 px-[5%] py-20 min-h-[90vh] border-b border-border justify-center">
+        <div className="flex-1 max-w-[600px]">
+          <div className="inline-flex items-center gap-2 bg-primary/15 text-primary px-3 py-1.5 rounded-full text-xs font-bold uppercase mb-5">
+            <div className="w-2 h-2 bg-primary rounded-full" />
+            Live Agent Active
           </div>
-          <p className="mt-5 text-xs text-muted-foreground/50">
-            *Capital District Nest is a licensed real estate broker. Investments involve risk.
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-6">
+            Real answers.<br />Right <span className="text-primary">now.</span>
+          </h2>
+          <p className="text-xl text-muted-foreground font-light leading-relaxed mb-8">
+            Buyers and sellers ask us daily: "Can I see this specific house?" "What are the schools like in Niskayuna?"
+            <br /><br />
+            Stop talking to bots. Get instant access to a <strong className="text-foreground">live, licensed agent</strong> who knows the neighborhood, the schools, and the market reality.
           </p>
+          <Link to="/contact" className="inline-block border-2 border-foreground text-foreground px-9 py-4 rounded-[30px] font-bold hover:bg-foreground hover:text-background transition-colors">
+            Ask a Question
+          </Link>
         </div>
-
-        {/* Phone Mockup */}
-        <div className="flex-1 flex items-center justify-center">
-          <div className="w-[340px] md:w-[380px] h-[680px] md:h-[750px] bg-card rounded-[40px] border-8 border-border relative overflow-hidden shadow-[0_0_60px_rgba(0,200,5,0.1)]">
-            <div className="p-5">
-              <div className="text-xl font-extrabold mb-1">Portfolio Value</div>
-              <div className="text-3xl md:text-4xl font-extrabold text-primary border-b border-border pb-5 mb-5">
-                $142,392.55{" "}
-                <span className="text-base text-primary">+12.4%</span>
-              </div>
-
-              <div className="text-xs text-muted-foreground mb-3 uppercase tracking-wide">
-                Your Properties
-              </div>
-
-              {/* Asset Rows */}
-              {portfolioAssets.map((asset) => (
-                <div
-                  key={asset.ticker}
-                  className="flex items-center justify-between py-4 border-b border-border cursor-pointer hover:bg-muted hover:px-2.5 hover:rounded-lg transition-all"
-                >
-                  <div className="flex flex-col">
-                    <span className="font-extrabold text-sm">{asset.ticker}</span>
-                    <span className="text-xs text-muted-foreground">{asset.description}</span>
-                  </div>
-                  {/* Sparkline */}
-                  <div className="flex items-end gap-0.5 w-24 h-8">
-                    {asset.bars.map((height, i) => (
-                      <div
-                        key={i}
-                        className="bg-primary w-[20%] rounded-sm"
-                        style={{ height: `${height}%` }}
-                      />
-                    ))}
-                  </div>
-                  <div className="font-bold text-sm">{asset.price}</div>
-                </div>
-              ))}
-
-              {/* Grant Notification */}
-              <div className="mt-8 bg-muted p-4 rounded-lg border-l-[3px] border-primary">
-                <div className="text-xs font-bold mb-1">NEW GRANT FOUND</div>
-                <div className="text-xs text-muted-foreground">
-                  You qualify for the Albany Rehab Program. Apply by Dec 31.
-                </div>
-              </div>
+        <div className="flex-1 flex justify-center">
+          <div className="bg-card border border-border rounded-3xl p-8 w-full max-w-[450px] shadow-[0_20px_50px_rgba(0,200,5,0.1)]">
+            <div className="text-center text-muted-foreground text-xs mb-4">Today, 2:14 PM</div>
+            <div className="bg-muted p-4 rounded-2xl mb-4 text-sm max-w-[80%]">
+              Hi, I'm looking at the multi-unit on Union St. What's the school district?
+            </div>
+            <div className="bg-primary text-primary-foreground p-4 rounded-2xl mb-4 text-sm max-w-[80%] ml-auto">
+              That's Schenectady Schools, but it borders Niskayuna. I have the tax map open, want me to send it?
+            </div>
+            <div className="bg-muted p-4 rounded-2xl mb-4 text-sm max-w-[80%]">
+              Yes please! Also, what are the taxes?
+            </div>
+            <div className="bg-primary text-primary-foreground p-4 rounded-2xl text-sm max-w-[80%] ml-auto">
+              Checking now... Total is $6,400/yr.
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section (Light) */}
-      <section className="px-[8%] py-20 bg-foreground text-background">
-        <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-10">
-          Fractional investing,<br />full ownership.
-        </h2>
+      {/* Section 2: Graduate-Level Analysis (Reversed) */}
+      <section className="flex flex-col lg:flex-row-reverse items-center gap-20 px-[5%] py-20 min-h-[90vh] border-b border-border justify-center">
+        <div className="flex-1 max-w-[600px]">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-6">
+            Graduate-level<br />analysis.
+          </h2>
+          <p className="text-xl text-muted-foreground font-light leading-relaxed mb-8">
+            Investing isn't a guessing game. Our agents hold Bachelor's and Graduate degrees in Economics and Business.
+            <br /><br />
+            We don't just open the door; we run the <strong className="text-foreground">Rent Rolls</strong>, calculate the <strong className="text-foreground">ROI</strong>, and build the spreadsheets for you.
+          </p>
+          <Link to="/investor-tools" className="inline-block border-2 border-foreground text-foreground px-9 py-4 rounded-[30px] font-bold hover:bg-foreground hover:text-background transition-colors">
+            View Investor Tools
+          </Link>
+        </div>
+        <div className="flex-1 flex justify-center">
+          <div className="bg-card border border-border rounded-xl p-6 w-full max-w-[500px]">
+            <div className="text-xl font-extrabold mb-5">Troy Triplex Analysis</div>
+            <div className="flex justify-between py-4 border-b border-border">
+              <span>Monthly Rent Roll</span>
+              <span className="font-bold text-primary">$4,250</span>
+            </div>
+            <div className="flex justify-between py-4 border-b border-border">
+              <span>Operating Expenses</span>
+              <span className="font-bold text-red-500">-$1,100</span>
+            </div>
+            <div className="flex justify-between py-4 border-b border-border">
+              <span>Est. Mortgage (7%)</span>
+              <span className="font-bold text-red-500">-$2,100</span>
+            </div>
+            <div className="flex justify-between pt-5">
+              <span className="text-xl">Net Cash Flow</span>
+              <span className="font-bold text-primary text-2xl">+$1,050/mo</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {featureCards.map((card) => (
+      {/* Section 3: Buying Power */}
+      <section className="flex flex-col lg:flex-row items-center gap-20 px-[5%] py-20 min-h-[90vh] border-b border-border justify-center">
+        <div className="flex-1 max-w-[600px]">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-6">
+            Know your<br />buying power.
+          </h2>
+          <p className="text-xl text-muted-foreground font-light leading-relaxed mb-8">
+            "What will it cost per month?" "Can I get seller concessions?"
+            <br /><br />
+            We specialize in creative financing. From <strong className="text-foreground">FHA 3.5% Down</strong> programs to negotiating a <strong className="text-foreground">6% Sellers Concession</strong> to cover your closing costs. We make the math work.
+          </p>
+          <div className="flex gap-3 flex-wrap">
+            <span className="bg-muted px-4 py-2 rounded-full text-sm">FHA Loans</span>
+            <span className="bg-muted px-4 py-2 rounded-full text-sm">Grants</span>
+            <span className="bg-muted px-4 py-2 rounded-full text-sm">VA Loans</span>
+          </div>
+        </div>
+        <div className="flex-1 flex justify-center">
+          <div className="bg-card border border-border rounded-xl p-8 w-full max-w-[400px] text-center">
+            <div className="text-muted-foreground text-sm mb-3">PURCHASE POWER</div>
+            <div className="text-6xl md:text-7xl font-extrabold text-foreground leading-none">$30k</div>
+            <div className="text-primary font-bold mt-3">Grant Money Available</div>
+            <p className="text-muted-foreground text-sm mt-4">We help you apply for local down-payment assistance.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 4: Freedom (Reversed) */}
+      <section className="flex flex-col lg:flex-row-reverse items-center gap-20 px-[5%] py-20 min-h-[90vh] border-b border-border justify-center">
+        <div className="flex-1 max-w-[600px]">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-6">
+            Your Freedom.<br />Our Expertise.
+          </h2>
+          <p className="text-xl text-muted-foreground font-light leading-relaxed">
+            Worried about being "locked in" with an agent? Confused by Buyer Agreements?
+            <br /><br />
+            We offer transparent, flexible representation. Whether you speak English, Spanish, or Italian, our <strong className="text-foreground">multilingual team</strong> ensures you understand every contract, every fee, and every option.
+          </p>
+        </div>
+        <div className="flex-1 flex justify-center">
+          <div className="text-[8rem]">🤝</div>
+        </div>
+      </section>
+
+      {/* Markets Grid */}
+      <section className="px-[5%] py-20 border-b border-border">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-10 text-center">
+          We cover the<br />entire Capital District.
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          {markets.map((market) => (
             <div
-              key={card.title}
-              className="bg-[#f5f5f5] text-background p-10 rounded border border-transparent hover:border-primary transition-colors"
+              key={market}
+              className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
             >
-              <div className="text-3xl mb-5">{card.icon}</div>
-              <div className="text-xl font-bold mb-2.5">{card.title}</div>
-              <div className="text-muted-foreground leading-relaxed">{card.description}</div>
+              {market}
             </div>
           ))}
         </div>
       </section>
 
-      {/* Floating Action Button */}
-      <Link
-        to="/contact"
-        className="fixed bottom-8 right-8 bg-primary text-primary-foreground px-8 py-4 rounded-full font-extrabold text-lg shadow-[0_10px_20px_rgba(0,200,5,0.3)] cursor-pointer z-[2000] flex items-center gap-2.5 hover:-translate-y-1 hover:scale-105 transition-transform"
-      >
-        <MessageCircle className="w-5 h-5" />
-        Live Help
-      </Link>
+      {/* Footer */}
+      <footer className="px-[5%] py-12 text-center text-muted-foreground text-sm">
+        <p>© 2025 Capital District Nest. Licensed Real Estate Broker.</p>
+        <p className="mt-2">Providing VIP Service, Technology, and Professional Guidance.</p>
+      </footer>
     </div>
   );
 };
