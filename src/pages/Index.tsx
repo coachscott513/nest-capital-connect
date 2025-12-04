@@ -49,20 +49,20 @@ const Index = () => {
       />
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-[1000] flex items-center justify-between px-[4%] py-4 bg-gradient-to-b from-black/95 to-transparent">
-        <Link to="/" className="text-[#E50914] text-3xl font-black uppercase tracking-wide">
+      <nav className="fixed top-0 left-0 right-0 z-[1000] flex items-center justify-between px-[4%] py-4 bg-black/90">
+        <Link to="/" className="text-[#E50914] text-3xl font-black uppercase tracking-wide drop-shadow-lg">
           NEST
         </Link>
         <Search className="w-6 h-6 text-white cursor-pointer" />
       </nav>
 
       {/* Pill Navigation */}
-      <div className="fixed top-[70px] left-[4%] right-[4%] z-[900] flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+      <div className="fixed top-[70px] left-[4%] right-[4%] z-[900] flex gap-4 overflow-x-auto pb-2 scrollbar-hide bg-black/80 py-3 -ml-[4%] pl-[4%] pr-[4%] w-full">
         {pillCategories.map((pill) => (
           <Link
             key={pill.label}
             to={pill.href}
-            className="flex-shrink-0 px-4 py-2 text-sm text-white border border-white/30 bg-black/50 rounded-full whitespace-nowrap transition-all hover:bg-white hover:text-black hover:border-white"
+            className="flex-shrink-0 px-4 py-2 text-sm text-white border border-white/50 bg-black/80 rounded-full whitespace-nowrap transition-all hover:bg-white hover:text-black hover:border-white font-medium"
           >
             {pill.label}
           </Link>
@@ -74,12 +74,12 @@ const Index = () => {
         className="relative h-[80vh] w-full bg-cover bg-center"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent flex items-center pl-[4%]">
+        <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-black/50 to-black/40 flex items-center pl-[4%]">
           <div className="max-w-[600px] mt-16">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)]">
               The Capital District<br />Investor Hub.
             </h1>
-            <p className="text-lg md:text-xl mb-6 drop-shadow-lg">
+            <p className="text-lg md:text-xl mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
               Access off-market deals, download local grant applications, and analyze ROI with our custom tools.
             </p>
             <div className="flex flex-wrap gap-3">
