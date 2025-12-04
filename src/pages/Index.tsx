@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const markets = [
   "Albany", "Niskayuna", "Troy", "Schenectady", 
@@ -19,6 +22,8 @@ const menuItems = [
 ];
 
 const Index = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
@@ -31,7 +36,58 @@ const Index = () => {
 
       {/* Navigation */}
       <header className="sticky top-0 z-[1000] flex items-center justify-between px-5 md:px-10 h-20 bg-background border-b border-border">
-        <Link to="/" className="font-extrabold text-2xl tracking-tight mr-10 whitespace-nowrap">
+        {/* Mobile Menu Trigger */}
+        <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+          <SheetTrigger asChild>
+            <button className="md:hidden p-2 -ml-2 text-foreground hover:text-primary transition-colors">
+              <Menu className="w-6 h-6" />
+            </button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-[300px] bg-background border-r border-border p-0">
+            <div className="flex flex-col h-full">
+              {/* Sidebar Header */}
+              <div className="flex items-center justify-between p-5 border-b border-border">
+                <Link to="/" className="font-extrabold text-2xl tracking-tight" onClick={() => setSidebarOpen(false)}>
+                  CD<span className="text-primary">N</span>
+                </Link>
+              </div>
+              
+              {/* Sidebar Menu */}
+              <nav className="flex-1 py-6">
+                {menuItems.map((item) => (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    onClick={() => setSidebarOpen(false)}
+                    className="flex items-center px-6 py-4 text-foreground font-bold text-lg hover:bg-primary/10 hover:text-primary transition-colors border-b border-border/50"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+              
+              {/* Sidebar Footer */}
+              <div className="p-5 border-t border-border space-y-3">
+                <Link
+                  to="/auth"
+                  onClick={() => setSidebarOpen(false)}
+                  className="block w-full text-center py-3 text-foreground font-bold hover:text-primary transition-colors"
+                >
+                  Log In
+                </Link>
+                <Link
+                  to="/first-time-homebuyers"
+                  onClick={() => setSidebarOpen(false)}
+                  className="block w-full text-center bg-primary text-primary-foreground py-3 rounded-full font-extrabold hover:scale-105 transition-transform"
+                >
+                  Start Chat
+                </Link>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        <Link to="/" className="font-extrabold text-2xl tracking-tight md:mr-10 whitespace-nowrap">
           CD<span className="text-primary">N</span>
         </Link>
 
@@ -60,7 +116,7 @@ const Index = () => {
           </Link>
         </div>
 
-        {/* Mobile: Show only CTA */}
+        {/* Mobile: Show CTA */}
         <Link
           to="/first-time-homebuyers"
           className="md:hidden bg-foreground text-background px-5 py-2 rounded-3xl font-bold text-sm"
