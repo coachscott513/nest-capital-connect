@@ -65,6 +65,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				media: {
+					background: 'hsl(222 47% 6%)',
+					card: 'hsl(222 47% 9%)',
+					accent: 'hsl(222 47% 15%)',
+					highlight: 'hsl(45 93% 58%)',
+					foreground: 'hsl(210 40% 98%)',
+					muted: 'hsl(215 20% 65%)',
+					border: 'hsl(222 30% 18%)'
 				}
 			},
 			borderRadius: {
