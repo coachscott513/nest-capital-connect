@@ -151,13 +151,20 @@ const Index = () => {
         </h1>
         
         <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mb-8 max-w-[700px] mx-auto">
-          The Capital District's first tech-enabled brokerage. We combine institutional-grade 
-          market data with the white-glove service of local, licensed experts.
+          The Capital District's premier tech-enabled investment team. 
+          We are <strong className="text-foreground">The Capital District Nest Team at RE/MAX</strong>—a specialized group of Economists and Business Strategists 
+          combining institutional-grade market data with white-glove local service.
         </p>
 
         {/* Trust Badges */}
         <div className="flex justify-center gap-3 flex-wrap mb-12">
-          {["Licensed Brokerage", "Live Agents", "Fiduciary Standard", "Local Experts"].map((badge) => (
+          {/* RE/MAX Badge - Special Styling */}
+          <div className="flex items-center gap-2 border border-[#004ecc] text-foreground px-4 py-2 rounded-full text-sm font-semibold">
+            <div className="w-1.5 h-1.5 bg-[#dc1c2e] rounded-full" />
+            Powered by RE/MAX
+          </div>
+          
+          {["Econ & Business Degrees", "Specialized Investment Team", "Local Experts"].map((badge) => (
             <div key={badge} className="flex items-center gap-2 bg-border/50 text-muted-foreground px-4 py-2 rounded-full text-sm font-semibold">
               <div className="w-1.5 h-1.5 bg-primary rounded-full" />
               {badge}
@@ -171,9 +178,15 @@ const Index = () => {
             View Market Data
           </Link>
           <Link to="/first-time-homebuyers" className="text-primary font-bold hover:underline">
-            Chat with an Agent →
+            Chat with the Team →
           </Link>
         </div>
+
+        {/* Disclaimer */}
+        <p className="mt-8 text-xs text-muted-foreground/60">
+          *Capital District Nest LLC is a specialized team of real estate professionals affiliated with RE/MAX. 
+          Each office independently owned and operated.
+        </p>
       </section>
 
       {/* Hero Section 1: VIP Experience */}
