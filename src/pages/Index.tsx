@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
+import CommandCenter from "@/components/CommandCenter";
 
 const markets = [
   "Albany", "Niskayuna", "Troy", "Schenectady", 
@@ -386,6 +387,9 @@ const Index = () => {
           ))}
         </div>
       </section>
+
+      {/* Command Center FAB */}
+      <CommandCenter />
 
       {/* Footer */}
       <footer className="px-[5%] py-12 text-center text-muted-foreground text-sm border-t border-border">
