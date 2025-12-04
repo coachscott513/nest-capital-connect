@@ -1,171 +1,212 @@
 import { Link } from "react-router-dom";
-import { Play, Info, MessageCircle } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import { Search } from "lucide-react";
+
+const pillCategories = [
+  { label: "Multi-Units", href: "/albany-multi-unit" },
+  { label: "Fix & Flip", href: "/investor-tools" },
+  { label: "Land", href: "/albany-land" },
+  { label: "Commercial", href: "/albany-investment-properties" },
+  { label: "Condos", href: "/homes-for-sale" },
+  { label: "Rentals", href: "/rentals" },
+  { label: "Calculators", href: "/investor-tools" },
+];
+
+const locations = [
+  { name: "Niskayuna", image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/schenectady-real-estate" },
+  { name: "Albany", image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/albany-real-estate" },
+  { name: "Schenectady", image: "https://images.unsplash.com/photo-1444723121867-c6001e34f543?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/schenectady-real-estate" },
+  { name: "Troy", image: "https://images.unsplash.com/photo-1522050212171-61b01dd24579?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/troy-real-estate" },
+  { name: "Saratoga", image: "https://images.unsplash.com/photo-1558036117-15d82a90b9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/saratoga-real-estate" },
+];
+
+const toolkitItems = [
+  { label: "ROI Calculator", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/investor-tools" },
+  { label: "2025 Market PDF", image: "https://images.unsplash.com/photo-1541746972996-4e0b0f43e02a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/markets" },
+  { label: "Grant Guide", image: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "/grants" },
+  { label: "Join VIP List", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", href: "#contact" },
+];
+
+const multiFamilyListings = [
+  { image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "98% Match", badgeColor: "text-green-400", location: "Albany", price: "$220k" },
+  { image: "https://images.unsplash.com/photo-1570129477492-45f003f2df51?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "12% Cap", badgeColor: "text-green-400", location: "Troy", price: "$185k" },
+  { image: "https://images.unsplash.com/photo-1600596542815-2495db98dada?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "New Listing", badgeColor: "text-white", location: "Schenectady", price: "$140k" },
+];
+
+const landCommercialListings = [
+  { image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "Developed", badgeColor: "text-green-400", type: "4 Acres", price: "$90k" },
+  { image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "Retail", badgeColor: "text-green-400", type: "Downtown", price: "$450k" },
+  { image: "https://images.unsplash.com/photo-1448630360428-65456885c650?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60", badge: "Fixer", badgeColor: "text-white", type: "Mixed Use", price: "$110k" },
+];
 
 const Index = () => {
-  const newsCards = [
-    { img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500", title: "Top 5 Neighborhoods in Troy for 2024", meta: "Market Analysis • 5 min read" },
-    { img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500", title: "Commercial Lending 101: What Investors Need to Know", meta: "Education • 8 min read" },
-    { img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500", title: "Albany's Emerging Arts District: Investment Hotspot", meta: "Opportunity • 4 min read" },
-    { img: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=500", title: "First-Time Investor Success Story: From 0 to 4 Units", meta: "Case Study • 6 min read" },
-  ];
-
-  const trendingListings = [
-    { img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=500", match: "98% Match", info: "3 Bed • $220k", badge: "ROI+" },
-    { img: "https://images.unsplash.com/photo-1570129477492-45f003f2df51?w=500", match: "86% Match", info: "Duplex • $180k" },
-    { img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b91d?w=500", match: "New", info: "Fixer • $95k" },
-    { img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=500", match: "91% Match", info: "4 Bed • $310k" },
-    { img: "https://images.unsplash.com/photo-1600596542815-2495db98dada?w=500", match: "Hot", info: "Triplex • $299k" },
-  ];
-
-  const fixFlipListings = [
-    { img: "https://images.unsplash.com/photo-1448630360428-65456885c650?w=500", match: "High Yield", info: "Troy • $65k" },
-    { img: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=500", match: "Cash Only", info: "Rehab • $45k" },
-    { img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500", match: "BRRRR", info: "Schenectady • $88k" },
-    { img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500", match: "New", info: "Albany • $120k" },
-  ];
-
   return (
-    <div className="min-h-screen bg-[#141414] text-[#e5e5e5] font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#141414] text-[#e5e5e5] overflow-x-hidden">
       <SEOHead
-        title="Capital District Nest | The Resource | Upstate NY Real Estate"
-        description="The Netflix of real estate. Browse Albany, Troy, Schenectady & Saratoga properties like never before. Investment analysis and market data."
-        keywords="Capital District real estate, Albany NY homes, Troy investment properties, real estate streaming"
+        title="Capital District Nest | The Investor Hub"
+        description="Access off-market deals, download local grant applications, and analyze ROI with custom tools for Albany, Troy, Schenectady & Saratoga real estate."
+        keywords="Capital District real estate, Albany investment properties, Troy multi-family, Schenectady homes, investor tools"
       />
 
       {/* Navigation */}
-      <nav className="flex items-center justify-between px-[4%] py-5 fixed top-0 w-[92%] z-[1000] bg-gradient-to-b from-black/90 to-transparent">
-        <Link to="/" className="text-[#E50914] text-[1.8rem] font-black uppercase tracking-wide">
+      <nav className="fixed top-0 left-0 right-0 z-[1000] flex items-center justify-between px-[4%] py-4 bg-gradient-to-b from-black/95 to-transparent">
+        <Link to="/" className="text-[#E50914] text-3xl font-black uppercase tracking-wide">
           NEST
         </Link>
-        <div className="hidden md:flex gap-5">
-          <Link to="/" className="text-white text-sm opacity-80 hover:opacity-100 transition-opacity">Home</Link>
-          <Link to="/albany-multi-unit" className="text-white text-sm opacity-80 hover:opacity-100 transition-opacity">Multi-Unit</Link>
-          <Link to="/investor-tools" className="text-white text-sm opacity-80 hover:opacity-100 transition-opacity">Fix & Flip</Link>
-          <Link to="/investor-tools" className="text-white text-sm opacity-80 hover:opacity-100 transition-opacity">My List</Link>
-        </div>
+        <Search className="w-6 h-6 text-white cursor-pointer" />
       </nav>
 
+      {/* Pill Navigation */}
+      <div className="fixed top-[70px] left-[4%] right-[4%] z-[900] flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+        {pillCategories.map((pill) => (
+          <Link
+            key={pill.label}
+            to={pill.href}
+            className="flex-shrink-0 px-4 py-2 text-sm text-white border border-white/30 bg-black/50 rounded-full whitespace-nowrap transition-all hover:bg-white hover:text-black hover:border-white"
+          >
+            {pill.label}
+          </Link>
+        ))}
+      </div>
+
       {/* Hero Billboard */}
-      <div 
-        className="h-[85vh] w-full bg-cover bg-center relative"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1950&q=80')" }}
+      <div
+        className="relative h-[80vh] w-full bg-cover bg-center"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')" }}
       >
-        {/* Stronger gradient overlay */}
-        <div className="absolute inset-0" style={{ background: "radial-gradient(circle, rgba(0,0,0,0.4) 0%, #141414 100%), linear-gradient(to top, #141414 10%, transparent 60%)" }} />
-        
-        <div className="absolute inset-0 flex items-center px-[4%]">
-          <div className="max-w-[600px] mt-[50px] z-10">
-            <span className="inline-block bg-[#E50914] text-white px-3 py-1.5 text-xs font-bold rounded-sm uppercase tracking-wider mb-5">
-              The Resource
-            </span>
-            <h1 className="text-3xl md:text-[3.5rem] font-extrabold leading-[1.1] mb-4">
-              Capital District Nest
+        <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent flex items-center pl-[4%]">
+          <div className="max-w-[600px] mt-16">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">
+              The Capital District<br />Investor Hub.
             </h1>
-            <p className="text-base md:text-xl text-[#d1d1d1] mb-6 leading-relaxed drop-shadow-lg">
-              Your streaming platform for real estate intelligence. Market analysis, investment tools, and property data for Albany, Troy, Schenectady & Saratoga.
+            <p className="text-lg md:text-xl mb-6 drop-shadow-lg">
+              Access off-market deals, download local grant applications, and analyze ROI with our custom tools.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <button className="flex items-center gap-2 bg-white text-black px-6 py-3 rounded font-bold hover:scale-105 transition-transform">
-                <Play className="w-5 h-5 fill-current" />
-                Watch Overview
-              </button>
-              <Link 
-                to="/investor-tools"
-                className="flex items-center gap-2 bg-[#6d6d6e]/70 backdrop-blur text-white px-6 py-3 rounded font-bold hover:scale-105 transition-transform"
+            <div className="flex flex-wrap gap-3">
+              <Link
+                to="/markets"
+                className="inline-flex items-center px-6 py-3 bg-white text-black font-bold rounded transition-transform hover:scale-105"
               >
-                <Info className="w-5 h-5" />
-                Investor Tools
+                ▶ Get Market Report
+              </Link>
+              <Link
+                to="/first-time-homebuyers"
+                className="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur text-white font-bold rounded transition-transform hover:scale-105"
+              >
+                ℹ Financing Options
               </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {/* News & Resources Section */}
-      <section className="py-5 pl-[4%] relative z-20">
-        <h3 className="text-xl md:text-[1.4rem] font-medium text-[#e5e5e5] mb-4 border-l-4 border-[#E50914] pl-3">
-          Latest News & Resources
-        </h3>
-        <div className="flex gap-4 overflow-x-auto pb-5 pr-[4%] scrollbar-hide scroll-smooth">
-          {newsCards.map((card, i) => (
-            <NewsCard key={i} {...card} />
+      {/* Explore by Location */}
+      <section className="py-5 pl-[4%]">
+        <div className="flex items-center gap-3 mb-4">
+          <h2 className="text-xl font-medium">Explore by Location</h2>
+          <Link to="/communities" className="text-sm text-gray-500 hover:text-white">View All &gt;</Link>
+        </div>
+        <div className="flex gap-4 overflow-x-auto pb-4 pr-[4%] scrollbar-hide">
+          {locations.map((loc) => (
+            <Link
+              key={loc.name}
+              to={loc.href}
+              className="flex-shrink-0 w-40 text-center transition-transform hover:scale-110 group"
+            >
+              <img
+                src={loc.image}
+                alt={loc.name}
+                className="w-[140px] h-[140px] rounded-full object-cover mx-auto mb-2 border-[3px] border-transparent group-hover:border-white transition-all"
+              />
+              <span className="text-sm">{loc.name}</span>
+            </Link>
           ))}
         </div>
       </section>
 
-      {/* Trending Section */}
-      <section className="py-5 pl-[4%] relative z-20">
-        <h3 className="text-xl md:text-[1.4rem] font-medium text-[#e5e5e5] mb-4 border-l-4 border-[#E50914] pl-3">
-          Trending in Albany
-        </h3>
-        <div className="flex gap-4 overflow-x-auto pb-5 pr-[4%] scrollbar-hide scroll-smooth">
-          {trendingListings.map((listing, i) => (
-            <ListingCard key={i} {...listing} />
+      {/* Investor Toolkit */}
+      <section className="py-5 pl-[4%]">
+        <div className="flex items-center gap-3 mb-4">
+          <h2 className="text-xl font-medium">Investor Toolkit</h2>
+          <Link to="/investor-tools" className="text-sm text-gray-500 hover:text-white">Free Downloads &gt;</Link>
+        </div>
+        <div className="flex gap-4 overflow-x-auto pb-4 pr-[4%] scrollbar-hide">
+          {toolkitItems.map((tool) => (
+            <Link
+              key={tool.label}
+              to={tool.href}
+              className="flex-shrink-0 w-40 h-60 relative rounded overflow-hidden cursor-pointer transition-transform hover:scale-110 hover:z-50 group"
+            >
+              <img
+                src={tool.image}
+                alt={tool.label}
+                className="w-full h-full object-cover opacity-70"
+              />
+              <div className="absolute bottom-3 left-3 right-3 border-t-2 border-[#E50914] pt-2 text-center font-bold uppercase text-sm">
+                {tool.label}
+              </div>
+            </Link>
           ))}
         </div>
       </section>
 
-      {/* Fix & Flip Section */}
-      <section className="py-5 pl-[4%] relative z-20">
-        <h3 className="text-xl md:text-[1.4rem] font-medium text-[#e5e5e5] mb-4 border-l-4 border-[#E50914] pl-3">
-          High ROI Fix & Flips
-        </h3>
-        <div className="flex gap-4 overflow-x-auto pb-5 pr-[4%] scrollbar-hide scroll-smooth">
-          {fixFlipListings.map((listing, i) => (
-            <ListingCard key={i} {...listing} />
+      {/* Multi-Family Opportunities */}
+      <section className="py-5 pl-[4%]">
+        <h2 className="text-xl font-medium mb-4">Multi-Family Opportunities</h2>
+        <div className="flex gap-3 overflow-x-auto pb-4 pr-[4%] scrollbar-hide">
+          {multiFamilyListings.map((listing, idx) => (
+            <Link
+              key={idx}
+              to="/albany-multi-unit"
+              className="flex-shrink-0 w-[260px] h-[147px] relative rounded overflow-hidden cursor-pointer transition-transform hover:scale-[1.3] hover:z-[100] hover:shadow-2xl group bg-[#222]"
+            >
+              <img src={listing.image} alt="Property" className="w-full h-full object-cover" />
+              <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className={`font-bold ${listing.badgeColor}`}>{listing.badge}</span>
+                <span className="text-white"> • {listing.location} • {listing.price}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Land & Commercial */}
+      <section className="py-5 pl-[4%]">
+        <h2 className="text-xl font-medium mb-4">Land & Commercial</h2>
+        <div className="flex gap-3 overflow-x-auto pb-4 pr-[4%] scrollbar-hide">
+          {landCommercialListings.map((listing, idx) => (
+            <Link
+              key={idx}
+              to="/albany-land"
+              className="flex-shrink-0 w-[260px] h-[147px] relative rounded overflow-hidden cursor-pointer transition-transform hover:scale-[1.3] hover:z-[100] hover:shadow-2xl group bg-[#222]"
+            >
+              <img src={listing.image} alt="Property" className="w-full h-full object-cover" />
+              <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className={`font-bold ${listing.badgeColor}`}>{listing.badge}</span>
+                <span className="text-white"> • {listing.type} • {listing.price}</span>
+              </div>
+            </Link>
           ))}
         </div>
       </section>
 
       {/* Chatbot Button */}
-      <div className="fixed bottom-8 right-8 w-[60px] h-[60px] bg-[#E50914] rounded-full flex items-center justify-center shadow-lg cursor-pointer z-[2000] hover:scale-110 transition-transform">
-        <MessageCircle className="w-7 h-7 text-white" />
+      <div className="fixed bottom-5 right-5 w-[60px] h-[60px] bg-[#E50914] rounded-full flex items-center justify-center text-3xl shadow-lg cursor-pointer z-[2000] transition-transform hover:scale-110">
+        💬
       </div>
 
       {/* Footer */}
-      <footer className="mt-12 py-12 px-[4%] bg-black text-[#808080] text-sm">
-        <div className="flex gap-5 mb-5">
-          <a href="https://facebook.com" className="text-white text-2xl hover:text-[#E50914] transition-colors">f</a>
-          <a href="https://instagram.com" className="text-white text-2xl hover:text-[#E50914] transition-colors">ig</a>
-          <a href="https://youtube.com" className="text-white text-2xl hover:text-[#E50914] transition-colors">yt</a>
-        </div>
+      <footer className="px-[4%] py-12 text-gray-500 text-sm">
         <div className="flex flex-wrap gap-5 mb-5">
-          <Link to="/investor-tools" className="text-[#808080] hover:text-white transition-colors">Tools & Calculators</Link>
-          <Link to="/homes-for-sale" className="text-[#808080] hover:text-white transition-colors">Homes for Sale</Link>
-          <Link to="/rentals" className="text-[#808080] hover:text-white transition-colors">Rentals</Link>
-          <Link to="/blog" className="text-[#808080] hover:text-white transition-colors">News</Link>
-          <Link to="/privacy-policy" className="text-[#808080] hover:text-white transition-colors">Privacy</Link>
+          <Link to="/blog" className="hover:text-white">About</Link>
+          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-white">Social Media</a>
+          <Link to="/privacy-policy" className="hover:text-white">Terms</Link>
+          <a href="mailto:scott@remax.com" className="hover:text-white">Contact</a>
         </div>
-        <p>© {new Date().getFullYear()} Capital District Nest. All rights reserved.</p>
+        <div>© 2025 Capital District Nest.</div>
       </footer>
     </div>
   );
 };
-
-// News Card Component (wider, different hover)
-const NewsCard = ({ img, title, meta }: { img: string; title: string; meta: string }) => (
-  <div className="flex-shrink-0 w-[280px] md:w-[350px] h-[180px] md:h-[200px] relative rounded cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:z-50 group bg-[#222] overflow-hidden shadow-lg hover:shadow-2xl">
-    <img src={img} alt={title} className="w-full h-full object-cover opacity-60 group-hover:opacity-30 transition-opacity" />
-    <div className="absolute bottom-0 left-0 p-5 w-full">
-      <h4 className="text-sm md:text-[1.1rem] font-bold mb-1 leading-tight">{title}</h4>
-      <p className="text-xs text-[#aaa]">{meta}</p>
-    </div>
-  </div>
-);
-
-// Listing Card Component (standard size, pop effect)
-const ListingCard = ({ img, match, info, badge }: { img: string; match: string; info: string; badge?: string }) => (
-  <div className="flex-shrink-0 w-[200px] md:w-[250px] h-[112px] md:h-[140px] relative rounded cursor-pointer transition-transform duration-300 ease-in-out hover:scale-[1.3] hover:z-50 group bg-[#333] overflow-hidden shadow-lg hover:shadow-2xl">
-    <img src={img} alt="Property" className="w-full h-full object-cover" />
-    <div className="absolute bottom-0 left-0 right-0 p-2.5 bg-gradient-to-t from-black/95 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-      <div className="text-[#46d369] font-bold text-xs md:text-sm">{match}</div>
-      <div className="text-[10px] md:text-xs text-[#b3b3b3] mt-1 flex items-center gap-2">
-        <span>{info}</span>
-        {badge && <span className="border border-[#b3b3b3] px-1 text-[9px] md:text-[10px] rounded">{badge}</span>}
-      </div>
-    </div>
-  </div>
-);
 
 export default Index;
