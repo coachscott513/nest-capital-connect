@@ -274,6 +274,89 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Portfolio Managers Section */}
+      <section className="px-[5%] py-20 bg-card/50 border-t border-border">
+        {/* Section Header */}
+        <div className="text-center max-w-[800px] mx-auto mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-5">
+            Not Agents. <span className="text-primary">Portfolio Managers.</span>
+          </h2>
+          <p className="text-muted-foreground text-lg leading-relaxed">
+            Most brokerages hire salespeople. We hire Economists, Analysts, and Investors. 
+            Our team doesn't just "show houses"—we navigate the complex regulatory landscape 
+            of the Capital District so your asset performs from Day 1.
+          </p>
+        </div>
+
+        {/* Regulatory Expertise Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-20 max-w-6xl mx-auto">
+          <div className="bg-card p-8 rounded-xl border border-border">
+            <div className="text-3xl mb-4">🏛️</div>
+            <h3 className="text-xl font-bold mb-3">Albany ROP Navigation</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Evictions in Albany are impossible without a valid <strong className="text-foreground">Residential Occupancy Permit (ROP)</strong>. We manage the Code Enforcement inspections and paperwork before you even close.
+            </p>
+          </div>
+
+          <div className="bg-card p-8 rounded-xl border border-border">
+            <div className="text-3xl mb-4">🧱</div>
+            <h3 className="text-xl font-bold mb-3">Troy Historic Boards</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Buying in the District? Exterior changes require <strong className="text-foreground">HDLRC approval</strong>. Our team knows exactly which materials and renovations get approved and which get fined.
+            </p>
+          </div>
+
+          <div className="bg-card p-8 rounded-xl border border-border">
+            <div className="text-3xl mb-4">📋</div>
+            <h3 className="text-xl font-bold mb-3">Schenectady Rental Certs</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Schenectady requires a <strong className="text-foreground">Landlord Registration</strong> and rental certificate for every tenant turnover. We systemize this process so you never face a vacancy ban.
+            </p>
+          </div>
+        </div>
+
+        {/* Client Case Study */}
+        <div className="bg-card border border-border rounded-2xl overflow-hidden max-w-4xl mx-auto">
+          <div className="p-8 md:p-10">
+            <div className="uppercase text-primary font-extrabold tracking-widest text-sm mb-3">
+              Client Case Study: The "Impossible" Triplex
+            </div>
+            <h3 className="text-2xl md:text-3xl font-bold mb-6">
+              From "Uninsurable" to 14% Cash Flow.
+            </h3>
+
+            <div className="flex flex-wrap gap-8 mb-8">
+              <div>
+                <div className="text-muted-foreground text-sm uppercase tracking-wide">Acquisition</div>
+                <div className="text-2xl font-bold">$145,000</div>
+              </div>
+              <div>
+                <div className="text-muted-foreground text-sm uppercase tracking-wide">Rehab Grant</div>
+                <div className="text-2xl font-bold text-primary">+$25,000</div>
+              </div>
+              <div>
+                <div className="text-muted-foreground text-sm uppercase tracking-wide">Current Rent</div>
+                <div className="text-2xl font-bold">$3,400/mo</div>
+              </div>
+            </div>
+
+            <p className="text-muted-foreground leading-relaxed mb-8">
+              "I was looking at this property in Troy, but my bank said no because of the peeling paint and FHA rules. Scott and his team stepped in. They didn't just find a lender; 
+              they secured a <strong className="text-foreground">Rehab Loan</strong> that covered the repairs and negotiated a <strong className="text-foreground">Seller Concession</strong> to pay my closing costs. 
+              I walked in with $12k total out of pocket."
+            </p>
+
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-muted rounded-full" />
+              <div>
+                <div className="font-bold">Michael R.</div>
+                <div className="text-muted-foreground text-sm">Investor • Westchester, NY</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Markets Grid */}
       <section className="px-[5%] py-20 border-t border-border">
         <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-10 text-center">
