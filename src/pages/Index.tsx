@@ -191,6 +191,23 @@ const Index = () => {
         </p>
       </section>
 
+      {/* Markets Grid */}
+      <section className="px-[5%] py-20 border-t border-border">
+        <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-10 text-center">
+          We cover the entire Capital District.
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          {markets.map((market) => (
+            <div
+              key={market}
+              className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+            >
+              {market}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Hero Section 1: VIP Experience */}
       <section className="flex flex-col lg:flex-row items-center px-[5%] py-16 lg:min-h-[600px] border-t border-border">
         <div className="flex-1 max-w-[550px] p-5">
@@ -369,23 +386,6 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Markets Grid */}
-      <section className="px-[5%] py-20 border-t border-border">
-        <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-10 text-center">
-          We cover the entire Capital District.
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-          {markets.map((market) => (
-            <div
-              key={market}
-              className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
-            >
-              {market}
-            </div>
-          ))}
         </div>
       </section>
 
