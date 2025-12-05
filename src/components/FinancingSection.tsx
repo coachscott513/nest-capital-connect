@@ -33,9 +33,7 @@ const FinancingSection = () => {
   };
 
   const createOrUpdateChart = (p_i: number, tax: number, insurance: number) => {
-    // Only proceed if canvas element is available
     if (!chartRef.current) {
-      console.log('Canvas ref not available yet');
       return;
     }
 
@@ -43,8 +41,8 @@ const FinancingSection = () => {
       labels: ['Principal & Interest', 'Property Tax', 'Home Insurance'],
       datasets: [{
         data: [p_i, tax, insurance],
-        backgroundColor: ['#4299E1', '#63B3ED', '#90CDF4'],
-        hoverBackgroundColor: ['#3182CE', '#4299E1', '#63B3ED'],
+        backgroundColor: ['hsl(142, 76%, 36%)', 'hsl(142, 76%, 46%)', 'hsl(142, 76%, 56%)'],
+        hoverBackgroundColor: ['hsl(142, 76%, 30%)', 'hsl(142, 76%, 40%)', 'hsl(142, 76%, 50%)'],
         borderWidth: 0,
       }]
     };
@@ -117,7 +115,6 @@ const FinancingSection = () => {
       setPropertyTax(0);
       setHomeInsurance(0);
       setAmortizationSchedule([]);
-      // Use setTimeout to ensure DOM is ready before chart operations
       setTimeout(() => createOrUpdateChart(0, 0, 0), 100);
       return;
     }
@@ -138,7 +135,6 @@ const FinancingSection = () => {
     setPropertyTax(monthlyPropertyTax);
     setHomeInsurance(monthlyHomeInsurance);
     
-    // Use setTimeout to ensure DOM is ready before chart operations
     setTimeout(() => createOrUpdateChart(principalAndInterest, monthlyPropertyTax, monthlyHomeInsurance), 100);
     generateAmortizationSchedule(loanAmount, monthlyInterestRate, numberOfPayments, principalAndInterest);
   };
@@ -178,7 +174,7 @@ const FinancingSection = () => {
 
   return (
     <>
-      <section id="financing" className="py-16 relative">
+      <section id="financing" className="py-16 relative border-t border-border">
         <div className="relative min-h-[450px] overflow-hidden rounded-lg mx-4 max-w-7xl lg:mx-auto">
           <img 
             src="https://img.kvcore.com/cdn-cgi/image/fit=scale-down,format=auto/https://dtzulyujzhqiu.cloudfront.net/kvcoredemo14/images/1594658722_YXYBlolB3pNcEOuHmf8KJPPpzrQZtnk99VIhIXq0.jpeg" 
@@ -195,28 +191,28 @@ const FinancingSection = () => {
       </section>
 
       {/* Mortgage Calculator Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-card border-t border-border">
         <div className="w-full max-w-6xl mx-auto px-4">
           <div className="text-center mb-10">
-            <h2 className="text-4xl font-bold text-gray-800">Mortgage Calculator</h2>
-            <p className="text-lg text-gray-600 mt-2">Estimate your monthly payments for your new home.</p>
+            <h2 className="text-4xl font-bold text-foreground">Mortgage Calculator</h2>
+            <p className="text-lg text-muted-foreground mt-2">Estimate your monthly payments for your new home.</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             {/* Left Side: Input Form */}
-            <div className="lg:col-span-2 bg-white p-8 rounded-2xl shadow-lg">
+            <div className="lg:col-span-2 bg-background p-8 rounded-2xl border border-border">
               <div className="space-y-6">
                 {/* Home Price */}
                 <div>
-                  <label htmlFor="home-price" className="block text-sm font-medium mb-1 text-gray-700">Home Price</label>
+                  <label htmlFor="home-price" className="block text-sm font-medium mb-1 text-foreground">Home Price</label>
                   <div className="relative">
-                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">$</span>
+                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-muted-foreground">$</span>
                     <input 
                       type="number" 
                       id="home-price" 
                       value={homePrice} 
                       onChange={(e) => handleHomePriceChange(parseInt(e.target.value) || 0)}
-                      className="w-full pl-7 pr-4 py-2 rounded-lg border border-gray-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition-all" 
+                      className="w-full pl-7 pr-4 py-2 rounded-lg border border-border bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
                     />
                   </div>
                 </div>
@@ -224,17 +220,17 @@ const FinancingSection = () => {
                 {/* Down Payment */}
                 <div>
                   <div className="flex justify-between items-center">
-                    <label htmlFor="down-payment" className="block text-sm font-medium text-gray-700">Down Payment</label>
-                    <span className="text-sm font-medium text-blue-600">{downPaymentPercent}%</span>
+                    <label htmlFor="down-payment" className="block text-sm font-medium text-foreground">Down Payment</label>
+                    <span className="text-sm font-medium text-primary">{downPaymentPercent}%</span>
                   </div>
                   <div className="relative mt-1">
-                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">$</span>
+                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-muted-foreground">$</span>
                     <input 
                       type="number" 
                       id="down-payment" 
                       value={downPayment} 
                       onChange={(e) => handleDownPaymentChange(parseInt(e.target.value) || 0)}
-                      className="w-full pl-7 pr-4 py-2 rounded-lg border border-gray-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition-all"
+                      className="w-full pl-7 pr-4 py-2 rounded-lg border border-border bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                     />
                   </div>
                   <input 
@@ -243,18 +239,18 @@ const FinancingSection = () => {
                     max="50" 
                     value={downPaymentPercent} 
                     onChange={(e) => handleDownPaymentSliderChange(parseInt(e.target.value))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mt-3"
+                    className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer mt-3"
                   />
                 </div>
 
                 {/* Loan Term */}
                 <div>
-                  <label htmlFor="loan-term" className="block text-sm font-medium mb-1 text-gray-700">Loan Term (Years)</label>
+                  <label htmlFor="loan-term" className="block text-sm font-medium mb-1 text-foreground">Loan Term (Years)</label>
                   <select 
                     id="loan-term" 
                     value={loanTerm}
                     onChange={(e) => setLoanTerm(parseInt(e.target.value))}
-                    className="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition-all"
+                    className="w-full px-4 py-2 rounded-lg bg-background border border-border text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                   >
                     <option value="30">30-Year Fixed</option>
                     <option value="20">20-Year Fixed</option>
@@ -265,16 +261,16 @@ const FinancingSection = () => {
                 
                 {/* Interest Rate */}
                 <div>
-                  <label htmlFor="interest-rate" className="block text-sm font-medium mb-1 text-gray-700">Interest Rate</label>
+                  <label htmlFor="interest-rate" className="block text-sm font-medium mb-1 text-foreground">Interest Rate</label>
                   <div className="relative">
-                    <span className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">%</span>
+                    <span className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground">%</span>
                     <input 
                       type="number" 
                       id="interest-rate" 
                       value={interestRate} 
                       onChange={(e) => setInterestRate(parseFloat(e.target.value) || 0)}
                       step="0.01" 
-                      className="w-full pr-8 pl-4 py-2 rounded-lg border border-gray-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-200 transition-all"
+                      className="w-full pr-8 pl-4 py-2 rounded-lg border border-border bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                     />
                   </div>
                 </div>
@@ -282,27 +278,27 @@ const FinancingSection = () => {
             </div>
 
             {/* Right Side: Results */}
-            <div className="lg:col-span-3 bg-white p-8 rounded-2xl shadow-lg">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Your Estimated Payment</h3>
+            <div className="lg:col-span-3 bg-background p-8 rounded-2xl border border-border">
+              <h3 className="text-2xl font-bold text-foreground mb-4">Your Estimated Payment</h3>
               <div className="text-center mb-6">
-                <p className="text-xl text-gray-600">Total Monthly Payment</p>
-                <p className="text-5xl font-bold text-blue-600 my-2">{formatCurrency(totalMonthlyPayment)}</p>
+                <p className="text-xl text-muted-foreground">Total Monthly Payment</p>
+                <p className="text-5xl font-bold text-primary my-2">{formatCurrency(totalMonthlyPayment)}</p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col justify-center">
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Principal & Interest</span>
-                      <span className="font-semibold text-gray-800">{formatCurrency(principalInterest)}</span>
+                      <span className="text-muted-foreground">Principal & Interest</span>
+                      <span className="font-semibold text-foreground">{formatCurrency(principalInterest)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Property Tax (Est.)</span>
-                      <span className="font-semibold text-gray-800">{formatCurrency(propertyTax)}</span>
+                      <span className="text-muted-foreground">Property Tax (Est.)</span>
+                      <span className="font-semibold text-foreground">{formatCurrency(propertyTax)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Home Insurance (Est.)</span>
-                      <span className="font-semibold text-gray-800">{formatCurrency(homeInsurance)}</span>
+                      <span className="text-muted-foreground">Home Insurance (Est.)</span>
+                      <span className="font-semibold text-foreground">{formatCurrency(homeInsurance)}</span>
                     </div>
                   </div>
                 </div>
@@ -312,29 +308,29 @@ const FinancingSection = () => {
               </div>
 
               <div className="mt-8">
-                <h4 className="text-xl font-bold text-gray-800 mb-4">Amortization Schedule</h4>
-                <div className="h-64 overflow-y-auto border border-gray-200 rounded-lg">
+                <h4 className="text-xl font-bold text-foreground mb-4">Amortization Schedule</h4>
+                <div className="h-64 overflow-y-auto border border-border rounded-lg">
                   <table className="min-w-full text-sm">
-                    <thead className="sticky top-0 bg-gray-50">
+                    <thead className="sticky top-0 bg-card">
                       <tr>
-                        <th className="p-2 text-left font-semibold text-gray-600">Month</th>
-                        <th className="p-2 text-right font-semibold text-gray-600">Principal</th>
-                        <th className="p-2 text-right font-semibold text-gray-600">Interest</th>
-                        <th className="p-2 text-right font-semibold text-gray-600">Balance</th>
+                        <th className="p-2 text-left font-semibold text-muted-foreground">Month</th>
+                        <th className="p-2 text-right font-semibold text-muted-foreground">Principal</th>
+                        <th className="p-2 text-right font-semibold text-muted-foreground">Interest</th>
+                        <th className="p-2 text-right font-semibold text-muted-foreground">Balance</th>
                       </tr>
                     </thead>
                     <tbody>
                       {amortizationSchedule.map((row, index) => (
-                        <tr key={row.month} className={`text-right ${index % 2 === 1 ? 'bg-gray-100' : ''}`}>
-                          <td className="p-2 text-center">{row.month}</td>
-                          <td className="p-2">{formatCurrency(row.principal)}</td>
-                          <td className="p-2">{formatCurrency(row.interest)}</td>
-                          <td className="p-2 font-medium">{formatCurrency(row.balance)}</td>
+                        <tr key={row.month} className={`text-right ${index % 2 === 1 ? 'bg-muted/30' : ''}`}>
+                          <td className="p-2 text-center text-foreground">{row.month}</td>
+                          <td className="p-2 text-foreground">{formatCurrency(row.principal)}</td>
+                          <td className="p-2 text-foreground">{formatCurrency(row.interest)}</td>
+                          <td className="p-2 font-medium text-foreground">{formatCurrency(row.balance)}</td>
                         </tr>
                       ))}
                       {amortizationSchedule.length === 0 && (
                         <tr>
-                          <td colSpan={4} className="text-center p-4">Enter valid numbers to see amortization schedule.</td>
+                          <td colSpan={4} className="text-center p-4 text-muted-foreground">Enter valid numbers to see amortization schedule.</td>
                         </tr>
                       )}
                     </tbody>

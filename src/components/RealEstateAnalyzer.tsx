@@ -319,20 +319,20 @@ const RealEstateAnalyzer: React.FC = () => {
   } : null;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 md:p-10 max-w-6xl mx-auto mb-8">
-      <header className="flex flex-col sm:flex-row justify-between items-center mb-8 pb-6 border-b border-gray-200">
-        <h3 className="text-3xl sm:text-4xl font-extrabold text-red-600 mb-4 sm:mb-0">
+    <div className="bg-background rounded-xl border border-border p-6 sm:p-8 md:p-10 max-w-6xl mx-auto mb-8">
+      <header className="flex flex-col sm:flex-row justify-between items-center mb-8 pb-6 border-b border-border">
+        <h3 className="text-3xl sm:text-4xl font-extrabold text-primary mb-4 sm:mb-0">
           Property Investment Analyzer
         </h3>
-        <div className="w-32 sm:w-40 h-12 bg-gradient-to-r from-red-600 to-blue-600 rounded-md flex items-center justify-center">
-          <span className="text-white font-bold">REMAX</span>
+        <div className="w-32 sm:w-40 h-12 bg-primary rounded-md flex items-center justify-center">
+          <span className="text-primary-foreground font-bold">REMAX</span>
         </div>
       </header>
 
       <form onSubmit={handleSubmit}>
         {/* Property Information Section */}
-        <section className="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
-          <h4 className="text-2xl font-semibold text-blue-700 mb-4 pb-2 border-b border-gray-300">
+        <section className="mb-8 p-6 bg-card rounded-lg border border-border">
+          <h4 className="text-2xl font-semibold text-primary mb-4 pb-2 border-b border-border">
             Property Information
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -733,33 +733,33 @@ const RealEstateAnalyzer: React.FC = () => {
       </form>
 
       {results && (
-        <section className="mt-10 p-6 bg-blue-50 rounded-lg border border-blue-600">
-          <h4 className="text-2xl font-semibold text-blue-700 mb-4 pb-2 border-b border-blue-600">
+        <section className="mt-10 p-6 bg-card rounded-lg border border-primary">
+          <h4 className="text-2xl font-semibold text-primary mb-4 pb-2 border-b border-primary">
             Analysis Results
           </h4>
 
           {/* Overall Summary */}
-          <div className="mb-8 p-4 bg-white rounded-md shadow-sm">
-            <h5 className="text-xl font-bold text-gray-800 mb-3">Overall Investment Summary</h5>
+          <div className="mb-8 p-4 bg-background rounded-md border border-border">
+            <h5 className="text-xl font-bold text-foreground mb-3">Overall Investment Summary</h5>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-              <div className="p-3 bg-green-100 rounded-lg shadow-sm">
-                <p className="text-sm text-gray-600">Flip ROI</p>
-                <p className="text-2xl font-bold text-green-700">{formatNumber(results.flipROI)}%</p>
+              <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
+                <p className="text-sm text-muted-foreground">Flip ROI</p>
+                <p className="text-2xl font-bold text-primary">{formatNumber(results.flipROI)}%</p>
               </div>
-              <div className="p-3 bg-blue-100 rounded-lg shadow-sm">
-                <p className="text-sm text-gray-600">Rental CoC</p>
-                <p className="text-2xl font-bold text-blue-700">{formatNumber(results.rentalCoC)}%</p>
+              <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
+                <p className="text-sm text-muted-foreground">Rental CoC</p>
+                <p className="text-2xl font-bold text-primary">{formatNumber(results.rentalCoC)}%</p>
               </div>
-              <div className="p-3 bg-purple-100 rounded-lg shadow-sm">
-                <p className="text-sm text-gray-600">BRRRR CoC</p>
-                <p className="text-2xl font-bold text-purple-700">{formatNumber(results.brrrrPostRefiCoC)}%</p>
+              <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
+                <p className="text-sm text-muted-foreground">BRRRR CoC</p>
+                <p className="text-2xl font-bold text-primary">{formatNumber(results.brrrrPostRefiCoC)}%</p>
               </div>
             </div>
           </div>
 
           {/* Flip Analysis */}
           <div className="mb-6">
-            <h5 className="text-xl font-semibold text-gray-800 mb-3">Flip Property Analysis</h5>
+            <h5 className="text-xl font-semibold text-foreground mb-3">Flip Property Analysis</h5>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex justify-between py-2 border-b border-gray-200">
                 <span className="font-medium">Total Project Cost:</span>
@@ -787,7 +787,7 @@ const RealEstateAnalyzer: React.FC = () => {
 
           {/* Rental Analysis */}
           <div className="mb-6">
-            <h5 className="text-xl font-semibold text-gray-800 mb-3">Rental Property Analysis</h5>
+            <h5 className="text-xl font-semibold text-foreground mb-3">Rental Property Analysis</h5>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex justify-between py-2 border-b border-gray-200">
                 <span className="font-medium">Monthly Gross Rent:</span>
@@ -831,7 +831,7 @@ const RealEstateAnalyzer: React.FC = () => {
 
           {/* BRRRR Analysis */}
           <div>
-            <h5 className="text-xl font-semibold text-gray-800 mb-3">BRRRR Strategy Analysis</h5>
+            <h5 className="text-xl font-semibold text-foreground mb-3">BRRRR Strategy Analysis</h5>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex justify-between py-2 border-b border-gray-200">
                 <span className="font-medium">Initial Cash Invested:</span>
@@ -874,7 +874,7 @@ const RealEstateAnalyzer: React.FC = () => {
         </section>
       )}
 
-      <footer className="text-center mt-10 pt-6 border-t border-gray-200 text-gray-600 text-sm">
+      <footer className="text-center mt-10 pt-6 border-t border-border text-muted-foreground text-sm">
         <p className="mb-2">
           Disclaimer: This analyzer is for informational purposes only. Not financial advice. 
           Consult professionals before making investment decisions.

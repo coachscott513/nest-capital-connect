@@ -16,18 +16,18 @@ const TestimonialsSection = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-slate-100">
+    <section className="py-16 px-4 bg-card border-t border-border">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12 text-slate-800">
+        <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
           What Our Clients Say
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-              <p className="text-slate-600 italic mb-4">
+            <div key={index} className="bg-background p-6 rounded-xl border border-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-2">
+              <p className="text-muted-foreground italic mb-4">
                 "{testimonial.quote}"
               </p>
-              <p className="font-semibold text-slate-800">
+              <p className="font-semibold text-foreground">
                 - {testimonial.author}
               </p>
             </div>
