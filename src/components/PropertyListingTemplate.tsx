@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Bed, Bath, Maximize, MapPin, Calendar, DollarSign, Home, ExternalLink } from "lucide-react";
 import PropertyPhotoCarousel from "./PropertyPhotoCarousel";
 import PropertyContactForm from "./PropertyContactForm";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 interface Property {
   id: string;

@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import MainLayout from "@/components/MainLayout";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
 
