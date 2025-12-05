@@ -1,6 +1,5 @@
 import React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import MainLayout from '@/components/MainLayout';
 import SEOHead from '@/components/SEOHead';
 import RentersSection from '@/components/RentersSection';
 import FirstTimeBuyersSection from '@/components/FirstTimeBuyersSection';
@@ -9,7 +8,6 @@ import AlbanyRentalsSection from '@/components/AlbanyRentalsSection';
 import SchenectadyRentalsSection from '@/components/SchenectadyRentalsSection';
 import TroyRentalsSection from '@/components/TroyRentalsSection';
 import ContactSection from '@/components/ContactSection';
-import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
 import RelatedContentSuggestions from '@/components/RelatedContentSuggestions';
 import NeighborhoodCrossLinks from '@/components/NeighborhoodCrossLinks';
 import CallToActionLinks from '@/components/CallToActionLinks';
@@ -21,8 +19,8 @@ const Rentals = () => {
     "@type": "LocalBusiness",
     "name": "Capital District Nest - Rentals & First-Time Buyers",
     "description": "Find quality rental properties and first-time homebuyer assistance in Albany, Troy, Schenectady, and Saratoga Springs, NY.",
-    "url": "https://your-domain.com/rentals",
-    "telephone": "+1-518-XXX-XXXX",
+    "url": "https://capitaldistrictnest.com/rentals",
+    "telephone": "+1-518-676-2347",
     "email": "info@capitaldistrict.com",
     "address": {
       "@type": "PostalAddress",
@@ -38,7 +36,7 @@ const Rentals = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <MainLayout>
       <SEOHead 
         title="Rentals & First-Time Buyers - Capital District Nest"
         description="Find quality rental properties and comprehensive first-time homebuyer assistance in Albany, Troy, Schenectady, and Saratoga Springs, NY."
@@ -46,17 +44,14 @@ const Rentals = () => {
         structuredData={structuredData}
       />
       
-      <BreadcrumbNavigation />
-      <Header />
-      
       <main role="main">
-        <div className="pt-20 pb-8 px-4 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="py-16 px-4 border-b border-border">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl font-bold mb-4 text-slate-800">
+            <h1 className="text-4xl font-bold mb-4">
               Rentals & First-Time Homebuyers
             </h1>
-            <p className="text-lg text-slate-600">
-              Quality rental properties and comprehensive support for first-time homebuyers across the <a href="/investment-properties" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Capital District investment market</a>.
+            <p className="text-lg text-muted-foreground">
+              Quality rental properties and comprehensive support for first-time homebuyers across the Capital District investment market.
             </p>
           </div>
         </div>
@@ -73,9 +68,7 @@ const Rentals = () => {
         <RelatedContentSuggestions currentPage="Capital District Rentals" />
         <ContactSection />
       </main>
-      
-      <Footer />
-    </div>
+    </MainLayout>
   );
 };
 
