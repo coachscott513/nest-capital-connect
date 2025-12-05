@@ -441,7 +441,7 @@ const BlogPost = () => {
                           View Profile
                         </Button>
                         <Button variant="outline" size="sm" asChild>
-                          <a href="tel:+15185227265">Contact Scott</a>
+                          <a href="tel:+15186762347">Contact Scott</a>
                         </Button>
                       </div>
                     </div>
@@ -458,7 +458,7 @@ const BlogPost = () => {
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Button size="lg" className="bg-white text-primary hover:bg-white/90" asChild>
-                      <a href="tel:+15185227265">Schedule Consultation</a>
+                      <a href="tel:+15186762347">Schedule Consultation</a>
                     </Button>
                     <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
                       View Current Deals

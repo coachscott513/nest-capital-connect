@@ -146,7 +146,7 @@ const DelmarHomesForSale = () => {
             "name": "Scott Alvarez",
             "image": "https://capitaldistrictnest.com/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png",
             "email": "scott@remax.com",
-            "telephone": "(518) 522-7265",
+            "telephone": "(518) 676-2347",
             "address": {
               "@type": "PostalAddress",
               "addressLocality": "Delmar",

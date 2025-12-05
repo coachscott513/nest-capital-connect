@@ -23,7 +23,7 @@ const CallToActionLinks = ({ context, className = "", layout = 'horizontal' }: C
       {
         title: "Contact Scott",
         description: "Speak with our expert directly",
-        href: "tel:+15185227265",
+        href: "tel:+15186762347",
         icon: <Phone className="w-5 h-5" />,
         external: true
       },
