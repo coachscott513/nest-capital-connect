@@ -79,12 +79,45 @@ const Index = () => {
         </div>
       )}
 
+      {/* Mission Section - Centered Hero */}
+      <section className="text-center px-[5%] py-28 lg:py-36 border-b border-border/50 bg-[radial-gradient(circle_at_center,#111_0%,#000_70%)]">
+        <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-medium tracking-tight leading-[1.05] mb-6">
+          Wall Street Tools.<br />
+          <span className="text-primary">Main Street Soul.</span>
+        </h1>
+        
+        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-3xl mx-auto">
+          The Capital District's premier tech-enabled investment team. 
+          We are <strong className="text-foreground">The Capital District Nest Team at RE/MAX</strong>—a specialized group of Economists and Business Strategists 
+          combining institutional-grade market data with white-glove local service.
+        </p>
+
+        <div className="flex justify-center gap-4 flex-wrap mb-10">
+          <div className="flex items-center gap-2 bg-card border border-[#004ecc] text-foreground px-5 py-2 rounded-full text-sm font-bold">
+            <div className="w-2 h-2 bg-[#dc1c2e] rounded-full" />
+            Powered by RE/MAX
+          </div>
+          <div className="flex items-center gap-2 bg-card border border-border text-muted-foreground px-5 py-2 rounded-full text-sm font-bold">
+            <div className="w-2 h-2 bg-foreground rounded-full" />
+            Econ & Business Degrees
+          </div>
+          <div className="flex items-center gap-2 bg-card border border-border text-muted-foreground px-5 py-2 rounded-full text-sm font-bold">
+            <div className="w-2 h-2 bg-foreground rounded-full" />
+            Local Experts
+          </div>
+        </div>
+
+        <Link to="/first-time-homebuyers" className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
+          Chat with the Team
+        </Link>
+      </section>
+
       {/* Hero 1: Grants */}
       <section className="flex flex-col lg:flex-row items-center justify-between gap-16 px-[5%] py-24 lg:py-32 border-b border-border/50">
         <div className="flex-1 max-w-xl">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.05] mb-6">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight leading-[1.05] mb-6">
             Start with <span className="text-gold">more.</span>
-          </h1>
+          </h2>
           <p className="text-lg md:text-xl text-foreground leading-relaxed mb-8 max-w-lg">
             Supercharge your purchase with a <strong>$30,000 instant grant boost</strong>. 
             First-time buyers in Albany & Troy can apply for down-payment assistance immediately.
