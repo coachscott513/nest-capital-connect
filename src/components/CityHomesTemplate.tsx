@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SEOHead from "@/components/SEOHead";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import MainLayout from "@/components/MainLayout";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
 
 interface CityHomesTemplateProps {
@@ -36,41 +35,40 @@ const CityHomesTemplate = ({
   }, []);
 
   return (
-    <>
+    <MainLayout>
       <SEOHead
         title={pageTitle}
         description={metaDescription}
         keywords={keywords}
         canonical={`https://capitaldistrictnest.com/homes-for-sale/${citySlug}`}
       />
-      <Header />
       
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="bg-primary py-16 px-4">
+        <section className="bg-background py-16 px-4 border-b border-border">
           <div className="container mx-auto max-w-4xl text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               {cityName}, NY Homes for Sale
             </h1>
-            <p className="text-xl text-white/90">
+            <p className="text-xl text-muted-foreground">
               Your trusted local resource for {cityName} real estate
             </p>
           </div>
         </section>
 
         {/* Introduction Section */}
-        <section className="py-12 px-4 bg-background">
+        <section className="py-12 px-4 bg-card border-b border-border">
           <div className="container mx-auto max-w-4xl">
             <div className="prose prose-lg max-w-none">
-              <p className="text-lg leading-relaxed mb-6">{description}</p>
+              <p className="text-lg leading-relaxed mb-6 text-muted-foreground">{description}</p>
             </div>
 
             {highlights.length > 0 && (
               <div className="mt-8 grid md:grid-cols-3 gap-4">
                 {highlights.map((highlight, index) => (
-                  <Card key={index}>
+                  <Card key={index} className="bg-background border-border">
                     <CardContent className="pt-6">
-                      <p className="text-center font-medium">{highlight}</p>
+                      <p className="text-center font-medium text-foreground">{highlight}</p>
                     </CardContent>
                   </Card>
                 ))}
@@ -81,32 +79,32 @@ const CityHomesTemplate = ({
 
         {/* Market Stats Section */}
         {stats && (
-          <section className="py-12 px-4 bg-muted">
+          <section className="py-12 px-4 bg-background border-b border-border">
             <div className="container mx-auto max-w-4xl">
-              <h2 className="text-3xl font-bold mb-8 text-center">
+              <h2 className="text-3xl font-bold mb-8 text-center text-foreground">
                 {cityName} Market Overview
               </h2>
               <div className="grid md:grid-cols-3 gap-6">
                 {stats.averagePrice && (
-                  <Card>
+                  <Card className="bg-card border-border">
                     <CardHeader>
-                      <CardTitle className="text-center">{stats.averagePrice}</CardTitle>
+                      <CardTitle className="text-center text-foreground">{stats.averagePrice}</CardTitle>
                       <CardDescription className="text-center">Average Sale Price</CardDescription>
                     </CardHeader>
                   </Card>
                 )}
                 {stats.daysOnMarket && (
-                  <Card>
+                  <Card className="bg-card border-border">
                     <CardHeader>
-                      <CardTitle className="text-center">{stats.daysOnMarket}</CardTitle>
+                      <CardTitle className="text-center text-foreground">{stats.daysOnMarket}</CardTitle>
                       <CardDescription className="text-center">Avg. Days on Market</CardDescription>
                     </CardHeader>
                   </Card>
                 )}
                 {stats.totalListings && (
-                  <Card>
+                  <Card className="bg-card border-border">
                     <CardHeader>
-                      <CardTitle className="text-center">{stats.totalListings}</CardTitle>
+                      <CardTitle className="text-center text-foreground">{stats.totalListings}</CardTitle>
                       <CardDescription className="text-center">Active Listings</CardDescription>
                     </CardHeader>
                   </Card>
@@ -117,9 +115,9 @@ const CityHomesTemplate = ({
         )}
 
         {/* Property Listings Section */}
-        <section className="py-12 px-4 bg-background">
+        <section className="py-12 px-4 bg-card border-b border-border">
           <div className="container mx-auto max-w-6xl">
-            <h2 className="text-3xl font-bold mb-8 text-center">
+            <h2 className="text-3xl font-bold mb-8 text-center text-foreground">
               Current {cityName} Properties
             </h2>
             
@@ -144,12 +142,12 @@ const CityHomesTemplate = ({
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 px-4 bg-primary text-white">
+        <section className="py-16 px-4 bg-background border-b border-border">
           <div className="container mx-auto max-w-4xl text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
               See a Home You Like?
             </h2>
-            <p className="text-xl mb-8">
+            <p className="text-xl mb-8 text-muted-foreground">
               Schedule a showing today and let our local experts guide you
             </p>
             <div className="max-w-md mx-auto">
@@ -158,9 +156,7 @@ const CityHomesTemplate = ({
           </div>
         </section>
       </main>
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 };
 
