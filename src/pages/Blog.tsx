@@ -5,8 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Calendar, Clock, User, Search, Filter, ArrowRight, BookOpen } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import MainLayout from '@/components/MainLayout';
 import SEOHead from '@/components/SEOHead';
 import ForSaleKeywordOptimizer from '@/components/ForSaleKeywordOptimizer';
 import CapitalDistrictSEOStrategy from '@/components/CapitalDistrictSEOStrategy';
@@ -1038,7 +1037,7 @@ const Blog = () => {
   const regularPosts = filteredPosts.filter(post => !post.featured);
 
   return (
-    <>
+    <MainLayout>
       <ForSaleKeywordOptimizer 
         pageTitle="Capital District Properties For Sale Blog"
         location="Capital District"
@@ -1050,11 +1049,9 @@ const Blog = () => {
         title="Properties For Sale Blog - Capital District Investment Insights | Capital District Nest"
         description="Expert insights on properties for sale in Albany, Troy, Schenectady. Investment properties for sale analysis, BRRRR strategy, market analysis, first-time buyer guides, and properties for sale opportunities in the Capital District."
         keywords="properties for sale blog, Albany properties for sale, Troy properties for sale, Capital District properties for sale, investment properties for sale, BRRRR strategy properties for sale, property analysis for sale, real estate for sale market blog"
-        canonical="https://your-domain.com/blog"
+        canonical="https://capitaldistrictnest.com/blog"
       />
       
-      <div className="min-h-screen bg-background">
-        <Header />
         
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white py-16">
@@ -1274,9 +1271,7 @@ const Blog = () => {
           </div>
         </section>
 
-        <Footer />
-      </div>
-    </>
+      </MainLayout>
   );
 };
 

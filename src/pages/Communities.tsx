@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import MainLayout from '@/components/MainLayout';
 import SEOHead from '@/components/SEOHead';
 import RealEstateSchema from '@/components/RealEstateSchema';
 import { MapPin, TrendingUp, School, ShoppingCart, Car, Home } from 'lucide-react';
@@ -120,8 +119,7 @@ const Communities = () => {
       />
       <RealEstateSchema type="agent" />
       
-      <div className="min-h-screen bg-background">
-        <Header />
+      <MainLayout>
         
         {/* Hero Section */}
         <section className="pt-32 pb-16 px-4 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
@@ -268,8 +266,7 @@ const Communities = () => {
           </div>
         </section>
 
-        <Footer />
-      </div>
+      </MainLayout>
     </>
   );
 };

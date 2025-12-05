@@ -4,8 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Calendar, Clock, User, ArrowLeft, Share2, BookOpen } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import MainLayout from '@/components/MainLayout';
 import SEOHead from '@/components/SEOHead';
 import DOMPurify from 'dompurify';
 
@@ -338,8 +337,7 @@ const BlogPost = () => {
         canonical={`https://your-domain.com/blog/${post.slug}`}
       />
       
-      <div className="min-h-screen bg-background">
-        <Header />
+      <MainLayout>
         
         {/* Hero Section */}
         <section className="relative py-16 bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white">
@@ -470,8 +468,7 @@ const BlogPost = () => {
           </div>
         </section>
 
-        <Footer />
-      </div>
+      </MainLayout>
     </>
   );
 };
