@@ -122,10 +122,10 @@ const Communities = () => {
       <MainLayout>
         
         {/* Hero Section */}
-        <section className="pt-32 pb-16 px-4 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
+        <section className="py-16 px-4 bg-background border-b border-border">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h1 className="text-5xl font-bold mb-6 text-foreground">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
                 {currentCommunity.name} Investment Properties
               </h1>
               <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
@@ -231,7 +231,7 @@ const Communities = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 px-4 bg-primary/5">
+        <section className="py-16 px-4 bg-card border-t border-border">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-6 text-foreground">
               Ready to Invest in {currentCommunity.name}?

@@ -1,5 +1,4 @@
 import React from 'react';
-import HeroSection from '@/components/HeroSection';
 import OpportunityCards from '@/components/OpportunityCards';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import ContactSection from '@/components/ContactSection';
@@ -89,7 +88,17 @@ const InvestorTools = () => {
       <AdSenseCompliance />
 
       <main role="main">
-        <HeroSection />
+        {/* Hero Section */}
+        <section className="py-16 px-4 bg-background border-b border-border">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
+              Investor Tools & Resources
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              Calculators, analysis tools, and market data for Capital District real estate investors
+            </p>
+          </div>
+        </section>
 
         {/* Grants & Financing Stats Section */}
         <section className="py-16 border-b border-border">
