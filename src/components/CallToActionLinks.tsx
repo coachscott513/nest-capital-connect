@@ -117,37 +117,37 @@ const CallToActionLinks = ({ context, className = "", layout = 'horizontal' }: C
   const actions = getContextualActions(context);
 
   const renderAction = (action: CTAAction, index: number) => {
-    const baseClasses = `group relative overflow-hidden rounded-lg p-4 transition-all duration-300 hover:scale-105 hover:shadow-lg ${
+    const baseClasses = `group relative overflow-hidden rounded-lg p-4 transition-all duration-300 hover:scale-105 ${
       action.primary 
-        ? 'bg-blue-600 text-white hover:bg-blue-700' 
-        : 'bg-white border border-gray-200 hover:border-blue-300 hover:bg-blue-50'
+        ? 'bg-primary text-primary-foreground hover:bg-primary/90' 
+        : 'bg-card border border-border hover:border-primary/50'
     }`;
 
     const content = (
       <div className="flex items-center space-x-3">
         <div className={`p-2 rounded-lg ${
           action.primary 
-            ? 'bg-white/20' 
-            : 'bg-blue-100 group-hover:bg-blue-200'
+            ? 'bg-primary-foreground/20' 
+            : 'bg-primary/10'
         }`}>
-          <div className={action.primary ? 'text-white' : 'text-blue-600'}>
+          <div className={action.primary ? 'text-primary-foreground' : 'text-primary'}>
             {action.icon}
           </div>
         </div>
         <div className="flex-1">
           <h4 className={`font-semibold ${
-            action.primary ? 'text-white' : 'text-gray-900 group-hover:text-blue-600'
+            action.primary ? 'text-primary-foreground' : 'text-foreground group-hover:text-primary'
           }`}>
             {action.title}
           </h4>
           <p className={`text-sm ${
-            action.primary ? 'text-blue-100' : 'text-gray-600'
+            action.primary ? 'text-primary-foreground/80' : 'text-muted-foreground'
           }`}>
             {action.description}
           </p>
         </div>
         <ArrowRight className={`w-4 h-4 group-hover:translate-x-1 transition-transform ${
-          action.primary ? 'text-white' : 'text-gray-400 group-hover:text-blue-600'
+          action.primary ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-primary'
         }`} />
       </div>
     );

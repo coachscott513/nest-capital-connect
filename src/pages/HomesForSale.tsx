@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SEOHead from "@/components/SEOHead";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import MainLayout from "@/components/MainLayout";
 import { Building2, MapPin } from "lucide-react";
 
 const HomesForSale = () => {
@@ -35,34 +34,33 @@ const HomesForSale = () => {
   ];
 
   return (
-    <>
+    <MainLayout>
       <SEOHead
         title="Capital District Homes for Sale | Albany, Troy, Schenectady & Saratoga Springs"
         description="Browse homes for sale in the Capital District. Search properties in Albany, Troy, Schenectady, and Saratoga Springs NY. Local expertise, better than Zillow."
         keywords="Capital District homes for sale, Albany NY real estate, Troy NY homes, Schenectady NY properties, Saratoga Springs NY real estate, homes for sale near me"
         canonical="https://capitaldistrictnest.com/homes-for-sale"
       />
-      <Header />
       
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="bg-primary py-16 px-4">
+        <section className="bg-background py-16 px-4 border-b border-border">
           <div className="container mx-auto max-w-4xl text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
               Capital District Homes for Sale
             </h1>
-            <p className="text-xl text-white/90">
+            <p className="text-xl text-muted-foreground">
               Search by city or neighborhood - Your local alternative to Zillow
             </p>
           </div>
         </section>
 
         {/* Cities Section */}
-        <section className="py-16 px-4 bg-background">
+        <section className="py-16 px-4 bg-card border-b border-border">
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-12">
               <Building2 className="w-12 h-12 mx-auto mb-4 text-primary" />
-              <h2 className="text-3xl font-bold mb-4">Search by City</h2>
+              <h2 className="text-3xl font-bold mb-4 text-foreground">Search by City</h2>
               <p className="text-lg text-muted-foreground">
                 Explore homes for sale in the Capital District's major cities
               </p>
@@ -75,10 +73,10 @@ const HomesForSale = () => {
                   to={`/homes-for-sale/${city.slug}`}
                   className="block transition-transform hover:scale-105"
                 >
-                  <Card className="h-full hover:shadow-lg transition-shadow">
+                  <Card className="h-full bg-background border-border hover:border-primary/50 transition-colors">
                     <CardHeader>
-                      <CardTitle className="text-2xl">{city.name} Homes for Sale</CardTitle>
-                      <CardDescription className="text-base">{city.description}</CardDescription>
+                      <CardTitle className="text-2xl text-foreground">{city.name} Homes for Sale</CardTitle>
+                      <CardDescription className="text-base text-muted-foreground">{city.description}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <p className="text-primary font-semibold">View {city.name} Properties →</p>
@@ -91,20 +89,20 @@ const HomesForSale = () => {
         </section>
 
         {/* Neighborhoods Coming Soon Section */}
-        <section className="py-16 px-4 bg-muted">
+        <section className="py-16 px-4 bg-background">
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-12">
               <MapPin className="w-12 h-12 mx-auto mb-4 text-primary" />
-              <h2 className="text-3xl font-bold mb-4">Browse by Neighborhood</h2>
+              <h2 className="text-3xl font-bold mb-4 text-foreground">Browse by Neighborhood</h2>
               <p className="text-lg text-muted-foreground">
                 Hyperlocal market insights and listings for Capital District neighborhoods
               </p>
             </div>
 
-            <Card className="max-w-2xl mx-auto">
+            <Card className="max-w-2xl mx-auto bg-card border-border">
               <CardHeader>
-                <CardTitle>Coming Soon</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-foreground">Coming Soon</CardTitle>
+                <CardDescription className="text-muted-foreground">
                   We're adding dedicated pages for popular neighborhoods including Pine Hills, Center Square, 
                   Downtown Troy, Stockade, and more. Each page will feature neighborhood-specific market data 
                   and property listings.
@@ -114,9 +112,7 @@ const HomesForSale = () => {
           </div>
         </section>
       </main>
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 };
 

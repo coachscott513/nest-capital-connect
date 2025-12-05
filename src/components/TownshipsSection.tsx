@@ -22,15 +22,15 @@ const TownshipsSection = () => {
     color: string;
   }) => (
     <div className="mb-8">
-      <h3 className="text-2xl font-bold mb-4 text-slate-800 flex items-center gap-2">
+      <h3 className="text-2xl font-bold mb-4 text-foreground flex items-center gap-2">
         <MapPin className={`h-6 w-6 ${color}`} />
         {county} County Communities
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {towns.map((town) => (
-          <Card key={town.slug} className="hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
+          <Card key={town.slug} className="bg-card border-border hover:border-primary/50 transition-shadow border-l-4 border-l-primary">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center justify-between">
+              <CardTitle className="text-lg flex items-center justify-between text-foreground">
                 <span>{town.name}</span>
                 <Badge 
                   variant={town.priority === 'high' ? 'default' : town.priority === 'medium' ? 'secondary' : 'outline'}
@@ -41,13 +41,13 @@ const TownshipsSection = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-slate-600 mb-3 line-clamp-2">
+              <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                 {town.description}
               </p>
               
               {town.neighborhoods && (
                 <div className="mb-3">
-                  <p className="text-xs font-medium text-slate-500 mb-1">Key Areas:</p>
+                  <p className="text-xs font-medium text-muted-foreground mb-1">Key Areas:</p>
                   <div className="flex flex-wrap gap-1">
                     {town.neighborhoods.slice(0, 3).map((neighborhood) => (
                       <Badge key={neighborhood} variant="outline" className="text-xs">
@@ -94,13 +94,13 @@ const TownshipsSection = () => {
   );
 
   return (
-    <section className="py-12 px-4 bg-gradient-to-br from-slate-50 to-blue-50">
+    <section className="py-12 px-4 bg-background border-b border-border">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4 text-slate-800">
+          <h2 className="text-3xl font-bold mb-4 text-foreground">
             Capital District Communities We Serve
           </h2>
-          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             Discover rental opportunities and real estate investments across all Capital District townships, 
             villages, and cities. From urban centers to suburban communities, we know every neighborhood.
           </p>
@@ -109,36 +109,36 @@ const TownshipsSection = () => {
         <CountySection 
           county="Albany" 
           towns={albanyCityTowns} 
-          color="text-blue-600"
+          color="text-primary"
         />
         
         <CountySection 
           county="Saratoga" 
           towns={saratogaTowns} 
-          color="text-green-600"
+          color="text-primary"
         />
         
         <CountySection 
           county="Schenectady" 
           towns={schenectadyTowns} 
-          color="text-purple-600"
+          color="text-primary"
         />
         
         <CountySection 
           county="Rensselaer" 
           towns={rensselaerTowns} 
-          color="text-orange-600"
+          color="text-primary"
         />
 
-        <div className="text-center mt-12 p-6 bg-white rounded-lg shadow-md">
-          <h3 className="text-xl font-bold mb-2 text-slate-800">
+        <div className="text-center mt-12 p-6 bg-card rounded-lg border border-border">
+          <h3 className="text-xl font-bold mb-2 text-foreground">
             Looking for Properties in a Specific Area?
           </h3>
-          <p className="text-slate-600 mb-4">
+          <p className="text-muted-foreground mb-4">
             Our local expertise covers every corner of the Capital District. Get personalized recommendations 
             for your target neighborhood.
           </p>
-          <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+          <Button size="lg">
             <MapPin className="h-4 w-4 mr-2" />
             Get Area-Specific Recommendations
           </Button>

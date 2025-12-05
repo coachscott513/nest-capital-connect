@@ -107,13 +107,13 @@ const RelatedContentSuggestions = ({ currentPage, className = "" }: RelatedConte
   if (relatedContent.length === 0) return null;
 
   return (
-    <section className={`py-12 px-4 bg-gray-50 ${className}`}>
+    <section className={`py-12 px-4 bg-background border-b border-border ${className}`}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
+          <h3 className="text-2xl font-bold text-foreground mb-2">
             You Might Also Be Interested In
           </h3>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             Explore more opportunities in the Capital District real estate market
           </p>
         </div>
@@ -123,20 +123,20 @@ const RelatedContentSuggestions = ({ currentPage, className = "" }: RelatedConte
             <Link
               key={content.href}
               to={content.href}
-              className="group bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+              className="group bg-card rounded-lg p-6 border border-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 p-2 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
+                <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors text-primary">
                   {content.icon}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                  <h4 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
                     {content.title}
                   </h4>
-                  <p className="text-gray-600 text-sm mt-1 line-clamp-2">
+                  <p className="text-muted-foreground text-sm mt-1 line-clamp-2">
                     {content.description}
                   </p>
-                  <div className="flex items-center mt-3 text-blue-600 text-sm font-medium group-hover:text-blue-700">
+                  <div className="flex items-center mt-3 text-primary text-sm font-medium">
                     Learn more
                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                   </div>
