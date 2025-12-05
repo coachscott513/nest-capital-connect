@@ -60,6 +60,49 @@ const AlbanyRealEstate = () => {
             </div>
           </section>
 
+          {/* Why Invest in Albany Section */}
+          <section className="py-16 px-4 bg-card border-y border-border">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold mb-8">
+                Why Invest in Albany Real Estate? <span className="text-primary">(2025 Market Outlook)</span>
+              </h2>
+              
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                Albany offers one of the most stable multi-family investment markets in New York State, 
+                driven by two recession-resistant economic anchors: <strong className="text-foreground">State Government</strong> and <strong className="text-foreground">Healthcare</strong>.
+              </p>
+
+              <div className="space-y-8">
+                <div className="bg-muted/30 p-6 rounded-xl border border-border">
+                  <h3 className="text-xl font-bold mb-3 text-primary">The "Albany Med" Effect</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    With Albany Medical Center currently undertaking a <strong className="text-foreground">$25 million expansion</strong> of its 
+                    emergency department (slated for 2026 completion), demand for workforce housing in the 
+                    <strong className="text-foreground"> Park South and Pine Hills</strong> neighborhoods is surging. Medical residents, nurses, 
+                    and hospital staff provide a reliable, high-credit-quality tenant base for duplex and triplex owners.
+                  </p>
+                </div>
+
+                <div className="bg-muted/30 p-6 rounded-xl border border-border">
+                  <h3 className="text-xl font-bold mb-3 text-primary">Stable Rents, Low Volatility</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Unlike volatile coastal markets, Albany provides consistent cash flow. The massive state worker 
+                    population ensures <strong className="text-foreground">low vacancy rates</strong>, while the "Championing Albany's Potential" (CAP) 
+                    initiative is injecting <strong className="text-foreground">$400 million</strong> into downtown revitalization, driving long-term 
+                    appreciation for buy-and-hold investors.
+                  </p>
+                </div>
+
+                <div className="bg-primary/10 border border-primary/30 p-6 rounded-xl">
+                  <p className="text-lg font-semibold">
+                    <span className="text-primary">Best For:</span> Buy-and-hold investors looking for 2-4 unit properties 
+                    with steady cash flow and low vacancy risk.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Market Overview */}
           <section className="py-16 px-4 bg-muted/30">
             <div className="max-w-6xl mx-auto">
