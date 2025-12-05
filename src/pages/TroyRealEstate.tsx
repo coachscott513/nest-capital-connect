@@ -60,6 +60,50 @@ const TroyRealEstate = () => {
             </div>
           </section>
 
+          {/* Why Invest in Troy Section */}
+          <section className="py-16 px-4 bg-card border-y border-border">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold mb-8">
+                Why Invest in Troy, NY? <span className="text-primary">(The "Brooklyn of the North")</span>
+              </h2>
+              
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                Troy has rapidly evolved into the Capital District's hottest appreciation play. Known as the 
+                <strong className="text-foreground"> "Brooklyn of the North"</strong> for its walkable Victorian downtown and Hudson River 
+                waterfront, Troy offers a unique mix of student housing demand and luxury rental potential.
+              </p>
+
+              <div className="space-y-8">
+                <div className="bg-muted/30 p-6 rounded-xl border border-border">
+                  <h3 className="text-xl font-bold mb-3 text-primary">The RPI Student Housing Engine</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Home to <strong className="text-foreground">Rensselaer Polytechnic Institute (RPI)</strong> and Russell Sage College, Troy has a 
+                    perpetual shortage of quality off-campus housing. With RPI enrolling over <strong className="text-foreground">7,000 students</strong>, 
+                    multi-family properties near "The Hill" and downtown consistently command premium rents per bedroom, 
+                    often exceeding <strong className="text-foreground">1% Rule benchmarks</strong>.
+                  </p>
+                </div>
+
+                <div className="bg-muted/30 p-6 rounded-xl border border-border">
+                  <h3 className="text-xl font-bold mb-3 text-primary">Historic Appreciation</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    While Albany offers stability, Troy offers <strong className="text-foreground">growth</strong>. The median home price in Troy has risen 
+                    <strong className="text-foreground"> ~5.4% year-over-year (2025)</strong>, outpacing many surrounding suburbs. Investors are finding 
+                    success converting distressed Victorian homes into high-end apartments for young professionals 
+                    commuting to Albany or working remotely.
+                  </p>
+                </div>
+
+                <div className="bg-primary/10 border border-primary/30 p-6 rounded-xl">
+                  <p className="text-lg font-semibold">
+                    <span className="text-primary">Best For:</span> BRRRR (Buy, Rehab, Rent, Refinance, Repeat) investors 
+                    and those seeking value-add flips in a high-appreciation market.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Market Overview */}
           <section className="py-16 px-4 bg-muted/30">
             <div className="max-w-6xl mx-auto">
