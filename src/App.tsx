@@ -39,6 +39,7 @@ import DelmarHomesForSale from "./pages/DelmarHomesForSale";
 import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 import PropertyListing from "./pages/PropertyListing";
 import ElsmereProperty from "./pages/137AElsmereAve";
+import Reviews from "./pages/Reviews";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -85,6 +86,7 @@ const App = () => {
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<PrivacyPolicy />} />
+          <Route path="/reviews" element={<Reviews />} />
           
           {/* Hyperlocal SEO Pages - Homes for Sale */}
           <Route path="/homes-for-sale" element={<HomesForSale />} />
