@@ -313,8 +313,7 @@ const Index = () => {
             Not Agents. <span className="text-primary">Portfolio Managers.</span>
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            Most brokerages hire salespeople. We hire Economists, Analysts, and Investors. 
-            Our team doesn't just "show houses"—we navigate the complex regulatory landscape 
+            Most agents just "show houses." The Capital District Nest Team at RE/MAX is different—we navigate the complex regulatory landscape 
             of the Capital District so your asset performs from Day 1.
           </p>
         </div>
