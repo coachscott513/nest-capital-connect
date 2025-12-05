@@ -32,7 +32,7 @@ const InvestorTools = () => {
         "alternateName": ["Capital District Investment Properties", "CDN Real Estate"],
         "description": "Premier investment property specialists for rental properties, rehab projects, and multi-unit buildings in Albany, Troy, Schenectady, and Saratoga Springs, NY.",
         "url": "https://your-domain.com",
-        "telephone": "+1-518-522-7265",
+        "telephone": "+1-518-676-2347",
         "email": "scottalvarez@remax.net",
         "foundingDate": "2020",
         "address": {
@@ -97,7 +97,7 @@ const InvestorTools = () => {
         },
         "servesCuisine": "Real Estate Investment Services",
         "priceRange": "$$",
-        "telephone": "+1-518-522-7265"
+        "telephone": "+1-518-676-2347"
       },
       {
         "@type": "Service",
