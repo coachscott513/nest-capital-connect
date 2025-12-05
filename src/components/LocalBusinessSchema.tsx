@@ -1,94 +1,75 @@
-
 import { useEffect } from 'react';
 
 const LocalBusinessSchema = () => {
   useEffect(() => {
-    const organizationSchema = {
+    const schema = {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Capital District Nest",
-      "alternateName": "CDN Real Estate",
-      "url": "https://your-domain.com",
-      "logo": "https://your-domain.com/logo.png",
-      "sameAs": [
-        "https://www.facebook.com/capitaldistrict",
-        "https://www.linkedin.com/company/capital-district-nest",
-        "https://www.instagram.com/capitaldistrict"
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+1-518-522-7265",
-        "contactType": "customer service",
-        "areaServed": "US",
-        "availableLanguage": "English"
-      }
+      "@graph": [
+        {
+          "@type": "RealEstateAgent",
+          "name": "Capital District Nest Team at RE/MAX",
+          "image": "https://capitaldistrictnest.com/logo.png",
+          "url": "https://capitaldistrictnest.com",
+          "telephone": "+15186762347",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Albany",
+            "addressRegion": "NY",
+            "postalCode": "12203",
+            "addressCountry": "US"
+          },
+          "areaServed": [
+            "Albany",
+            "Troy",
+            "Schenectady",
+            "Niskayuna",
+            "Saratoga Springs",
+            "Latham",
+            "Clifton Park",
+            "Rensselaer"
+          ],
+          "description": "Specialized investment team combining institutional-grade market analysis with local expertise in multi-family, land development, and first-time buyer grants."
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How can I buy a house in Albany with no money down?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We specialize in finding 3.5% down FHA loans and connecting buyers with the Albany & Troy Homeowner Grants which can provide up to $30,000 in down-payment assistance."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is buying a multi-family home in Troy NY a good investment?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Troy offers some of the highest cap rates in New York State. Our team analyzes rent rolls and expense data to ensure your multi-unit property generates positive cash flow."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I need a real estate agent to buy land in Niskayuna?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Land acquisition requires specific knowledge of zoning, perc tests, and surveys. Our team specializes in land development and new construction processes."
+              }
+            }
+          ]
+        }
+      ]
     };
 
-    const realEstateAgentSchema = {
-      "@context": "https://schema.org",
-      "@type": "RealEstateAgent",
-      "name": "Capital District Nest",
-      "description": "Professional real estate services specializing in rental properties, first-time home buying, and investment opportunities in Albany, Troy, Schenectady, and Saratoga Springs, NY.",
-      "url": "https://your-domain.com",
-      "telephone": "+1-518-522-7265",
-      "address": {
-        "@type": "PostalAddress",
-        "addressRegion": "NY",
-        "addressCountry": "US"
-      },
-      "areaServed": [
-        "Albany County, NY",
-        "Rensselaer County, NY", 
-        "Schenectady County, NY",
-        "Saratoga County, NY"
-      ],
-      "serviceType": [
-        "Apartment Rentals",
-        "House Rentals",
-        "Property Management",
-        "Real Estate Sales",
-        "First-Time Buyer Programs",
-        "Investment Property Consulting"
-      ],
-      "priceRange": "$$"
-    };
-
-    const serviceSchema = {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Capital District Property Rental Services",
-      "description": "Comprehensive property rental and real estate services in New York's Capital District",
-      "provider": {
-        "@type": "Organization",
-        "name": "Capital District Nest"
-      },
-      "areaServed": {
-        "@type": "State",
-        "name": "New York"
-      },
-      "serviceType": "Real Estate Services"
-    };
-
-    // Add schemas to head
-    const script1 = document.createElement('script');
-    script1.type = 'application/ld+json';
-    script1.textContent = JSON.stringify(organizationSchema);
-    document.head.appendChild(script1);
-
-    const script2 = document.createElement('script');
-    script2.type = 'application/ld+json';
-    script2.textContent = JSON.stringify(realEstateAgentSchema);
-    document.head.appendChild(script2);
-
-    const script3 = document.createElement('script');
-    script3.type = 'application/ld+json';
-    script3.textContent = JSON.stringify(serviceSchema);
-    document.head.appendChild(script3);
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(schema);
+    document.head.appendChild(script);
 
     return () => {
-      document.head.removeChild(script1);
-      document.head.removeChild(script2);
-      document.head.removeChild(script3);
+      document.head.removeChild(script);
     };
   }, []);
 
