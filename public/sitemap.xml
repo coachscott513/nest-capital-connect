@@ -88,6 +88,14 @@
     <priority>0.8</priority>
   </url>
   
+  <!-- Reviews -->
+  <url>
+    <loc>https://capitaldistrictnest.com/reviews</loc>
+    <lastmod>2025-12-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
   <!-- Additional Pages -->
   <url>
     <loc>https://capitaldistrictnest.com/grants</loc>
