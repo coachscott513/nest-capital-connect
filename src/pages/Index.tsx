@@ -58,11 +58,12 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Capital District Nest | The Modern Real Estate Company"
-        description="Real answers, right now. Get instant access to live, licensed agents who know the Capital District neighborhoods, schools, and market reality."
-        keywords="real estate Albany NY, Capital District homes, Niskayuna real estate, Troy homes for sale, licensed real estate agent"
+        title="Capital District Nest | Albany & Troy Real Estate Investment Team at RE/MAX"
+        description="Stop renting. Start owning. Capital District Nest connects buyers with $30k down-payment grants, off-market multi-family deals, and land in Albany, Troy, and Schenectady. Powered by RE/MAX."
+        keywords="Albany NY Real Estate, Troy NY Home Grants, Schenectady Multi-Family, Capital District Investment Property, First Time Home Buyer Grants NY, Niskayuna Land for Sale, RE/MAX Capital District"
         canonical="https://capitaldistrictnest.com"
-        ogImage="/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png"
+        ogImage="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+        ogType="website"
       />
 
       {/* Full-Screen Menu Overlay */}
