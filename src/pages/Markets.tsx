@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import MainLayout from '@/components/MainLayout';
 import SEOHead from '@/components/SEOHead';
 import { getTownsByPriority } from '@/components/CapitalDistrictTowns';
 import { Card } from '@/components/ui/card';
@@ -14,7 +13,7 @@ const Markets = () => {
   const mediumPriorityTowns = getTownsByPriority('medium');
   
   return (
-    <div className="flex flex-col min-h-screen">
+    <MainLayout>
       <SEOHead 
         title="Single-Family Home Markets in Capital District | Expert Analysis & Trends"
         description="Explore comprehensive market guides for single-family homes across Albany, Schenectady, Saratoga, and more. Get expert analysis, pricing trends, and neighborhood insights."
@@ -22,11 +21,9 @@ const Markets = () => {
         canonical="https://capitaldistrictnest.com/markets"
       />
       
-      <Header />
-      
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-primary/10 to-primary/5 py-16 md:py-24">
+        <section className="py-16 md:py-24 border-b border-border">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -36,25 +33,27 @@ const Markets = () => {
                 Comprehensive market guides with expert analysis, current trends, and neighborhood insights for single-family homes across the Capital District.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Button asChild size="lg" className="font-medium">
-                  <Link to="/markets/albany-single-family-homes">
-                    <Home className="mr-2 h-5 w-5" />
-                    Explore Albany Homes
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="lg" className="font-medium">
-                  <Link to="#featured-markets">
-                    <MapPin className="mr-2 h-5 w-5" />
-                    Browse All Markets
-                  </Link>
-                </Button>
+                <Link 
+                  to="/markets/albany-single-family-homes"
+                  className="bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform flex items-center"
+                >
+                  <Home className="mr-2 h-5 w-5" />
+                  Explore Albany Homes
+                </Link>
+                <Link 
+                  to="#featured-markets"
+                  className="border border-foreground text-foreground px-8 py-4 rounded-full font-extrabold hover:bg-foreground hover:text-background transition-colors flex items-center"
+                >
+                  <MapPin className="mr-2 h-5 w-5" />
+                  Browse All Markets
+                </Link>
               </div>
             </div>
           </div>
         </section>
         
         {/* Market Overview */}
-        <section className="py-16 bg-background">
+        <section className="py-16 border-b border-border">
           <div className="container mx-auto px-4">
             <div className="max-w-5xl mx-auto">
               <h2 className="text-3xl font-bold text-foreground mb-8 text-center">
@@ -62,7 +61,7 @@ const Markets = () => {
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
+                <div className="bg-card rounded-xl p-6 border border-border">
                   <TrendingUp className="h-10 w-10 text-primary mb-4" />
                   <h3 className="text-xl font-semibold mb-2">Market Trends</h3>
                   <p className="text-muted-foreground">
@@ -70,7 +69,7 @@ const Markets = () => {
                   </p>
                 </div>
                 
-                <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
+                <div className="bg-card rounded-xl p-6 border border-border">
                   <Layers className="h-10 w-10 text-primary mb-4" />
                   <h3 className="text-xl font-semibold mb-2">Inventory Levels</h3>
                   <p className="text-muted-foreground">
@@ -78,7 +77,7 @@ const Markets = () => {
                   </p>
                 </div>
                 
-                <div className="bg-card rounded-xl p-6 shadow-sm border border-border">
+                <div className="bg-card rounded-xl p-6 border border-border">
                   <Home className="h-10 w-10 text-primary mb-4" />
                   <h3 className="text-xl font-semibold mb-2">Home Types</h3>
                   <p className="text-muted-foreground">
@@ -93,18 +92,19 @@ const Markets = () => {
                   helping you make informed decisions about buying or selling single-family homes.
                 </p>
                 
-                <Button asChild>
-                  <Link to="#contact">
-                    Get a Custom Market Report
-                  </Link>
-                </Button>
+                <Link 
+                  to="#contact"
+                  className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform"
+                >
+                  Get a Custom Market Report
+                </Link>
               </div>
             </div>
           </div>
         </section>
         
         {/* Featured Markets Section */}
-        <section id="featured-markets" className="py-16 bg-muted/30">
+        <section id="featured-markets" className="py-16 border-b border-border">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-foreground mb-2 text-center">
               Featured Single-Family Home Markets
@@ -115,19 +115,20 @@ const Markets = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
               {highPriorityTowns.map((town) => (
-                <Card key={town.slug} className="overflow-hidden hover:shadow-md transition-shadow duration-300">
+                <Card key={town.slug} className="overflow-hidden hover:border-primary transition-colors duration-300 bg-card border-border">
                   <div className="p-6">
                     <h3 className="text-xl font-semibold mb-2">{town.name} Single-Family Homes</h3>
                     <p className="text-muted-foreground mb-4 line-clamp-3">
                       Explore the {town.name} market for single-family homes. Get insights on pricing trends, 
                       neighborhoods, and what makes this area unique for homebuyers.
                     </p>
-                    <Button asChild variant="outline" className="w-full">
-                      <Link to={`/markets/${town.slug}-single-family-homes`}>
-                        Explore Market
-                        <ChevronRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
+                    <Link 
+                      to={`/markets/${town.slug}-single-family-homes`}
+                      className="inline-flex items-center border border-border px-4 py-2 rounded-lg font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors w-full justify-center"
+                    >
+                      Explore Market
+                      <ChevronRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </div>
                 </Card>
               ))}
@@ -139,19 +140,21 @@ const Markets = () => {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
               {mediumPriorityTowns.map((town) => (
-                <Button key={town.slug} asChild variant="ghost" className="justify-start h-auto py-3">
-                  <Link to={`/markets/${town.slug}-single-family-homes`}>
-                    <MapPin className="mr-2 h-4 w-4 text-primary" />
-                    {town.name} Homes
-                  </Link>
-                </Button>
+                <Link 
+                  key={town.slug} 
+                  to={`/markets/${town.slug}-single-family-homes`}
+                  className="flex items-center px-4 py-3 border border-border rounded-lg hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors font-semibold"
+                >
+                  <MapPin className="mr-2 h-4 w-4" />
+                  {town.name} Homes
+                </Link>
               ))}
             </div>
           </div>
         </section>
         
         {/* CTA Section */}
-        <section id="contact" className="py-16 bg-primary/5">
+        <section id="contact" className="py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl font-bold text-foreground mb-4">
@@ -162,24 +165,24 @@ const Markets = () => {
                 custom market analysis tailored to your needs.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <Button asChild size="lg">
-                  <Link to="/contact">
-                    Request Market Analysis
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="lg">
-                  <Link to="/blog">
-                    Read Our Latest Market Updates
-                  </Link>
-                </Button>
+                <Link 
+                  to="/first-time-homebuyers"
+                  className="bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform"
+                >
+                  Request Market Analysis
+                </Link>
+                <Link 
+                  to="/blog"
+                  className="border border-foreground text-foreground px-8 py-4 rounded-full font-extrabold hover:bg-foreground hover:text-background transition-colors"
+                >
+                  Read Our Latest Market Updates
+                </Link>
               </div>
             </div>
           </div>
         </section>
       </main>
-      
-      <Footer />
-    </div>
+    </MainLayout>
   );
 };
 
