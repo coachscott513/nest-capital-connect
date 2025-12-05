@@ -312,7 +312,7 @@ const Index = () => {
       <section className="flex flex-col lg:flex-row items-center px-[5%] py-20 border-t border-border bg-muted/20">
         <div className="flex-1 max-w-[550px] p-5">
           <div className="text-primary font-bold text-sm mb-3 uppercase tracking-wider">Q4 2025 DATA</div>
-          <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-5 text-[hsl(220,60%,20%)]">
+          <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-5 text-[hsl(220,50%,45%)]">
             The Economics of<br />Upstate Real Estate
           </h2>
           <p className="text-muted-foreground italic mb-4">
