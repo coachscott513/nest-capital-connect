@@ -1,36 +1,90 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Phone, Mail } from 'lucide-react';
 
 const Footer = () => {
-  const capitalDistrictTowns = [
-    // Albany County
-    "Albany", "Altamont", "Berne", "Bethlehem", "Cohoes", "Colonie", "Green Island", "Guilderland", "Knox", "Menands", "New Scotland", "Rensselaerville", "Watervliet", "Westerlo",
-    // Rensselaer County  
-    "Troy", "Berlin", "Brunswick", "East Greenbush", "Grafton", "Hoosick", "Lansingburgh", "Nassau", "North Greenbush", "Petersburgh", "Pittstown", "Poestenkill", "Rensselaer", "Sand Lake", "Schaghticoke", "Schodack", "Stephentown",
-    // Saratoga County
-    "Saratoga Springs", "Ballston", "Ballston Spa", "Charlton", "Clifton Park", "Corinth", "Day", "Edinburgh", "Galway", "Greenfield", "Hadley", "Halfmoon", "Malta", "Mechanicville", "Milton", "Moreau", "Northumberland", "Providence", "Saratoga", "Stillwater", "Waterford", "Wilton",
-    // Schenectady County
-    "Schenectady", "Duanesburg", "Glenville", "Niskayuna", "Princetown", "Rotterdam", "Scotia"
-  ];
-
   return (
-    <footer className="bg-slate-800 text-white py-8 px-4 text-center">
-      <div className="max-w-7xl mx-auto">
-        <p>&copy; 2025 Capital District Nest. All rights reserved.</p>
-        <div className="mt-4 text-sm space-x-4">
-          <Link to="/privacy-policy" className="hover:underline transition-colors">Privacy Policy</Link>
-          <Link to="/terms-of-service" className="hover:underline transition-colors">Terms of Service</Link>
-          <Link to="/#investment-properties" className="hover:underline transition-colors">Investment Properties</Link>
-          <Link to="/rentals" className="hover:underline transition-colors">Rentals</Link>
-          <Link to="/#financing" className="hover:underline transition-colors">Financing</Link>
-        </div>
-        
-        <div className="mt-6 border-t border-slate-700 pt-4">
-          <p className="text-xs text-slate-400 mb-2">Serving the Capital District Area:</p>
-          <div className="text-xs text-slate-500 leading-relaxed max-w-5xl mx-auto">
-            {capitalDistrictTowns.join(" • ")}
+    <footer className="bg-card border-t border-border">
+      {/* Main Footer Content */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="grid md:grid-cols-3 gap-8">
+          {/* Column 1: Brand */}
+          <div>
+            <h3 className="text-xl font-bold text-foreground mb-3">Capital District Nest</h3>
+            <p className="text-muted-foreground text-sm">
+              Modern Real Estate for the Capital District & Boston.
+            </p>
           </div>
+
+          {/* Column 2: Contact */}
+          <div>
+            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">Contact</h4>
+            <div className="space-y-3">
+              <a 
+                href="tel:+15186762347" 
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm"
+              >
+                <Phone className="h-4 w-4" />
+                (518) 676-2347
+              </a>
+              <a 
+                href="mailto:scott@remax.com" 
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm"
+              >
+                <Mail className="h-4 w-4" />
+                scott@remax.com
+              </a>
+              <p className="text-muted-foreground text-sm pt-2 border-t border-border mt-3">
+                Affiliated with <span className="font-semibold text-foreground">RE/MAX</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Column 3: Legal Links */}
+          <div>
+            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">Legal</h4>
+            <ul className="space-y-2">
+              <li>
+                <a 
+                  href="https://dos.ny.gov/system/files/documents/2021/08/fairhousingnotice.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  NY Fair Housing Notice
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://dos.ny.gov/system/files/documents/2021/08/standardizedoperatingprocedures.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  Standard Operating Procedures
+                </a>
+              </li>
+              <li>
+                <Link 
+                  to="/privacy-policy" 
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Bar: Disclaimer */}
+      <div className="border-t border-border bg-background">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <p className="text-xs text-muted-foreground text-center leading-relaxed">
+            © {new Date().getFullYear()} Capital District Nest. Scott Alvarez is a Licensed Real Estate Salesperson. 
+            Capital District Nest is a team name. Each RE/MAX® Office is Independently Owned and Operated. 
+            Equal Housing Opportunity.
+          </p>
         </div>
       </div>
     </footer>
