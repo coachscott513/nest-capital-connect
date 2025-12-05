@@ -205,6 +205,24 @@ const Index = () => {
         </p>
       </section>
 
+      {/* Markets Grid */}
+      <section className="px-[5%] py-20 border-t border-border">
+        <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-10 text-center">
+          We cover the entire Capital District.
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          {markets.map((market) => (
+            <Link
+              key={market.name}
+              to={market.href}
+              className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+            >
+              {market.name}
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Trust Bar - Reviews Section */}
       <section className="bg-muted/30 py-12 px-[5%] border-t border-border">
         <h3 className="text-center text-sm uppercase tracking-widest text-muted-foreground font-semibold mb-8">
@@ -269,24 +287,6 @@ const Index = () => {
           <Link to="/reviews" className="text-primary font-semibold hover:underline text-sm">
             Read All Reviews →
           </Link>
-        </div>
-      </section>
-
-      {/* Markets Grid */}
-      <section className="px-[5%] py-20 border-t border-border">
-        <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-10 text-center">
-          We cover the entire Capital District.
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-          {markets.map((market) => (
-            <Link
-              key={market.name}
-              to={market.href}
-              className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
-            >
-              {market.name}
-            </Link>
-          ))}
         </div>
       </section>
 
