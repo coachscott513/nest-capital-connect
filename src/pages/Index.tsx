@@ -154,8 +154,7 @@ const Index = () => {
         
         <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mb-8 max-w-[700px] mx-auto">
           The Capital District's premier tech-enabled investment team. 
-          We are <strong className="text-foreground">The Capital District Nest Team at RE/MAX</strong>—a specialized group of Economists and Business Strategists 
-          combining institutional-grade market data with white-glove local service.
+          We are <strong className="text-foreground">The Capital District Nest Team at RE/MAX</strong>—a specialized team of business strategists.
         </p>
 
         {/* Trust Badges */}
