@@ -29,7 +29,7 @@ export const useAnalytics = () => {
       window.gtag('event', eventName, {
         ...parameters,
         // Mark as key event (conversion)
-        send_to: 'GA_TRACKING_ID', // Replace with your actual GA4 tracking ID
+        send_to: 'G-BLCCLEJ3M0',
       });
     }
   };
