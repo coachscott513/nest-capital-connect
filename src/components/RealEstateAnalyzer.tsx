@@ -337,7 +337,7 @@ const RealEstateAnalyzer: React.FC = () => {
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="col-span-full">
-              <label htmlFor="propertyAddress" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="propertyAddress" className="block text-sm font-medium text-foreground mb-1">
                 Property Address:
               </label>
               <input
@@ -345,15 +345,15 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="propertyAddress"
                 value={formData.propertyAddress}
                 onChange={(e) => handleInputChange('propertyAddress', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="e.g., 123 Main St, Anytown"
                 required
               />
             </div>
             
             <div className="flex items-center space-x-4">
-              <label className="text-sm font-medium text-gray-700">Property Type:</label>
-              <div className="flex space-x-4">
+              <label className="text-sm font-medium text-foreground">Property Type:</label>
+              <div className="flex space-x-4 text-foreground">
                 <label className="flex items-center">
                   <input
                     type="radio"
@@ -361,7 +361,7 @@ const RealEstateAnalyzer: React.FC = () => {
                     value="SFH"
                     checked={formData.propertyType === 'SFH'}
                     onChange={() => handlePropertyTypeChange('SFH')}
-                    className="form-radio text-red-600 mr-2"
+                    className="form-radio text-primary mr-2"
                   />
                   <span>Single Family</span>
                 </label>
@@ -372,7 +372,7 @@ const RealEstateAnalyzer: React.FC = () => {
                     value="Multi"
                     checked={formData.propertyType === 'Multi'}
                     onChange={() => handlePropertyTypeChange('Multi')}
-                    className="form-radio text-red-600 mr-2"
+                    className="form-radio text-primary mr-2"
                   />
                   <span>Multi-Unit</span>
                 </label>
@@ -382,14 +382,14 @@ const RealEstateAnalyzer: React.FC = () => {
             {formData.propertyType === 'Multi' && (
               <>
                 <div>
-                  <label htmlFor="numUnits" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="numUnits" className="block text-sm font-medium text-foreground mb-1">
                     Number of Units (Max 8):
                   </label>
                   <select
                     id="numUnits"
                     value={formData.numUnits}
                     onChange={(e) => handleNumUnitsChange(Number(e.target.value))}
-                    className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                   >
                     {[2, 3, 4, 5, 6, 7, 8].map(num => (
                       <option key={num} value={num}>{num} Units</option>
@@ -398,20 +398,20 @@ const RealEstateAnalyzer: React.FC = () => {
                 </div>
                 
                 <div className="col-span-full">
-                  <h5 className="text-lg font-semibold text-gray-700 mb-3 border-b border-gray-200 pb-1">
+                  <h5 className="text-lg font-semibold text-foreground mb-3 border-b border-border pb-1">
                     Individual Unit Rents:
                   </h5>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {unitRents.map((rent, index) => (
-                      <div key={index} className="flex items-center gap-2 p-2 bg-white rounded-md shadow-sm">
-                        <label className="text-sm font-medium text-gray-700 w-16">
+                      <div key={index} className="flex items-center gap-2 p-2 bg-background rounded-md border border-border">
+                        <label className="text-sm font-medium text-foreground w-16">
                           Unit {index + 1}:
                         </label>
                         <input
                           type="number"
                           value={rent}
                           onChange={(e) => updateUnitRent(index, Number(e.target.value))}
-                          className="flex-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                          className="flex-1 p-2 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                           placeholder="e.g., 1200"
                           min="0"
                         />
@@ -423,7 +423,7 @@ const RealEstateAnalyzer: React.FC = () => {
             )}
 
             <div>
-              <label htmlFor="purchasePrice" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="purchasePrice" className="block text-sm font-medium text-foreground mb-1">
                 Purchase Price ($):
               </label>
               <input
@@ -431,7 +431,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="purchasePrice"
                 value={formData.purchasePrice || ''}
                 onChange={(e) => handleInputChange('purchasePrice', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="200000"
                 min="0"
                 required
@@ -439,7 +439,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="arv" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="arv" className="block text-sm font-medium text-foreground mb-1">
                 After Repair Value (ARV) ($):
               </label>
               <input
@@ -447,7 +447,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="arv"
                 value={formData.arv || ''}
                 onChange={(e) => handleInputChange('arv', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="350000"
                 min="0"
                 required
@@ -456,7 +456,7 @@ const RealEstateAnalyzer: React.FC = () => {
 
             {formData.propertyType === 'SFH' && (
               <div className="col-span-full">
-                <label htmlFor="estimatedTotalRent" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="estimatedTotalRent" className="block text-sm font-medium text-foreground mb-1">
                   Estimated Monthly Rent ($):
                 </label>
                 <input
@@ -464,7 +464,7 @@ const RealEstateAnalyzer: React.FC = () => {
                   id="estimatedTotalRent"
                   value={formData.estimatedTotalRent || ''}
                   onChange={(e) => handleInputChange('estimatedTotalRent', e.target.value)}
-                  className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                   placeholder="2500"
                   min="0"
                   required
@@ -475,13 +475,13 @@ const RealEstateAnalyzer: React.FC = () => {
         </section>
 
         {/* Costs & Expenses Section */}
-        <section className="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
-          <h4 className="text-2xl font-semibold text-blue-700 mb-4 pb-2 border-b border-gray-300">
+        <section className="mb-8 p-6 bg-card rounded-lg border border-border">
+          <h4 className="text-2xl font-semibold text-primary mb-4 pb-2 border-b border-border">
             Costs & Expenses
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="rehabCosts" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="rehabCosts" className="block text-sm font-medium text-foreground mb-1">
                 Estimated Rehab Costs ($):
               </label>
               <input
@@ -489,7 +489,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="rehabCosts"
                 value={formData.rehabCosts || ''}
                 onChange={(e) => handleInputChange('rehabCosts', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="50000"
                 min="0"
                 required
@@ -497,7 +497,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="acquisitionCosts" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="acquisitionCosts" className="block text-sm font-medium text-foreground mb-1">
                 Acquisition Closing Costs (% of Loan):
               </label>
               <input
@@ -505,7 +505,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="acquisitionCosts"
                 value={formData.acquisitionCosts || ''}
                 onChange={(e) => handleInputChange('acquisitionCosts', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="3.0"
                 min="0"
                 step="0.1"
@@ -514,7 +514,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="sellingCosts" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="sellingCosts" className="block text-sm font-medium text-foreground mb-1">
                 Selling Costs (% of ARV):
               </label>
               <input
@@ -522,7 +522,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="sellingCosts"
                 value={formData.sellingCosts || ''}
                 onChange={(e) => handleInputChange('sellingCosts', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="6.0"
                 min="0"
                 step="0.1"
@@ -531,7 +531,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="holdingPeriod" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="holdingPeriod" className="block text-sm font-medium text-foreground mb-1">
                 Holding Period (Months):
               </label>
               <input
@@ -539,7 +539,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="holdingPeriod"
                 value={formData.holdingPeriod || ''}
                 onChange={(e) => handleInputChange('holdingPeriod', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="4"
                 min="0"
                 required
@@ -547,7 +547,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="monthlyTaxes" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="monthlyTaxes" className="block text-sm font-medium text-foreground mb-1">
                 Monthly Property Taxes ($):
               </label>
               <input
@@ -555,7 +555,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="monthlyTaxes"
                 value={formData.monthlyTaxes || ''}
                 onChange={(e) => handleInputChange('monthlyTaxes', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="300"
                 min="0"
                 required
@@ -563,7 +563,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="monthlyInsurance" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="monthlyInsurance" className="block text-sm font-medium text-foreground mb-1">
                 Monthly Insurance ($):
               </label>
               <input
@@ -571,7 +571,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="monthlyInsurance"
                 value={formData.monthlyInsurance || ''}
                 onChange={(e) => handleInputChange('monthlyInsurance', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="100"
                 min="0"
                 required
@@ -579,7 +579,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="propertyManagement" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="propertyManagement" className="block text-sm font-medium text-foreground mb-1">
                 Property Management (% of Rent):
               </label>
               <input
@@ -587,7 +587,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="propertyManagement"
                 value={formData.propertyManagement || ''}
                 onChange={(e) => handleInputChange('propertyManagement', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="8.0"
                 min="0"
                 step="0.1"
@@ -596,7 +596,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="vacancyRate" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="vacancyRate" className="block text-sm font-medium text-foreground mb-1">
                 Vacancy Rate (% of Rent):
               </label>
               <input
@@ -604,7 +604,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="vacancyRate"
                 value={formData.vacancyRate || ''}
                 onChange={(e) => handleInputChange('vacancyRate', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="5.0"
                 min="0"
                 step="0.1"
@@ -613,7 +613,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div className="col-span-full">
-              <label htmlFor="repairsCapEx" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="repairsCapEx" className="block text-sm font-medium text-foreground mb-1">
                 Monthly Repairs & CapEx Reserve ($):
               </label>
               <input
@@ -621,7 +621,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="repairsCapEx"
                 value={formData.repairsCapEx || ''}
                 onChange={(e) => handleInputChange('repairsCapEx', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="200"
                 min="0"
               />
@@ -630,13 +630,13 @@ const RealEstateAnalyzer: React.FC = () => {
         </section>
 
         {/* Financing Details Section */}
-        <section className="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
-          <h4 className="text-2xl font-semibold text-blue-700 mb-4 pb-2 border-b border-gray-300">
+        <section className="mb-8 p-6 bg-card rounded-lg border border-border">
+          <h4 className="text-2xl font-semibold text-primary mb-4 pb-2 border-b border-border">
             Financing Details
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="acquisitionLTV" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="acquisitionLTV" className="block text-sm font-medium text-foreground mb-1">
                 Acquisition Loan LTV (%):
               </label>
               <input
@@ -644,7 +644,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="acquisitionLTV"
                 value={formData.acquisitionLTV || ''}
                 onChange={(e) => handleInputChange('acquisitionLTV', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="80"
                 min="0"
                 max="100"
@@ -653,7 +653,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="acquisitionInterestRate" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="acquisitionInterestRate" className="block text-sm font-medium text-foreground mb-1">
                 Acquisition Interest Rate (% Annual):
               </label>
               <input
@@ -661,7 +661,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="acquisitionInterestRate"
                 value={formData.acquisitionInterestRate || ''}
                 onChange={(e) => handleInputChange('acquisitionInterestRate', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="8.0"
                 min="0"
                 step="0.1"
@@ -670,7 +670,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="refiLTV" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="refiLTV" className="block text-sm font-medium text-foreground mb-1">
                 Refinance Loan LTV (% of ARV):
               </label>
               <input
@@ -678,7 +678,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="refiLTV"
                 value={formData.refiLTV || ''}
                 onChange={(e) => handleInputChange('refiLTV', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="75"
                 min="0"
                 max="100"
@@ -687,7 +687,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="refiInterestRate" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="refiInterestRate" className="block text-sm font-medium text-foreground mb-1">
                 Refinance Interest Rate (% Annual):
               </label>
               <input
@@ -695,7 +695,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="refiInterestRate"
                 value={formData.refiInterestRate || ''}
                 onChange={(e) => handleInputChange('refiInterestRate', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="6.5"
                 min="0"
                 step="0.1"
@@ -704,7 +704,7 @@ const RealEstateAnalyzer: React.FC = () => {
             </div>
 
             <div className="col-span-full">
-              <label htmlFor="refiClosingCosts" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="refiClosingCosts" className="block text-sm font-medium text-foreground mb-1">
                 Refinance Closing Costs (% of Refi Loan):
               </label>
               <input
@@ -712,7 +712,7 @@ const RealEstateAnalyzer: React.FC = () => {
                 id="refiClosingCosts"
                 value={formData.refiClosingCosts || ''}
                 onChange={(e) => handleInputChange('refiClosingCosts', e.target.value)}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-3 border border-border rounded-md bg-background text-foreground focus:ring-primary focus:border-primary"
                 placeholder="2.0"
                 min="0"
                 step="0.1"
@@ -725,7 +725,7 @@ const RealEstateAnalyzer: React.FC = () => {
         <div className="text-center mt-8">
           <button 
             type="submit" 
-            className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-8 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
           >
             Analyze Property
           </button>
@@ -760,22 +760,22 @@ const RealEstateAnalyzer: React.FC = () => {
           {/* Flip Analysis */}
           <div className="mb-6">
             <h5 className="text-xl font-semibold text-foreground mb-3">Flip Property Analysis</h5>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="flex justify-between py-2 border-b border-gray-200">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-foreground">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Total Project Cost:</span>
-                <strong className="text-red-600">${formatNumber(results.flipTotalCost)}</strong>
+                <strong className="text-primary">${formatNumber(results.flipTotalCost)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Estimated Sale Price:</span>
-                <strong className="text-red-600">${formatNumber(results.flipSalePrice)}</strong>
+                <strong className="text-primary">${formatNumber(results.flipSalePrice)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Estimated Net Profit:</span>
-                <strong className="text-red-600">${formatNumber(results.flipNetProfit)}</strong>
+                <strong className="text-primary">${formatNumber(results.flipNetProfit)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Return on Investment (ROI):</span>
-                <strong className="text-red-600">{formatNumber(results.flipROI)}%</strong>
+                <strong className="text-primary">{formatNumber(results.flipROI)}%</strong>
               </div>
             </div>
             {flipChartData && (
@@ -788,38 +788,38 @@ const RealEstateAnalyzer: React.FC = () => {
           {/* Rental Analysis */}
           <div className="mb-6">
             <h5 className="text-xl font-semibold text-foreground mb-3">Rental Property Analysis</h5>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="flex justify-between py-2 border-b border-gray-200">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-foreground">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Monthly Gross Rent:</span>
-                <strong className="text-red-600">${formatNumber(results.rentalGrossRent)}</strong>
+                <strong className="text-primary">${formatNumber(results.rentalGrossRent)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Monthly Operating Expenses:</span>
-                <strong className="text-red-600">${formatNumber(results.rentalOperatingExpenses)}</strong>
+                <strong className="text-primary">${formatNumber(results.rentalOperatingExpenses)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Net Operating Income (NOI):</span>
-                <strong className="text-red-600">${formatNumber(results.rentalNOI)}</strong>
+                <strong className="text-primary">${formatNumber(results.rentalNOI)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Monthly Debt Service:</span>
-                <strong className="text-red-600">${formatNumber(results.rentalDebtService)}</strong>
+                <strong className="text-primary">${formatNumber(results.rentalDebtService)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Monthly Cash Flow:</span>
-                <strong className="text-red-600">${formatNumber(results.rentalCashFlow)}</strong>
+                <strong className="text-primary">${formatNumber(results.rentalCashFlow)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Annual Cash Flow:</span>
-                <strong className="text-red-600">${formatNumber(results.rentalAnnualCashFlow)}</strong>
+                <strong className="text-primary">${formatNumber(results.rentalAnnualCashFlow)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Cash-on-Cash Return:</span>
-                <strong className="text-red-600">{formatNumber(results.rentalCoC)}%</strong>
+                <strong className="text-primary">{formatNumber(results.rentalCoC)}%</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Cap Rate:</span>
-                <strong className="text-red-600">{formatNumber(results.rentalCapRate)}%</strong>
+                <strong className="text-primary">{formatNumber(results.rentalCapRate)}%</strong>
               </div>
             </div>
             {rentalChartData && (
@@ -832,26 +832,26 @@ const RealEstateAnalyzer: React.FC = () => {
           {/* BRRRR Analysis */}
           <div>
             <h5 className="text-xl font-semibold text-foreground mb-3">BRRRR Strategy Analysis</h5>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="flex justify-between py-2 border-b border-gray-200">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-foreground">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Initial Cash Invested:</span>
-                <strong className="text-red-600">${formatNumber(results.brrrrInitialCash)}</strong>
+                <strong className="text-primary">${formatNumber(results.brrrrInitialCash)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Refinance Loan Amount:</span>
-                <strong className="text-red-600">${formatNumber(results.brrrrRefiLoan)}</strong>
+                <strong className="text-primary">${formatNumber(results.brrrrRefiLoan)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Cash Pulled Out:</span>
-                <strong className="text-red-600">${formatNumber(results.brrrrCashOut)}</strong>
+                <strong className="text-primary">${formatNumber(results.brrrrCashOut)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200">
+              <div className="flex justify-between py-2 border-b border-border">
                 <span className="font-medium">Cash Left in Deal:</span>
-                <strong className="text-red-600">${formatNumber(results.brrrrCashLeft)}</strong>
+                <strong className="text-primary">${formatNumber(results.brrrrCashLeft)}</strong>
               </div>
-              <div className="flex justify-between py-2 border-b border-gray-200 col-span-full">
+              <div className="flex justify-between py-2 border-b border-border col-span-full">
                 <span className="font-medium">Post-Refi Cash-on-Cash Return:</span>
-                <strong className="text-red-600">{formatNumber(results.brrrrPostRefiCoC)}%</strong>
+                <strong className="text-primary">{formatNumber(results.brrrrPostRefiCoC)}%</strong>
               </div>
             </div>
             {brrrrChartData && (
