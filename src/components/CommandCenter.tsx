@@ -17,7 +17,7 @@ export const CommandCenter: React.FC = () => {
         }`}
       >
         <a 
-          href="sms:+15189282020?body=Hi%20Capital%20District%20Nest%2C%20I'm%20interested%20in%20an%20investment%20property."
+          href="sms:+15186762347?body=Hi%20Capital%20District%20Nest%2C%20I'm%20interested%20in%20an%20investment%20property."
           className="bg-card border border-border px-5 py-4 rounded-xl flex items-center justify-between w-[260px] no-underline text-foreground transition-all duration-200 hover:-translate-x-1 hover:border-primary"
         >
           <div>
@@ -28,7 +28,7 @@ export const CommandCenter: React.FC = () => {
         </a>
 
         <a 
-          href="tel:+15189282020"
+          href="tel:+15186762347"
           className="bg-card border border-border px-5 py-4 rounded-xl flex items-center justify-between w-[260px] no-underline text-foreground transition-all duration-200 hover:-translate-x-1 hover:border-primary"
         >
           <div>
