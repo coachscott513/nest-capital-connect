@@ -332,7 +332,7 @@ const Index = () => {
             {/* Metric 1 */}
             <div className="flex items-center justify-between py-4 border-b border-border">
               <div>
-                <div className="text-4xl font-extrabold text-[hsl(220,60%,20%)]">15</div>
+                <div className="text-4xl font-extrabold text-foreground">15</div>
                 <div className="text-sm text-muted-foreground mt-1">Avg Days on Market</div>
               </div>
               <div className="flex items-center gap-1 text-primary font-bold">
@@ -346,7 +346,7 @@ const Index = () => {
             {/* Metric 2 */}
             <div className="flex items-center justify-between py-4 border-b border-border">
               <div>
-                <div className="text-4xl font-extrabold text-[hsl(220,60%,20%)]">$320k</div>
+                <div className="text-4xl font-extrabold text-foreground">$320k</div>
                 <div className="text-sm text-muted-foreground mt-1">Median Sales Price</div>
               </div>
               <div className="flex items-center gap-1 text-primary font-bold">
@@ -360,7 +360,7 @@ const Index = () => {
             {/* Metric 3 */}
             <div className="flex items-center justify-between py-4">
               <div>
-                <div className="text-4xl font-extrabold text-[hsl(220,60%,20%)]">98.1%</div>
+                <div className="text-4xl font-extrabold text-foreground">98.1%</div>
                 <div className="text-sm text-muted-foreground mt-1">List-to-Sale Ratio</div>
               </div>
               <div className="flex items-center gap-1 text-primary font-bold">
