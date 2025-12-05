@@ -22,9 +22,23 @@ const faqItems = [
   }
 ];
 
+const menuItems = [
+  { label: "Invest", href: "/investment-landing" },
+  { label: "Markets", href: "/markets" },
+  { label: "Rentals", href: "/rentals" },
+  { label: "Calculators", href: "/investor-tools" },
+  { label: "Financing", href: "/first-time-homebuyers" },
+  { label: "VIP List", href: "/grants" },
+  { label: "Support", href: "/communities" },
+];
+
 const Index = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [activeModal, setActiveModal] = useState<string | null>(null);
+
+  const openModal = (id: string) => setActiveModal(id);
+  const closeModal = () => setActiveModal(null);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -43,39 +57,38 @@ const Index = () => {
         </Link>
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="font-bold cursor-pointer border border-foreground px-5 py-2 rounded-full hover:bg-foreground hover:text-background transition-all"
+          className={`font-bold cursor-pointer border px-5 py-2 rounded-full transition-all ${
+            menuOpen 
+              ? 'border-primary text-primary' 
+              : 'border-foreground hover:bg-foreground hover:text-background'
+          }`}
         >
           {menuOpen ? "Close" : "Menu"}
         </button>
       </header>
 
-      {/* Simple Menu Overlay */}
-      {menuOpen && (
-        <div className="fixed inset-0 bg-background z-[1500] pt-24 px-10">
-          <nav className="flex flex-col gap-4">
-            {[
-              { label: "First-Time Buyers", href: "/first-time-homebuyers" },
-              { label: "Land & Lots", href: "/albany-land" },
-              { label: "Investors", href: "/investment-landing" },
-              { label: "Rentals", href: "/rentals" },
-              { label: "Markets", href: "/markets" },
-              { label: "Grants", href: "/grants" },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                to={item.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-3xl font-bold hover:text-gold transition-colors"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
+      {/* Full Menu Overlay */}
+      <div 
+        className={`fixed inset-0 bg-background z-[1500] pt-24 px-[5%] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          menuOpen ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
+        <nav className="flex flex-col gap-2 overflow-y-auto">
+          {menuItems.map((item) => (
+            <Link
+              key={item.label}
+              to={item.href}
+              onClick={() => setMenuOpen(false)}
+              className="text-3xl md:text-4xl font-bold hover:text-primary hover:pl-3 transition-all py-2"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+      </div>
 
-      {/* Mission Section - Democratized Wealth */}
-      <section className="text-center px-[5%] py-28 lg:py-36 border-b border-border/50 bg-[radial-gradient(circle_at_center,#111_0%,#000_70%)]">
+      {/* Mission Section */}
+      <section className="text-center px-[5%] py-28 lg:py-36 border-b border-border/50 bg-[radial-gradient(circle_at_center,hsl(var(--card))_0%,hsl(var(--background))_70%)]">
         <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-medium tracking-tight leading-[1.05] mb-6">
           Wall Street Tools.<br />
           <span className="text-primary">For Your First Asset.</span>
@@ -87,15 +100,19 @@ const Index = () => {
           we provide the strategy, the math, and the grants to make it happen.
         </p>
 
+        {/* Trust Badges */}
         <div className="flex justify-center gap-4 flex-wrap mb-10">
-          <div className="flex items-center gap-2 bg-card border border-border text-muted-foreground px-5 py-2 rounded-full text-sm font-bold">
-            First-Time Buyers
+          <div className="flex items-center gap-2 bg-card border border-[#004ecc] text-foreground px-5 py-2 rounded-full text-sm font-bold">
+            <div className="w-2 h-2 bg-[#dc1c2e] rounded-full" />
+            Powered by RE/MAX
           </div>
           <div className="flex items-center gap-2 bg-card border border-border text-muted-foreground px-5 py-2 rounded-full text-sm font-bold">
-            Land & New Build
+            <div className="w-2 h-2 bg-foreground rounded-full" />
+            Econ & Business Degrees
           </div>
           <div className="flex items-center gap-2 bg-card border border-border text-muted-foreground px-5 py-2 rounded-full text-sm font-bold">
-            Investors
+            <div className="w-2 h-2 bg-foreground rounded-full" />
+            Local Experts
           </div>
         </div>
 
@@ -110,95 +127,169 @@ const Index = () => {
         </button>
       </section>
 
-      {/* Hero 1: Stop Renting - House Hacking */}
+      {/* Choose Your Path - Card Grid */}
+      <section className="px-[5%] py-20 lg:py-24 border-b border-border/50">
+        <div className="text-center mb-14">
+          <h2 className="text-4xl md:text-5xl font-medium tracking-tight leading-[1.1] mb-4">
+            Choose your <span className="text-primary">Path.</span>
+          </h2>
+          <p className="text-lg text-muted-foreground">Start where you are. We'll get you to the closing table.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {/* Free Funding Card */}
+          <div 
+            onClick={() => openModal('grant')}
+            className="bg-card p-10 rounded-2xl border border-border cursor-pointer hover:-translate-y-1 hover:border-primary transition-all relative"
+          >
+            <div className="text-4xl mb-5">💸</div>
+            <h3 className="text-2xl font-medium mb-3">Free Funding</h3>
+            <p className="text-muted-foreground mb-8">
+              Buying your first rental? Don't use all your own cash. Download the <strong className="text-foreground">2025 Down-Payment Assistance PDF</strong> ($30k available).
+            </p>
+            <div className="text-primary font-bold">Get Grant PDF →</div>
+          </div>
+
+          {/* Get Financed Card */}
+          <div 
+            onClick={() => openModal('analysis')}
+            className="bg-card p-10 rounded-2xl border border-border cursor-pointer hover:-translate-y-1 hover:border-primary transition-all relative"
+          >
+            <div className="text-4xl mb-5">🏦</div>
+            <h3 className="text-2xl font-medium mb-3">Get Financed</h3>
+            <p className="text-muted-foreground mb-8">
+              No pre-approval? No problem. We connect you with lenders who specialize in <strong className="text-foreground">FHA (3.5% down)</strong> and <strong className="text-foreground">Renovation Loans</strong>.
+            </p>
+            <div className="text-primary font-bold">See Loan Options →</div>
+          </div>
+
+          {/* Deal Access Card */}
+          <div 
+            onClick={() => openModal('vip')}
+            className="bg-card p-10 rounded-2xl border border-border cursor-pointer hover:-translate-y-1 hover:border-primary transition-all relative"
+          >
+            <div className="text-4xl mb-5">🔐</div>
+            <h3 className="text-2xl font-medium mb-3">Deal Access</h3>
+            <p className="text-muted-foreground mb-8">
+              From your first duplex to a 10-unit portfolio. Get the list of <strong className="text-foreground">High Cash Flow</strong> properties before they hit Zillow.
+            </p>
+            <div className="text-primary font-bold">View Inventory →</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Street-Level Economics Hero */}
       <section className="flex flex-col lg:flex-row items-center justify-between gap-16 px-[5%] py-24 lg:py-32 border-b border-border/50">
         <div className="flex-1 max-w-xl">
-          <span className="text-gold font-extrabold uppercase tracking-widest text-sm mb-4 block">Stop Renting. Start Owning.</span>
+          <span className="text-gold font-extrabold uppercase tracking-widest text-sm mb-4 block">Street-Level Economics</span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05] mb-6">
-            Your rent is paying someone else's mortgage.
+            Not Agents.<br />Portfolio Managers.
           </h2>
           <p className="text-lg md:text-xl text-foreground leading-relaxed mb-8 max-w-lg">
-            Flip the script. Buy a 2-family home. Live in one unit, rent the other, and live for free. 
-            We specialize in helping <strong>Renters become Owners</strong> using $30k Grants.
+            A standard agent opens the door. We analyze the asset. 
+            Whether it's raw land in Niskayuna or a 3-family in Troy, we apply institutional-grade data to every transaction.
           </p>
-          <Link to="/grants" className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
-            Get the "House Hack" Guide
-          </Link>
-          <p className="text-xs text-muted-foreground mt-6 max-w-md leading-relaxed">
-            *First-time buyer grants available in Albany & Troy. Income limits apply.
-          </p>
+          
+          <div className="flex flex-wrap gap-3 mt-8">
+            <div className="border border-border px-4 py-2 rounded-full text-sm">🏠 Residential</div>
+            <div className="border border-border px-4 py-2 rounded-full text-sm">🏙️ Multi-Unit</div>
+            <div className="border border-border px-4 py-2 rounded-full text-sm">🌳 Land Development</div>
+          </div>
         </div>
         <div className="flex-1 flex justify-center">
           <div className="w-full max-w-sm h-[500px] bg-card rounded-[40px] border-4 border-border overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.05)]">
             <img 
-              src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
-              alt="Keys to your first home" 
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
+              alt="Analytics Dashboard" 
               className="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity"
             />
           </div>
         </div>
       </section>
 
-      {/* Hero 2: Land - Build Your Future (Reversed) */}
+      {/* Boots on the Ground Hero (Reversed) */}
       <section className="flex flex-col lg:flex-row-reverse items-center justify-between gap-16 px-[5%] py-24 lg:py-32 border-b border-border/50">
         <div className="flex-1 max-w-xl">
-          <span className="text-gold font-extrabold uppercase tracking-widest text-sm mb-4 block">Build Your Future</span>
+          <span className="text-gold font-extrabold uppercase tracking-widest text-sm mb-4 block">Boots on the Ground</span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] mb-6">
-            Land. The ultimate limited resource.
+            Local eyes.<br />Asset protection.
           </h2>
           <p className="text-lg md:text-xl text-foreground leading-relaxed mb-8 max-w-lg">
-            Looking for acreage in Niskayuna or a buildable lot in Saratoga? 
-            Land buying requires different expertise: Perc tests, zoning, and surveys. 
-            We help you find the dirt to build your dream.
+            We don't disappear at closing. 
+            <strong> Nest Stewardship</strong> handles the headaches for our VIP clients. 
+            We triage tenant calls, coordinate repairs, and handle inspections so your passive income stays passive.
           </p>
-          <Link to="/albany-land" className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
-            View Land Listings
-          </Link>
+          <button 
+            onClick={() => openModal('vip')}
+            className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform cursor-pointer"
+          >
+            Join VIP List
+          </button>
           <p className="text-xs text-muted-foreground mt-6 max-w-md leading-relaxed">
-            *We assist with land acquisition and builder connections.
+            *Available for clients in Albany, Troy, Schenectady.
           </p>
         </div>
         <div className="flex-1 flex justify-center">
           <div className="w-full max-w-sm h-[500px] bg-card rounded-[40px] border-4 border-border overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.05)]">
             <img 
-              src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
-              alt="Land for sale" 
+              src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
+              alt="Property keys handover" 
               className="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity"
             />
           </div>
         </div>
       </section>
 
-      {/* Hero 3: Financing - Even if you're new */}
-      <section className="flex flex-col lg:flex-row items-center justify-between gap-16 px-[5%] py-24 lg:py-32 border-b border-border/50">
-        <div className="flex-1 max-w-xl">
-          <span className="text-gold font-extrabold uppercase tracking-widest text-sm mb-4 block">No Approval? No Problem.</span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] mb-6">
-            Get Financed.<br />Even if you're new.
-          </h2>
-          <p className="text-lg md:text-xl text-foreground leading-relaxed mb-8 max-w-lg">
-            Don't let the banks scare you. 
-            We work with lenders who specialize in <strong>First-Time Buyers</strong> (3.5% Down) and <strong>Renovation Loans</strong> (fixing up an old house).
-          </p>
-          <Link to="/first-time-homebuyers" className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
-            See Loan Options
-          </Link>
-        </div>
-        <div className="flex-1 flex justify-center">
-          <div className="w-full max-w-sm h-[500px] bg-card rounded-[40px] border-4 border-border overflow-hidden shadow-[0_0_50px_rgba(255,255,255,0.05)]">
-            <img 
-              src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
-              alt="Financing options" 
-              className="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity"
-            />
+      {/* Buyer Feed Section */}
+      <section className="px-[5%] py-24 lg:py-28 border-b border-border/50 text-center">
+        <h2 className="text-4xl md:text-5xl font-medium tracking-tight leading-[1.1] mb-5">
+          We have the <span className="text-primary">Demand.</span>
+        </h2>
+        <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
+          We match properties with buyers instantly. From first-time house hackers to commercial developers.
+        </p>
+
+        <div className="bg-card border border-border rounded-2xl max-w-3xl mx-auto overflow-hidden text-left">
+          <div className="bg-muted px-5 py-4 font-bold border-b border-border flex justify-between items-center">
+            <span>🎯 LIVE BUYER FEED</span>
+            <span className="text-primary text-sm">● ACTIVE</span>
           </div>
+          <div>
+            <div className="flex justify-between items-center px-5 py-5 border-b border-border/50">
+              <div>
+                <div className="font-bold">First-Time Investor</div>
+                <div className="text-sm text-muted-foreground">Looking in: <span className="text-foreground/80">Troy / Lansingburgh</span></div>
+              </div>
+              <div className="text-right">
+                <div className="font-bold text-primary">$180k FHA</div>
+              </div>
+            </div>
+            <div className="flex justify-between items-center px-5 py-5">
+              <div>
+                <div className="font-bold">Cash Buyer (NYC)</div>
+                <div className="text-sm text-muted-foreground">Looking in: <span className="text-foreground/80">Albany Center Sq</span></div>
+              </div>
+              <div className="text-right">
+                <div className="font-bold text-primary">$450k Cash</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <button 
+            onClick={() => openModal('analysis')}
+            className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform cursor-pointer"
+          >
+            Get Cash Offer Analysis
+          </button>
         </div>
       </section>
 
       {/* FAQ Section */}
       <section className="px-[5%] lg:px-[15%] py-24 lg:py-32">
         <h2 className="text-4xl md:text-5xl font-medium tracking-tight leading-[1.1] mb-16">
-          New to this?<br />We've got you.
+          You've got questions.<br />We got answers.
         </h2>
 
         <div className="divide-y divide-border">
@@ -231,13 +322,98 @@ const Index = () => {
       <footer className="px-[5%] py-12 border-t border-border text-sm text-muted-foreground">
         <div className="max-w-3xl">
           <div className="font-bold text-foreground mb-4">Capital District Nest Team at RE/MAX</div>
-          <p>
+          <p className="mb-4">
             Capital District Nest LLC is a specialized real estate team. 
             Powered by RE/MAX. Each office independently owned and operated.
             Licensed in New York and Massachusetts.
           </p>
+          <p>*Nest Stewardship is a client service tier and not an insurance product.</p>
         </div>
       </footer>
+
+      {/* MODALS */}
+      {/* Grant Modal */}
+      {activeModal === 'grant' && (
+        <div 
+          className="fixed inset-0 bg-background/85 backdrop-blur-sm z-[3000] flex items-center justify-center animate-in fade-in duration-200"
+          onClick={(e) => e.target === e.currentTarget && closeModal()}
+        >
+          <div className="bg-card border border-border p-10 rounded-2xl max-w-md w-[90%] relative text-center shadow-2xl">
+            <button onClick={closeModal} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground text-2xl">×</button>
+            <div className="text-5xl mb-4">💸</div>
+            <h3 className="text-2xl font-medium mb-3">Claim Grant PDF</h3>
+            <p className="text-muted-foreground mb-6">Enter details to receive the 2025 Application.</p>
+            <form onSubmit={(e) => { e.preventDefault(); closeModal(); }}>
+              <input 
+                type="email" 
+                placeholder="Email Address" 
+                required
+                className="w-full bg-background border border-border px-4 py-4 rounded-lg text-foreground mb-4 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <button type="submit" className="w-full bg-foreground text-background px-6 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
+                Send PDF
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* VIP Modal */}
+      {activeModal === 'vip' && (
+        <div 
+          className="fixed inset-0 bg-background/85 backdrop-blur-sm z-[3000] flex items-center justify-center animate-in fade-in duration-200"
+          onClick={(e) => e.target === e.currentTarget && closeModal()}
+        >
+          <div className="bg-card border border-border p-10 rounded-2xl max-w-md w-[90%] relative text-center shadow-2xl">
+            <button onClick={closeModal} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground text-2xl">×</button>
+            <div className="text-5xl mb-4">🔐</div>
+            <h3 className="text-2xl font-medium mb-3">Join VIP List</h3>
+            <p className="text-muted-foreground mb-6">Get "Coming Soon" inventory 48 hours early.</p>
+            <form onSubmit={(e) => { e.preventDefault(); closeModal(); }}>
+              <input 
+                type="email" 
+                placeholder="Email Address" 
+                required
+                className="w-full bg-background border border-border px-4 py-4 rounded-lg text-foreground mb-4 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <button type="submit" className="w-full bg-foreground text-background px-6 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
+                Join List
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Analysis Modal */}
+      {activeModal === 'analysis' && (
+        <div 
+          className="fixed inset-0 bg-background/85 backdrop-blur-sm z-[3000] flex items-center justify-center animate-in fade-in duration-200"
+          onClick={(e) => e.target === e.currentTarget && closeModal()}
+        >
+          <div className="bg-card border border-border p-10 rounded-2xl max-w-md w-[90%] relative text-center shadow-2xl">
+            <button onClick={closeModal} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground text-2xl">×</button>
+            <div className="text-5xl mb-4">📊</div>
+            <h3 className="text-2xl font-medium mb-3">Deal Analysis</h3>
+            <p className="text-muted-foreground mb-6">Paste a Zillow link. We'll run the numbers.</p>
+            <form onSubmit={(e) => { e.preventDefault(); closeModal(); }}>
+              <input 
+                type="text" 
+                placeholder="Property Address/URL"
+                className="w-full bg-background border border-border px-4 py-4 rounded-lg text-foreground mb-4 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <input 
+                type="email" 
+                placeholder="Email" 
+                required
+                className="w-full bg-background border border-border px-4 py-4 rounded-lg text-foreground mb-4 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <button type="submit" className="w-full bg-foreground text-background px-6 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
+                Analyze
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
