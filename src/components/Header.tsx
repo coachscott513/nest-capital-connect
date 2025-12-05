@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
@@ -23,17 +23,26 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-blue-900/95 backdrop-blur-sm border-b border-blue-800/20 shadow-lg">
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-6 py-3">
-        {/* Logo and Site Name */}
-        <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-          <img 
-            src="/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png" 
-            alt="Capital District Nest Logo" 
-            className="h-10 w-10"
-          />
-          <span className="text-white font-semibold text-lg hidden sm:block">
-            Capital District Nest
-          </span>
-        </Link>
+        {/* Logo, Site Name, and Phone */}
+        <div className="flex items-center space-x-4">
+          <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+            <img 
+              src="/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png" 
+              alt="Capital District Nest Logo" 
+              className="h-10 w-10"
+            />
+            <span className="text-white font-semibold text-lg hidden sm:block">
+              Capital District Nest
+            </span>
+          </Link>
+          <a 
+            href="tel:+15186762347" 
+            className="hidden sm:flex items-center space-x-1.5 text-white/90 hover:text-white transition-colors text-sm"
+          >
+            <Phone size={14} />
+            <span>(518) 676-2347</span>
+          </a>
+        </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-1">
