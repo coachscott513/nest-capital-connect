@@ -8,6 +8,11 @@ const markets = [
   "Saratoga", "Latham", "Clifton Park", "Rensselaer"
 ];
 
+const propertyTypes = [
+  "Single Family Homes", "Rental Properties", "Land", 
+  "Fix & Flip", "Commercial", "Sell Your Home"
+];
+
 const menuSections = [
   {
     category: "Assets",
@@ -202,6 +207,23 @@ const Index = () => {
               className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
             >
               {market}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Property Types Grid */}
+      <section className="px-[5%] py-20 border-t border-border">
+        <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-10 text-center">
+          We specialize in every property type.
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 max-w-5xl mx-auto">
+          {propertyTypes.map((type) => (
+            <div
+              key={type}
+              className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+            >
+              {type}
             </div>
           ))}
         </div>
