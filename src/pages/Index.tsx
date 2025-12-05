@@ -308,6 +308,72 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Market Analytics Section */}
+      <section className="flex flex-col lg:flex-row items-center px-[5%] py-20 border-t border-border bg-muted/20">
+        <div className="flex-1 max-w-[550px] p-5">
+          <div className="text-primary font-bold text-sm mb-3 uppercase tracking-wider">Q4 2025 DATA</div>
+          <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-5 text-[hsl(220,60%,20%)]">
+            The Economics of<br />Upstate Real Estate
+          </h2>
+          <p className="text-muted-foreground italic mb-4">
+            Why accurate pricing matters more than ever in a tight inventory market.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-6">
+            Real estate isn't just about curb appeal; it's about supply and demand curves. In late 2025, the Capital District is experiencing a classic supply constraint. With inventory in Albany County down nearly 16% year-over-year and median sale prices stabilizing around $320,000, we are in a high-velocity market.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            For sellers, this "Scarcity Premium" means homes priced correctly are seeing multiple offers within 15 days. For buyers, it means you need an agent who understands the data to win competitive bids without overpaying. I don't just guess the price; <strong className="text-foreground">I analyze the market fundamentals to secure your investment.</strong>
+          </p>
+        </div>
+        <div className="flex-1 flex justify-center p-5">
+          <div className="bg-card border border-border rounded-2xl p-8 w-full max-w-[400px] shadow-[0_20px_50px_rgba(0,0,0,0.25)]">
+            <div className="text-xs text-muted-foreground uppercase tracking-widest mb-6 text-center">Capital District Market Snapshot</div>
+            
+            {/* Metric 1 */}
+            <div className="flex items-center justify-between py-4 border-b border-border">
+              <div>
+                <div className="text-4xl font-extrabold text-[hsl(220,60%,20%)]">15</div>
+                <div className="text-sm text-muted-foreground mt-1">Avg Days on Market</div>
+              </div>
+              <div className="flex items-center gap-1 text-primary font-bold">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                </svg>
+                Fast
+              </div>
+            </div>
+
+            {/* Metric 2 */}
+            <div className="flex items-center justify-between py-4 border-b border-border">
+              <div>
+                <div className="text-4xl font-extrabold text-[hsl(220,60%,20%)]">$320k</div>
+                <div className="text-sm text-muted-foreground mt-1">Median Sales Price</div>
+              </div>
+              <div className="flex items-center gap-1 text-primary font-bold">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                </svg>
+                Stable
+              </div>
+            </div>
+
+            {/* Metric 3 */}
+            <div className="flex items-center justify-between py-4">
+              <div>
+                <div className="text-4xl font-extrabold text-[hsl(220,60%,20%)]">98.1%</div>
+                <div className="text-sm text-muted-foreground mt-1">List-to-Sale Ratio</div>
+              </div>
+              <div className="flex items-center gap-1 text-primary font-bold">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                </svg>
+                Strong
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Hero Section 1: VIP Experience */}
       <section className="flex flex-col lg:flex-row items-center px-[5%] py-16 lg:min-h-[600px] border-t border-border">
         <div className="flex-1 max-w-[550px] p-5">
