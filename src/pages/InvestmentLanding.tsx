@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -94,6 +95,12 @@ const InvestmentLanding = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
+      <Helmet>
+        <title>Investment Properties Capital District | High-Return Deals | Capital District Nest</title>
+        <meta name="description" content="Get exclusive access to off-market multi-unit properties and rehab opportunities in Albany, Troy, Schenectady. Join 200+ investors receiving weekly alerts." />
+        <link rel="canonical" href="https://capitaldistrictnest.com/investment-properties" />
+      </Helmet>
+      
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto text-center mb-8">
