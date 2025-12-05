@@ -4,13 +4,23 @@ import SEOHead from "@/components/SEOHead";
 import CommandCenter from "@/components/CommandCenter";
 
 const markets = [
-  "Albany", "Niskayuna", "Troy", "Schenectady", 
-  "Saratoga", "Latham", "Clifton Park", "Rensselaer"
+  { name: "Albany", href: "/albany-real-estate" },
+  { name: "Niskayuna", href: "/markets" },
+  { name: "Troy", href: "/troy-real-estate" },
+  { name: "Schenectady", href: "/schenectady-real-estate" },
+  { name: "Saratoga", href: "/saratoga-real-estate" },
+  { name: "Latham", href: "/markets" },
+  { name: "Clifton Park", href: "/markets" },
+  { name: "Rensselaer", href: "/markets" },
 ];
 
 const propertyTypes = [
-  "Single Family Homes", "Rental Properties", "Land", 
-  "Fix & Flip", "Commercial", "Sell Your Home"
+  { name: "Single Family Homes", href: "/homes-for-sale" },
+  { name: "Rental Properties", href: "/rentals" },
+  { name: "Land", href: "/albany-land" },
+  { name: "Fix & Flip", href: "/sell-investment-property" },
+  { name: "Commercial", href: "/albany-multi-unit" },
+  { name: "Sell Your Home", href: "/sell-investment-property" },
 ];
 
 const menuSections = [
@@ -202,12 +212,13 @@ const Index = () => {
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
           {markets.map((market) => (
-            <div
-              key={market}
+            <Link
+              key={market.name}
+              to={market.href}
               className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
             >
-              {market}
-            </div>
+              {market.name}
+            </Link>
           ))}
         </div>
       </section>
@@ -219,12 +230,13 @@ const Index = () => {
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 max-w-5xl mx-auto">
           {propertyTypes.map((type) => (
-            <div
-              key={type}
+            <Link
+              key={type.name}
+              to={type.href}
               className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
             >
-              {type}
-            </div>
+              {type.name}
+            </Link>
           ))}
         </div>
       </section>
