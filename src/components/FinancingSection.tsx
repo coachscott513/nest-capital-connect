@@ -172,19 +172,110 @@ const FinancingSection = () => {
     };
   }, []);
 
+  const strategyCards = [
+    {
+      title: "Low Entry",
+      subtitle: "FHA 3.5% Down",
+      description: "Access homeownership with minimal upfront capital. Perfect for first-time buyers and house-hackers looking to start building equity.",
+      icon: (
+        <svg className="w-12 h-12" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+    },
+    {
+      title: "Seller Pay",
+      subtitle: "Closing Cost Concessions",
+      description: "Negotiate seller-paid closing costs to reduce your cash-to-close. We structure offers that protect your capital while staying competitive.",
+      icon: (
+        <svg className="w-12 h-12" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+      ),
+    },
+    {
+      title: "Value Add",
+      subtitle: "203(k) Renovation Loans",
+      description: "Finance both purchase and renovation in a single loan. Turn distressed properties into performing assets with built-in equity from day one.",
+      icon: (
+        <svg className="w-12 h-12" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+        </svg>
+      ),
+    },
+    {
+      title: "Creative Stack",
+      subtitle: "DSCR & Portfolio Loans",
+      description: "Scale beyond conventional limits with debt-service coverage ratio loans. Qualify based on property income, not personal DTI. Perfect for investors.",
+      icon: (
+        <svg className="w-12 h-12" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      ),
+    },
+  ];
+
   return (
     <>
-      <section id="financing" className="py-16 relative border-t border-border">
-        <div className="relative min-h-[450px] overflow-hidden rounded-lg mx-4 max-w-7xl lg:mx-auto">
-          <img 
-            src="https://img.kvcore.com/cdn-cgi/image/fit=scale-down,format=auto/https://dtzulyujzhqiu.cloudfront.net/kvcoredemo14/images/1594658722_YXYBlolB3pNcEOuHmf8KJPPpzrQZtnk99VIhIXq0.jpeg" 
-            alt="picture of calculator"
-            className="absolute inset-0 w-full h-full object-cover brightness-50"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center text-white max-w-3xl px-6">
-              <h3 className="text-4xl font-semibold mb-4">Financing Solutions</h3>
-              <p className="text-lg">Our partners offer competitive rates and expert guidance to help you navigate your financing options with confidence.</p>
+      <section id="financing" className="py-20 relative border-t border-border bg-background">
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="text-primary font-bold text-sm tracking-wider mb-3">FINANCIAL ARCHITECTURE</div>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+              The Capital Stack
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Strategic financing solutions engineered to maximize leverage and minimize cash-to-close.
+            </p>
+          </div>
+
+          {/* 2x2 Grid with Center Goal */}
+          <div className="relative">
+            {/* Strategy Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+              {strategyCards.map((card, index) => (
+                <div
+                  key={card.title}
+                  className="group relative bg-card/40 backdrop-blur-md border border-primary/30 rounded-2xl p-8 transition-all duration-300 hover:-translate-y-2 hover:border-primary hover:shadow-[0_0_40px_rgba(16,185,129,0.15)]"
+                >
+                  {/* Gold Icon - Top Right */}
+                  <div className="absolute top-6 right-6 text-[#D4AF37] opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+                    {card.icon}
+                  </div>
+
+                  {/* Content */}
+                  <div className="pr-16">
+                    <h3 className="text-2xl font-bold text-foreground mb-1">{card.title}</h3>
+                    <div className="text-primary font-semibold text-sm mb-4">{card.subtitle}</div>
+                    <p className="text-muted-foreground leading-relaxed">{card.description}</p>
+                  </div>
+
+                  {/* Subtle gradient overlay on hover */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                </div>
+              ))}
+            </div>
+
+            {/* Central Goal Badge - Desktop Only */}
+            <div className="hidden lg:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+              <div className="bg-background border-2 border-primary rounded-full px-8 py-4 shadow-[0_0_60px_rgba(16,185,129,0.3)]">
+                <div className="text-center">
+                  <div className="text-xs text-muted-foreground font-semibold tracking-wider mb-1">GOAL</div>
+                  <div className="text-lg font-bold text-primary">Minimize Cash-to-Close</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Goal Badge */}
+          <div className="lg:hidden mt-10 flex justify-center">
+            <div className="bg-card border-2 border-primary rounded-full px-8 py-4 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
+              <div className="text-center">
+                <div className="text-xs text-muted-foreground font-semibold tracking-wider mb-1">GOAL</div>
+                <div className="text-lg font-bold text-primary">Minimize Cash-to-Close</div>
+              </div>
             </div>
           </div>
         </div>
