@@ -5,6 +5,7 @@ import CommandCenter from "@/components/CommandCenter";
 import AlphaListSection from "@/components/AlphaListSection";
 import DealOfMonthSection from "@/components/DealOfMonthSection";
 import StrategySessionSection from "@/components/StrategySessionSection";
+import FinancingSection from "@/components/FinancingSection";
 
 const markets = [
   { name: "Albany", href: "/albany-real-estate" },
@@ -624,6 +625,9 @@ const Index = () => {
 
       {/* Strategy Session Section */}
       <StrategySessionSection />
+
+      {/* Capital Stack Financing Section */}
+      <FinancingSection />
 
       {/* Command Center FAB */}
       <CommandCenter />
