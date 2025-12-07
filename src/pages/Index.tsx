@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TrendingUp, Percent, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import CommandCenter from "@/components/CommandCenter";
@@ -478,78 +479,53 @@ const Index = () => {
 
       </section>
 
-      {/* First-Time Homebuyers - Bloomberg Terminal Aesthetic */}
+      {/* First-Time Investor Section - Coverage Area Style */}
       <section className="px-[5%] py-20 border-t border-border bg-black">
         {/* Section Title */}
-        <div className="text-center mb-16">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wider text-[#10B981] drop-shadow-[0_0_20px_rgba(16,185,129,0.5)]" style={{ fontFamily: 'system-ui, -apple-system, monospace' }}>
-            FIRST-TIME BUYER: <span className="text-white">THE FINANCIAL EDGE</span>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+            FIRST HOME = FIRST ASSET
           </h2>
-          <div className="w-32 h-0.5 bg-[#10B981] mx-auto mt-4 shadow-[0_0_10px_rgba(16,185,129,0.7)]" />
         </div>
 
-        {/* Three-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {/* Card 1: Your First Asset */}
-          <div className="bg-[#022c22]/70 backdrop-blur-xl border border-[#10B981] rounded-xl p-8 shadow-[0_0_30px_rgba(16,185,129,0.2)] hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all duration-300">
-            {/* Icon - Upward Trending Graph */}
-            <div className="mb-6 flex justify-center">
-              <div className="w-16 h-16 flex items-center justify-center">
-                <svg className="w-14 h-14 text-[#10B981] drop-shadow-[0_0_10px_rgba(16,185,129,0.7)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-              </div>
+        {/* Three Feature Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {/* Card 1: Appreciating Asset */}
+          <div className="bg-[#10B981] rounded-xl p-8 text-center transition-all duration-300 hover:shadow-[0_0_40px_rgba(16,185,129,0.6)] hover:brightness-110 cursor-pointer">
+            <div className="mb-4 flex justify-center">
+              <TrendingUp className="w-10 h-10 text-white" />
             </div>
-            
-            <h3 className="text-[#10B981] font-bold text-lg mb-4 text-center tracking-wide drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" style={{ fontFamily: 'system-ui, -apple-system, monospace' }}>
-              YOUR FIRST ASSET
+            <h3 className="text-white font-bold text-xl mb-3">
+              Appreciating Asset
             </h3>
-            
-            <p className="text-white/80 text-center leading-relaxed text-sm">
-              Stop paying 100% interest on rent. Start building equity and net worth with your first property investment.
+            <p className="text-white/90 text-sm leading-relaxed">
+              Stop paying 100% interest on rent. Pay down your own principal.
             </p>
           </div>
 
-          {/* Card 2: Low to Zero Capital Entry */}
-          <div className="bg-[#022c22]/70 backdrop-blur-xl border border-[#10B981] rounded-xl p-8 shadow-[0_0_30px_rgba(16,185,129,0.2)] hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all duration-300">
-            {/* Icon - Percentage/Coins */}
-            <div className="mb-6 flex justify-center">
-              <div className="w-16 h-16 flex items-center justify-center">
-                <span className="text-3xl font-black text-[#10B981] drop-shadow-[0_0_10px_rgba(16,185,129,0.7)]" style={{ fontFamily: 'system-ui, -apple-system, monospace' }}>
-                  0-3.5%
-                </span>
-              </div>
+          {/* Card 2: Low/Zero Entry */}
+          <div className="bg-[#10B981] rounded-xl p-8 text-center transition-all duration-300 hover:shadow-[0_0_40px_rgba(16,185,129,0.6)] hover:brightness-110 cursor-pointer">
+            <div className="mb-4 flex justify-center">
+              <Percent className="w-10 h-10 text-white" />
             </div>
-            
-            <h3 className="text-[#10B981] font-bold text-lg mb-4 text-center tracking-wide drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" style={{ fontFamily: 'system-ui, -apple-system, monospace' }}>
-              LOW TO ZERO CAPITAL ENTRY
+            <h3 className="text-white font-bold text-xl mb-3">
+              Low/Zero Entry
             </h3>
-            
-            <p className="text-white/80 text-center leading-relaxed text-sm">
-              Leverage FHA, VA, and USDA programs. Utilize grants and seller concessions for minimal cash-to-close.
+            <p className="text-white/90 text-sm leading-relaxed">
+              Leverage FHA & Grants. Control a $300k asset with $0 to 3.5% down.
             </p>
           </div>
 
-          {/* Card 3: Tax & Savings Advantage */}
-          <div className="bg-[#022c22]/70 backdrop-blur-xl border border-[#10B981] rounded-xl p-8 shadow-[0_0_30px_rgba(16,185,129,0.2)] hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all duration-300">
-            {/* Icon - Piggy Bank with Calculator */}
-            <div className="mb-6 flex justify-center">
-              <div className="w-16 h-16 flex items-center justify-center gap-2">
-                <svg className="w-10 h-10 text-[#10B981] drop-shadow-[0_0_10px_rgba(16,185,129,0.7)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <svg className="w-6 h-6 text-[#10B981] drop-shadow-[0_0_10px_rgba(16,185,129,0.7)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-              </div>
+          {/* Card 3: Tax Strategy */}
+          <div className="bg-[#10B981] rounded-xl p-8 text-center transition-all duration-300 hover:shadow-[0_0_40px_rgba(16,185,129,0.6)] hover:brightness-110 cursor-pointer">
+            <div className="mb-4 flex justify-center">
+              <Calculator className="w-10 h-10 text-white" />
             </div>
-            
-            <h3 className="text-[#10B981] font-bold text-lg mb-4 text-center tracking-wide drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" style={{ fontFamily: 'system-ui, -apple-system, monospace' }}>
-              TAX & SAVINGS ADVANTAGE
+            <h3 className="text-white font-bold text-xl mb-3">
+              Tax Strategy
             </h3>
-            
-            <p className="text-white/80 text-center leading-relaxed text-sm">
-              Lock in your monthly housing cost. Potential deductions for mortgage interest and property taxes. <span className="text-white/50 text-xs">(Consult a tax professional)</span>
+            <p className="text-white/90 text-sm leading-relaxed">
+              Unlock mortgage interest deductions and future depreciation benefits.
             </p>
           </div>
         </div>
