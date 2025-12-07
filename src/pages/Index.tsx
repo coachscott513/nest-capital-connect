@@ -479,7 +479,7 @@ const Index = () => {
       </section>
 
       {/* First-Time Homebuyers - Bloomberg Terminal Aesthetic */}
-      <section className="px-[5%] py-20 border-t border-border" style={{ backgroundColor: '#065F46' }}>
+      <section className="px-[5%] py-20 border-t border-border bg-black">
         {/* Section Title */}
         <div className="text-center mb-16">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wider text-[#10B981] drop-shadow-[0_0_20px_rgba(16,185,129,0.5)]" style={{ fontFamily: 'system-ui, -apple-system, monospace' }}>
