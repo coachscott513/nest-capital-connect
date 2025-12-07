@@ -409,37 +409,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Hero Section 2: Purchasing Power (Reversed) */}
-      <section className="flex flex-col lg:flex-row-reverse items-center px-[5%] py-16 lg:min-h-[600px] border-t border-border">
-        <div className="flex-1 max-w-[550px] p-5">
-          <div className="text-primary font-bold text-sm mb-3">PURCHASING POWER</div>
-          <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-5">
-            Financing made<br />transparent.
-          </h2>
-          <p className="text-muted-foreground leading-relaxed text-lg mb-8">
-            From FHA 3.5% down-payments to negotiating 6% seller concessions. 
-            We unlock grants and creative financing to maximize your leverage.
-          </p>
-          <Link to="/grants" className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
-            See Grant Eligibility
-          </Link>
-        </div>
-        <div className="flex-1 flex justify-center p-5">
-          <div className="bg-card border border-border rounded-2xl p-8 w-full max-w-[450px] shadow-[0_20px_40px_rgba(0,0,0,0.5)] text-center">
-            <div className="text-5xl md:text-6xl font-extrabold text-foreground leading-none">$30k</div>
-            <div className="text-primary font-bold mt-3">Down Payment Grant</div>
-            <hr className="border-0 border-t border-border my-5" />
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Rate</span>
-              <span className="font-semibold">6.1% Fixed</span>
-            </div>
-            <div className="flex justify-between text-sm mt-3">
-              <span className="text-muted-foreground">Closing Costs</span>
-              <span className="text-primary font-semibold">Covered (Seller)</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Capital Stack Financing Section */}
+      <FinancingSection />
 
       {/* Hero Section 3: Graduate Analysis */}
       <section className="flex flex-col lg:flex-row items-center px-[5%] py-16 lg:min-h-[600px] border-t border-border">
@@ -628,9 +599,6 @@ const Index = () => {
 
       {/* Strategy Session Section */}
       <StrategySessionSection />
-
-      {/* Capital Stack Financing Section */}
-      <FinancingSection />
 
       {/* Command Center FAB */}
       <CommandCenter />
