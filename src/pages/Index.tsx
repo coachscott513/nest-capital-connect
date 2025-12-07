@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import CommandCenter from "@/components/CommandCenter";
+import AlphaListSection from "@/components/AlphaListSection";
 
 const markets = [
   { name: "Albany", href: "/albany-real-estate" },
@@ -626,6 +627,9 @@ const Index = () => {
           </a>
         </div>
       </section>
+
+      {/* Alpha List Section */}
+      <AlphaListSection />
 
       {/* Command Center FAB */}
       <CommandCenter />
