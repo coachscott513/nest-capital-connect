@@ -1,10 +1,1 @@
-project_id = "akonlzlpbdoqmczidfwm"
-
-[functions.sync-properties]
-verify_jwt = false
-
-[functions.submit-contact-form]
-verify_jwt = false
-
-[functions.google-sheets-webhook]
-verify_jwt = false
+project_id = "hstoxhgsvzlnwmagxfho"
