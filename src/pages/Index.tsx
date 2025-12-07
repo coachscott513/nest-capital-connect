@@ -478,79 +478,79 @@ const Index = () => {
 
       </section>
 
-      {/* First-Time Investor Section */}
+      {/* First-Time Homebuyers - Bloomberg Terminal Aesthetic */}
       <section className="px-[5%] py-20 border-t border-border" style={{ backgroundColor: '#065F46' }}>
-        <div className="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
-          {/* Left Side: The Chart */}
-          <div className="flex-1 w-full">
-            <div className="bg-[#022c22]/80 backdrop-blur-xl border border-[#10B981] rounded-2xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-              <h3 className="text-white/70 text-sm uppercase tracking-widest mb-6">Net Worth Comparison</h3>
-              <p className="text-white/50 text-xs mb-8">Source: Federal Reserve Survey of Consumer Finances</p>
-              
-              {/* Bar Chart */}
-              <div className="flex items-end gap-8 h-64 mb-6">
-                {/* Bar 1: Renter */}
-                <div className="flex-1 flex flex-col items-center justify-end h-full">
-                  <div className="text-white font-bold text-lg mb-2">$10,400</div>
-                  <div 
-                    className="w-full bg-gray-500 rounded-t-lg transition-all duration-500"
-                    style={{ height: '6%' }}
-                  />
-                  <div className="text-white/70 text-sm mt-3 text-center">Avg Renter<br/>Net Worth</div>
-                </div>
-                
-                {/* Bar 2: Homeowner */}
-                <div className="flex-1 flex flex-col items-center justify-end h-full relative">
-                  <div className="text-[#10B981] font-bold text-lg mb-2">$396,200</div>
-                  <div 
-                    className="w-full bg-[#10B981] rounded-t-lg transition-all duration-500"
-                    style={{ height: '100%' }}
-                  />
-                  <div className="text-white/70 text-sm mt-3 text-center">Avg Homeowner<br/>Net Worth</div>
-                  
-                  {/* Annotation Arrow */}
-                  <div className="absolute -right-4 top-1/4 flex items-center gap-2">
-                    <svg className="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                    <span className="text-[#FFD700] font-bold text-sm whitespace-nowrap">40x Wealth<br/>Multiplier</span>
-                  </div>
-                </div>
+        {/* Section Title */}
+        <div className="text-center mb-16">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wider text-[#10B981] drop-shadow-[0_0_20px_rgba(16,185,129,0.5)]" style={{ fontFamily: 'system-ui, -apple-system, monospace' }}>
+            FIRST-TIME BUYER: <span className="text-white">THE FINANCIAL EDGE</span>
+          </h2>
+          <div className="w-32 h-0.5 bg-[#10B981] mx-auto mt-4 shadow-[0_0_10px_rgba(16,185,129,0.7)]" />
+        </div>
+
+        {/* Three-Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {/* Card 1: Your First Asset */}
+          <div className="bg-[#022c22]/70 backdrop-blur-xl border border-[#10B981] rounded-xl p-8 shadow-[0_0_30px_rgba(16,185,129,0.2)] hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all duration-300">
+            {/* Icon - Upward Trending Graph */}
+            <div className="mb-6 flex justify-center">
+              <div className="w-16 h-16 flex items-center justify-center">
+                <svg className="w-14 h-14 text-[#10B981] drop-shadow-[0_0_10px_rgba(16,185,129,0.7)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
               </div>
             </div>
+            
+            <h3 className="text-[#10B981] font-bold text-lg mb-4 text-center tracking-wide drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" style={{ fontFamily: 'system-ui, -apple-system, monospace' }}>
+              YOUR FIRST ASSET
+            </h3>
+            
+            <p className="text-white/80 text-center leading-relaxed text-sm">
+              Stop paying 100% interest on rent. Start building equity and net worth with your first property investment.
+            </p>
           </div>
 
-          {/* Right Side: The Pitch */}
-          <div className="flex-1">
-            <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-4">
-              Asset Acquisition:<br />
-              <span className="text-[#10B981]">Your First Home.</span>
-            </h2>
-            <p className="text-xl text-white/90 font-semibold mb-6">
-              Rent is 100% Interest.
-            </p>
-            <p className="text-white/70 leading-relaxed mb-8">
-              In the Capital District, waiting for rates to drop is a trap. Renting consumes 100% of your payment with zero equity. 
-              Buying—even at today's rates—locks in your housing cost and starts your 40x wealth journey.
-            </p>
-            
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-start gap-4">
-              <a 
-                href="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/copy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#10B981] text-white px-8 py-4 rounded-full font-bold hover:bg-[#0D9668] transition-colors inline-flex items-center gap-2"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                Download Rent vs. Buy Calculator
-              </a>
-              <Link to="/grants" className="text-[#10B981] font-semibold hover:underline py-4">
-                Check Grant Eligibility →
-              </Link>
+          {/* Card 2: Low to Zero Capital Entry */}
+          <div className="bg-[#022c22]/70 backdrop-blur-xl border border-[#10B981] rounded-xl p-8 shadow-[0_0_30px_rgba(16,185,129,0.2)] hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all duration-300">
+            {/* Icon - Percentage/Coins */}
+            <div className="mb-6 flex justify-center">
+              <div className="w-16 h-16 flex items-center justify-center">
+                <span className="text-3xl font-black text-[#10B981] drop-shadow-[0_0_10px_rgba(16,185,129,0.7)]" style={{ fontFamily: 'system-ui, -apple-system, monospace' }}>
+                  0-3.5%
+                </span>
+              </div>
             </div>
+            
+            <h3 className="text-[#10B981] font-bold text-lg mb-4 text-center tracking-wide drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" style={{ fontFamily: 'system-ui, -apple-system, monospace' }}>
+              LOW TO ZERO CAPITAL ENTRY
+            </h3>
+            
+            <p className="text-white/80 text-center leading-relaxed text-sm">
+              Leverage FHA, VA, and USDA programs. Utilize grants and seller concessions for minimal cash-to-close.
+            </p>
+          </div>
+
+          {/* Card 3: Tax & Savings Advantage */}
+          <div className="bg-[#022c22]/70 backdrop-blur-xl border border-[#10B981] rounded-xl p-8 shadow-[0_0_30px_rgba(16,185,129,0.2)] hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-all duration-300">
+            {/* Icon - Piggy Bank with Calculator */}
+            <div className="mb-6 flex justify-center">
+              <div className="w-16 h-16 flex items-center justify-center gap-2">
+                <svg className="w-10 h-10 text-[#10B981] drop-shadow-[0_0_10px_rgba(16,185,129,0.7)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <svg className="w-6 h-6 text-[#10B981] drop-shadow-[0_0_10px_rgba(16,185,129,0.7)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+            </div>
+            
+            <h3 className="text-[#10B981] font-bold text-lg mb-4 text-center tracking-wide drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]" style={{ fontFamily: 'system-ui, -apple-system, monospace' }}>
+              TAX & SAVINGS ADVANTAGE
+            </h3>
+            
+            <p className="text-white/80 text-center leading-relaxed text-sm">
+              Lock in your monthly housing cost. Potential deductions for mortgage interest and property taxes. <span className="text-white/50 text-xs">(Consult a tax professional)</span>
+            </p>
           </div>
         </div>
       </section>
