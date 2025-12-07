@@ -453,25 +453,11 @@ const Index = () => {
           </Link>
         </div>
         <div className="flex-1 flex justify-center p-5">
-          <div className="bg-card border border-border rounded-2xl p-6 w-full max-w-[500px] shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
-            <div className="text-xl font-extrabold mb-5">Troy Triplex Analysis</div>
-            <div className="flex justify-between py-4 border-b border-border">
-              <span className="text-muted-foreground">Monthly Rent Roll</span>
-              <span className="font-bold text-primary">$4,250</span>
-            </div>
-            <div className="flex justify-between py-4 border-b border-border">
-              <span className="text-muted-foreground">Operating Expenses</span>
-              <span className="font-bold text-red-500">-$1,100</span>
-            </div>
-            <div className="flex justify-between py-4 border-b border-border">
-              <span className="text-muted-foreground">Est. Mortgage (7%)</span>
-              <span className="font-bold text-red-500">-$2,100</span>
-            </div>
-            <div className="flex justify-between pt-5">
-              <span className="text-xl">Net Cash Flow</span>
-              <span className="font-bold text-primary text-2xl">+$1,050/mo</span>
-            </div>
-          </div>
+          <img 
+            src="/assets/wall-street-analysis.png" 
+            alt="Investment Performance Analysis showing Projected Net Annual Cash Flow and Cash-on-Cash Return comparison"
+            className="w-full max-w-[600px] rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
+          />
         </div>
       </section>
 
