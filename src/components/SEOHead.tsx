@@ -14,7 +14,7 @@ interface SEOHeadProps {
 const BASE_URL = "https://capitaldistrictnest.com";
 
 const SEOHead = ({ 
-  title = "Albany NY Homes for Sale | Capital District Nest | Capital Region Real Estate",
+  title = "Capital District Nest | Real Estate Economics & Investing",
   description = "Find homes for sale in Albany, Troy, Schenectady, and Saratoga Springs NY. Expert local real estate services, investment properties, first-time buyer assistance, and rental properties in New York's Capital District.",
   keywords = "Albany NY homes for sale, Troy NY homes for sale, Schenectady NY homes for sale, Saratoga Springs NY real estate, Capital District homes, Albany real estate, investment properties Albany NY, Capital District property management, NY first time home buyers, rental properties Albany, multi-unit homes NY, Capital Region real estate",
   canonical,
@@ -41,7 +41,7 @@ const SEOHead = ({
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
       
       {/* Author */}
-      <meta name="author" content="Capital District Nest - Real Estate Professionals" />
+      <meta name="author" content="Scott Alvarez - Capital District Nest" />
       
       {/* Language */}
       <meta httpEquiv="content-language" content="en-US" />
