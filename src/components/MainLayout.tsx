@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CommandCenter from "./CommandCenter";
+import cdnLogo from "@/assets/cdn-logo.png";
 
 const menuSections = [
   {
@@ -108,8 +109,8 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
       {/* Navigation Header */}
       <header className="sticky top-0 z-[2000] flex items-center justify-between px-5 md:px-10 h-20 bg-background/90 backdrop-blur-md border-b border-border">
-        <Link to="/" className="font-extrabold text-lg md:text-xl tracking-tight uppercase">
-          Capital District <span className="text-primary">Nest</span>
+        <Link to="/" className="flex items-center">
+          <img src={cdnLogo} alt="Capital District Nest" className="h-12 md:h-14 w-auto" />
         </Link>
 
         <button
