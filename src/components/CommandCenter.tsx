@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
-import { MessageCircle, Mail, X } from 'lucide-react';
+import { MessageCircle, Mail, Phone, X } from 'lucide-react';
 
 export const CommandCenter: React.FC = () => {
   const [isActive, setIsActive] = useState(false);
 
   const contactOptions = [
+    {
+      label: "Call Live Agent",
+      subtitle: "Speak to a human",
+      href: "tel:+15186762347",
+      icon: <Phone className="w-6 h-6" />,
+      bgColor: "bg-primary",
+      textColor: "text-primary-foreground",
+    },
     {
       label: "WhatsApp Scott",
       subtitle: "Chat on WhatsApp",
