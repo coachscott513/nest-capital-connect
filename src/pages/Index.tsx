@@ -4,6 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import CommandCenter from "@/components/CommandCenter";
 import AlphaListSection from "@/components/AlphaListSection";
 import DealOfMonthSection from "@/components/DealOfMonthSection";
+import StrategySessionSection from "@/components/StrategySessionSection";
 
 const markets = [
   { name: "Albany", href: "/albany-real-estate" },
@@ -634,6 +635,9 @@ const Index = () => {
 
       {/* Alpha List Section */}
       <AlphaListSection />
+
+      {/* Strategy Session Section */}
+      <StrategySessionSection />
 
       {/* Command Center FAB */}
       <CommandCenter />
