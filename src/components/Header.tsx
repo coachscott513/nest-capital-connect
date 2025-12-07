@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const scrollToSection = (sectionId: string) => {
     // Only scroll if we're on the home page
@@ -14,8 +15,14 @@ const Header = () => {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // Navigate to home page with hash
-      window.location.href = `/#${sectionId}`;
+      // Navigate to home page, then scroll after navigation
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
     }
     setIsMenuOpen(false);
   };
