@@ -476,43 +476,80 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Client Case Study */}
-        <div className="bg-card border border-border rounded-2xl overflow-hidden max-w-4xl mx-auto">
-          <div className="p-8 md:p-10">
-            <div className="uppercase text-primary font-extrabold tracking-widest text-sm mb-3">
-              Client Case Study: The "Impossible" Triplex
-            </div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-6">
-              From "Uninsurable" to 14% Cash Flow.
-            </h3>
+      </section>
 
-            <div className="flex flex-wrap gap-8 mb-8">
-              <div>
-                <div className="text-muted-foreground text-sm uppercase tracking-wide">Acquisition</div>
-                <div className="text-2xl font-bold">$145,000</div>
-              </div>
-              <div>
-                <div className="text-muted-foreground text-sm uppercase tracking-wide">Rehab Grant</div>
-                <div className="text-2xl font-bold text-primary">+$25,000</div>
-              </div>
-              <div>
-                <div className="text-muted-foreground text-sm uppercase tracking-wide">Current Rent</div>
-                <div className="text-2xl font-bold">$3,400/mo</div>
+      {/* First-Time Investor Section */}
+      <section className="px-[5%] py-20 border-t border-border" style={{ backgroundColor: '#065F46' }}>
+        <div className="flex flex-col lg:flex-row items-center gap-12 max-w-6xl mx-auto">
+          {/* Left Side: The Chart */}
+          <div className="flex-1 w-full">
+            <div className="bg-[#022c22]/80 backdrop-blur-xl border border-[#10B981] rounded-2xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+              <h3 className="text-white/70 text-sm uppercase tracking-widest mb-6">Net Worth Comparison</h3>
+              <p className="text-white/50 text-xs mb-8">Source: Federal Reserve Survey of Consumer Finances</p>
+              
+              {/* Bar Chart */}
+              <div className="flex items-end gap-8 h-64 mb-6">
+                {/* Bar 1: Renter */}
+                <div className="flex-1 flex flex-col items-center justify-end h-full">
+                  <div className="text-white font-bold text-lg mb-2">$10,400</div>
+                  <div 
+                    className="w-full bg-gray-500 rounded-t-lg transition-all duration-500"
+                    style={{ height: '6%' }}
+                  />
+                  <div className="text-white/70 text-sm mt-3 text-center">Avg Renter<br/>Net Worth</div>
+                </div>
+                
+                {/* Bar 2: Homeowner */}
+                <div className="flex-1 flex flex-col items-center justify-end h-full relative">
+                  <div className="text-[#10B981] font-bold text-lg mb-2">$396,200</div>
+                  <div 
+                    className="w-full bg-[#10B981] rounded-t-lg transition-all duration-500"
+                    style={{ height: '100%' }}
+                  />
+                  <div className="text-white/70 text-sm mt-3 text-center">Avg Homeowner<br/>Net Worth</div>
+                  
+                  {/* Annotation Arrow */}
+                  <div className="absolute -right-4 top-1/4 flex items-center gap-2">
+                    <svg className="w-6 h-6 text-[#FFD700]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    <span className="text-[#FFD700] font-bold text-sm whitespace-nowrap">40x Wealth<br/>Multiplier</span>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
 
-            <p className="text-muted-foreground leading-relaxed mb-8">
-              "I was looking at this property in Troy, but my bank said no because of the peeling paint and FHA rules. Scott and his team stepped in. They didn't just find a lender; 
-              they secured a <strong className="text-foreground">Rehab Loan</strong> that covered the repairs and negotiated a <strong className="text-foreground">Seller Concession</strong> to pay my closing costs. 
-              I walked in with $12k total out of pocket."
+          {/* Right Side: The Pitch */}
+          <div className="flex-1">
+            <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-4">
+              Asset Acquisition:<br />
+              <span className="text-[#10B981]">Your First Home.</span>
+            </h2>
+            <p className="text-xl text-white/90 font-semibold mb-6">
+              Rent is 100% Interest.
             </p>
-
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-muted rounded-full" />
-              <div>
-                <div className="font-bold">Michael R.</div>
-                <div className="text-muted-foreground text-sm">Investor • Westchester, NY</div>
-              </div>
+            <p className="text-white/70 leading-relaxed mb-8">
+              In the Capital District, waiting for rates to drop is a trap. Renting consumes 100% of your payment with zero equity. 
+              Buying—even at today's rates—locks in your housing cost and starts your 40x wealth journey.
+            </p>
+            
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-start gap-4">
+              <a 
+                href="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/copy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#10B981] text-white px-8 py-4 rounded-full font-bold hover:bg-[#0D9668] transition-colors inline-flex items-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download Rent vs. Buy Calculator
+              </a>
+              <Link to="/grants" className="text-[#10B981] font-semibold hover:underline py-4">
+                Check Grant Eligibility →
+              </Link>
             </div>
           </div>
         </div>
