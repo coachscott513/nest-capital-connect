@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import CommandCenter from "@/components/CommandCenter";
 import AlphaListSection from "@/components/AlphaListSection";
+import DealOfMonthSection from "@/components/DealOfMonthSection";
 
 const markets = [
   { name: "Albany", href: "/albany-real-estate" },
@@ -627,6 +628,9 @@ const Index = () => {
           </a>
         </div>
       </section>
+
+      {/* Deal of the Month Section */}
+      <DealOfMonthSection />
 
       {/* Alpha List Section */}
       <AlphaListSection />
