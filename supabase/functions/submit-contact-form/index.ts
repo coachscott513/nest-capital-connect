@@ -1,9 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import React from 'npm:react@18.3.1';
-import { Resend } from 'npm:resend@4.0.0';
-import { renderAsync } from 'npm:@react-email/components@0.0.22';
-import { LeadNotificationEmail } from './_templates/lead-notification.tsx';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -100,6 +96,60 @@ const validateContactFormData = (data: any): { valid: boolean; errors: string[] 
   return { valid: errors.length === 0, errors };
 };
 
+// Generate HTML email content
+const generateEmailHtml = (formData: ContactFormData): string => {
+  const rows = [
+    { label: 'Name', value: formData.name },
+    { label: 'Email', value: `<a href="mailto:${formData.email}">${formData.email}</a>` },
+    formData.phone ? { label: 'Phone', value: `<a href="tel:${formData.phone}">${formData.phone}</a>` } : null,
+    { label: 'Lead Type', value: formData.type },
+    formData.location ? { label: 'Location', value: formData.location } : null,
+    formData.bedrooms ? { label: 'Bedrooms', value: formData.bedrooms } : null,
+    formData.price_range ? { label: 'Price Range', value: formData.price_range } : null,
+    formData.message ? { label: 'Message', value: formData.message } : null,
+  ].filter(Boolean);
+
+  const rowsHtml = rows.map(row => `
+    <tr>
+      <td style="padding: 8px 12px; font-weight: bold; color: #666; width: 30%;">${row!.label}:</td>
+      <td style="padding: 8px 12px; color: #333;">${row!.value}</td>
+    </tr>
+  `).join('');
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+    </head>
+    <body style="background-color: #f6f9fc; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Ubuntu,sans-serif; padding: 20px;">
+      <div style="background-color: #ffffff; max-width: 600px; margin: 0 auto; padding: 20px 20px 48px; border-radius: 8px;">
+        <h1 style="color: #333; font-size: 24px; font-weight: bold; text-align: center; margin: 40px 0;">🎉 New Lead Received!</h1>
+        
+        <p style="color: #333; font-size: 16px; line-height: 26px; margin: 16px 8px;">
+          You have a new <strong>${formData.type}</strong> lead from your website:
+        </p>
+
+        <table style="width: 100%; border: solid 1px #dedede; border-radius: 5px; margin: 20px 0; border-collapse: collapse;">
+          ${rowsHtml}
+        </table>
+
+        <div style="text-align: center; margin: 32px 0;">
+          <a href="mailto:${formData.email}?subject=Re: Your ${formData.type} inquiry" 
+             style="background-color: #2754C5; border-radius: 5px; color: #fff; font-size: 16px; font-weight: bold; text-decoration: none; display: inline-block; padding: 14px 28px;">
+            Reply to Lead
+          </a>
+        </div>
+
+        <p style="color: #8898aa; font-size: 12px; line-height: 16px; text-align: center; margin: 20px 0;">
+          This lead was submitted through your Capital District Real Estate website.
+        </p>
+      </div>
+    </body>
+    </html>
+  `;
+};
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -174,7 +224,7 @@ const handler = async (req: Request): Promise<Response> => {
         name: formData.name,
         email: formData.email,
         phone: formData.phone || null,
-        message: formData.message || null,
+        message: formData.message || '',
         type: formData.type,
         location: formData.location || null,
         bedrooms: formData.bedrooms || null,
@@ -196,38 +246,38 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log('Successfully saved lead with ID:', data.id);
 
-    // Send email notification to Scott
-    try {
-      const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
-      
-      const emailHtml = await renderAsync(
-        React.createElement(LeadNotificationEmail, {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-          type: formData.type,
-          location: formData.location,
-          bedrooms: formData.bedrooms,
-          price_range: formData.price_range,
-        })
-      );
+    // Send email notification using Resend
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    if (resendApiKey) {
+      try {
+        const emailHtml = generateEmailHtml(formData);
+        
+        const emailResponse = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${resendApiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'Capital District Real Estate <onboarding@resend.dev>',
+            to: ['coachscott513@gmail.com'],
+            subject: `🎉 New ${formData.type} lead from ${formData.name}`,
+            html: emailHtml,
+          }),
+        });
 
-      const emailResult = await resend.emails.send({
-        from: 'Capital District Real Estate <onboarding@resend.dev>',
-        to: ['coachscott513@gmail.com'],
-        subject: `🎉 New ${formData.type} lead from ${formData.name}`,
-        html: emailHtml,
-      });
-
-      if (emailResult.error) {
-        console.error('Email sending error:', emailResult.error);
-      } else {
-        console.log('Email notification sent successfully:', emailResult.data);
+        if (!emailResponse.ok) {
+          const errorText = await emailResponse.text();
+          console.error('Email sending error:', errorText);
+        } else {
+          console.log('Email notification sent successfully');
+        }
+      } catch (emailError) {
+        console.error('Error sending email notification:', emailError);
+        // Don't fail the whole request if email fails
       }
-    } catch (emailError) {
-      console.error('Error sending email notification:', emailError);
-      // Don't fail the whole request if email fails
+    } else {
+      console.log('RESEND_API_KEY not configured, skipping email notification');
     }
 
     return new Response(JSON.stringify({ 
