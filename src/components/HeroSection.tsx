@@ -28,7 +28,7 @@ const HeroSection = () => {
         
         <div className="container mx-auto max-w-5xl relative z-10">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white drop-shadow-lg">
-            Find Your Home in the Capital District
+            Stop Guessing. Start Cash Flowing.
           </h1>
           <p className="text-xl md:text-2xl text-white/90 drop-shadow-md">
             Albany, Troy, Schenectady & Saratoga Springs Real Estate — Your Local Alternative to Zillow
@@ -41,25 +41,24 @@ const HeroSection = () => {
         <div className="container mx-auto max-w-5xl">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-white">Search All Properties</h2>
           
-          {/* Mobile: Dialog Search */}
-          <div className="md:hidden w-full max-w-[960px] mx-auto mb-6">
-            <PropertySearchDialog>
-              <Button size="lg" className="w-full">
-                Open Property Search
-              </Button>
-            </PropertySearchDialog>
-            <p className="mt-3 text-center text-sm text-white/90">
-              Choose rent/buy, property type, and county.
-            </p>
+          {/* Mobile: CTA Buttons */}
+          <div className="md:hidden w-full max-w-[960px] mx-auto mb-6 flex flex-col gap-3">
+            <Button size="lg" className="w-full" onClick={() => navigate('/albany-investment-properties')}>
+              Get the Top 10 Investment List
+            </Button>
+            <Button size="lg" variant="outline" className="w-full border-white text-white hover:bg-white/10" onClick={() => navigate('/cash-flow-report')}>
+              View Sample Deal
+            </Button>
           </div>
 
-          {/* Desktop: Embedded Search */}
-          <div className="hidden md:block w-full max-w-[960px] mx-auto mb-6">
-            <iframe 
-              className="w-full h-[300px]"
-              src="https://scottalvarez.remax.com/wide.php" 
-              title="Property Search"
-            />
+          {/* Desktop: CTA Buttons */}
+          <div className="hidden md:flex w-full max-w-[960px] mx-auto mb-6 gap-4 justify-center">
+            <Button size="lg" onClick={() => navigate('/albany-investment-properties')}>
+              Get the Top 10 Investment List
+            </Button>
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10" onClick={() => navigate('/cash-flow-report')}>
+              View Sample Deal
+            </Button>
           </div>
 
           {/* Quick intent buttons */}
