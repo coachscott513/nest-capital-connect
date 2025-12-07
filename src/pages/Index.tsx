@@ -478,59 +478,6 @@ const Index = () => {
         </div>
 
       </section>
-
-      {/* First-Time Investor Section - Coverage Area Style */}
-      <section className="px-[5%] py-20 border-t border-border bg-black">
-        {/* Section Title */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
-            FIRST HOME = FIRST ASSET
-          </h2>
-        </div>
-
-        {/* Three Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {/* Card 1: Appreciating Asset */}
-          <div className="bg-[#10B981] rounded-xl p-8 text-center transition-all duration-300 hover:shadow-[0_0_40px_rgba(16,185,129,0.6)] hover:brightness-110 cursor-pointer">
-            <div className="mb-4 flex justify-center">
-              <TrendingUp className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-white font-bold text-xl mb-3">
-              Appreciating Asset
-            </h3>
-            <p className="text-white/90 text-sm leading-relaxed">
-              Stop paying 100% interest on rent. Pay down your own principal.
-            </p>
-          </div>
-
-          {/* Card 2: Low/Zero Entry */}
-          <div className="bg-[#10B981] rounded-xl p-8 text-center transition-all duration-300 hover:shadow-[0_0_40px_rgba(16,185,129,0.6)] hover:brightness-110 cursor-pointer">
-            <div className="mb-4 flex justify-center">
-              <Percent className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-white font-bold text-xl mb-3">
-              Low/Zero Entry
-            </h3>
-            <p className="text-white/90 text-sm leading-relaxed">
-              Leverage FHA & Grants. Control a $300k asset with $0 to 3.5% down.
-            </p>
-          </div>
-
-          {/* Card 3: Tax Strategy */}
-          <div className="bg-[#10B981] rounded-xl p-8 text-center transition-all duration-300 hover:shadow-[0_0_40px_rgba(16,185,129,0.6)] hover:brightness-110 cursor-pointer">
-            <div className="mb-4 flex justify-center">
-              <Calculator className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-white font-bold text-xl mb-3">
-              Tax Strategy
-            </h3>
-            <p className="text-white/90 text-sm leading-relaxed">
-              Unlock mortgage interest deductions and future depreciation benefits.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Market Intelligence Section */}
       <section className="px-[5%] py-20 border-t border-border" style={{ backgroundColor: '#065F46' }}>
         <div className="text-center max-w-[800px] mx-auto mb-12">
