@@ -3,8 +3,7 @@ import { Calendar } from "lucide-react";
 
 const StrategySessionSection = () => {
   const handleBookCall = () => {
-    // Opens Calendly in a new tab - replace with actual Calendly link
-    window.open("https://calendly.com/capitaldistrictnest/strategy-call", "_blank");
+    window.open("https://calendly.com/alvarez-team/real-estate-consultation", "_blank");
   };
 
   return (
