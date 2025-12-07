@@ -529,27 +529,34 @@ const Index = () => {
 
         {/* 3-Column Data Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {/* Card 1: Inventory Index */}
-          <div className="bg-[#022c22] border border-[#10B981] rounded-2xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.6)]">
-            <h3 className="text-white font-bold text-lg mb-2">Inventory Index</h3>
-            <p className="text-white/50 text-sm mb-6">Albany Market Data</p>
+          {/* Card 1: Live Mortgage Rate */}
+          <div className="group relative bg-[#022c22] border border-[#10B981] rounded-2xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.6)]">
+            {/* Live Indicator */}
+            <div className="absolute top-4 right-4 flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#10B981] rounded-full animate-pulse" />
+              <span className="text-[#10B981] text-xs font-medium">Live Market Data</span>
+            </div>
             
-            {/* Downward Trending Line Chart */}
-            <div className="h-24 flex items-end justify-between gap-1 mb-6">
-              <svg className="w-full h-full" viewBox="0 0 200 80" fill="none">
-                <polyline 
-                  points="0,20 30,25 60,30 90,35 120,45 150,55 180,65 200,70" 
-                  stroke="#ef4444" 
-                  strokeWidth="3" 
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle cx="200" cy="70" r="4" fill="#ef4444" />
+            <h3 className="text-white font-bold text-lg mb-2">30-Year Fixed Avg</h3>
+            <p className="text-white/50 text-sm mb-6">National Rate Index</p>
+            
+            {/* Large Rate Display */}
+            <div className="h-24 flex items-center justify-center gap-3 mb-6">
+              <span className="text-5xl md:text-6xl font-black text-white">6.82%</span>
+              {/* Rate Up Arrow (Red) - Change to TrendingDown and green when rates drop */}
+              <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
               </svg>
             </div>
             
-            <p className="text-red-400 font-bold text-xl">Supply Down 16% YoY</p>
+            <p className="text-red-400 font-bold text-xl">+0.12% this week</p>
+            
+            {/* Hover Tooltip */}
+            <div className="absolute inset-0 bg-[#022c22]/95 rounded-2xl p-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+              <p className="text-white text-center text-sm leading-relaxed">
+                <span className="font-bold text-[#10B981]">The 1% Rule:</span> For every 1% drop in rates, your buying power increases by ~10%. Lock in before the next Fed meeting.
+              </p>
+            </div>
           </div>
 
           {/* Card 2: Rent Velocity */}
