@@ -14,7 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          bedrooms: string | null
+          created_at: string
+          email: string
+          id: string
+          location: string | null
+          message: string
+          name: string
+          phone: string | null
+          price_range: string | null
+          type: string
+        }
+        Insert: {
+          bedrooms?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          location?: string | null
+          message: string
+          name: string
+          phone?: string | null
+          price_range?: string | null
+          type: string
+        }
+        Update: {
+          bedrooms?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          location?: string | null
+          message?: string
+          name?: string
+          phone?: string | null
+          price_range?: string | null
+          type?: string
+        }
+        Relationships: []
+      }
+      properties: {
+        Row: {
+          address: string
+          baths: number | null
+          beds: number | null
+          boldtrail_url: string | null
+          city: string
+          created_at: string
+          days_on_market: number | null
+          description: string | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          lot_size: number | null
+          mls_id: string | null
+          photos: string[] | null
+          price: number
+          property_type: string | null
+          sqft: number | null
+          state: string | null
+          status: string | null
+          updated_at: string
+          year_built: number | null
+          zip: string | null
+        }
+        Insert: {
+          address: string
+          baths?: number | null
+          beds?: number | null
+          boldtrail_url?: string | null
+          city: string
+          created_at?: string
+          days_on_market?: number | null
+          description?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          lot_size?: number | null
+          mls_id?: string | null
+          photos?: string[] | null
+          price: number
+          property_type?: string | null
+          sqft?: number | null
+          state?: string | null
+          status?: string | null
+          updated_at?: string
+          year_built?: number | null
+          zip?: string | null
+        }
+        Update: {
+          address?: string
+          baths?: number | null
+          beds?: number | null
+          boldtrail_url?: string | null
+          city?: string
+          created_at?: string
+          days_on_market?: number | null
+          description?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          lot_size?: number | null
+          mls_id?: string | null
+          photos?: string[] | null
+          price?: number
+          property_type?: string | null
+          sqft?: number | null
+          state?: string | null
+          status?: string | null
+          updated_at?: string
+          year_built?: number | null
+          zip?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

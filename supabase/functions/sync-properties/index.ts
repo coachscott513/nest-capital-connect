@@ -22,6 +22,8 @@ interface Property {
   property_type?: string;
   status: string;
   boldtrail_url?: string;
+  year_built?: number;
+  lot_size?: string;
 }
 
 async function geocodeAddress(address: string, apiKey: string): Promise<{ lat: number; lng: number } | null> {
@@ -242,10 +244,13 @@ async function scrapeProperties(url: string, firecrawlKey: string): Promise<Prop
       const property = properties[i];
       console.log(`Scraping details for ${property.address} (${i + 1}/${properties.length})`);
       
-      const details = await scrapePropertyDetails(property.boldtrail_url, firecrawlKey);
+      if (property.boldtrail_url) {
+        const details = await scrapePropertyDetails(property.boldtrail_url, firecrawlKey);
+        
+        // Merge details into property
+        properties[i] = { ...property, ...details };
+      }
       
-      // Merge details into property
-      properties[i] = { ...property, ...details };
       
       // Small delay to avoid rate limiting
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -355,7 +360,7 @@ Deno.serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: false,
-        error: error.message,
+        error: error instanceof Error ? error.message : 'Unknown error',
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
