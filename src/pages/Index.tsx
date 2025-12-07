@@ -66,9 +66,9 @@ const menuSections = [
 ];
 
 const footerLinks = [
-  { label: "Start Live Chat", href: "/first-time-homebuyers", highlight: true },
+  { label: "Start Live Chat", href: "#contact", highlight: true },
   { label: "Login", href: "/auth" },
-  { label: "Support", href: "/contact" },
+  { label: "Support", href: "#contact" },
 ];
 
 const Index = () => {
@@ -389,9 +389,12 @@ const Index = () => {
             Whether you need to know the school district in Niskayuna or the zoning laws in Troy, 
             our team is ready. No bots. Just licensed professionals with degrees in Economics and Business.
           </p>
-          <Link to="/first-time-homebuyers" className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
+          <button 
+            onClick={() => window.dispatchEvent(new CustomEvent('openCommandCenter'))}
+            className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform cursor-pointer"
+          >
             Start Live Chat
-          </Link>
+          </button>
         </div>
         <div className="flex-1 flex justify-center p-5">
           <div className="bg-card border border-border rounded-2xl p-8 w-full max-w-[450px] shadow-[0_20px_40px_rgba(0,0,0,0.5)]">

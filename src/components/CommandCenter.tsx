@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageCircle, Mail, Phone, X } from 'lucide-react';
 
 export const CommandCenter: React.FC = () => {
   const [isActive, setIsActive] = useState(false);
+
+  // Listen for external open events
+  useEffect(() => {
+    const handleOpenCommand = () => setIsActive(true);
+    window.addEventListener('openCommandCenter', handleOpenCommand);
+    return () => window.removeEventListener('openCommandCenter', handleOpenCommand);
+  }, []);
 
   const contactOptions = [
     {
