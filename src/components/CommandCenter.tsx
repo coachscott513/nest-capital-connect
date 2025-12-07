@@ -27,8 +27,8 @@ export const CommandCenter: React.FC = () => {
     },
     {
       label: "Email Us",
-      subtitle: "info@capitaldistrictnest.com",
-      href: "mailto:info@capitaldistrictnest.com",
+      subtitle: "scott@capitaldistrictnest.com",
+      href: "mailto:scott@capitaldistrictnest.com",
       icon: <Mail className="w-6 h-6" />,
       bgColor: "bg-muted",
       textColor: "text-foreground",
