@@ -198,9 +198,12 @@ const Index = () => {
           <Link to="/markets" className="bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
             View Market Data
           </Link>
-          <Link to="/first-time-homebuyers" className="text-primary font-bold hover:underline">
-            Chat with the Team →
-          </Link>
+          <button 
+            onClick={() => window.dispatchEvent(new CustomEvent('openCommandCenter'))}
+            className="text-primary font-bold hover:underline"
+          >
+            Team →
+          </button>
         </div>
 
         {/* Disclaimer */}
