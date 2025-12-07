@@ -87,17 +87,23 @@ export const CommandCenter: React.FC = () => {
       {/* Main FAB Button */}
       <button
         onClick={() => setIsActive(!isActive)}
-        className={`border-none w-16 h-16 rounded-full font-extrabold text-base cursor-pointer shadow-[0_10px_30px_rgba(16,185,129,0.4)] transition-all duration-200 flex items-center justify-center hover:scale-110 ${
+        className={`border-none px-5 h-14 rounded-full font-bold text-sm cursor-pointer shadow-[0_10px_30px_rgba(16,185,129,0.4)] transition-all duration-200 flex items-center gap-2 hover:scale-105 ${
           isActive 
-            ? 'bg-card border border-border text-foreground rotate-0' 
-            : 'bg-primary text-primary-foreground rotate-0'
+            ? 'bg-card border border-border text-foreground' 
+            : 'bg-primary text-primary-foreground'
         }`}
         aria-label={isActive ? "Close contact menu" : "Open contact menu"}
       >
         {isActive ? (
-          <X className="w-7 h-7" />
+          <>
+            <X className="w-5 h-5" />
+            <span>Close</span>
+          </>
         ) : (
-          <MessageCircle className="w-7 h-7" />
+          <>
+            <span className="w-2 h-2 bg-primary-foreground rounded-full animate-pulse" />
+            <span>Live Agent</span>
+          </>
         )}
       </button>
     </div>
