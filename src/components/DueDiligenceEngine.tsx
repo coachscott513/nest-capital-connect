@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Search, Phone } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -65,21 +64,31 @@ const DueDiligenceEngine = () => {
         {/* Checkbox Tags */}
         <div className="flex flex-wrap justify-center gap-3 mb-8">
           {dataPoints.map((point) => (
-            <label
+            <button
+              type="button"
               key={point}
+              onClick={() => toggleDataPoint(point)}
               className={`flex items-center gap-2 px-4 py-2 rounded-full border cursor-pointer transition-all ${
                 selectedPoints.includes(point)
                   ? "bg-primary/20 border-primary text-primary"
                   : "bg-background border-border text-muted-foreground hover:border-primary/50"
               }`}
             >
-              <Checkbox
-                checked={selectedPoints.includes(point)}
-                onCheckedChange={() => toggleDataPoint(point)}
-                className="border-current data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-              />
+              <div
+                className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors ${
+                  selectedPoints.includes(point)
+                    ? "bg-primary border-primary"
+                    : "border-current"
+                }`}
+              >
+                {selectedPoints.includes(point) && (
+                  <svg className="w-3 h-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+              </div>
               <span className="text-sm font-medium">{point}</span>
-            </label>
+            </button>
           ))}
         </div>
 
