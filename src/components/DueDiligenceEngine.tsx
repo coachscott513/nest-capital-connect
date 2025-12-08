@@ -4,22 +4,22 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 const dataPoints = [
-  "Annual Tax Bill",
-  "Utility Split",
-  "Water/Sewer Avg",
-  "Current Rent Roll",
-  "Lease Expiration",
+  { label: "Pro Forma (Projected P&L)", isHighlighted: true },
+  { label: "Current Rent Roll", isHighlighted: false },
+  { label: "Tax & Utility Audit", isHighlighted: false },
+  { label: "CapEx / Reno Estimate", isHighlighted: false },
+  { label: "Sales Comps", isHighlighted: false },
 ];
 
 const DueDiligenceEngine = () => {
   const [address, setAddress] = useState("");
   const [selectedPoints, setSelectedPoints] = useState<string[]>([]);
 
-  const toggleDataPoint = (point: string) => {
+  const toggleDataPoint = (label: string) => {
     setSelectedPoints((prev) =>
-      prev.includes(point)
-        ? prev.filter((p) => p !== point)
-        : [...prev, point]
+      prev.includes(label)
+        ? prev.filter((p) => p !== label)
+        : [...prev, label]
     );
   };
 
@@ -66,33 +66,42 @@ const DueDiligenceEngine = () => {
 
         {/* Checkbox Tags */}
         <div className="flex flex-wrap justify-center gap-3 mb-8">
-          {dataPoints.map((point) => (
-            <button
-              type="button"
-              key={point}
-              onClick={() => toggleDataPoint(point)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full border cursor-pointer transition-all ${
-                selectedPoints.includes(point)
-                  ? "bg-primary/20 border-primary text-primary"
-                  : "bg-background border-border text-muted-foreground hover:border-primary/50"
-              }`}
-            >
-              <div
-                className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors ${
-                  selectedPoints.includes(point)
-                    ? "bg-primary border-primary"
-                    : "border-current"
+          {dataPoints.map((point) => {
+            const isSelected = selectedPoints.includes(point.label);
+            const goldStyle = point.isHighlighted && !isSelected;
+            
+            return (
+              <button
+                type="button"
+                key={point.label}
+                onClick={() => toggleDataPoint(point.label)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full border cursor-pointer transition-all ${
+                  isSelected
+                    ? "bg-primary border-primary text-primary-foreground"
+                    : goldStyle
+                    ? "bg-background border-amber-500 text-amber-500 hover:border-amber-400 hover:text-amber-400"
+                    : "bg-background border-border text-muted-foreground hover:border-primary/50"
                 }`}
               >
-                {selectedPoints.includes(point) && (
-                  <svg className="w-3 h-3 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
-              <span className="text-sm font-medium">{point}</span>
-            </button>
-          ))}
+                <div
+                  className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors ${
+                    isSelected
+                      ? "bg-primary-foreground border-primary-foreground"
+                      : goldStyle
+                      ? "border-amber-500"
+                      : "border-current"
+                  }`}
+                >
+                  {isSelected && (
+                    <svg className="w-3 h-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </div>
+                <span className="text-sm font-medium">{point.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Action Buttons */}
