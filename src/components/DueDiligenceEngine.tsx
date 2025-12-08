@@ -114,7 +114,7 @@ const DueDiligenceEngine = () => {
 
         {/* Text Option */}
         <a
-          href="sms:+15186762347"
+          href={`sms:+15186762347${address ? `?body=${encodeURIComponent(`I'd like a financial report for: ${address}`)}` : ''}`}
           className="inline-block mb-6 text-primary/70 hover:text-primary transition-colors text-sm font-medium"
         >
           Prefer to text? SMS this address to (518) 676-2347
