@@ -24,14 +24,17 @@ const DueDiligenceEngine = () => {
   };
 
   const handleRequestReport = () => {
-    // Open command center with pre-filled data
-    window.dispatchEvent(
-      new CustomEvent("openCommandCenter", {
-        detail: {
-          message: `Intelligence Report Request:\nAddress: ${address}\nData Points: ${selectedPoints.join(", ") || "All"}`,
-        },
-      })
+    const searchTerm = address || "Property Address";
+    const dataPointsText = selectedPoints.length > 0 
+      ? `\n\nData points requested: ${selectedPoints.join(", ")}`
+      : "";
+    
+    const subject = encodeURIComponent(`Intelligence Request: ${searchTerm}`);
+    const body = encodeURIComponent(
+      `I would like the financial report for ${searchTerm}. Please send it to this email address.${dataPointsText}`
     );
+    
+    window.location.href = `mailto:scott@capitaldistrictnest.com?subject=${subject}&body=${body}`;
   };
 
   return (
