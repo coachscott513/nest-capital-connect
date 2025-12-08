@@ -108,9 +108,17 @@ const DueDiligenceEngine = () => {
             className="group w-full sm:w-auto flex items-center justify-center gap-2 border-2 border-primary text-primary px-8 py-[22px] text-lg font-bold rounded-full hover:bg-primary/10 transition-colors animate-pulse"
           >
             <Phone className="w-5 h-5" />
-            Analyze Live (Call Now)
+            Call to Analyze: (518) 676-2347
           </a>
         </div>
+
+        {/* Text Option */}
+        <a
+          href="sms:+15186762347"
+          className="inline-block mb-6 text-primary/70 hover:text-primary transition-colors text-sm font-medium"
+        >
+          Prefer to text? SMS this address to (518) 676-2347
+        </a>
 
         {/* Disclaimer */}
         <p className="text-sm text-muted-foreground/60">
