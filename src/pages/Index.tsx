@@ -3,6 +3,7 @@ import { TrendingUp, Percent, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import CommandCenter from "@/components/CommandCenter";
+import DueDiligenceEngine from "@/components/DueDiligenceEngine";
 import AlphaListSection from "@/components/AlphaListSection";
 import DealOfMonthSection from "@/components/DealOfMonthSection";
 import StrategySessionSection from "@/components/StrategySessionSection";
@@ -212,6 +213,9 @@ const Index = () => {
           Each office independently owned and operated.
         </p>
       </section>
+
+      {/* Due Diligence Engine */}
+      <DueDiligenceEngine />
 
       {/* Markets Grid */}
       <section className="px-[5%] py-20 border-t border-border">
