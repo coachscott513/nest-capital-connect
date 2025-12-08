@@ -12,6 +12,7 @@ import Rentals from "./pages/Rentals";
 import Communities from "./pages/Communities";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import BlogArticle from "./pages/BlogArticle";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import AlbanyRealEstate from "./pages/AlbanyRealEstate";
@@ -83,6 +84,7 @@ const App = () => {
           <Route path="/contact" element={<Index />} />
           <Route path="/about" element={<Index />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/article/:slug" element={<BlogArticle />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<PrivacyPolicy />} />
