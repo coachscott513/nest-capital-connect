@@ -43,6 +43,7 @@ import ElsmereProperty from "./pages/137AElsmereAve";
 import Reviews from "./pages/Reviews";
 import MarketPage from "./pages/MarketPage";
 import StrategyPage from "./pages/StrategyPage";
+import MarketInsights from "./pages/MarketInsights";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -125,6 +126,9 @@ const App = () => {
           
           {/* SEO Strategy Pages */}
           <Route path="/strategy/:asset" element={<StrategyPage />} />
+          
+          {/* Market Insights */}
+          <Route path="/insights" element={<MarketInsights />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
