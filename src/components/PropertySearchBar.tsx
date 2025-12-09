@@ -30,15 +30,25 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
   };
 
   return (
-    <Card className="p-6 bg-card/80 backdrop-blur-sm border-2 border-primary/30 shadow-xl shadow-primary/10 ring-1 ring-primary/20">
+    <Card className="p-8 bg-card/90 backdrop-blur-md border-2 border-primary/40 shadow-2xl shadow-primary/20 ring-2 ring-primary/30">
+      {/* Header */}
+      <div className="text-center mb-6">
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+          Search Any Property — Get Instant Details + Free Cash Flow Analysis
+        </h2>
+        <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
+          Enter an address or MLS link. I'll send you cap rate, cash flow, rent estimates, DSCR score, and 5-year ROI projections for free.
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Price Range */}
         <div>
-          <label className="text-sm font-medium text-foreground mb-2 block">
+          <label className="text-sm font-semibold text-foreground mb-2 block">
             Price Range
           </label>
           <Select value={priceRange} onValueChange={setPriceRange}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full bg-background/80 border-border/50">
               <SelectValue placeholder="Any Price" />
             </SelectTrigger>
             <SelectContent>
@@ -54,11 +64,11 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
 
         {/* Bedrooms */}
         <div>
-          <label className="text-sm font-medium text-foreground mb-2 block">
+          <label className="text-sm font-semibold text-foreground mb-2 block">
             Bedrooms
           </label>
           <Select value={beds} onValueChange={setBeds}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full bg-background/80 border-border/50">
               <SelectValue placeholder="Any Beds" />
             </SelectTrigger>
             <SelectContent>
@@ -74,14 +84,15 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
 
         {/* Keyword Search */}
         <div>
-          <label className="text-sm font-medium text-foreground mb-2 block">
-            Address Keyword
+          <label className="text-sm font-semibold text-foreground mb-2 block">
+            Property Address
           </label>
           <Input 
-            placeholder="Search by street name..."
+            placeholder="Type an address or property… (e.g., 123 Main St Albany)"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            className="bg-background/80 border-border/50"
           />
         </div>
 
