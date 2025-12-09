@@ -86,6 +86,40 @@ const marketData: Record<string, MarketData> = {
       'Short-term rental opportunity'
     ],
     neighborhoods: ['Downtown', 'East Side', 'West Side', 'Greenfield']
+  },
+  'clifton-park': {
+    name: 'Clifton Park',
+    slug: 'clifton-park',
+    county: 'Saratoga',
+    medianPrice: '$385,000',
+    priceChange: '+7.3%',
+    avgDaysOnMarket: '21',
+    inventory: '156',
+    description: 'Clifton Park is the premier suburban community in the Capital District. Top-rated Shenendehowa schools, abundant retail, and easy access to the Northway make it ideal for families.',
+    highlights: [
+      'Top-rated Shenendehowa School District',
+      'Strong retail and dining options',
+      'Easy commute to Albany and Saratoga',
+      'New construction and established neighborhoods'
+    ],
+    neighborhoods: ['Clifton Gardens', 'Clifton Knolls', 'Country Knolls', 'Vischer Ferry']
+  },
+  'amsterdam': {
+    name: 'Amsterdam',
+    slug: 'amsterdam',
+    county: 'Montgomery',
+    medianPrice: '$145,000',
+    priceChange: '+11.2%',
+    avgDaysOnMarket: '35',
+    inventory: '78',
+    description: 'Amsterdam is an emerging market with exceptional value and the highest appreciation rates in the region. Historic architecture and a revitalizing downtown create opportunity for investors.',
+    highlights: [
+      'Lowest entry point in the region',
+      'Highest appreciation rate (+11.2%)',
+      'Historic downtown revitalization',
+      'Strong rental yields due to low prices'
+    ],
+    neighborhoods: ['Downtown', 'East End', 'West End', 'Rockton']
   }
 };
 
