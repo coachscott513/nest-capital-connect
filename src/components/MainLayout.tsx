@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CommandCenter from "./CommandCenter";
+import MobileCtaBar from "./MobileCtaBar";
 import cdnLogo from "@/assets/cdn-logo.png";
 
 const menuSections = [
@@ -141,6 +142,9 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
       {/* Command Center FAB */}
       <CommandCenter />
+
+      {/* Mobile CTA Bar */}
+      <MobileCtaBar />
 
       {/* Footer */}
       <footer className="px-[5%] py-12 text-center text-muted-foreground text-sm border-t border-border">
