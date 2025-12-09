@@ -44,6 +44,9 @@ import Reviews from "./pages/Reviews";
 import MarketPage from "./pages/MarketPage";
 import StrategyPage from "./pages/StrategyPage";
 import MarketInsights from "./pages/MarketInsights";
+import NycToAlbanyPlaybook from "./pages/NycToAlbanyPlaybook";
+import AlbanyMultiUnitMarket from "./pages/AlbanyMultiUnitMarket";
+import AnalyzeMultifamily from "./pages/AnalyzeMultifamily";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -129,6 +132,11 @@ const App = () => {
           
           {/* Market Insights */}
           <Route path="/insights" element={<MarketInsights />} />
+          
+          {/* Investor Cornerstone Pages */}
+          <Route path="/investor/nyc-to-albany-roi" element={<NycToAlbanyPlaybook />} />
+          <Route path="/investor/albany-multi-unit-market" element={<AlbanyMultiUnitMarket />} />
+          <Route path="/investor/analyze-multifamily" element={<AnalyzeMultifamily />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
