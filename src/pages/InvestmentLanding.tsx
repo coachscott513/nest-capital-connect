@@ -96,9 +96,9 @@ const InvestmentLanding = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
       <Helmet>
-        <title>Investment Properties Capital District | High-Return Deals | Capital District Nest</title>
-        <meta name="description" content="Get exclusive access to off-market multi-unit properties and rehab opportunities in Albany, Troy, Schenectady. Join 200+ investors receiving weekly alerts." />
-        <link rel="canonical" href="https://capitaldistrictnest.com/investment-properties" />
+        <title>Capital District's #1 Real Estate & Investment Intelligence Platform | Capital District Nest</title>
+        <meta name="description" content="Analyze any property like a pro. Get free cash-flow projections, rent rolls, tax audits, and investor-grade P&L reports in Albany, Troy & Schenectady. 1-day turnaround." />
+        <link rel="canonical" href="https://capitaldistrictnest.com/investment-landing" />
       </Helmet>
       
       {/* Hero Section */}
