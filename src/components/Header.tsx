@@ -92,6 +92,13 @@ const Header = () => {
             </div>
           </div>
           <Link
+            to="/insights"
+            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Insights
+          </Link>
+          <Link
             to="/blog"
             className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
             onClick={() => setIsMenuOpen(false)}
@@ -180,6 +187,13 @@ const Header = () => {
                   Saratoga Homes
                 </Link>
               </div>
+              <Link
+                to="/insights"
+                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Insights
+              </Link>
               <Link
                 to="/blog"
                 className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
