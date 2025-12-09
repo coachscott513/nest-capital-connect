@@ -273,6 +273,35 @@ const Index = () => {
       {/* Investment Strategies Grid - SEO Linked */}
       <PropertyTypeGrid />
 
+      {/* Investor Guides Section */}
+      <section className="px-[5%] py-12 border-t border-border">
+        <div className="max-w-5xl mx-auto">
+          <h3 className="text-sm uppercase tracking-widest text-muted-foreground font-semibold mb-6">
+            Investor Guides
+          </h3>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+            <Link 
+              to="/investor/nyc-to-albany-roi" 
+              className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            >
+              Why NYC Investors Are Moving to Albany →
+            </Link>
+            <Link 
+              to="/investor/albany-multi-unit-market" 
+              className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            >
+              2025 Albany Multi-Unit Market Update →
+            </Link>
+            <Link 
+              to="/investor/analyze-multifamily" 
+              className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            >
+              How to Analyze a Multi-Family Property →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Market Analytics Section */}
       <section className="flex flex-col lg:flex-row items-center px-[5%] py-20 border-t border-border bg-muted/20">
         <div className="flex-1 max-w-[550px] p-5">
