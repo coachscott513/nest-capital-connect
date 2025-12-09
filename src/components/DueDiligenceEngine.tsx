@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 
 const dataPoints = [
   { label: "Pro Forma (Projected P&L)", isHighlighted: true },
-  { label: "Current Rent Roll", isHighlighted: false },
+  { label: "Current / Potential Rent Roll", isHighlighted: false },
   { label: "Tax & Utility Audit", isHighlighted: false },
-  { label: "CapEx / Reno Estimate", isHighlighted: false },
-  { label: "Sales Comps", isHighlighted: false },
+  { label: "CapEx / Renovation Estimate", isHighlighted: false },
+  { label: "Sales Comps & ARV", isHighlighted: false },
 ];
 
 const DueDiligenceEngine = () => {
@@ -43,13 +43,17 @@ const DueDiligenceEngine = () => {
         {/* Headline */}
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
           Search on Zillow.{" "}
-          <span className="text-primary">Analyze like a Pro.</span>
+          <span className="text-primary">Analyze with a Pro.</span>
         </h2>
 
         {/* Sub-headline */}
-        <p className="text-muted-foreground text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-          Zillow gives you the price. We give you the P&L. Enter any address
-          below to request a deep-dive financial report.
+        <p className="text-muted-foreground text-lg md:text-xl mb-3 max-w-2xl mx-auto">
+          See a home or multi-unit you like on Zillow, Redfin, or Realtor.com? Paste the address below and get a simple, investor-style breakdown you can actually use.
+        </p>
+        
+        {/* Supporting line */}
+        <p className="text-muted-foreground text-base mb-10 max-w-2xl mx-auto">
+          Free, no obligation. Real numbers — not guesses.
         </p>
 
         {/* Search Bar */}
@@ -57,7 +61,7 @@ const DueDiligenceEngine = () => {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="e.g. 123 State St, Albany, NY"
+            placeholder="e.g. 123 State St, Albany, NY (paste an address or Zillow link)"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             className="w-full pl-12 pr-4 py-6 text-lg bg-background border-2 border-border rounded-xl focus:border-primary transition-colors"
@@ -110,7 +114,7 @@ const DueDiligenceEngine = () => {
             onClick={handleRequestReport}
             className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-bold rounded-full"
           >
-            Request Intelligence Report
+            Get My Free Intelligence Report
           </Button>
           <a
             href="tel:+15186762347"
@@ -126,13 +130,12 @@ const DueDiligenceEngine = () => {
           href={`sms:+15186762347${address ? `?body=${encodeURIComponent(`I'd like a financial report for: ${address}`)}` : ''}`}
           className="inline-block mb-6 text-primary/70 hover:text-primary transition-colors text-sm font-medium"
         >
-          Prefer to text? SMS this address to (518) 676-2347
+          Prefer to text? SMS any address to (518) 676-2347 and I'll send your report.
         </a>
 
         {/* Disclaimer */}
         <p className="text-sm text-muted-foreground/60">
-          Report Timeline: 1 Business Day or Sooner. We manually verify tax and
-          lease data for accuracy.
+          Report Timeline: About 1 business day or sooner. I personally verify tax, rent, and utility data for accuracy.
         </p>
       </div>
     </section>
