@@ -48,7 +48,7 @@ const DueDiligenceEngine = () => {
 
         {/* Sub-headline */}
         <p className="text-muted-foreground text-lg md:text-xl mb-3 max-w-2xl mx-auto">
-          See a home or multi-unit you like on Zillow, Redfin, or Realtor.com? Paste the address below and get a simple, investor-style breakdown you can actually use.
+          Zillow gives you the price. We give you the P&L. Paste any address below and we'll send you a simple, investor-style report you can actually use.
         </p>
         
         {/* Supporting line */}
@@ -67,6 +67,11 @@ const DueDiligenceEngine = () => {
             className="w-full pl-14 pr-6 py-7 text-lg bg-background/80 border-3 border-primary/50 rounded-2xl focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all shadow-lg shadow-primary/20 placeholder:text-muted-foreground/60"
           />
         </div>
+
+        {/* Caption for toggles */}
+        <p className="text-sm text-muted-foreground/60 mb-3">
+          Choose what you want in your report:
+        </p>
 
         {/* Checkbox Tags */}
         <div className="flex flex-wrap justify-center gap-3 mb-8">
