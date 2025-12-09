@@ -52,7 +52,7 @@ export const CommandCenter: React.FC = () => {
 
   return (
     <div 
-      className="fixed bottom-6 right-6 z-50 flex flex-col items-end font-manrope"
+      className="fixed bottom-6 right-6 z-50 hidden md:flex flex-col items-end font-manrope"
     >
       {/* Speed Dial Options */}
       <div 
