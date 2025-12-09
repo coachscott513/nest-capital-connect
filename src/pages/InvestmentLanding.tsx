@@ -105,11 +105,55 @@ const InvestmentLanding = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4 leading-tight">
-            Find Your Next High-Return Investment Property in the Capital District
+            The Capital District's #1 Real Estate & Investment Intelligence Platform
           </h1>
-          <p className="text-xl text-muted-foreground mb-8">
-            Get exclusive access to off-market multi-unit properties and rehab opportunities
+          <p className="text-xl text-muted-foreground mb-6">
+            Analyze any property like a pro. Get cash-flow projections, rent rolls, tax audits, and investor-grade P&L reports—free.
           </p>
+          
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+            <Button 
+              size="lg" 
+              className="h-14 px-8 text-lg font-bold"
+              onClick={() => navigate('/')}
+            >
+              📊 Analyze a Property
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="h-14 px-8 text-lg font-semibold"
+              asChild
+            >
+              <a href="tel:+15186762347">📞 Call or Text Scott: 518-676-2347</a>
+            </Button>
+          </div>
+          
+          {/* Supporting Line */}
+          <p className="text-muted-foreground mb-4">
+            Trusted by investors, first-time buyers, and multi-unit owners across Albany, Troy & Schenectady.
+          </p>
+          
+          {/* Trust Badges */}
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <CheckCircle className="w-4 h-4 text-primary" />
+              Economics-Driven Reports
+            </span>
+            <span className="flex items-center gap-1">
+              <CheckCircle className="w-4 h-4 text-primary" />
+              Live Local Agent
+            </span>
+            <span className="flex items-center gap-1">
+              <CheckCircle className="w-4 h-4 text-primary" />
+              1-Day Turnaround
+            </span>
+            <span className="flex items-center gap-1">
+              <CheckCircle className="w-4 h-4 text-primary" />
+              Multi-Unit & Investment Specialists
+            </span>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-start">
