@@ -58,13 +58,13 @@ const DueDiligenceEngine = () => {
 
         {/* Search Bar */}
         <div className="relative mb-6">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-primary" />
           <Input
             type="text"
             placeholder="e.g. 123 State St, Albany, NY (paste an address or Zillow link)"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            className="w-full pl-12 pr-4 py-6 text-lg bg-background border-2 border-border rounded-xl focus:border-primary transition-colors"
+            className="w-full pl-14 pr-6 py-7 text-lg bg-background/80 border-3 border-primary/50 rounded-2xl focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all shadow-lg shadow-primary/20 placeholder:text-muted-foreground/60"
           />
         </div>
 
