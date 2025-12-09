@@ -8,26 +8,8 @@ import AlphaListSection from "@/components/AlphaListSection";
 import DealOfMonthSection from "@/components/DealOfMonthSection";
 import StrategySessionSection from "@/components/StrategySessionSection";
 import FinancingSection from "@/components/FinancingSection";
-
-const markets = [
-  { name: "Albany", href: "/albany-real-estate" },
-  { name: "Niskayuna", href: "/markets" },
-  { name: "Troy", href: "/troy-real-estate" },
-  { name: "Schenectady", href: "/schenectady-real-estate" },
-  { name: "Saratoga", href: "/saratoga-real-estate" },
-  { name: "Latham", href: "/markets" },
-  { name: "Clifton Park", href: "/markets" },
-  { name: "Rensselaer", href: "/markets" },
-];
-
-const propertyTypes = [
-  { name: "Single Family Homes", href: "/homes-for-sale" },
-  { name: "Rental Properties", href: "/rentals" },
-  { name: "Land", href: "/albany-land" },
-  { name: "Fix & Flip", href: "/sell-investment-property" },
-  { name: "Commercial", href: "/albany-multi-unit" },
-  { name: "Sell Your Home", href: "/sell-investment-property" },
-];
+import CoverageAreaGrid from "@/components/CoverageAreaGrid";
+import PropertyTypeGrid from "@/components/PropertyTypeGrid";
 
 const menuSections = [
   {
@@ -217,23 +199,8 @@ const Index = () => {
       {/* Due Diligence Engine */}
       <DueDiligenceEngine />
 
-      {/* Markets Grid */}
-      <section className="px-[5%] py-20 border-t border-border">
-        <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-10 text-center">
-          We cover the entire Capital District.
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-          {markets.map((market) => (
-            <Link
-              key={market.name}
-              to={market.href}
-              className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
-            >
-              {market.name}
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* Coverage Area Grid - SEO Linked */}
+      <CoverageAreaGrid />
 
       {/* Trust Bar - Reviews Section */}
       <section className="bg-muted/30 py-12 px-[5%] border-t border-border">
@@ -263,7 +230,7 @@ const Index = () => {
           <div className="bg-card border border-border rounded-xl p-6">
             <div className="flex gap-1 mb-3">
               {[...Array(5)].map((_, i) => (
-                <svg key={i} className="w-5 h-5 text-yellow-500 fill-current" viewBox="0 0 20 20">
+                <svg key={i} className="w-5 h-5 text-yellow-500 fill-current" viewBox="0 0 24 24">
                   <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
                 </svg>
               ))}
@@ -302,23 +269,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Property Types Grid */}
-      <section className="px-[5%] py-20 border-t border-border">
-        <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-10 text-center">
-          We specialize in every property type.
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 max-w-5xl mx-auto">
-          {propertyTypes.map((type) => (
-            <Link
-              key={type.name}
-              to={type.href}
-              className="border border-border px-4 py-4 text-center rounded-lg cursor-pointer font-semibold hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
-            >
-              {type.name}
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* Investment Strategies Grid - SEO Linked */}
+      <PropertyTypeGrid />
 
       {/* Market Analytics Section */}
       <section className="flex flex-col lg:flex-row items-center px-[5%] py-20 border-t border-border bg-muted/20">
