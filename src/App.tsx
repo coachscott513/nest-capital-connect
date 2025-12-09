@@ -41,6 +41,8 @@ import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 import PropertyListing from "./pages/PropertyListing";
 import ElsmereProperty from "./pages/137AElsmereAve";
 import Reviews from "./pages/Reviews";
+import MarketPage from "./pages/MarketPage";
+import StrategyPage from "./pages/StrategyPage";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -118,6 +120,12 @@ const App = () => {
           <Route path="/markets" element={<Markets />} />
           <Route path="/markets/:town" element={<SingleFamilyMarket />} />
           
+          {/* SEO Market Pages */}
+          <Route path="/market/:town" element={<MarketPage />} />
+          
+          {/* SEO Strategy Pages */}
+          <Route path="/strategy/:asset" element={<StrategyPage />} />
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
