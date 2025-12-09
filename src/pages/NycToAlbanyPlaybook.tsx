@@ -384,15 +384,26 @@ const NycToAlbanyPlaybook = () => {
         </div>
       </section>
 
-      {/* Related Links */}
-      <section className="py-12 bg-card/50">
+      {/* More Investor Guides */}
+      <section className="py-16 bg-card/50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h3 className="font-playfair text-xl font-bold text-foreground mb-6 text-center">Related Resources</h3>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/investor/albany-multi-unit-market" className="text-primary hover:underline">Albany Multi-Unit Market Report →</Link>
-              <Link to="/investor/analyze-multifamily" className="text-primary hover:underline">How to Analyze Multi-Family →</Link>
-              <Link to="/investor-tools" className="text-primary hover:underline">Investor Tools →</Link>
+            <h3 className="font-playfair text-2xl font-bold text-foreground mb-8 text-center">More Investor Guides</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <Link 
+                to="/investor/albany-multi-unit-market" 
+                className="block p-6 bg-background/50 border border-primary/20 rounded-lg hover:border-primary/40 transition-colors"
+              >
+                <h4 className="text-lg font-semibold text-foreground mb-2">Albany Multi-Unit Market Report 2025</h4>
+                <p className="text-muted-foreground text-sm">Cap rates, rent trends, and investment outlook for the Capital District.</p>
+              </Link>
+              <Link 
+                to="/investor/analyze-multifamily" 
+                className="block p-6 bg-background/50 border border-primary/20 rounded-lg hover:border-primary/40 transition-colors"
+              >
+                <h4 className="text-lg font-semibold text-foreground mb-2">How to Analyze a Multi-Family Property</h4>
+                <p className="text-muted-foreground text-sm">Step-by-step underwriting guide used by professional investors.</p>
+              </Link>
             </div>
           </div>
         </div>
