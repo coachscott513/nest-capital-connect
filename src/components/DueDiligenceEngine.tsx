@@ -38,7 +38,7 @@ const DueDiligenceEngine = () => {
   };
 
   return (
-    <section className="bg-[#0a0a0a] border-t border-border py-20 px-[5%]">
+    <section id="due-diligence-engine" className="bg-[#0a0a0a] border-t border-border py-20 px-[5%]">
       <div className="max-w-3xl mx-auto text-center">
         {/* Headline */}
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
