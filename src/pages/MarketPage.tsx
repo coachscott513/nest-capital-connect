@@ -155,16 +155,16 @@ const MarketPage = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="bg-primary py-16 px-4">
+      <section className="bg-[#022c22] py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-2 text-accent mb-4">
             <MapPin className="w-5 h-5" />
             <span className="text-sm uppercase tracking-wider">{market.county} County</span>
           </div>
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">
             {market.name} Real Estate Market
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-white/70 max-w-3xl">
             {market.description}
           </p>
         </div>
