@@ -1,80 +1,204 @@
 import { useNavigate } from "react-router-dom";
 import heroBackground from "@/assets/hero-background.jpg";
-import PropertySearchDialog from "@/components/PropertySearchDialog";
 import { Button } from "@/components/ui/button";
+import { Phone, MessageSquare, TrendingUp, Building2, Star, BarChart3, MapPin, Award } from "lucide-react";
+
 const HeroSection = () => {
   const navigate = useNavigate();
 
-  const quickIntents = [
-    { text: "Investment", href: "/albany-investment-properties" },
-    { text: "Multi-Unit", href: "/albany-multi-unit" },
-    { text: "Land", href: "/albany-land" },
-    { text: "First-Time Buyers", href: "/first-time-buyer-programs-albany" },
-    { text: "Sell Investment", href: "/sell-investment-property" },
-    { text: "Cash-Flow Report", href: "/cash-flow-report" }
-  ];
+  const scrollToAnalyzer = () => {
+    const element = document.getElementById('due-diligence-engine');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <>
-      {/* Hero Image Section */}
+      {/* MOBILE HERO */}
       <section 
-        className="relative py-24 px-4 text-center bg-cover bg-center bg-no-repeat" 
+        className="md:hidden relative py-12 px-4 bg-cover bg-center bg-no-repeat" 
         role="banner"
         style={{ backgroundImage: `url(${heroBackground})` }}
         aria-label="Capital District Nest - Albany Real Estate Search"
       >
-        {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/50" aria-hidden="true"></div>
+        <div className="absolute inset-0 bg-black/60" aria-hidden="true"></div>
         
-        <div className="container mx-auto max-w-5xl relative z-10">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white drop-shadow-lg">
-            Stop Guessing. Start Cash Flowing.
+        <div className="relative z-10 max-w-lg mx-auto text-center">
+          <h1 className="text-3xl font-bold mb-4 text-white drop-shadow-lg leading-tight">
+            Buy Smarter in the Capital District
           </h1>
-          <p className="text-xl md:text-2xl text-white/90 drop-shadow-md">
-            Albany, Troy, Schenectady & Saratoga Springs Real Estate — Your Local Alternative to Zillow
+          <p className="text-base text-white/90 mb-6 drop-shadow-md leading-relaxed">
+            Real market data for investors & homebuyers. Paste any address — get a free P&L, rent estimate, taxes, and 5-year projections.
           </p>
-        </div>
-      </section>
-
-      {/* Search Bar Section */}
-      <section className="py-10 px-4" style={{ backgroundColor: '#003DA5' }}>
-        <div className="container mx-auto max-w-5xl">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 text-white">Search All Properties</h2>
           
-          {/* Mobile: CTA Buttons */}
-          <div className="md:hidden w-full max-w-[960px] mx-auto mb-6 flex flex-col gap-3">
-            <Button size="lg" className="w-full" onClick={() => navigate('/albany-investment-properties')}>
-              Get the Top 10 Investment List
+          {/* Mobile CTA Buttons - Stacked Full Width */}
+          <div className="flex flex-col gap-3 mb-6">
+            <Button 
+              size="lg" 
+              className="w-full h-14 text-base font-bold"
+              onClick={scrollToAnalyzer}
+            >
+              <BarChart3 className="w-5 h-5 mr-2" />
+              Analyze Any Property (Free Report)
             </Button>
-            <Button size="lg" variant="outline" className="w-full border-white text-white hover:bg-white/10" onClick={() => navigate('/cash-flow-report')}>
-              View Sample Deal
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="w-full h-14 text-base font-semibold bg-white/10 border-white text-white hover:bg-white/20"
+              asChild
+            >
+              <a href="tel:+15186762347">
+                <Phone className="w-5 h-5 mr-2" />
+                Call Scott (518-676-2347)
+              </a>
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="w-full h-14 text-base font-semibold bg-white/10 border-white text-white hover:bg-white/20"
+              asChild
+            >
+              <a href="sms:+15186762347">
+                <MessageSquare className="w-5 h-5 mr-2" />
+                Text an Address
+              </a>
             </Button>
           </div>
-
-          {/* Desktop: CTA Buttons */}
-          <div className="hidden md:flex w-full max-w-[960px] mx-auto mb-6 gap-4 justify-center">
-            <Button size="lg" onClick={() => navigate('/albany-investment-properties')}>
-              Get the Top 10 Investment List
-            </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10" onClick={() => navigate('/cash-flow-report')}>
-              View Sample Deal
-            </Button>
-          </div>
-
-          {/* Quick intent buttons */}
-          <div className="flex flex-wrap gap-2 justify-center">
-            {quickIntents.map((intent, index) => (
-              <button
-                key={index}
-                onClick={() => navigate(intent.href)}
-                className="px-4 py-2.5 border border-border rounded-full font-semibold text-sm text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors cursor-pointer bg-background"
-              >
-                {intent.text}
-              </button>
-            ))}
+          
+          {/* Mobile Trust Strip */}
+          <div className="text-xs text-white/80 space-y-1">
+            <p>⭐ 500+ Properties Analyzed • 📊 Investor-Focused Analysis</p>
+            <p>🌆 Albany • Troy • Saratoga Expert • 🏢 RE/MAX Licensed Professional</p>
           </div>
         </div>
       </section>
+
+      {/* DESKTOP HERO */}
+      <section 
+        className="hidden md:block relative py-16 lg:py-20 px-4 bg-cover bg-center bg-no-repeat" 
+        role="banner"
+        style={{ backgroundImage: `url(${heroBackground})` }}
+        aria-label="Capital District Nest - Albany Real Estate Search"
+      >
+        <div className="absolute inset-0 bg-black/55" aria-hidden="true"></div>
+        
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="text-left">
+              <h1 className="text-4xl lg:text-5xl font-bold mb-5 text-white drop-shadow-lg leading-tight">
+                Smarter Real Estate Decisions in the Capital District
+              </h1>
+              <p className="text-lg lg:text-xl text-white/90 mb-8 drop-shadow-md leading-relaxed max-w-xl">
+                Investors & homebuyers get full financial clarity — P&L, rent estimates, tax audit, neighborhood trends, and a 5-year projection for any property.
+              </p>
+              
+              {/* Desktop CTA Row */}
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                <Button 
+                  size="lg" 
+                  className="h-14 px-8 text-lg font-bold"
+                  onClick={scrollToAnalyzer}
+                >
+                  <BarChart3 className="w-5 h-5 mr-2" />
+                  Analyze Any Property (Free Report)
+                </Button>
+              </div>
+              
+              {/* Secondary Links */}
+              <div className="flex flex-wrap items-center gap-6 text-white/90">
+                <a 
+                  href="tel:+15186762347" 
+                  className="flex items-center gap-2 hover:text-white transition-colors font-medium"
+                >
+                  <Phone className="w-4 h-4" />
+                  Call 518-676-2347
+                </a>
+                <a 
+                  href="sms:+15186762347" 
+                  className="flex items-center gap-2 hover:text-white transition-colors font-medium"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  Text an Address
+                </a>
+                <button 
+                  onClick={() => navigate('/insights')}
+                  className="flex items-center gap-2 hover:text-white transition-colors font-medium"
+                >
+                  <TrendingUp className="w-4 h-4" />
+                  Market Insights
+                </button>
+              </div>
+            </div>
+            
+            {/* Right Visual - Analytics Card */}
+            <div className="hidden lg:block">
+              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-2xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                    <BarChart3 className="w-5 h-5 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold">Property Intelligence Report</p>
+                    <p className="text-white/70 text-sm">Sample Analysis</p>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80 text-sm">Estimated Rent</span>
+                    <span className="text-emerald-400 font-bold">$2,450/mo</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80 text-sm">Cap Rate</span>
+                    <span className="text-emerald-400 font-bold">7.2%</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-white/10">
+                    <span className="text-white/80 text-sm">Cash on Cash</span>
+                    <span className="text-emerald-400 font-bold">12.4%</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-white/80 text-sm">5-Year Equity</span>
+                    <span className="text-emerald-400 font-bold">+$87,500</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Desktop Trust Bar */}
+      <div className="hidden md:block bg-muted/50 border-b border-border py-4">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            <span className="flex items-center gap-1.5">
+              <Star className="w-4 h-4 text-primary" />
+              Trusted by investors across Albany, Troy & Saratoga
+            </span>
+            <span className="hidden lg:inline">•</span>
+            <span className="flex items-center gap-1.5">
+              <BarChart3 className="w-4 h-4 text-primary" />
+              500+ properties analyzed yearly
+            </span>
+            <span className="hidden lg:inline">•</span>
+            <span className="flex items-center gap-1.5">
+              <TrendingUp className="w-4 h-4 text-primary" />
+              Economics-trained analysts
+            </span>
+            <span className="hidden lg:inline">•</span>
+            <span className="flex items-center gap-1.5">
+              <Building2 className="w-4 h-4 text-primary" />
+              Multi-unit & investor specialists
+            </span>
+            <span className="hidden lg:inline">•</span>
+            <span className="flex items-center gap-1.5">
+              <Award className="w-4 h-4 text-primary" />
+              RE/MAX licensed professional
+            </span>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
