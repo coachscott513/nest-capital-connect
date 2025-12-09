@@ -279,24 +279,36 @@ const Index = () => {
           <h3 className="text-sm uppercase tracking-widest text-muted-foreground font-semibold mb-6">
             Investor Guides
           </h3>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+          <div className="flex flex-col gap-3">
             <Link 
               to="/investor/nyc-to-albany-roi" 
               className="text-foreground hover:text-primary transition-colors text-sm font-medium"
             >
-              Why NYC Investors Are Moving to Albany →
+              NYC → Albany ROI Playbook →
             </Link>
             <Link 
               to="/investor/albany-multi-unit-market" 
               className="text-foreground hover:text-primary transition-colors text-sm font-medium"
             >
-              2025 Albany Multi-Unit Market Update →
+              Albany Multi-Unit Market Report →
             </Link>
             <Link 
               to="/investor/analyze-multifamily" 
               className="text-foreground hover:text-primary transition-colors text-sm font-medium"
             >
               How to Analyze a Multi-Family Property →
+            </Link>
+            <Link 
+              to="/investor/1031-nyc-to-albany" 
+              className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            >
+              1031 Exchange Playbook (NYC → Albany) →
+            </Link>
+            <Link 
+              to="/investor/best-neighborhoods-cash-flow-capital-district" 
+              className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            >
+              Best Neighborhoods for Cash Flow in the Capital District →
             </Link>
           </div>
         </div>

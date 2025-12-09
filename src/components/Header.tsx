@@ -95,10 +95,12 @@ const Header = () => {
             <button className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
               Investor Guides
             </button>
-            <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-64 border border-blue-700/50 z-50">
+            <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-72 border border-blue-700/50 z-50">
               <Link to="/investor/nyc-to-albany-roi" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">NYC → Albany ROI Playbook</Link>
               <Link to="/investor/albany-multi-unit-market" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Albany Multi-Unit Market Report</Link>
-              <Link to="/investor/analyze-multifamily" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">How to Analyze a Multi-Family Deal</Link>
+              <Link to="/investor/analyze-multifamily" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">How to Analyze a Multi-Family Property</Link>
+              <Link to="/investor/1031-nyc-to-albany" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">1031 Exchange Playbook (NYC → Albany)</Link>
+              <Link to="/investor/best-neighborhoods-cash-flow-capital-district" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Best Neighborhoods for Cash Flow (Capital District)</Link>
             </div>
           </div>
           <Link
@@ -218,7 +220,21 @@ const Header = () => {
                   className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  How to Analyze a Multi-Family Deal
+                  How to Analyze a Multi-Family Property
+                </Link>
+                <Link
+                  to="/investor/1031-nyc-to-albany"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  1031 Exchange Playbook (NYC → Albany)
+                </Link>
+                <Link
+                  to="/investor/best-neighborhoods-cash-flow-capital-district"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Best Neighborhoods for Cash Flow (Capital District)
                 </Link>
               </div>
               <Link
