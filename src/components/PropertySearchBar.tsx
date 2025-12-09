@@ -30,11 +30,11 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
   };
 
   return (
-    <Card className="p-6 bg-white border-gray-200 shadow-lg">
+    <Card className="p-6 bg-card/80 backdrop-blur-sm border-2 border-primary/30 shadow-xl shadow-primary/10 ring-1 ring-primary/20">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Price Range */}
         <div>
-          <label className="text-sm font-medium text-gray-700 mb-2 block">
+          <label className="text-sm font-medium text-foreground mb-2 block">
             Price Range
           </label>
           <Select value={priceRange} onValueChange={setPriceRange}>
@@ -54,7 +54,7 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
 
         {/* Bedrooms */}
         <div>
-          <label className="text-sm font-medium text-gray-700 mb-2 block">
+          <label className="text-sm font-medium text-foreground mb-2 block">
             Bedrooms
           </label>
           <Select value={beds} onValueChange={setBeds}>
@@ -74,7 +74,7 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
 
         {/* Keyword Search */}
         <div>
-          <label className="text-sm font-medium text-gray-700 mb-2 block">
+          <label className="text-sm font-medium text-foreground mb-2 block">
             Address Keyword
           </label>
           <Input 
@@ -89,7 +89,7 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
         <div className="flex gap-2 items-end">
           <Button 
             onClick={handleSearch}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+            className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
           >
             <Search className="w-4 h-4 mr-2" />
             Search
