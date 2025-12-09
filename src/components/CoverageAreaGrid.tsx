@@ -39,6 +39,24 @@ const CoverageAreaGrid = () => {
       metric: '+5.8% YoY',
       price: '$485K',
       color: 'from-amber-500 to-amber-600'
+    },
+    {
+      name: 'Clifton Park',
+      slug: 'clifton-park',
+      icon: <Home className="w-7 h-7" />,
+      description: 'Family-friendly suburb with top-rated schools and retail',
+      metric: '+7.3% YoY',
+      price: '$385K',
+      color: 'from-teal-500 to-teal-600'
+    },
+    {
+      name: 'Amsterdam',
+      slug: 'amsterdam',
+      icon: <Building className="w-7 h-7" />,
+      description: 'Emerging market with historic charm and value opportunities',
+      metric: '+11.2% YoY',
+      price: '$145K',
+      color: 'from-rose-500 to-rose-600'
     }
   ];
 

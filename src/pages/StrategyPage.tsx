@@ -154,6 +154,38 @@ const strategyData: Record<string, StrategyData> = {
       capRate: '6.8%',
       cashOnCash: '11.2% (Year 1)'
     }
+  },
+  'land': {
+    name: 'Land',
+    slug: 'land',
+    icon: <Target className="w-8 h-8" />,
+    tagline: 'Ground-Floor Investment Opportunity',
+    description: 'Land investing in the Capital District offers unique opportunities for development, subdivision, or long-term appreciation. From buildable lots in growing suburbs to rural acreage, land provides flexibility and upside.',
+    keyMetrics: [
+      { label: 'Avg Lot Price', value: '$65,000', description: 'Buildable residential lots' },
+      { label: 'Appreciation', value: '8-15%', description: 'Annual in growth corridors' },
+      { label: 'Carrying Cost', value: 'Low', description: 'Taxes only, no maintenance' },
+      { label: 'Subdivision ROI', value: '40%+', description: 'When adding infrastructure' }
+    ],
+    investmentThesis: [
+      'No tenants, no maintenance, no headaches',
+      'Finite resource with increasing demand',
+      'Development upside in growing areas',
+      'Low carrying costs while you wait'
+    ],
+    idealFor: [
+      'Patient investors with long time horizons',
+      'Developers seeking entitled land',
+      'Those wanting passive appreciation',
+      'Investors diversifying beyond buildings'
+    ],
+    caseStudy: {
+      title: 'Clifton Park - Buildable Lot',
+      purchase: '$75,000',
+      monthlyIncome: 'N/A (hold)',
+      capRate: 'N/A',
+      cashOnCash: 'Sold after 3 years: $115,000 (+53%)'
+    }
   }
 };
 

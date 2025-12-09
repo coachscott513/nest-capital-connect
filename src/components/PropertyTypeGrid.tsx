@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Building, Home, TrendingUp, Target, ArrowRight } from 'lucide-react';
+import { Building, Home, TrendingUp, Target, ArrowRight, Hammer, Mountain } from 'lucide-react';
 
 const PropertyTypeGrid = () => {
   const strategies = [
@@ -23,7 +23,7 @@ const PropertyTypeGrid = () => {
     {
       name: 'Fix & Flip',
       slug: 'fix-and-flip',
-      icon: <TrendingUp className="w-7 h-7" />,
+      icon: <Hammer className="w-7 h-7" />,
       description: 'Value-add opportunities in historic properties',
       metric: '20%+ ROI',
       color: 'from-amber-500 to-amber-600'
@@ -35,6 +35,14 @@ const PropertyTypeGrid = () => {
       description: 'Long-term wealth through appreciation & cash flow',
       metric: '+62% 10yr',
       color: 'from-purple-500 to-purple-600'
+    },
+    {
+      name: 'Land',
+      slug: 'land',
+      icon: <Mountain className="w-7 h-7" />,
+      description: 'Raw land and development opportunities in growing areas',
+      metric: 'High Upside',
+      color: 'from-teal-500 to-teal-600'
     }
   ];
 
