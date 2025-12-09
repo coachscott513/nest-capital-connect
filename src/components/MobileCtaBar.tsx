@@ -25,33 +25,33 @@ const MobileCtaBar = () => {
   };
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[1000] bg-card border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.3)] safe-area-inset-bottom">
-      <div className="grid grid-cols-3 divide-x divide-border">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 z-[1000] bg-[#2563eb] shadow-[0_-4px_20px_rgba(0,0,0,0.4)] safe-area-inset-bottom">
+      <div className="grid grid-cols-3 divide-x divide-white/20">
         {/* Call Button */}
         <a
           href="tel:+15186762347"
-          className="flex flex-col items-center justify-center py-3 px-2 text-foreground hover:bg-muted/50 transition-colors active:bg-muted"
+          className="flex flex-col items-center justify-center min-h-[56px] py-3 px-2 text-white hover:bg-white/10 transition-colors active:bg-white/20"
         >
-          <Phone className="w-5 h-5 text-primary mb-1" />
-          <span className="text-xs font-medium">Call Scott</span>
+          <Phone className="w-5 h-5 text-white mb-1" />
+          <span className="text-xs font-medium text-white">Call Scott</span>
         </a>
 
         {/* Text Button */}
         <a
           href="sms:+15186762347?body=Hi%20Scott%2C%20I'd%20like%20to%20analyze%20this%20property%3A%20"
-          className="flex flex-col items-center justify-center py-3 px-2 text-foreground hover:bg-muted/50 transition-colors active:bg-muted"
+          className="flex flex-col items-center justify-center min-h-[56px] py-3 px-2 text-white hover:bg-white/10 transition-colors active:bg-white/20"
         >
-          <MessageSquare className="w-5 h-5 text-primary mb-1" />
-          <span className="text-xs font-medium">Text Address</span>
+          <MessageSquare className="w-5 h-5 text-white mb-1" />
+          <span className="text-xs font-medium text-white">Text Address</span>
         </a>
 
         {/* Analyze Button */}
         <button
           onClick={handleAnalyze}
-          className="flex flex-col items-center justify-center py-3 px-2 text-foreground hover:bg-muted/50 transition-colors active:bg-muted"
+          className="flex flex-col items-center justify-center min-h-[56px] py-3 px-2 text-white hover:bg-white/10 transition-colors active:bg-white/20"
         >
-          <BarChart3 className="w-5 h-5 text-primary mb-1" />
-          <span className="text-xs font-medium">Analyze a Deal</span>
+          <BarChart3 className="w-5 h-5 text-white mb-1" />
+          <span className="text-xs font-medium text-white">Analyze a Deal</span>
         </button>
       </div>
     </div>

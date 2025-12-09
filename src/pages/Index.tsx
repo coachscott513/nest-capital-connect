@@ -2,7 +2,6 @@ import { useState } from "react";
 import { TrendingUp, Percent, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
-import CommandCenter from "@/components/CommandCenter";
 import DueDiligenceEngine from "@/components/DueDiligenceEngine";
 import AlphaListSection from "@/components/AlphaListSection";
 import DealOfMonthSection from "@/components/DealOfMonthSection";
@@ -574,8 +573,6 @@ const Index = () => {
       {/* Strategy Session Section */}
       <StrategySessionSection />
 
-      {/* Command Center FAB */}
-      <CommandCenter />
 
       {/* Footer */}
       <footer className="px-[5%] py-12 text-center text-muted-foreground text-sm border-t border-border">
