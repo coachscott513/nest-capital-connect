@@ -52,20 +52,27 @@ const DueDiligenceEngine = () => {
         </p>
         
         {/* Supporting line */}
-        <p className="text-muted-foreground text-base mb-10 max-w-2xl mx-auto">
+        <p className="text-muted-foreground text-base mb-2 max-w-2xl mx-auto">
           Free, no obligation. Real numbers — not guesses.
         </p>
 
-        {/* Search Bar */}
-        <div className="relative mb-6">
-          <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-primary" />
-          <Input
-            type="text"
-            placeholder="e.g. 123 State St, Albany, NY (paste an address or Zillow link)"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            className="w-full pl-14 pr-6 py-7 text-lg bg-background/80 border-3 border-primary/50 rounded-2xl focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all shadow-lg shadow-primary/20 placeholder:text-muted-foreground/60"
-          />
+        {/* Property Search Bar Analyzer Label */}
+        <p className="text-primary font-bold text-lg md:text-xl uppercase tracking-wider mb-8">
+          Property Search Bar Analyzer
+        </p>
+
+        {/* Search Bar - Always Green Border, Larger Size */}
+        <div className="relative p-1 rounded-2xl bg-primary shadow-2xl shadow-primary/40 mb-8">
+          <div className="relative">
+            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-7 h-7 text-primary" />
+            <Input
+              type="text"
+              placeholder="e.g. 123 State St, Albany, NY (paste an address or Zillow link)"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="w-full pl-16 pr-6 py-8 text-lg md:text-xl bg-background border-0 rounded-xl focus:ring-0 focus:ring-offset-0 text-foreground font-semibold placeholder:text-foreground/50 placeholder:font-medium"
+            />
+          </div>
         </div>
 
         {/* Caption for toggles */}
@@ -74,7 +81,7 @@ const DueDiligenceEngine = () => {
         </p>
 
         {/* Checkbox Tags */}
-        <div className="flex flex-wrap justify-center gap-3 mb-8">
+        <div className="flex flex-wrap justify-center gap-3 mb-6">
           {dataPoints.map((point) => {
             const isSelected = selectedPoints.includes(point.label);
             const goldStyle = point.isHighlighted && !isSelected;
@@ -113,17 +120,26 @@ const DueDiligenceEngine = () => {
           })}
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+        {/* Helper text explaining the flow */}
+        <p className="text-muted-foreground text-sm md:text-base mb-8 max-w-xl mx-auto">
+          After you select what you want, click the button below and we'll send your free Intelligence Report by email, text, or phone call.
+        </p>
+
+        {/* Main CTA Button - More Prominent */}
+        <div className="mb-6">
           <Button
             onClick={handleRequestReport}
-            className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-bold rounded-full"
+            className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-7 text-xl font-bold rounded-full shadow-xl shadow-primary/30 hover:shadow-primary/50 transition-all animate-pulse"
           >
             Get My Free Intelligence Report
           </Button>
+        </div>
+
+        {/* Secondary Actions */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
           <a
             href="tel:+15186762347"
-            className="group w-full sm:w-auto flex items-center justify-center gap-2 border-2 border-primary text-primary px-8 py-[22px] text-lg font-bold rounded-full hover:bg-primary/10 transition-colors animate-pulse"
+            className="group w-full sm:w-auto flex items-center justify-center gap-2 border-2 border-primary text-primary px-8 py-4 text-lg font-bold rounded-full hover:bg-primary/10 transition-colors"
           >
             <Phone className="w-5 h-5" />
             Call to Analyze: (518) 676-2347
