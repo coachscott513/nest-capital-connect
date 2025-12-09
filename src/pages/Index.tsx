@@ -48,6 +48,16 @@ const menuSections = [
       { label: "Learn", sub: "/ Education", href: "/communities" },
     ],
   },
+  {
+    category: "Investor Guides",
+    items: [
+      { label: "NYC → Albany ROI", sub: "/ Playbook", href: "/investor/nyc-to-albany-roi" },
+      { label: "Albany Multi-Unit", sub: "/ Market Report", href: "/investor/albany-multi-unit-market" },
+      { label: "Analyze Multi-Family", sub: "/ How-To Guide", href: "/investor/analyze-multifamily" },
+      { label: "1031 Exchange", sub: "/ NYC → Albany", href: "/investor/1031-nyc-to-albany" },
+      { label: "Best Neighborhoods", sub: "/ Cash Flow", href: "/investor/best-neighborhoods-cash-flow-capital-district" },
+    ],
+  },
 ];
 
 const footerLinks = [
