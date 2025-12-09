@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="bg-card border-t border-border">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-4 gap-8">
           {/* Column 1: Brand */}
           <div>
             <h3 className="text-xl font-bold text-foreground mb-3">Capital District Nest</h3>
@@ -40,7 +40,38 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Column 3: Legal Links */}
+          {/* Column 3: Investor Resources */}
+          <div>
+            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">Investor Resources</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link 
+                  to="/investor/nyc-to-albany-roi" 
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  NYC → Albany ROI Playbook
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/investor/albany-multi-unit-market" 
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  Albany Multi-Unit Market Report
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/investor/analyze-multifamily" 
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  Multi-Family Analysis Guide
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Legal Links */}
           <div>
             <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">Legal</h4>
             <ul className="space-y-2">
