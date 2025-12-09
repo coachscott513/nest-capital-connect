@@ -69,7 +69,7 @@ const DueDiligenceEngine = () => {
         </div>
 
         {/* Caption for toggles */}
-        <p className="text-sm text-muted-foreground/60 mb-3">
+        <p className="text-lg md:text-xl font-bold text-foreground mb-4">
           Choose what you want in your report:
         </p>
 
