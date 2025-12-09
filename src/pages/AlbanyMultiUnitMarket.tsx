@@ -313,7 +313,7 @@ const AlbanyMultiUnitMarket = () => {
               Request a Custom Multi-Unit Report
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Text any property address to <strong className="text-primary">518-522-7265</strong> for:
+              Text any property address to <strong className="text-primary">518-676-2347</strong> for:
             </p>
             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               {['Rent comps', 'Cap rate forecast', 'DSCR analysis', 'Renovation budget modeling'].map((item) => (
@@ -324,13 +324,13 @@ const AlbanyMultiUnitMarket = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
-                <a href="tel:+15185227265" className="flex items-center gap-2">
+                <a href="tel:+15186762347" className="flex items-center gap-2">
                   <Phone className="w-5 h-5" />
-                  Call: (518) 522-7265
+                  Call: (518) 676-2347
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="sms:+15185227265" className="flex items-center gap-2">
+                <a href="sms:+15186762347" className="flex items-center gap-2">
                   <MessageSquare className="w-5 h-5" />
                   Text an Address
                 </a>
