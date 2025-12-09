@@ -58,6 +58,39 @@ const strategyData: Record<string, StrategyData> = {
       cashOnCash: '14.2%'
     }
   },
+  'single-family': {
+    name: 'Single Family',
+    slug: 'single-family',
+    icon: <Home className="w-8 h-8" />,
+    tagline: 'The Foundation of Real Estate Wealth',
+    description: 'Single-family rentals remain the most accessible and liquid real estate investment. In the Capital District, SFRs offer stable appreciation, strong tenant demand, and easier financing than commercial properties.',
+    keyMetrics: [
+      { label: 'Avg Cap Rate', value: '6.2%', description: 'Net operating income / purchase price' },
+      { label: 'Appreciation', value: '+6.8%', description: 'Annual average (Capital District)' },
+      { label: 'Avg Rent', value: '$1,850', description: '3BR single-family home' },
+      { label: 'Tenant Turnover', value: '2.5 yrs', description: 'Average lease duration' }
+    ],
+    investmentThesis: [
+      'Easier to finance with conventional mortgages',
+      'Higher quality, longer-term tenants',
+      'Strongest appreciation among property types',
+      'Most liquid asset for exit strategy'
+    ],
+    idealFor: [
+      'New investors starting their portfolio',
+      'Those seeking stable, predictable returns',
+      'Investors prioritizing appreciation over cash flow',
+      'Out-of-state investors wanting easy management'
+    ],
+    caseStudy: {
+      title: 'Schenectady Ranch - Mont Pleasant',
+      purchase: '$165,000',
+      renovation: '$15,000',
+      monthlyIncome: '$1,650 rent',
+      capRate: '6.4%',
+      cashOnCash: '9.8%'
+    }
+  },
   'first-time-buyer': {
     name: 'First-Time Buyer',
     slug: 'first-time-buyer',

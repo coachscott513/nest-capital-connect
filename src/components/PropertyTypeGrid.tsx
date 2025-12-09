@@ -13,6 +13,14 @@ const PropertyTypeGrid = () => {
       color: 'from-emerald-500 to-emerald-600'
     },
     {
+      name: 'Single Family',
+      slug: 'single-family',
+      icon: <Home className="w-7 h-7" />,
+      description: 'Traditional homes with strong appreciation and tenant demand',
+      metric: '6.2% Avg Cap',
+      color: 'from-sky-500 to-sky-600'
+    },
+    {
       name: 'First-Time Buyer',
       slug: 'first-time-buyer',
       icon: <Home className="w-7 h-7" />,
