@@ -17,6 +17,127 @@ const articles: Record<string, {
   heroImage?: string;
   content: React.ReactNode;
 }> = {
+  "1022-union-schenectady-dscr-analysis": {
+    title: "Investment Analysis: 1022 Union St, Schenectady",
+    subtitle: "The \"DSCR\" Leverage Play - Why the deal structure matters more than the price tag",
+    author: "Scott Alvarez",
+    authorTitle: "Principal Analyst, Capital District Nest",
+    publishedAt: "December 9, 2025",
+    readTime: "6 min read",
+    category: "DSCR / Multi-Family",
+    content: (
+      <>
+        <div className="bg-muted/30 border-l-4 border-primary p-6 my-8">
+          <p className="text-sm text-muted-foreground mb-2">Asset Class: Multi-Family (4-Unit) • Financing Strategy: DSCR / Residential Loan (20% Down)</p>
+        </div>
+
+        <h2 className="font-playfair text-3xl font-semibold mt-12 mb-6 text-primary">
+          The Analyst View
+        </h2>
+
+        <div className="bg-muted/30 border-l-4 border-accent p-6 my-8">
+          <p className="font-playfair text-xl italic text-foreground/90">
+            "Stop looking at the price tag ($450k). Look at the Terms."
+          </p>
+        </div>
+
+        <p className="mb-6 font-lora leading-relaxed">
+          1022 Union Street is a stabilized 4-unit generating <strong>$57,000/year</strong>. Because it is a 4-unit (and not 5+), it qualifies for residential financing rates, avoiding commercial loan headaches.
+        </p>
+
+        <p className="mb-6 font-lora leading-relaxed">
+          <strong>The Alpha here is the deal structure:</strong> By negotiating a <strong>6% Seller Concession ($27,000)</strong>, we can effectively wipe out the closing costs and buy down the rate. This minimizes your "Cash to Close" and skyrockets your Cash-on-Cash return.
+        </p>
+
+        <h2 className="font-playfair text-3xl font-semibold mt-12 mb-6 text-primary">
+          The Financials (The "Real" Numbers)
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-6 my-10">
+          <div className="bg-card border border-border p-6">
+            <p className="text-sm text-muted-foreground mb-2">Purchase Price</p>
+            <p className="font-playfair text-3xl font-bold text-foreground">$450,000</p>
+          </div>
+          <div className="bg-card border border-border p-6">
+            <p className="text-sm text-muted-foreground mb-2">Down Payment (20%)</p>
+            <p className="font-playfair text-3xl font-bold text-foreground">$90,000</p>
+          </div>
+          <div className="bg-card border border-border p-6">
+            <p className="text-sm text-muted-foreground mb-2">Seller Concession (6%)</p>
+            <p className="font-playfair text-3xl font-bold text-accent">$27,000 credit</p>
+            <p className="text-xs text-muted-foreground mt-1">Covers closing costs + prepaid taxes</p>
+          </div>
+          <div className="bg-card border border-border p-6">
+            <p className="text-sm text-muted-foreground mb-2">Loan Strategy</p>
+            <p className="font-playfair text-xl font-bold text-foreground">DSCR @ 6.25%</p>
+            <p className="text-xs text-muted-foreground mt-1">No personal DTI required</p>
+          </div>
+        </div>
+
+        <h2 className="font-playfair text-3xl font-semibold mt-12 mb-6 text-primary">
+          Projected Monthly Cash Flow
+        </h2>
+
+        <div className="bg-card border border-border p-6 my-8">
+          <div className="space-y-4">
+            <div className="flex justify-between items-center py-3 border-b border-border">
+              <span className="font-lora text-foreground">Gross Income</span>
+              <span className="font-playfair text-xl font-bold text-accent">$4,750/mo</span>
+            </div>
+            <div className="flex justify-between items-center py-3 border-b border-border">
+              <span className="font-lora text-muted-foreground">Mortgage (P&I @ 6.25%)</span>
+              <span className="font-playfair text-lg text-foreground">~$2,217/mo</span>
+            </div>
+            <div className="flex justify-between items-center py-3 border-b border-border">
+              <span className="font-lora text-muted-foreground">Taxes</span>
+              <span className="font-playfair text-lg text-foreground">$737/mo</span>
+            </div>
+            <div className="flex justify-between items-center py-3 border-b border-border">
+              <span className="font-lora text-muted-foreground">Insurance (Est)</span>
+              <span className="font-playfair text-lg text-foreground">$200/mo</span>
+            </div>
+            <div className="flex justify-between items-center py-3 border-b border-border">
+              <span className="font-lora font-semibold text-foreground">Total PITI</span>
+              <span className="font-playfair text-lg font-semibold text-foreground">~$3,154/mo</span>
+            </div>
+            <div className="flex justify-between items-center py-3 bg-accent/10 px-4 -mx-4 rounded">
+              <span className="font-lora font-bold text-foreground">Net Cash Flow</span>
+              <span className="font-playfair text-2xl font-bold text-accent">+$1,596/mo</span>
+            </div>
+            <p className="text-xs text-muted-foreground text-center mt-2">Before maintenance reserves</p>
+          </div>
+        </div>
+
+        <h2 className="font-playfair text-3xl font-semibold mt-12 mb-6 text-primary">
+          The Verdict
+        </h2>
+
+        <div className="bg-primary/10 border border-primary/30 p-6 my-8 rounded-lg">
+          <p className="font-playfair text-2xl font-bold text-primary mb-4">STRONG BUY for Leverage</p>
+          <p className="font-lora leading-relaxed text-foreground">
+            Most investors think they need 25-30% down for a commercial loan on a deal this size. By keeping it as a <strong>residential 4-unit with a DSCR product</strong>, you put less money down, secure a fixed 6.25% rate, and let the tenants pay off the asset while you pocket ~$1,600/month.
+          </p>
+        </div>
+
+        <div className="bg-card border border-border p-6 my-8">
+          <p className="text-sm text-muted-foreground mb-2">Asset Grade</p>
+          <p className="font-playfair text-3xl font-bold text-accent">A-</p>
+          <p className="text-sm text-muted-foreground mt-2">Newer mechanics + Separate utilities = Low OpEx Risk</p>
+        </div>
+
+        <Separator className="my-12" />
+
+        <div className="bg-muted/30 border border-border p-8 text-center rounded-lg">
+          <p className="font-playfair text-xl font-semibold text-foreground mb-4">
+            Want to see the full Rent Roll & Lease Dates?
+          </p>
+          <Link to="/" className="inline-block bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-3 rounded transition-colors">
+            Request the Intelligence Report on our Homepage
+          </Link>
+        </div>
+      </>
+    )
+  },
   "2025-capital-district-market-forecast": {
     title: "The 2025 Capital District Market Forecast",
     subtitle: "How macro forces, local demand, and investor sentiment are reshaping Albany, Troy, and Schenectady real estate",

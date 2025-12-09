@@ -7,6 +7,15 @@ import { Button } from "@/components/ui/button";
 
 const articles = [
   {
+    id: 0,
+    tag: "DSCR",
+    headline: "Investment Analysis: 1022 Union St, Schenectady (The \"DSCR\" Leverage Play)",
+    excerpt: "Stop looking at the price tag ($450k). Look at the Terms. A stabilized 4-unit generating $57,000/year with residential financing rates.",
+    date: "Dec 9, 2025",
+    author: "Scott Alvarez",
+    slug: "1022-union-schenectady-dscr-analysis"
+  },
+  {
     id: 1,
     tag: "MULTI-FAMILY",
     headline: "Investment Analysis: 128 Hamilton St, Troy",
