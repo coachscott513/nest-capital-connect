@@ -43,6 +43,7 @@ const menuSections = [
   {
     category: "Network",
     items: [
+      { label: "Insights", sub: "/ Market Intelligence", href: "/insights" },
       { label: "Community", sub: "/ Social", href: "/blog" },
       { label: "Learn", sub: "/ Education", href: "/communities" },
     ],
