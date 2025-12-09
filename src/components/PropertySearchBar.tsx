@@ -34,10 +34,11 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
       {/* Header */}
       <div className="text-center mb-6">
         <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-          Search Any Property — Get Instant Details + Free Cash Flow Analysis
+          Search Any Home or Multi-Unit Property in the Capital District
         </h2>
         <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
-          Enter an address or MLS link. I'll send you cap rate, cash flow, rent estimates, DSCR score, and 5-year ROI projections for free.
+          Instantly view details, rent estimates, comps, and more.<br />
+          Want analysis? I'll run the numbers for you — no cost.
         </p>
       </div>
 
@@ -88,7 +89,7 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
             Property Address
           </label>
           <Input 
-            placeholder="Type an address or property… (e.g., 123 Main St Albany)"
+            placeholder="Search by address, city, or MLS number…"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
