@@ -5,8 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Building2, TrendingUp, DollarSign, Wrench, MapPin, Phone, CheckCircle, ExternalLink, MessageCircle, Check, Crown, Percent } from "lucide-react";
+import { Building2, TrendingUp, DollarSign, Wrench, MapPin, Phone, CheckCircle, ExternalLink, MessageCircle, Check, Crown, Percent, Calendar, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -52,56 +51,6 @@ const TroyMultiUnit = () => {
     }
   };
 
-  const bulletPoints = [
-    "BRRRR & value-add deals",
-    "House hack opportunities",
-    "Off-market alerts",
-    "Fast rent-roll & expense analysis"
-  ];
-
-  const sampleDeals = [
-    {
-      location: "Downtown Troy — 4-Unit",
-      purchase: "$315,000",
-      rentRoll: "$3,600/mo (projected)",
-      capRate: "12.3%",
-      coc: "19%"
-    },
-    {
-      location: "Lansingburgh — 3-Unit",
-      purchase: "$265,000",
-      rentRoll: "$3,000/mo",
-      capRate: "11.1%",
-      coc: "22%"
-    },
-    {
-      location: "RPI Zone — Duplex",
-      purchase: "$245,000",
-      rentRoll: "$2,450/mo",
-      capRate: "10.8%",
-      coc: "18%"
-    }
-  ];
-
-  const neighborhoods = [
-    {
-      name: "Downtown / Monument Square",
-      description: "High-demand professional renters, premium rents, low vacancy."
-    },
-    {
-      name: "Lansingburgh",
-      description: "Albany's best mix of affordability + ROI. Very strong cash flow."
-    },
-    {
-      name: "RPI Area",
-      description: "Student + graduate renters with reliable demand year-round."
-    },
-    {
-      name: "East Side / South Troy",
-      description: "Rapidly developing, ideal for long-term appreciation."
-    }
-  ];
-
   return (
     <MainLayout>
       <Helmet>
@@ -135,37 +84,31 @@ const TroyMultiUnit = () => {
                   Troy Multi-Unit Market Report
                 </h1>
                 <p className="text-lg md:text-xl text-primary font-semibold mb-4">
-                  Cap Rates: 10–13% • Cash-on-Cash: 15–28% • Strong Appreciation Potential
+                  Real 10–13% Cap Rates • 15–28% Cash-on-Cash Returns
                 </p>
                 <p className="text-muted-foreground mb-4 leading-relaxed">
-                  Troy has become one of the hottest investment markets in the Capital District, driven by a mix of urban revitalization, university influence, and long-term renter demand.
+                  Troy has become one of the strongest emerging investment markets in the Capital District, driven by university demand (RPI), urban revitalization, and walkable neighborhoods that command premium rents.
                 </p>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                  Investors come here for reliable returns, walkable neighborhoods, and high appreciation potential not found in many Northeast cities.
+                  Investors come for immediate cash flow, appreciation potential, and a tenant base that stays long-term.
                 </p>
                 
-                {/* Bullet Points */}
-                <ul className="space-y-3 mb-8 text-left mx-auto lg:mx-0 max-w-md">
-                  {bulletPoints.map((point, index) => (
-                    <li key={index} className="flex items-center gap-3 text-foreground">
-                      <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                        <Check className="w-4 h-4 text-primary" />
-                      </div>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                {/* Text Link */}
-                <p className="text-muted-foreground">
-                  Prefer to skip the form?{" "}
-                  <a 
-                    href={`sms:${SCOTT_PHONE_TEL}`}
-                    className="text-primary font-semibold hover:underline"
-                  >
-                    Text Scott at {SCOTT_PHONE}
-                  </a>
-                </p>
+                {/* Highlighted Phone Contact Block */}
+                <div 
+                  className="mt-6 mb-6 p-3 rounded-md mx-auto lg:mx-0 max-w-md"
+                  style={{ backgroundColor: '#dff7df' }}
+                >
+                  <p className="text-center lg:text-left" style={{ color: '#000' }}>
+                    <span className="font-bold">Call/Text Scott directly: </span>
+                    <a 
+                      href={`tel:${SCOTT_PHONE_TEL}`}
+                      className="font-bold hover:underline"
+                      style={{ color: '#000' }}
+                    >
+                      {SCOTT_PHONE}
+                    </a>
+                  </p>
+                </div>
               </div>
 
               {/* Right Column - Form */}
@@ -292,33 +235,33 @@ const TroyMultiUnit = () => {
           </div>
         </section>
 
-        {/* WHY TROY IS A TOP MULTI-UNIT MARKET */}
+        {/* WHY INVESTORS ARE MOVING INTO TROY */}
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12 font-playfair">
-              Why Troy Is a Top Multi-Unit Market
+              Why Investors Are Moving Into Troy
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 {
                   icon: Percent,
                   title: "10–13% Cap Rates (Consistently Achievable)",
-                  description: "Troy combines strong rents with historically undervalued buildings, creating excellent net returns."
+                  description: "Troy combines strong rent levels with accessible prices, delivering long-term stable performance."
                 },
                 {
                   icon: TrendingUp,
                   title: "15–28% Cash-on-Cash Returns",
-                  description: "Especially common in 3–4 unit buildings near RPI, downtown corridors, and Lansingburgh."
+                  description: "Especially common in Lansingburgh, Downtown Troy, and East Side."
                 },
                 {
                   icon: DollarSign,
                   title: "Powerful Appreciation Drivers",
-                  description: "RPI influence (2nd highest-paid grads in the U.S.), downtown revitalization, tech startups & creative industries."
+                  description: "RPI influence (one of the highest-earning student populations in the U.S.), downtown redevelopment, tech and creative growth."
                 },
                 {
                   icon: Wrench,
                   title: "Ideal for Value-Add & BRRRR",
-                  description: "Paint + flooring + kitchen upgrades often unlock 25–40% rent increases."
+                  description: "Light renovations (paint, flooring, kitchens) often lift rents 20–35%."
                 }
               ].map((item, index) => (
                 <div key={index} className="bg-card border border-border rounded-xl p-6 hover:border-primary/50 transition-colors">
@@ -333,18 +276,90 @@ const TroyMultiUnit = () => {
           </div>
         </section>
 
-        {/* RECENT TROY DEALS WE ANALYZED */}
+        {/* NYC → TROY ROI COMPARISON TABLE */}
         <section className="py-20 bg-card border-y border-border">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-4 font-playfair">
-              Recent Troy Deals We Analyzed
+              NYC → Troy ROI Comparison
+            </h2>
+            <p className="text-center text-muted-foreground mb-10 max-w-2xl mx-auto">
+              Investors shifting capital from NYC to Troy often see 4–6× improvement in returns.
+            </p>
+            <div className="overflow-x-auto max-w-5xl mx-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-primary/10">
+                    <th className="border border-border px-4 py-3 text-left text-foreground font-semibold">Metric</th>
+                    <th className="border border-border px-4 py-3 text-left text-foreground font-semibold">Troy</th>
+                    <th className="border border-border px-4 py-3 text-left text-foreground font-semibold">NYC</th>
+                    <th className="border border-border px-4 py-3 text-left text-primary font-semibold">Advantage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="bg-background">
+                    <td className="border border-border px-4 py-3 text-foreground font-medium">Cap Rate</td>
+                    <td className="border border-border px-4 py-3 text-primary font-semibold">10–13%</td>
+                    <td className="border border-border px-4 py-3 text-muted-foreground">2–4%</td>
+                    <td className="border border-border px-4 py-3 text-primary font-semibold">Troy +7–9%</td>
+                  </tr>
+                  <tr className="bg-card">
+                    <td className="border border-border px-4 py-3 text-foreground font-medium">Cash-on-Cash</td>
+                    <td className="border border-border px-4 py-3 text-primary font-semibold">15–28%</td>
+                    <td className="border border-border px-4 py-3 text-muted-foreground">-5% to +5%</td>
+                    <td className="border border-border px-4 py-3 text-primary font-semibold">Troy +20–30%</td>
+                  </tr>
+                  <tr className="bg-background">
+                    <td className="border border-border px-4 py-3 text-foreground font-medium">Typical 3-Unit Price</td>
+                    <td className="border border-border px-4 py-3 text-primary font-semibold">$250K–$320K</td>
+                    <td className="border border-border px-4 py-3 text-muted-foreground">$1M–$1.7M</td>
+                    <td className="border border-border px-4 py-3 text-primary font-semibold">Troy 80% cheaper</td>
+                  </tr>
+                  <tr className="bg-card">
+                    <td className="border border-border px-4 py-3 text-foreground font-medium">Cash Flow</td>
+                    <td className="border border-border px-4 py-3 text-primary font-semibold">$500–$1,500/mo</td>
+                    <td className="border border-border px-4 py-3 text-muted-foreground">Often negative</td>
+                    <td className="border border-border px-4 py-3 text-primary font-semibold">Troy wins</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* RECENT TROY DEALS WE ANALYZED */}
+        <section className="py-20 bg-background">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-4 font-playfair">
+              Recent Troy Multi-Unit Deals We Analyzed
             </h2>
             <p className="text-center text-muted-foreground mb-10">
               Real examples of what investors achieve in Troy.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {sampleDeals.map((deal, index) => (
-                <Card key={index} className="bg-background border-border hover:border-primary/50 transition-all">
+              {[
+                {
+                  location: "Downtown Troy — 4-Unit",
+                  purchase: "$315,000",
+                  rentRoll: "$3,600/mo",
+                  capRate: "12.3%",
+                  coc: "19%"
+                },
+                {
+                  location: "Lansingburgh — 3-Unit",
+                  purchase: "$265,000",
+                  rentRoll: "$3,000/mo",
+                  capRate: "11.1%",
+                  coc: "22%"
+                },
+                {
+                  location: "RPI Zone — Duplex",
+                  purchase: "$245,000",
+                  rentRoll: "$2,450/mo",
+                  capRate: "10.8%",
+                  coc: "18%"
+                }
+              ].map((deal, index) => (
+                <Card key={index} className="bg-card border-border hover:border-primary/50 transition-all">
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold text-foreground mb-4">{deal.location}</h3>
                     <div className="space-y-2 text-sm">
@@ -373,14 +388,31 @@ const TroyMultiUnit = () => {
         </section>
 
         {/* BEST TROY NEIGHBORHOODS */}
-        <section className="py-20 bg-background">
+        <section className="py-20 bg-card border-y border-border">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12 font-playfair">
               Best Troy Neighborhoods for Multi-Unit Investing
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {neighborhoods.map((neighborhood, index) => (
-                <div key={index} className="bg-card border border-border rounded-xl p-5 hover:border-primary/50 transition-colors">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+              {[
+                {
+                  name: "Downtown / Monument Square",
+                  description: "Premium rents, low vacancy, walkable urban environment."
+                },
+                {
+                  name: "Lansingburgh",
+                  description: "Highest ROI mix—affordable prices + strong cash flow."
+                },
+                {
+                  name: "RPI / East Side",
+                  description: "Student and graduate renters with predictable demand."
+                },
+                {
+                  name: "South Troy",
+                  description: "Revitalizing district with appreciation potential."
+                }
+              ].map((neighborhood, index) => (
+                <div key={index} className="bg-background border border-border rounded-xl p-5 hover:border-primary/50 transition-colors">
                   <div className="flex items-start gap-3">
                     <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
                     <div>
@@ -395,7 +427,7 @@ const TroyMultiUnit = () => {
         </section>
 
         {/* VIP INVESTOR ACCESS */}
-        <section className="py-20 bg-card border-y border-border">
+        <section className="py-20 bg-background">
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30 rounded-2xl p-8 md:p-12 text-center">
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -404,17 +436,14 @@ const TroyMultiUnit = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-playfair">
                 VIP Investor Access — Troy Deals
               </h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                Many Troy multi-units never hit Zillow or the MLS.
-              </p>
-              <p className="text-foreground font-medium mb-4">VIP Investors get:</p>
+              <p className="text-foreground mb-4">VIP Investors receive:</p>
               <ul className="text-left max-w-md mx-auto mb-8 space-y-3">
                 {[
-                  "Off-market buildings",
+                  "Off-market & pre-market Troy multi-units",
                   "Rent roll verification",
-                  "True cap rate & cash flow analysis",
-                  "Neighborhood ROI scoring",
-                  "Full P&L + 5-year projection"
+                  "True tax, utilities, insurance evaluation",
+                  "Full P&L and cash-flow modeling",
+                  "Neighborhood ROI scoring"
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-3 text-foreground">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
@@ -432,26 +461,33 @@ const TroyMultiUnit = () => {
                   Join VIP Multi-Unit Buyers
                 </a>
               </Button>
+              
+              <p className="text-foreground mt-6">
+                <span className="font-semibold">Call/Text Scott: </span>
+                <a href={`tel:${SCOTT_PHONE_TEL}`} className="text-primary font-semibold hover:underline">
+                  {SCOTT_PHONE}
+                </a>
+              </p>
             </div>
           </div>
         </section>
 
-        {/* FREE INTELLIGENCE REPORT */}
-        <section className="py-20 bg-primary/10">
+        {/* FREE TROY MULTI-UNIT INTELLIGENCE REPORT */}
+        <section className="py-20 bg-primary/10 border-y border-border">
           <div className="container mx-auto px-4 text-center max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-playfair">
               Free Troy Multi-Unit Intelligence Report
             </h2>
             <p className="text-lg text-muted-foreground mb-6">
-              Paste any Troy property address below to get:
+              Send any Troy property address for a full investor breakdown:
             </p>
             <ul className="text-left max-w-md mx-auto mb-8 space-y-3">
               {[
                 "Cap Rate (10–13%)",
-                "Cash-on-Cash ROI (15–28%)",
-                "Market Rent Analysis",
-                "Tax/Utility Audit",
-                "Renovation & Value-Add Potential"
+                "Cash-on-Cash (15–28%)",
+                "Market Rent vs. Current Rent",
+                "Taxes, Utilities, Expenses",
+                "5-Year ROI Projection"
               ].map((item, index) => (
                 <li key={index} className="flex items-center gap-3 text-foreground">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
@@ -466,7 +502,7 @@ const TroyMultiUnit = () => {
             >
               <a href={`sms:${SCOTT_PHONE_TEL}`}>
                 <MessageCircle className="w-5 h-5 mr-2" />
-                Text any address to {SCOTT_PHONE}
+                Text any address: {SCOTT_PHONE}
               </a>
             </Button>
           </div>
@@ -476,104 +512,39 @@ const TroyMultiUnit = () => {
         <section className="py-20 bg-background">
           <div className="container mx-auto px-4 max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12 font-playfair">
-              Frequently Asked Questions
+              Troy FAQ
             </h2>
             <Accordion type="single" collapsible className="space-y-4">
               <AccordionItem value="item-1" className="bg-card border border-border rounded-xl px-6">
                 <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
-                  Is Troy good for investors?
+                  Is Troy stable for rentals?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-5">
-                  Yes — it has some of the strongest rent growth and appreciation in the region, driven by RPI influence and downtown revitalization.
+                  Yes — RPI + Downtown Troy create demand year-round.
                 </AccordionContent>
               </AccordionItem>
               
               <AccordionItem value="item-2" className="bg-card border border-border rounded-xl px-6">
                 <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
-                  Can students pay reliably?
+                  Are off-market deals common?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-5">
-                  RPI students are among the highest-paying renters in Upstate NY. They typically have strong family support and reliable payment histories.
+                  Very — many never hit Zillow/MLS.
                 </AccordionContent>
               </AccordionItem>
               
               <AccordionItem value="item-3" className="bg-card border border-border rounded-xl px-6">
                 <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
-                  Do value-add deals exist?
+                  Is Troy good for BRRRR?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-5">
-                  Yes — especially in Lansingburgh and South Troy. Paint + flooring + kitchen upgrades often unlock 25–40% rent increases.
+                  One of the best BRRRR cities in the Capital Region.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
           </div>
         </section>
-
-        {/* FINAL CTA */}
-        <section className="py-20 bg-card border-t border-border">
-          <div className="container mx-auto px-4 text-center max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-playfair">
-              Get a Free Troy Investor Report
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Receive a custom rent roll, cash-flow projection, and ROI analysis for any Troy property.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-              <Button 
-                size="lg" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6"
-                asChild
-              >
-                <a href={`tel:${SCOTT_PHONE_TEL}`}>
-                  <Phone className="w-5 h-5 mr-2" />
-                  Call {SCOTT_PHONE}
-                </a>
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-6"
-                asChild
-              >
-                <a href={`sms:${SCOTT_PHONE_TEL}`}>
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  Text Scott
-                </a>
-              </Button>
-            </div>
-            <p className="text-muted-foreground">
-              or email:{" "}
-              <a href="mailto:scott@capitaldistrictnest.com" className="text-primary hover:underline">
-                scott@capitaldistrictnest.com
-              </a>
-            </p>
-          </div>
-        </section>
       </main>
-      
-      {/* Mobile Sticky CTA */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 p-3 bg-background/95 backdrop-blur-sm border-t border-border z-40">
-        <div className="flex gap-2">
-          <Button 
-            className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3"
-            asChild
-          >
-            <a href={`tel:${SCOTT_PHONE_TEL}`}>
-              <Phone className="w-4 h-4 mr-1" />
-              Call
-            </a>
-          </Button>
-          <Button 
-            className="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-3"
-            asChild
-          >
-            <a href={`sms:${SCOTT_PHONE_TEL}`}>
-              <MessageCircle className="w-4 h-4 mr-1" />
-              Text
-            </a>
-          </Button>
-        </div>
-      </div>
     </MainLayout>
   );
 };
