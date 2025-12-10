@@ -10,6 +10,7 @@ import FinancingSection from "@/components/FinancingSection";
 import CoverageAreaGrid from "@/components/CoverageAreaGrid";
 import PropertyTypeGrid from "@/components/PropertyTypeGrid";
 import QuickSearchBlock from "@/components/QuickSearchBlock";
+import MultiUnitSearchSection from "@/components/MultiUnitSearchSection";
 
 const menuSections = [
   {
@@ -212,6 +213,9 @@ const Index = () => {
 
       {/* Due Diligence Engine */}
       <DueDiligenceEngine />
+
+      {/* Multi-Unit Search Section */}
+      <MultiUnitSearchSection />
 
       {/* Coverage Area Grid - SEO Linked */}
       <CoverageAreaGrid />

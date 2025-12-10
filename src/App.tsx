@@ -29,6 +29,8 @@ import Grants from "./pages/Grants";
 import FirstTimeHomebuyers from "./pages/FirstTimeHomebuyers";
 import AlbanyInvestmentProperties from "./pages/AlbanyInvestmentProperties";
 import AlbanyMultiUnit from "./pages/AlbanyMultiUnit";
+import SchenectadyMultiUnit from "./pages/SchenectadyMultiUnit";
+import TroyMultiUnit from "./pages/TroyMultiUnit";
 import AlbanyLand from "./pages/AlbanyLand";
 import SellInvestmentProperty from "./pages/SellInvestmentProperty";
 import CashFlowReport from "./pages/CashFlowReport";
@@ -80,6 +82,8 @@ const App = () => {
           <Route path="/first-time-buyer-programs-albany" element={<FirstTimeHomebuyers />} />
           <Route path="/albany-investment-properties" element={<AlbanyInvestmentProperties />} />
           <Route path="/albany-multi-unit" element={<AlbanyMultiUnit />} />
+          <Route path="/schenectady-multi-unit" element={<SchenectadyMultiUnit />} />
+          <Route path="/troy-multi-unit" element={<TroyMultiUnit />} />
           <Route path="/albany-land" element={<AlbanyLand />} />
           <Route path="/sell-investment-property" element={<SellInvestmentProperty />} />
           <Route path="/cash-flow-report" element={<CashFlowReport />} />
