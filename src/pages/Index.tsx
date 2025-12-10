@@ -330,71 +330,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Market Analytics Section */}
-      <section className="flex flex-col lg:flex-row items-center px-[5%] py-20 border-t border-border bg-muted/20">
-        <div className="flex-1 max-w-[550px] p-5">
-          <div className="text-primary font-bold text-sm mb-3 uppercase tracking-wider">Q4 2025 DATA</div>
-          <h2 className="text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight mb-5 text-[hsl(220,50%,45%)]">
-            The Economics of<br />Upstate Real Estate
-          </h2>
-          <p className="text-muted-foreground italic mb-4">
-            Why accurate pricing matters more than ever in a tight inventory market.
-          </p>
-          <p className="text-muted-foreground leading-relaxed mb-6">
-            Real estate isn't just about curb appeal; it's about supply and demand curves. In late 2025, the Capital District is experiencing a classic supply constraint. With inventory in Albany County down nearly 16% year-over-year and median sale prices stabilizing around $320,000, we are in a high-velocity market.
-          </p>
-          <p className="text-muted-foreground leading-relaxed">
-            For sellers, this "Scarcity Premium" means homes priced correctly are seeing multiple offers within 15 days. For buyers, it means you need an agent who understands the data to win competitive bids without overpaying. I don't just guess the price; <strong className="text-foreground">I analyze the market fundamentals to secure your investment.</strong>
-          </p>
-        </div>
-        <div className="flex-1 flex justify-center p-5">
-          <div className="bg-card border border-border rounded-2xl p-8 w-full max-w-[400px] shadow-[0_20px_50px_rgba(0,0,0,0.25)]">
-            <div className="text-xs text-muted-foreground uppercase tracking-widest mb-6 text-center">Capital District Market Snapshot</div>
-            
-            {/* Metric 1 */}
-            <div className="flex items-center justify-between py-4 border-b border-border">
-              <div>
-                <div className="text-4xl font-extrabold text-foreground">15</div>
-                <div className="text-sm text-muted-foreground mt-1">Avg Days on Market</div>
-              </div>
-              <div className="flex items-center gap-1 text-primary font-bold">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                </svg>
-                Fast
-              </div>
-            </div>
-
-            {/* Metric 2 */}
-            <div className="flex items-center justify-between py-4 border-b border-border">
-              <div>
-                <div className="text-4xl font-extrabold text-foreground">$320k</div>
-                <div className="text-sm text-muted-foreground mt-1">Median Sales Price</div>
-              </div>
-              <div className="flex items-center gap-1 text-primary font-bold">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                </svg>
-                Stable
-              </div>
-            </div>
-
-            {/* Metric 3 */}
-            <div className="flex items-center justify-between py-4">
-              <div>
-                <div className="text-4xl font-extrabold text-foreground">98.1%</div>
-                <div className="text-sm text-muted-foreground mt-1">List-to-Sale Ratio</div>
-              </div>
-              <div className="flex items-center gap-1 text-primary font-bold">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                </svg>
-                Strong
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Hero Section 1: VIP Experience */}
       <section className="flex flex-col lg:flex-row items-center px-[5%] py-16 lg:min-h-[600px] border-t border-border">
@@ -448,138 +383,20 @@ const Index = () => {
         <div className="flex-1 flex justify-center p-5">
           <img 
             src="/assets/wall-street-analysis.png" 
-            alt="Investment Performance Analysis showing Projected Net Annual Cash Flow and Cash-on-Cash Return comparison"
-            className="w-full max-w-[600px] rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
+            alt="Professional Real Estate Investment Analysis Spreadsheet"
+            className="rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.5)] max-w-full h-auto"
           />
         </div>
       </section>
 
-      {/* Portfolio Managers Section */}
-      <section className="px-[5%] py-20 bg-card/50 border-t border-border">
-        {/* Section Header */}
-        <div className="text-center max-w-[800px] mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-5">
-            Not Agents. <span className="text-primary">Portfolio Managers.</span>
-          </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
-            Most agents just "show houses." The Capital District Nest Team at RE/MAX is different—we navigate the complex regulatory landscape 
-            of the Capital District so your asset performs from Day 1.
-          </p>
-        </div>
-
-        {/* Investor Analysis Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-20 max-w-6xl mx-auto">
-          <div className="bg-card p-8 rounded-xl border border-border">
-            <div className="text-3xl mb-4">📊</div>
-            <h3 className="text-xl font-bold mb-3">Cash Flow Modeling</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              We build <strong className="text-foreground">complete rent roll projections</strong> with realistic expense ratios, vacancy assumptions, and cap rate analysis before you make an offer.
-            </p>
-          </div>
-
-          <div className="bg-card p-8 rounded-xl border border-border">
-            <div className="text-3xl mb-4">📈</div>
-            <h3 className="text-xl font-bold mb-3">Market Comparables</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              We pull <strong className="text-foreground">neighborhood-level data</strong>—recent sales, rental rates, and price trends—so you know exactly what a property is worth today and tomorrow.
-            </p>
-          </div>
-
-          <div className="bg-card p-8 rounded-xl border border-border">
-            <div className="text-3xl mb-4">🎯</div>
-            <h3 className="text-xl font-bold mb-3">ROI Projections</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              From <strong className="text-foreground">CoC returns to IRR</strong>, we calculate your actual returns factoring in financing costs, rehab budgets, and realistic appreciation scenarios.
-            </p>
-          </div>
-        </div>
-
-      </section>
-      {/* Market Intelligence Section */}
-      <section className="px-[5%] py-20 border-t border-border" style={{ backgroundColor: '#065F46' }}>
-        <div className="text-center max-w-[800px] mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-white">
-            Market Pulse: <span className="text-[#10B981]">The Data Behind the Deal.</span>
-          </h2>
-          <p className="text-white/70 text-lg">Real-time insights from the Capital District investment landscape.</p>
-        </div>
-
-        {/* 3-Column Data Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {/* Card 1: Live Mortgage Rate */}
-          <div className="group relative bg-[#022c22] border border-[#10B981] rounded-2xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.6)]">
-            {/* Live Indicator */}
-            <div className="absolute top-4 right-4 flex items-center gap-2">
-              <span className="w-2 h-2 bg-[#10B981] rounded-full animate-pulse" />
-              <span className="text-[#10B981] text-xs font-medium">Live Market Data</span>
-            </div>
-            
-            <h3 className="text-white font-bold text-lg mb-2">30-Year Fixed Avg</h3>
-            <p className="text-white/50 text-sm mb-6">National Rate Index</p>
-            
-            {/* Large Rate Display */}
-            <div className="h-24 flex items-center justify-center gap-3 mb-6">
-              <span className="text-5xl md:text-6xl font-black text-white">6.82%</span>
-              {/* Rate Up Arrow (Red) - Change to TrendingDown and green when rates drop */}
-              <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-              </svg>
-            </div>
-            
-            <p className="text-red-400 font-bold text-xl">+0.12% this week</p>
-            
-            {/* Hover Tooltip */}
-            <div className="absolute inset-0 bg-[#022c22]/95 rounded-2xl p-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-              <p className="text-white text-center text-sm leading-relaxed">
-                <span className="font-bold text-[#10B981]">The 1% Rule:</span> For every 1% drop in rates, your buying power increases by ~10%. Lock in before the next Fed meeting.
-              </p>
-            </div>
-          </div>
-
-          {/* Card 2: Rent Velocity */}
-          <div className="bg-[#022c22] border border-[#10B981] rounded-2xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.6)]">
-            <h3 className="text-white font-bold text-lg mb-2">Rent Velocity</h3>
-            <p className="text-white/50 text-sm mb-6">Troy Rent Trends</p>
-            
-            {/* Two Vertical Bars */}
-            <div className="h-24 flex items-end justify-center gap-8 mb-6">
-              <div className="flex flex-col items-center">
-                <div className="w-12 bg-[#10B981]/50 rounded-t" style={{ height: '50%' }} />
-                <span className="text-white/50 text-xs mt-2">2024</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="w-12 bg-[#10B981] rounded-t" style={{ height: '85%' }} />
-                <span className="text-white/50 text-xs mt-2">2025</span>
-              </div>
-            </div>
-            
-            <p className="text-[#10B981] font-bold text-xl">Troy Rents +12%</p>
-          </div>
-
-          {/* Card 3: Alpha Spread */}
-          <div className="bg-[#022c22] border border-[#10B981] rounded-2xl p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_30px_60px_rgba(0,0,0,0.6)]">
-            <h3 className="text-white font-bold text-lg mb-2">Alpha Spread</h3>
-            <p className="text-white/50 text-sm mb-6">Client Performance</p>
-            
-            {/* Large Gold Percentage */}
-            <div className="h-24 flex items-center justify-center mb-6">
-              <span className="text-5xl md:text-6xl font-black text-[#FFD700]">12.4%</span>
-            </div>
-            
-            <p className="text-[#FFD700] font-bold text-xl">Avg. Client Cap Rate</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Deal of the Month Section */}
-      <DealOfMonthSection />
-
-      {/* Alpha List Section */}
-      <AlphaListSection />
-
-      {/* Strategy Session Section */}
+      {/* Strategy Session */}
       <StrategySessionSection />
 
+      {/* Deal of the Month */}
+      <DealOfMonthSection />
+
+      {/* Alpha List */}
+      <AlphaListSection />
 
       {/* Footer */}
       <footer className="px-[5%] py-12 text-center text-muted-foreground text-sm border-t border-border">
