@@ -10,7 +10,7 @@ const NycToAlbanyPlaybook = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "NYC → Albany Investor Playbook: Why Downstate Investors Are Moving Upstate for 20–25% ROI",
+    "headline": "NYC → Albany Investor Playbook: Why Downstate Investors Are Moving Upstate for 15–30% ROI",
     "author": {
       "@type": "Person",
       "name": "Scott Alvarez"
@@ -20,14 +20,14 @@ const NycToAlbanyPlaybook = () => {
       "name": "Capital District Nest"
     },
     "datePublished": "2025-01-01",
-    "description": "Learn why NYC landlords are repositioning capital to the Capital District for 20-25% cash-on-cash returns vs 3-5% in NYC."
+    "description": "Learn why NYC landlords are repositioning capital to the Capital District for 15-30% cash-on-cash returns vs 3-5% in NYC."
   };
 
   return (
     <MainLayout>
       <Helmet>
         <title>NYC to Albany Investor Playbook | 20-25% ROI Strategy | Capital District Nest</title>
-        <meta name="description" content="NYC landlords are moving capital upstate for 20-25% cash-on-cash returns. Learn how to reposition from 3-5% NYC cap rates to 6-10% Capital District returns." />
+        <meta name="description" content="NYC landlords are moving capital upstate for 15-30% cash-on-cash returns. Learn how to reposition from 3-5% NYC cap rates to 10-14% Capital District returns." />
         <meta name="keywords" content="NYC to Albany investment, upstate NY real estate, Capital District investing, 1031 exchange Albany, NYC landlord exit strategy, Albany ROI, Troy investment properties" />
         <link rel="canonical" href="https://capitaldistrictnest.com/investor/nyc-to-albany-roi" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
@@ -44,10 +44,10 @@ const NycToAlbanyPlaybook = () => {
               NYC → Albany Investor Playbook
             </h1>
             <p className="text-xl md:text-2xl text-primary font-semibold mb-4">
-              Why Downstate Investors Are Moving Upstate for 20–25% Cash-on-Cash Returns
+              Why Downstate Investors Are Moving Upstate for 15–30% Cash-on-Cash Returns
             </p>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              New York City landlords are facing the tightest investment margins in decades. Meanwhile, the Capital District is delivering 20–25% annualized returns.
+              New York City landlords are facing the tightest investment margins in decades. Meanwhile, the Capital District is delivering 15–30% annualized returns with $600–$1,800/mo net cash flow per property.
             </p>
           </div>
         </div>
@@ -61,7 +61,7 @@ const NycToAlbanyPlaybook = () => {
               Between rent stabilization laws, soft rent growth, and high operational costs, many multifamily buildings in NYC are generating <strong className="text-primary">3–5% annual returns</strong>—before surprises.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed mt-4">
-              Meanwhile, just 150 miles north, the Capital District (Albany, Troy, Schenectady, Saratoga) is delivering <strong className="text-primary">20–25% annualized cash-on-cash returns</strong> with lower barriers to entry and significantly higher rent-to-value ratios.
+              Meanwhile, just 150 miles north, the Capital District (Albany, Troy, Schenectady, Saratoga) is delivering <strong className="text-primary">15–30% annualized cash-on-cash returns</strong> with 10–14% cap rates, lower barriers to entry and significantly higher rent-to-value ratios.
             </p>
             <p className="text-lg text-foreground font-semibold mt-6">
               This guide explains why the shift is happening and how NYC landlords are repositioning into higher-performing assets.
@@ -121,9 +121,9 @@ const NycToAlbanyPlaybook = () => {
                 <CardContent className="p-8">
                   <div className="flex items-center gap-3 mb-6">
                     <TrendingUp className="w-8 h-8 text-primary" />
-                    <h3 className="font-playfair text-2xl font-bold text-foreground">Capital District: 6–10% Cap Rate</h3>
+                    <h3 className="font-playfair text-2xl font-bold text-foreground">Capital District: 10–14% Cap Rate</h3>
                   </div>
-                  <p className="text-primary font-semibold mb-4">(with 20–25% CoC returns)</p>
+                  <p className="text-primary font-semibold mb-4">(with 15–30% CoC returns • $600–$1,800/mo net cash flow)</p>
                   <ul className="space-y-3 text-muted-foreground">
                     <li className="flex items-center gap-2">
                       <span className="w-2 h-2 bg-primary rounded-full"></span>
@@ -211,7 +211,7 @@ const NycToAlbanyPlaybook = () => {
                     </div>
                     <div className="flex justify-between items-center py-2">
                       <span className="text-muted-foreground">Cash-on-cash return:</span>
-                      <span className="text-primary font-bold text-xl">20–25%</span>
+                      <span className="text-primary font-bold text-xl">15–30%</span>
                     </div>
                   </div>
                 </CardContent>
@@ -350,7 +350,7 @@ const NycToAlbanyPlaybook = () => {
               ))}
             </div>
             <p className="text-xl text-primary font-semibold mb-8">
-              → Ready to see if your NYC building qualifies for a 25% ROI swap?
+              → Ready to see if your NYC building qualifies for a 15–30% ROI swap?
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
