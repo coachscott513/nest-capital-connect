@@ -40,32 +40,46 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Column 3: Investor Resources */}
+          {/* Column 3: Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">Investor Resources</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">Quick Links</h4>
             <ul className="space-y-2">
+              <li>
+                <a 
+                  href="https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=300000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  Multi-Family Under $300k in Albany NY
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  All Multi-Family in Albany County NY
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=300000&beds=0&baths=0&types%5B%5D=0&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  Homes Under $300k in Albany County NY
+                </a>
+              </li>
               <li>
                 <Link 
                   to="/investor/nyc-to-albany-roi" 
                   className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
-                  NYC → Albany ROI Playbook
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/investor/albany-multi-unit-market" 
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  Albany Multi-Unit Market Report
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/investor/analyze-multifamily" 
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  Multi-Family Analysis Guide
+                  Investor Guides
                 </Link>
               </li>
             </ul>
