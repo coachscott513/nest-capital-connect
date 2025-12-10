@@ -63,10 +63,11 @@ const AlbanyMultiUnit = () => {
           <div className="absolute inset-0 bg-[url('/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png')] bg-cover bg-center opacity-20" />
           <div className="relative z-10 container mx-auto px-4 py-20 text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 font-playfair">
-              Albany NY Multi-Family Homes for Sale
+              Albany Multi-Unit Homes for Sale (Duplex, Triplex & 4-Units)
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10">
-              Updated daily. Live inventory for duplexes, triplexes, and income-producing multi-family properties in Albany County — ideal for investors, house hackers, and BRRRR buyers.
+              Real-time inventory for Albany County investors. Updated every 15 minutes. 
+              Clean numbers, cap rate breakdowns, and investor-ready insights powered by the Capital District Nest Team at RE/MAX.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
@@ -401,6 +402,16 @@ const AlbanyMultiUnit = () => {
           </div>
         </section>
       </main>
+      
+      {/* Mobile Sticky CTA */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border z-40">
+        <Button 
+          onClick={scrollToForm}
+          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4"
+        >
+          Request Investor Report
+        </Button>
+      </div>
     </MainLayout>
   );
 };

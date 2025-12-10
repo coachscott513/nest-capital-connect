@@ -46,18 +46,19 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-1">
-          <Link
-            to="/albany-multi-unit"
-            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
-          >
-            Multi-Unit Search
-          </Link>
-          <button
-            onClick={() => scrollToSection('investment-properties')}
-            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
-          >
-            Investment Properties
-          </button>
+          <div className="relative group">
+            <button className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
+              Investment Properties
+            </button>
+            <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-56 border border-blue-700/50 z-50">
+              <Link to="/albany-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm font-semibold">Albany Multi-Units</Link>
+              <Link to="/schenectady-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm text-white/70">Schenectady Multi-Units (coming soon)</Link>
+              <Link to="/troy-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm text-white/70">Troy Multi-Units (coming soon)</Link>
+              <div className="border-t border-blue-700 my-2"></div>
+              <Link to="/investor-tools" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Investor Tools</Link>
+              <Link to="/cash-flow-report" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Cash Flow Analyzer</Link>
+            </div>
+          </div>
           <button
             onClick={() => scrollToSection('rehab-properties')}
             className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
@@ -150,19 +151,44 @@ const Header = () => {
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-blue-600 p-4 md:hidden">
           <div className="flex flex-col space-y-4">
-              <Link
-                to="/albany-multi-unit"
-                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Multi-Unit Search
-              </Link>
-              <button
-                onClick={() => scrollToSection('investment-properties')}
-                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
-              >
-                Investment Properties
-              </button>
+              <div className="text-white font-medium">Investment Properties</div>
+              <div className="pl-4 flex flex-col space-y-2 mb-1">
+                <Link
+                  to="/albany-multi-unit"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Albany Multi-Units
+                </Link>
+                <Link
+                  to="/schenectady-multi-unit"
+                  className="text-white/70 hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Schenectady Multi-Units (coming soon)
+                </Link>
+                <Link
+                  to="/troy-multi-unit"
+                  className="text-white/70 hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Troy Multi-Units (coming soon)
+                </Link>
+                <Link
+                  to="/investor-tools"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Investor Tools
+                </Link>
+                <Link
+                  to="/cash-flow-report"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Cash Flow Analyzer
+                </Link>
+              </div>
               <button
                 onClick={() => scrollToSection('rehab-properties')}
                 className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
