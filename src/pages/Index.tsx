@@ -9,6 +9,7 @@ import StrategySessionSection from "@/components/StrategySessionSection";
 import FinancingSection from "@/components/FinancingSection";
 import CoverageAreaGrid from "@/components/CoverageAreaGrid";
 import PropertyTypeGrid from "@/components/PropertyTypeGrid";
+import QuickSearchBlock from "@/components/QuickSearchBlock";
 
 const menuSections = [
   {
@@ -284,6 +285,9 @@ const Index = () => {
 
       {/* Investment Strategies Grid - SEO Linked */}
       <PropertyTypeGrid />
+
+      {/* Quick Search Block - IDX Links */}
+      <QuickSearchBlock />
 
       {/* Investor Guides Section */}
       <section className="px-[5%] py-12 border-t border-border">
