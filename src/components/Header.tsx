@@ -46,6 +46,12 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-1">
+          <Link
+            to="/albany-multi-unit"
+            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
+          >
+            Multi-Unit Search
+          </Link>
           <button
             onClick={() => scrollToSection('investment-properties')}
             className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
@@ -143,7 +149,14 @@ const Header = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-blue-600 p-4 md:hidden">
-            <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-4">
+              <Link
+                to="/albany-multi-unit"
+                className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Multi-Unit Search
+              </Link>
               <button
                 onClick={() => scrollToSection('investment-properties')}
                 className="text-white hover:text-blue-200 transition-colors duration-200 text-left"
