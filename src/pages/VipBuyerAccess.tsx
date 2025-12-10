@@ -13,22 +13,25 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { 
-  Clock, 
-  TrendingUp, 
-  FileText, 
-  Shield, 
-  Users, 
-  Target,
   Check,
   Phone,
   Home,
   Building,
+  FileText,
+  Shield,
+  MapPin,
   DollarSign,
-  Calendar
+  TrendingUp,
+  User,
+  MessageCircle
 } from 'lucide-react';
+
+const SCOTT_PHONE = "518-676-2347";
+const SCOTT_PHONE_TEL = "+15186762347";
 
 const VipBuyerAccess = () => {
   const { toast } = useToast();
@@ -37,7 +40,7 @@ const VipBuyerAccess = () => {
     name: '',
     phone: '',
     email: '',
-    lookingFor: '',
+    lookingFor: [] as string[],
     priceRange: '',
     preferredCities: [] as string[],
     timeline: ''
@@ -53,6 +56,15 @@ const VipBuyerAccess = () => {
       preferredCities: prev.preferredCities.includes(city)
         ? prev.preferredCities.filter(c => c !== city)
         : [...prev.preferredCities, city]
+    }));
+  };
+
+  const handlePropertyTypeToggle = (type: string) => {
+    setFormData(prev => ({
+      ...prev,
+      lookingFor: prev.lookingFor.includes(type)
+        ? prev.lookingFor.filter(t => t !== type)
+        : [...prev.lookingFor, type]
     }));
   };
 
@@ -76,8 +88,8 @@ const VipBuyerAccess = () => {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
-          message: `VIP Buyer Request\n\nLooking for: ${formData.lookingFor}\nPrice Range: ${formData.priceRange}\nPreferred Cities: ${formData.preferredCities.join(', ')}\nTimeline: ${formData.timeline}`,
-          type: 'vip-buyer',
+          message: `VIP Investor Request\n\nLooking for: ${formData.lookingFor.join(', ')}\nPrice Range: ${formData.priceRange}\nPreferred Cities: ${formData.preferredCities.join(', ')}\nTimeline: ${formData.timeline}`,
+          type: 'vip-investor',
           location: formData.preferredCities.join(', '),
           price_range: formData.priceRange
         }
@@ -87,14 +99,14 @@ const VipBuyerAccess = () => {
 
       toast({
         title: "Welcome to VIP Access!",
-        description: "We'll be in touch within 24 hours with hand-selected listings.",
+        description: "You'll receive deals within 24 hours or sooner.",
       });
 
       setFormData({
         name: '',
         phone: '',
         email: '',
-        lookingFor: '',
+        lookingFor: [],
         priceRange: '',
         preferredCities: [],
         timeline: ''
@@ -127,48 +139,111 @@ const VipBuyerAccess = () => {
     "Anyone ready to build a rental portfolio in Albany, Troy, or Schenectady"
   ];
 
-  const whatYouReceive = [
+  const whatYouGet = [
     {
-      icon: Home,
-      title: "Hand-Selected Listings",
-      description: "Properties that match your exact criteria, delivered to your inbox."
+      number: "1",
+      title: "Off-Market & Pocket Listings",
+      description: "Deals you won't find on Zillow, Realtor, or Redfin."
     },
     {
-      icon: FileText,
-      title: "Full Financial Analysis",
-      description: "Pro forma, rent roll projections, and ROI calculations on every property."
+      number: "2",
+      title: "Full P&L on Every Property",
+      description: "You receive a real investor breakdown:",
+      bullets: [
+        "Cap rate (verified, not listing fluff)",
+        "Cash-on-cash return",
+        "NOI & expenses",
+        "Market rent vs. current rent gaps"
+      ]
     },
     {
-      icon: Building,
-      title: "Off-Market Access",
-      description: "Pocket listings and pre-market opportunities before they go public."
+      number: "3",
+      title: "Tax & Utility Audit",
+      description: "We verify:",
+      bullets: [
+        "Water & sewer",
+        "Heat type & cost",
+        "Taxes",
+        "Insurance estimates"
+      ],
+      note: "This is the difference between a winner and a time bomb."
     },
     {
-      icon: Phone,
-      title: "Priority Support",
-      description: "Direct access to Scott — call, text, or email anytime."
+      number: "4",
+      title: "Neighborhood Risk Profile",
+      description: "Each property includes a summarized risk score for:",
+      bullets: [
+        "Tenant quality",
+        "Rent stability",
+        "Appreciation potential",
+        "Renovation needs"
+      ]
+    },
+    {
+      number: "5",
+      title: "Direct Access to an Expert",
+      description: "You'll work directly with:",
+      expert: {
+        name: "Scott Alvarez",
+        credentials: "Economics Degree, Investment Specialist",
+        phone: SCOTT_PHONE
+      }
     }
   ];
 
-  const testimonials = [
+  const sampleDeals = [
     {
-      quote: "Scott sent me a triplex that wasn't even listed yet. I closed before anyone else even saw it.",
-      author: "Mike R.",
-      location: "Troy Investor"
+      location: "Albany – 3-Family (Under-rented)",
+      price: "$285,000",
+      rentRoll: "$3,150/mo",
+      capRate: "11.6%",
+      coc: "22%"
     },
     {
-      quote: "The financial breakdown on each property saved me hours of research. I knew exactly what I was buying.",
-      author: "Sarah T.",
-      location: "First-Time Buyer"
+      location: "Troy – 4-Unit (Turnkey)",
+      price: "$315,000",
+      rentRoll: "$3,600/mo",
+      capRate: "12.3%",
+      coc: "19%",
+      note: "Strong tenant base near RPI."
     },
     {
-      quote: "I moved from Brooklyn and Scott found me a duplex that cash flows from day one. VIP access was worth it.",
-      author: "James L.",
-      location: "NYC to Albany Buyer"
+      location: "Schenectady – Duplex (High ROI)",
+      price: "$235,000",
+      rentRoll: "$2,400/mo",
+      capRate: "13.2%",
+      coc: "30%",
+      note: "Best entry-level returns in the region."
     }
   ];
 
-  const cities = ['Troy', 'Albany', 'Schenectady', 'Saratoga Springs', 'Clifton Park', 'Delmar', 'Amsterdam', 'Cohoes'];
+  const cityProfiles = [
+    {
+      name: "Albany",
+      description: "Government, healthcare, colleges. Extremely stable renters.",
+      highlight: "10–14% cap rates typical."
+    },
+    {
+      name: "Troy",
+      description: "RPI influence + redevelopment boom.",
+      highlight: "Great for 3–4 units with strong appreciation."
+    },
+    {
+      name: "Schenectady",
+      description: "Best entry-level ROI in the region.",
+      highlight: "Cash-on-cash 20–30% common."
+    }
+  ];
+
+  const propertyTypes = [
+    "Multi-unit (Duplex, 3–4 unit)",
+    "Single-family rentals",
+    "Fix & Flip",
+    "BRRRR",
+    "Turnkey rentals"
+  ];
+
+  const cities = ['Albany', 'Troy', 'Schenectady', 'Saratoga', 'Clifton Park'];
 
   return (
     <MainLayout>
@@ -178,9 +253,9 @@ const VipBuyerAccess = () => {
       </Helmet>
 
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 bg-gradient-to-b from-background to-background/95">
+      <section className="relative py-20 md:py-28 bg-gradient-to-b from-background to-background/95">
         <div className="container mx-auto px-4 text-center max-w-4xl">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
+          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4 font-playfair">
             VIP Investor Access
           </h1>
           <p className="text-lg md:text-xl text-primary font-semibold mb-4">
@@ -220,9 +295,9 @@ const VipBuyerAccess = () => {
       </section>
 
       {/* Who This Is For */}
-      <section className="py-16 md:py-24 bg-card/50">
+      <section className="py-16 md:py-20 bg-card/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4 font-playfair">
             🌎 Who This Is For
           </h2>
           <p className="text-center text-muted-foreground mb-10">
@@ -246,44 +321,46 @@ const VipBuyerAccess = () => {
         </div>
       </section>
 
-      {/* What VIP Buyers Receive */}
-      <section className="py-16 md:py-24 bg-card/50">
+      {/* What You Get as a VIP Investor */}
+      <section className="py-16 md:py-20 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
-            What VIP Buyers Receive
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12 font-playfair">
+            📈 What You Get as a VIP Investor
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {whatYouReceive.map((item, index) => (
-              <Card key={index} className="bg-card border-border/50 hover:border-primary/50 transition-all">
-                <CardContent className="p-6 flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <item.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-foreground mb-1">{item.title}</h3>
-                    <p className="text-muted-foreground">{item.description}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
-            What VIP Buyers Say
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-card border-border/50">
+          <div className="max-w-3xl mx-auto space-y-8">
+            {whatYouGet.map((item, index) => (
+              <Card key={index} className="bg-card border-border hover:border-primary/50 transition-all">
                 <CardContent className="p-6">
-                  <p className="text-foreground text-lg italic mb-4">"{testimonial.quote}"</p>
-                  <div className="text-sm">
-                    <p className="font-bold text-foreground">{testimonial.author}</p>
-                    <p className="text-muted-foreground">{testimonial.location}</p>
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                      <span className="text-primary font-bold">{item.number}</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-foreground mb-2">{item.title}</h3>
+                      <p className="text-muted-foreground mb-3">{item.description}</p>
+                      {item.bullets && (
+                        <ul className="space-y-2 mb-3">
+                          {item.bullets.map((bullet, i) => (
+                            <li key={i} className="flex items-center gap-2 text-foreground text-sm">
+                              <Check className="w-4 h-4 text-primary" />
+                              <span>{bullet}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {item.note && (
+                        <p className="text-primary font-semibold text-sm italic">{item.note}</p>
+                      )}
+                      {item.expert && (
+                        <div className="bg-primary/10 rounded-lg p-4 mt-3">
+                          <p className="text-foreground font-semibold">{item.expert.name}</p>
+                          <p className="text-muted-foreground text-sm">{item.expert.credentials}</p>
+                          <a href={`tel:${SCOTT_PHONE_TEL}`} className="text-primary font-semibold hover:underline">
+                            Call/text anytime: {item.expert.phone}
+                          </a>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -293,15 +370,15 @@ const VipBuyerAccess = () => {
       </section>
 
       {/* VIP Form Section */}
-      <section id="vip-form" className="py-16 md:py-24 bg-card/50">
+      <section id="vip-form" className="py-16 md:py-20 bg-card/50">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Become a VIP Buyer
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-playfair">
+                🔒 VIP Investor Intake Form
               </h2>
               <p className="text-lg text-muted-foreground">
-                Tell us what you're looking for. We'll send hand-selected listings + full financials.
+                Tell me what you want — I'll send you deals that match exactly.
               </p>
             </div>
 
@@ -320,19 +397,6 @@ const VipBuyerAccess = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="phone" className="text-foreground">Phone <span className="text-destructive">*</span></Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                      placeholder="(518) 555-1234"
-                      required
-                      className="mt-1.5 bg-background border-border"
-                    />
-                  </div>
-
-                  <div>
                     <Label htmlFor="email" className="text-foreground">Email <span className="text-destructive">*</span></Label>
                     <Input
                       id="email"
@@ -346,28 +410,58 @@ const VipBuyerAccess = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="lookingFor" className="text-foreground">What are you looking for?</Label>
-                    <Select 
-                      value={formData.lookingFor} 
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, lookingFor: value }))}
-                    >
-                      <SelectTrigger className="mt-1.5 bg-background border-border">
-                        <SelectValue placeholder="Select an option" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="primary-residence">Primary Residence</SelectItem>
-                        <SelectItem value="investment-property">Investment Property</SelectItem>
-                        <SelectItem value="multi-unit">Multi-Unit (2-4 units)</SelectItem>
-                        <SelectItem value="house-hack">House Hack (live in one, rent others)</SelectItem>
-                        <SelectItem value="fix-and-flip">Fix & Flip</SelectItem>
-                        <SelectItem value="land">Land / Development</SelectItem>
-                        <SelectItem value="not-sure">Not Sure Yet</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Label htmlFor="phone" className="text-foreground">Phone <span className="text-destructive">*</span></Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                      placeholder="(518) 555-1234"
+                      required
+                      className="mt-1.5 bg-background border-border"
+                    />
                   </div>
 
                   <div>
-                    <Label htmlFor="priceRange" className="text-foreground">Price Range</Label>
+                    <Label className="text-foreground mb-3 block">What type of properties are you looking for?</Label>
+                    <div className="space-y-3">
+                      {propertyTypes.map((type) => (
+                        <div key={type} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={type}
+                            checked={formData.lookingFor.includes(type)}
+                            onCheckedChange={() => handlePropertyTypeToggle(type)}
+                          />
+                          <label htmlFor={type} className="text-sm text-foreground cursor-pointer">
+                            {type}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label className="text-foreground mb-3 block">Target cities (choose any)</Label>
+                    <div className="flex flex-wrap gap-3">
+                      {cities.map((city) => (
+                        <button
+                          key={city}
+                          type="button"
+                          onClick={() => handleCityToggle(city)}
+                          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                            formData.preferredCities.includes(city)
+                              ? 'bg-primary text-primary-foreground'
+                              : 'bg-background border border-border text-foreground hover:border-primary'
+                          }`}
+                        >
+                          {city}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="priceRange" className="text-foreground">Budget range</Label>
                     <Select 
                       value={formData.priceRange} 
                       onValueChange={(value) => setFormData(prev => ({ ...prev, priceRange: value }))}
@@ -376,34 +470,12 @@ const VipBuyerAccess = () => {
                         <SelectValue placeholder="Select price range" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="under-150k">Under $150,000</SelectItem>
-                        <SelectItem value="150k-250k">$150,000 - $250,000</SelectItem>
-                        <SelectItem value="250k-400k">$250,000 - $400,000</SelectItem>
-                        <SelectItem value="400k-600k">$400,000 - $600,000</SelectItem>
-                        <SelectItem value="600k-plus">$600,000+</SelectItem>
+                        <SelectItem value="200k-350k">$200K–$350K</SelectItem>
+                        <SelectItem value="350k-500k">$350K–$500K</SelectItem>
+                        <SelectItem value="500k-1m">$500K–$1M</SelectItem>
+                        <SelectItem value="1m-plus">$1M+</SelectItem>
                       </SelectContent>
                     </Select>
-                  </div>
-
-                  <div>
-                    <Label className="text-foreground mb-3 block">Preferred Cities (select all that apply)</Label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {cities.map((city) => (
-                        <div key={city} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={city}
-                            checked={formData.preferredCities.includes(city)}
-                            onCheckedChange={() => handleCityToggle(city)}
-                          />
-                          <label
-                            htmlFor={city}
-                            className="text-sm text-foreground cursor-pointer"
-                          >
-                            {city}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
                   </div>
 
                   <div>
@@ -416,11 +488,10 @@ const VipBuyerAccess = () => {
                         <SelectValue placeholder="When are you looking to buy?" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="asap">ASAP - Ready Now</SelectItem>
-                        <SelectItem value="1-3-months">1-3 Months</SelectItem>
-                        <SelectItem value="3-6-months">3-6 Months</SelectItem>
-                        <SelectItem value="6-12-months">6-12 Months</SelectItem>
-                        <SelectItem value="just-exploring">Just Exploring</SelectItem>
+                        <SelectItem value="asap">ASAP</SelectItem>
+                        <SelectItem value="30-days">30 days</SelectItem>
+                        <SelectItem value="90-days">90 days</SelectItem>
+                        <SelectItem value="just-exploring">Just exploring</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -430,11 +501,11 @@ const VipBuyerAccess = () => {
                     disabled={isSubmitting}
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-7 text-xl font-bold rounded-full shadow-xl shadow-primary/30"
                   >
-                    {isSubmitting ? 'Submitting...' : 'Get VIP Access Now'}
+                    {isSubmitting ? 'Submitting...' : 'Submit →'}
                   </Button>
 
                   <p className="text-center text-sm text-muted-foreground">
-                    No obligation. No spam. You get hand-selected properties and full analysis — fast.
+                    You will receive deals within 24 hours or sooner.
                   </p>
                 </form>
               </CardContent>
@@ -443,17 +514,178 @@ const VipBuyerAccess = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-12 bg-background">
+      {/* Sample VIP Deals */}
+      <section className="py-16 md:py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4 font-playfair">
+            💰 Sample VIP Deals (Recent)
+          </h2>
+          <p className="text-center text-muted-foreground mb-10">
+            These are real examples of what VIP investors receive.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {sampleDeals.map((deal, index) => (
+              <Card key={index} className="bg-card border-border hover:border-primary/50 transition-all">
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Building className="w-5 h-5 text-primary" />
+                    <h3 className="text-lg font-bold text-foreground">{deal.location}</h3>
+                  </div>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Price:</span>
+                      <span className="text-foreground font-medium">{deal.price}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Rent Roll:</span>
+                      <span className="text-foreground font-medium">{deal.rentRoll}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Cap Rate:</span>
+                      <span className="text-primary font-semibold">{deal.capRate}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">CoC:</span>
+                      <span className="text-primary font-semibold">{deal.coc}</span>
+                    </div>
+                  </div>
+                  {deal.note && (
+                    <p className="text-muted-foreground text-sm mt-4 pt-4 border-t border-border italic">
+                      {deal.note}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why These Cities Work */}
+      <section className="py-16 md:py-20 bg-card/50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12 font-playfair">
+            🗺️ Why These Cities Work: Albany, Troy, Schenectady
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {cityProfiles.map((city, index) => (
+              <Card key={index} className="bg-card border-border hover:border-primary/50 transition-all">
+                <CardContent className="p-6 text-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
+                    <MapPin className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-3">{city.name}</h3>
+                  <p className="text-muted-foreground mb-3">{city.description}</p>
+                  <p className="text-primary font-semibold">{city.highlight}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Talk to an Investment Specialist */}
+      <section className="py-16 md:py-20 bg-primary/10">
+        <div className="container mx-auto px-4 text-center max-w-2xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-playfair">
+            📞 Talk to an Investment Specialist (Free)
+          </h2>
+          <p className="text-lg text-muted-foreground mb-8">
+            Want real, direct answers about deals, financing, tenants, neighborhoods, or ROI?
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6"
+              asChild
+            >
+              <a href={`tel:${SCOTT_PHONE_TEL}`}>
+                <Phone className="w-5 h-5 mr-2" />
+                Call {SCOTT_PHONE}
+              </a>
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-6"
+              asChild
+            >
+              <a href={`sms:${SCOTT_PHONE_TEL}`}>
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Text Scott
+              </a>
+            </Button>
+          </div>
+          <p className="text-foreground font-medium">
+            You'll talk to me — not a bot.
+          </p>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 md:py-20 bg-background">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12 font-playfair">
+            ❓ FAQ
+          </h2>
+          <Accordion type="single" collapsible className="space-y-4">
+            <AccordionItem value="item-1" className="bg-card border border-border rounded-xl px-6">
+              <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
+                Do these deals really cash flow?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-5">
+                Yes — Albany/Troy/Schenectady routinely deliver <strong className="text-primary">10–14% cap rates</strong> and <strong className="text-primary">15–30% cash-on-cash returns</strong>.
+              </AccordionContent>
+            </AccordionItem>
+            
+            <AccordionItem value="item-2" className="bg-card border border-border rounded-xl px-6">
+              <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
+                Can you help run the numbers?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-5">
+                Yes. That's my specialty. Text any address to {SCOTT_PHONE} for a free investor-grade analysis.
+              </AccordionContent>
+            </AccordionItem>
+            
+            <AccordionItem value="item-3" className="bg-card border border-border rounded-xl px-6">
+              <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
+                Are off-market deals real?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-5">
+                Yes — many multi-units never hit the MLS. VIP investors receive them weekly.
+              </AccordionContent>
+            </AccordionItem>
+            
+            <AccordionItem value="item-4" className="bg-card border border-border rounded-xl px-6">
+              <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
+                Can out-of-state investors buy here?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground pb-5">
+                Absolutely. Many of my clients invest remotely. We handle the local due diligence, property analysis, and coordination.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-12 bg-card/50">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-lg text-muted-foreground">
+          <Button 
+            onClick={scrollToForm}
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-7 text-xl font-bold rounded-full shadow-xl shadow-primary/30"
+          >
+            Get VIP Access Now
+          </Button>
+          <p className="text-muted-foreground mt-4">
             Prefer to talk?{' '}
-            <a href="tel:+15186762347" className="text-primary font-semibold hover:underline">
+            <a href={`tel:${SCOTT_PHONE_TEL}`} className="text-primary font-semibold hover:underline">
               Call
             </a>{' '}
             or{' '}
-            <a href="sms:+15186762347" className="text-primary font-semibold hover:underline">
-              text Scott at 518-676-2347
+            <a href={`sms:${SCOTT_PHONE_TEL}`} className="text-primary font-semibold hover:underline">
+              text Scott at {SCOTT_PHONE}
             </a>
           </p>
         </div>
