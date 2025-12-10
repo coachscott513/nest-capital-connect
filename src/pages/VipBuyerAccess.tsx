@@ -119,7 +119,7 @@ const VipBuyerAccess = () => {
     {
       icon: TrendingUp,
       title: "Investment-Grade Data",
-      description: "Get rent projections, cap rates, and cash-on-cash returns on every property."
+      description: "Get rent projections, 10–14% cap rates, and 15–30% cash-on-cash returns analysis on every property."
     },
     {
       icon: FileText,
@@ -207,9 +207,15 @@ const VipBuyerAccess = () => {
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
             VIP Buyer Access
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-6 max-w-3xl mx-auto">
             Get Listings Before Zillow. Get Data Zillow Can't Give You.
           </p>
+          {/* Highlighted Performance Note */}
+          <div className="bg-primary/10 border border-primary/30 rounded-xl px-6 py-4 mb-10 max-w-2xl mx-auto">
+            <p className="text-primary font-semibold">
+              Albany is one of the few Northeast markets where investors can still achieve <span className="font-bold">10–14% cap rates</span> and <span className="font-bold">15–30% cash-on-cash returns</span> with $600–$1,800/mo net cash flow.
+            </p>
+          </div>
           <Button 
             onClick={scrollToForm}
             size="lg"

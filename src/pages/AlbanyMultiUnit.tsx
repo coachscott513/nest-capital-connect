@@ -89,9 +89,16 @@ const AlbanyMultiUnit = () => {
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-5 font-playfair leading-tight">
                   Albany Multi-Unit & Cash-Flow Deals
                 </h1>
-                <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+                <p className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed">
                   Get the weekly list of the best duplex, triplex, and 4-unit properties in Albany — plus simple cash-flow and rent-roll breakdowns.
                 </p>
+                
+                {/* Highlighted Performance Note */}
+                <div className="bg-primary/10 border border-primary/30 rounded-xl px-4 py-3 mb-6">
+                  <p className="text-primary text-sm md:text-base font-semibold">
+                    Albany delivers <span className="font-bold">10–14% cap rates</span> and <span className="font-bold">15–30% cash-on-cash returns</span> with $600–$1,800/mo net cash flow.
+                  </p>
+                </div>
                 
                 {/* Bullet Points */}
                 <ul className="space-y-3 mb-8 text-left mx-auto lg:mx-0 max-w-md">
@@ -403,10 +410,10 @@ const AlbanyMultiUnit = () => {
               
               <AccordionItem value="item-2" className="bg-background border border-border rounded-xl px-6">
                 <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
-                  What cap rate can I expect?
+                  What cap rate and cash-on-cash returns can I expect?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-5">
-                  Most stabilized 2–4 unit buildings produce 7–10% cap rates. Value-add deals can reach 10–14% after repositioning with market-rate rents and strategic improvements.
+                  Albany is one of the few Northeast markets where investors can still achieve <strong className="text-primary">10–14% cap rates</strong> and <strong className="text-primary">15–30% cash-on-cash returns</strong>. Typical net monthly cash flow ranges from $600–$1,800/mo per property depending on unit count and financing.
                 </AccordionContent>
               </AccordionItem>
               

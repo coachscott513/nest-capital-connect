@@ -51,6 +51,11 @@ const DueDiligenceEngine = () => {
           Zillow gives you the price. We give you the P&L. Paste any address below and we'll send you a simple, investor-style report you can actually use.
         </p>
         
+        {/* Performance highlight */}
+        <p className="text-primary font-semibold text-base md:text-lg mb-2 max-w-2xl mx-auto">
+          Albany is one of the few Northeast markets where investors can achieve 10–14% cap rates and 15–30% cash-on-cash returns.
+        </p>
+        
         {/* Supporting line */}
         <p className="text-muted-foreground text-base mb-2 max-w-2xl mx-auto">
           Free, no obligation. Real numbers — not guesses.
