@@ -211,6 +211,52 @@ const Index = () => {
         </p>
       </section>
 
+      {/* START HERE (INVESTORS) CTA BLOCK */}
+      <section className="px-[5%] py-12 bg-card border-y border-border">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+            Start Here (Investors)
+          </h2>
+          <p className="text-lg text-primary font-semibold mb-4">
+            Your Path to 10–14% Cap Rates & 15–30% Cash-on-Cash in the Capital District
+          </p>
+          <p className="text-muted-foreground mb-6">
+            If you're an investor — especially from NYC, NJ, CT, or Boston — start here.
+          </p>
+          
+          <div className="bg-background/50 border border-border rounded-xl p-6 mb-8 text-left max-w-lg mx-auto">
+            <p className="text-foreground font-semibold mb-4 text-center">You'll get:</p>
+            <ul className="space-y-3">
+              {[
+                "Off-market & pre-market multi-unit deals",
+                "Full P&L, cap rate, and cash-flow reports",
+                "Rent roll verification",
+                "Neighborhood risk scoring",
+                "Direct access to a local investment specialist"
+              ].map((item, index) => (
+                <li key={index} className="flex items-center gap-3 text-foreground text-sm">
+                  <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-3 h-3 text-primary" />
+                  </div>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <p className="text-muted-foreground text-sm mb-6">
+            No bots. No generic MLS links. Real numbers — not guesses.
+          </p>
+          
+          <Link 
+            to="/vip-buyer-access" 
+            className="inline-block bg-primary text-primary-foreground px-10 py-4 rounded-full font-extrabold hover:scale-105 transition-transform text-lg"
+          >
+            ➡️ Start Here (Investor VIP Access)
+          </Link>
+        </div>
+      </section>
+
       {/* Due Diligence Engine */}
       <DueDiligenceEngine />
 
