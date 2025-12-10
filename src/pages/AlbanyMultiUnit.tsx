@@ -4,20 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Building2, TrendingUp, DollarSign, Wrench, Calculator, FileText, Percent, MapPin, Phone, Mail, CheckCircle, ExternalLink } from "lucide-react";
+import { Building2, TrendingUp, DollarSign, Wrench, Calculator, FileText, Percent, MapPin, Phone, Mail, CheckCircle, ExternalLink, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const IDX_URL = "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types[]=3&statuses[]=0&pak=county:g40_dre6kenh&sortby=listings.price+ASC&rtype=map";
+const SCOTT_PHONE = "518-522-7265";
+const SCOTT_PHONE_TEL = "+15185227265";
 
 const AlbanyMultiUnit = () => {
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     phone: "",
-    investorType: "",
-    priceRange: ""
+    email: "",
+    investorType: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -29,17 +30,17 @@ const AlbanyMultiUnit = () => {
     try {
       const { error } = await supabase.from("leads").insert({
         name: formData.name,
-        email: formData.email,
-        phone: formData.phone || null,
+        email: formData.email || "not provided",
+        phone: formData.phone,
         type: "Investor – Albany Multi-Unit",
-        message: `What they're looking for: ${formData.investorType}\nTarget Price Range: ${formData.priceRange}`,
+        message: `What they're looking for: ${formData.investorType || "Not specified"}`,
         location: "Albany"
       });
       
       if (error) throw error;
       
       setIsSubmitted(true);
-      toast.success("Request received! Your custom list is on the way.");
+      toast.success("Got it! I'll text your custom list shortly.");
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -51,155 +52,193 @@ const AlbanyMultiUnit = () => {
     <MainLayout>
       <Helmet>
         <title>Albany Multi-Unit Homes for Sale | Duplexes, Triplexes & Cash-Flow Deals</title>
-        <meta name="description" content="Get a weekly list of the best duplex, triplex, and 4-unit properties in Albany County — plus investor-style cash flow and rent roll breakdowns." />
+        <meta name="description" content="Get a weekly list of the best duplex, triplex, and 4-unit properties in Albany County — plus investor-style cash flow and rent roll breakdowns. Call or text Scott at 518-522-7265." />
         <meta name="keywords" content="albany multi family homes for sale, albany duplex for sale, albany triplex, albany investment property, albany county multi family" />
         <link rel="canonical" href="https://capitaldistrictnest.com/albany-multi-unit" />
       </Helmet>
 
-      <main className="flex-grow">
-        {/* BLOCK 1 — HERO + LEAD CAPTURE FORM (ABOVE THE FOLD) */}
+      {/* Sticky Top Bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-primary text-primary-foreground py-2 px-4 text-center">
+        <a 
+          href={`tel:${SCOTT_PHONE_TEL}`}
+          className="inline-flex items-center gap-2 text-sm md:text-base font-medium hover:opacity-90 transition-opacity"
+        >
+          <Phone className="w-4 h-4" />
+          <span>📞 Call or Text Scott Directly — {SCOTT_PHONE}</span>
+        </a>
+      </div>
+
+      <main className="flex-grow pt-10">
+        {/* BLOCK 1 — HERO + LEAD CAPTURE FORM */}
         <section className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-background via-background to-primary/10">
           <div className="absolute inset-0 bg-[url('/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png')] bg-cover bg-center opacity-15" />
           <div className="relative z-10 container mx-auto px-4 py-12 md:py-20">
             
-            {/* Success State */}
-            {isSubmitted ? (
-              <div className="max-w-3xl mx-auto text-center">
-                <div className="bg-primary/10 border border-primary/30 rounded-2xl p-8 md:p-12 mb-8">
-                  <CheckCircle className="w-16 h-16 text-primary mx-auto mb-6" />
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 font-playfair">
-                    Thanks — your custom list and investor breakdown will be sent shortly.
-                  </h2>
-                  <p className="text-muted-foreground text-lg mb-8">
-                    In the meantime, you can browse current Albany multi-unit listings below.
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              {/* Left Column - Text */}
+              <div className="text-center lg:text-left">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 font-playfair leading-tight">
+                  Albany Multi-Unit & Cash-Flow Deals
+                </h1>
+                <p className="text-lg md:text-xl text-muted-foreground mb-6 leading-relaxed">
+                  Get the weekly list of the best duplex, triplex, and 4-unit properties in Albany County — plus simple investor-style breakdowns.
+                </p>
+                
+                {/* Call/Text CTA */}
+                <div className="bg-card/80 backdrop-blur-sm border border-border rounded-xl p-5 mb-8 inline-block">
+                  <p className="text-foreground font-medium mb-3">
+                    Prefer to skip the form?
                   </p>
-                  <Button 
-                    size="lg" 
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-10 py-6"
-                    asChild
-                  >
-                    <a href={IDX_URL} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-5 h-5 mr-2" />
-                      View Current Albany Multi-Unit Listings
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              /* Two-Column Layout: Text Left, Form Right */
-              <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-                {/* Left Column - Text */}
-                <div className="text-center lg:text-left">
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 font-playfair leading-tight">
-                    Albany Multi-Unit & Cash-Flow Deals
-                  </h1>
-                  <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-                    Get a weekly list of the best duplex, triplex, and 4-unit properties in Albany County — plus a simple investor-style cash flow and rent roll breakdown for any property you like.
-                  </p>
-                  
-                  {/* Trust Indicators */}
-                  <div className="hidden lg:flex flex-col gap-4 mt-8">
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                      <span>500+ properties analyzed weekly</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                      <span>Cash flow & cap rate breakdowns included</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-muted-foreground">
-                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                      <span>Off-market deals before MLS</span>
-                    </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button 
+                      size="lg" 
+                      variant="outline"
+                      className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                      asChild
+                    >
+                      <a href={`tel:${SCOTT_PHONE_TEL}`}>
+                        <Phone className="w-4 h-4 mr-2" />
+                        Call {SCOTT_PHONE}
+                      </a>
+                    </Button>
+                    <Button 
+                      size="lg" 
+                      variant="outline"
+                      className="border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+                      asChild
+                    >
+                      <a href={`sms:${SCOTT_PHONE_TEL}`}>
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        Text Scott
+                      </a>
+                    </Button>
                   </div>
                 </div>
-
-                {/* Right Column - Form */}
-                <div className="bg-card border border-border rounded-2xl p-6 md:p-8 shadow-xl">
-                  <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2 font-playfair text-center lg:text-left">
-                    Get Your Custom Deal List
-                  </h2>
-                  <p className="text-muted-foreground text-sm mb-6 text-center lg:text-left">
-                    No spam. Just quality multi-unit opportunities delivered to your inbox.
-                  </p>
-                  
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Full Name *</label>
-                      <Input 
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="Your full name"
-                        required
-                        className="bg-background"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Email *</label>
-                      <Input 
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="you@email.com"
-                        required
-                        className="bg-background"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Phone (optional)</label>
-                      <Input 
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="(518) 555-1234"
-                        className="bg-background"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">What are you looking for?</label>
-                      <Select value={formData.investorType} onValueChange={(value) => setFormData({ ...formData, investorType: value })}>
-                        <SelectTrigger className="bg-background">
-                          <SelectValue placeholder="Select your investment style" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="2-4-unit-multifamily">2–4 Unit Multi-Family</SelectItem>
-                          <SelectItem value="house-hack">House Hack (Live in 1, Rent the Rest)</SelectItem>
-                          <SelectItem value="brrrr-value-add">BRRRR / Value-Add</SelectItem>
-                          <SelectItem value="1031-exchange">1031 Exchange</SelectItem>
-                          <SelectItem value="researching">Just Researching Options</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Target Price Range</label>
-                      <Input 
-                        value={formData.priceRange}
-                        onChange={(e) => setFormData({ ...formData, priceRange: e.target.value })}
-                        placeholder="e.g. $150k - $300k"
-                        className="bg-background"
-                      />
-                    </div>
-                    
-                    <Button 
-                      type="submit" 
-                      size="lg" 
-                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6 font-semibold"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? "Sending..." : "Send Me the Deals"}
-                    </Button>
-                    
-                    <p className="text-xs text-muted-foreground text-center">
-                      By submitting, you agree to receive property alerts. Unsubscribe anytime.
-                    </p>
-                  </form>
+                
+                {/* Trust Indicators */}
+                <div className="hidden lg:flex flex-col gap-4">
+                  <div className="flex items-center gap-3 text-muted-foreground">
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span>500+ properties analyzed weekly</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-muted-foreground">
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span>Cash flow & cap rate breakdowns included</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-muted-foreground">
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                    <span>Off-market deals before MLS</span>
+                  </div>
                 </div>
               </div>
-            )}
+
+              {/* Right Column - Form */}
+              <div className="bg-card border border-border rounded-2xl p-6 md:p-8 shadow-xl">
+                {isSubmitted ? (
+                  /* Success State */
+                  <div className="text-center py-4">
+                    <CheckCircle className="w-14 h-14 text-primary mx-auto mb-5" />
+                    <h2 className="text-xl md:text-2xl font-bold text-foreground mb-3 font-playfair">
+                      Thanks — I'll text your custom list shortly.
+                    </h2>
+                    <p className="text-muted-foreground mb-6">
+                      In the meantime, browse current Albany multi-unit listings:
+                    </p>
+                    <Button 
+                      size="lg" 
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6 mb-4"
+                      asChild
+                    >
+                      <a href={IDX_URL} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-5 h-5 mr-2" />
+                        View Current Albany Multi-Unit Listings
+                      </a>
+                    </Button>
+                    <p className="text-muted-foreground">
+                      Or call/text now:{" "}
+                      <a href={`tel:${SCOTT_PHONE_TEL}`} className="text-primary font-semibold hover:underline">
+                        {SCOTT_PHONE}
+                      </a>
+                    </p>
+                  </div>
+                ) : (
+                  /* Form */
+                  <>
+                    <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2 font-playfair text-center lg:text-left">
+                      Get Your Custom Deal List
+                    </h2>
+                    <p className="text-muted-foreground text-sm mb-6 text-center lg:text-left">
+                      No spam. Just quality multi-unit opportunities texted to you.
+                    </p>
+                    
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-2">Name *</label>
+                        <Input 
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          placeholder="Your name"
+                          required
+                          className="bg-background"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-2">Phone *</label>
+                        <Input 
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          placeholder="(518) 555-1234"
+                          required
+                          className="bg-background"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-2">Email (optional)</label>
+                        <Input 
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          placeholder="you@email.com"
+                          className="bg-background"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-2">What are you looking for?</label>
+                        <Select value={formData.investorType} onValueChange={(value) => setFormData({ ...formData, investorType: value })}>
+                          <SelectTrigger className="bg-background">
+                            <SelectValue placeholder="Select your investment style" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border border-border z-50">
+                            <SelectItem value="2-4-unit-multifamily">2–4 Unit Multi-Family</SelectItem>
+                            <SelectItem value="house-hack">House Hack (Live in 1, Rent the Rest)</SelectItem>
+                            <SelectItem value="brrrr-value-add">BRRRR / Value-Add</SelectItem>
+                            <SelectItem value="1031-exchange">1031 Exchange</SelectItem>
+                            <SelectItem value="researching">Just Researching Options</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <Button 
+                        type="submit" 
+                        size="lg" 
+                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6 font-semibold"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? "Sending..." : "Send Me the Deals"}
+                      </Button>
+                      
+                      <p className="text-xs text-muted-foreground text-center">
+                        I'll text you personally — no bots, no spam.
+                      </p>
+                    </form>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -387,35 +426,61 @@ const AlbanyMultiUnit = () => {
             <p className="text-lg text-muted-foreground mb-8">
               Receive a custom rent roll, cash-flow projection, rehab estimate (if needed), and ROI analysis for any property you're considering.
             </p>
-            <Button 
-              size="lg" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-10 py-6"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            >
-              Request My Investor Report
-            </Button>
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 text-muted-foreground">
-              <a href="tel:+15186762347" className="flex items-center gap-2 hover:text-primary transition-colors">
-                <Phone className="w-5 h-5" />
-                (518) 676-2347
-              </a>
-              <a href="mailto:scott@capitaldistrictnest.com" className="flex items-center gap-2 hover:text-primary transition-colors">
-                <Mail className="w-5 h-5" />
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+              <Button 
+                size="lg" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6"
+                asChild
+              >
+                <a href={`tel:${SCOTT_PHONE_TEL}`}>
+                  <Phone className="w-5 h-5 mr-2" />
+                  Call {SCOTT_PHONE}
+                </a>
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-6"
+                asChild
+              >
+                <a href={`sms:${SCOTT_PHONE_TEL}`}>
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Text Scott
+                </a>
+              </Button>
+            </div>
+            <p className="text-muted-foreground">
+              or email:{" "}
+              <a href="mailto:scott@capitaldistrictnest.com" className="text-primary hover:underline">
                 scott@capitaldistrictnest.com
               </a>
-            </div>
+            </p>
           </div>
         </section>
       </main>
       
       {/* Mobile Sticky CTA */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border z-40">
-        <Button 
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4"
-        >
-          Send Me the Deals
-        </Button>
+      <div className="md:hidden fixed bottom-0 left-0 right-0 p-3 bg-background/95 backdrop-blur-sm border-t border-border z-40">
+        <div className="flex gap-2">
+          <Button 
+            className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3"
+            asChild
+          >
+            <a href={`tel:${SCOTT_PHONE_TEL}`}>
+              <Phone className="w-4 h-4 mr-1" />
+              Call
+            </a>
+          </Button>
+          <Button 
+            className="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-3"
+            asChild
+          >
+            <a href={`sms:${SCOTT_PHONE_TEL}`}>
+              <MessageCircle className="w-4 h-4 mr-1" />
+              Text
+            </a>
+          </Button>
+        </div>
       </div>
     </MainLayout>
   );
