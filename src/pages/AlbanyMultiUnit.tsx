@@ -75,7 +75,7 @@ const AlbanyMultiUnit = () => {
                 className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6"
                 asChild
               >
-                <a href="https://scottjalvarez.boldtrail.com/results-gallery/?office=RENY03&propertytype=RES&minunits=2&status=1&searchtype=city&city=Albany&county=Albany" target="_blank" rel="noopener noreferrer">
+                <a href="https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types[]=3&statuses[]=0&pak=county:g40_dre6kenh&sortby=listings.price+ASC&rtype=map" target="_blank" rel="noopener noreferrer">
                   View Multi-Family Listings
                 </a>
               </Button>
@@ -106,7 +106,7 @@ const AlbanyMultiUnit = () => {
                 className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-10 py-6"
                 asChild
               >
-                <a href="https://scottjalvarez.boldtrail.com/results-gallery/?office=RENY03&propertytype=RES&minunits=2&status=1&searchtype=city&city=Albany&county=Albany" target="_blank" rel="noopener noreferrer">
+                <a href="https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types[]=3&statuses[]=0&pak=county:g40_dre6kenh&sortby=listings.price+ASC&rtype=map" target="_blank" rel="noopener noreferrer">
                   Open Full IDX Search →
                 </a>
               </Button>
