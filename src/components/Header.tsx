@@ -117,6 +117,13 @@ const Header = () => {
           >
             Blog
           </Link>
+          <Link
+            to="/vip-buyer-access"
+            className="text-white bg-primary hover:bg-primary/90 px-4 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            VIP Access
+          </Link>
           <button
             onClick={() => scrollToSection('contact')}
             className="text-white bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-md transition-colors duration-200 text-sm font-medium ml-2"
@@ -250,6 +257,13 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Blog
+              </Link>
+              <Link
+                to="/vip-buyer-access"
+                className="text-white bg-primary hover:bg-primary/90 px-4 py-2 rounded-md transition-colors duration-200 text-center font-semibold"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                VIP Access
               </Link>
               <button
                 onClick={() => scrollToSection('contact')}
