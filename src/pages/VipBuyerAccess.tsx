@@ -110,45 +110,21 @@ const VipBuyerAccess = () => {
     }
   };
 
-  const whyVipCards = [
-    {
-      icon: Clock,
-      title: "Early Access",
-      description: "See listings before they hit public sites like Zillow or Realtor.com."
-    },
-    {
-      icon: TrendingUp,
-      title: "Investment-Grade Data",
-      description: "Get rent projections, 10–14% cap rates, and 15–30% cash-on-cash returns analysis on every property."
-    },
-    {
-      icon: FileText,
-      title: "Full Financial Reports",
-      description: "Receive pro forma P&L statements, not just listing descriptions."
-    },
-    {
-      icon: Shield,
-      title: "Off-Market Opportunities",
-      description: "Access pocket listings and properties that never hit the MLS."
-    },
-    {
-      icon: Users,
-      title: "Direct Agent Access",
-      description: "Work with Scott directly — no call centers, no runaround."
-    },
-    {
-      icon: Target,
-      title: "Tailored Matches",
-      description: "Properties hand-selected to match your investment criteria and goals."
-    }
+  const vipBenefits = [
+    "Off-market & pre-market multi-unit deals",
+    "Fully verified financials (rent, taxes, utilities, expenses)",
+    "Neighborhood-level risk & ROI analysis",
+    "Investor-grade P&L + 5-year projection",
+    "Direct access to a specialist (no bots, no gatekeepers)"
   ];
 
   const whoItsFor = [
-    "First-time buyers who want guidance and a competitive edge",
-    "Investors looking for cash-flowing multi-units",
-    "NYC buyers relocating or investing in the Capital District",
-    "Anyone tired of losing offers on Zillow listings",
-    "Serious buyers ready to move fast when the right deal comes"
+    "An NYC / NJ / CT investor looking for higher returns",
+    "A first-time investor wanting expert guidance",
+    "A serious buyer seeking 10–14% cap rates",
+    "Someone tired of negative or break-even cash flow",
+    "An investor who wants clear, accurate, transparent numbers",
+    "Anyone ready to build a rental portfolio in Albany, Troy, or Schenectady"
   ];
 
   const whatYouReceive = [
@@ -197,25 +173,42 @@ const VipBuyerAccess = () => {
   return (
     <MainLayout>
       <Helmet>
-        <title>VIP Buyer Access | Capital District Nest</title>
-        <meta name="description" content="Get listings before Zillow. Get data Zillow can't give you. Join our VIP buyer program for early access, off-market deals, and full financial analysis." />
+        <title>VIP Investor Access | Off-Market Deals | Capital District Nest</title>
+        <meta name="description" content="VIP investor access to off-market multi-unit deals in Albany, Troy, Schenectady & Saratoga. Get 10–14% cap rates, 15–30% cash-on-cash returns. Full P&L reports included." />
       </Helmet>
 
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 bg-gradient-to-b from-background to-background/95">
         <div className="container mx-auto px-4 text-center max-w-4xl">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            VIP Buyer Access
+          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
+            VIP Investor Access
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-6 max-w-3xl mx-auto">
-            Get Listings Before Zillow. Get Data Zillow Can't Give You.
+          <p className="text-lg md:text-xl text-primary font-semibold mb-4">
+            Off-Market Deals • Full P&L Reports • 10–14% Cap Rates • 15–30% Cash-on-Cash
           </p>
-          {/* Highlighted Performance Note */}
-          <div className="bg-primary/10 border border-primary/30 rounded-xl px-6 py-4 mb-10 max-w-2xl mx-auto">
-            <p className="text-primary font-semibold">
-              Albany is one of the few Northeast markets where investors can still achieve <span className="font-bold">10–14% cap rates</span> and <span className="font-bold">15–30% cash-on-cash returns</span> with $600–$1,800/mo net cash flow.
+          <p className="text-muted-foreground mb-6">
+            Albany • Troy • Schenectady • Saratoga
+          </p>
+          <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto">
+            Most great investment properties in the Capital District never hit Zillow or the MLS. They sell privately — to prepared buyers with the right team behind them.
+          </p>
+          
+          {/* What you get */}
+          <div className="bg-card/80 border border-border rounded-xl p-6 md:p-8 mb-8 max-w-2xl mx-auto text-left">
+            <p className="text-foreground font-semibold mb-4 text-center">This VIP Access page gives you:</p>
+            <ul className="space-y-3">
+              {vipBenefits.map((benefit, index) => (
+                <li key={index} className="flex items-center gap-3 text-foreground">
+                  <Check className="w-5 h-5 text-primary flex-shrink-0" />
+                  <span>{benefit}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="text-primary font-semibold mt-6 text-center">
+              Free. Fast. No pressure. Real numbers — not guesses.
             </p>
           </div>
+          
           <Button 
             onClick={scrollToForm}
             size="lg"
@@ -226,32 +219,15 @@ const VipBuyerAccess = () => {
         </div>
       </section>
 
-      {/* Why VIP Buyers Win */}
+      {/* Who This Is For */}
       <section className="py-16 md:py-24 bg-card/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
-            Why VIP Buyers Win More Deals
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-4">
+            🌎 Who This Is For
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {whyVipCards.map((card, index) => (
-              <Card key={index} className="bg-card/80 border-border/50 hover:border-primary/50 transition-all">
-                <CardContent className="p-6">
-                  <card.icon className="w-10 h-10 text-primary mb-4" />
-                  <h3 className="text-xl font-bold text-foreground mb-2">{card.title}</h3>
-                  <p className="text-muted-foreground">{card.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Who This Program Is Best For */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
-            Who This Program Is Best For
-          </h2>
+          <p className="text-center text-muted-foreground mb-10">
+            This works best if you are:
+          </p>
           <div className="max-w-2xl mx-auto">
             <ul className="space-y-4">
               {whoItsFor.map((item, index) => (
@@ -261,6 +237,11 @@ const VipBuyerAccess = () => {
                 </li>
               ))}
             </ul>
+            <div className="mt-8 p-4 bg-primary/10 border border-primary/30 rounded-xl text-center">
+              <p className="text-foreground font-semibold">
+                If that's you — this is your new home base.
+              </p>
+            </div>
           </div>
         </div>
       </section>
