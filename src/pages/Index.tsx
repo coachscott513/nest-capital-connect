@@ -221,18 +221,18 @@ const Index = () => {
             Your Path to 10–14% Cap Rates & 15–30% Cash-on-Cash in the Capital District
           </p>
           <p className="text-muted-foreground mb-6">
-            If you're an investor — especially from NYC, NJ, CT, or Boston — start here.
+            If you're an investor — especially from NYC, NJ, CT, or Boston — this is where you begin.
           </p>
           
           <div className="bg-background/50 border border-border rounded-xl p-6 mb-8 text-left max-w-lg mx-auto">
-            <p className="text-foreground font-semibold mb-4 text-center">You'll get:</p>
+            <p className="text-foreground font-semibold mb-4 text-center">You'll receive:</p>
             <ul className="space-y-3">
               {[
                 "Off-market & pre-market multi-unit deals",
-                "Full P&L, cap rate, and cash-flow reports",
-                "Rent roll verification",
-                "Neighborhood risk scoring",
-                "Direct access to a local investment specialist"
+                "Verified rent, tax, and utility data",
+                "True cap rate & cash flow analysis",
+                "Full P&L and 5-year projections",
+                "Direct access to a Capital District investment specialist"
               ].map((item, index) => (
                 <li key={index} className="flex items-center gap-3 text-foreground text-sm">
                   <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
@@ -252,7 +252,7 @@ const Index = () => {
             to="/vip-buyer-access" 
             className="inline-block bg-primary text-primary-foreground px-10 py-4 rounded-full font-extrabold hover:scale-105 transition-transform text-lg"
           >
-            ➡️ Start Here (Investor VIP Access)
+            ➡️ Start Here: VIP Investor Access
           </Link>
         </div>
       </section>
