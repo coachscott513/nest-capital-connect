@@ -51,6 +51,7 @@ import AlbanyMultiUnitMarket from "./pages/AlbanyMultiUnitMarket";
 import AnalyzeMultifamily from "./pages/AnalyzeMultifamily";
 import Exchange1031Playbook from "./pages/Exchange1031Playbook";
 import BestNeighborhoodsCashFlow from "./pages/BestNeighborhoodsCashFlow";
+import VipBuyerAccess from "./pages/VipBuyerAccess";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -143,6 +144,9 @@ const App = () => {
           <Route path="/investor/analyze-multifamily" element={<AnalyzeMultifamily />} />
           <Route path="/investor/1031-nyc-to-albany" element={<Exchange1031Playbook />} />
           <Route path="/investor/best-neighborhoods-cash-flow-capital-district" element={<BestNeighborhoodsCashFlow />} />
+          
+          {/* VIP Buyer Access */}
+          <Route path="/vip-buyer-access" element={<VipBuyerAccess />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
