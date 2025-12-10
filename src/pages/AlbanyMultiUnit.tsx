@@ -2,23 +2,25 @@ import { Helmet } from "react-helmet-async";
 import MainLayout from "@/components/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Building2, TrendingUp, DollarSign, Wrench, Calculator, FileText, Percent, MapPin, Phone, Mail } from "lucide-react";
+import { Building2, TrendingUp, DollarSign, Wrench, Calculator, FileText, Percent, MapPin, Phone, Mail, CheckCircle, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+
+const IDX_URL = "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types[]=3&statuses[]=0&pak=county:g40_dre6kenh&sortby=listings.price+ASC&rtype=map";
 
 const AlbanyMultiUnit = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    propertyType: "",
-    message: ""
+    investorType: "",
+    priceRange: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,15 +30,16 @@ const AlbanyMultiUnit = () => {
       const { error } = await supabase.from("leads").insert({
         name: formData.name,
         email: formData.email,
-        phone: formData.phone,
-        type: "albany-multi-unit",
-        message: `Property Type: ${formData.propertyType}\n\n${formData.message}`
+        phone: formData.phone || null,
+        type: "Investor – Albany Multi-Unit",
+        message: `What they're looking for: ${formData.investorType}\nTarget Price Range: ${formData.priceRange}`,
+        location: "Albany"
       });
       
       if (error) throw error;
       
-      toast.success("Report request sent! We'll be in touch within 24 hours.");
-      setFormData({ name: "", email: "", phone: "", propertyType: "", message: "" });
+      setIsSubmitted(true);
+      toast.success("Request received! Your custom list is on the way.");
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -44,50 +47,159 @@ const AlbanyMultiUnit = () => {
     }
   };
 
-  const scrollToForm = () => {
-    document.getElementById("investor-form")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <MainLayout>
       <Helmet>
-        <title>Albany NY Multi-Family Homes for Sale | Duplexes, Triplexes & Investment Properties</title>
-        <meta name="description" content="Updated daily. Live inventory for duplexes, triplexes, and income-producing multi-family properties in Albany County — ideal for investors, house hackers, and BRRRR buyers." />
+        <title>Albany Multi-Unit Homes for Sale | Duplexes, Triplexes & Cash-Flow Deals</title>
+        <meta name="description" content="Get a weekly list of the best duplex, triplex, and 4-unit properties in Albany County — plus investor-style cash flow and rent roll breakdowns." />
         <meta name="keywords" content="albany multi family homes for sale, albany duplex for sale, albany triplex, albany investment property, albany county multi family" />
         <link rel="canonical" href="https://capitaldistrictnest.com/albany-multi-unit" />
       </Helmet>
 
       <main className="flex-grow">
-        {/* BLOCK 1 — HERO SECTION */}
-        <section className="relative min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-background via-background to-primary/10">
-          <div className="absolute inset-0 bg-[url('/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png')] bg-cover bg-center opacity-20" />
-          <div className="relative z-10 container mx-auto px-4 py-20 text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 font-playfair">
-              Albany Multi-Unit Homes for Sale (Duplex, Triplex & 4-Units)
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10">
-              Real-time inventory for Albany County investors. Updated every 15 minutes. 
-              Clean numbers, cap rate breakdowns, and investor-ready insights powered by the Capital District Nest Team at RE/MAX.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6"
-                asChild
-              >
-                <a href="https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types[]=3&statuses[]=0&pak=county:g40_dre6kenh&sortby=listings.price+ASC&rtype=map" target="_blank" rel="noopener noreferrer">
-                  View Multi-Family Listings
-                </a>
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-primary text-primary hover:bg-primary/10 text-lg px-8 py-6"
-                onClick={scrollToForm}
-              >
-                Request Albany Investor Report
-              </Button>
-            </div>
+        {/* BLOCK 1 — HERO + LEAD CAPTURE FORM (ABOVE THE FOLD) */}
+        <section className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-background via-background to-primary/10">
+          <div className="absolute inset-0 bg-[url('/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png')] bg-cover bg-center opacity-15" />
+          <div className="relative z-10 container mx-auto px-4 py-12 md:py-20">
+            
+            {/* Success State */}
+            {isSubmitted ? (
+              <div className="max-w-3xl mx-auto text-center">
+                <div className="bg-primary/10 border border-primary/30 rounded-2xl p-8 md:p-12 mb-8">
+                  <CheckCircle className="w-16 h-16 text-primary mx-auto mb-6" />
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 font-playfair">
+                    Thanks — your custom list and investor breakdown will be sent shortly.
+                  </h2>
+                  <p className="text-muted-foreground text-lg mb-8">
+                    In the meantime, you can browse current Albany multi-unit listings below.
+                  </p>
+                  <Button 
+                    size="lg" 
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-10 py-6"
+                    asChild
+                  >
+                    <a href={IDX_URL} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="w-5 h-5 mr-2" />
+                      View Current Albany Multi-Unit Listings
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              /* Two-Column Layout: Text Left, Form Right */
+              <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                {/* Left Column - Text */}
+                <div className="text-center lg:text-left">
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 font-playfair leading-tight">
+                    Albany Multi-Unit & Cash-Flow Deals
+                  </h1>
+                  <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+                    Get a weekly list of the best duplex, triplex, and 4-unit properties in Albany County — plus a simple investor-style cash flow and rent roll breakdown for any property you like.
+                  </p>
+                  
+                  {/* Trust Indicators */}
+                  <div className="hidden lg:flex flex-col gap-4 mt-8">
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                      <span>500+ properties analyzed weekly</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                      <span>Cash flow & cap rate breakdowns included</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                      <span>Off-market deals before MLS</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column - Form */}
+                <div className="bg-card border border-border rounded-2xl p-6 md:p-8 shadow-xl">
+                  <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2 font-playfair text-center lg:text-left">
+                    Get Your Custom Deal List
+                  </h2>
+                  <p className="text-muted-foreground text-sm mb-6 text-center lg:text-left">
+                    No spam. Just quality multi-unit opportunities delivered to your inbox.
+                  </p>
+                  
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Full Name *</label>
+                      <Input 
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        placeholder="Your full name"
+                        required
+                        className="bg-background"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Email *</label>
+                      <Input 
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="you@email.com"
+                        required
+                        className="bg-background"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Phone (optional)</label>
+                      <Input 
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        placeholder="(518) 555-1234"
+                        className="bg-background"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">What are you looking for?</label>
+                      <Select value={formData.investorType} onValueChange={(value) => setFormData({ ...formData, investorType: value })}>
+                        <SelectTrigger className="bg-background">
+                          <SelectValue placeholder="Select your investment style" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="2-4-unit-multifamily">2–4 Unit Multi-Family</SelectItem>
+                          <SelectItem value="house-hack">House Hack (Live in 1, Rent the Rest)</SelectItem>
+                          <SelectItem value="brrrr-value-add">BRRRR / Value-Add</SelectItem>
+                          <SelectItem value="1031-exchange">1031 Exchange</SelectItem>
+                          <SelectItem value="researching">Just Researching Options</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-foreground mb-2">Target Price Range</label>
+                      <Input 
+                        value={formData.priceRange}
+                        onChange={(e) => setFormData({ ...formData, priceRange: e.target.value })}
+                        placeholder="e.g. $150k - $300k"
+                        className="bg-background"
+                      />
+                    </div>
+                    
+                    <Button 
+                      type="submit" 
+                      size="lg" 
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6 font-semibold"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Sending..." : "Send Me the Deals"}
+                    </Button>
+                    
+                    <p className="text-xs text-muted-foreground text-center">
+                      By submitting, you agree to receive property alerts. Unsubscribe anytime.
+                    </p>
+                  </form>
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
@@ -106,7 +218,7 @@ const AlbanyMultiUnit = () => {
                 className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-10 py-6"
                 asChild
               >
-                <a href="https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types[]=3&statuses[]=0&pak=county:g40_dre6kenh&sortby=listings.price+ASC&rtype=map" target="_blank" rel="noopener noreferrer">
+                <a href={IDX_URL} target="_blank" rel="noopener noreferrer">
                   Open Full IDX Search →
                 </a>
               </Button>
@@ -194,106 +306,8 @@ const AlbanyMultiUnit = () => {
           </div>
         </section>
 
-        {/* BLOCK 5 — CALLOUT CTA */}
-        <section className="py-16 bg-primary/5">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-xl md:text-2xl text-foreground mb-6 max-w-3xl mx-auto">
-              Want the numbers on any Albany property?<br />
-              <span className="text-muted-foreground">Get a full cash-flow breakdown, rent roll, and cap-rate analysis delivered directly to your inbox.</span>
-            </p>
-            <Button 
-              size="lg" 
-              className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-10 py-6"
-              onClick={scrollToForm}
-            >
-              Send My Albany Investor Report
-            </Button>
-          </div>
-        </section>
-
-        {/* BLOCK 6 — LEAD FORM BLOCK */}
-        <section id="investor-form" className="py-20 bg-background">
-          <div className="container mx-auto px-4 max-w-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-4 font-playfair">
-              Get Your Personal Albany Investor Report
-            </h2>
-            <p className="text-muted-foreground text-center mb-10">
-              Includes rent roll, P&L, cap rate, financing options, and off-market opportunities.
-            </p>
-            
-            <form onSubmit={handleSubmit} className="bg-card border border-border rounded-xl p-8 space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Name</label>
-                <Input 
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Your name"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Email</label>
-                <Input 
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="you@email.com"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Phone</label>
-                <Input 
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  placeholder="(518) 555-1234"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Property Types</label>
-                <Select value={formData.propertyType} onValueChange={(value) => setFormData({ ...formData, propertyType: value })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select property type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="duplex">Duplex</SelectItem>
-                    <SelectItem value="triplex">Triplex</SelectItem>
-                    <SelectItem value="fourplex">Fourplex</SelectItem>
-                    <SelectItem value="5plus">5+ Units</SelectItem>
-                    <SelectItem value="brrrr">BRRRR Deals</SelectItem>
-                    <SelectItem value="any">Any Multi-Family</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Tell us what you're looking for</label>
-                <Textarea 
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Budget, neighborhoods, investment goals..."
-                  rows={4}
-                />
-              </div>
-              
-              <Button 
-                type="submit" 
-                size="lg" 
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Sending..." : "Send My Report"}
-              </Button>
-            </form>
-          </div>
-        </section>
-
-        {/* BLOCK 7 — NEIGHBORHOODS */}
-        <section className="py-20 bg-card border-y border-border">
+        {/* BLOCK 5 — NEIGHBORHOODS */}
+        <section className="py-20 bg-background">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12 font-playfair">
               Top Albany Multi-Family Neighborhoods
@@ -309,7 +323,7 @@ const AlbanyMultiUnit = () => {
                 "West Hill",
                 "Arbor Hill"
               ].map((neighborhood, index) => (
-                <div key={index} className="flex items-center gap-3 bg-background border border-border rounded-lg p-4 hover:border-primary/50 transition-colors">
+                <div key={index} className="flex items-center gap-3 bg-card border border-border rounded-lg p-4 hover:border-primary/50 transition-colors">
                   <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="text-foreground font-medium">{neighborhood}</span>
                 </div>
@@ -318,14 +332,14 @@ const AlbanyMultiUnit = () => {
           </div>
         </section>
 
-        {/* BLOCK 8 — FAQ SECTION */}
-        <section className="py-20 bg-background">
+        {/* BLOCK 6 — FAQ SECTION */}
+        <section className="py-20 bg-card border-y border-border">
           <div className="container mx-auto px-4 max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12 font-playfair">
               Frequently Asked Questions
             </h2>
             <Accordion type="single" collapsible className="space-y-4">
-              <AccordionItem value="item-1" className="bg-card border border-border rounded-xl px-6">
+              <AccordionItem value="item-1" className="bg-background border border-border rounded-xl px-6">
                 <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
                   Are multi-family homes in Albany a good investment?
                 </AccordionTrigger>
@@ -334,7 +348,7 @@ const AlbanyMultiUnit = () => {
                 </AccordionContent>
               </AccordionItem>
               
-              <AccordionItem value="item-2" className="bg-card border border-border rounded-xl px-6">
+              <AccordionItem value="item-2" className="bg-background border border-border rounded-xl px-6">
                 <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
                   What cap rate can I expect?
                 </AccordionTrigger>
@@ -343,7 +357,7 @@ const AlbanyMultiUnit = () => {
                 </AccordionContent>
               </AccordionItem>
               
-              <AccordionItem value="item-3" className="bg-card border border-border rounded-xl px-6">
+              <AccordionItem value="item-3" className="bg-background border border-border rounded-xl px-6">
                 <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
                   Can you provide cash-flow analysis before making an offer?
                 </AccordionTrigger>
@@ -352,7 +366,7 @@ const AlbanyMultiUnit = () => {
                 </AccordionContent>
               </AccordionItem>
               
-              <AccordionItem value="item-4" className="bg-card border border-border rounded-xl px-6">
+              <AccordionItem value="item-4" className="bg-background border border-border rounded-xl px-6">
                 <AccordionTrigger className="text-left text-foreground hover:no-underline py-5">
                   Do you have off-market multi-family deals?
                 </AccordionTrigger>
@@ -364,31 +378,22 @@ const AlbanyMultiUnit = () => {
           </div>
         </section>
 
-        {/* BLOCK 9 — FINAL CTA SECTION */}
-        <section className="py-20 bg-primary/10 border-t border-border">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 font-playfair">
-              Ready to Analyze Properties Like an Investor?
+        {/* BLOCK 7 — GET A FREE INVESTOR REPORT CTA */}
+        <section id="investor-report-cta" className="py-20 bg-primary/10 border-t border-border">
+          <div className="container mx-auto px-4 text-center max-w-3xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-playfair">
+              Get a Free Investor Report
             </h2>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6"
-                asChild
-              >
-                <a href="https://scottjalvarez.boldtrail.com/results-gallery/?office=RENY03&propertytype=RES&minunits=2&status=1&searchtype=city&city=Albany&county=Albany" target="_blank" rel="noopener noreferrer">
-                  View Multi-Family Homes
-                </a>
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-primary text-primary hover:bg-primary/10 text-lg px-8 py-6"
-                onClick={scrollToForm}
-              >
-                Get Investor Report
-              </Button>
-            </div>
+            <p className="text-lg text-muted-foreground mb-8">
+              Receive a custom rent roll, cash-flow projection, rehab estimate (if needed), and ROI analysis for any property you're considering.
+            </p>
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-10 py-6"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              Request My Investor Report
+            </Button>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-6 text-muted-foreground">
               <a href="tel:+15186762347" className="flex items-center gap-2 hover:text-primary transition-colors">
                 <Phone className="w-5 h-5" />
@@ -406,10 +411,10 @@ const AlbanyMultiUnit = () => {
       {/* Mobile Sticky CTA */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border z-40">
         <Button 
-          onClick={scrollToForm}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4"
         >
-          Request Investor Report
+          Send Me the Deals
         </Button>
       </div>
     </MainLayout>
