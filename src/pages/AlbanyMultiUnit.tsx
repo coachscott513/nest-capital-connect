@@ -111,6 +111,23 @@ const AlbanyMultiUnit = () => {
                   ))}
                 </ul>
                 
+                {/* Highlighted Phone Contact Block */}
+                <div 
+                  className="mt-6 mb-4 p-3 rounded-md mx-auto lg:mx-0 max-w-md"
+                  style={{ backgroundColor: '#dff7df' }}
+                >
+                  <p className="text-center lg:text-left" style={{ color: '#000' }}>
+                    <span className="font-bold">Call/Text Scott directly: </span>
+                    <a 
+                      href={`tel:${SCOTT_PHONE_TEL}`}
+                      className="font-bold hover:underline"
+                      style={{ color: '#000' }}
+                    >
+                      {SCOTT_PHONE}
+                    </a>
+                  </p>
+                </div>
+                
                 {/* Text Link */}
                 <p className="text-muted-foreground">
                   Prefer to skip the form?{" "}
