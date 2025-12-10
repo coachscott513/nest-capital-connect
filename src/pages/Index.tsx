@@ -54,6 +54,10 @@ const menuSections = [
     items: [
       { label: "NYC → Albany ROI", sub: "/ Playbook", href: "/investor/nyc-to-albany-roi" },
       { label: "Albany Multi-Unit", sub: "/ Market Report", href: "/investor/albany-multi-unit-market" },
+      { label: "Troy Multi-Unit", sub: "/ Market Report", href: "/troy-multi-unit" },
+      { label: "Schenectady Multi-Unit", sub: "/ Market Report", href: "/schenectady-multi-unit" },
+      { label: "Saratoga Multi-Unit", sub: "/ Market Report", href: "/investor/saratoga-multi-unit-market" },
+      { label: "Fulton & Montgomery", sub: "/ Market Report", href: "/investor/fulton-montgomery-multi-unit-market" },
       { label: "Analyze Multi-Family", sub: "/ How-To Guide", href: "/investor/analyze-multifamily" },
       { label: "1031 Exchange", sub: "/ NYC → Albany", href: "/investor/1031-nyc-to-albany" },
       { label: "Best Neighborhoods", sub: "/ Cash Flow", href: "/investor/best-neighborhoods-cash-flow-capital-district" },
@@ -357,6 +361,30 @@ const Index = () => {
               className="text-foreground hover:text-primary transition-colors text-sm font-medium"
             >
               Albany Multi-Unit Market Report →
+            </Link>
+            <Link 
+              to="/troy-multi-unit" 
+              className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            >
+              Troy Multi-Unit Market Report →
+            </Link>
+            <Link 
+              to="/schenectady-multi-unit" 
+              className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            >
+              Schenectady Multi-Unit Market Report →
+            </Link>
+            <Link 
+              to="/investor/saratoga-multi-unit-market" 
+              className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            >
+              Saratoga County Multi-Unit Report →
+            </Link>
+            <Link 
+              to="/investor/fulton-montgomery-multi-unit-market" 
+              className="text-foreground hover:text-primary transition-colors text-sm font-medium"
+            >
+              Fulton & Montgomery Multi-Unit Report →
             </Link>
             <Link 
               to="/investor/analyze-multifamily" 

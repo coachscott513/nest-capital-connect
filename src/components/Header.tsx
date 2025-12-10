@@ -52,8 +52,8 @@ const Header = () => {
             </button>
             <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-56 border border-blue-700/50 z-50">
               <Link to="/albany-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm font-semibold">Albany Multi-Units</Link>
-              <Link to="/schenectady-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm text-white/70">Schenectady Multi-Units (coming soon)</Link>
-              <Link to="/troy-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm text-white/70">Troy Multi-Units (coming soon)</Link>
+              <Link to="/troy-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Troy Multi-Units</Link>
+              <Link to="/schenectady-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Schenectady Multi-Units</Link>
               <div className="border-t border-blue-700 my-2"></div>
               <Link to="/investor-tools" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Investor Tools</Link>
               <Link to="/cash-flow-report" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Cash Flow Analyzer</Link>
@@ -105,9 +105,14 @@ const Header = () => {
             <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-72 border border-blue-700/50 z-50">
               <Link to="/investor/nyc-to-albany-roi" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">NYC → Albany ROI Playbook</Link>
               <Link to="/investor/albany-multi-unit-market" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Albany Multi-Unit Market Report</Link>
+              <Link to="/troy-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Troy Multi-Unit Market Report</Link>
+              <Link to="/schenectady-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Schenectady Multi-Unit Market Report</Link>
+              <Link to="/investor/saratoga-multi-unit-market" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Saratoga County Multi-Unit Report</Link>
+              <Link to="/investor/fulton-montgomery-multi-unit-market" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Fulton & Montgomery Multi-Unit Report</Link>
+              <div className="border-t border-blue-700 my-2"></div>
               <Link to="/investor/analyze-multifamily" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">How to Analyze a Multi-Family Property</Link>
               <Link to="/investor/1031-nyc-to-albany" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">1031 Exchange Playbook (NYC → Albany)</Link>
-              <Link to="/investor/best-neighborhoods-cash-flow-capital-district" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Best Neighborhoods for Cash Flow (Capital District)</Link>
+              <Link to="/investor/best-neighborhoods-cash-flow-capital-district" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Best Neighborhoods for Cash Flow</Link>
             </div>
           </div>
           <Link
@@ -161,18 +166,18 @@ const Header = () => {
                   Albany Multi-Units
                 </Link>
                 <Link
-                  to="/schenectady-multi-unit"
-                  className="text-white/70 hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  to="/troy-multi-unit"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Schenectady Multi-Units (coming soon)
+                  Troy Multi-Units
                 </Link>
                 <Link
-                  to="/troy-multi-unit"
-                  className="text-white/70 hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  to="/schenectady-multi-unit"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Troy Multi-Units (coming soon)
+                  Schenectady Multi-Units
                 </Link>
                 <Link
                   to="/investor-tools"
@@ -262,6 +267,34 @@ const Header = () => {
                   Albany Multi-Unit Market Report
                 </Link>
                 <Link
+                  to="/troy-multi-unit"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Troy Multi-Unit Market Report
+                </Link>
+                <Link
+                  to="/schenectady-multi-unit"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Schenectady Multi-Unit Market Report
+                </Link>
+                <Link
+                  to="/investor/saratoga-multi-unit-market"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Saratoga County Multi-Unit Report
+                </Link>
+                <Link
+                  to="/investor/fulton-montgomery-multi-unit-market"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Fulton & Montgomery Multi-Unit Report
+                </Link>
+                <Link
                   to="/investor/analyze-multifamily"
                   className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
                   onClick={() => setIsMenuOpen(false)}
@@ -280,7 +313,7 @@ const Header = () => {
                   className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Best Neighborhoods for Cash Flow (Capital District)
+                  Best Neighborhoods for Cash Flow
                 </Link>
               </div>
               <Link
