@@ -191,6 +191,9 @@ const Index = () => {
           <Link to="/markets" className="bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
             View Market Data
           </Link>
+          <Link to="/vip-buyer-access" className="bg-amber-500 text-black px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
+            VIP Buyer Access
+          </Link>
           <button 
             onClick={() => window.dispatchEvent(new CustomEvent('openCommandCenter'))}
             className="text-primary font-bold hover:underline"
