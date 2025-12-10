@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Building2, TrendingUp, DollarSign, Wrench, Calculator, FileText, Percent, MapPin, Phone, Mail, CheckCircle, ExternalLink, MessageCircle } from "lucide-react";
+import { Building2, TrendingUp, DollarSign, Wrench, Calculator, FileText, Percent, MapPin, Phone, Mail, CheckCircle, ExternalLink, MessageCircle, Check } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -18,7 +18,8 @@ const AlbanyMultiUnit = () => {
     name: "",
     phone: "",
     email: "",
-    investorType: ""
+    investorType: "",
+    priceRange: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -33,8 +34,9 @@ const AlbanyMultiUnit = () => {
         email: formData.email || "not provided",
         phone: formData.phone,
         type: "Investor – Albany Multi-Unit",
-        message: `What they're looking for: ${formData.investorType || "Not specified"}`,
-        location: "Albany"
+        message: `Investment Type: ${formData.investorType || "Not specified"}\nTarget Price Range: ${formData.priceRange || "Not specified"}`,
+        location: "Albany",
+        price_range: formData.priceRange || null
       });
       
       if (error) throw error;
@@ -47,6 +49,13 @@ const AlbanyMultiUnit = () => {
       setIsSubmitting(false);
     }
   };
+
+  const bulletPoints = [
+    "BRRRR & value-add deals",
+    "House hack opportunities",
+    "Off-market alerts",
+    "Fast rent-roll & expense analysis"
+  ];
 
   return (
     <MainLayout>
@@ -64,70 +73,59 @@ const AlbanyMultiUnit = () => {
           className="inline-flex items-center gap-2 text-sm md:text-base font-medium hover:opacity-90 transition-opacity"
         >
           <Phone className="w-4 h-4" />
-          <span>📞 Call or Text Scott Directly — {SCOTT_PHONE}</span>
+          <span>📞 Call or Text Scott — {SCOTT_PHONE}</span>
         </a>
       </div>
 
       <main className="flex-grow pt-10">
-        {/* BLOCK 1 — HERO + LEAD CAPTURE FORM */}
-        <section className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-background via-background to-primary/10">
-          <div className="absolute inset-0 bg-[url('/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png')] bg-cover bg-center opacity-15" />
-          <div className="relative z-10 container mx-auto px-4 py-12 md:py-20">
+        {/* HERO + LEAD CAPTURE FORM */}
+        <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-background via-background to-primary/10">
+          <div className="absolute inset-0 bg-[url('/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png')] bg-cover bg-center opacity-10" />
+          <div className="relative z-10 container mx-auto px-4 py-12 md:py-16">
             
-            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
               {/* Left Column - Text */}
-              <div className="text-center lg:text-left">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 font-playfair leading-tight">
+              <div className="text-center lg:text-left pt-4">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-5 font-playfair leading-tight">
                   Albany Multi-Unit & Cash-Flow Deals
                 </h1>
-                <p className="text-lg md:text-xl text-muted-foreground mb-6 leading-relaxed">
-                  Get the weekly list of the best duplex, triplex, and 4-unit properties in Albany County — plus simple investor-style breakdowns.
+                <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+                  Get the weekly list of the best duplex, triplex, and 4-unit properties in Albany — plus simple cash-flow and rent-roll breakdowns.
                 </p>
                 
-                {/* Call/Text CTA */}
-                <div className="bg-card/80 backdrop-blur-sm border border-border rounded-xl p-5 mb-8 inline-block">
-                  <p className="text-foreground font-medium mb-3">
-                    Prefer to skip the form?
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <Button 
-                      size="lg" 
-                      variant="outline"
-                      className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                      asChild
-                    >
-                      <a href={`tel:${SCOTT_PHONE_TEL}`}>
-                        <Phone className="w-4 h-4 mr-2" />
-                        Call {SCOTT_PHONE}
-                      </a>
-                    </Button>
-                    <Button 
-                      size="lg" 
-                      variant="outline"
-                      className="border-accent text-accent hover:bg-accent hover:text-accent-foreground"
-                      asChild
-                    >
-                      <a href={`sms:${SCOTT_PHONE_TEL}`}>
-                        <MessageCircle className="w-4 h-4 mr-2" />
-                        Text Scott
-                      </a>
-                    </Button>
-                  </div>
-                </div>
+                {/* Bullet Points */}
+                <ul className="space-y-3 mb-8 text-left mx-auto lg:mx-0 max-w-md">
+                  {bulletPoints.map((point, index) => (
+                    <li key={index} className="flex items-center gap-3 text-foreground">
+                      <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                        <Check className="w-4 h-4 text-primary" />
+                      </div>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
                 
-                {/* Trust Indicators */}
-                <div className="hidden lg:flex flex-col gap-4">
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                {/* Text Link */}
+                <p className="text-muted-foreground">
+                  Prefer to skip the form?{" "}
+                  <a 
+                    href={`sms:${SCOTT_PHONE_TEL}`}
+                    className="text-primary font-semibold hover:underline"
+                  >
+                    Text Scott at {SCOTT_PHONE}
+                  </a>
+                </p>
+                
+                {/* Trust Indicators - Desktop Only */}
+                <div className="hidden lg:flex flex-col gap-3 mt-10 pt-8 border-t border-border">
+                  <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">Why investors trust us:</p>
+                  <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                    <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
                     <span>500+ properties analyzed weekly</span>
                   </div>
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span>Cash flow & cap rate breakdowns included</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span>Off-market deals before MLS</span>
+                  <div className="flex items-center gap-3 text-muted-foreground text-sm">
+                    <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                    <span>RE/MAX licensed • Capital District expert</span>
                   </div>
                 </div>
               </div>
@@ -139,10 +137,10 @@ const AlbanyMultiUnit = () => {
                   <div className="text-center py-4">
                     <CheckCircle className="w-14 h-14 text-primary mx-auto mb-5" />
                     <h2 className="text-xl md:text-2xl font-bold text-foreground mb-3 font-playfair">
-                      Thanks — I'll text your custom list shortly.
+                      Thanks — I'll text your list shortly.
                     </h2>
                     <p className="text-muted-foreground mb-6">
-                      In the meantime, browse current Albany multi-unit listings:
+                      In the meantime, browse current listings:
                     </p>
                     <Button 
                       size="lg" 
@@ -155,7 +153,7 @@ const AlbanyMultiUnit = () => {
                       </a>
                     </Button>
                     <p className="text-muted-foreground">
-                      Or call/text now:{" "}
+                      Or call/text Scott now:{" "}
                       <a href={`tel:${SCOTT_PHONE_TEL}`} className="text-primary font-semibold hover:underline">
                         {SCOTT_PHONE}
                       </a>
@@ -168,12 +166,12 @@ const AlbanyMultiUnit = () => {
                       Get Your Custom Deal List
                     </h2>
                     <p className="text-muted-foreground text-sm mb-6 text-center lg:text-left">
-                      No spam. Just quality multi-unit opportunities texted to you.
+                      No spam — just quality multi-unit opportunities texted to you.
                     </p>
                     
-                    <form onSubmit={handleSubmit} className="space-y-5">
+                    <form onSubmit={handleSubmit} className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">Name *</label>
+                        <label className="block text-sm font-medium text-foreground mb-1.5">Name *</label>
                         <Input 
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -184,7 +182,7 @@ const AlbanyMultiUnit = () => {
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">Phone *</label>
+                        <label className="block text-sm font-medium text-foreground mb-1.5">Phone *</label>
                         <Input 
                           type="tel"
                           value={formData.phone}
@@ -196,7 +194,7 @@ const AlbanyMultiUnit = () => {
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">Email (optional)</label>
+                        <label className="block text-sm font-medium text-foreground mb-1.5">Email</label>
                         <Input 
                           type="email"
                           value={formData.email}
@@ -207,17 +205,33 @@ const AlbanyMultiUnit = () => {
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">What are you looking for?</label>
+                        <label className="block text-sm font-medium text-foreground mb-1.5">What type of multi-unit are you targeting?</label>
                         <Select value={formData.investorType} onValueChange={(value) => setFormData({ ...formData, investorType: value })}>
                           <SelectTrigger className="bg-background">
-                            <SelectValue placeholder="Select your investment style" />
+                            <SelectValue placeholder="Select type" />
                           </SelectTrigger>
                           <SelectContent className="bg-popover border border-border z-50">
-                            <SelectItem value="2-4-unit-multifamily">2–4 Unit Multi-Family</SelectItem>
-                            <SelectItem value="house-hack">House Hack (Live in 1, Rent the Rest)</SelectItem>
-                            <SelectItem value="brrrr-value-add">BRRRR / Value-Add</SelectItem>
+                            <SelectItem value="2-4-units">2–4 Units</SelectItem>
+                            <SelectItem value="house-hack">House Hack</SelectItem>
+                            <SelectItem value="brrrr">BRRRR</SelectItem>
                             <SelectItem value="1031-exchange">1031 Exchange</SelectItem>
-                            <SelectItem value="researching">Just Researching Options</SelectItem>
+                            <SelectItem value="just-looking">Just Looking</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-foreground mb-1.5">Target Price Range</label>
+                        <Select value={formData.priceRange} onValueChange={(value) => setFormData({ ...formData, priceRange: value })}>
+                          <SelectTrigger className="bg-background">
+                            <SelectValue placeholder="Select range" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-popover border border-border z-50">
+                            <SelectItem value="under-150k">Under $150k</SelectItem>
+                            <SelectItem value="150k-250k">$150k – $250k</SelectItem>
+                            <SelectItem value="250k-400k">$250k – $400k</SelectItem>
+                            <SelectItem value="400k-600k">$400k – $600k</SelectItem>
+                            <SelectItem value="600k-plus">$600k+</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
@@ -225,7 +239,7 @@ const AlbanyMultiUnit = () => {
                       <Button 
                         type="submit" 
                         size="lg" 
-                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6 font-semibold"
+                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6 font-semibold mt-2"
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? "Sending..." : "Send Me the Deals"}
@@ -417,7 +431,7 @@ const AlbanyMultiUnit = () => {
           </div>
         </section>
 
-        {/* BLOCK 7 — GET A FREE INVESTOR REPORT CTA */}
+        {/* BLOCK 7 — FINAL CTA */}
         <section id="investor-report-cta" className="py-20 bg-primary/10 border-t border-border">
           <div className="container mx-auto px-4 text-center max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-playfair">
