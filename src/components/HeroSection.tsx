@@ -26,10 +26,13 @@ const HeroSection = () => {
         
         <div className="relative z-10 max-w-lg mx-auto text-center">
           <h1 className="text-3xl font-bold mb-4 text-white drop-shadow-lg leading-tight">
-            Buy Smarter in the Capital District
+            Know the Real Numbers Behind Any Property.
           </h1>
-          <p className="text-base text-white/90 mb-6 drop-shadow-md leading-relaxed">
-            Real market data for investors & homebuyers. Paste any address — get a free P&L, rent estimate, taxes, and 5-year projections.
+          <p className="text-base text-white/90 mb-3 drop-shadow-md leading-relaxed">
+            Paste any address and get a full pro-level breakdown — cash flow, rent roll, taxes, cap rate, and projected returns.
+          </p>
+          <p className="text-sm text-white/80 mb-6 drop-shadow-md leading-relaxed">
+            Clear, simple analysis built for buyers, sellers, and investors who want the truth behind every deal.
           </p>
           
           {/* Mobile CTA Buttons - Stacked Full Width */}
@@ -98,10 +101,16 @@ const HeroSection = () => {
             {/* Left Content */}
             <div className="text-left">
               <h1 className="text-4xl lg:text-5xl font-bold mb-5 text-white drop-shadow-lg leading-tight">
-                Smarter Real Estate Decisions in the Capital District
+                Know the Real Numbers Behind Any Property.
               </h1>
-              <p className="text-lg lg:text-xl text-white/90 mb-8 drop-shadow-md leading-relaxed max-w-xl">
-                Investors & homebuyers get full financial clarity — P&L, rent estimates, tax audit, neighborhood trends, and a 5-year projection for any property.
+              <p className="text-lg lg:text-xl text-white/90 mb-4 drop-shadow-md leading-relaxed max-w-xl">
+                Paste any address and get a full pro-level breakdown — cash flow, rent roll, taxes, cap rate, and projected returns.
+              </p>
+              <p className="text-base text-white/80 mb-4 drop-shadow-md leading-relaxed max-w-xl">
+                Clear, simple analysis built for buyers, sellers, and investors who want the truth behind every deal.
+              </p>
+              <p className="text-primary font-semibold text-base mb-8 drop-shadow-md max-w-xl">
+                Albany is one of the few Northeast markets where investors can achieve 10–14% cap rates and 15–30% cash-on-cash returns.
               </p>
               
               {/* Desktop CTA Row */}

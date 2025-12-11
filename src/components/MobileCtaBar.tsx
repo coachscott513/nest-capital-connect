@@ -30,28 +30,28 @@ const MobileCtaBar = () => {
         {/* Call Button */}
         <a
           href="tel:+15186762347"
-          className="flex flex-col items-center justify-center min-h-[56px] py-3 px-2 text-white hover:bg-white/10 transition-colors active:bg-white/20"
+          className="flex flex-col items-center justify-center min-h-[56px] py-3 px-1 text-white hover:bg-white/10 transition-colors active:bg-white/20"
         >
           <Phone className="w-5 h-5 text-white mb-1" />
-          <span className="text-xs font-medium text-white">Call Scott</span>
+          <span className="text-[10px] font-medium text-white text-center leading-tight">Call Scott — Speak With an Analyst</span>
         </a>
 
         {/* Text Button */}
         <a
           href="sms:+15186762347?body=Hi%20Scott%2C%20I'd%20like%20to%20analyze%20this%20property%3A%20"
-          className="flex flex-col items-center justify-center min-h-[56px] py-3 px-2 text-white hover:bg-white/10 transition-colors active:bg-white/20"
+          className="flex flex-col items-center justify-center min-h-[56px] py-3 px-1 text-white hover:bg-white/10 transition-colors active:bg-white/20"
         >
           <MessageSquare className="w-5 h-5 text-white mb-1" />
-          <span className="text-xs font-medium text-white">Text Address</span>
+          <span className="text-[10px] font-medium text-white text-center leading-tight">Text an Address — Get Rapid Analysis</span>
         </a>
 
         {/* Analyze Button */}
         <button
           onClick={handleAnalyze}
-          className="flex flex-col items-center justify-center min-h-[56px] py-3 px-2 text-white hover:bg-white/10 transition-colors active:bg-white/20"
+          className="flex flex-col items-center justify-center min-h-[56px] py-3 px-1 text-white hover:bg-white/10 transition-colors active:bg-white/20"
         >
           <BarChart3 className="w-5 h-5 text-white mb-1" />
-          <span className="text-xs font-medium text-white">Analyze a Deal</span>
+          <span className="text-[10px] font-medium text-white text-center leading-tight">Submit a Property — Get a Pro Report</span>
         </button>
       </div>
     </div>
