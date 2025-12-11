@@ -40,30 +40,14 @@ const DueDiligenceEngine = () => {
   return (
     <section id="due-diligence-engine" className="bg-[#0a0a0a] border-t border-border py-20 px-[5%]">
       <div className="max-w-3xl mx-auto text-center">
-        {/* Headline */}
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-          Search on Zillow.{" "}
-          <span className="text-primary">Analyze with a Pro.</span>
-        </h2>
-
-        {/* Sub-headline */}
-        <p className="text-muted-foreground text-lg md:text-xl mb-3 max-w-2xl mx-auto">
-          Zillow gives you the price. We give you the P&L. Paste any address below and we'll send you a simple, investor-style report you can actually use.
+        {/* Label */}
+        <p className="text-primary font-bold text-lg md:text-xl uppercase tracking-wider mb-4">
+          Property Analyzer — Get Your Free Pro Report
         </p>
-        
+
         {/* Performance highlight */}
-        <p className="text-primary font-semibold text-base md:text-lg mb-2 max-w-2xl mx-auto">
+        <p className="text-primary font-semibold text-base md:text-lg mb-8 max-w-2xl mx-auto">
           Albany is one of the few Northeast markets where investors can achieve 10–14% cap rates and 15–30% cash-on-cash returns.
-        </p>
-        
-        {/* Supporting line */}
-        <p className="text-muted-foreground text-base mb-2 max-w-2xl mx-auto">
-          Free, no obligation. Real numbers — not guesses.
-        </p>
-
-        {/* Property Search Bar Analyzer Label */}
-        <p className="text-primary font-bold text-lg md:text-xl uppercase tracking-wider mb-8">
-          Property Search Bar Analyzer
         </p>
 
         {/* Search Bar - Always Green Border, Larger Size */}
@@ -72,7 +56,7 @@ const DueDiligenceEngine = () => {
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-7 h-7 text-primary" />
             <Input
               type="text"
-              placeholder="e.g. 123 State St, Albany, NY (paste an address or Zillow link)"
+              placeholder="e.g. 123 State St, Albany, NY"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               className="w-full pl-16 pr-6 py-8 text-lg md:text-xl bg-background border-0 rounded-xl focus:ring-0 focus:ring-offset-0 text-foreground font-semibold placeholder:text-foreground/50 placeholder:font-medium"
@@ -129,6 +113,21 @@ const DueDiligenceEngine = () => {
         <p className="text-muted-foreground text-sm md:text-base mb-8 max-w-xl mx-auto">
           After you select what you want, click the button below and we'll send your free Intelligence Report by email, text, or phone call.
         </p>
+
+        {/* Value Section */}
+        <div className="bg-background/50 border border-border rounded-xl p-6 mb-8 text-left max-w-2xl mx-auto">
+          <h3 className="text-lg font-bold text-foreground mb-4">What You'll Get in Your Free Investor-Style Report</h3>
+          <ul className="space-y-2 text-muted-foreground text-sm md:text-base">
+            <li>✓ Cash Flow Breakdown (rents, expenses, taxes, insurance)</li>
+            <li>✓ Cap Rate & Cash-on-Cash Returns</li>
+            <li>✓ Rent Roll & Market Rent Estimates</li>
+            <li>✓ 5-Year Projection Chart</li>
+            <li>✓ Neighborhood Snapshot</li>
+            <li>✓ Red Flags & Opportunities</li>
+            <li>✓ Simple summary you can actually use to make a decision</li>
+          </ul>
+          <p className="text-primary font-semibold mt-4 text-sm">Real numbers. Plain English. Built for buyers, sellers & investors.</p>
+        </div>
 
         {/* Main CTA Button - More Prominent */}
         <div className="mb-6">
