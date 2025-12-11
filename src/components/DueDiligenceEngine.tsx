@@ -41,9 +41,9 @@ const DueDiligenceEngine = () => {
     <section id="due-diligence-engine" className="bg-[#0a0a0a] border-t border-border py-20 px-[5%]">
       <div className="max-w-3xl mx-auto text-center">
         {/* Label */}
-        <p className="text-primary font-bold text-lg md:text-xl uppercase tracking-wider mb-4">
-          Property Analyzer — Get Your Free Pro Report
-        </p>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white uppercase tracking-wide mb-4">
+          Property Analyzer — Get Your Free Property Analysis
+        </h2>
 
         {/* Performance highlight */}
         <p className="text-primary font-semibold text-base md:text-lg mb-8 max-w-2xl mx-auto">
