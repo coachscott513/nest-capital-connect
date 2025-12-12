@@ -16,7 +16,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BlogArticle from "./pages/BlogArticle";
 import NotFound from "./pages/NotFound";
-import PrivacyPolicy from "./components/PrivacyPolicy";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import AlbanyRealEstate from "./pages/AlbanyRealEstate";
 import TroyRealEstate from "./pages/TroyRealEstate";
 import SchenectadyRealEstate from "./pages/SchenectadyRealEstate";
@@ -103,8 +103,8 @@ const App = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/article/:slug" element={<BlogArticle />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<PrivacyPolicy />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms-of-service" element={<PrivacyPolicyPage />} />
           <Route path="/reviews" element={<Reviews />} />
           
           {/* Hyperlocal SEO Pages - Homes for Sale */}
