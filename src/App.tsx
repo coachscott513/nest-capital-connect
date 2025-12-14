@@ -56,6 +56,8 @@ import BestNeighborhoodsCashFlow from "./pages/BestNeighborhoodsCashFlow";
 import SaratogaMultiUnitMarket from "./pages/SaratogaMultiUnitMarket";
 import FultonMontgomeryMultiUnitMarket from "./pages/FultonMontgomeryMultiUnitMarket";
 import VipBuyerAccess from "./pages/VipBuyerAccess";
+import DealDesk from "./pages/DealDesk";
+import DealDeskThanks from "./pages/DealDeskThanks";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -155,6 +157,10 @@ const App = () => {
           
           {/* VIP Buyer Access */}
           <Route path="/vip-buyer-access" element={<VipBuyerAccess />} />
+
+          {/* Deal Desk */}
+          <Route path="/dealdesk" element={<DealDesk />} />
+          <Route path="/dealdesk/thanks" element={<DealDeskThanks />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      deal_desk_requests: {
+        Row: {
+          agreed_to_updates: boolean
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          notes: string | null
+          property_address: string
+          strategy: string
+        }
+        Insert: {
+          agreed_to_updates?: boolean
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          notes?: string | null
+          property_address: string
+          strategy: string
+        }
+        Update: {
+          agreed_to_updates?: boolean
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          notes?: string | null
+          property_address?: string
+          strategy?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           bedrooms: string | null
