@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,8 +11,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
-import { CheckCircle, FileText, TrendingUp, DollarSign, Shield, Clock, Zap } from "lucide-react";
+import { CheckCircle, FileText, TrendingUp, DollarSign, Shield, Clock, Zap, Map, AlertTriangle, ArrowRight, X } from "lucide-react";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -23,11 +24,21 @@ const formSchema = z.object({
   agreedToUpdates: z.boolean().refine(val => val === true, "You must agree to receive updates"),
 });
 
+const proFormSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  email: z.string().email("Valid email is required"),
+});
+
 type FormData = z.infer<typeof formSchema>;
+type ProFormData = z.infer<typeof proFormSchema>;
 
 const DealDesk = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isProModalOpen, setIsProModalOpen] = useState(false);
+  const [isProSubmitting, setIsProSubmitting] = useState(false);
+  const [proSubmitted, setProSubmitted] = useState(false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -41,10 +52,26 @@ const DealDesk = () => {
     },
   });
 
+  const proForm = useForm<ProFormData>({
+    resolver: zodResolver(proFormSchema),
+    defaultValues: {
+      firstName: "",
+      email: "",
+    },
+  });
+
+  // Scroll to pricing section if hash is #pricing
+  useEffect(() => {
+    if (location.hash === "#pricing") {
+      setTimeout(() => {
+        document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, [location]);
+
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
-      // Send emails via edge function
       const { error: emailError } = await supabase.functions.invoke("send-dealdesk-emails", {
         body: {
           firstName: data.firstName,
@@ -57,7 +84,6 @@ const DealDesk = () => {
 
       if (emailError) {
         console.error("Email error:", emailError);
-        // Don't block on email failure, still show success
       }
 
       toast({
@@ -77,8 +103,42 @@ const DealDesk = () => {
     }
   };
 
+  const onProSubmit = async (data: ProFormData) => {
+    setIsProSubmitting(true);
+    try {
+      const { error } = await supabase.functions.invoke("send-dealdesk-emails", {
+        body: {
+          firstName: data.firstName,
+          email: data.email,
+          propertyAddress: "PRO INTEREST",
+          strategy: "pro-membership",
+          notes: "User interested in Pro membership - send signup link",
+        },
+      });
+
+      if (error) {
+        console.error("Pro interest email error:", error);
+      }
+
+      setProSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting pro interest:", error);
+      toast({
+        title: "Submission failed",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsProSubmitting(false);
+    }
+  };
+
   const scrollToForm = () => {
     document.getElementById("intake-form")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToPricing = () => {
+    document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -255,8 +315,36 @@ const DealDesk = () => {
           </div>
         </section>
 
-        {/* What's Included */}
+        {/* What You Receive */}
         <section className="py-16 px-4">
+          <div className="container mx-auto max-w-4xl">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
+              What You Receive in a <span className="text-emerald-400">Snapshot</span>
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              {[
+                { icon: FileText, text: "Property facts + neighborhood map" },
+                { icon: DollarSign, text: "Tax/assessment reality check" },
+                { icon: TrendingUp, text: "Comps + market pulse (where available)" },
+                { icon: AlertTriangle, text: "Key risks + what to verify next" },
+                { icon: ArrowRight, text: "Clear next steps" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-4 p-4 bg-[#111111] rounded-lg border border-gray-800">
+                  <item.icon className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-gray-300">{item.text}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-center text-gray-500 text-sm">
+              Not an appraisal. Verify rent roll/expenses with seller or agent.
+            </p>
+          </div>
+        </section>
+
+        {/* What's Included (detailed) */}
+        <section className="py-16 px-4 bg-[#111111]">
           <div className="container mx-auto max-w-4xl">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
               What's Included in Your <span className="text-emerald-400">Investor Snapshot</span>
@@ -271,7 +359,7 @@ const DealDesk = () => {
                 { icon: Shield, text: "Neighborhood risk assessment" },
                 { icon: Zap, text: "Quick take: buy, pass, or dig deeper" },
               ].map((item, i) => (
-                <div key={i} className="flex items-start gap-4 p-4 bg-[#111111] rounded-lg border border-gray-800">
+                <div key={i} className="flex items-start gap-4 p-4 bg-[#0a0a0a] rounded-lg border border-gray-800">
                   <item.icon className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <p className="text-gray-300">{item.text}</p>
                 </div>
@@ -280,8 +368,8 @@ const DealDesk = () => {
           </div>
         </section>
 
-        {/* Pro Membership */}
-        <section className="py-16 px-4 bg-[#111111]">
+        {/* Pro Membership / Pricing */}
+        <section id="pricing" className="py-16 px-4">
           <div className="container mx-auto max-w-3xl text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
               <span className="text-emerald-400">Pro Membership</span>
@@ -302,21 +390,21 @@ const DealDesk = () => {
                 </li>
                 <li className="flex items-center gap-3 text-gray-300">
                   <Shield className="w-5 h-5 text-emerald-400" />
-                  Priority support & follow-up
+                  Email delivery
                 </li>
               </ul>
               <Button 
-                onClick={scrollToForm}
+                onClick={() => setIsProModalOpen(true)}
                 className="bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-8"
               >
-                Start with a Free Snapshot
+                Join Pro
               </Button>
             </div>
           </div>
         </section>
 
         {/* FAQ & Disclaimers */}
-        <section className="py-16 px-4">
+        <section className="py-16 px-4 bg-[#111111]">
           <div className="container mx-auto max-w-3xl">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
               Frequently Asked Questions
@@ -341,7 +429,7 @@ const DealDesk = () => {
                   a: "Most Snapshots are delivered same-day during business hours. Pro members receive priority queue placement."
                 },
               ].map((faq, i) => (
-                <div key={i} className="bg-[#111111] rounded-lg p-6 border border-gray-800">
+                <div key={i} className="bg-[#0a0a0a] rounded-lg p-6 border border-gray-800">
                   <h3 className="text-lg font-semibold text-emerald-400 mb-2">{faq.q}</h3>
                   <p className="text-gray-400">{faq.a}</p>
                 </div>
@@ -371,6 +459,89 @@ const DealDesk = () => {
           </div>
         </footer>
       </div>
+
+      {/* Pro Interest Modal */}
+      <Dialog open={isProModalOpen} onOpenChange={setIsProModalOpen}>
+        <DialogContent className="bg-[#111111] border-gray-800 text-white max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold">
+              {proSubmitted ? "Got it!" : "Pro is now open"}
+            </DialogTitle>
+            <DialogDescription className="text-gray-400">
+              {proSubmitted 
+                ? "We'll send the signup link shortly." 
+                : "Enter your email and we'll send the signup link."
+              }
+            </DialogDescription>
+          </DialogHeader>
+
+          {proSubmitted ? (
+            <div className="text-center py-6">
+              <CheckCircle className="w-16 h-16 text-emerald-400 mx-auto mb-4" />
+              <p className="text-gray-300">Check your inbox for the Pro signup link.</p>
+              <Button 
+                onClick={() => {
+                  setIsProModalOpen(false);
+                  setProSubmitted(false);
+                  proForm.reset();
+                }}
+                className="mt-4 bg-emerald-500 hover:bg-emerald-600 text-black"
+              >
+                Close
+              </Button>
+            </div>
+          ) : (
+            <Form {...proForm}>
+              <form onSubmit={proForm.handleSubmit(onProSubmit)} className="space-y-4">
+                <FormField
+                  control={proForm.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-300">First Name</FormLabel>
+                      <FormControl>
+                        <Input 
+                          {...field} 
+                          placeholder="Your first name"
+                          className="bg-[#1a1a1a] border-gray-700 text-white placeholder:text-gray-500"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={proForm.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-300">Email</FormLabel>
+                      <FormControl>
+                        <Input 
+                          {...field} 
+                          type="email"
+                          placeholder="you@email.com"
+                          className="bg-[#1a1a1a] border-gray-700 text-white placeholder:text-gray-500"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button 
+                  type="submit" 
+                  disabled={isProSubmitting}
+                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-black font-semibold"
+                >
+                  {isProSubmitting ? "Sending..." : "Send Me the Link"}
+                </Button>
+              </form>
+            </Form>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

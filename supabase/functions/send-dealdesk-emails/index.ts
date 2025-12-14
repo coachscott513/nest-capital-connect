@@ -18,7 +18,6 @@ interface DealDeskRequest {
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -33,35 +32,120 @@ const handler = async (req: Request): Promise<Response> => {
       timeStyle: "short",
     });
 
-    // Send confirmation email to user
-    const userEmailResponse = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-      },
-      body: JSON.stringify({
-        from: "Capital Deal Desk <onboarding@resend.dev>",
-        to: [data.email],
-        subject: "We received your Investor Snapshot request",
-        html: `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h2 style="color: #10b981;">Capital Deal Desk</h2>
-            <p>Hi ${data.firstName},</p>
-            <p>Got it — we're preparing your same-day Investor Snapshot for:</p>
-            <p style="background: #f4f4f4; padding: 12px; border-radius: 6px; font-weight: 500;">${data.propertyAddress}</p>
-            <p>You'll receive it shortly.</p>
-            <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 24px 0;" />
-            <p style="color: #666; font-size: 14px;">Capital Deal Desk — Wall Street Tools. Main Street Soul.</p>
+    const isProInterest = data.strategy === "pro-membership";
+
+    // Send confirmation email to user (skip for Pro interest)
+    let userEmailResult = null;
+    if (!isProInterest) {
+      const userEmailResponse = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+        },
+        body: JSON.stringify({
+          from: "Capital Deal Desk <onboarding@resend.dev>",
+          to: [data.email],
+          subject: "We received your Investor Snapshot request",
+          html: `
+            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+              <h2 style="color: #10b981;">Capital Deal Desk</h2>
+              <p>Hi ${data.firstName},</p>
+              <p>Got it — we're preparing your same-day Investor Snapshot for:</p>
+              <p style="background: #f4f4f4; padding: 12px; border-radius: 6px; font-weight: 500;">${data.propertyAddress}</p>
+              <p>You'll receive it shortly.</p>
+              <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 24px 0;" />
+              <p style="color: #666; font-size: 14px;">Capital Deal Desk — Wall Street Tools. Main Street Soul.</p>
+            </div>
+          `,
+        }),
+      });
+
+      userEmailResult = await userEmailResponse.json();
+      console.log("User confirmation email sent:", userEmailResult);
+    }
+
+    // Build admin email content based on type
+    const adminSubject = isProInterest 
+      ? `NEW Pro Interest — ${data.email}`
+      : `NEW Deal Desk Request — ${data.propertyAddress}`;
+
+    const adminHtml = isProInterest
+      ? `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2 style="color: #10b981; margin-bottom: 24px;">🎯 NEW Pro Interest</h2>
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+            <tr>
+              <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9; width: 140px;">Timestamp</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;">${timestamp}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Name</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;">${data.firstName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Email</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;"><a href="mailto:${data.email}">${data.email}</a></td>
+            </tr>
+          </table>
+          <div style="background: #fff3cd; padding: 16px; border-radius: 8px; border-left: 4px solid #ffc107;">
+            <p style="margin: 0; font-size: 14px; color: #333;">
+              <strong>ACTION: Send Pro signup link to this user.</strong>
+            </p>
           </div>
-        `,
-      }),
-    });
+        </div>
+      `
+      : `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2 style="color: #10b981; margin-bottom: 24px;">NEW Deal Desk Request</h2>
+          
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+            <tr>
+              <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9; width: 140px;">Timestamp</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;">${timestamp}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Name</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;">${data.firstName}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Email</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;"><a href="mailto:${data.email}">${data.email}</a></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Address/Link</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5; word-break: break-all;">${data.propertyAddress}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Strategy</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;">${data.strategy}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Notes</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;">${data.notes || "None"}</td>
+            </tr>
+          </table>
 
-    const userEmailResult = await userEmailResponse.json();
-    console.log("User confirmation email sent:", userEmailResult);
+          <div style="background: #f4f4f4; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+            <h3 style="margin: 0 0 12px 0; font-size: 14px; text-transform: uppercase; color: #666;">PROCESSING CHECKLIST</h3>
+            <div style="font-size: 14px; line-height: 1.8;">
+              ☐ Pull RPR report<br/>
+              ☐ Pull tax/assessment basics<br/>
+              ☐ Create Snapshot PDF packet<br/>
+              ☐ Send delivery email + upsell
+            </div>
+          </div>
 
-    // Send internal notification to admin
+          <div style="background: #e8f5e9; padding: 16px; border-radius: 8px; border-left: 4px solid #10b981;">
+            <p style="margin: 0; font-size: 14px; color: #333;">
+              <strong>Reply to this email with the finished PDF to deliver it.</strong><br/>
+              <span style="color: #666;">(This makes your inbox your queue.)</span>
+            </p>
+          </div>
+        </div>
+      `;
+
+    // Send admin notification
     const adminEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -71,38 +155,8 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "Capital Deal Desk <onboarding@resend.dev>",
         to: [ADMIN_EMAIL],
-        subject: `New Snapshot Request: ${data.propertyAddress}`,
-        html: `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h2 style="color: #10b981;">New Investor Snapshot Request</h2>
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr>
-                <td style="padding: 8px 0; border-bottom: 1px solid #e5e5e5; font-weight: 600;">First Name</td>
-                <td style="padding: 8px 0; border-bottom: 1px solid #e5e5e5;">${data.firstName}</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px 0; border-bottom: 1px solid #e5e5e5; font-weight: 600;">Email</td>
-                <td style="padding: 8px 0; border-bottom: 1px solid #e5e5e5;"><a href="mailto:${data.email}">${data.email}</a></td>
-              </tr>
-              <tr>
-                <td style="padding: 8px 0; border-bottom: 1px solid #e5e5e5; font-weight: 600;">Property Address/Link</td>
-                <td style="padding: 8px 0; border-bottom: 1px solid #e5e5e5;">${data.propertyAddress}</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px 0; border-bottom: 1px solid #e5e5e5; font-weight: 600;">Strategy</td>
-                <td style="padding: 8px 0; border-bottom: 1px solid #e5e5e5;">${data.strategy}</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px 0; border-bottom: 1px solid #e5e5e5; font-weight: 600;">Notes</td>
-                <td style="padding: 8px 0; border-bottom: 1px solid #e5e5e5;">${data.notes || "None"}</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px 0; font-weight: 600;">Timestamp</td>
-                <td style="padding: 8px 0;">${timestamp}</td>
-              </tr>
-            </table>
-          </div>
-        `,
+        subject: adminSubject,
+        html: adminHtml,
       }),
     });
 
