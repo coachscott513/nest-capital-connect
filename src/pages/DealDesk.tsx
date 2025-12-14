@@ -44,18 +44,26 @@ const DealDesk = () => {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
-      const { error } = await supabase
-        .from("deal_desk_requests")
-        .insert({
-          first_name: data.firstName,
+      // Send emails via edge function
+      const { error: emailError } = await supabase.functions.invoke("send-dealdesk-emails", {
+        body: {
+          firstName: data.firstName,
           email: data.email,
-          property_address: data.propertyAddress,
+          propertyAddress: data.propertyAddress,
           strategy: data.strategy,
           notes: data.notes || null,
-          agreed_to_updates: data.agreedToUpdates,
-        });
+        },
+      });
 
-      if (error) throw error;
+      if (emailError) {
+        console.error("Email error:", emailError);
+        // Don't block on email failure, still show success
+      }
+
+      toast({
+        title: "Request received!",
+        description: "Check your email for confirmation.",
+      });
       navigate("/dealdesk/thanks");
     } catch (error) {
       console.error("Error submitting deal desk request:", error);
