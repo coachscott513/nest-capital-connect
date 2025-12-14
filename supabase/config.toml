@@ -1,1 +1,4 @@
 project_id = "hstoxhgsvzlnwmagxfho"
+
+[functions.send-dealdesk-emails]
+verify_jwt = false
