@@ -272,11 +272,30 @@ const Index = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Card 1 - First-Time Home Buyers */}
+            {/* Card 1 - Investors */}
+            <div className="bg-background border border-border rounded-xl p-6 flex flex-col">
+              <h3 className="text-xl font-bold text-foreground mb-3">Investors</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                Build long-term wealth with real data. We help investors analyze cash flow, compare opportunities, understand risk, and identify properties that actually make sense — locally and long term.
+              </p>
+              <ul className="text-muted-foreground text-xs space-y-1 mb-6 flex-1">
+                <li>• Deal analysis & cash flow</li>
+                <li>• Neighborhood investment guides</li>
+                <li>• Off-market opportunities</li>
+              </ul>
+              <Link 
+                to="/investment-landing" 
+                className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
+              >
+                Start Investing Here
+              </Link>
+            </div>
+
+            {/* Card 2 - First-Time Home Buyers */}
             <div className="bg-background border border-border rounded-xl p-6 flex flex-col">
               <h3 className="text-xl font-bold text-foreground mb-3">First-Time Home Buyers</h3>
               <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
-                Buying your first home doesn't have to be confusing. We break down grants, low-down-payment programs, monthly costs, and what you actually qualify for — so you can buy with confidence, not guesswork.
+                Buying your first home doesn't have to be overwhelming. We simplify grants, financing, monthly costs, and the buying process so you know exactly what to expect before you make a move.
               </p>
               <Link 
                 to="/first-time-homebuyers" 
@@ -286,11 +305,11 @@ const Index = () => {
               </Link>
             </div>
 
-            {/* Card 2 - Land Buyers */}
+            {/* Card 3 - Land Buyers */}
             <div className="bg-background border border-border rounded-xl p-6 flex flex-col">
               <h3 className="text-xl font-bold text-foreground mb-3">Land Buyers</h3>
               <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
-                Thinking about buying land? The numbers matter more than you think. Zoning, utilities, build costs, resale value — we help you understand what makes land a smart purchase (and what to avoid).
+                Land can be a smart investment — or a costly mistake. We help you understand zoning, utilities, build costs, resale value, and long-term potential before you buy.
               </p>
               <Link 
                 to="/albany-land" 
@@ -300,31 +319,17 @@ const Index = () => {
               </Link>
             </div>
 
-            {/* Card 3 - Financing & Mortgages */}
+            {/* Card 4 - Financing & Mortgages */}
             <div className="bg-background border border-border rounded-xl p-6 flex flex-col">
               <h3 className="text-xl font-bold text-foreground mb-3">Financing & Mortgages</h3>
               <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
-                The right financing can change everything. Explore mortgage options, down-payment assistance, investor vs. owner-occupied loans, and how financing impacts your long-term costs and returns.
+                Financing decisions impact everything. We break down mortgage options, assistance programs, investor vs. owner-occupied loans, and how financing affects long-term costs and returns.
               </p>
               <Link 
                 to="/first-time-homebuyers" 
                 className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
               >
                 Explore Financing Options
-              </Link>
-            </div>
-
-            {/* Card 4 - Investors */}
-            <div className="bg-background border border-border rounded-xl p-6 flex flex-col">
-              <h3 className="text-xl font-bold text-foreground mb-3">Investors</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
-                Looking for cash flow and long-term returns? Analyze properties, compare opportunities, and get investor-level insights designed for people building wealth in the Capital District.
-              </p>
-              <Link 
-                to="/investment-landing" 
-                className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
-              >
-                Start Investing Here
               </Link>
             </div>
           </div>
