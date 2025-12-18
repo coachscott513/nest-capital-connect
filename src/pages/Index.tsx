@@ -264,6 +264,73 @@ const Index = () => {
       {/* Due Diligence Engine */}
       <DueDiligenceEngine />
 
+      {/* Start Your Journey Section */}
+      <section className="px-[5%] py-12 bg-card border-y border-border">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+            Start Your Journey With the Right Information
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Card 1 - First-Time Home Buyers */}
+            <div className="bg-background border border-border rounded-xl p-6 flex flex-col">
+              <h3 className="text-xl font-bold text-foreground mb-3">First-Time Home Buyers</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
+                Buying your first home doesn't have to be confusing. We break down grants, low-down-payment programs, monthly costs, and what you actually qualify for — so you can buy with confidence, not guesswork.
+              </p>
+              <Link 
+                to="/first-time-homebuyers" 
+                className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
+              >
+                First-Time Buyer Guide
+              </Link>
+            </div>
+
+            {/* Card 2 - Land Buyers */}
+            <div className="bg-background border border-border rounded-xl p-6 flex flex-col">
+              <h3 className="text-xl font-bold text-foreground mb-3">Land Buyers</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
+                Thinking about buying land? The numbers matter more than you think. Zoning, utilities, build costs, resale value — we help you understand what makes land a smart purchase (and what to avoid).
+              </p>
+              <Link 
+                to="/albany-land" 
+                className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
+              >
+                Land Buyer Insights
+              </Link>
+            </div>
+
+            {/* Card 3 - Financing & Mortgages */}
+            <div className="bg-background border border-border rounded-xl p-6 flex flex-col">
+              <h3 className="text-xl font-bold text-foreground mb-3">Financing & Mortgages</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
+                The right financing can change everything. Explore mortgage options, down-payment assistance, investor vs. owner-occupied loans, and how financing impacts your long-term costs and returns.
+              </p>
+              <Link 
+                to="/first-time-homebuyers" 
+                className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
+              >
+                Explore Financing Options
+              </Link>
+            </div>
+
+            {/* Card 4 - Investors */}
+            <div className="bg-background border border-border rounded-xl p-6 flex flex-col">
+              <h3 className="text-xl font-bold text-foreground mb-3">Investors</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
+                Looking for cash flow and long-term returns? Analyze properties, compare opportunities, and get investor-level insights designed for people building wealth in the Capital District.
+              </p>
+              <Link 
+                to="/investment-landing" 
+                className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
+              >
+                Start Investing Here
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Multi-Unit Search Section */}
       <MultiUnitSearchSection />
 
