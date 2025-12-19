@@ -287,7 +287,7 @@ const Index = () => {
                 <li>• Off-market opportunities</li>
               </ul>
               <Link 
-                to="/investment-landing" 
+                to="/investment-properties"
                 className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
               >
                 Start Investing Here
