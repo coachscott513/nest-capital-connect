@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/MainLayout";
+import GuideLeadModal from "@/components/GuideLeadModal";
 import { Mountain, FileText, Plug, Hammer, TrendingUp, ArrowRight, CheckCircle, AlertTriangle } from "lucide-react";
 
 const LandBuyers = () => {
+  const [showGuideModal, setShowGuideModal] = useState(false);
+
   return (
     <MainLayout>
       <Helmet>
@@ -12,6 +16,13 @@ const LandBuyers = () => {
         <meta name="keywords" content="buy land Capital District, Albany land for sale, building lots NY, vacant land investment, zoning Capital District" />
         <link rel="canonical" href="https://capitaldistrictnest.com/land-buyers" />
       </Helmet>
+
+      <GuideLeadModal
+        open={showGuideModal}
+        onOpenChange={setShowGuideModal}
+        redirectPath="/buyer-journey/land-buyer"
+        guideType="land-buyer-guide"
+      />
 
       {/* Hero Section */}
       <section className="bg-card border-b border-border px-[5%] py-16">
@@ -31,9 +42,12 @@ const LandBuyers = () => {
           <span className="text-sm font-medium text-foreground">
             📘 Free Land Due Diligence Guide Coming Soon — Join the List to Get It First.
           </span>
-          <Link to="/vip-buyer-access" className="text-sm font-bold text-primary hover:underline">
-            Join Now →
-          </Link>
+          <button 
+            onClick={() => setShowGuideModal(true)} 
+            className="text-sm font-bold text-primary hover:underline"
+          >
+            Get My Free Guide →
+          </button>
         </div>
       </div>
 

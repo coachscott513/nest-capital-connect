@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/MainLayout";
+import GuideLeadModal from "@/components/GuideLeadModal";
 import { Home, DollarSign, Calculator, ClipboardList, AlertTriangle, ArrowRight, CheckCircle } from "lucide-react";
 
 const FirstTimeHomeBuyers = () => {
+  const [showGuideModal, setShowGuideModal] = useState(false);
+
   return (
     <MainLayout>
       <Helmet>
@@ -12,6 +16,13 @@ const FirstTimeHomeBuyers = () => {
         <meta name="keywords" content="first-time home buyer Albany, NY home buyer grants, down payment assistance Capital District, buying first home Troy NY" />
         <link rel="canonical" href="https://capitaldistrictnest.com/first-time-home-buyers" />
       </Helmet>
+
+      <GuideLeadModal
+        open={showGuideModal}
+        onOpenChange={setShowGuideModal}
+        redirectPath="/buyer-journey/first-time-buyer"
+        guideType="first-time-buyer-guide"
+      />
 
       {/* Hero Section */}
       <section className="bg-card border-b border-border px-[5%] py-16">
@@ -31,9 +42,12 @@ const FirstTimeHomeBuyers = () => {
           <span className="text-sm font-medium text-foreground">
             📘 Free First-Time Buyer Checklist Coming Soon — Join the List to Get It First.
           </span>
-          <Link to="/vip-buyer-access" className="text-sm font-bold text-primary hover:underline">
-            Join Now →
-          </Link>
+          <button 
+            onClick={() => setShowGuideModal(true)} 
+            className="text-sm font-bold text-primary hover:underline"
+          >
+            Get My Free Guide →
+          </button>
         </div>
       </div>
 
