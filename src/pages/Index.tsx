@@ -267,9 +267,12 @@ const Index = () => {
       {/* Start Your Journey Section */}
       <section className="px-[5%] py-12 bg-card border-y border-border">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3 text-center">
             Start Your Journey With the Right Information
           </h2>
+          <p className="text-lg text-muted-foreground text-center mb-8 max-w-2xl mx-auto">
+            Clear guidance, real numbers, and practical tools — built for every type of buyer in the Capital District.
+          </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Card 1 - Investors */}
