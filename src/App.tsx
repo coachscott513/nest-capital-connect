@@ -58,6 +58,11 @@ import FultonMontgomeryMultiUnitMarket from "./pages/FultonMontgomeryMultiUnitMa
 import VipBuyerAccess from "./pages/VipBuyerAccess";
 import DealDesk from "./pages/DealDesk";
 import DealDeskThanks from "./pages/DealDeskThanks";
+import BuyerRoadmap from "./pages/BuyerRoadmap";
+import InvestorJourney from "./pages/buyer-journey/InvestorJourney";
+import FirstTimeBuyerJourney from "./pages/buyer-journey/FirstTimeBuyerJourney";
+import LandBuyerJourney from "./pages/buyer-journey/LandBuyerJourney";
+import FinancingJourney from "./pages/buyer-journey/FinancingJourney";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
