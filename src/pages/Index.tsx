@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TrendingUp, Percent, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
+import GuideLeadModal from "@/components/GuideLeadModal";
 import SEOHead from "@/components/SEOHead";
 import DueDiligenceEngine from "@/components/DueDiligenceEngine";
 import AlphaListSection from "@/components/AlphaListSection";
@@ -73,6 +74,7 @@ const footerLinks = [
 
 const Index = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [guideModal, setGuideModal] = useState<{ open: boolean; guideType: string; redirectPath: string }>({ open: false, guideType: "", redirectPath: "" });
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -286,12 +288,12 @@ const Index = () => {
                 <li>• Neighborhood investment guides</li>
                 <li>• Off-market opportunities</li>
               </ul>
-              <Link 
-                to="/investment-properties"
+              <button 
+                onClick={() => setGuideModal({ open: true, guideType: "investor", redirectPath: "/buyer-journey/investor" })}
                 className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
               >
                 Start Investing Here
-              </Link>
+              </button>
             </div>
 
             {/* Card 2 - First-Time Home Buyers */}
@@ -300,12 +302,12 @@ const Index = () => {
               <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
                 Buying your first home doesn't have to be overwhelming. We simplify grants, financing, monthly costs, and the buying process so you know exactly what to expect before you make a move.
               </p>
-              <Link 
-                to="/first-time-home-buyers"
+              <button 
+                onClick={() => setGuideModal({ open: true, guideType: "first-time-buyer", redirectPath: "/buyer-journey/first-time-buyer" })}
                 className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
               >
                 First-Time Buyer Guide
-              </Link>
+              </button>
             </div>
 
             {/* Card 3 - Land Buyers */}
@@ -314,12 +316,12 @@ const Index = () => {
               <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
                 Land can be a smart investment — or a costly mistake. We help you understand zoning, utilities, build costs, resale value, and long-term potential before you buy.
               </p>
-              <Link 
-                to="/land-buyers"
+              <button 
+                onClick={() => setGuideModal({ open: true, guideType: "land-buyer", redirectPath: "/buyer-journey/land-buyer" })}
                 className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
               >
                 Land Buyer Insights
-              </Link>
+              </button>
             </div>
 
             {/* Card 4 - Financing & Mortgages */}
@@ -328,16 +330,24 @@ const Index = () => {
               <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
                 Financing decisions impact everything. We break down mortgage options, assistance programs, investor vs. owner-occupied loans, and how financing affects long-term costs and returns.
               </p>
-              <Link 
-                to="/financing"
+              <button 
+                onClick={() => setGuideModal({ open: true, guideType: "financing", redirectPath: "/buyer-journey/financing" })}
                 className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
               >
                 Explore Financing Options
-              </Link>
+              </button>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Guide Lead Modal */}
+      <GuideLeadModal
+        open={guideModal.open}
+        onOpenChange={(open) => setGuideModal({ ...guideModal, open })}
+        guideType={guideModal.guideType}
+        redirectPath={guideModal.redirectPath}
+      />
 
       {/* Multi-Unit Search Section */}
       <MultiUnitSearchSection />
