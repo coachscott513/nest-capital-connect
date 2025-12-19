@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle, Download, Shield } from "lucide-react";
+import { CheckCircle, Download, Shield, Phone, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface JourneyLeadMagnetProps {
@@ -40,7 +40,7 @@ const JourneyLeadMagnet = ({
   benefits,
   downloadName 
 }: JourneyLeadMagnetProps) => {
-  const [formData, setFormData] = useState({ firstName: "", email: "" });
+  const [formData, setFormData] = useState({ firstName: "", email: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -54,6 +54,7 @@ const JourneyLeadMagnet = ({
       const { error: dbError } = await supabase.from("leads").insert({
         name: formData.firstName,
         email: formData.email,
+        phone: formData.phone || null,
         message: `Lead magnet request: ${downloadName}`,
         type: journeyType,
       });
@@ -66,6 +67,7 @@ const JourneyLeadMagnet = ({
         body: {
           firstName: formData.firstName,
           email: formData.email,
+          phone: formData.phone || null,
           journeyType,
           subject: emailConfig.subject,
           leadMagnet: emailConfig.leadMagnet,
@@ -101,9 +103,9 @@ const JourneyLeadMagnet = ({
           <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-primary" />
           </div>
-          <h3 className="text-xl font-bold text-foreground mb-2">Check Your Inbox!</h3>
+          <h3 className="text-xl font-bold text-foreground mb-2">Thanks!</h3>
           <p className="text-muted-foreground mb-4">
-            We've sent "{downloadName}" to {formData.email}
+            Your guide is on the way. If you asked for help, Scott will reach out shortly.
           </p>
           <p className="text-sm text-muted-foreground">
             Didn't receive it? Check your spam folder or contact us directly.
@@ -149,19 +151,44 @@ const JourneyLeadMagnet = ({
               className="h-12"
             />
           </div>
+          <div className="space-y-2">
+            <Input
+              type="tel"
+              placeholder="Phone number (optional)"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              className="h-12"
+            />
+          </div>
           <Button type="submit" className="w-full h-12" disabled={isSubmitting}>
-            {isSubmitting ? "Sending..." : (
-              <>
-                <Download className="w-4 h-4 mr-2" />
-                Get Free {downloadName}
-              </>
-            )}
+            {isSubmitting ? "Sending..." : "Get the Free Guide"}
           </Button>
         </form>
 
         <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
           <Shield className="w-3 h-3" />
-          <span>We respect your privacy. Unsubscribe anytime.</span>
+          <span>Free download. No spam. No obligation.</span>
+        </div>
+
+        {/* Live Contact Section */}
+        <div className="pt-4 border-t border-border">
+          <p className="text-sm text-muted-foreground text-center mb-3">
+            Prefer to talk it through first?
+          </p>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button variant="outline" className="flex-1" asChild>
+              <a href="tel:5185227265">
+                <Phone className="w-4 h-4 mr-2" />
+                Call Now
+              </a>
+            </Button>
+            <Button variant="outline" className="flex-1" asChild>
+              <a href="sms:5185227265">
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Text for Help
+              </a>
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>
