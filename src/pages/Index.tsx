@@ -329,7 +329,7 @@ const Index = () => {
                 Financing decisions impact everything. We break down mortgage options, assistance programs, investor vs. owner-occupied loans, and how financing affects long-term costs and returns.
               </p>
               <Link 
-                to="/first-time-homebuyers" 
+                to="/financing"
                 className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
               >
                 Explore Financing Options
