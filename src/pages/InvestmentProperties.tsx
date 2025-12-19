@@ -25,6 +25,18 @@ const InvestmentProperties = () => {
         </div>
       </section>
 
+      {/* Guide Coming Soon Banner */}
+      <div className="bg-primary/5 border-b border-primary/20 px-[5%] py-4">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-3 text-center sm:text-left">
+          <span className="text-sm font-medium text-foreground">
+            📘 Free Investor Guide Coming Soon — Join the List to Get It First.
+          </span>
+          <Link to="/vip-buyer-access" className="text-sm font-bold text-primary hover:underline">
+            Join Now →
+          </Link>
+        </div>
+      </div>
+
       {/* Section 1: Intro */}
       <section className="px-[5%] py-12 bg-background">
         <div className="max-w-4xl mx-auto">
