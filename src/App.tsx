@@ -34,6 +34,7 @@ import AlbanyMultiUnit from "./pages/AlbanyMultiUnit";
 import SchenectadyMultiUnit from "./pages/SchenectadyMultiUnit";
 import TroyMultiUnit from "./pages/TroyMultiUnit";
 import AlbanyLand from "./pages/AlbanyLand";
+import LandBuyers from "./pages/LandBuyers";
 import SellInvestmentProperty from "./pages/SellInvestmentProperty";
 import CashFlowReport from "./pages/CashFlowReport";
 import HomesForSale from "./pages/HomesForSale";
@@ -97,6 +98,7 @@ const App = () => {
           <Route path="/schenectady-multi-unit" element={<SchenectadyMultiUnit />} />
           <Route path="/troy-multi-unit" element={<TroyMultiUnit />} />
           <Route path="/albany-land" element={<AlbanyLand />} />
+          <Route path="/land-buyers" element={<LandBuyers />} />
           <Route path="/sell-investment-property" element={<SellInvestmentProperty />} />
           <Route path="/cash-flow-report" element={<CashFlowReport />} />
           <Route path="/communities/:city" element={<Communities />} />
