@@ -341,13 +341,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Guide Lead Modal */}
-      <GuideLeadModal
-        open={guideModal.open}
-        onOpenChange={(open) => setGuideModal({ ...guideModal, open })}
-        guideType={guideModal.guideType}
-        redirectPath={guideModal.redirectPath}
-      />
 
       {/* Multi-Unit Search Section */}
       <MultiUnitSearchSection />
@@ -560,6 +553,14 @@ const Index = () => {
 
       {/* Alpha List */}
       <AlphaListSection />
+
+      {/* Guide Lead Modal */}
+      <GuideLeadModal
+        open={guideModal.open}
+        onOpenChange={(open) => setGuideModal({ ...guideModal, open })}
+        guideType={guideModal.guideType}
+        redirectPath={guideModal.redirectPath}
+      />
 
       {/* Footer */}
       <footer className="px-[5%] py-12 text-center text-muted-foreground text-sm border-t border-border">
