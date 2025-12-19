@@ -1,7 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -53,41 +52,55 @@ const handler = async (req: Request): Promise<Response> => {
     const content = journeyContent[journeyType] || journeyContent.investor;
 
     // Send user email
-    const userEmailResponse = await resend.emails.send({
-      from: "Capital District Nest <onboarding@resend.dev>",
-      to: [email],
-      subject: subject,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h1 style="color: #1a1a1a;">${content.heading}</h1>
-          <p>Hi ${firstName},</p>
-          <p>${content.body}</p>
-          <p><strong>Your download:</strong> ${leadMagnet}</p>
-          <p>Our team will follow up shortly with your personalized resources. In the meantime, feel free to explore:</p>
-          <p style="margin: 24px 0;">
-            <a href="${content.ctaUrl}" style="background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">${content.cta}</a>
-          </p>
-          <p>Questions? Reply to this email or call Scott directly at (518) 676-2347.</p>
-          <p>Best,<br>The Capital District Nest Team</p>
-        </div>
-      `,
+    const userEmailResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: "Capital District Nest <onboarding@resend.dev>",
+        to: [email],
+        subject: subject,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h1 style="color: #1a1a1a;">${content.heading}</h1>
+            <p>Hi ${firstName},</p>
+            <p>${content.body}</p>
+            <p><strong>Your download:</strong> ${leadMagnet}</p>
+            <p>Our team will follow up shortly with your personalized resources. In the meantime, feel free to explore:</p>
+            <p style="margin: 24px 0;">
+              <a href="${content.ctaUrl}" style="background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">${content.cta}</a>
+            </p>
+            <p>Questions? Reply to this email or call Scott directly at (518) 676-2347.</p>
+            <p>Best,<br>The Capital District Nest Team</p>
+          </div>
+        `,
+      }),
     });
 
     // Send internal notification
-    await resend.emails.send({
-      from: "Capital District Nest <onboarding@resend.dev>",
-      to: ["scott@capitaldistrictnest.com"],
-      subject: `NEW Lead Magnet Request — ${journeyType.toUpperCase()} Journey`,
-      html: `
-        <h2>New Lead Magnet Download</h2>
-        <p><strong>Journey:</strong> ${journeyType}</p>
-        <p><strong>Name:</strong> ${firstName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Resource:</strong> ${leadMagnet}</p>
-        <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
-        <hr>
-        <p>Follow up with personalized content for their ${journeyType} journey.</p>
-      `,
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: "Capital District Nest <onboarding@resend.dev>",
+        to: ["scott@capitaldistrictnest.com"],
+        subject: `NEW Lead Magnet Request — ${journeyType.toUpperCase()} Journey`,
+        html: `
+          <h2>New Lead Magnet Download</h2>
+          <p><strong>Journey:</strong> ${journeyType}</p>
+          <p><strong>Name:</strong> ${firstName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Resource:</strong> ${leadMagnet}</p>
+          <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+          <hr>
+          <p>Follow up with personalized content for their ${journeyType} journey.</p>
+        `,
+      }),
     });
 
     return new Response(JSON.stringify({ success: true }), {
