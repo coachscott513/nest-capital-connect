@@ -90,7 +90,7 @@ const Index = () => {
       {/* Full-Screen Menu Overlay */}
       <div
         className={`fixed inset-0 bg-background z-[1500] flex flex-col pt-24 px-5 md:px-10 pb-10 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          menuOpen ? "translate-y-0" : "-translate-y-full"
+          menuOpen ? "translate-y-0" : "-translate-y-full pointer-events-none"
         }`}
       >
         <div className="overflow-y-auto flex-1 pr-4 scrollbar-hide">
