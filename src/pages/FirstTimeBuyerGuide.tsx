@@ -290,6 +290,47 @@ const FirstTimeHomeBuyers = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="px-[5%] py-12 bg-card border-y border-border">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">How much do I need for a down payment as a first-time buyer?</h3>
+              <p className="text-muted-foreground text-sm">
+                First-time buyers can put down as little as 3% with conventional loans or 3.5% with FHA loans. Many Capital District buyers qualify for SONYMA assistance (up to $15,000) and local programs that can cover most or all of the down payment. VA and USDA loans offer 0% down for qualifying buyers.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">What credit score do I need to buy a home?</h3>
+              <p className="text-muted-foreground text-sm">
+                FHA loans accept scores as low as 580 with 3.5% down. Conventional loans typically require 620+, with the best rates going to borrowers with 740+ scores. If your score is below 620, many lenders offer credit counseling to help you qualify within 6-12 months.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">How long does it take to buy a house from start to finish?</h3>
+              <p className="text-muted-foreground text-sm">
+                The typical timeline is 45-60 days from accepted offer to closing. Add 2-4 weeks for house hunting before that. Getting pre-approved first is essential — it takes 1-3 days and shows sellers you are serious. The entire process from pre-approval to keys usually takes 2-3 months.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">What are closing costs and how much should I expect?</h3>
+              <p className="text-muted-foreground text-sm">
+                Closing costs include lender fees, title insurance, attorney fees, prepaid taxes, and insurance. Budget 2-5% of the purchase price. On a $250,000 home, that is $5,000-$12,500. Sellers can sometimes contribute toward closing costs, and some assistance programs cover them.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">Should I buy now or wait for prices or rates to drop?</h3>
+              <p className="text-muted-foreground text-sm">
+                Timing the market is difficult. While waiting, you continue paying rent and miss building equity. If rates drop significantly after purchase, you can refinance. The Capital District has historically stable prices with modest appreciation — waiting rarely provides dramatic savings.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Section 6: CTA */}
       <section className="px-[5%] py-16 bg-card border-t border-border">
         <div className="max-w-2xl mx-auto text-center">

@@ -378,6 +378,47 @@ const Financing = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="px-[5%] py-12 bg-background">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">What is the difference between pre-qualification and pre-approval?</h3>
+              <p className="text-muted-foreground text-sm">
+                Pre-qualification is a quick estimate based on self-reported information — it carries little weight with sellers. Pre-approval involves a full credit check, income verification, and documentation review. Always get pre-approved before house hunting; it shows sellers you are a serious, qualified buyer.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">Should I choose a 15-year or 30-year mortgage?</h3>
+              <p className="text-muted-foreground text-sm">
+                A 15-year mortgage has lower interest rates and builds equity faster, but higher monthly payments. A 30-year mortgage offers lower payments and more flexibility. Most buyers choose 30-year for the payment flexibility, then make extra payments when possible.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">What is PMI and how do I avoid it?</h3>
+              <p className="text-muted-foreground text-sm">
+                Private Mortgage Insurance (PMI) protects the lender when you put less than 20% down. It typically costs 0.5-1% of the loan amount annually. To avoid PMI, put 20% down, use a VA loan (no PMI), or ask about lender-paid PMI options that trade slightly higher rates for no separate PMI payment.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">Can I buy an investment property with less than 20% down?</h3>
+              <p className="text-muted-foreground text-sm">
+                Traditional investment property loans require 15-25% down. However, if you live in one unit of a 2-4 unit property (house hacking), you can use owner-occupied financing with as little as 3.5% down (FHA) or 5% (conventional). This is one of the best strategies for new investors.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">How much does one percentage point in interest rate affect my payment?</h3>
+              <p className="text-muted-foreground text-sm">
+                On a $300,000 loan, each 1% rate increase adds roughly $200/month to your payment. Over 30 years, that is $72,000 in additional interest. However, a 1% rate increase has roughly the same payment impact as a 10% higher purchase price — so timing the market on rates is not always beneficial.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Section 6: CTA */}
       <section className="px-[5%] py-16 bg-card border-t border-border">
         <div className="max-w-2xl mx-auto text-center">
