@@ -302,6 +302,47 @@ const LandBuyers = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="px-[5%] py-12 bg-background">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">How do I know if land is buildable?</h3>
+              <p className="text-muted-foreground text-sm">
+                Buildability depends on zoning, wetlands, soil conditions, and utility access. Always verify with the town planning department, order a survey, and conduct a perc test for septic if no sewer is available. Never assume a parcel is buildable just because it is listed for sale.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">What is a perc test and why does it matter?</h3>
+              <p className="text-muted-foreground text-sm">
+                A percolation (perc) test measures how quickly water drains through soil to determine if a septic system can be installed. If the land fails a perc test and has no municipal sewer access, you cannot build on it. Always make land purchases contingent on passing a perc test.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">How much does it cost to build a home on vacant land?</h3>
+              <p className="text-muted-foreground text-sm">
+                In the Capital District, construction costs range from $175-$300+ per square foot depending on finishes. A 2,000 sq ft mid-range home costs $450,000-$600,000 to build. Add land cost, site work (clearing, driveway, utilities), and permit fees. Total investment often exceeds $550,000-$800,000.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">Can I get a mortgage for vacant land?</h3>
+              <p className="text-muted-foreground text-sm">
+                Land loans exist but have stricter terms than home mortgages — typically 20-50% down, higher interest rates, and shorter terms (5-15 years). Construction-to-permanent loans are another option if you plan to build immediately. Some buyers use home equity loans or pay cash.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">Is buying land a good investment in the Capital District?</h3>
+              <p className="text-muted-foreground text-sm">
+                Land can appreciate well in growing areas like Saratoga County and Albany suburbs, but it generates no income while you hold it and still incurs property taxes. Land works best as part of a specific plan (build, subdivide, hold for development) rather than pure speculation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Section 6: CTA */}
       <section className="px-[5%] py-16 bg-card border-t border-border">
         <div className="max-w-2xl mx-auto text-center">

@@ -284,6 +284,47 @@ const InvestmentProperties = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="px-[5%] py-12 bg-card border-y border-border">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">What is a good cap rate for the Capital District?</h3>
+              <p className="text-muted-foreground text-sm">
+                In the Capital District, cap rates typically range from 6-12% depending on location and property condition. Troy and Schenectady often see 8-12% cap rates, while Albany suburbs like Delmar and Colonie trend toward 5-7%. Higher cap rates usually come with more management intensity or deferred maintenance.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">How much do I need to invest in a Capital District rental property?</h3>
+              <p className="text-muted-foreground text-sm">
+                Investment properties typically require 15-25% down payment. For a $200,000 duplex, expect to bring $30,000-$50,000 plus closing costs and reserves. Some investors use house hacking (living in one unit) to qualify for owner-occupied financing with as little as 3.5% down.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">Is Albany or Troy better for rental property investment?</h3>
+              <p className="text-muted-foreground text-sm">
+                Troy generally offers higher cap rates and lower entry prices, making it attractive for cash flow investors. Albany provides more stability and slower but steadier appreciation. The best choice depends on your investment goals, risk tolerance, and management preferences.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">What expenses should I budget for on a rental property?</h3>
+              <p className="text-muted-foreground text-sm">
+                Budget for property taxes (varies widely by town), insurance ($1,200-$2,400/year for multi-units), maintenance (10% of gross rent), vacancy (5-8%), and property management if used (8-10% of collected rent). Always verify actual tax bills before purchasing — they vary significantly across the Capital District.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-foreground mb-2">Can I invest in the Capital District if I live out of state?</h3>
+              <p className="text-muted-foreground text-sm">
+                Yes, many of our investors are from NYC, New Jersey, Connecticut, and beyond. We help out-of-state investors with property analysis, local market knowledge, and connections to property managers. The key is having a reliable local team for management and maintenance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Section 7: CTA */}
       <section className="px-[5%] py-16 bg-background">
         <div className="max-w-2xl mx-auto text-center">
