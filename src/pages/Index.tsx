@@ -315,7 +315,7 @@ const Index = () => {
                 Land can be a smart investment — or a costly mistake. We help you understand zoning, utilities, build costs, resale value, and long-term potential before you buy.
               </p>
               <Link 
-                to="/albany-land" 
+                to="/land-buyers"
                 className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
               >
                 Land Buyer Insights
