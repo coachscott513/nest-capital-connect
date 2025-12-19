@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/MainLayout";
 import FAQSection from "@/components/FAQSection";
 import JourneyLeadMagnet from "@/components/JourneyLeadMagnet";
-import { TrendingUp, CheckCircle, ArrowRight, BarChart3, Building2, Shield } from "lucide-react";
+import { TrendingUp, CheckCircle, ArrowRight, BarChart3, Building2, Shield, Phone, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const investorFaqs = [
   {
@@ -31,6 +35,43 @@ const investorFaqs = [
 ];
 
 const InvestorJourney = () => {
+  const [hasAccess, setHasAccess] = useState(false);
+  const [formData, setFormData] = useState({ firstName: "", email: "", phone: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleUnlock = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const { error: dbError } = await supabase.from("leads").insert({
+        name: formData.firstName,
+        email: formData.email,
+        phone: formData.phone || null,
+        message: "Guide access: Investor Guide",
+        type: "investor-guide-access",
+      });
+
+      if (dbError) throw dbError;
+
+      toast({
+        title: "Welcome!",
+        description: "You now have full access to the investor guide.",
+      });
+      setHasAccess(true);
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <MainLayout>
       <Helmet>
@@ -58,188 +99,239 @@ const InvestorJourney = () => {
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl">
               Get investor-level analysis on every property. We help you find deals that actually cash flow, with verified numbers and local expertise.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Button asChild size="lg">
-                <Link to="/vip-buyer-access">
-                  Get VIP Investor Access
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/dealdesk">Analyze a Property</Link>
-              </Button>
-            </div>
           </div>
         </section>
 
-        {/* What You Get Section */}
-        <section className="py-12 px-4 bg-card">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl font-bold text-foreground mb-8 text-center">
-              What Investors Get From Our Team
-            </h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <Card className="bg-background border-border">
-                <CardContent className="pt-6">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                    <BarChart3 className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground mb-2">Deal Analysis</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Full P&L projections, cap rate calculations, and 5-year return forecasts on any property you're considering.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card className="bg-background border-border">
-                <CardContent className="pt-6">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                    <Building2 className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground mb-2">Off-Market Access</h3>
-                  <p className="text-sm text-muted-foreground">
-                    First access to pre-market and off-market multi-family deals before they hit the MLS.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card className="bg-background border-border">
-                <CardContent className="pt-6">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                    <Shield className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground mb-2">Verified Numbers</h3>
-                  <p className="text-sm text-muted-foreground">
-                    We verify rent rolls, tax records, and expense data. No guesses — just real numbers you can bank on.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
+        {/* Lead Capture Gate Section */}
+        {!hasAccess && (
+          <section className="py-12 px-4 bg-card border-b border-border">
+            <div className="max-w-md mx-auto">
+              <div className="bg-background border border-border rounded-xl p-8">
+                <h2 className="text-2xl font-bold text-foreground mb-2 text-center">
+                  Get the Free Guide
+                </h2>
+                <p className="text-muted-foreground text-center mb-6">
+                  Enter your details to access the full market breakdown and investor insights.
+                </p>
 
-        {/* Market Stats */}
-        <section className="py-12 px-4 bg-muted/30">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-foreground mb-8 text-center">
-              Capital District Investment Market at a Glance
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-1">10-14%</div>
-                <div className="text-sm text-muted-foreground">Typical Cap Rates</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-1">$150k-$350k</div>
-                <div className="text-sm text-muted-foreground">Multi-Family Entry</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-1">15-30%</div>
-                <div className="text-sm text-muted-foreground">Cash-on-Cash</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-1">3-5%</div>
-                <div className="text-sm text-muted-foreground">Annual Appreciation</div>
-              </div>
-            </div>
-          </div>
-        </section>
+                <form onSubmit={handleUnlock} className="space-y-4">
+                  <Input
+                    placeholder="First name"
+                    value={formData.firstName}
+                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                    required
+                    className="h-12"
+                  />
+                  <Input
+                    type="email"
+                    placeholder="Email address"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    required
+                    className="h-12"
+                  />
+                  <Input
+                    type="tel"
+                    placeholder="Phone number (optional)"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="h-12"
+                  />
+                  <Button type="submit" className="w-full h-12" disabled={isSubmitting}>
+                    {isSubmitting ? "Unlocking..." : "Get Instant Access"}
+                  </Button>
+                </form>
 
-        {/* Lead Magnet Section */}
-        <section className="py-12 px-4 bg-background">
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-start">
-            <div>
-              <h2 className="text-2xl font-bold text-foreground mb-4">
-                Get Our Free Investor Toolkit
-              </h2>
-              <p className="text-muted-foreground mb-6">
-                Download our cash-flow analysis spreadsheet and Capital District investment guide. Learn exactly how we evaluate deals and what to look for in your next property.
-              </p>
-              <ul className="space-y-3 text-foreground">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-primary mt-0.5" />
-                  <span>Excel cash-flow calculator template</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-primary mt-0.5" />
-                  <span>Neighborhood-by-neighborhood investment guide</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-primary mt-0.5" />
-                  <span>Due diligence checklist for multi-family</span>
-                </li>
-              </ul>
+                <p className="text-xs text-muted-foreground text-center mt-4">
+                  Free download. No spam. No obligation.
+                </p>
+
+                <div className="pt-4 border-t border-border mt-4">
+                  <p className="text-sm text-muted-foreground text-center">
+                    Call or Text Scott at{" "}
+                    <a href="tel:5186762347" className="text-primary font-medium hover:underline">
+                      518-676-2347
+                    </a>
+                  </p>
+                </div>
+              </div>
             </div>
-            <JourneyLeadMagnet
-              journeyType="investor"
-              title="Free Investor Toolkit"
-              description="Cash-flow spreadsheet + investment guide delivered to your inbox."
-              benefits={[
-                "Analyze deals like a pro",
-                "Understand local market dynamics",
-                "Avoid common investor mistakes",
-              ]}
-              downloadName="Investor Toolkit"
+          </section>
+        )}
+
+        {/* Guide Content - Only shown after form submission */}
+        {hasAccess && (
+          <>
+            {/* What You Get Section */}
+            <section className="py-12 px-4 bg-card">
+              <div className="max-w-5xl mx-auto">
+                <h2 className="text-2xl font-bold text-foreground mb-8 text-center">
+                  What Investors Get From Our Team
+                </h2>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <Card className="bg-background border-border">
+                    <CardContent className="pt-6">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <BarChart3 className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2">Deal Analysis</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Full P&L projections, cap rate calculations, and 5-year return forecasts on any property you're considering.
+                      </p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-background border-border">
+                    <CardContent className="pt-6">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <Building2 className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2">Off-Market Access</h3>
+                      <p className="text-sm text-muted-foreground">
+                        First access to pre-market and off-market multi-family deals before they hit the MLS.
+                      </p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-background border-border">
+                    <CardContent className="pt-6">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                        <Shield className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2">Verified Numbers</h3>
+                      <p className="text-sm text-muted-foreground">
+                        We verify rent rolls, tax records, and expense data. No guesses — just real numbers you can bank on.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            </section>
+
+            {/* Market Stats */}
+            <section className="py-12 px-4 bg-muted/30">
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-2xl font-bold text-foreground mb-8 text-center">
+                  Capital District Investment Market at a Glance
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-primary mb-1">10-14%</div>
+                    <div className="text-sm text-muted-foreground">Typical Cap Rates</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-primary mb-1">$150k-$350k</div>
+                    <div className="text-sm text-muted-foreground">Multi-Family Entry</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-primary mb-1">15-30%</div>
+                    <div className="text-sm text-muted-foreground">Cash-on-Cash</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-primary mb-1">3-5%</div>
+                    <div className="text-sm text-muted-foreground">Annual Appreciation</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Lead Magnet Section */}
+            <section className="py-12 px-4 bg-background">
+              <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-start">
+                <div>
+                  <h2 className="text-2xl font-bold text-foreground mb-4">
+                    Get Our Free Investor Toolkit
+                  </h2>
+                  <p className="text-muted-foreground mb-6">
+                    Download our cash-flow analysis spreadsheet and Capital District investment guide. Learn exactly how we evaluate deals and what to look for in your next property.
+                  </p>
+                  <ul className="space-y-3 text-foreground">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-primary mt-0.5" />
+                      <span>Excel cash-flow calculator template</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-primary mt-0.5" />
+                      <span>Neighborhood-by-neighborhood investment guide</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-primary mt-0.5" />
+                      <span>Due diligence checklist for multi-family</span>
+                    </li>
+                  </ul>
+                </div>
+                <JourneyLeadMagnet
+                  journeyType="investor"
+                  title="Free Investor Toolkit"
+                  description="Cash-flow spreadsheet + investment guide delivered to your inbox."
+                  benefits={[
+                    "Analyze deals like a pro",
+                    "Understand local market dynamics",
+                    "Avoid common investor mistakes",
+                  ]}
+                  downloadName="Investor Toolkit"
+                />
+              </div>
+            </section>
+
+            {/* Related Resources */}
+            <section className="py-12 px-4 bg-card border-t border-border">
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-xl font-bold text-foreground mb-6">Related Investor Resources</h2>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Link 
+                    to="/investor/nyc-to-albany-roi" 
+                    className="flex items-center gap-3 p-4 bg-background border border-border rounded-lg hover:border-primary/50 transition-colors"
+                  >
+                    <ArrowRight className="w-4 h-4 text-primary" />
+                    <span className="text-foreground">NYC → Albany ROI Playbook</span>
+                  </Link>
+                  <Link 
+                    to="/investor/albany-multi-unit-market" 
+                    className="flex items-center gap-3 p-4 bg-background border border-border rounded-lg hover:border-primary/50 transition-colors"
+                  >
+                    <ArrowRight className="w-4 h-4 text-primary" />
+                    <span className="text-foreground">Albany Multi-Unit Market Report</span>
+                  </Link>
+                  <Link 
+                    to="/investor/analyze-multifamily" 
+                    className="flex items-center gap-3 p-4 bg-background border border-border rounded-lg hover:border-primary/50 transition-colors"
+                  >
+                    <ArrowRight className="w-4 h-4 text-primary" />
+                    <span className="text-foreground">How to Analyze Multi-Family</span>
+                  </Link>
+                  <Link 
+                    to="/investor/best-neighborhoods-cash-flow-capital-district" 
+                    className="flex items-center gap-3 p-4 bg-background border border-border rounded-lg hover:border-primary/50 transition-colors"
+                  >
+                    <ArrowRight className="w-4 h-4 text-primary" />
+                    <span className="text-foreground">Best Cash Flow Neighborhoods</span>
+                  </Link>
+                </div>
+              </div>
+            </section>
+
+            {/* FAQ Section with Schema */}
+            <FAQSection 
+              faqs={investorFaqs}
+              pageUrl="https://capitaldistrictnest.com/buyer-journey/investor"
             />
-          </div>
-        </section>
 
-        {/* Related Resources */}
-        <section className="py-12 px-4 bg-card border-t border-border">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-xl font-bold text-foreground mb-6">Related Investor Resources</h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              <Link 
-                to="/investor/nyc-to-albany-roi" 
-                className="flex items-center gap-3 p-4 bg-background border border-border rounded-lg hover:border-primary/50 transition-colors"
-              >
-                <ArrowRight className="w-4 h-4 text-primary" />
-                <span className="text-foreground">NYC → Albany ROI Playbook</span>
-              </Link>
-              <Link 
-                to="/investor/albany-multi-unit-market" 
-                className="flex items-center gap-3 p-4 bg-background border border-border rounded-lg hover:border-primary/50 transition-colors"
-              >
-                <ArrowRight className="w-4 h-4 text-primary" />
-                <span className="text-foreground">Albany Multi-Unit Market Report</span>
-              </Link>
-              <Link 
-                to="/investor/analyze-multifamily" 
-                className="flex items-center gap-3 p-4 bg-background border border-border rounded-lg hover:border-primary/50 transition-colors"
-              >
-                <ArrowRight className="w-4 h-4 text-primary" />
-                <span className="text-foreground">How to Analyze Multi-Family</span>
-              </Link>
-              <Link 
-                to="/investor/best-neighborhoods-cash-flow-capital-district" 
-                className="flex items-center gap-3 p-4 bg-background border border-border rounded-lg hover:border-primary/50 transition-colors"
-              >
-                <ArrowRight className="w-4 h-4 text-primary" />
-                <span className="text-foreground">Best Cash Flow Neighborhoods</span>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section with Schema */}
-        <FAQSection 
-          faqs={investorFaqs}
-          pageUrl="https://capitaldistrictnest.com/buyer-journey/investor"
-        />
-
-        {/* Final CTA */}
-        <section className="py-12 px-4 bg-primary text-primary-foreground text-center">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold mb-4">Ready to Start Building Wealth?</h2>
-            <p className="mb-6 opacity-90">
-              Get VIP access to off-market deals, cash-flow analysis, and investor-level support.
-            </p>
-            <Button asChild size="lg" variant="secondary">
-              <Link to="/vip-buyer-access">
-                Get VIP Investor Access
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
-            </Button>
-          </div>
-        </section>
+            {/* Final CTA */}
+            <section className="py-12 px-4 bg-primary text-primary-foreground text-center">
+              <div className="max-w-2xl mx-auto">
+                <h2 className="text-2xl font-bold mb-4">Ready to Start Building Wealth?</h2>
+                <p className="mb-6 opacity-90">
+                  Get VIP access to off-market deals, cash-flow analysis, and investor-level support.
+                </p>
+                <Button asChild size="lg" variant="secondary">
+                  <Link to="/vip-buyer-access">
+                    Get VIP Investor Access
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </div>
+            </section>
+          </>
+        )}
       </main>
     </MainLayout>
   );
