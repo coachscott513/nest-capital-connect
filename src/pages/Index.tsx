@@ -301,7 +301,7 @@ const Index = () => {
                 Buying your first home doesn't have to be overwhelming. We simplify grants, financing, monthly costs, and the buying process so you know exactly what to expect before you make a move.
               </p>
               <Link 
-                to="/first-time-homebuyers" 
+                to="/first-time-home-buyers"
                 className="inline-block bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform text-center"
               >
                 First-Time Buyer Guide
