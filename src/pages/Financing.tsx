@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/MainLayout";
+import GuideLeadModal from "@/components/GuideLeadModal";
 import { Wallet, Users, Percent, PiggyBank, ClipboardCheck, ArrowRight, CheckCircle } from "lucide-react";
 
 const Financing = () => {
+  const [showGuideModal, setShowGuideModal] = useState(false);
+
   return (
     <MainLayout>
       <Helmet>
@@ -12,6 +16,13 @@ const Financing = () => {
         <meta name="keywords" content="mortgage Capital District, home financing Albany, investor loans NY, first-time buyer mortgage, down payment assistance" />
         <link rel="canonical" href="https://capitaldistrictnest.com/financing" />
       </Helmet>
+
+      <GuideLeadModal
+        open={showGuideModal}
+        onOpenChange={setShowGuideModal}
+        redirectPath="/buyer-journey/financing"
+        guideType="financing-guide"
+      />
 
       {/* Hero Section */}
       <section className="bg-card border-b border-border px-[5%] py-16">
@@ -31,9 +42,12 @@ const Financing = () => {
           <span className="text-sm font-medium text-foreground">
             📘 Free Mortgage Options Guide Coming Soon — Join the List to Get It First.
           </span>
-          <Link to="/vip-buyer-access" className="text-sm font-bold text-primary hover:underline">
-            Join Now →
-          </Link>
+          <button 
+            onClick={() => setShowGuideModal(true)} 
+            className="text-sm font-bold text-primary hover:underline"
+          >
+            Get My Free Guide →
+          </button>
         </div>
       </div>
 

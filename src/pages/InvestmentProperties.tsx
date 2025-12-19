@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/MainLayout";
+import GuideLeadModal from "@/components/GuideLeadModal";
 import { TrendingUp, DollarSign, BarChart3, MapPin, Calculator, ArrowRight } from "lucide-react";
 
 const InvestmentProperties = () => {
+  const [showGuideModal, setShowGuideModal] = useState(false);
+
   return (
     <MainLayout>
       <Helmet>
@@ -12,6 +16,13 @@ const InvestmentProperties = () => {
         <meta name="keywords" content="Capital District investment properties, Albany cash flow, Troy rental properties, cap rate NY, real estate investing upstate NY" />
         <link rel="canonical" href="https://capitaldistrictnest.com/investment-properties" />
       </Helmet>
+
+      <GuideLeadModal
+        open={showGuideModal}
+        onOpenChange={setShowGuideModal}
+        redirectPath="/buyer-journey/investor"
+        guideType="investor-guide"
+      />
 
       {/* Hero Section */}
       <section className="bg-card border-b border-border px-[5%] py-16">
@@ -31,9 +42,12 @@ const InvestmentProperties = () => {
           <span className="text-sm font-medium text-foreground">
             📘 Free Investor Guide Coming Soon — Join the List to Get It First.
           </span>
-          <Link to="/vip-buyer-access" className="text-sm font-bold text-primary hover:underline">
-            Join Now →
-          </Link>
+          <button 
+            onClick={() => setShowGuideModal(true)} 
+            className="text-sm font-bold text-primary hover:underline"
+          >
+            Get My Free Guide →
+          </button>
         </div>
       </div>
 
