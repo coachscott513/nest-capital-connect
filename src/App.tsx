@@ -37,6 +37,7 @@ import AlbanyLand from "./pages/AlbanyLand";
 import LandBuyers from "./pages/LandBuyers";
 import SellInvestmentProperty from "./pages/SellInvestmentProperty";
 import CashFlowReport from "./pages/CashFlowReport";
+import Financing from "./pages/Financing";
 import HomesForSale from "./pages/HomesForSale";
 import TroyHomesForSale from "./pages/TroyHomesForSale";
 import AlbanyHomesForSale from "./pages/AlbanyHomesForSale";
@@ -105,7 +106,7 @@ const App = () => {
           <Route path="/investment-properties" element={<InvestmentProperties />} />
           <Route path="/investment-landing" element={<InvestmentLanding />} />
           <Route path="/rehab-properties" element={<Index />} />
-          <Route path="/financing" element={<Index />} />
+          <Route path="/financing" element={<Financing />} />
           <Route path="/albany-rentals" element={<Rentals />} />
           <Route path="/troy-rentals" element={<Rentals />} />
           <Route path="/schenectady-rentals" element={<Rentals />} />
