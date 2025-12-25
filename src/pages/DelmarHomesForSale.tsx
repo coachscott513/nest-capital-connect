@@ -1,418 +1,255 @@
-import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
-import PropertyGrid from "@/components/PropertyGrid";
-import PropertySearchBar from "@/components/PropertySearchBar";
-import InteractivePropertyMap from "@/components/InteractivePropertyMap";
-import LeadCaptureForm from "@/components/LeadCaptureForm";
-import DelmarSmartFilters from "@/components/DelmarSmartFilters";
-import DelmarMarketAnalytics from "@/components/DelmarMarketAnalytics";
-import DelmarSchoolDistrict from "@/components/DelmarSchoolDistrict";
-import DelmarNeighborhoodInsights from "@/components/DelmarNeighborhoodInsights";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Home, TrendingUp, ExternalLink, Bed, Bath, Ruler, Globe } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { Card } from "@/components/ui/card";
+import { Link } from "react-router-dom";
+import { Check, Phone } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const DelmarHomesForSale = () => {
-  const location = useLocation();
-  const [allProperties, setAllProperties] = useState<any[]>([]);
-  const [filteredProperties, setFilteredProperties] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const quickFilters = [
+    { label: "Under $350K", id: "under-350k" },
+    { label: "$350K–$500K", id: "350k-500k" },
+    { label: "$500K+", id: "500k-plus" },
+    { label: "New Listings", id: "new-listings" },
+    { label: "Open Houses", id: "open-houses" },
+    { label: "3+ Bedrooms", id: "3-plus-beds" },
+    { label: "Top School Areas", id: "top-schools" },
+  ];
 
-  useEffect(() => {
-    fetchDelmarProperties();
-  }, []);
+  const intelligenceReportFeatures = [
+    "P&L / cash flow estimate (if rental)",
+    "Rent roll estimate (if multi-unit)",
+    "Taxes + key expense flags",
+    "Comparable sales + price reality check",
+  ];
 
-  // Apply filters from navigation state if present
-  useEffect(() => {
-    if (location.state?.filters && allProperties.length > 0) {
-      handleSearch(location.state.filters);
+  const faqs = [
+    {
+      question: "Are these listings live?",
+      answer: "Yes—updated regularly via the embedded search.",
+    },
+    {
+      question: "Can you show homes in Delmar?",
+      answer: "Yes. I'll confirm availability and get you in quickly.",
+    },
+    {
+      question: "Do you help with low-down-payment options?",
+      answer: "Yes—FHA, conventional options, and assistance resources depending on eligibility.",
+    },
+  ];
+
+  const scrollToSearch = () => {
+    const searchSection = document.getElementById("listing-search");
+    if (searchSection) {
+      searchSection.scrollIntoView({ behavior: "smooth" });
     }
-  }, [location.state, allProperties]);
-
-  const fetchDelmarProperties = async () => {
-    try {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from("properties")
-        .select("*")
-        .eq("city", "Delmar")
-        .eq("status", "active");
-
-      if (error) throw error;
-
-      const formattedProperties = data?.map((p) => ({
-        id: p.id,
-        mlsId: p.mls_id,
-        address: p.address,
-        price: Number(p.price),
-        beds: p.beds,
-        baths: Number(p.baths),
-        sqft: p.sqft,
-        latitude: Number(p.latitude),
-        longitude: Number(p.longitude),
-        thumbnail: p.photos?.[0] || "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800",
-        status: p.status,
-        daysOnMarket: p.days_on_market || 0,
-        boldtrailUrl: p.boldtrail_url,
-      })) || [];
-      setAllProperties(formattedProperties);
-      setFilteredProperties(formattedProperties);
-    } catch (error) {
-      console.error("Error fetching properties:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSearch = (filters: { priceRange?: string; beds?: string; keyword?: string }) => {
-    let filtered = [...allProperties];
-
-    if (filters.priceRange && filters.priceRange !== "any") {
-      const [min, max] = filters.priceRange.split("-").map(Number);
-      filtered = filtered.filter((p) => {
-        if (max) {
-          return p.price >= min && p.price <= max;
-        }
-        return p.price >= min;
-      });
-    }
-
-    if (filters.beds && filters.beds !== "any") {
-      const minBeds = parseInt(filters.beds);
-      filtered = filtered.filter((p) => p.beds >= minBeds);
-    }
-
-    if (filters.keyword) {
-      const keyword = filters.keyword.toLowerCase();
-      filtered = filtered.filter((p) => p.address.toLowerCase().includes(keyword));
-    }
-
-    setFilteredProperties(filtered);
-  };
-
-  const handleSmartFilters = (filters: any) => {
-    let filtered = [...allProperties];
-    
-    // For demo purposes, smart filters will show subset of data
-    // In production, these would filter based on actual property metadata
-    if (filters.bethlehem) {
-      // All Delmar properties are in Bethlehem Central SD
-      filtered = filtered;
-    }
-    if (filters.hasGoogleEarth) {
-      // Filter properties with valid coordinates
-      filtered = filtered.filter(p => p.latitude && p.longitude);
-    }
-    
-    setFilteredProperties(filtered);
   };
 
   return (
     <>
       <Helmet>
-        <title>Delmar Homes for Sale | Capital District Nest Real Estate</title>
-        <meta 
-          name="description" 
-          content="Discover homes for sale in Delmar, NY — explore listings with Google Earth views, pricing, and expert local guidance from RE/MAX Realtor Scott Alvarez." 
+        <title>Delmar Homes for Sale | Capital District Nest</title>
+        <meta
+          name="description"
+          content="Search Delmar homes for sale with live listings and local pricing context. Get a free Intelligence Report on any property from Capital District Nest."
         />
-        <meta 
-          name="keywords" 
-          content="Delmar homes for sale, Albany County real estate, Capital District homes, Bethlehem Central schools, RE/MAX Delmar, Scott Alvarez real estate" 
+        <meta
+          name="keywords"
+          content="Delmar homes for sale, Delmar NY real estate, Bethlehem Central schools, Albany County homes, Capital District real estate"
         />
         <link rel="canonical" href="https://capitaldistrictnest.com/delmar-homes-for-sale" />
-        
-        {/* Open Graph / Social Media */}
         <meta property="og:title" content="Delmar Homes for Sale | Capital District Nest" />
-        <meta property="og:description" content="Explore homes for sale in Delmar, NY — a charming Albany suburb with top-rated schools and tree-lined streets." />
-        <meta property="og:image" content="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200" />
+        <meta property="og:description" content="Live listings + local pricing context from Capital District Nest. Search Delmar homes for sale." />
         <meta property="og:url" content="https://capitaldistrictnest.com/delmar-homes-for-sale" />
         <meta property="og:type" content="website" />
-        
-        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Delmar Homes for Sale | Capital District Nest" />
-        <meta name="twitter:description" content="Explore homes for sale in Delmar, NY with expert guidance from RE/MAX Realtor Scott Alvarez." />
-        <meta name="twitter:image" content="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200" />
-
-        {/* Schema.org markup for RealEstateAgent */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "RealEstateAgent",
-            "name": "Scott Alvarez",
-            "image": "https://capitaldistrictnest.com/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png",
-            "email": "scott@remax.com",
-            "telephone": "(518) 676-2347",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Delmar",
-              "addressRegion": "NY",
-              "addressCountry": "US"
-            },
-            "areaServed": "Delmar, NY",
-            "priceRange": "$$$"
-          })}
-        </script>
-
-        {/* Schema.org markup for Offers */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            "itemListElement": filteredProperties.map((property, index) => ({
-              "@type": "Offer",
-              "position": index + 1,
-              "itemOffered": {
-                "@type": "House",
-                "name": property.address,
-                "address": {
-                  "@type": "PostalAddress",
-                  "streetAddress": property.address.split(",")[0],
-                  "addressLocality": "Delmar",
-                  "addressRegion": "NY"
-                },
-                "geo": {
-                  "@type": "GeoCoordinates",
-                  "latitude": property.latitude,
-                  "longitude": property.longitude
-                },
-                "numberOfRooms": property.beds,
-                "floorSize": {
-                  "@type": "QuantitativeValue",
-                  "value": property.sqft,
-                  "unitText": "sqft"
-                }
-              },
-              "price": property.price,
-              "priceCurrency": "USD",
-              "availability": "https://schema.org/InStock"
-            }))
-          })}
-        </script>
       </Helmet>
 
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-background">
         <MainHeader />
-        
-        {/* Hero Section - RE/MAX Red */}
-        <section className="pt-24 pb-12 bg-gradient-to-br from-red-600 to-red-700 text-white">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-8">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                Explore Homes for Sale in Delmar, NY
-              </h1>
-              <p className="text-xl text-red-50 max-w-3xl mx-auto leading-relaxed">
-                Interactive maps, school data, and smart market insights for Albany's premier suburb.
-              </p>
-              <div className="mt-6">
-                <Link to="/delmar-market-insights">
-                  <Button className="bg-white text-red-600 hover:bg-red-50 font-semibold px-8 py-6 text-lg">
-                    <TrendingUp className="w-5 h-5 mr-2" />
-                    View Full Market Analytics & Insights
-                  </Button>
-                </Link>
-              </div>
-            </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-6 text-center">
-                <Home className="w-8 h-8 mx-auto mb-3 text-white" />
-                <div className="text-3xl font-bold text-white">{filteredProperties.length}</div>
-                <div className="text-red-50 text-sm">Active Listings</div>
-              </Card>
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-6 text-center">
-                <TrendingUp className="w-8 h-8 mx-auto mb-3 text-white" />
-                <div className="text-3xl font-bold text-white">$475K</div>
-                <div className="text-red-50 text-sm">Median Price</div>
-              </Card>
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-6 text-center">
-                <MapPin className="w-8 h-8 mx-auto mb-3 text-white" />
-                <div className="text-3xl font-bold text-white">Bethlehem</div>
-                <div className="text-red-50 text-sm">Top-Rated Schools</div>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Listing */}
-        <section className="py-8 bg-gradient-to-br from-blue-50 to-blue-100 border-b border-blue-200">
-          <div className="max-w-7xl mx-auto px-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-              ⭐ Featured Listing in Bethlehem Central Schools
-            </h2>
-            <Card className="overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-                <div className="relative h-64 md:h-auto">
-                  <img 
-                    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&h=800&fit=crop" 
-                    alt="137A Elsmere Avenue, Delmar NY"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-4 left-4 bg-red-600 text-white px-4 py-2 rounded-lg font-bold">
-                    NEW LISTING
-                  </div>
-                </div>
-                <CardContent className="p-6 md:p-8 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                      137A Elsmere Avenue
-                    </h3>
-                    <p className="text-gray-600 mb-4 flex items-center gap-2">
-                      <MapPin className="h-4 w-4" />
-                      Delmar, NY 12054 • Bethlehem Central SD
-                    </p>
-                    <p className="text-3xl font-bold text-red-600 mb-6">
-                      $349,900
-                    </p>
-                    
-                    <div className="grid grid-cols-3 gap-4 mb-6">
-                      <div className="flex items-center gap-2">
-                        <Bed className="h-5 w-5 text-gray-500" />
-                        <div>
-                          <p className="text-sm text-gray-500">Beds</p>
-                          <p className="font-semibold">3</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Bath className="h-5 w-5 text-gray-500" />
-                        <div>
-                          <p className="text-sm text-gray-500">Baths</p>
-                          <p className="font-semibold">2</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Ruler className="h-5 w-5 text-gray-500" />
-                        <div>
-                          <p className="text-sm text-gray-500">Sq Ft</p>
-                          <p className="font-semibold">1,572</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-700 mb-6">
-                      Beautiful home in top-rated Bethlehem Central School District. 
-                      0.27 acre lot, built 1967. Perfect opportunity in sought-after Delmar location.
-                    </p>
-                  </div>
-
-                  <div className="flex gap-3">
-                    <Button asChild className="flex-1 bg-red-600 hover:bg-red-700">
-                      <Link to="/listings/137a-elsmere-ave-delmar-ny" className="flex items-center justify-center gap-2">
-                        View Details
-                      </Link>
-                    </Button>
-                    <Button asChild variant="outline" className="flex-1">
-                      <a 
-                        href="https://www.scottalvarez.com/property/137a-elsmere-ave-delmar-ny-12054"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2"
-                      >
-                        <ExternalLink className="h-4 w-4" />
-                        Full Listing
-                      </a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </div>
-            </Card>
-          </div>
-        </section>
-
-        {/* Search Bar & Smart Filters Section */}
-        <section className="py-8 bg-gray-50 border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-6">
-            <PropertySearchBar onSearch={handleSearch} />
-            <div className="mt-6">
-              <DelmarSmartFilters onFilterChange={handleSmartFilters} />
-            </div>
-          </div>
-        </section>
-
-        {/* Main Content - Property Grid and Map */}
-        <section className="py-12">
-          <div className="max-w-7xl mx-auto px-6">
-            {loading ? (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
-                <p className="mt-4 text-gray-600">Loading Delmar properties...</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2">
-                  <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                      {filteredProperties.length} Homes Found
-                    </h2>
-                    <p className="text-gray-600 flex items-center gap-2">
-                      <Globe className="h-4 w-4" />
-                      All listings include Google Earth & Street View links
-                    </p>
-                  </div>
-                  <PropertyGrid properties={filteredProperties} />
-                </div>
-                <div className="lg:col-span-1">
-                  <div className="sticky top-24">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Map View</h3>
-                    <InteractivePropertyMap properties={filteredProperties} />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* Market Analytics Section */}
-        <DelmarMarketAnalytics properties={filteredProperties} />
-
-        {/* School District Section */}
-        <DelmarSchoolDistrict />
-
-        {/* Neighborhood Insights Section */}
-        <DelmarNeighborhoodInsights />
-
-        {/* Contact Section - Blue Accents */}
-        <section className="py-16 bg-blue-50 border-t border-blue-100">
-          <div className="max-w-4xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Ready to Find Your Delmar Home?
-              </h2>
-              <p className="text-lg text-gray-600">
-                Contact Scott Alvarez, your local RE/MAX expert, for personalized assistance
-              </p>
-            </div>
-            <LeadCaptureForm 
-              type="investment" 
-              title="Contact Scott Alvarez"
-              description="Get instant access to new Delmar listings and schedule a showing"
-              buttonText="Get Started"
-            />
-          </div>
-        </section>
-
-        {/* Footer CTA - RE/MAX Red */}
-        <section className="py-12 bg-gradient-to-br from-red-600 to-red-700 text-white">
+        {/* 1) Hero Section */}
+        <section className="pt-28 pb-16 bg-gradient-to-br from-primary/10 to-primary/5">
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 className="text-3xl font-bold mb-4">
-              Thinking of Selling Your Delmar Home?
-            </h2>
-            <p className="text-xl text-red-50 mb-6 leading-relaxed">
-              Contact Scott Alvarez, your local RE/MAX expert, for a free property valuation.
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Delmar Homes for Sale
+            </h1>
+            <p className="text-xl text-muted-foreground mb-2">
+              Live listings + local pricing context from Capital District Nest.
             </p>
-            <a 
-              href="mailto:scott@remax.com" 
-              className="inline-block bg-white text-red-600 font-bold px-8 py-4 rounded-lg hover:bg-gray-100 transition-colors"
-            >
-              Get Free Home Valuation
-            </a>
+            <p className="text-sm text-muted-foreground mb-8">
+              Updated daily. Want the fastest answer on a specific home? Get a free Intelligence Report.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg"
+                asChild
+              >
+                <Link to="/#due-diligence">Get My Free Intelligence Report</Link>
+              </Button>
+              <Link
+                to="/delmar-market-insights"
+                className="text-primary hover:text-primary/80 font-medium underline underline-offset-4"
+              >
+                See Delmar Market Insights
+              </Link>
+            </div>
           </div>
         </section>
+
+        {/* 2) Quick Filters */}
+        <section className="py-10 bg-background border-b border-border">
+          <div className="max-w-4xl mx-auto px-6">
+            <h2 className="text-xl font-semibold text-foreground mb-6 text-center">
+              Popular Delmar Searches
+            </h2>
+            <div className="flex flex-wrap gap-3 justify-center">
+              {quickFilters.map((filter) => (
+                <Button
+                  key={filter.id}
+                  variant="outline"
+                  className="border-primary/30 hover:bg-primary/10 hover:border-primary text-foreground"
+                  onClick={scrollToSearch}
+                >
+                  {filter.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 3) Listing Search - RE/MAX Embed */}
+        <section id="listing-search" className="py-14 bg-muted/30">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-foreground mb-3">
+                Search Delmar Listings
+              </h2>
+              <p className="text-muted-foreground">
+                Use the live search below to browse available homes.
+              </p>
+            </div>
+
+            {/* RE/MAX Embed - Responsive with branded styling */}
+            <div
+              className="w-full max-w-[980px] mx-auto rounded-[18px] overflow-hidden border-2 border-primary bg-white"
+              style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
+            >
+              <iframe
+                title="Delmar Home Search"
+                src="https://scottalvarez.remax.com/embedsmall.php"
+                loading="lazy"
+                className="w-full h-[680px] md:h-[780px] block border-0"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* 4) Delmar in 60 Seconds */}
+        <section className="py-14 bg-background">
+          <div className="max-w-3xl mx-auto px-6">
+            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">
+              Delmar in 60 Seconds
+            </h2>
+            <ul className="space-y-4 text-lg text-foreground">
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <span>Strong owner-occupied neighborhoods and steady demand</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <span>Commute-friendly access to Albany</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <span>Prices vary by pocket—street-by-street matters</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <span>Inventory moves fast when homes are priced correctly</span>
+              </li>
+            </ul>
+            <p className="text-sm text-muted-foreground mt-6 text-center italic">
+              I'll help you interpret the numbers so you don't overpay.
+            </p>
+          </div>
+        </section>
+
+        {/* 5) Free Intelligence Report CTA */}
+        <section className="py-16 bg-primary/5 border-y border-primary/20">
+          <div className="max-w-3xl mx-auto px-6 text-center">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Get a Free Intelligence Report on Any Property
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Paste any address and I'll send an investor-style breakdown you can use.
+            </p>
+
+            <Card className="p-6 bg-background border-primary/20 mb-8 text-left max-w-lg mx-auto">
+              <ul className="space-y-3">
+                {intelligenceReportFeatures.map((feature, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span className="text-foreground">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg mb-6"
+              asChild
+            >
+              <Link to="/#due-diligence">Get My Free Intelligence Report</Link>
+            </Button>
+
+            <div className="flex items-center justify-center gap-2 text-foreground font-medium">
+              <Phone className="w-5 h-5 text-primary" />
+              <a href="tel:518-676-2347" className="hover:text-primary">
+                Call/Text Scott: 518-676-2347
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* 6) FAQ */}
+        <section className="py-14 bg-background">
+          <div className="max-w-2xl mx-auto px-6">
+            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">
+              Frequently Asked Questions
+            </h2>
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger className="text-left text-foreground font-medium">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </section>
+
+        {/* Persistent Contact Line - Mobile Friendly */}
+        <div className="py-4 bg-primary text-primary-foreground text-center">
+          <a href="tel:518-676-2347" className="flex items-center justify-center gap-2 font-semibold text-lg">
+            <Phone className="w-5 h-5" />
+            Call/Text Scott: 518-676-2347
+          </a>
+        </div>
 
         <Footer />
       </div>
