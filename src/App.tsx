@@ -20,6 +20,7 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import AlbanyRealEstate from "./pages/AlbanyRealEstate";
 import TroyRealEstate from "./pages/TroyRealEstate";
 import SchenectadyRealEstate from "./pages/SchenectadyRealEstate";
+import SchenectadyCountyIntelligence from "./pages/SchenectadyCountyIntelligence";
 import SaratogaRealEstate from "./pages/SaratogaRealEstate";
 import InvestmentLanding from "./pages/InvestmentLanding";
 import InvestmentProperties from "./pages/InvestmentProperties";
@@ -125,6 +126,7 @@ const App = () => {
           <Route path="/homes-for-sale/troy" element={<TroyHomesForSale />} />
           <Route path="/homes-for-sale/albany" element={<AlbanyHomesForSale />} />
           <Route path="/homes-for-sale/schenectady" element={<SchenectadyHomesForSale />} />
+          <Route path="/schenectady-county-real-estate" element={<SchenectadyCountyIntelligence />} />
           <Route path="/homes-for-sale/saratoga-springs" element={<SaratogaHomesForSale />} />
           <Route path="/homes-for-sale/albany/pine-hills" element={<PineHillsAlbany />} />
           <Route path="/delmar-homes-for-sale" element={<DelmarHomesForSale />} />
