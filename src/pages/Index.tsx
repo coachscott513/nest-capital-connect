@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { TrendingUp, Percent, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
 import GuideLeadModal from "@/components/GuideLeadModal";
@@ -12,6 +12,10 @@ import CoverageAreaGrid from "@/components/CoverageAreaGrid";
 import PropertyTypeGrid from "@/components/PropertyTypeGrid";
 import QuickSearchBlock from "@/components/QuickSearchBlock";
 import MultiUnitSearchSection from "@/components/MultiUnitSearchSection";
+import StartHereDeck from "@/components/StartHereDeck";
+import HomeBuyerHub from "@/components/HomeBuyerHub";
+import InvestorHub from "@/components/InvestorHub";
+import MarketMapSection from "@/components/MarketMapSection";
 
 const menuSections = [
   {
@@ -75,6 +79,17 @@ const footerLinks = [
 const Index = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [guideModal, setGuideModal] = useState<{ open: boolean; guideType: string; redirectPath: string }>({ open: false, guideType: "", redirectPath: "" });
+  
+  const buyerHubRef = useRef<HTMLDivElement>(null);
+  const investorHubRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBuyerHub = () => {
+    buyerHubRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const scrollToInvestorHub = () => {
+    investorHubRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -165,6 +180,12 @@ const Index = () => {
           )}
         </button>
       </header>
+
+      {/* START HERE DECK - Guided Onboarding */}
+      <StartHereDeck 
+        onBuyerPathSelected={scrollToBuyerHub}
+        onInvestorPathSelected={scrollToInvestorHub}
+      />
 
       {/* Mission Control - The New Tagline Section */}
       <section className="text-center px-[5%] pt-20 pb-10 max-w-[900px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000">
@@ -341,6 +362,18 @@ const Index = () => {
         </div>
       </section>
 
+      {/* HOME BUYER HUB */}
+      <div ref={buyerHubRef}>
+        <HomeBuyerHub />
+      </div>
+
+      {/* INVESTOR HUB */}
+      <div ref={investorHubRef}>
+        <InvestorHub />
+      </div>
+
+      {/* MARKET MAP SECTION */}
+      <MarketMapSection />
 
       {/* Multi-Unit Search Section */}
       <MultiUnitSearchSection />
