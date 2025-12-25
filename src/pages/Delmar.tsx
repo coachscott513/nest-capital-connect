@@ -472,7 +472,7 @@ const Delmar = () => {
                   size="lg" 
                   variant="outline" 
                   className="h-14 px-8 text-lg"
-                  onClick={() => window.open("https://www.albanyrealestate.net/search/results/quick/1/latlonbox/42.5685,42.6186,-73.8553,-73.7859/", "_blank")}
+                  onClick={() => window.open("https://scottalvarez.remax.com/index.php?advanced=1&display=12054+NY&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&areas%5B%5D=zip%3A12054%3Any&pak=zip%3A12054&sortby=listings.price+ASC&rtype=list", "_blank")}
                 >
                   Open Full Search
                 </Button>
