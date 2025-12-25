@@ -468,10 +468,13 @@ const Delmar = () => {
                     Browse Delmar Homes
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="h-14 px-8 text-lg" asChild>
-                  <a href="https://www.albanyrealestate.net/search/results/quick/1/latlonbox/42.5685,42.6186,-73.8553,-73.7859/" target="_blank" rel="noopener noreferrer">
-                    Open Full Search
-                  </a>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="h-14 px-8 text-lg"
+                  onClick={() => window.open("https://www.albanyrealestate.net/search/results/quick/1/latlonbox/42.5685,42.6186,-73.8553,-73.7859/", "_blank")}
+                >
+                  Open Full Search
                 </Button>
               </div>
             </CardContent>
