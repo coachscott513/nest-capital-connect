@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import Header from '@/components/Header';
+import MainHeader from '@/components/MainHeader';
 import Footer from '@/components/Footer';
 import SEOHead from '@/components/SEOHead';
 import { getTownBySlug } from '@/components/CapitalDistrictTowns';
@@ -175,7 +175,7 @@ const SingleFamilyMarket = () => {
   if (!townData) {
     return (
       <div className="flex flex-col min-h-screen">
-        <Header />
+        <MainHeader />
         <main className="flex-grow container mx-auto px-4 py-16">
           <h1 className="text-3xl font-bold mb-4">Market Not Found</h1>
           <p className="mb-4">Sorry, we couldn't find information for the requested market area.</p>
@@ -201,7 +201,7 @@ const SingleFamilyMarket = () => {
         canonical={`https://capitaldistrictnest.com/markets/${baseTownSlug}-single-family-homes`}
       />
       
-      <Header />
+      <MainHeader />
       
       <main className="flex-grow">
         {/* Hero Section */}

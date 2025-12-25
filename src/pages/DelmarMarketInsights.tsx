@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import Header from "@/components/Header";
+import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import DelmarMarketHero from "@/components/DelmarMarketHero";
 import DelmarMetricsGrid from "@/components/DelmarMetricsGrid";
@@ -26,7 +26,7 @@ const DelmarMarketInsights = () => {
         />
       </Helmet>
 
-      <Header />
+      <MainHeader />
       
       <main>
         {/* Hero with Google Earth Background */}

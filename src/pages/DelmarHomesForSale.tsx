@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import Header from "@/components/Header";
+import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import PropertyGrid from "@/components/PropertyGrid";
 import PropertySearchBar from "@/components/PropertySearchBar";
@@ -196,7 +196,7 @@ const DelmarHomesForSale = () => {
       </Helmet>
 
       <div className="min-h-screen bg-white">
-        <Header />
+        <MainHeader />
         
         {/* Hero Section - RE/MAX Red */}
         <section className="pt-24 pb-12 bg-gradient-to-br from-red-600 to-red-700 text-white">
