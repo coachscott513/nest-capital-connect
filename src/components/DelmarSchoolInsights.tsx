@@ -45,17 +45,20 @@ const DelmarSchoolInsights = () => {
           </Table>
         </Card>
 
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center space-y-2">
           <Button 
             variant="outline" 
-            className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
             asChild
           >
-            <a href="https://www.rpr.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.narrpr.com/reports-v2/6817b29a-44d8-4221-a604-05c717acee81/pdf" target="_blank" rel="noopener noreferrer">
               <ExternalLink className="w-4 h-4 mr-2" />
-              View Full RPR School Report
+              View Delmar Market Report (PDF)
             </a>
           </Button>
+          <p className="text-sm text-muted-foreground">
+            Updates every 48 hours with recent sales, pricing trends, and market activity.
+          </p>
         </div>
       </div>
     </section>
