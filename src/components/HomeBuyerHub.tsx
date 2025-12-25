@@ -53,7 +53,7 @@ const HomeBuyerHub = () => {
       title: "Market Trends",
       description: "Stay informed with the latest market data and price trends.",
       links: [
-        { label: "Market Insights", href: "/market-insights" },
+        { label: "Market Insights", href: "/insights" },
         { label: "Delmar Market Analysis", href: "/delmar-market-insights" },
         { label: "Single-Family Market Report", href: "/single-family-market" },
       ],

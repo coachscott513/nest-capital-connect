@@ -40,7 +40,7 @@ const InvestorHub = () => {
       title: "Rent Roll Verification",
       description: "Verify income and expenses before you buy.",
       links: [
-        { label: "Deal Desk (Request Analysis)", href: "/deal-desk" },
+        { label: "Deal Desk (Request Analysis)", href: "/dealdesk" },
         { label: "Best Neighborhoods for Cash Flow", href: "/investor/best-neighborhoods-cash-flow-capital-district" },
       ],
     },

@@ -68,6 +68,7 @@ import InvestorJourney from "./pages/buyer-journey/InvestorJourney";
 import FirstTimeBuyerJourney from "./pages/buyer-journey/FirstTimeBuyerJourney";
 import LandBuyerJourney from "./pages/buyer-journey/LandBuyerJourney";
 import FinancingJourney from "./pages/buyer-journey/FinancingJourney";
+import ComingSoon from "./pages/ComingSoon";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -120,6 +121,29 @@ const App = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-of-service" element={<PrivacyPolicyPage />} />
           <Route path="/reviews" element={<Reviews />} />
+          
+          {/* City Real Estate Pages */}
+          <Route path="/albany-real-estate" element={<AlbanyRealEstate />} />
+          <Route path="/troy-real-estate" element={<TroyRealEstate />} />
+          <Route path="/schenectady-real-estate" element={<SchenectadyRealEstate />} />
+          <Route path="/saratoga-real-estate" element={<SaratogaRealEstate />} />
+          
+          {/* Communities base route */}
+          <Route path="/communities" element={<HomesForSale />} />
+          
+          {/* Market insights alias */}
+          <Route path="/market-insights" element={<MarketInsights />} />
+          <Route path="/single-family-market" element={<SingleFamilyMarket />} />
+          
+          {/* Buyer Journey Routes */}
+          <Route path="/buyer-roadmap" element={<BuyerRoadmap />} />
+          <Route path="/buyer-journey/first-time-buyer" element={<FirstTimeBuyerJourney />} />
+          <Route path="/buyer-journey/financing" element={<FinancingJourney />} />
+          <Route path="/buyer-journey/investor" element={<InvestorJourney />} />
+          <Route path="/buyer-journey/land-buyer" element={<LandBuyerJourney />} />
+          
+          {/* Coming Soon placeholder */}
+          <Route path="/coming-soon" element={<ComingSoon />} />
           
           {/* Hyperlocal SEO Pages - Homes for Sale */}
           <Route path="/homes-for-sale" element={<HomesForSale />} />
