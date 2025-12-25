@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import Header from "@/components/Header";
+import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import PropertyPhotoCarousel from "@/components/PropertyPhotoCarousel";
 import PropertyContactForm from "@/components/PropertyContactForm";
@@ -65,7 +65,7 @@ const ElsmereProperty = () => {
         <meta property="og:description" content={`${property.beds} bed, ${property.baths} bath home in Delmar's Bethlehem Central School District`} />
       </Helmet>
 
-      <Header />
+      <MainHeader />
 
       <main className="min-h-screen bg-background">
         <div className="container mx-auto px-4 py-8 max-w-7xl">

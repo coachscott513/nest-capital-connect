@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import Header from "@/components/Header";
+import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,7 @@ const ComingSoon = () => {
       </Helmet>
       
       <div className="min-h-screen bg-background">
-        <Header />
+        <MainHeader />
         
         <main className="pt-24 pb-16 px-4">
           <div className="max-w-3xl mx-auto text-center">

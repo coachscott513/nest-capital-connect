@@ -1,5 +1,5 @@
 import SEOHead from "@/components/SEOHead";
-import Header from "@/components/Header";
+import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import BreadcrumbNavigation from "@/components/BreadcrumbNavigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,7 +34,7 @@ const TroyRealEstate = () => {
       
       <div className="min-h-screen bg-background">
         <BreadcrumbNavigation />
-        <Header />
+        <MainHeader />
         
         <main className="pt-20">
           {/* Hero Section */}

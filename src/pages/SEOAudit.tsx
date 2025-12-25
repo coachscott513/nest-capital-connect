@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '@/components/Header';
+import MainHeader from '@/components/MainHeader';
 import Footer from '@/components/Footer';
 import RedirectAudit from '@/components/RedirectAudit';
 import SEOHead from '@/components/SEOHead';
@@ -14,7 +14,7 @@ const SEOAudit = () => {
       />
       
       <div className="min-h-screen bg-background">
-        <Header />
+        <MainHeader />
         <main className="pt-20">
           <RedirectAudit />
         </main>

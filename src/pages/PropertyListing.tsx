@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import PropertyListingTemplate from "@/components/PropertyListingTemplate";
-import Header from "@/components/Header";
+import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -52,7 +52,7 @@ const PropertyListing = () => {
   if (loading) {
     return (
       <>
-        <Header />
+        <MainHeader />
         <div className="container mx-auto px-4 py-8 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-6">
@@ -72,7 +72,7 @@ const PropertyListing = () => {
   if (error || !property) {
     return (
       <>
-        <Header />
+        <MainHeader />
         <div className="container mx-auto px-4 py-16 text-center">
           <Alert variant="destructive" className="max-w-lg mx-auto">
             <AlertCircle className="h-4 w-4" />
@@ -92,7 +92,7 @@ const PropertyListing = () => {
 
   return (
     <>
-      <Header />
+      <MainHeader />
       <PropertyListingTemplate property={property} />
       <Footer />
     </>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SEOHead from "@/components/SEOHead";
-import Header from "@/components/Header";
+import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
 import { ChevronRight } from "lucide-react";
@@ -49,7 +49,7 @@ const NeighborhoodHomesTemplate = ({
         keywords={keywords}
         canonical={`https://capitaldistrictnest.com/homes-for-sale/${citySlug}/${neighborhoodSlug}`}
       />
-      <Header />
+      <MainHeader />
       
       <main className="min-h-screen">
         {/* Breadcrumb Navigation */}
