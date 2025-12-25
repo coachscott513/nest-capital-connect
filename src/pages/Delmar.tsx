@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
+import DelmarMarketReport from "@/components/DelmarMarketReport";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { 
   Home, 
   TrendingUp, 
@@ -17,17 +19,25 @@ import {
   Calendar,
   MapPin,
   Phone,
-  CheckCircle2
+  CheckCircle2,
+  Mail,
+  FileText,
+  GraduationCap,
+  Search
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 type UserPath = "buyer" | "homeowner" | "investor" | "data" | null;
 
 const Delmar = () => {
   const [selectedPath, setSelectedPath] = useState<UserPath>(null);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterName, setNewsletterName] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handlePathSelect = (path: UserPath) => {
     setSelectedPath(path);
-    // Scroll to resources section
     setTimeout(() => {
       document.getElementById("path-resources")?.scrollIntoView({ behavior: "smooth" });
     }, 100);
@@ -36,6 +46,43 @@ const Delmar = () => {
   const resetSelection = () => {
     setSelectedPath(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail || !newsletterName) {
+      toast.error("Please enter your name and email");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase.functions.invoke('submit-contact-form', {
+        body: {
+          name: newsletterName,
+          email: newsletterEmail,
+          phone: '',
+          message: 'Delmar Nest Newsletter subscription',
+          type: 'newsletter',
+          boldtrailTag: 'delmar-nest-newsletter'
+        }
+      });
+
+      if (error) throw error;
+      
+      toast.success("Welcome to the Delmar Nest!");
+      setNewsletterEmail("");
+      setNewsletterName("");
+    } catch (error) {
+      console.error('Newsletter signup error:', error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Path content configurations
@@ -87,7 +134,7 @@ const Delmar = () => {
     { label: "Price Range", value: "$280K–$850K", change: "active" },
   ];
 
-  // Recently sold data (example)
+  // Recently sold data
   const recentlySold = [
     { address: "142 Elsmere Ave", price: "$425,000", beds: 3, baths: 2, date: "Dec 2024" },
     { address: "38 Fernbank Ave", price: "$512,000", beds: 4, baths: 2.5, date: "Dec 2024" },
@@ -99,14 +146,14 @@ const Delmar = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Delmar Real Estate — Made Simple | Capital District Nest</title>
+        <title>Delmar NY Real Estate | Homes for Sale & Market Trends (Updated)</title>
         <meta 
           name="description" 
-          content="Homes, prices, financing, and local insight for Delmar, NY — all in one place. Explore listings, market data, and buyer programs in Bethlehem's premier community." 
+          content="Explore Delmar NY homes for sale, recent sales, and live market data. Get a free intelligence report on any Delmar property." 
         />
         <meta 
           name="keywords" 
-          content="Delmar real estate, Delmar homes for sale, Bethlehem Central Schools, Albany County real estate, Delmar NY, Capital District homes" 
+          content="Delmar NY real estate, Delmar homes for sale, Delmar housing market, Delmar NY home prices, Bethlehem Central School District homes" 
         />
         <link rel="canonical" href="https://capitaldistrictnest.com/delmar" />
       </Helmet>
@@ -122,8 +169,7 @@ const Delmar = () => {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-foreground mb-6">
-            Delmar Real Estate<br />
-            <span className="text-primary">Made Simple</span>
+            Delmar NY Real Estate & Homes for Sale
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-2xl mx-auto">
@@ -155,7 +201,48 @@ const Delmar = () => {
         </div>
       </section>
 
-      {/* Guided Journey Deck */}
+      {/* Start Here - Guided Entry Section */}
+      <section className="px-[5%] py-16 md:py-20 bg-background border-b border-border">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Start Your Delmar Home Search the Smart Way
+          </h2>
+          <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
+            Answer one question and I'll point you in the right direction.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <Button
+              size="lg"
+              className="h-16 text-lg font-semibold flex items-center justify-center gap-3"
+              onClick={() => scrollToSection("search-homes")}
+            >
+              <Home className="w-5 h-5" />
+              I'm Buying a Home in Delmar
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="h-16 text-lg font-semibold flex items-center justify-center gap-3 border-primary text-primary hover:bg-primary/10"
+              onClick={() => scrollToSection("intelligence-report")}
+            >
+              <DollarSign className="w-5 h-5" />
+              I'm an Investor / Analyzing
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="h-16 text-lg font-semibold flex items-center justify-center gap-3"
+              onClick={() => scrollToSection("market-snapshot")}
+            >
+              <BarChart3 className="w-5 h-5" />
+              I Just Want Market Data
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* What Are You Looking For Section */}
       <section id="start-here" className="px-[5%] py-16 md:py-20 bg-muted/30 scroll-mt-24">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
@@ -303,7 +390,7 @@ const Delmar = () => {
       </section>
 
       {/* Market Snapshot */}
-      <section className="px-[5%] py-16 md:py-20 bg-background">
+      <section id="market-snapshot" className="px-[5%] py-16 md:py-20 bg-background scroll-mt-24">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -326,6 +413,15 @@ const Delmar = () => {
             ))}
           </div>
 
+          {/* Human paragraph for SEO */}
+          <div className="max-w-3xl mx-auto mt-10 p-6 bg-muted/30 rounded-xl border border-border">
+            <p className="text-muted-foreground leading-relaxed text-center">
+              Delmar is not a one-price market. Homes can sell very differently depending on street, 
+              school boundary, and condition. Online estimates often miss this. I review actual sales, 
+              not just list prices, so buyers understand what a home is really worth before making an offer.
+            </p>
+          </div>
+
           <div className="text-center mt-8">
             <Button variant="outline" size="lg" asChild>
               <Link to="/delmar-market-insights">
@@ -333,6 +429,144 @@ const Delmar = () => {
                 View Full Market Analytics
               </Link>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Delmar Market Report (RPR PDF) */}
+      <DelmarMarketReport />
+
+      {/* Search Delmar Homes */}
+      <section id="search-homes" className="px-[5%] py-16 md:py-20 bg-background scroll-mt-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Search Delmar Homes
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              Browse current listings in Bethlehem Central School District.
+            </p>
+          </div>
+
+          {/* RE/MAX Search Embed */}
+          <Card className="overflow-hidden border-2 border-primary/20">
+            <CardContent className="p-0">
+              <div className="aspect-[16/10] min-h-[500px]">
+                <iframe
+                  title="Delmar Home Search"
+                  src="https://www.albanyrealestate.net/search/results/quick/1/latlonbox/42.5685,42.6186,-73.8553,-73.7859/"
+                  className="w-full h-full border-0"
+                  loading="lazy"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
+            <Button size="lg" asChild>
+              <Link to="/delmar-homes-for-sale">
+                <Search className="w-5 h-5 mr-2" />
+                View All Delmar Listings
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <a href="tel:518-676-2347">
+                <Phone className="w-5 h-5 mr-2" />
+                Call: 518-676-2347
+              </a>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Intelligence Report CTA */}
+      <section id="intelligence-report" className="px-[5%] py-16 md:py-20 bg-primary/5 scroll-mt-24">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
+            <FileText className="w-4 h-4" />
+            Free Property Analysis
+          </div>
+          
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Get a Free Intelligence Report on Any Delmar Property
+          </h2>
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Rent potential, taxes, cash flow, cap rate, and comparable sales — all in one personalized breakdown. 
+            No bots. No generic MLS links. Real numbers.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button 
+              size="lg" 
+              className="h-14 px-10 text-lg font-bold w-full sm:w-auto"
+              asChild
+            >
+              <Link to="/dealdesk">
+                <FileText className="w-5 h-5 mr-2" />
+                Get My Free Intelligence Report
+              </Link>
+            </Button>
+            <p className="text-sm text-muted-foreground">
+              or text any address to <a href="tel:518-676-2347" className="text-primary font-medium hover:underline">518-676-2347</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Buyer Tools */}
+      <section className="px-[5%] py-16 md:py-20 bg-background">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Buyer Tools & Resources
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              Everything you need to buy smarter in Delmar.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link to="/first-time-homebuyers" className="group">
+              <Card className="h-full hover:shadow-lg hover:border-primary/30 transition-all">
+                <CardContent className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <DollarSign className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">Zero Down Programs</h3>
+                  <p className="text-muted-foreground text-sm">
+                    First-time buyer assistance, FHA, VA, and grant programs available in NY.
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link to="/grants" className="group">
+              <Card className="h-full hover:shadow-lg hover:border-primary/30 transition-all">
+                <CardContent className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <CheckCircle2 className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">Mortgage Grants</h3>
+                  <p className="text-muted-foreground text-sm">
+                    NYS grants and down payment assistance you may qualify for.
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link to="/delmar-market-insights" className="group">
+              <Card className="h-full hover:shadow-lg hover:border-primary/30 transition-all">
+                <CardContent className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <GraduationCap className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">School District Info</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Bethlehem Central School District rankings and boundary info.
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
           </div>
         </div>
       </section>
@@ -378,37 +612,78 @@ const Delmar = () => {
               </Card>
             ))}
           </div>
-
-          <div className="text-center mt-8">
-            <p className="text-muted-foreground mb-4">
-              Want weekly Delmar updates delivered to your inbox?
-            </p>
-            <Button size="lg" asChild>
-              <Link to="#join-nest">
-                Get Weekly Delmar Updates
-              </Link>
-            </Button>
-          </div>
         </div>
       </section>
 
-      {/* Join the Delmar Nest */}
-      <section id="join-nest" className="px-[5%] py-16 md:py-20 bg-background scroll-mt-24">
+      {/* Delmar Nest Newsletter */}
+      <section id="newsletter" className="px-[5%] py-16 md:py-20 bg-background scroll-mt-24">
+        <div className="max-w-xl mx-auto">
+          <Card className="border-2 border-primary/20">
+            <CardContent className="p-8">
+              <div className="text-center mb-6">
+                <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
+                  <Mail className="w-7 h-7 text-primary" />
+                </div>
+                <h2 className="text-2xl font-bold text-foreground mb-2">
+                  Delmar Nest Newsletter
+                </h2>
+                <p className="text-muted-foreground">
+                  Weekly: homes sold, prices, and what it means for buyers.
+                </p>
+              </div>
+
+              <form onSubmit={handleNewsletterSubmit} className="space-y-4">
+                <Input
+                  type="text"
+                  placeholder="First name"
+                  value={newsletterName}
+                  onChange={(e) => setNewsletterName(e.target.value)}
+                  className="h-12"
+                  required
+                />
+                <Input
+                  type="email"
+                  placeholder="Email address"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  className="h-12"
+                  required
+                />
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="w-full h-12 font-semibold"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Joining..." : "Join the Delmar Nest"}
+                </Button>
+              </form>
+
+              <p className="text-xs text-muted-foreground text-center mt-4">
+                No spam. Unsubscribe anytime.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Join the Delmar Nest - Lead Capture */}
+      <section id="join-nest" className="px-[5%] py-16 md:py-20 bg-muted/30 scroll-mt-24">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Join the Delmar Nest
+              Get Personalized Delmar Help
             </h2>
             <p className="text-muted-foreground text-lg">
-              Get local market updates, new listings, and buyer resources — no spam, just value.
+              Looking for something specific? Tell us about your search and we'll send relevant options.
             </p>
           </div>
 
           <LeadCaptureForm 
             type="report"
-            title="Stay Connected"
+            title="Let's Talk Delmar"
             description="Enter your info below for personalized Delmar real estate updates."
-            buttonText="Join the Nest"
+            buttonText="Get Started"
           />
         </div>
       </section>
@@ -437,6 +712,20 @@ const Delmar = () => {
           </p>
         </div>
       </section>
+
+      {/* Sticky Mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border md:hidden z-50">
+        <Button 
+          size="lg" 
+          className="w-full h-14 font-bold text-lg"
+          asChild
+        >
+          <Link to="/dealdesk">
+            <FileText className="w-5 h-5 mr-2" />
+            Get Free Intelligence Report
+          </Link>
+        </Button>
+      </div>
 
       <Footer />
     </div>
