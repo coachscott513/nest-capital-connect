@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { TrendingUp, Percent, Calculator } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import GuideLeadModal from "@/components/GuideLeadModal";
 import SEOHead from "@/components/SEOHead";
@@ -16,6 +16,7 @@ import StartHereDeck from "@/components/StartHereDeck";
 import HomeBuyerHub from "@/components/HomeBuyerHub";
 import InvestorHub from "@/components/InvestorHub";
 import MarketMapSection from "@/components/MarketMapSection";
+import CleanHero from "@/components/CleanHero";
 
 const menuSections = [
   {
@@ -181,62 +182,16 @@ const Index = () => {
         </button>
       </header>
 
+      {/* CLEAN HERO - New simplified hero */}
+      <CleanHero />
+
       {/* START HERE DECK - Guided Onboarding */}
-      <StartHereDeck 
-        onBuyerPathSelected={scrollToBuyerHub}
-        onInvestorPathSelected={scrollToInvestorHub}
-      />
-
-      {/* Mission Control - The New Tagline Section */}
-      <section className="text-center px-[5%] pt-20 pb-10 max-w-[900px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000">
-        <h1 className="text-4xl md:text-6xl lg:text-[4.5rem] font-medium leading-[1.1] tracking-tight mb-5">
-          Wall Street Tools.<br />
-          <strong className="text-primary font-medium">Main Street Soul.</strong>
-        </h1>
-        
-        <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed mb-8 max-w-[700px] mx-auto">
-          The Capital District's premier tech-enabled investment team. 
-          We are <strong className="text-foreground">The Capital District Nest Team at RE/MAX</strong>—a specialized team of business strategists.
-        </p>
-
-        {/* Trust Badges */}
-        <div className="flex justify-center gap-3 flex-wrap mb-12">
-          {/* RE/MAX Badge - Special Styling */}
-          <div className="flex items-center gap-2 border border-[#004ecc] text-foreground px-4 py-2 rounded-full text-sm font-semibold">
-            <div className="w-1.5 h-1.5 bg-[#dc1c2e] rounded-full" />
-            Powered by RE/MAX
-          </div>
-          
-          {["Econ & Business Degrees", "Specialized Investment Team", "Local Experts"].map((badge) => (
-            <div key={badge} className="flex items-center gap-2 bg-border/50 text-muted-foreground px-4 py-2 rounded-full text-sm font-semibold">
-              <div className="w-1.5 h-1.5 bg-primary rounded-full" />
-              {badge}
-            </div>
-          ))}
-        </div>
-
-        {/* CTAs */}
-        <div className="flex items-center justify-center gap-5 flex-wrap">
-          <Link to="/markets" className="bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
-            View Market Data
-          </Link>
-          <Link to="/vip-buyer-access" className="bg-amber-500 text-black px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform">
-            VIP Buyer Access
-          </Link>
-          <button 
-            onClick={() => window.dispatchEvent(new CustomEvent('openCommandCenter'))}
-            className="text-primary font-bold hover:underline"
-          >
-            Team →
-          </button>
-        </div>
-
-        {/* Disclaimer */}
-        <p className="mt-8 text-xs text-muted-foreground/60">
-          *Capital District Nest LLC is a specialized team of real estate professionals affiliated with RE/MAX. 
-          Each office independently owned and operated.
-        </p>
-      </section>
+      <div id="start-here" className="scroll-mt-24">
+        <StartHereDeck 
+          onBuyerPathSelected={scrollToBuyerHub}
+          onInvestorPathSelected={scrollToInvestorHub}
+        />
+      </div>
 
       {/* START HERE (INVESTORS) CTA BLOCK */}
       <section className="px-[5%] py-12 bg-card border-y border-border">
@@ -363,17 +318,19 @@ const Index = () => {
       </section>
 
       {/* HOME BUYER HUB */}
-      <div ref={buyerHubRef}>
+      <div ref={buyerHubRef} id="buyer-hub" className="scroll-mt-24">
         <HomeBuyerHub />
       </div>
 
       {/* INVESTOR HUB */}
-      <div ref={investorHubRef}>
+      <div ref={investorHubRef} id="investor-hub" className="scroll-mt-24">
         <InvestorHub />
       </div>
 
       {/* MARKET MAP SECTION */}
-      <MarketMapSection />
+      <div id="market-maps" className="scroll-mt-24">
+        <MarketMapSection />
+      </div>
 
       {/* Multi-Unit Search Section */}
       <MultiUnitSearchSection />

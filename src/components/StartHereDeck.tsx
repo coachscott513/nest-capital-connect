@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Home, TrendingUp, ArrowRight, Users, Briefcase, Building2, MapPin, DollarSign, RefreshCw, Landmark } from "lucide-react";
+import { Home, TrendingUp, Search, MessageSquare, ArrowRight, Building2, DollarSign, MapPin, RefreshCw, Briefcase } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
-type UserType = "buyer" | "investor" | "both" | null;
-type BuyerPath = "first-time" | "moving-up" | "capital-district" | "researching" | null;
-type InvestorPath = "cash-flow" | "appreciation" | "multi-family" | "commercial" | "nyc-arbitrage" | "1031" | null;
+type UserPath = "buyer" | "investor" | "exploring" | "talk" | null;
 
 interface StartHereDeckProps {
   onBuyerPathSelected: () => void;
@@ -13,30 +12,52 @@ interface StartHereDeckProps {
 }
 
 const StartHereDeck = ({ onBuyerPathSelected, onInvestorPathSelected }: StartHereDeckProps) => {
-  const [userType, setUserType] = useState<UserType>(null);
-  const [buyerPath, setBuyerPath] = useState<BuyerPath>(null);
-  const [investorPath, setInvestorPath] = useState<InvestorPath>(null);
+  const [selectedPath, setSelectedPath] = useState<UserPath>(null);
 
-  const handleUserTypeSelect = (type: UserType) => {
-    setUserType(type);
-    setBuyerPath(null);
-    setInvestorPath(null);
-  };
-
-  const handleBuyerPathSelect = (path: BuyerPath) => {
-    setBuyerPath(path);
-    onBuyerPathSelected();
-  };
-
-  const handleInvestorPathSelect = (path: InvestorPath) => {
-    setInvestorPath(path);
-    onInvestorPathSelected();
+  const handlePathSelect = (path: UserPath) => {
+    setSelectedPath(path);
+    if (path === "buyer") {
+      onBuyerPathSelected();
+    } else if (path === "investor") {
+      onInvestorPathSelected();
+    }
   };
 
   const resetSelection = () => {
-    setUserType(null);
-    setBuyerPath(null);
-    setInvestorPath(null);
+    setSelectedPath(null);
+  };
+
+  // Path-specific content reveals
+  const pathContent = {
+    buyer: {
+      title: "Home Buyer Resources",
+      items: [
+        { label: "Zero & Low Down Payment Programs", href: "/grants", icon: DollarSign },
+        { label: "First-Time Buyer Guide", href: "/buyer-journey/first-time-buyer", icon: Home },
+        { label: "Neighborhood Guides", href: "/communities", icon: MapPin },
+        { label: "Market Trends", href: "/markets", icon: TrendingUp },
+        { label: "Mortgage & Affordability Tools", href: "/first-time-homebuyers", icon: Building2 },
+      ],
+    },
+    investor: {
+      title: "Investor Resources",
+      items: [
+        { label: "Multi-Unit Listings", href: "/albany-multi-unit", icon: Building2 },
+        { label: "Cap Rate & Cash Flow Tools", href: "/investor-tools", icon: TrendingUp },
+        { label: "County Investment Pages", href: "/markets", icon: MapPin },
+        { label: "Off-Market Opportunities", href: "/vip-buyer-access", icon: DollarSign },
+        { label: "1031 Exchange Playbook", href: "/investor/1031-nyc-to-albany", icon: RefreshCw },
+      ],
+    },
+    exploring: {
+      title: "Research & Data",
+      items: [
+        { label: "Sold Properties Map", href: "/markets", icon: MapPin },
+        { label: "Market Trends & Stats", href: "/delmar-market-insights", icon: TrendingUp },
+        { label: "Price Per Square Foot Data", href: "/investor-tools", icon: DollarSign },
+        { label: "Blog & Data Library", href: "/blog", icon: Search },
+      ],
+    },
   };
 
   return (
@@ -48,256 +69,121 @@ const StartHereDeck = ({ onBuyerPathSelected, onInvestorPathSelected }: StartHer
             START HERE
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-            Get the Right Info in 60 Seconds
+            What are you here to do?
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Whether you're buying your first home or investing for cash flow, we'll guide you to exactly what matters.
+            Select your path and we'll show you exactly what matters.
           </p>
         </div>
 
-        {/* Deck Card 1 - User Type */}
-        {!userType && (
+        {/* Path Selection Cards */}
+        {!selectedPath && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <h3 className="text-xl font-semibold text-foreground mb-6">Who are you?</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+              {/* Card 1 - Homebuyer */}
               <Card 
                 className="cursor-pointer hover:border-primary hover:shadow-lg transition-all group"
-                onClick={() => handleUserTypeSelect("buyer")}
+                onClick={() => handlePathSelect("buyer")}
               >
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                    <Home className="w-8 h-8 text-primary" />
+                <CardContent className="p-6 text-center">
+                  <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                    <Home className="w-7 h-7 text-primary" />
                   </div>
-                  <span className="text-lg font-bold text-foreground">Home Buyer</span>
+                  <span className="text-lg font-bold text-foreground block mb-1">I'm buying a home</span>
+                  <span className="text-sm text-muted-foreground">First-time or upgrading</span>
                 </CardContent>
               </Card>
 
+              {/* Card 2 - Investor */}
               <Card 
                 className="cursor-pointer hover:border-primary hover:shadow-lg transition-all group"
-                onClick={() => handleUserTypeSelect("investor")}
+                onClick={() => handlePathSelect("investor")}
               >
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                    <TrendingUp className="w-8 h-8 text-primary" />
+                <CardContent className="p-6 text-center">
+                  <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                    <TrendingUp className="w-7 h-7 text-primary" />
                   </div>
-                  <span className="text-lg font-bold text-foreground">Real Estate Investor</span>
+                  <span className="text-lg font-bold text-foreground block mb-1">I'm investing</span>
+                  <span className="text-sm text-muted-foreground">Multi-units & cash flow</span>
                 </CardContent>
               </Card>
 
+              {/* Card 3 - Exploring */}
               <Card 
                 className="cursor-pointer hover:border-primary hover:shadow-lg transition-all group"
-                onClick={() => handleUserTypeSelect("both")}
+                onClick={() => handlePathSelect("exploring")}
               >
-                <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                    <Users className="w-8 h-8 text-primary" />
+                <CardContent className="p-6 text-center">
+                  <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                    <Search className="w-7 h-7 text-primary" />
                   </div>
-                  <span className="text-lg font-bold text-foreground">Both</span>
+                  <span className="text-lg font-bold text-foreground block mb-1">Just exploring</span>
+                  <span className="text-sm text-muted-foreground">Research the market</span>
                 </CardContent>
               </Card>
+
+              {/* Card 4 - Talk to Expert */}
+              <Link to="/deal-desk">
+                <Card className="cursor-pointer hover:border-primary hover:shadow-lg transition-all group h-full">
+                  <CardContent className="p-6 text-center">
+                    <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                      <MessageSquare className="w-7 h-7 text-primary" />
+                    </div>
+                    <span className="text-lg font-bold text-foreground block mb-1">Talk to an expert</span>
+                    <span className="text-sm text-muted-foreground">Strategy session</span>
+                  </CardContent>
+                </Card>
+              </Link>
             </div>
           </div>
         )}
 
-        {/* Deck Card 2 - Home Buyer Path */}
-        {(userType === "buyer" || userType === "both") && !buyerPath && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <button 
-              onClick={resetSelection}
-              className="text-sm text-muted-foreground hover:text-primary mb-4 flex items-center gap-1 mx-auto"
-            >
-              ← Back to selection
-            </button>
-            <h3 className="text-xl font-semibold text-foreground mb-6">What best describes you?</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto mb-6">
-              <Card 
-                className="cursor-pointer hover:border-primary hover:shadow-lg transition-all p-6"
-                onClick={() => handleBuyerPathSelect("first-time")}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Home className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-semibold text-foreground block">First-time buyer</span>
-                    <span className="text-sm text-muted-foreground">Low or no money down programs</span>
-                  </div>
-                </div>
-              </Card>
-
-              <Card 
-                className="cursor-pointer hover:border-primary hover:shadow-lg transition-all p-6"
-                onClick={() => handleBuyerPathSelect("moving-up")}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <ArrowRight className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-semibold text-foreground block">Moving up / relocating</span>
-                    <span className="text-sm text-muted-foreground">Upgrading or changing areas</span>
-                  </div>
-                </div>
-              </Card>
-
-              <Card 
-                className="cursor-pointer hover:border-primary hover:shadow-lg transition-all p-6"
-                onClick={() => handleBuyerPathSelect("capital-district")}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-semibold text-foreground block">Buying in the Capital District</span>
-                    <span className="text-sm text-muted-foreground">Albany, Troy, Schenectady area</span>
-                  </div>
-                </div>
-              </Card>
-
-              <Card 
-                className="cursor-pointer hover:border-primary hover:shadow-lg transition-all p-6"
-                onClick={() => handleBuyerPathSelect("researching")}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Briefcase className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-semibold text-foreground block">Just researching</span>
-                    <span className="text-sm text-muted-foreground">Prices & neighborhoods</span>
-                  </div>
-                </div>
-              </Card>
-            </div>
-
-            {userType === "both" && (
-              <Button 
-                variant="outline" 
-                onClick={() => setUserType("investor")}
-                className="mt-4"
-              >
-                Skip to Investor Options →
-              </Button>
-            )}
-          </div>
-        )}
-
-        {/* Deck Card 3 - Investor Path */}
-        {(userType === "investor" || (userType === "both" && buyerPath)) && !investorPath && (
+        {/* Revealed Content Based on Selection */}
+        {selectedPath && selectedPath !== "talk" && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <button 
               onClick={resetSelection}
-              className="text-sm text-muted-foreground hover:text-primary mb-4 flex items-center gap-1 mx-auto"
+              className="text-sm text-muted-foreground hover:text-primary mb-6 flex items-center gap-1 mx-auto"
             >
               ← Back to selection
             </button>
-            <h3 className="text-xl font-semibold text-foreground mb-6">What's your investment goal?</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto mb-6">
-              <Card 
-                className="cursor-pointer hover:border-primary hover:shadow-lg transition-all p-5"
-                onClick={() => handleInvestorPathSelect("cash-flow")}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <DollarSign className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-semibold text-foreground text-sm block">Cash flow</span>
-                    <span className="text-xs text-muted-foreground">10–14% cap rates</span>
-                  </div>
-                </div>
-              </Card>
-
-              <Card 
-                className="cursor-pointer hover:border-primary hover:shadow-lg transition-all p-5"
-                onClick={() => handleInvestorPathSelect("appreciation")}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-semibold text-foreground text-sm block">Long-term appreciation</span>
-                    <span className="text-xs text-muted-foreground">Build equity over time</span>
-                  </div>
-                </div>
-              </Card>
-
-              <Card 
-                className="cursor-pointer hover:border-primary hover:shadow-lg transition-all p-5"
-                onClick={() => handleInvestorPathSelect("multi-family")}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Building2 className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-semibold text-foreground text-sm block">Multi-family (2–4 units)</span>
-                    <span className="text-xs text-muted-foreground">Residential investment</span>
-                  </div>
-                </div>
-              </Card>
-
-              <Card 
-                className="cursor-pointer hover:border-primary hover:shadow-lg transition-all p-5"
-                onClick={() => handleInvestorPathSelect("commercial")}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Briefcase className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-semibold text-foreground text-sm block">5+ unit / commercial</span>
-                    <span className="text-xs text-muted-foreground">Larger properties</span>
-                  </div>
-                </div>
-              </Card>
-
-              <Card 
-                className="cursor-pointer hover:border-primary hover:shadow-lg transition-all p-5"
-                onClick={() => handleInvestorPathSelect("nyc-arbitrage")}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-semibold text-foreground text-sm block">NYC → Upstate arbitrage</span>
-                    <span className="text-xs text-muted-foreground">Higher returns upstate</span>
-                  </div>
-                </div>
-              </Card>
-
-              <Card 
-                className="cursor-pointer hover:border-primary hover:shadow-lg transition-all p-5"
-                onClick={() => handleInvestorPathSelect("1031")}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <RefreshCw className="w-5 h-5 text-primary" />
-                  </div>
-                  <div className="text-left">
-                    <span className="font-semibold text-foreground text-sm block">1031 Exchange</span>
-                    <span className="text-xs text-muted-foreground">Tax-deferred swap</span>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          </div>
-        )}
-
-        {/* Confirmation State */}
-        {(buyerPath || investorPath) && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 mt-8">
-            <div className="bg-primary/10 border border-primary/20 rounded-xl p-6 max-w-md mx-auto">
-              <p className="text-primary font-semibold mb-2">✓ Great choice!</p>
-              <p className="text-muted-foreground text-sm mb-4">
-                Scroll down to see the content tailored for you, or explore the hubs below.
-              </p>
-              <Button onClick={resetSelection} variant="outline" size="sm">
-                Start Over
-              </Button>
+            
+            <div className="bg-card border border-border rounded-xl p-6 max-w-2xl mx-auto text-left">
+              <h3 className="text-xl font-bold text-foreground mb-4 text-center">
+                {pathContent[selectedPath].title}
+              </h3>
+              <div className="space-y-3">
+                {pathContent[selectedPath].items.map((item, index) => (
+                  <Link 
+                    key={index}
+                    to={item.href}
+                    className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors group"
+                  >
+                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20">
+                      <item.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+                      {item.label}
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-muted-foreground ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </Link>
+                ))}
+              </div>
+              
+              <div className="mt-6 pt-6 border-t border-border text-center">
+                <p className="text-sm text-muted-foreground mb-4">
+                  {selectedPath === "buyer" 
+                    ? "Ready to start your home search?"
+                    : selectedPath === "investor"
+                    ? "Want personalized deal recommendations?"
+                    : "Have questions about the market?"}
+                </p>
+                <Button asChild>
+                  <Link to="/deal-desk">
+                    Get Personalized Guidance <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         )}
