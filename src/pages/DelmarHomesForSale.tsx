@@ -11,6 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import DelmarMarketReport from "@/components/DelmarMarketReport";
 
 const DelmarHomesForSale = () => {
   const quickFilters = [
@@ -183,6 +184,9 @@ const DelmarHomesForSale = () => {
             </p>
           </div>
         </section>
+
+        {/* Delmar Market Report Section */}
+        <DelmarMarketReport />
 
         {/* 5) Free Intelligence Report CTA */}
         <section className="py-16 bg-primary/5 border-y border-primary/20">

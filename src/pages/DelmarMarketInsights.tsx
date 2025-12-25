@@ -10,6 +10,7 @@ import DelmarBusinessCarousel from "@/components/DelmarBusinessCarousel";
 import DelmarSafetyMap from "@/components/DelmarSafetyMap";
 import DelmarSearchCTA from "@/components/DelmarSearchCTA";
 import DelmarTrendFooter from "@/components/DelmarTrendFooter";
+import DelmarMarketReport from "@/components/DelmarMarketReport";
 
 const DelmarMarketInsights = () => {
   return (
@@ -34,6 +35,9 @@ const DelmarMarketInsights = () => {
         
         {/* Large Market Metrics */}
         <DelmarMetricsGrid />
+        
+        {/* Market Report - Primary Home */}
+        <DelmarMarketReport />
         
         {/* Search CTA - Moved Higher */}
         <DelmarSearchCTA />
