@@ -1,7 +1,5 @@
 import SEOHead from "@/components/SEOHead";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import BreadcrumbNavigation from "@/components/BreadcrumbNavigation";
+import MainLayout from "@/components/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
@@ -56,7 +54,7 @@ const SchenectadyCountyIntelligence = () => {
   ];
 
   return (
-    <>
+    <MainLayout>
       <SEOHead
         title="Schenectady County Real Estate Intelligence | Market Data & Investment Analysis"
         description="Sales, rentals, cash flow, and neighborhood trends for Schenectady County. Wall Street tools with Main Street soul. Get a free property intelligence report."
@@ -65,10 +63,6 @@ const SchenectadyCountyIntelligence = () => {
         structuredData={structuredData}
       />
       
-      <div className="min-h-screen bg-background">
-        <BreadcrumbNavigation />
-        <Header />
-        
         <main className="pt-20">
           {/* HERO SECTION */}
           <section className="py-20 md:py-28 px-4 relative overflow-hidden">
@@ -364,9 +358,6 @@ const SchenectadyCountyIntelligence = () => {
             </div>
           </section>
         </main>
-        
-        <Footer />
-      </div>
 
       {/* Lead Capture Modal */}
       <GuideLeadModal
@@ -375,7 +366,7 @@ const SchenectadyCountyIntelligence = () => {
         redirectPath="/schenectady-county-real-estate"
         guideType="Schenectady County Intelligence Report"
       />
-    </>
+    </MainLayout>
   );
 };
 
