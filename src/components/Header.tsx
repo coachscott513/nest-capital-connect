@@ -85,7 +85,10 @@ const Header = () => {
             <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-56 border border-blue-700/50">
               <Link to="/markets" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md font-semibold text-sm">All Markets</Link>
               <div className="border-t border-blue-700 my-2"></div>
-              <Link to="/delmar-market-insights" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm bg-blue-700/50">Delmar Market Insights</Link>
+              <div className="px-4 py-1 text-blue-300 text-xs font-semibold uppercase tracking-wide">County Intelligence</div>
+              <Link to="/schenectady-county-real-estate" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm bg-blue-700/50">Schenectady County</Link>
+              <div className="border-t border-blue-700 my-2"></div>
+              <Link to="/delmar-market-insights" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Delmar Market Insights</Link>
               <Link to="/delmar-homes-for-sale" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Delmar Homes</Link>
               <Link to="/markets/albany-single-family-homes" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Albany Homes</Link>
               <Link to="/markets/schenectady-single-family-homes" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Schenectady Homes</Link>
@@ -221,6 +224,15 @@ const Header = () => {
                 Markets
               </Link>
               <div className="pl-4 flex flex-col space-y-2 mt-2 mb-1">
+                <div className="text-blue-300 text-xs font-semibold uppercase tracking-wide pt-1">County Intelligence</div>
+                <Link
+                  to="/schenectady-county-real-estate"
+                  className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm font-medium"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Schenectady County
+                </Link>
+                <div className="border-t border-blue-500/30 my-1"></div>
                 <Link
                   to="/markets/albany-single-family-homes"
                   className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"
