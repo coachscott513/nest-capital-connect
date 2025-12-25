@@ -211,32 +211,32 @@ const Delmar = () => {
             Answer one question and I'll point you in the right direction.
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          <div className="flex flex-col md:flex-row gap-4 justify-center items-stretch max-w-4xl mx-auto">
             <Button
               size="lg"
-              className="h-16 text-lg font-semibold flex items-center justify-center gap-3"
+              className="h-16 px-6 text-base md:text-lg font-semibold flex items-center justify-center gap-2 whitespace-nowrap"
               onClick={() => scrollToSection("search-homes")}
             >
-              <Home className="w-5 h-5" />
-              I'm Buying a Home in Delmar
+              <Home className="w-5 h-5 flex-shrink-0" />
+              <span>I'm Buying in Delmar</span>
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="h-16 text-lg font-semibold flex items-center justify-center gap-3 border-primary text-primary hover:bg-primary/10"
+              className="h-16 px-6 text-base md:text-lg font-semibold flex items-center justify-center gap-2 border-primary text-primary hover:bg-primary/10 whitespace-nowrap"
               onClick={() => scrollToSection("intelligence-report")}
             >
-              <DollarSign className="w-5 h-5" />
-              I'm an Investor / Analyzing
+              <DollarSign className="w-5 h-5 flex-shrink-0" />
+              <span>I'm an Investor</span>
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="h-16 text-lg font-semibold flex items-center justify-center gap-3"
+              className="h-16 px-6 text-base md:text-lg font-semibold flex items-center justify-center gap-2 whitespace-nowrap"
               onClick={() => scrollToSection("market-snapshot")}
             >
-              <BarChart3 className="w-5 h-5" />
-              I Just Want Market Data
+              <BarChart3 className="w-5 h-5 flex-shrink-0" />
+              <span>I Want Market Data</span>
             </Button>
           </div>
         </div>
@@ -448,16 +448,31 @@ const Delmar = () => {
             </p>
           </div>
 
-          {/* RE/MAX Search Embed */}
+          {/* Direct Link to Search */}
           <Card className="overflow-hidden border-2 border-primary/20">
-            <CardContent className="p-0">
-              <div className="aspect-[16/10] min-h-[500px]">
-                <iframe
-                  title="Delmar Home Search"
-                  src="https://www.albanyrealestate.net/search/results/quick/1/latlonbox/42.5685,42.6186,-73.8553,-73.7859/"
-                  className="w-full h-full border-0"
-                  loading="lazy"
-                />
+            <CardContent className="p-8 md:p-12 text-center">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <Search className="w-10 h-10 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-foreground mb-4">
+                View All Delmar Listings
+              </h3>
+              <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+                Browse homes for sale in Delmar and Bethlehem Central School District. 
+                Updated daily with new listings.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button size="lg" className="h-14 px-8 text-lg font-bold" asChild>
+                  <Link to="/delmar-homes-for-sale">
+                    <Search className="w-5 h-5 mr-2" />
+                    Browse Delmar Homes
+                  </Link>
+                </Button>
+                <Button size="lg" variant="outline" className="h-14 px-8 text-lg" asChild>
+                  <a href="https://www.albanyrealestate.net/search/results/quick/1/latlonbox/42.5685,42.6186,-73.8553,-73.7859/" target="_blank" rel="noopener noreferrer">
+                    Open Full Search
+                  </a>
+                </Button>
               </div>
             </CardContent>
           </Card>
