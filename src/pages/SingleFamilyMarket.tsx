@@ -189,15 +189,15 @@ const SingleFamilyMarket = () => {
   }
   
   const townName = townData.name;
-  const pageTitle = `${townName} Single-Family Homes: Market Guide & Analysis`;
-  const pageDescription = `Explore ${townName}'s single-family home market with current trends, average prices, and neighborhood insights. Find your dream home in ${townName}, NY.`;
+  const pageTitle = `${townName} NY Homes for Sale | Single-Family Market Guide | Capital District Nest`;
+  const pageDescription = `Find single-family homes for sale in ${townName}, ${townData.county} County NY. Expert market analysis, pricing trends, neighborhood insights, and local expertise from Capital District Nest.`;
   
   return (
     <div className="flex flex-col min-h-screen">
       <SEOHead 
         title={pageTitle}
         description={pageDescription}
-        keywords={`${townName.toLowerCase()} single family homes, ${townName.toLowerCase()} real estate market, ${townName.toLowerCase()} housing, ${townName.toLowerCase()} neighborhoods, ${townData.county} county homes, capital district real estate, new york single family homes`}
+        keywords={`${townName.toLowerCase()} homes for sale, ${townName.toLowerCase()} single family homes, ${townName.toLowerCase()} real estate, ${townName.toLowerCase()} NY houses, ${townData.county} county homes for sale, capital district real estate, buy home ${townName.toLowerCase()} NY`}
         canonical={`https://capitaldistrictnest.com/markets/${baseTownSlug}-single-family-homes`}
       />
       
@@ -217,12 +217,12 @@ const SingleFamilyMarket = () => {
               </div>
               
               <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                {townName} Single-Family Homes
+                {townName} NY Homes for Sale
               </h1>
               
               <p className="text-lg md:text-xl text-muted-foreground mb-8">
-                Your comprehensive guide to the {townName} single-family home market,
-                with current trends, neighborhood insights, and expert analysis.
+                Your comprehensive guide to single-family homes in {townName}, {townData.county} County.
+                Current market trends, neighborhood insights, and expert analysis.
               </p>
               
               <div className="flex flex-wrap gap-4">
