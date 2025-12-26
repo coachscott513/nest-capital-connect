@@ -93,7 +93,7 @@ const Markets = () => {
                 </p>
                 
                 <Link 
-                  to="#contact"
+                  to="/dealdesk"
                   className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform"
                 >
                   Get a Custom Market Report
@@ -166,7 +166,7 @@ const Markets = () => {
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link 
-                  to="/first-time-homebuyers"
+                  to="/dealdesk"
                   className="bg-foreground text-background px-8 py-4 rounded-full font-extrabold hover:scale-105 transition-transform"
                 >
                   Request Market Analysis
