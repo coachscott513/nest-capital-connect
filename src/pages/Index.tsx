@@ -17,6 +17,7 @@ import HomeBuyerHub from "@/components/HomeBuyerHub";
 import InvestorHub from "@/components/InvestorHub";
 import MarketMapSection from "@/components/MarketMapSection";
 import CleanHero from "@/components/CleanHero";
+import FeaturedListingBanner from "@/components/FeaturedListingBanner";
 
 const menuSections = [
   {
@@ -184,6 +185,9 @@ const Index = () => {
 
       {/* CLEAN HERO - New simplified hero */}
       <CleanHero />
+
+      {/* FEATURED LISTING BANNER */}
+      <FeaturedListingBanner />
 
       {/* START HERE DECK - Guided Onboarding */}
       <div id="start-here" className="scroll-mt-24">
