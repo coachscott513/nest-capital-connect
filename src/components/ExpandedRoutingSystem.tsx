@@ -4,6 +4,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { capitalDistrictTowns, TownData } from './CapitalDistrictTowns';
+import SEOHead from './SEOHead';
 
 // Import existing pages
 import AlbanyRealEstate from '@/pages/AlbanyRealEstate';
@@ -28,12 +29,22 @@ const TownRealEstatePage = ({ town }: { town: TownData }) => {
     "url": `https://capitaldistrictnest.com/${town.slug}-real-estate`
   };
 
+  const pageTitle = `${town.name} NY Homes for Sale | ${town.county} County Real Estate | Capital District Nest`;
+  const pageDescription = `${town.description}. Find homes for sale in ${town.name}, ${town.county} County NY. Expert real estate services, investment properties, and market insights from Capital District Nest.`;
+  const pageKeywords = town.keywords.join(', ');
+
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead 
+        title={pageTitle}
+        description={pageDescription}
+        keywords={pageKeywords}
+        structuredData={structuredData}
+      />
       <header className="pt-20">
         <div className="max-w-6xl mx-auto px-4 py-16 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-primary-glow to-accent bg-clip-text text-transparent">
-            {town.name} NY Real Estate Analysis
+            {town.name} NY Homes for Sale
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             {town.description}. Expert data-driven analysis of {town.name} real estate market, investment opportunities, and rental properties.
