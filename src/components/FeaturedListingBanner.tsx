@@ -30,16 +30,16 @@ const FeaturedListingBanner = () => {
             <div className="lg:w-1/2 relative h-64 lg:h-80 overflow-hidden">
               <img
                 src={propertyImage}
-                alt="1999 Ridge Road, Queensbury NY - 6.8 acres"
+                alt="1999 Ridge Road, Queensbury NY - 4 acres"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-background/80 lg:block hidden" />
               <div className="absolute top-4 left-4 flex gap-2">
                 <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-bold">
-                  New Listing
+                  Featured
                 </span>
                 <span className="bg-background/80 backdrop-blur-sm text-foreground px-3 py-1 rounded-full text-xs font-semibold border border-border">
-                  6.8 Acres
+                  4 Acres
                 </span>
               </div>
             </div>
@@ -56,12 +56,12 @@ const FeaturedListingBanner = () => {
               </h3>
               
               <p className="text-4xl font-extrabold text-primary mb-4">
-                $279,900
+                $179,900
               </p>
 
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Rare 6.8-acre property near Lake George with mature tree buffer and southern exposure. 
-                Minutes to Adirondack recreation, shopping, and I-87 access.
+                A data-driven look at one of Queensbury's most flexible land opportunities. 
+                Land value, privacy, and long-term optionality at this price point.
               </p>
 
               <div className="flex flex-wrap gap-4 mb-6">
