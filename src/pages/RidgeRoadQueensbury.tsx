@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import propertyMainPhoto from "@/assets/1999-ridge-road-queensbury.jpeg";
 
 const RidgeRoadQueensbury = () => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
@@ -53,7 +54,7 @@ const RidgeRoadQueensbury = () => {
     latitude: 43.3469,
     longitude: -73.6789,
     photos: [
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&h=900&fit=crop",
+      propertyMainPhoto,
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&h=900&fit=crop",
       "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&h=900&fit=crop",
       "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&h=900&fit=crop",

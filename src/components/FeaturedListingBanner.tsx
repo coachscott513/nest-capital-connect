@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { MapPin, Trees, ArrowRight } from "lucide-react";
+import propertyImage from "@/assets/1999-ridge-road-queensbury.jpeg";
 
 const FeaturedListingBanner = () => {
   return (
@@ -28,7 +29,7 @@ const FeaturedListingBanner = () => {
             {/* Image */}
             <div className="lg:w-1/2 relative h-64 lg:h-80 overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop"
+                src={propertyImage}
                 alt="1999 Ridge Road, Queensbury NY - 6.8 acres"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
