@@ -22,7 +22,7 @@ const propertyData: PropertyData = {
   exemptionAmount: "$30,000",
   assessedLandValue: "$37,100",
   totalMarketValue: "$53,000",
-  rprValueIndicator: "$278,000",
+  rprValueIndicator: "$179,900",
   rprConfidence: "90",
   zoning: "RR-3A",
   taxYear: "2021",
