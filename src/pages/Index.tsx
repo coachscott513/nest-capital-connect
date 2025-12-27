@@ -18,42 +18,52 @@ import InvestorHub from "@/components/InvestorHub";
 import MarketMapSection from "@/components/MarketMapSection";
 import CleanHero from "@/components/CleanHero";
 import FeaturedListingBanner from "@/components/FeaturedListingBanner";
+import HomepageEntrySections from "@/components/HomepageEntrySections";
+import TownEntrySection from "@/components/TownEntrySection";
+import GuidedDeck from "@/components/GuidedDeck";
 
 const menuSections = [
   {
-    category: "Assets",
+    category: "Home",
     items: [
-      { label: "Invest", sub: "/ Standard Listings", href: "/investment-landing" },
-      { label: "Markets", sub: "/ Crypto of Real Estate", href: "/markets" },
-      { label: "Rentals", sub: "/ Retirement Income", href: "/rentals" },
-      { label: "Commercial", sub: "/ Ventures", href: "/albany-multi-unit" },
-      { label: "Land", sub: "/ Futures", href: "/albany-land" },
-      { label: "Luxury", sub: "/ Gold Standard", href: "/homes-for-sale" },
+      { label: "Home", sub: "/ Main", href: "/" },
     ],
   },
   {
-    category: "Capital",
+    category: "Towns",
     items: [
-      { label: "Financing", sub: "/ Banking & Loans", href: "/first-time-homebuyers" },
-      { label: "Grants", sub: "/ Free Funding", href: "/grants" },
-      { label: "Calculators", sub: "/ ROI Tools", href: "/investor-tools" },
-      { label: "Forecasts", sub: "/ Market Predictions", href: "/delmar-market-insights" },
+      { label: "Delmar", sub: "/ Bethlehem Central", href: "/delmar" },
+      { label: "Niskayuna", sub: "/ Top Schools", href: "/niskayuna-real-estate" },
+      { label: "Voorheesville", sub: "/ Rural Character", href: "/voorheesville-real-estate" },
+      { label: "Clifton Park", sub: "/ Growing Suburb", href: "/clifton-park-real-estate" },
+      { label: "Albany", sub: "/ Capital City", href: "/albany-real-estate" },
+      { label: "Troy", sub: "/ Collar City", href: "/troy-real-estate" },
+      { label: "Schenectady", sub: "/ Electric City", href: "/schenectady-real-estate" },
+      { label: "Saratoga", sub: "/ Springs", href: "/saratoga-real-estate" },
+      { label: "Amsterdam", sub: "/ Opportunity", href: "/amsterdam-real-estate" },
     ],
   },
   {
-    category: "Strategies",
+    category: "Properties",
     items: [
-      { label: "Flipping", sub: "/ Active Trading", href: "/sell-investment-property" },
-      { label: "Strategies", sub: "/ Options & BRRRR", href: "/cash-flow-report" },
-      { label: "VIP Access", sub: "/ Legends Only", href: "/auth" },
+      { label: "Featured Properties", sub: "/ Current Listings", href: "/homes-for-sale" },
+      { label: "Analyze an Address", sub: "/ Property Intel", href: "/deal-desk" },
+      { label: "Request Intel Report", sub: "/ Full Analysis", href: "/deal-desk" },
+      { label: "Multi-Unit Listings", sub: "/ Investment", href: "/albany-multi-unit" },
+      { label: "Land for Sale", sub: "/ Development", href: "/albany-land" },
     ],
   },
   {
-    category: "Network",
+    category: "Buyers & Investors",
     items: [
-      { label: "Insights", sub: "/ Market Intelligence", href: "/insights" },
-      { label: "Community", sub: "/ Social", href: "/blog" },
-      { label: "Learn", sub: "/ Education", href: "/communities" },
+      { label: "Zero & Low Down Payment", sub: "/ Programs", href: "/grants" },
+      { label: "Mortgage Assistance", sub: "/ Grants", href: "/first-time-homebuyers" },
+      { label: "First-Time Buyer Guide", sub: "/ Start Here", href: "/buyer-journey/first-time-buyer" },
+      { label: "Neighborhood Guides", sub: "/ Explore", href: "/communities" },
+      { label: "Market Trends", sub: "/ Data & Stats", href: "/markets" },
+      { label: "School District Insights", sub: "/ Education", href: "/delmar" },
+      { label: "Investor Hub", sub: "/ Cash Flow Tools", href: "/investor-tools" },
+      { label: "VIP Access", sub: "/ Off-Market Deals", href: "/vip-buyer-access" },
     ],
   },
   {
@@ -70,12 +80,22 @@ const menuSections = [
       { label: "Best Neighborhoods", sub: "/ Cash Flow", href: "/investor/best-neighborhoods-cash-flow-capital-district" },
     ],
   },
+  {
+    category: "About",
+    items: [
+      { label: "What We Do", sub: "/ Our Mission", href: "/about" },
+      { label: "How It Works", sub: "/ Process", href: "/communities" },
+      { label: "Reviews", sub: "/ Testimonials", href: "/reviews" },
+      { label: "Contact", sub: "/ Get in Touch", href: "/deal-desk" },
+      { label: "Blog", sub: "/ Articles", href: "/blog" },
+    ],
+  },
 ];
 
 const footerLinks = [
   { label: "Start Live Chat", href: "#contact", highlight: true },
-  { label: "Login", href: "/auth" },
-  { label: "Support", href: "#contact" },
+  { label: "VIP Access", href: "/vip-buyer-access" },
+  { label: "Contact", href: "/dealdesk" },
 ];
 
 const Index = () => {
@@ -84,6 +104,8 @@ const Index = () => {
   
   const buyerHubRef = useRef<HTMLDivElement>(null);
   const investorHubRef = useRef<HTMLDivElement>(null);
+  const townSectionRef = useRef<HTMLDivElement>(null);
+  const startHereDeckRef = useRef<HTMLDivElement>(null);
 
   const scrollToBuyerHub = () => {
     buyerHubRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -91,6 +113,14 @@ const Index = () => {
 
   const scrollToInvestorHub = () => {
     investorHubRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const scrollToTownSection = () => {
+    townSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const scrollToStartHereDeck = () => {
+    startHereDeckRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -186,11 +216,25 @@ const Index = () => {
       {/* CLEAN HERO - New simplified hero */}
       <CleanHero />
 
+      {/* PRIMARY ENTRY SECTIONS - Three clear paths */}
+      <HomepageEntrySections 
+        onTownClick={scrollToTownSection}
+        onBuyerClick={scrollToStartHereDeck}
+      />
+
+      {/* START WITH YOUR TOWN - Town Intelligence Entry */}
+      <div ref={townSectionRef} id="town-intelligence" className="scroll-mt-24">
+        <TownEntrySection />
+      </div>
+
       {/* FEATURED LISTING BANNER */}
       <FeaturedListingBanner />
 
-      {/* START HERE DECK - Guided Onboarding */}
-      <div id="start-here" className="scroll-mt-24">
+      {/* GUIDED DECK - 3-Step Guided Experience */}
+      <GuidedDeck />
+
+      {/* START HERE DECK - Guided Onboarding (Original) */}
+      <div ref={startHereDeckRef} id="start-here" className="scroll-mt-24">
         <StartHereDeck 
           onBuyerPathSelected={scrollToBuyerHub}
           onInvestorPathSelected={scrollToInvestorHub}

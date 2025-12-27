@@ -3,49 +3,46 @@ import { Link } from "react-router-dom";
 
 const menuSections = [
   {
-    category: "Assets",
+    category: "Home",
     items: [
-      { label: "Invest", sub: "/ Standard Listings", href: "/investment-landing" },
-      { label: "Markets", sub: "/ Crypto of Real Estate", href: "/markets" },
-      { label: "Rentals", sub: "/ Retirement Income", href: "/rentals" },
-      { label: "Commercial", sub: "/ Ventures", href: "/albany-multi-unit" },
-      { label: "Land", sub: "/ Futures", href: "/albany-land" },
-      { label: "Luxury", sub: "/ Gold Standard", href: "/homes-for-sale" },
-    ],
-  },
-  {
-    category: "Capital",
-    items: [
-      { label: "Financing", sub: "/ Banking & Loans", href: "/first-time-homebuyers" },
-      { label: "Grants", sub: "/ Free Funding", href: "/grants" },
-      { label: "Calculators", sub: "/ ROI Tools", href: "/investor-tools" },
-      { label: "Forecasts", sub: "/ Market Predictions", href: "/delmar-market-insights" },
-    ],
-  },
-  {
-    category: "Strategies",
-    items: [
-      { label: "Flipping", sub: "/ Active Trading", href: "/sell-investment-property" },
-      { label: "Strategies", sub: "/ Options & BRRRR", href: "/cash-flow-report" },
-      { label: "VIP Access", sub: "/ Legends Only", href: "/vip-buyer-access" },
-    ],
-  },
-  {
-    category: "Network",
-    items: [
-      { label: "Insights", sub: "/ Market Intelligence", href: "/insights" },
-      { label: "Community", sub: "/ Social", href: "/blog" },
-      { label: "Learn", sub: "/ Education", href: "/communities" },
+      { label: "Home", sub: "/ Main", href: "/" },
     ],
   },
   {
     category: "Towns",
     items: [
       { label: "Delmar", sub: "/ Bethlehem Central", href: "/delmar" },
-      { label: "Schenectady County", sub: "/ Intelligence Hub", href: "/schenectady-county-real-estate" },
+      { label: "Niskayuna", sub: "/ Top Schools", href: "/niskayuna-real-estate" },
+      { label: "Voorheesville", sub: "/ Rural Character", href: "/voorheesville-real-estate" },
+      { label: "Clifton Park", sub: "/ Growing Suburb", href: "/clifton-park-real-estate" },
       { label: "Albany", sub: "/ Capital City", href: "/albany-real-estate" },
       { label: "Troy", sub: "/ Collar City", href: "/troy-real-estate" },
+      { label: "Schenectady", sub: "/ Electric City", href: "/schenectady-real-estate" },
       { label: "Saratoga", sub: "/ Springs", href: "/saratoga-real-estate" },
+      { label: "Amsterdam", sub: "/ Opportunity", href: "/amsterdam-real-estate" },
+    ],
+  },
+  {
+    category: "Properties",
+    items: [
+      { label: "Featured Properties", sub: "/ Current Listings", href: "/homes-for-sale" },
+      { label: "Analyze an Address", sub: "/ Property Intel", href: "/deal-desk" },
+      { label: "Request Intel Report", sub: "/ Full Analysis", href: "/deal-desk" },
+      { label: "Multi-Unit Listings", sub: "/ Investment", href: "/albany-multi-unit" },
+      { label: "Land for Sale", sub: "/ Development", href: "/albany-land" },
+    ],
+  },
+  {
+    category: "Buyers & Investors",
+    items: [
+      { label: "Zero & Low Down Payment", sub: "/ Programs", href: "/grants" },
+      { label: "Mortgage Assistance", sub: "/ Grants", href: "/first-time-homebuyers" },
+      { label: "First-Time Buyer Guide", sub: "/ Start Here", href: "/buyer-journey/first-time-buyer" },
+      { label: "Neighborhood Guides", sub: "/ Explore", href: "/communities" },
+      { label: "Market Trends", sub: "/ Data & Stats", href: "/markets" },
+      { label: "School District Insights", sub: "/ Education", href: "/delmar" },
+      { label: "Investor Hub", sub: "/ Cash Flow Tools", href: "/investor-tools" },
+      { label: "VIP Access", sub: "/ Off-Market Deals", href: "/vip-buyer-access" },
     ],
   },
   {
@@ -62,12 +59,22 @@ const menuSections = [
       { label: "Best Neighborhoods", sub: "/ Cash Flow", href: "/investor/best-neighborhoods-cash-flow-capital-district" },
     ],
   },
+  {
+    category: "About",
+    items: [
+      { label: "What We Do", sub: "/ Our Mission", href: "/about" },
+      { label: "How It Works", sub: "/ Process", href: "/communities" },
+      { label: "Reviews", sub: "/ Testimonials", href: "/reviews" },
+      { label: "Contact", sub: "/ Get in Touch", href: "/deal-desk" },
+      { label: "Blog", sub: "/ Articles", href: "/blog" },
+    ],
+  },
 ];
 
 const footerLinks = [
   { label: "Start Live Chat", href: "/dealdesk", highlight: true },
-  { label: "Login", href: "/vip-buyer-access" },
-  { label: "Support", href: "/dealdesk" },
+  { label: "VIP Access", href: "/vip-buyer-access" },
+  { label: "Contact", href: "/dealdesk" },
 ];
 
 const MainHeader = () => {
