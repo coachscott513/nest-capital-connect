@@ -77,8 +77,6 @@ const RidgeRoadQueensbury = () => {
     photos: [
       propertyStreetView,
       propertyMainPhoto,
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&h=900&fit=crop",
-      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&h=900&fit=crop",
     ],
     googleEarthLink: `https://earth.google.com/web/@43.3469,-73.6789,200a,500d,35y,0h,45t,0r`,
     boldtrailUrl: "https://www.scottalvarez.com/property/1999-ridge-road-queensbury-ny"
