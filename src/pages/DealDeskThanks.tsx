@@ -50,15 +50,15 @@ const DealDeskThanks = () => {
                 Submit Another Address
               </Button>
             </Link>
-            <Link to="/dealdesk#pricing">
+            <Link to="/">
               <Button variant="outline" className="w-full sm:w-auto border-gray-700 text-gray-300 hover:bg-gray-800">
-                View Pro Membership
+                Back to Home
               </Button>
             </Link>
           </div>
 
           <p className="text-gray-500 text-sm">
-            Pro: $59.95/mo = 3 reports/month • Same-day, queue-based.
+            All reports are free & personalized • Same-day delivery on most requests
           </p>
         </div>
       </div>
