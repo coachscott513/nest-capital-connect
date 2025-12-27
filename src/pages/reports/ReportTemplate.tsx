@@ -57,6 +57,22 @@ const propertyData: PropertyData = {
   
   // Optional note about structure
   structureNote: "", // Leave empty if no special notes needed
+
+  // Deep intelligence fields (optional)
+  assessmentType: "Full Market Value", // Assessment methodology
+  assessmentRatio: "100%", // Assessment ratio
+  equalizationRate: "100%", // Equalization rate
+  totalAssessedValue: "$200,000", // Total assessed value if different from market
+  taxInsight: "", // Custom insight about taxes (auto-generated if empty)
+  rprValueLow: "", // Optional low estimate from RPR
+  rprValueHigh: "", // Optional high estimate from RPR
+  rprInterpretation: "", // Custom interpretation (auto-generated if empty)
+  riskSignals: [], // Array of {type: "positive"|"warning", text: "..."} - auto-generated if empty
+  landUse: "Residential", // Land use classification
+  zoningNote: "", // Custom zoning note (auto-generated if empty)
+  lastSaleDate: "", // Last sale date if available
+  lastSalePrice: "", // Last sale price if available
+  priorListings: "", // Prior listing info if available
 };
 
 // ============================================

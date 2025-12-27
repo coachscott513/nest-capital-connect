@@ -14,6 +14,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import {
@@ -28,6 +33,12 @@ import {
   ClipboardCheck,
   Send,
   Search,
+  ChevronDown,
+  BarChart3,
+  TrendingUp,
+  AlertCircle,
+  MapPinned,
+  History,
 } from "lucide-react";
 
 export interface PropertyData {
@@ -53,6 +64,21 @@ export interface PropertyData {
   zoning: string;
   taxYear: string;
   structureNote?: string;
+  // New deep intelligence fields
+  assessmentType?: string;
+  assessmentRatio?: string;
+  equalizationRate?: string;
+  totalAssessedValue?: string;
+  taxInsight?: string;
+  rprValueLow?: string;
+  rprValueHigh?: string;
+  rprInterpretation?: string;
+  riskSignals?: { type: "positive" | "warning"; text: string }[];
+  landUse?: string;
+  zoningNote?: string;
+  lastSaleDate?: string;
+  lastSalePrice?: string;
+  priorListings?: string;
 }
 
 interface IntelligenceReportTemplateProps {
@@ -418,8 +444,292 @@ const IntelligenceReportTemplate = ({
                       Automated valuation tools can be off — especially with rural land, mixed property types, or unique parcels.
                     </p>
                   </CardContent>
-                </Card>
+              </Card>
               )}
+            </div>
+          </div>
+        </section>
+
+        {/* Deep Intelligence Sections - Collapsible */}
+        <section className="py-12 md:py-16 border-b border-border">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto space-y-4">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+                  Deep Intelligence
+                </h2>
+                <p className="text-muted-foreground">
+                  Expand sections below for investor-grade analysis
+                </p>
+              </div>
+
+              {/* Tax & Assessment Intelligence */}
+              <Collapsible>
+                <Card className="border-border bg-card overflow-hidden">
+                  <CollapsibleTrigger asChild>
+                    <button className="w-full p-6 flex items-center justify-between hover:bg-muted/50 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <BarChart3 className="w-6 h-6 text-primary" />
+                        <h3 className="text-lg font-semibold text-foreground text-left">
+                          Tax & Assessment Intelligence
+                        </h3>
+                      </div>
+                      <ChevronDown className="w-5 h-5 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <CardContent className="p-6 pt-0 border-t border-border">
+                      {/* Cards Row */}
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                        <div className="bg-muted/30 rounded-lg p-4 text-center">
+                          <p className="text-xs text-muted-foreground mb-1">Assessment Year</p>
+                          <p className="text-lg font-semibold text-foreground">{propertyData.taxYear}</p>
+                        </div>
+                        <div className="bg-muted/30 rounded-lg p-4 text-center">
+                          <p className="text-xs text-muted-foreground mb-1">Assessment Type</p>
+                          <p className="text-lg font-semibold text-foreground">{propertyData.assessmentType || "Full Market Value"}</p>
+                        </div>
+                        <div className="bg-muted/30 rounded-lg p-4 text-center">
+                          <p className="text-xs text-muted-foreground mb-1">Assessment Ratio</p>
+                          <p className="text-lg font-semibold text-foreground">{propertyData.assessmentRatio || "100%"}</p>
+                        </div>
+                        <div className="bg-muted/30 rounded-lg p-4 text-center">
+                          <p className="text-xs text-muted-foreground mb-1">Equalization Rate</p>
+                          <p className="text-lg font-semibold text-foreground">{propertyData.equalizationRate || "100%"}</p>
+                        </div>
+                      </div>
+
+                      {/* Expanded Table */}
+                      <div className="bg-muted/20 rounded-lg p-4 mb-4">
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center py-2 border-b border-border">
+                            <span className="text-muted-foreground">Land Assessed Value</span>
+                            <span className="font-medium text-foreground">{propertyData.assessedLandValue}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-border">
+                            <span className="text-muted-foreground">Total Assessed Value</span>
+                            <span className="font-medium text-foreground">{propertyData.totalAssessedValue || propertyData.totalMarketValue}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b border-border">
+                            <span className="text-muted-foreground">Full Market Value (Tax Basis)</span>
+                            <span className="font-medium text-foreground">{propertyData.totalMarketValue}</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2">
+                            <span className="text-muted-foreground">Tax Jurisdictions</span>
+                            <span className="font-medium text-foreground">County / Town / School</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Insight Callout */}
+                      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                        <p className="text-sm text-foreground">
+                          <strong>Insight:</strong> {propertyData.taxInsight || `This property is assessed at full market value with a ${parseFloat(propertyData.taxesTotal.replace(/[^0-9.-]+/g, "")) < 1000 ? "low" : "moderate"} total tax burden. Reassessments or exemption changes could impact future taxes.`}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </CollapsibleContent>
+                </Card>
+              </Collapsible>
+
+              {/* Value & Market Intelligence (RPR) */}
+              {propertyData.rprValueIndicator && (
+                <Collapsible>
+                  <Card className="border-border bg-card overflow-hidden">
+                    <CollapsibleTrigger asChild>
+                      <button className="w-full p-6 flex items-center justify-between hover:bg-muted/50 transition-colors">
+                        <div className="flex items-center gap-3">
+                          <TrendingUp className="w-6 h-6 text-primary" />
+                          <h3 className="text-lg font-semibold text-foreground text-left">
+                            Value & Market Intelligence (RPR)
+                          </h3>
+                        </div>
+                        <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                      </button>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <CardContent className="p-6 pt-0 border-t border-border">
+                        {/* Confidence Meter */}
+                        <div className="mb-6">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm text-muted-foreground">Confidence Score</span>
+                            <span className="text-sm font-medium text-foreground">{propertyData.rprConfidence}%</span>
+                          </div>
+                          <div className="h-3 bg-muted rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-gradient-to-r from-primary/60 to-primary rounded-full transition-all"
+                              style={{ width: `${propertyData.rprConfidence}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Value Display */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                          {propertyData.rprValueLow && (
+                            <div className="bg-muted/30 rounded-lg p-4 text-center">
+                              <p className="text-xs text-muted-foreground mb-1">Low Estimate</p>
+                              <p className="text-lg font-semibold text-muted-foreground">{propertyData.rprValueLow}</p>
+                            </div>
+                          )}
+                          <div className={`bg-primary/10 rounded-lg p-4 text-center ${!propertyData.rprValueLow ? 'md:col-span-3' : ''}`}>
+                            <p className="text-xs text-primary mb-1">RPR Estimated Value</p>
+                            <p className="text-2xl font-bold text-primary">{propertyData.rprValueIndicator}</p>
+                          </div>
+                          {propertyData.rprValueHigh && (
+                            <div className="bg-muted/30 rounded-lg p-4 text-center">
+                              <p className="text-xs text-muted-foreground mb-1">High Estimate</p>
+                              <p className="text-lg font-semibold text-muted-foreground">{propertyData.rprValueHigh}</p>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* AI Interpretation */}
+                        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
+                          <div className="flex items-start gap-3">
+                            <AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                            <p className="text-sm text-foreground">
+                              {propertyData.rprInterpretation || "RPR's automated model suggests a significantly higher theoretical value than public tax records. This often occurs with large land parcels or properties with redevelopment or use potential. Verification is recommended."}
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </CollapsibleContent>
+                  </Card>
+                </Collapsible>
+              )}
+
+              {/* Risk & Verification Signals */}
+              <Collapsible>
+                <Card className="border-border bg-card overflow-hidden">
+                  <CollapsibleTrigger asChild>
+                    <button className="w-full p-6 flex items-center justify-between hover:bg-muted/50 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <AlertCircle className="w-6 h-6 text-primary" />
+                        <h3 className="text-lg font-semibold text-foreground text-left">
+                          Risk & Verification Signals
+                        </h3>
+                      </div>
+                      <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <CardContent className="p-6 pt-0 border-t border-border">
+                      <div className="space-y-3 mb-4">
+                        {(propertyData.riskSignals || [
+                          { type: "positive" as const, text: `Large acreage (${propertyData.lotSize})` },
+                          { type: "warning" as const, text: `Public record lists ${propertyData.propertyType.toLowerCase()} structure` },
+                          { type: "warning" as const, text: "Utilities not fully specified" },
+                          { type: "warning" as const, text: "MLS description should be confirmed" },
+                          { type: "warning" as const, text: `Zoning confirmation recommended (${propertyData.zoning})` },
+                        ]).map((signal, index) => (
+                          <div key={index} className="flex items-start gap-3">
+                            {signal.type === "positive" ? (
+                              <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                            ) : (
+                              <AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                            )}
+                            <span className="text-foreground">{signal.text}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Identifying these items early helps avoid surprises after contract.
+                      </p>
+                    </CardContent>
+                  </CollapsibleContent>
+                </Card>
+              </Collapsible>
+
+              {/* Land & Zoning Context */}
+              <Collapsible>
+                <Card className="border-border bg-card overflow-hidden">
+                  <CollapsibleTrigger asChild>
+                    <button className="w-full p-6 flex items-center justify-between hover:bg-muted/50 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <MapPinned className="w-6 h-6 text-primary" />
+                        <h3 className="text-lg font-semibold text-foreground text-left">
+                          Land & Zoning Context
+                        </h3>
+                      </div>
+                      <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <CardContent className="p-6 pt-0 border-t border-border">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                        <div className="bg-muted/30 rounded-lg p-4 text-center">
+                          <p className="text-xs text-muted-foreground mb-1">Zoning Code</p>
+                          <p className="text-lg font-semibold text-foreground">{propertyData.zoning}</p>
+                        </div>
+                        <div className="bg-muted/30 rounded-lg p-4 text-center">
+                          <p className="text-xs text-muted-foreground mb-1">Land Use</p>
+                          <p className="text-lg font-semibold text-foreground">{propertyData.landUse || "Residential"}</p>
+                        </div>
+                        <div className="bg-muted/30 rounded-lg p-4 text-center">
+                          <p className="text-xs text-muted-foreground mb-1">Acreage</p>
+                          <p className="text-lg font-semibold text-foreground">{propertyData.lotSize}</p>
+                        </div>
+                        <div className="bg-muted/30 rounded-lg p-4 text-center">
+                          <p className="text-xs text-muted-foreground mb-1">Build / Use</p>
+                          <p className="text-lg font-semibold text-foreground">Confirm with Town</p>
+                        </div>
+                      </div>
+                      <div className="bg-muted/20 border border-border rounded-lg p-4">
+                        <p className="text-sm text-muted-foreground">
+                          {propertyData.zoningNote || "Zoning and land use should be confirmed directly with the municipality before planning improvements or development."}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </CollapsibleContent>
+                </Card>
+              </Collapsible>
+
+              {/* Historical Context */}
+              <Collapsible>
+                <Card className="border-border bg-card overflow-hidden">
+                  <CollapsibleTrigger asChild>
+                    <button className="w-full p-6 flex items-center justify-between hover:bg-muted/50 transition-colors">
+                      <div className="flex items-center gap-3">
+                        <History className="w-6 h-6 text-primary" />
+                        <h3 className="text-lg font-semibold text-foreground text-left">
+                          Historical Context
+                        </h3>
+                      </div>
+                      <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <CardContent className="p-6 pt-0 border-t border-border">
+                      {propertyData.lastSaleDate || propertyData.lastSalePrice ? (
+                        <div className="space-y-3">
+                          {propertyData.lastSaleDate && (
+                            <div className="flex justify-between items-center py-2 border-b border-border">
+                              <span className="text-muted-foreground">Last Sale Date</span>
+                              <span className="font-medium text-foreground">{propertyData.lastSaleDate}</span>
+                            </div>
+                          )}
+                          {propertyData.lastSalePrice && (
+                            <div className="flex justify-between items-center py-2 border-b border-border">
+                              <span className="text-muted-foreground">Last Sale Price</span>
+                              <span className="font-medium text-foreground">{propertyData.lastSalePrice}</span>
+                            </div>
+                          )}
+                          {propertyData.priorListings && (
+                            <div className="flex justify-between items-center py-2">
+                              <span className="text-muted-foreground">Prior Listings</span>
+                              <span className="font-medium text-foreground">{propertyData.priorListings}</span>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <p className="text-muted-foreground text-center py-4">
+                          No verified prior sale data found in public records.
+                        </p>
+                      )}
+                    </CardContent>
+                  </CollapsibleContent>
+                </Card>
+              </Collapsible>
             </div>
           </div>
         </section>
