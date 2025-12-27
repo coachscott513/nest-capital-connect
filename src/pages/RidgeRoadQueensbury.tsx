@@ -172,7 +172,7 @@ const RidgeRoadQueensbury = () => {
 
       <main className="min-h-screen bg-background">
         {/* HERO SECTION */}
-        <section className="relative min-h-[70vh] overflow-hidden">
+        <section className="relative min-h-[50vh] overflow-hidden">
           {/* Background Image */}
           <img
             src={property.photos[currentPhotoIndex]}
