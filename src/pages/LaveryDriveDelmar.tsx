@@ -8,6 +8,10 @@ import PropertyChatDialog from "@/components/PropertyChatDialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import PropertyIntelligenceForm from "@/components/PropertyIntelligenceForm";
+import SearchAssistanceSection from "@/components/SearchAssistanceSection";
+import PropertyFooterAttribution from "@/components/PropertyFooterAttribution";
+import LiveConversationButton from "@/components/LiveConversationButton";
 import { 
   MapPin, 
   Trees, 
@@ -951,6 +955,12 @@ const LaveryDriveDelmar = () => {
           </div>
         </section>
 
+        {/* PROPERTY INTELLIGENCE FORM - Want information on another property? */}
+        <PropertyIntelligenceForm sourceProperty={property.fullAddress} />
+
+        {/* SEARCH ASSISTANCE SECTION - Need help narrowing your search? */}
+        <SearchAssistanceSection />
+
         {/* AGENT & BRAND FOOTER */}
         <section className="py-20 md:py-24">
           <div className="container mx-auto px-6 max-w-6xl">
@@ -1014,21 +1024,19 @@ const LaveryDriveDelmar = () => {
                       </div>
                     ))}
                   </div>
-                  <PropertyChatDialog 
-                    propertyAddress={property.fullAddress}
-                    propertyUrl={window.location.href}
-                  >
-                    <Button className="w-full rounded-full">
-                      <MessageSquare className="h-4 w-4 mr-2" />
-                      Start a Conversation
-                    </Button>
-                  </PropertyChatDialog>
+                  <LiveConversationButton className="w-full rounded-full" />
                   <p className="text-xs text-muted-foreground text-center mt-2">
                     Typical response time: under 2 minutes
                   </p>
                 </div>
               </div>
             </div>
+
+            {/* MLS Link & Agent Attribution */}
+            <PropertyFooterAttribution 
+              mlsUrl={property.boldtrailUrl}
+              mlsId="Delmar-22-Lavery"
+            />
           </div>
         </section>
       </main>
