@@ -28,7 +28,13 @@ import {
   Users,
   Calendar,
   FileText,
-  MessageSquare
+  MessageSquare,
+  GraduationCap,
+  ShoppingCart,
+  Mountain,
+  Waves,
+  Car,
+  Building2
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -369,6 +375,99 @@ const RidgeRoadQueensbury = () => {
                 Request the Intelligence Report →
               </a>
             </Button>
+          </div>
+        </section>
+
+        {/* AREA LANDMARKS & FEATURES */}
+        <section className="py-20 md:py-24 bg-card/30 border-b border-border">
+          <div className="container mx-auto px-6 max-w-5xl">
+            <p className="text-primary font-semibold tracking-widest uppercase mb-3">What's Nearby</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-8">
+              Queensbury Area Landmarks & Features
+            </h2>
+            <p className="text-lg text-muted-foreground mb-10 max-w-3xl">
+              Ridge Road offers a prime Queensbury location with easy access to Lake George, outdoor recreation, and everyday conveniences.
+            </p>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Lake George */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Waves className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Lake George</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Just 10 minutes to the "Queen of American Lakes" — beaches, boating, and year-round recreation.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Adirondacks */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Mountain className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Adirondack Park Gateway</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Direct access to 6 million acres of protected wilderness, hiking trails, and ski resorts.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Schools */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <GraduationCap className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Queensbury Schools</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Well-regarded Queensbury Union Free School District with strong academics and athletics.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Shopping */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <ShoppingCart className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Aviation Mall & Outlets</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Major retail, dining, and entertainment options along the Route 9 corridor nearby.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Outdoor Recreation */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Trees className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Gurney Lane Recreation Area</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Town park with swimming, hiking trails, disc golf, and winter cross-country skiing.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Highway Access */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Car className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">I-87 Northway Access</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Easy commute to Glens Falls, Saratoga Springs, and Albany via Exit 19 nearby.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </section>
 
