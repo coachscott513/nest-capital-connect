@@ -329,10 +329,6 @@ const RidgeRoadQueensbury = () => {
                 </CardContent>
               </Card>
             </div>
-
-            <p className="text-center text-sm text-muted-foreground mt-8 italic">
-              (This helps buyers self-qualify — fewer wasted calls, stronger leads.)
-            </p>
           </div>
         </section>
 
