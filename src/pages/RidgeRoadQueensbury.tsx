@@ -179,8 +179,8 @@ const RidgeRoadQueensbury = () => {
             alt={`${property.address} - Photo ${currentPhotoIndex + 1}`}
             className="absolute inset-0 w-full h-full object-cover"
           />
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
+          {/* Gradient Overlay (non-interactive so arrows remain clickable) */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/55 to-transparent" />
 
           {/* Navigation Arrows */}
           <button
