@@ -68,9 +68,9 @@ const RidgeRoadQueensbury = () => {
     latitude: 43.3469,
     longitude: -73.6789,
     photos: [
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&h=900&fit=crop",
       propertyMainPhoto,
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&h=900&fit=crop",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&h=900&fit=crop",
       "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&h=900&fit=crop",
     ],
     googleEarthLink: `https://earth.google.com/web/@43.3469,-73.6789,200a,500d,35y,0h,45t,0r`,
@@ -173,14 +173,13 @@ const RidgeRoadQueensbury = () => {
         {/* HERO SECTION */}
         <section className="relative min-h-[70vh] overflow-hidden">
           {/* Background Image */}
-          <div className="absolute inset-0">
-            <img
-              src={property.photos[currentPhotoIndex]}
-              alt={`${property.address} - Photo ${currentPhotoIndex + 1}`}
-              className="w-full h-full object-cover transition-opacity duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
-          </div>
+          <img
+            src={property.photos[currentPhotoIndex]}
+            alt={`${property.address} - Photo ${currentPhotoIndex + 1}`}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
 
           {/* Navigation Arrows */}
           <button
