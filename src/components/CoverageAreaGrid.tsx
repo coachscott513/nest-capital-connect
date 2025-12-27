@@ -66,10 +66,10 @@ const CoverageAreaGrid = () => {
         <div className="text-center mb-12">
           <MapPin className="w-12 h-12 mx-auto mb-4 text-accent" />
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Coverage Area
+            Market Intelligence Reports
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore real estate markets across the Capital District
+            Data-driven insights and trends for Capital District real estate markets
           </p>
         </div>
 
