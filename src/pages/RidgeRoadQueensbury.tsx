@@ -8,10 +8,9 @@ import PropertyChatDialog from "@/components/PropertyChatDialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import PropertyIntelligenceForm from "@/components/PropertyIntelligenceForm";
-import SearchAssistanceSection from "@/components/SearchAssistanceSection";
 import PropertyFooterAttribution from "@/components/PropertyFooterAttribution";
 import LiveConversationButton from "@/components/LiveConversationButton";
+import PropertySearchDeck from "@/components/PropertySearchDeck";
 import { 
   MapPin, 
   Trees, 
@@ -925,11 +924,8 @@ const RidgeRoadQueensbury = () => {
           </div>
         </section>
 
-        {/* PROPERTY INTELLIGENCE FORM - Want information on another property? */}
-        <PropertyIntelligenceForm sourceProperty={property.fullAddress} />
-
-        {/* SEARCH ASSISTANCE SECTION - Need help narrowing your search? */}
-        <SearchAssistanceSection />
+        {/* PROPERTY SEARCH DECK - Looking at Other Properties Like This? */}
+        <PropertySearchDeck sourcePropertyAddress={property.fullAddress} />
 
         {/* AGENT & BRAND FOOTER */}
         <section className="py-20 md:py-24">
