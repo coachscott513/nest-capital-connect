@@ -171,16 +171,26 @@ const RidgeRoadQueensbury = () => {
       <MainHeader />
 
       <main className="min-h-screen bg-background pt-20">
-        {/* HERO SECTION */}
-        <section className="relative min-h-[50vh] overflow-hidden">
+        {/* ADDRESS & PRICE HEADER */}
+        <section className="bg-background border-b border-border">
+          <div className="container mx-auto px-6 py-8 md:py-12">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-3">
+              {property.address} · {property.city}, {property.state}
+            </h1>
+            <p className="text-2xl md:text-3xl font-semibold text-primary">
+              {property.acreage} Acres | {formatPrice(property.price)}
+            </p>
+          </div>
+        </section>
+
+        {/* PHOTO CAROUSEL */}
+        <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
           {/* Background Image */}
           <img
             src={property.photos[currentPhotoIndex]}
             alt={`${property.address} - Photo ${currentPhotoIndex + 1}`}
             className="absolute inset-0 w-full h-full object-cover"
           />
-          {/* Gradient Overlay (non-interactive so arrows remain clickable) */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/95 via-background/55 to-transparent" />
 
           {/* Navigation Arrows */}
           <button
@@ -202,43 +212,32 @@ const RidgeRoadQueensbury = () => {
           <div className="absolute top-6 right-6 z-20 px-4 py-2 rounded-full bg-background/80 backdrop-blur-sm border border-border">
             <span className="text-sm font-medium">{currentPhotoIndex + 1} / {property.photos.length}</span>
           </div>
+        </section>
 
-          {/* Hero Content */}
-          <div className="absolute bottom-0 left-0 right-0 z-10 p-6 md:p-12 lg:p-16">
-            <div className="max-w-4xl">
-              {/* Address */}
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-3">
-                {property.address} · {property.city}, {property.state}
-              </h1>
+        {/* VALUE STATEMENT & CTA */}
+        <section className="bg-background border-b border-border">
+          <div className="container mx-auto px-6 py-8 md:py-12 max-w-4xl">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-4">
+              A data-driven look at one of Queensbury's most flexible land opportunities.
+            </p>
+            <p className="text-base text-muted-foreground/80 max-w-2xl mb-8">
+              This page is designed to help serious buyers understand <strong className="text-foreground">why this property works</strong> — not just what it is.
+            </p>
 
-              {/* Price & Acreage Line */}
-              <p className="text-2xl md:text-3xl font-semibold text-primary mb-6">
-                {property.acreage} Acres | {formatPrice(property.price)}
-              </p>
-
-              {/* Value Statement */}
-              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-4">
-                A data-driven look at one of Queensbury's most flexible land opportunities.
-              </p>
-              <p className="text-base text-muted-foreground/80 max-w-2xl mb-8">
-                This page is designed to help serious buyers understand <strong className="text-foreground">why this property works</strong> — not just what it is.
-              </p>
-
-              {/* CTA */}
-              <Button 
-                size="lg" 
-                className="text-lg px-8 py-6 rounded-full font-bold"
-                asChild
-              >
-                <a href="#intelligence-report">
-                  <FileText className="h-5 w-5 mr-2" />
-                  Get the Full Property Intelligence Report (Free)
-                </a>
-              </Button>
-              <p className="text-sm text-muted-foreground mt-3">
-                Includes pricing context, land comps, tax data, and buyer strategies.
-              </p>
-            </div>
+            {/* CTA */}
+            <Button 
+              size="lg" 
+              className="text-lg px-8 py-6 rounded-full font-bold"
+              asChild
+            >
+              <a href="#intelligence-report">
+                <FileText className="h-5 w-5 mr-2" />
+                Get the Full Property Intelligence Report (Free)
+              </a>
+            </Button>
+            <p className="text-sm text-muted-foreground mt-3">
+              Includes pricing context, land comps, tax data, and buyer strategies.
+            </p>
           </div>
         </section>
 
