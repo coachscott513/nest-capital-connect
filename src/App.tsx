@@ -51,6 +51,7 @@ import Delmar from "./pages/Delmar";
 import PropertyListing from "./pages/PropertyListing";
 import ElsmereProperty from "./pages/137AElsmereAve";
 import RidgeRoadQueensbury from "./pages/RidgeRoadQueensbury";
+import LaveryDriveDelmar from "./pages/LaveryDriveDelmar";
 import Reviews from "./pages/Reviews";
 import MarketPage from "./pages/MarketPage";
 import StrategyPage from "./pages/StrategyPage";
@@ -173,7 +174,7 @@ const App = () => {
           <Route path="/listings/:mlsId" element={<PropertyListing />} />
           <Route path="/listings/137a-elsmere-ave-delmar-ny" element={<ElsmereProperty />} />
           <Route path="/listings/1999-ridge-road-queensbury-ny" element={<RidgeRoadQueensbury />} />
-          
+          <Route path="/listings/22-lavery-drive-delmar-ny" element={<LaveryDriveDelmar />} />
           {/* Markets Section */}
           <Route path="/markets" element={<Markets />} />
           <Route path="/markets/:town" element={<SingleFamilyMarket />} />
