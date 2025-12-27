@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import PropertyChatDialog from "@/components/PropertyChatDialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -887,9 +888,18 @@ const RidgeRoadQueensbury = () => {
                       </div>
                     ))}
                   </div>
-                  <Button asChild className="w-full rounded-full">
-                    <Link to="/dealdesk">Start a Conversation</Link>
-                  </Button>
+                  <PropertyChatDialog 
+                    propertyAddress={property.fullAddress}
+                    propertyUrl={window.location.href}
+                  >
+                    <Button className="w-full rounded-full">
+                      <MessageSquare className="h-4 w-4 mr-2" />
+                      Start a Conversation
+                    </Button>
+                  </PropertyChatDialog>
+                  <p className="text-xs text-muted-foreground text-center mt-2">
+                    Typical response time: under 2 minutes
+                  </p>
                 </div>
               </div>
             </div>
