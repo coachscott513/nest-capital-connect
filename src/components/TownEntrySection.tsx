@@ -2,15 +2,15 @@ import { Link } from "react-router-dom";
 import { MapPin, ChevronRight } from "lucide-react";
 
 const towns = [
-  { name: "Delmar", href: "/delmar", description: "Bethlehem Central Schools" },
-  { name: "Niskayuna", href: "/niskayuna-real-estate", description: "Top-Rated Schools" },
-  { name: "Voorheesville", href: "/voorheesville-real-estate", description: "Rural Character" },
-  { name: "Clifton Park", href: "/clifton-park-real-estate", description: "Growing Suburb" },
+  { name: "Delmar", href: "/towns/delmar", description: "Bethlehem Central Schools" },
+  { name: "Niskayuna", href: "/towns/niskayuna", description: "Top-Rated Schools" },
+  { name: "Voorheesville", href: "/towns/voorheesville", description: "Rural Character" },
+  { name: "Clifton Park", href: "/towns/clifton-park", description: "Growing Suburb" },
+  { name: "Amsterdam", href: "/towns/amsterdam", description: "Affordable Opportunity" },
   { name: "Albany", href: "/albany-real-estate", description: "Capital City" },
   { name: "Troy", href: "/troy-real-estate", description: "Collar City" },
   { name: "Schenectady", href: "/schenectady-real-estate", description: "Electric City" },
   { name: "Saratoga", href: "/saratoga-real-estate", description: "Springs & Racing" },
-  { name: "Amsterdam", href: "/amsterdam-real-estate", description: "Affordable Opportunity" },
 ];
 
 const TownEntrySection = () => {
