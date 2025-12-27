@@ -47,6 +47,42 @@ export type Database = {
         }
         Relationships: []
       }
+      intel_report_leads: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          page_url: string | null
+          phone: string | null
+          referrer: string | null
+          report_slug: string
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          page_url?: string | null
+          phone?: string | null
+          referrer?: string | null
+          report_slug: string
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          page_url?: string | null
+          phone?: string | null
+          referrer?: string | null
+          report_slug?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           bedrooms: string | null
