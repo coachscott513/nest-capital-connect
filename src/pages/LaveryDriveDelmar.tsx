@@ -31,8 +31,19 @@ import {
   MessageSquare,
   Home,
   GraduationCap,
-  MapPinned
+  MapPinned,
+  ShoppingCart,
+  Utensils,
+  Building2,
+  Bike
 } from "lucide-react";
+
+// Import property photos
+import laveryFront from "@/assets/22-lavery-drive-front.jpg";
+import laveryBackyard from "@/assets/22-lavery-drive-backyard.jpg";
+import laveryLivingRoom1 from "@/assets/22-lavery-drive-living-room-1.jpg";
+import laveryLivingRoom2 from "@/assets/22-lavery-drive-living-room-2.jpg";
+import laveryDiningRoom from "@/assets/22-lavery-drive-dining-room.jpg";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -71,10 +82,11 @@ const LaveryDriveDelmar = () => {
     latitude: 42.6199,
     longitude: -73.8323,
     photos: [
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&h=900&fit=crop",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&h=900&fit=crop",
-      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&h=900&fit=crop",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&h=900&fit=crop",
+      laveryFront,
+      laveryBackyard,
+      laveryLivingRoom1,
+      laveryLivingRoom2,
+      laveryDiningRoom,
     ],
     googleEarthLink: `https://earth.google.com/web/@42.6199,-73.8323,200a,500d,35y,0h,45t,0r`,
     boldtrailUrl: "https://www.scottalvarez.com/property/22-lavery-drive-delmar-ny"
@@ -386,8 +398,101 @@ const LaveryDriveDelmar = () => {
           </div>
         </section>
 
-        {/* SECTION 4: BUYER STRATEGY NOTES */}
+        {/* AREA LANDMARKS & FEATURES */}
         <section className="py-20 md:py-24 bg-card/30 border-b border-border">
+          <div className="container mx-auto px-6 max-w-5xl">
+            <p className="text-primary font-semibold tracking-widest uppercase mb-3">What's Nearby</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-8">
+              Delmar Area Landmarks & Features
+            </h2>
+            <p className="text-lg text-muted-foreground mb-10 max-w-3xl">
+              Lavery Drive sits in the heart of Delmar, with easy access to the amenities that make this community one of the Capital District's most sought-after.
+            </p>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Schools */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <GraduationCap className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Bethlehem Central Schools</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Highly-rated district with Elsmere Elementary, BCMS, and BCHS all within a short drive.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Shopping */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <ShoppingCart className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Delaware Plaza</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Less than 1 mile — Hannaford, CVS, restaurants, and local shops for daily convenience.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Dining */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Utensils className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Four Corners District</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Delmar's walkable village center with restaurants, cafes, and the beloved Perfect Blend.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Recreation */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Trees className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Five Rivers Environmental Center</h3>
+                  <p className="text-sm text-muted-foreground">
+                    450 acres of trails, wetlands, and wildlife education just minutes away.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Rail Trail */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Bike className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Albany County Rail Trail</h3>
+                  <p className="text-sm text-muted-foreground">
+                    9+ mile paved trail for biking, running, and walking — accessible from the neighborhood.
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Town Services */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Building2 className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Town of Bethlehem Services</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Library, town park, community center, and excellent municipal services nearby.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 4: BUYER STRATEGY NOTES */}
+        <section className="py-20 md:py-24 border-b border-border">
           <div className="container mx-auto px-6 max-w-4xl">
             <p className="text-primary font-semibold tracking-widest uppercase mb-3">How Smart Buyers Evaluate This Home</p>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-8">
