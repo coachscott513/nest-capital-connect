@@ -48,6 +48,11 @@ import PineHillsAlbany from "./pages/PineHillsAlbany";
 import DelmarHomesForSale from "./pages/DelmarHomesForSale";
 import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 import Delmar from "./pages/Delmar";
+import DelmarIntelligence from "./pages/DelmarIntelligence";
+import NiskayunaIntelligence from "./pages/NiskayunaIntelligence";
+import VoorheesvilleIntelligence from "./pages/VoorheesvilleIntelligence";
+import CliftonParkIntelligence from "./pages/CliftonParkIntelligence";
+import AmsterdamIntelligence from "./pages/AmsterdamIntelligence";
 import PropertyListing from "./pages/PropertyListing";
 import ElsmereProperty from "./pages/137AElsmereAve";
 import RidgeRoadQueensbury from "./pages/RidgeRoadQueensbury";
@@ -162,6 +167,13 @@ const App = () => {
           <Route path="/delmar-homes-for-sale" element={<DelmarHomesForSale />} />
           <Route path="/delmar-market-insights" element={<DelmarMarketInsights />} />
           <Route path="/delmar" element={<Delmar />} />
+          
+          {/* Town Intelligence Pages */}
+          <Route path="/towns/delmar" element={<DelmarIntelligence />} />
+          <Route path="/towns/niskayuna" element={<NiskayunaIntelligence />} />
+          <Route path="/towns/voorheesville" element={<VoorheesvilleIntelligence />} />
+          <Route path="/towns/clifton-park" element={<CliftonParkIntelligence />} />
+          <Route path="/towns/amsterdam" element={<AmsterdamIntelligence />} />
           
           {/* Capital District Hub Pages */}
           {/* Capital District Hub Pages - All Towns */}
