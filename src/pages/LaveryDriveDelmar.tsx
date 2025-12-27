@@ -199,33 +199,37 @@ const LaveryDriveDelmar = () => {
         </section>
 
         {/* PHOTO CAROUSEL */}
-        <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
-          {/* Background Image */}
-          <img
-            src={property.photos[currentPhotoIndex]}
-            alt={`${property.address} - Photo ${currentPhotoIndex + 1}`}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+        <section className="relative bg-muted/30">
+          <div className="container mx-auto px-4 py-6">
+            <div className="relative aspect-[4/3] md:aspect-[16/9] max-h-[70vh] overflow-hidden rounded-xl bg-muted">
+              {/* Main Image */}
+              <img
+                src={property.photos[currentPhotoIndex]}
+                alt={`${property.address} - Photo ${currentPhotoIndex + 1}`}
+                className="w-full h-full object-contain"
+              />
 
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevPhoto}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-primary hover:border-primary transition-all group"
-            aria-label="Previous photo"
-          >
-            <ChevronLeft className="h-6 w-6 text-foreground group-hover:text-primary-foreground" />
-          </button>
-          <button
-            onClick={nextPhoto}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-primary hover:border-primary transition-all group"
-            aria-label="Next photo"
-          >
-            <ChevronRight className="h-6 w-6 text-foreground group-hover:text-primary-foreground" />
-          </button>
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevPhoto}
+                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-primary hover:border-primary transition-all group"
+                aria-label="Previous photo"
+              >
+                <ChevronLeft className="h-6 w-6 text-foreground group-hover:text-primary-foreground" />
+              </button>
+              <button
+                onClick={nextPhoto}
+                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border hover:bg-primary hover:border-primary transition-all group"
+                aria-label="Next photo"
+              >
+                <ChevronRight className="h-6 w-6 text-foreground group-hover:text-primary-foreground" />
+              </button>
 
-          {/* Photo Counter */}
-          <div className="absolute top-6 right-6 z-20 px-4 py-2 rounded-full bg-background/80 backdrop-blur-sm border border-border">
-            <span className="text-sm font-medium">{currentPhotoIndex + 1} / {property.photos.length}</span>
+              {/* Photo Counter */}
+              <div className="absolute top-6 right-6 z-20 px-4 py-2 rounded-full bg-background/80 backdrop-blur-sm border border-border">
+                <span className="text-sm font-medium">{currentPhotoIndex + 1} / {property.photos.length}</span>
+              </div>
+            </div>
           </div>
         </section>
 
