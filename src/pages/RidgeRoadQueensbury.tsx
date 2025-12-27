@@ -40,7 +40,21 @@ const RidgeRoadQueensbury = () => {
     email: "",
     phone: ""
   });
+  const [otherPropertyForm, setOtherPropertyForm] = useState({
+    address: "",
+    name: "",
+    email: "",
+    phone: ""
+  });
+  const [buyerIntakeForm, setBuyerIntakeForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: ""
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isOtherPropertySubmitting, setIsOtherPropertySubmitting] = useState(false);
+  const [isIntakeSubmitting, setIsIntakeSubmitting] = useState(false);
 
   const property = {
     address: "1999 Ridge Road",
@@ -532,6 +546,281 @@ const RidgeRoadQueensbury = () => {
                 </a>
               </Button>
             </div>
+          </div>
+        </section>
+
+        {/* SECTION: LOOKING AT OTHER PROPERTIES? */}
+        <section className="py-20 md:py-24 bg-background border-b border-border">
+          <div className="container mx-auto px-6 max-w-4xl">
+            <div className="text-center mb-10">
+              <p className="text-primary font-semibold tracking-widest uppercase mb-3">Compare Apples to Apples</p>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+                Looking at Other Properties Too?
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Get the same level of intelligence on any property you're considering — even if it's not listed here.
+              </p>
+            </div>
+
+            <div className="prose prose-lg max-w-none text-center text-muted-foreground mb-10">
+              <p>
+                Most buyers compare multiple properties before making a decision.
+                Instead of guessing, you can request the same data-driven breakdown for any address you're evaluating.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 mb-10">
+              <div className="bg-card border border-border rounded-2xl p-6">
+                <h3 className="text-xl font-bold mb-4">We'll Provide:</h3>
+                <ul className="space-y-3">
+                  {[
+                    "Pricing context & comps",
+                    "Market positioning",
+                    "Tax and ownership insights",
+                    "Strategy notes (not sales talk)"
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-primary flex-shrink-0" />
+                      <span className="text-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <form 
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      setIsOtherPropertySubmitting(true);
+                      try {
+                        const { error } = await supabase.from("leads").insert({
+                          name: otherPropertyForm.name,
+                          email: otherPropertyForm.email,
+                          phone: otherPropertyForm.phone || null,
+                          message: `Property Intelligence Report Request for: ${otherPropertyForm.address}`,
+                          type: "other_property_intelligence",
+                          location: otherPropertyForm.address
+                        });
+                        if (error) throw error;
+                        toast.success("Request submitted! We'll analyze this property and get back to you.");
+                        setOtherPropertyForm({ address: "", name: "", email: "", phone: "" });
+                      } catch (error) {
+                        console.error("Form submission error:", error);
+                        toast.error("Something went wrong. Please try again.");
+                      } finally {
+                        setIsOtherPropertySubmitting(false);
+                      }
+                    }}
+                    className="space-y-4"
+                  >
+                    <Input
+                      placeholder="Paste any address here"
+                      value={otherPropertyForm.address}
+                      onChange={(e) => setOtherPropertyForm({ ...otherPropertyForm, address: e.target.value })}
+                      required
+                      className="bg-background border-border"
+                    />
+                    <Input
+                      placeholder="Full Name"
+                      value={otherPropertyForm.name}
+                      onChange={(e) => setOtherPropertyForm({ ...otherPropertyForm, name: e.target.value })}
+                      required
+                      className="bg-background border-border"
+                    />
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      value={otherPropertyForm.email}
+                      onChange={(e) => setOtherPropertyForm({ ...otherPropertyForm, email: e.target.value })}
+                      required
+                      className="bg-background border-border"
+                    />
+                    <Input
+                      type="tel"
+                      placeholder="Phone (optional)"
+                      value={otherPropertyForm.phone}
+                      onChange={(e) => setOtherPropertyForm({ ...otherPropertyForm, phone: e.target.value })}
+                      className="bg-background border-border"
+                    />
+                    <Button 
+                      type="submit" 
+                      size="lg" 
+                      className="w-full rounded-full font-bold"
+                      disabled={isOtherPropertySubmitting}
+                    >
+                      {isOtherPropertySubmitting ? "Submitting..." : "Get the Intelligence Report"}
+                    </Button>
+                  </form>
+                  <p className="text-xs text-muted-foreground mt-4 text-center">
+                    Your information is only used to deliver property insights and help you make informed decisions. No spam. No pressure.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <p className="text-center text-sm text-muted-foreground italic">
+              Every property on Capital District Nest can be evaluated the same way — so you're always comparing apples to apples.
+            </p>
+          </div>
+        </section>
+
+        {/* SECTION: NEED HELP NARROWING DOWN YOUR SEARCH? */}
+        <section className="py-20 md:py-24 bg-card/30 border-b border-border">
+          <div className="container mx-auto px-6 max-w-5xl">
+            <div className="text-center mb-10">
+              <p className="text-primary font-semibold tracking-widest uppercase mb-3">Buyer Guidance</p>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+                Not Sure Which Properties Make the Most Sense?
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                We help buyers narrow their search using data, not guesswork.
+              </p>
+            </div>
+
+            <div className="prose prose-lg max-w-none text-center text-muted-foreground mb-10">
+              <p>
+                If you're early in the process — or overwhelmed by too many options — we can help you focus on properties that actually align with your goals.
+              </p>
+            </div>
+
+            <div className="bg-card border border-border rounded-2xl p-8 mb-10">
+              <h3 className="text-xl font-bold mb-6">This is ideal if you:</h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  "Are comparing multiple towns or neighborhoods",
+                  "Want to stay within a specific payment range",
+                  "Are balancing land, location, and long-term value",
+                  "Want clarity before making offers"
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span className="text-foreground">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Option 1: Quick Buyer Intake */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <div className="text-center mb-4">
+                    <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                      <Users className="h-7 w-7 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Quick Buyer Intake</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Tell us what you're looking for and we'll point you in the right direction.
+                    </p>
+                  </div>
+                  <form 
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      setIsIntakeSubmitting(true);
+                      try {
+                        const { error } = await supabase.from("leads").insert({
+                          name: buyerIntakeForm.name,
+                          email: buyerIntakeForm.email,
+                          phone: buyerIntakeForm.phone || null,
+                          message: buyerIntakeForm.message || "Buyer intake - help narrowing search",
+                          type: "buyer_intake"
+                        });
+                        if (error) throw error;
+                        toast.success("Got it! We'll reach out shortly to help narrow your search.");
+                        setBuyerIntakeForm({ name: "", email: "", phone: "", message: "" });
+                      } catch (error) {
+                        console.error("Form submission error:", error);
+                        toast.error("Something went wrong. Please try again.");
+                      } finally {
+                        setIsIntakeSubmitting(false);
+                      }
+                    }}
+                    className="space-y-4"
+                  >
+                    <Input
+                      placeholder="Full Name"
+                      value={buyerIntakeForm.name}
+                      onChange={(e) => setBuyerIntakeForm({ ...buyerIntakeForm, name: e.target.value })}
+                      required
+                      className="bg-background border-border"
+                    />
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      value={buyerIntakeForm.email}
+                      onChange={(e) => setBuyerIntakeForm({ ...buyerIntakeForm, email: e.target.value })}
+                      required
+                      className="bg-background border-border"
+                    />
+                    <Input
+                      type="tel"
+                      placeholder="Phone (optional)"
+                      value={buyerIntakeForm.phone}
+                      onChange={(e) => setBuyerIntakeForm({ ...buyerIntakeForm, phone: e.target.value })}
+                      className="bg-background border-border"
+                    />
+                    <Textarea
+                      placeholder="What are you looking for? (areas, price range, property type, timeline)"
+                      value={buyerIntakeForm.message}
+                      onChange={(e) => setBuyerIntakeForm({ ...buyerIntakeForm, message: e.target.value })}
+                      className="bg-background border-border min-h-[100px]"
+                    />
+                    <Button 
+                      type="submit" 
+                      size="lg" 
+                      className="w-full rounded-full font-bold"
+                      disabled={isIntakeSubmitting}
+                    >
+                      {isIntakeSubmitting ? "Submitting..." : "Help Me Narrow My Search"}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+
+              {/* Option 2: Strategy Call */}
+              <Card className="bg-card border-border">
+                <CardContent className="p-6 flex flex-col h-full">
+                  <div className="text-center flex-1">
+                    <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                      <Calendar className="h-7 w-7 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">10-Minute Strategy Call</h3>
+                    <p className="text-sm text-muted-foreground mb-6">
+                      A short, no-pressure conversation to help you prioritize your search.
+                    </p>
+                    <div className="space-y-4 text-left mb-8">
+                      <div className="flex items-start gap-3">
+                        <MessageSquare className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                        <span className="text-sm text-muted-foreground">Ask questions specific to your situation</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Target className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                        <span className="text-sm text-muted-foreground">Get clarity on what makes sense for you</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <Compass className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                        <span className="text-sm text-muted-foreground">Leave with a focused next step</span>
+                      </div>
+                    </div>
+                  </div>
+                  <Button 
+                    size="lg" 
+                    className="w-full rounded-full font-bold"
+                    asChild
+                  >
+                    <a href="tel:+15186762347">
+                      <Phone className="h-5 w-5 mr-2" />
+                      Schedule a Quick Call
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+
+            <p className="text-center text-sm text-muted-foreground mt-8">
+              <strong className="text-foreground">Buyers who start with a clear strategy make better offers</strong> — and avoid costly mistakes.
+            </p>
           </div>
         </section>
 
