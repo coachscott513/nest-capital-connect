@@ -537,7 +537,7 @@ const LaveryDriveDelmar = () => {
         </section>
 
         {/* SECTION 5: NEXT STEPS FOR BUYERS / LEAD FORM */}
-        <section id="intelligence-report" className="py-20 md:py-24 border-b border-border">
+        <section id="intelligence-report" className="py-20 md:py-24 border-b border-border scroll-mt-24">
           <div className="container mx-auto px-6 max-w-5xl">
             <div className="text-center mb-12">
               <p className="text-primary font-semibold tracking-widest uppercase mb-3">Next Steps</p>
