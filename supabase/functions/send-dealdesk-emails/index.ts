@@ -44,7 +44,7 @@ const handler = async (req: Request): Promise<Response> => {
           Authorization: `Bearer ${RESEND_API_KEY}`,
         },
         body: JSON.stringify({
-          from: "Capital Deal Desk <onboarding@resend.dev>",
+          from: "Capital Deal Desk <deals@capitaldistrictnest.com>",
           to: [data.email],
           subject: "We received your Investor Snapshot request",
           html: `
@@ -153,7 +153,7 @@ const handler = async (req: Request): Promise<Response> => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Capital Deal Desk <onboarding@resend.dev>",
+        from: "Capital Deal Desk <deals@capitaldistrictnest.com>",
         to: [ADMIN_EMAIL],
         subject: adminSubject,
         html: adminHtml,

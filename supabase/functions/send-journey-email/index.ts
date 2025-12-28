@@ -59,7 +59,7 @@ const handler = async (req: Request): Promise<Response> => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Capital District Nest <onboarding@resend.dev>",
+        from: "Capital District Nest <hello@capitaldistrictnest.com>",
         to: [email],
         subject: subject,
         html: `
@@ -87,7 +87,7 @@ const handler = async (req: Request): Promise<Response> => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Capital District Nest <onboarding@resend.dev>",
+        from: "Capital District Nest <hello@capitaldistrictnest.com>",
         to: ["scott@capitaldistrictnest.com"],
         subject: `NEW Lead Magnet Request — ${journeyType.toUpperCase()} Journey`,
         html: `
