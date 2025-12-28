@@ -37,6 +37,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send confirmation email to user (skip for Pro interest)
     let userEmailResult = null;
     if (!isProInterest) {
+      // NOTE: Using Resend-managed sender while custom domain verification propagates
       const userEmailResponse = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
@@ -44,7 +45,8 @@ const handler = async (req: Request): Promise<Response> => {
           Authorization: `Bearer ${RESEND_API_KEY}`,
         },
         body: JSON.stringify({
-          from: "Capital Deal Desk <deals@capitaldistrictnest.com>",
+          from: "Capital Deal Desk <onboarding@resend.dev>",
+          reply_to: "deals@capitaldistrictnest.com",
           to: [data.email],
           subject: "We received your Investor Snapshot request",
           html: `
@@ -145,7 +147,7 @@ const handler = async (req: Request): Promise<Response> => {
         </div>
       `;
 
-    // Send admin notification
+    // NOTE: Using Resend-managed sender while custom domain verification propagates
     const adminEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -153,7 +155,8 @@ const handler = async (req: Request): Promise<Response> => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Capital Deal Desk <deals@capitaldistrictnest.com>",
+        from: "Capital Deal Desk <onboarding@resend.dev>",
+        reply_to: "deals@capitaldistrictnest.com",
         to: [ADMIN_EMAIL],
         subject: adminSubject,
         html: adminHtml,
