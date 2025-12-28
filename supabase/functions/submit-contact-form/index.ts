@@ -252,6 +252,7 @@ const handler = async (req: Request): Promise<Response> => {
       try {
         const emailHtml = generateEmailHtml(formData);
         
+        // Send admin notification
         const emailResponse = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
@@ -259,8 +260,8 @@ const handler = async (req: Request): Promise<Response> => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: 'Capital District Real Estate <onboarding@resend.dev>',
-            to: ['coachscott513@gmail.com'],
+            from: 'Capital District Nest <hello@capitaldistrictnest.com>',
+            to: ['scott@capitaldistrictnest.com'],
             subject: `🎉 New ${formData.type} lead from ${formData.name}`,
             html: emailHtml,
           }),
@@ -268,9 +269,50 @@ const handler = async (req: Request): Promise<Response> => {
 
         if (!emailResponse.ok) {
           const errorText = await emailResponse.text();
-          console.error('Email sending error:', errorText);
+          console.error('Admin email sending error:', errorText);
         } else {
-          console.log('Email notification sent successfully');
+          console.log('Admin email notification sent successfully');
+        }
+
+        // Send confirmation email to subscriber (for newsletter types)
+        if (formData.type.includes('homes') || formData.type === 'newsletter') {
+          const confirmationResponse = await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${resendApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              from: 'Capital District Nest <hello@capitaldistrictnest.com>',
+              to: [formData.email],
+              subject: `Welcome to Capital District Nest Market Updates!`,
+              html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                  <h1 style="color: #1a1a1a;">You're In! 🏡</h1>
+                  <p>Hi ${formData.name},</p>
+                  <p>Thanks for subscribing to our market updates. You'll receive:</p>
+                  <ul style="color: #444; line-height: 1.8;">
+                    <li>New listings before they hit the major sites</li>
+                    <li>Price drops and market insights</li>
+                    <li>Investment opportunities and cash flow deals</li>
+                  </ul>
+                  <p>Have questions? Just reply to this email or text Scott at <strong>(518) 676-2347</strong>.</p>
+                  <p style="margin-top: 24px;">Best,<br>The Capital District Nest Team</p>
+                  <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">
+                  <p style="color: #888; font-size: 12px;">
+                    <a href="https://capitaldistrictnest.com" style="color: #2563eb;">capitaldistrictnest.com</a>
+                  </p>
+                </div>
+              `,
+            }),
+          });
+
+          if (!confirmationResponse.ok) {
+            const errorText = await confirmationResponse.text();
+            console.error('Subscriber confirmation email error:', errorText);
+          } else {
+            console.log('Subscriber confirmation email sent successfully');
+          }
         }
       } catch (emailError) {
         console.error('Error sending email notification:', emailError);
