@@ -65,7 +65,7 @@ export const niskayunaData: TownData = {
   slug: "niskayuna",
   schoolDistrict: "Niskayuna Central School District",
   description: "Homes, market activity, and local insights for Niskayuna, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Niskayuna&pak=city%3Ag30_drf96hy&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Niskayuna+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3Ab5QBqXEBDeU4HJVijxZS&sortby=listings.price+ASC&rtype=map",
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "18", change: "steady market" },
     { label: "Median Sale Price", value: "$385,000", change: "+3.8% YoY" },
