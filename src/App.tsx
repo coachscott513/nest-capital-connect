@@ -51,6 +51,7 @@ import Delmar from "./pages/Delmar";
 import DelmarIntelligence from "./pages/DelmarIntelligence";
 import NiskayunaIntelligence from "./pages/NiskayunaIntelligence";
 import VoorheesvilleIntelligence from "./pages/VoorheesvilleIntelligence";
+import VoorheesvilleHomesForSale from "./pages/VoorheesvilleHomesForSale";
 import CliftonParkIntelligence from "./pages/CliftonParkIntelligence";
 import AmsterdamIntelligence from "./pages/AmsterdamIntelligence";
 import PropertyListing from "./pages/PropertyListing";
@@ -172,6 +173,7 @@ const App = () => {
           <Route path="/towns/delmar" element={<DelmarIntelligence />} />
           <Route path="/towns/niskayuna" element={<NiskayunaIntelligence />} />
           <Route path="/towns/voorheesville" element={<VoorheesvilleIntelligence />} />
+          <Route path="/voorheesville-homes-for-sale" element={<VoorheesvilleHomesForSale />} />
           <Route path="/towns/clifton-park" element={<CliftonParkIntelligence />} />
           <Route path="/towns/amsterdam" element={<AmsterdamIntelligence />} />
           
