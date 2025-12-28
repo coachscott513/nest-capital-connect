@@ -199,11 +199,20 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
             </div>
 
             <Card className="overflow-hidden border-2 border-primary/20">
-              <div className="aspect-video bg-muted">
+              <div className="aspect-video bg-muted relative">
                 <img 
                   src={town.featuredProperty.image} 
                   alt={town.featuredProperty.address}
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const parent = target.parentElement;
+                    if (parent) {
+                      parent.innerHTML = `<div class="w-full h-full flex items-center justify-center bg-primary/5"><svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-primary/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>`;
+                    }
+                  }}
                 />
               </div>
               <CardContent className="p-6 text-center">
@@ -373,8 +382,11 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Recently Sold in {town.name}
               </h2>
-              <p className="text-muted-foreground text-lg">
+              <p className="text-muted-foreground text-lg mb-2">
                 See what homes are actually selling for in {town.name}.
+              </p>
+              <p className="text-sm text-muted-foreground/70">
+                Updated monthly • Last refresh: December 2025
               </p>
             </div>
 

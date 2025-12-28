@@ -7,16 +7,16 @@ export const delmarData: TownData = {
   description: "Homes, market activity, and local insights — all built specifically for Delmar, NY.",
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "24", change: "active market" },
-    { label: "Median Sale Price", value: "$475,000", change: "+4.2% YoY" },
-    { label: "Days on Market", value: "18", change: "-3 days" },
+    { label: "Median Sale Price", value: "$485,000", change: "+4.2% YoY" },
+    { label: "Days on Market", value: "16", change: "-3 days" },
     { label: "Inventory Level", value: "Low", change: "seller's market" },
   ],
   recentlySold: [
-    { address: "142 Elsmere Ave", price: "$425,000", beds: 3, baths: 2, date: "Dec 2024" },
-    { address: "38 Fernbank Ave", price: "$512,000", beds: 4, baths: 2.5, date: "Dec 2024" },
-    { address: "19 Greenleaf Dr", price: "$389,000", beds: 3, baths: 1.5, date: "Nov 2024" },
-    { address: "85 Roweland Ave", price: "$445,000", beds: 4, baths: 2, date: "Nov 2024" },
-    { address: "211 Murray Ave", price: "$525,000", beds: 4, baths: 2.5, date: "Nov 2024" },
+    { address: "142 Elsmere Ave", price: "$435,000", beds: 3, baths: 2, date: "Dec 2025" },
+    { address: "38 Fernbank Ave", price: "$525,000", beds: 4, baths: 2.5, date: "Nov 2025" },
+    { address: "19 Greenleaf Dr", price: "$398,000", beds: 3, baths: 1.5, date: "Nov 2025" },
+    { address: "85 Roweland Ave", price: "$458,000", beds: 4, baths: 2, date: "Oct 2025" },
+    { address: "211 Murray Ave", price: "$545,000", beds: 4, baths: 2.5, date: "Oct 2025" },
   ],
   localInsights: {
     schoolOverview: "Bethlehem Central School District consistently ranks among the top districts in the Capital Region. High test scores, strong extracurriculars, and excellent college placement rates make this a top draw for families.",
@@ -26,7 +26,7 @@ export const delmarData: TownData = {
     renovationDemand: "Move-in-ready homes command premium prices. However, there's growing interest in renovations as buyers accept older homes to get into the district. Kitchen and bath updates offer the best ROI.",
   },
   featuredProperty: {
-    image: "/src/assets/22-lavery-drive-front.jpg",
+    image: "/assets/22-lavery-drive-front.jpg",
     address: "22 Lavery Drive, Delmar",
     link: "/listings/22-lavery-drive-delmar-ny",
   },
@@ -44,9 +44,9 @@ export const niskayunaData: TownData = {
     { label: "Inventory Level", value: "Low", change: "competitive" },
   ],
   recentlySold: [
-    { address: "2145 Nott St", price: "$395,000", beds: 4, baths: 2.5, date: "Dec 2024" },
-    { address: "1876 Balltown Rd", price: "$342,000", beds: 3, baths: 2, date: "Dec 2024" },
-    { address: "456 Van Antwerp Rd", price: "$428,000", beds: 4, baths: 2.5, date: "Nov 2024" },
+    { address: "2145 Nott St", price: "$408,000", beds: 4, baths: 2.5, date: "Dec 2025" },
+    { address: "1876 Balltown Rd", price: "$355,000", beds: 3, baths: 2, date: "Nov 2025" },
+    { address: "456 Van Antwerp Rd", price: "$445,000", beds: 4, baths: 2.5, date: "Nov 2025" },
   ],
   localInsights: {
     schoolOverview: "Niskayuna Central School District is consistently ranked among the best in New York State. Known for strong STEM programs, competitive academics, and excellent college preparation.",
@@ -69,8 +69,8 @@ export const voorheesvilleData: TownData = {
     { label: "Inventory Level", value: "Very Low", change: "high demand" },
   ],
   recentlySold: [
-    { address: "45 Maple Ave", price: "$298,000", beds: 3, baths: 1.5, date: "Dec 2024" },
-    { address: "112 Altamont Rd", price: "$385,000", beds: 4, baths: 2, date: "Nov 2024" },
+    { address: "45 Maple Ave", price: "$315,000", beds: 3, baths: 1.5, date: "Dec 2025" },
+    { address: "112 Altamont Rd", price: "$398,000", beds: 4, baths: 2, date: "Nov 2025" },
   ],
   localInsights: {
     schoolOverview: "Voorheesville Central School District offers a small-town educational experience with strong academics. Low student-to-teacher ratios and engaged community support.",
@@ -93,10 +93,10 @@ export const cliftonParkData: TownData = {
     { label: "Inventory Level", value: "Low", change: "competitive" },
   ],
   recentlySold: [
-    { address: "28 Huntwood Dr", price: "$485,000", beds: 4, baths: 2.5, date: "Dec 2024" },
-    { address: "156 Moe Rd", price: "$395,000", beds: 3, baths: 2, date: "Dec 2024" },
-    { address: "892 Route 146", price: "$525,000", beds: 5, baths: 3, date: "Nov 2024" },
-    { address: "34 Longwood Dr", price: "$445,000", beds: 4, baths: 2.5, date: "Nov 2024" },
+    { address: "28 Huntwood Dr", price: "$498,000", beds: 4, baths: 2.5, date: "Dec 2025" },
+    { address: "156 Moe Rd", price: "$410,000", beds: 3, baths: 2, date: "Nov 2025" },
+    { address: "892 Route 146", price: "$545,000", beds: 5, baths: 3, date: "Nov 2025" },
+    { address: "34 Longwood Dr", price: "$465,000", beds: 4, baths: 2.5, date: "Oct 2025" },
   ],
   localInsights: {
     schoolOverview: "Shenendehowa Central School District is one of the largest and highest-performing districts in the region. Known for athletics, academics, and extensive extracurricular programs.",
@@ -119,9 +119,9 @@ export const amsterdamData: TownData = {
     { label: "Inventory Level", value: "Moderate", change: "balanced" },
   ],
   recentlySold: [
-    { address: "85 Division St", price: "$125,000", beds: 3, baths: 1, date: "Dec 2024" },
-    { address: "234 Market St", price: "$168,000", beds: 4, baths: 2, date: "Dec 2024" },
-    { address: "67 Church St", price: "$142,000", beds: 3, baths: 1.5, date: "Nov 2024" },
+    { address: "85 Division St", price: "$135,000", beds: 3, baths: 1, date: "Dec 2025" },
+    { address: "234 Market St", price: "$178,000", beds: 4, baths: 2, date: "Nov 2025" },
+    { address: "67 Church St", price: "$155,000", beds: 3, baths: 1.5, date: "Nov 2025" },
   ],
   localInsights: {
     schoolOverview: "Amsterdam City School District serves a diverse community. Recent investments in facilities and programs. Growing opportunities for student success.",
