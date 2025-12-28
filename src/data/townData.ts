@@ -26,11 +26,6 @@ export const delmarData: TownData = {
     buyerDemand: "Strong demand from families relocating within the Capital Region and NYC transplants seeking top schools. Inventory remains tight, with well-priced homes selling quickly.",
     renovationDemand: "Move-in-ready homes command premium prices. However, there's growing interest in renovations as buyers accept older homes to get into the district. Kitchen and bath updates offer the best ROI.",
   },
-  featuredProperty: {
-    image: "/assets/22-lavery-drive-front.jpg",
-    address: "22 Lavery Drive, Delmar",
-    link: "/listings/22-lavery-drive-delmar-ny",
-  },
 };
 
 export const troyData: TownData = {
