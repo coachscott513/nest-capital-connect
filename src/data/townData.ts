@@ -145,7 +145,7 @@ export const schenectadyData: TownData = {
   slug: "schenectady",
   schoolDistrict: "Schenectady City School District",
   description: "Homes, market activity, and local insights for Schenectady, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady+City+SD&pak=scho%3Ag30_5qr8dhr&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady+City+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3A3YcAqXEBrfxrYfk40-yv&sortby=listings.price+ASC&rtype=map",
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "42", change: "active market" },
     { label: "Median Sale Price", value: "$165,000", change: "+7.5% YoY" },
