@@ -54,6 +54,17 @@ import VoorheesvilleIntelligence from "./pages/VoorheesvilleIntelligence";
 import VoorheesvilleHomesForSale from "./pages/VoorheesvilleHomesForSale";
 import CliftonParkIntelligence from "./pages/CliftonParkIntelligence";
 import AmsterdamIntelligence from "./pages/AmsterdamIntelligence";
+import TroyIntelligence from "./pages/TroyIntelligence";
+import SaratogaIntelligence from "./pages/SaratogaIntelligence";
+import SchenectadyIntelligence from "./pages/SchenectadyIntelligence";
+import QueensburyIntelligence from "./pages/QueensburyIntelligence";
+import TroyHomesForSalePage from "./pages/TroyHomesForSalePage";
+import NiskayunaHomesForSale from "./pages/NiskayunaHomesForSale";
+import SaratogaHomesForSalePage from "./pages/SaratogaHomesForSalePage";
+import CliftonParkHomesForSale from "./pages/CliftonParkHomesForSale";
+import SchenectadyHomesForSalePage from "./pages/SchenectadyHomesForSalePage";
+import AmsterdamHomesForSale from "./pages/AmsterdamHomesForSale";
+import QueensburyHomesForSale from "./pages/QueensburyHomesForSale";
 import PropertyListing from "./pages/PropertyListing";
 import ElsmereProperty from "./pages/137AElsmereAve";
 import RidgeRoadQueensbury from "./pages/RidgeRoadQueensbury";
@@ -173,9 +184,22 @@ const App = () => {
           <Route path="/towns/delmar" element={<DelmarIntelligence />} />
           <Route path="/towns/niskayuna" element={<NiskayunaIntelligence />} />
           <Route path="/towns/voorheesville" element={<VoorheesvilleIntelligence />} />
-          <Route path="/voorheesville-homes-for-sale" element={<VoorheesvilleHomesForSale />} />
           <Route path="/towns/clifton-park" element={<CliftonParkIntelligence />} />
           <Route path="/towns/amsterdam" element={<AmsterdamIntelligence />} />
+          <Route path="/towns/troy" element={<TroyIntelligence />} />
+          <Route path="/towns/saratoga-springs" element={<SaratogaIntelligence />} />
+          <Route path="/towns/schenectady" element={<SchenectadyIntelligence />} />
+          <Route path="/towns/queensbury" element={<QueensburyIntelligence />} />
+          
+          {/* Town Homes for Sale Pages */}
+          <Route path="/voorheesville-homes-for-sale" element={<VoorheesvilleHomesForSale />} />
+          <Route path="/troy-homes-for-sale" element={<TroyHomesForSalePage />} />
+          <Route path="/niskayuna-homes-for-sale" element={<NiskayunaHomesForSale />} />
+          <Route path="/saratoga-springs-homes-for-sale" element={<SaratogaHomesForSalePage />} />
+          <Route path="/clifton-park-homes-for-sale" element={<CliftonParkHomesForSale />} />
+          <Route path="/schenectady-homes-for-sale" element={<SchenectadyHomesForSalePage />} />
+          <Route path="/amsterdam-homes-for-sale" element={<AmsterdamHomesForSale />} />
+          <Route path="/queensbury-homes-for-sale" element={<QueensburyHomesForSale />} />
           
           {/* Capital District Hub Pages */}
           {/* Capital District Hub Pages - All Towns */}
