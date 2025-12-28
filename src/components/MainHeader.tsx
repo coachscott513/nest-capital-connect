@@ -13,7 +13,7 @@ const menuSections = [
     items: [
       { label: "Delmar", sub: "/ Bethlehem Central", href: "/towns/delmar" },
       { label: "Niskayuna", sub: "/ Top Schools", href: "/towns/niskayuna" },
-      { label: "Voorheesville", sub: "/ Rural Character", href: "/towns/voorheesville" },
+      { label: "Voorheesville", sub: "/ Rural Character", href: "/voorheesville-homes-for-sale" },
       { label: "Clifton Park", sub: "/ Growing Suburb", href: "/towns/clifton-park" },
       { label: "Amsterdam", sub: "/ Opportunity", href: "/towns/amsterdam" },
       { label: "Albany", sub: "/ Capital City", href: "/albany-real-estate" },
