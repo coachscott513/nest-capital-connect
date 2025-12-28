@@ -17,7 +17,6 @@ import HomeBuyerHub from "@/components/HomeBuyerHub";
 import InvestorHub from "@/components/InvestorHub";
 import MarketMapSection from "@/components/MarketMapSection";
 import CleanHero from "@/components/CleanHero";
-import FeaturedListingBanner from "@/components/FeaturedListingBanner";
 import HomepageEntrySections from "@/components/HomepageEntrySections";
 import TownEntrySection from "@/components/TownEntrySection";
 import GuidedDeck from "@/components/GuidedDeck";
@@ -226,9 +225,6 @@ const Index = () => {
       <div ref={townSectionRef} id="town-intelligence" className="scroll-mt-24">
         <TownEntrySection />
       </div>
-
-      {/* FEATURED LISTING BANNER */}
-      <FeaturedListingBanner />
 
       {/* GUIDED DECK - 3-Step Guided Experience */}
       <GuidedDeck />
