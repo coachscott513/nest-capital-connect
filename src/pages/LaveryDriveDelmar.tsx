@@ -155,12 +155,15 @@ const LaveryDriveDelmar = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.from("leads").insert({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        message: `Property Intelligence Report Request for ${property.fullAddress}`,
-        type: "property_intelligence"
+      // Use the edge function to save lead and send email notifications
+      const { data, error } = await supabase.functions.invoke('submit-contact-form', {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: `Property Intelligence Report Request for ${property.fullAddress}`,
+          type: "property_intelligence"
+        }
       });
 
       if (error) throw error;
