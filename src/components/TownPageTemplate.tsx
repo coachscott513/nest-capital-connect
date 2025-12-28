@@ -25,6 +25,7 @@ export interface TownData {
   slug: string;
   schoolDistrict?: string;
   description: string;
+  remaxSearchUrl: string; // Direct RE/MAX search link
   marketSnapshot: {
     label: string;
     value: string;
@@ -136,10 +137,10 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
               className="h-14 px-8 text-lg font-bold w-full sm:w-auto"
               asChild
             >
-              <Link to={`/${town.slug}-homes-for-sale`}>
+              <a href={town.remaxSearchUrl} target="_blank" rel="noopener noreferrer">
                 <Home className="w-5 h-5 mr-2" />
-                View {town.name} Homes for Sale
-              </Link>
+                View Live {town.name} Homes for Sale →
+              </a>
             </Button>
             <Button 
               size="lg" 
@@ -148,10 +149,13 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
               asChild
             >
               <Link to="/dealdesk">
-                Get the {town.name} Market Report
+                Get the {town.name} Intelligence Report
               </Link>
             </Button>
           </div>
+          <p className="text-sm text-muted-foreground mt-4">
+            Updated directly from RE/MAX. Map + list view.
+          </p>
         </div>
       </section>
 
@@ -254,10 +258,10 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
                 Browse homes for sale in {town.name}. Updated daily with new listings.
               </p>
               <Button size="lg" className="h-14 px-8 text-lg font-bold" asChild>
-                <Link to={`/${town.slug}-homes-for-sale`}>
+                <a href={town.remaxSearchUrl} target="_blank" rel="noopener noreferrer">
                   <Search className="w-5 h-5 mr-2" />
-                  Browse {town.name} Homes
-                </Link>
+                  Browse {town.name} Homes →
+                </a>
               </Button>
             </CardContent>
           </Card>
