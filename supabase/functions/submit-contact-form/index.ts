@@ -253,6 +253,7 @@ const handler = async (req: Request): Promise<Response> => {
         const emailHtml = generateEmailHtml(formData);
         
         // Send admin notification
+        // NOTE: Using a Resend-managed sender while custom domain sending finishes propagating.
         const emailResponse = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
@@ -260,18 +261,19 @@ const handler = async (req: Request): Promise<Response> => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: 'Capital District Nest <hello@capitaldistrictnest.com>',
+            from: 'Capital District Nest <onboarding@resend.dev>',
+            reply_to: 'hello@capitaldistrictnest.com',
             to: ['scott@capitaldistrictnest.com'],
             subject: `🎉 New ${formData.type} lead from ${formData.name}`,
             html: emailHtml,
           }),
         });
 
+        const adminSendResultText = await emailResponse.text();
         if (!emailResponse.ok) {
-          const errorText = await emailResponse.text();
-          console.error('Admin email sending error:', errorText);
+          console.error('Admin email sending error:', adminSendResultText);
         } else {
-          console.log('Admin email notification sent successfully');
+          console.log('Admin email notification sent successfully:', adminSendResultText);
         }
 
         // Send confirmation email to subscriber (for newsletter types)
@@ -283,7 +285,8 @@ const handler = async (req: Request): Promise<Response> => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              from: 'Capital District Nest <hello@capitaldistrictnest.com>',
+              from: 'Capital District Nest <onboarding@resend.dev>',
+              reply_to: 'hello@capitaldistrictnest.com',
               to: [formData.email],
               subject: `Welcome to Capital District Nest Market Updates!`,
               html: `
@@ -297,8 +300,8 @@ const handler = async (req: Request): Promise<Response> => {
                     <li>Investment opportunities and cash flow deals</li>
                   </ul>
                   <p>Have questions? Just reply to this email or text Scott at <strong>(518) 676-2347</strong>.</p>
-                  <p style="margin-top: 24px;">Best,<br>The Capital District Nest Team</p>
-                  <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">
+                  <p style="margin-top: 24px;">Best,<br/>The Capital District Nest Team</p>
+                  <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;" />
                   <p style="color: #888; font-size: 12px;">
                     <a href="https://capitaldistrictnest.com" style="color: #2563eb;">capitaldistrictnest.com</a>
                   </p>
@@ -307,11 +310,11 @@ const handler = async (req: Request): Promise<Response> => {
             }),
           });
 
+          const subscriberSendResultText = await confirmationResponse.text();
           if (!confirmationResponse.ok) {
-            const errorText = await confirmationResponse.text();
-            console.error('Subscriber confirmation email error:', errorText);
+            console.error('Subscriber confirmation email error:', subscriberSendResultText);
           } else {
-            console.log('Subscriber confirmation email sent successfully');
+            console.log('Subscriber confirmation email sent successfully:', subscriberSendResultText);
           }
         }
       } catch (emailError) {
