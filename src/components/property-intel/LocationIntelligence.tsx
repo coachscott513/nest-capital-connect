@@ -30,7 +30,7 @@ const LocationIntelligence = ({ data }: LocationIntelligenceProps) => {
   ];
 
   return (
-    <section className="py-16 md:py-20 border-b border-report-border">
+    <section className="py-16 md:py-20 bg-report-card-alt">
       <div className="container mx-auto px-4 max-w-4xl">
         <h2 className="text-2xl md:text-3xl font-light text-report-fg mb-4 text-center">
           Location Intelligence
@@ -44,10 +44,10 @@ const LocationIntelligence = ({ data }: LocationIntelligenceProps) => {
           {cards.map((card, index) => (
             <div
               key={index}
-              className="flex items-start gap-4 p-5 rounded-2xl bg-report-card"
+              className="flex items-start gap-4 p-5 rounded-2xl bg-report-card border border-report-border/50 shadow-sm"
             >
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-report-border/50 flex items-center justify-center">
-                <card.icon className="w-5 h-5 text-report-muted" strokeWidth={1.5} />
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-report-accent/10 flex items-center justify-center">
+                <card.icon className="w-5 h-5 text-report-accent" strokeWidth={1.5} />
               </div>
               <div>
                 <h3 className="text-sm font-medium text-report-fg mb-1">{card.title}</h3>

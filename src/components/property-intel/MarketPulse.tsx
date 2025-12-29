@@ -13,7 +13,18 @@ const MarketPulse = ({ data }: MarketPulseProps) => {
       case 'High':
         return 'text-report-warning';
       default:
-        return 'text-report-muted';
+        return 'text-report-fg';
+    }
+  };
+
+  const getPressureBg = (pressure: string) => {
+    switch (pressure) {
+      case 'Low':
+        return 'bg-report-success/10';
+      case 'High':
+        return 'bg-report-warning/10';
+      default:
+        return 'bg-report-accent/10';
     }
   };
 
@@ -21,7 +32,8 @@ const MarketPulse = ({ data }: MarketPulseProps) => {
     {
       icon: Clock,
       label: "Avg Days on Market",
-      value: `${data.avgDaysOnMarket} days`,
+      value: `${data.avgDaysOnMarket}`,
+      unit: "days",
       subtext: "in this area",
     },
     {
@@ -29,18 +41,20 @@ const MarketPulse = ({ data }: MarketPulseProps) => {
       label: "Inventory Pressure",
       value: data.inventoryPressure,
       valueClass: getPressureColor(data.inventoryPressure),
+      iconBg: getPressureBg(data.inventoryPressure),
       subtext: "buyer competition",
     },
     {
       icon: TrendingUp,
       label: "Sale-to-List Ratio",
-      value: `${(data.saleToListRatio * 100).toFixed(0)}%`,
+      value: `${(data.saleToListRatio * 100).toFixed(0)}`,
+      unit: "%",
       subtext: "recent closings",
     },
   ];
 
   return (
-    <section className="py-16 md:py-20 border-b border-report-border">
+    <section className="py-16 md:py-20 bg-report-bg">
       <div className="container mx-auto px-4 max-w-4xl">
         <h2 className="text-2xl md:text-3xl font-light text-report-fg mb-10 text-center">
           Market Pulse
@@ -50,19 +64,26 @@ const MarketPulse = ({ data }: MarketPulseProps) => {
           {metrics.map((metric, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center p-6 rounded-2xl bg-report-card"
+              className="flex flex-col items-center text-center p-6 rounded-2xl bg-report-card border border-report-border/50 shadow-sm"
             >
-              <metric.icon className="w-6 h-6 text-report-muted mb-4" strokeWidth={1.5} />
-              <p className="text-xs text-report-muted mb-2">{metric.label}</p>
-              <p className={`text-2xl font-light ${metric.valueClass || 'text-report-fg'}`}>
-                {metric.value}
-              </p>
-              <p className="text-xs text-report-muted mt-1">{metric.subtext}</p>
+              <div className={`w-12 h-12 rounded-full ${metric.iconBg || 'bg-report-accent/10'} flex items-center justify-center mb-4`}>
+                <metric.icon className="w-6 h-6 text-report-accent" strokeWidth={1.5} />
+              </div>
+              <p className="text-xs uppercase tracking-wider text-report-muted mb-3">{metric.label}</p>
+              <div className="flex items-baseline gap-1">
+                <p className={`text-3xl font-light ${metric.valueClass || 'text-report-fg'}`}>
+                  {metric.value}
+                </p>
+                {metric.unit && (
+                  <span className="text-sm text-report-muted">{metric.unit}</span>
+                )}
+              </div>
+              <p className="text-xs text-report-muted mt-2">{metric.subtext}</p>
             </div>
           ))}
         </div>
         
-        <p className="text-xs text-report-muted text-center mt-6">
+        <p className="text-xs text-report-muted text-center mt-8">
           Metrics reflect recent local market behavior.
         </p>
       </div>
