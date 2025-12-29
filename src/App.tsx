@@ -74,6 +74,7 @@ import RidgeRoadIntelReport from "./pages/reports/RidgeRoadIntelReport";
 import RidgeRoadIntelligenceReport from "./pages/reports/RidgeRoadIntelligenceReport";
 import ReportTemplate from "./pages/reports/ReportTemplate";
 import SamplePropertyIntelligenceReport from "./pages/SamplePropertyIntelligenceReport";
+import RidgeRoadPropertyIntel from "./pages/intel/RidgeRoadPropertyIntel";
 import Reviews from "./pages/Reviews";
 import MarketPage from "./pages/MarketPage";
 import StrategyPage from "./pages/StrategyPage";
@@ -225,6 +226,9 @@ const App = () => {
           <Route path="/reports/template" element={<ReportTemplate />} />
           <Route path="/reports/sample-property-intelligence" element={<SamplePropertyIntelligenceReport />} />
           <Route path="/reports/old/1999-ridge-road-queensbury-ny" element={<RidgeRoadIntelReport />} />
+          
+          {/* New Apple-style Property Intelligence Reports */}
+          <Route path="/intel/1999-ridge-road-queensbury-ny" element={<RidgeRoadPropertyIntel />} />
           
           {/* Markets Section */}
           <Route path="/markets" element={<Markets />} />
