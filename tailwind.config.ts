@@ -68,6 +68,16 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				report: {
+					bg: 'hsl(var(--report-bg))',
+					fg: 'hsl(var(--report-fg))',
+					muted: 'hsl(var(--report-muted))',
+					border: 'hsl(var(--report-border))',
+					card: 'hsl(var(--report-card))',
+					accent: 'hsl(var(--report-accent))',
+					success: 'hsl(var(--report-success))',
+					warning: 'hsl(var(--report-warning))'
+				},
 				media: {
 					background: 'hsl(222 47% 6%)',
 					card: 'hsl(222 47% 9%)',

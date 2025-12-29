@@ -40,6 +40,16 @@
     --surface: 0 0% 13%;
     --text-muted: 0 0% 71%;
 
+    /* Apple-style report tokens */
+    --report-bg: 0 0% 100%;
+    --report-fg: 0 0% 7%;
+    --report-muted: 0 0% 46%;
+    --report-border: 0 0% 90%;
+    --report-card: 0 0% 98%;
+    --report-accent: 160 84% 39%;
+    --report-success: 142 76% 36%;
+    --report-warning: 38 92% 50%;
+
     --sidebar-background: 0 0% 0%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 160 84% 39%;
