@@ -6,84 +6,76 @@ interface MarketPulseProps {
 }
 
 const MarketPulse = ({ data }: MarketPulseProps) => {
-  const getPressureColor = (pressure: string) => {
+  const getPressureLabel = (pressure: string) => {
     switch (pressure) {
       case 'Low':
-        return 'text-report-success';
+        return { text: 'Low', color: 'text-report-success', bg: 'bg-report-success/10' };
       case 'High':
-        return 'text-report-warning';
+        return { text: 'High', color: 'text-report-warning', bg: 'bg-report-warning/10' };
       default:
-        return 'text-report-fg';
+        return { text: 'Balanced', color: 'text-report-accent', bg: 'bg-report-accent/10' };
     }
   };
 
-  const getPressureBg = (pressure: string) => {
-    switch (pressure) {
-      case 'Low':
-        return 'bg-report-success/10';
-      case 'High':
-        return 'bg-report-warning/10';
-      default:
-        return 'bg-report-accent/10';
-    }
-  };
+  const pressure = getPressureLabel(data.inventoryPressure);
 
   const metrics = [
     {
       icon: Clock,
-      label: "Avg Days on Market",
-      value: `${data.avgDaysOnMarket}`,
-      unit: "days",
+      label: "Days on Market",
+      value: data.avgDaysOnMarket.toString(),
+      unit: "avg",
       subtext: "in this area",
     },
     {
       icon: BarChart3,
       label: "Inventory Pressure",
-      value: data.inventoryPressure,
-      valueClass: getPressureColor(data.inventoryPressure),
-      iconBg: getPressureBg(data.inventoryPressure),
+      value: pressure.text,
+      valueClass: pressure.color,
       subtext: "buyer competition",
     },
     {
       icon: TrendingUp,
-      label: "Sale-to-List Ratio",
-      value: `${(data.saleToListRatio * 100).toFixed(0)}`,
-      unit: "%",
+      label: "Sale-to-List",
+      value: `${(data.saleToListRatio * 100).toFixed(0)}%`,
       subtext: "recent closings",
     },
   ];
 
   return (
-    <section className="py-16 md:py-20 bg-report-bg">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <h2 className="text-2xl md:text-3xl font-light text-report-fg mb-10 text-center">
+    <section className="py-20 md:py-28 bg-report-section-light">
+      <div className="container mx-auto px-4 max-w-5xl">
+        <p className="text-xs uppercase tracking-[0.2em] text-report-muted text-center mb-3">
+          Market Conditions
+        </p>
+        <h2 className="text-3xl md:text-4xl font-light text-report-fg mb-12 text-center">
           Market Pulse
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {metrics.map((metric, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center p-6 rounded-2xl bg-report-card border border-report-border/50 shadow-sm"
+              className="flex flex-col items-center text-center p-8 rounded-3xl bg-report-section-muted border border-report-border/30"
             >
-              <div className={`w-12 h-12 rounded-full ${metric.iconBg || 'bg-report-accent/10'} flex items-center justify-center mb-4`}>
-                <metric.icon className="w-6 h-6 text-report-accent" strokeWidth={1.5} />
+              <div className="w-14 h-14 rounded-2xl bg-report-accent/10 flex items-center justify-center mb-5">
+                <metric.icon className="w-7 h-7 text-report-accent" strokeWidth={1.5} />
               </div>
-              <p className="text-xs uppercase tracking-wider text-report-muted mb-3">{metric.label}</p>
-              <div className="flex items-baseline gap-1">
-                <p className={`text-3xl font-light ${metric.valueClass || 'text-report-fg'}`}>
+              <p className="text-xs uppercase tracking-wider text-report-muted mb-4">{metric.label}</p>
+              <div className="flex items-baseline gap-1.5">
+                <p className={`text-4xl font-light ${metric.valueClass || 'text-report-fg'}`}>
                   {metric.value}
                 </p>
                 {metric.unit && (
                   <span className="text-sm text-report-muted">{metric.unit}</span>
                 )}
               </div>
-              <p className="text-xs text-report-muted mt-2">{metric.subtext}</p>
+              <p className="text-xs text-report-muted mt-3">{metric.subtext}</p>
             </div>
           ))}
         </div>
         
-        <p className="text-xs text-report-muted text-center mt-8">
+        <p className="text-xs text-report-muted text-center mt-10">
           Metrics reflect recent local market behavior.
         </p>
       </div>
