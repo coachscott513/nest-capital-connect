@@ -59,6 +59,13 @@ export interface TownData {
     avgDaysOnMarket?: number;
     priceChange: string;
     priceDirection: 'up' | 'down' | 'stable';
+    // Qualitative market trend (replaces % change)
+    marketTrendLabel?: string;
+  };
+  // RE/MAX data source links
+  dataSourceLinks?: {
+    activeListings?: string;
+    justListed?: string;
   };
 }
 
@@ -282,9 +289,16 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
               <CardContent className="p-5 text-center">
                 <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">New Listings</p>
                 <p className="text-sm text-muted-foreground mb-1">Last 7 Days</p>
-                <p className="text-3xl md:text-4xl font-bold text-foreground">
-                  {weeklyIntel.newListings}
-                </p>
+                {weeklyIntel.newListings === 0 ? (
+                  <div>
+                    <p className="text-3xl md:text-4xl font-bold text-foreground">0</p>
+                    <p className="text-xs text-muted-foreground mt-1">No new homes listed this week</p>
+                  </div>
+                ) : (
+                  <p className="text-3xl md:text-4xl font-bold text-foreground">
+                    {weeklyIntel.newListings}
+                  </p>
+                )}
               </CardContent>
             </Card>
 
@@ -292,39 +306,65 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
             <Card className="border border-border">
               <CardContent className="p-5 text-center">
                 <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Homes Sold</p>
-                <p className="text-sm text-muted-foreground mb-1">Last 7 Days</p>
-                <p className="text-3xl md:text-4xl font-bold text-foreground">
-                  {weeklyIntel.homesSold}
-                </p>
+                <p className="text-sm text-muted-foreground mb-1">Last 30 Days</p>
+                {weeklyIntel.homesSold === 0 ? (
+                  <div>
+                    <p className="text-3xl md:text-4xl font-bold text-foreground">0</p>
+                    <p className="text-xs text-muted-foreground mt-1">No closed sales this period</p>
+                  </div>
+                ) : (
+                  <p className="text-3xl md:text-4xl font-bold text-foreground">
+                    {weeklyIntel.homesSold}
+                  </p>
+                )}
               </CardContent>
             </Card>
 
-            {/* Tile 3: Median Sale Price */}
+            {/* Tile 3: Median List Price */}
             <Card className="border border-border">
               <CardContent className="p-5 text-center">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Median Sale Price</p>
-                <p className="text-sm text-muted-foreground mb-1">Recent Sales</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Median List Price</p>
+                <p className="text-sm text-muted-foreground mb-1">Active Listings</p>
                 <p className="text-2xl md:text-3xl font-bold text-foreground">
-                  {weeklyIntel.medianSoldPrice || weeklyIntel.medianListPrice || "$415,000"}
+                  {weeklyIntel.medianListPrice || weeklyIntel.medianSoldPrice || "—"}
                 </p>
               </CardContent>
             </Card>
 
-            {/* Tile 4: Price Movement Trend */}
+            {/* Tile 4: Market Trend (Qualitative) */}
             <Card className="border border-border">
               <CardContent className="p-5 text-center">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Price Trend</p>
-                <p className="text-sm text-muted-foreground mb-1">Movement</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Market Trend</p>
+                <p className="text-sm text-muted-foreground mb-1">Current Conditions</p>
                 <div className="flex items-center justify-center gap-2">
                   {getPriceIcon()}
-                  <p className="text-lg font-bold text-foreground">
-                    {weeklyIntel.priceDirection === 'up' ? 'Rising' : 
-                     weeklyIntel.priceDirection === 'down' ? 'Softening' : 'Stable'}
+                  <p className="text-base font-bold text-foreground">
+                    {weeklyIntel.marketTrendLabel || 
+                     (weeklyIntel.priceDirection === 'up' ? 'Tight Inventory' : 
+                      weeklyIntel.priceDirection === 'down' ? 'Softening' : 'Stable')}
                   </p>
                 </div>
               </CardContent>
             </Card>
           </div>
+
+          {/* Source Attribution */}
+          {town.dataSourceLinks?.activeListings && (
+            <div className="text-center mt-6">
+              <p className="text-xs text-muted-foreground">
+                Source:{" "}
+                <a 
+                  href={town.dataSourceLinks.activeListings} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="underline hover:text-foreground transition-colors"
+                >
+                  RE/MAX {town.schoolDistrict || town.name} listings
+                </a>
+                . Updated weekly.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
