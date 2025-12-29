@@ -1,7 +1,12 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import MainLayout from "@/components/MainLayout";
-import { TrendingUp, Home, Mountain, Wallet, ArrowRight, CheckCircle, BookOpen } from "lucide-react";
+import { TrendingUp, Home, Mountain, Wallet, ArrowRight, CheckCircle, BookOpen, Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const journeys = [
   {
@@ -11,6 +16,7 @@ const journeys = [
     icon: TrendingUp,
     path: "/investment-properties",
     features: ["Deal analysis & cash flow", "Neighborhood investment guides", "Off-market opportunities"],
+    hasLeadCapture: true,
   },
   {
     id: "first-time",
@@ -19,6 +25,7 @@ const journeys = [
     icon: Home,
     path: "/first-time-home-buyers",
     features: ["Down payment grants", "Low-cost financing options", "Step-by-step guidance"],
+    hasLeadCapture: true,
   },
   {
     id: "land",
@@ -27,6 +34,7 @@ const journeys = [
     icon: Mountain,
     path: "/land-buyers",
     features: ["Zoning & permits", "Utility feasibility", "Build cost estimates"],
+    hasLeadCapture: true,
   },
   {
     id: "financing",
@@ -35,6 +43,7 @@ const journeys = [
     icon: Wallet,
     path: "/financing",
     features: ["Mortgage comparisons", "Assistance programs", "Investor vs. owner loans"],
+    hasLeadCapture: true,
   },
 ];
 
@@ -60,6 +69,74 @@ const guides = [
     path: "/investor/1031-nyc-to-albany",
   },
 ];
+
+interface QuickLeadFormProps {
+  journeyId: string;
+  journeyTitle: string;
+}
+
+const QuickLeadForm = ({ journeyId, journeyTitle }: QuickLeadFormProps) => {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.from("leads").insert({
+        name: "Quick Lead",
+        email: email,
+        message: `Quick lead from ${journeyTitle} card`,
+        type: journeyId,
+      });
+
+      if (error) throw error;
+
+      setIsSubmitted(true);
+      toast({
+        title: "You're in!",
+        description: "We'll send you resources and next steps.",
+      });
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="flex items-center gap-2 text-sm text-primary">
+        <CheckCircle className="w-4 h-4" />
+        <span>Check your inbox!</span>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex gap-2 mt-4">
+      <Input
+        type="email"
+        placeholder="Enter your email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        className="h-10 flex-1"
+      />
+      <Button type="submit" size="sm" disabled={isSubmitting} className="h-10 px-3">
+        {isSubmitting ? "..." : <Send className="w-4 h-4" />}
+      </Button>
+    </form>
+  );
+};
 
 const BuyerRoadmap = () => {
   return (
@@ -146,7 +223,7 @@ const BuyerRoadmap = () => {
                       <p className="text-muted-foreground text-sm mt-1">{journey.description}</p>
                     </div>
                   </div>
-                  <ul className="space-y-2 mb-6">
+                  <ul className="space-y-2 mb-4">
                     {journey.features.map((feature, index) => (
                       <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
                         <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
@@ -154,9 +231,18 @@ const BuyerRoadmap = () => {
                       </li>
                     ))}
                   </ul>
+                  
+                  {/* Quick Lead Capture */}
+                  {journey.hasLeadCapture && (
+                    <div className="border-t border-border pt-4 mb-4">
+                      <p className="text-xs text-muted-foreground mb-2">Get free resources & next steps:</p>
+                      <QuickLeadForm journeyId={journey.id} journeyTitle={journey.title} />
+                    </div>
+                  )}
+                  
                   <Link 
                     to={journey.path}
-                    className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform"
+                    className="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:underline"
                   >
                     Explore {journey.title}
                     <ArrowRight className="w-4 h-4" />
