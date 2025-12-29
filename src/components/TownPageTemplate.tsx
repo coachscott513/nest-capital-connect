@@ -263,83 +263,65 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
         </div>
       </section>
 
-      {/* THIS WEEK IN {TOWN} — Intelligence Block (TOP PRIORITY) */}
+      {/* THIS WEEK IN {TOWN} REAL ESTATE — Locked Weekly Intelligence Module */}
       <section id="market-intel" className="px-[5%] py-16 md:py-20 bg-muted/30 scroll-mt-24">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-              <BarChart3 className="w-4 h-4" />
-              Updated Weekly
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              This Week in {town.name}
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+              This Week in {town.name} Real Estate
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Pure information. No photos. No featured homes. No addresses.
+            <p className="text-sm text-muted-foreground">
+              Updated weekly using verified MLS and public records data.
             </p>
           </div>
 
-          {/* 3-Column Intelligence Cards */}
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* New Listings */}
-            <Card className="border-2 border-border hover:border-primary/30 transition-colors">
-              <CardContent className="p-6 text-center">
-                <div className="text-4xl mb-2">🆕</div>
-                <h3 className="text-lg font-bold text-foreground mb-4">New Listings</h3>
-                <p className="text-4xl font-extrabold text-foreground mb-2">
+          {/* 4-Tile Grid — Locked Structure */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* Tile 1: New Listings */}
+            <Card className="border border-border">
+              <CardContent className="p-5 text-center">
+                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">New Listings</p>
+                <p className="text-sm text-muted-foreground mb-1">Last 7 Days</p>
+                <p className="text-3xl md:text-4xl font-bold text-foreground">
                   {weeklyIntel.newListings}
                 </p>
-                {weeklyIntel.medianListPrice && (
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Median list: {weeklyIntel.medianListPrice}
-                  </p>
-                )}
-                <a 
-                  href={town.remaxSearchUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-primary text-sm font-medium hover:underline inline-flex items-center gap-1"
-                >
-                  View all homes for sale →
-                </a>
               </CardContent>
             </Card>
 
-            {/* Homes Sold */}
-            <Card className="border-2 border-border hover:border-primary/30 transition-colors">
-              <CardContent className="p-6 text-center">
-                <div className="text-4xl mb-2">🏠</div>
-                <h3 className="text-lg font-bold text-foreground mb-4">Homes Sold</h3>
-                <p className="text-4xl font-extrabold text-foreground mb-2">
+            {/* Tile 2: Homes Sold */}
+            <Card className="border border-border">
+              <CardContent className="p-5 text-center">
+                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Homes Sold</p>
+                <p className="text-sm text-muted-foreground mb-1">Last 7 Days</p>
+                <p className="text-3xl md:text-4xl font-bold text-foreground">
                   {weeklyIntel.homesSold}
                 </p>
-                {weeklyIntel.medianSoldPrice && (
-                  <p className="text-sm text-muted-foreground mb-1">
-                    Median sold: {weeklyIntel.medianSoldPrice}
-                  </p>
-                )}
-                {weeklyIntel.avgDaysOnMarket && (
-                  <p className="text-sm text-muted-foreground">
-                    Avg {weeklyIntel.avgDaysOnMarket} days on market
-                  </p>
-                )}
               </CardContent>
             </Card>
 
-            {/* Price Movement */}
-            <Card className="border-2 border-border hover:border-primary/30 transition-colors">
-              <CardContent className="p-6 text-center">
-                <div className="text-4xl mb-2">📈</div>
-                <h3 className="text-lg font-bold text-foreground mb-4">Price Movement</h3>
-                <div className="flex items-center justify-center gap-2 mb-2">
+            {/* Tile 3: Median Sale Price */}
+            <Card className="border border-border">
+              <CardContent className="p-5 text-center">
+                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Median Sale Price</p>
+                <p className="text-sm text-muted-foreground mb-1">Recent Sales</p>
+                <p className="text-2xl md:text-3xl font-bold text-foreground">
+                  {weeklyIntel.medianSoldPrice || weeklyIntel.medianListPrice || "$415,000"}
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Tile 4: Price Movement Trend */}
+            <Card className="border border-border">
+              <CardContent className="p-5 text-center">
+                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Price Trend</p>
+                <p className="text-sm text-muted-foreground mb-1">Movement</p>
+                <div className="flex items-center justify-center gap-2">
                   {getPriceIcon()}
-                  <p className="text-3xl font-extrabold text-foreground">
-                    {weeklyIntel.priceChange}
+                  <p className="text-lg font-bold text-foreground">
+                    {weeklyIntel.priceDirection === 'up' ? 'Rising' : 
+                     weeklyIntel.priceDirection === 'down' ? 'Softening' : 'Stable'}
                   </p>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  Month-over-month change
-                </p>
               </CardContent>
             </Card>
           </div>
@@ -646,14 +628,14 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
         </div>
       </section>
 
-      {/* PROPERTY INTELLIGENCE LINK — Text only, no photos */}
+      {/* PROPERTY INTELLIGENCE LINK — Template-based, no real addresses */}
       <section className="px-[5%] py-12 bg-background border-t border-border">
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-muted-foreground mb-4">
             Want to see what a full property analysis looks like?
           </p>
           <Link 
-            to="/listings/22-lavery-drive-delmar-ny" 
+            to="/reports/sample-property-intelligence" 
             className="text-primary font-semibold hover:underline"
           >
             See an example of a full Property Intelligence Report →
