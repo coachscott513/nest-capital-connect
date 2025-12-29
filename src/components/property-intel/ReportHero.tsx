@@ -5,9 +5,10 @@ import { Lock } from "lucide-react";
 interface ReportHeroProps {
   data: PropertyIntelData;
   onUnlockClick: () => void;
+  isUnlocked?: boolean;
 }
 
-const ReportHero = ({ data, onUnlockClick }: ReportHeroProps) => {
+const ReportHero = ({ data, onUnlockClick, isUnlocked = false }: ReportHeroProps) => {
   return (
     <section className="py-24 md:py-36 text-center bg-report-hero-bg relative overflow-hidden">
       {/* Subtle gradient overlay */}
@@ -18,37 +19,55 @@ const ReportHero = ({ data, onUnlockClick }: ReportHeroProps) => {
           Property Intelligence Report
         </p>
         
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white mb-6">
-          {data.address}
-        </h1>
-        <p className="text-lg md:text-xl text-white/70 mb-2">
-          {data.city}, {data.state}
-        </p>
+        {isUnlocked ? (
+          <>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white mb-6">
+              {data.address}
+            </h1>
+            <p className="text-lg md:text-xl text-white/70 mb-2">
+              {data.city}, {data.state}
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white mb-6">
+              Sample Property Report
+            </h1>
+            <p className="text-sm text-white/50 mb-2 italic">
+              Preview — Not a live listing
+            </p>
+          </>
+        )}
         
         <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 text-sm md:text-base text-white/60 my-8">
-          <span>{data.beds} Beds</span>
+          <span>{isUnlocked ? data.beds : "4"} Beds</span>
           <span className="text-white/30">•</span>
-          <span>{data.baths} Baths</span>
+          <span>{isUnlocked ? data.baths : "2"} Baths</span>
           <span className="text-white/30">•</span>
-          <span>{data.sqft.toLocaleString()} Sq Ft</span>
+          <span>{isUnlocked ? data.sqft.toLocaleString() : "2,200"} Sq Ft</span>
           <span className="text-white/30">•</span>
-          <span>{data.acres} Acres</span>
+          <span>{isUnlocked ? data.acres : "1.5"} Acres</span>
         </div>
         
         <p className="text-sm text-white/50 mb-12">
-          {data.propertyType} • Built {data.yearBuilt}
+          {data.propertyType} • Built {isUnlocked ? data.yearBuilt : "1990"}
         </p>
         
-        <Button
-          onClick={onUnlockClick}
-          className="bg-white text-report-hero-bg hover:bg-white/90 px-8 py-6 text-base font-medium rounded-full transition-all shadow-lg shadow-black/20 group"
-        >
-          <Lock className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-          Unlock Full Property Intelligence
-        </Button>
+        {!isUnlocked && (
+          <Button
+            onClick={onUnlockClick}
+            className="bg-white text-report-hero-bg hover:bg-white/90 px-8 py-6 text-base font-medium rounded-full transition-all shadow-lg shadow-black/20 group"
+          >
+            <Lock className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+            Unlock Full Property Intelligence
+          </Button>
+        )}
         
         <p className="text-xs text-white/40 mt-10 max-w-md mx-auto">
-          Independent market intelligence generated from MLS, tax, and public records.
+          {isUnlocked 
+            ? "Independent market intelligence generated from MLS, tax, and public records."
+            : "This preview shows the depth of analysis provided. Full property-specific data available after request."
+          }
         </p>
       </div>
     </section>

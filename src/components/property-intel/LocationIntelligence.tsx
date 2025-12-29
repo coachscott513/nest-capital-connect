@@ -3,31 +3,23 @@ import { PropertyIntelData } from "./types";
 
 interface LocationIntelligenceProps {
   data: PropertyIntelData;
+  isUnlocked?: boolean;
 }
 
-const LocationIntelligence = ({ data }: LocationIntelligenceProps) => {
-  const cards = [
-    {
-      icon: Car,
-      title: "Commute Access",
-      description: data.commuteAccess || "Direct access to major routes",
-    },
-    {
-      icon: Store,
-      title: "Nearby Services",
-      description: data.nearbyServices?.join(", ") || "Local amenities within 5 miles",
-    },
-    {
-      icon: GraduationCap,
-      title: "School Quality",
-      description: data.schoolQuality || `${data.schoolDistrict} District`,
-    },
-    {
-      icon: TreePine,
-      title: "Area Context",
-      description: data.areaContext || "Residential neighborhood setting",
-    },
-  ];
+const LocationIntelligence = ({ data, isUnlocked = false }: LocationIntelligenceProps) => {
+  const cards = isUnlocked
+    ? [
+        { icon: Car, title: "Commute Access", description: data.commuteAccess || "Direct access to major routes" },
+        { icon: Store, title: "Nearby Services", description: data.nearbyServices?.join(", ") || "Local amenities within 5 miles" },
+        { icon: GraduationCap, title: "School Quality", description: data.schoolQuality || `${data.schoolDistrict} District` },
+        { icon: TreePine, title: "Area Context", description: data.areaContext || "Residential neighborhood setting" },
+      ]
+    : [
+        { icon: Car, title: "Commute Access", description: "Highway proximity, drive times to employment centers" },
+        { icon: Store, title: "Nearby Services", description: "Grocery, healthcare, dining within X miles" },
+        { icon: GraduationCap, title: "School Quality", description: "District rating and school performance context" },
+        { icon: TreePine, title: "Area Context", description: "Neighborhood type, lot density, setting" },
+      ];
 
   return (
     <section className="py-20 md:py-28 bg-report-section-dark">
@@ -40,7 +32,10 @@ const LocationIntelligence = ({ data }: LocationIntelligenceProps) => {
         </h2>
         
         <p className="text-sm text-white/50 text-center mb-12 max-w-lg mx-auto">
-          Location characteristics often influence long-term value more than interior features.
+          {isUnlocked 
+            ? "Location characteristics often influence long-term value more than interior features."
+            : "Location context provided for subject property upon request."
+          }
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

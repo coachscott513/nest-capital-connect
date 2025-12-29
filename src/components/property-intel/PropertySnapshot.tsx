@@ -3,36 +3,25 @@ import { PropertyIntelData } from "./types";
 
 interface PropertySnapshotProps {
   data: PropertyIntelData;
+  isUnlocked?: boolean;
 }
 
-const PropertySnapshot = ({ data }: PropertySnapshotProps) => {
-  const items = [
-    {
-      icon: Home,
-      label: "Status",
-      value: data.status,
-    },
-    {
-      icon: DollarSign,
-      label: "Asking Price",
-      value: `$${data.askingPrice.toLocaleString()}`,
-    },
-    {
-      icon: SquareStack,
-      label: "Price per Sq Ft",
-      value: `$${data.pricePerSqFt.toLocaleString()}`,
-    },
-    {
-      icon: GraduationCap,
-      label: "School District",
-      value: data.schoolDistrict,
-    },
-    {
-      icon: Building2,
-      label: "Municipality",
-      value: data.municipality,
-    },
-  ];
+const PropertySnapshot = ({ data, isUnlocked = false }: PropertySnapshotProps) => {
+  const items = isUnlocked
+    ? [
+        { icon: Home, label: "Status", value: data.status },
+        { icon: DollarSign, label: "Asking Price", value: `$${data.askingPrice.toLocaleString()}` },
+        { icon: SquareStack, label: "Price per Sq Ft", value: `$${data.pricePerSqFt.toLocaleString()}` },
+        { icon: GraduationCap, label: "School District", value: data.schoolDistrict },
+        { icon: Building2, label: "Municipality", value: data.municipality },
+      ]
+    : [
+        { icon: Home, label: "Status", value: "Active" },
+        { icon: DollarSign, label: "Asking Price", value: "$XXX,XXX" },
+        { icon: SquareStack, label: "Price per Sq Ft", value: "$XX" },
+        { icon: GraduationCap, label: "School District", value: "Example District" },
+        { icon: Building2, label: "Municipality", value: "Subject Area" },
+      ];
 
   return (
     <section className="py-20 md:py-28 bg-report-section-light">
@@ -40,9 +29,14 @@ const PropertySnapshot = ({ data }: PropertySnapshotProps) => {
         <p className="text-xs uppercase tracking-[0.2em] text-report-muted text-center mb-3">
           At a Glance
         </p>
-        <h2 className="text-3xl md:text-4xl font-light text-report-fg mb-12 text-center">
+        <h2 className="text-3xl md:text-4xl font-light text-report-fg mb-4 text-center">
           Property Snapshot
         </h2>
+        {!isUnlocked && (
+          <p className="text-sm text-report-muted text-center mb-8 italic">
+            Sample data shown — unlock for actual property details
+          </p>
+        )}
         
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
           {items.map((item, index) => (
