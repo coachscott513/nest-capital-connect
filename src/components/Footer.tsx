@@ -28,11 +28,11 @@ const Footer = () => {
                 (518) 676-2347
               </a>
               <a 
-                href="mailto:scott@remax.com" 
+                href="mailto:scott@capitaldistrictnest.com" 
                 className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 <Mail className="h-4 w-4" />
-                scott@remax.com
+                scott@capitaldistrictnest.com
               </a>
               <p className="text-muted-foreground text-sm pt-2 border-t border-border mt-3">
                 Affiliated with <span className="font-semibold text-foreground">RE/MAX</span>
