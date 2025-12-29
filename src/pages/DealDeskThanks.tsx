@@ -1,9 +1,28 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CheckCircle, Mail, Inbox, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useDelmarConfirmation } from "@/contexts/DelmarConfirmationContext";
 
 const DealDeskThanks = () => {
+  const navigate = useNavigate();
+  const { setShowConfirmation } = useDelmarConfirmation();
+
+  // Auto-redirect to Delmar town page after 3 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowConfirmation(true);
+      navigate("/towns/delmar");
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [navigate, setShowConfirmation]);
+
+  const handleExploreDelmar = () => {
+    setShowConfirmation(true);
+    navigate("/towns/delmar");
+  };
+
   return (
     <>
       <Helmet>
@@ -39,20 +58,21 @@ const DealDeskThanks = () => {
               </li>
               <li className="flex items-start gap-3">
                 <RefreshCw className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300">You can submit another property anytime.</span>
+                <span className="text-gray-300">Redirecting you to explore Delmar market insights...</span>
               </li>
             </ul>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            <Button 
+              onClick={handleExploreDelmar}
+              className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-6"
+            >
+              Explore Delmar Now
+            </Button>
             <Link to="/dealdesk">
-              <Button className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-6">
-                Submit Another Address
-              </Button>
-            </Link>
-            <Link to="/">
               <Button variant="outline" className="w-full sm:w-auto border-gray-700 text-gray-300 hover:bg-gray-800">
-                Back to Home
+                Submit Another Address
               </Button>
             </Link>
           </div>

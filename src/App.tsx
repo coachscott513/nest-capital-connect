@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import CommandCenter from "@/components/CommandCenter";
+import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext";
 import Index from "./pages/Index";
 import InvestorTools from "./pages/InvestorTools";
 import Rentals from "./pages/Rentals";
@@ -107,11 +108,12 @@ const App = () => {
 
   return (
     <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
+      <DelmarConfirmationProvider>
+        <QueryClientProvider client={queryClient}>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/investor-tools" element={<InvestorTools />} />
           <Route path="/rentals" element={<Rentals />} />
@@ -260,7 +262,8 @@ const App = () => {
           {/* Global Command Center - shows on desktop only */}
           <CommandCenter />
         </BrowserRouter>
-      </QueryClientProvider>
+        </QueryClientProvider>
+      </DelmarConfirmationProvider>
     </HelmetProvider>
   );
 };
