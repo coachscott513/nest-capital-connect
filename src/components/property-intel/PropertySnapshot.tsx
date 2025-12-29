@@ -35,19 +35,21 @@ const PropertySnapshot = ({ data }: PropertySnapshotProps) => {
   ];
 
   return (
-    <section className="py-16 md:py-20 border-b border-report-border">
+    <section className="py-16 md:py-20 bg-report-bg">
       <div className="container mx-auto px-4 max-w-4xl">
         <h2 className="text-2xl md:text-3xl font-light text-report-fg mb-10 text-center">
           Property Snapshot
         </h2>
         
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {items.map((item, index) => (
             <div
               key={index}
-              className="flex flex-col items-center text-center p-4 rounded-2xl bg-report-card"
+              className="flex flex-col items-center text-center p-5 rounded-2xl bg-report-card border border-report-border/50 shadow-sm"
             >
-              <item.icon className="w-6 h-6 text-report-muted mb-3" strokeWidth={1.5} />
+              <div className="w-10 h-10 rounded-full bg-report-accent/10 flex items-center justify-center mb-3">
+                <item.icon className="w-5 h-5 text-report-accent" strokeWidth={1.5} />
+              </div>
               <p className="text-xs text-report-muted mb-1">{item.label}</p>
               <p className="text-sm md:text-base font-medium text-report-fg">{item.value}</p>
             </div>

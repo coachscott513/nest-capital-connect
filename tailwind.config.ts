@@ -74,9 +74,11 @@ export default {
 					muted: 'hsl(var(--report-muted))',
 					border: 'hsl(var(--report-border))',
 					card: 'hsl(var(--report-card))',
+					'card-alt': 'hsl(var(--report-card-alt))',
 					accent: 'hsl(var(--report-accent))',
 					success: 'hsl(var(--report-success))',
-					warning: 'hsl(var(--report-warning))'
+					warning: 'hsl(var(--report-warning))',
+					'hero-bg': 'hsl(var(--report-hero-bg))'
 				},
 				media: {
 					background: 'hsl(222 47% 6%)',
