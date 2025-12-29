@@ -106,7 +106,7 @@ const PropertyIntelReport = ({
         <meta property="og:type" content="website" />
       </Helmet>
 
-      <main className="min-h-screen bg-report-bg">
+      <main className="min-h-screen">
         {/* Hero Section */}
         <ReportHero data={data} onUnlockClick={handleUnlockClick} />
 
@@ -117,11 +117,11 @@ const PropertyIntelReport = ({
 
         {/* GATE / UNLOCK */}
         {!isUnlocked && (
-          <section className="py-20 text-center border-b border-report-border">
+          <section className="py-24 md:py-32 text-center bg-report-section-dark">
             <div className="container mx-auto px-4 max-w-xl">
-              <div className="w-16 h-16 rounded-full bg-report-card flex items-center justify-center mx-auto mb-6">
+              <div className="w-20 h-20 rounded-3xl bg-white/10 flex items-center justify-center mx-auto mb-8">
                 <svg
-                  className="w-7 h-7 text-report-muted"
+                  className="w-9 h-9 text-white/60"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -134,15 +134,18 @@ const PropertyIntelReport = ({
                   />
                 </svg>
               </div>
-              <h3 className="text-2xl font-light text-report-fg mb-3">
+              <p className="text-xs uppercase tracking-[0.2em] text-white/40 mb-4">
+                Premium Content
+              </p>
+              <h3 className="text-3xl md:text-4xl font-light text-white mb-4">
                 Continue Reading
               </h3>
-              <p className="text-sm text-report-muted mb-8">
+              <p className="text-sm text-white/50 mb-10 max-w-md mx-auto">
                 See pricing context, comparable sales, tax analysis, and risk assessment.
               </p>
               <button
                 onClick={handleUnlockClick}
-                className="bg-report-fg text-report-bg px-8 py-4 rounded-full font-medium hover:bg-report-fg/90 transition-colors"
+                className="bg-white text-report-section-dark px-10 py-4 rounded-full font-medium hover:bg-white/90 transition-all shadow-lg shadow-black/20"
               >
                 Unlock Full Report
               </button>

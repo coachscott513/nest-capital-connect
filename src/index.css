@@ -40,13 +40,16 @@
     --surface: 0 0% 13%;
     --text-muted: 0 0% 71%;
 
-    /* Apple-style report tokens - warm neutral palette */
-    --report-bg: 30 20% 98%;
+    /* Apple-style report tokens - sophisticated contrast palette */
+    --report-bg: 0 0% 100%;
     --report-fg: 220 15% 15%;
     --report-muted: 220 10% 50%;
-    --report-border: 220 10% 88%;
+    --report-border: 220 10% 90%;
     --report-card: 0 0% 100%;
-    --report-card-alt: 220 15% 96%;
+    --report-card-alt: 220 15% 97%;
+    --report-section-dark: 220 20% 12%;
+    --report-section-light: 0 0% 100%;
+    --report-section-muted: 220 15% 97%;
     --report-accent: 160 84% 39%;
     --report-success: 160 70% 40%;
     --report-warning: 38 92% 50%;

@@ -30,13 +30,16 @@ const LocationIntelligence = ({ data }: LocationIntelligenceProps) => {
   ];
 
   return (
-    <section className="py-16 md:py-20 bg-report-card-alt">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <h2 className="text-2xl md:text-3xl font-light text-report-fg mb-4 text-center">
+    <section className="py-20 md:py-28 bg-report-section-dark">
+      <div className="container mx-auto px-4 max-w-5xl">
+        <p className="text-xs uppercase tracking-[0.2em] text-white/40 text-center mb-3">
+          Neighborhood
+        </p>
+        <h2 className="text-3xl md:text-4xl font-light text-white mb-4 text-center">
           Location Intelligence
         </h2>
         
-        <p className="text-sm text-report-muted text-center mb-10 max-w-lg mx-auto">
+        <p className="text-sm text-white/50 text-center mb-12 max-w-lg mx-auto">
           Location characteristics often influence long-term value more than interior features.
         </p>
         
@@ -44,14 +47,14 @@ const LocationIntelligence = ({ data }: LocationIntelligenceProps) => {
           {cards.map((card, index) => (
             <div
               key={index}
-              className="flex items-start gap-4 p-5 rounded-2xl bg-report-card border border-report-border/50 shadow-sm"
+              className="flex items-start gap-5 p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm"
             >
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-report-accent/10 flex items-center justify-center">
-                <card.icon className="w-5 h-5 text-report-accent" strokeWidth={1.5} />
+              <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-report-accent/20 flex items-center justify-center">
+                <card.icon className="w-6 h-6 text-report-accent" strokeWidth={1.5} />
               </div>
               <div>
-                <h3 className="text-sm font-medium text-report-fg mb-1">{card.title}</h3>
-                <p className="text-sm text-report-muted">{card.description}</p>
+                <h3 className="text-base font-medium text-white mb-1">{card.title}</h3>
+                <p className="text-sm text-white/60 leading-relaxed">{card.description}</p>
               </div>
             </div>
           ))}
