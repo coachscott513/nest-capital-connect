@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,10 +16,14 @@ import {
   FileText,
   Mail,
   Calendar,
-  BarChart3
+  BarChart3,
+  ChevronRight,
+  CheckCircle,
+  X
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useDelmarConfirmation } from "@/contexts/DelmarConfirmationContext";
 
 export interface TownData {
   name: string;
@@ -67,6 +71,18 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
   const [newsletterName, setNewsletterName] = useState("");
   const [newsletterPhone, setNewsletterPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { showConfirmation, setShowConfirmation } = useDelmarConfirmation();
+  const location = useLocation();
+
+  // Auto-dismiss confirmation banner after 10 seconds
+  useEffect(() => {
+    if (showConfirmation) {
+      const timer = setTimeout(() => setShowConfirmation(false), 10000);
+      return () => clearTimeout(timer);
+    }
+  }, [showConfirmation, setShowConfirmation]);
+
+  const isDelmarPage = town.slug === "delmar";
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -138,6 +154,74 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
       </Helmet>
 
       <MainHeader />
+
+      {/* Confirmation Banner - Shows after form submission */}
+      {showConfirmation && isDelmarPage && (
+        <div className="bg-primary/10 border-b border-primary/20 px-[5%] py-3">
+          <div className="max-w-4xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-2 text-primary">
+              <CheckCircle className="w-5 h-5" />
+              <span className="font-medium">You're in. Explore Delmar market insights below.</span>
+            </div>
+            <button 
+              onClick={() => setShowConfirmation(false)}
+              className="text-primary/70 hover:text-primary transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* WELCOME SECTION — First-time user optimized (Delmar only) */}
+      {isDelmarPage && (
+        <section className="px-[5%] py-12 md:py-16 bg-background border-b border-border">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+              Delmar Real Estate Intelligence
+            </h2>
+            <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
+              Clear, local insights for homeowners and buyers — beyond Zillow.
+            </p>
+
+            {/* 3-Step Visual Flow */}
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <BarChart3 className="w-7 h-7 text-primary" />
+                </div>
+                <div className="text-xs font-semibold text-primary mb-2">Step 1</div>
+                <h3 className="font-semibold text-foreground mb-1">Explore Market Activity</h3>
+                <p className="text-sm text-muted-foreground">
+                  See what's selling, price trends, and local data.
+                </p>
+              </div>
+              
+              <div className="flex flex-col items-center text-center">
+                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <Home className="w-7 h-7 text-primary" />
+                </div>
+                <div className="text-xs font-semibold text-primary mb-2">Step 2</div>
+                <h3 className="font-semibold text-foreground mb-1">View Property Pages</h3>
+                <p className="text-sm text-muted-foreground">
+                  Browse detailed intelligence on specific addresses.
+                </p>
+              </div>
+              
+              <div className="flex flex-col items-center text-center">
+                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <FileText className="w-7 h-7 text-primary" />
+                </div>
+                <div className="text-xs font-semibold text-primary mb-2">Step 3</div>
+                <h3 className="font-semibold text-foreground mb-1">Request a Report</h3>
+                <p className="text-sm text-muted-foreground">
+                  Get personalized intelligence on any property.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* HERO SECTION — New Intelligence-First Copy */}
       <section className="relative px-[5%] py-20 md:py-28 bg-gradient-to-br from-primary/10 via-background to-background border-b border-border">
@@ -593,11 +677,23 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
 
       {/* Sticky Mobile CTA */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border md:hidden z-50">
-        <Button size="lg" className="w-full h-12 font-bold" asChild>
-          <Link to="/dealdesk">
-            Get {town.name} Intelligence Report
-          </Link>
-        </Button>
+        <div className="flex gap-2">
+          {isDelmarPage && (
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="h-12 font-bold flex-1"
+              onClick={() => document.getElementById('market-intel')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Explore Delmar
+            </Button>
+          )}
+          <Button size="lg" className={`h-12 font-bold ${isDelmarPage ? 'flex-1' : 'w-full'}`} asChild>
+            <Link to="/dealdesk">
+              {isDelmarPage ? 'Get Report' : `Get ${town.name} Intelligence Report`}
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

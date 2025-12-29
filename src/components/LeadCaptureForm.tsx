@@ -24,6 +24,7 @@ interface LeadCaptureFormProps {
   buttonText?: string;
   variant?: "modal" | "inline" | "hero";
   boldtrailTag?: string;
+  onSuccess?: () => void;
 }
 
 const LeadCaptureForm = ({ 
@@ -32,7 +33,8 @@ const LeadCaptureForm = ({
   description, 
   buttonText,
   variant = "inline",
-  boldtrailTag 
+  boldtrailTag,
+  onSuccess 
 }: LeadCaptureFormProps) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -200,6 +202,11 @@ const LeadCaptureForm = ({
           phone: "",
           message: ""
         });
+
+        // Call onSuccess callback if provided
+        if (onSuccess) {
+          onSuccess();
+        }
       }
 
     } catch (error) {
