@@ -108,12 +108,12 @@ const PropertyIntelReport = ({
 
       <main className="min-h-screen">
         {/* Hero Section */}
-        <ReportHero data={data} onUnlockClick={handleUnlockClick} />
+        <ReportHero data={data} onUnlockClick={handleUnlockClick} isUnlocked={isUnlocked} />
 
         {/* FREE SECTIONS */}
-        <PropertySnapshot data={data} />
-        <LocationIntelligence data={data} />
-        <MarketPulse data={data} />
+        <PropertySnapshot data={data} isUnlocked={isUnlocked} />
+        <LocationIntelligence data={data} isUnlocked={isUnlocked} />
+        <MarketPulse data={data} isUnlocked={isUnlocked} />
 
         {/* GATE / UNLOCK */}
         {!isUnlocked && (
@@ -138,16 +138,20 @@ const PropertyIntelReport = ({
                 Premium Content
               </p>
               <h3 className="text-3xl md:text-4xl font-light text-white mb-4">
-                Continue Reading
+                Unlock Full Intelligence
               </h3>
-              <p className="text-sm text-white/50 mb-10 max-w-md mx-auto">
+              <p className="text-sm text-white/50 mb-6 max-w-md mx-auto">
                 See pricing context, comparable sales, tax analysis, and risk assessment.
+              </p>
+              <p className="text-xs text-white/40 mb-10 max-w-sm mx-auto italic">
+                This is a preview of the Property Intelligence format.<br />
+                Actual reports are generated per property upon request.
               </p>
               <button
                 onClick={handleUnlockClick}
                 className="bg-white text-report-section-dark px-10 py-4 rounded-full font-medium hover:bg-white/90 transition-all shadow-lg shadow-black/20"
               >
-                Unlock Full Report
+                Request Property Intelligence
               </button>
             </div>
           </section>

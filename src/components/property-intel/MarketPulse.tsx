@@ -3,9 +3,10 @@ import { PropertyIntelData } from "./types";
 
 interface MarketPulseProps {
   data: PropertyIntelData;
+  isUnlocked?: boolean;
 }
 
-const MarketPulse = ({ data }: MarketPulseProps) => {
+const MarketPulse = ({ data, isUnlocked = false }: MarketPulseProps) => {
   const getPressureLabel = (pressure: string) => {
     switch (pressure) {
       case 'Low':
@@ -19,28 +20,17 @@ const MarketPulse = ({ data }: MarketPulseProps) => {
 
   const pressure = getPressureLabel(data.inventoryPressure);
 
-  const metrics = [
-    {
-      icon: Clock,
-      label: "Days on Market",
-      value: data.avgDaysOnMarket.toString(),
-      unit: "avg",
-      subtext: "in this area",
-    },
-    {
-      icon: BarChart3,
-      label: "Inventory Pressure",
-      value: pressure.text,
-      valueClass: pressure.color,
-      subtext: "buyer competition",
-    },
-    {
-      icon: TrendingUp,
-      label: "Sale-to-List",
-      value: `${(data.saleToListRatio * 100).toFixed(0)}%`,
-      subtext: "recent closings",
-    },
-  ];
+  const metrics = isUnlocked
+    ? [
+        { icon: Clock, label: "Days on Market", value: data.avgDaysOnMarket.toString(), unit: "avg", subtext: "in this area" },
+        { icon: BarChart3, label: "Inventory Pressure", value: pressure.text, valueClass: pressure.color, subtext: "buyer competition" },
+        { icon: TrendingUp, label: "Sale-to-List", value: `${(data.saleToListRatio * 100).toFixed(0)}%`, subtext: "recent closings" },
+      ]
+    : [
+        { icon: Clock, label: "Days on Market", value: "XX", unit: "avg", subtext: "in this area" },
+        { icon: BarChart3, label: "Inventory Pressure", value: "—", valueClass: "text-report-muted", subtext: "buyer competition" },
+        { icon: TrendingUp, label: "Sale-to-List", value: "XX%", subtext: "recent closings" },
+      ];
 
   return (
     <section className="py-20 md:py-28 bg-report-section-light">
@@ -48,9 +38,14 @@ const MarketPulse = ({ data }: MarketPulseProps) => {
         <p className="text-xs uppercase tracking-[0.2em] text-report-muted text-center mb-3">
           Market Conditions
         </p>
-        <h2 className="text-3xl md:text-4xl font-light text-report-fg mb-12 text-center">
+        <h2 className="text-3xl md:text-4xl font-light text-report-fg mb-4 text-center">
           Market Pulse
         </h2>
+        {!isUnlocked && (
+          <p className="text-sm text-report-muted text-center mb-8 italic">
+            Local market metrics shown after unlock
+          </p>
+        )}
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {metrics.map((metric, index) => (
@@ -76,7 +71,7 @@ const MarketPulse = ({ data }: MarketPulseProps) => {
         </div>
         
         <p className="text-xs text-report-muted text-center mt-10">
-          Metrics reflect recent local market behavior.
+          {isUnlocked ? "Metrics reflect recent local market behavior." : "Metrics provided for subject area upon request."}
         </p>
       </div>
     </section>
