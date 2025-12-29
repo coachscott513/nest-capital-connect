@@ -38,7 +38,7 @@ const PropertyContactForm = ({ propertyAddress, mlsId }: PropertyContactFormProp
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     try {
-      // TODO: Integrate with edge function to send to scott@remax.com and BoldTrail CRM
+      // TODO: Integrate with edge function to send to scott@capitaldistrictnest.com and BoldTrail CRM
       console.log("Contact form submission:", { ...values, property: propertyAddress, mlsId });
       toast.success("Thank you! Scott will contact you shortly.");
       form.reset();
