@@ -34,9 +34,6 @@ const Footer = () => {
                 <Mail className="h-4 w-4" />
                 scott@capitaldistrictnest.com
               </a>
-              <p className="text-muted-foreground text-sm pt-2 border-t border-border mt-3">
-                Affiliated with <span className="font-semibold text-foreground">RE/MAX</span>
-              </p>
             </div>
           </div>
 
