@@ -31,9 +31,8 @@ const TownEntrySection = () => {
             Live data, school insights, and market trends for each Capital District town — updated weekly.
           </p>
         </div>
-
-        {/* Town Grid - pr-16 on lg screens prevents overlap with fixed Live Agent button */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 relative z-10 lg:pr-0">
+        {/* Town Grid - add right padding on lg to avoid overlap with fixed Command Center */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 relative z-10 lg:pr-24">
           {towns.map((town) => (
             <Link
               key={town.name}
