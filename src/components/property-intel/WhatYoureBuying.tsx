@@ -56,7 +56,7 @@ const WhatYoureBuying = ({ data, isUnlocked = false }: WhatYoureBuyingProps) => 
           The story behind the listing
         </p>
         
-        <div className="bg-report-card rounded-2xl shadow-[0_2px_12px_-2px_hsl(30_20%_20%/0.15)] border border-report-border p-8 md:p-10">
+        <div className="bg-report-card rounded-2xl shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-report-border p-8 md:p-10">
           <blockquote className="text-lg md:text-xl text-report-text-body leading-relaxed text-center italic">
             "{generateNarrative()}"
           </blockquote>

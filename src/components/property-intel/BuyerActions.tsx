@@ -89,7 +89,7 @@ const BuyerActions = ({ townName, userEmail }: BuyerActionsProps) => {
                 key={index}
                 asChild
                 variant="outline"
-                className="h-auto py-7 px-6 flex flex-col items-center gap-3 bg-report-card border-report-border/40 text-report-text-headline hover:bg-report-card-alt shadow-[0_4px_24px_-4px_hsl(220_20%_10%/0.08)] rounded-2xl"
+                className="h-auto py-7 px-6 flex flex-col items-center gap-3 bg-report-card border-report-border text-report-text-headline hover:bg-report-card-alt shadow-[0_6px_24px_rgba(0,0,0,0.06)] rounded-2xl"
               >
                 <a href={action.href}>
                   <Icon className="w-6 h-6 text-report-text-muted" strokeWidth={1.5} />
@@ -101,7 +101,7 @@ const BuyerActions = ({ townName, userEmail }: BuyerActionsProps) => {
         </div>
         
         {/* Request Another Address */}
-        <div className="max-w-md mx-auto p-7 rounded-2xl bg-report-card shadow-[0_4px_24px_-4px_hsl(220_20%_10%/0.08)] border border-report-border/40">
+        <div className="max-w-md mx-auto p-7 rounded-2xl bg-report-card shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-report-border">
           <div className="flex items-center gap-3 mb-5">
             <div className="w-10 h-10 rounded-full bg-report-bg flex items-center justify-center border border-report-border/40">
               <Search className="w-5 h-5 text-report-text-muted" strokeWidth={1.5} />

@@ -6,7 +6,7 @@ const ReportDisclosure = () => {
           Disclosure
         </p>
         
-        <div className="bg-report-card rounded-2xl shadow-[0_4px_24px_-4px_hsl(220_20%_10%/0.08)] border border-report-border/40 p-8 text-center space-y-4">
+        <div className="bg-report-card rounded-2xl shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-report-border p-8 text-center space-y-4">
           <p className="text-sm text-report-text-body leading-relaxed">
             This Property Intelligence Report is prepared using publicly available data sources 
             including MLS records, tax assessor databases, and market analytics. It is intended 

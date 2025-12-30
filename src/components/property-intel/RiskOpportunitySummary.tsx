@@ -36,7 +36,7 @@ const RiskOpportunitySummary = ({ data }: RiskOpportunitySummaryProps) => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
           {/* Upside */}
-          <div className="p-7 rounded-2xl bg-report-card shadow-[0_4px_24px_-4px_hsl(220_20%_10%/0.08)] border border-report-border/40">
+          <div className="p-7 rounded-2xl bg-report-card shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-report-border">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-full bg-report-success/10 flex items-center justify-center">
                 <TrendingUp className="w-5 h-5 text-report-success" strokeWidth={1.5} />
@@ -55,7 +55,7 @@ const RiskOpportunitySummary = ({ data }: RiskOpportunitySummaryProps) => {
           </div>
           
           {/* Risk */}
-          <div className="p-7 rounded-2xl bg-report-card shadow-[0_4px_24px_-4px_hsl(220_20%_10%/0.08)] border border-report-border/40">
+          <div className="p-7 rounded-2xl bg-report-card shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-report-border">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-full bg-report-warning/10 flex items-center justify-center">
                 <AlertTriangle className="w-5 h-5 text-report-warning" strokeWidth={1.5} />
