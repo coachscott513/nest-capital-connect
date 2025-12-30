@@ -51,7 +51,7 @@ const ComparableSales = ({ data }: ComparableSalesProps) => {
 
 const CompCard = ({ comp }: { comp: ComparableSale }) => {
   return (
-    <div className="p-6 rounded-2xl bg-report-card shadow-[0_4px_24px_-4px_hsl(220_20%_10%/0.08)] border border-report-border/40">
+    <div className="p-6 rounded-2xl bg-report-card shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-report-border">
       <p className="text-xl font-medium text-report-text-headline mb-4">
         ${comp.salePrice.toLocaleString()}
       </p>
