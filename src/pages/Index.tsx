@@ -283,6 +283,24 @@ const Index = () => {
         </div>
       </section>
 
+      {/* SAMPLE INTELLIGENCE REPORT CTA */}
+      <section className="px-[5%] py-16 bg-muted/30 border-y border-border">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+            See What a Real Property Intelligence Report Looks Like
+          </h2>
+          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+            Transparent. Local. Built for real decisions — not sales pitches.
+          </p>
+          <Link 
+            to="/intel/1999-ridge-road-queensbury-ny" 
+            className="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform"
+          >
+            View Sample Report →
+          </Link>
+        </div>
+      </section>
+
       {/* Due Diligence Engine */}
       <DueDiligenceEngine />
 

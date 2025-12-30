@@ -31,10 +31,10 @@ const ReportHero = ({ data, onUnlockClick, isUnlocked = false }: ReportHeroProps
         ) : (
           <>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-white mb-6">
-              Sample Property Report
+              Sample Property Intelligence Report
             </h1>
             <p className="text-sm text-white/50 mb-2 italic">
-              Preview — Not a live listing
+              Methodology Preview — Representative Data
             </p>
           </>
         )}

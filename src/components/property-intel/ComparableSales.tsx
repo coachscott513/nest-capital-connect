@@ -17,24 +17,28 @@ const ComparableSales = ({ data }: ComparableSalesProps) => {
   }
 
   return (
-    <section className="py-16 md:py-20 border-b border-report-border">
+    <section className="py-20 md:py-28 bg-report-bg">
       <div className="container mx-auto px-4 max-w-4xl">
-        <h2 className="text-2xl md:text-3xl font-light text-report-fg mb-10 text-center">
+        <h2 className="text-2xl md:text-3xl font-medium text-report-text-headline mb-3 text-center">
           Comparable Sales
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <p className="text-sm text-report-text-muted text-center mb-12 max-w-lg mx-auto">
+          Recent transactions in the area
+        </p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {displayComps.map((comp, index) => (
             <CompCard key={index} comp={comp} />
           ))}
         </div>
         
         {comps.length > 3 && (
-          <div className="text-center mt-8">
+          <div className="text-center mt-10">
             <Button
               variant="ghost"
               onClick={() => setShowAll(!showAll)}
-              className="text-report-muted hover:text-report-fg"
+              className="text-report-text-muted hover:text-report-text-headline"
             >
               {showAll ? "Show Core Comps" : `Show All ${comps.length} Comps`}
             </Button>
@@ -47,29 +51,29 @@ const ComparableSales = ({ data }: ComparableSalesProps) => {
 
 const CompCard = ({ comp }: { comp: ComparableSale }) => {
   return (
-    <div className="p-5 rounded-2xl bg-report-card">
-      <p className="text-lg font-medium text-report-fg mb-4">
+    <div className="p-6 rounded-2xl bg-report-card shadow-[0_4px_24px_-4px_hsl(220_20%_10%/0.08)] border border-report-border/40">
+      <p className="text-xl font-medium text-report-text-headline mb-4">
         ${comp.salePrice.toLocaleString()}
       </p>
       
       <div className="space-y-3 text-sm">
-        <div className="flex items-center gap-2 text-report-muted">
-          <Calendar className="w-4 h-4" strokeWidth={1.5} />
+        <div className="flex items-center gap-2 text-report-text-body">
+          <Calendar className="w-4 h-4 text-report-text-muted" strokeWidth={1.5} />
           <span>Sold {comp.saleDate}</span>
         </div>
         
-        <div className="flex items-center gap-2 text-report-muted">
-          <MapPin className="w-4 h-4" strokeWidth={1.5} />
+        <div className="flex items-center gap-2 text-report-text-body">
+          <MapPin className="w-4 h-4 text-report-text-muted" strokeWidth={1.5} />
           <span>{comp.distance} away</span>
         </div>
         
-        <div className="flex items-center gap-2 text-report-muted">
-          <Ruler className="w-4 h-4" strokeWidth={1.5} />
+        <div className="flex items-center gap-2 text-report-text-body">
+          <Ruler className="w-4 h-4 text-report-text-muted" strokeWidth={1.5} />
           <span>${comp.pricePerSqFt}/sq ft</span>
         </div>
       </div>
       
-      <p className="text-xs text-report-muted mt-4 pt-3 border-t border-report-border">
+      <p className="text-xs text-report-text-muted mt-4 pt-4 border-t border-report-border/50">
         {comp.address}
       </p>
     </div>

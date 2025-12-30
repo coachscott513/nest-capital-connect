@@ -42,22 +42,28 @@ const WhatYoureBuying = ({ data, isUnlocked = false }: WhatYoureBuyingProps) => 
   };
 
   return (
-    <section className="py-16 md:py-20 bg-report-section-light">
+    <section className="py-20 md:py-28 bg-report-bg">
       <div className="container mx-auto px-4 max-w-3xl">
-        <p className="text-xs uppercase tracking-[0.2em] text-report-muted mb-6 text-center">
+        <p className="text-xs uppercase tracking-[0.2em] text-report-text-muted mb-4 text-center">
           Section 2
         </p>
         
-        <h2 className="text-2xl md:text-3xl font-light text-report-fg mb-8 text-center">
+        <h2 className="text-2xl md:text-3xl font-medium text-report-text-headline mb-3 text-center">
           What You're Actually Buying
         </h2>
         
-        <blockquote className="text-lg md:text-xl text-report-fg/80 leading-relaxed text-center italic">
-          "{generateNarrative()}"
-        </blockquote>
+        <p className="text-sm text-report-text-muted text-center mb-10 max-w-lg mx-auto">
+          The story behind the listing
+        </p>
+        
+        <div className="bg-report-card rounded-2xl shadow-[0_4px_24px_-4px_hsl(220_20%_10%/0.08)] border border-report-border/40 p-8 md:p-10">
+          <blockquote className="text-lg md:text-xl text-report-text-body leading-relaxed text-center italic">
+            "{generateNarrative()}"
+          </blockquote>
+        </div>
         
         {!isUnlocked && (
-          <p className="text-xs text-report-muted text-center mt-6 italic">
+          <p className="text-xs text-report-text-muted text-center mt-8 italic">
             Full property-specific narrative available after unlock
           </p>
         )}

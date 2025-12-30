@@ -66,22 +66,22 @@ const BuyerActions = ({ townName, userEmail }: BuyerActionsProps) => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-report-section-light">
+    <section className="py-20 md:py-28 bg-report-bg">
       <div className="container mx-auto px-4 max-w-4xl">
-        <p className="text-xs uppercase tracking-[0.2em] text-report-muted mb-6 text-center">
+        <p className="text-xs uppercase tracking-[0.2em] text-report-text-muted mb-4 text-center">
           Section 7
         </p>
         
-        <h2 className="text-2xl md:text-3xl font-light text-report-fg mb-4 text-center">
+        <h2 className="text-2xl md:text-3xl font-medium text-report-text-headline mb-3 text-center">
           What To Do Next
         </h2>
         
-        <p className="text-sm text-report-muted text-center mb-10 max-w-lg mx-auto">
+        <p className="text-sm text-report-text-muted text-center mb-12 max-w-lg mx-auto">
           No sales pressure. Just help.
         </p>
         
         {/* Action Buttons */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-12">
           {actionButtons.map((action, index) => {
             const Icon = action.icon;
             return (
@@ -89,10 +89,10 @@ const BuyerActions = ({ townName, userEmail }: BuyerActionsProps) => {
                 key={index}
                 asChild
                 variant="outline"
-                className="h-auto py-6 px-6 flex flex-col items-center gap-3 border-report-border text-report-fg hover:bg-report-card rounded-2xl"
+                className="h-auto py-7 px-6 flex flex-col items-center gap-3 bg-report-card border-report-border/40 text-report-text-headline hover:bg-report-card-alt shadow-[0_4px_24px_-4px_hsl(220_20%_10%/0.08)] rounded-2xl"
               >
                 <a href={action.href}>
-                  <Icon className="w-6 h-6 text-report-muted" strokeWidth={1.5} />
+                  <Icon className="w-6 h-6 text-report-text-muted" strokeWidth={1.5} />
                   <span className="text-sm font-medium">{action.label}</span>
                 </a>
               </Button>
@@ -101,16 +101,16 @@ const BuyerActions = ({ townName, userEmail }: BuyerActionsProps) => {
         </div>
         
         {/* Request Another Address */}
-        <div className="max-w-md mx-auto p-6 rounded-2xl bg-report-card border border-report-border/50">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-report-border/50 flex items-center justify-center">
-              <Search className="w-5 h-5 text-report-muted" strokeWidth={1.5} />
+        <div className="max-w-md mx-auto p-7 rounded-2xl bg-report-card shadow-[0_4px_24px_-4px_hsl(220_20%_10%/0.08)] border border-report-border/40">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-10 h-10 rounded-full bg-report-bg flex items-center justify-center border border-report-border/40">
+              <Search className="w-5 h-5 text-report-text-muted" strokeWidth={1.5} />
             </div>
             <div>
-              <h3 className="text-base font-medium text-report-fg">
+              <h3 className="text-base font-medium text-report-text-headline">
                 Request Intelligence on Another Property
               </h3>
-              <p className="text-xs text-report-muted">
+              <p className="text-xs text-report-text-muted">
                 Get this same analysis for any address
               </p>
             </div>
@@ -122,12 +122,12 @@ const BuyerActions = ({ townName, userEmail }: BuyerActionsProps) => {
               placeholder="Enter property address"
               value={addressInput}
               onChange={(e) => setAddressInput(e.target.value)}
-              className="bg-report-bg border-report-border text-report-fg rounded-xl text-sm h-11 flex-1"
+              className="bg-report-bg border-report-border/60 text-report-text-headline placeholder:text-report-text-muted rounded-xl text-sm h-11 flex-1"
             />
             <Button
               onClick={handleAddressRequest}
               disabled={isSubmittingAddress || !addressInput.trim()}
-              className="bg-report-fg text-report-bg hover:bg-report-fg/90 h-11 px-6 rounded-xl text-sm"
+              className="bg-report-text-headline text-report-card hover:bg-report-text-headline/90 h-11 px-6 rounded-xl text-sm"
             >
               Request
             </Button>

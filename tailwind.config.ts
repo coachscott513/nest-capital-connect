@@ -81,7 +81,10 @@ export default {
 					accent: 'hsl(var(--report-accent))',
 					success: 'hsl(var(--report-success))',
 					warning: 'hsl(var(--report-warning))',
-					'hero-bg': 'hsl(var(--report-hero-bg))'
+					'hero-bg': 'hsl(var(--report-hero-bg))',
+					'text-headline': 'hsl(var(--report-text-headline))',
+					'text-body': 'hsl(var(--report-text-body))',
+					'text-muted': 'hsl(var(--report-text-muted))'
 				},
 				media: {
 					background: 'hsl(222 47% 6%)',
