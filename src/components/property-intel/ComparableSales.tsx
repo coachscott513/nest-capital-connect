@@ -17,33 +17,37 @@ const ComparableSales = ({ data }: ComparableSalesProps) => {
   }
 
   return (
-    <section className="py-20 md:py-28 bg-report-bg">
+    <section className="py-16 md:py-20 bg-report-bg">
       <div className="container mx-auto px-4 max-w-4xl">
-        <h2 className="text-2xl md:text-3xl font-medium text-report-text-headline mb-3 text-center">
-          Comparable Sales
-        </h2>
-        
-        <p className="text-sm text-report-text-muted text-center mb-12 max-w-lg mx-auto">
-          Recent transactions in the area
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-          {displayComps.map((comp, index) => (
-            <CompCard key={index} comp={comp} />
-          ))}
-        </div>
-        
-        {comps.length > 3 && (
-          <div className="text-center mt-10">
-            <Button
-              variant="ghost"
-              onClick={() => setShowAll(!showAll)}
-              className="text-report-text-muted hover:text-report-text-headline"
-            >
-              {showAll ? "Show Core Comps" : `Show All ${comps.length} Comps`}
-            </Button>
+        <article className="bg-report-card rounded-2xl shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-report-border p-8 md:p-10">
+          <header className="text-center">
+            <h2 className="text-2xl md:text-3xl font-medium text-report-text-headline mb-3">
+              Comparable Sales
+            </h2>
+
+            <p className="text-sm text-report-text-muted mb-12 max-w-lg mx-auto">
+              Recent transactions in the area
+            </p>
+          </header>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+            {displayComps.map((comp, index) => (
+              <CompCard key={index} comp={comp} />
+            ))}
           </div>
-        )}
+
+          {comps.length > 3 && (
+            <div className="text-center mt-10">
+              <Button
+                variant="ghost"
+                onClick={() => setShowAll(!showAll)}
+                className="text-report-text-muted hover:text-report-text-headline"
+              >
+                {showAll ? "Show Core Comps" : `Show All ${comps.length} Comps`}
+              </Button>
+            </div>
+          )}
+        </article>
       </div>
     </section>
   );
