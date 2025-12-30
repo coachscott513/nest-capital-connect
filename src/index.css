@@ -41,24 +41,26 @@
     --text-muted: 0 0% 71%;
 
     /* Apple-style report tokens - soft gray background, layered cards */
-    --report-bg: 220 14% 96%;
-    --report-fg: 220 15% 8%;
-    --report-muted: 220 8% 46%;
-    --report-border: 220 10% 88%;
+    /* Target neutrals (approx): bg #F7F7F8, headline #1C1C1E, body #3A3A3C, muted #6E6E73 */
+    /* Slightly deeper paper tone to reduce glare on long-scroll reading */
+    --report-bg: 220 10% 95%;
+    --report-fg: 240 6% 11%;
+    --report-muted: 240 2% 44%;
+    --report-border: 220 8% 88%;
     --report-card: 0 0% 100%;
-    --report-card-alt: 220 15% 97%;
+    --report-card-alt: 220 10% 96%;
     --report-section-dark: 220 20% 12%;
-    --report-section-light: 220 14% 96%;
-    --report-section-muted: 220 14% 96%;
+    --report-section-light: 220 10% 95%;
+    --report-section-muted: 220 10% 95%;
     --report-accent: 160 84% 39%;
     --report-success: 160 70% 40%;
     --report-warning: 38 92% 50%;
     --report-hero-bg: 220 20% 12%;
-    --report-text-headline: 220 15% 8%;
-    --report-text-body: 220 10% 23%;
-    --report-text-muted: 220 8% 46%;
-    --report-shadow: 0 4px 24px -4px hsl(220 20% 10% / 0.08);
-
+    --report-text-headline: 240 6% 11%;
+    --report-text-body: 240 2% 23%;
+    --report-text-muted: 240 2% 44%;
+    --report-shadow: 0 6px 28px -10px hsl(240 8% 12% / 0.10);
+ 
     --sidebar-background: 0 0% 0%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 160 84% 39%;
