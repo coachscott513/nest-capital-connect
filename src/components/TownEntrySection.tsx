@@ -16,7 +16,7 @@ const towns = [
 
 const TownEntrySection = () => {
   return (
-    <section className="px-[5%] py-16 bg-gradient-to-b from-primary/5 to-background border-b border-border">
+    <section className="px-[5%] py-16 bg-gradient-to-b from-primary/5 to-background border-b border-border relative z-20">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
@@ -32,13 +32,14 @@ const TownEntrySection = () => {
           </p>
         </div>
 
-        {/* Town Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 relative z-10">
+        {/* Town Grid - pr-16 on lg screens prevents overlap with fixed Live Agent button */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 relative z-10 lg:pr-0">
           {towns.map((town) => (
             <Link
               key={town.name}
               to={town.href}
-              className="group relative z-10 block bg-card border border-border rounded-xl p-4 md:p-5 hover:border-primary hover:shadow-lg transition-all text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              className="group relative z-30 block cursor-pointer bg-card border border-border rounded-xl p-4 md:p-5 hover:border-primary hover:shadow-lg transition-all text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              style={{ isolation: 'isolate' }}
             >
               <div className="flex flex-col items-center pointer-events-none">
                 <h3 className="text-lg md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
