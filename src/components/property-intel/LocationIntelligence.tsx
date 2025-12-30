@@ -1,4 +1,4 @@
-import { Car, Store, GraduationCap, TreePine } from "lucide-react";
+import { MapPin, Car, GraduationCap, TrendingUp, Building } from "lucide-react";
 import { PropertyIntelData } from "./types";
 
 interface LocationIntelligenceProps {
@@ -7,52 +7,67 @@ interface LocationIntelligenceProps {
 }
 
 const LocationIntelligence = ({ data, isUnlocked = false }: LocationIntelligenceProps) => {
-  const cards = isUnlocked
-    ? [
-        { icon: Car, title: "Commute Access", description: data.commuteAccess || "Direct access to major routes" },
-        { icon: Store, title: "Nearby Services", description: data.nearbyServices?.join(", ") || "Local amenities within 5 miles" },
-        { icon: GraduationCap, title: "School Quality", description: data.schoolQuality || `${data.schoolDistrict} District` },
-        { icon: TreePine, title: "Area Context", description: data.areaContext || "Residential neighborhood setting" },
-      ]
-    : [
-        { icon: Car, title: "Commute Access", description: "Highway proximity, drive times to employment centers" },
-        { icon: Store, title: "Nearby Services", description: "Grocery, healthcare, dining within X miles" },
-        { icon: GraduationCap, title: "School Quality", description: "District rating and school performance context" },
-        { icon: TreePine, title: "Area Context", description: "Neighborhood type, lot density, setting" },
-      ];
+  const locationItems = [
+    {
+      icon: Car,
+      label: "Commuting Access",
+      value: data.commuteAccess || "Highway proximity, drive times to employment centers",
+    },
+    {
+      icon: GraduationCap,
+      label: "School District Context",
+      value: data.schoolQuality || `${data.schoolDistrict} serves this area`,
+    },
+    {
+      icon: Building,
+      label: "Nearby Demand Drivers",
+      value: data.demandDrivers?.join(", ") || "Employment centers, retail, healthcare",
+    },
+    {
+      icon: TrendingUp,
+      label: "Long-term Area Trajectory",
+      value: data.areaTrajectory || data.areaContext || "Development trends and growth indicators",
+    },
+  ];
 
   return (
-    <section className="py-20 md:py-28 bg-report-section-dark">
-      <div className="container mx-auto px-4 max-w-5xl">
-        <p className="text-xs uppercase tracking-[0.2em] text-white/40 text-center mb-3">
-          Neighborhood
+    <section className="py-16 md:py-20 bg-report-section-dark text-white">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <p className="text-xs uppercase tracking-[0.2em] text-white/40 mb-6 text-center">
+          Section 6
         </p>
-        <h2 className="text-3xl md:text-4xl font-light text-white mb-4 text-center">
+        
+        <h2 className="text-2xl md:text-3xl font-light text-white mb-4 text-center">
           Location Intelligence
         </h2>
         
-        <p className="text-sm text-white/50 text-center mb-12 max-w-lg mx-auto">
-          {isUnlocked 
-            ? "Location characteristics often influence long-term value more than interior features."
-            : "Location context provided for subject property upon request."
-          }
+        <p className="text-sm text-white/50 text-center mb-10 max-w-lg mx-auto">
+          Context that determines long-term value
         </p>
         
+        {/* Map placeholder */}
+        <div className="w-full h-48 rounded-2xl bg-white/5 flex items-center justify-center mb-10">
+          <MapPin className="w-8 h-8 text-white/20" strokeWidth={1.5} />
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {cards.map((card, index) => (
-            <div
-              key={index}
-              className="flex items-start gap-5 p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm"
-            >
-              <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-report-accent/20 flex items-center justify-center">
-                <card.icon className="w-6 h-6 text-report-accent" strokeWidth={1.5} />
+          {locationItems.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={index}
+                className="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/10"
+              >
+                <div className="w-10 h-10 rounded-full bg-report-accent/20 flex items-center justify-center flex-shrink-0">
+                  <Icon className="w-5 h-5 text-report-accent" strokeWidth={1.5} />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white mb-1">{item.label}</p>
+                  <p className="text-sm text-white/60">{item.value}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-base font-medium text-white mb-1">{card.title}</h3>
-                <p className="text-sm text-white/60 leading-relaxed">{card.description}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
