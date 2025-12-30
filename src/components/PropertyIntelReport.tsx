@@ -5,14 +5,15 @@ import { toast } from "@/hooks/use-toast";
 
 import ReportHero from "./property-intel/ReportHero";
 import PropertySnapshot from "./property-intel/PropertySnapshot";
-import LocationIntelligence from "./property-intel/LocationIntelligence";
+import WhatYoureBuying from "./property-intel/WhatYoureBuying";
+import FinancialReality from "./property-intel/FinancialReality";
 import MarketPulse from "./property-intel/MarketPulse";
-import UnlockModal from "./property-intel/UnlockModal";
-import PricingIntelligence from "./property-intel/PricingIntelligence";
 import ComparableSales from "./property-intel/ComparableSales";
-import TaxOwnershipIntel from "./property-intel/TaxOwnershipIntel";
 import RiskOpportunitySummary from "./property-intel/RiskOpportunitySummary";
+import LocationIntelligence from "./property-intel/LocationIntelligence";
 import BuyerActions from "./property-intel/BuyerActions";
+import ReportDisclosure from "./property-intel/ReportDisclosure";
+import UnlockModal from "./property-intel/UnlockModal";
 import Footer from "./Footer";
 
 import { PropertyIntelData, LeadFormData } from "./property-intel/types";
@@ -92,8 +93,13 @@ const PropertyIntelReport = ({
     }
   };
 
-  const defaultTitle = `${data.address}, ${data.city} ${data.state} — Property Intelligence Report`;
-  const defaultDescription = `Independent property intelligence for ${data.address}. Market analysis, comparable sales, tax data, and risk assessment.`;
+  // Dynamic meta based on locked/unlocked state
+  const defaultTitle = isUnlocked 
+    ? `${data.address}, ${data.city} ${data.state} — Property Intelligence Report`
+    : `Sample Property Intelligence Report — Methodology Preview`;
+  const defaultDescription = isUnlocked
+    ? `Independent property intelligence for ${data.address}. Market analysis, comparable sales, tax data, and risk assessment.`
+    : `See what a Property Intelligence Report includes. Market analysis, comparable sales, financial reality, and risk assessment.`;
 
   return (
     <>
@@ -106,16 +112,20 @@ const PropertyIntelReport = ({
         <meta property="og:type" content="website" />
       </Helmet>
 
-      <main className="min-h-screen">
-        {/* Hero Section */}
+      <main className="min-h-screen bg-report-bg">
+        {/* HERO - Title & Basic Info */}
         <ReportHero data={data} onUnlockClick={handleUnlockClick} isUnlocked={isUnlocked} />
 
-        {/* FREE SECTIONS */}
+        {/* SECTION 1: Property Snapshot (FREE) */}
         <PropertySnapshot data={data} isUnlocked={isUnlocked} />
-        <LocationIntelligence data={data} isUnlocked={isUnlocked} />
-        <MarketPulse data={data} isUnlocked={isUnlocked} />
+        
+        {/* SECTION 2: What You're Actually Buying (FREE preview, full narrative gated) */}
+        <WhatYoureBuying data={data} isUnlocked={isUnlocked} />
+        
+        {/* SECTION 3: Financial Reality (GATED) */}
+        <FinancialReality data={data} isUnlocked={isUnlocked} />
 
-        {/* GATE / UNLOCK */}
+        {/* GATE / UNLOCK CTA */}
         {!isUnlocked && (
           <section className="py-24 md:py-32 text-center bg-report-section-dark">
             <div className="container mx-auto px-4 max-w-xl">
@@ -135,24 +145,24 @@ const PropertyIntelReport = ({
                 </svg>
               </div>
               <p className="text-xs uppercase tracking-[0.2em] text-white/40 mb-4">
-                Premium Content
+                Full Report Access
               </p>
               <h3 className="text-3xl md:text-4xl font-light text-white mb-4">
-                Unlock Full Intelligence
+                Unlock Complete Intelligence
               </h3>
-              <p className="text-sm text-white/50 mb-6 max-w-md mx-auto">
-                See pricing context, comparable sales, tax analysis, and risk assessment.
-              </p>
-              <p className="text-xs text-white/40 mb-10 max-w-sm mx-auto italic">
-                This is a preview of the Property Intelligence format.<br />
-                Actual reports are generated per property upon request.
+              <p className="text-sm text-white/50 mb-8 max-w-md mx-auto">
+                Get full market context, comparable sales, tax analysis, upside & risk assessment, and next steps.
               </p>
               <button
                 onClick={handleUnlockClick}
                 className="bg-white text-report-section-dark px-10 py-4 rounded-full font-medium hover:bg-white/90 transition-all shadow-lg shadow-black/20"
               >
-                Request Property Intelligence
+                Request Full Property Intelligence
               </button>
+              <p className="text-xs text-white/40 mt-8 max-w-sm mx-auto italic">
+                This is a preview of the Property Intelligence format.<br />
+                Actual reports are generated per property upon request.
+              </p>
             </div>
           </section>
         )}
@@ -160,11 +170,21 @@ const PropertyIntelReport = ({
         {/* GATED SECTIONS - Only show when unlocked */}
         {isUnlocked && (
           <>
-            <PricingIntelligence data={data} />
+            {/* SECTION 4: Market Context */}
+            <MarketPulse data={data} isUnlocked={isUnlocked} />
             <ComparableSales data={data} />
-            <TaxOwnershipIntel data={data} />
+            
+            {/* SECTION 5: Upside & Risk */}
             <RiskOpportunitySummary data={data} />
+            
+            {/* SECTION 6: Location Intelligence */}
+            <LocationIntelligence data={data} isUnlocked={isUnlocked} />
+            
+            {/* SECTION 7: What To Do Next */}
             <BuyerActions townName={data.city} userEmail={userEmail} />
+            
+            {/* SECTION 8: Disclosure */}
+            <ReportDisclosure />
           </>
         )}
 

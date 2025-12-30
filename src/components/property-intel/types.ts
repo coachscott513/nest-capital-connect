@@ -10,44 +10,51 @@ export interface PropertyIntelData {
   propertyType: string;
   yearBuilt: number;
   
-  // Snapshot (FREE)
+  // Snapshot (Section 1)
   status: string;
   askingPrice: number;
   pricePerSqFt: number;
   schoolDistrict: string;
   municipality: string;
   county: string;
+  daysOnMarket?: number;
   
-  // Location Intelligence (FREE)
+  // Location Intelligence (Section 6)
   commuteAccess?: string;
   nearbyServices?: string[];
   schoolQuality?: string;
   areaContext?: string;
+  demandDrivers?: string[];
+  areaTrajectory?: string;
   
-  // Market Pulse (FREE)
+  // Market Context (Section 4)
   avgDaysOnMarket: number;
   inventoryPressure: 'Low' | 'Balanced' | 'High';
   saleToListRatio: number;
   
-  // Pricing Intelligence (GATED)
+  // Pricing Intelligence (Gated)
   medianSold12Mo?: number;
   medianActive?: number;
   pricePosition?: 'Below' | 'At' | 'Above';
   
-  // Comparable Sales (GATED)
+  // Comparable Sales (Section 4 - Gated)
   comparables?: ComparableSale[];
   
-  // Tax & Ownership (GATED)
+  // Tax & Financial (Section 3 - Gated)
   assessedValue?: number;
   annualTaxes?: number;
   taxHistory?: { year: number; amount: number }[];
   ownershipDuration?: string;
   lastSaleDate?: string;
   lastSalePrice?: number;
+  estimatedInsurance?: number;
+  estimatedUtilities?: number;
   
-  // Risk & Opportunity (GATED)
+  // Upside & Risk (Section 5 - Gated)
   opportunities?: string[];
   considerations?: string[];
+  upsideFactors?: string[];
+  riskFactors?: string[];
 }
 
 export interface ComparableSale {
