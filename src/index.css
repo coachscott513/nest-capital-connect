@@ -40,34 +40,34 @@
     --surface: 0 0% 13%;
     --text-muted: 0 0% 71%;
 
-    /* Report tokens - 3-layer visual hierarchy */
-    /* Layer 1: Page background - soft light gray (#F6F7F9) */
-    --report-bg: 225 14% 97%;
+    /* Report tokens - 3-layer blue visual hierarchy */
+    /* Layer 1: Page background - light slate blue */
+    --report-bg: 220 30% 92%;
     
-    /* Layer 2: Content cards - pure white with shadows */
-    --report-card: 0 0% 100%;
-    --report-card-alt: 225 14% 95%;
-    --report-border: 220 13% 88%;
+    /* Layer 2: Content cards - soft blue-gray (NOT white) */
+    --report-card: 220 25% 96%;
+    --report-card-alt: 220 20% 88%;
+    --report-border: 220 20% 80%;
     
-    /* Layer 3: Text contrast - near-black to muted gray */
-    --report-text-headline: 0 0% 7%;      /* #111111 */
-    --report-text-body: 0 0% 18%;         /* #2E2E2E */
-    --report-text-muted: 240 2% 43%;      /* #6E6E73 */
+    /* Layer 3: Text contrast - dark navy to muted blue-gray */
+    --report-text-headline: 220 30% 15%;
+    --report-text-body: 220 20% 25%;
+    --report-text-muted: 220 15% 45%;
     
     /* Legacy aliases */
-    --report-fg: 0 0% 7%;
-    --report-muted: 240 2% 43%;
+    --report-fg: 220 30% 15%;
+    --report-muted: 220 15% 45%;
     
-    /* Section backgrounds */
-    --report-section-dark: 220 20% 12%;
-    --report-section-light: 225 14% 97%;
-    --report-section-muted: 225 14% 95%;
+    /* Section backgrounds - alternating blues */
+    --report-section-dark: 220 35% 14%;
+    --report-section-light: 220 25% 85%;
+    --report-section-muted: 220 20% 78%;
     
     /* Accent colors */
     --report-accent: 160 84% 39%;
     --report-success: 160 70% 40%;
     --report-warning: 38 92% 50%;
-    --report-hero-bg: 220 20% 12%;
+    --report-hero-bg: 220 35% 14%;
  
     --sidebar-background: 0 0% 0%;
     --sidebar-foreground: 0 0% 100%;
