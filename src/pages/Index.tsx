@@ -288,50 +288,53 @@ const Index = () => {
       </section>
 
       {/* ========================================== */}
-      {/* SECTION 3: OPTIONAL PATHS (Two Tiles) */}
+      {/* SECTION 3: PROPERTY INTELLIGENCE EXPLAINED */}
       {/* ========================================== */}
       <section className="px-[5%] py-16 md:py-20">
         <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Property Intelligence */}
-            <div className="bg-card border border-border rounded-xl p-6 md:p-8">
-              <div className="flex items-center gap-2 mb-4">
-                <FileText className="w-5 h-5 text-primary" />
-                <span className="text-sm font-medium text-muted-foreground">Property Intelligence</span>
-              </div>
-              <h3 className="text-xl font-bold text-foreground mb-3">
-                Request a Detailed Report
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                Request a detailed Property Intelligence Report for any home you're evaluating. Verified data, tax analysis, and market context.
-              </p>
-              <Link 
-                to="/intel/1999-ridge-road-queensbury-ny" 
-                className="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:underline"
-              >
-                View sample report <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+              Property Intelligence, Explained
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Capital District Nest provides clear, local intelligence for buyers, sellers, and homeowners.<br />
+              Our reports combine verified public records, tax data, and real market activity — organized in a way that's easy to understand.
+            </p>
+          </div>
+          
+          <div className="text-center">
+            <Link 
+              to="/intel/1999-ridge-road-queensbury-ny" 
+              className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
+            >
+              See how a Property Intelligence Report works <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
 
-            {/* Investor Intelligence */}
-            <div className="bg-card border border-border rounded-xl p-6 md:p-8">
-              <div className="flex items-center gap-2 mb-4">
-                <BarChart3 className="w-5 h-5 text-muted-foreground" />
-                <span className="text-sm font-medium text-muted-foreground">Investor Intelligence (Optional)</span>
-              </div>
-              <h3 className="text-xl font-bold text-foreground mb-3">
-                Advanced Analysis Tools
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                Advanced analysis tools for multi-unit and long-term investors. Cash flow, cap rates, and market reports.
-              </p>
-              <Link 
-                to="/investor-tools" 
-                className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary font-semibold text-sm transition-colors"
-              >
-                Explore Investor Intelligence <ArrowRight className="w-4 h-4" />
-              </Link>
+      {/* ========================================== */}
+      {/* SECTION 4: INVESTOR INTELLIGENCE (OPTIONAL) */}
+      {/* ========================================== */}
+      <section className="px-[5%] py-12 border-t border-border">
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-card border border-border rounded-xl p-6 md:p-8">
+            <div className="flex items-center gap-2 mb-4">
+              <BarChart3 className="w-5 h-5 text-muted-foreground" />
+              <span className="text-sm font-medium text-muted-foreground">Investor Intelligence (Optional)</span>
             </div>
+            <h3 className="text-xl font-bold text-foreground mb-3">
+              For Deeper Cash-Flow, Multi-Unit, and Return Analysis
+            </h3>
+            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+              Advanced analysis tools for multi-unit and long-term investors. Cash flow, cap rates, and market reports.
+            </p>
+            <Link 
+              to="/investor-tools" 
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary font-semibold text-sm transition-colors"
+            >
+              Explore Investor Intelligence <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>

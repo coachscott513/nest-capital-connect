@@ -132,78 +132,25 @@ const Intelligence = () => {
         </div>
       </section>
 
-      {/* Free vs Gated */}
+      {/* How Reports Are Prepared */}
       <section className="px-[5%] py-16 bg-muted/30 border-y border-border">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
-            Free vs. Full Reports
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
+            How Reports Are Prepared
           </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Free */}
-            <div className="bg-card border border-border rounded-xl p-6">
-              <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Free</div>
-              <h3 className="text-lg font-bold text-foreground mb-4">Overview + Sample Visuals</h3>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-2 text-muted-foreground text-sm">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  View sample report format
-                </li>
-                <li className="flex items-start gap-2 text-muted-foreground text-sm">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Understand what data is included
-                </li>
-                <li className="flex items-start gap-2 text-muted-foreground text-sm">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Browse town-level market trends
-                </li>
-              </ul>
-              <div className="mt-6">
-                <Link 
-                  to="/intel/1999-ridge-road-queensbury-ny" 
-                  className="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:underline"
-                >
-                  View Sample Report <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Full Report */}
-            <div className="bg-card border border-primary/30 rounded-xl p-6">
-              <div className="text-sm font-semibold text-primary uppercase tracking-wide mb-3">Full Report</div>
-              <h3 className="text-lg font-bold text-foreground mb-4">Complete Property Intelligence</h3>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-2 text-muted-foreground text-sm">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Verified property data
-                </li>
-                <li className="flex items-start gap-2 text-muted-foreground text-sm">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Full tax breakdown
-                </li>
-                <li className="flex items-start gap-2 text-muted-foreground text-sm">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Comparable sales analysis
-                </li>
-                <li className="flex items-start gap-2 text-muted-foreground text-sm">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Risk & opportunity flags
-                </li>
-                <li className="flex items-start gap-2 text-muted-foreground text-sm">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  Downloadable + web-based
-                </li>
-              </ul>
-              <div className="mt-6">
-                <Link 
-                  to="/dealdesk" 
-                  className="inline-flex items-center gap-2 bg-foreground text-background px-5 py-3 rounded-full font-semibold text-sm hover:scale-105 transition-transform"
-                >
-                  Request an Intelligence Report <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-          </div>
+          <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+            This is a sample Property Intelligence Report.<br />
+            Full reports are generated on request to ensure accuracy and relevance.
+          </p>
+          <p className="text-muted-foreground text-sm mb-8">
+            Reports are prepared individually and delivered digitally.
+          </p>
+          <Link 
+            to="/intel/1999-ridge-road-queensbury-ny" 
+            className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
+          >
+            View Sample Report <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 
