@@ -33,14 +33,14 @@ const TownEntrySection = () => {
         </div>
 
         {/* Town Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 relative z-10">
           {towns.map((town) => (
             <Link
               key={town.name}
               to={town.href}
-              className="group relative bg-card border border-border rounded-xl p-4 md:p-5 hover:border-primary hover:shadow-lg transition-all text-center"
+              className="group relative z-10 block bg-card border border-border rounded-xl p-4 md:p-5 hover:border-primary hover:shadow-lg transition-all text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center pointer-events-none">
                 <h3 className="text-lg md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                   {town.name}
                 </h3>
