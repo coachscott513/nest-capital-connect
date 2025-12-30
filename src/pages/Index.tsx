@@ -1,23 +1,10 @@
 import { useState, useRef } from "react";
-import { TrendingUp, MapPin, BarChart3, Home, Users, ArrowRight } from "lucide-react";
+import { MapPin, ArrowRight, FileText, BarChart3, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import GuideLeadModal from "@/components/GuideLeadModal";
 import SEOHead from "@/components/SEOHead";
-import DueDiligenceEngine from "@/components/DueDiligenceEngine";
-import AlphaListSection from "@/components/AlphaListSection";
-import DealOfMonthSection from "@/components/DealOfMonthSection";
-import StrategySessionSection from "@/components/StrategySessionSection";
-import FinancingSection from "@/components/FinancingSection";
-import CoverageAreaGrid from "@/components/CoverageAreaGrid";
-import PropertyTypeGrid from "@/components/PropertyTypeGrid";
-import QuickSearchBlock from "@/components/QuickSearchBlock";
-import MultiUnitSearchSection from "@/components/MultiUnitSearchSection";
-import StartHereDeck from "@/components/StartHereDeck";
-import HomeBuyerHub from "@/components/HomeBuyerHub";
-import InvestorHub from "@/components/InvestorHub";
-import MarketMapSection from "@/components/MarketMapSection";
 import CleanHero from "@/components/CleanHero";
-import GuidedDeck from "@/components/GuidedDeck";
+import Footer from "@/components/Footer";
 
 const menuSections = [
   {
@@ -81,7 +68,7 @@ const menuSections = [
     category: "About",
     items: [
       { label: "What We Do", sub: "/ Our Mission", href: "/about" },
-      { label: "How It Works", sub: "/ Process", href: "/communities" },
+      { label: "How It Works", sub: "/ Process", href: "/intelligence" },
       { label: "Reviews", sub: "/ Testimonials", href: "/reviews" },
       { label: "Contact", sub: "/ Get in Touch", href: "/dealdesk" },
       { label: "Blog", sub: "/ Articles", href: "/blog" },
@@ -96,47 +83,33 @@ const footerLinks = [
 ];
 
 const townHubs = [
-  { name: "Delmar", href: "/delmar", description: "Bethlehem Central Schools" },
   { name: "Voorheesville", href: "/voorheesville-real-estate", description: "Rural character, top schools" },
-  { name: "Clifton Park", href: "/clifton-park-real-estate", description: "Growing suburb, family-friendly" },
+  { name: "Delmar", href: "/delmar", description: "Bethlehem Central Schools" },
   { name: "Niskayuna", href: "/niskayuna-real-estate", description: "Top-rated schools" },
-  { name: "Albany", href: "/albany-real-estate", description: "Capital city, diverse neighborhoods" },
+  { name: "Clifton Park", href: "/clifton-park-real-estate", description: "Growing suburb, family-friendly" },
   { name: "Troy", href: "/troy-real-estate", description: "Historic charm, RPI proximity" },
   { name: "Schenectady", href: "/schenectady-real-estate", description: "Revitalizing downtown" },
-  { name: "Saratoga", href: "/saratoga-real-estate", description: "Racing, culture, upscale living" },
+  { name: "Saratoga Springs", href: "/saratoga-real-estate", description: "Racing, culture, upscale living" },
+  { name: "Amsterdam", href: "/amsterdam-real-estate", description: "Affordable opportunity" },
+  { name: "Queensbury", href: "/queensbury-real-estate", description: "Lake George gateway" },
 ];
 
 const Index = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [guideModal, setGuideModal] = useState<{ open: boolean; guideType: string; redirectPath: string }>({ open: false, guideType: "", redirectPath: "" });
   
-  const buyerHubRef = useRef<HTMLDivElement>(null);
-  const investorHubRef = useRef<HTMLDivElement>(null);
   const townSectionRef = useRef<HTMLDivElement>(null);
-  const investorSectionRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBuyerHub = () => {
-    buyerHubRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  const scrollToInvestorHub = () => {
-    investorHubRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
 
   const scrollToTownSection = () => {
     townSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const scrollToInvestorSection = () => {
-    investorSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Albany NY Real Estate | Capital District Nest | Homes, Investment & Land"
-        description="Stop renting. Start owning. Capital District Nest connects buyers with $30k down-payment grants, off-market multi-family deals, and land in Albany, Troy, and Schenectady. Powered by RE/MAX."
-        keywords="Albany NY Real Estate, Troy NY Home Grants, Schenectady Multi-Family, Capital District Investment Property, First Time Home Buyer Grants NY, Niskayuna Land for Sale, RE/MAX Capital District"
+        title="Capital District Nest | Modern Real Estate Intelligence"
+        description="Clear data. Local context. Town-by-town real estate intelligence for Albany, Troy, Schenectady, Saratoga, and the Capital District."
+        keywords="Capital District real estate, Albany homes, Troy real estate, Schenectady homes, property intelligence, market data"
         canonical="https://capitaldistrictnest.com"
         ogImage="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
         ogType="website"
@@ -218,24 +191,25 @@ const Index = () => {
         </button>
       </header>
 
-      {/* CLEAN HERO - Exactly as is */}
-      <CleanHero />
+      {/* HERO */}
+      <CleanHero onScrollToTowns={scrollToTownSection} />
 
       {/* ========================================== */}
-      {/* SECTION 1: TOWN INTELLIGENCE HUBS (PRIMARY) */}
+      {/* SECTION 1: TOWN INTELLIGENCE (CORE PRODUCT) */}
       {/* ========================================== */}
       <section ref={townSectionRef} id="town-intelligence" className="scroll-mt-24 px-[5%] py-16 md:py-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              Town Intelligence Hubs
+              Town Intelligence, Not Just Listings
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Local market insight, updated regularly — built town by town.
+              Each town has its own market behavior, pricing patterns, and buyer dynamics.<br />
+              We organize real estate intelligence the way people actually think — locally.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {townHubs.map((town) => (
               <Link
                 key={town.name}
@@ -252,7 +226,7 @@ const Index = () => {
                   {town.description}
                 </p>
                 <div className="mt-3 text-xs text-primary font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                  View Intel <ArrowRight className="w-3 h-3" />
+                  Explore Town Intelligence <ArrowRight className="w-3 h-3" />
                 </div>
               </Link>
             ))}
@@ -270,308 +244,123 @@ const Index = () => {
       </section>
 
       {/* ========================================== */}
-      {/* SECTION 2: PROPERTY INTELLIGENCE */}
-      {/* ========================================== */}
-      <section className="px-[5%] py-16 bg-muted/30 border-y border-border">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 text-sm text-muted-foreground mb-4">
-            <Home className="w-4 h-4" />
-            <span>Property Analysis</span>
-          </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-            Get Intelligence on Any Address
-          </h2>
-          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-            Submit an address. Receive a detailed property intelligence report — pricing, comps, risks, and opportunities.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              to="/dealdesk" 
-              className="inline-block bg-foreground text-background px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform"
-            >
-              Request Property Intel
-            </Link>
-            <Link 
-              to="/intel/1999-ridge-road-queensbury-ny" 
-              className="inline-block border border-border text-foreground px-8 py-4 rounded-full font-bold hover:bg-card transition-colors"
-            >
-              View Sample Report
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================== */}
-      {/* SECTION 3: BUYER PATHS (Neutral) */}
-      {/* ========================================== */}
-      <section className="px-[5%] py-16">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-              Buyer Resources
-            </h2>
-            <p className="text-muted-foreground">
-              Clear guidance for every type of buyer in the Capital District.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* First-Time Buyers */}
-            <div className="bg-card border border-border rounded-xl p-6 flex flex-col">
-              <h3 className="text-lg font-bold text-foreground mb-3">First-Time Buyers</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
-                Grants, financing options, and step-by-step guidance for your first home purchase.
-              </p>
-              <button 
-                onClick={() => setGuideModal({ open: true, guideType: "first-time-buyer", redirectPath: "/buyer-journey/first-time-buyer" })}
-                className="inline-block bg-foreground text-background px-5 py-3 rounded-full font-semibold text-sm hover:scale-105 transition-transform text-center"
-              >
-                Start Here
-              </button>
-            </div>
-
-            {/* Land Buyers */}
-            <div className="bg-card border border-border rounded-xl p-6 flex flex-col">
-              <h3 className="text-lg font-bold text-foreground mb-3">Land Buyers</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
-                Zoning, utilities, build costs, and long-term potential — before you commit.
-              </p>
-              <button 
-                onClick={() => setGuideModal({ open: true, guideType: "land-buyer", redirectPath: "/buyer-journey/land-buyer" })}
-                className="inline-block bg-foreground text-background px-5 py-3 rounded-full font-semibold text-sm hover:scale-105 transition-transform text-center"
-              >
-                Land Guide
-              </button>
-            </div>
-
-            {/* Financing */}
-            <div className="bg-card border border-border rounded-xl p-6 flex flex-col">
-              <h3 className="text-lg font-bold text-foreground mb-3">Financing & Mortgages</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
-                Mortgage options, assistance programs, and how financing affects long-term costs.
-              </p>
-              <button 
-                onClick={() => setGuideModal({ open: true, guideType: "financing", redirectPath: "/buyer-journey/financing" })}
-                className="inline-block bg-foreground text-background px-5 py-3 rounded-full font-semibold text-sm hover:scale-105 transition-transform text-center"
-              >
-                Financing Options
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================== */}
-      {/* SECTION 4: WHY THIS PLATFORM EXISTS */}
+      {/* SECTION 2: WHY THIS PLATFORM EXISTS */}
       {/* ========================================== */}
       <section className="bg-muted/30 py-16 px-[5%] border-y border-border">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-              Why This Platform Exists
-            </h3>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Built on trust, accuracy, and local intelligence — not sales tactics.
-            </p>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+              Why Capital District Nest Exists
+            </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            {/* Review 1 */}
-            <div className="bg-card border border-border rounded-xl p-6">
-              <div className="flex gap-1 mb-3">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-4 h-4 text-yellow-500 fill-current" viewBox="0 0 20 20">
-                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-foreground text-sm leading-relaxed mb-4">
-                "His communication skills are outstanding... He also referred us to an excellent mortgage banker and closing attorney."
-              </p>
-              <div className="text-sm">
-                <span className="font-semibold text-foreground">Karen Lawson</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex items-start gap-4">
+              <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-foreground mb-1">Built from verified data sources</h3>
+                <p className="text-muted-foreground text-sm">Not scraped estimates or AI guesses.</p>
               </div>
             </div>
-
-            {/* Review 2 */}
-            <div className="bg-card border border-border rounded-xl p-6">
-              <div className="flex gap-1 mb-3">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-4 h-4 text-yellow-500 fill-current" viewBox="0 0 24 24">
-                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-foreground text-sm leading-relaxed mb-4">
-                "We put in an offer. Offer got accepted THAT night. Then we closed in 22 days!"
-              </p>
-              <div className="text-sm">
-                <span className="font-semibold text-foreground">Scout Isabella Hoff</span>
+            <div className="flex items-start gap-4">
+              <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-foreground mb-1">Combines tax data, MLS activity, and market trends</h3>
+                <p className="text-muted-foreground text-sm">The full picture, not just listing details.</p>
               </div>
             </div>
-
-            {/* Review 3 */}
-            <div className="bg-card border border-border rounded-xl p-6">
-              <div className="flex gap-1 mb-3">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-4 h-4 text-yellow-500 fill-current" viewBox="0 0 20 20">
-                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-foreground text-sm leading-relaxed mb-4">
-                "By the end, Scott wasn't just my real estate agent — he became a friend."
-              </p>
-              <div className="text-sm">
-                <span className="font-semibold text-foreground">jstickling0</span>
+            <div className="flex items-start gap-4">
+              <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-foreground mb-1">Designed to reduce noise and surface insight</h3>
+                <p className="text-muted-foreground text-sm">What matters, without the clutter.</p>
               </div>
             </div>
-          </div>
-
-          {/* Credibility Stats */}
-          <div className="flex flex-wrap justify-center gap-8 md:gap-12 text-center">
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-foreground">500+</div>
-              <div className="text-sm text-muted-foreground">Properties Analyzed</div>
+            <div className="flex items-start gap-4">
+              <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-foreground mb-1">No ads. No lead selling. No gimmicks.</h3>
+                <p className="text-muted-foreground text-sm">This is where trust is earned.</p>
+              </div>
             </div>
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-foreground">RE/MAX</div>
-              <div className="text-sm text-muted-foreground">Licensed Broker</div>
-            </div>
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-foreground">Local</div>
-              <div className="text-sm text-muted-foreground">Capital District Focus</div>
-            </div>
-          </div>
-
-          <div className="text-center mt-8">
-            <Link to="/reviews" className="text-primary font-semibold hover:underline text-sm">
-              Read All Reviews →
-            </Link>
           </div>
         </div>
       </section>
 
       {/* ========================================== */}
-      {/* SECTION 5: INVESTOR INTELLIGENCE (OPTIONAL) */}
+      {/* SECTION 3: OPTIONAL PATHS (Two Tiles) */}
       {/* ========================================== */}
-      <section ref={investorSectionRef} id="investor-intelligence" className="scroll-mt-24 px-[5%] py-16 md:py-20 border-b border-border">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-sm text-muted-foreground mb-3">
-              <BarChart3 className="w-4 h-4" />
-              <span>Optional</span>
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-              Investor Intelligence
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              For deeper cash-flow, multi-unit, and return analysis.
-            </p>
-          </div>
-
-          {/* Investor Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-            {/* Multi-Unit Search */}
-            <div className="bg-card border border-border rounded-xl p-6">
-              <h3 className="text-lg font-bold text-foreground mb-2">Multi-Unit Properties</h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                Search 2-4 unit properties across Albany, Troy, and Schenectady with verified rental data.
+      <section className="px-[5%] py-16 md:py-20">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Property Intelligence */}
+            <div className="bg-card border border-border rounded-xl p-6 md:p-8">
+              <div className="flex items-center gap-2 mb-4">
+                <FileText className="w-5 h-5 text-primary" />
+                <span className="text-sm font-medium text-muted-foreground">Property Intelligence</span>
+              </div>
+              <h3 className="text-xl font-bold text-foreground mb-3">
+                Request a Detailed Report
+              </h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                Request a detailed Property Intelligence Report for any home you're evaluating. Verified data, tax analysis, and market context.
               </p>
               <Link 
-                to="/albany-multi-unit" 
+                to="/intel/1999-ridge-road-queensbury-ny" 
                 className="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:underline"
               >
-                Search Multi-Units <ArrowRight className="w-4 h-4" />
+                View sample report <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
-            {/* Cash Flow Analysis */}
-            <div className="bg-card border border-border rounded-xl p-6">
-              <h3 className="text-lg font-bold text-foreground mb-2">Cash Flow Analysis</h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                Full P&L projections, cap rate calculations, and 5-year return modeling.
+            {/* Investor Intelligence */}
+            <div className="bg-card border border-border rounded-xl p-6 md:p-8">
+              <div className="flex items-center gap-2 mb-4">
+                <BarChart3 className="w-5 h-5 text-muted-foreground" />
+                <span className="text-sm font-medium text-muted-foreground">Investor Intelligence (Optional)</span>
+              </div>
+              <h3 className="text-xl font-bold text-foreground mb-3">
+                Advanced Analysis Tools
+              </h3>
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                Advanced analysis tools for multi-unit and long-term investors. Cash flow, cap rates, and market reports.
               </p>
               <Link 
                 to="/investor-tools" 
-                className="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:underline"
+                className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary font-semibold text-sm transition-colors"
               >
-                View Investor Tools <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* Market Reports */}
-            <div className="bg-card border border-border rounded-xl p-6">
-              <h3 className="text-lg font-bold text-foreground mb-2">Market Reports</h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                In-depth analysis of multi-unit markets in Albany, Troy, Schenectady, and Saratoga.
-              </p>
-              <Link 
-                to="/investor/albany-multi-unit-market" 
-                className="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:underline"
-              >
-                View Reports <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-
-            {/* VIP Access */}
-            <div className="bg-card border border-border rounded-xl p-6">
-              <h3 className="text-lg font-bold text-foreground mb-2">VIP Investor Access</h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                Off-market deals, pre-market opportunities, and direct access to a local specialist.
-              </p>
-              <Link 
-                to="/vip-buyer-access" 
-                className="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:underline"
-              >
-                Get VIP Access <ArrowRight className="w-4 h-4" />
+                Explore Investor Intelligence <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
-
-          {/* Investor Guides Collapsed */}
-          <details className="bg-card border border-border rounded-xl p-6">
-            <summary className="cursor-pointer font-bold text-foreground flex items-center justify-between">
-              <span>Investor Guides & Playbooks</span>
-              <ArrowRight className="w-4 h-4 text-muted-foreground" />
-            </summary>
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-              <Link to="/investor/nyc-to-albany-roi" className="text-muted-foreground hover:text-primary text-sm">
-                NYC → Albany ROI Playbook →
-              </Link>
-              <Link to="/investor/analyze-multifamily" className="text-muted-foreground hover:text-primary text-sm">
-                How to Analyze Multi-Family →
-              </Link>
-              <Link to="/investor/1031-nyc-to-albany" className="text-muted-foreground hover:text-primary text-sm">
-                1031 Exchange Playbook →
-              </Link>
-              <Link to="/investor/best-neighborhoods-cash-flow-capital-district" className="text-muted-foreground hover:text-primary text-sm">
-                Best Neighborhoods for Cash Flow →
-              </Link>
-              <Link to="/troy-multi-unit" className="text-muted-foreground hover:text-primary text-sm">
-                Troy Multi-Unit Report →
-              </Link>
-              <Link to="/schenectady-multi-unit" className="text-muted-foreground hover:text-primary text-sm">
-                Schenectady Multi-Unit Report →
-              </Link>
-              <Link to="/investor/saratoga-multi-unit-market" className="text-muted-foreground hover:text-primary text-sm">
-                Saratoga Multi-Unit Report →
-              </Link>
-              <Link to="/investor/fulton-montgomery-multi-unit-market" className="text-muted-foreground hover:text-primary text-sm">
-                Fulton & Montgomery Report →
-              </Link>
-            </div>
-          </details>
         </div>
       </section>
 
-      {/* Coverage Area Grid - SEO Linked */}
-      <CoverageAreaGrid />
+      {/* ========================================== */}
+      {/* SECTION 4: PROOF (Understated) */}
+      {/* ========================================== */}
+      <section className="px-[5%] py-12 border-t border-border">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-muted-foreground">
+            <div>
+              <div className="text-2xl md:text-3xl font-bold text-foreground">500+</div>
+              <div className="text-sm">Properties Analyzed</div>
+            </div>
+            <div>
+              <div className="text-2xl md:text-3xl font-bold text-foreground">Local</div>
+              <div className="text-sm">Capital District Focus</div>
+            </div>
+          </div>
+          <p className="text-sm text-muted-foreground mt-6">
+            Serving the Capital District with precision.
+          </p>
+        </div>
+      </section>
 
       {/* ========================================== */}
-      {/* SECTION 6: FINAL CTA (Soft) */}
+      {/* SECTION 5: FINAL CTA (Soft) */}
       {/* ========================================== */}
-      <section className="px-[5%] py-20 text-center">
+      <section className="px-[5%] py-20 text-center bg-muted/20">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
             Start with your town.
@@ -579,22 +368,13 @@ const Index = () => {
           <p className="text-lg text-muted-foreground mb-8">
             Go deeper only if you want.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={scrollToTownSection}
-              className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform"
-            >
-              <MapPin className="w-4 h-4" />
-              Explore Towns
-            </button>
-            <button
-              onClick={scrollToInvestorSection}
-              className="inline-flex items-center justify-center gap-2 border border-border text-foreground px-8 py-4 rounded-full font-bold hover:bg-card transition-colors"
-            >
-              <BarChart3 className="w-4 h-4" />
-              Investor Tools
-            </button>
-          </div>
+          <button
+            onClick={scrollToTownSection}
+            className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform"
+          >
+            <MapPin className="w-4 h-4" />
+            Explore Towns
+          </button>
         </div>
       </section>
 
@@ -606,11 +386,8 @@ const Index = () => {
         redirectPath={guideModal.redirectPath}
       />
 
-      {/* Footer */}
-      <footer className="px-[5%] py-12 text-center text-muted-foreground text-sm border-t border-border">
-        <p>© 2025 Capital District Nest. Licensed Real Estate Broker.</p>
-        <p className="mt-2">Local market intelligence for the Capital District.</p>
-      </footer>
+      {/* Footer with RE/MAX branding */}
+      <Footer />
     </div>
   );
 };

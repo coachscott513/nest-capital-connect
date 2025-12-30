@@ -95,6 +95,7 @@ import FirstTimeBuyerJourney from "./pages/buyer-journey/FirstTimeBuyerJourney";
 import LandBuyerJourney from "./pages/buyer-journey/LandBuyerJourney";
 import FinancingJourney from "./pages/buyer-journey/FinancingJourney";
 import ComingSoon from "./pages/ComingSoon";
+import Intelligence from "./pages/Intelligence";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -171,6 +172,9 @@ const App = () => {
           
           {/* Coming Soon placeholder */}
           <Route path="/coming-soon" element={<ComingSoon />} />
+          
+          {/* Intelligence Hub */}
+          <Route path="/intelligence" element={<Intelligence />} />
           
           {/* Hyperlocal SEO Pages - Homes for Sale */}
           <Route path="/homes-for-sale" element={<HomesForSale />} />
