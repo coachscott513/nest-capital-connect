@@ -76,7 +76,7 @@ const PropertySnapshot = ({ data, isUnlocked = false }: PropertySnapshotProps) =
             return (
               <div
                 key={index}
-                className="flex flex-col items-center text-center p-5 md:p-7 rounded-2xl bg-report-card shadow-[0_4px_24px_-4px_hsl(220_20%_10%/0.08)] border border-report-border/40"
+                className="flex flex-col items-center text-center p-5 md:p-7 rounded-2xl bg-report-card shadow-[0_2px_12px_-2px_hsl(30_20%_20%/0.15)] border border-report-border"
               >
                 <Icon className="w-5 h-5 text-report-accent mb-3" strokeWidth={1.5} />
                 <p className="text-[10px] md:text-xs uppercase tracking-wider text-report-text-muted mb-1">{item.label}</p>
