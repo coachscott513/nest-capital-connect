@@ -59,6 +59,9 @@ import TroyIntelligence from "./pages/TroyIntelligence";
 import SaratogaIntelligence from "./pages/SaratogaIntelligence";
 import SchenectadyIntelligence from "./pages/SchenectadyIntelligence";
 import QueensburyIntelligence from "./pages/QueensburyIntelligence";
+import AlbanyIntelligence from "./pages/AlbanyIntelligence";
+import GuilderlandIntelligence from "./pages/GuilderlandIntelligence";
+import MechanicvilleIntelligence from "./pages/MechanicvilleIntelligence";
 import TroyHomesForSalePage from "./pages/TroyHomesForSalePage";
 import NiskayunaHomesForSale from "./pages/NiskayunaHomesForSale";
 import SaratogaHomesForSalePage from "./pages/SaratogaHomesForSalePage";
@@ -189,16 +192,19 @@ const App = () => {
           <Route path="/delmar-market-insights" element={<DelmarMarketInsights />} />
           <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
           
-          {/* Town Intelligence Pages */}
-          <Route path="/towns/delmar" element={<DelmarIntelligence />} />
-          <Route path="/towns/niskayuna" element={<NiskayunaIntelligence />} />
-          <Route path="/towns/voorheesville" element={<VoorheesvilleIntelligence />} />
-          <Route path="/towns/clifton-park" element={<CliftonParkIntelligence />} />
+          {/* Town Intelligence Pages - Alphabetical */}
+          <Route path="/towns/albany" element={<AlbanyIntelligence />} />
           <Route path="/towns/amsterdam" element={<AmsterdamIntelligence />} />
-          <Route path="/towns/troy" element={<TroyIntelligence />} />
+          <Route path="/towns/clifton-park" element={<CliftonParkIntelligence />} />
+          <Route path="/towns/delmar" element={<DelmarIntelligence />} />
+          <Route path="/towns/guilderland" element={<GuilderlandIntelligence />} />
+          <Route path="/towns/mechanicville" element={<MechanicvilleIntelligence />} />
+          <Route path="/towns/niskayuna" element={<NiskayunaIntelligence />} />
+          <Route path="/towns/queensbury" element={<QueensburyIntelligence />} />
           <Route path="/towns/saratoga-springs" element={<SaratogaIntelligence />} />
           <Route path="/towns/schenectady" element={<SchenectadyIntelligence />} />
-          <Route path="/towns/queensbury" element={<QueensburyIntelligence />} />
+          <Route path="/towns/troy" element={<TroyIntelligence />} />
+          <Route path="/towns/voorheesville" element={<VoorheesvilleIntelligence />} />
           
           {/* Market Report Thank You Pages */}
           <Route path="/towns/:townSlug/report-request-thanks" element={<MarketReportThanks />} />

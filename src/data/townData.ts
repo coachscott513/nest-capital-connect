@@ -418,16 +418,90 @@ export const albanyData: TownData = {
   },
 };
 
+export const guilderlandData: TownData = {
+  name: "Guilderland",
+  slug: "guilderland",
+  schoolDistrict: "Guilderland Central School District",
+  description: "Homes, market activity, and local insights for Guilderland, NY.",
+  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Guilderland&pak=city%3Ag30_drc9v1sm&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  dataSourceLinks: {
+    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Guilderland&pak=city%3Ag30_drc9v1sm&statuses%5B%5D=0&statuses%5B%5D=57&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  },
+  weeklyIntel: {
+    newListings: 0,
+    homesSold: 0,
+    medianListPrice: "$0",
+    avgDaysOnMarket: 0,
+    priceChange: "",
+    priceDirection: "stable",
+    marketTrendLabel: "Data Pending",
+  },
+  marketActivityPdfUrl: "",
+  marketActivityLastChecked: "Awaiting MLS Data",
+  marketSnapshot: [
+    { label: "Recent Sales (30 days)", value: "—", change: "awaiting data" },
+    { label: "Median Sale Price", value: "—", change: "awaiting data" },
+    { label: "Days on Market", value: "—", change: "awaiting data" },
+    { label: "Inventory Level", value: "—", change: "awaiting data" },
+  ],
+  recentlySold: [],
+  localInsights: {
+    schoolOverview: "Guilderland Central School District is highly regarded with strong academics, athletics, and arts programs. Consistently ranked among the top districts in the Capital Region.",
+    propertyTaxes: "Property taxes typically range from $7,000 to $14,000 annually depending on home value. The strong school district justifies competitive tax rates.",
+    homeStyles: "Mix of colonials, ranches, and newer construction. Established neighborhoods like Westmere and newer developments near Crossgates. Generous lot sizes with mature landscaping.",
+    buyerDemand: "Strong family demand driven by excellent schools. Convenient highway access to Albany. Retail and commercial growth around Crossgates Mall area.",
+    renovationDemand: "Moderate renovation activity. Move-in ready homes preferred, but older properties in prime locations offer good value for updates.",
+  },
+};
+
+export const mechanicvilleData: TownData = {
+  name: "Mechanicville",
+  slug: "mechanicville",
+  schoolDistrict: "Mechanicville City School District",
+  description: "Homes, market activity, and local insights for Mechanicville, NY.",
+  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Mechanicville&pak=city%3Ag30_drdqsf8b&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  dataSourceLinks: {
+    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Mechanicville&pak=city%3Ag30_drdqsf8b&statuses%5B%5D=0&statuses%5B%5D=57&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  },
+  weeklyIntel: {
+    newListings: 0,
+    homesSold: 0,
+    medianListPrice: "$0",
+    avgDaysOnMarket: 0,
+    priceChange: "",
+    priceDirection: "stable",
+    marketTrendLabel: "Data Pending",
+  },
+  marketActivityPdfUrl: "",
+  marketActivityLastChecked: "Awaiting MLS Data",
+  marketSnapshot: [
+    { label: "Recent Sales (30 days)", value: "—", change: "awaiting data" },
+    { label: "Median Sale Price", value: "—", change: "awaiting data" },
+    { label: "Days on Market", value: "—", change: "awaiting data" },
+    { label: "Inventory Level", value: "—", change: "awaiting data" },
+  ],
+  recentlySold: [],
+  localInsights: {
+    schoolOverview: "Mechanicville City School District is a small, community-focused district. Strong sense of community with personalized attention for students.",
+    propertyTaxes: "Property taxes are among the most affordable in the region, typically ranging from $3,000 to $7,000 annually. Excellent value for budget-conscious buyers.",
+    homeStyles: "Classic upstate New York architecture with many historic homes. Multi-family properties and single-family homes on compact lots. Walkable downtown area.",
+    buyerDemand: "Growing interest from first-time buyers and investors seeking affordability. Proximity to Saratoga Springs and easy commute to Albany make it attractive.",
+    renovationDemand: "Strong renovation opportunity. Historic homes with good bones available at accessible prices. Growing investor interest in the area.",
+  },
+};
+
 // Export all town data for easy access
 export const allTownData = {
-  delmar: delmarData,
-  troy: troyData,
-  niskayuna: niskayunaData,
-  "saratoga-springs": saratogaData,
-  "clifton-park": cliftonParkData,
-  schenectady: schenectadyData,
-  amsterdam: amsterdamData,
-  queensbury: queensburyData,
-  voorheesville: voorheesvilleData,
   albany: albanyData,
+  amsterdam: amsterdamData,
+  "clifton-park": cliftonParkData,
+  delmar: delmarData,
+  guilderland: guilderlandData,
+  mechanicville: mechanicvilleData,
+  niskayuna: niskayunaData,
+  queensbury: queensburyData,
+  "saratoga-springs": saratogaData,
+  schenectady: schenectadyData,
+  troy: troyData,
+  voorheesville: voorheesvilleData,
 };
