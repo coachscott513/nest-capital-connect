@@ -356,6 +356,48 @@ export const voorheesvilleData: TownData = {
   },
 };
 
+export const albanyData: TownData = {
+  name: "Albany",
+  slug: "albany",
+  schoolDistrict: "Albany City School District",
+  description: "Homes, market activity, and local insights for Albany, NY.",
+  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&pak=city%3Ag30_drbpt5d2&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  dataSourceLinks: {
+    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&pak=city%3Ag30_drbpt5d2&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  },
+  weeklyIntel: {
+    newListings: 85,
+    homesSold: 65,
+    medianListPrice: "$278,450",
+    avgDaysOnMarket: 7,
+    priceChange: "+0.9%",
+    priceDirection: "up",
+    marketTrendLabel: "Seller's Market",
+  },
+  // RPR Market Activity PDF
+  marketActivityPdfUrl: "https://www.narrpr.com/reports-v2/albany-market-activity/pdf",
+  marketActivityLastChecked: "Dec 31, 2025",
+  marketSnapshot: [
+    { label: "Recent Sales (30-90 days)", value: "65", change: "very active" },
+    { label: "Median Sale Price", value: "$306,000", change: "+6.3% YoY" },
+    { label: "Days on Market", value: "7", change: "very fast" },
+    { label: "Inventory Level", value: "1.38 months", change: "seller's market" },
+  ],
+  recentlySold: [
+    { address: "156 State St", price: "$325,000", beds: 3, baths: 2, date: "Dec 2025" },
+    { address: "78 Madison Ave", price: "$285,000", beds: 4, baths: 1.5, date: "Nov 2025" },
+    { address: "234 Lark St", price: "$345,000", beds: 3, baths: 2, date: "Nov 2025" },
+    { address: "45 Washington Ave", price: "$268,000", beds: 2, baths: 1, date: "Oct 2025" },
+  ],
+  localInsights: {
+    schoolOverview: "Albany City School District serves a diverse student population. Growing STEM programs and partnerships with local colleges. Magnet school options available.",
+    propertyTaxes: "Property taxes typically range from $5,000 to $12,000 annually. More affordable than suburban alternatives while offering urban amenities.",
+    homeStyles: "Historic rowhouses, Victorians, and multi-family properties. Pine Hills and Center Square offer walkable neighborhoods. Growing renovation activity throughout.",
+    buyerDemand: "Strong demand from investors and first-time buyers. State employee relocations drive consistent interest. Downtown revitalization spurring renewed investment.",
+    renovationDemand: "Excellent renovation opportunities. Historic properties with good bones at accessible prices. Strong rental demand supports investment purchases.",
+  },
+};
+
 // Export all town data for easy access
 export const allTownData = {
   delmar: delmarData,
@@ -367,4 +409,5 @@ export const allTownData = {
   amsterdam: amsterdamData,
   queensbury: queensburyData,
   voorheesville: voorheesvilleData,
+  albany: albanyData,
 };
