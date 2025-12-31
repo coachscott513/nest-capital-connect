@@ -46,6 +46,17 @@ export const troyData: TownData = {
   schoolDistrict: "Troy City School District",
   description: "Homes, market activity, and local insights for Troy, NY.",
   remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Troy&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=city%3Ag30_dree57z2&sortby=listings.price+ASC&rtype=map",
+  dataSourceLinks: {
+    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Troy&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=city%3Ag30_dree57z2&sortby=listings.price+ASC&rtype=map",
+  },
+  weeklyIntel: {
+    newListings: 0,
+    homesSold: 0,
+    medianListPrice: "$195,000",
+    priceChange: "",
+    priceDirection: "stable",
+    marketTrendLabel: "Data Updating",
+  },
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "38", change: "very active" },
     { label: "Median Sale Price", value: "$195,000", change: "+6.8% YoY" },
@@ -73,6 +84,17 @@ export const niskayunaData: TownData = {
   schoolDistrict: "Niskayuna Central School District",
   description: "Homes, market activity, and local insights for Niskayuna, NY.",
   remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Niskayuna+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3Ab5QBqXEBDeU4HJVijxZS&sortby=listings.price+ASC&rtype=map",
+  dataSourceLinks: {
+    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Niskayuna+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3Ab5QBqXEBDeU4HJVijxZS&sortby=listings.price+ASC&rtype=map",
+  },
+  weeklyIntel: {
+    newListings: 0,
+    homesSold: 0,
+    medianListPrice: "$385,000",
+    priceChange: "",
+    priceDirection: "stable",
+    marketTrendLabel: "Data Updating",
+  },
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "18", change: "steady market" },
     { label: "Median Sale Price", value: "$385,000", change: "+3.8% YoY" },
@@ -99,6 +121,17 @@ export const saratogaData: TownData = {
   schoolDistrict: "Saratoga Springs City School District",
   description: "Homes, market activity, and local insights for Saratoga Springs, NY.",
   remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Saratoga+Springs+City+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3AWh4CqXEBvDrqX0JUFazL&sortby=listings.price+ASC&rtype=map",
+  dataSourceLinks: {
+    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Saratoga+Springs+City+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3AWh4CqXEBvDrqX0JUFazL&sortby=listings.price+ASC&rtype=map",
+  },
+  weeklyIntel: {
+    newListings: 0,
+    homesSold: 0,
+    medianListPrice: "$525,000",
+    priceChange: "",
+    priceDirection: "stable",
+    marketTrendLabel: "Data Updating",
+  },
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "52", change: "very active" },
     { label: "Median Sale Price", value: "$525,000", change: "+5.2% YoY" },
@@ -126,6 +159,17 @@ export const cliftonParkData: TownData = {
   schoolDistrict: "Shenendehowa Central School District",
   description: "Homes, market activity, and local insights for Clifton Park, NY.",
   remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Shenendehowa+CSD&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DClifton+Park&pak=scho%3Ag30_5qr8dj6&sortby=listings.price+ASC&rtype=map",
+  dataSourceLinks: {
+    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Shenendehowa+CSD&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DClifton+Park&pak=scho%3Ag30_5qr8dj6&sortby=listings.price+ASC&rtype=map",
+  },
+  weeklyIntel: {
+    newListings: 0,
+    homesSold: 0,
+    medianListPrice: "$425,000",
+    priceChange: "",
+    priceDirection: "stable",
+    marketTrendLabel: "Data Updating",
+  },
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "45", change: "very active" },
     { label: "Median Sale Price", value: "$425,000", change: "+4.5% YoY" },
@@ -153,6 +197,17 @@ export const schenectadyData: TownData = {
   schoolDistrict: "Schenectady City School District",
   description: "Homes, market activity, and local insights for Schenectady, NY.",
   remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady+City+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3A3YcAqXEBrfxrYfk40-yv&sortby=listings.price+ASC&rtype=map",
+  dataSourceLinks: {
+    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady+City+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3A3YcAqXEBrfxrYfk40-yv&sortby=listings.price+ASC&rtype=map",
+  },
+  weeklyIntel: {
+    newListings: 0,
+    homesSold: 0,
+    medianListPrice: "$165,000",
+    priceChange: "",
+    priceDirection: "stable",
+    marketTrendLabel: "Data Updating",
+  },
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "42", change: "active market" },
     { label: "Median Sale Price", value: "$165,000", change: "+7.5% YoY" },
@@ -167,7 +222,7 @@ export const schenectadyData: TownData = {
   ],
   localInsights: {
     schoolOverview: "Schenectady City School District offers diverse educational opportunities. Growing STEM programs and partnerships with Union College and local employers.",
-    propertyTaxes: "Property taxes typically range from $3,500 to $8,000 annually. Very affordable compared to suburban alternatives.",
+    propertyTaxes: "Property taxes are among the most affordable in the region, typically $3,500 to $8,000 annually. Very affordable compared to suburban alternatives.",
     homeStyles: "Historic Victorians, rowhouses, and multi-family properties. Stockade District offers unique colonial architecture. Strong architectural character throughout the city.",
     buyerDemand: "Growing investor interest for cash flow properties. First-time buyers attracted to affordability. Downtown revitalization spurring renewed interest.",
     renovationDemand: "Excellent opportunities for renovation projects. Historic properties with significant potential. Strong rental market supports investment purchases.",
@@ -180,6 +235,17 @@ export const amsterdamData: TownData = {
   schoolDistrict: "Amsterdam City School District",
   description: "Homes, market activity, and local insights for Amsterdam, NY.",
   remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Amsterdam+City+SD&pak=scho%3Ag30_5qr8d4z&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  dataSourceLinks: {
+    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Amsterdam+City+SD&pak=scho%3Ag30_5qr8d4z&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  },
+  weeklyIntel: {
+    newListings: 0,
+    homesSold: 0,
+    medianListPrice: "$145,000",
+    priceChange: "",
+    priceDirection: "stable",
+    marketTrendLabel: "Data Updating",
+  },
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "22", change: "active market" },
     { label: "Median Sale Price", value: "$145,000", change: "+8.2% YoY" },
@@ -206,6 +272,17 @@ export const queensburyData: TownData = {
   schoolDistrict: "Queensbury Union Free School District",
   description: "Homes, market activity, and local insights for Queensbury, NY.",
   remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Queensbury+Union+Free+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3AuAsBqXEBNCODdP_3qCa7&sortby=listings.price+ASC&rtype=map",
+  dataSourceLinks: {
+    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Queensbury+Union+Free+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3AuAsBqXEBNCODdP_3qCa7&sortby=listings.price+ASC&rtype=map",
+  },
+  weeklyIntel: {
+    newListings: 0,
+    homesSold: 0,
+    medianListPrice: "$345,000",
+    priceChange: "",
+    priceDirection: "stable",
+    marketTrendLabel: "Data Updating",
+  },
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "28", change: "active market" },
     { label: "Median Sale Price", value: "$345,000", change: "+4.8% YoY" },
@@ -233,6 +310,17 @@ export const voorheesvilleData: TownData = {
   schoolDistrict: "Voorheesville Central School District",
   description: "Homes, market activity, and local insights for Voorheesville, NY.",
   remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Voorheesville&pak=city%3Ag30_dre6tsd2&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  dataSourceLinks: {
+    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Voorheesville&pak=city%3Ag30_dre6tsd2&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  },
+  weeklyIntel: {
+    newListings: 0,
+    homesSold: 0,
+    medianListPrice: "$325,000",
+    priceChange: "",
+    priceDirection: "stable",
+    marketTrendLabel: "Data Updating",
+  },
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "8", change: "limited inventory" },
     { label: "Median Sale Price", value: "$325,000", change: "+5.1% YoY" },

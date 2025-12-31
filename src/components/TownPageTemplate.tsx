@@ -162,6 +162,26 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
 
       <MainHeader />
 
+      {/* Breadcrumb Navigation */}
+      <nav className="bg-background/80 backdrop-blur-sm border-b border-border py-3 px-4 md:px-[5%]">
+        <div className="max-w-7xl mx-auto">
+          <ol className="flex items-center space-x-2 text-sm">
+            <li className="flex items-center">
+              <Link
+                to="/"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Capital District Nest
+              </Link>
+            </li>
+            <li className="flex items-center">
+              <span className="text-muted-foreground/50 mx-2">→</span>
+              <span className="text-foreground font-medium">{town.name}</span>
+            </li>
+          </ol>
+        </div>
+      </nav>
+
       {/* Confirmation Banner - Shows after form submission */}
       {showConfirmation && isDelmarPage && (
         <div className="bg-primary/10 border-b border-primary/20 px-[5%] py-3">
