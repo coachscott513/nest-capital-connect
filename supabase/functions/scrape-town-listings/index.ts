@@ -7,9 +7,9 @@ const corsHeaders = {
 
 // Town configuration with RE/MAX search URLs
 const TOWN_CONFIGS: Record<string, { name: string; url: string }> = {
-  'clifton-park': {
-    name: 'Clifton Park',
-    url: 'https://scottalvarez.remax.com/index.php?advanced=1&display=Clifton+Park&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DClifton+Park&sortby=listings.price+ASC&rtype=grid'
+  'clifton-park-new': {
+    name: 'Clifton Park (Just Listed)',
+    url: 'https://scottalvarez.remax.com/index.php?advanced=1&display=Clifton+Park&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DClifton+Park&sortby=listings.price+ASC&rtype=grid&options%5B%5D=new'
   },
   'albany': {
     name: 'Albany',
@@ -65,79 +65,104 @@ function parseListingsFromMarkdown(markdown: string): Listing[] {
   
   console.log('Starting parsing, markdown length:', markdown.length);
   
-  // Strategy 1: Look for property URL patterns and extract surrounding data
-  const propertyUrlRegex = /\[View Details\]\((https:\/\/scottalvarez\.remax\.com\/property\/[^\)]+)\)/gi;
-  let match;
-  const propertyUrls: string[] = [];
-  
-  while ((match = propertyUrlRegex.exec(markdown)) !== null) {
-    propertyUrls.push(match[1]);
-  }
-  console.log('Found property URLs:', propertyUrls.length);
-  
-  // Strategy 2: Parse by looking for price patterns followed by property info
-  // Pattern: $XXX,XXX followed by city name and property details
-  const priceBlockRegex = /\$(\d{1,3}(?:,\d{3})+)\s*(?:\n|.*?)([A-Za-z\s]+),\s*NY/gi;
-  
-  // Strategy 3: Look for specific listing card patterns from the markdown
-  // The format appears to be: [address](url) followed by city, price, type, details
+  // Split into lines for processing
   const lines = markdown.split('\n');
   
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
+  // Find all property URLs first
+  const propertyUrlRegex = /https:\/\/scottalvarez\.remax\.com\/property\/[^\s\)\]]+/g;
+  const allUrls = [...new Set(markdown.match(propertyUrlRegex) || [])];
+  console.log('Found unique property URLs:', allUrls.length);
+  
+  // For each URL, find its context in the markdown
+  for (const url of allUrls) {
+    // Find the line containing this URL
+    let urlLineIndex = -1;
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].includes(url)) {
+        urlLineIndex = i;
+        break;
+      }
+    }
     
-    // Look for lines with property URLs
-    const urlMatch = line.match(/\(https:\/\/scottalvarez\.remax\.com\/property\/[^\)]+\)/);
-    if (!urlMatch) continue;
+    if (urlLineIndex === -1) continue;
     
-    const url = urlMatch[0].slice(1, -1);
+    // Get context around the URL (before and after)
+    const contextStart = Math.max(0, urlLineIndex - 3);
+    const contextEnd = Math.min(lines.length, urlLineIndex + 15);
+    const contextLines = lines.slice(contextStart, contextEnd);
+    const context = contextLines.join('\n');
     
-    // Look around this line for price, address, and details
-    const context = lines.slice(Math.max(0, i - 5), Math.min(lines.length, i + 15)).join(' ');
+    // Extract price - handle both formats: $434K, $660K, $1.5M, or $434,000
+    let price: number | null = null;
     
-    // Extract price
-    const priceMatch = context.match(/\$(\d{1,3}(?:,\d{3})+)/);
-    if (!priceMatch) continue;
+    // Try short format first (e.g., $434K, $1.5M)
+    const shortPriceMatch = context.match(/\$(\d+(?:\.\d+)?)(K|M)/i);
+    if (shortPriceMatch) {
+      const value = parseFloat(shortPriceMatch[1]);
+      const multiplier = shortPriceMatch[2].toUpperCase() === 'M' ? 1000000 : 1000;
+      price = Math.round(value * multiplier);
+    }
     
-    const price = parseInt(priceMatch[1].replace(/,/g, ''));
-    if (isNaN(price) || price < 10000) continue;
+    // Try long format (e.g., $434,000)
+    if (!price) {
+      const longPriceMatch = context.match(/\$(\d{1,3}(?:,\d{3})+)/);
+      if (longPriceMatch) {
+        price = parseInt(longPriceMatch[1].replace(/,/g, ''));
+      }
+    }
     
-    // Extract address from URL or surrounding text
-    // URL format: /property/155-202531202-23-northcrest-drive-clifton-park-NY-12065
+    if (!price || price < 10000) continue;
+    
+    // Extract city from URL (format: .../property/155-...-city-name-NY-12345)
     const urlParts = url.split('/').pop() || '';
-    const addressFromUrl = urlParts.split('-').slice(2, -3).join(' ');
+    const urlSegments = urlParts.split('-');
     
-    // Try to find address in context
+    // Find NY position to extract city
+    const nyIndex = urlSegments.findIndex(s => s === 'NY');
+    let city = 'Unknown';
+    if (nyIndex > 0) {
+      // City is usually 1-2 words before NY
+      const cityParts = urlSegments.slice(Math.max(0, nyIndex - 2), nyIndex);
+      city = cityParts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ');
+    }
+    
+    // Extract address from the markdown context
+    // Pattern: "23 Northcrest DriveType..." or "[23 Northcrest Drive..."
     const addressMatch = context.match(/(\d+[a-z]?\s+[\w\s'.-]+(?:Drive|Street|Avenue|Road|Lane|Way|Court|Circle|Place|Boulevard|Terrace|Trail|Path|Run|Rd|St|Ave|Ln|Dr|Ct|Cir|Pl|Blvd|Ter))/i);
-    const address = addressMatch ? addressMatch[1].trim() : addressFromUrl;
+    let address = addressMatch ? addressMatch[1].trim() : '';
     
-    // Extract city from URL
-    const cityFromUrl = urlParts.split('-').slice(-3, -2).join(' ');
-    const city = cityFromUrl || 'Unknown';
+    // If no address found from context, extract from URL
+    if (!address) {
+      // Extract address portion from URL (between first number segment and city)
+      const firstNumIndex = urlSegments.findIndex(s => /^\d+[a-z]?$/.test(s));
+      if (firstNumIndex > 0 && nyIndex > firstNumIndex) {
+        const addressParts = urlSegments.slice(firstNumIndex, nyIndex - 1);
+        address = addressParts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(' ');
+      }
+    }
     
     // Extract property type
     let propertyType = 'Single Family';
-    if (/multi-?family|income/i.test(context)) propertyType = 'Multi-Family';
-    else if (/condo/i.test(context)) propertyType = 'Condo';
-    else if (/townhouse/i.test(context)) propertyType = 'Townhouse';
-    else if (/\bland\b/i.test(context)) propertyType = 'Land';
+    if (/TypeMulti-?Family|multi-?family|income/i.test(context)) propertyType = 'Multi-Family';
+    else if (/TypeCondo|condo/i.test(context)) propertyType = 'Condo';
+    else if (/TypeTownhouse|townhouse/i.test(context)) propertyType = 'Townhouse';
+    else if (/TypeLand|\bland\b/i.test(context)) propertyType = 'Land';
+    else if (/TypeSingle Family/i.test(context)) propertyType = 'Single Family';
     
-    // Extract sqft - look for patterns like "2,122 SqFt" or "Size 2,122"
-    const sqftMatch = context.match(/(?:Size\s*)?(\d{1,2},?\d{3})\s*SqFt/i);
-    const sqft = sqftMatch ? parseInt(sqftMatch[1].replace(/,/g, '')) : null;
-    
-    // Extract beds and baths
-    const bedsMatch = context.match(/(\d+)\s*Beds?/i);
-    const bathsMatch = context.match(/(\d+\.?\d*)\s*Baths?/i);
+    // Extract beds, baths, sqft if present
+    const bedsMatch = context.match(/(\d+)\s*(?:Beds?|BR|bd)/i);
+    const bathsMatch = context.match(/(\d+\.?\d*)\s*(?:Baths?|BA|ba)/i);
+    const sqftMatch = context.match(/(\d{1,2},?\d{3})\s*(?:SqFt|sq\.?\s*ft|SF)/i);
     
     const beds = bedsMatch ? parseInt(bedsMatch[1]) : null;
     const baths = bathsMatch ? parseFloat(bathsMatch[1]) : null;
+    const sqft = sqftMatch ? parseInt(sqftMatch[1].replace(/,/g, '')) : null;
     
     // Avoid duplicates
     if (listings.some(l => l.url === url)) continue;
     
     listings.push({
-      address,
+      address: address || 'Address unavailable',
       city,
       price,
       propertyType,
@@ -146,6 +171,8 @@ function parseListingsFromMarkdown(markdown: string): Listing[] {
       baths,
       url
     });
+    
+    console.log(`Parsed listing: ${address}, ${city} - $${price}`);
   }
   
   console.log('Parsed listings:', listings.length);
