@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.send-market-report]
 verify_jwt = false
+
+[functions.scrape-town-listings]
+verify_jwt = false
