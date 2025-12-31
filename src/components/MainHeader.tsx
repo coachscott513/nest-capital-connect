@@ -135,9 +135,16 @@ const MainHeader = () => {
 
       {/* Navigation Header */}
       <header className="sticky top-0 z-[2000] flex items-center justify-between px-5 md:px-10 h-20 bg-background/90 backdrop-blur-md border-b border-border">
-        <Link to="/" className="font-extrabold text-lg md:text-xl tracking-tight uppercase flex items-center gap-1">
-          Capital District <span className="text-primary">Nest</span>
-          <span className="text-muted-foreground font-medium text-sm hidden sm:inline">— Home</span>
+        <Link 
+          to="/" 
+          className="group flex flex-col items-start cursor-pointer transition-opacity hover:opacity-90"
+        >
+          <span className="font-extrabold text-lg md:text-xl tracking-tight uppercase flex items-center gap-1">
+            Capital District <span className="text-primary">Nest</span>
+          </span>
+          <span className="text-muted-foreground/60 text-[10px] uppercase tracking-widest font-medium">
+            Home
+          </span>
         </Link>
 
         <button
