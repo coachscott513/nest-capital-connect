@@ -150,11 +150,11 @@ const App = () => {
           <Route path="/terms-of-service" element={<PrivacyPolicyPage />} />
           <Route path="/reviews" element={<Reviews />} />
           
-          {/* City Real Estate Pages */}
-          <Route path="/albany-real-estate" element={<AlbanyRealEstate />} />
-          <Route path="/troy-real-estate" element={<TroyRealEstate />} />
-          <Route path="/schenectady-real-estate" element={<SchenectadyRealEstate />} />
-          <Route path="/saratoga-real-estate" element={<SaratogaRealEstate />} />
+          {/* City Real Estate Redirects - canonical URLs are /towns/:slug */}
+          <Route path="/albany-real-estate" element={<Navigate to="/towns/albany" replace />} />
+          <Route path="/troy-real-estate" element={<Navigate to="/towns/troy" replace />} />
+          <Route path="/schenectady-real-estate" element={<Navigate to="/towns/schenectady" replace />} />
+          <Route path="/saratoga-real-estate" element={<Navigate to="/towns/saratoga-springs" replace />} />
           
           {/* Communities base route */}
           <Route path="/communities" element={<HomesForSale />} />

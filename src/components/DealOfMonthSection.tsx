@@ -83,7 +83,7 @@ const DealOfMonthSection = () => {
           {/* SEO Links Footer */}
           <div className="border-t border-[#10B981]/30 px-8 py-5 flex flex-wrap items-center justify-center gap-2 md:gap-6 text-sm">
             <Link 
-              to="/troy-real-estate" 
+              to="/towns/troy" 
               className="text-[#10B981] hover:text-white font-semibold transition-colors hover:underline"
             >
               Analyze this Troy Multi-Family

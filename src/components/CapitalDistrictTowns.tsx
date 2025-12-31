@@ -314,8 +314,12 @@ export const getTownsByPriority = (priority: 'high' | 'medium' | 'low'): TownDat
   return capitalDistrictTowns.filter(town => town.priority === priority);
 };
 
+// Updated URL generation to use canonical /towns/:slug format
 export const generateTownUrl = (town: TownData, type: 'real-estate' | 'rentals' = 'real-estate'): string => {
-  return `/${town.slug}-${type}`;
+  if (type === 'rentals') {
+    return `/${town.slug}-rentals`;
+  }
+  return `/towns/${town.slug}`;
 };
 
 export const generateCanonicalUrl = (town: TownData, type: 'real-estate' | 'rentals' = 'real-estate'): string => {
