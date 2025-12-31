@@ -26,7 +26,7 @@ const menuSections = [
     category: "Properties",
     items: [
       { label: "Featured Properties", sub: "/ Current Listings", href: "/homes-for-sale" },
-      { label: "Sample Intelligence Report", sub: "/ See What's Included", href: "/intel/1999-ridge-road-queensbury-ny" },
+      { label: "Sample Property Intelligence", sub: "/ See What's Included", href: "/reports/sample-property-intelligence" },
       { label: "Request Intel Report", sub: "/ Full Analysis", href: "/dealdesk" },
       { label: "Multi-Unit Listings", sub: "/ Investment", href: "/albany-multi-unit" },
       { label: "Land for Sale", sub: "/ Development", href: "/albany-land" },
