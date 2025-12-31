@@ -48,7 +48,7 @@ import SaratogaHomesForSale from "./pages/SaratogaHomesForSale";
 import PineHillsAlbany from "./pages/PineHillsAlbany";
 import DelmarHomesForSale from "./pages/DelmarHomesForSale";
 import DelmarMarketInsights from "./pages/DelmarMarketInsights";
-import Delmar from "./pages/Delmar";
+
 import DelmarIntelligence from "./pages/DelmarIntelligence";
 import NiskayunaIntelligence from "./pages/NiskayunaIntelligence";
 import VoorheesvilleIntelligence from "./pages/VoorheesvilleIntelligence";
@@ -186,7 +186,7 @@ const App = () => {
           <Route path="/homes-for-sale/albany/pine-hills" element={<PineHillsAlbany />} />
           <Route path="/delmar-homes-for-sale" element={<DelmarHomesForSale />} />
           <Route path="/delmar-market-insights" element={<DelmarMarketInsights />} />
-          <Route path="/delmar" element={<Delmar />} />
+          <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
           
           {/* Town Intelligence Pages */}
           <Route path="/towns/delmar" element={<DelmarIntelligence />} />
