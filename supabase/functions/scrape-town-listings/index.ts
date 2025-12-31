@@ -9,7 +9,7 @@ const corsHeaders = {
 const TOWN_CONFIGS: Record<string, { name: string; url: string }> = {
   'clifton-park': {
     name: 'Clifton Park',
-    url: 'https://scottalvarez.remax.com/index.php?advanced=1&display=Shenendehowa+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&options%5B%5D=new&keywords=City%3DClifton+Park&pak=school_district%3ATScAqXEBP2ySQEDmIXO6&sortby=listings.price+ASC&rtype=map'
+    url: 'https://scottalvarez.remax.com/index.php?advanced=1&display=Shenendehowa+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DClifton+Park&pak=school_district%3ATScAqXEBP2ySQEDmIXO6&sortby=listings.price+ASC&rtype=map'
   },
   'albany': {
     name: 'Albany',
