@@ -304,23 +304,24 @@ export const queensburyData: TownData = {
   dataSourceLinks: {
     activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Queensbury+Union+Free+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3AuAsBqXEBNCODdP_3qCa7&sortby=listings.price+ASC&rtype=map",
   },
+  // MLS Data Source: GlobalMLS InfoSparks - November 2025
+  mlsDataSource: "GlobalMLS InfoSparks",
+  mlsDataDate: "November 2025",
   weeklyIntel: {
-    newListings: 10,
-    homesSold: 10,
-    medianListPrice: "$529,950",
-    avgDaysOnMarket: 29,
+    newListings: 23,
+    homesSold: 33,
+    medianListPrice: "$455,000",
+    avgDaysOnMarket: 6,
     priceChange: "",
     priceDirection: "stable",
     marketTrendLabel: "Seller's Market",
   },
-  // RPR Market Activity PDF
-  marketActivityPdfUrl: "https://www.narrpr.com/reports-v2/queensbury-market-activity/pdf",
   marketActivityLastChecked: "Dec 31, 2025",
   marketSnapshot: [
-    { label: "Recent Sales (30 days)", value: "10", change: "active market" },
-    { label: "Median Sale Price", value: "$360,000", change: "steady" },
-    { label: "Days on Market", value: "29", change: "moderate" },
-    { label: "Inventory Level", value: "1.68 months", change: "seller's market" },
+    { label: "Active Listings", value: "45", change: "available homes" },
+    { label: "Median Sale Price", value: "$455,000", change: "Nov 2025" },
+    { label: "Days on Market", value: "6", change: "very fast" },
+    { label: "Closed Sales", value: "33", change: "Nov 2025" },
   ],
   recentlySold: [
     { address: "156 Aviation Rd", price: "$385,000", beds: 4, baths: 2.5, date: "Dec 2025" },
