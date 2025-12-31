@@ -73,6 +73,9 @@ export interface TownData {
   // Market Activity PDF (RPR reports)
   marketActivityPdfUrl?: string;
   marketActivityLastChecked?: string;
+  // MLS Data Source tracking
+  mlsDataSource?: string;
+  mlsDataDate?: string;
   // What it means bullets
   whatItMeans?: string[];
   // Notable moves (no addresses)
