@@ -1,4 +1,4 @@
-import { ChevronRight, Home } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 interface BreadcrumbItem {
@@ -6,16 +6,39 @@ interface BreadcrumbItem {
   href: string;
 }
 
+// Town name mapping for clean display
+const townNameMap: Record<string, string> = {
+  "delmar": "Delmar",
+  "niskayuna": "Niskayuna",
+  "voorheesville": "Voorheesville",
+  "clifton-park": "Clifton Park",
+  "saratoga-springs": "Saratoga Springs",
+  "troy": "Troy",
+  "schenectady": "Schenectady",
+  "queensbury": "Queensbury",
+  "amsterdam": "Amsterdam",
+};
+
 const BreadcrumbNavigation = () => {
   const location = useLocation();
   
   const getBreadcrumbs = (pathname: string): BreadcrumbItem[] => {
     const crumbs: BreadcrumbItem[] = [
-      { label: "Home", href: "/" }
+      { label: "Capital District Nest", href: "/" }
     ];
 
     if (pathname === "/") return crumbs;
 
+    // Town pages - /towns/[town-name]
+    const townMatch = pathname.match(/^\/towns\/(.+)/);
+    if (townMatch) {
+      const townSlug = townMatch[1];
+      const townName = townNameMap[townSlug] || townSlug.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+      crumbs.push({ label: townName, href: pathname });
+      return crumbs;
+    }
+
+    // Legacy paths
     if (pathname.includes("rentals")) {
       crumbs.push({ label: "Rentals", href: "/rentals" });
     }
@@ -65,23 +88,20 @@ const BreadcrumbNavigation = () => {
   if (breadcrumbs.length <= 1) return null;
 
   return (
-    <nav className="bg-white/80 backdrop-blur-sm border-b border-gray-200 py-3 px-4 sticky top-0 z-40">
+    <nav className="bg-background/80 backdrop-blur-sm border-b border-border py-3 px-4 md:px-[5%]">
       <div className="max-w-7xl mx-auto">
         <ol className="flex items-center space-x-2 text-sm">
           {breadcrumbs.map((crumb, index) => (
             <li key={crumb.href} className="flex items-center">
               {index > 0 && (
-                <ChevronRight className="w-4 h-4 text-gray-400 mr-2" />
-              )}
-              {index === 0 && (
-                <Home className="w-4 h-4 text-gray-500 mr-1" />
+                <ChevronRight className="w-4 h-4 text-muted-foreground/50 mr-2" />
               )}
               {index === breadcrumbs.length - 1 ? (
-                <span className="text-gray-900 font-medium">{crumb.label}</span>
+                <span className="text-foreground font-medium">{crumb.label}</span>
               ) : (
                 <Link
                   to={crumb.href}
-                  className="text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {crumb.label}
                 </Link>

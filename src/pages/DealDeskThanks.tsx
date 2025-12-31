@@ -64,17 +64,18 @@ const DealDeskThanks = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Button 
-              onClick={handleExploreDelmar}
-              className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-6"
-            >
-              Explore Delmar Now
-            </Button>
-            <Link to="/dealdesk">
-              <Button variant="outline" className="w-full sm:w-auto border-gray-700 text-gray-300 hover:bg-gray-800">
-                Submit Another Address
+            <Link to="/">
+              <Button className="w-full sm:w-auto bg-white hover:bg-gray-100 text-black font-semibold px-8">
+                Return to Home
               </Button>
             </Link>
+            <Button 
+              onClick={handleExploreDelmar}
+              variant="outline"
+              className="w-full sm:w-auto border-emerald-500 text-emerald-400 hover:bg-emerald-500/10"
+            >
+              Explore Delmar Intelligence
+            </Button>
           </div>
 
           <p className="text-gray-500 text-sm">
