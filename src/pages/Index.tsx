@@ -16,15 +16,18 @@ const menuSections = [
   {
     category: "Towns",
     items: [
-      { label: "Delmar", sub: "/ Bethlehem Central", href: "/delmar" },
-      { label: "Niskayuna", sub: "/ Top Schools", href: "/niskayuna-real-estate" },
-      { label: "Voorheesville", sub: "/ Rural Character", href: "/voorheesville-real-estate" },
-      { label: "Clifton Park", sub: "/ Growing Suburb", href: "/clifton-park-real-estate" },
-      { label: "Albany", sub: "/ Capital City", href: "/albany-real-estate" },
-      { label: "Troy", sub: "/ Collar City", href: "/troy-real-estate" },
-      { label: "Schenectady", sub: "/ Electric City", href: "/schenectady-real-estate" },
-      { label: "Saratoga", sub: "/ Springs", href: "/saratoga-real-estate" },
-      { label: "Amsterdam", sub: "/ Opportunity", href: "/amsterdam-real-estate" },
+      { label: "Albany", sub: "/ Capital City", href: "/towns/albany" },
+      { label: "Amsterdam", sub: "/ Opportunity", href: "/towns/amsterdam" },
+      { label: "Clifton Park", sub: "/ Growing Suburb", href: "/towns/clifton-park" },
+      { label: "Delmar", sub: "/ Bethlehem Central", href: "/towns/delmar" },
+      { label: "Guilderland", sub: "/ Top Schools", href: "/towns/guilderland" },
+      { label: "Mechanicville", sub: "/ Affordable", href: "/towns/mechanicville" },
+      { label: "Niskayuna", sub: "/ Top Schools", href: "/towns/niskayuna" },
+      { label: "Queensbury", sub: "/ Lake George", href: "/towns/queensbury" },
+      { label: "Saratoga", sub: "/ Springs", href: "/towns/saratoga-springs" },
+      { label: "Schenectady", sub: "/ Electric City", href: "/towns/schenectady" },
+      { label: "Troy", sub: "/ Collar City", href: "/towns/troy" },
+      { label: "Voorheesville", sub: "/ Rural Character", href: "/towns/voorheesville" },
     ],
   },
   {
@@ -83,15 +86,18 @@ const footerLinks = [
 ];
 
 const townHubs = [
-  { name: "Voorheesville", href: "/towns/voorheesville", description: "Rural character, top schools" },
-  { name: "Delmar", href: "/towns/delmar", description: "Bethlehem Central Schools" },
-  { name: "Niskayuna", href: "/towns/niskayuna", description: "Top-rated schools" },
-  { name: "Clifton Park", href: "/towns/clifton-park", description: "Growing suburb, family-friendly" },
-  { name: "Troy", href: "/towns/troy", description: "Historic charm, RPI proximity" },
-  { name: "Schenectady", href: "/towns/schenectady", description: "Revitalizing downtown" },
-  { name: "Saratoga Springs", href: "/towns/saratoga-springs", description: "Racing, culture, upscale living" },
+  { name: "Albany", href: "/towns/albany", description: "Capital City, diverse neighborhoods" },
   { name: "Amsterdam", href: "/towns/amsterdam", description: "Affordable opportunity" },
+  { name: "Clifton Park", href: "/towns/clifton-park", description: "Growing suburb, family-friendly" },
+  { name: "Delmar", href: "/towns/delmar", description: "Bethlehem Central Schools" },
+  { name: "Guilderland", href: "/towns/guilderland", description: "Top schools, Crossgates area" },
+  { name: "Mechanicville", href: "/towns/mechanicville", description: "Affordable, Saratoga access" },
+  { name: "Niskayuna", href: "/towns/niskayuna", description: "Top-rated schools" },
   { name: "Queensbury", href: "/towns/queensbury", description: "Lake George gateway" },
+  { name: "Saratoga Springs", href: "/towns/saratoga-springs", description: "Racing, culture, upscale living" },
+  { name: "Schenectady", href: "/towns/schenectady", description: "Revitalizing downtown" },
+  { name: "Troy", href: "/towns/troy", description: "Historic charm, RPI proximity" },
+  { name: "Voorheesville", href: "/towns/voorheesville", description: "Rural character, top schools" },
 ];
 
 const Index = () => {
