@@ -197,6 +197,90 @@ export type Database = {
         }
         Relationships: []
       }
+      town_market_data: {
+        Row: {
+          active_listings: number | null
+          avg_baths: number | null
+          avg_beds: number | null
+          avg_days_on_market: number | null
+          avg_price: number | null
+          avg_sqft: number | null
+          condo_count: number | null
+          created_at: string
+          id: string
+          land_count: number | null
+          listings_300k_500k: number | null
+          listings_500k_750k: number | null
+          listings_data: Json | null
+          listings_over_750k: number | null
+          listings_under_300k: number | null
+          max_price: number | null
+          median_price: number | null
+          min_price: number | null
+          multi_family_count: number | null
+          scraped_at: string
+          single_family_count: number | null
+          source_url: string | null
+          town_name: string
+          town_slug: string
+          updated_at: string
+        }
+        Insert: {
+          active_listings?: number | null
+          avg_baths?: number | null
+          avg_beds?: number | null
+          avg_days_on_market?: number | null
+          avg_price?: number | null
+          avg_sqft?: number | null
+          condo_count?: number | null
+          created_at?: string
+          id?: string
+          land_count?: number | null
+          listings_300k_500k?: number | null
+          listings_500k_750k?: number | null
+          listings_data?: Json | null
+          listings_over_750k?: number | null
+          listings_under_300k?: number | null
+          max_price?: number | null
+          median_price?: number | null
+          min_price?: number | null
+          multi_family_count?: number | null
+          scraped_at?: string
+          single_family_count?: number | null
+          source_url?: string | null
+          town_name: string
+          town_slug: string
+          updated_at?: string
+        }
+        Update: {
+          active_listings?: number | null
+          avg_baths?: number | null
+          avg_beds?: number | null
+          avg_days_on_market?: number | null
+          avg_price?: number | null
+          avg_sqft?: number | null
+          condo_count?: number | null
+          created_at?: string
+          id?: string
+          land_count?: number | null
+          listings_300k_500k?: number | null
+          listings_500k_750k?: number | null
+          listings_data?: Json | null
+          listings_over_750k?: number | null
+          listings_under_300k?: number | null
+          max_price?: number | null
+          median_price?: number | null
+          min_price?: number | null
+          multi_family_count?: number | null
+          scraped_at?: string
+          single_family_count?: number | null
+          source_url?: string | null
+          town_name?: string
+          town_slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
