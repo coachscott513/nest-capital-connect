@@ -200,55 +200,6 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
         </div>
       )}
 
-      {/* WELCOME SECTION — First-time user optimized (Delmar only) */}
-      {isDelmarPage && (
-        <section className="px-[5%] py-12 md:py-16 bg-background border-b border-border">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-              Delmar Real Estate Intelligence
-            </h2>
-            <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
-              Clear, local insights for homeowners and buyers — beyond Zillow.
-            </p>
-
-            {/* 3-Step Visual Flow */}
-            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-              <div className="flex flex-col items-center text-center">
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <BarChart3 className="w-7 h-7 text-primary" />
-                </div>
-                <div className="text-xs font-semibold text-primary mb-2">Step 1</div>
-                <h3 className="font-semibold text-foreground mb-1">Explore Market Activity</h3>
-                <p className="text-sm text-muted-foreground">
-                  See what's selling, price trends, and local data.
-                </p>
-              </div>
-              
-              <div className="flex flex-col items-center text-center">
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <Home className="w-7 h-7 text-primary" />
-                </div>
-                <div className="text-xs font-semibold text-primary mb-2">Step 2</div>
-                <h3 className="font-semibold text-foreground mb-1">View Property Pages</h3>
-                <p className="text-sm text-muted-foreground">
-                  Browse detailed intelligence on specific addresses.
-                </p>
-              </div>
-              
-              <div className="flex flex-col items-center text-center">
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <FileText className="w-7 h-7 text-primary" />
-                </div>
-                <div className="text-xs font-semibold text-primary mb-2">Step 3</div>
-                <h3 className="font-semibold text-foreground mb-1">Request a Report</h3>
-                <p className="text-sm text-muted-foreground">
-                  Get personalized intelligence on any property.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* HERO SECTION — New Intelligence-First Copy */}
       <section className="relative px-[5%] py-20 md:py-28 bg-gradient-to-br from-primary/10 via-background to-background border-b border-border">
