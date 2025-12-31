@@ -70,7 +70,7 @@ const SamplePropertyIntelligenceReport = () => {
           name="description" 
           content="See what a full property intelligence report includes: tax data, pricing context, market forces, and actionable insights for Delmar-area properties."
         />
-        <link rel="canonical" href="https://capitaldistrictnest.com/reports/sample-property-intelligence" />
+        <link rel="canonical" href="https://www.capitaldistrictnest.com/reports/sample-property-intelligence" />
       </Helmet>
 
       <MainHeader />
