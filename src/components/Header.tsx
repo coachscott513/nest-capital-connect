@@ -95,10 +95,10 @@ const Header = () => {
               <Link to="/markets/troy-single-family-homes" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Troy Homes</Link>
               <Link to="/markets/saratoga-springs-single-family-homes" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Saratoga Homes</Link>
               <div className="border-t border-blue-700 my-2"></div>
-              <Link to="/albany-real-estate" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Albany Real Estate</Link>
-              <Link to="/troy-real-estate" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Troy Real Estate</Link>
-              <Link to="/schenectady-real-estate" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Schenectady Real Estate</Link>
-              <Link to="/saratoga-real-estate" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Saratoga Real Estate</Link>
+              <Link to="/towns/albany" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Albany Real Estate</Link>
+              <Link to="/towns/troy" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Troy Real Estate</Link>
+              <Link to="/towns/schenectady" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Schenectady Real Estate</Link>
+              <Link to="/towns/saratoga-springs" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Saratoga Real Estate</Link>
             </div>
           </div>
           <div className="relative group">

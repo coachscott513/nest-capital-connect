@@ -153,7 +153,7 @@ const SchenectadyCountyIntelligence = () => {
                 className="h-14 px-8 text-base font-semibold"
                 asChild
               >
-                <Link to="/schenectady-real-estate">
+                <Link to="/towns/schenectady">
                   Browse All Properties
                 </Link>
               </Button>
@@ -495,7 +495,7 @@ const SchenectadyCountyIntelligence = () => {
                     All residential listings across Schenectady County.
                   </p>
                   <Button asChild>
-                    <Link to="/schenectady-real-estate">
+                    <Link to="/towns/schenectady">
                       View All Listings
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
