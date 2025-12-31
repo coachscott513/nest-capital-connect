@@ -164,13 +164,17 @@ export const cliftonParkData: TownData = {
     justListed: "https://scottalvarez.remax.com/index.php?advanced=1&display=Shenendehowa+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&options%5B%5D=new&keywords=City%3DClifton+Park&pak=school_district%3ATScAqXEBP2ySQEDmIXO6&sortby=listings.price+ASC&rtype=map",
   },
   weeklyIntel: {
-    newListings: 3,
-    homesSold: 0,
-    medianListPrice: "$425,000",
+    newListings: 6,
+    homesSold: 5,
+    medianListPrice: "$701,500",
+    avgDaysOnMarket: 46,
     priceChange: "",
-    priceDirection: "stable",
-    marketTrendLabel: "Data Updating",
+    priceDirection: "up",
+    marketTrendLabel: "Active Market",
   },
+  // RPR Market Activity PDF
+  marketActivityPdfUrl: "https://www.narrpr.com/reports-v2/29e963e2-ab59-4a07-82fc-ce33ca5e4ec5/pdf",
+  marketActivityLastChecked: "Dec 31, 2025",
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "45", change: "very active" },
     { label: "Median Sale Price", value: "$425,000", change: "+4.5% YoY" },
