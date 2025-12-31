@@ -63,64 +63,92 @@ interface Listing {
 function parseListingsFromMarkdown(markdown: string): Listing[] {
   const listings: Listing[] = [];
   
-  // Split by property cards - they typically start with "View Details" links
-  const propertyBlocks = markdown.split(/\[View Details\]/gi);
+  console.log('Starting parsing, markdown length:', markdown.length);
   
-  for (const block of propertyBlocks) {
-    try {
-      // Extract price - look for patterns like $434,900 or $660,000
-      const priceMatch = block.match(/\$(\d{1,3}(?:,\d{3})*(?:,\d{3})?)/);
-      if (!priceMatch) continue;
-      
-      const price = parseInt(priceMatch[1].replace(/,/g, ''));
-      if (isNaN(price) || price < 10000) continue;
-      
-      // Extract address - look for street addresses
-      const addressMatch = block.match(/(\d+[a-z]?\s+[\w\s']+(?:Drive|Street|Avenue|Road|Lane|Way|Court|Circle|Place|Boulevard|Terrace|Trail|Path|Run|Rd|St|Ave|Ln|Dr|Ct|Cir|Pl|Blvd|Ter))[,\s]+([A-Za-z\s]+),\s*NY/i);
-      
-      if (!addressMatch) continue;
-      
-      const address = addressMatch[1].trim();
-      const city = addressMatch[2].trim();
-      
-      // Extract property type
-      let propertyType = 'Single Family';
-      if (/multi-?family/i.test(block)) propertyType = 'Multi-Family';
-      else if (/condo/i.test(block)) propertyType = 'Condo';
-      else if (/townhouse/i.test(block)) propertyType = 'Townhouse';
-      else if (/land/i.test(block)) propertyType = 'Land';
-      else if (/TypeSingle Family/i.test(block)) propertyType = 'Single Family';
-      
-      // Extract sqft
-      const sqftMatch = block.match(/(\d{1,2},?\d{3})\s*SqFt/i);
-      const sqft = sqftMatch ? parseInt(sqftMatch[1].replace(/,/g, '')) : null;
-      
-      // Extract beds and baths - look for "4 Beds + 2.5 Baths" or similar
-      const bedsMatch = block.match(/(\d+)\s*Beds?/i);
-      const bathsMatch = block.match(/(\d+\.?\d*)\s*Baths?/i);
-      
-      const beds = bedsMatch ? parseInt(bedsMatch[1]) : null;
-      const baths = bathsMatch ? parseFloat(bathsMatch[1]) : null;
-      
-      // Extract URL from the block
-      const urlMatch = block.match(/\(https:\/\/scottalvarez\.remax\.com\/property\/[^)]+\)/);
-      const url = urlMatch ? urlMatch[0].slice(1, -1) : '';
-      
-      listings.push({
-        address,
-        city,
-        price,
-        propertyType,
-        sqft,
-        beds,
-        baths,
-        url
-      });
-    } catch (e) {
-      console.error('Error parsing listing block:', e);
-    }
+  // Strategy 1: Look for property URL patterns and extract surrounding data
+  const propertyUrlRegex = /\[View Details\]\((https:\/\/scottalvarez\.remax\.com\/property\/[^\)]+)\)/gi;
+  let match;
+  const propertyUrls: string[] = [];
+  
+  while ((match = propertyUrlRegex.exec(markdown)) !== null) {
+    propertyUrls.push(match[1]);
+  }
+  console.log('Found property URLs:', propertyUrls.length);
+  
+  // Strategy 2: Parse by looking for price patterns followed by property info
+  // Pattern: $XXX,XXX followed by city name and property details
+  const priceBlockRegex = /\$(\d{1,3}(?:,\d{3})+)\s*(?:\n|.*?)([A-Za-z\s]+),\s*NY/gi;
+  
+  // Strategy 3: Look for specific listing card patterns from the markdown
+  // The format appears to be: [address](url) followed by city, price, type, details
+  const lines = markdown.split('\n');
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    
+    // Look for lines with property URLs
+    const urlMatch = line.match(/\(https:\/\/scottalvarez\.remax\.com\/property\/[^\)]+\)/);
+    if (!urlMatch) continue;
+    
+    const url = urlMatch[0].slice(1, -1);
+    
+    // Look around this line for price, address, and details
+    const context = lines.slice(Math.max(0, i - 5), Math.min(lines.length, i + 15)).join(' ');
+    
+    // Extract price
+    const priceMatch = context.match(/\$(\d{1,3}(?:,\d{3})+)/);
+    if (!priceMatch) continue;
+    
+    const price = parseInt(priceMatch[1].replace(/,/g, ''));
+    if (isNaN(price) || price < 10000) continue;
+    
+    // Extract address from URL or surrounding text
+    // URL format: /property/155-202531202-23-northcrest-drive-clifton-park-NY-12065
+    const urlParts = url.split('/').pop() || '';
+    const addressFromUrl = urlParts.split('-').slice(2, -3).join(' ');
+    
+    // Try to find address in context
+    const addressMatch = context.match(/(\d+[a-z]?\s+[\w\s'.-]+(?:Drive|Street|Avenue|Road|Lane|Way|Court|Circle|Place|Boulevard|Terrace|Trail|Path|Run|Rd|St|Ave|Ln|Dr|Ct|Cir|Pl|Blvd|Ter))/i);
+    const address = addressMatch ? addressMatch[1].trim() : addressFromUrl;
+    
+    // Extract city from URL
+    const cityFromUrl = urlParts.split('-').slice(-3, -2).join(' ');
+    const city = cityFromUrl || 'Unknown';
+    
+    // Extract property type
+    let propertyType = 'Single Family';
+    if (/multi-?family|income/i.test(context)) propertyType = 'Multi-Family';
+    else if (/condo/i.test(context)) propertyType = 'Condo';
+    else if (/townhouse/i.test(context)) propertyType = 'Townhouse';
+    else if (/\bland\b/i.test(context)) propertyType = 'Land';
+    
+    // Extract sqft - look for patterns like "2,122 SqFt" or "Size 2,122"
+    const sqftMatch = context.match(/(?:Size\s*)?(\d{1,2},?\d{3})\s*SqFt/i);
+    const sqft = sqftMatch ? parseInt(sqftMatch[1].replace(/,/g, '')) : null;
+    
+    // Extract beds and baths
+    const bedsMatch = context.match(/(\d+)\s*Beds?/i);
+    const bathsMatch = context.match(/(\d+\.?\d*)\s*Baths?/i);
+    
+    const beds = bedsMatch ? parseInt(bedsMatch[1]) : null;
+    const baths = bathsMatch ? parseFloat(bathsMatch[1]) : null;
+    
+    // Avoid duplicates
+    if (listings.some(l => l.url === url)) continue;
+    
+    listings.push({
+      address,
+      city,
+      price,
+      propertyType,
+      sqft,
+      beds,
+      baths,
+      url
+    });
   }
   
+  console.log('Parsed listings:', listings.length);
   return listings;
 }
 
@@ -194,6 +222,7 @@ function calculateMarketStats(listings: Listing[]) {
 async function scrapeTown(townSlug: string, config: { name: string; url: string }, firecrawlApiKey: string) {
   console.log(`Scraping ${config.name} from ${config.url}`);
   
+  // Use JSON extraction with prompt for structured data extraction
   const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
     method: 'POST',
     headers: {
@@ -204,7 +233,7 @@ async function scrapeTown(townSlug: string, config: { name: string; url: string 
       url: config.url,
       formats: ['markdown'],
       onlyMainContent: false,
-      waitFor: 3000, // Wait for JavaScript to load
+      waitFor: 3000,
     }),
   });
   
@@ -218,6 +247,7 @@ async function scrapeTown(townSlug: string, config: { name: string; url: string 
   const markdown = data.data?.markdown || data.markdown || '';
   console.log(`Received ${markdown.length} characters of markdown for ${config.name}`);
   
+  // Parse listings from markdown
   const listings = parseListingsFromMarkdown(markdown);
   console.log(`Parsed ${listings.length} listings for ${config.name}`);
   
@@ -238,7 +268,8 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
+    // Try both possible secret names (connector uses FIRECRAWL_API_KEY_1)
+    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY_1') || Deno.env.get('FIRECRAWL_API_KEY');
     if (!firecrawlApiKey) {
       console.error('FIRECRAWL_API_KEY not configured');
       return new Response(
