@@ -320,12 +320,15 @@ export const voorheesvilleData: TownData = {
   },
   weeklyIntel: {
     newListings: 0,
-    homesSold: 0,
+    homesSold: 5,
     medianListPrice: "$325,000",
     priceChange: "",
     priceDirection: "stable",
-    marketTrendLabel: "Data Updating",
+    marketTrendLabel: "Active Market",
   },
+  // RPR Market Activity PDF
+  marketActivityPdfUrl: "https://www.narrpr.com/reports-v2/c97b7851-e5bf-457c-8cb6-2203c010c8f5/pdf",
+  marketActivityLastChecked: "Dec 31, 2025",
   marketSnapshot: [
     { label: "Recent Sales (30-90 days)", value: "8", change: "limited inventory" },
     { label: "Median Sale Price", value: "$325,000", change: "+5.1% YoY" },
