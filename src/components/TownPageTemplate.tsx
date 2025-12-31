@@ -19,11 +19,14 @@ import {
   BarChart3,
   ChevronRight,
   CheckCircle,
-  X
+  X,
+  ExternalLink,
+  ClipboardList
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useDelmarConfirmation } from "@/contexts/DelmarConfirmationContext";
+import MarketReportRequestForm from "@/components/MarketReportRequestForm";
 
 export interface TownData {
   name: string;
@@ -67,6 +70,13 @@ export interface TownData {
     activeListings?: string;
     justListed?: string;
   };
+  // Market Activity PDF (RPR reports)
+  marketActivityPdfUrl?: string;
+  marketActivityLastChecked?: string;
+  // What it means bullets
+  whatItMeans?: string[];
+  // Notable moves (no addresses)
+  notableMoves?: string[];
 }
 
 interface TownPageTemplateProps {
@@ -78,6 +88,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
   const [newsletterName, setNewsletterName] = useState("");
   const [newsletterPhone, setNewsletterPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isReportFormOpen, setIsReportFormOpen] = useState(false);
   const { showConfirmation, setShowConfirmation } = useDelmarConfirmation();
   const location = useLocation();
 
@@ -335,6 +346,87 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
                 . Updated weekly.
               </p>
             </div>
+          )}
+        </div>
+      </section>
+
+      {/* WHAT IT MEANS — Plain English Bullets */}
+      {town.whatItMeans && town.whatItMeans.length > 0 && (
+        <section className="px-[5%] py-12 bg-background border-b border-border">
+          <div className="max-w-3xl mx-auto">
+            <h3 className="text-xl font-bold text-foreground mb-4">What It Means</h3>
+            <ul className="space-y-3">
+              {town.whatItMeans.map((bullet, index) => (
+                <li key={index} className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground">{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* NOTABLE MOVES — Homes to Know (No Addresses) */}
+      {town.notableMoves && town.notableMoves.length > 0 && (
+        <section className="px-[5%] py-12 bg-muted/30 border-b border-border">
+          <div className="max-w-3xl mx-auto">
+            <h3 className="text-xl font-bold text-foreground mb-4">Homes to Know</h3>
+            <p className="text-sm text-muted-foreground mb-4">Notable moves this week (no addresses shown publicly)</p>
+            <ul className="space-y-3">
+              {town.notableMoves.map((move, index) => (
+                <li key={index} className="flex items-start gap-3">
+                  <Home className="w-4 h-4 text-primary mt-1 flex-shrink-0" />
+                  <span className="text-muted-foreground">{move}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* MARKET ACTIVITY PDF — RPR Report Section */}
+      <section className="px-[5%] py-16 md:py-20 bg-background border-b border-border">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+              Market Activity (Updated Regularly)
+            </h2>
+            <p className="text-muted-foreground">
+              A detailed market activity report — new listings, price changes, and recent activity.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            {town.marketActivityPdfUrl ? (
+              <Button size="lg" className="h-14 px-8 w-full sm:w-auto" asChild>
+                <a href={town.marketActivityPdfUrl} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="w-5 h-5 mr-2" />
+                  View Market Activity PDF
+                </a>
+              </Button>
+            ) : (
+              <Button size="lg" className="h-14 px-8 w-full sm:w-auto" disabled>
+                <FileText className="w-5 h-5 mr-2" />
+                PDF Coming Soon
+              </Button>
+            )}
+            
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="h-14 px-8 w-full sm:w-auto"
+              onClick={() => setIsReportFormOpen(true)}
+            >
+              <ClipboardList className="w-5 h-5 mr-2" />
+              Request Full List + Breakdown
+            </Button>
+          </div>
+
+          {town.marketActivityLastChecked && (
+            <p className="text-xs text-muted-foreground text-center mt-4">
+              Last updated: {town.marketActivityLastChecked}
+            </p>
           )}
         </div>
       </section>
@@ -688,6 +780,14 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
           </Button>
         </div>
       </div>
+
+      {/* Market Report Request Form Modal */}
+      <MarketReportRequestForm
+        townName={town.name}
+        townSlug={town.slug}
+        isOpen={isReportFormOpen}
+        onClose={() => setIsReportFormOpen(false)}
+      />
     </div>
   );
 };

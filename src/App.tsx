@@ -96,6 +96,7 @@ import LandBuyerJourney from "./pages/buyer-journey/LandBuyerJourney";
 import FinancingJourney from "./pages/buyer-journey/FinancingJourney";
 import ComingSoon from "./pages/ComingSoon";
 import Intelligence from "./pages/Intelligence";
+import MarketReportThanks from "./pages/MarketReportThanks";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -198,6 +199,9 @@ const App = () => {
           <Route path="/towns/saratoga-springs" element={<SaratogaIntelligence />} />
           <Route path="/towns/schenectady" element={<SchenectadyIntelligence />} />
           <Route path="/towns/queensbury" element={<QueensburyIntelligence />} />
+          
+          {/* Market Report Thank You Pages */}
+          <Route path="/towns/:townSlug/report-request-thanks" element={<MarketReportThanks />} />
           
           {/* Town Homes for Sale Pages */}
           <Route path="/voorheesville-homes-for-sale" element={<VoorheesvilleHomesForSale />} />
