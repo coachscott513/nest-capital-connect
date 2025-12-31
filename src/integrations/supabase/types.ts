@@ -122,6 +122,42 @@ export type Database = {
         }
         Relationships: []
       }
+      market_report_leads: {
+        Row: {
+          address_to_analyze: string | null
+          buyer_type: string
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          phone: string | null
+          town_name: string
+          town_slug: string
+        }
+        Insert: {
+          address_to_analyze?: string | null
+          buyer_type: string
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          phone?: string | null
+          town_name: string
+          town_slug: string
+        }
+        Update: {
+          address_to_analyze?: string | null
+          buyer_type?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string | null
+          town_name?: string
+          town_slug?: string
+        }
+        Relationships: []
+      }
       properties: {
         Row: {
           address: string
@@ -214,6 +250,8 @@ export type Database = {
           listings_data: Json | null
           listings_over_750k: number | null
           listings_under_300k: number | null
+          market_activity_last_checked: string | null
+          market_activity_pdf_url: string | null
           max_price: number | null
           median_price: number | null
           min_price: number | null
@@ -241,6 +279,8 @@ export type Database = {
           listings_data?: Json | null
           listings_over_750k?: number | null
           listings_under_300k?: number | null
+          market_activity_last_checked?: string | null
+          market_activity_pdf_url?: string | null
           max_price?: number | null
           median_price?: number | null
           min_price?: number | null
@@ -268,6 +308,8 @@ export type Database = {
           listings_data?: Json | null
           listings_over_750k?: number | null
           listings_under_300k?: number | null
+          market_activity_last_checked?: string | null
+          market_activity_pdf_url?: string | null
           max_price?: number | null
           median_price?: number | null
           min_price?: number | null
