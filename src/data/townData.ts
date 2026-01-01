@@ -264,23 +264,24 @@ export const amsterdamData: TownData = {
   dataSourceLinks: {
     activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Amsterdam+City+SD&pak=scho%3Ag30_5qr8d4z&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
   },
+  // MLS Data Source: GlobalMLS InfoSparks - December 2025
+  mlsDataSource: "GlobalMLS InfoSparks",
+  mlsDataDate: "December 2025",
   weeklyIntel: {
-    newListings: 10,
-    homesSold: 10,
-    medianListPrice: "$267,450",
-    avgDaysOnMarket: 43,
+    newListings: 7,
+    homesSold: 13,
+    medianListPrice: "$260,000",
+    avgDaysOnMarket: 12,
     priceChange: "",
     priceDirection: "stable",
     marketTrendLabel: "Seller's Market",
   },
-  // RPR Market Activity PDF
-  marketActivityPdfUrl: "https://www.narrpr.com/reports-v2/amsterdam-market-activity/pdf",
-  marketActivityLastChecked: "Dec 31, 2025",
+  marketActivityLastChecked: "Jan 1, 2026",
   marketSnapshot: [
-    { label: "Recent Sales (30 days)", value: "10", change: "active market" },
-    { label: "Median Sale Price", value: "$300,000", change: "steady" },
-    { label: "Days on Market", value: "43", change: "slower market" },
-    { label: "Inventory Level", value: "1.54 months", change: "seller's market" },
+    { label: "Active Listings", value: "22", change: "available homes" },
+    { label: "Median Sale Price", value: "$260,000", change: "Dec 2025" },
+    { label: "Days on Market", value: "12", change: "fast" },
+    { label: "Pending Sales", value: "10", change: "under contract" },
   ],
   recentlySold: [
     { address: "85 Division St", price: "$135,000", beds: 3, baths: 1, date: "Dec 2025" },
