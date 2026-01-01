@@ -387,23 +387,24 @@ export const albanyData: TownData = {
   dataSourceLinks: {
     activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&pak=city%3Ag30_drbpt5d2&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
   },
+  // MLS Data Source: GlobalMLS InfoSparks - December 2025
+  mlsDataSource: "GlobalMLS InfoSparks",
+  mlsDataDate: "December 2025",
   weeklyIntel: {
-    newListings: 85,
-    homesSold: 65,
-    medianListPrice: "$278,450",
-    avgDaysOnMarket: 7,
-    priceChange: "+0.9%",
-    priceDirection: "up",
+    newListings: 30,
+    homesSold: 62,
+    medianListPrice: "$290,000",
+    avgDaysOnMarket: 12,
+    priceChange: "",
+    priceDirection: "stable",
     marketTrendLabel: "Seller's Market",
   },
-  // RPR Market Activity PDF
-  marketActivityPdfUrl: "https://www.narrpr.com/reports-v2/albany-market-activity/pdf",
-  marketActivityLastChecked: "Dec 31, 2025",
+  marketActivityLastChecked: "Jan 1, 2026",
   marketSnapshot: [
-    { label: "Recent Sales (30-90 days)", value: "65", change: "very active" },
-    { label: "Median Sale Price", value: "$306,000", change: "+6.3% YoY" },
-    { label: "Days on Market", value: "7", change: "very fast" },
-    { label: "Inventory Level", value: "1.38 months", change: "seller's market" },
+    { label: "Active Listings", value: "61", change: "available homes" },
+    { label: "Median Sale Price", value: "$290,000", change: "Dec 2025" },
+    { label: "Days on Market", value: "12", change: "fast" },
+    { label: "Pending Sales", value: "37", change: "under contract" },
   ],
   recentlySold: [
     { address: "156 State St", price: "$325,000", beds: 3, baths: 2, date: "Dec 2025" },
