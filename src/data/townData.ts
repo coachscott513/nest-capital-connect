@@ -354,22 +354,24 @@ export const voorheesvilleData: TownData = {
   dataSourceLinks: {
     activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Voorheesville&pak=city%3Ag30_dre6tsd2&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
   },
+  // MLS Data Source: GlobalMLS InfoSparks - December 2025
+  mlsDataSource: "GlobalMLS InfoSparks",
+  mlsDataDate: "December 2025",
   weeklyIntel: {
-    newListings: 0,
-    homesSold: 5,
-    medianListPrice: "$325,000",
+    newListings: 1,
+    homesSold: 4,
+    medianListPrice: "$352,500",
+    avgDaysOnMarket: 4,
     priceChange: "",
     priceDirection: "stable",
-    marketTrendLabel: "Active Market",
+    marketTrendLabel: "Seller's Market",
   },
-  // RPR Market Activity PDF
-  marketActivityPdfUrl: "https://www.narrpr.com/reports-v2/c97b7851-e5bf-457c-8cb6-2203c010c8f5/pdf",
-  marketActivityLastChecked: "Dec 31, 2025",
+  marketActivityLastChecked: "Jan 1, 2026",
   marketSnapshot: [
-    { label: "Recent Sales (30-90 days)", value: "8", change: "limited inventory" },
-    { label: "Median Sale Price", value: "$325,000", change: "+5.1% YoY" },
-    { label: "Days on Market", value: "28", change: "steady" },
-    { label: "Inventory Level", value: "Very Low", change: "high demand" },
+    { label: "Active Listings", value: "3", change: "very low inventory" },
+    { label: "Median Sale Price", value: "$352,500", change: "Dec 2025" },
+    { label: "Days on Market", value: "4", change: "extremely fast" },
+    { label: "Pending Sales", value: "0", change: "none pending" },
   ],
   recentlySold: [
     { address: "45 Maple Ave", price: "$315,000", beds: 3, baths: 1.5, date: "Dec 2025" },
