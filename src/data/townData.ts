@@ -43,6 +43,7 @@ export const delmarData: TownData = {
     buyerDemand: "Strong demand from families relocating within the Capital Region and NYC transplants seeking top schools. Inventory remains tight, with well-priced homes selling quickly.",
     renovationDemand: "Move-in-ready homes command premium prices. However, there's growing interest in renovations as buyers accept older homes to get into the district. Kitchen and bath updates offer the best ROI.",
   },
+  livingIn: "Known for walkable streets, strong schools, and quick access to Albany. Locals frequent places like Four Corners, the Rail Trail, and neighborhood parks that keep the town feeling connected and livable.",
 };
 
 export const troyData: TownData = {
@@ -86,6 +87,7 @@ export const troyData: TownData = {
     buyerDemand: "Strong investor interest for multi-family properties. Growing demand from first-time buyers and RPI affiliates. Downtown revitalization driving increased interest.",
     renovationDemand: "Excellent renovation opportunities. Historic properties with good bones available at accessible prices. Strong rental demand supports investment purchases.",
   },
+  livingIn: "A city with grit and character. Downtown Troy offers a walkable core with local restaurants, coffee shops, and the year-round Troy Waterfront Farmers Market. Close to RPI and easy access to the Hudson River waterfront.",
 };
 
 export const niskayunaData: TownData = {
@@ -128,6 +130,7 @@ export const niskayunaData: TownData = {
     buyerDemand: "High demand from families seeking top-rated schools. GE and local tech employers drive consistent buyer interest. Homes in the best school zones sell quickly.",
     renovationDemand: "Strong preference for updated kitchens and baths. Mid-century homes with original features often need updates, but the strong school district ensures good resale value after renovations.",
   },
+  livingIn: "A quiet, family-focused suburb with top-rated schools and tree-lined streets. Residents enjoy easy access to the Mohawk-Hudson Bike-Hike Trail, Niskayuna Co-op, and a 15-minute commute to downtown Schenectady or Albany.",
 };
 
 export const saratogaData: TownData = {
@@ -171,6 +174,7 @@ export const saratogaData: TownData = {
     buyerDemand: "Extremely high demand from families, retirees, and second-home buyers. Racing season brings additional interest. Consistently strong appreciation.",
     renovationDemand: "Historic homes often need updates but command premium prices when renovated. Strong preference for move-in ready, but renovation opportunities exist in older neighborhoods.",
   },
+  livingIn: "A destination town with year-round appeal. Broadway's shops and restaurants, Saratoga Spa State Park, and the famous racetrack draw visitors and residents alike. Walkable downtown, mineral springs, and a vibrant arts scene define daily life.",
 };
 
 export const cliftonParkData: TownData = {
@@ -215,6 +219,7 @@ export const cliftonParkData: TownData = {
     buyerDemand: "Extremely high demand from families and commuters. Excellent highway access to Albany and Saratoga. Tech corridor employers drive consistent buyer interest.",
     renovationDemand: "Less renovation opportunity as housing stock is newer. Buyers prefer move-in ready. Updates to 1980s-90s homes (kitchens, baths, flooring) can add significant value.",
   },
+  livingIn: "Suburban living with excellent schools and easy highway access. Clifton Park Center and Exit 9 offer shopping and dining. Families enjoy the Southern Saratoga YMCA, local parks, and quick drives to both Saratoga and Albany.",
 };
 
 export const schenectadyData: TownData = {
@@ -258,6 +263,7 @@ export const schenectadyData: TownData = {
     buyerDemand: "Growing investor interest for cash flow properties. First-time buyers attracted to affordability. Downtown revitalization spurring renewed interest.",
     renovationDemand: "Excellent opportunities for renovation projects. Historic properties with significant potential. Strong rental market supports investment purchases.",
   },
+  livingIn: "An affordable city with deep history and a growing arts scene. The Stockade District is one of America's oldest neighborhoods. Proctors Theatre, Union College, and local breweries anchor the downtown. Easy access to I-890 and Route 7.",
 };
 
 export const amsterdamData: TownData = {
@@ -300,6 +306,7 @@ export const amsterdamData: TownData = {
     buyerDemand: "Growing interest from investors seeking cash flow and buyers priced out of Albany County. Revitalization efforts and arts community driving renewed interest.",
     renovationDemand: "Excellent opportunities for renovation projects. Historic homes with good bones available at low entry points. Investors achieving strong returns on thoughtful renovations.",
   },
+  livingIn: "A Mohawk Valley city with affordable homes and strong community ties. Main Street offers local shops and eateries. The Mohawk River and Erie Canal provide outdoor recreation. A 35-minute drive to Albany or Saratoga.",
 };
 
 export const queensburyData: TownData = {
@@ -343,6 +350,7 @@ export const queensburyData: TownData = {
     buyerDemand: "Strong demand from families seeking quality schools and outdoor lifestyle. Lake George proximity attracts second-home buyers. Growing interest from remote workers.",
     renovationDemand: "Moderate renovation opportunities. Buyers prefer move-in ready but appreciate updated kitchens and baths. Lakefront and view properties command premium after updates.",
   },
+  livingIn: "Gateway to the Adirondacks with Lake George just minutes away. Aviation Mall, outlet shopping, and local restaurants serve daily needs. Hiking, skiing, and lake recreation are part of the lifestyle. Excellent schools and a safe, family-friendly feel.",
 };
 
 export const voorheesvilleData: TownData = {
@@ -384,6 +392,7 @@ export const voorheesvilleData: TownData = {
     buyerDemand: "Growing interest from buyers priced out of Delmar seeking quality schools with lower entry points. Rural feel attracts those seeking more land and privacy.",
     renovationDemand: "Historic village homes often need updates. Buyers appreciate original character but expect modern kitchens and baths. Good opportunity for value-add purchases.",
   },
+  livingIn: "A small village with a tight-knit community feel. Main Street anchors the downtown with a few local shops. Thacher State Park is nearby for hiking and views. Families value the small school district and quiet, rural atmosphere.",
 };
 
 export const albanyData: TownData = {
@@ -427,6 +436,7 @@ export const albanyData: TownData = {
     buyerDemand: "Strong demand from investors and first-time buyers. State employee relocations drive consistent interest. Downtown revitalization spurring renewed investment.",
     renovationDemand: "Excellent renovation opportunities. Historic properties with good bones at accessible prices. Strong rental demand supports investment purchases.",
   },
+  livingIn: "New York's capital city with walkable neighborhoods, diverse dining, and cultural amenities. Lark Street, Washington Park, and the Empire State Plaza anchor urban life. Major employers, hospitals, and universities are all within reach.",
 };
 
 export const guilderlandData: TownData = {
@@ -465,6 +475,7 @@ export const guilderlandData: TownData = {
     buyerDemand: "Strong family demand driven by excellent schools. Convenient highway access to Albany. Retail and commercial growth around Crossgates Mall area.",
     renovationDemand: "Moderate renovation activity. Move-in ready homes preferred, but older properties in prime locations offer good value for updates.",
   },
+  livingIn: "A suburban town with strong schools and convenient retail. Crossgates Mall and surrounding shopping serve daily needs. Guilderland Center offers a quieter village feel. Easy access to I-90 and Route 20 for commutes.",
 };
 
 export const mechanicvilleData: TownData = {
@@ -503,6 +514,7 @@ export const mechanicvilleData: TownData = {
     buyerDemand: "Growing interest from first-time buyers and investors seeking affordability. Proximity to Saratoga Springs and easy commute to Albany make it attractive.",
     renovationDemand: "Strong renovation opportunity. Historic homes with good bones available at accessible prices. Growing investor interest in the area.",
   },
+  livingIn: "A compact city with an affordable cost of living and strong community pride. Downtown offers local shops and a walkable Main Street. Close to Saratoga and the Northway for commutes. Known for its tight-knit neighborhoods.",
 };
 
 // Export all town data for easy access

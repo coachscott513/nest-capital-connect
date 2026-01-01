@@ -80,6 +80,8 @@ export interface TownData {
   whatItMeans?: string[];
   // Notable moves (no addresses)
   notableMoves?: string[];
+  // Living in [Town] - local flavor bullets
+  livingIn?: string;
 }
 
 interface TownPageTemplateProps {
@@ -92,6 +94,9 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
   const [newsletterPhone, setNewsletterPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isReportFormOpen, setIsReportFormOpen] = useState(false);
+  const [propertyAddress, setPropertyAddress] = useState("");
+  const [addressNote, setAddressNote] = useState("");
+  const [isAddressSubmitting, setIsAddressSubmitting] = useState(false);
   const { showConfirmation, setShowConfirmation } = useDelmarConfirmation();
   const location = useLocation();
 
@@ -136,6 +141,36 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleAddressSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!propertyAddress.trim()) {
+      toast.error("Please enter a property address");
+      return;
+    }
+    
+    setIsAddressSubmitting(true);
+    try {
+      const { error } = await supabase.from('leads').insert({
+        name: "Property Intel Request",
+        email: `${town.slug}@propertyintel.request`,
+        message: `Property Intelligence Request for: ${propertyAddress}${addressNote ? ` | Note: ${addressNote}` : ''}`,
+        type: 'property_intel_request',
+        location: town.name
+      });
+
+      if (error) throw error;
+      
+      toast.success("Got it! We'll generate your property summary and reach out shortly.");
+      setPropertyAddress("");
+      setAddressNote("");
+    } catch (error) {
+      console.error('Address submission error:', error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsAddressSubmitting(false);
     }
   };
 
@@ -350,6 +385,55 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
               </p>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* CURIOUS ABOUT A PROPERTY — Lead Capture */}
+      <section className="px-[5%] py-16 md:py-20 bg-background border-b border-border">
+        <div className="max-w-2xl mx-auto">
+          <Card className="border-2 border-primary/20">
+            <CardContent className="p-8 md:p-10">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                  Curious About a Specific Property?
+                </h2>
+                <p className="text-muted-foreground">
+                  Pick any address in or around {town.name}.<br />
+                  We'll generate a private Property Intelligence summary using real MLS data, tax records, and comparable sales.
+                </p>
+              </div>
+
+              <form onSubmit={handleAddressSubmit} className="space-y-4">
+                <Input
+                  type="text"
+                  placeholder="Enter property address"
+                  value={propertyAddress}
+                  onChange={(e) => setPropertyAddress(e.target.value)}
+                  className="h-12"
+                  required
+                />
+                <Input
+                  type="text"
+                  placeholder="Buying, selling, or just curious? (optional)"
+                  value={addressNote}
+                  onChange={(e) => setAddressNote(e.target.value)}
+                  className="h-12"
+                />
+                <Button 
+                  type="submit" 
+                  size="lg" 
+                  className="w-full h-14 text-lg font-bold"
+                  disabled={isAddressSubmitting}
+                >
+                  {isAddressSubmitting ? "Submitting..." : "See What the Data Shows"}
+                </Button>
+              </form>
+              
+              <p className="text-xs text-muted-foreground text-center mt-4">
+                No spam. No sales pressure. Just data.
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
@@ -625,6 +709,20 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
           </div>
         </div>
       </section>
+
+      {/* LIVING IN [TOWN] — Local Flavor */}
+      {town.livingIn && (
+        <section className="px-[5%] py-16 md:py-20 bg-background">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
+              Living in {town.name}
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              {town.livingIn}
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* MORTGAGE ASSISTANCE & GRANTS */}
       <section className="px-[5%] py-16 md:py-20 bg-background">
