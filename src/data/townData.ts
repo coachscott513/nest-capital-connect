@@ -136,23 +136,24 @@ export const saratogaData: TownData = {
   dataSourceLinks: {
     activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Saratoga+Springs+City+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3AWh4CqXEBvDrqX0JUFazL&sortby=listings.price+ASC&rtype=map",
   },
+  // MLS Data Source: GlobalMLS InfoSparks - December 2025
+  mlsDataSource: "GlobalMLS InfoSparks",
+  mlsDataDate: "December 2025",
   weeklyIntel: {
-    newListings: 10,
-    homesSold: 10,
-    medianListPrice: "$764,027",
-    avgDaysOnMarket: 26,
+    newListings: 0,
+    homesSold: 1,
+    medianListPrice: "$625,000",
+    avgDaysOnMarket: 79,
     priceChange: "",
     priceDirection: "stable",
-    marketTrendLabel: "Seller's Market",
+    marketTrendLabel: "Limited Inventory",
   },
-  // RPR Market Activity PDF
-  marketActivityPdfUrl: "https://www.narrpr.com/reports-v2/saratoga-springs-market-activity/pdf",
-  marketActivityLastChecked: "Dec 31, 2025",
+  marketActivityLastChecked: "Jan 1, 2026",
   marketSnapshot: [
-    { label: "Recent Sales (30 days)", value: "10", change: "active market" },
-    { label: "Median Sale Price", value: "$625,000", change: "+6% YoY" },
-    { label: "Days on Market", value: "26", change: "steady" },
-    { label: "Inventory Level", value: "2.72 months", change: "balanced" },
+    { label: "Active Listings", value: "5", change: "very low inventory" },
+    { label: "Median Sale Price", value: "$625,000", change: "Dec 2025" },
+    { label: "Days on Market", value: "79", change: "slower" },
+    { label: "Pending Sales", value: "2", change: "under contract" },
   ],
   recentlySold: [
     { address: "45 Circular St", price: "$685,000", beds: 4, baths: 3, date: "Dec 2025" },
