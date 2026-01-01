@@ -45,12 +45,14 @@ const DealDesk = () => {
   });
 
 
-  // Scroll to free reports section if hash is #free-reports
+  // Scroll to top on page load (unless coming with #free-reports hash)
   useEffect(() => {
     if (location.hash === "#free-reports") {
       setTimeout(() => {
         document.getElementById("free-reports")?.scrollIntoView({ behavior: "smooth" });
       }, 100);
+    } else {
+      window.scrollTo(0, 0);
     }
   }, [location]);
 
