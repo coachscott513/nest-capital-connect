@@ -97,23 +97,24 @@ export const niskayunaData: TownData = {
   dataSourceLinks: {
     activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Niskayuna+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3Ab5QBqXEBDeU4HJVijxZS&sortby=listings.price+ASC&rtype=map",
   },
+  // MLS Data Source: GlobalMLS InfoSparks - December 2025
+  mlsDataSource: "GlobalMLS InfoSparks",
+  mlsDataDate: "December 2025",
   weeklyIntel: {
-    newListings: 14,
-    homesSold: 2,
-    medianListPrice: "$480,000",
-    avgDaysOnMarket: 22,
+    newListings: 12,
+    homesSold: 23,
+    medianListPrice: "$469,900",
+    avgDaysOnMarket: 9,
     priceChange: "",
     priceDirection: "stable",
-    marketTrendLabel: "Low Inventory",
+    marketTrendLabel: "Seller's Market",
   },
-  // RPR Market Activity PDF
-  marketActivityPdfUrl: "https://www.narrpr.com/reports-v2/niskayuna-market-activity/pdf",
-  marketActivityLastChecked: "Dec 31, 2025",
+  marketActivityLastChecked: "Jan 1, 2026",
   marketSnapshot: [
-    { label: "Recent Sales (30-90 days)", value: "2", change: "very low" },
-    { label: "Median Sale Price", value: "$480,000", change: "stable" },
-    { label: "Days on Market", value: "22", change: "stable" },
-    { label: "Inventory Level", value: "Very Low", change: "competitive" },
+    { label: "Active Listings", value: "22", change: "low inventory" },
+    { label: "Median Sale Price", value: "$469,900", change: "Dec 2025" },
+    { label: "Days on Market", value: "9", change: "very fast" },
+    { label: "Pending Sales", value: "14", change: "under contract" },
   ],
   recentlySold: [
     { address: "2145 Nott St", price: "$408,000", beds: 4, baths: 2.5, date: "Dec 2025" },
