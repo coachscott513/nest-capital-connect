@@ -224,23 +224,24 @@ export const schenectadyData: TownData = {
   dataSourceLinks: {
     activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady+City+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3A3YcAqXEBrfxrYfk40-yv&sortby=listings.price+ASC&rtype=map",
   },
+  // MLS Data Source: GlobalMLS InfoSparks - December 2025
+  mlsDataSource: "GlobalMLS InfoSparks",
+  mlsDataDate: "December 2025",
   weeklyIntel: {
-    newListings: 10,
-    homesSold: 10,
-    medianListPrice: "$264,500",
-    avgDaysOnMarket: 6,
+    newListings: 22,
+    homesSold: 51,
+    medianListPrice: "$230,000",
+    avgDaysOnMarket: 13,
     priceChange: "",
     priceDirection: "stable",
     marketTrendLabel: "Seller's Market",
   },
-  // RPR Market Activity PDF
-  marketActivityPdfUrl: "https://www.narrpr.com/reports-v2/schenectady-market-activity/pdf",
-  marketActivityLastChecked: "Dec 31, 2025",
+  marketActivityLastChecked: "Jan 1, 2026",
   marketSnapshot: [
-    { label: "Recent Sales (30 days)", value: "10", change: "active market" },
-    { label: "Median Sale Price", value: "$251,620", change: "steady" },
-    { label: "Days on Market", value: "6", change: "very fast" },
-    { label: "Inventory Level", value: "1.24 months", change: "seller's market" },
+    { label: "Active Listings", value: "50", change: "available homes" },
+    { label: "Median Sale Price", value: "$230,000", change: "Dec 2025" },
+    { label: "Days on Market", value: "13", change: "fast" },
+    { label: "Pending Sales", value: "21", change: "under contract" },
   ],
   recentlySold: [
     { address: "1245 State St", price: "$185,000", beds: 3, baths: 2, date: "Dec 2025" },
