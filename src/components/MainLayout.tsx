@@ -4,39 +4,29 @@ import cdnLogo from "@/assets/cdn-logo.png";
 
 const menuSections = [
   {
-    category: "Assets",
+    category: "Explore",
     items: [
-      { label: "Invest", sub: "/ Standard Listings", href: "/investment-landing" },
-      { label: "Markets", sub: "/ Crypto of Real Estate", href: "/markets" },
+      { label: "Home", sub: "/ Main", href: "/" },
+      { label: "Towns", sub: "/ Local Markets", href: "/communities" },
       { label: "Rentals", sub: "/ Local Housing", href: "/rentals" },
-      { label: "Commercial", sub: "/ Ventures", href: "/albany-multi-unit" },
-      { label: "Land", sub: "/ Futures", href: "/albany-land" },
-      { label: "Luxury", sub: "/ Gold Standard", href: "/homes-for-sale" },
+      { label: "Intelligence Reports", sub: "/ Property Analysis", href: "/reports/sample-property-intelligence" },
+      { label: "About", sub: "/ Our Story", href: "/blog" },
     ],
   },
   {
-    category: "Capital",
+    category: "Learn",
     items: [
-      { label: "Financing", sub: "/ Banking & Loans", href: "/first-time-buyers" },
+      { label: "First-Time Buyers", sub: "/ Programs & Guidance", href: "/first-time-homebuyers" },
       { label: "Grants", sub: "/ Free Funding", href: "/grants" },
-      { label: "Calculators", sub: "/ ROI Tools", href: "/investor-tools" },
-      { label: "Forecasts", sub: "/ Market Predictions", href: "/delmar-market-insights" },
+      { label: "Market Insights", sub: "/ Analysis", href: "/delmar-market-insights" },
     ],
   },
   {
-    category: "Strategies",
+    category: "Invest",
     items: [
-      { label: "Flipping", sub: "/ Active Trading", href: "/sell-investment-property" },
-      { label: "Strategies", sub: "/ Options & BRRRR", href: "/cash-flow-report" },
-      { label: "VIP Access", sub: "/ Legends Only", href: "/auth" },
-    ],
-  },
-  {
-    category: "Network",
-    items: [
-      { label: "Insights", sub: "/ Market Intelligence", href: "/insights" },
-      { label: "Community", sub: "/ Social", href: "/blog" },
-      { label: "Learn", sub: "/ Education", href: "/communities" },
+      { label: "Investment Properties", sub: "/ Opportunities", href: "/investment-landing" },
+      { label: "Multi-Unit", sub: "/ Commercial", href: "/albany-multi-unit" },
+      { label: "Land", sub: "/ Development", href: "/albany-land" },
     ],
   },
 ];
