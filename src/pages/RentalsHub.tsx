@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import MainLayout from "@/components/MainLayout";
-import { ArrowRight, CheckCircle2, MapPin, MessageCircle } from "lucide-react";
+import { ArrowRight, CheckCircle2, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import LiveConversationButton from "@/components/LiveConversationButton";
 const cities = [
   { name: "Albany", slug: "albany" },
   { name: "Schenectady", slug: "schenectady" },
@@ -68,12 +68,11 @@ const RentalsHub = () => {
               <Button asChild size="lg" className="rounded-full px-8">
                 <Link to="/rentals/albany">Explore Rentals</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-                <Link to="/contact">
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Have a rental property? Talk with us
-                </Link>
-              </Button>
+              <LiveConversationButton 
+                variant="outline" 
+                size="lg" 
+                className="rounded-full px-8"
+              />
             </div>
           </div>
         </section>
@@ -137,12 +136,11 @@ const RentalsHub = () => {
             </div>
 
             <div className="text-center">
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-                <Link to="/contact">
-                  Start a conversation
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
+              <LiveConversationButton 
+                variant="outline" 
+                size="lg" 
+                className="rounded-full px-8"
+              />
               <p className="text-xs text-muted-foreground mt-3">No pricing. No promises. Just access.</p>
             </div>
           </div>
@@ -206,16 +204,15 @@ const RentalsHub = () => {
             <h2 className="text-2xl font-bold text-foreground mb-8">Questions about renting in the Capital District?</h2>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild variant="outline" size="lg" className="rounded-full px-8">
-                <Link to="/contact">
-                  Ask a question
-                </Link>
-              </Button>
-              <Button asChild size="lg" className="rounded-full px-8">
-                <Link to="/contact">
-                  Talk with a local specialist
-                </Link>
-              </Button>
+              <LiveConversationButton 
+                variant="outline" 
+                size="lg" 
+                className="rounded-full px-8"
+              />
+              <LiveConversationButton 
+                size="lg" 
+                className="rounded-full px-8"
+              />
             </div>
           </div>
         </section>
