@@ -8,7 +8,7 @@ const menuSections = [
     items: [
       { label: "Invest", sub: "/ Standard Listings", href: "/investment-landing" },
       { label: "Markets", sub: "/ Crypto of Real Estate", href: "/markets" },
-      { label: "Rentals", sub: "/ Retirement Income", href: "/rentals" },
+      { label: "Rentals", sub: "/ Local Housing", href: "/rentals" },
       { label: "Commercial", sub: "/ Ventures", href: "/albany-multi-unit" },
       { label: "Land", sub: "/ Futures", href: "/albany-land" },
       { label: "Luxury", sub: "/ Gold Standard", href: "/homes-for-sale" },
@@ -17,7 +17,7 @@ const menuSections = [
   {
     category: "Capital",
     items: [
-      { label: "Financing", sub: "/ Banking & Loans", href: "/first-time-homebuyers" },
+      { label: "Financing", sub: "/ Banking & Loans", href: "/first-time-buyers" },
       { label: "Grants", sub: "/ Free Funding", href: "/grants" },
       { label: "Calculators", sub: "/ ROI Tools", href: "/investor-tools" },
       { label: "Forecasts", sub: "/ Market Predictions", href: "/delmar-market-insights" },

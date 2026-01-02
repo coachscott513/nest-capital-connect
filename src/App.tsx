@@ -12,6 +12,9 @@ import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext
 import Index from "./pages/Index";
 import InvestorTools from "./pages/InvestorTools";
 import Rentals from "./pages/Rentals";
+import RentalsHub from "./pages/RentalsHub";
+import CityRentalPage from "./pages/CityRentalPage";
+import FirstTimeBuyerHub from "./pages/FirstTimeBuyerHub";
 import Communities from "./pages/Communities";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -123,8 +126,11 @@ const App = () => {
             <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/investor-tools" element={<InvestorTools />} />
-          <Route path="/rentals" element={<Rentals />} />
+          <Route path="/rentals" element={<RentalsHub />} />
+          <Route path="/rentals/:city" element={<CityRentalPage />} />
+          <Route path="/old-rentals" element={<Rentals />} />
           <Route path="/grants" element={<Grants />} />
+          <Route path="/first-time-buyers" element={<FirstTimeBuyerHub />} />
           <Route path="/first-time-homebuyers" element={<FirstTimeHomebuyers />} />
           <Route path="/first-time-home-buyers" element={<FirstTimeBuyerGuide />} />
           <Route path="/first-time-buyer-programs-albany" element={<FirstTimeHomebuyers />} />
