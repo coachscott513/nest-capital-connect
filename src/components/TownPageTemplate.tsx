@@ -388,6 +388,178 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
         </div>
       </section>
 
+      {/* MARKET MOMENTUM SNAPSHOT — Auto-Generated Interpretation */}
+      <section className="px-[5%] py-12 md:py-16 bg-background border-b border-border">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6 text-center">
+            Market Momentum Snapshot
+          </h2>
+          <div className="grid md:grid-cols-3 gap-4">
+            {/* Pace Card */}
+            <Card className="border border-border">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <TrendingUp className="w-4 h-4 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-foreground">Pace</h3>
+                </div>
+                <p className="text-muted-foreground text-sm">
+                  {weeklyIntel.avgDaysOnMarket && weeklyIntel.avgDaysOnMarket <= 14
+                    ? "Homes are selling quickly, indicating strong buyer demand."
+                    : weeklyIntel.avgDaysOnMarket && weeklyIntel.avgDaysOnMarket <= 30
+                    ? "Properties are moving at a moderate pace with balanced activity."
+                    : "Longer listing times suggest buyers have more negotiating room."}
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Demand Card */}
+            <Card className="border border-border">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <BarChart3 className="w-4 h-4 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-foreground">Demand</h3>
+                </div>
+                <p className="text-muted-foreground text-sm">
+                  {weeklyIntel.priceDirection === 'up'
+                    ? "Sale-to-list ratios suggest competitive pricing and strong buyer interest."
+                    : weeklyIntel.priceDirection === 'down'
+                    ? "Softening demand may create opportunities for patient buyers."
+                    : "Balanced demand with steady buyer activity in the market."}
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Supply Card */}
+            <Card className="border border-border">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <Home className="w-4 h-4 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-foreground">Supply</h3>
+                </div>
+                <p className="text-muted-foreground text-sm">
+                  {weeklyIntel.newListings <= 3
+                    ? "Inventory levels point to a tight market with limited selection."
+                    : weeklyIntel.newListings <= 10
+                    ? "Moderate inventory provides reasonable options for active buyers."
+                    : "Higher inventory levels give buyers more choices and leverage."}
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* WHAT'S ACTUALLY HAPPENING — Human Interpretation */}
+      <section className="px-[5%] py-12 md:py-16 bg-muted/30 border-b border-border">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6 text-center">
+            What's Actually Happening in This Market
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Buyers */}
+            <div className="space-y-3">
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-500" />
+                For Buyers
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                {weeklyIntel.priceDirection === 'up'
+                  ? `Competition remains in ${town.name}. Well-priced homes attract multiple offers. Preparation and pre-approval matter.`
+                  : weeklyIntel.priceDirection === 'down'
+                  ? `${town.name} is showing buyer-friendly conditions. More room for negotiation and less pressure on timing.`
+                  : `${town.name} offers a balanced market. Neither buyers nor sellers have a clear advantage right now.`}
+              </p>
+            </div>
+
+            {/* Sellers */}
+            <div className="space-y-3">
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-green-500" />
+                For Sellers
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                {weeklyIntel.avgDaysOnMarket && weeklyIntel.avgDaysOnMarket <= 14
+                  ? `Properly priced homes in ${town.name} are selling quickly. Condition and pricing strategy remain critical.`
+                  : weeklyIntel.avgDaysOnMarket && weeklyIntel.avgDaysOnMarket <= 30
+                  ? `${town.name} homes are moving at a reasonable pace. Realistic pricing drives the best outcomes.`
+                  : `Patience may be required. ${town.name} sellers should focus on presentation and competitive pricing.`}
+              </p>
+            </div>
+
+            {/* Investors */}
+            <div className="space-y-3">
+              <h3 className="font-semibold text-foreground flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-500" />
+                For Investors
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                {weeklyIntel.newListings <= 3
+                  ? `Low inventory in ${town.name} means fewer opportunities but less competition for off-market deals.`
+                  : `${town.name} has enough activity to evaluate opportunities. Watch for price reductions and extended listings.`}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WHAT MARKET AVERAGES DON'T SHOW */}
+      <section className="px-[5%] py-12 md:py-16 bg-background border-b border-border">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6 text-center">
+            What Market Averages Don't Show
+          </h2>
+          <ul className="space-y-4">
+            <li className="flex items-start gap-3">
+              <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+              <span className="text-muted-foreground">
+                <strong className="text-foreground">Street-by-street price variation</strong> — Two homes a block apart can sell at very different prices due to lot position, traffic, or proximity to amenities.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+              <span className="text-muted-foreground">
+                <strong className="text-foreground">Tax and assessment mismatches</strong> — Assessed values often lag market reality by 2–5 years. What you pay in taxes may not reflect current home value.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+              <span className="text-muted-foreground">
+                <strong className="text-foreground">Why similar homes sell at different speeds</strong> — Condition, photos, pricing strategy, and agent network can swing time-on-market by weeks.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+              <span className="text-muted-foreground">
+                <strong className="text-foreground">Hidden risk in comps</strong> — That "comparable sale" may have been a distressed sale, estate liquidation, or off-market deal with unusual terms.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* PROPERTY INTELLIGENCE BRIDGE — Soft CTA */}
+      <section className="px-[5%] py-12 md:py-16 bg-muted/30 border-b border-border">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-xl md:text-2xl font-bold text-foreground mb-4">
+            Why Property-Level Intelligence Matters
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            Town-level data explains the market. Property-level intelligence explains the decision.
+          </p>
+          <Button variant="outline" size="lg" className="h-12 px-6" asChild>
+            <Link to="/reports/sample-property-intelligence">
+              View a Sample Property Intelligence Report →
+            </Link>
+          </Button>
+        </div>
+      </section>
+
       {/* CURIOUS ABOUT A PROPERTY — Lead Capture */}
       <section className="px-[5%] py-16 md:py-20 bg-background border-b border-border">
         <div className="max-w-2xl mx-auto">
