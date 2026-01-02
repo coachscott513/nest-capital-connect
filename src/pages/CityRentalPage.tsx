@@ -111,7 +111,7 @@ const CityRentalPage = () => {
                 </a>
               </Button>
               <Button size="lg" variant="outline" className="rounded-full px-8">
-                List a Rental — $50
+                List a Rental
               </Button>
             </div>
           </div>
@@ -212,7 +212,7 @@ const CityRentalPage = () => {
               List it here for $50. Local visibility. Real inquiries. No spam.
             </p>
             <Button size="lg" className="rounded-full px-8">
-              List a Rental — $50
+              List a Rental
             </Button>
           </div>
         </section>
