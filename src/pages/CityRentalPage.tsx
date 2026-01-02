@@ -209,7 +209,7 @@ const CityRentalPage = () => {
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-xl font-bold text-foreground mb-3">Have a Rental in {data.cityName}?</h2>
             <p className="text-muted-foreground mb-6">
-              List it here for $50. Local visibility. Real inquiries. No spam.
+              Local visibility. Real inquiries. No spam.
             </p>
             <Button size="lg" className="rounded-full px-8">
               List a Rental
