@@ -43,6 +43,41 @@ export const delmarData: TownData = {
     renovationDemand: "Move-in-ready homes command premium prices. However, there's growing interest in renovations as buyers accept older homes to get into the district. Kitchen and bath updates offer the best ROI.",
   },
   livingIn: "Known for walkable streets, strong schools, and quick access to Albany. Locals frequent places like Four Corners, the Rail Trail, and neighborhood parks that keep the town feeling connected and livable.",
+  localQuestions: [
+    {
+      question: "What are homes really selling for here?",
+      answer: "Most homes in Delmar sell between $380,000 and $550,000, with the median around $430,000. Prices vary based on proximity to Four Corners, lot size, and condition. Well-priced homes often sell within a week."
+    },
+    {
+      question: "How competitive is this market compared to nearby towns?",
+      answer: "Delmar is one of the most competitive markets in the Capital Region due to Bethlehem Central schools. Expect multiple offers on desirable homes and limited negotiating room compared to Albany or Troy."
+    },
+    {
+      question: "Are prices rising or stabilizing?",
+      answer: "Prices have been stable over the past year with modest appreciation. The tight inventory keeps values firm, but we're not seeing the rapid increases of 2021-2022."
+    },
+    {
+      question: "What surprises buyers when they move here?",
+      answer: "Many buyers are surprised by the strong sense of community — neighbors know each other, kids walk to school, and local events at Four Corners draw crowds. Property taxes are higher than expected, but residents often say the schools justify it."
+    },
+    {
+      question: "How does timing matter in this town?",
+      answer: "Spring and early summer see the most listings, but competition is fierce. Fall can offer slightly less competition. Winter inventory is very limited, but motivated sellers may be more negotiable."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Four Corners — the heart of Delmar with shops, restaurants, and the library",
+      "Albany County Rail Trail — popular for walking, biking, and running",
+      "Elm Avenue Park — community pool, sports fields, and summer programs",
+      "Perfect Blend Café — local coffee spot near Four Corners",
+      "Delmar Farmers Market — seasonal market with local vendors"
+    ],
+    schoolDistrictNames: [
+      "Bethlehem Central School District"
+    ],
+    feel: "Suburban with a village core. Walkable streets near Four Corners transition to larger lots in surrounding neighborhoods. Family-oriented with active community programs, youth sports, and a well-used library system."
+  },
 };
 
 export const troyData: TownData = {
@@ -87,6 +122,41 @@ export const troyData: TownData = {
     renovationDemand: "Excellent renovation opportunities. Historic properties with good bones available at accessible prices. Strong rental demand supports investment purchases.",
   },
   livingIn: "A city with grit and character. Downtown Troy offers a walkable core with local restaurants, coffee shops, and the year-round Troy Waterfront Farmers Market. Close to RPI and easy access to the Hudson River waterfront.",
+  localQuestions: [
+    {
+      question: "What are homes really selling for here?",
+      answer: "Most homes in Troy sell between $150,000 and $300,000, with the median around $237,000. Multi-family properties and historic homes in good condition command higher prices. Downtown and South Troy offer the most variety."
+    },
+    {
+      question: "How competitive is this market compared to nearby towns?",
+      answer: "Troy is less competitive than suburban markets like Delmar or Niskayuna. Buyers have more negotiating room, and properties sit longer. This makes it attractive for first-time buyers and investors."
+    },
+    {
+      question: "Are prices rising or stabilizing?",
+      answer: "Prices have seen steady appreciation over the past few years, driven by downtown revitalization and investor interest. The market remains more affordable than most of the Capital Region."
+    },
+    {
+      question: "What surprises buyers when they move here?",
+      answer: "Buyers are often surprised by the quality of historic architecture and the vibrant downtown scene. The walkability, farmers market, and proximity to RPI create a unique urban feel uncommon in the Capital Region."
+    },
+    {
+      question: "How does timing matter in this town?",
+      answer: "Year-round activity with less seasonal fluctuation than suburban markets. Investment properties move quickly. Academic calendar from RPI can influence rental demand timing."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Troy Waterfront Farmers Market — year-round market on River Street",
+      "Brown's Brewing Company — local brewery and gathering spot",
+      "Uncle Sam statue — downtown landmark",
+      "Hudson River waterfront — parks and walking paths",
+      "RPI campus — Rensselaer Polytechnic Institute"
+    ],
+    schoolDistrictNames: [
+      "Troy City School District"
+    ],
+    feel: "Urban with historic character. Walkable downtown with restaurants, cafes, and local shops. Victorian architecture lines the streets. A city in transition with growing energy from young professionals and artists."
+  },
 };
 
 export const niskayunaData: TownData = {
@@ -130,6 +200,41 @@ export const niskayunaData: TownData = {
     renovationDemand: "Strong preference for updated kitchens and baths. Mid-century homes with original features often need updates, but the strong school district ensures good resale value after renovations.",
   },
   livingIn: "A quiet, family-focused suburb with top-rated schools and tree-lined streets. Residents enjoy easy access to the Mohawk-Hudson Bike-Hike Trail, Niskayuna Co-op, and a 15-minute commute to downtown Schenectady or Albany.",
+  localQuestions: [
+    {
+      question: "What are homes really selling for here?",
+      answer: "Most homes in Niskayuna sell between $350,000 and $550,000, with the median around $470,000. Homes in prime school zones and with updated features command the highest prices."
+    },
+    {
+      question: "How competitive is this market compared to nearby towns?",
+      answer: "Niskayuna is one of the most competitive markets in the Capital Region due to the top-rated school district. Expect multiple offers on well-priced homes and limited inventory."
+    },
+    {
+      question: "Are prices rising or stabilizing?",
+      answer: "Prices have been stable with modest appreciation. The strong school district provides a floor for values, and inventory remains tight year-round."
+    },
+    {
+      question: "What surprises buyers when they move here?",
+      answer: "Buyers are often surprised by how quiet and family-focused the community is. The access to nature via the Bike-Hike Trail and the convenience of the Niskayuna Co-op create a balanced suburban lifestyle."
+    },
+    {
+      question: "How does timing matter in this town?",
+      answer: "Spring and summer see the most family moves timed around the school year. Inventory is always limited, so acting quickly on desirable properties is essential."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Niskayuna Co-op — local grocery and community hub",
+      "Mohawk-Hudson Bike-Hike Trail — popular for recreation",
+      "Blatnik Park — sports fields and community events",
+      "Rosendale neighborhood — established family area",
+      "Niskayuna Town Hall — community center"
+    ],
+    schoolDistrictNames: [
+      "Niskayuna Central School District"
+    ],
+    feel: "Quiet suburban with excellent schools. Tree-lined streets with mid-century homes. Family-oriented with strong community programs. Close to Schenectady and Albany while maintaining its own identity."
+  },
 };
 
 export const saratogaData: TownData = {
@@ -174,6 +279,41 @@ export const saratogaData: TownData = {
     renovationDemand: "Historic homes often need updates but command premium prices when renovated. Strong preference for move-in ready, but renovation opportunities exist in older neighborhoods.",
   },
   livingIn: "A destination town with year-round appeal. Broadway's shops and restaurants, Saratoga Spa State Park, and the famous racetrack draw visitors and residents alike. Walkable downtown, mineral springs, and a vibrant arts scene define daily life.",
+  localQuestions: [
+    {
+      question: "What are homes really selling for here?",
+      answer: "Most homes in Saratoga Springs sell between $450,000 and $800,000, with the median around $625,000. Historic downtown properties and homes near the track command premium prices."
+    },
+    {
+      question: "How competitive is this market compared to nearby towns?",
+      answer: "Saratoga is highly desirable with limited inventory, making it competitive. However, higher price points mean fewer bidding wars compared to more affordable markets."
+    },
+    {
+      question: "Are prices rising or stabilizing?",
+      answer: "Prices have been stable at premium levels. The destination appeal and strong schools maintain values, though the pace of appreciation has moderated."
+    },
+    {
+      question: "What surprises buyers when they move here?",
+      answer: "Buyers are surprised by how active the community is year-round — not just during racing season. The arts scene, downtown walkability, and Saratoga Spa State Park create a lifestyle beyond the summer crowds."
+    },
+    {
+      question: "How does timing matter in this town?",
+      answer: "Spring and early summer before racing season see the most inventory. Racing season (July-August) brings visibility but also tourist competition. Fall can offer less pressure."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Broadway — main street with shops, restaurants, and galleries",
+      "Saratoga Race Course — historic horse racing track",
+      "Saratoga Spa State Park — mineral springs and performing arts center",
+      "Congress Park — downtown park with carousel and mineral springs",
+      "Caroline Street — nightlife and dining district"
+    ],
+    schoolDistrictNames: [
+      "Saratoga Springs City School District"
+    ],
+    feel: "Destination town with year-round appeal. Walkable Victorian downtown meets resort town amenities. Arts, dining, and outdoor recreation blend seamlessly. A place where people visit and decide to stay."
+  },
 };
 
 export const cliftonParkData: TownData = {

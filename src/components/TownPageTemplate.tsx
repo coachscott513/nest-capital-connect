@@ -6,6 +6,12 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { 
   Home, 
   TrendingUp, 
@@ -82,6 +88,17 @@ export interface TownData {
   notableMoves?: string[];
   // Living in [Town] - local flavor bullets
   livingIn?: string;
+  // Questions People Ask - expandable FAQ section
+  localQuestions?: {
+    question: string;
+    answer: string;
+  }[];
+  // Local Snapshot - landmarks, cafés, feel
+  localSnapshot?: {
+    landmarks: string[];
+    schoolDistrictNames: string[];
+    feel: string;
+  };
 }
 
 interface TownPageTemplateProps {
@@ -892,6 +909,84 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
             <p className="text-muted-foreground text-lg leading-relaxed">
               {town.livingIn}
             </p>
+          </div>
+        </section>
+      )}
+
+      {/* QUESTIONS PEOPLE ASK — Expandable FAQ Section */}
+      {town.localQuestions && town.localQuestions.length > 0 && (
+        <section className="px-[5%] py-16 md:py-20 bg-muted/30">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
+              Questions People Ask About Living in {town.name}
+            </h2>
+            <Accordion type="single" collapsible className="space-y-3">
+              {town.localQuestions.map((item, index) => (
+                <AccordionItem 
+                  key={index} 
+                  value={`item-${index}`}
+                  className="bg-background rounded-lg border border-border px-6"
+                >
+                  <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
+                    {item.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </section>
+      )}
+
+      {/* LOCAL SNAPSHOT — Landmarks, Schools, Feel */}
+      {town.localSnapshot && (
+        <section className="px-[5%] py-16 md:py-20 bg-background border-t border-border">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
+              Local Snapshot
+            </h2>
+            
+            <div className="space-y-8">
+              {/* Landmarks & Gathering Spots */}
+              {town.localSnapshot.landmarks && town.localSnapshot.landmarks.length > 0 && (
+                <div>
+                  <h3 className="font-semibold text-foreground mb-3">Local Landmarks & Gathering Spots</h3>
+                  <ul className="space-y-2">
+                    {town.localSnapshot.landmarks.map((landmark, index) => (
+                      <li key={index} className="flex items-start gap-2 text-muted-foreground">
+                        <MapPin className="w-4 h-4 mt-1 text-primary flex-shrink-0" />
+                        <span>{landmark}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* School Districts */}
+              {town.localSnapshot.schoolDistrictNames && town.localSnapshot.schoolDistrictNames.length > 0 && (
+                <div>
+                  <h3 className="font-semibold text-foreground mb-3">School Districts</h3>
+                  <ul className="space-y-2">
+                    {town.localSnapshot.schoolDistrictNames.map((school, index) => (
+                      <li key={index} className="flex items-start gap-2 text-muted-foreground">
+                        <Home className="w-4 h-4 mt-1 text-primary flex-shrink-0" />
+                        <span>{school}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* General Feel */}
+              {town.localSnapshot.feel && (
+                <div>
+                  <h3 className="font-semibold text-foreground mb-3">The Feel</h3>
+                  <p className="text-muted-foreground leading-relaxed">{town.localSnapshot.feel}</p>
+                </div>
+              )}
+            </div>
           </div>
         </section>
       )}
