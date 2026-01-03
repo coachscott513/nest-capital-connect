@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import CommandCenter from "@/components/CommandCenter";
+import GARouteTracker from "@/components/GARouteTracker";
 import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext";
 import Index from "./pages/Index";
 import InvestorTools from "./pages/InvestorTools";
@@ -123,6 +124,7 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <GARouteTracker />
             <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/investor-tools" element={<InvestorTools />} />
