@@ -320,7 +320,7 @@ export const cliftonParkData: TownData = {
   name: "Clifton Park",
   slug: "clifton-park",
   schoolDistrict: "Shenendehowa Central School District",
-  description: "Homes, market activity, and local insights for Clifton Park, NY.",
+  description: "Clear, local housing intelligence for Clifton Park and the surrounding Capital District. Updated regularly using MLS market data and local analysis.",
   remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Shenendehowa+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DClifton+Park&pak=school_district%3ATScAqXEBP2ySQEDmIXO6&sortby=listings.price+ASC&rtype=map",
   dataSourceLinks: {
     activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Shenendehowa+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DClifton+Park&pak=school_district%3ATScAqXEBP2ySQEDmIXO6&sortby=listings.price+ASC&rtype=map",
@@ -340,9 +340,11 @@ export const cliftonParkData: TownData = {
   },
   marketActivityLastChecked: "Jan 1, 2026",
   marketSnapshot: [
-    { label: "Active Listings", value: "39", change: "available homes" },
+    { label: "New Listings", value: "26", change: "last 7 days" },
+    { label: "Homes for Sale", value: "39", change: "available" },
+    { label: "Homes Sold", value: "38", change: "last 30 days" },
     { label: "Median Sale Price", value: "$478,500", change: "Dec 2025" },
-    { label: "Days on Market", value: "10", change: "fast" },
+    { label: "Median Days on Market", value: "10", change: "fast" },
     { label: "Pending Sales", value: "21", change: "under contract" },
   ],
   recentlySold: [
@@ -358,7 +360,70 @@ export const cliftonParkData: TownData = {
     buyerDemand: "Extremely high demand from families and commuters. Excellent highway access to Albany and Saratoga. Tech corridor employers drive consistent buyer interest.",
     renovationDemand: "Less renovation opportunity as housing stock is newer. Buyers prefer move-in ready. Updates to 1980s-90s homes (kitchens, baths, flooring) can add significant value.",
   },
-  livingIn: "Suburban living with excellent schools and easy highway access. Clifton Park Center and Exit 9 offer shopping and dining. Families enjoy the Southern Saratoga YMCA, local parks, and quick drives to both Saratoga and Albany.",
+  // NEW: Market Snapshot paragraph
+  marketSnapshotParagraph: "Clifton Park is one of the Capital District's most consistently active residential markets, known for newer housing stock, strong school districts, and steady long-term demand. Buyers and sellers here tend to be long-term residents rather than short-term speculators, which contributes to market stability even during broader market shifts.",
+  // NEW: Life in Clifton Park - Local Life Cards
+  lifeInCards: {
+    fitness: [
+      "ABC Sports & Fitness – Full-service fitness club with pools and courts",
+      "Vent Fitness – Popular local gym with multiple locations nearby"
+    ],
+    cafes: [
+      "Stacks Espresso Bar – Local favorite for coffee and remote work",
+      "Uncommon Grounds – Casual café and bakery option"
+    ],
+    restaurants: [
+      "Ferrari's Ristorante – Established Italian dining spot",
+      "Carson's Woodside Tavern – Casual dining and gathering place"
+    ],
+    parks: [
+      "Clifton Common – Trails, fields, and seasonal events",
+      "Vischer Ferry Nature Preserve – Walking paths and river access"
+    ],
+    commuting: [
+      "Easy access to I-87 and Route 146",
+      "Approx. 20–25 minutes to Albany",
+      "Approx. 20 minutes to Saratoga Springs"
+    ]
+  },
+  // NEW: Who Clifton Park Is Often a Fit For
+  whoFitFor: [
+    "Families prioritizing school districts",
+    "Buyers seeking newer or well-maintained homes",
+    "Commuters working in Albany or Saratoga",
+    "Long-term rental investors focused on stability"
+  ],
+  livingIn: "Clifton Park offers a suburban lifestyle with strong schools, everyday conveniences, and easy access to Albany, Saratoga, and major highways.",
+  localQuestions: [
+    {
+      question: "Is Clifton Park competitive right now?",
+      answer: "Inventory levels and days on market suggest a market that favors prepared buyers."
+    },
+    {
+      question: "How quickly do homes sell?",
+      answer: "Homes typically move faster than many surrounding towns when priced accurately."
+    },
+    {
+      question: "Are rentals hard to find?",
+      answer: "Rental demand remains steady due to limited supply and strong tenant profiles."
+    },
+    {
+      question: "How does Clifton Park compare to nearby towns?",
+      answer: "Clifton Park tends to trade slightly higher than neighboring areas due to school districts and housing age."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Clifton Common – Trails, fields, and seasonal events",
+      "Southern Saratoga YMCA – Community fitness and programs",
+      "Clifton Park Center – Shopping and dining hub",
+      "Vischer Ferry Nature Preserve – Walking paths and river access"
+    ],
+    schoolDistrictNames: [
+      "Shenendehowa Central School District"
+    ],
+    feel: "Suburban with excellent schools and highway access. Families enjoy the YMCA, local parks, and quick drives to both Saratoga and Albany. A stable, family-focused community with consistent demand."
+  },
 };
 
 export const schenectadyData: TownData = {
