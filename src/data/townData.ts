@@ -43,6 +43,36 @@ export const delmarData: TownData = {
     renovationDemand: "Move-in-ready homes command premium prices. However, there's growing interest in renovations as buyers accept older homes to get into the district. Kitchen and bath updates offer the best ROI.",
   },
   livingIn: "Known for walkable streets, strong schools, and quick access to Albany. Locals frequent places like Four Corners, the Rail Trail, and neighborhood parks that keep the town feeling connected and livable.",
+  marketSnapshotParagraph: "Delmar is one of the Capital District's most desirable residential communities, anchored by the Bethlehem Central School District and a walkable village center. The market here tends toward stability, with families often staying long-term rather than flipping quickly.",
+  lifeInCards: {
+    fitness: [
+      "Fitness 101 – Local gym near Four Corners",
+      "Bethlehem YMCA – Family fitness and programs"
+    ],
+    cafes: [
+      "Perfect Blend – Local coffee spot at Four Corners",
+      "I Love NY Pizza – Quick bites and community gathering"
+    ],
+    restaurants: [
+      "Swifty's – Casual American dining",
+      "My Place & Co – Local pub and restaurant"
+    ],
+    parks: [
+      "Elm Avenue Park – Pool, fields, and summer programs",
+      "Albany County Rail Trail – Walking, biking, and running"
+    ],
+    commuting: [
+      "10–15 minutes to downtown Albany",
+      "Easy access to I-87 and Route 9W",
+      "15–20 minutes to Albany Airport"
+    ]
+  },
+  whoFitFor: [
+    "Families prioritizing top-rated schools",
+    "Buyers seeking walkable neighborhoods",
+    "Commuters working in downtown Albany",
+    "Those who value community and stability"
+  ],
   localQuestions: [
     {
       question: "What are homes really selling for here?",
@@ -122,6 +152,36 @@ export const troyData: TownData = {
     renovationDemand: "Excellent renovation opportunities. Historic properties with good bones available at accessible prices. Strong rental demand supports investment purchases.",
   },
   livingIn: "A city with grit and character. Downtown Troy offers a walkable core with local restaurants, coffee shops, and the year-round Troy Waterfront Farmers Market. Close to RPI and easy access to the Hudson River waterfront.",
+  marketSnapshotParagraph: "Troy offers one of the Capital District's most compelling investment opportunities, with historic housing stock, growing downtown energy, and price points well below suburban markets. The RPI presence and ongoing revitalization efforts continue to drive renewed interest.",
+  lifeInCards: {
+    fitness: [
+      "Troy YMCA – Community fitness center",
+      "RPI Athletic Facilities – Campus recreation options"
+    ],
+    cafes: [
+      "Spillin' the Beans – Local coffee shop downtown",
+      "Lucas Confectionery – Wine bar and café"
+    ],
+    restaurants: [
+      "Brown's Brewing – Craft beer and pub food",
+      "Dinosaur Bar-B-Que – BBQ institution"
+    ],
+    parks: [
+      "Riverfront Park – Hudson River waterfront access",
+      "Prospect Park – Views and walking trails"
+    ],
+    commuting: [
+      "10 minutes to Albany",
+      "Access to I-787 and Route 7",
+      "20 minutes to Albany Airport"
+    ]
+  },
+  whoFitFor: [
+    "Investors seeking cash flow properties",
+    "First-time buyers on a budget",
+    "RPI students and faculty",
+    "Those who value urban walkability and character"
+  ],
   localQuestions: [
     {
       question: "What are homes really selling for here?",
@@ -200,6 +260,36 @@ export const niskayunaData: TownData = {
     renovationDemand: "Strong preference for updated kitchens and baths. Mid-century homes with original features often need updates, but the strong school district ensures good resale value after renovations.",
   },
   livingIn: "A quiet, family-focused suburb with top-rated schools and tree-lined streets. Residents enjoy easy access to the Mohawk-Hudson Bike-Hike Trail, Niskayuna Co-op, and a 15-minute commute to downtown Schenectady or Albany.",
+  marketSnapshotParagraph: "Niskayuna is a school-district-driven market where families compete for limited inventory. The combination of top-rated schools, quiet neighborhoods, and proximity to major employers creates consistent demand and stable values year-round.",
+  lifeInCards: {
+    fitness: [
+      "Niskayuna YMCA – Family fitness and programs",
+      "Vent Fitness – Modern gym facilities"
+    ],
+    cafes: [
+      "Villa Italia – Local coffee and pastries",
+      "Niskayuna Co-op Café – Community grocery and café"
+    ],
+    restaurants: [
+      "Blue Ribbon Restaurant – Local diner favorite",
+      "Moscatiello's – Italian dining"
+    ],
+    parks: [
+      "Mohawk-Hudson Bike-Hike Trail – Recreation and commuting",
+      "Blatnik Park – Sports fields and events"
+    ],
+    commuting: [
+      "15 minutes to downtown Schenectady",
+      "20–25 minutes to Albany",
+      "Easy access to I-890"
+    ]
+  },
+  whoFitFor: [
+    "Families prioritizing top-rated schools",
+    "GE and tech sector employees",
+    "Buyers seeking quiet suburban living",
+    "Those who value community and stability"
+  ],
   localQuestions: [
     {
       question: "What are homes really selling for here?",
@@ -279,6 +369,36 @@ export const saratogaData: TownData = {
     renovationDemand: "Historic homes often need updates but command premium prices when renovated. Strong preference for move-in ready, but renovation opportunities exist in older neighborhoods.",
   },
   livingIn: "A destination town with year-round appeal. Broadway's shops and restaurants, Saratoga Spa State Park, and the famous racetrack draw visitors and residents alike. Walkable downtown, mineral springs, and a vibrant arts scene define daily life.",
+  marketSnapshotParagraph: "Saratoga Springs commands premium prices as one of the Capital District's most desirable destinations. The combination of walkable downtown, excellent schools, and year-round tourism creates a unique market where lifestyle buyers compete with long-term residents.",
+  lifeInCards: {
+    fitness: [
+      "Saratoga Regional YMCA – Full-service fitness",
+      "Saratoga Spa State Park – Trails and pools"
+    ],
+    cafes: [
+      "Uncommon Grounds – Local coffee institution",
+      "Saratoga Coffee Traders – Downtown café"
+    ],
+    restaurants: [
+      "Hattie's – Southern comfort food",
+      "Druthers Brewing – Craft beer and food"
+    ],
+    parks: [
+      "Saratoga Spa State Park – Springs, trails, and SPAC",
+      "Congress Park – Downtown green space"
+    ],
+    commuting: [
+      "30–40 minutes to Albany",
+      "20 minutes to Clifton Park",
+      "Access to I-87 Northway"
+    ]
+  },
+  whoFitFor: [
+    "Lifestyle buyers seeking walkable downtown living",
+    "Families prioritizing excellent schools",
+    "Second-home buyers and investors",
+    "Those who value arts, dining, and outdoor recreation"
+  ],
   localQuestions: [
     {
       question: "What are homes really selling for here?",
@@ -468,6 +588,66 @@ export const schenectadyData: TownData = {
     renovationDemand: "Excellent opportunities for renovation projects. Historic properties with significant potential. Strong rental market supports investment purchases.",
   },
   livingIn: "An affordable city with deep history and a growing arts scene. The Stockade District is one of America's oldest neighborhoods. Proctors Theatre, Union College, and local breweries anchor the downtown. Easy access to I-890 and Route 7.",
+  marketSnapshotParagraph: "Schenectady offers one of the Capital District's most affordable entry points, with historic architecture and growing revitalization energy. Investors and first-time buyers find value here that's increasingly hard to find in surrounding suburban markets.",
+  lifeInCards: {
+    fitness: [
+      "YMCA of Schenectady – Community fitness",
+      "Union College Athletic Center – Recreation options"
+    ],
+    cafes: [
+      "Ambition Coffee & Eatery – Downtown café",
+      "Arthur's Market – Coffee and community"
+    ],
+    restaurants: [
+      "Aperitivo Bistro – Italian dining",
+      "Mad Jack Brewing – Craft beer and food"
+    ],
+    parks: [
+      "Central Park – City green space",
+      "Stockade District – Historic walking"
+    ],
+    commuting: [
+      "15 minutes to Albany",
+      "15 minutes to Niskayuna",
+      "Access to I-890 and Route 7"
+    ]
+  },
+  whoFitFor: [
+    "Investors seeking affordable multi-family",
+    "First-time buyers on a budget",
+    "Those who value historic architecture",
+    "Urban buyers priced out of Albany"
+  ],
+  localQuestions: [
+    {
+      question: "What are homes really selling for here?",
+      answer: "Most homes in Schenectady sell between $120,000 and $280,000, with the median around $230,000. Multi-family properties in established neighborhoods command higher prices."
+    },
+    {
+      question: "How competitive is this market compared to nearby towns?",
+      answer: "Schenectady is more accessible than suburban markets like Niskayuna. Buyers have more negotiating room, making it attractive for first-time buyers and investors."
+    },
+    {
+      question: "Are prices rising or stabilizing?",
+      answer: "Prices have seen steady appreciation driven by revitalization and investor interest. The market remains more affordable than most of the Capital Region."
+    },
+    {
+      question: "What surprises buyers when they move here?",
+      answer: "Buyers are often surprised by the quality of historic architecture and the growing downtown scene. The Stockade District and Proctors create cultural anchors uncommon for the price point."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Proctors Theatre – Historic performing arts venue",
+      "Stockade District – America's oldest neighborhood",
+      "Union College – Historic campus and community anchor",
+      "Central Park – City green space"
+    ],
+    schoolDistrictNames: [
+      "Schenectady City School District"
+    ],
+    feel: "Urban with historic character. Growing arts and dining scene. Affordable entry point with renovation opportunities. A city in transition with increasing energy."
+  },
 };
 
 export const amsterdamData: TownData = {
@@ -511,6 +691,66 @@ export const amsterdamData: TownData = {
     renovationDemand: "Excellent opportunities for renovation projects. Historic homes with good bones available at low entry points. Investors achieving strong returns on thoughtful renovations.",
   },
   livingIn: "A Mohawk Valley city with affordable homes and strong community ties. Main Street offers local shops and eateries. The Mohawk River and Erie Canal provide outdoor recreation. A 35-minute drive to Albany or Saratoga.",
+  marketSnapshotParagraph: "Amsterdam offers the Capital District's most affordable housing options, with historic architecture and growing investor interest. Buyers priced out of Albany County are discovering value here, driving renewed attention to the market.",
+  lifeInCards: {
+    fitness: [
+      "Amsterdam YMCA – Community fitness center",
+      "Local gyms – Various options downtown"
+    ],
+    cafes: [
+      "Raindancer – Local coffee and café",
+      "Main Street Coffee – Downtown option"
+    ],
+    restaurants: [
+      "Henry & Mary's – Local dining",
+      "Amsterdam Ale House – Pub and gathering place"
+    ],
+    parks: [
+      "Mohawk River access – Recreation and trails",
+      "Erie Canal path – Walking and biking"
+    ],
+    commuting: [
+      "35 minutes to Albany",
+      "35 minutes to Saratoga",
+      "Access to Route 30 and I-90"
+    ]
+  },
+  whoFitFor: [
+    "Investors seeking maximum cash flow",
+    "First-time buyers on a tight budget",
+    "Remote workers seeking affordability",
+    "Those who value small-town community"
+  ],
+  localQuestions: [
+    {
+      question: "What are homes really selling for here?",
+      answer: "Most homes in Amsterdam sell between $100,000 and $200,000, with the median around $155,000. Historic properties and multi-families offer the most value."
+    },
+    {
+      question: "How competitive is this market?",
+      answer: "Amsterdam is less competitive than Albany County markets. Buyers have more negotiating room and can find deals not available closer to Albany."
+    },
+    {
+      question: "Are prices rising?",
+      answer: "Prices have appreciated as buyers discover value here. Still among the most affordable markets in the region."
+    },
+    {
+      question: "What surprises buyers?",
+      answer: "Buyers are surprised by the historic architecture and community feel. The Erie Canal and Mohawk River provide unexpected outdoor recreation."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Erie Canal – Historic waterway and recreation",
+      "Mohawk River – Outdoor recreation",
+      "Main Street – Local shops and dining",
+      "Historic downtown – Architecture and character"
+    ],
+    schoolDistrictNames: [
+      "Amsterdam City School District"
+    ],
+    feel: "Small city with strong community ties. Affordable homes with historic character. Growing interest from investors and budget-conscious buyers."
+  },
 };
 
 export const queensburyData: TownData = {
@@ -555,6 +795,66 @@ export const queensburyData: TownData = {
     renovationDemand: "Moderate renovation opportunities. Buyers prefer move-in ready but appreciate updated kitchens and baths. Lakefront and view properties command premium after updates.",
   },
   livingIn: "Gateway to the Adirondacks with Lake George just minutes away. Aviation Mall, outlet shopping, and local restaurants serve daily needs. Hiking, skiing, and lake recreation are part of the lifestyle. Excellent schools and a safe, family-friendly feel.",
+  marketSnapshotParagraph: "Queensbury serves as the gateway to the Adirondacks, offering a unique combination of suburban convenience and outdoor lifestyle. The Lake George proximity, quality schools, and growing remote work population drive consistent demand.",
+  lifeInCards: {
+    fitness: [
+      "Glens Falls YMCA – Full-service fitness",
+      "Planet Fitness – Budget-friendly option"
+    ],
+    cafes: [
+      "Rock Hill Bakehouse – Local favorite",
+      "Mean Beans – Coffee and community"
+    ],
+    restaurants: [
+      "Silo – Upscale casual dining",
+      "The Queensbury Hotel Restaurant – Historic dining"
+    ],
+    parks: [
+      "Lake George – Beach and recreation",
+      "Crandall Park – Trails and green space"
+    ],
+    commuting: [
+      "45–50 minutes to Albany",
+      "5 minutes to Lake George Village",
+      "Access to I-87 Northway"
+    ]
+  },
+  whoFitFor: [
+    "Families seeking outdoor lifestyle",
+    "Remote workers valuing quality of life",
+    "Second-home buyers near Lake George",
+    "Retirees seeking Adirondack access"
+  ],
+  localQuestions: [
+    {
+      question: "What are homes really selling for here?",
+      answer: "Most homes in Queensbury sell between $300,000 and $550,000, with the median around $455,000. Lake-proximity and view properties command significant premiums."
+    },
+    {
+      question: "How competitive is this market?",
+      answer: "Queensbury is competitive, especially for properties near Lake George. Homes move quickly with an average of 6 days on market."
+    },
+    {
+      question: "What draws buyers here?",
+      answer: "The combination of excellent schools, Adirondack access, and outdoor lifestyle attracts families and remote workers seeking quality of life."
+    },
+    {
+      question: "How does location within Queensbury matter?",
+      answer: "Proximity to Lake George, school zones, and highway access all affect pricing. Ridge Road and Bay Road corridors offer different feels and price points."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Lake George – Adirondack recreation destination",
+      "Aviation Mall – Shopping and retail",
+      "Great Escape – Family amusement",
+      "Glen Lake – Local swimming and recreation"
+    ],
+    schoolDistrictNames: [
+      "Queensbury Union Free School District"
+    ],
+    feel: "Suburban gateway to the Adirondacks. Family-friendly with outdoor focus. Strong schools and safe neighborhoods. Growing remote work community."
+  },
 };
 
 export const voorheesvilleData: TownData = {
@@ -597,6 +897,66 @@ export const voorheesvilleData: TownData = {
     renovationDemand: "Historic village homes often need updates. Buyers appreciate original character but expect modern kitchens and baths. Good opportunity for value-add purchases.",
   },
   livingIn: "A small village with a tight-knit community feel. Main Street anchors the downtown with a few local shops. Thacher State Park is nearby for hiking and views. Families value the small school district and quiet, rural atmosphere.",
+  marketSnapshotParagraph: "Voorheesville is a micro-market with extremely limited inventory. The small, well-regarded school district and village character attract families seeking an alternative to larger suburban markets. When homes do list, they move quickly.",
+  lifeInCards: {
+    fitness: [
+      "Helderberg Fitness – Local gym option",
+      "Thacher State Park – Outdoor fitness and trails"
+    ],
+    cafes: [
+      "Smith's Tavern – Local gathering spot",
+      "Indian Ladder Farms – Café and farm store"
+    ],
+    restaurants: [
+      "Smith's Tavern – Village pub and dining",
+      "Indian Ladder Farms Cidery – Farm dining experience"
+    ],
+    parks: [
+      "Thacher State Park – Escarpment views and hiking",
+      "John Boyd Thacher State Park trails – Extensive trail system"
+    ],
+    commuting: [
+      "20 minutes to Albany",
+      "15 minutes to Delmar",
+      "Access to Route 85 and 85A"
+    ]
+  },
+  whoFitFor: [
+    "Families seeking small-town schools",
+    "Buyers priced out of Delmar",
+    "Those who value rural character",
+    "Outdoor enthusiasts near Helderbergs"
+  ],
+  localQuestions: [
+    {
+      question: "What are homes really selling for here?",
+      answer: "Most homes in Voorheesville sell between $280,000 and $420,000, with the median around $352,500. The limited inventory means accurate pricing is essential."
+    },
+    {
+      question: "How competitive is this market?",
+      answer: "Extremely competitive due to tiny inventory. Homes sell in an average of 4 days. Buyers must be prepared to act immediately."
+    },
+    {
+      question: "How does Voorheesville compare to Delmar?",
+      answer: "Voorheesville offers similar school quality at lower price points, with a more rural feel. Trade-off is less walkability and fewer amenities."
+    },
+    {
+      question: "What's the community like?",
+      answer: "Tight-knit village atmosphere where neighbors know each other. Small school district creates strong community connections."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Thacher State Park – Helderberg escarpment views",
+      "Indian Ladder Farms – Farm, cidery, and events",
+      "Village center – Small-town Main Street",
+      "Helderberg Escarpment – Dramatic natural feature"
+    ],
+    schoolDistrictNames: [
+      "Voorheesville Central School District"
+    ],
+    feel: "Small village with rural character. Tight-knit community with excellent schools. Gateway to Helderberg hiking. Quiet alternative to larger suburban markets."
+  },
 };
 
 export const albanyData: TownData = {
@@ -641,6 +1001,66 @@ export const albanyData: TownData = {
     renovationDemand: "Excellent renovation opportunities. Historic properties with good bones at accessible prices. Strong rental demand supports investment purchases.",
   },
   livingIn: "New York's capital city with walkable neighborhoods, diverse dining, and cultural amenities. Lark Street, Washington Park, and the Empire State Plaza anchor urban life. Major employers, hospitals, and universities are all within reach.",
+  marketSnapshotParagraph: "Albany offers the Capital District's most diverse housing market, from historic rowhouses to multi-family investments. State employment, hospital systems, and universities drive consistent demand across a wide range of price points and neighborhoods.",
+  lifeInCards: {
+    fitness: [
+      "Albany JCC – Full-service fitness center",
+      "Best Fitness – Multiple locations"
+    ],
+    cafes: [
+      "Stacks Espresso – Popular coffee spot",
+      "Daily Grind – Lark Street café"
+    ],
+    restaurants: [
+      "New World Bistro – Farm-to-table dining",
+      "Café Capriccio – Italian institution"
+    ],
+    parks: [
+      "Washington Park – City's signature green space",
+      "Corning Preserve – Riverfront trails"
+    ],
+    commuting: [
+      "Central location for Capital District",
+      "Access to I-787, I-87, and I-90",
+      "10 minutes to Albany Airport"
+    ]
+  },
+  whoFitFor: [
+    "Investors seeking rental income",
+    "First-time buyers seeking affordability",
+    "State employees and hospital workers",
+    "Urban buyers valuing walkability"
+  ],
+  localQuestions: [
+    {
+      question: "What are homes really selling for here?",
+      answer: "Most homes in Albany sell between $180,000 and $380,000, with the median around $290,000. Prices vary significantly by neighborhood."
+    },
+    {
+      question: "How competitive is this market?",
+      answer: "Albany is less competitive than suburban markets, offering more negotiating room. Well-priced properties in desirable neighborhoods still move quickly."
+    },
+    {
+      question: "Which neighborhoods should I know about?",
+      answer: "Pine Hills, Center Square, and Delaware Avenue are popular for walkability. Pine Bush and New Scotland offer quieter suburban feel while remaining in city limits."
+    },
+    {
+      question: "What surprises buyers?",
+      answer: "Buyers are surprised by neighborhood diversity and the quality of historic housing stock. The urban amenities rival much larger cities."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Empire State Plaza – Government center and cultural venues",
+      "Washington Park – Historic green space and events",
+      "Lark Street – Arts, dining, and nightlife",
+      "State Capitol – Historic landmark"
+    ],
+    schoolDistrictNames: [
+      "Albany City School District"
+    ],
+    feel: "Urban capital city with diverse neighborhoods. Historic architecture and walkable districts. Strong employment base and cultural amenities."
+  },
 };
 
 export const guilderlandData: TownData = {
@@ -680,6 +1100,66 @@ export const guilderlandData: TownData = {
     renovationDemand: "Moderate renovation activity. Move-in ready homes preferred, but older properties in prime locations offer good value for updates.",
   },
   livingIn: "A suburban town with strong schools and convenient retail. Crossgates Mall and surrounding shopping serve daily needs. Guilderland Center offers a quieter village feel. Easy access to I-90 and Route 20 for commutes.",
+  marketSnapshotParagraph: "Guilderland balances suburban convenience with excellent schools, making it a consistent draw for families. The town offers multiple distinct neighborhoods, from busy commercial corridors near Crossgates to quiet residential areas in Guilderland Center.",
+  lifeInCards: {
+    fitness: [
+      "Best Fitness Crossgates – Modern gym facility",
+      "Guilderland YMCA – Community fitness"
+    ],
+    cafes: [
+      "Starbucks – Multiple locations near Crossgates",
+      "Uncommon Grounds – Local café option"
+    ],
+    restaurants: [
+      "Delmonico's Italian Steakhouse – Upscale dining",
+      "Ralph's Tavern – Local gathering place"
+    ],
+    parks: [
+      "Tawasentha Park – Trails and recreation",
+      "Pine Bush Preserve – Unique ecosystem and hiking"
+    ],
+    commuting: [
+      "15 minutes to downtown Albany",
+      "Easy access to I-90 and Route 20",
+      "20 minutes to Albany Airport"
+    ]
+  },
+  whoFitFor: [
+    "Families prioritizing strong schools",
+    "Buyers seeking retail convenience",
+    "Commuters to Albany or Schenectady",
+    "Those who want suburban feel with amenities"
+  ],
+  localQuestions: [
+    {
+      question: "What are homes really selling for here?",
+      answer: "Most homes in Guilderland sell between $280,000 and $450,000, with the median around $360,000. Location within the town affects pricing significantly."
+    },
+    {
+      question: "How competitive is this market?",
+      answer: "Guilderland is competitive due to school district demand. Properties typically sell within 18 days, slightly slower than neighboring Bethlehem."
+    },
+    {
+      question: "How does Guilderland compare to Delmar?",
+      answer: "Guilderland offers similar school quality at slightly lower price points. More retail convenience near Crossgates, less walkable village character."
+    },
+    {
+      question: "What should I know about neighborhoods?",
+      answer: "Guilderland Center offers village charm. Westmere provides suburban convenience. McKownville sits closer to Albany. Each area has distinct character."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Crossgates Mall – Regional shopping destination",
+      "Pine Bush Preserve – Unique inland pine barrens",
+      "Tawasentha Park – Community recreation",
+      "Guilderland Center – Village core"
+    ],
+    schoolDistrictNames: [
+      "Guilderland Central School District"
+    ],
+    feel: "Suburban with excellent schools and retail convenience. Multiple distinct neighborhoods. Balance of quiet residential and commercial corridors."
+  },
 };
 
 export const mechanicvilleData: TownData = {
@@ -719,6 +1199,66 @@ export const mechanicvilleData: TownData = {
     renovationDemand: "Strong renovation opportunity. Historic homes with good bones available at accessible prices. Growing investor interest in the area.",
   },
   livingIn: "A compact city with an affordable cost of living and strong community pride. Downtown offers local shops and a walkable Main Street. Close to Saratoga and the Northway for commutes. Known for its tight-knit neighborhoods.",
+  marketSnapshotParagraph: "Mechanicville is one of the Capital District's most affordable options, offering a compact walkable city with proximity to both Saratoga Springs and the Northway. Growing interest from first-time buyers and investors is driving gradual appreciation.",
+  lifeInCards: {
+    fitness: [
+      "Local gyms – Community fitness options",
+      "Hudson River trails – Outdoor recreation"
+    ],
+    cafes: [
+      "Main Street cafés – Local coffee options",
+      "Downtown bakeries – Community gathering"
+    ],
+    restaurants: [
+      "Main Street restaurants – Local dining",
+      "Neighborhood pubs – Casual gathering"
+    ],
+    parks: [
+      "Hudson River access – Recreation",
+      "City parks – Community green space"
+    ],
+    commuting: [
+      "15 minutes to Saratoga Springs",
+      "25 minutes to Albany",
+      "Direct Northway access"
+    ]
+  },
+  whoFitFor: [
+    "First-time buyers seeking affordability",
+    "Investors looking for cash flow",
+    "Saratoga commuters on a budget",
+    "Those who value small-city community"
+  ],
+  localQuestions: [
+    {
+      question: "What are homes really selling for here?",
+      answer: "Most homes in Mechanicville sell between $180,000 and $350,000, with the median around $289,000. Multi-family properties offer strong investment potential."
+    },
+    {
+      question: "How competitive is this market?",
+      answer: "Mechanicville is less competitive than surrounding markets, with homes averaging 26 days on market. Buyers have more negotiating room."
+    },
+    {
+      question: "Why choose Mechanicville over nearby towns?",
+      answer: "Mechanicville offers significantly lower entry points with easy Saratoga and Northway access. Trade-off is smaller city amenities versus suburban options."
+    },
+    {
+      question: "What's the community like?",
+      answer: "Tight-knit city with strong community pride. Walkable downtown and neighborhood feel. Growing interest from younger buyers."
+    }
+  ],
+  localSnapshot: {
+    landmarks: [
+      "Main Street – Downtown walkable core",
+      "Hudson River – Waterfront access",
+      "City Hall – Community anchor",
+      "Local parks – Neighborhood green space"
+    ],
+    schoolDistrictNames: [
+      "Mechanicville City School District"
+    ],
+    feel: "Compact city with affordable homes. Strong community pride and walkable downtown. Gateway to Saratoga at budget-friendly prices."
+  },
 };
 
 // Export all town data for easy access
