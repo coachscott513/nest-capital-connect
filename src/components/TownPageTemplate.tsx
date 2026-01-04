@@ -120,6 +120,16 @@ export interface TownData {
   };
   // NEW: Who [Town] Is Often a Fit For
   whoFitFor?: string[];
+  // NEW: Daily listings feed (placeholder until live MLS connected)
+  newTodayListings?: {
+    address: string;
+    price: string;
+    beds?: number;
+    baths?: number;
+    sqft?: number;
+    thumbnail?: string;
+    mlsId?: string;
+  }[];
 }
 
 interface TownPageTemplateProps {
@@ -423,6 +433,104 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
                 </a>
                 . Updated weekly.
               </p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* NEW TODAY SECTION — Daily Listing Addresses */}
+      <section className="px-[5%] py-12 md:py-16 bg-background border-b border-border">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+              New Today in {town.name}
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Updated daily from MLS/IDX. Tap any address for a clean intelligence breakdown.
+            </p>
+          </div>
+
+          {/* Listing Cards Grid */}
+          {town.newTodayListings && town.newTodayListings.length > 0 ? (
+            <>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {town.newTodayListings.slice(0, 6).map((listing, index) => (
+                  <Card key={index} className="border border-border hover:border-primary/30 transition-colors">
+                    <CardContent className="p-4">
+                      {listing.thumbnail && (
+                        <div className="aspect-[16/10] rounded-lg bg-muted mb-3 overflow-hidden">
+                          <img 
+                            src={listing.thumbnail} 
+                            alt={listing.address}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      {!listing.thumbnail && (
+                        <div className="aspect-[16/10] rounded-lg bg-muted/50 mb-3 flex items-center justify-center">
+                          <Home className="w-8 h-8 text-muted-foreground/30" />
+                        </div>
+                      )}
+                      <h3 className="font-semibold text-foreground text-sm mb-1">{listing.address}</h3>
+                      <p className="text-lg font-bold text-foreground mb-1">{listing.price}</p>
+                      {(listing.beds || listing.baths || listing.sqft) && (
+                        <p className="text-xs text-muted-foreground mb-3">
+                          {listing.beds && `${listing.beds} bed`}
+                          {listing.baths && ` • ${listing.baths} bath`}
+                          {listing.sqft && ` • ${listing.sqft.toLocaleString()} sqft`}
+                        </p>
+                      )}
+                      <div className="flex gap-2">
+                        <a 
+                          href={town.remaxSearchUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1"
+                        >
+                          <Button variant="outline" size="sm" className="w-full text-xs">
+                            <ExternalLink className="w-3 h-3 mr-1" />
+                            View Listing
+                          </Button>
+                        </a>
+                        <Link to="/reports/sample-property-intelligence" className="flex-1">
+                          <Button variant="default" size="sm" className="w-full text-xs">
+                            <FileText className="w-3 h-3 mr-1" />
+                            View Intel
+                          </Button>
+                        </Link>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+              
+              {/* View All Link */}
+              <div className="text-center mt-6">
+                <a 
+                  href={town.remaxSearchUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary font-medium hover:underline inline-flex items-center gap-1"
+                >
+                  View all new listings in {town.name} →
+                </a>
+              </div>
+            </>
+          ) : (
+            /* Placeholder when no live feed connected */
+            <div className="text-center py-8 bg-muted/30 rounded-xl border border-border">
+              <Home className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
+              <p className="text-muted-foreground mb-2">
+                Live daily feed is being connected.
+              </p>
+              <a 
+                href={town.remaxSearchUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary font-medium hover:underline inline-flex items-center gap-1"
+              >
+                View all listings on RE/MAX →
+              </a>
             </div>
           )}
         </div>
