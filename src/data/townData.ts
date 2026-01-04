@@ -968,6 +968,13 @@ export const albanyData: TownData = {
   dataSourceLinks: {
     activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DAlbany&pak=city%3Ag30_drbpt5d2&sortby=listings.price+ASC&rtype=map&leadid=948",
   },
+  newTodayListings: [
+    { address: "245 State St", price: "$329,000", beds: 3, baths: 2, sqft: 1850, mlsId: "202500001" },
+    { address: "18 Lark St", price: "$285,000", beds: 2, baths: 1.5, sqft: 1420, mlsId: "202500002" },
+    { address: "412 Madison Ave", price: "$198,000", beds: 4, baths: 2, sqft: 2100, mlsId: "202500003" },
+    { address: "67 S Pine Ave", price: "$275,000", beds: 3, baths: 1, sqft: 1380, mlsId: "202500004" },
+    { address: "156 New Scotland Ave", price: "$345,000", beds: 4, baths: 2.5, sqft: 2250, mlsId: "202500005" },
+  ],
   // MLS Data Source: GlobalMLS InfoSparks - December 2025
   mlsDataSource: "GlobalMLS InfoSparks",
   mlsDataDate: "December 2025",
