@@ -104,6 +104,7 @@ import FinancingJourney from "./pages/buyer-journey/FinancingJourney";
 import ComingSoon from "./pages/ComingSoon";
 import Intelligence from "./pages/Intelligence";
 import MarketReportThanks from "./pages/MarketReportThanks";
+import Ask from "./pages/Ask";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -281,6 +282,9 @@ const App = () => {
           <Route path="/dealdesk" element={<DealDesk />} />
           <Route path="/deal-desk" element={<Navigate to="/dealdesk" replace />} />
           <Route path="/dealdesk/thanks" element={<DealDeskThanks />} />
+          
+          {/* Ask a Question */}
+          <Route path="/ask" element={<Ask />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

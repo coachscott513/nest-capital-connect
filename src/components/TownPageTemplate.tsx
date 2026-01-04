@@ -36,7 +36,8 @@ import {
   Building,
   LandPlot,
   Key,
-  LineChart
+  LineChart,
+  MessageCircle
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -536,6 +537,42 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
         </div>
       </section>
 
+      {/* HAVE QUESTIONS CARD — Neutral CTA */}
+      <section className="px-[5%] py-12 md:py-16 bg-muted/30 border-b border-border">
+        <div className="max-w-2xl mx-auto">
+          <Card className="border border-border">
+            <CardContent className="p-6 md:p-8">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <MessageCircle className="w-6 h-6 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg md:text-xl font-bold text-foreground mb-2">
+                    Have questions about {town.name}?
+                  </h3>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    Ask anything — pricing, neighborhoods, taxes, rentals, multifamily, timelines. You'll get a clear answer.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button asChild>
+                      <Link to="/ask">
+                        Ask a Question →
+                      </Link>
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => document.getElementById('get-intel')?.scrollIntoView({ behavior: 'smooth' })}
+                    >
+                      Request an Intelligence Report
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* MARKET SNAPSHOT PARAGRAPH — Apple-Style Explanation */}
       {town.marketSnapshotParagraph && (
         <section className="px-[5%] py-12 md:py-16 bg-background border-b border-border">
@@ -729,18 +766,18 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
             <CardContent className="p-8 md:p-10">
               <div className="text-center mb-8">
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                  Curious About a Specific Property?
+                  Request a Property Intelligence Report
                 </h2>
                 <p className="text-muted-foreground">
                   Pick any address in or around {town.name}.<br />
-                  We'll generate a private Property Intelligence summary using real MLS data, tax records, and comparable sales.
+                  We'll generate a private summary using MLS data, tax records, and comparable sales — delivered to you directly.
                 </p>
               </div>
 
               <form onSubmit={handleAddressSubmit} className="space-y-4">
                 <Input
                   type="text"
-                  placeholder="Enter property address"
+                  placeholder="Property address"
                   value={propertyAddress}
                   onChange={(e) => setPropertyAddress(e.target.value)}
                   className="h-12"
@@ -748,7 +785,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
                 />
                 <Input
                   type="text"
-                  placeholder="Buying, selling, or just curious? (optional)"
+                  placeholder="Your email (so we can send the report)"
                   value={addressNote}
                   onChange={(e) => setAddressNote(e.target.value)}
                   className="h-12"
@@ -759,13 +796,22 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
                   className="w-full h-14 text-lg font-bold"
                   disabled={isAddressSubmitting}
                 >
-                  {isAddressSubmitting ? "Submitting..." : "See What the Data Shows"}
+                  {isAddressSubmitting ? "Submitting..." : "Get My Free Report"}
                 </Button>
               </form>
               
               <p className="text-xs text-muted-foreground text-center mt-4">
-                No spam. No sales pressure. Just data.
+                We use this only to deliver your report and follow up if you want help. No spam.
               </p>
+              
+              <div className="text-center mt-4">
+                <Link 
+                  to="/reports/sample-property-intelligence" 
+                  className="text-sm text-primary hover:underline"
+                >
+                  See the sample format →
+                </Link>
+              </div>
             </CardContent>
           </Card>
         </div>
