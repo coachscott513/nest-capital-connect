@@ -482,17 +482,24 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
                         </p>
                       )}
                       <div className="flex gap-2">
-                        <a 
-                          href={town.remaxSearchUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1"
-                        >
-                          <Button variant="outline" size="sm" className="w-full text-xs">
-                            <ExternalLink className="w-3 h-3 mr-1" />
-                            View Listing
+                        {listing.mlsId ? (
+                          <Link to={`/property/${listing.mlsId}`} className="flex-1">
+                            <Button variant="outline" size="sm" className="w-full text-xs">
+                              <Home className="w-3 h-3 mr-1" />
+                              View Listing
+                            </Button>
+                          </Link>
+                        ) : (
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="flex-1 text-xs"
+                            onClick={() => document.getElementById('get-intel')?.scrollIntoView({ behavior: 'smooth' })}
+                          >
+                            <Home className="w-3 h-3 mr-1" />
+                            View Details
                           </Button>
-                        </a>
+                        )}
                         <Link to="/reports/sample-property-intelligence" className="flex-1">
                           <Button variant="default" size="sm" className="w-full text-xs">
                             <FileText className="w-3 h-3 mr-1" />
@@ -507,14 +514,12 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
               
               {/* View All Link */}
               <div className="text-center mt-6">
-                <a 
-                  href={town.remaxSearchUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link 
+                  to={`/homes-for-sale?city=${encodeURIComponent(town.name)}`}
                   className="text-primary font-medium hover:underline inline-flex items-center gap-1"
                 >
-                  View all new listings in {town.name} →
-                </a>
+                  View all listings in {town.name} →
+                </Link>
               </div>
             </>
           ) : (
@@ -524,14 +529,12 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
               <p className="text-muted-foreground mb-2">
                 Live daily feed is being connected.
               </p>
-              <a 
-                href={town.remaxSearchUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link 
+                to={`/homes-for-sale?city=${encodeURIComponent(town.name)}`}
                 className="text-primary font-medium hover:underline inline-flex items-center gap-1"
               >
-                View all listings on RE/MAX →
-              </a>
+                View all listings in {town.name} →
+              </Link>
             </div>
           )}
         </div>
