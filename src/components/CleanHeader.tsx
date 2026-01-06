@@ -51,9 +51,10 @@ interface DropdownProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  align?: "left" | "right";
 }
 
-const Dropdown = ({ isOpen, onClose, children }: DropdownProps) => {
+const Dropdown = ({ isOpen, onClose, children, align = "left" }: DropdownProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -77,7 +78,9 @@ const Dropdown = ({ isOpen, onClose, children }: DropdownProps) => {
   return (
     <div
       ref={ref}
-      className="absolute top-full left-0 mt-2 bg-card border border-border rounded-lg shadow-xl p-4 min-w-72 z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+      className={`absolute top-full mt-2 bg-card border border-border rounded-lg shadow-xl p-4 min-w-72 z-50 animate-in fade-in slide-in-from-top-2 duration-200 ${
+        align === "right" ? "right-0" : "left-0"
+      }`}
     >
       {children}
     </div>
@@ -352,7 +355,7 @@ const CleanHeader = () => {
 
                   {/* Contact Dropdown */}
                   {item.dropdown === "contact" && (
-                    <Dropdown isOpen={activeDropdown === "contact"} onClose={closeDropdowns}>
+                    <Dropdown isOpen={activeDropdown === "contact"} onClose={closeDropdowns} align="right">
                       <div className="space-y-3">
                         <a
                           href="tel:+15186762347"
