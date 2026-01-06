@@ -299,7 +299,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
       )}
 
 
-      {/* HERO SECTION — "[Town] Real Estate — Explained" */}
+      {/* HERO SECTION — "[Town] Real Estate Intelligence" */}
       <section className="relative px-[5%] py-20 md:py-28 bg-gradient-to-br from-primary/10 via-background to-background border-b border-border">
         <div className="max-w-4xl mx-auto text-center">
           {town.schoolDistrict && (
@@ -310,32 +310,33 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
           )}
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight text-foreground mb-6">
-            {town.name} Real Estate — Explained
+            {town.name} Real Estate Intelligence
           </h1>
           
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-4 max-w-2xl mx-auto">
-            Clear, local housing intelligence for {town.name} and the surrounding Capital District.
-          </p>
-          <p className="text-sm text-muted-foreground/70 mb-10">
-            Updated regularly using MLS market data and local analysis.
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-2xl mx-auto">
+            MLS-backed weekly stats + local life + smart tools.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button 
               size="lg" 
               className="h-14 px-8 text-lg font-bold w-full sm:w-auto"
-              onClick={() => document.getElementById('market-intel')?.scrollIntoView({ behavior: 'smooth' })}
+              asChild
             >
-              <BarChart3 className="w-5 h-5 mr-2" />
-              View This Week's Data
+              <a href={town.remaxSearchUrl} target="_blank" rel="noopener noreferrer">
+                <Search className="w-5 h-5 mr-2" />
+                Search {town.name} Homes
+              </a>
             </Button>
             <Button 
               size="lg" 
               variant="outline"
               className="h-14 px-8 text-lg font-semibold w-full sm:w-auto"
-              onClick={() => document.getElementById('get-intel')?.scrollIntoView({ behavior: 'smooth' })}
+              asChild
             >
-              Get My Free Intelligence Report
+              <Link to="/dealdesk">
+                Request Property Intelligence
+              </Link>
             </Button>
           </div>
         </div>
@@ -440,39 +441,67 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
       </section>
 
 
-      {/* HAVE QUESTIONS CARD — Neutral CTA */}
+      {/* CURIOSITY MODULE — 4 Question Buttons */}
       <section className="px-[5%] py-12 md:py-16 bg-muted/30 border-b border-border">
-        <div className="max-w-2xl mx-auto">
-          <Card className="border border-border">
-            <CardContent className="p-6 md:p-8">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <MessageCircle className="w-6 h-6 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg md:text-xl font-bold text-foreground mb-2">
-                    Have questions about {town.name}?
-                  </h3>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    Ask anything — pricing, neighborhoods, taxes, rentals, multifamily, timelines. You'll get a clear answer.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <Button asChild>
-                      <Link to="/ask">
-                        Ask a Question →
-                      </Link>
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      onClick={() => document.getElementById('get-intel')?.scrollIntoView({ behavior: 'smooth' })}
-                    >
-                      Request an Intelligence Report
-                    </Button>
-                  </div>
-                </div>
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+              Have a question about a specific address?
+            </h2>
+            <p className="text-muted-foreground">
+              Click any question below — we'll generate a custom answer for your property.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Link 
+              to="/dealdesk"
+              className="flex items-center gap-3 p-5 bg-background border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <TrendingUp className="w-5 h-5 text-primary" />
               </div>
-            </CardContent>
-          </Card>
+              <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+                What's it worth right now?
+              </span>
+            </Link>
+            
+            <Link 
+              to="/dealdesk"
+              className="flex items-center gap-3 p-5 bg-background border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <Key className="w-5 h-5 text-primary" />
+              </div>
+              <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+                What would it rent for?
+              </span>
+            </Link>
+            
+            <Link 
+              to="/dealdesk"
+              className="flex items-center gap-3 p-5 bg-background border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <Calendar className="w-5 h-5 text-primary" />
+              </div>
+              <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+                How fast would it sell?
+              </span>
+            </Link>
+            
+            <Link 
+              to="/dealdesk"
+              className="flex items-center gap-3 p-5 bg-background border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all group"
+            >
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <BarChart3 className="w-5 h-5 text-primary" />
+              </div>
+              <span className="font-medium text-foreground group-hover:text-primary transition-colors">
+                Is it a good investment?
+              </span>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -993,11 +1022,11 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
         </div>
       </section>
 
-      {/* LIFE IN [TOWN] — Apple-Style Local Life Cards */}
+      {/* LOCAL LIFE — Apple-Style 2x2 Grid */}
       <section className="px-[5%] py-16 md:py-20 bg-background">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 text-center">
-            Life in {town.name}
+            Local Life
           </h2>
           {town.livingIn && (
             <p className="text-muted-foreground text-lg leading-relaxed text-center mb-10 max-w-2xl mx-auto">
@@ -1005,103 +1034,88 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
             </p>
           )}
           
-          {/* Local Life Cards Grid */}
+          {/* 2x2 Local Life Grid */}
           {town.lifeInCards && (
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Fitness & Wellness */}
-              {town.lifeInCards.fitness && town.lifeInCards.fitness.length > 0 && (
-                <Card className="border border-border/50">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Dumbbell className="w-5 h-5 text-primary" />
-                      </div>
-                      <h3 className="font-semibold text-foreground">Local Fitness & Wellness</h3>
-                    </div>
-                    <ul className="space-y-2">
-                      {town.lifeInCards.fitness.map((item, index) => (
-                        <li key={index} className="text-muted-foreground text-sm">{item}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
+            <div className="grid grid-cols-2 gap-4">
+              {/* Coffee */}
+              <Card className="border border-border/50">
+                <CardContent className="p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Coffee className="w-5 h-5 text-primary" />
+                    <h3 className="font-semibold text-foreground text-sm">Coffee</h3>
+                  </div>
+                  {town.lifeInCards.cafes && town.lifeInCards.cafes.length > 0 && (
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {town.lifeInCards.cafes[0]?.split(' – ')[0]}
+                      {town.lifeInCards.cafes[0]?.includes(' – ') && (
+                        <span className="block text-xs text-muted-foreground/70 mt-1">
+                          {town.lifeInCards.cafes[0]?.split(' – ')[1]}
+                        </span>
+                      )}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
 
-              {/* Cafés & Coffee */}
-              {town.lifeInCards.cafes && town.lifeInCards.cafes.length > 0 && (
-                <Card className="border border-border/50">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Coffee className="w-5 h-5 text-primary" />
-                      </div>
-                      <h3 className="font-semibold text-foreground">Cafés & Coffee</h3>
-                    </div>
-                    <ul className="space-y-2">
-                      {town.lifeInCards.cafes.map((item, index) => (
-                        <li key={index} className="text-muted-foreground text-sm">{item}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
+              {/* Restaurant */}
+              <Card className="border border-border/50">
+                <CardContent className="p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <UtensilsCrossed className="w-5 h-5 text-primary" />
+                    <h3 className="font-semibold text-foreground text-sm">Restaurant</h3>
+                  </div>
+                  {town.lifeInCards.restaurants && town.lifeInCards.restaurants.length > 0 && (
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {town.lifeInCards.restaurants[0]?.split(' – ')[0]}
+                      {town.lifeInCards.restaurants[0]?.includes(' – ') && (
+                        <span className="block text-xs text-muted-foreground/70 mt-1">
+                          {town.lifeInCards.restaurants[0]?.split(' – ')[1]}
+                        </span>
+                      )}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
 
-              {/* Restaurants & Dining */}
-              {town.lifeInCards.restaurants && town.lifeInCards.restaurants.length > 0 && (
-                <Card className="border border-border/50">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <UtensilsCrossed className="w-5 h-5 text-primary" />
-                      </div>
-                      <h3 className="font-semibold text-foreground">Restaurants & Dining</h3>
-                    </div>
-                    <ul className="space-y-2">
-                      {town.lifeInCards.restaurants.map((item, index) => (
-                        <li key={index} className="text-muted-foreground text-sm">{item}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
+              {/* Gym / Fitness */}
+              <Card className="border border-border/50">
+                <CardContent className="p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Dumbbell className="w-5 h-5 text-primary" />
+                    <h3 className="font-semibold text-foreground text-sm">Gym / Fitness</h3>
+                  </div>
+                  {town.lifeInCards.fitness && town.lifeInCards.fitness.length > 0 && (
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {town.lifeInCards.fitness[0]?.split(' – ')[0]}
+                      {town.lifeInCards.fitness[0]?.includes(' – ') && (
+                        <span className="block text-xs text-muted-foreground/70 mt-1">
+                          {town.lifeInCards.fitness[0]?.split(' – ')[1]}
+                        </span>
+                      )}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
 
-              {/* Parks & Outdoor Spaces */}
-              {town.lifeInCards.parks && town.lifeInCards.parks.length > 0 && (
-                <Card className="border border-border/50">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Trees className="w-5 h-5 text-primary" />
-                      </div>
-                      <h3 className="font-semibold text-foreground">Parks & Outdoor Spaces</h3>
-                    </div>
-                    <ul className="space-y-2">
-                      {town.lifeInCards.parks.map((item, index) => (
-                        <li key={index} className="text-muted-foreground text-sm">{item}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Access & Commuting */}
-              {town.lifeInCards.commuting && town.lifeInCards.commuting.length > 0 && (
-                <Card className="border border-border/50 md:col-span-2">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Car className="w-5 h-5 text-primary" />
-                      </div>
-                      <h3 className="font-semibold text-foreground">Access & Commuting</h3>
-                    </div>
-                    <ul className="flex flex-wrap gap-4">
-                      {town.lifeInCards.commuting.map((item, index) => (
-                        <li key={index} className="text-muted-foreground text-sm">{item}</li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
+              {/* Outdoors / Fun */}
+              <Card className="border border-border/50">
+                <CardContent className="p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Trees className="w-5 h-5 text-primary" />
+                    <h3 className="font-semibold text-foreground text-sm">Outdoors / Fun</h3>
+                  </div>
+                  {town.lifeInCards.parks && town.lifeInCards.parks.length > 0 && (
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {town.lifeInCards.parks[0]?.split(' – ')[0]}
+                      {town.lifeInCards.parks[0]?.includes(' – ') && (
+                        <span className="block text-xs text-muted-foreground/70 mt-1">
+                          {town.lifeInCards.parks[0]?.split(' – ')[1]}
+                        </span>
+                      )}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
             </div>
           )}
         </div>
@@ -1248,141 +1262,81 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
         </div>
       </section>
 
-      {/* CONTINUE YOUR SEARCH — Navigation Hub */}
+      {/* CONTINUE YOUR SEARCH — Clean 6-Tile Grid */}
       <section id="search-homes" className="px-[5%] py-16 md:py-20 bg-muted/30 scroll-mt-24">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-10 text-center">
-            Continue Your Search in {town.name}
+            Continue Your Search
           </h2>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Homes for Sale */}
-            <Card className="border border-border/50 hover:border-primary/30 transition-colors">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Home className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground">Homes for Sale</h3>
-                </div>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Explore all current residential listings in {town.name}.
-                </p>
-                <a 
-                  href={town.remaxSearchUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-primary font-medium text-sm hover:underline inline-flex items-center gap-1"
-                >
-                  View homes →
-                </a>
-              </CardContent>
-            </Card>
-
-            {/* Condos & Townhomes */}
-            <Card className="border border-border/50 hover:border-primary/30 transition-colors">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Building className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground">Condos & Townhomes</h3>
-                </div>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Search low-maintenance living options in {town.name}.
-                </p>
-                <Link 
-                  to={`/towns/${town.slug}/condos`}
-                  className="text-primary font-medium text-sm hover:underline inline-flex items-center gap-1"
-                >
-                  View condos & townhomes →
-                </Link>
-              </CardContent>
-            </Card>
-
-            {/* Multi-Unit Properties */}
-            <Card className="border border-border/50 hover:border-primary/30 transition-colors">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Building className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground">Multi-Unit Properties</h3>
-                </div>
-                <p className="text-muted-foreground text-sm mb-4">
-                  See duplex, triplex, and small apartment buildings.
-                </p>
-                <Link 
-                  to="/investment-properties"
-                  className="text-primary font-medium text-sm hover:underline inline-flex items-center gap-1"
-                >
-                  View multi-unit homes →
-                </Link>
-              </CardContent>
-            </Card>
-
-            {/* Land for Sale */}
-            <Card className="border border-border/50 hover:border-primary/30 transition-colors">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <LandPlot className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground">Land for Sale</h3>
-                </div>
-                <p className="text-muted-foreground text-sm mb-4">
-                  View available land and development opportunities.
-                </p>
-                <Link 
-                  to="/land-buyers"
-                  className="text-primary font-medium text-sm hover:underline inline-flex items-center gap-1"
-                >
-                  View land →
-                </Link>
-              </CardContent>
-            </Card>
-
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {/* Rentals */}
-            <Card className="border border-border/50 hover:border-primary/30 transition-colors">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Key className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground">Rentals</h3>
-                </div>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Browse available rentals in and around {town.name}.
-                </p>
-                <Link 
-                  to="/rentals"
-                  className="text-primary font-medium text-sm hover:underline inline-flex items-center gap-1"
-                >
-                  View rentals →
-                </Link>
-              </CardContent>
-            </Card>
-
-            {/* Property Intelligence */}
-            <Card className="border border-border/50 hover:border-primary/30 transition-colors">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <LineChart className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground">Property Intelligence</h3>
-                </div>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Request a full intelligence report for a specific address.
-                </p>
-                <Link 
-                  to="/reports/sample-property-intelligence"
-                  className="text-primary font-medium text-sm hover:underline inline-flex items-center gap-1"
-                >
-                  View sample report →
-                </Link>
-              </CardContent>
-            </Card>
+            <Link 
+              to="/rentals"
+              className="flex flex-col items-center justify-center p-6 bg-background border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all text-center group"
+            >
+              <Key className="w-6 h-6 text-primary mb-2" />
+              <span className="font-medium text-foreground group-hover:text-primary text-sm">
+                {town.name} Rentals
+              </span>
+            </Link>
+            
+            {/* Multi-Family */}
+            <Link 
+              to="/investment-properties"
+              className="flex flex-col items-center justify-center p-6 bg-background border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all text-center group"
+            >
+              <Building className="w-6 h-6 text-primary mb-2" />
+              <span className="font-medium text-foreground group-hover:text-primary text-sm">
+                {town.name} Multi-Family
+              </span>
+            </Link>
+            
+            {/* Land */}
+            <Link 
+              to="/land-buyers"
+              className="flex flex-col items-center justify-center p-6 bg-background border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all text-center group"
+            >
+              <LandPlot className="w-6 h-6 text-primary mb-2" />
+              <span className="font-medium text-foreground group-hover:text-primary text-sm">
+                {town.name} Land
+              </span>
+            </Link>
+            
+            {/* Condos / Townhomes */}
+            <a 
+              href={town.remaxSearchUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center justify-center p-6 bg-background border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all text-center group"
+            >
+              <Home className="w-6 h-6 text-primary mb-2" />
+              <span className="font-medium text-foreground group-hover:text-primary text-sm">
+                Condos / Townhomes
+              </span>
+            </a>
+            
+            {/* Sample Report */}
+            <Link 
+              to="/reports/sample-property-intelligence"
+              className="flex flex-col items-center justify-center p-6 bg-background border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all text-center group"
+            >
+              <FileText className="w-6 h-6 text-primary mb-2" />
+              <span className="font-medium text-foreground group-hover:text-primary text-sm">
+                View Sample Report
+              </span>
+            </Link>
+            
+            {/* Browse All Towns */}
+            <Link 
+              to="/communities"
+              className="flex flex-col items-center justify-center p-6 bg-background border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all text-center group"
+            >
+              <MapPin className="w-6 h-6 text-primary mb-2" />
+              <span className="font-medium text-foreground group-hover:text-primary text-sm">
+                Browse All Towns
+              </span>
+            </Link>
           </div>
         </div>
       </section>
@@ -1478,29 +1432,36 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
         </div>
       </section>
 
-      {/* PROPERTY INTELLIGENCE LINK — Template-based, no real addresses */}
+      {/* TRUST / FOOTER CTA */}
       <section className="px-[5%] py-12 bg-background border-t border-border">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-muted-foreground mb-4">
-            Want to see what a full property analysis looks like?
-          </p>
-          <Link 
-            to="/reports/sample-property-intelligence" 
-            className="text-primary font-semibold hover:underline"
-          >
-            See an example of a full Property Intelligence Report →
-          </Link>
+        <div className="max-w-2xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-6 bg-muted/50 rounded-xl border border-border">
+            <div className="text-center sm:text-left">
+              <p className="font-semibold text-foreground mb-1">Want a fast answer?</p>
+              <div className="flex flex-col sm:flex-row items-center gap-2 text-sm text-muted-foreground">
+                <a href="tel:+15186762347" className="hover:text-primary transition-colors">
+                  (518) 676-2347
+                </a>
+                <span className="hidden sm:inline">•</span>
+                <a href="mailto:scott@capitaldistrictnest.com" className="hover:text-primary transition-colors">
+                  scott@capitaldistrictnest.com
+                </a>
+              </div>
+            </div>
+            <Button asChild>
+              <Link to="/dealdesk">
+                Submit an Address
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* TRUST FOOTER */}
-      <section className="px-[5%] py-12 bg-muted/30 border-t border-border">
+      {/* DATA TRUST FOOTER */}
+      <section className="px-[5%] py-8 bg-muted/30 border-t border-border">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm text-muted-foreground mb-4">
-            Data sourced from MLS and public records. Updated regularly.
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Capital District Nest • Licensed Real Estate Broker • RE/MAX
+          <p className="text-xs text-muted-foreground">
+            Data sourced from MLS and public records. Updated regularly. Capital District Nest • Licensed Real Estate Broker • RE/MAX
           </p>
         </div>
       </section>
