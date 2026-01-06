@@ -206,20 +206,6 @@ const CleanHeader = () => {
                         >
                           Grants & Down Payment Help
                         </Link>
-                        <Link
-                          to="/communities"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Neighborhood Guides
-                        </Link>
-                        <Link
-                          to="/markets"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Market Trends
-                        </Link>
                       </div>
                     </Dropdown>
                   )}
@@ -462,12 +448,6 @@ const CleanHeader = () => {
               </Link>
               <Link to="/grants" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
                 Grants & Down Payment Help
-              </Link>
-              <Link to="/communities" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Neighborhood Guides
-              </Link>
-              <Link to="/markets" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Market Trends
               </Link>
             </div>
           </div>
