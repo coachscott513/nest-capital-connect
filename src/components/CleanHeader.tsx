@@ -111,10 +111,10 @@ const CleanHeader = () => {
     <>
       {/* Desktop Header */}
       <header className="sticky top-0 z-[2000] bg-background/95 backdrop-blur-md border-b border-border">
-        <nav className="max-w-7xl mx-auto px-4 md:px-6">
+        <nav className="w-full px-4 md:px-8 lg:px-12">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group" onClick={closeDropdowns}>
+            <Link to="/" className="flex items-center gap-2 group shrink-0" onClick={closeDropdowns}>
               <img src={cdnLogo} alt="Capital District Nest" className="h-10 md:h-12 w-auto" />
               <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium hidden sm:block group-hover:text-foreground transition-colors">
                 Home
