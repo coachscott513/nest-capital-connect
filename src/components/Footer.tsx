@@ -73,6 +73,14 @@ const Footer = () => {
                   Request Property Report
                 </Link>
               </li>
+              <li>
+                <Link 
+                  to="/site-index" 
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  Full Site Index
+                </Link>
+              </li>
             </ul>
           </div>
 

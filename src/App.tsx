@@ -105,6 +105,7 @@ import ComingSoon from "./pages/ComingSoon";
 import Intelligence from "./pages/Intelligence";
 import MarketReportThanks from "./pages/MarketReportThanks";
 import Ask from "./pages/Ask";
+import SiteIndex from "./pages/SiteIndex";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -285,6 +286,9 @@ const App = () => {
           
           {/* Ask a Question */}
           <Route path="/ask" element={<Ask />} />
+          
+          {/* Site Index */}
+          <Route path="/site-index" element={<SiteIndex />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
