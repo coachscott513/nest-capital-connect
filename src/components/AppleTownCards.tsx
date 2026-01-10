@@ -17,7 +17,8 @@ const townHubs: TownCardData[] = [
     description: "Growing suburb, family-friendly",
     nestScore: 94,
     businessCount: 12,
-    image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80"
+    // Clifton Park Common / Nature boardwalk aesthetic
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80"
   },
   { 
     name: "Saratoga Springs", 
@@ -25,7 +26,8 @@ const townHubs: TownCardData[] = [
     description: "Racing, culture, upscale living",
     nestScore: 96,
     businessCount: 18,
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+    // Congress Park / Historic fountain aesthetic
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80"
   },
   { 
     name: "Delmar", 
@@ -33,7 +35,8 @@ const townHubs: TownCardData[] = [
     description: "Bethlehem Central Schools",
     nestScore: 92,
     businessCount: 8,
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+    // Classic New England town center / tree-lined street
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80"
   },
   { 
     name: "Albany", 
@@ -41,7 +44,8 @@ const townHubs: TownCardData[] = [
     description: "Capital City, diverse neighborhoods",
     nestScore: 88,
     businessCount: 24,
-    image: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=800&q=80"
+    // Empire State Plaza / Government architecture
+    image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80"
   },
   { 
     name: "Niskayuna", 
@@ -49,7 +53,8 @@ const townHubs: TownCardData[] = [
     description: "Top-rated schools",
     nestScore: 91,
     businessCount: 6,
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+    // Suburban neighborhood / classic homes
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80"
   },
   { 
     name: "Troy", 
@@ -57,7 +62,8 @@ const townHubs: TownCardData[] = [
     description: "Historic charm, RPI proximity",
     nestScore: 85,
     businessCount: 15,
-    image: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?auto=format&fit=crop&w=800&q=80"
+    // Historic brownstone / downtown architecture
+    image: "https://images.unsplash.com/photo-1555636222-cae831e670b3?auto=format&fit=crop&w=800&q=80"
   },
   { 
     name: "Schenectady", 
@@ -65,7 +71,8 @@ const townHubs: TownCardData[] = [
     description: "Revitalizing downtown",
     nestScore: 82,
     businessCount: 11,
-    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80"
+    // Downtown revitalization / urban renewal
+    image: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=800&q=80"
   },
   { 
     name: "Guilderland", 
@@ -73,7 +80,8 @@ const townHubs: TownCardData[] = [
     description: "Top schools, Crossgates area",
     nestScore: 90,
     businessCount: 9,
-    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80"
+    // Upscale suburban development
+    image: "https://images.unsplash.com/photo-1560184897-ae75f418493e?auto=format&fit=crop&w=800&q=80"
   },
   { 
     name: "Queensbury", 
@@ -81,7 +89,8 @@ const townHubs: TownCardData[] = [
     description: "Lake George gateway",
     nestScore: 87,
     businessCount: 7,
-    image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=800&q=80"
+    // Mountain / Lake region aesthetic
+    image: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=800&q=80"
   },
 ];
 
