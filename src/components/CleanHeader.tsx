@@ -139,10 +139,9 @@ const CleanHeader = () => {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo - Abstract Institutional Mark */}
             <Link to="/" className="flex items-center gap-4 group shrink-0" onClick={closeDropdowns}>
-              {/* Abstract "N" Symbol - Structural Beams */}
+              {/* Data Nest Logo - Minimalist Horizontal Lines */}
               <div className="relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-                <svg viewBox="0 0 40 40" className="w-full h-full">
-                  {/* Glowing effect background */}
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <defs>
                     <filter id="tealGlow" x="-50%" y="-50%" width="200%" height="200%">
                       <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
@@ -152,27 +151,22 @@ const CleanHeader = () => {
                       </feMerge>
                     </filter>
                   </defs>
-                  {/* Abstract N / Upward Arrow / Structural Beams */}
-                  <path 
-                    d="M8 32 L8 8 L20 20 L32 8 L32 32" 
-                    fill="none" 
-                    stroke="hsl(185 100% 50%)" 
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    filter="url(#tealGlow)"
-                    className="drop-shadow-[0_0_8px_rgba(0,245,255,0.6)]"
-                  />
+                  {/* Base line - Foundation */}
+                  <rect x="8" y="28" width="24" height="2" fill="white"/>
+                  {/* Middle line - Electric Teal Glow */}
+                  <rect x="12" y="22" width="16" height="2" fill="#00F5FF" filter="url(#tealGlow)" className="drop-shadow-[0_0_8px_rgba(0,245,255,0.6)]"/>
+                  {/* Top line - Peak */}
+                  <rect x="18" y="16" width="4" height="2" fill="white"/>
                 </svg>
               </div>
               
-              {/* Typography - Inter Light, Wide Tracking */}
+              {/* Typography - Ultra Light, Wide Tracking */}
               <div className="hidden sm:flex flex-col">
-                <span className="text-[11px] font-light text-white tracking-[0.25em] uppercase">
-                  Capital District
+                <span className="text-[13px] font-extralight text-white tracking-[0.4em] uppercase">
+                  Nest
                 </span>
                 <span className="text-[9px] text-primary tracking-[0.3em] uppercase font-medium">
-                  Nest
+                  Intelligence
                 </span>
               </div>
             </Link>
