@@ -356,10 +356,10 @@ const CleanHeader = () => {
           <div>
             <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Intelligence</h3>
             <div className="space-y-2">
-              <Link to="/reports/sample-property-intelligence" onClick={closeMobileMenu} className="block text-primary font-medium">
+              <Link to="/intel/1999-ridge-road-queensbury-ny" onClick={closeMobileMenu} className="block text-primary font-medium">
                 View Sample Report →
               </Link>
-              <Link to="/dealdesk" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
+              <Link to="/intelligence" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
                 Request a Report
               </Link>
             </div>
