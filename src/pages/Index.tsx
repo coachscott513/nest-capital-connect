@@ -133,7 +133,7 @@ const Index = () => {
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link 
-                to="/dealdesk"
+                to="/intelligence"
                 className="inline-flex items-center gap-2 glass px-10 py-5 rounded-2xl font-semibold text-foreground hover:bg-primary hover:text-primary-foreground transition-all text-lg"
               >
                 Request a Report

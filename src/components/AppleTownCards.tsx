@@ -108,17 +108,17 @@ const AppleTownCards = () => {
               to={town.href}
               className="group relative h-[420px] rounded-[2rem] overflow-hidden hover-lift"
             >
-              {/* Background Image - Cinematic Filter */}
+              {/* Background Image - Cinematic Filter with Heavy Mask */}
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110"
                 style={{ 
                   backgroundImage: `url(${town.image})`,
-                  filter: 'brightness(0.8) contrast(1.1) saturate(0.9)'
+                  filter: 'brightness(0.5) contrast(1.2) saturate(0.7)'
                 }}
               />
               
-              {/* Dark Gradient Overlay - Heavy for readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30" />
+              {/* Monochromatic Overlay - Heavy dark mask until landmarks imported */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/50" />
               
               {/* Teal Glow Nest Score Badge */}
               <div className="absolute top-5 right-5 nest-badge">
