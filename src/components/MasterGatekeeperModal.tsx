@@ -287,7 +287,7 @@ const MasterGatekeeperModal = ({
           {/* Compliance Disclaimer */}
           <div className="pt-4 border-t border-border/50 mt-4">
             <p className="text-[9px] text-muted-foreground/60 text-center leading-relaxed">
-              Capital District Nest is a neutral real estate intelligence platform. By registering, you are requesting institutional property data and agree to our{" "}
+              Capital District Nest is a neutral real estate intelligence platform. Registration is for the purpose of accessing institutional data and verified property vault access. By continuing, you agree to our{" "}
               <Link to="/privacy" className="text-primary/60 hover:text-primary underline">terms</Link>.
             </p>
           </div>
