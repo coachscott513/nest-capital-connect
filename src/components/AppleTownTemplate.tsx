@@ -68,6 +68,10 @@ interface TownMarketData {
   avg_baths: number | null;
   single_family_count: number | null;
   multi_family_count: number | null;
+  hero_landmark: string | null;
+  target_yield: number | null;
+  nest_score: number | null;
+  region_category: string | null;
 }
 
 interface AppleTownTemplateProps {
@@ -104,8 +108,13 @@ const AppleTownTemplate = ({
     return "Low";
   };
 
-  // Calculate avg yield from high-yield assets data
+  // Calculate avg yield from database target_yield or high-yield assets
   const calculateAvgYield = (): string => {
+    // First priority: database target_yield
+    if (townMarketData?.target_yield) {
+      return `${townMarketData.target_yield}%`;
+    }
+    // Second priority: calculate from high-yield assets
     if (highYieldAssets.length > 0) {
       const avgCoC = highYieldAssets.reduce((sum, a) => sum + (a.cash_on_cash_return || 0), 0) / highYieldAssets.length;
       return `${avgCoC.toFixed(1)}%`;
@@ -115,6 +124,7 @@ const AppleTownTemplate = ({
 
   const marketVelocity = propMarketVelocity || calculateVelocity(townMarketData?.avg_days_on_market ?? null);
   const avgYield = calculateAvgYield();
+  const nestScore = townMarketData?.nest_score || 5;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,7 +154,7 @@ const AppleTownTemplate = ({
           .limit(8),
         supabase
           .from('town_market_data')
-          .select('avg_price, median_price, active_listings, avg_days_on_market, avg_sqft, avg_beds, avg_baths, single_family_count, multi_family_count')
+          .select('avg_price, median_price, active_listings, avg_days_on_market, avg_sqft, avg_beds, avg_baths, single_family_count, multi_family_count, hero_landmark, target_yield, nest_score, region_category')
           .eq('town_slug', townSlug)
           .order('scraped_at', { ascending: false })
           .maybeSingle()
