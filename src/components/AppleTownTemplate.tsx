@@ -171,74 +171,75 @@ const AppleTownTemplate = ({
     }
   };
 
-  const getVelocityColor = (velocity: string) => {
-    switch (velocity) {
-      case 'High': return 'text-green-600 bg-green-50';
-      case 'Medium': return 'text-yellow-600 bg-yellow-50';
-      case 'Low': return 'text-red-600 bg-red-50';
-      default: return 'text-gray-600 bg-gray-50';
-    }
-  };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <SEOHead
-        title={`${townName} Real Estate Intelligence | Capital District Nest`}
-        description={`Live market intelligence for ${townName} NY. Yield data, local business insights, and investment opportunities.`}
-        keywords={`${townName} real estate, ${townName} investment properties, ${townName} market data`}
+        title={`${townName} | Yield Intelligence by Capital District Nest`}
+        description={`Exclusive market intelligence for ${townName} NY. ${avgYield} average yields, local business insights, and verified investment opportunities for NYC and Boston investors.`}
+        keywords={`${townName} investment properties, ${townName} cash on cash return, ${townName} real estate yields, ${townName} market intelligence`}
         canonical={`https://capitaldistrictnest.com/towns/${townSlug}`}
       />
 
       <CleanHeader />
 
-      {/* CINEMATIC HERO with Floating Intelligence Gauge */}
-      <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-        {/* Background Image */}
+      {/* DEEP SPACE CINEMATIC HERO */}
+      <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-background">
+        {/* Background Image with Cinematic Filter */}
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroImage})` }}
+          style={{ 
+            backgroundImage: `url(${heroImage})`,
+            filter: 'brightness(0.7) grayscale(10%)'
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+        {/* Deep Space Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
 
-        {/* Floating Nest Intelligence Gauge - Top Right */}
+        {/* Floating Nest Intelligence Gauge - Glass Morphism */}
         <div className="absolute top-8 right-8 md:top-12 md:right-12 z-20">
-          <div className="glass-strong rounded-2xl p-6 min-w-[220px]">
+          <div className="glass-strong rounded-2xl p-6 min-w-[220px] border border-primary/20">
             <div className="flex items-center gap-2 mb-4">
               <Gauge className="w-5 h-5 text-primary" />
-              <span className="text-sm font-semibold text-[#1D1D1F]">Nest Intelligence</span>
+              <span className="text-sm font-semibold text-foreground">Nest Intelligence</span>
             </div>
             
             <div className="space-y-3">
               <div>
-                <p className="text-xs text-[#6E6E73] mb-1">Average Town Yield</p>
-                <p className="text-3xl font-bold text-primary">{avgYield}</p>
+                <p className="text-xs text-muted-foreground mb-1">Average Town Yield</p>
+                <p className="text-3xl font-bold text-primary text-glow">{avgYield}</p>
               </div>
               <div>
-                <p className="text-xs text-[#6E6E73] mb-1">Market Velocity</p>
-                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${getVelocityColor(marketVelocity)}`}>
+                <p className="text-xs text-muted-foreground mb-1">Market Velocity</p>
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${
+                  marketVelocity === 'High' ? 'bg-primary/20 text-primary' :
+                  marketVelocity === 'Medium' ? 'bg-yellow-500/20 text-yellow-400' :
+                  'bg-red-500/20 text-red-400'
+                }`}>
                   {marketVelocity}
                 </span>
               </div>
               {townMarketData && (
                 <>
-                  <div className="pt-2 border-t border-gray-200">
+                  <div className="pt-2 border-t border-border">
                     <div className="flex justify-between items-center">
-                      <p className="text-xs text-[#6E6E73]">Active Listings</p>
-                      <p className="text-sm font-bold text-[#1D1D1F]">{townMarketData.active_listings || 0}</p>
+                      <p className="text-xs text-muted-foreground">Active Listings</p>
+                      <p className="text-sm font-bold text-foreground">{townMarketData.active_listings || 0}</p>
                     </div>
                   </div>
                   {townMarketData.median_price && (
                     <div className="flex justify-between items-center">
-                      <p className="text-xs text-[#6E6E73]">Median Price</p>
-                      <p className="text-sm font-bold text-[#1D1D1F]">
+                      <p className="text-xs text-muted-foreground">Median Price</p>
+                      <p className="text-sm font-bold text-foreground">
                         ${(townMarketData.median_price / 1000).toFixed(0)}K
                       </p>
                     </div>
                   )}
                   {townMarketData.avg_days_on_market && (
                     <div className="flex justify-between items-center">
-                      <p className="text-xs text-[#6E6E73]">Avg Days on Market</p>
-                      <p className="text-sm font-bold text-[#1D1D1F]">{townMarketData.avg_days_on_market}</p>
+                      <p className="text-xs text-muted-foreground">Avg Days on Market</p>
+                      <p className="text-sm font-bold text-foreground">{townMarketData.avg_days_on_market}</p>
                     </div>
                   )}
                 </>
@@ -251,17 +252,17 @@ const AppleTownTemplate = ({
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 py-20">
           <div className="max-w-2xl">
             {schoolDistrict && (
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
-                <MapPin className="w-4 h-4 text-white" />
-                <span className="text-sm font-medium text-white">{schoolDistrict}</span>
+              <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-6">
+                <MapPin className="w-4 h-4 text-primary" />
+                <span className="text-sm font-medium text-foreground">{schoolDistrict}</span>
               </div>
             )}
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              {townName} Intelligence
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground leading-tight mb-6 tracking-tight">
+              {townName} <span className="text-primary text-glow">Intelligence</span>
             </h1>
             
-            <p className="text-xl text-white/80 mb-8 leading-relaxed">
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed body-airy">
               Real-time market data, investment opportunities, and local insights — 
               all in one place.
             </p>
@@ -271,14 +272,14 @@ const AppleTownTemplate = ({
                 href={searchUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform"
+                className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform glow-primary"
               >
                 <Search className="w-5 h-5" />
                 Search {townName} Homes
               </a>
               <Link
                 to="/dealdesk"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-colors"
+                className="inline-flex items-center justify-center gap-2 glass border border-primary/30 text-foreground px-8 py-4 rounded-xl font-semibold hover:bg-primary/20 transition-colors"
               >
                 Request Property Intel
               </Link>
@@ -287,13 +288,13 @@ const AppleTownTemplate = ({
         </div>
       </section>
 
-      {/* TOWN LEDGER - Apple News Feed Style */}
-      <section className="py-20 px-[5%] bg-[#F5F5F7]">
+      {/* TOWN LEDGER - Deep Space Bento Cards */}
+      <section className="section-massive px-[5%] bg-card">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-10">
             <div>
               <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-2">Town Ledger</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#1D1D1F]">
+              <h2 className="text-3xl md:text-4xl font-extralight text-foreground tracking-tight">
                 What's Happening in {townName}
               </h2>
             </div>
@@ -302,10 +303,10 @@ const AppleTownTemplate = ({
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="apple-card p-6 animate-pulse">
-                  <div className="h-4 bg-gray-200 rounded w-1/3 mb-4" />
-                  <div className="h-6 bg-gray-200 rounded w-full mb-2" />
-                  <div className="h-4 bg-gray-200 rounded w-2/3" />
+                <div key={i} className="bento-card p-6 animate-pulse">
+                  <div className="h-4 bg-muted rounded w-1/3 mb-4" />
+                  <div className="h-6 bg-muted rounded w-full mb-2" />
+                  <div className="h-4 bg-muted rounded w-2/3" />
                 </div>
               ))}
             </div>
@@ -314,44 +315,44 @@ const AppleTownTemplate = ({
               {ledgerEntries.map((entry) => {
                 const Icon = getCategoryIcon(entry.category);
                 return (
-                  <div key={entry.id} className="apple-card p-6 hover-lift group">
+                  <div key={entry.id} className="bento-card p-6 hover-lift group">
                     <div className="flex items-center gap-2 mb-4">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
                         <Icon className="w-4 h-4 text-primary" />
                       </div>
-                      <span className="text-xs font-semibold text-[#6E6E73] uppercase tracking-wider">
+                      <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         {entry.category}
                       </span>
                       {entry.is_featured && (
                         <span className="ml-auto text-xs font-semibold text-primary">Featured</span>
                       )}
                     </div>
-                    <h3 className="text-lg font-semibold text-[#1D1D1F] mb-2 group-hover:text-primary transition-colors">
+                    <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
                       {entry.title}
                     </h3>
-                    <p className="text-sm text-[#6E6E73] line-clamp-2">{entry.content}</p>
+                    <p className="text-sm text-muted-foreground line-clamp-2">{entry.content}</p>
                   </div>
                 );
               })}
             </div>
           ) : (
-            <div className="apple-card p-8 text-center">
-              <Newspaper className="w-12 h-12 text-[#6E6E73] mx-auto mb-4" />
-              <p className="text-[#6E6E73]">No ledger entries yet for {townName}.</p>
+            <div className="bento-card p-8 text-center">
+              <Newspaper className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">No ledger entries yet for {townName}.</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* HIGH-YIELD ASSETS / INVESTMENT VAULT */}
-      <section className="py-20 px-[5%] bg-white">
+      {/* HIGH-YIELD ASSETS / INVESTMENT VAULT - Deep Space Bento */}
+      <section className="section-massive px-[5%] bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-2">Investment Vault</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1D1D1F] mb-4">
+            <h2 className="text-3xl md:text-4xl font-extralight text-foreground mb-4 tracking-tight">
               High-Yield Assets in {townName}
             </h2>
-            <p className="text-lg text-[#6E6E73] max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto body-airy">
               Cash-flowing properties with verified returns. Click any property to view virtual underwriting.
             </p>
           </div>
@@ -359,10 +360,10 @@ const AppleTownTemplate = ({
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[1, 2].map((i) => (
-                <div key={i} className="apple-card p-6 animate-pulse">
-                  <div className="h-40 bg-gray-200 rounded-xl mb-4" />
-                  <div className="h-6 bg-gray-200 rounded w-2/3 mb-2" />
-                  <div className="h-4 bg-gray-200 rounded w-1/2" />
+                <div key={i} className="bento-card p-6 animate-pulse">
+                  <div className="h-40 bg-muted rounded-xl mb-4" />
+                  <div className="h-6 bg-muted rounded w-2/3 mb-2" />
+                  <div className="h-4 bg-muted rounded w-1/2" />
                 </div>
               ))}
             </div>
@@ -372,35 +373,35 @@ const AppleTownTemplate = ({
                 <Link
                   key={asset.id}
                   to="/dealdesk"
-                  className="apple-card p-6 hover-lift group"
+                  className="bento-card p-6 hover-lift group"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div>
-                      <p className="text-xs text-[#6E6E73] uppercase tracking-wider mb-1">{asset.property_type}</p>
-                      <h3 className="text-xl font-bold text-[#1D1D1F] group-hover:text-primary transition-colors">
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{asset.property_type}</p>
+                      <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                         {asset.address}
                       </h3>
                     </div>
-                    <span className="text-2xl font-bold text-primary">{asset.price}</span>
+                    <span className="text-2xl font-bold text-primary text-glow">{asset.price}</span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4 p-4 bg-[#F5F5F7] rounded-xl mb-4">
+                  <div className="grid grid-cols-3 gap-4 p-4 glass rounded-xl mb-4">
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-green-600">{asset.cash_on_cash_return}%</p>
-                      <p className="text-xs text-[#6E6E73]">Cash-on-Cash</p>
+                      <p className="text-2xl font-bold text-primary text-glow">{asset.cash_on_cash_return}%</p>
+                      <p className="text-xs text-muted-foreground">Cash-on-Cash</p>
                     </div>
-                    <div className="text-center border-x border-gray-200">
-                      <p className="text-2xl font-bold text-[#1D1D1F]">{asset.cap_rate}%</p>
-                      <p className="text-xs text-[#6E6E73]">Cap Rate</p>
+                    <div className="text-center border-x border-border">
+                      <p className="text-2xl font-bold text-foreground">{asset.cap_rate}%</p>
+                      <p className="text-xs text-muted-foreground">Cap Rate</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-[#1D1D1F]">{asset.units}</p>
-                      <p className="text-xs text-[#6E6E73]">Units</p>
+                      <p className="text-2xl font-bold text-foreground">{asset.units}</p>
+                      <p className="text-xs text-muted-foreground">Units</p>
                     </div>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-[#6E6E73]">Gross Rent: {asset.gross_rent}</span>
+                    <span className="text-sm text-muted-foreground">Gross Rent: {asset.gross_rent}</span>
                     <span className="text-sm font-semibold text-primary flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       View Underwriting <ArrowRight className="w-4 h-4" />
                     </span>
@@ -409,9 +410,9 @@ const AppleTownTemplate = ({
               ))}
             </div>
           ) : (
-            <div className="apple-card p-8 text-center">
-              <Home className="w-12 h-12 text-[#6E6E73] mx-auto mb-4" />
-              <p className="text-[#6E6E73]">No high-yield assets currently available in {townName}.</p>
+            <div className="bento-card p-8 text-center">
+              <Home className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">No high-yield assets currently available in {townName}.</p>
               <Link to="/dealdesk" className="inline-flex items-center gap-2 text-primary font-semibold mt-4 hover:underline">
                 Submit an address for analysis <ArrowRight className="w-4 h-4" />
               </Link>
@@ -420,15 +421,15 @@ const AppleTownTemplate = ({
         </div>
       </section>
 
-      {/* LOCAL VOICES - Horizontal Avatar Tray */}
-      <section className="py-20 px-[5%] bg-[#F5F5F7] overflow-hidden">
+      {/* LOCAL VOICES - Horizontal Avatar Tray with Spotlight Effect */}
+      <section className="section-massive px-[5%] bg-card overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-2">Local Voices</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1D1D1F] mb-4">
+            <h2 className="text-3xl md:text-4xl font-extralight text-foreground mb-4 tracking-tight">
               The People Building {townName}
             </h2>
-            <p className="text-lg text-[#6E6E73] max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto body-airy">
               Hear from verified local business owners about the town's growth and opportunities.
             </p>
           </div>
@@ -437,8 +438,8 @@ const AppleTownTemplate = ({
             <div className="flex gap-8 justify-center">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="flex flex-col items-center gap-3 animate-pulse">
-                  <div className="w-24 h-24 rounded-full bg-gray-200" />
-                  <div className="h-4 bg-gray-200 rounded w-20" />
+                  <div className="w-24 h-24 rounded-full bg-muted" />
+                  <div className="h-4 bg-muted rounded w-20" />
                 </div>
               ))}
             </div>
@@ -449,31 +450,31 @@ const AppleTownTemplate = ({
                   <button
                     key={voice.id}
                     onClick={() => setSelectedVoice(voice)}
-                    className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
+                    className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group spotlight"
                   >
-                    {/* Verified Border */}
+                    {/* Verified Border with Teal Glow */}
                     <div className="relative">
-                      <div className="w-24 h-24 md:w-28 md:h-28 rounded-full p-[3px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300">
-                        <div className="w-full h-full rounded-full overflow-hidden bg-white p-1">
+                      <div className="w-24 h-24 md:w-28 md:h-28 rounded-full p-[3px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,245,255,0.3)]">
+                        <div className="w-full h-full rounded-full overflow-hidden bg-card p-1">
                           <img
-                            src={voice.owner_photo_url || voice.business_logo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(voice.owner_name)}&background=10b981&color=fff`}
+                            src={voice.owner_photo_url || voice.business_logo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(voice.owner_name)}&background=00F5FF&color=0B0B0B`}
                             alt={voice.owner_name}
                             className="w-full h-full rounded-full object-cover"
                           />
                         </div>
                       </div>
                       {voice.is_verified && (
-                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
                           Verified
                         </div>
                       )}
                     </div>
                     
                     <div className="text-center">
-                      <span className="text-sm font-semibold text-[#1D1D1F] group-hover:text-primary transition-colors block">
+                      <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors block">
                         {voice.owner_name}
                       </span>
-                      <span className="text-xs text-[#6E6E73] block max-w-[120px] truncate">
+                      <span className="text-xs text-muted-foreground block max-w-[120px] truncate">
                         {voice.business_name}
                       </span>
                     </div>
@@ -481,32 +482,32 @@ const AppleTownTemplate = ({
                 ))}
               </div>
               
-              {/* Fade edges */}
-              <div className="absolute left-0 top-0 bottom-6 w-12 bg-gradient-to-r from-[#F5F5F7] to-transparent pointer-events-none md:hidden" />
-              <div className="absolute right-0 top-0 bottom-6 w-12 bg-gradient-to-l from-[#F5F5F7] to-transparent pointer-events-none md:hidden" />
+              {/* Fade edges - Deep Space */}
+              <div className="absolute left-0 top-0 bottom-6 w-12 bg-gradient-to-r from-card to-transparent pointer-events-none md:hidden" />
+              <div className="absolute right-0 top-0 bottom-6 w-12 bg-gradient-to-l from-card to-transparent pointer-events-none md:hidden" />
             </div>
           ) : (
-            <div className="apple-card p-8 text-center max-w-md mx-auto">
-              <Users className="w-12 h-12 text-[#6E6E73] mx-auto mb-4" />
-              <p className="text-[#6E6E73]">Local business spotlights coming soon for {townName}.</p>
+            <div className="bento-card p-8 text-center max-w-md mx-auto">
+              <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">Local business spotlights coming soon for {townName}.</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 px-[5%] bg-white">
+      {/* CTA Section - Deep Space */}
+      <section className="section-massive px-[5%] bg-background">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1D1D1F] mb-4">
-            Ready to invest in {townName}?
+          <h2 className="text-3xl md:text-4xl font-extralight text-foreground mb-4 tracking-tight">
+            Ready to invest in <span className="text-primary text-glow">{townName}</span>?
           </h2>
-          <p className="text-lg text-[#6E6E73] mb-8">
+          <p className="text-lg text-muted-foreground mb-8 body-airy">
             Submit any address for a custom property intelligence report.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/dealdesk"
-              className="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform"
+              className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform glow-primary"
             >
               Request Property Intel
               <ArrowRight className="w-5 h-5" />
@@ -515,7 +516,7 @@ const AppleTownTemplate = ({
               href={searchUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 border border-[#1D1D1F]/20 text-[#1D1D1F] px-8 py-4 rounded-xl font-semibold hover:bg-[#1D1D1F] hover:text-white transition-all"
+              className="inline-flex items-center justify-center gap-2 glass border border-border text-foreground px-8 py-4 rounded-xl font-semibold hover:bg-primary/20 transition-all"
             >
               Browse All Listings
               <ExternalLink className="w-4 h-4" />
@@ -528,18 +529,18 @@ const AppleTownTemplate = ({
 
       {/* Local Voice Interview Side Panel */}
       <Sheet open={!!selectedVoice} onOpenChange={() => setSelectedVoice(null)}>
-        <SheetContent className="w-full sm:max-w-lg bg-white border-l border-gray-100 overflow-y-auto">
+        <SheetContent className="w-full sm:max-w-lg bg-card border-l border-border overflow-y-auto">
           {selectedVoice && (
             <>
               <SheetHeader className="mb-6">
                 <div className="flex items-center gap-2">
                   {selectedVoice.is_verified && (
-                    <span className="bg-primary text-white text-xs font-bold px-2 py-1 rounded-full">
+                    <span className="bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">
                       Nest Verified
                     </span>
                   )}
                 </div>
-                <SheetTitle className="text-2xl font-bold text-[#1D1D1F] mt-2">
+                <SheetTitle className="text-2xl font-bold text-foreground mt-2">
                   {selectedVoice.business_name}
                 </SheetTitle>
               </SheetHeader>
@@ -556,40 +557,40 @@ const AppleTownTemplate = ({
               {/* Owner Info */}
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-[#1D1D1F]">{selectedVoice.owner_name}</h3>
-                  <p className="text-sm text-[#6E6E73]">Owner & Founder</p>
+                  <h3 className="text-lg font-semibold text-foreground">{selectedVoice.owner_name}</h3>
+                  <p className="text-sm text-muted-foreground">Owner & Founder</p>
                 </div>
-                <div className="flex items-center gap-1 text-sm text-[#6E6E73]">
+                <div className="flex items-center gap-1 text-sm text-muted-foreground">
                   <MapPin className="w-4 h-4" />
                   {townName}
                 </div>
               </div>
 
-              {/* Interview Sections */}
+              {/* Interview Sections - Glass Cards */}
               <div className="space-y-6">
                 {/* The Origin */}
-                <div className="p-4 bg-[#F5F5F7] rounded-xl">
+                <div className="p-4 glass rounded-xl">
                   <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">The Origin</h4>
-                  <p className="text-sm text-[#1D1D1F] italic">"{selectedVoice.origin_story}"</p>
+                  <p className="text-sm text-foreground italic">"{selectedVoice.origin_story}"</p>
                 </div>
 
                 {/* The Alpha */}
-                <div className="p-4 bg-[#F5F5F7] rounded-xl">
+                <div className="p-4 glass rounded-xl">
                   <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Market Alpha</h4>
-                  <p className="text-sm text-[#1D1D1F] italic">"{selectedVoice.alpha_insight}"</p>
+                  <p className="text-sm text-foreground italic">"{selectedVoice.alpha_insight}"</p>
                 </div>
 
                 {/* The Vision */}
-                <div className="p-4 bg-[#F5F5F7] rounded-xl">
+                <div className="p-4 glass rounded-xl">
                   <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Why {townName} is Big Time</h4>
-                  <p className="text-sm text-[#1D1D1F] italic">"{selectedVoice.growth_vision}"</p>
+                  <p className="text-sm text-foreground italic">"{selectedVoice.growth_vision}"</p>
                 </div>
               </div>
 
               {/* Primary Offering */}
-              <div className="mt-6 p-4 border border-gray-200 rounded-xl">
-                <h4 className="text-sm font-semibold text-[#1D1D1F] mb-1">What They Offer</h4>
-                <p className="text-[#6E6E73]">{selectedVoice.primary_offering}</p>
+              <div className="mt-6 p-4 border border-border rounded-xl">
+                <h4 className="text-sm font-semibold text-foreground mb-1">What They Offer</h4>
+                <p className="text-muted-foreground">{selectedVoice.primary_offering}</p>
               </div>
 
               {/* CTA */}
@@ -598,7 +599,7 @@ const AppleTownTemplate = ({
                   href={selectedVoice.website_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full py-4 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-colors mt-6"
+                  className="flex items-center justify-center gap-2 w-full py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-colors mt-6 glow-primary"
                 >
                   Visit Website <ExternalLink className="w-4 h-4" />
                 </a>
