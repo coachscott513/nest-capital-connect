@@ -110,6 +110,7 @@ import Ask from "./pages/Ask";
 import SiteIndex from "./pages/SiteIndex";
 import ClaimBusiness from "./pages/ClaimBusiness";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -130,6 +131,7 @@ const App = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <ScrollToTop />
               <GARouteTracker />
             <Routes>
           <Route path="/" element={<Index />} />
