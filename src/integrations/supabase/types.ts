@@ -47,6 +47,60 @@ export type Database = {
         }
         Relationships: []
       }
+      high_yield_assets: {
+        Row: {
+          address: string
+          cap_rate: number | null
+          cash_on_cash_return: number | null
+          created_at: string
+          featured_order: number | null
+          gross_rent: string | null
+          id: string
+          is_active: boolean | null
+          mls_id: string | null
+          price: string
+          property_type: string
+          thumbnail_url: string | null
+          town_slug: string
+          units: number | null
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          cap_rate?: number | null
+          cash_on_cash_return?: number | null
+          created_at?: string
+          featured_order?: number | null
+          gross_rent?: string | null
+          id?: string
+          is_active?: boolean | null
+          mls_id?: string | null
+          price: string
+          property_type: string
+          thumbnail_url?: string | null
+          town_slug: string
+          units?: number | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          cap_rate?: number | null
+          cash_on_cash_return?: number | null
+          created_at?: string
+          featured_order?: number | null
+          gross_rent?: string | null
+          id?: string
+          is_active?: boolean | null
+          mls_id?: string | null
+          price?: string
+          property_type?: string
+          thumbnail_url?: string | null
+          town_slug?: string
+          units?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       intel_report_leads: {
         Row: {
           created_at: string
@@ -119,6 +173,57 @@ export type Database = {
           phone?: string | null
           price_range?: string | null
           type?: string
+        }
+        Relationships: []
+      }
+      local_voices: {
+        Row: {
+          alpha_insight: string | null
+          business_logo_url: string | null
+          business_name: string
+          created_at: string
+          display_order: number | null
+          growth_vision: string | null
+          id: string
+          is_verified: boolean | null
+          origin_story: string | null
+          owner_name: string
+          owner_photo_url: string | null
+          primary_offering: string | null
+          town_slug: string
+          website_url: string | null
+        }
+        Insert: {
+          alpha_insight?: string | null
+          business_logo_url?: string | null
+          business_name: string
+          created_at?: string
+          display_order?: number | null
+          growth_vision?: string | null
+          id?: string
+          is_verified?: boolean | null
+          origin_story?: string | null
+          owner_name: string
+          owner_photo_url?: string | null
+          primary_offering?: string | null
+          town_slug: string
+          website_url?: string | null
+        }
+        Update: {
+          alpha_insight?: string | null
+          business_logo_url?: string | null
+          business_name?: string
+          created_at?: string
+          display_order?: number | null
+          growth_vision?: string | null
+          id?: string
+          is_verified?: boolean | null
+          origin_story?: string | null
+          owner_name?: string
+          owner_photo_url?: string | null
+          primary_offering?: string | null
+          town_slug?: string
+          website_url?: string | null
         }
         Relationships: []
       }
@@ -230,6 +335,45 @@ export type Database = {
           updated_at?: string
           year_built?: number | null
           zip?: string | null
+        }
+        Relationships: []
+      }
+      town_ledger: {
+        Row: {
+          category: string
+          content: string | null
+          created_at: string
+          icon: string | null
+          id: string
+          is_featured: boolean | null
+          published_at: string
+          source_url: string | null
+          title: string
+          town_slug: string
+        }
+        Insert: {
+          category: string
+          content?: string | null
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_featured?: boolean | null
+          published_at?: string
+          source_url?: string | null
+          title: string
+          town_slug: string
+        }
+        Update: {
+          category?: string
+          content?: string | null
+          created_at?: string
+          icon?: string | null
+          id?: string
+          is_featured?: boolean | null
+          published_at?: string
+          source_url?: string | null
+          title?: string
+          town_slug?: string
         }
         Relationships: []
       }
