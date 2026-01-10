@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -281,6 +282,14 @@ const MasterGatekeeperModal = ({
             <span className="text-[10px] text-muted-foreground tracking-wide">
               Your data stays private • No spam • Agent-neutral intelligence
             </span>
+          </div>
+
+          {/* Compliance Disclaimer */}
+          <div className="pt-4 border-t border-border/50 mt-4">
+            <p className="text-[9px] text-muted-foreground/60 text-center leading-relaxed">
+              Capital District Nest is a neutral real estate intelligence platform. By registering, you are requesting institutional property data and agree to our{" "}
+              <Link to="/privacy" className="text-primary/60 hover:text-primary underline">terms</Link>.
+            </p>
           </div>
         </form>
       </DialogContent>
