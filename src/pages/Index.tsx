@@ -48,21 +48,21 @@ const Index = () => {
       <BusinessSpotlight />
 
       {/* ========================================== */}
-      {/* SECTION: WHY THIS PLATFORM - Cupertino Style */}
+      {/* SECTION: WHY THIS PLATFORM - Maximum Spacing */}
       {/* ========================================== */}
-      <section className="py-24 px-[5%] bg-white">
+      <section className="section-massive px-[5%] bg-background">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-3">Why Choose Us</p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1D1D1F] mb-4">
+          <div className="text-center mb-20">
+            <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Why Choose Us</p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-6">
               Built different. On purpose.
             </h2>
-            <p className="text-lg text-[#6E6E73] max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto body-airy font-light">
               No scraped estimates. No AI guesses. Real data, verified locally.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
                 title: "Verified data sources",
@@ -83,15 +83,15 @@ const Index = () => {
             ].map((item) => (
               <div 
                 key={item.title}
-                className="apple-card p-8 hover-lift"
+                className="bento-card p-10 hover-lift"
               >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-5 h-5 text-primary" />
+                <div className="flex items-start gap-5">
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg text-[#1D1D1F] mb-2">{item.title}</h3>
-                    <p className="text-[#6E6E73]">{item.description}</p>
+                    <h3 className="font-semibold text-xl text-foreground mb-3">{item.title}</h3>
+                    <p className="text-muted-foreground body-airy">{item.description}</p>
                   </div>
                 </div>
               </div>
@@ -101,37 +101,36 @@ const Index = () => {
       </section>
 
       {/* ========================================== */}
-      {/* SECTION: PROPERTY INTELLIGENCE - Cupertino Card Style */}
+      {/* SECTION: PROPERTY INTELLIGENCE - Bento Card */}
       {/* ========================================== */}
-      <section className="px-[5%] py-24 bg-[#F5F5F7]">
+      <section className="px-[5%] section-massive bg-card">
         <div className="max-w-5xl mx-auto">
-          <div className="apple-card rounded-3xl p-8 md:p-12 lg:p-16 text-center">
-            <div className="inline-flex items-center gap-2 bg-primary/10 rounded-full px-4 py-2 mb-6">
+          <div className="bento-card p-10 md:p-16 lg:p-20 text-center">
+            <div className="inline-flex items-center gap-2 glass rounded-full px-5 py-2.5 mb-8">
               <BarChart3 className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-primary">Property Intelligence</span>
+              <span className="text-sm font-semibold text-foreground">Property Intelligence</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1D1D1F] mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-8">
               Beyond the listing.<br />
-              <span className="text-gradient-premium">Into the intelligence.</span>
+              <span className="text-gradient-premium font-normal">Into the intelligence.</span>
             </h2>
             
-            <p className="text-lg text-[#6E6E73] max-w-2xl mx-auto leading-relaxed mb-10">
-              Our reports combine verified public records, tax data, and real market activity —<br className="hidden md:block" />
-              organized in a way that's easy to understand and act on.
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto body-airy font-light mb-12">
+              Our reports combine verified public records, tax data, and real market activity — organized in a way that's easy to understand and act on.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
               <Link 
                 to="/intel/1999-ridge-road-queensbury-ny"
-                className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform"
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-10 py-5 rounded-2xl font-semibold hover:scale-105 transition-transform text-lg"
               >
                 View Sample Report
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-5 h-5" />
               </Link>
               <Link 
                 to="/dealdesk"
-                className="inline-flex items-center gap-2 border border-[#1D1D1F]/20 px-8 py-4 rounded-xl font-semibold text-[#1D1D1F] hover:bg-[#1D1D1F] hover:text-white transition-all"
+                className="inline-flex items-center gap-2 glass px-10 py-5 rounded-2xl font-semibold text-foreground hover:bg-primary hover:text-primary-foreground transition-all text-lg"
               >
                 Request a Report
               </Link>
@@ -141,29 +140,31 @@ const Index = () => {
       </section>
 
       {/* ========================================== */}
-      {/* SECTION: INVESTOR - Cupertino Style */}
+      {/* SECTION: INVESTOR - Bento Card */}
       {/* ========================================== */}
-      <section className="px-[5%] py-16 bg-white">
+      <section className="px-[5%] py-20 bg-background">
         <div className="max-w-4xl mx-auto">
-          <div className="apple-card p-8 md:p-10 hover-lift">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="bento-card p-10 md:p-12">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
               <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <BarChart3 className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-semibold text-[#6E6E73]">For Investors</span>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <BarChart3 className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-sm font-semibold text-muted-foreground">For Investors</span>
                 </div>
-                <h3 className="text-2xl font-bold text-[#1D1D1F] mb-2">
+                <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-3">
                   Cash-Flow, Multi-Unit & Return Analysis
                 </h3>
-                <p className="text-[#6E6E73]">
+                <p className="text-muted-foreground body-airy text-lg">
                   Advanced tools for serious investors. Cap rates, cash flow projections, and market reports.
                 </p>
               </div>
               <Link 
                 to="/investor-tools" 
-                className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:scale-105 transition-transform flex-shrink-0"
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-semibold hover:scale-105 transition-transform flex-shrink-0 text-lg"
               >
-                Explore Tools <ArrowRight className="w-4 h-4" />
+                Explore Tools <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
           </div>
@@ -171,27 +172,27 @@ const Index = () => {
       </section>
 
       {/* ========================================== */}
-      {/* SECTION: FINAL CTA - Cupertino Cinematic */}
+      {/* SECTION: FINAL CTA - Cinematic */}
       {/* ========================================== */}
-      <section className="relative px-[5%] py-32 overflow-hidden bg-[#F5F5F7]">
+      <section className="relative px-[5%] section-massive overflow-hidden bg-card">
         {/* Background effects */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[100px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[150px]" />
         </div>
         
         <div className="relative z-10 max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1D1D1F] mb-6">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extralight text-foreground tracking-tight mb-8">
             Start with your town.
           </h2>
-          <p className="text-xl text-[#6E6E73] mb-10">
+          <p className="text-2xl text-muted-foreground mb-12 body-airy font-light">
             Go deeper only when you're ready.
           </p>
           <button
             onClick={scrollToTownSection}
-            className="inline-flex items-center justify-center gap-3 bg-[#1D1D1F] text-white px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-transform"
+            className="inline-flex items-center justify-center gap-3 bg-foreground text-background px-12 py-6 rounded-2xl font-semibold text-xl hover:scale-105 transition-transform"
           >
             Explore Towns
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-6 h-6" />
           </button>
         </div>
       </section>

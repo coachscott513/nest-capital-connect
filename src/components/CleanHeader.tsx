@@ -78,7 +78,7 @@ const Dropdown = ({ isOpen, onClose, children, align = "left" }: DropdownProps) 
   return (
     <div
       ref={ref}
-      className={`absolute top-full mt-2 bg-white border border-gray-200 rounded-2xl shadow-xl p-4 min-w-72 z-50 animate-in fade-in slide-in-from-top-2 duration-200 ${
+      className={`absolute top-full mt-3 glass-strong rounded-2xl p-5 min-w-72 z-50 animate-in fade-in slide-in-from-top-2 duration-200 ${
         align === "right" ? "right-0" : "left-0"
       }`}
     >
@@ -112,8 +112,8 @@ const CleanHeader = () => {
 
   return (
     <>
-      {/* Desktop Header - Cupertino Light Theme */}
-      <header className="sticky top-0 z-[2000] bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
+      {/* Desktop Header - Liquid Glass Navigation */}
+      <header className="sticky top-0 z-[2000] glass-nav">
         <nav className="w-full px-4 md:px-8 lg:px-12">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
