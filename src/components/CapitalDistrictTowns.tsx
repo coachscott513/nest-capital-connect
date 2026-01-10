@@ -190,36 +190,81 @@ export const capitalDistrictTowns: TownData[] = [
     county: "Albany",
     slug: "cohoes",
     type: "city",
-    description: "Historic mill city on the Mohawk River",
-    keywords: ["Cohoes NY real estate", "Cohoes homes for sale"],
-    priority: "medium"
+    description: "Historic mill city on the Mohawk River with Cohoes Falls",
+    keywords: ["Cohoes NY real estate", "Cohoes homes for sale", "Cohoes investment"],
+    priority: "high"
   },
   {
     name: "Watervliet",
     county: "Albany",
     slug: "watervliet",
     type: "city",
-    description: "Small city with affordable housing options",
+    description: "Small city with affordable housing and high yields",
     keywords: ["Watervliet NY real estate", "Watervliet homes for sale"],
-    priority: "low"
+    priority: "high"
   },
   {
     name: "Green Island",
     county: "Albany",
     slug: "green-island",
     type: "village",
-    description: "Small village with river access",
-    keywords: ["Green Island NY real estate"],
-    priority: "low"
+    description: "Small village with exceptional investment returns",
+    keywords: ["Green Island NY real estate", "Green Island investment"],
+    priority: "high"
   },
   {
     name: "Voorheesville",
     county: "Albany",
     slug: "voorheesville",
     type: "village",
-    description: "Small village with rural character",
+    description: "Small village near Thacher State Park",
     keywords: ["Voorheesville NY real estate"],
-    priority: "low"
+    priority: "medium"
+  },
+  {
+    name: "Latham",
+    county: "Albany",
+    slug: "latham",
+    type: "hamlet",
+    description: "Commercial hub with Newton Plaza",
+    keywords: ["Latham NY real estate", "Latham homes for sale"],
+    priority: "medium"
+  },
+  {
+    name: "Loudonville",
+    county: "Albany",
+    slug: "loudonville",
+    type: "hamlet",
+    description: "Upscale neighborhood near Siena College",
+    keywords: ["Loudonville NY real estate", "Loudonville luxury homes"],
+    priority: "medium"
+  },
+  {
+    name: "Menands",
+    county: "Albany",
+    slug: "menands",
+    type: "village",
+    description: "Small village with strong investment potential",
+    keywords: ["Menands NY real estate"],
+    priority: "medium"
+  },
+  {
+    name: "Ravena",
+    county: "Albany",
+    slug: "ravena",
+    type: "village",
+    description: "Village with affordable properties",
+    keywords: ["Ravena NY real estate"],
+    priority: "medium"
+  },
+  {
+    name: "Altamont",
+    county: "Albany",
+    slug: "altamont",
+    type: "village",
+    description: "Village home to the Altamont Fair",
+    keywords: ["Altamont NY real estate"],
+    priority: "medium"
   },
 
   // Additional Rensselaer County Towns
@@ -228,8 +273,35 @@ export const capitalDistrictTowns: TownData[] = [
     county: "Rensselaer",
     slug: "rensselaer",
     type: "city",
-    description: "Riverfront city across from Albany",
+    description: "Riverfront city across from Albany with Amtrak access",
     keywords: ["Rensselaer NY real estate", "Rensselaer homes for sale"],
+    priority: "high"
+  },
+  {
+    name: "Averill Park",
+    county: "Rensselaer",
+    slug: "averill-park",
+    type: "hamlet",
+    description: "Hamlet with Crystal Lake recreation",
+    keywords: ["Averill Park NY real estate", "Averill Park homes"],
+    priority: "medium"
+  },
+  {
+    name: "Wynantskill",
+    county: "Rensselaer",
+    slug: "wynantskill",
+    type: "hamlet",
+    description: "Hamlet near Burden Lake",
+    keywords: ["Wynantskill NY real estate"],
+    priority: "medium"
+  },
+  {
+    name: "Schaghticoke",
+    county: "Rensselaer",
+    slug: "schaghticoke",
+    type: "town",
+    description: "Rural town with the famous fairgrounds",
+    keywords: ["Schaghticoke NY real estate"],
     priority: "medium"
   },
   {
@@ -259,9 +331,27 @@ export const capitalDistrictTowns: TownData[] = [
     county: "Saratoga",
     slug: "mechanicville",
     type: "city",
-    description: "Small city with historic character",
+    description: "Small city with historic character and strong yields",
     keywords: ["Mechanicville NY real estate"],
-    priority: "low"
+    priority: "high"
+  },
+  {
+    name: "Stillwater",
+    county: "Saratoga",
+    slug: "stillwater",
+    type: "town",
+    description: "Historic town with Saratoga Battlefield",
+    keywords: ["Stillwater NY real estate"],
+    priority: "medium"
+  },
+  {
+    name: "Waterford",
+    county: "Saratoga",
+    slug: "waterford",
+    type: "town",
+    description: "Historic town at Flight of Locks",
+    keywords: ["Waterford NY real estate"],
+    priority: "medium"
   },
   {
     name: "Wilton",
@@ -279,24 +369,6 @@ export const capitalDistrictTowns: TownData[] = [
     type: "town",
     description: "Rural town with Ballston Lake",
     keywords: ["Milton NY real estate"],
-    priority: "low"
-  },
-  {
-    name: "Stillwater",
-    county: "Saratoga",
-    slug: "stillwater",
-    type: "town",
-    description: "Rural town on the Hudson River",
-    keywords: ["Stillwater NY real estate"],
-    priority: "low"
-  },
-  {
-    name: "Waterford",
-    county: "Saratoga",
-    slug: "waterford",
-    type: "town",
-    description: "Historic town at confluence of rivers",
-    keywords: ["Waterford NY real estate"],
     priority: "low"
   }
 ];

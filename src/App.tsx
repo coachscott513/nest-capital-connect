@@ -55,6 +55,7 @@ import DelmarHomesForSale from "./pages/DelmarHomesForSale";
 import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 
 import DelmarIntelligence from "./pages/DelmarIntelligence";
+import DynamicTownIntelligence from "./pages/DynamicTownIntelligence";
 import NiskayunaIntelligence from "./pages/NiskayunaIntelligence";
 import VoorheesvilleIntelligence from "./pages/VoorheesvilleIntelligence";
 import VoorheesvilleHomesForSale from "./pages/VoorheesvilleHomesForSale";
@@ -204,7 +205,7 @@ const App = () => {
           <Route path="/delmar-market-insights" element={<DelmarMarketInsights />} />
           <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
           
-          {/* Town Intelligence Pages - Alphabetical */}
+          {/* Town Intelligence Pages - Specific overrides for existing pages */}
           <Route path="/towns/albany" element={<AlbanyIntelligence />} />
           <Route path="/towns/amsterdam" element={<AmsterdamIntelligence />} />
           <Route path="/towns/clifton-park" element={<CliftonParkIntelligence />} />
@@ -217,6 +218,9 @@ const App = () => {
           <Route path="/towns/schenectady" element={<SchenectadyIntelligence />} />
           <Route path="/towns/troy" element={<TroyIntelligence />} />
           <Route path="/towns/voorheesville" element={<VoorheesvilleIntelligence />} />
+          
+          {/* Dynamic Town Intelligence - catches all other towns from the 30-town inventory */}
+          <Route path="/towns/:slug" element={<DynamicTownIntelligence />} />
           
           {/* Market Report Thank You Pages */}
           <Route path="/towns/:townSlug/report-request-thanks" element={<MarketReportThanks />} />
