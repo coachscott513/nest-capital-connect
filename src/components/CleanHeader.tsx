@@ -116,21 +116,41 @@ const CleanHeader = () => {
       <header className="sticky top-0 z-[2000] glass-nav">
         <nav className="w-full px-4 md:px-8 lg:px-12">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo - Electrified Teal Brand */}
-            <Link to="/" className="flex items-center gap-3 group shrink-0" onClick={closeDropdowns}>
-              <div className="relative">
-                <img 
-                  src={cdnLogo} 
-                  alt="Capital District Nest" 
-                  className="h-10 md:h-12 w-auto filter drop-shadow-[0_0_8px_rgba(0,245,255,0.4)]"
-                  style={{ filter: 'brightness(1.1) saturate(1.2)' }}
-                />
+            {/* Logo - Abstract Institutional Mark */}
+            <Link to="/" className="flex items-center gap-4 group shrink-0" onClick={closeDropdowns}>
+              {/* Abstract "N" Symbol - Structural Beams */}
+              <div className="relative w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                <svg viewBox="0 0 40 40" className="w-full h-full">
+                  {/* Glowing effect background */}
+                  <defs>
+                    <filter id="tealGlow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                      <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  {/* Abstract N / Upward Arrow / Structural Beams */}
+                  <path 
+                    d="M8 32 L8 8 L20 20 L32 8 L32 32" 
+                    fill="none" 
+                    stroke="hsl(185 100% 50%)" 
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    filter="url(#tealGlow)"
+                    className="drop-shadow-[0_0_8px_rgba(0,245,255,0.6)]"
+                  />
+                </svg>
               </div>
+              
+              {/* Typography - Inter Light, Wide Tracking */}
               <div className="hidden sm:flex flex-col">
-                <span className="text-xs font-light text-white tracking-[0.2em] uppercase">
+                <span className="text-[11px] font-light text-white tracking-[0.25em] uppercase">
                   Capital District
                 </span>
-                <span className="text-[10px] text-[#00F5FF] tracking-[0.15em] uppercase font-medium">
+                <span className="text-[9px] text-primary tracking-[0.3em] uppercase font-medium">
                   Nest
                 </span>
               </div>

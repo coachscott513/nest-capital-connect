@@ -114,23 +114,17 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
         </div>
       </div>
 
-      {/* Premium Pulse Indicator - Expanding Teal Ring */}
-      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
-        {/* Animated Pulse Rings */}
-        <div className="relative w-10 h-10">
-          <div className="absolute inset-0 rounded-full border border-primary/60 animate-pulse-ring" />
-          <div className="absolute inset-0 rounded-full border border-primary/40 animate-pulse-ring" style={{ animationDelay: '0.5s' }} />
-          <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse-ring" style={{ animationDelay: '1s' }} />
-          {/* Center Dot */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary/80 shadow-[0_0_8px_rgba(0,245,255,0.6)]" />
+      {/* Premium Breathing Line Indicator */}
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6">
+        {/* Breathing Vertical Line */}
+        <div className="relative h-16 w-px">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary to-transparent animate-breathe" />
         </div>
         
-        {/* Vertical Text */}
-        <div className="flex flex-col items-center">
-          <span className="text-[10px] font-light text-muted-foreground tracking-[0.25em] uppercase" style={{ writingMode: 'vertical-rl' }}>
-            EXPLORE ALPHA
-          </span>
-        </div>
+        {/* Underwrite Text */}
+        <span className="text-[8px] font-light text-muted-foreground tracking-[0.35em] uppercase">
+          Underwrite
+        </span>
       </div>
     </section>
   );
