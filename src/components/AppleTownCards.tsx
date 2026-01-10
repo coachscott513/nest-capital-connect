@@ -117,8 +117,8 @@ const AppleTownCards = () => {
                 }}
               />
               
-              {/* Dark Gradient Overlay - Cinematic */}
-              <div className="absolute inset-0 town-card-overlay" />
+              {/* Dark Gradient Overlay - Heavy for readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30" />
               
               {/* Teal Glow Nest Score Badge */}
               <div className="absolute top-5 right-5 nest-badge">
