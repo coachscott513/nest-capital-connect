@@ -14,9 +14,9 @@ interface SEOHeadProps {
 const BASE_URL = "https://capitaldistrictnest.com";
 
 const SEOHead = ({ 
-  title = "Capital District Nest | Real Estate Economics & Investing",
-  description = "Find homes for sale in Albany, Troy, Schenectady, and Saratoga Springs NY. Expert local real estate services, investment properties, first-time buyer assistance, and rental properties in New York's Capital District.",
-  keywords = "Albany NY homes for sale, Troy NY homes for sale, Schenectady NY homes for sale, Saratoga Springs NY real estate, Capital District homes, Albany real estate, investment properties Albany NY, Capital District property management, NY first time home buyers, rental properties Albany, multi-unit homes NY, Capital Region real estate",
+  title = "Capital District Nest | The Yield Intelligence Platform",
+  description = "Exclusive 36% Cash-on-Cash property intelligence for NYC and Boston investors. Premium real estate data for Albany, Troy, Schenectady & Saratoga Springs NY.",
+  keywords = "investment properties Albany NY, 36% cash on cash return, NYC investors Albany, Boston investors Capital District, multi-unit properties Troy NY, yield intelligence, real estate investment platform, Capital District nest score",
   canonical,
   structuredData,
   ogImage = `${BASE_URL}/og-image-capital-district.jpg`,

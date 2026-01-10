@@ -116,12 +116,24 @@ const CleanHeader = () => {
       <header className="sticky top-0 z-[2000] glass-nav">
         <nav className="w-full px-4 md:px-8 lg:px-12">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group shrink-0" onClick={closeDropdowns}>
-              <img src={cdnLogo} alt="Capital District Nest" className="h-10 md:h-12 w-auto" />
-              <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium hidden sm:block group-hover:text-foreground transition-colors">
-                Home
-              </span>
+            {/* Logo - Electrified Teal Brand */}
+            <Link to="/" className="flex items-center gap-3 group shrink-0" onClick={closeDropdowns}>
+              <div className="relative">
+                <img 
+                  src={cdnLogo} 
+                  alt="Capital District Nest" 
+                  className="h-10 md:h-12 w-auto filter drop-shadow-[0_0_8px_rgba(0,245,255,0.4)]"
+                  style={{ filter: 'brightness(1.1) saturate(1.2)' }}
+                />
+              </div>
+              <div className="hidden sm:flex flex-col">
+                <span className="text-xs font-light text-white tracking-[0.2em] uppercase">
+                  Capital District
+                </span>
+                <span className="text-[10px] text-[#00F5FF] tracking-[0.15em] uppercase font-medium">
+                  Nest
+                </span>
+              </div>
             </Link>
 
             {/* Desktop Navigation */}
