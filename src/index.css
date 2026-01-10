@@ -265,9 +265,22 @@
     line-height: 1.1;
   }
   
+  /* Market Pulse Cinematic - Massive Scale */
+  .market-pulse-cinematic {
+    font-weight: 100;
+    font-size: clamp(3rem, 10vw, 6rem);
+    line-height: 1.1;
+    letter-spacing: 0.8em;
+  }
+  
   @media (max-width: 768px) {
     .market-pulse-title {
       font-size: 2rem;
+      letter-spacing: 0.3em;
+    }
+    
+    .market-pulse-cinematic {
+      font-size: clamp(1.5rem, 8vw, 3rem);
       letter-spacing: 0.3em;
     }
   }
@@ -369,18 +382,22 @@
 /* ============= BREATHING LINE ANIMATION - Premium Pulse ============= */
 @keyframes breathe {
   0%, 100% { 
-    opacity: 0.25;
-    transform: scaleY(0.9);
+    opacity: 0.2;
     filter: drop-shadow(0 0 4px hsl(185 100% 50% / 0.3));
   }
   50% { 
     opacity: 1;
-    transform: scaleY(1.15);
-    filter: drop-shadow(0 0 12px hsl(185 100% 50% / 0.7));
+    filter: drop-shadow(0 0 20px hsl(185 100% 50% / 0.8));
   }
 }
 
 .animate-breathe {
+  animation: breathe 3s ease-in-out infinite;
+}
+
+/* Cinematic Breathing Line for Market Pulse */
+.breathing-line {
+  background: linear-gradient(to bottom, hsl(185 100% 50%) 0%, hsl(185 100% 50% / 0.3) 100%);
   animation: breathe 3s ease-in-out infinite;
 }
 
