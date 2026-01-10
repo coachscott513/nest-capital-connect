@@ -117,7 +117,7 @@ const AppleTownCards = () => {
               {/* Dark Gradient Overlay - Cinematic */}
               <div className="absolute inset-0 town-card-overlay" />
               
-              {/* Frosted Glass Nest Score Badge */}
+              {/* Teal Glow Nest Score Badge */}
               <div className="absolute top-5 right-5 nest-badge">
                 Nest Score: {town.nestScore}
               </div>
@@ -125,7 +125,7 @@ const AppleTownCards = () => {
               {/* Content - Bottom Aligned */}
               <div className="absolute bottom-0 left-0 right-0 p-8">
                 <div className="flex items-center gap-2 mb-3">
-                  <MapPin className="w-4 h-4 text-white/80" />
+                  <MapPin className="w-4 h-4 text-primary" />
                   <h3 className="text-2xl font-semibold text-white tracking-tight">
                     {town.name}
                   </h3>
@@ -140,7 +140,7 @@ const AppleTownCards = () => {
                   </div>
                   
                   {/* Hover Reveal Arrow */}
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-1 text-white font-semibold text-sm">
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-1 text-primary font-semibold text-sm">
                     Explore <ArrowRight className="w-4 h-4" />
                   </span>
                 </div>

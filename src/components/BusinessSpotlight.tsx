@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, ExternalLink, MapPin } from "lucide-react";
+import { ExternalLink, MapPin } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
 interface Business {
@@ -81,32 +81,32 @@ const BusinessSpotlight = () => {
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null);
 
   return (
-    <section className="py-20 px-[5%] bg-white overflow-hidden">
+    <section className="section-massive px-[5%] bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-3">Local Partners</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1D1D1F] mb-4">
+        <div className="text-center mb-16">
+          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Local Partners</p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-6">
             Featured Local Partners
           </h2>
-          <p className="text-lg text-[#6E6E73] max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto body-airy font-light">
             Discover the businesses that make the Capital District thrive
           </p>
         </div>
 
         {/* Horizontal Scrolling Business Avatars */}
         <div className="relative">
-          <div className="flex gap-8 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
+          <div className="flex gap-10 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory">
             {featuredBusinesses.map((business) => (
               <button
                 key={business.id}
                 onClick={() => setSelectedBusiness(business)}
-                className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
+                className="flex flex-col items-center gap-4 flex-shrink-0 snap-center group"
               >
-                {/* Verified by Nest Border */}
-                <div className="relative">
-                  <div className="w-24 h-24 md:w-28 md:h-28 rounded-full p-[3px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300">
-                    <div className="w-full h-full rounded-full overflow-hidden bg-white p-1">
+                {/* Teal Glow Border - Spotlight Effect */}
+                <div className="relative spotlight">
+                  <div className="w-28 h-28 md:w-32 md:h-32 rounded-full p-[3px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
+                    <div className="w-full h-full rounded-full overflow-hidden bg-card p-1">
                       <img
                         src={business.logo}
                         alt={business.name}
@@ -115,13 +115,13 @@ const BusinessSpotlight = () => {
                     </div>
                   </div>
                   {/* Verified Badge */}
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[10px] font-bold px-3 py-1 rounded-full whitespace-nowrap">
                     Verified by Nest
                   </div>
                 </div>
                 
                 {/* Business Name */}
-                <span className="text-sm font-medium text-[#1D1D1F] text-center max-w-[100px] leading-tight group-hover:text-primary transition-colors">
+                <span className="text-sm font-medium text-foreground text-center max-w-[120px] leading-tight group-hover:text-primary transition-colors">
                   {business.name}
                 </span>
               </button>
@@ -129,53 +129,53 @@ const BusinessSpotlight = () => {
           </div>
           
           {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-6 w-12 bg-gradient-to-r from-white to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-6 w-12 bg-gradient-to-l from-white to-transparent pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-8 w-16 bg-gradient-to-r from-background to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-8 w-16 bg-gradient-to-l from-background to-transparent pointer-events-none" />
         </div>
       </div>
 
-      {/* Side Panel / Drawer */}
+      {/* Side Panel / Drawer - Deep Space Style */}
       <Sheet open={!!selectedBusiness} onOpenChange={() => setSelectedBusiness(null)}>
-        <SheetContent className="w-full sm:max-w-lg bg-white border-l border-gray-100">
+        <SheetContent className="w-full sm:max-w-lg bg-card border-l border-border">
           {selectedBusiness && (
             <>
               <SheetHeader className="mb-6">
-                <SheetTitle className="text-2xl font-bold text-[#1D1D1F]">
+                <SheetTitle className="text-2xl font-bold text-foreground">
                   {selectedBusiness.name}
                 </SheetTitle>
               </SheetHeader>
 
-              {/* Owner Photo */}
-              <div className="mb-6">
+              {/* Owner Photo with Spotlight */}
+              <div className="mb-6 relative spotlight rounded-2xl overflow-hidden">
                 <img
                   src={selectedBusiness.ownerPhoto}
                   alt={selectedBusiness.ownerName}
-                  className="w-full h-64 object-cover rounded-2xl"
+                  className="w-full h-64 object-cover"
                 />
               </div>
 
               {/* Owner Name & Town */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-[#1D1D1F]">{selectedBusiness.ownerName}</h3>
-                  <p className="text-sm text-[#6E6E73]">Owner & Founder</p>
+                  <h3 className="text-lg font-semibold text-foreground">{selectedBusiness.ownerName}</h3>
+                  <p className="text-sm text-muted-foreground">Owner & Founder</p>
                 </div>
-                <div className="flex items-center gap-1 text-sm text-[#6E6E73]">
-                  <MapPin className="w-4 h-4" />
+                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                  <MapPin className="w-4 h-4 text-primary" />
                   {selectedBusiness.town}
                 </div>
               </div>
 
               {/* Story */}
               <div className="mb-6">
-                <h4 className="text-sm font-semibold text-[#1D1D1F] mb-2 uppercase tracking-wider">The Story</h4>
-                <p className="text-[#6E6E73] leading-relaxed">{selectedBusiness.story}</p>
+                <h4 className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wider">The Story</h4>
+                <p className="text-muted-foreground leading-relaxed body-airy">{selectedBusiness.story}</p>
               </div>
 
               {/* Offering */}
-              <div className="p-4 bg-[#F5F5F7] rounded-xl mb-6">
-                <h4 className="text-sm font-semibold text-[#1D1D1F] mb-1">What They Offer</h4>
-                <p className="text-[#6E6E73]">{selectedBusiness.offering}</p>
+              <div className="p-5 glass rounded-2xl mb-6">
+                <h4 className="text-sm font-semibold text-foreground mb-2">What They Offer</h4>
+                <p className="text-muted-foreground">{selectedBusiness.offering}</p>
               </div>
 
               {/* CTA */}
@@ -184,7 +184,7 @@ const BusinessSpotlight = () => {
                   href={selectedBusiness.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full py-4 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-colors"
+                  className="flex items-center justify-center gap-2 w-full py-4 bg-primary text-primary-foreground rounded-xl font-semibold hover:scale-105 transition-transform glow-primary"
                 >
                   Visit Website <ExternalLink className="w-4 h-4" />
                 </a>

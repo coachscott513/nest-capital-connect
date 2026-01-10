@@ -18,8 +18,8 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Full-Bleed 4K Cinematic Background */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+      {/* Deep Space Cinematic Background */}
       <div className="absolute inset-0">
         {/* High-Fidelity Video Background */}
         <video
@@ -27,7 +27,7 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
           poster="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1920&q=80"
         >
           <source 
@@ -36,11 +36,12 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
           />
         </video>
         
-        {/* Dark Gradient Overlay - 20% opacity for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/5 to-black/30" />
+        {/* Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
         
-        {/* Subtle light wash for glass effect contrast */}
-        <div className="absolute inset-0 bg-white/40" />
+        {/* Teal glow orbs */}
+        <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[150px]" />
+        <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" />
       </div>
 
       {/* Content - Maximum White Space */}
@@ -54,10 +55,10 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
         {/* Headline - Extra Light 84px */}
         <h1 className="headline-hero text-foreground mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
           Find clarity in<br />
-          <span className="text-gradient-premium">every property decision</span>
+          <span className="text-gradient-premium text-glow">every property decision</span>
         </h1>
 
-        {/* Subheadline - Airy Line Height */}
+        {/* Subheadline - Silver color */}
         <p className="text-xl md:text-2xl text-muted-foreground body-airy mb-16 max-w-2xl mx-auto animate-fade-in font-light" style={{ animationDelay: '0.2s' }}>
           Clear data. Local context. Town-by-town intelligence built for buyers who demand precision.
         </p>
@@ -75,14 +76,14 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Enter address or town for yield analysis..."
+                placeholder="Enter address for yield analysis..."
                 className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground/60 text-lg py-4 font-light tracking-wide"
               />
             </div>
             <Button 
               type="submit"
               size="lg" 
-              className="h-14 px-8 rounded-xl font-semibold shrink-0"
+              className="h-14 px-8 rounded-xl font-semibold shrink-0 glow-primary"
             >
               Analyze
               <ArrowRight className="w-4 h-4 ml-2" />
@@ -90,7 +91,7 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
           </div>
         </form>
 
-        {/* Ghost Pill Buttons */}
+        {/* Ghost Glass Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
           <Link 
             to="/investor-tools"
@@ -116,7 +117,7 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
       {/* Scroll indicator - frosted */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-scroll">
         <div className="w-8 h-14 rounded-full glass flex items-start justify-center p-2.5">
-          <div className="w-1.5 h-3 rounded-full bg-foreground/40" />
+          <div className="w-1.5 h-3 rounded-full bg-primary/60" />
         </div>
       </div>
     </section>
