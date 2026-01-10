@@ -338,6 +338,113 @@ export type Database = {
         }
         Relationships: []
       }
+      rental_applications: {
+        Row: {
+          annual_income: string
+          created_at: string
+          current_address: string | null
+          email: string
+          full_name: string
+          id: string
+          message: string | null
+          move_in_date: string
+          phone: string | null
+          rental_id: string | null
+        }
+        Insert: {
+          annual_income: string
+          created_at?: string
+          current_address?: string | null
+          email: string
+          full_name: string
+          id?: string
+          message?: string | null
+          move_in_date: string
+          phone?: string | null
+          rental_id?: string | null
+        }
+        Update: {
+          annual_income?: string
+          created_at?: string
+          current_address?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string | null
+          move_in_date?: string
+          phone?: string | null
+          rental_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rental_applications_rental_id_fkey"
+            columns: ["rental_id"]
+            isOneToOne: false
+            referencedRelation: "rentals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rentals: {
+        Row: {
+          address: string
+          available_date: string | null
+          bathrooms: number
+          bedrooms: number
+          created_at: string
+          description: string | null
+          featured_order: number | null
+          id: string
+          is_active: boolean | null
+          pet_friendly: boolean | null
+          photos: string[] | null
+          property_video_url: string | null
+          rent_price: number
+          sqft: number | null
+          town_slug: string
+          updated_at: string
+          utilities_included: boolean | null
+        }
+        Insert: {
+          address: string
+          available_date?: string | null
+          bathrooms?: number
+          bedrooms?: number
+          created_at?: string
+          description?: string | null
+          featured_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          pet_friendly?: boolean | null
+          photos?: string[] | null
+          property_video_url?: string | null
+          rent_price: number
+          sqft?: number | null
+          town_slug: string
+          updated_at?: string
+          utilities_included?: boolean | null
+        }
+        Update: {
+          address?: string
+          available_date?: string | null
+          bathrooms?: number
+          bedrooms?: number
+          created_at?: string
+          description?: string | null
+          featured_order?: number | null
+          id?: string
+          is_active?: boolean | null
+          pet_friendly?: boolean | null
+          photos?: string[] | null
+          property_video_url?: string | null
+          rent_price?: number
+          sqft?: number | null
+          town_slug?: string
+          updated_at?: string
+          utilities_included?: boolean | null
+        }
+        Relationships: []
+      }
       town_ledger: {
         Row: {
           category: string

@@ -22,6 +22,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import IntelligenceGatekeeper from "@/components/IntelligenceGatekeeper";
+import RentalVault from "@/components/RentalVault";
 
 interface TownLedgerEntry {
   id: string;
@@ -535,6 +536,9 @@ const AppleTownTemplate = ({
           )}
         </div>
       </section>
+
+      {/* Rental Vault for this town */}
+      <RentalVault townSlug={townSlug} townName={townName} limit={4} />
 
       {/* CTA Section - Deep Space */}
       <section className="section-massive px-[5%] bg-background">
