@@ -334,7 +334,23 @@
   animation: ticker 30s linear infinite;
 }
 
-/* Scroll Animation */
+/* ============= PULSE RING ANIMATION - Premium Scroll Indicator ============= */
+@keyframes pulse-ring {
+  0% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+  100% { 
+    transform: scale(2.5); 
+    opacity: 0; 
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Scroll Animation (legacy) */
 @keyframes scroll {
   0%, 100% { opacity: 1; transform: translateY(0); }
   50% { opacity: 0.5; transform: translateY(4px); }
@@ -351,4 +367,9 @@
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* ============= CINEMATIC IMAGE FILTER ============= */
+.cinematic-filter {
+  filter: brightness(0.8) contrast(1.1) saturate(0.9);
 }

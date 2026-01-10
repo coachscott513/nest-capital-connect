@@ -114,10 +114,22 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
         </div>
       </div>
 
-      {/* Scroll indicator - frosted */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-scroll">
-        <div className="w-8 h-14 rounded-full glass flex items-start justify-center p-2.5">
-          <div className="w-1.5 h-3 rounded-full bg-primary/60" />
+      {/* Premium Pulse Indicator - Expanding Teal Ring */}
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
+        {/* Animated Pulse Rings */}
+        <div className="relative w-10 h-10">
+          <div className="absolute inset-0 rounded-full border border-primary/60 animate-pulse-ring" />
+          <div className="absolute inset-0 rounded-full border border-primary/40 animate-pulse-ring" style={{ animationDelay: '0.5s' }} />
+          <div className="absolute inset-0 rounded-full border border-primary/20 animate-pulse-ring" style={{ animationDelay: '1s' }} />
+          {/* Center Dot */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary/80 shadow-[0_0_8px_rgba(0,245,255,0.6)]" />
+        </div>
+        
+        {/* Vertical Text */}
+        <div className="flex flex-col items-center">
+          <span className="text-[10px] font-light text-muted-foreground tracking-[0.25em] uppercase" style={{ writingMode: 'vertical-rl' }}>
+            EXPLORE ALPHA
+          </span>
         </div>
       </div>
     </section>
