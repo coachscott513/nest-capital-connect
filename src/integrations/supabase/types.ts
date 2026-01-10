@@ -487,6 +487,7 @@ export type Database = {
       town_market_data: {
         Row: {
           active_listings: number | null
+          agent_search_url: string | null
           anchor_agent_email: string | null
           anchor_agent_id: string | null
           anchor_agent_name: string | null
@@ -526,6 +527,7 @@ export type Database = {
         }
         Insert: {
           active_listings?: number | null
+          agent_search_url?: string | null
           anchor_agent_email?: string | null
           anchor_agent_id?: string | null
           anchor_agent_name?: string | null
@@ -565,6 +567,7 @@ export type Database = {
         }
         Update: {
           active_listings?: number | null
+          agent_search_url?: string | null
           anchor_agent_email?: string | null
           anchor_agent_id?: string | null
           anchor_agent_name?: string | null
