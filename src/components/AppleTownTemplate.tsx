@@ -23,6 +23,7 @@ import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import IntelligenceGatekeeper from "@/components/IntelligenceGatekeeper";
 import RentalVault from "@/components/RentalVault";
+import MasterGatekeeperModal from "@/components/MasterGatekeeperModal";
 
 interface TownLedgerEntry {
   id: string;
@@ -100,6 +101,13 @@ const AppleTownTemplate = ({
   const [townMarketData, setTownMarketData] = useState<TownMarketData | null>(null);
   const [selectedVoice, setSelectedVoice] = useState<LocalVoice | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Master Gatekeeper state
+  const [gatekeeperOpen, setGatekeeperOpen] = useState(false);
+
+  const handleSearchClick = () => {
+    setGatekeeperOpen(true);
+  };
 
   // Calculate market velocity from days on market
   const calculateVelocity = (avgDaysOnMarket: number | null): "High" | "Medium" | "Low" => {
@@ -280,15 +288,13 @@ const AppleTownTemplate = ({
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <a
-                href={searchUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={handleSearchClick}
                 className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform glow-primary"
               >
                 <Search className="w-5 h-5" />
                 Search {townName} Homes
-              </a>
+              </button>
               <Link
                 to="/dealdesk"
                 className="inline-flex items-center justify-center gap-2 glass border border-primary/30 text-foreground px-8 py-4 rounded-xl font-semibold hover:bg-primary/20 transition-colors"
@@ -557,18 +563,24 @@ const AppleTownTemplate = ({
               Request Property Intel
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <a
-              href={searchUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={handleSearchClick}
               className="inline-flex items-center justify-center gap-2 glass border border-border text-foreground px-8 py-4 rounded-xl font-semibold hover:bg-primary/20 transition-all"
             >
               Browse All Listings
               <ExternalLink className="w-4 h-4" />
-            </a>
+            </button>
           </div>
         </div>
       </section>
+
+      {/* Master Gatekeeper Modal */}
+      <MasterGatekeeperModal
+        isOpen={gatekeeperOpen}
+        onClose={() => setGatekeeperOpen(false)}
+        redirectUrl={searchUrl}
+        townName={townName}
+      />
 
       <Footer />
 
