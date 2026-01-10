@@ -137,10 +137,18 @@ const CleanHeader = () => {
 
   return (
     <>
-      {/* Desktop Header - Liquid Glass Navigation */}
-      <header className="sticky top-0 z-[2000] glass-nav">
-        <nav className="w-full px-4 md:px-8 lg:px-12">
-          <div className="flex items-center justify-between h-16 md:h-20">
+      {/* Desktop Header - Apple-Style Glass Navigation */}
+      <header 
+        className="sticky top-0 z-[2000]"
+        style={{
+          background: 'rgba(11, 11, 11, 0.85)',
+          backdropFilter: 'blur(25px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
+        }}
+      >
+        <nav className="w-full px-4 md:px-8 lg:px-16">
+          <div className="flex items-center justify-between h-18 md:h-20">
             {/* Logo - Abstract Institutional Mark */}
             <Link to="/" className="flex items-center gap-4 group shrink-0" onClick={closeDropdowns}>
               {/* Data Nest Logo - Minimalist Horizontal Lines */}
@@ -175,21 +183,21 @@ const CleanHeader = () => {
               </div>
             </Link>
 
-            {/* Desktop Navigation - Institutional Style */}
-            <div className="hidden lg:flex items-center gap-2">
+            {/* Desktop Navigation - Apple-Style Institutional */}
+            <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => (
                 <div key={item.label} className="relative">
                   <button
                     onClick={() => toggleDropdown(item.dropdown)}
-                    className={`flex items-center gap-1.5 px-5 py-2.5 text-[13px] uppercase tracking-[0.25em] font-extralight rounded-full transition-all ${
+                    className={`flex items-center gap-2 px-6 py-3 text-[12px] uppercase tracking-[0.4em] font-[200] rounded-full transition-all duration-300 ${
                       activeDropdown === item.dropdown
-                        ? "text-primary bg-primary/15"
-                        : "text-white/80 hover:text-primary hover:bg-white/5"
+                        ? "text-primary bg-primary/20"
+                        : "text-white/90 hover:text-primary hover:bg-white/10"
                     }`}
                   >
                     {item.label}
                     <ChevronDown
-                      className={`h-4 w-4 transition-transform ${
+                      className={`h-3.5 w-3.5 transition-transform duration-300 ${
                         activeDropdown === item.dropdown ? "rotate-180" : ""
                       }`}
                     />
