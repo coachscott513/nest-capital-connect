@@ -29,64 +29,100 @@ const MarketPulse = () => {
   ];
 
   return (
-    <section className="section-massive px-[5%] bg-background">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header - Maximum Breathing Room */}
-        <div className="text-center mb-20">
-          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Market Pulse</p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight">
-            The data Zillow won't show you
-          </h2>
-        </div>
+    <section className="relative bg-background overflow-hidden">
+      {/* Extended Breathing Line from Hero */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-[20vh] bg-gradient-to-b from-primary via-primary/50 to-transparent" />
+      
+      {/* Massive Vertical Padding - Command Center Feel */}
+      <div className="pt-[20vh] pb-32 px-[5%]">
+        <div className="max-w-7xl mx-auto">
+          {/* Institutional Header - 4rem, Light Weight, Wide Tracking */}
+          <div className="text-center mb-24">
+            <h2 className="market-pulse-title text-foreground tracking-[0.5em] uppercase mb-6">
+              Market Pulse
+            </h2>
+            <p className="text-xl md:text-2xl text-muted-foreground font-light tracking-wide max-w-2xl mx-auto">
+              The data Zillow won't show you
+            </p>
+          </div>
 
-        {/* Bento Grid with Neon Gauges */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {pulseCards.map((card) => (
-            <div 
-              key={card.label}
-              className="bento-card p-10 group relative overflow-hidden"
-            >
-              {/* Circular Gauge - Neon Bloomberg Style */}
-              <div className="relative w-32 h-32 mx-auto mb-8">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-                  {/* Background Ring */}
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="42"
-                    fill="none"
-                    stroke="hsl(var(--muted))"
-                    strokeWidth="6"
-                  />
-                  {/* Progress Ring - Teal Glow */}
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="42"
-                    fill="none"
-                    stroke="hsl(var(--primary))"
-                    strokeWidth="6"
-                    strokeDasharray={`${card.gaugePercent * 2.64} 264`}
-                    className="gauge-ring"
-                  />
-                </svg>
-                {/* Center Value - Glowing */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-3xl font-bold text-primary text-glow">{card.value}<span className="text-xl">{card.suffix}</span></span>
+          {/* 3-Column Command Center Bento Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10">
+            {pulseCards.map((card) => (
+              <div 
+                key={card.label}
+                className="bento-card p-8 lg:p-12 group relative overflow-hidden"
+              >
+                {/* Teal Glow Background Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Circular Gauge - Larger for Command Center */}
+                <div className="relative w-40 h-40 lg:w-48 lg:h-48 mx-auto mb-10">
+                  <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                    {/* Background Ring */}
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="42"
+                      fill="none"
+                      stroke="hsl(var(--muted))"
+                      strokeWidth="4"
+                    />
+                    {/* Progress Ring - Teal Glow with Animation */}
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="42"
+                      fill="none"
+                      stroke="hsl(var(--primary))"
+                      strokeWidth="4"
+                      strokeDasharray={`${card.gaugePercent * 2.64} 264`}
+                      strokeLinecap="round"
+                      className="gauge-ring drop-shadow-[0_0_8px_rgba(0,245,255,0.5)]"
+                    />
+                  </svg>
+                  {/* Center Value - Glowing Bloomberg Style */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-4xl lg:text-5xl font-light text-primary text-glow tracking-tight">
+                      {card.value}
+                      <span className="text-2xl lg:text-3xl">{card.suffix}</span>
+                    </span>
+                  </div>
                 </div>
-              </div>
-              
-              {/* Icon + Label */}
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                  <card.icon className="w-5 h-5 text-primary" />
+                
+                {/* Icon Badge */}
+                <div className="flex items-center justify-center gap-3 mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors border border-primary/20">
+                    <card.icon className="w-6 h-6 text-primary" />
+                  </div>
                 </div>
+                
+                {/* Label - Command Center Typography */}
+                <h3 className="text-lg lg:text-xl font-medium text-foreground text-center mb-3 tracking-wide">
+                  {card.label}
+                </h3>
+                <p className="text-sm text-muted-foreground text-center tracking-wider uppercase">
+                  {card.subtext}
+                </p>
               </div>
-              
-              <h3 className="text-lg font-semibold text-foreground text-center mb-2">{card.label}</h3>
-              <p className="text-sm text-muted-foreground text-center body-airy">{card.subtext}</p>
-            </div>
-          ))}
+            ))}
+          </div>
+          
+          {/* Additional Data Row - Institutional Feel */}
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { label: "Days on Market", value: "28", trend: "↓ 12%" },
+              { label: "Active Towns", value: "43", trend: "Coverage" },
+              { label: "Monthly Views", value: "12K+", trend: "Growing" },
+              { label: "Data Sources", value: "7", trend: "Verified" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center p-6 glass rounded-2xl">
+                <p className="text-3xl lg:text-4xl font-light text-primary mb-2 tracking-tight">{stat.value}</p>
+                <p className="text-sm text-foreground font-medium mb-1">{stat.label}</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider">{stat.trend}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

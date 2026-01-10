@@ -258,6 +258,20 @@
     }
   }
   
+  /* Market Pulse Title - Institutional 4rem */
+  .market-pulse-title {
+    font-weight: 100;
+    font-size: 4rem;
+    line-height: 1.1;
+  }
+  
+  @media (max-width: 768px) {
+    .market-pulse-title {
+      font-size: 2rem;
+      letter-spacing: 0.3em;
+    }
+  }
+  
   .body-airy {
     line-height: 1.8;
     letter-spacing: 0.01em;

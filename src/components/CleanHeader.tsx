@@ -92,9 +92,16 @@ const Dropdown = ({ isOpen, onClose, children, align = "left" }: DropdownProps) 
   return (
     <div
       ref={ref}
-      className={`absolute top-full mt-3 glass-strong rounded-2xl p-5 min-w-72 z-50 animate-in fade-in slide-in-from-top-2 duration-200 ${
+      className={`absolute top-full mt-3 rounded-2xl p-5 min-w-72 z-[9999] animate-in fade-in slide-in-from-top-2 duration-200 ${
         align === "right" ? "right-0" : "left-0"
       }`}
+      style={{
+        background: 'rgba(11, 11, 11, 0.95)',
+        backdropFilter: 'blur(20px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+        border: '1px solid rgba(255, 255, 255, 0.12)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 0 0.5px rgba(255, 255, 255, 0.1)'
+      }}
     >
       {children}
     </div>
