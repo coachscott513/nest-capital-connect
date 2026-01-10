@@ -61,7 +61,7 @@ const navItems = [
   },
   {
     label: "Intelligence",
-    dropdown: "intelligence",
+    href: "/intelligence", // Direct link, no dropdown
   },
 ];
 
@@ -187,21 +187,32 @@ const CleanHeader = () => {
             <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => (
                 <div key={item.label} className="relative">
-                  <button
-                    onClick={() => toggleDropdown(item.dropdown)}
-                    className={`flex items-center gap-2 px-6 py-3 text-[12px] uppercase tracking-[0.4em] font-[200] rounded-full transition-all duration-300 ${
-                      activeDropdown === item.dropdown
-                        ? "text-primary bg-primary/20"
-                        : "text-white/90 hover:text-primary hover:bg-white/10"
-                    }`}
-                  >
-                    {item.label}
-                    <ChevronDown
-                      className={`h-3.5 w-3.5 transition-transform duration-300 ${
-                        activeDropdown === item.dropdown ? "rotate-180" : ""
+                  {item.href ? (
+                    // Direct link (no dropdown)
+                    <Link
+                      to={item.href}
+                      className="flex items-center gap-2 px-6 py-3 text-[12px] uppercase tracking-[0.4em] font-[200] rounded-full transition-all duration-300 text-white/90 hover:text-primary hover:bg-white/10"
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    // Dropdown button
+                    <button
+                      onClick={() => toggleDropdown(item.dropdown!)}
+                      className={`flex items-center gap-2 px-6 py-3 text-[12px] uppercase tracking-[0.4em] font-[200] rounded-full transition-all duration-300 ${
+                        activeDropdown === item.dropdown
+                          ? "text-primary bg-primary/20"
+                          : "text-white/90 hover:text-primary hover:bg-white/10"
                       }`}
-                    />
-                  </button>
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className={`h-3.5 w-3.5 transition-transform duration-300 ${
+                          activeDropdown === item.dropdown ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                  )}
 
                   {/* Towns Dropdown */}
                   {item.dropdown === "towns" && (
@@ -263,37 +274,6 @@ const CleanHeader = () => {
                         >
                           <span>Become a Local Partner — $49/mo</span>
                         </Link>
-                      </div>
-                    </Dropdown>
-                  )}
-
-                  {/* Intelligence Dropdown */}
-                  {item.dropdown === "intelligence" && (
-                    <Dropdown isOpen={activeDropdown === "intelligence"} onClose={closeDropdowns}>
-                      <div className="space-y-1">
-                        <Link
-                          to="/reports/sample-property-intelligence"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-primary hover:bg-primary/10 rounded-md transition-colors"
-                        >
-                          View Sample Report →
-                        </Link>
-                        <Link
-                          to="/dealdesk"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Request a Report
-                        </Link>
-                        <div className="border-t border-border my-2" />
-                        <div className="px-3 py-2 text-sm text-muted-foreground">
-                          <p className="font-medium text-foreground mb-1">How It Works</p>
-                          <ol className="list-decimal list-inside space-y-1 text-xs">
-                            <li>Submit any property address</li>
-                            <li>We pull tax, comp, and risk data</li>
-                            <li>Get your full report in 24 hours</li>
-                          </ol>
-                        </div>
                       </div>
                     </Dropdown>
                   )}

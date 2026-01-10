@@ -104,7 +104,7 @@ import FirstTimeBuyerJourney from "./pages/buyer-journey/FirstTimeBuyerJourney";
 import LandBuyerJourney from "./pages/buyer-journey/LandBuyerJourney";
 import FinancingJourney from "./pages/buyer-journey/FinancingJourney";
 import ComingSoon from "./pages/ComingSoon";
-import Intelligence from "./pages/Intelligence";
+import IntelligenceHub from "./pages/IntelligenceHub";
 import MarketReportThanks from "./pages/MarketReportThanks";
 import Ask from "./pages/Ask";
 import SiteIndex from "./pages/SiteIndex";
@@ -192,7 +192,7 @@ const App = () => {
           <Route path="/coming-soon" element={<ComingSoon />} />
           
           {/* Intelligence Hub */}
-          <Route path="/intelligence" element={<Intelligence />} />
+          <Route path="/intelligence" element={<IntelligenceHub />} />
           
           {/* Hyperlocal SEO Pages - Homes for Sale */}
           <Route path="/homes-for-sale" element={<HomesForSale />} />
