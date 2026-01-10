@@ -108,10 +108,13 @@ const AppleTownCards = () => {
               to={town.href}
               className="group relative h-[420px] rounded-[2rem] overflow-hidden hover-lift"
             >
-              {/* Background Image */}
+              {/* Background Image - Cinematic Filter */}
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110"
-                style={{ backgroundImage: `url(${town.image})` }}
+                style={{ 
+                  backgroundImage: `url(${town.image})`,
+                  filter: 'brightness(0.8) contrast(1.1) saturate(0.9)'
+                }}
               />
               
               {/* Dark Gradient Overlay - Cinematic */}
