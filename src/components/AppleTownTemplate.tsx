@@ -57,12 +57,24 @@ interface LocalVoice {
   is_verified: boolean;
 }
 
+interface TownMarketData {
+  avg_price: number | null;
+  median_price: number | null;
+  active_listings: number | null;
+  avg_days_on_market: number | null;
+  avg_sqft: number | null;
+  avg_beds: number | null;
+  avg_baths: number | null;
+  single_family_count: number | null;
+  multi_family_count: number | null;
+}
+
 interface AppleTownTemplateProps {
   townSlug: string;
   townName: string;
   schoolDistrict?: string;
-  avgYield: string;
-  marketVelocity: "High" | "Medium" | "Low";
+  avgYield?: string; // Now optional - will pull from DB
+  marketVelocity?: "High" | "Medium" | "Low"; // Now optional - calculated from data
   searchUrl: string;
   heroImage?: string;
 }
@@ -71,23 +83,44 @@ const AppleTownTemplate = ({
   townSlug,
   townName,
   schoolDistrict,
-  avgYield,
-  marketVelocity,
+  avgYield: propAvgYield,
+  marketVelocity: propMarketVelocity,
   searchUrl,
   heroImage = "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1920&q=80"
 }: AppleTownTemplateProps) => {
   const [ledgerEntries, setLedgerEntries] = useState<TownLedgerEntry[]>([]);
   const [highYieldAssets, setHighYieldAssets] = useState<HighYieldAsset[]>([]);
   const [localVoices, setLocalVoices] = useState<LocalVoice[]>([]);
+  const [townMarketData, setTownMarketData] = useState<TownMarketData | null>(null);
   const [selectedVoice, setSelectedVoice] = useState<LocalVoice | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Calculate market velocity from days on market
+  const calculateVelocity = (avgDaysOnMarket: number | null): "High" | "Medium" | "Low" => {
+    if (!avgDaysOnMarket) return "Medium";
+    if (avgDaysOnMarket < 30) return "High";
+    if (avgDaysOnMarket < 60) return "Medium";
+    return "Low";
+  };
+
+  // Calculate avg yield from high-yield assets data
+  const calculateAvgYield = (): string => {
+    if (highYieldAssets.length > 0) {
+      const avgCoC = highYieldAssets.reduce((sum, a) => sum + (a.cash_on_cash_return || 0), 0) / highYieldAssets.length;
+      return `${avgCoC.toFixed(1)}%`;
+    }
+    return propAvgYield || "7.0%";
+  };
+
+  const marketVelocity = propMarketVelocity || calculateVelocity(townMarketData?.avg_days_on_market ?? null);
+  const avgYield = calculateAvgYield();
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       
-      // Fetch all data in parallel
-      const [ledgerRes, assetsRes, voicesRes] = await Promise.all([
+      // Fetch all data in parallel including town_market_data
+      const [ledgerRes, assetsRes, voicesRes, marketRes] = await Promise.all([
         supabase
           .from('town_ledger')
           .select('*')
@@ -99,7 +132,7 @@ const AppleTownTemplate = ({
           .select('*')
           .eq('town_slug', townSlug)
           .eq('is_active', true)
-          .order('featured_order', { ascending: true })
+          .order('cash_on_cash_return', { ascending: false })
           .limit(4),
         supabase
           .from('local_voices')
@@ -107,12 +140,19 @@ const AppleTownTemplate = ({
           .eq('town_slug', townSlug)
           .eq('is_verified', true)
           .order('display_order', { ascending: true })
-          .limit(8)
+          .limit(8),
+        supabase
+          .from('town_market_data')
+          .select('avg_price, median_price, active_listings, avg_days_on_market, avg_sqft, avg_beds, avg_baths, single_family_count, multi_family_count')
+          .eq('town_slug', townSlug)
+          .order('scraped_at', { ascending: false })
+          .maybeSingle()
       ]);
 
       if (ledgerRes.data) setLedgerEntries(ledgerRes.data);
       if (assetsRes.data) setHighYieldAssets(assetsRes.data);
       if (voicesRes.data) setLocalVoices(voicesRes.data);
+      if (marketRes.data) setTownMarketData(marketRes.data);
       
       setIsLoading(false);
     };
@@ -162,7 +202,7 @@ const AppleTownTemplate = ({
 
         {/* Floating Nest Intelligence Gauge - Top Right */}
         <div className="absolute top-8 right-8 md:top-12 md:right-12 z-20">
-          <div className="glass-strong rounded-2xl p-6 min-w-[200px]">
+          <div className="glass-strong rounded-2xl p-6 min-w-[220px]">
             <div className="flex items-center gap-2 mb-4">
               <Gauge className="w-5 h-5 text-primary" />
               <span className="text-sm font-semibold text-[#1D1D1F]">Nest Intelligence</span>
@@ -179,6 +219,30 @@ const AppleTownTemplate = ({
                   {marketVelocity}
                 </span>
               </div>
+              {townMarketData && (
+                <>
+                  <div className="pt-2 border-t border-gray-200">
+                    <div className="flex justify-between items-center">
+                      <p className="text-xs text-[#6E6E73]">Active Listings</p>
+                      <p className="text-sm font-bold text-[#1D1D1F]">{townMarketData.active_listings || 0}</p>
+                    </div>
+                  </div>
+                  {townMarketData.median_price && (
+                    <div className="flex justify-between items-center">
+                      <p className="text-xs text-[#6E6E73]">Median Price</p>
+                      <p className="text-sm font-bold text-[#1D1D1F]">
+                        ${(townMarketData.median_price / 1000).toFixed(0)}K
+                      </p>
+                    </div>
+                  )}
+                  {townMarketData.avg_days_on_market && (
+                    <div className="flex justify-between items-center">
+                      <p className="text-xs text-[#6E6E73]">Avg Days on Market</p>
+                      <p className="text-sm font-bold text-[#1D1D1F]">{townMarketData.avg_days_on_market}</p>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </div>
