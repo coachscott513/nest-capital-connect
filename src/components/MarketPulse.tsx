@@ -30,15 +30,15 @@ const MarketPulse = () => {
 
   return (
     <section className="relative bg-background overflow-hidden">
-      {/* Extended Breathing Line from Hero */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-[20vh] bg-gradient-to-b from-primary via-primary/50 to-transparent" />
+      {/* Cinematic Breathing Line - 200px tall with pulse animation */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-[200px] breathing-line" />
       
       {/* Massive Vertical Padding - Command Center Feel */}
-      <div className="pt-[20vh] pb-32 px-[5%]">
+      <div className="pt-[15vh] pb-[10vh] px-[5%]">
         <div className="max-w-7xl mx-auto">
-          {/* Institutional Header - 4rem, Light Weight, Wide Tracking */}
+          {/* Cinematic Institutional Header - Massive Scale */}
           <div className="text-center mb-24">
-            <h2 className="market-pulse-title text-foreground tracking-[0.5em] uppercase mb-6">
+            <h2 className="market-pulse-cinematic text-foreground uppercase mb-6">
               Market Pulse
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground font-light tracking-wide max-w-2xl mx-auto">
