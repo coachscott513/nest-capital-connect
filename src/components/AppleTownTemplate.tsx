@@ -24,7 +24,7 @@ import SEOHead from "@/components/SEOHead";
 import IntelligenceGatekeeper from "@/components/IntelligenceGatekeeper";
 import RentalVault from "@/components/RentalVault";
 import MasterGatekeeperModal from "@/components/MasterGatekeeperModal";
-import MarketPulseTicker from "@/components/MarketPulseTicker";
+import AlphaDashboard from "@/components/AlphaDashboard";
 import FeaturedAlphaSection from "@/components/FeaturedAlphaSection";
 
 interface TownLedgerEntry {
@@ -205,13 +205,13 @@ const AppleTownTemplate = ({
 
       <CleanHeader />
 
-      {/* Live Market Pulse Ticker */}
-      <MarketPulseTicker
+      {/* Institutional Alpha Dashboard */}
+      <AlphaDashboard
+        townName={townName}
         avgYield={avgYield}
         nestScore={nestScore}
-        activeListings={townMarketData?.active_listings || 0}
+        marketVelocity={marketVelocity}
         avgDaysOnMarket={townMarketData?.avg_days_on_market || 28}
-        townName={townName}
       />
 
       {/* DEEP SPACE CINEMATIC HERO */}
