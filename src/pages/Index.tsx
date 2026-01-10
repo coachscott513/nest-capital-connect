@@ -1,26 +1,12 @@
 import { useState, useRef } from "react";
-import { MapPin, ArrowRight, FileText, BarChart3, CheckCircle } from "lucide-react";
+import { ArrowRight, BarChart3, CheckCircle, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import GuideLeadModal from "@/components/GuideLeadModal";
 import SEOHead from "@/components/SEOHead";
-import CleanHero from "@/components/CleanHero";
+import AppleHero from "@/components/AppleHero";
+import AppleTownCards from "@/components/AppleTownCards";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
-
-const townHubs = [
-  { name: "Albany", href: "/towns/albany", description: "Capital City, diverse neighborhoods" },
-  { name: "Amsterdam", href: "/towns/amsterdam", description: "Affordable opportunity" },
-  { name: "Clifton Park", href: "/towns/clifton-park", description: "Growing suburb, family-friendly" },
-  { name: "Delmar", href: "/towns/delmar", description: "Bethlehem Central Schools" },
-  { name: "Guilderland", href: "/towns/guilderland", description: "Top schools, Crossgates area" },
-  { name: "Mechanicville", href: "/towns/mechanicville", description: "Affordable, Saratoga access" },
-  { name: "Niskayuna", href: "/towns/niskayuna", description: "Top-rated schools" },
-  { name: "Queensbury", href: "/towns/queensbury", description: "Lake George gateway" },
-  { name: "Saratoga Springs", href: "/towns/saratoga-springs", description: "Racing, culture, upscale living" },
-  { name: "Schenectady", href: "/towns/schenectady", description: "Revitalizing downtown" },
-  { name: "Troy", href: "/towns/troy", description: "Historic charm, RPI proximity" },
-  { name: "Voorheesville", href: "/towns/voorheesville", description: "Rural character, top schools" },
-];
 
 const Index = () => {
   const [guideModal, setGuideModal] = useState<{ open: boolean; guideType: string; redirectPath: string }>({ open: false, guideType: "", redirectPath: "" });
@@ -45,192 +31,165 @@ const Index = () => {
       {/* Clean Header Navigation */}
       <CleanHeader />
 
-      {/* HERO */}
-      <CleanHero onScrollToTowns={scrollToTownSection} />
+      {/* Apple-Style Cinematic Hero */}
+      <AppleHero onScrollToTowns={scrollToTownSection} />
+
+      {/* Town Intelligence Cards */}
+      <div ref={townSectionRef} id="town-intelligence" className="scroll-mt-24">
+        <AppleTownCards />
+      </div>
 
       {/* ========================================== */}
-      {/* SECTION 1: TOWN INTELLIGENCE (CORE PRODUCT) */}
+      {/* SECTION 2: WHY THIS PLATFORM EXISTS - Apple Style */}
       {/* ========================================== */}
-      <section ref={townSectionRef} id="town-intelligence" className="scroll-mt-24 px-[5%] py-16 md:py-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              Town Intelligence, Not Just Listings
+      <section className="relative py-24 px-[5%] overflow-hidden">
+        {/* Subtle gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/10 to-background" />
+        
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 glass-strong rounded-full px-4 py-2 mb-6">
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-foreground/90">Why Choose Us</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Built different. On purpose.
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Each town has its own market behavior, pricing patterns, and buyer dynamics.<br />
-              We organize real estate intelligence the way people actually think — locally.
+              No scraped estimates. No AI guesses. Real data, verified locally.
             </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-            {townHubs.map((town) => (
-              <Link
-                key={town.name}
-                to={town.href}
-                className="group bg-card border border-border rounded-xl p-5 md:p-6 hover:border-primary/50 hover:shadow-lg transition-all"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <MapPin className="w-4 h-4 text-primary" />
-                  <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">
-                    {town.name}
-                  </h3>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {town.description}
-                </p>
-                <div className="mt-3 text-xs text-primary font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                  Explore Town Intelligence <ArrowRight className="w-3 h-3" />
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <Link 
-              to="/communities" 
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground font-medium transition-colors"
-            >
-              View all Capital District towns <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================== */}
-      {/* SECTION 2: WHY THIS PLATFORM EXISTS */}
-      {/* ========================================== */}
-      <section className="bg-muted/30 py-16 px-[5%] border-y border-border">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-              Why Capital District Nest Exists
-            </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex items-start gap-4">
-              <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-foreground mb-1">Built from verified data sources</h3>
-                <p className="text-muted-foreground text-sm">Not scraped estimates or AI guesses.</p>
+            {[
+              {
+                title: "Verified data sources",
+                description: "Tax records, MLS activity, and market trends — combined for the full picture."
+              },
+              {
+                title: "Local intelligence, not generic feeds",
+                description: "Each town analyzed independently with its own market behavior and patterns."
+              },
+              {
+                title: "Signal, not noise",
+                description: "Designed to surface what matters — without the clutter of typical real estate sites."
+              },
+              {
+                title: "No ads. No lead selling.",
+                description: "Your information stays yours. This is where trust is earned."
+              }
+            ].map((item, index) => (
+              <div 
+                key={item.title}
+                className="glass-card rounded-2xl p-6 md:p-8 hover-lift"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg text-foreground mb-2">{item.title}</h3>
+                    <p className="text-muted-foreground">{item.description}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-foreground mb-1">Combines tax data, MLS activity, and market trends</h3>
-                <p className="text-muted-foreground text-sm">The full picture, not just listing details.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-foreground mb-1">Designed to reduce noise and surface insight</h3>
-                <p className="text-muted-foreground text-sm">What matters, without the clutter.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4">
-              <CheckCircle className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-              <div>
-                <h3 className="font-semibold text-foreground mb-1">No ads. No lead selling. No gimmicks.</h3>
-                <p className="text-muted-foreground text-sm">This is where trust is earned.</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ========================================== */}
-      {/* SECTION 3: PROPERTY INTELLIGENCE EXPLAINED */}
+      {/* SECTION 3: PROPERTY INTELLIGENCE - Apple Card Style */}
       {/* ========================================== */}
-      <section className="px-[5%] py-16 md:py-20">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-              Property Intelligence, Explained
+      <section className="px-[5%] py-24">
+        <div className="max-w-5xl mx-auto">
+          <div className="glass-card rounded-3xl p-8 md:p-12 lg:p-16 text-center glow-subtle">
+            <div className="inline-flex items-center gap-2 bg-primary/20 rounded-full px-4 py-2 mb-6">
+              <BarChart3 className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-primary">Property Intelligence</span>
+            </div>
+            
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+              Beyond the listing.<br />
+              <span className="text-gradient-premium">Into the intelligence.</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Capital District Nest provides clear, local intelligence for buyers, sellers, and homeowners.<br />
-              Our reports combine verified public records, tax data, and real market activity — organized in a way that's easy to understand.
+            
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">
+              Our reports combine verified public records, tax data, and real market activity —<br className="hidden md:block" />
+              organized in a way that's easy to understand and act on.
             </p>
-          </div>
-          
-          <div className="text-center">
-            <Link 
-              to="/intel/1999-ridge-road-queensbury-ny" 
-              className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
-            >
-              See how a Property Intelligence Report works <ArrowRight className="w-4 h-4" />
-            </Link>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link 
+                to="/intel/1999-ridge-road-queensbury-ny"
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform"
+              >
+                View Sample Report
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link 
+                to="/dealdesk"
+                className="inline-flex items-center gap-2 glass-strong px-8 py-4 rounded-xl font-semibold text-foreground hover:bg-white/10 transition-colors"
+              >
+                Request a Report
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ========================================== */}
-      {/* SECTION 4: INVESTOR INTELLIGENCE (OPTIONAL) */}
+      {/* SECTION 4: INVESTOR SECTION - Apple Style */}
       {/* ========================================== */}
-      <section className="px-[5%] py-12 border-t border-border">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-card border border-border rounded-xl p-6 md:p-8">
-            <div className="flex items-center gap-2 mb-4">
-              <BarChart3 className="w-5 h-5 text-muted-foreground" />
-              <span className="text-sm font-medium text-muted-foreground">Investor Intelligence (Optional)</span>
+      <section className="px-[5%] py-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="glass-card rounded-2xl p-8 md:p-10 hover-lift">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <BarChart3 className="w-5 h-5 text-primary" />
+                  <span className="text-sm font-medium text-muted-foreground">For Investors</span>
+                </div>
+                <h3 className="text-2xl font-bold text-foreground mb-2">
+                  Cash-Flow, Multi-Unit & Return Analysis
+                </h3>
+                <p className="text-muted-foreground">
+                  Advanced tools for serious investors. Cap rates, cash flow projections, and market reports.
+                </p>
+              </div>
+              <Link 
+                to="/investor-tools" 
+                className="inline-flex items-center gap-2 bg-primary/20 hover:bg-primary/30 text-primary px-6 py-3 rounded-xl font-semibold transition-colors flex-shrink-0"
+              >
+                Explore Tools <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
-            <h3 className="text-xl font-bold text-foreground mb-3">
-              For Deeper Cash-Flow, Multi-Unit, and Return Analysis
-            </h3>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Advanced analysis tools for multi-unit and long-term investors. Cash flow, cap rates, and market reports.
-            </p>
-            <Link 
-              to="/investor-tools" 
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary font-semibold text-sm transition-colors"
-            >
-              Explore Investor Intelligence <ArrowRight className="w-4 h-4" />
-            </Link>
           </div>
         </div>
       </section>
 
       {/* ========================================== */}
-      {/* SECTION 4: PROOF (Understated) */}
+      {/* SECTION 5: FINAL CTA - Cinematic */}
       {/* ========================================== */}
-      <section className="px-[5%] py-12 border-t border-border">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-muted-foreground">
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-foreground">500+</div>
-              <div className="text-sm">Properties Analyzed</div>
-            </div>
-            <div>
-              <div className="text-2xl md:text-3xl font-bold text-foreground">Local</div>
-              <div className="text-sm">Capital District Focus</div>
-            </div>
-          </div>
-          <p className="text-sm text-muted-foreground mt-6">
-            Serving the Capital District with precision.
-          </p>
+      <section className="relative px-[5%] py-32 overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/10 blur-[100px]" />
         </div>
-      </section>
-
-      {/* ========================================== */}
-      {/* SECTION 5: FINAL CTA (Soft) */}
-      {/* ========================================== */}
-      <section className="px-[5%] py-20 text-center bg-muted/20">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+        
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
             Start with your town.
           </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            Go deeper only if you want.
+          <p className="text-xl text-muted-foreground mb-10">
+            Go deeper only when you're ready.
           </p>
           <button
             onClick={scrollToTownSection}
-            className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform"
+            className="inline-flex items-center justify-center gap-3 bg-foreground text-background px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-transform glow-subtle"
           >
-            <MapPin className="w-4 h-4" />
             Explore Towns
+            <ArrowRight className="w-5 h-5" />
           </button>
         </div>
       </section>
