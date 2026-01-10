@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
+import LocalGuideSection from "@/components/LocalGuideSection";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -1342,6 +1343,9 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
           </div>
         </div>
       </section>
+
+      {/* LOCAL GUIDE — Business Directory */}
+      <LocalGuideSection townName={town.name} townSlug={town.slug} />
 
       {/* GET INTELLIGENCE CTA */}
       <section id="get-intel" className="px-[5%] py-16 md:py-20 bg-background scroll-mt-24">

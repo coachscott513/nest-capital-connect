@@ -108,6 +108,7 @@ import Intelligence from "./pages/Intelligence";
 import MarketReportThanks from "./pages/MarketReportThanks";
 import Ask from "./pages/Ask";
 import SiteIndex from "./pages/SiteIndex";
+import ClaimBusiness from "./pages/ClaimBusiness";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 
 const queryClient = new QueryClient({
@@ -295,6 +296,9 @@ const App = () => {
           
           {/* Site Index */}
           <Route path="/site-index" element={<SiteIndex />} />
+          
+          {/* Business Claim/Edit Form */}
+          <Route path="/claim-business" element={<ClaimBusiness />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
