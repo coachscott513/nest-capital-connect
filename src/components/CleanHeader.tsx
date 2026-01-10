@@ -56,6 +56,10 @@ const navItems = [
     dropdown: "towns",
   },
   {
+    label: "Guide",
+    dropdown: "guide",
+  },
+  {
     label: "Intelligence",
     dropdown: "intelligence",
   },
@@ -171,16 +175,16 @@ const CleanHeader = () => {
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-1">
+            {/* Desktop Navigation - Institutional Style */}
+            <div className="hidden lg:flex items-center gap-2">
               {navItems.map((item) => (
                 <div key={item.label} className="relative">
                   <button
                     onClick={() => toggleDropdown(item.dropdown)}
-                    className={`flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-colors ${
+                    className={`flex items-center gap-1.5 px-5 py-2.5 text-[13px] uppercase tracking-[0.25em] font-extralight rounded-full transition-all ${
                       activeDropdown === item.dropdown
-                        ? "text-primary bg-primary/20"
-                        : "text-foreground hover:text-primary hover:bg-muted"
+                        ? "text-primary bg-primary/15"
+                        : "text-white/80 hover:text-primary hover:bg-white/5"
                     }`}
                   >
                     {item.label}
@@ -224,6 +228,33 @@ const CleanHeader = () => {
                             </Link>
                           ))}
                         </div>
+                      </div>
+                    </Dropdown>
+                  )}
+
+                  {/* Guide Dropdown - Local Business Directory */}
+                  {item.dropdown === "guide" && (
+                    <Dropdown isOpen={activeDropdown === "guide"} onClose={closeDropdowns}>
+                      <div className="space-y-2">
+                        <p className="text-xs uppercase text-[#00F5FF] tracking-widest font-semibold mb-3">Local Partners</p>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          Trusted businesses in every Capital District town — coffee shops, restaurants, gyms, and service providers.
+                        </p>
+                        <Link
+                          to="/communities"
+                          onClick={closeDropdowns}
+                          className="block px-3 py-2.5 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
+                        >
+                          Browse All Town Guides →
+                        </Link>
+                        <div className="border-t border-border my-2" />
+                        <Link
+                          to="/claim-business"
+                          onClick={closeDropdowns}
+                          className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-[#00F5FF] hover:bg-[#00F5FF]/10 rounded-md transition-colors"
+                        >
+                          <span>Become a Local Partner — $49/mo</span>
+                        </Link>
                       </div>
                     </Dropdown>
                   )}
@@ -317,6 +348,19 @@ const CleanHeader = () => {
                   {town.name}
                 </Link>
               ))}
+            </div>
+          </div>
+
+          {/* Guide - Local Partners */}
+          <div>
+            <h3 className="text-xs uppercase text-[#00F5FF] font-bold tracking-widest mb-3">Local Guide</h3>
+            <div className="space-y-2">
+              <Link to="/communities" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
+                Browse All Town Guides
+              </Link>
+              <Link to="/claim-business" onClick={closeMobileMenu} className="block text-[#00F5FF] font-medium">
+                Become a Local Partner — $49/mo
+              </Link>
             </div>
           </div>
 
