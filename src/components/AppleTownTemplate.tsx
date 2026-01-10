@@ -21,6 +21,7 @@ import { supabase } from "@/integrations/supabase/client";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import IntelligenceGatekeeper from "@/components/IntelligenceGatekeeper";
 
 interface TownLedgerEntry {
   id: string;
@@ -344,82 +345,112 @@ const AppleTownTemplate = ({
         </div>
       </section>
 
-      {/* HIGH-YIELD ASSETS / INVESTMENT VAULT - Deep Space Bento */}
-      <section className="section-massive px-[5%] bg-background">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-2">Investment Vault</p>
-            <h2 className="text-3xl md:text-4xl font-extralight text-foreground mb-4 tracking-tight">
-              High-Yield Assets in {townName}
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto body-airy">
-              Cash-flowing properties with verified returns. Click any property to view virtual underwriting.
-            </p>
-          </div>
-
-          {isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[1, 2].map((i) => (
-                <div key={i} className="bento-card p-6 animate-pulse">
-                  <div className="h-40 bg-muted rounded-xl mb-4" />
-                  <div className="h-6 bg-muted rounded w-2/3 mb-2" />
-                  <div className="h-4 bg-muted rounded w-1/2" />
-                </div>
-              ))}
+      {/* HIGH-YIELD ASSETS / INVESTMENT VAULT - Gated Behind Authentication */}
+      <IntelligenceGatekeeper
+        yieldValue={avgYield}
+        townName={townName}
+        previewContent={
+          <section className="section-massive px-[5%] bg-background">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-2">Investment Vault</p>
+                <h2 className="text-3xl md:text-4xl font-extralight text-foreground mb-4 tracking-tight">
+                  High-Yield Assets in {townName}
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto body-airy">
+                  Cash-flowing properties with verified returns. Click any property to view virtual underwriting.
+                </p>
+              </div>
+              {/* Preview placeholder cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[1, 2].map((i) => (
+                  <div key={i} className="bento-card p-6">
+                    <div className="h-40 bg-muted/50 rounded-xl mb-4" />
+                    <div className="h-6 bg-muted/50 rounded w-2/3 mb-2" />
+                    <div className="h-4 bg-muted/50 rounded w-1/2" />
+                  </div>
+                ))}
+              </div>
             </div>
-          ) : highYieldAssets.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {highYieldAssets.map((asset) => (
-                <Link
-                  key={asset.id}
-                  to="/dealdesk"
-                  className="bento-card p-6 hover-lift group"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{asset.property_type}</p>
-                      <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                        {asset.address}
-                      </h3>
-                    </div>
-                    <span className="text-2xl font-bold text-primary text-glow">{asset.price}</span>
-                  </div>
+          </section>
+        }
+      >
+        <section className="section-massive px-[5%] bg-background">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-2">Investment Vault</p>
+              <h2 className="text-3xl md:text-4xl font-extralight text-foreground mb-4 tracking-tight">
+                High-Yield Assets in {townName}
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto body-airy">
+                Cash-flowing properties with verified returns. Click any property to view virtual underwriting.
+              </p>
+            </div>
 
-                  <div className="grid grid-cols-3 gap-4 p-4 glass rounded-xl mb-4">
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-primary text-glow">{asset.cash_on_cash_return}%</p>
-                      <p className="text-xs text-muted-foreground">Cash-on-Cash</p>
-                    </div>
-                    <div className="text-center border-x border-border">
-                      <p className="text-2xl font-bold text-foreground">{asset.cap_rate}%</p>
-                      <p className="text-xs text-muted-foreground">Cap Rate</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-2xl font-bold text-foreground">{asset.units}</p>
-                      <p className="text-xs text-muted-foreground">Units</p>
-                    </div>
+            {isLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[1, 2].map((i) => (
+                  <div key={i} className="bento-card p-6 animate-pulse">
+                    <div className="h-40 bg-muted rounded-xl mb-4" />
+                    <div className="h-6 bg-muted rounded w-2/3 mb-2" />
+                    <div className="h-4 bg-muted rounded w-1/2" />
                   </div>
+                ))}
+              </div>
+            ) : highYieldAssets.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {highYieldAssets.map((asset) => (
+                  <Link
+                    key={asset.id}
+                    to="/dealdesk"
+                    className="bento-card p-6 hover-lift group"
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{asset.property_type}</p>
+                        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                          {asset.address}
+                        </h3>
+                      </div>
+                      <span className="text-2xl font-bold text-primary text-glow">{asset.price}</span>
+                    </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Gross Rent: {asset.gross_rent}</span>
-                    <span className="text-sm font-semibold text-primary flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      View Underwriting <ArrowRight className="w-4 h-4" />
-                    </span>
-                  </div>
+                    <div className="grid grid-cols-3 gap-4 p-4 glass rounded-xl mb-4">
+                      <div className="text-center">
+                        <p className="text-2xl font-bold text-primary text-glow">{asset.cash_on_cash_return}%</p>
+                        <p className="text-xs text-muted-foreground">Cash-on-Cash</p>
+                      </div>
+                      <div className="text-center border-x border-border">
+                        <p className="text-2xl font-bold text-foreground">{asset.cap_rate}%</p>
+                        <p className="text-xs text-muted-foreground">Cap Rate</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-2xl font-bold text-foreground">{asset.units}</p>
+                        <p className="text-xs text-muted-foreground">Units</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">Gross Rent: {asset.gross_rent}</span>
+                      <span className="text-sm font-semibold text-primary flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        View Underwriting <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="bento-card p-8 text-center">
+                <Home className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground">No high-yield assets currently available in {townName}.</p>
+                <Link to="/dealdesk" className="inline-flex items-center gap-2 text-primary font-semibold mt-4 hover:underline">
+                  Submit an address for analysis <ArrowRight className="w-4 h-4" />
                 </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="bento-card p-8 text-center">
-              <Home className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">No high-yield assets currently available in {townName}.</p>
-              <Link to="/dealdesk" className="inline-flex items-center gap-2 text-primary font-semibold mt-4 hover:underline">
-                Submit an address for analysis <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          )}
-        </div>
-      </section>
+              </div>
+            )}
+          </div>
+        </section>
+      </IntelligenceGatekeeper>
 
       {/* LOCAL VOICES - Horizontal Avatar Tray with Spotlight Effect */}
       <section className="section-massive px-[5%] bg-card overflow-hidden">
