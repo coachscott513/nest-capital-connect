@@ -7,23 +7,24 @@
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
+    /* Cupertino Light Theme */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 11%;
 
-    --card: 0 0% 13%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 97%;
+    --card-foreground: 0 0% 11%;
 
-    --popover: 0 0% 13%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 11%;
 
     --primary: 160 84% 39%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 160 85% 20%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 11%;
 
-    --muted: 0 0% 19%;
-    --muted-foreground: 0 0% 71%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
     --accent: 160 84% 39%;
     --accent-foreground: 0 0% 100%;
@@ -31,83 +32,75 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 19%;
-    --input: 0 0% 19%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
     --ring: 160 84% 39%;
 
-    --radius: 0.25rem;
+    --radius: 0.75rem;
 
-    --surface: 0 0% 13%;
-    --text-muted: 0 0% 71%;
+    --surface: 0 0% 97%;
+    --text-muted: 0 0% 45%;
+    
+    /* Cupertino specific tokens */
+    --slate-deep: 0 0% 11%;
+    --soft-gray: 0 0% 97%;
+    --apple-gray: 0 0% 96%;
+    
+    /* Apple-style glassmorphism tokens */
+    --glass-bg: 0 0% 100% / 0.72;
+    --glass-border: 0 0% 0% / 0.08;
+    --glass-shadow: 0 0% 0% / 0.08;
+    --glass-blur: 20px;
+    
+    /* Premium accent colors */
+    --teal-glow: 160 84% 50%;
 
     /* Report tokens - 3-layer blue visual hierarchy */
-    /* Layer 1: Page background - light slate blue */
     --report-bg: 220 30% 92%;
-    
-    /* Layer 2: Content cards - soft blue-gray (NOT white) */
     --report-card: 220 25% 96%;
     --report-card-alt: 220 20% 88%;
     --report-border: 220 20% 80%;
-    
-    /* Layer 3: Text contrast - dark navy to muted blue-gray */
     --report-text-headline: 220 30% 15%;
     --report-text-body: 220 20% 25%;
     --report-text-muted: 220 15% 45%;
-    
-    /* Legacy aliases */
     --report-fg: 220 30% 15%;
     --report-muted: 220 15% 45%;
-    
-    /* Section backgrounds - alternating blues */
     --report-section-dark: 220 35% 14%;
     --report-section-light: 220 25% 85%;
     --report-section-muted: 220 20% 78%;
-    
-    /* Accent colors */
     --report-accent: 160 84% 39%;
     --report-success: 160 70% 40%;
     --report-warning: 38 92% 50%;
     --report-hero-bg: 220 35% 14%;
  
-    --sidebar-background: 0 0% 0%;
-    --sidebar-foreground: 0 0% 100%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 11%;
     --sidebar-primary: 160 84% 39%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 13%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 19%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 11%;
+    --sidebar-border: 0 0% 90%;
     --sidebar-ring: 160 84% 39%;
-    
-    /* Apple-style glassmorphism tokens */
-    --glass-bg: 0 0% 100% / 0.08;
-    --glass-border: 0 0% 100% / 0.12;
-    --glass-shadow: 0 0% 0% / 0.4;
-    --glass-blur: 20px;
-    
-    /* Premium accent colors */
-    --teal-glow: 160 84% 50%;
-    --slate-deep: 220 20% 8%;
-    --slate-surface: 220 15% 12%;
   }
 
   .dark {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
 
-    --card: 0 0% 13%;
+    --card: 0 0% 8%;
     --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 13%;
+    --popover: 0 0% 8%;
     --popover-foreground: 0 0% 100%;
 
     --primary: 160 84% 39%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 160 85% 20%;
+    --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 19%;
-    --muted-foreground: 0 0% 71%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
 
     --accent: 160 84% 39%;
     --accent-foreground: 0 0% 100%;
@@ -115,17 +108,21 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 19%;
-    --input: 0 0% 19%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
     --ring: 160 84% 39%;
+    
+    --glass-bg: 0 0% 100% / 0.08;
+    --glass-border: 0 0% 100% / 0.12;
+    --glass-shadow: 0 0% 0% / 0.4;
 
     --sidebar-background: 0 0% 0%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 160 84% 39%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 13%;
+    --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 19%;
+    --sidebar-border: 0 0% 20%;
     --sidebar-ring: 160 84% 39%;
   }
 }
@@ -145,56 +142,88 @@
     background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
   }
   
-  /* Glassmorphism utility classes */
+  /* Cupertino Glassmorphism - Light theme optimized */
   .glass {
     background: hsla(var(--glass-bg));
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid hsla(var(--glass-border));
+    box-shadow: 0 4px 30px hsla(var(--glass-shadow));
   }
   
   .glass-strong {
-    background: hsla(0 0% 100% / 0.12);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid hsla(0 0% 100% / 0.18);
+    background: hsla(0 0% 100% / 0.85);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid hsla(0 0% 0% / 0.06);
+    box-shadow: 0 8px 32px hsla(0 0% 0% / 0.08);
   }
   
   .glass-card {
-    background: hsla(0 0% 100% / 0.05);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid hsla(0 0% 100% / 0.08);
-    box-shadow: 0 8px 32px hsla(var(--glass-shadow));
+    background: hsla(0 0% 100% / 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsla(0 0% 0% / 0.05);
+    box-shadow: 0 4px 24px hsla(0 0% 0% / 0.06),
+                0 1px 2px hsla(0 0% 0% / 0.04);
+  }
+  
+  /* Apple-style card - clean white with subtle shadow */
+  .apple-card {
+    background: hsl(0 0% 100%);
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px hsla(0 0% 0% / 0.04),
+                0 8px 24px hsla(0 0% 0% / 0.08);
+    border: 1px solid hsla(0 0% 0% / 0.04);
+  }
+  
+  .apple-card:hover {
+    box-shadow: 0 4px 12px hsla(0 0% 0% / 0.06),
+                0 12px 40px hsla(0 0% 0% / 0.12);
   }
   
   /* Premium hover lift effect */
   .hover-lift {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                box-shadow 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                box-shadow 0.4s ease;
   }
   
   .hover-lift:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px hsla(0 0% 0% / 0.3);
+    transform: translateY(-4px) scale(1.02);
   }
   
   /* Cinematic text gradient */
   .text-gradient-premium {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(160 90% 60%) 50%, hsl(var(--primary)) 100%);
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(160 70% 45%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   
-  /* Glow effects */
+  /* Soft glow for light theme */
   .glow-primary {
-    box-shadow: 0 0 40px hsla(var(--primary) / 0.3),
-                0 0 80px hsla(var(--primary) / 0.15);
+    box-shadow: 0 0 40px hsla(var(--primary) / 0.15),
+                0 0 80px hsla(var(--primary) / 0.08);
   }
   
   .glow-subtle {
-    box-shadow: 0 0 60px hsla(var(--primary) / 0.15);
+    box-shadow: 0 8px 40px hsla(0 0% 0% / 0.08);
+  }
+  
+  /* Town card image overlay */
+  .town-card-overlay {
+    background: linear-gradient(to top, hsla(0 0% 0% / 0.7) 0%, hsla(0 0% 0% / 0) 60%);
+  }
+  
+  /* Nest Score badge */
+  .nest-badge {
+    background: hsla(160 84% 39% / 0.9);
+    backdrop-filter: blur(8px);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
   }
 }
 
