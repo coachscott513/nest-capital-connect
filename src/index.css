@@ -352,20 +352,22 @@
   animation: ticker 30s linear infinite;
 }
 
-/* ============= BREATHING LINE ANIMATION ============= */
+/* ============= BREATHING LINE ANIMATION - Premium Pulse ============= */
 @keyframes breathe {
   0%, 100% { 
-    opacity: 0.3;
-    transform: scaleY(1);
+    opacity: 0.25;
+    transform: scaleY(0.9);
+    filter: drop-shadow(0 0 4px hsl(185 100% 50% / 0.3));
   }
   50% { 
     opacity: 1;
-    transform: scaleY(1.1);
+    transform: scaleY(1.15);
+    filter: drop-shadow(0 0 12px hsl(185 100% 50% / 0.7));
   }
 }
 
 .animate-breathe {
-  animation: breathe 2.5s ease-in-out infinite;
+  animation: breathe 3s ease-in-out infinite;
 }
 
 /* ============= PULSE RING ANIMATION ============= */
