@@ -119,7 +119,7 @@ const CleanHeader = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2 group shrink-0" onClick={closeDropdowns}>
               <img src={cdnLogo} alt="Capital District Nest" className="h-10 md:h-12 w-auto" />
-              <span className="text-[10px] text-[#6E6E73] uppercase tracking-widest font-medium hidden sm:block group-hover:text-[#1D1D1F] transition-colors">
+              <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium hidden sm:block group-hover:text-foreground transition-colors">
                 Home
               </span>
             </Link>
@@ -132,8 +132,8 @@ const CleanHeader = () => {
                     onClick={() => toggleDropdown(item.dropdown)}
                     className={`flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-colors ${
                       activeDropdown === item.dropdown
-                        ? "text-primary bg-primary/10"
-                        : "text-[#1D1D1F] hover:text-primary hover:bg-gray-100"
+                        ? "text-primary bg-primary/20"
+                        : "text-foreground hover:text-primary hover:bg-muted"
                     }`}
                   >
                     {item.label}
@@ -381,7 +381,7 @@ const CleanHeader = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors text-[#1D1D1F]"
+              className="lg:hidden flex items-center gap-2 px-4 py-2 border border-border rounded-full text-sm font-medium hover:bg-muted transition-colors text-foreground"
             >
               {mobileMenuOpen ? (
                 <>
@@ -399,9 +399,9 @@ const CleanHeader = () => {
         </nav>
       </header>
 
-      {/* Mobile Menu Overlay - Cupertino Light */}
+      {/* Mobile Menu Overlay - Deep Space */}
       <div
-        className={`fixed inset-0 bg-white z-[1999] pt-20 px-4 pb-8 overflow-y-auto transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed inset-0 bg-background z-[1999] pt-20 px-4 pb-8 overflow-y-auto transition-transform duration-300 ease-out lg:hidden ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

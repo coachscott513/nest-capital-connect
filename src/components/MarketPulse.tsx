@@ -39,14 +39,14 @@ const MarketPulse = () => {
           </h2>
         </div>
 
-        {/* Bento Grid with Circular Gauges */}
+        {/* Bento Grid with Neon Gauges */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {pulseCards.map((card) => (
             <div 
               key={card.label}
               className="bento-card p-10 group relative overflow-hidden"
             >
-              {/* Circular Gauge - Apple Health Style */}
+              {/* Circular Gauge - Neon Bloomberg Style */}
               <div className="relative w-32 h-32 mx-auto mb-8">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
                   {/* Background Ring */}
@@ -56,29 +56,29 @@ const MarketPulse = () => {
                     r="42"
                     fill="none"
                     stroke="hsl(var(--muted))"
-                    strokeWidth="8"
+                    strokeWidth="6"
                   />
-                  {/* Progress Ring */}
+                  {/* Progress Ring - Teal Glow */}
                   <circle
                     cx="50"
                     cy="50"
                     r="42"
                     fill="none"
                     stroke="hsl(var(--primary))"
-                    strokeWidth="8"
+                    strokeWidth="6"
                     strokeDasharray={`${card.gaugePercent * 2.64} 264`}
                     className="gauge-ring"
                   />
                 </svg>
-                {/* Center Value */}
+                {/* Center Value - Glowing */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-3xl font-bold text-foreground">{card.value}<span className="text-xl">{card.suffix}</span></span>
+                  <span className="text-3xl font-bold text-primary text-glow">{card.value}<span className="text-xl">{card.suffix}</span></span>
                 </div>
               </div>
               
               {/* Icon + Label */}
               <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <div className="w-10 h-10 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
                   <card.icon className="w-5 h-5 text-primary" />
                 </div>
               </div>
