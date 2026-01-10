@@ -6,6 +6,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import CommandCenter from "@/components/CommandCenter";
 import GARouteTracker from "@/components/GARouteTracker";
@@ -121,12 +122,13 @@ const App = () => {
 
   return (
     <HelmetProvider>
-      <DelmarConfirmationProvider>
-        <QueryClientProvider client={queryClient}>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <GARouteTracker />
+      <AuthProvider>
+        <DelmarConfirmationProvider>
+          <QueryClientProvider client={queryClient}>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <GARouteTracker />
             <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/investor-tools" element={<InvestorTools />} />
@@ -300,6 +302,7 @@ const App = () => {
         </BrowserRouter>
         </QueryClientProvider>
       </DelmarConfirmationProvider>
+    </AuthProvider>
     </HelmetProvider>
   );
 };
