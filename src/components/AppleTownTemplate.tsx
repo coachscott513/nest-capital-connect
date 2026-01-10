@@ -24,6 +24,8 @@ import SEOHead from "@/components/SEOHead";
 import IntelligenceGatekeeper from "@/components/IntelligenceGatekeeper";
 import RentalVault from "@/components/RentalVault";
 import MasterGatekeeperModal from "@/components/MasterGatekeeperModal";
+import MarketPulseTicker from "@/components/MarketPulseTicker";
+import FeaturedAlphaSection from "@/components/FeaturedAlphaSection";
 
 interface TownLedgerEntry {
   id: string;
@@ -203,6 +205,15 @@ const AppleTownTemplate = ({
 
       <CleanHeader />
 
+      {/* Live Market Pulse Ticker */}
+      <MarketPulseTicker
+        avgYield={avgYield}
+        nestScore={nestScore}
+        activeListings={townMarketData?.active_listings || 0}
+        avgDaysOnMarket={townMarketData?.avg_days_on_market || 28}
+        townName={townName}
+      />
+
       {/* DEEP SPACE CINEMATIC HERO */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-background">
         {/* Background Image with Cinematic Filter */}
@@ -210,12 +221,19 @@ const AppleTownTemplate = ({
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
             backgroundImage: `url(${heroImage})`,
-            filter: 'brightness(0.7) grayscale(10%)'
+            filter: 'brightness(0.6) grayscale(20%)'
           }}
         />
-        {/* Deep Space Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
+        {/* Monochromatic Black-to-Teal Gradient Overlay - 0.6 opacity */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, rgba(11, 11, 11, 0.85) 0%, rgba(11, 11, 11, 0.6) 40%, rgba(0, 245, 255, 0.15) 100%)',
+          }}
+        />
+        {/* Deep Space Gradient Overlay for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
 
         {/* Floating Nest Intelligence Gauge - Glass Morphism */}
         <div className="absolute top-8 right-8 md:top-12 md:right-12 z-20">
@@ -545,6 +563,16 @@ const AppleTownTemplate = ({
 
       {/* Rental Vault for this town */}
       <RentalVault townSlug={townSlug} townName={townName} limit={4} />
+
+      {/* Featured Alpha Section - Investment Opportunity Showcase */}
+      <FeaturedAlphaSection 
+        townName={townName} 
+        townSlug={townSlug}
+        featuredAddress={highYieldAssets[0]?.address}
+        featuredPrice={highYieldAssets[0]?.price}
+        featuredYield={highYieldAssets[0] ? `${highYieldAssets[0].cash_on_cash_return}%` : undefined}
+        featuredType={highYieldAssets[0]?.property_type}
+      />
 
       {/* CTA Section - Deep Space */}
       <section className="section-massive px-[5%] bg-background">
