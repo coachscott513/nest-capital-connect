@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,9 +10,11 @@ import {
   Briefcase,
   ExternalLink,
   Phone,
+  Mail,
   Instagram,
   Facebook,
-  Star
+  Star,
+  Sparkles
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -22,10 +23,12 @@ interface LocalBusiness {
   description: string;
   website?: string;
   phone?: string;
+  email?: string;
   instagram?: string;
   facebook?: string;
   googleMaps?: string;
   isPartner?: boolean;
+  specialOffer?: string;
 }
 
 interface LocalGuideCategory {
@@ -99,6 +102,210 @@ const getDefaultCategories = (townName: string): LocalGuideCategory[] => [
   }
 ];
 
+// Business Card Component - Standard vs Partner
+const BusinessCard = ({ 
+  business, 
+  townSlug, 
+  categoryId 
+}: { 
+  business: LocalBusiness; 
+  townSlug: string; 
+  categoryId: string;
+}) => {
+  const isPartner = business.isPartner;
+
+  return (
+    <Card 
+      className={`border transition-all hover:shadow-md ${
+        isPartner 
+          ? 'border-[#00F5FF]/50 bg-gradient-to-br from-[#00F5FF]/5 to-transparent shadow-[0_0_20px_rgba(0,245,255,0.1)]' 
+          : 'border-border hover:border-primary/30'
+      }`}
+    >
+      <CardContent className="p-4">
+        {/* Partner Badge */}
+        {isPartner && (
+          <Badge 
+            className="mb-3 bg-[#00F5FF]/20 text-[#00F5FF] border-[#00F5FF]/30 hover:bg-[#00F5FF]/30"
+          >
+            <Star className="w-3 h-3 mr-1 fill-current" />
+            Local Partner
+          </Badge>
+        )}
+
+        {/* Business Name & Description */}
+        <h4 className="font-semibold text-foreground mb-1">
+          {business.name}
+        </h4>
+        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+          {business.description}
+        </p>
+
+        {/* STANDARD LISTING: Website only */}
+        {!isPartner && (
+          <>
+            {business.website ? (
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="h-8 text-xs w-full"
+                asChild
+              >
+                <a href={business.website} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="w-3 h-3 mr-1" />
+                  Visit Website
+                </a>
+              </Button>
+            ) : (
+              <div className="h-8 flex items-center justify-center text-xs text-muted-foreground">
+                Website coming soon
+              </div>
+            )}
+
+            {/* Upgrade CTA for Standard listings */}
+            <div className="mt-3 pt-3 border-t border-border flex items-center justify-between">
+              <Link 
+                to={`/claim-business?town=${townSlug}&category=${categoryId}&name=${encodeURIComponent(business.name)}`}
+                className="text-xs text-muted-foreground hover:text-primary transition-colors"
+              >
+                Claim / Edit
+              </Link>
+              <Link 
+                to={`/claim-business?town=${townSlug}&category=${categoryId}&name=${encodeURIComponent(business.name)}&upgrade=true`}
+                className="text-xs text-[#00F5FF] hover:text-[#00F5FF]/80 transition-colors flex items-center gap-1"
+              >
+                <Sparkles className="w-3 h-3" />
+                Partner Tier — $49/mo
+              </Link>
+            </div>
+          </>
+        )}
+
+        {/* PARTNER LISTING: Full features unlocked */}
+        {isPartner && (
+          <>
+            {/* Direct Contact Buttons */}
+            <div className="flex gap-2 mb-3">
+              {business.phone && (
+                <Button 
+                  size="sm" 
+                  className="h-9 flex-1 bg-[#00F5FF] hover:bg-[#00F5FF]/90 text-black font-medium"
+                  asChild
+                >
+                  <a href={`tel:${business.phone}`}>
+                    <Phone className="w-3.5 h-3.5 mr-1.5" />
+                    Call Now
+                  </a>
+                </Button>
+              )}
+              {business.email && (
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  className="h-9 flex-1 border-[#00F5FF]/50 text-[#00F5FF] hover:bg-[#00F5FF]/10"
+                  asChild
+                >
+                  <a href={`mailto:${business.email}`}>
+                    <Mail className="w-3.5 h-3.5 mr-1.5" />
+                    Message
+                  </a>
+                </Button>
+              )}
+              {business.website && !business.phone && !business.email && (
+                <Button 
+                  size="sm" 
+                  className="h-9 w-full bg-[#00F5FF] hover:bg-[#00F5FF]/90 text-black font-medium"
+                  asChild
+                >
+                  <a href={business.website} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
+                    Visit Website
+                  </a>
+                </Button>
+              )}
+            </div>
+
+            {/* Social Row - Live Links */}
+            <div className="flex items-center gap-2 mb-3">
+              {business.website && (
+                <a 
+                  href={business.website} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-full bg-muted/80 flex items-center justify-center hover:bg-[#00F5FF]/20 hover:text-[#00F5FF] transition-colors"
+                  title="Website"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )}
+              {business.instagram && (
+                <a 
+                  href={business.instagram} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-full bg-muted/80 flex items-center justify-center hover:bg-gradient-to-br hover:from-purple-500/20 hover:to-pink-500/20 hover:text-pink-400 transition-colors"
+                  title="Instagram"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+              )}
+              {business.facebook && (
+                <a 
+                  href={business.facebook} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-full bg-muted/80 flex items-center justify-center hover:bg-blue-500/20 hover:text-blue-400 transition-colors"
+                  title="Facebook"
+                >
+                  <Facebook className="w-4 h-4" />
+                </a>
+              )}
+              {business.googleMaps && (
+                <a 
+                  href={business.googleMaps} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-full bg-muted/80 flex items-center justify-center hover:bg-red-500/20 hover:text-red-400 transition-colors text-sm font-bold"
+                  title="Google Business"
+                >
+                  G
+                </a>
+              )}
+            </div>
+
+            {/* Alpha Special - Offer Box */}
+            {business.specialOffer && (
+              <div className="p-3 rounded-lg border border-[#00F5FF]/30 bg-[#00F5FF]/5">
+                <div className="flex items-start gap-2">
+                  <Sparkles className="w-4 h-4 text-[#00F5FF] mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-[#00F5FF] uppercase tracking-wide mb-1">
+                      Alpha Special
+                    </p>
+                    <p className="text-sm text-foreground">
+                      {business.specialOffer}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Claim/Edit Link for Partners */}
+            <div className="mt-3 pt-3 border-t border-[#00F5FF]/20">
+              <Link 
+                to={`/claim-business?town=${townSlug}&category=${categoryId}&name=${encodeURIComponent(business.name)}`}
+                className="text-xs text-muted-foreground hover:text-[#00F5FF] transition-colors"
+              >
+                Manage Listing
+              </Link>
+            </div>
+          </>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
+
 const LocalGuideSection = ({ townName, townSlug, categories }: LocalGuideSectionProps) => {
   const displayCategories = categories || getDefaultCategories(townName);
 
@@ -110,9 +317,15 @@ const LocalGuideSection = ({ townName, townSlug, categories }: LocalGuideSection
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
             Local Guide
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg text-muted-foreground mb-4">
             Trusted local spots in {townName}
           </p>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00F5FF]/10 border border-[#00F5FF]/20">
+            <Star className="w-4 h-4 text-[#00F5FF] fill-[#00F5FF]" />
+            <span className="text-sm text-[#00F5FF]">
+              Local Partners get featured placement & direct contact
+            </span>
+          </div>
         </div>
 
         {/* Category Grid */}
@@ -132,107 +345,12 @@ const LocalGuideSection = ({ townName, townSlug, categories }: LocalGuideSection
               {/* Business Cards */}
               <div className="space-y-3">
                 {category.businesses.map((business, idx) => (
-                  <Card 
-                    key={idx} 
-                    className={`border transition-all hover:border-primary/30 ${
-                      business.isPartner ? 'border-primary/50 bg-primary/5' : 'border-border'
-                    }`}
-                  >
-                    <CardContent className="p-4">
-                      {/* Partner Badge */}
-                      {business.isPartner && (
-                        <Badge 
-                          variant="secondary" 
-                          className="mb-2 bg-primary/20 text-primary border-0 text-xs"
-                        >
-                          <Star className="w-3 h-3 mr-1 fill-current" />
-                          Local Partner
-                        </Badge>
-                      )}
-
-                      {/* Business Name & Description */}
-                      <h4 className="font-semibold text-foreground mb-1">
-                        {business.name}
-                      </h4>
-                      <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                        {business.description}
-                      </p>
-
-                      {/* Action Buttons */}
-                      <div className="flex items-center gap-2 flex-wrap">
-                        {business.website && (
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
-                            className="h-8 text-xs"
-                            asChild
-                          >
-                            <a href={business.website} target="_blank" rel="noopener noreferrer">
-                              <ExternalLink className="w-3 h-3 mr-1" />
-                              Website
-                            </a>
-                          </Button>
-                        )}
-                        {business.phone && (
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
-                            className="h-8 text-xs"
-                            asChild
-                          >
-                            <a href={`tel:${business.phone}`}>
-                              <Phone className="w-3 h-3 mr-1" />
-                              Call
-                            </a>
-                          </Button>
-                        )}
-                        
-                        {/* Social Icons */}
-                        <div className="flex items-center gap-1 ml-auto">
-                          {business.instagram && (
-                            <a 
-                              href={business.instagram} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="w-7 h-7 rounded-full bg-muted flex items-center justify-center hover:bg-primary/20 transition-colors"
-                            >
-                              <Instagram className="w-3.5 h-3.5 text-muted-foreground" />
-                            </a>
-                          )}
-                          {business.facebook && (
-                            <a 
-                              href={business.facebook} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="w-7 h-7 rounded-full bg-muted flex items-center justify-center hover:bg-primary/20 transition-colors"
-                            >
-                              <Facebook className="w-3.5 h-3.5 text-muted-foreground" />
-                            </a>
-                          )}
-                          {business.googleMaps && (
-                            <a 
-                              href={business.googleMaps} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="w-7 h-7 rounded-full bg-muted flex items-center justify-center hover:bg-primary/20 transition-colors text-xs font-bold text-muted-foreground"
-                            >
-                              G
-                            </a>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Claim/Edit Link */}
-                      <div className="mt-3 pt-3 border-t border-border">
-                        <Link 
-                          to={`/claim-business?town=${townSlug}&category=${category.id}&name=${encodeURIComponent(business.name)}`}
-                          className="text-xs text-muted-foreground hover:text-primary transition-colors"
-                        >
-                          Claim / Edit / Remove
-                        </Link>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <BusinessCard 
+                    key={idx}
+                    business={business}
+                    townSlug={townSlug}
+                    categoryId={category.id}
+                  />
                 ))}
               </div>
             </div>
@@ -244,11 +362,22 @@ const LocalGuideSection = ({ townName, townSlug, categories }: LocalGuideSection
           <p className="text-sm text-muted-foreground mb-3">
             Own a business in {townName}?
           </p>
-          <Button variant="outline" asChild>
-            <Link to={`/claim-business?town=${townSlug}`}>
-              Add Your Business to This Guide
-            </Link>
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Button variant="outline" asChild>
+              <Link to={`/claim-business?town=${townSlug}`}>
+                Add Your Business (Free)
+              </Link>
+            </Button>
+            <Button 
+              className="bg-[#00F5FF] hover:bg-[#00F5FF]/90 text-black font-semibold"
+              asChild
+            >
+              <Link to={`/claim-business?town=${townSlug}&upgrade=true`}>
+                <Star className="w-4 h-4 mr-2 fill-current" />
+                Become a Local Partner — $49/mo
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
     </section>
