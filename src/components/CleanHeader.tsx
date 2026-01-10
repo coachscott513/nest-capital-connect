@@ -3,47 +3,61 @@ import { Link } from "react-router-dom";
 import { ChevronDown, Phone, Search, X, Menu } from "lucide-react";
 import cdnLogo from "@/assets/cdn-logo.png";
 
-// Town data for alphabetical listing
+// Town data - All Capital District + Expansion Counties
 const towns = [
   { name: "Albany", slug: "albany" },
+  { name: "Altamont", slug: "altamont" },
   { name: "Amsterdam", slug: "amsterdam" },
+  { name: "Averill Park", slug: "averill-park" },
+  { name: "Ballston Spa", slug: "ballston-spa" },
+  { name: "Brunswick", slug: "brunswick" },
+  { name: "Cambridge", slug: "cambridge" },
+  { name: "Canajoharie", slug: "canajoharie" },
   { name: "Clifton Park", slug: "clifton-park" },
+  { name: "Cohoes", slug: "cohoes" },
+  { name: "Colonie", slug: "colonie" },
   { name: "Delmar", slug: "delmar" },
+  { name: "East Greenbush", slug: "east-greenbush" },
+  { name: "Fonda", slug: "fonda" },
+  { name: "Glens Falls", slug: "glens-falls" },
+  { name: "Gloversville", slug: "gloversville" },
+  { name: "Green Island", slug: "green-island" },
+  { name: "Greenwich", slug: "greenwich" },
   { name: "Guilderland", slug: "guilderland" },
+  { name: "Hudson Falls", slug: "hudson-falls" },
+  { name: "Johnstown", slug: "johnstown" },
+  { name: "Lake George", slug: "lake-george" },
+  { name: "Latham", slug: "latham" },
+  { name: "Loudonville", slug: "loudonville" },
+  { name: "Malta", slug: "malta" },
   { name: "Mechanicville", slug: "mechanicville" },
+  { name: "Menands", slug: "menands" },
   { name: "Niskayuna", slug: "niskayuna" },
+  { name: "North Greenbush", slug: "north-greenbush" },
+  { name: "Northville", slug: "northville" },
   { name: "Queensbury", slug: "queensbury" },
+  { name: "Ravena", slug: "ravena" },
+  { name: "Rensselaer", slug: "rensselaer" },
   { name: "Saratoga Springs", slug: "saratoga-springs" },
+  { name: "Schaghticoke", slug: "schaghticoke" },
   { name: "Schenectady", slug: "schenectady" },
+  { name: "Stillwater", slug: "stillwater" },
   { name: "Troy", slug: "troy" },
   { name: "Voorheesville", slug: "voorheesville" },
+  { name: "Waterford", slug: "waterford" },
+  { name: "Watervliet", slug: "watervliet" },
+  { name: "Wynantskill", slug: "wynantskill" },
 ].sort((a, b) => a.name.localeCompare(b.name));
 
-// Navigation structure
+// Simplified Navigation structure - Agent-Neutral, Clean
 const navItems = [
   {
     label: "Towns",
     dropdown: "towns",
   },
   {
-    label: "Buy",
-    dropdown: "buy",
-  },
-  {
-    label: "Rent",
-    dropdown: "rent",
-  },
-  {
-    label: "Invest",
-    dropdown: "invest",
-  },
-  {
     label: "Intelligence",
     dropdown: "intelligence",
-  },
-  {
-    label: "Contact",
-    dropdown: "contact",
   },
 ];
 
@@ -213,133 +227,6 @@ const CleanHeader = () => {
                     </Dropdown>
                   )}
 
-                  {/* Buy Dropdown */}
-                  {item.dropdown === "buy" && (
-                    <Dropdown isOpen={activeDropdown === "buy"} onClose={closeDropdowns}>
-                      <div className="space-y-1">
-                        <Link
-                          to="/homes-for-sale"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Search Homes
-                        </Link>
-                        <Link
-                          to="/first-time-homebuyers"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          First-Time Buyer Programs
-                        </Link>
-                        <Link
-                          to="/grants"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Grants & Down Payment Help
-                        </Link>
-                      </div>
-                    </Dropdown>
-                  )}
-
-                  {/* Rent Dropdown */}
-                  {item.dropdown === "rent" && (
-                    <Dropdown isOpen={activeDropdown === "rent"} onClose={closeDropdowns}>
-                      <div className="space-y-1">
-                        <Link
-                          to="/rentals"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Rentals Hub
-                        </Link>
-                        <div className="border-t border-border my-2" />
-                        <Link
-                          to="/rentals/albany"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Albany Rentals
-                        </Link>
-                        <Link
-                          to="/rentals/schenectady"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Schenectady Rentals
-                        </Link>
-                        <Link
-                          to="/rentals/troy"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Troy Rentals
-                        </Link>
-                        <Link
-                          to="/rentals/saratoga"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Saratoga Rentals
-                        </Link>
-                      </div>
-                    </Dropdown>
-                  )}
-
-                  {/* Invest Dropdown */}
-                  {item.dropdown === "invest" && (
-                    <Dropdown isOpen={activeDropdown === "invest"} onClose={closeDropdowns}>
-                      <div className="space-y-1">
-                        <Link
-                          to="/albany-multi-unit"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Multi-Family Search
-                        </Link>
-                        <Link
-                          to="/investor-tools"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Investor Tools & Calculators
-                        </Link>
-                        <div className="border-t border-border my-2" />
-                        <p className="px-3 py-1 text-xs text-muted-foreground uppercase tracking-wide font-semibold">
-                          Market Reports
-                        </p>
-                        <Link
-                          to="/investor/albany-multi-unit-market"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Albany Multi-Unit
-                        </Link>
-                        <Link
-                          to="/troy-multi-unit"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Troy Multi-Unit
-                        </Link>
-                        <Link
-                          to="/schenectady-multi-unit"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Schenectady Multi-Unit
-                        </Link>
-                        <Link
-                          to="/investor/saratoga-multi-unit-market"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Saratoga Multi-Unit
-                        </Link>
-                      </div>
-                    </Dropdown>
-                  )}
-
                   {/* Intelligence Dropdown */}
                   {item.dropdown === "intelligence" && (
                     <Dropdown isOpen={activeDropdown === "intelligence"} onClose={closeDropdowns}>
@@ -367,42 +254,6 @@ const CleanHeader = () => {
                             <li>Get your full report in 24 hours</li>
                           </ol>
                         </div>
-                      </div>
-                    </Dropdown>
-                  )}
-
-                  {/* Contact Dropdown */}
-                  {item.dropdown === "contact" && (
-                    <Dropdown isOpen={activeDropdown === "contact"} onClose={closeDropdowns} align="right">
-                      <div className="space-y-3">
-                        <a
-                          href="tel:+15186762347"
-                          className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          <Phone className="h-4 w-4" />
-                          (518) 676-2347
-                        </a>
-                        <a
-                          href="mailto:scott@capitaldistrictnest.com"
-                          className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          scott@capitaldistrictnest.com
-                        </a>
-                        <div className="border-t border-border my-2" />
-                        <Link
-                          to="/dealdesk"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Submit an Address to Analyze
-                        </Link>
-                        <Link
-                          to="/vip-buyer-access"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2 text-sm font-medium text-primary hover:bg-primary/10 rounded-md transition-colors"
-                        >
-                          VIP Buyer Access →
-                        </Link>
                       </div>
                     </Dropdown>
                   )}
@@ -468,66 +319,6 @@ const CleanHeader = () => {
             </div>
           </div>
 
-          {/* Buy */}
-          <div>
-            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Buy</h3>
-            <div className="space-y-2">
-              <Link to="/homes-for-sale" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Search Homes
-              </Link>
-              <Link to="/first-time-homebuyers" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                First-Time Buyer Programs
-              </Link>
-              <Link to="/grants" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Grants & Down Payment Help
-              </Link>
-            </div>
-          </div>
-
-          {/* Rent */}
-          <div>
-            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Rent</h3>
-            <div className="space-y-2">
-              <Link to="/rentals" onClick={closeMobileMenu} className="block text-foreground hover:text-primary font-medium">
-                Rentals Hub
-              </Link>
-              <Link to="/rentals/albany" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Albany Rentals
-              </Link>
-              <Link to="/rentals/schenectady" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Schenectady Rentals
-              </Link>
-              <Link to="/rentals/troy" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Troy Rentals
-              </Link>
-              <Link to="/rentals/saratoga" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Saratoga Rentals
-              </Link>
-            </div>
-          </div>
-
-          {/* Invest */}
-          <div>
-            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Invest</h3>
-            <div className="space-y-2">
-              <Link to="/albany-multi-unit" onClick={closeMobileMenu} className="block text-foreground hover:text-primary font-medium">
-                Multi-Family Search
-              </Link>
-              <Link to="/investor-tools" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Investor Tools
-              </Link>
-              <Link to="/investor/albany-multi-unit-market" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Albany Multi-Unit Report
-              </Link>
-              <Link to="/troy-multi-unit" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Troy Multi-Unit Report
-              </Link>
-              <Link to="/schenectady-multi-unit" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Schenectady Multi-Unit Report
-              </Link>
-            </div>
-          </div>
-
           {/* Intelligence */}
           <div>
             <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Intelligence</h3>
@@ -541,23 +332,20 @@ const CleanHeader = () => {
             </div>
           </div>
 
-          {/* Contact */}
+          {/* Quick Links */}
           <div>
-            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Contact</h3>
+            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Quick Links</h3>
             <div className="space-y-2">
+              <Link to="/rentals" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
+                Rentals Hub
+              </Link>
+              <Link to="/investor-tools" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
+                Investor Tools
+              </Link>
               <a href="tel:+15186762347" className="flex items-center gap-2 text-foreground hover:text-primary">
                 <Phone className="h-4 w-4" />
                 (518) 676-2347
               </a>
-              <a href="mailto:scott@capitaldistrictnest.com" className="block text-foreground hover:text-primary">
-                scott@capitaldistrictnest.com
-              </a>
-              <Link to="/dealdesk" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Submit an Address
-              </Link>
-              <Link to="/vip-buyer-access" onClick={closeMobileMenu} className="block text-primary font-medium">
-                VIP Buyer Access →
-              </Link>
             </div>
           </div>
 
