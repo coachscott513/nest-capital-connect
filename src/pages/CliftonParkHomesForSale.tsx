@@ -36,8 +36,9 @@ const CliftonParkHomesForSale = () => {
     setIsSubmitting(true);
     try {
       const { error } = await supabase.from("leads").insert({
-        name: formData.name, email: formData.email, phone: formData.phone || null,
+        full_name: formData.name, email: formData.email, phone: formData.phone || null,
         message: formData.requirements || "Clifton Park home search request", type: "clifton-park-homes",
+        origin_town: "clifton-park", lead_type: "buyer",
       });
       if (error) throw error;
       toast({ title: "Request Sent!", description: "We'll send you matching properties shortly." });

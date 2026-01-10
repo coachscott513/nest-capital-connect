@@ -46,7 +46,7 @@ const PropertySearchDeck = ({ sourcePropertyAddress = "", visible = true }: Prop
     
     try {
       await addLead({
-        name: searchForm.name,
+        full_name: searchForm.name,
         email: searchForm.email,
         phone: searchForm.phone || undefined,
         message: `Property Search Request: ${searchForm.propertyAddress}. Source: ${sourcePropertyAddress || "Property Page"}`,
@@ -79,7 +79,7 @@ const PropertySearchDeck = ({ sourcePropertyAddress = "", visible = true }: Prop
     
     try {
       await addLead({
-        name: narrowForm.name,
+        full_name: narrowForm.name,
         email: narrowForm.email,
         message: `Search Narrowing Request. Priorities: ${selectedLabels || "General guidance"}. Source: ${sourcePropertyAddress || "Property Page"}`,
         type: "buyer",

@@ -87,10 +87,11 @@ const QuickLeadForm = ({ journeyId, journeyTitle }: QuickLeadFormProps) => {
 
     try {
       const { error } = await supabase.from("leads").insert({
-        name: "Quick Lead",
+        full_name: "Quick Lead",
         email: email,
         message: `Quick lead from ${journeyTitle} card`,
         type: journeyId,
+        lead_type: "buyer",
       });
 
       if (error) throw error;

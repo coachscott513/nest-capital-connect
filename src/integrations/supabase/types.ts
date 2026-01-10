@@ -139,37 +139,46 @@ export type Database = {
       }
       leads: {
         Row: {
+          assigned_agent_id: string | null
           bedrooms: string | null
           created_at: string
           email: string
+          full_name: string
           id: string
+          lead_type: string | null
           location: string | null
           message: string
-          name: string
+          origin_town: string | null
           phone: string | null
           price_range: string | null
           type: string
         }
         Insert: {
+          assigned_agent_id?: string | null
           bedrooms?: string | null
           created_at?: string
           email: string
+          full_name: string
           id?: string
+          lead_type?: string | null
           location?: string | null
           message: string
-          name: string
+          origin_town?: string | null
           phone?: string | null
           price_range?: string | null
           type: string
         }
         Update: {
+          assigned_agent_id?: string | null
           bedrooms?: string | null
           created_at?: string
           email?: string
+          full_name?: string
           id?: string
+          lead_type?: string | null
           location?: string | null
           message?: string
-          name?: string
+          origin_town?: string | null
           phone?: string | null
           price_range?: string | null
           type?: string

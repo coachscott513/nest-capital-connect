@@ -55,14 +55,16 @@ const MasterGatekeeperModal = ({
     setIsSubmitting(true);
 
     try {
-      // Save lead to Supabase
+      // Save lead to Supabase with origin tracking
       const { error } = await supabase.from("leads").insert({
-        name: result.data.name,
+        full_name: result.data.name,
         email: result.data.email,
         phone: result.data.phone || null,
         message: `Property search request${townName ? ` for ${townName}` : ""}${searchQuery ? `: ${searchQuery}` : ""}`,
         type: "property_search",
         location: townName || null,
+        origin_town: townName || null,
+        lead_type: "buyer",
       });
 
       if (error) throw error;

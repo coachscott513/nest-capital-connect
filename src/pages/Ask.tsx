@@ -31,12 +31,13 @@ const Ask = () => {
     setIsSubmitting(true);
     try {
       const { error } = await supabase.from('leads').insert({
-        name: formData.name || "Question Submission",
+        full_name: formData.name || "Question Submission",
         email: formData.contact.includes('@') ? formData.contact : `${formData.contact}@phone.placeholder`,
         phone: !formData.contact.includes('@') ? formData.contact : null,
         message: formData.question,
         type: 'question',
-        location: 'Capital District'
+        location: 'Capital District',
+        lead_type: "buyer",
       });
 
       if (error) throw error;

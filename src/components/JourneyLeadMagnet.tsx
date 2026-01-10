@@ -52,11 +52,12 @@ const JourneyLeadMagnet = ({
     try {
       // Save to leads table
       const { error: dbError } = await supabase.from("leads").insert({
-        name: formData.firstName,
+        full_name: formData.firstName,
         email: formData.email,
         phone: formData.phone || null,
         message: `Lead magnet request: ${downloadName}`,
         type: journeyType,
+        lead_type: journeyType === "investor" ? "investor" : "buyer",
       });
 
       if (dbError) throw dbError;
