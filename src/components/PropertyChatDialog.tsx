@@ -42,11 +42,12 @@ const PropertyChatDialog = ({ children, propertyAddress, propertyUrl }: Property
 
     try {
       const { error } = await supabase.from("leads").insert({
-        name: formData.name,
+        full_name: formData.name,
         email: formData.email,
         phone: formData.phone || null,
         message: `[Property Inquiry: ${propertyAddress}]\n\nURL: ${propertyUrl}\n\n${formData.message}`,
-        type: "property_chat"
+        type: "property_chat",
+        lead_type: "buyer",
       });
 
       if (error) throw error;

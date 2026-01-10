@@ -30,13 +30,15 @@ const AlbanyMultiUnit = () => {
     
     try {
       const { error } = await supabase.from("leads").insert({
-        name: formData.name,
+        full_name: formData.name,
         email: formData.email || "not provided",
         phone: formData.phone,
         type: "Investor – Albany Multi-Unit",
         message: `Investment Type: ${formData.investorType || "Not specified"}\nTarget Price Range: ${formData.priceRange || "Not specified"}`,
         location: "Albany",
-        price_range: formData.priceRange || null
+        price_range: formData.priceRange || null,
+        lead_type: "investor",
+        origin_town: "albany",
       });
       
       if (error) throw error;

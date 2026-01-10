@@ -717,12 +717,13 @@ const LaveryDriveDelmar = () => {
                       setIsOtherPropertySubmitting(true);
                       try {
                         const { error } = await supabase.from("leads").insert({
-                          name: otherPropertyForm.name,
+                          full_name: otherPropertyForm.name,
                           email: otherPropertyForm.email,
                           phone: otherPropertyForm.phone || null,
                           message: `Property Intelligence Report Request for: ${otherPropertyForm.address}`,
                           type: "other_property_intelligence",
-                          location: otherPropertyForm.address
+                          location: otherPropertyForm.address,
+                          lead_type: "buyer",
                         });
                         if (error) throw error;
                         toast.success("Request submitted! We'll analyze this property and get back to you.");
@@ -834,11 +835,12 @@ const LaveryDriveDelmar = () => {
                       setIsIntakeSubmitting(true);
                       try {
                         const { error } = await supabase.from("leads").insert({
-                          name: buyerIntakeForm.name,
+                          full_name: buyerIntakeForm.name,
                           email: buyerIntakeForm.email,
                           phone: buyerIntakeForm.phone || null,
                           message: buyerIntakeForm.message || "Buyer intake - help narrowing search",
-                          type: "buyer_intake"
+                          type: "buyer_intake",
+                          lead_type: "buyer",
                         });
                         if (error) throw error;
                         toast.success("Got it! We'll reach out shortly to help narrow your search.");

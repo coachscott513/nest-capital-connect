@@ -51,11 +51,13 @@ const VoorheesvilleHomesForSale = () => {
 
     try {
       const { error } = await supabase.from("leads").insert({
-        name: formData.name,
+        full_name: formData.name,
         email: formData.email,
         phone: formData.phone || null,
         message: formData.requirements || "Voorheesville home search request",
         type: "voorheesville-homes",
+        origin_town: "voorheesville",
+        lead_type: "buyer",
       });
 
       if (error) throw error;

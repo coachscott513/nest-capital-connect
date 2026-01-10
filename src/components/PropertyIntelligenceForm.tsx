@@ -36,12 +36,13 @@ const PropertyIntelligenceForm: React.FC<PropertyIntelligenceFormProps> = ({ sou
     
     try {
       const { error } = await supabase.from('leads').insert({
-        name: formData.name,
+        full_name: formData.name,
         email: formData.email,
         phone: formData.phone || null,
         message: `Property Intelligence Request: ${formData.propertyAddress}`,
         type: 'property_intelligence',
-        location: formData.propertyAddress
+        location: formData.propertyAddress,
+        lead_type: "buyer",
       });
 
       if (error) throw error;

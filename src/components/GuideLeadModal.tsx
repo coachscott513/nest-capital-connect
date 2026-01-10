@@ -27,11 +27,12 @@ const GuideLeadModal = ({ open, onOpenChange, redirectPath, guideType }: GuideLe
     try {
       // Save to leads table
       const { error: dbError } = await supabase.from("leads").insert({
-        name: formData.firstName,
+        full_name: formData.firstName,
         email: formData.email,
         phone: formData.phone || null,
         message: `Guide access request: ${guideType}`,
         type: guideType,
+        lead_type: "buyer",
       });
 
       if (dbError) throw dbError;

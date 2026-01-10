@@ -41,12 +41,13 @@ const SearchAssistanceSection: React.FC = () => {
     
     try {
       const { error } = await supabase.from('leads').insert({
-        name: formData.name,
+        full_name: formData.name,
         email: formData.email,
         phone: formData.phone || null,
         message: `Search Assistance Request: ${formData.searchCriteria || 'No specific criteria provided'}`,
         type: 'search_assistance',
-        location: 'Capital District'
+        location: 'Capital District',
+        lead_type: "buyer",
       });
 
       if (error) throw error;

@@ -46,11 +46,12 @@ const InvestorJourney = () => {
 
     try {
       const { error: dbError } = await supabase.from("leads").insert({
-        name: formData.firstName,
+        full_name: formData.firstName,
         email: formData.email,
         phone: formData.phone || null,
         message: "Guide access: Investor Guide",
         type: "investor-guide-access",
+        lead_type: "investor",
       });
 
       if (dbError) throw dbError;

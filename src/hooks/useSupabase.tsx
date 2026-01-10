@@ -4,14 +4,17 @@ import { supabase } from '@/integrations/supabase/client';
 
 export interface Lead {
   id?: string;
-  name: string;
+  full_name: string;
   email: string;
   phone?: string;
   message: string;
-  type: 'renter' | 'owner' | 'buyer' | 'seller';
+  type: 'renter' | 'owner' | 'buyer' | 'seller' | string;
   location?: string;
   bedrooms?: string;
   price_range?: string;
+  origin_town?: string;
+  lead_type?: string;
+  assigned_agent_id?: string;
   created_at?: string;
 }
 

@@ -45,11 +45,13 @@ const TroyHomesForSalePage = () => {
     setIsSubmitting(true);
     try {
       const { error } = await supabase.from("leads").insert({
-        name: formData.name,
+        full_name: formData.name,
         email: formData.email,
         phone: formData.phone || null,
         message: formData.requirements || "Troy home search request",
         type: "troy-homes",
+        origin_town: "troy",
+        lead_type: "buyer",
       });
       if (error) throw error;
       toast({

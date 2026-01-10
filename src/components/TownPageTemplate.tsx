@@ -203,11 +203,13 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
     setIsAddressSubmitting(true);
     try {
       const { error } = await supabase.from('leads').insert({
-        name: "Property Intel Request",
+        full_name: "Property Intel Request",
         email: `${town.slug}@propertyintel.request`,
         message: `Property Intelligence Request for: ${propertyAddress}${addressNote ? ` | Note: ${addressNote}` : ''}`,
         type: 'property_intel_request',
-        location: town.name
+        location: town.name,
+        origin_town: town.slug,
+        lead_type: "buyer",
       });
 
       if (error) throw error;
