@@ -7,6 +7,7 @@ import AppleHero from "@/components/AppleHero";
 import AppleTownCards from "@/components/AppleTownCards";
 import MarketPulse from "@/components/MarketPulse";
 import BusinessSpotlight from "@/components/BusinessSpotlight";
+import RentalVault from "@/components/RentalVault";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 
@@ -46,6 +47,9 @@ const Index = () => {
 
       {/* Business Spotlight */}
       <BusinessSpotlight />
+
+      {/* Rental Vault */}
+      <RentalVault limit={4} />
 
       {/* ========================================== */}
       {/* SECTION: WHY THIS PLATFORM - Maximum Spacing */}
