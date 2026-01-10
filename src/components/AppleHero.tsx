@@ -114,13 +114,13 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
         </div>
       </div>
 
-      {/* Premium Breathing Line Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-3 z-20">
-        {/* Breathing Vertical Line */}
-        <div className="h-12 w-0.5 bg-gradient-to-b from-transparent via-primary to-transparent animate-breathe rounded-full" />
+      {/* Premium Breathing Line Indicator - Teal Glow */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4 z-20">
+        {/* Breathing Vertical Line with Glow */}
+        <div className="h-16 w-[2px] bg-gradient-to-b from-transparent via-primary to-transparent animate-breathe rounded-full shadow-[0_0_8px_hsl(185_100%_50%_/_0.5)]" />
         
-        {/* Underwrite Text */}
-        <span className="text-[9px] font-light text-muted-foreground tracking-[0.3em] uppercase">
+        {/* Underwrite Text - Premium Typography */}
+        <span className="text-[10px] font-light text-muted-foreground tracking-[0.35em] uppercase">
           Underwrite
         </span>
       </div>
