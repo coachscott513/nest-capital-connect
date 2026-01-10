@@ -136,8 +136,26 @@
     @apply border-border;
   }
 
+  /* FORCE DEEP SPACE - Hard Reset */
+  html {
+    background-color: #0B0B0B !important;
+    color-scheme: dark;
+  }
+
   body {
     @apply bg-background text-foreground font-manrope antialiased;
+    background-color: #0B0B0B !important;
+    min-height: 100vh;
+  }
+
+  #root {
+    background-color: #0B0B0B;
+    min-height: 100vh;
+  }
+
+  /* Prevent white flash on page load */
+  .min-h-screen {
+    background-color: hsl(var(--background)) !important;
   }
 }
 
@@ -175,9 +193,9 @@
   }
   
   .glass-nav {
-    background: rgba(5, 5, 5, 0.85);
-    backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    background: rgba(11, 11, 11, 0.8) !important;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
   
