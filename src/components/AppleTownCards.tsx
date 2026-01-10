@@ -87,62 +87,61 @@ const townHubs: TownCardData[] = [
 
 const AppleTownCards = () => {
   return (
-    <section className="py-20 md:py-28 px-[5%] bg-[#F5F5F7]">
+    <section className="section-massive px-[5%] bg-card">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-3">Regional Hub</p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1D1D1F] mb-4">
+        {/* Section Header - Maximum Breathing Room */}
+        <div className="text-center mb-20">
+          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Regional Hub</p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-6">
             Intelligence by Town
           </h2>
-          <p className="text-lg text-[#6E6E73] max-w-2xl mx-auto">
-            Each market has its own rhythm. We organize real estate intelligence
-            the way people actually search — locally.
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto body-airy font-light">
+            Each market has its own rhythm. We organize real estate intelligence the way people actually search — locally.
           </p>
         </div>
 
-        {/* 3-Column Town Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Bento Grid - 32px Radius Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {townHubs.map((town) => (
             <Link
               key={town.name}
               to={town.href}
-              className="group relative h-[380px] rounded-3xl overflow-hidden hover-lift"
+              className="group relative h-[420px] rounded-[2rem] overflow-hidden hover-lift"
             >
               {/* Background Image */}
               <div 
-                className="absolute inset-0 bg-cover bg-center transition-all duration-500 group-hover:scale-105 group-hover:blur-[2px]"
+                className="absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110"
                 style={{ backgroundImage: `url(${town.image})` }}
               />
               
-              {/* Dark Gradient Overlay */}
+              {/* Dark Gradient Overlay - Cinematic */}
               <div className="absolute inset-0 town-card-overlay" />
               
-              {/* Nest Score Badge - Top Right */}
-              <div className="absolute top-4 right-4 nest-badge">
+              {/* Frosted Glass Nest Score Badge */}
+              <div className="absolute top-5 right-5 nest-badge">
                 Nest Score: {town.nestScore}
               </div>
               
-              {/* Content - Bottom */}
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <div className="flex items-center gap-2 mb-2">
+              {/* Content - Bottom Aligned */}
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <div className="flex items-center gap-2 mb-3">
                   <MapPin className="w-4 h-4 text-white/80" />
-                  <h3 className="text-2xl font-bold text-white">
+                  <h3 className="text-2xl font-semibold text-white tracking-tight">
                     {town.name}
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm mb-4">{town.description}</p>
+                <p className="text-white/70 text-base mb-5 body-airy">{town.description}</p>
                 
-                {/* Business Pulse Indicator */}
+                {/* Business Pulse */}
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-white/60 text-sm">
+                  <div className="flex items-center gap-2 text-white/50 text-sm">
                     <Store className="w-4 h-4" />
                     <span>{town.businessCount} Business Spotlights</span>
                   </div>
                   
-                  {/* View Button - Appears on hover */}
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1 text-white font-semibold text-sm">
-                    View Town <ArrowRight className="w-4 h-4" />
+                  {/* Hover Reveal Arrow */}
+                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-1 text-white font-semibold text-sm">
+                    Explore <ArrowRight className="w-4 h-4" />
                   </span>
                 </div>
               </div>
@@ -151,13 +150,13 @@ const AppleTownCards = () => {
         </div>
 
         {/* View All Link */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-16">
           <Link 
             to="/communities" 
-            className="inline-flex items-center gap-2 text-[#1D1D1F] font-semibold hover:text-primary transition-colors group"
+            className="inline-flex items-center gap-2 text-foreground font-semibold hover:text-primary transition-colors group text-lg"
           >
             View all Capital District towns 
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
           </Link>
         </div>
       </div>
