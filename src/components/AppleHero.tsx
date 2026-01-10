@@ -16,8 +16,8 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Trigger gatekeeper modal instead of direct redirect
-      const redirectUrl = `/dealdesk?address=${encodeURIComponent(searchQuery.trim())}`;
+      // Trigger gatekeeper modal with Intelligence Hub redirect
+      const redirectUrl = `/intelligence?address=${encodeURIComponent(searchQuery.trim())}`;
       setPendingRedirectUrl(redirectUrl);
       setGatekeeperOpen(true);
     }
