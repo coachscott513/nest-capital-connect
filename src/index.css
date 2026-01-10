@@ -273,6 +273,14 @@
     letter-spacing: 0.8em;
   }
   
+  /* Market Pulse Ultra - 8vw Dynamic Scaling */
+  .market-pulse-ultra {
+    font-weight: 100;
+    font-size: 8vw;
+    line-height: 1.1;
+    letter-spacing: 0.6em;
+  }
+  
   @media (max-width: 768px) {
     .market-pulse-title {
       font-size: 2rem;
@@ -281,6 +289,11 @@
     
     .market-pulse-cinematic {
       font-size: clamp(1.5rem, 8vw, 3rem);
+      letter-spacing: 0.3em;
+    }
+    
+    .market-pulse-ultra {
+      font-size: 10vw;
       letter-spacing: 0.3em;
     }
   }
@@ -391,14 +404,32 @@
   }
 }
 
+/* 4-second cinematic breathing for active intelligence signal */
+@keyframes breathe-cinematic {
+  0%, 100% { 
+    opacity: 0.2;
+    filter: drop-shadow(0 0 4px hsl(185 100% 50% / 0.2));
+  }
+  50% { 
+    opacity: 1;
+    filter: drop-shadow(0 0 30px hsl(185 100% 50% / 1));
+  }
+}
+
 .animate-breathe {
   animation: breathe 3s ease-in-out infinite;
 }
 
-/* Cinematic Breathing Line for Market Pulse */
+/* Standard Breathing Line */
 .breathing-line {
   background: linear-gradient(to bottom, hsl(185 100% 50%) 0%, hsl(185 100% 50% / 0.3) 100%);
   animation: breathe 3s ease-in-out infinite;
+}
+
+/* Cinematic Breathing Line for Market Pulse - 4 second pulse */
+.breathing-line-cinematic {
+  background: linear-gradient(to bottom, hsl(185 100% 50%) 0%, hsl(185 100% 50% / 0.1) 100%);
+  animation: breathe-cinematic 4s ease-in-out infinite;
 }
 
 /* ============= PULSE RING ANIMATION ============= */
