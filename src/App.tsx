@@ -288,9 +288,9 @@ const App = () => {
           {/* VIP Buyer Access */}
           <Route path="/vip-buyer-access" element={<VipBuyerAccess />} />
 
-          {/* Deal Desk */}
-          <Route path="/dealdesk" element={<DealDesk />} />
-          <Route path="/deal-desk" element={<Navigate to="/dealdesk" replace />} />
+          {/* Deal Desk - Redirects to Intelligence Hub */}
+          <Route path="/dealdesk" element={<Navigate to="/intelligence" replace />} />
+          <Route path="/deal-desk" element={<Navigate to="/intelligence" replace />} />
           <Route path="/dealdesk/thanks" element={<DealDeskThanks />} />
           
           {/* Ask a Question */}

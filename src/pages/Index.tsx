@@ -1,11 +1,11 @@
 import { useState, useRef } from "react";
-import { ArrowRight, BarChart3, CheckCircle, Sparkles } from "lucide-react";
+import { ArrowRight, BarChart3, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import GuideLeadModal from "@/components/GuideLeadModal";
 import SEOHead from "@/components/SEOHead";
 import AppleHero from "@/components/AppleHero";
 import AppleTownCards from "@/components/AppleTownCards";
-import MarketPulse from "@/components/MarketPulse";
+import InstitutionalHeader from "@/components/InstitutionalHeader";
 import BusinessSpotlight from "@/components/BusinessSpotlight";
 import RentalVault from "@/components/RentalVault";
 import CleanHeader from "@/components/CleanHeader";
@@ -37,8 +37,8 @@ const Index = () => {
       {/* Apple-Style Cinematic Hero */}
       <AppleHero onScrollToTowns={scrollToTownSection} />
 
-      {/* Market Pulse - Apple Health Style */}
-      <MarketPulse />
+      {/* Institutional Header - 3-Column Bento */}
+      <InstitutionalHeader />
 
       {/* Town Intelligence Cards */}
       <div ref={townSectionRef} id="town-intelligence" className="scroll-mt-24">

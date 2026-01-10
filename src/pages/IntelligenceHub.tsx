@@ -4,7 +4,16 @@ import { Helmet } from "react-helmet-async";
 import { Search, FileText, BookOpen, Home, Send, TrendingUp, Shield, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import MainHeader from "@/components/MainHeader";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -12,6 +21,16 @@ import { toast } from "sonner";
 const IntelligenceHub = () => {
   const [searchAddress, setSearchAddress] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [underwriteModalOpen, setUnderwriteModalOpen] = useState(false);
+  
+  // Form state for precision underwrite
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    propertyAddress: "",
+    notes: ""
+  });
 
   const handleDueDiligenceSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,6 +61,44 @@ const IntelligenceHub = () => {
     }
   };
 
+  const handleUnderwriteSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.email || !formData.fullName || !formData.propertyAddress) {
+      toast.error("Please fill in required fields");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase.from("leads").insert({
+        full_name: formData.fullName,
+        email: formData.email,
+        phone: formData.phone || null,
+        message: `Custom Underwrite Request: ${formData.propertyAddress}. Notes: ${formData.notes}`,
+        type: "custom_underwrite",
+        lead_type: "precision_underwrite"
+      });
+
+      if (error) throw error;
+
+      toast.success("Request submitted! Your precision underwrite will be delivered within 24 hours.");
+      setUnderwriteModalOpen(false);
+      setFormData({ fullName: "", email: "", phone: "", propertyAddress: "", notes: "" });
+    } catch (error) {
+      console.error("Error submitting underwrite request:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const openUnderwriteModal = (address?: string) => {
+    if (address) {
+      setFormData(prev => ({ ...prev, propertyAddress: address }));
+    }
+    setUnderwriteModalOpen(true);
+  };
+
   const intelligenceTiles = [
     {
       icon: FileText,
@@ -49,28 +106,32 @@ const IntelligenceHub = () => {
       description: "See a full 36% yield underwriting analysis. This is the 'Big Time' data depth that justifies premium partnerships.",
       link: "/reports/sample-property-intelligence",
       cta: "View Sample Report",
-      highlight: true
+      highlight: true,
+      isLink: true
     },
     {
       icon: BookOpen,
       title: "Investor Guides",
       description: "PDF resources covering all 5 counties in the Capital District. Market trends, cap rates, and neighborhood breakdowns.",
       link: "/investor-tools",
-      cta: "Browse Guides"
+      cta: "Browse Guides",
+      isLink: true
     },
     {
       icon: Home,
       title: "First-Time Buyer Help",
       description: "Specialized data for entry-level home seekers. School districts, commute times, and 'Nest Score' rankings.",
       link: "/first-time-buyers",
-      cta: "Get Started"
+      cta: "Get Started",
+      isLink: true
     },
     {
       icon: Send,
-      title: "Request Property Report",
+      title: "Request Precision Underwrite",
       description: "Submit any address in the Capital District. We'll deliver a full intelligence report within 24 hours.",
-      link: "/dealdesk",
-      cta: "Request Report"
+      cta: "Request Report",
+      isLink: false,
+      onClick: () => openUnderwriteModal()
     }
   ];
 
@@ -88,7 +149,7 @@ const IntelligenceHub = () => {
         <meta name="description" content="Access institutional-grade real estate intelligence for the Capital District. Sample reports, investor guides, and due diligence tools." />
       </Helmet>
 
-      <MainHeader />
+      <CleanHeader />
 
       <main className="min-h-screen bg-background">
         {/* Hero Section */}
@@ -167,42 +228,61 @@ const IntelligenceHub = () => {
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
-                {intelligenceTiles.map((tile) => (
-                  <Link
-                    key={tile.title}
-                    to={tile.link}
-                    className={`group relative p-8 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
-                      tile.highlight 
-                        ? "border-primary/30 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent hover:border-primary/50" 
-                        : "border-border bg-card hover:border-primary/30 hover:bg-muted/50"
-                    }`}
-                  >
-                    <div className="flex items-start gap-5">
-                      <div className={`p-3 rounded-xl ${tile.highlight ? "bg-primary/20" : "bg-muted"}`}>
-                        <tile.icon className={`h-6 w-6 ${tile.highlight ? "text-primary" : "text-foreground"}`} />
+                {intelligenceTiles.map((tile) => {
+                  const tileClassName = `group relative p-8 rounded-2xl border transition-all duration-300 hover:scale-[1.02] text-left w-full ${
+                    tile.highlight 
+                      ? "border-primary/30 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent hover:border-primary/50" 
+                      : "border-border bg-card hover:border-primary/30 hover:bg-muted/50"
+                  }`;
+
+                  const tileContent = (
+                    <>
+                      <div className="flex items-start gap-5">
+                        <div className={`p-3 rounded-xl ${tile.highlight ? "bg-primary/20" : "bg-muted"}`}>
+                          <tile.icon className={`h-6 w-6 ${tile.highlight ? "text-primary" : "text-foreground"}`} />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-medium text-foreground mb-2 group-hover:text-primary transition-colors">
+                            {tile.title}
+                          </h3>
+                          <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                            {tile.description}
+                          </p>
+                          <span className="text-primary text-sm font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                            {tile.cta}
+                            <span className="text-lg">→</span>
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-medium text-foreground mb-2 group-hover:text-primary transition-colors">
-                          {tile.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                          {tile.description}
-                        </p>
-                        <span className="text-primary text-sm font-medium inline-flex items-center gap-2 group-hover:gap-3 transition-all">
-                          {tile.cta}
-                          <span className="text-lg">→</span>
-                        </span>
-                      </div>
-                    </div>
-                    {tile.highlight && (
-                      <div className="absolute top-4 right-4">
-                        <span className="text-[10px] uppercase tracking-widest text-primary bg-primary/20 px-3 py-1 rounded-full">
-                          Featured
-                        </span>
-                      </div>
-                    )}
-                  </Link>
-                ))}
+                      {tile.highlight && (
+                        <div className="absolute top-4 right-4">
+                          <span className="text-[10px] uppercase tracking-widest text-primary bg-primary/20 px-3 py-1 rounded-full">
+                            Featured
+                          </span>
+                        </div>
+                      )}
+                    </>
+                  );
+
+                  if (tile.isLink && tile.link) {
+                    return (
+                      <Link key={tile.title} to={tile.link} className={tileClassName}>
+                        {tileContent}
+                      </Link>
+                    );
+                  }
+
+                  return (
+                    <button
+                      key={tile.title}
+                      type="button"
+                      onClick={tile.onClick}
+                      className={tileClassName}
+                    >
+                      {tileContent}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -265,15 +345,97 @@ const IntelligenceHub = () => {
                 Request your first property intelligence report today. 
                 Full analysis delivered within 24 hours.
               </p>
-              <Link to="/dealdesk">
-                <Button size="lg" className="rounded-full px-10">
-                  Request Intelligence Report
-                </Button>
-              </Link>
+              <Button 
+                size="lg" 
+                className="rounded-full px-10"
+                onClick={() => openUnderwriteModal()}
+              >
+                Request Precision Underwrite
+              </Button>
             </div>
           </div>
         </section>
       </main>
+
+      {/* Precision Underwrite Modal */}
+      <Dialog open={underwriteModalOpen} onOpenChange={setUnderwriteModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-[200] tracking-wide">
+              Request Precision Underwrite
+            </DialogTitle>
+            <DialogDescription>
+              Submit any Capital District address. We'll deliver a full intelligence report within 24 hours.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <form onSubmit={handleUnderwriteSubmit} className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <Label htmlFor="fullName">Full Name *</Label>
+              <Input
+                id="fullName"
+                value={formData.fullName}
+                onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
+                placeholder="Your name"
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="email">Email *</Label>
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone (Optional)</Label>
+              <Input
+                id="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                placeholder="(518) 555-0123"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="propertyAddress">Property Address *</Label>
+              <Input
+                id="propertyAddress"
+                value={formData.propertyAddress}
+                onChange={(e) => setFormData(prev => ({ ...prev, propertyAddress: e.target.value }))}
+                placeholder="123 Main St, Albany, NY 12203"
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="notes">Additional Notes</Label>
+              <Textarea
+                id="notes"
+                value={formData.notes}
+                onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
+                placeholder="Tell us about your investment goals or specific questions..."
+                rows={3}
+              />
+            </div>
+            
+            <Button 
+              type="submit" 
+              className="w-full rounded-full" 
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Request Report"}
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </>
