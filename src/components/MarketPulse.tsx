@@ -30,9 +30,9 @@ const MarketPulse = () => {
 
   return (
     <section className="relative overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
-      {/* Cinematic Breathing Line - Terminates 40px above title */}
+      {/* Cinematic Breathing Line - 300px height for visual bridge */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col items-center">
-        <div className="w-[2px] h-[calc(15vh-40px)] breathing-line-cinematic" />
+        <div className="w-[2px] h-[300px] breathing-line-cinematic" />
       </div>
       
       {/* Massive Vertical Padding - Command Center Feel */}

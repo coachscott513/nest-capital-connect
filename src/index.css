@@ -273,12 +273,12 @@
     letter-spacing: 0.8em;
   }
   
-  /* Market Pulse Ultra - 8vw Dynamic Scaling */
+  /* Market Pulse Ultra - 10vw Dynamic Scaling for Cinematic Impact */
   .market-pulse-ultra {
     font-weight: 100;
-    font-size: 8vw;
+    font-size: 10vw;
     line-height: 1.1;
-    letter-spacing: 0.6em;
+    letter-spacing: 0.8em;
   }
   
   @media (max-width: 768px) {
