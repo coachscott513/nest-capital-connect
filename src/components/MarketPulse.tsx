@@ -29,16 +29,18 @@ const MarketPulse = () => {
   ];
 
   return (
-    <section className="relative bg-background overflow-hidden">
-      {/* Cinematic Breathing Line - 200px tall with pulse animation */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-[200px] breathing-line" />
+    <section className="relative overflow-hidden" style={{ backgroundColor: '#0B0B0B' }}>
+      {/* Cinematic Breathing Line - Terminates 40px above title */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col items-center">
+        <div className="w-[2px] h-[calc(15vh-40px)] breathing-line-cinematic" />
+      </div>
       
       {/* Massive Vertical Padding - Command Center Feel */}
       <div className="pt-[15vh] pb-[10vh] px-[5%]">
         <div className="max-w-7xl mx-auto">
-          {/* Cinematic Institutional Header - Massive Scale */}
+          {/* Ultra-Cinematic Institutional Header - 8vw Dynamic Scale */}
           <div className="text-center mb-24">
-            <h2 className="market-pulse-cinematic text-foreground uppercase mb-6">
+            <h2 className="market-pulse-ultra text-foreground uppercase mb-6">
               Market Pulse
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground font-light tracking-wide max-w-2xl mx-auto">
