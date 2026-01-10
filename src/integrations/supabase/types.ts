@@ -380,6 +380,11 @@ export type Database = {
       town_market_data: {
         Row: {
           active_listings: number | null
+          anchor_agent_email: string | null
+          anchor_agent_id: string | null
+          anchor_agent_name: string | null
+          anchor_agent_phone: string | null
+          anchor_agent_photo: string | null
           avg_baths: number | null
           avg_beds: number | null
           avg_days_on_market: number | null
@@ -387,7 +392,9 @@ export type Database = {
           avg_sqft: number | null
           condo_count: number | null
           created_at: string
+          hero_landmark: string | null
           id: string
+          is_active: boolean | null
           land_count: number | null
           listings_300k_500k: number | null
           listings_500k_750k: number | null
@@ -400,15 +407,23 @@ export type Database = {
           median_price: number | null
           min_price: number | null
           multi_family_count: number | null
+          nest_score: number | null
+          region_category: string | null
           scraped_at: string
           single_family_count: number | null
           source_url: string | null
+          target_yield: number | null
           town_name: string
           town_slug: string
           updated_at: string
         }
         Insert: {
           active_listings?: number | null
+          anchor_agent_email?: string | null
+          anchor_agent_id?: string | null
+          anchor_agent_name?: string | null
+          anchor_agent_phone?: string | null
+          anchor_agent_photo?: string | null
           avg_baths?: number | null
           avg_beds?: number | null
           avg_days_on_market?: number | null
@@ -416,7 +431,9 @@ export type Database = {
           avg_sqft?: number | null
           condo_count?: number | null
           created_at?: string
+          hero_landmark?: string | null
           id?: string
+          is_active?: boolean | null
           land_count?: number | null
           listings_300k_500k?: number | null
           listings_500k_750k?: number | null
@@ -429,15 +446,23 @@ export type Database = {
           median_price?: number | null
           min_price?: number | null
           multi_family_count?: number | null
+          nest_score?: number | null
+          region_category?: string | null
           scraped_at?: string
           single_family_count?: number | null
           source_url?: string | null
+          target_yield?: number | null
           town_name: string
           town_slug: string
           updated_at?: string
         }
         Update: {
           active_listings?: number | null
+          anchor_agent_email?: string | null
+          anchor_agent_id?: string | null
+          anchor_agent_name?: string | null
+          anchor_agent_phone?: string | null
+          anchor_agent_photo?: string | null
           avg_baths?: number | null
           avg_beds?: number | null
           avg_days_on_market?: number | null
@@ -445,7 +470,9 @@ export type Database = {
           avg_sqft?: number | null
           condo_count?: number | null
           created_at?: string
+          hero_landmark?: string | null
           id?: string
+          is_active?: boolean | null
           land_count?: number | null
           listings_300k_500k?: number | null
           listings_500k_750k?: number | null
@@ -458,9 +485,12 @@ export type Database = {
           median_price?: number | null
           min_price?: number | null
           multi_family_count?: number | null
+          nest_score?: number | null
+          region_category?: string | null
           scraped_at?: string
           single_family_count?: number | null
           source_url?: string | null
+          target_yield?: number | null
           town_name?: string
           town_slug?: string
           updated_at?: string
