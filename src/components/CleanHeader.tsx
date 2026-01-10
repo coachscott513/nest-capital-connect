@@ -78,7 +78,7 @@ const Dropdown = ({ isOpen, onClose, children, align = "left" }: DropdownProps) 
   return (
     <div
       ref={ref}
-      className={`absolute top-full mt-2 bg-card border border-border rounded-lg shadow-xl p-4 min-w-72 z-50 animate-in fade-in slide-in-from-top-2 duration-200 ${
+      className={`absolute top-full mt-2 bg-white border border-gray-200 rounded-2xl shadow-xl p-4 min-w-72 z-50 animate-in fade-in slide-in-from-top-2 duration-200 ${
         align === "right" ? "right-0" : "left-0"
       }`}
     >
@@ -112,14 +112,14 @@ const CleanHeader = () => {
 
   return (
     <>
-      {/* Desktop Header */}
-      <header className="sticky top-0 z-[2000] bg-background/95 backdrop-blur-md border-b border-border">
+      {/* Desktop Header - Cupertino Light Theme */}
+      <header className="sticky top-0 z-[2000] bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
         <nav className="w-full px-4 md:px-8 lg:px-12">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2 group shrink-0" onClick={closeDropdowns}>
               <img src={cdnLogo} alt="Capital District Nest" className="h-10 md:h-12 w-auto" />
-              <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium hidden sm:block group-hover:text-foreground transition-colors">
+              <span className="text-[10px] text-[#6E6E73] uppercase tracking-widest font-medium hidden sm:block group-hover:text-[#1D1D1F] transition-colors">
                 Home
               </span>
             </Link>
@@ -130,10 +130,10 @@ const CleanHeader = () => {
                 <div key={item.label} className="relative">
                   <button
                     onClick={() => toggleDropdown(item.dropdown)}
-                    className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                    className={`flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-colors ${
                       activeDropdown === item.dropdown
                         ? "text-primary bg-primary/10"
-                        : "text-foreground hover:text-primary hover:bg-muted"
+                        : "text-[#1D1D1F] hover:text-primary hover:bg-gray-100"
                     }`}
                   >
                     {item.label}
@@ -381,7 +381,7 @@ const CleanHeader = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden flex items-center gap-2 px-3 py-2 border border-border rounded-full text-sm font-medium hover:bg-muted transition-colors"
+              className="lg:hidden flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors text-[#1D1D1F]"
             >
               {mobileMenuOpen ? (
                 <>
@@ -399,16 +399,16 @@ const CleanHeader = () => {
         </nav>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - Cupertino Light */}
       <div
-        className={`fixed inset-0 bg-background z-[1999] pt-20 px-4 pb-8 overflow-y-auto transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed inset-0 bg-white z-[1999] pt-20 px-4 pb-8 overflow-y-auto transition-transform duration-300 ease-out lg:hidden ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="space-y-6">
           {/* Towns */}
           <div>
-            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Towns</h3>
+            <h3 className="text-xs uppercase text-[#6E6E73] font-bold tracking-widest mb-3">Towns</h3>
             <Link to="/communities" onClick={closeMobileMenu} className="block text-primary font-medium mb-2">
               Browse All Towns →
             </Link>
