@@ -83,7 +83,7 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Enter address for yield analysis..."
+                  placeholder="Enter any address to get started..."
                   className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground/60 text-lg py-4 font-light tracking-wide"
                 />
               </div>
@@ -126,9 +126,9 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
           {/* Breathing Vertical Line with Glow */}
           <div className="h-16 w-[2px] bg-gradient-to-b from-transparent via-primary to-transparent animate-breathe rounded-full shadow-[0_0_8px_hsl(185_100%_50%_/_0.5)]" />
           
-          {/* Underwrite Text - Premium Typography */}
+          {/* Property Insights Text - Premium Typography */}
           <span className="text-[10px] font-light text-muted-foreground tracking-[0.35em] uppercase">
-            Underwrite
+            The Numbers
           </span>
         </div>
       </section>

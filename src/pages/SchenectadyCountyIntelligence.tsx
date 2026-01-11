@@ -515,7 +515,7 @@ const SchenectadyCountyIntelligence = () => {
                 For Investors
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Investor Intelligence Tools
+                Investor Tools
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 Go beyond list prices. Understand real returns before making an offer.
@@ -552,7 +552,7 @@ const SchenectadyCountyIntelligence = () => {
                     <div className="p-2 rounded-lg bg-primary/10">
                       <BarChart3 className="w-5 h-5 text-primary" />
                     </div>
-                    Advanced Intelligence (VIP)
+                    Advanced Reports (VIP)
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -575,7 +575,7 @@ const SchenectadyCountyIntelligence = () => {
                 onClick={() => setGuideModalOpen(true)}
               >
                 <FileText className="w-5 h-5 mr-2" />
-                Get a Free Intelligence Report
+                Get a Free Property Report
               </Button>
             </div>
           </div>
@@ -586,10 +586,10 @@ const SchenectadyCountyIntelligence = () => {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Neighborhood Snapshots
+                Area Snapshots
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Each neighborhood behaves differently. These are high-level patterns investors should understand.
+                Each area behaves differently. These are high-level patterns buyers should understand.
               </p>
             </div>
             

@@ -29,7 +29,7 @@ const InstitutionalHeader = () => {
         {/* Main Content */}
         <div className="pt-32 pb-16 px-[5%]">
           <div className="max-w-6xl mx-auto">
-            {/* Ultra-light Institutional Title */}
+            {/* Ultra-light Professional Title */}
             <div className="text-center mb-12">
               <h2 
                 className="text-2xl md:text-3xl lg:text-4xl text-foreground uppercase leading-tight"
@@ -38,20 +38,20 @@ const InstitutionalHeader = () => {
                   letterSpacing: '0.5em' 
                 }}
               >
-                Capital District <span className="text-primary text-glow">: Alpha</span>
+                Capital District <span className="text-primary text-glow">: Insights</span>
               </h2>
               <p 
                 className="mt-3 text-[10px] md:text-xs text-muted-foreground uppercase font-light"
                 style={{ letterSpacing: '0.3em' }}
               >
-                [ Regional Intelligence Dashboard ]
+                [ Regional Market Hub ]
               </p>
             </div>
 
             {/* 4-Tile Bento Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
               
-              {/* Tile 1: Regional Intelligence Map (Large - spans 2 cols) */}
+              {/* Tile 1: Regional Map (Large - spans 2 cols) */}
               <Link 
                 to="/communities"
                 className="lg:col-span-2 group relative rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.02]"
@@ -68,14 +68,14 @@ const InstitutionalHeader = () => {
                         <Map className="w-5 h-5 text-primary" />
                       </div>
                       <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground font-light">
-                        Regional Map
+                        Town Map
                       </span>
                     </div>
                     <h3 className="text-xl md:text-2xl font-light text-foreground tracking-tight mb-2">
-                      42-Town Intelligence Grid
+                      42-Town Market Guide
                     </h3>
                     <p className="text-sm text-muted-foreground font-light">
-                      Every market. Every pattern. Navigate the full Capital District inventory.
+                      Every neighborhood. Every trend. Your complete Capital District resource.
                     </p>
                   </div>
                   <div className="flex items-center gap-2 text-primary text-sm font-medium mt-6 group-hover:gap-3 transition-all">
@@ -86,7 +86,7 @@ const InstitutionalHeader = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
               </Link>
 
-              {/* Tile 2: Highest Alpha (Small) */}
+              {/* Tile 2: Top Performer (Small) */}
               <div 
                 className="rounded-3xl overflow-hidden"
                 style={{
@@ -100,7 +100,7 @@ const InstitutionalHeader = () => {
                     <div className="flex items-center gap-2 mb-4">
                       <TrendingUp className="w-4 h-4 text-green-400" />
                       <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground font-light">
-                        Highest Alpha
+                        Top Performer
                       </span>
                     </div>
                     <p className="text-3xl md:text-4xl font-[100] text-green-400 tracking-wide mb-1">
@@ -132,14 +132,14 @@ const InstitutionalHeader = () => {
                     <div className="flex items-center gap-2 mb-4">
                       <BookOpen className="w-4 h-4 text-primary" />
                       <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground font-light">
-                        Intel Hub
+                        Resource Hub
                       </span>
                     </div>
                     <h3 className="text-lg font-light text-foreground tracking-tight mb-2">
-                      Investor<br />Intelligence
+                      Buyer &<br />Investor Tools
                     </h3>
                     <p className="text-xs text-muted-foreground font-light">
-                      Reports, guides, and precision tools.
+                      Guides, reports, and helpful resources.
                     </p>
                   </div>
                   <div className="flex items-center gap-2 text-primary text-sm font-medium mt-4 group-hover:gap-3 transition-all">

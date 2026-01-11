@@ -51,10 +51,10 @@ const IntelligenceDashboard = ({
           className="text-4xl md:text-5xl lg:text-6xl text-foreground uppercase tracking-[0.8em] font-[100] leading-tight"
           style={{ letterSpacing: '0.8em' }}
         >
-          {townName.toUpperCase()} <span className="text-primary text-glow">: INTEL</span>
+          {townName.toUpperCase()} <span className="text-primary text-glow">: SPOTLIGHT</span>
         </h2>
         <p className="mt-4 text-sm md:text-base text-muted-foreground tracking-[0.3em] uppercase font-light">
-          [ Town Intelligence Dashboard ]
+          [ Town Snapshot ]
         </p>
       </div>
 

@@ -120,7 +120,7 @@ const IntelligenceGatekeeper = ({
 
             {/* Title */}
             <h3 className="text-2xl font-extralight text-white text-center mb-2 tracking-wide">
-              Institutional Intelligence
+              Local Insider Access
             </h3>
             <p className="text-center text-white/60 text-sm font-light mb-2">
               Locked

@@ -29,7 +29,7 @@ const LocalBusinessSchema = () => {
             "Clifton Park",
             "Rensselaer"
           ],
-          "description": "Specialized investment team combining institutional-grade market analysis with local expertise in multi-family, land development, and first-time buyer grants."
+          "description": "Specialized investment team combining expert-level market analysis with local expertise in multi-family, land development, and first-time buyer grants."
         },
         {
           "@type": "FAQPage",
