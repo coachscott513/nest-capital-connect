@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ExternalLink, MapPin, Instagram, Facebook, Globe } from "lucide-react";
+import { MapPin, Instagram, Facebook, Globe, Lock } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -378,7 +378,7 @@ const BusinessSpotlight = () => {
 
       {/* Business Detail Drawer */}
       <Sheet open={!!selectedBusiness} onOpenChange={() => setSelectedBusiness(null)}>
-        <SheetContent className="w-full sm:max-w-lg bg-card border-l border-border">
+        <SheetContent className="w-full sm:max-w-lg bg-card border-l border-border overflow-y-auto">
           {selectedBusiness && (
             <>
               <SheetHeader className="mb-6">
@@ -408,33 +408,89 @@ const BusinessSpotlight = () => {
                 </div>
               </div>
 
-              {/* Story */}
-              <div className="mb-6">
-                <h4 className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wider">The Story</h4>
-                <p className="text-muted-foreground leading-relaxed body-airy">{selectedBusiness.story}</p>
+              {/* Blurred Story Section - Premium Gated */}
+              <div className="mb-6 relative">
+                <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">The Founding Story</h4>
+                
+                {/* Blurred Content Container */}
+                <div className="relative rounded-xl overflow-hidden">
+                  {/* Blurred Text - Redacted Document Effect */}
+                  <div className="select-none pointer-events-none">
+                    <p className="text-muted-foreground leading-relaxed body-airy blur-[6px] opacity-60">
+                      {selectedBusiness.story}
+                    </p>
+                  </div>
+                  
+                  {/* Glassmorphism Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background/80 backdrop-blur-[2px]" />
+                  
+                  {/* Verification CTA Overlay */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <div className="glass px-6 py-4 rounded-2xl text-center max-w-[280px] border border-primary/20 shadow-lg">
+                      <Lock className="w-5 h-5 text-primary mx-auto mb-2" />
+                      <p className="text-sm font-medium text-foreground mb-3">
+                        Story Protected
+                      </p>
+                      <Button
+                        size="sm"
+                        className="rounded-full text-xs"
+                        onClick={(e) => handleSocialClick(e, selectedBusiness)}
+                      >
+                        Owner: Verify to Unlock Narrative
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* Offering */}
+              {/* Blurred About Founder Section */}
+              <div className="mb-6 relative">
+                <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">About the Founder</h4>
+                
+                <div className="relative rounded-xl overflow-hidden">
+                  {/* Blurred Bio Lines - Elegant Redacted Effect */}
+                  <div className="select-none pointer-events-none space-y-2">
+                    <div className="h-3 bg-muted-foreground/30 rounded blur-[4px] w-full" />
+                    <div className="h-3 bg-muted-foreground/25 rounded blur-[4px] w-11/12" />
+                    <div className="h-3 bg-muted-foreground/20 rounded blur-[4px] w-4/5" />
+                    <div className="h-3 bg-muted-foreground/25 rounded blur-[4px] w-9/12" />
+                  </div>
+                  
+                  {/* Subtle Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background/50" />
+                </div>
+              </div>
+
+              {/* Offering - Visible */}
               <div className="p-5 glass rounded-2xl mb-6">
                 <h4 className="text-sm font-semibold text-foreground mb-2">What They Offer</h4>
                 <p className="text-muted-foreground">{selectedBusiness.offering}</p>
               </div>
 
-              {/* Social Links - Gated */}
-              <div className="flex items-center justify-center gap-3 mb-6">
-                {[Instagram, Facebook, TikTokIcon, Globe].map((Icon, i) => (
-                  <button
-                    key={i}
-                    onClick={(e) => handleSocialClick(e, selectedBusiness)}
-                    className="p-3 rounded-full border border-border text-muted-foreground hover:text-primary hover:border-primary hover:shadow-[0_0_12px_rgba(0,245,255,0.4)] transition-all duration-200"
-                  >
-                    <Icon className="w-5 h-5" />
-                  </button>
-                ))}
+              {/* Social Links - Blurred & Gated */}
+              <div className="relative mb-6">
+                <div className="flex items-center justify-center gap-3 blur-[3px] opacity-50 pointer-events-none">
+                  {[Instagram, Facebook, TikTokIcon, Globe].map((Icon, i) => (
+                    <div
+                      key={i}
+                      className="p-3 rounded-full border border-border text-muted-foreground"
+                    >
+                      <Icon className="w-5 h-5" />
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={(e) => handleSocialClick(e, selectedBusiness)}
+                  className="absolute inset-0 flex items-center justify-center group cursor-pointer"
+                >
+                  <span className="text-xs font-medium text-primary bg-background/90 px-3 py-1.5 rounded-full border border-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    Verify to activate links
+                  </span>
+                </button>
               </div>
 
-              <p className="text-xs text-center text-muted-foreground">
-                Social links activate after business verification
+              <p className="text-xs text-center text-muted-foreground italic">
+                We protect business narratives until owner verification
               </p>
             </>
           )}
