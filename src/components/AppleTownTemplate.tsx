@@ -15,7 +15,8 @@ import {
   Users,
   ChevronRight,
   Gauge,
-  Lock
+  Lock,
+  ToggleLeft
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { supabase } from "@/integrations/supabase/client";
@@ -104,9 +105,14 @@ const AppleTownTemplate = ({
   const [townMarketData, setTownMarketData] = useState<TownMarketData | null>(null);
   const [selectedVoice, setSelectedVoice] = useState<LocalVoice | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<'owner-occupied' | 'investment'>('owner-occupied');
   
   // Master Gatekeeper state
   const [gatekeeperOpen, setGatekeeperOpen] = useState(false);
+  
+  // Regional average for Town Alpha comparison (Capital District benchmark)
+  const REGIONAL_AVG_PPSF = 165; // $/sqft regional benchmark
+  const REGIONAL_AVG_DOM = 35; // days regional benchmark
 
   const handleSearchClick = () => {
     setGatekeeperOpen(true);
@@ -157,12 +163,12 @@ const AppleTownTemplate = ({
           .eq('is_active', true)
           .order('cash_on_cash_return', { ascending: false })
           .limit(4),
-        supabase
+      supabase
           .from('local_voices')
           .select('*')
           .eq('town_slug', townSlug)
           .order('display_order', { ascending: true })
-          .limit(12),
+          .limit(7), // Town pages show 7 businesses (homepage shows 12 for "Big Time" scale)
         supabase
           .from('town_market_data')
           .select('avg_price, median_price, active_listings, avg_days_on_market, avg_sqft, avg_beds, avg_baths, single_family_count, multi_family_count, hero_landmark, target_yield, nest_score, region_category')
@@ -556,8 +562,8 @@ const AppleTownTemplate = ({
                   </button>
                 ))}
                 
-                {/* Coming Soon Placeholders - Fill to 12 */}
-                {localVoices.length < 12 && Array.from({ length: 12 - localVoices.length }).map((_, index) => (
+              {/* Coming Soon Placeholders - Fill to 7 for town pages */}
+                {localVoices.length < 7 && Array.from({ length: 7 - localVoices.length }).map((_, index) => (
                   <button
                     key={`placeholder-${index}`}
                     onClick={() => setGatekeeperOpen(true)}
@@ -600,13 +606,68 @@ const AppleTownTemplate = ({
             <div className="w-px h-16 bg-gradient-to-b from-primary via-primary to-transparent" />
           </div>
 
+          {/* Town Alpha Badge + Investor Yield Toggle */}
+          <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+            {/* Town Alpha Indicator */}
+            {(() => {
+              const townPPSF = townMarketData?.median_price && townMarketData?.avg_sqft 
+                ? Math.round(townMarketData.median_price / townMarketData.avg_sqft) 
+                : null;
+              const ppsfDiff = townPPSF ? ((townPPSF - REGIONAL_AVG_PPSF) / REGIONAL_AVG_PPSF * 100) : 0;
+              const domDiff = townMarketData?.avg_days_on_market 
+                ? ((REGIONAL_AVG_DOM - townMarketData.avg_days_on_market) / REGIONAL_AVG_DOM * 100) 
+                : 0;
+              const alphaScore = ppsfDiff < 0 ? 'Value Zone' : ppsfDiff > 15 ? 'Premium Market' : 'Market Rate';
+              const alphaColor = ppsfDiff < 0 ? 'bg-primary/20 text-primary' : ppsfDiff > 15 ? 'bg-amber-500/20 text-amber-400' : 'bg-blue-500/20 text-blue-400';
+              
+              return (
+                <div className="flex items-center gap-3">
+                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${alphaColor}`}>
+                    <TrendingUp className="w-4 h-4" />
+                    Town Alpha: {alphaScore}
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    {ppsfDiff > 0 ? '+' : ''}{ppsfDiff.toFixed(0)}% vs Regional Avg
+                  </span>
+                </div>
+              );
+            })()}
+            
+            {/* Investor Yield Toggle */}
+            <div className="flex items-center gap-2 glass rounded-full p-1">
+              <button
+                onClick={() => setViewMode('owner-occupied')}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  viewMode === 'owner-occupied' 
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <Home className="w-4 h-4 inline mr-2" />
+                Owner-Occupied
+              </button>
+              <button
+                onClick={() => setViewMode('investment')}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  viewMode === 'investment' 
+                    ? 'bg-primary text-primary-foreground' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                <Building2 className="w-4 h-4 inline mr-2" />
+                Investment
+              </button>
+            </div>
+          </div>
+
           {/* Institutional Bento Grid - 4 Core Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Market Velocity */}
             <button
               onClick={handleSearchClick}
-              className="bento-card p-6 hover-lift group text-left"
+              className="bento-card p-6 hover-lift group text-left relative"
             >
+              <Lock className="absolute top-4 right-4 w-4 h-4 text-muted-foreground/40" />
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
                   <Zap className="w-5 h-5 text-primary" />
@@ -637,8 +698,9 @@ const AppleTownTemplate = ({
             {/* Equity Anchor */}
             <button
               onClick={handleSearchClick}
-              className="bento-card p-6 hover-lift group text-left"
+              className="bento-card p-6 hover-lift group text-left relative"
             >
+              <Lock className="absolute top-4 right-4 w-4 h-4 text-muted-foreground/40" />
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
                   <TrendingUp className="w-5 h-5 text-primary" />
@@ -661,41 +723,63 @@ const AppleTownTemplate = ({
               </div>
             </button>
 
-            {/* Institutional Yield (PPSF) */}
+            {/* Institutional Yield (PPSF) - Changes based on toggle */}
             <button
               onClick={handleSearchClick}
-              className="bento-card p-6 hover-lift group text-left"
+              className="bento-card p-6 hover-lift group text-left relative"
             >
+              <Lock className="absolute top-4 right-4 w-4 h-4 text-muted-foreground/40" />
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
                   <Building2 className="w-5 h-5 text-primary" />
                 </div>
                 <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  Institutional Yield
+                  {viewMode === 'investment' ? 'Target Yield' : 'Institutional Yield'}
                 </span>
               </div>
-              <p className="text-3xl font-bold text-foreground mb-1">
-                ${townMarketData?.median_price && townMarketData?.avg_sqft 
-                  ? Math.round(townMarketData.median_price / townMarketData.avg_sqft)
-                  : '---'}
-                <span className="text-lg font-normal text-muted-foreground">/sqft</span>
-              </p>
-              <p className="text-sm text-muted-foreground mb-4">
-                Price per Sq Ft
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground">
-                  Avg {townMarketData?.avg_sqft?.toLocaleString() || '---'} sqft
-                </span>
-                <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
+              {viewMode === 'investment' ? (
+                <>
+                  <p className="text-3xl font-bold text-primary text-glow mb-1">
+                    {avgYield}
+                    <span className="text-lg font-normal text-muted-foreground"> CoC</span>
+                  </p>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Cash-on-Cash Return
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">
+                      {townMarketData?.multi_family_count || 0} Multi-Family
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-3xl font-bold text-foreground mb-1">
+                    ${townMarketData?.median_price && townMarketData?.avg_sqft 
+                      ? Math.round(townMarketData.median_price / townMarketData.avg_sqft)
+                      : '---'}
+                    <span className="text-lg font-normal text-muted-foreground">/sqft</span>
+                  </p>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Price per Sq Ft
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">
+                      Avg {townMarketData?.avg_sqft?.toLocaleString() || '---'} sqft
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                </>
+              )}
             </button>
 
             {/* Community Index */}
             <button
               onClick={handleSearchClick}
-              className="bento-card p-6 hover-lift group text-left"
+              className="bento-card p-6 hover-lift group text-left relative"
             >
+              <Lock className="absolute top-4 right-4 w-4 h-4 text-muted-foreground/40" />
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
                   <Gauge className="w-5 h-5 text-primary" />
@@ -728,6 +812,7 @@ const AppleTownTemplate = ({
               onClick={handleSearchClick}
               className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
             >
+              <Lock className="w-4 h-4" />
               Deep Dive: Full Market Analysis
               <ArrowRight className="w-4 h-4" />
             </button>
