@@ -32,9 +32,9 @@ const NeighborhoodCrossLinks = ({
       description: "The vibrant capital with diverse neighborhoods and investment opportunities",
       highlights: ["State Government Hub", "Universities", "Growing Tech Sector"],
       icon: <Home className="w-5 h-5" />,
-      rentalLink: "/albany-rentals",
-      investmentLink: "/investment-properties#albany",
-      communityLink: "/communities/albany"
+      rentalLink: "/towns/albany",
+      investmentLink: "/towns/albany",
+      communityLink: "/towns/albany"
     },
     {
       name: "Troy",
@@ -42,9 +42,9 @@ const NeighborhoodCrossLinks = ({
       description: "Historic architecture meets modern revitalization efforts",
       highlights: ["Historic Districts", "RPI Campus", "Riverfront Development"],
       icon: <MapPin className="w-5 h-5" />,
-      rentalLink: "/troy-rentals",
-      investmentLink: "/investment-properties#troy",
-      communityLink: "/communities/troy"
+      rentalLink: "/towns/troy",
+      investmentLink: "/towns/troy",
+      communityLink: "/towns/troy"
     },
     {
       name: "Schenectady",
@@ -52,19 +52,19 @@ const NeighborhoodCrossLinks = ({
       description: "Affordable options in a city experiencing significant growth",
       highlights: ["Union College", "GE Heritage", "Revitalization Projects"],
       icon: <Users className="w-5 h-5" />,
-      rentalLink: "/schenectady-rentals",
-      investmentLink: "/investment-properties#schenectady",
-      communityLink: "/communities/schenectady"
+      rentalLink: "/towns/schenectady",
+      investmentLink: "/towns/schenectady",
+      communityLink: "/towns/schenectady"
     },
     {
       name: "Saratoga Springs",
-      slug: "saratoga",
+      slug: "saratoga-springs",
       description: "Elegant community with culture, horse racing, and upscale living",
       highlights: ["Racing Season", "SPAC", "Historic Downtown"],
       icon: <TrendingUp className="w-5 h-5" />,
-      rentalLink: "/saratoga-rentals",
-      investmentLink: "/investment-properties#saratoga",
-      communityLink: "/communities/saratoga"
+      rentalLink: "/towns/saratoga-springs",
+      investmentLink: "/towns/saratoga-springs",
+      communityLink: "/towns/saratoga-springs"
     }
   ];
 

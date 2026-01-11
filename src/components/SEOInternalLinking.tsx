@@ -73,10 +73,10 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
       keywords: ["clifton park single family homes", "clifton park real estate", "clifton park schools"]
     },
     
-    // Real Estate Pages
+    // Real Estate Pages - Canonical /towns/ URLs
     {
       title: "Albany Real Estate",
-      url: "/albany-real-estate",
+      url: "/towns/albany",
       description: "Explore Albany's real estate market, neighborhoods, and investment opportunities.",
       category: "Real Estate",
       priority: 8,
@@ -84,7 +84,7 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
     },
     {
       title: "Troy Real Estate",
-      url: "/troy-real-estate",
+      url: "/towns/troy",
       description: "Discover Troy's housing market, historic properties, and investment opportunities.",
       category: "Real Estate",
       priority: 7,
@@ -92,15 +92,15 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
     },
     {
       title: "Schenectady Real Estate",
-      url: "/schenectady-real-estate",
+      url: "/towns/schenectady",
       description: "Learn about Schenectady's real estate market, neighborhoods, and property options.",
       category: "Real Estate",
       priority: 7,
       keywords: ["schenectady real estate", "schenectady homes", "schenectady properties", "schenectady ny real estate"]
     },
     {
-      title: "Saratoga Real Estate",
-      url: "/saratoga-real-estate",
+      title: "Saratoga Springs Real Estate",
+      url: "/towns/saratoga-springs",
       description: "Explore Saratoga Springs' premium real estate market and luxury properties.",
       category: "Real Estate",
       priority: 6,

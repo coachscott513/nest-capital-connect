@@ -160,10 +160,10 @@ const App = () => {
           <Route path="/investment-landing" element={<InvestmentLanding />} />
           <Route path="/rehab-properties" element={<Index />} />
           <Route path="/financing" element={<Financing />} />
-          <Route path="/albany-rentals" element={<Rentals />} />
-          <Route path="/troy-rentals" element={<Rentals />} />
-          <Route path="/schenectady-rentals" element={<Rentals />} />
-          <Route path="/saratoga-rentals" element={<Rentals />} />
+          <Route path="/albany-rentals" element={<Navigate to="/towns/albany" replace />} />
+          <Route path="/troy-rentals" element={<Navigate to="/towns/troy" replace />} />
+          <Route path="/schenectady-rentals" element={<Navigate to="/towns/schenectady" replace />} />
+          <Route path="/saratoga-rentals" element={<Navigate to="/towns/saratoga-springs" replace />} />
           <Route path="/contact" element={<Index />} />
           <Route path="/about" element={<Index />} />
           <Route path="/blog" element={<Blog />} />

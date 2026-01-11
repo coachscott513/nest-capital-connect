@@ -45,31 +45,31 @@ const ContextualLinks = ({ links, context }: ContextualLinksProps) => {
 
 // Predefined contextual link sets for different page types
 export const investmentLinks: ContextualLink[] = [
-  { text: "Albany Properties", href: "/albany-rentals" },
-  { text: "Troy Investments", href: "/troy-rentals" },
+  { text: "Albany Properties", href: "/towns/albany" },
+  { text: "Troy Investments", href: "/towns/troy" },
   { text: "Financing Options", href: "/financing" },
   { text: "Rehab Opportunities", href: "/rehab-properties" }
 ];
 
 export const rentalLinks: ContextualLink[] = [
-  { text: "Investment Analysis", href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=grid&leadid=948", external: true },
-  { text: "Multi-Unit Properties", href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=grid&leadid=948", external: true },
+  { text: "Investment Analysis", href: "/towns/albany" },
+  { text: "Multi-Unit Properties", href: "/markets" },
   { text: "Financing Solutions", href: "/#financing" },
   { text: "Neighborhood Guide", href: "/communities" }
 ];
 
 export const financingLinks: ContextualLink[] = [
-  { text: "Investment Properties", href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=grid&leadid=948", external: true },
+  { text: "Investment Properties", href: "/markets" },
   { text: "Rehab Projects", href: "/rehab-properties" },
   { text: "Rental Opportunities", href: "/rentals" },
   { text: "Market Analysis", href: "/" }
 ];
 
 export const neighborhoodLinks: ContextualLink[] = [
-  { text: "Albany Rentals", href: "/albany-rentals" },
-  { text: "Troy Properties", href: "/troy-rentals" },
-  { text: "Schenectady Homes", href: "/schenectady-rentals" },
-  { text: "Saratoga Listings", href: "/saratoga-rentals" }
+  { text: "Albany", href: "/towns/albany" },
+  { text: "Troy", href: "/towns/troy" },
+  { text: "Schenectady", href: "/towns/schenectady" },
+  { text: "Saratoga Springs", href: "/towns/saratoga-springs" }
 ];
 
 export default ContextualLinks;

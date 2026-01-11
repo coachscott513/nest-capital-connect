@@ -43,7 +43,7 @@ const FeaturedAreasSection = () => {
           {cities.map((city) => (
             <Link 
               key={city.slug} 
-              to={`/homes-for-sale/${city.slug}`}
+              to={`/towns/${city.slug}`}
               className="block transition-transform hover:scale-105"
             >
               <Card className="h-full hover:shadow-lg transition-shadow">
@@ -61,7 +61,7 @@ const FeaturedAreasSection = () => {
 
         <div className="text-center">
           <Link 
-            to="/homes-for-sale"
+            to="/communities"
             className="inline-block text-lg font-semibold text-primary hover:underline"
           >
             View All Cities & Neighborhoods →
