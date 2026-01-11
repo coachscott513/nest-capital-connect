@@ -14,6 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
+      academic_institutions: {
+        Row: {
+          address: string | null
+          created_at: string
+          description: string | null
+          display_order: number | null
+          enrollment: number | null
+          graduation_rate: number | null
+          highlights: Json | null
+          id: string
+          institution_type: string
+          is_active: boolean | null
+          is_featured: boolean | null
+          logo_url: string | null
+          name: string
+          phone: string | null
+          ranking_score: number | null
+          short_name: string | null
+          student_teacher_ratio: number | null
+          town_slug: string
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          enrollment?: number | null
+          graduation_rate?: number | null
+          highlights?: Json | null
+          id?: string
+          institution_type: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          logo_url?: string | null
+          name: string
+          phone?: string | null
+          ranking_score?: number | null
+          short_name?: string | null
+          student_teacher_ratio?: number | null
+          town_slug: string
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          enrollment?: number | null
+          graduation_rate?: number | null
+          highlights?: Json | null
+          id?: string
+          institution_type?: string
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          logo_url?: string | null
+          name?: string
+          phone?: string | null
+          ranking_score?: number | null
+          short_name?: string | null
+          student_teacher_ratio?: number | null
+          town_slug?: string
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       business_partners: {
         Row: {
           created_at: string
@@ -568,6 +637,81 @@ export type Database = {
         }
         Relationships: []
       }
+      town_civic_directory: {
+        Row: {
+          address: string | null
+          calendar_url: string | null
+          category: Database["public"]["Enums"]["civic_category"]
+          contact_name: string | null
+          contact_photo_url: string | null
+          contact_title: string | null
+          created_at: string
+          description: string | null
+          display_order: number | null
+          email: string | null
+          id: string
+          is_active: boolean | null
+          last_verified_at: string | null
+          office_hours: string | null
+          office_name: string | null
+          pdf_url: string | null
+          phone: string | null
+          subtitle: string | null
+          title: string
+          town_slug: string
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          address?: string | null
+          calendar_url?: string | null
+          category: Database["public"]["Enums"]["civic_category"]
+          contact_name?: string | null
+          contact_photo_url?: string | null
+          contact_title?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          email?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_verified_at?: string | null
+          office_hours?: string | null
+          office_name?: string | null
+          pdf_url?: string | null
+          phone?: string | null
+          subtitle?: string | null
+          title: string
+          town_slug: string
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          address?: string | null
+          calendar_url?: string | null
+          category?: Database["public"]["Enums"]["civic_category"]
+          contact_name?: string | null
+          contact_photo_url?: string | null
+          contact_title?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          email?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_verified_at?: string | null
+          office_hours?: string | null
+          office_name?: string | null
+          pdf_url?: string | null
+          phone?: string | null
+          subtitle?: string | null
+          title?: string
+          town_slug?: string
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       town_ledger: {
         Row: {
           category: string
@@ -738,6 +882,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      civic_category:
+        | "tax_assessor"
+        | "code_enforcement"
+        | "town_hall"
+        | "elected_official"
+        | "school_board"
+        | "planning_board"
+        | "zoning_board"
       partner_subscription_type:
         | "live_social_stack"
         | "priority_contact"
@@ -870,6 +1022,15 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      civic_category: [
+        "tax_assessor",
+        "code_enforcement",
+        "town_hall",
+        "elected_official",
+        "school_board",
+        "planning_board",
+        "zoning_board",
+      ],
       partner_subscription_type: [
         "live_social_stack",
         "priority_contact",

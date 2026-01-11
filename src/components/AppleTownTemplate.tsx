@@ -30,6 +30,8 @@ import IntelligenceGatekeeper from "@/components/IntelligenceGatekeeper";
 import RentalVault from "@/components/RentalVault";
 import MasterGatekeeperModal from "@/components/MasterGatekeeperModal";
 import AlphaDashboard from "@/components/AlphaDashboard";
+import CivicDirectorySection from "@/components/CivicDirectorySection";
+import AcademicInstitutionsSection from "@/components/AcademicInstitutionsSection";
 import FeaturedAlphaSection from "@/components/FeaturedAlphaSection";
 
 interface TownLedgerEntry {
@@ -957,6 +959,12 @@ const AppleTownTemplate = ({
 
       {/* Rental Vault for this town */}
       <RentalVault townSlug={townSlug} townName={townName} limit={4} />
+
+      {/* Civic Directory - Government & Tax Offices */}
+      <CivicDirectorySection townSlug={townSlug} townName={townName} />
+
+      {/* Academic Institutions - Schools & Colleges */}
+      <AcademicInstitutionsSection townSlug={townSlug} townName={townName} />
 
       {/* Featured Alpha Section - Investment Opportunity Showcase */}
       <FeaturedAlphaSection 
