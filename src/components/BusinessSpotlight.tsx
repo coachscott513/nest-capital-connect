@@ -81,10 +81,10 @@ const BusinessSpotlight = () => {
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null);
 
   return (
-    <section className="section-massive px-[5%] bg-background overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+    <section className="section-massive px-[3%] md:px-[4%] bg-background overflow-hidden">
+      <div className="max-w-[1600px] mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Local Partners</p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-6">
             Featured Local Partners
@@ -94,18 +94,51 @@ const BusinessSpotlight = () => {
           </p>
         </div>
 
-        {/* Horizontal Scrolling Business Avatars */}
-        <div className="relative">
-          <div className="flex gap-10 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory">
+        {/* Edge-to-Edge Business Grid - Desktop */}
+        <div className="hidden md:flex justify-between items-start pb-8">
+          {featuredBusinesses.map((business) => (
+            <button
+              key={business.id}
+              onClick={() => setSelectedBusiness(business)}
+              className="flex flex-col items-center gap-5 group"
+            >
+              {/* Teal Glow Border - Spotlight Effect - 15% Larger */}
+              <div className="relative spotlight">
+                <div className="w-36 h-36 lg:w-40 lg:h-40 rounded-full p-[3px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-card p-1">
+                    <img
+                      src={business.logo}
+                      alt={business.name}
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  </div>
+                </div>
+                {/* Verified Badge */}
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[11px] font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                  Verified by Nest
+                </div>
+              </div>
+              
+              {/* Business Name - Larger Text */}
+              <span className="text-base font-medium text-foreground text-center max-w-[160px] leading-tight group-hover:text-primary transition-colors">
+                {business.name}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* Mobile Horizontal Scroll */}
+        <div className="md:hidden relative">
+          <div className="flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory -mx-[3%] px-[3%]">
             {featuredBusinesses.map((business) => (
               <button
                 key={business.id}
                 onClick={() => setSelectedBusiness(business)}
                 className="flex flex-col items-center gap-4 flex-shrink-0 snap-center group"
               >
-                {/* Teal Glow Border - Spotlight Effect */}
+                {/* Teal Glow Border - Large on Mobile */}
                 <div className="relative spotlight">
-                  <div className="w-28 h-28 md:w-32 md:h-32 rounded-full p-[3px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
+                  <div className="w-32 h-32 rounded-full p-[3px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
                     <div className="w-full h-full rounded-full overflow-hidden bg-card p-1">
                       <img
                         src={business.logo}
@@ -128,9 +161,9 @@ const BusinessSpotlight = () => {
             ))}
           </div>
           
-          {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-8 w-16 bg-gradient-to-r from-background to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-8 w-16 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+          {/* Fade edges - Mobile Only */}
+          <div className="absolute left-0 top-0 bottom-8 w-12 bg-gradient-to-r from-background to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-8 w-12 bg-gradient-to-l from-background to-transparent pointer-events-none" />
         </div>
       </div>
 
