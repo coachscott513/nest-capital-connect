@@ -46,7 +46,7 @@ const articles: Record<string, {
         </p>
 
         <p className="mb-6 font-lora leading-relaxed">
-          <strong>The Alpha here is the deal structure:</strong> By negotiating a <strong>6% Seller Concession ($27,000)</strong>, we can effectively wipe out the closing costs and buy down the rate. This minimizes your "Cash to Close" and skyrockets your Cash-on-Cash return.
+          <strong>The edge here is the deal structure:</strong> By negotiating a <strong>6% Seller Concession ($27,000)</strong>, we can effectively wipe out the closing costs and buy down the rate. This minimizes your "Cash to Close" and skyrockets your Cash-on-Cash return.
         </p>
 
         <h2 className="font-playfair text-3xl font-semibold mt-12 mb-6 text-primary">
@@ -216,7 +216,7 @@ const articles: Record<string, {
         </div>
 
         <h2 className="font-playfair text-3xl font-semibold mt-12 mb-6 text-primary">
-          Troy: The Emerging Alpha Play
+          Troy: The Emerging Value Play
         </h2>
 
         <p className="mb-6 font-lora leading-relaxed">
