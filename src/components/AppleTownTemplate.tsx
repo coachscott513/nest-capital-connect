@@ -1032,13 +1032,20 @@ const AppleTownTemplate = ({
                 </SheetTitle>
               </SheetHeader>
 
-              {/* Owner Photo */}
-              <div className="mb-6">
+              {/* Owner Photo - Blurred if not verified */}
+              <div className="mb-6 relative">
                 <img
                   src={selectedVoice.owner_photo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedVoice.owner_name)}&background=00F5FF&color=0B0B0B&size=400`}
                   alt={selectedVoice.owner_name}
-                  className="w-full h-64 object-cover rounded-2xl"
+                  className={`w-full h-64 object-cover rounded-2xl ${!selectedVoice.is_verified ? 'filter blur-[8px]' : ''}`}
                 />
+                {!selectedVoice.is_verified && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="glass-strong rounded-full p-4">
+                      <Lock className="w-8 h-8 text-primary" />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Owner Info */}
