@@ -569,11 +569,11 @@ const AppleTownTemplate = ({
               <div className="absolute right-0 top-0 bottom-8 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
               
               <div className="flex gap-8 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory justify-center">
-                {/* Render local voices with homepage-matching styling */}
-                {localVoices.map((voice) => (
+                {/* Always use FEATURED_REGIONAL_BUSINESSES with real photos - matching homepage exactly */}
+                {FEATURED_REGIONAL_BUSINESSES.map((business, index) => (
                   <button
-                    key={voice.id}
-                    onClick={() => setSelectedVoice(voice)}
+                    key={business.id}
+                    onClick={() => setGatekeeperOpen(true)}
                     className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
                   >
                     {/* Teal Glow Border - exact homepage styling */}
@@ -581,8 +581,8 @@ const AppleTownTemplate = ({
                       <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
                         <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
                           <img
-                            src={voice.owner_photo_url || voice.business_logo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(voice.owner_name)}&background=00F5FF&color=0B0B0B`}
-                            alt={voice.owner_name}
+                            src={business.logo}
+                            alt={business.name}
                             className="w-full h-full rounded-full object-cover"
                           />
                         </div>
@@ -594,42 +594,10 @@ const AppleTownTemplate = ({
                     </div>
                     
                     <span className="text-sm font-medium text-foreground text-center max-w-[120px] leading-tight group-hover:text-primary transition-colors">
-                      {voice.business_name}
+                      {business.name}
                     </span>
                   </button>
                 ))}
-                
-                {/* Featured regional businesses as fallback - matching homepage styling exactly */}
-                {localVoices.length < 7 && FEATURED_REGIONAL_BUSINESSES
-                  .slice(0, 7 - localVoices.length)
-                  .map((business) => (
-                    <button
-                      key={business.id}
-                      onClick={() => setGatekeeperOpen(true)}
-                      className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
-                    >
-                      {/* Teal Glow Border */}
-                      <div className="relative spotlight">
-                        <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
-                          <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
-                            <img
-                              src={business.logo}
-                              alt={business.name}
-                              className="w-full h-full rounded-full object-cover"
-                            />
-                          </div>
-                        </div>
-                        {/* Verified Badge */}
-                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
-                          Verified
-                        </div>
-                      </div>
-                      
-                      <span className="text-sm font-medium text-foreground text-center max-w-[120px] leading-tight group-hover:text-primary transition-colors">
-                        {business.name}
-                      </span>
-                    </button>
-                  ))}
               </div>
             </div>
           )}
