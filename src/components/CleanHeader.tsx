@@ -256,6 +256,72 @@ const CleanHeader = () => {
                     </Dropdown>
                   )}
 
+                  {/* Regional Intelligence Dropdown */}
+                  {item.dropdown === "regional" && (
+                    <Dropdown isOpen={activeDropdown === "regional"} onClose={closeDropdowns}>
+                      <div className="space-y-4 w-80">
+                        <p className="text-xs uppercase text-[#00F5FF] tracking-widest font-semibold">Regional Intelligence</p>
+                        
+                        {/* Colleges & Universities */}
+                        <div>
+                          <p className="text-xs uppercase text-muted-foreground tracking-wider mb-2">Colleges & Universities</p>
+                          <div className="space-y-1">
+                            <Link to="/towns/albany" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                              UAlbany / SUNY Poly
+                            </Link>
+                            <Link to="/towns/troy" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                              RPI / HVCC
+                            </Link>
+                            <Link to="/towns/schenectady" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                              Union College / SCCC
+                            </Link>
+                            <Link to="/towns/loudonville" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                              Siena College
+                            </Link>
+                          </div>
+                        </div>
+
+                        <div className="border-t border-border/50" />
+
+                        {/* K-12 School Districts */}
+                        <div>
+                          <p className="text-xs uppercase text-muted-foreground tracking-wider mb-2">Top K-12 Districts</p>
+                          <div className="space-y-1">
+                            <Link to="/towns/clifton-park" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                              Shenendehowa (Clifton Park)
+                            </Link>
+                            <Link to="/towns/niskayuna" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                              Niskayuna CSD
+                            </Link>
+                            <Link to="/towns/delmar" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                              Bethlehem (Delmar)
+                            </Link>
+                            <Link to="/towns/guilderland" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                              Guilderland CSD
+                            </Link>
+                          </div>
+                        </div>
+
+                        <div className="border-t border-border/50" />
+
+                        {/* Civic Quick Links */}
+                        <div>
+                          <p className="text-xs uppercase text-muted-foreground tracking-wider mb-2">Civic & Government</p>
+                          <p className="text-xs text-muted-foreground mb-2">
+                            Tax assessors, building permits, and elected officials for each town.
+                          </p>
+                          <Link
+                            to="/communities"
+                            onClick={closeDropdowns}
+                            className="block text-sm font-medium text-primary hover:underline"
+                          >
+                            Browse All Town Civic Directories →
+                          </Link>
+                        </div>
+                      </div>
+                    </Dropdown>
+                  )}
+
                   {/* Guide Dropdown - Local Business Directory */}
                   {item.dropdown === "guide" && (
                     <Dropdown isOpen={activeDropdown === "guide"} onClose={closeDropdowns}>
@@ -344,9 +410,34 @@ const CleanHeader = () => {
             </div>
           </div>
 
+          {/* Regional Intelligence */}
+          <div>
+            <h3 className="text-xs uppercase text-[#00F5FF] font-bold tracking-widest mb-3">Regional Intelligence</h3>
+            <div className="space-y-3">
+              <div>
+                <p className="text-xs text-muted-foreground mb-2">Colleges & Universities</p>
+                <div className="grid grid-cols-2 gap-1">
+                  <Link to="/towns/albany" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">UAlbany</Link>
+                  <Link to="/towns/troy" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">RPI</Link>
+                  <Link to="/towns/schenectady" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Union</Link>
+                  <Link to="/towns/loudonville" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Siena</Link>
+                </div>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-2">Top K-12 Districts</p>
+                <div className="grid grid-cols-2 gap-1">
+                  <Link to="/towns/clifton-park" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Shen</Link>
+                  <Link to="/towns/niskayuna" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Niskayuna</Link>
+                  <Link to="/towns/delmar" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Bethlehem</Link>
+                  <Link to="/towns/guilderland" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Guilderland</Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Guide - Local Partners */}
           <div>
-            <h3 className="text-xs uppercase text-[#00F5FF] font-bold tracking-widest mb-3">Local Guide</h3>
+            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Local Guide</h3>
             <div className="space-y-2">
               <Link to="/communities" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
                 Browse All Town Guides
