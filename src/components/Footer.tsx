@@ -193,9 +193,29 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 4: Legal Links */}
+          {/* Column 4: Partner Resources */}
           <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">Legal</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">Partner Resources</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link 
+                  to="/partner-auth" 
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium"
+                >
+                  Business Login
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/claim-business" 
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                >
+                  Claim Your Story
+                </Link>
+              </li>
+            </ul>
+            
+            <h4 className="text-sm font-semibold text-foreground mb-4 mt-6 uppercase tracking-wide">Legal</h4>
             <ul className="space-y-2">
               <li>
                 <a 
@@ -205,16 +225,6 @@ const Footer = () => {
                   className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   NY Fair Housing Notice
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://dos.ny.gov/system/files/documents/2021/08/standardizedoperatingprocedures.pdf" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
-                  Standard Operating Procedures
                 </a>
               </li>
               <li>
