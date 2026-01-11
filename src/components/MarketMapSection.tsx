@@ -6,7 +6,7 @@ const MarketMapSection = () => {
   const counties = [
     {
       name: "Albany County",
-      slug: "/albany-real-estate",
+      slug: "/towns/albany",
       description: "Government hub. Healthcare anchor. Stable demand for rentals and investment properties.",
       stats: {
         medianPrice: "$275K",
@@ -26,7 +26,7 @@ const MarketMapSection = () => {
     },
     {
       name: "Rensselaer County (Troy)",
-      slug: "/troy-real-estate",
+      slug: "/towns/troy",
       description: "College town energy. Downtown revival. RPI students drive rental demand.",
       stats: {
         medianPrice: "$215K",
@@ -36,7 +36,7 @@ const MarketMapSection = () => {
     },
     {
       name: "Saratoga County",
-      slug: "/saratoga-real-estate",
+      slug: "/towns/saratoga-springs",
       description: "Affluent suburbs. Appreciation play. Premium rents and strong schools.",
       stats: {
         medianPrice: "$425K",

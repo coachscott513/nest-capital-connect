@@ -64,20 +64,20 @@ const BreadcrumbNavigation = () => {
       crumbs.push({ label: "Financing", href: "/financing" });
     }
 
-    if (pathname.includes("albany-rentals")) {
-      crumbs.push({ label: "Albany Rentals", href: "/albany-rentals" });
+    if (pathname.includes("/towns/albany")) {
+      crumbs.push({ label: "Albany", href: "/towns/albany" });
     }
 
-    if (pathname.includes("troy-rentals")) {
-      crumbs.push({ label: "Troy Rentals", href: "/troy-rentals" });
+    if (pathname.includes("/towns/troy")) {
+      crumbs.push({ label: "Troy", href: "/towns/troy" });
     }
 
-    if (pathname.includes("schenectady-rentals")) {
-      crumbs.push({ label: "Schenectady Rentals", href: "/schenectady-rentals" });
+    if (pathname.includes("/towns/schenectady")) {
+      crumbs.push({ label: "Schenectady", href: "/towns/schenectady" });
     }
 
-    if (pathname.includes("saratoga-rentals")) {
-      crumbs.push({ label: "Saratoga Rentals", href: "/saratoga-rentals" });
+    if (pathname.includes("/towns/saratoga-springs")) {
+      crumbs.push({ label: "Saratoga Springs", href: "/towns/saratoga-springs" });
     }
 
     return crumbs;

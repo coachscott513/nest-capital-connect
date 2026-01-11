@@ -39,27 +39,51 @@ const SEOSitemap = () => {
         lastmod: currentDate
       },
       
-      // Capital District Hub Pages
+      // Capital District Hub Pages - Canonical /towns/ URLs
       { 
-        url: '/albany-real-estate', 
+        url: '/towns/albany', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate
       },
       { 
-        url: '/troy-real-estate', 
+        url: '/towns/troy', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate
       },
       { 
-        url: '/schenectady-real-estate', 
+        url: '/towns/schenectady', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate
       },
       { 
-        url: '/saratoga-real-estate', 
+        url: '/towns/saratoga-springs', 
+        changefreq: 'daily', 
+        priority: '0.9',
+        lastmod: currentDate
+      },
+      { 
+        url: '/towns/delmar', 
+        changefreq: 'daily', 
+        priority: '0.9',
+        lastmod: currentDate
+      },
+      { 
+        url: '/towns/clifton-park', 
+        changefreq: 'daily', 
+        priority: '0.9',
+        lastmod: currentDate
+      },
+      { 
+        url: '/towns/niskayuna', 
+        changefreq: 'daily', 
+        priority: '0.9',
+        lastmod: currentDate
+      },
+      { 
+        url: '/towns/queensbury', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate
@@ -70,30 +94,6 @@ const SEOSitemap = () => {
         url: '/#neighborhoods', 
         changefreq: 'weekly', 
         priority: '0.8',
-        lastmod: currentDate
-      },
-      { 
-        url: '/#albany-rentals', 
-        changefreq: 'daily', 
-        priority: '0.9',
-        lastmod: currentDate
-      },
-      { 
-        url: '/#troy-rentals', 
-        changefreq: 'daily', 
-        priority: '0.9',
-        lastmod: currentDate
-      },
-      { 
-        url: '/#schenectady-rentals', 
-        changefreq: 'daily', 
-        priority: '0.9',
-        lastmod: currentDate
-      },
-      { 
-        url: '/#saratoga-rentals', 
-        changefreq: 'daily', 
-        priority: '0.9',
         lastmod: currentDate
       },
       

@@ -7,7 +7,7 @@ const towns = [
   { name: "Niskayuna", href: "/towns/niskayuna", description: "Top-Rated Schools" },
   { name: "Voorheesville", href: "/towns/voorheesville", description: "Rural Character" },
   { name: "Troy", href: "/towns/troy", description: "Collar City" },
-  { name: "Albany", href: "/albany-real-estate", description: "Capital City" },
+  { name: "Albany", href: "/towns/albany", description: "Capital City" },
   { name: "Schenectady", href: "/towns/schenectady", description: "Electric City" },
   { name: "Saratoga", href: "/towns/saratoga-springs", description: "Springs & Racing" },
   { name: "Amsterdam", href: "/towns/amsterdam", description: "Affordable Opportunity" },

@@ -34,7 +34,7 @@ const townHubs: TownCardData[] = [
   {
     name: "Delmar",
     slug: "delmar",
-    href: "/delmar-homes-for-sale",
+    href: "/towns/delmar",
     description: "Bethlehem Central Schools",
     nestScore: 91,
     businessCount: 6,
@@ -43,7 +43,7 @@ const townHubs: TownCardData[] = [
   {
     name: "Albany",
     slug: "albany",
-    href: "/albany-homes-for-sale",
+    href: "/towns/albany",
     description: "Capital City, diverse neighborhoods",
     nestScore: 88,
     businessCount: 15,

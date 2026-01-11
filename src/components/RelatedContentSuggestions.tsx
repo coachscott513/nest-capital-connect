@@ -38,30 +38,30 @@ const RelatedContentSuggestions = ({ currentPage, className = "" }: RelatedConte
       category: "financing"
     },
     {
-      title: "Albany Rentals",
-      description: "Premium rental listings in Albany and surrounding areas",
-      href: "/albany-rentals",
+      title: "Albany",
+      description: "Premium listings in Albany and surrounding areas",
+      href: "/towns/albany",
       icon: <Home className="w-5 h-5" />,
       category: "rental"
     },
     {
-      title: "Troy Rentals",
-      description: "Quality rentals in historic Troy with modern amenities",
-      href: "/troy-rentals",
+      title: "Troy",
+      description: "Quality properties in historic Troy with modern amenities",
+      href: "/towns/troy",
       icon: <Home className="w-5 h-5" />,
       category: "rental"
     },
     {
-      title: "Schenectady Rentals",
-      description: "Affordable rental options in diverse Schenectady communities",
-      href: "/schenectady-rentals",
+      title: "Schenectady",
+      description: "Affordable options in diverse Schenectady communities",
+      href: "/towns/schenectady",
       icon: <Home className="w-5 h-5" />,
       category: "rental"
     },
     {
-      title: "Saratoga Rentals",
-      description: "Elegant rental properties in charming Saratoga Springs",
-      href: "/saratoga-rentals",
+      title: "Saratoga Springs",
+      description: "Elegant properties in charming Saratoga Springs",
+      href: "/towns/saratoga-springs",
       icon: <Home className="w-5 h-5" />,
       category: "rental"
     }
