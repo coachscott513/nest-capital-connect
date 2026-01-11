@@ -16,7 +16,10 @@ import {
   ChevronRight,
   Gauge,
   Lock,
-  ToggleLeft
+  ToggleLeft,
+  Instagram,
+  Facebook,
+  Twitter
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { supabase } from "@/integrations/supabase/client";
@@ -90,127 +93,137 @@ interface AppleTownTemplateProps {
   heroImage?: string;
 }
 
-// Town-specific business fallbacks - each town shows its own local businesses
-const TOWN_BUSINESSES: Record<string, Array<{ id: string; name: string; logo: string }>> = {
+// Business type with social media
+interface TownBusiness {
+  id: string;
+  name: string;
+  logo: string;
+  instagram?: string;
+  facebook?: string;
+  twitter?: string;
+}
+
+// Town-specific business fallbacks - each town shows its own local businesses with social links
+const TOWN_BUSINESSES: Record<string, TownBusiness[]> = {
   "amsterdam": [
-    { id: "1", name: "Amsterdam Brewing Co.", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "Riverfront Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Amsterdam Hardware", logo: "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Mohawk Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "Amsterdam Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Market Street Deli", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Amsterdam Pet Care", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Amsterdam Brewing Co.", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "2", name: "Riverfront Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#", twitter: "#" },
+    { id: "3", name: "Amsterdam Hardware", logo: "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "4", name: "Mohawk Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#", twitter: "#" },
+    { id: "5", name: "Amsterdam Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "6", name: "Market Street Deli", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", facebook: "#", twitter: "#" },
+    { id: "7", name: "Amsterdam Pet Care", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" }
   ],
   "delmar": [
-    { id: "1", name: "Perfect Blend Café", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "Delmar Fitness Studio", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Delmar Marketplace", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Four Corners Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "Delmar Wine & Spirits", logo: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Delmar Pet Supplies", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Delmar Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Perfect Blend Café", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "2", name: "Delmar Fitness Studio", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#", twitter: "#" },
+    { id: "3", name: "Delmar Marketplace", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "4", name: "Four Corners Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80", facebook: "#", twitter: "#" },
+    { id: "5", name: "Delmar Wine & Spirits", logo: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "6", name: "Delmar Pet Supplies", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "7", name: "Delmar Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#", twitter: "#" }
   ],
   "albany": [
-    { id: "1", name: "Albany Tech Hub", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "Lark Street Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Albany Pump Station", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Capital Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "Albany Urban Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Empire State Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Albany Pet Hospital", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Albany Tech Hub", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80", twitter: "#", facebook: "#" },
+    { id: "2", name: "Lark Street Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "3", name: "Albany Pump Station", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", instagram: "#", twitter: "#" },
+    { id: "4", name: "Capital Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "5", name: "Albany Urban Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "6", name: "Empire State Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80", facebook: "#", twitter: "#" },
+    { id: "7", name: "Albany Pet Hospital", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" }
   ],
   "troy": [
-    { id: "1", name: "Troy Brewing Co.", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "River Street Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Troy Innovation Garage", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Troy Fitness Club", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "Monument Square Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Troy Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Troy Animal Hospital", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Troy Brewing Co.", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "2", name: "River Street Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#", twitter: "#" },
+    { id: "3", name: "Troy Innovation Garage", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80", twitter: "#", facebook: "#" },
+    { id: "4", name: "Troy Fitness Club", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "5", name: "Monument Square Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "6", name: "Troy Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "7", name: "Troy Animal Hospital", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", facebook: "#", twitter: "#" }
   ],
   "schenectady": [
-    { id: "1", name: "Schenectady Provisions", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "Electric City Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Proctors District Pub", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Electric City Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "Schenectady Tech Hub", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Vale Park Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Schenectady Pet Care", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Schenectady Provisions", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "2", name: "Electric City Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "3", name: "Proctors District Pub", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", instagram: "#", twitter: "#" },
+    { id: "4", name: "Electric City Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "5", name: "Schenectady Tech Hub", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80", twitter: "#", facebook: "#" },
+    { id: "6", name: "Vale Park Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "7", name: "Schenectady Pet Care", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", facebook: "#" }
   ],
   "saratoga-springs": [
-    { id: "1", name: "Saratoga Coffee Traders", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "Saratoga Brewing", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Broadway Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Saratoga Spa Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "Saratoga Wine & Spirits", logo: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Saratoga Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Saratoga Pet Hospital", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Saratoga Coffee Traders", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#", twitter: "#" },
+    { id: "2", name: "Saratoga Brewing", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "3", name: "Broadway Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "4", name: "Saratoga Spa Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "5", name: "Saratoga Wine & Spirits", logo: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=200&q=80", instagram: "#", twitter: "#" },
+    { id: "6", name: "Saratoga Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "7", name: "Saratoga Pet Hospital", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", facebook: "#", twitter: "#" }
   ],
   "clifton-park": [
-    { id: "1", name: "Clifton Park Coffee Co.", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "Shenendehowa Brewing", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Exit 9 Fitness Studio", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Clifton Park Veterinary", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "The Tech Collective CP", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Wheatfields Bakehouse", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Vischer Ferry Boutique", logo: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Clifton Park Coffee Co.", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "2", name: "Shenendehowa Brewing", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", instagram: "#", twitter: "#" },
+    { id: "3", name: "Exit 9 Fitness Studio", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "4", name: "Clifton Park Veterinary", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "5", name: "The Tech Collective CP", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80", twitter: "#", facebook: "#" },
+    { id: "6", name: "Wheatfields Bakehouse", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "7", name: "Vischer Ferry Boutique", logo: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=200&q=80", instagram: "#" }
   ],
   "niskayuna": [
-    { id: "1", name: "Niskayuna Gardens", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "Niskayuna Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Mohawk Commons Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Niskayuna Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "Niskayuna Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Niskayuna Pet Clinic", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Niskayuna Tech Labs", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Niskayuna Gardens", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "2", name: "Niskayuna Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "3", name: "Mohawk Commons Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#", twitter: "#" },
+    { id: "4", name: "Niskayuna Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "5", name: "Niskayuna Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", facebook: "#", twitter: "#" },
+    { id: "6", name: "Niskayuna Pet Clinic", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "7", name: "Niskayuna Tech Labs", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80", twitter: "#", facebook: "#" }
   ],
   "guilderland": [
-    { id: "1", name: "Crossgates Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "Guilderland Brewing", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Guilderland Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Altamont Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "Guilderland Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Guilderland Pet Care", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Guilderland Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Crossgates Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "2", name: "Guilderland Brewing", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "3", name: "Guilderland Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#", twitter: "#" },
+    { id: "4", name: "Altamont Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "5", name: "Guilderland Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", facebook: "#", twitter: "#" },
+    { id: "6", name: "Guilderland Pet Care", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "7", name: "Guilderland Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" }
   ],
   "voorheesville": [
-    { id: "1", name: "Voorheesville Diner", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "Voorheesville Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Indian Ladder Farms", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Voorheesville Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "Helderberg Hardware", logo: "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Voorheesville Pet Shop", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Village Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Voorheesville Diner", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "2", name: "Voorheesville Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "3", name: "Indian Ladder Farms", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#", twitter: "#" },
+    { id: "4", name: "Voorheesville Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "5", name: "Helderberg Hardware", logo: "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "6", name: "Voorheesville Pet Shop", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "7", name: "Village Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#" }
   ],
   "queensbury": [
-    { id: "1", name: "Queensbury Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "Lake George Brewing", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Aviation Mall Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Queensbury Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "Adirondack Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Queensbury Pet Care", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Glens Falls Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Queensbury Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "2", name: "Lake George Brewing", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#", twitter: "#" },
+    { id: "3", name: "Aviation Mall Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "4", name: "Queensbury Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "5", name: "Adirondack Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "6", name: "Queensbury Pet Care", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "7", name: "Glens Falls Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" }
   ],
   "mechanicville": [
-    { id: "1", name: "Mechanicville Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-    { id: "2", name: "Mechanicville Brewing", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80" },
-    { id: "3", name: "Mechanicville Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-    { id: "4", name: "Mechanicville Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80" },
-    { id: "5", name: "Hudson Falls Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-    { id: "6", name: "Mechanicville Pet Shop", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" },
-    { id: "7", name: "Mechanicville Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80" }
+    { id: "1", name: "Mechanicville Coffee", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "2", name: "Mechanicville Brewing", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+    { id: "3", name: "Mechanicville Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+    { id: "4", name: "Mechanicville Pharmacy", logo: "https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "5", name: "Hudson Falls Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "6", name: "Mechanicville Pet Shop", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+    { id: "7", name: "Mechanicville Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" }
   ]
 };
 
 // Default fallback for towns not in the map
-const DEFAULT_BUSINESSES = [
-  { id: "1", name: "Local Coffee Shop", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80" },
-  { id: "2", name: "Community Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" },
-  { id: "3", name: "Local Brewery", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80" },
-  { id: "4", name: "Town Veterinary", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80" },
-  { id: "5", name: "Local Tech Hub", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80" },
-  { id: "6", name: "Local Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80" },
-  { id: "7", name: "Town Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80" }
+const DEFAULT_BUSINESSES: TownBusiness[] = [
+  { id: "1", name: "Local Coffee Shop", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
+  { id: "2", name: "Community Fitness", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#" },
+  { id: "3", name: "Local Brewery", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", instagram: "#", twitter: "#" },
+  { id: "4", name: "Town Veterinary", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+  { id: "5", name: "Local Tech Hub", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80", twitter: "#", facebook: "#" },
+  { id: "6", name: "Local Market", logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80", facebook: "#" },
+  { id: "7", name: "Town Florist", logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" }
 ];
 
 const AppleTownTemplate = ({
@@ -646,7 +659,7 @@ const AppleTownTemplate = ({
               <div className="absolute right-0 top-0 bottom-8 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
               
               <div className="flex gap-8 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory justify-center">
-                {/* Use town-specific businesses with real photos - clicking opens blurred narrative modal */}
+                {/* Use town-specific businesses with blurred photos and social icons */}
                 {(TOWN_BUSINESSES[townSlug] || DEFAULT_BUSINESSES).map((business) => {
                   // Create a LocalVoice object for the Sheet modal with unverified status
                   const businessVoice: LocalVoice = {
@@ -669,26 +682,50 @@ const AppleTownTemplate = ({
                       onClick={() => setSelectedVoice(businessVoice)}
                       className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
                     >
-                      {/* Teal Glow Border - exact homepage styling */}
+                      {/* Teal Glow Border with BLURRED photo */}
                       <div className="relative spotlight">
                         <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
                           <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
                             <img
                               src={business.logo}
                               alt={business.name}
-                              className="w-full h-full rounded-full object-cover"
+                              className="w-full h-full rounded-full object-cover filter blur-[4px] group-hover:blur-[3px] transition-all"
                             />
                           </div>
                         </div>
+                        {/* Lock overlay on blurred image */}
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <Lock className="w-6 h-6 text-primary/80" />
+                        </div>
                         {/* Verified Badge - exact homepage styling */}
                         <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
-                          Verified
+                          Verify
                         </div>
                       </div>
                       
+                      {/* Business name */}
                       <span className="text-sm font-medium text-foreground text-center max-w-[120px] leading-tight group-hover:text-primary transition-colors">
                         {business.name}
                       </span>
+                      
+                      {/* Social Media Icons */}
+                      <div className="flex items-center gap-2">
+                        {business.instagram && (
+                          <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                            <Instagram className="w-3 h-3 text-primary" />
+                          </div>
+                        )}
+                        {business.facebook && (
+                          <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                            <Facebook className="w-3 h-3 text-primary" />
+                          </div>
+                        )}
+                        {business.twitter && (
+                          <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
+                            <Twitter className="w-3 h-3 text-primary" />
+                          </div>
+                        )}
+                      </div>
                     </button>
                   );
                 })}
