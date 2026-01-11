@@ -14,7 +14,8 @@ import {
   Home,
   Users,
   ChevronRight,
-  Gauge
+  Gauge,
+  Lock
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { supabase } from "@/integrations/supabase/client";
@@ -160,9 +161,8 @@ const AppleTownTemplate = ({
           .from('local_voices')
           .select('*')
           .eq('town_slug', townSlug)
-          .eq('is_verified', true)
           .order('display_order', { ascending: true })
-          .limit(8),
+          .limit(12),
         supabase
           .from('town_market_data')
           .select('avg_price, median_price, active_listings, avg_days_on_market, avg_sqft, avg_beds, avg_baths, single_family_count, multi_family_count, hero_landmark, target_yield, nest_score, region_category')
@@ -216,11 +216,11 @@ const AppleTownTemplate = ({
 
       {/* DEEP SPACE CINEMATIC HERO */}
       <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-background">
-        {/* Background Image with Cinematic Filter */}
+        {/* Background Image with Cinematic Filter - Uses DB hero_landmark or prop fallback */}
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: `url(${heroImage})`,
+            backgroundImage: `url(${townMarketData?.hero_landmark || heroImage})`,
             filter: 'brightness(0.6) grayscale(20%)'
           }}
         />
@@ -487,41 +487,46 @@ const AppleTownTemplate = ({
         </section>
       </IntelligenceGatekeeper>
 
-      {/* LOCAL VOICES - Horizontal Avatar Tray with Spotlight Effect */}
-      <section className="section-massive px-[5%] bg-card overflow-hidden">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-2">Local Voices</p>
-            <h2 className="text-3xl md:text-4xl font-extralight text-foreground mb-4 tracking-tight">
-              The People Building {townName}
+      {/* LOCAL PARTNERS - Infinity Scroll with Blurred Stories & Coming Soon Placeholders */}
+      <section className="section-massive px-[2%] lg:px-[3%] bg-card overflow-hidden">
+        <div className="w-full">
+          <div className="text-center mb-12 md:mb-16 px-[3%]">
+            <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Local Partners</p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-6">
+              The Soul of {townName}
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto body-airy">
-              Hear from verified local business owners about the town's growth and opportunities.
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto body-airy font-light">
+              Verified business owners building the community. Click to discover their stories.
             </p>
           </div>
 
           {isLoading ? (
             <div className="flex gap-8 justify-center">
-              {[1, 2, 3].map((i) => (
+              {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="flex flex-col items-center gap-3 animate-pulse">
-                  <div className="w-24 h-24 rounded-full bg-muted" />
+                  <div className="w-28 h-28 rounded-full bg-muted" />
                   <div className="h-4 bg-muted rounded w-20" />
                 </div>
               ))}
             </div>
-          ) : localVoices.length > 0 ? (
+          ) : (
             <div className="relative">
-              <div className="flex gap-8 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory justify-start md:justify-center">
+              {/* Fade edges */}
+              <div className="absolute left-0 top-0 bottom-6 w-24 bg-gradient-to-r from-card to-transparent pointer-events-none z-10" />
+              <div className="absolute right-0 top-0 bottom-6 w-24 bg-gradient-to-l from-card to-transparent pointer-events-none z-10" />
+              
+              <div className="flex gap-8 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
+                {/* Render actual local voices */}
                 {localVoices.map((voice) => (
                   <button
                     key={voice.id}
                     onClick={() => setSelectedVoice(voice)}
                     className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group spotlight"
                   >
-                    {/* Verified Border with Teal Glow */}
+                    {/* Teal Glow Border */}
                     <div className="relative">
-                      <div className="w-24 h-24 md:w-28 md:h-28 rounded-full p-[3px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(0,245,255,0.3)]">
-                        <div className="w-full h-full rounded-full overflow-hidden bg-card p-1">
+                      <div className={`w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br ${voice.is_verified ? 'from-primary to-primary/60 glow-primary' : 'from-muted to-muted/60'} group-hover:scale-105 transition-transform duration-300`}>
+                        <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
                           <img
                             src={voice.owner_photo_url || voice.business_logo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(voice.owner_name)}&background=00F5FF&color=0B0B0B`}
                             alt={voice.owner_name}
@@ -529,33 +534,57 @@ const AppleTownTemplate = ({
                           />
                         </div>
                       </div>
-                      {voice.is_verified && (
-                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+                      {voice.is_verified ? (
+                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
                           Verified
+                        </div>
+                      ) : (
+                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-muted text-muted-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+                          Preview
                         </div>
                       )}
                     </div>
                     
                     <div className="text-center">
-                      <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors block">
-                        {voice.owner_name}
+                      <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors block max-w-[120px] leading-tight">
+                        {voice.business_name}
                       </span>
                       <span className="text-xs text-muted-foreground block max-w-[120px] truncate">
-                        {voice.business_name}
+                        {voice.owner_name}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+                
+                {/* Coming Soon Placeholders - Fill to 12 */}
+                {localVoices.length < 12 && Array.from({ length: 12 - localVoices.length }).map((_, index) => (
+                  <button
+                    key={`placeholder-${index}`}
+                    onClick={() => setGatekeeperOpen(true)}
+                    className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
+                  >
+                    <div className="relative">
+                      <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-border to-border/40 group-hover:from-primary/40 group-hover:to-primary/20 transition-colors duration-300">
+                        <div className="w-full h-full rounded-full bg-card flex items-center justify-center">
+                          <Store className="w-10 h-10 text-muted-foreground/40 group-hover:text-primary/60 transition-colors" />
+                        </div>
+                      </div>
+                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-muted text-muted-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+                        Coming Soon
+                      </div>
+                    </div>
+                    
+                    <div className="text-center">
+                      <span className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors block">
+                        Verify Your Business
+                      </span>
+                      <span className="text-xs text-muted-foreground/60 block">
+                        {townName}
                       </span>
                     </div>
                   </button>
                 ))}
               </div>
-              
-              {/* Fade edges - Deep Space */}
-              <div className="absolute left-0 top-0 bottom-6 w-12 bg-gradient-to-r from-card to-transparent pointer-events-none md:hidden" />
-              <div className="absolute right-0 top-0 bottom-6 w-12 bg-gradient-to-l from-card to-transparent pointer-events-none md:hidden" />
-            </div>
-          ) : (
-            <div className="bento-card p-8 text-center max-w-md mx-auto">
-              <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">Local business spotlights coming soon for {townName}.</p>
             </div>
           )}
         </div>
@@ -612,16 +641,20 @@ const AppleTownTemplate = ({
 
       <Footer />
 
-      {/* Local Voice Interview Side Panel */}
+      {/* Local Voice Interview Side Panel with Blurred Narrative for Unverified */}
       <Sheet open={!!selectedVoice} onOpenChange={() => setSelectedVoice(null)}>
         <SheetContent className="w-full sm:max-w-lg bg-card border-l border-border overflow-y-auto">
           {selectedVoice && (
             <>
               <SheetHeader className="mb-6">
                 <div className="flex items-center gap-2">
-                  {selectedVoice.is_verified && (
+                  {selectedVoice.is_verified ? (
                     <span className="bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">
                       Nest Verified
+                    </span>
+                  ) : (
+                    <span className="bg-muted text-muted-foreground text-xs font-bold px-2 py-1 rounded-full">
+                      Community Preview
                     </span>
                   )}
                 </div>
@@ -633,7 +666,7 @@ const AppleTownTemplate = ({
               {/* Owner Photo */}
               <div className="mb-6">
                 <img
-                  src={selectedVoice.owner_photo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedVoice.owner_name)}&background=10b981&color=fff&size=400`}
+                  src={selectedVoice.owner_photo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedVoice.owner_name)}&background=00F5FF&color=0B0B0B&size=400`}
                   alt={selectedVoice.owner_name}
                   className="w-full h-64 object-cover rounded-2xl"
                 />
@@ -651,35 +684,70 @@ const AppleTownTemplate = ({
                 </div>
               </div>
 
-              {/* Interview Sections - Glass Cards */}
-              <div className="space-y-6">
-                {/* The Origin */}
-                <div className="p-4 glass rounded-xl">
-                  <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">The Origin</h4>
-                  <p className="text-sm text-foreground italic">"{selectedVoice.origin_story}"</p>
+              {/* Interview Sections - Blurred if not verified */}
+              {selectedVoice.is_verified ? (
+                <div className="space-y-6">
+                  <div className="p-4 glass rounded-xl">
+                    <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">The Origin</h4>
+                    <p className="text-sm text-foreground italic">"{selectedVoice.origin_story}"</p>
+                  </div>
+                  <div className="p-4 glass rounded-xl">
+                    <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Market Alpha</h4>
+                    <p className="text-sm text-foreground italic">"{selectedVoice.alpha_insight}"</p>
+                  </div>
+                  <div className="p-4 glass rounded-xl">
+                    <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Why {townName} is Big Time</h4>
+                    <p className="text-sm text-foreground italic">"{selectedVoice.growth_vision}"</p>
+                  </div>
                 </div>
-
-                {/* The Alpha */}
-                <div className="p-4 glass rounded-xl">
-                  <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Market Alpha</h4>
-                  <p className="text-sm text-foreground italic">"{selectedVoice.alpha_insight}"</p>
+              ) : (
+                /* Blurred Narrative with Verify CTA */
+                <div className="relative">
+                  <div className="space-y-6 filter blur-[6px] opacity-60 select-none pointer-events-none">
+                    <div className="p-4 glass rounded-xl">
+                      <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">The Origin</h4>
+                      <p className="text-sm text-foreground italic">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore."</p>
+                    </div>
+                    <div className="p-4 glass rounded-xl">
+                      <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Market Alpha</h4>
+                      <p className="text-sm text-foreground italic">"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo."</p>
+                    </div>
+                    <div className="p-4 glass rounded-xl">
+                      <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Why {townName} is Big Time</h4>
+                      <p className="text-sm text-foreground italic">"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."</p>
+                    </div>
+                  </div>
+                  
+                  {/* Verification CTA Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button
+                      onClick={() => {
+                        setSelectedVoice(null);
+                        setGatekeeperOpen(true);
+                      }}
+                      className="flex flex-col items-center gap-3 p-6 glass-strong rounded-2xl border border-primary/30 hover:border-primary/60 transition-colors group"
+                    >
+                      <Lock className="w-8 h-8 text-primary" />
+                      <span className="text-lg font-semibold text-foreground">Owner: Verify to Unlock Narrative</span>
+                      <span className="text-sm text-muted-foreground text-center max-w-xs">
+                        This listing is in Community Preview mode. Verify your business to publish your story.
+                      </span>
+                      <span className="text-sm font-semibold text-primary group-hover:underline">
+                        Request Verification →
+                      </span>
+                    </button>
+                  </div>
                 </div>
-
-                {/* The Vision */}
-                <div className="p-4 glass rounded-xl">
-                  <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Why {townName} is Big Time</h4>
-                  <p className="text-sm text-foreground italic">"{selectedVoice.growth_vision}"</p>
-                </div>
-              </div>
+              )}
 
               {/* Primary Offering */}
               <div className="mt-6 p-4 border border-border rounded-xl">
                 <h4 className="text-sm font-semibold text-foreground mb-1">What They Offer</h4>
-                <p className="text-muted-foreground">{selectedVoice.primary_offering}</p>
+                <p className="text-muted-foreground">{selectedVoice.primary_offering || "Details coming soon"}</p>
               </div>
 
-              {/* CTA */}
-              {selectedVoice.website_url && (
+              {/* CTA - Only show if verified and has website */}
+              {selectedVoice.is_verified && selectedVoice.website_url && (
                 <a
                   href={selectedVoice.website_url}
                   target="_blank"
