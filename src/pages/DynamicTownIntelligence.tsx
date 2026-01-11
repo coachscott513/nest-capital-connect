@@ -52,6 +52,19 @@ const townConfig: Record<string, { name: string; searchUrl: string; schoolDistri
   "rotterdam": { name: "Rotterdam", searchUrl: "https://capitaldistrictnest.com/search/rotterdam", schoolDistrict: "Mohonasen Central" },
   "halfmoon": { name: "Halfmoon", searchUrl: "https://capitaldistrictnest.com/search/halfmoon", schoolDistrict: "Shenendehowa Central" },
   "wilton": { name: "Wilton", searchUrl: "https://capitaldistrictnest.com/search/wilton", schoolDistrict: "Saratoga Springs Central" },
+  
+  // Greene County - Catskill Mountains Gateway
+  "catskill": { name: "Catskill", searchUrl: "https://capitaldistrictnest.com/search/catskill", schoolDistrict: "Catskill Central" },
+  "coxsackie": { name: "Coxsackie", searchUrl: "https://capitaldistrictnest.com/search/coxsackie", schoolDistrict: "Coxsackie-Athens Central" },
+  "windham": { name: "Windham", searchUrl: "https://capitaldistrictnest.com/search/windham", schoolDistrict: "Windham-Ashland-Jewett Central" },
+  "hunter": { name: "Hunter", searchUrl: "https://capitaldistrictnest.com/search/hunter", schoolDistrict: "Hunter-Tannersville Central" },
+  "athens": { name: "Athens", searchUrl: "https://capitaldistrictnest.com/search/athens", schoolDistrict: "Coxsackie-Athens Central" },
+  
+  // Schoharie County - Rural Investment Corridor
+  "schoharie": { name: "Schoharie", searchUrl: "https://capitaldistrictnest.com/search/schoharie", schoolDistrict: "Schoharie Central" },
+  "cobleskill": { name: "Cobleskill", searchUrl: "https://capitaldistrictnest.com/search/cobleskill", schoolDistrict: "Cobleskill-Richmondville Central" },
+  "middleburgh": { name: "Middleburgh", searchUrl: "https://capitaldistrictnest.com/search/middleburgh", schoolDistrict: "Middleburgh Central" },
+  "sharon-springs": { name: "Sharon Springs", searchUrl: "https://capitaldistrictnest.com/search/sharon-springs", schoolDistrict: "Sharon Springs Central" },
 };
 
 const DynamicTownIntelligence = () => {
