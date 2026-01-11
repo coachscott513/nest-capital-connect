@@ -268,18 +268,18 @@ export const townSEOContent: Record<string, TownSEOContent> = {
     name: "Catskill",
     county: "Greene County",
     h1: "Catskill Insights, Property Data & Local Guide",
-    metaDescription: "Explore Catskill through our professional lens. Get expert property data, Airbnb potential analysis, and discover Hudson Valley's creative hub.",
-    leadParagraph: "Catskill is Greene County's cultural anchor and the gateway to the Catskill Mountains. This Hudson Valley village has transformed into a creative hub, attracting Brooklyn transplants, artists, and entrepreneurs. The walkable downtown features galleries, farm-to-table restaurants, and a thriving arts scene. For investors, Catskill offers both long-term rental demand and short-term vacation rental potential.",
-    marketParagraph: "Catskill's median price of $280,000 offers exceptional value compared to Hudson Valley destinations further south. Investors see 7-10% yields on long-term rentals, with short-term vacation properties generating premium income during peak seasons. Historic properties downtown appreciate as the creative economy grows. The NYC weekend crowd supports local businesses year-round.",
-    communityParagraph: "Catskill Central School District serves the area. The Bridge Street Theatre, Catskill Mountain Foundation, and growing restaurant scene anchor cultural life. Proximity to Thomas Cole's historic studios and Hunter Mountain creates tourism infrastructure that supports property values.",
-    civicKeywords: ["Catskill village hall", "Greene County tax office", "Catskill building permits", "Catskill zoning", "Catskill school calendar"],
-    lifestyleKeywords: ["Catskill restaurants", "Hudson Valley arts", "Catskill Mountain House", "Thomas Cole historic site", "Catskill farmers market"],
+    metaDescription: "Explore Catskill through our professional lens. Get expert property data, Hudson riverfront insights, and discover this historic arts destination.",
+    leadParagraph: "A historic riverfront community with a thriving arts scene and significant investment potential. Catskill serves as Greene County's cultural and commercial anchor, drawing creatives, weekend buyers, and investors seeking the next Hudson Valley opportunity. The town's walkable downtown, proximity to the Catskill Mountains, and established arts community create a unique lifestyle proposition.",
+    marketParagraph: "High demand for creative spaces and riverside residential rehabs defines the Catskill market. The town offers exceptional value compared to Hudson and points south, with median prices around $325,000. Multi-family properties and commercial conversions generate strong returns, while single-family homes in the village center see consistent appreciation as the arts renaissance continues.",
+    communityParagraph: "Catskill Central School District serves the area. The Thomas Cole National Historic Site, emerging galleries, and independent restaurants anchor the cultural scene. Local business owners are driving a creative economy that supports property values and attracts a discerning buyer pool.",
+    civicKeywords: ["Catskill town hall", "Catskill property taxes", "Catskill building permits", "Catskill zoning board", "Catskill Central schools"],
+    lifestyleKeywords: ["Catskill arts scene", "Hudson River Catskill", "Thomas Cole site", "Catskill restaurants", "Catskill creative community"],
     internalLinks: [
       { label: "See all Greene County Spotlights", path: "/intelligence/greene-county" },
-      { label: "Catskill investment properties", path: "/homes/catskill" },
-      { label: "Outdoor luxury properties", path: "/investment-properties" }
+      { label: "Catskill properties", path: "/homes/catskill" },
+      { label: "Investment properties guide", path: "/investment-properties" }
     ],
-    focusKeywords: ["Catskill NY homes for sale", "living in Catskill NY", "Catskill Airbnb investment", "Hudson Valley real estate", "Catskill Mountains homes"]
+    focusKeywords: ["Catskill NY homes for sale", "living in Catskill NY", "Catskill arts community", "Catskill real estate", "Greene County riverfront"]
   },
 
   windham: {
@@ -287,18 +287,18 @@ export const townSEOContent: Record<string, TownSEOContent> = {
     name: "Windham",
     county: "Greene County",
     h1: "Windham Insights, Property Data & Local Guide",
-    metaDescription: "Explore Windham through our professional lens. Get expert property data, ski resort insights, and discover high-yield vacation rental potential.",
-    leadParagraph: "Windham is the Catskills' premier ski destination, drawing NYC weekenders year-round. Windham Mountain Resort drives consistent tourism, while the village's restaurants, shops, and outdoor recreation create four-season appeal. For investors, Windham offers some of the region's strongest short-term rental yields, with ski-in properties commanding premium rates.",
-    marketParagraph: "Windham's median price of $375,000 reflects its destination market positioning. Ski-access properties and slopeside condos generate 12-18% short-term rental yields during peak season. Year-round tourism—skiing, hiking, mountain biking, and fall foliage—supports consistent occupancy. The NYC accessibility (2.5 hours) creates reliable buyer and renter demand.",
-    communityParagraph: "Windham-Ashland-Jewett Central School District serves the area. Windham Mountain Resort, the Windham Path trail system, and a walkable village center anchor community life. The resort's investment in year-round programming continues to expand the tourism season.",
-    civicKeywords: ["Windham town hall", "Greene County tax office", "Windham building permits", "Windham zoning", "Windham school calendar"],
-    lifestyleKeywords: ["Windham Mountain skiing", "Windham restaurants", "Catskills hiking", "Windham golf", "mountain biking Windham"],
+    metaDescription: "Explore Windham through our professional lens. Get expert property data, ski resort insights, and discover this luxury mountain destination.",
+    leadParagraph: "The Gem of the Catskills, offering luxury recreational living and high-yield seasonal rental opportunities. Windham Mountain Resort anchors a year-round economy, while the charming village center provides dining and boutique shopping that draws weekend visitors from the metro area. The four-season appeal makes Windham one of the region's most stable luxury markets.",
+    marketParagraph: "Premium vacation market with consistent value growth in the luxury sector. Ski-in/ski-out properties and village condos command premium prices, while the short-term rental income potential supports investment calculations. Properties with mountain views or resort access see the strongest appreciation, with median prices around $450,000 and luxury properties reaching well into seven figures.",
+    communityParagraph: "Windham-Ashland-Jewett Central School District serves local families. The resort, Windham Country Club, and village restaurants anchor community life. Boutique retail and the arts community create a sophisticated mountain lifestyle that attracts discerning buyers.",
+    civicKeywords: ["Windham town hall", "Windham property taxes", "Windham building permits", "Windham zoning", "Windham Ashland Jewett schools"],
+    lifestyleKeywords: ["Windham Mountain", "Windham ski resort", "Catskills luxury", "Windham restaurants", "mountain living"],
     internalLinks: [
       { label: "See all Greene County Spotlights", path: "/intelligence/greene-county" },
-      { label: "Windham vacation properties", path: "/homes/windham" },
-      { label: "High-yield investment guide", path: "/investment-properties" }
+      { label: "Windham properties", path: "/homes/windham" },
+      { label: "Vacation rental guide", path: "/investment-properties" }
     ],
-    focusKeywords: ["Windham NY homes for sale", "Windham ski properties", "Catskills vacation homes", "Windham Airbnb investment", "Windham Mountain real estate"]
+    focusKeywords: ["Windham NY homes for sale", "living in Windham NY", "Windham Mountain real estate", "Catskills ski homes", "Windham vacation rentals"]
   },
 
   hunter: {
@@ -306,18 +306,18 @@ export const townSEOContent: Record<string, TownSEOContent> = {
     name: "Hunter",
     county: "Greene County",
     h1: "Hunter Insights, Property Data & Local Guide",
-    metaDescription: "Explore Hunter through our professional lens. Get expert property data, Hunter Mountain insights, and discover Catskills investment potential.",
-    leadParagraph: "Hunter is the heart of Catskills recreation, anchored by Hunter Mountain Resort. This mountain village draws skiers, hikers, and festival-goers throughout the year. The Kaaterskill Falls, Mountain Top Arboretum, and scenic drives attract nature enthusiasts. For investors, Hunter offers strong vacation rental potential with year-round tourism demand.",
-    marketParagraph: "Hunter's median price of $320,000 provides accessible entry into the Catskills market. Properties near Hunter Mountain generate strong short-term rental income, particularly during ski season and summer festivals. The ongoing investment in year-round mountain activities continues to expand the rental calendar and support appreciation.",
-    communityParagraph: "Hunter-Tannersville Central School District serves the area. Hunter Mountain's festivals, Kaaterskill Falls, and the Mountain Top Historical Society anchor community life. The village's small-town character and dramatic mountain setting create a unique living environment.",
-    civicKeywords: ["Hunter town hall", "Greene County tax office", "Hunter building permits", "Hunter zoning", "Hunter school calendar"],
-    lifestyleKeywords: ["Hunter Mountain skiing", "Kaaterskill Falls", "Catskills festivals", "Hunter restaurants", "mountain recreation"],
+    metaDescription: "Explore Hunter through our professional lens. Get expert property data, Hunter Mountain insights, and discover this premier ski destination.",
+    leadParagraph: "A premier four-season destination known for its rugged beauty and world-class skiing investments. Hunter Mountain anchors the local economy, drawing visitors year-round for skiing, festivals, and summer concerts. The town's position as a gateway to the high peaks creates opportunities for investors targeting the vacation rental market.",
+    marketParagraph: "Strong short-term rental market with year-round recreational appeal. Properties with mountain access or views command premiums, while condos and townhomes offer entry points for vacation rental investors. The median price of $375,000 reflects the resort influence, with luxury properties near the mountain reaching significantly higher.",
+    communityParagraph: "Hunter-Tannersville Central School District serves the area. The mountain resort, Kaaterskill Falls, and the Devil's Path hiking trail anchor outdoor recreation. The village's restaurants and après-ski culture create a vibrant seasonal community.",
+    civicKeywords: ["Hunter town hall", "Hunter property taxes", "Hunter building permits", "Hunter zoning", "Hunter Tannersville schools"],
+    lifestyleKeywords: ["Hunter Mountain", "Kaaterskill Falls", "Devil's Path hiking", "Hunter ski resort", "Catskills adventure"],
     internalLinks: [
       { label: "See all Greene County Spotlights", path: "/intelligence/greene-county" },
-      { label: "Hunter vacation properties", path: "/homes/hunter" },
-      { label: "Outdoor luxury properties", path: "/investment-properties" }
+      { label: "Hunter properties", path: "/homes/hunter" },
+      { label: "Ski property guide", path: "/investment-properties" }
     ],
-    focusKeywords: ["Hunter NY homes for sale", "Hunter Mountain properties", "Catskills vacation homes", "Hunter Airbnb investment", "Kaaterskill Falls area homes"]
+    focusKeywords: ["Hunter NY homes for sale", "living in Hunter NY", "Hunter Mountain real estate", "Catskills ski property", "Hunter vacation rentals"]
   },
 
   coxsackie: {
@@ -325,18 +325,18 @@ export const townSEOContent: Record<string, TownSEOContent> = {
     name: "Coxsackie",
     county: "Greene County",
     h1: "Coxsackie Insights, Property Data & Local Guide",
-    metaDescription: "Explore Coxsackie through our professional lens. Get expert property data, riverfront insights, and discover this historic Hudson River village.",
-    leadParagraph: "Coxsackie is Greene County's riverfront gem, combining Hudson River access with small-town authenticity. The historic downtown features antique shops, restaurants, and a growing creative community. NYC transplants appreciate the Amtrak accessibility, while families value the strong schools and affordable housing. The waterfront revitalization continues to attract new residents and investors.",
-    marketParagraph: "Coxsackie's median price of $265,000 offers excellent value for Hudson River access. Waterfront and water-view properties command premium prices, while village homes provide affordable entry points. Long-term rental demand is steady, with growing interest from remote workers seeking Hudson Valley living at accessible prices.",
-    communityParagraph: "Coxsackie-Athens Central School District serves the area with solid academics. The Coxsackie Antique Center, waterfront parks, and a growing restaurant scene anchor community life. The village's historic architecture and river setting create character that's drawing new residents.",
-    civicKeywords: ["Coxsackie village hall", "Greene County tax office", "Coxsackie building permits", "Coxsackie zoning", "Coxsackie-Athens school calendar"],
-    lifestyleKeywords: ["Hudson River waterfront", "Coxsackie antiques", "Coxsackie restaurants", "Riverside Park", "historic Coxsackie"],
+    metaDescription: "Explore Coxsackie through our professional lens. Get expert property data, riverfront insights, and discover this rising Hudson Valley town.",
+    leadParagraph: "A rising river town offering a blend of historic charm and modern commutable convenience. Coxsackie's position along the Hudson, midway between Albany and Hudson, creates appeal for remote workers and weekenders. The walkable village center and river access attract buyers seeking value in the Hudson Valley market.",
+    marketParagraph: "Growing interest from urban professionals looking for riverfront value. The median price of $295,000 offers significant value compared to towns further south, while the historic housing stock provides character that new construction cannot match. Multi-family properties and commercial buildings offer investment potential as the town continues to develop.",
+    communityParagraph: "Coxsackie-Athens Central School District serves local families. The riverfront park, historic buildings, and emerging restaurants anchor community life. The town's proximity to both Albany and the Catskills creates a lifestyle balance that appeals to diverse buyers.",
+    civicKeywords: ["Coxsackie town hall", "Coxsackie property taxes", "Coxsackie building permits", "Coxsackie zoning", "Coxsackie Athens schools"],
+    lifestyleKeywords: ["Hudson River Coxsackie", "Coxsackie village", "riverfront living", "Coxsackie restaurants", "commutable Hudson Valley"],
     internalLinks: [
       { label: "See all Greene County Spotlights", path: "/intelligence/greene-county" },
-      { label: "Coxsackie waterfront homes", path: "/homes/coxsackie" },
-      { label: "Hudson Valley investment", path: "/investment-properties" }
+      { label: "Coxsackie properties", path: "/homes/coxsackie" },
+      { label: "Hudson Valley guide", path: "/investment-properties" }
     ],
-    focusKeywords: ["Coxsackie NY homes for sale", "living in Coxsackie NY", "Hudson River homes", "Coxsackie real estate", "Greene County waterfront"]
+    focusKeywords: ["Coxsackie NY homes for sale", "living in Coxsackie NY", "Coxsackie riverfront", "Coxsackie real estate", "Greene County Hudson Valley"]
   },
 
   athens: {
@@ -344,18 +344,18 @@ export const townSEOContent: Record<string, TownSEOContent> = {
     name: "Athens",
     county: "Greene County",
     h1: "Athens Insights, Property Data & Local Guide",
-    metaDescription: "Explore Athens through our professional lens. Get expert property data, Hudson River insights, and discover this historic rivertown's appeal.",
-    leadParagraph: "Athens is Greene County's hidden waterfront treasure. This small rivertown offers stunning Hudson River views, historic architecture, and a peaceful alternative to busier Hudson Valley destinations. The Athens Lighthouse and riverfront park create iconic scenery, while the village's quiet character appeals to those seeking authentic small-town living.",
-    marketParagraph: "Athens' median price of $245,000 offers exceptional Hudson River value. Waterfront properties with dock access command premium prices, while village homes remain affordable. The limited inventory and growing interest from NYC buyers creates upward pressure on prices. Long-term appreciation potential is strong as the Hudson Valley market continues to expand north.",
-    communityParagraph: "Coxsackie-Athens Central School District serves the village. The Athens Lighthouse, Stewart House, and riverfront parks anchor community life. The village's small size creates a tight-knit atmosphere where neighbors know each other.",
-    civicKeywords: ["Athens village hall", "Greene County tax office", "Athens building permits", "Athens zoning", "Coxsackie-Athens schools"],
-    lifestyleKeywords: ["Athens Lighthouse", "Hudson River views", "Stewart House Athens", "riverfront living", "historic Athens NY"],
+    metaDescription: "Explore Athens through our professional lens. Get expert property data, river views insights, and discover this quintessential Hudson Valley village.",
+    leadParagraph: "A quintessential Hudson Valley village known for its preserved architecture and scenic river views. Athens offers the walkability and character that weekend buyers seek, with a lighthouse, waterfront park, and historic streetscapes that define small-town charm. The town's authenticity attracts buyers who value preservation over development.",
+    marketParagraph: "Stable residential market with increasing boutique hospitality interest. The median price of $310,000 reflects the village's appeal, while properties with river views or historic significance command premiums. The limited inventory and preservation focus create price stability that investors appreciate.",
+    communityParagraph: "Coxsackie-Athens Central School District serves the area. The Athens Lighthouse, Riverfront Park, and historic village center anchor community character. Local restaurants and the seasonal farmers market create gathering places that strengthen neighborhood bonds.",
+    civicKeywords: ["Athens town hall", "Athens property taxes", "Athens building permits", "Athens zoning", "Athens preservation"],
+    lifestyleKeywords: ["Athens Lighthouse", "Hudson River Athens", "Athens village", "historic Athens", "river views Athens"],
     internalLinks: [
       { label: "See all Greene County Spotlights", path: "/intelligence/greene-county" },
-      { label: "Athens waterfront homes", path: "/homes/athens" },
-      { label: "Hudson Valley investment", path: "/investment-properties" }
+      { label: "Athens properties", path: "/homes/athens" },
+      { label: "Historic homes guide", path: "/investment-properties" }
     ],
-    focusKeywords: ["Athens NY homes for sale", "living in Athens NY", "Hudson River homes", "Athens real estate", "Greene County waterfront"]
+    focusKeywords: ["Athens NY homes for sale", "living in Athens NY", "Athens Hudson River", "Athens real estate", "Greene County village"]
   },
 
   // ========== SCHOHARIE COUNTY - Rural Investment Corridor ==========
@@ -364,18 +364,18 @@ export const townSEOContent: Record<string, TownSEOContent> = {
     name: "Cobleskill",
     county: "Schoharie County",
     h1: "Cobleskill Insights, Property Data & Local Guide",
-    metaDescription: "Explore Cobleskill through our professional lens. Get expert property data, SUNY insights, and discover this college town's investment potential.",
-    leadParagraph: "Cobleskill is Schoharie County's anchor, home to SUNY Cobleskill and the region's commercial center. The college creates consistent rental demand, while the village's agricultural roots maintain authentic rural character. For investors, Cobleskill offers stable cash flow from student housing and accessible entry points for building a rental portfolio.",
-    marketParagraph: "Cobleskill's median price of $175,000 is among the most accessible in the Capital District region. SUNY Cobleskill drives rental demand, with multi-family properties generating 9-12% returns. The agricultural economy provides stability, while growing interest from remote workers seeking rural affordability creates new buyer demand.",
-    communityParagraph: "Cobleskill-Richmondville Central School District serves the area. SUNY Cobleskill's agricultural programs, the Cobleskill Fairgrounds, and local shops on Main Street anchor community life. The college brings cultural programming and maintains a young, active population.",
-    civicKeywords: ["Cobleskill village hall", "Schoharie County tax office", "Cobleskill building permits", "Cobleskill zoning", "SUNY Cobleskill campus"],
-    lifestyleKeywords: ["SUNY Cobleskill", "Cobleskill Fair", "Schoharie Valley", "rural Cobleskill", "college town living"],
+    metaDescription: "Explore Cobleskill through our professional lens. Get expert property data, SUNY insights, and discover this stable academic hub.",
+    leadParagraph: "A stable academic and agricultural hub anchored by SUNY Cobleskill, offering reliable rental yields. The college creates consistent tenant demand, while the village provides services and amenities for the surrounding rural area. Investors appreciate the predictable returns and institutional stability that the campus provides.",
+    marketParagraph: "Consistent rental demand driven by the student population and local institutional growth. The median price of $195,000 offers exceptional entry points for investors, while multi-family properties near campus generate reliable cash flow. The combination of low acquisition costs and stable demand creates attractive yield profiles.",
+    communityParagraph: "Cobleskill-Richmondville Central School District serves local families. SUNY Cobleskill, the agricultural programs, and village businesses anchor the economy. The Bull's Head Inn and local restaurants create community gathering places that enhance quality of life.",
+    civicKeywords: ["Cobleskill town hall", "Cobleskill property taxes", "Cobleskill building permits", "Cobleskill zoning", "Cobleskill Richmondville schools"],
+    lifestyleKeywords: ["SUNY Cobleskill", "Cobleskill village", "agricultural Schoharie", "college town living", "Bull's Head Inn"],
     internalLinks: [
       { label: "See all Schoharie County Spotlights", path: "/intelligence/schoharie-county" },
-      { label: "Cobleskill investment properties", path: "/homes/cobleskill" },
-      { label: "Student housing investment", path: "/investment-properties" }
+      { label: "Cobleskill properties", path: "/homes/cobleskill" },
+      { label: "Student rental guide", path: "/investment-properties" }
     ],
-    focusKeywords: ["Cobleskill NY homes for sale", "living in Cobleskill NY", "SUNY Cobleskill housing", "Cobleskill real estate", "Schoharie County investment"]
+    focusKeywords: ["Cobleskill NY homes for sale", "living in Cobleskill NY", "SUNY Cobleskill rentals", "Cobleskill real estate", "Schoharie County investment"]
   },
 
   schoharie: {
@@ -383,18 +383,18 @@ export const townSEOContent: Record<string, TownSEOContent> = {
     name: "Schoharie",
     county: "Schoharie County",
     h1: "Schoharie Insights, Property Data & Local Guide",
-    metaDescription: "Explore Schoharie through our professional lens. Get expert property data, historic village insights, and discover rural investment potential.",
-    leadParagraph: "Schoharie is the county seat and a village steeped in Revolutionary War history. The Old Stone Fort Museum, historic Main Street, and Schoharie Creek create a picturesque setting. For buyers seeking authentic rural living with historic character, Schoharie offers a slower pace just 45 minutes from Albany.",
-    marketParagraph: "Schoharie's median price of $185,000 provides exceptional affordability. Historic homes with character features are available at prices that would be impossible in suburban markets. Long-term rental demand is steady, with growing interest from remote workers and retirees seeking peaceful settings. Agricultural land and larger properties offer additional opportunities.",
-    communityParagraph: "Schoharie Central School District serves the village with small class sizes. The Old Stone Fort Museum, Schoharie Creek, and historic village center anchor community life. The county courthouse and government offices provide local employment.",
-    civicKeywords: ["Schoharie village hall", "Schoharie County courthouse", "Schoharie tax office", "Schoharie building permits", "Schoharie school board"],
-    lifestyleKeywords: ["Old Stone Fort Museum", "Schoharie Creek", "historic Schoharie", "rural Schoharie Valley", "Schoharie community"],
+    metaDescription: "Explore Schoharie through our professional lens. Get expert property data, valley insights, and discover this historic county seat.",
+    leadParagraph: "A valley community rich in history, offering significant equity opportunities for long-term investors. As the county seat, Schoharie provides government services and commercial activity for the surrounding rural area. The Old Stone Fort, historic village center, and agricultural heritage create a distinctive character that attracts heritage-minded buyers.",
+    marketParagraph: "High-value land and multi-family opportunities in a peaceful rural setting. The median price of $225,000 offers substantial value, while properties with acreage or historic significance command premiums. The limited development pressure creates price stability for patient investors building long-term portfolios.",
+    communityParagraph: "Schoharie Central School District serves local families. The Old Stone Fort Museum, Schoharie Creek, and county government offices anchor community life. Local businesses and the agricultural economy create a self-sufficient community character.",
+    civicKeywords: ["Schoharie town hall", "Schoharie property taxes", "Schoharie building permits", "Schoharie county seat", "Schoharie Central schools"],
+    lifestyleKeywords: ["Old Stone Fort", "Schoharie Creek", "Schoharie Valley", "historic Schoharie", "county seat living"],
     internalLinks: [
       { label: "See all Schoharie County Spotlights", path: "/intelligence/schoharie-county" },
-      { label: "Schoharie historic homes", path: "/homes/schoharie" },
-      { label: "Rural investment guide", path: "/investment-properties" }
+      { label: "Schoharie properties", path: "/homes/schoharie" },
+      { label: "Land investment guide", path: "/investment-properties" }
     ],
-    focusKeywords: ["Schoharie NY homes for sale", "living in Schoharie NY", "Schoharie Valley real estate", "historic Schoharie homes", "Schoharie County properties"]
+    focusKeywords: ["Schoharie NY homes for sale", "living in Schoharie NY", "Schoharie Valley real estate", "Schoharie County seat", "rural New York investment"]
   },
 
   "sharon-springs": {
@@ -402,18 +402,18 @@ export const townSEOContent: Record<string, TownSEOContent> = {
     name: "Sharon Springs",
     county: "Schoharie County",
     h1: "Sharon Springs Insights, Property Data & Local Guide",
-    metaDescription: "Explore Sharon Springs through our professional lens. Get expert property data, resort revival insights, and discover this hidden gem's potential.",
-    leadParagraph: "Sharon Springs is experiencing a renaissance. This historic spa village, once a grand resort destination, is being rediscovered by artists, entrepreneurs, and remote workers. The village's Victorian architecture, natural mineral springs, and peaceful setting create unique character. For investors and buyers seeking something special, Sharon Springs offers untapped potential.",
-    marketParagraph: "Sharon Springs' median price of $150,000 makes it one of the region's most affordable entry points. Historic Victorian properties with significant potential are available at remarkable prices. The village's revival—driven by new restaurants, shops, and the American Hotel restoration—is beginning to drive appreciation. Early investors have seen strong returns.",
-    communityParagraph: "Sharon Springs Central School District serves the village with intimate class sizes. The Beekman 1802 Farm, American Hotel, and village shops anchor the growing creative economy. The annual Harvest Festival and cultural events draw visitors year-round.",
-    civicKeywords: ["Sharon Springs village hall", "Schoharie County tax office", "Sharon Springs building permits", "Sharon Springs zoning", "Sharon Springs school board"],
-    lifestyleKeywords: ["Beekman 1802 Farm", "American Hotel Sharon Springs", "mineral springs spa", "Victorian Sharon Springs", "Sharon Springs revival"],
+    metaDescription: "Explore Sharon Springs through our professional lens. Get expert property data, spa village insights, and discover this boutique tourism destination.",
+    leadParagraph: "A world-renowned historic spa village seeing a modern renaissance in boutique tourism and wellness. Sharon Springs' mineral springs drew visitors for centuries, and today's revival brings new boutique hotels, restaurants, and wellness practitioners. The village's architecture, gardens, and healing waters create a lifestyle destination unlike anywhere else in upstate New York.",
+    marketParagraph: "Ideal for lifestyle investors targeting the wellness and hospitality sectors. The median price of $265,000 offers entry into a market with significant upside as the tourism renaissance continues. Historic buildings with hospitality potential command premiums, while residential properties offer value for those seeking village character.",
+    communityParagraph: "Sharon Springs Central School District serves local families. The American Hotel, mineral springs, and boutique shops anchor the village economy. The flower festivals and wellness tourism create seasonal vibrancy that supports local businesses.",
+    civicKeywords: ["Sharon Springs village", "Sharon Springs property taxes", "Sharon Springs building permits", "Sharon Springs historic district", "Sharon Springs schools"],
+    lifestyleKeywords: ["Sharon Springs spa", "mineral springs", "boutique Sharon Springs", "American Hotel", "wellness tourism"],
     internalLinks: [
       { label: "See all Schoharie County Spotlights", path: "/intelligence/schoharie-county" },
       { label: "Sharon Springs properties", path: "/homes/sharon-springs" },
-      { label: "Historic investment guide", path: "/investment-properties" }
+      { label: "Hospitality investment guide", path: "/investment-properties" }
     ],
-    focusKeywords: ["Sharon Springs NY homes for sale", "living in Sharon Springs NY", "Sharon Springs real estate", "historic Sharon Springs", "Beekman 1802 area"]
+    focusKeywords: ["Sharon Springs NY homes for sale", "living in Sharon Springs NY", "Sharon Springs spa village", "boutique hotel Sharon Springs", "wellness destination NY"]
   },
 
   middleburgh: {
@@ -421,18 +421,37 @@ export const townSEOContent: Record<string, TownSEOContent> = {
     name: "Middleburgh",
     county: "Schoharie County",
     h1: "Middleburgh Insights, Property Data & Local Guide",
-    metaDescription: "Explore Middleburgh through our professional lens. Get expert property data, agricultural insights, and discover rural Schoharie Valley living.",
-    leadParagraph: "Middleburgh is the agricultural heart of Schoharie Valley. This village offers authentic rural living surrounded by working farms and scenic beauty. The community's resilience after flooding has strengthened local bonds, while affordable housing attracts families seeking value and space. For those escaping suburban density, Middleburgh provides genuine country living.",
-    marketParagraph: "Middleburgh's median price of $165,000 offers remarkable affordability. Properties with acreage are available at prices impossible to find closer to Albany. The agricultural economy provides stability, while growing interest from remote workers creates new demand. Historic homes and farmhouses offer character unavailable in newer developments.",
-    communityParagraph: "Middleburgh Central School District serves the village with personalized attention. Local farms, the Schoharie Creek, and village shops anchor community life. The community's recovery from past flooding demonstrates the resilience and mutual support that characterizes rural living.",
-    civicKeywords: ["Middleburgh village hall", "Schoharie County tax office", "Middleburgh building permits", "Middleburgh zoning", "Middleburgh school board"],
-    lifestyleKeywords: ["Schoharie Valley farms", "rural Middleburgh", "Middleburgh community", "agricultural Schoharie", "country living"],
+    metaDescription: "Explore Middleburgh through our professional lens. Get expert property data, valley views, and discover this resilient Schoharie community.",
+    leadParagraph: "A resilient community with stunning valley views and a strong local business spirit. Middleburgh has rebuilt after flood challenges, creating a community character defined by determination and mutual support. The village's agricultural roots and scenic setting attract buyers seeking authenticity and value in rural New York.",
+    marketParagraph: "Affordable residential entry points with a focus on community-centric growth. The median price of $185,000 offers exceptional value for properties with land and views. The housing stock includes historic village homes, farmhouses with acreage, and newer construction, providing options for various buyer profiles.",
+    communityParagraph: "Middleburgh Central School District serves local families. The village center, Schoharie Creek, and surrounding farms anchor community character. Local businesses and the agricultural economy create self-sufficiency that residents value.",
+    civicKeywords: ["Middleburgh town hall", "Middleburgh property taxes", "Middleburgh building permits", "Middleburgh zoning", "Middleburgh Central schools"],
+    lifestyleKeywords: ["Middleburgh valley", "Schoharie Creek", "rural Middleburgh", "agricultural living", "valley views"],
     internalLinks: [
       { label: "See all Schoharie County Spotlights", path: "/intelligence/schoharie-county" },
       { label: "Middleburgh properties", path: "/homes/middleburgh" },
-      { label: "Rural investment guide", path: "/investment-properties" }
+      { label: "Farmland guide", path: "/investment-properties" }
     ],
-    focusKeywords: ["Middleburgh NY homes for sale", "living in Middleburgh NY", "Schoharie Valley real estate", "Middleburgh farms", "rural Schoharie County"]
+    focusKeywords: ["Middleburgh NY homes for sale", "living in Middleburgh NY", "Middleburgh real estate", "Schoharie Valley homes", "affordable rural NY"]
+  },
+
+  esperance: {
+    slug: "esperance",
+    name: "Esperance",
+    county: "Schoharie County",
+    h1: "Esperance Insights, Property Data & Local Guide",
+    metaDescription: "Explore Esperance through our professional lens. Get expert property data, Schoharie Creek insights, and discover this peaceful gateway town.",
+    leadParagraph: "A peaceful gateway town offering vast agricultural land and quiet residential retreats. Esperance's position at the eastern edge of Schoharie County provides commutable access to Schenectady while maintaining rural character. Buyers seeking space, privacy, and agricultural potential find exceptional value here.",
+    marketParagraph: "Low-density value opportunities for land-bankers and commuters alike. The median price of $175,000 offers some of the region's most affordable entry points, while properties with acreage provide agricultural or development potential. The combination of low prices and regional accessibility creates opportunities for patient investors.",
+    communityParagraph: "Schoharie Central School District serves some areas, while Duanesburg serves others. Schoharie Creek, agricultural lands, and the quiet residential character define community life. The town's proximity to both Schenectady and the Schoharie Valley creates flexibility for residents.",
+    civicKeywords: ["Esperance town hall", "Esperance property taxes", "Esperance building permits", "Esperance zoning", "Esperance schools"],
+    lifestyleKeywords: ["Schoharie Creek Esperance", "rural Esperance", "agricultural land", "commutable rural", "peaceful living"],
+    internalLinks: [
+      { label: "See all Schoharie County Spotlights", path: "/intelligence/schoharie-county" },
+      { label: "Esperance properties", path: "/homes/esperance" },
+      { label: "Land investment guide", path: "/investment-properties" }
+    ],
+    focusKeywords: ["Esperance NY homes for sale", "living in Esperance NY", "Esperance land for sale", "Schoharie County acreage", "affordable rural NY"]
   },
 
   // ========== ADDITIONAL TOWNS ==========
