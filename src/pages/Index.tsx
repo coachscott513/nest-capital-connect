@@ -161,7 +161,7 @@ const Index = () => {
                   Cash-Flow, Multi-Unit & Return Analysis
                 </h3>
                 <p className="text-muted-foreground body-airy text-lg">
-                  Advanced tools for serious investors. Cap rates, cash flow projections, and market reports.
+                  Professional tools for serious investors. Rent potential, cash flow projections, and market reports.
                 </p>
               </div>
               <Link 

@@ -618,7 +618,7 @@ const AppleTownTemplate = ({
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-muted-foreground">Gross Rent: {asset.gross_rent}</span>
                       <span className="text-sm font-semibold text-primary flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        View Underwriting <ArrowRight className="w-4 h-4" />
+                        View Numbers <ArrowRight className="w-4 h-4" />
                       </span>
                     </div>
                   </Link>
@@ -738,13 +738,13 @@ const AppleTownTemplate = ({
         </div>
       </section>
 
-      {/* UNDERWRITE BRIDGE - Institutional Transition */}
+      {/* THE NUMBERS BRIDGE - Professional Transition */}
       <section className="py-20 px-[5%] bg-background relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           {/* The Bridge Visual */}
           <div className="flex flex-col items-center mb-16">
             <div className="w-px h-16 bg-gradient-to-b from-transparent via-primary to-primary" />
-            <p className="text-sm font-extralight tracking-[0.4em] text-primary my-6">UNDERWRITE</p>
+            <p className="text-sm font-extralight tracking-[0.4em] text-primary my-6">THE NUMBERS</p>
             <div className="w-px h-16 bg-gradient-to-b from-primary via-primary to-transparent" />
           </div>
 
@@ -766,7 +766,7 @@ const AppleTownTemplate = ({
                 <div className="flex items-center gap-3">
                   <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${marketColor}`}>
                     <TrendingUp className="w-4 h-4" />
-                    Market Intel: {marketScore}
+                    Market Status: {marketScore}
                   </div>
                   <span className="text-xs text-muted-foreground">
                     {ppsfDiff > 0 ? '+' : ''}{ppsfDiff.toFixed(0)}% vs Regional Avg
@@ -1175,12 +1175,12 @@ const AppleTownTemplate = ({
                       className="flex flex-col items-center gap-3 p-6 glass-strong rounded-2xl border border-primary/30 hover:border-primary/60 transition-colors group"
                     >
                       <Lock className="w-8 h-8 text-primary" />
-                      <span className="text-lg font-semibold text-foreground">Owner: Verify to Unlock Narrative</span>
+                      <span className="text-lg font-semibold text-foreground">Owner: Claim Your Story</span>
                       <span className="text-sm text-muted-foreground text-center max-w-xs">
-                        This listing is in Community Preview mode. Verify your business to publish your story.
+                        This listing is in Community Preview mode. Join our community to publish your story.
                       </span>
                       <span className="text-sm font-semibold text-primary group-hover:underline">
-                        Request Verification →
+                        Get Started →
                       </span>
                     </button>
                   </div>

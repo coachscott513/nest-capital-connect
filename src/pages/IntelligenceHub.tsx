@@ -102,8 +102,8 @@ const IntelligenceHub = () => {
   const intelligenceTiles = [
     {
       icon: FileText,
-      title: "Sample Intelligence Report",
-      description: "See a full 36% yield underwriting analysis. This is the 'Big Time' data depth that justifies premium partnerships.",
+      title: "Sample Property Report",
+      description: "See a full property analysis with rent potential and profit trends. This is the depth that helps you make confident decisions.",
       link: "/reports/sample-property-intelligence",
       cta: "View Sample Report",
       highlight: true,
@@ -111,8 +111,8 @@ const IntelligenceHub = () => {
     },
     {
       icon: BookOpen,
-      title: "Investor Guides",
-      description: "PDF resources covering all 5 counties in the Capital District. Market trends, cap rates, and neighborhood breakdowns.",
+      title: "Buyer & Investor Guides",
+      description: "PDF resources covering all 5 counties in the Capital District. Market trends, neighborhood insights, and helpful breakdowns.",
       link: "/investor-tools",
       cta: "Browse Guides",
       isLink: true
@@ -120,15 +120,15 @@ const IntelligenceHub = () => {
     {
       icon: Home,
       title: "First-Time Buyer Help",
-      description: "Specialized data for entry-level home seekers. School districts, commute times, and 'Nest Score' rankings.",
+      description: "Specialized resources for entry-level home seekers. School districts, commute times, and 'Nest Score' rankings.",
       link: "/first-time-buyers",
       cta: "Get Started",
       isLink: true
     },
     {
       icon: Send,
-      title: "Request Precision Underwrite",
-      description: "Submit any address in the Capital District. We'll deliver a full intelligence report within 24 hours.",
+      title: "Request a Property Report",
+      description: "Submit any address in the Capital District. We'll deliver a full report within 24 hours.",
       cta: "Request Report",
       isLink: false,
       onClick: () => openUnderwriteModal()
@@ -145,8 +145,8 @@ const IntelligenceHub = () => {
   return (
     <>
       <Helmet>
-        <title>Intelligence Hub | Capital District Nest</title>
-        <meta name="description" content="Access institutional-grade real estate intelligence for the Capital District. Sample reports, investor guides, and due diligence tools." />
+        <title>Resource Hub | Capital District Nest</title>
+        <meta name="description" content="Access expert-level real estate resources for the Capital District. Sample reports, buyer guides, and property analysis tools." />
       </Helmet>
 
       <CleanHeader />
@@ -159,16 +159,16 @@ const IntelligenceHub = () => {
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <p className="text-[11px] uppercase tracking-[0.5em] text-primary font-medium mb-6">
-                Institutional Intelligence
+                Expert Insights
               </p>
               <h1 className="text-4xl md:text-6xl font-[200] tracking-tight text-foreground mb-6">
-                Due Diligence.
+                Property Insights.
                 <br />
-                <span className="text-primary">Delivered.</span>
+                <span className="text-primary">Simplified.</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto mb-12">
-                Access the same data-driven insights used by institutional investors. 
-                Every property. Every town. Every metric that matters.
+                Access the same helpful resources used by smart buyers and investors. 
+                Every property. Every town. Clear answers when you need them.
               </p>
 
               {/* Due Diligence Search Bar */}
@@ -293,7 +293,7 @@ const IntelligenceHub = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-2xl md:text-3xl font-[200] text-foreground mb-12">
-                Why Institutional Investors Choose Us
+                Why Smart Buyers Choose Us
               </h2>
               
               <div className="grid md:grid-cols-3 gap-8">
@@ -301,9 +301,9 @@ const IntelligenceHub = () => {
                   <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                     <TrendingUp className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="font-medium text-foreground mb-2">Yield Analysis</h3>
+                  <h3 className="font-medium text-foreground mb-2">Profit Analysis</h3>
                   <p className="text-sm text-muted-foreground">
-                    Cap rates, cash-on-cash returns, and rent-to-price ratios for every property.
+                    Rent potential, cash flow trends, and return projections for every property.
                   </p>
                 </div>
                 
@@ -321,9 +321,9 @@ const IntelligenceHub = () => {
                   <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
                     <MapPin className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="font-medium text-foreground mb-2">Local Intel</h3>
+                  <h3 className="font-medium text-foreground mb-2">Local Insider</h3>
                   <p className="text-sm text-muted-foreground">
-                    Neighborhood trends, school ratings, and development pipeline data.
+                    Area trends, school ratings, and development pipeline data.
                   </p>
                 </div>
               </div>
@@ -350,22 +350,22 @@ const IntelligenceHub = () => {
                 className="rounded-full px-10"
                 onClick={() => openUnderwriteModal()}
               >
-                Request Precision Underwrite
+                Request a Property Report
               </Button>
             </div>
           </div>
         </section>
       </main>
 
-      {/* Precision Underwrite Modal */}
+      {/* Property Report Modal */}
       <Dialog open={underwriteModalOpen} onOpenChange={setUnderwriteModalOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="text-xl font-[200] tracking-wide">
-              Request Precision Underwrite
+              Request a Property Report
             </DialogTitle>
             <DialogDescription>
-              Submit any Capital District address. We'll deliver a full intelligence report within 24 hours.
+              Submit any Capital District address. We'll deliver a full property report within 24 hours.
             </DialogDescription>
           </DialogHeader>
           

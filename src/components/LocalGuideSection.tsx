@@ -361,7 +361,7 @@ const LocalGuideSection = ({ townName, townSlug, categories }: LocalGuideSection
             <Button variant="outline" asChild>
               <Link to={`/claim-business?town=${townSlug}`}>
                 <CheckCircle className="w-4 h-4 mr-2" />
-                Verify Your Business
+                Join Our Community
               </Link>
             </Button>
           </div>

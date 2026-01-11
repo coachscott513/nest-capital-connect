@@ -112,14 +112,14 @@ const DealDesk = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/20 to-transparent" />
           <div className="container mx-auto max-w-5xl relative z-10">
             <p className="text-emerald-400 font-medium tracking-wider uppercase text-sm mb-4">
-              Wall Street Tools. Main Street Soul.
+              Expert Tools. Friendly Service.
             </p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               Paste any address.<br />
-              <span className="text-emerald-400">Get a same-day Investor Snapshot.</span>
+              <span className="text-emerald-400">See if the numbers work.</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-400 mb-8 max-w-2xl">
-              Investor intelligence by Capital District Nest. NY focus, nationwide available.
+              Property insights by Capital District Nest. NY focus, nationwide available.
             </p>
             <Button 
               onClick={scrollToForm}

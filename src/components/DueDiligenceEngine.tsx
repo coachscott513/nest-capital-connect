@@ -47,7 +47,7 @@ const DueDiligenceEngine = () => {
 
         {/* Performance highlight */}
         <p className="text-primary font-semibold text-base md:text-lg mb-8 max-w-2xl mx-auto">
-          Albany is one of the few Northeast markets where investors can achieve 10–14% cap rates and 15–30% cash-on-cash returns.
+          Albany is one of the few Northeast markets where investors can achieve strong rent potential and solid profit trends.
         </p>
 
         {/* Search Bar - Always Green Border, Larger Size */}
@@ -119,10 +119,10 @@ const DueDiligenceEngine = () => {
           <h3 className="text-lg font-bold text-foreground mb-4">What You'll Get in Your Free Investor-Style Report</h3>
           <ul className="space-y-2 text-muted-foreground text-sm md:text-base">
             <li>✓ Cash Flow Breakdown (rents, expenses, taxes, insurance)</li>
-            <li>✓ Cap Rate & Cash-on-Cash Returns</li>
+            <li>✓ Rent Potential & Profit Trends</li>
             <li>✓ Rent Roll & Market Rent Estimates</li>
             <li>✓ 5-Year Projection Chart</li>
-            <li>✓ Neighborhood Snapshot</li>
+            <li>✓ Area Snapshot</li>
             <li>✓ Red Flags & Opportunities</li>
             <li>✓ Simple summary you can actually use to make a decision</li>
           </ul>

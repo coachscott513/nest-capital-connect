@@ -376,7 +376,7 @@ const CleanHeader = () => {
                           onClick={closeDropdowns}
                           className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-muted/50 rounded-md transition-colors"
                         >
-                          <span>Verify Your Business</span>
+                          <span>Join Our Community</span>
                         </Link>
                       </div>
                     </Dropdown>
@@ -501,7 +501,7 @@ const CleanHeader = () => {
                 Browse All Town Guides
               </Link>
               <Link to="/claim-business" onClick={closeMobileMenu} className="block text-muted-foreground hover:text-primary">
-                Verify Your Business
+                Join Our Community
               </Link>
             </div>
           </div>
