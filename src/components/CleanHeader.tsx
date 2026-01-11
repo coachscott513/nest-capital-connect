@@ -56,6 +56,10 @@ const navItems = [
     dropdown: "towns",
   },
   {
+    label: "Regional Intel",
+    dropdown: "regional",
+  },
+  {
     label: "Guide",
     dropdown: "guide",
   },
