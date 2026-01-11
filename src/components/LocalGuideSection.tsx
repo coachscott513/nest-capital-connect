@@ -14,7 +14,8 @@ import {
   Instagram,
   Facebook,
   Star,
-  Sparkles
+  Sparkles,
+  CheckCircle
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -162,20 +163,14 @@ const BusinessCard = ({
               </div>
             )}
 
-            {/* Upgrade CTA for Standard listings */}
-            <div className="mt-3 pt-3 border-t border-border flex items-center justify-between">
+            {/* Verification CTA for listings */}
+            <div className="mt-3 pt-3 border-t border-border">
               <Link 
                 to={`/claim-business?town=${townSlug}&category=${categoryId}&name=${encodeURIComponent(business.name)}`}
-                className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
               >
-                Claim / Edit
-              </Link>
-              <Link 
-                to={`/claim-business?town=${townSlug}&category=${categoryId}&name=${encodeURIComponent(business.name)}&upgrade=true`}
-                className="text-xs text-[#00F5FF] hover:text-[#00F5FF]/80 transition-colors flex items-center gap-1"
-              >
-                <Sparkles className="w-3 h-3" />
-                Partner Tier — $49/mo
+                <CheckCircle className="w-3 h-3" />
+                Verify or Edit Details
               </Link>
             </div>
           </>
@@ -365,16 +360,8 @@ const LocalGuideSection = ({ townName, townSlug, categories }: LocalGuideSection
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button variant="outline" asChild>
               <Link to={`/claim-business?town=${townSlug}`}>
-                Add Your Business (Free)
-              </Link>
-            </Button>
-            <Button 
-              className="bg-[#00F5FF] hover:bg-[#00F5FF]/90 text-black font-semibold"
-              asChild
-            >
-              <Link to={`/claim-business?town=${townSlug}&upgrade=true`}>
-                <Star className="w-4 h-4 mr-2 fill-current" />
-                Become a Local Partner — $49/mo
+                <CheckCircle className="w-4 h-4 mr-2" />
+                Verify Your Business
               </Link>
             </Button>
           </div>
