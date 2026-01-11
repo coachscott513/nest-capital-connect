@@ -2,34 +2,143 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail } from 'lucide-react';
 
+// Complete town directory for SEO - 11 Counties
+const townDirectory = {
+  "Albany County": [
+    { name: "Albany", slug: "albany" },
+    { name: "Altamont", slug: "altamont" },
+    { name: "Cohoes", slug: "cohoes" },
+    { name: "Colonie", slug: "colonie" },
+    { name: "Delmar", slug: "delmar" },
+    { name: "Green Island", slug: "green-island" },
+    { name: "Guilderland", slug: "guilderland" },
+    { name: "Latham", slug: "latham" },
+    { name: "Loudonville", slug: "loudonville" },
+    { name: "Menands", slug: "menands" },
+    { name: "Ravena", slug: "ravena" },
+    { name: "Voorheesville", slug: "voorheesville" },
+    { name: "Watervliet", slug: "watervliet" },
+  ],
+  "Schenectady County": [
+    { name: "Niskayuna", slug: "niskayuna" },
+    { name: "Rotterdam", slug: "rotterdam" },
+    { name: "Schenectady", slug: "schenectady" },
+  ],
+  "Rensselaer County": [
+    { name: "Averill Park", slug: "averill-park" },
+    { name: "Brunswick", slug: "brunswick" },
+    { name: "East Greenbush", slug: "east-greenbush" },
+    { name: "North Greenbush", slug: "north-greenbush" },
+    { name: "Rensselaer", slug: "rensselaer" },
+    { name: "Schaghticoke", slug: "schaghticoke" },
+    { name: "Troy", slug: "troy" },
+    { name: "Wynantskill", slug: "wynantskill" },
+  ],
+  "Saratoga County": [
+    { name: "Ballston Spa", slug: "ballston-spa" },
+    { name: "Clifton Park", slug: "clifton-park" },
+    { name: "Halfmoon", slug: "halfmoon" },
+    { name: "Malta", slug: "malta" },
+    { name: "Mechanicville", slug: "mechanicville" },
+    { name: "Saratoga Springs", slug: "saratoga-springs" },
+    { name: "Stillwater", slug: "stillwater" },
+    { name: "Waterford", slug: "waterford" },
+    { name: "Wilton", slug: "wilton" },
+  ],
+  "Warren County": [
+    { name: "Glens Falls", slug: "glens-falls" },
+    { name: "Lake George", slug: "lake-george" },
+    { name: "Queensbury", slug: "queensbury" },
+  ],
+  "Washington County": [
+    { name: "Cambridge", slug: "cambridge" },
+    { name: "Greenwich", slug: "greenwich" },
+    { name: "Hudson Falls", slug: "hudson-falls" },
+  ],
+  "Fulton County": [
+    { name: "Gloversville", slug: "gloversville" },
+    { name: "Johnstown", slug: "johnstown" },
+    { name: "Northville", slug: "northville" },
+  ],
+  "Montgomery County": [
+    { name: "Amsterdam", slug: "amsterdam" },
+    { name: "Canajoharie", slug: "canajoharie" },
+    { name: "Fonda", slug: "fonda" },
+  ],
+  "Greene County": [
+    { name: "Athens", slug: "athens" },
+    { name: "Catskill", slug: "catskill" },
+    { name: "Coxsackie", slug: "coxsackie" },
+    { name: "Hunter", slug: "hunter" },
+    { name: "Windham", slug: "windham" },
+  ],
+  "Schoharie County": [
+    { name: "Cobleskill", slug: "cobleskill" },
+    { name: "Middleburgh", slug: "middleburgh" },
+    { name: "Schoharie", slug: "schoharie" },
+    { name: "Sharon Springs", slug: "sharon-springs" },
+  ],
+};
+
 const Footer = () => {
   return (
-    <footer className="bg-[#F5F5F7] border-t border-gray-200">
+    <footer className="bg-[#F5F5F7] border-t border-border">
+      {/* Town Directory for SEO */}
+      <div className="max-w-7xl mx-auto px-6 py-12 border-b border-border">
+        <h3 className="text-sm font-semibold text-foreground mb-6 uppercase tracking-wide">
+          Real Estate by County
+        </h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {Object.entries(townDirectory).map(([county, towns]) => (
+            <div key={county}>
+              <h4 className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wide">
+                {county}
+              </h4>
+              <ul className="space-y-1">
+                {towns.map((town) => (
+                  <li key={town.slug}>
+                    <Link
+                      to={`/towns/${town.slug}`}
+                      className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {town.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-muted-foreground mt-6">
+          Serving 52+ towns across the Capital District, Catskill Mountains, and beyond.
+        </p>
+      </div>
+
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Column 1: Brand */}
           <div>
-            <h3 className="text-xl font-bold text-[#1D1D1F] mb-3">Capital District Nest</h3>
-            <p className="text-[#6E6E73] text-sm">
+            <h3 className="text-xl font-bold text-foreground mb-3">Capital District Nest</h3>
+            <p className="text-muted-foreground text-sm">
               Modern Real Estate for the Capital District & Boston.
             </p>
           </div>
 
           {/* Column 2: Contact */}
           <div>
-            <h4 className="text-sm font-semibold text-[#1D1D1F] mb-4 uppercase tracking-wide">Contact</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">Contact</h4>
             <div className="space-y-3">
               <a 
                 href="tel:+15186762347" 
-                className="flex items-center gap-2 text-[#6E6E73] hover:text-primary transition-colors text-sm"
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 <Phone className="h-4 w-4" />
                 (518) 676-2347
               </a>
               <a 
                 href="mailto:scott@capitaldistrictnest.com" 
-                className="flex items-center gap-2 text-[#6E6E73] hover:text-primary transition-colors text-sm"
+                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm"
               >
                 <Mail className="h-4 w-4" />
                 scott@capitaldistrictnest.com
@@ -39,12 +148,12 @@ const Footer = () => {
 
           {/* Column 3: Resources */}
           <div>
-            <h4 className="text-sm font-semibold text-[#1D1D1F] mb-4 uppercase tracking-wide">Resources</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">Resources</h4>
             <ul className="space-y-2">
               <li>
                 <Link 
                   to="/intel/1999-ridge-road-queensbury-ny" 
-                  className="text-[#6E6E73] hover:text-primary transition-colors text-sm"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   Sample Intelligence Report
                 </Link>
@@ -52,7 +161,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/investor/nyc-to-albany-roi" 
-                  className="text-[#6E6E73] hover:text-primary transition-colors text-sm"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   Investor Guides
                 </Link>
@@ -60,7 +169,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/first-time-homebuyers" 
-                  className="text-[#6E6E73] hover:text-primary transition-colors text-sm"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   First-Time Buyer Help
                 </Link>
@@ -68,7 +177,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/dealdesk" 
-                  className="text-[#6E6E73] hover:text-primary transition-colors text-sm"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   Request Property Report
                 </Link>
@@ -76,7 +185,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/site-index" 
-                  className="text-[#6E6E73] hover:text-primary transition-colors text-sm"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   Full Site Index
                 </Link>
@@ -86,14 +195,14 @@ const Footer = () => {
 
           {/* Column 4: Legal Links */}
           <div>
-            <h4 className="text-sm font-semibold text-[#1D1D1F] mb-4 uppercase tracking-wide">Legal</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wide">Legal</h4>
             <ul className="space-y-2">
               <li>
                 <a 
                   href="https://dos.ny.gov/system/files/documents/2021/08/fairhousingnotice.pdf" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-[#6E6E73] hover:text-primary transition-colors text-sm"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   NY Fair Housing Notice
                 </a>
@@ -103,7 +212,7 @@ const Footer = () => {
                   href="https://dos.ny.gov/system/files/documents/2021/08/standardizedoperatingprocedures.pdf" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-[#6E6E73] hover:text-primary transition-colors text-sm"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   Standard Operating Procedures
                 </a>
@@ -111,7 +220,7 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/privacy-policy" 
-                  className="text-[#6E6E73] hover:text-primary transition-colors text-sm"
+                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
                 >
                   Privacy Policy
                 </Link>
@@ -122,9 +231,9 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar: Disclaimer */}
-      <div className="border-t border-gray-200 bg-white">
+      <div className="border-t border-border bg-background">
         <div className="max-w-7xl mx-auto px-6 py-4">
-          <p className="text-xs text-[#6E6E73] text-center leading-relaxed">
+          <p className="text-xs text-muted-foreground text-center leading-relaxed">
             © {new Date().getFullYear()} Capital District Nest. Scott Alvarez is a Licensed Real Estate Salesperson. 
             Capital District Nest is a team name. Each RE/MAX® Office is Independently Owned and Operated. 
             Equal Housing Opportunity.

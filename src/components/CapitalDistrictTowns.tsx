@@ -370,6 +370,92 @@ export const capitalDistrictTowns: TownData[] = [
     description: "Rural town with Ballston Lake",
     keywords: ["Milton NY real estate"],
     priority: "low"
+  },
+
+  // Greene County - Catskill Mountains Gateway
+  {
+    name: "Catskill",
+    county: "Greene",
+    slug: "catskill",
+    type: "village",
+    description: "Historic village and gateway to the Catskill Mountains",
+    keywords: ["Catskill NY real estate", "Catskill homes for sale", "Catskill investment properties"],
+    neighborhoods: ["Catskill Village", "Leeds", "Palenville"],
+    priority: "high"
+  },
+  {
+    name: "Coxsackie",
+    county: "Greene",
+    slug: "coxsackie",
+    type: "village",
+    description: "Riverfront village on the Hudson with strong investment potential",
+    keywords: ["Coxsackie NY real estate", "Coxsackie homes for sale"],
+    priority: "high"
+  },
+  {
+    name: "Windham",
+    county: "Greene",
+    slug: "windham",
+    type: "town",
+    description: "Ski resort town in the Catskill Mountains",
+    keywords: ["Windham NY real estate", "Windham ski properties", "Windham vacation homes"],
+    priority: "medium"
+  },
+  {
+    name: "Hunter",
+    county: "Greene",
+    slug: "hunter",
+    type: "town",
+    description: "Mountain town home to Hunter Mountain ski resort",
+    keywords: ["Hunter NY real estate", "Hunter Mountain homes", "Hunter vacation properties"],
+    priority: "medium"
+  },
+  {
+    name: "Athens",
+    county: "Greene",
+    slug: "athens",
+    type: "village",
+    description: "Historic Hudson River village with lighthouse views",
+    keywords: ["Athens NY real estate", "Athens Hudson River homes"],
+    priority: "medium"
+  },
+
+  // Schoharie County - Rural Investment Corridor
+  {
+    name: "Schoharie",
+    county: "Schoharie",
+    slug: "schoharie",
+    type: "village",
+    description: "County seat with historic Old Stone Fort and agricultural heritage",
+    keywords: ["Schoharie NY real estate", "Schoharie homes for sale"],
+    priority: "high"
+  },
+  {
+    name: "Cobleskill",
+    county: "Schoharie",
+    slug: "cobleskill",
+    type: "village",
+    description: "College town home to SUNY Cobleskill with student housing demand",
+    keywords: ["Cobleskill NY real estate", "Cobleskill student housing", "SUNY Cobleskill rentals"],
+    priority: "high"
+  },
+  {
+    name: "Middleburgh",
+    county: "Schoharie",
+    slug: "middleburgh",
+    type: "village",
+    description: "Schoharie Valley village with affordable rural properties",
+    keywords: ["Middleburgh NY real estate", "Middleburgh homes for sale"],
+    priority: "medium"
+  },
+  {
+    name: "Sharon Springs",
+    county: "Schoharie",
+    slug: "sharon-springs",
+    type: "village",
+    description: "Historic spa village experiencing revitalization",
+    keywords: ["Sharon Springs NY real estate", "Sharon Springs historic homes"],
+    priority: "medium"
   }
 ];
 

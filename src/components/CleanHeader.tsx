@@ -3,19 +3,28 @@ import { Link } from "react-router-dom";
 import { ChevronDown, Phone, Search, X, Menu } from "lucide-react";
 import cdnLogo from "@/assets/cdn-logo.png";
 
-// Town data - All Capital District + Expansion Counties
+// Town data - All 11 Counties: Albany, Schenectady, Rensselaer, Saratoga, 
+// Washington, Warren, Fulton, Montgomery, Greene, Schoharie + Boston Expansion
 const towns = [
   { name: "Albany", slug: "albany" },
   { name: "Altamont", slug: "altamont" },
   { name: "Amsterdam", slug: "amsterdam" },
+  // Greene County
+  { name: "Athens", slug: "athens" },
   { name: "Averill Park", slug: "averill-park" },
   { name: "Ballston Spa", slug: "ballston-spa" },
   { name: "Brunswick", slug: "brunswick" },
   { name: "Cambridge", slug: "cambridge" },
   { name: "Canajoharie", slug: "canajoharie" },
+  // Greene County
+  { name: "Catskill", slug: "catskill" },
   { name: "Clifton Park", slug: "clifton-park" },
+  // Schoharie County
+  { name: "Cobleskill", slug: "cobleskill" },
   { name: "Cohoes", slug: "cohoes" },
   { name: "Colonie", slug: "colonie" },
+  // Greene County
+  { name: "Coxsackie", slug: "coxsackie" },
   { name: "Delmar", slug: "delmar" },
   { name: "East Greenbush", slug: "east-greenbush" },
   { name: "Fonda", slug: "fonda" },
@@ -25,6 +34,8 @@ const towns = [
   { name: "Greenwich", slug: "greenwich" },
   { name: "Guilderland", slug: "guilderland" },
   { name: "Hudson Falls", slug: "hudson-falls" },
+  // Greene County
+  { name: "Hunter", slug: "hunter" },
   { name: "Johnstown", slug: "johnstown" },
   { name: "Lake George", slug: "lake-george" },
   { name: "Latham", slug: "latham" },
@@ -32,6 +43,8 @@ const towns = [
   { name: "Malta", slug: "malta" },
   { name: "Mechanicville", slug: "mechanicville" },
   { name: "Menands", slug: "menands" },
+  // Schoharie County
+  { name: "Middleburgh", slug: "middleburgh" },
   { name: "Niskayuna", slug: "niskayuna" },
   { name: "North Greenbush", slug: "north-greenbush" },
   { name: "Northville", slug: "northville" },
@@ -41,11 +54,17 @@ const towns = [
   { name: "Saratoga Springs", slug: "saratoga-springs" },
   { name: "Schaghticoke", slug: "schaghticoke" },
   { name: "Schenectady", slug: "schenectady" },
+  // Schoharie County
+  { name: "Schoharie", slug: "schoharie" },
+  // Schoharie County
+  { name: "Sharon Springs", slug: "sharon-springs" },
   { name: "Stillwater", slug: "stillwater" },
   { name: "Troy", slug: "troy" },
   { name: "Voorheesville", slug: "voorheesville" },
   { name: "Waterford", slug: "waterford" },
   { name: "Watervliet", slug: "watervliet" },
+  // Greene County
+  { name: "Windham", slug: "windham" },
   { name: "Wynantskill", slug: "wynantskill" },
 ].sort((a, b) => a.name.localeCompare(b.name));
 
