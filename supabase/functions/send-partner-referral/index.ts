@@ -52,9 +52,10 @@ const handler = async (req: Request): Promise<Response> => {
       .eq("id", partnerId)
       .single();
 
-    const businessName = partner?.local_voices?.business_name || "Unknown Business";
-    const ownerName = partner?.local_voices?.owner_name || "Unknown Owner";
-    const townSlug = partner?.local_voices?.town_slug || "unknown";
+    const localVoice = partner?.local_voices?.[0];
+    const businessName = localVoice?.business_name || "Unknown Business";
+    const ownerName = localVoice?.owner_name || "Unknown Owner";
+    const townSlug = localVoice?.town_slug || "unknown";
 
     // Send email to Scott via Resend API
     const emailResponse = await fetch("https://api.resend.com/emails", {
