@@ -682,24 +682,20 @@ const AppleTownTemplate = ({
                       onClick={() => setSelectedVoice(businessVoice)}
                       className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
                     >
-                      {/* Teal Glow Border with BLURRED photo */}
+                      {/* Teal Glow Border - exact homepage styling */}
                       <div className="relative spotlight">
                         <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
                           <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
                             <img
                               src={business.logo}
                               alt={business.name}
-                              className="w-full h-full rounded-full object-cover filter blur-[4px] group-hover:blur-[3px] transition-all"
+                              className="w-full h-full rounded-full object-cover"
                             />
                           </div>
                         </div>
-                        {/* Lock overlay on blurred image */}
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <Lock className="w-6 h-6 text-primary/80" />
-                        </div>
                         {/* Verified Badge - exact homepage styling */}
                         <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
-                          Verify
+                          Verified
                         </div>
                       </div>
                       
