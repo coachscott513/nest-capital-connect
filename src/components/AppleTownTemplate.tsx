@@ -90,6 +90,52 @@ interface AppleTownTemplateProps {
   heroImage?: string;
 }
 
+// Featured regional businesses for fallback display - matches homepage BusinessSpotlight
+const FEATURED_REGIONAL_BUSINESSES = [
+  {
+    id: "1",
+    name: "Saratoga Coffee Traders",
+    logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80",
+    town: "Saratoga Springs"
+  },
+  {
+    id: "2",
+    name: "Delmar Fitness Studio",
+    logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80",
+    town: "Delmar"
+  },
+  {
+    id: "3",
+    name: "Troy Brewing Co.",
+    logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80",
+    town: "Troy"
+  },
+  {
+    id: "4",
+    name: "Clifton Park Veterinary",
+    logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80",
+    town: "Clifton Park"
+  },
+  {
+    id: "5",
+    name: "Albany Tech Hub",
+    logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80",
+    town: "Albany"
+  },
+  {
+    id: "6",
+    name: "Niskayuna Gardens",
+    logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80",
+    town: "Niskayuna"
+  },
+  {
+    id: "7",
+    name: "Schenectady Provisions",
+    logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80",
+    town: "Schenectady"
+  }
+];
+
 const AppleTownTemplate = ({
   townSlug,
   townName,
@@ -198,6 +244,7 @@ const AppleTownTemplate = ({
       default: return Newspaper;
     }
   };
+
 
 
   return (
@@ -493,8 +540,8 @@ const AppleTownTemplate = ({
         </section>
       </IntelligenceGatekeeper>
 
-      {/* LOCAL PARTNERS - Infinity Scroll with Blurred Stories & Coming Soon Placeholders */}
-      <section className="section-massive px-[2%] lg:px-[3%] bg-card overflow-hidden">
+      {/* LOCAL PARTNERS - Matches Homepage BusinessSpotlight Styling */}
+      <section className="section-massive px-[2%] lg:px-[3%] bg-background overflow-hidden">
         <div className="w-full">
           <div className="text-center mb-12 md:mb-16 px-[3%]">
             <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Local Partners</p>
@@ -517,21 +564,21 @@ const AppleTownTemplate = ({
             </div>
           ) : (
             <div className="relative">
-              {/* Fade edges */}
-              <div className="absolute left-0 top-0 bottom-6 w-24 bg-gradient-to-r from-card to-transparent pointer-events-none z-10" />
-              <div className="absolute right-0 top-0 bottom-6 w-24 bg-gradient-to-l from-card to-transparent pointer-events-none z-10" />
+              {/* Fade edges - matches homepage */}
+              <div className="absolute left-0 top-0 bottom-8 w-24 bg-gradient-to-r from-background to-transparent pointer-events-none z-10" />
+              <div className="absolute right-0 top-0 bottom-8 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
               
-              <div className="flex gap-8 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
-                {/* Render actual local voices */}
+              <div className="flex gap-8 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory justify-center">
+                {/* Render local voices with homepage-matching styling */}
                 {localVoices.map((voice) => (
                   <button
                     key={voice.id}
                     onClick={() => setSelectedVoice(voice)}
-                    className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group spotlight"
+                    className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
                   >
-                    {/* Teal Glow Border */}
-                    <div className="relative">
-                      <div className={`w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br ${voice.is_verified ? 'from-primary to-primary/60 glow-primary' : 'from-muted to-muted/60'} group-hover:scale-105 transition-transform duration-300`}>
+                    {/* Teal Glow Border - exact homepage styling */}
+                    <div className="relative spotlight">
+                      <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
                         <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
                           <img
                             src={voice.owner_photo_url || voice.business_logo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(voice.owner_name)}&background=00F5FF&color=0B0B0B`}
@@ -540,56 +587,49 @@ const AppleTownTemplate = ({
                           />
                         </div>
                       </div>
-                      {voice.is_verified ? (
-                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
-                          Verified
-                        </div>
-                      ) : (
-                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-muted text-muted-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
-                          Preview
-                        </div>
-                      )}
+                      {/* Verified Badge - exact homepage styling */}
+                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+                        Verified
+                      </div>
                     </div>
                     
-                    <div className="text-center">
-                      <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors block max-w-[120px] leading-tight">
-                        {voice.business_name}
-                      </span>
-                      <span className="text-xs text-muted-foreground block max-w-[120px] truncate">
-                        {voice.owner_name}
-                      </span>
-                    </div>
+                    <span className="text-sm font-medium text-foreground text-center max-w-[120px] leading-tight group-hover:text-primary transition-colors">
+                      {voice.business_name}
+                    </span>
                   </button>
                 ))}
                 
-              {/* Coming Soon Placeholders - Fill to 7 for town pages */}
-                {localVoices.length < 7 && Array.from({ length: 7 - localVoices.length }).map((_, index) => (
-                  <button
-                    key={`placeholder-${index}`}
-                    onClick={() => setGatekeeperOpen(true)}
-                    className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
-                  >
-                    <div className="relative">
-                      <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-border to-border/40 group-hover:from-primary/40 group-hover:to-primary/20 transition-colors duration-300">
-                        <div className="w-full h-full rounded-full bg-card flex items-center justify-center">
-                          <Store className="w-10 h-10 text-muted-foreground/40 group-hover:text-primary/60 transition-colors" />
+                {/* Featured regional businesses as fallback - matching homepage styling exactly */}
+                {localVoices.length < 7 && FEATURED_REGIONAL_BUSINESSES
+                  .slice(0, 7 - localVoices.length)
+                  .map((business) => (
+                    <button
+                      key={business.id}
+                      onClick={() => setGatekeeperOpen(true)}
+                      className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
+                    >
+                      {/* Teal Glow Border */}
+                      <div className="relative spotlight">
+                        <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
+                          <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
+                            <img
+                              src={business.logo}
+                              alt={business.name}
+                              className="w-full h-full rounded-full object-cover"
+                            />
+                          </div>
+                        </div>
+                        {/* Verified Badge */}
+                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+                          Verified
                         </div>
                       </div>
-                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-muted text-muted-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
-                        Coming Soon
-                      </div>
-                    </div>
-                    
-                    <div className="text-center">
-                      <span className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors block">
-                        Verify Your Business
+                      
+                      <span className="text-sm font-medium text-foreground text-center max-w-[120px] leading-tight group-hover:text-primary transition-colors">
+                        {business.name}
                       </span>
-                      <span className="text-xs text-muted-foreground/60 block">
-                        {townName}
-                      </span>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  ))}
               </div>
             </div>
           )}
