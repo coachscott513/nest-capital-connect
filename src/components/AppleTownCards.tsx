@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Store } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 
 interface TownCardData {
   name: string;
@@ -13,86 +11,92 @@ interface TownCardData {
   image: string;
 }
 
-// Fallback descriptions for towns
-const townDescriptions: Record<string, string> = {
-  "clifton-park": "Growing suburb, family-friendly",
-  "saratoga-springs": "Racing, culture, upscale living",
-  "delmar": "Bethlehem Central Schools",
-  "albany": "Capital City, diverse neighborhoods",
-  "niskayuna": "Top-rated schools",
-  "troy": "Historic charm, RPI proximity",
-  "schenectady": "Revitalizing downtown",
-  "guilderland": "Top schools, Crossgates area",
-  "queensbury": "Lake George gateway",
-};
-
-// Fallback image for towns without hero_landmark
-const defaultImage = "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80";
+// Curated featured towns with proper images
+const townHubs: TownCardData[] = [
+  {
+    name: "Clifton Park",
+    slug: "clifton-park",
+    href: "/clifton-park-intelligence",
+    description: "Growing suburb, family-friendly",
+    nestScore: 92,
+    businessCount: 12,
+    image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Saratoga Springs",
+    slug: "saratoga-springs",
+    href: "/saratoga-homes-for-sale",
+    description: "Racing, culture, upscale living",
+    nestScore: 94,
+    businessCount: 8,
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Delmar",
+    slug: "delmar",
+    href: "/delmar-homes-for-sale",
+    description: "Bethlehem Central Schools",
+    nestScore: 91,
+    businessCount: 6,
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Albany",
+    slug: "albany",
+    href: "/albany-homes-for-sale",
+    description: "Capital City, diverse neighborhoods",
+    nestScore: 88,
+    businessCount: 15,
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Niskayuna",
+    slug: "niskayuna",
+    href: "/niskayuna-homes-for-sale",
+    description: "Top-rated schools",
+    nestScore: 93,
+    businessCount: 4,
+    image: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Troy",
+    slug: "troy",
+    href: "/troy-homes-for-sale",
+    description: "Historic charm, RPI proximity",
+    nestScore: 87,
+    businessCount: 10,
+    image: "https://images.unsplash.com/photo-1524333865981-372076044719?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Schenectady",
+    slug: "schenectady",
+    href: "/schenectady-homes-for-sale",
+    description: "Revitalizing downtown",
+    nestScore: 85,
+    businessCount: 9,
+    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Guilderland",
+    slug: "guilderland",
+    href: "/towns/guilderland",
+    description: "Top schools, Crossgates area",
+    nestScore: 90,
+    businessCount: 5,
+    image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Queensbury",
+    slug: "queensbury",
+    href: "/queensbury-homes-for-sale",
+    description: "Lake George gateway",
+    nestScore: 89,
+    businessCount: 7,
+    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80"
+  }
+];
 
 const AppleTownCards = () => {
-  const [townHubs, setTownHubs] = useState<TownCardData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchTownData = async () => {
-      // Fetch town market data and local_voices counts
-      const [marketRes, voicesRes] = await Promise.all([
-        supabase
-          .from('town_market_data')
-          .select('town_slug, town_name, hero_landmark, nest_score')
-          .eq('is_active', true)
-          .order('nest_score', { ascending: false })
-          .limit(9),
-        supabase
-          .from('local_voices')
-          .select('town_slug')
-      ]);
-
-      if (marketRes.data) {
-        // Count businesses per town
-        const businessCounts: Record<string, number> = {};
-        voicesRes.data?.forEach(v => {
-          businessCounts[v.town_slug] = (businessCounts[v.town_slug] || 0) + 1;
-        });
-
-        const cards: TownCardData[] = marketRes.data.map(town => ({
-          name: town.town_name,
-          slug: town.town_slug,
-          href: `/towns/${town.town_slug}`,
-          description: townDescriptions[town.town_slug] || "Capital District community",
-          nestScore: town.nest_score || 85,
-          businessCount: businessCounts[town.town_slug] || 0,
-          image: town.hero_landmark || defaultImage
-        }));
-
-        setTownHubs(cards);
-      }
-      setIsLoading(false);
-    };
-
-    fetchTownData();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <section className="section-massive px-[5%] bg-card">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Regional Hub</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-6">
-              Intelligence by Town
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="h-[420px] rounded-[2rem] bg-muted animate-pulse" />
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="section-massive px-[5%] bg-card">
       <div className="max-w-7xl mx-auto">
