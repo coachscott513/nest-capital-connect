@@ -19,7 +19,8 @@ import {
   ToggleLeft,
   Instagram,
   Facebook,
-  Twitter
+  Twitter,
+  Layers
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { supabase } from "@/integrations/supabase/client";
@@ -33,6 +34,7 @@ import AlphaDashboard from "@/components/AlphaDashboard";
 import CivicDirectorySection from "@/components/CivicDirectorySection";
 import AcademicInstitutionsSection from "@/components/AcademicInstitutionsSection";
 import FeaturedAlphaSection from "@/components/FeaturedAlphaSection";
+import LiveInventoryModal from "@/components/LiveInventoryModal";
 
 interface TownLedgerEntry {
   id: string;
@@ -247,6 +249,9 @@ const AppleTownTemplate = ({
   
   // Master Gatekeeper state
   const [gatekeeperOpen, setGatekeeperOpen] = useState(false);
+  
+  // Live Inventory Modal state
+  const [inventoryModalOpen, setInventoryModalOpen] = useState(false);
   
   // Regional average for Town Alpha comparison (Capital District benchmark)
   const REGIONAL_AVG_PPSF = 165; // $/sqft regional benchmark
@@ -943,6 +948,59 @@ const AppleTownTemplate = ({
             </button>
           </div>
 
+          {/* Live Inventory Tile - Full Width Feature */}
+          <div className="mt-8">
+            <button
+              onClick={() => setInventoryModalOpen(true)}
+              className="w-full bento-card p-8 hover-lift group text-left relative overflow-hidden"
+            >
+              {/* Background Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
+              
+              <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center">
+                    <Layers className="w-7 h-7 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
+                      Live Inventory
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Browse active {townName} listings with dark-mode filters
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-foreground">
+                        {townMarketData?.active_listings || '—'}
+                      </div>
+                      <div className="text-xs text-muted-foreground">Active</div>
+                    </div>
+                    <div className="w-px h-10 bg-border" />
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-primary text-glow">
+                        {townMarketData?.single_family_count || '—'}
+                      </div>
+                      <div className="text-xs text-muted-foreground">Single Family</div>
+                    </div>
+                    <div className="w-px h-10 bg-border" />
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-emerald-400">
+                        {townMarketData?.multi_family_count || '—'}
+                      </div>
+                      <div className="text-xs text-muted-foreground">Multi-Unit</div>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-6 h-6 text-primary opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                </div>
+              </div>
+            </button>
+          </div>
+
           {/* Deep Dive CTA */}
           <div className="text-center mt-12">
             <button
@@ -1010,6 +1068,15 @@ const AppleTownTemplate = ({
         onClose={() => setGatekeeperOpen(false)}
         redirectUrl={searchUrl}
         townName={townName}
+      />
+
+      {/* Live Inventory Modal */}
+      <LiveInventoryModal
+        isOpen={inventoryModalOpen}
+        onClose={() => setInventoryModalOpen(false)}
+        townName={townName}
+        townSlug={townSlug}
+        searchUrl={searchUrl}
       />
 
       <Footer />
