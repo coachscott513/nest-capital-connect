@@ -590,6 +590,151 @@ const AppleTownTemplate = ({
         </div>
       </section>
 
+      {/* UNDERWRITE BRIDGE - Institutional Transition */}
+      <section className="py-20 px-[5%] bg-background relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          {/* The Bridge Visual */}
+          <div className="flex flex-col items-center mb-16">
+            <div className="w-px h-16 bg-gradient-to-b from-transparent via-primary to-primary" />
+            <p className="text-sm font-extralight tracking-[0.4em] text-primary my-6">UNDERWRITE</p>
+            <div className="w-px h-16 bg-gradient-to-b from-primary via-primary to-transparent" />
+          </div>
+
+          {/* Institutional Bento Grid - 4 Core Metrics */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Market Velocity */}
+            <button
+              onClick={handleSearchClick}
+              className="bento-card p-6 hover-lift group text-left"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Market Velocity
+                </span>
+              </div>
+              <p className="text-3xl font-bold text-foreground mb-1">
+                {townMarketData?.avg_days_on_market || 28} <span className="text-lg font-normal text-muted-foreground">days</span>
+              </p>
+              <p className="text-sm text-muted-foreground mb-4">
+                Avg. Days on Market
+              </p>
+              <div className="flex items-center justify-between">
+                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${
+                  (townMarketData?.avg_days_on_market || 28) < 30 ? 'bg-primary/20 text-primary' :
+                  (townMarketData?.avg_days_on_market || 28) < 60 ? 'bg-yellow-500/20 text-yellow-400' :
+                  'bg-red-500/20 text-red-400'
+                }`}>
+                  {(townMarketData?.avg_days_on_market || 28) < 30 ? 'High Velocity' : 
+                   (townMarketData?.avg_days_on_market || 28) < 60 ? 'Moderate' : 'Low Velocity'}
+                </span>
+                <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            </button>
+
+            {/* Equity Anchor */}
+            <button
+              onClick={handleSearchClick}
+              className="bento-card p-6 hover-lift group text-left"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Equity Anchor
+                </span>
+              </div>
+              <p className="text-3xl font-bold text-foreground mb-1">
+                ${townMarketData?.median_price ? (townMarketData.median_price / 1000).toFixed(0) : '---'}K
+              </p>
+              <p className="text-sm text-muted-foreground mb-4">
+                Median Sale Price
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-primary font-semibold">
+                  {townMarketData?.active_listings || 0} Active Listings
+                </span>
+                <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            </button>
+
+            {/* Institutional Yield (PPSF) */}
+            <button
+              onClick={handleSearchClick}
+              className="bento-card p-6 hover-lift group text-left"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                  <Building2 className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Institutional Yield
+                </span>
+              </div>
+              <p className="text-3xl font-bold text-foreground mb-1">
+                ${townMarketData?.median_price && townMarketData?.avg_sqft 
+                  ? Math.round(townMarketData.median_price / townMarketData.avg_sqft)
+                  : '---'}
+                <span className="text-lg font-normal text-muted-foreground">/sqft</span>
+              </p>
+              <p className="text-sm text-muted-foreground mb-4">
+                Price per Sq Ft
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">
+                  Avg {townMarketData?.avg_sqft?.toLocaleString() || '---'} sqft
+                </span>
+                <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            </button>
+
+            {/* Community Index */}
+            <button
+              onClick={handleSearchClick}
+              className="bento-card p-6 hover-lift group text-left"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                  <Gauge className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Nest Score
+                </span>
+              </div>
+              <p className="text-3xl font-bold text-primary text-glow mb-1">
+                {nestScore}
+                <span className="text-lg font-normal text-muted-foreground">/10</span>
+              </p>
+              <p className="text-sm text-muted-foreground mb-4">
+                Quality of Life Index
+              </p>
+              <div className="flex items-center justify-between">
+                {schoolDistrict && (
+                  <span className="text-xs text-muted-foreground truncate max-w-[140px]">
+                    {schoolDistrict}
+                  </span>
+                )}
+                <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            </button>
+          </div>
+
+          {/* Deep Dive CTA */}
+          <div className="text-center mt-12">
+            <button
+              onClick={handleSearchClick}
+              className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
+            >
+              Deep Dive: Full Market Analysis
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* Rental Vault for this town */}
       <RentalVault townSlug={townSlug} townName={townName} limit={4} />
 
