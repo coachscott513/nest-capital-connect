@@ -271,9 +271,9 @@ const CleanHeader = () => {
                         <Link
                           to="/claim-business"
                           onClick={closeDropdowns}
-                          className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-[#00F5FF] hover:bg-[#00F5FF]/10 rounded-md transition-colors"
+                          className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-muted/50 rounded-md transition-colors"
                         >
-                          <span>Become a Local Partner — $49/mo</span>
+                          <span>Verify Your Business</span>
                         </Link>
                       </div>
                     </Dropdown>
@@ -347,8 +347,8 @@ const CleanHeader = () => {
               <Link to="/communities" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
                 Browse All Town Guides
               </Link>
-              <Link to="/claim-business" onClick={closeMobileMenu} className="block text-[#00F5FF] font-medium">
-                Become a Local Partner — $49/mo
+              <Link to="/claim-business" onClick={closeMobileMenu} className="block text-muted-foreground hover:text-primary">
+                Verify Your Business
               </Link>
             </div>
           </div>
