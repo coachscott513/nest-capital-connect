@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import MasterGatekeeperModal from './MasterGatekeeperModal';
 
 const NeighborhoodsSection = () => {
+  const [gatekeeperOpen, setGatekeeperOpen] = useState(false);
+  const [pendingUrl, setPendingUrl] = useState<string | null>(null);
+
+  const handleGatedClick = (url: string) => {
+    setPendingUrl(url);
+    setGatekeeperOpen(true);
+  };
+
   const neighborhoods = [
     {
       name: "Albany, NY",
@@ -30,42 +39,52 @@ const NeighborhoodsSection = () => {
   ];
 
   return (
-    <section id="neighborhoods" className="py-16 px-4 bg-white text-center">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold mb-12 text-slate-800">
-          Explore Capital District Neighborhoods
-        </h2>
-        <p className="text-lg mb-8 max-w-2xl mx-auto">
-          From the historic charm of <Link to="/albany-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Albany rentals</Link> to the vibrant arts scene of <Link to="/troy-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Troy</Link>, the revitalized energy of <Link to="/schenectady-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Schenectady</Link>, and the elegant allure of <Link to="/saratoga-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Saratoga Springs</Link>, we provide both <Link to="/rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">rental opportunities</Link> and <Link to="/#investment-properties" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">investment properties</Link> across the Capital District.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {neighborhoods.map((neighborhood, index) => (
-            <div key={index} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-              <h3 className="text-xl font-semibold mb-2 text-slate-800">
-                {neighborhood.name}
-              </h3>
-              <p className="text-slate-600 mb-4">
-                {neighborhood.description}
-              </p>
-              {neighborhood.url ? (
-                <a 
-                  href={neighborhood.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-600 hover:underline transition-colors"
-                >
-                  {neighborhood.link}
-                </a>
-              ) : (
-                <button className="text-blue-500 hover:text-blue-600 hover:underline transition-colors">
-                  {neighborhood.link}
-                </button>
-              )}
-            </div>
-          ))}
+    <>
+      <section id="neighborhoods" className="py-16 px-4 bg-white text-center">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-12 text-slate-800">
+            Explore Capital District Neighborhoods
+          </h2>
+          <p className="text-lg mb-8 max-w-2xl mx-auto">
+            From the historic charm of <Link to="/albany-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Albany rentals</Link> to the vibrant arts scene of <Link to="/troy-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Troy</Link>, the revitalized energy of <Link to="/schenectady-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Schenectady</Link>, and the elegant allure of <Link to="/saratoga-rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Saratoga Springs</Link>, we provide both <Link to="/rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">rental opportunities</Link> and <Link to="/#investment-properties" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">investment properties</Link> across the Capital District.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {neighborhoods.map((neighborhood, index) => (
+              <div key={index} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <h3 className="text-xl font-semibold mb-2 text-slate-800">
+                  {neighborhood.name}
+                </h3>
+                <p className="text-slate-600 mb-4">
+                  {neighborhood.description}
+                </p>
+                {neighborhood.url ? (
+                  <button 
+                    onClick={() => handleGatedClick(neighborhood.url)}
+                    className="text-blue-500 hover:text-blue-600 hover:underline transition-colors"
+                  >
+                    {neighborhood.link}
+                  </button>
+                ) : (
+                  <button className="text-blue-500 hover:text-blue-600 hover:underline transition-colors">
+                    {neighborhood.link}
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Nest Passport Gatekeeper - No anonymous exits */}
+      <MasterGatekeeperModal 
+        isOpen={gatekeeperOpen} 
+        onClose={() => {
+          setGatekeeperOpen(false);
+          setPendingUrl(null);
+        }}
+        redirectUrl={pendingUrl || undefined}
+      />
+    </>
   );
 };
 

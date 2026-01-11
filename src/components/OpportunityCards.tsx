@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Building2, Home, Wrench, DollarSign, Users, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import MasterGatekeeperModal from "./MasterGatekeeperModal";
 
 const OpportunityCards = () => {
   const navigate = useNavigate();
+  const [gatekeeperOpen, setGatekeeperOpen] = useState(false);
+  const [pendingUrl, setPendingUrl] = useState<string | null>(null);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -12,12 +16,17 @@ const OpportunityCards = () => {
     }
   };
 
+  const handleGatedClick = (url: string) => {
+    setPendingUrl(url);
+    setGatekeeperOpen(true);
+  };
+
   const opportunities = [
     {
       icon: Building2,
       title: "Multi-Unit Properties",
       description: "Discover investment opportunities in duplexes, triplexes, and apartment buildings across the Capital District.",
-      action: () => window.open('https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=grid&leadid=948', '_blank'),
+      action: () => handleGatedClick('https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=grid&leadid=948'),
       gradient: "from-primary/10 to-primary/5"
     },
     {
@@ -58,53 +67,65 @@ const OpportunityCards = () => {
   ];
 
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Investment Opportunities
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Explore diverse real estate opportunities across the Capital District. 
-            From multi-unit buildings to fix-and-flip projects, find your next investment.
-          </p>
-        </div>
+    <>
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Investment Opportunities
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Explore diverse real estate opportunities across the Capital District. 
+              From multi-unit buildings to fix-and-flip projects, find your next investment.
+            </p>
+          </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {opportunities.map((opportunity, index) => {
-            const Icon = opportunity.icon;
-            return (
-              <div
-                key={index}
-                onClick={opportunity.action}
-                className="group relative bg-card border border-border rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${opportunity.gradient} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                
-                <div className="relative space-y-4">
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-7 h-7 text-primary" />
-                  </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {opportunities.map((opportunity, index) => {
+              const Icon = opportunity.icon;
+              return (
+                <div
+                  key={index}
+                  onClick={opportunity.action}
+                  className="group relative bg-card border border-border rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
+                >
+                  <div className={`absolute inset-0 bg-gradient-to-br ${opportunity.gradient} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                   
-                  <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">
-                    {opportunity.title}
-                  </h3>
-                  
-                  <p className="text-muted-foreground leading-relaxed">
-                    {opportunity.description}
-                  </p>
-                  
-                  <div className="flex items-center text-primary font-semibold pt-2 group-hover:gap-3 gap-2 transition-all">
-                    Learn More
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <div className="relative space-y-4">
+                    <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <Icon className="w-7 h-7 text-primary" />
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">
+                      {opportunity.title}
+                    </h3>
+                    
+                    <p className="text-muted-foreground leading-relaxed">
+                      {opportunity.description}
+                    </p>
+                    
+                    <div className="flex items-center text-primary font-semibold pt-2 group-hover:gap-3 gap-2 transition-all">
+                      Learn More
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Nest Passport Gatekeeper - No anonymous exits */}
+      <MasterGatekeeperModal 
+        isOpen={gatekeeperOpen} 
+        onClose={() => {
+          setGatekeeperOpen(false);
+          setPendingUrl(null);
+        }}
+        redirectUrl={pendingUrl || undefined}
+      />
+    </>
   );
 };
 
