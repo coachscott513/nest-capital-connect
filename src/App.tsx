@@ -179,8 +179,8 @@ const App = () => {
           <Route path="/schenectady-real-estate" element={<Navigate to="/towns/schenectady" replace />} />
           <Route path="/saratoga-real-estate" element={<Navigate to="/towns/saratoga-springs" replace />} />
           
-          {/* Communities base route */}
-          <Route path="/communities" element={<HomesForSale />} />
+          {/* Communities base route - Regional Command Center */}
+          <Route path="/communities" element={<Communities />} />
           
           {/* Market insights alias */}
           <Route path="/market-insights" element={<MarketInsights />} />
@@ -199,15 +199,15 @@ const App = () => {
           {/* Intelligence Hub */}
           <Route path="/intelligence" element={<IntelligenceHub />} />
           
-          {/* Hyperlocal SEO Pages - Homes for Sale */}
-          <Route path="/homes-for-sale" element={<HomesForSale />} />
-          <Route path="/homes-for-sale/troy" element={<TroyHomesForSale />} />
-          <Route path="/homes-for-sale/albany" element={<AlbanyHomesForSale />} />
-          <Route path="/homes-for-sale/schenectady" element={<SchenectadyHomesForSale />} />
+          {/* Hyperlocal SEO Pages - Redirect legacy /homes-for-sale/ to /towns/ */}
+          <Route path="/homes-for-sale" element={<Navigate to="/communities" replace />} />
+          <Route path="/homes-for-sale/troy" element={<Navigate to="/towns/troy" replace />} />
+          <Route path="/homes-for-sale/albany" element={<Navigate to="/towns/albany" replace />} />
+          <Route path="/homes-for-sale/schenectady" element={<Navigate to="/towns/schenectady" replace />} />
           <Route path="/schenectady-county-real-estate" element={<SchenectadyCountyIntelligence />} />
-          <Route path="/homes-for-sale/saratoga-springs" element={<SaratogaHomesForSale />} />
-          <Route path="/homes-for-sale/albany/pine-hills" element={<PineHillsAlbany />} />
-          <Route path="/delmar-homes-for-sale" element={<DelmarHomesForSale />} />
+          <Route path="/homes-for-sale/saratoga-springs" element={<Navigate to="/towns/saratoga-springs" replace />} />
+          <Route path="/homes-for-sale/albany/pine-hills" element={<Navigate to="/towns/albany" replace />} />
+          <Route path="/delmar-homes-for-sale" element={<Navigate to="/towns/delmar" replace />} />
           <Route path="/delmar-market-insights" element={<DelmarMarketInsights />} />
           <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
           
@@ -231,15 +231,15 @@ const App = () => {
           {/* Market Report Thank You Pages */}
           <Route path="/towns/:townSlug/report-request-thanks" element={<MarketReportThanks />} />
           
-          {/* Town Homes for Sale Pages */}
-          <Route path="/voorheesville-homes-for-sale" element={<VoorheesvilleHomesForSale />} />
-          <Route path="/troy-homes-for-sale" element={<TroyHomesForSalePage />} />
-          <Route path="/niskayuna-homes-for-sale" element={<NiskayunaHomesForSale />} />
-          <Route path="/saratoga-springs-homes-for-sale" element={<SaratogaHomesForSalePage />} />
-          <Route path="/clifton-park-homes-for-sale" element={<CliftonParkHomesForSale />} />
-          <Route path="/schenectady-homes-for-sale" element={<SchenectadyHomesForSalePage />} />
-          <Route path="/amsterdam-homes-for-sale" element={<AmsterdamHomesForSale />} />
-          <Route path="/queensbury-homes-for-sale" element={<QueensburyHomesForSale />} />
+          {/* Town Homes for Sale Pages - Redirect to /towns/ */}
+          <Route path="/voorheesville-homes-for-sale" element={<Navigate to="/towns/voorheesville" replace />} />
+          <Route path="/troy-homes-for-sale" element={<Navigate to="/towns/troy" replace />} />
+          <Route path="/niskayuna-homes-for-sale" element={<Navigate to="/towns/niskayuna" replace />} />
+          <Route path="/saratoga-springs-homes-for-sale" element={<Navigate to="/towns/saratoga-springs" replace />} />
+          <Route path="/clifton-park-homes-for-sale" element={<Navigate to="/towns/clifton-park" replace />} />
+          <Route path="/schenectady-homes-for-sale" element={<Navigate to="/towns/schenectady" replace />} />
+          <Route path="/amsterdam-homes-for-sale" element={<Navigate to="/towns/amsterdam" replace />} />
+          <Route path="/queensbury-homes-for-sale" element={<Navigate to="/towns/queensbury" replace />} />
           
           {/* Capital District Hub Pages */}
           {/* Capital District Hub Pages - All Towns */}
