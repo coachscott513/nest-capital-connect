@@ -1,8 +1,11 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Store } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface TownCardData {
   name: string;
+  slug: string;
   href: string;
   description: string;
   nestScore: number;
@@ -10,91 +13,86 @@ interface TownCardData {
   image: string;
 }
 
-const townHubs: TownCardData[] = [
-  { 
-    name: "Clifton Park", 
-    href: "/towns/clifton-park", 
-    description: "Growing suburb, family-friendly",
-    nestScore: 94,
-    businessCount: 12,
-    // Clifton Park Common / Nature boardwalk aesthetic
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80"
-  },
-  { 
-    name: "Saratoga Springs", 
-    href: "/towns/saratoga-springs", 
-    description: "Racing, culture, upscale living",
-    nestScore: 96,
-    businessCount: 18,
-    // Congress Park / Historic fountain aesthetic
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80"
-  },
-  { 
-    name: "Delmar", 
-    href: "/towns/delmar", 
-    description: "Bethlehem Central Schools",
-    nestScore: 92,
-    businessCount: 8,
-    // Classic New England town center / tree-lined street
-    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80"
-  },
-  { 
-    name: "Albany", 
-    href: "/towns/albany", 
-    description: "Capital City, diverse neighborhoods",
-    nestScore: 88,
-    businessCount: 24,
-    // Empire State Plaza / Government architecture
-    image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80"
-  },
-  { 
-    name: "Niskayuna", 
-    href: "/towns/niskayuna", 
-    description: "Top-rated schools",
-    nestScore: 91,
-    businessCount: 6,
-    // Suburban neighborhood / classic homes
-    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80"
-  },
-  { 
-    name: "Troy", 
-    href: "/towns/troy", 
-    description: "Historic charm, RPI proximity",
-    nestScore: 85,
-    businessCount: 15,
-    // Historic brownstone / downtown architecture
-    image: "https://images.unsplash.com/photo-1555636222-cae831e670b3?auto=format&fit=crop&w=800&q=80"
-  },
-  { 
-    name: "Schenectady", 
-    href: "/towns/schenectady", 
-    description: "Revitalizing downtown",
-    nestScore: 82,
-    businessCount: 11,
-    // Downtown revitalization / urban renewal
-    image: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=800&q=80"
-  },
-  { 
-    name: "Guilderland", 
-    href: "/towns/guilderland", 
-    description: "Top schools, Crossgates area",
-    nestScore: 90,
-    businessCount: 9,
-    // Upscale suburban development
-    image: "https://images.unsplash.com/photo-1560184897-ae75f418493e?auto=format&fit=crop&w=800&q=80"
-  },
-  { 
-    name: "Queensbury", 
-    href: "/towns/queensbury", 
-    description: "Lake George gateway",
-    nestScore: 87,
-    businessCount: 7,
-    // Mountain / Lake region aesthetic
-    image: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=800&q=80"
-  },
-];
+// Fallback descriptions for towns
+const townDescriptions: Record<string, string> = {
+  "clifton-park": "Growing suburb, family-friendly",
+  "saratoga-springs": "Racing, culture, upscale living",
+  "delmar": "Bethlehem Central Schools",
+  "albany": "Capital City, diverse neighborhoods",
+  "niskayuna": "Top-rated schools",
+  "troy": "Historic charm, RPI proximity",
+  "schenectady": "Revitalizing downtown",
+  "guilderland": "Top schools, Crossgates area",
+  "queensbury": "Lake George gateway",
+};
+
+// Fallback image for towns without hero_landmark
+const defaultImage = "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80";
 
 const AppleTownCards = () => {
+  const [townHubs, setTownHubs] = useState<TownCardData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTownData = async () => {
+      // Fetch town market data and local_voices counts
+      const [marketRes, voicesRes] = await Promise.all([
+        supabase
+          .from('town_market_data')
+          .select('town_slug, town_name, hero_landmark, nest_score')
+          .eq('is_active', true)
+          .order('nest_score', { ascending: false })
+          .limit(9),
+        supabase
+          .from('local_voices')
+          .select('town_slug')
+      ]);
+
+      if (marketRes.data) {
+        // Count businesses per town
+        const businessCounts: Record<string, number> = {};
+        voicesRes.data?.forEach(v => {
+          businessCounts[v.town_slug] = (businessCounts[v.town_slug] || 0) + 1;
+        });
+
+        const cards: TownCardData[] = marketRes.data.map(town => ({
+          name: town.town_name,
+          slug: town.town_slug,
+          href: `/towns/${town.town_slug}`,
+          description: townDescriptions[town.town_slug] || "Capital District community",
+          nestScore: town.nest_score || 85,
+          businessCount: businessCounts[town.town_slug] || 0,
+          image: town.hero_landmark || defaultImage
+        }));
+
+        setTownHubs(cards);
+      }
+      setIsLoading(false);
+    };
+
+    fetchTownData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section className="section-massive px-[5%] bg-card">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Regional Hub</p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-6">
+              Intelligence by Town
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="h-[420px] rounded-[2rem] bg-muted animate-pulse" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="section-massive px-[5%] bg-card">
       <div className="max-w-7xl mx-auto">
@@ -113,11 +111,11 @@ const AppleTownCards = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {townHubs.map((town) => (
             <Link
-              key={town.name}
+              key={town.slug}
               to={town.href}
               className="group relative h-[420px] rounded-[2rem] overflow-hidden hover-lift"
             >
-              {/* Background Image - Cinematic Filter with Heavy Mask */}
+              {/* Background Image - Cinematic Filter */}
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110"
                 style={{ 
@@ -126,7 +124,7 @@ const AppleTownCards = () => {
                 }}
               />
               
-              {/* Monochromatic Overlay - Heavy dark mask until landmarks imported */}
+              {/* Monochromatic Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/50" />
               
               {/* Teal Glow Nest Score Badge */}
