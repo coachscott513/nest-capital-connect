@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import MainLayout from "@/components/MainLayout";
@@ -15,10 +15,16 @@ import {
   School,
   CheckCircle2,
   ArrowRight,
-  ExternalLink
+  ExternalLink,
+  X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { allCityRentalData, CityRentalData } from "@/data/rentalData";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import NotFound from "./NotFound";
 
 const getTrendIcon = (direction: "up" | "down" | "stable") => {
@@ -31,6 +37,11 @@ const getTrendIcon = (direction: "up" | "down" | "stable") => {
 
 const CityRentalPage = () => {
   const { city } = useParams<{ city: string }>();
+  const { toast } = useToast();
+  const [showLeadGate, setShowLeadGate] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({ fullName: "", email: "", phone: "" });
+  const [pendingRedirectUrl, setPendingRedirectUrl] = useState<string | null>(null);
   
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,6 +52,54 @@ const CityRentalPage = () => {
   if (!data) {
     return <NotFound />;
   }
+
+  const handleRentalClick = (url: string) => {
+    setPendingRedirectUrl(url);
+    setShowLeadGate(true);
+  };
+
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.from("leads").insert({
+        full_name: formData.fullName.trim(),
+        email: formData.email.trim().toLowerCase(),
+        phone: formData.phone.trim() || null,
+        message: `High-Intent Renter - ${data.cityName}`,
+        type: "rental",
+        lead_type: "High-Intent Renter",
+        location: data.cityName,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Access Granted",
+        description: "Redirecting you to available rentals...",
+      });
+
+      // Redirect after short delay
+      setTimeout(() => {
+        if (pendingRedirectUrl) {
+          window.open(pendingRedirectUrl, "_blank");
+        }
+        setShowLeadGate(false);
+        setFormData({ fullName: "", email: "", phone: "" });
+      }, 1000);
+
+    } catch (error) {
+      console.error("Lead capture error:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const marketTiles = [
     { label: "Typical Rent Range", value: data.marketSnapshot.typicalRentRange, icon: Home, isTrend: false },
@@ -104,11 +163,13 @@ const CityRentalPage = () => {
         <section className="py-12 px-4 bg-background border-b border-border">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="rounded-full px-8" asChild>
-                <a href={data.mlsSearchUrl} target="_blank" rel="noopener noreferrer">
-                  View Available Rentals
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </a>
+              <Button 
+                size="lg" 
+                className="rounded-full px-8"
+                onClick={() => handleRentalClick(data.mlsSearchUrl)}
+              >
+                View Available Rentals
+                <ExternalLink className="w-4 h-4 ml-2" />
               </Button>
               <Button size="lg" variant="outline" className="rounded-full px-8">
                 List a Rental
@@ -233,6 +294,73 @@ const CityRentalPage = () => {
           </div>
         </section>
       </main>
+
+      {/* Lead Capture Gate Modal */}
+      <Dialog open={showLeadGate} onOpenChange={setShowLeadGate}>
+        <DialogContent className="sm:max-w-md bg-card border-border">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-foreground">
+              Unlock {data.cityName} Rentals
+            </DialogTitle>
+          </DialogHeader>
+          
+          <p className="text-muted-foreground text-sm mb-4">
+            Get instant access to verified rental listings and be first to know about new properties.
+          </p>
+
+          <form onSubmit={handleLeadSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="fullName" className="text-foreground">Full Name *</Label>
+              <Input
+                id="fullName"
+                value={formData.fullName}
+                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                required
+                placeholder="John Smith"
+                className="bg-background border-border"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-foreground">Email *</Label>
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+                placeholder="john@example.com"
+                className="bg-background border-border"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="text-foreground">Phone (Optional)</Label>
+              <Input
+                id="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder="(518) 555-0123"
+                className="bg-background border-border"
+              />
+            </div>
+
+            <Button 
+              type="submit" 
+              className="w-full rounded-full" 
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Unlocking..." : "View Rentals Now"}
+              <ExternalLink className="w-4 h-4 ml-2" />
+            </Button>
+
+            <p className="text-xs text-muted-foreground text-center">
+              By submitting, you agree to receive property alerts. Unsubscribe anytime.
+            </p>
+          </form>
+        </DialogContent>
+      </Dialog>
     </MainLayout>
   );
 };

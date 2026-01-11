@@ -81,8 +81,9 @@ const BusinessSpotlight = () => {
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null);
 
   return (
-    <section className="section-massive px-[3%] md:px-[4%] bg-background overflow-hidden">
-      <div className="max-w-[1600px] mx-auto">
+    <section className="section-massive bg-background overflow-hidden">
+      {/* Full-width container with minimal padding */}
+      <div className="px-[2%] lg:px-[3%]">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Local Partners</p>
@@ -94,17 +95,17 @@ const BusinessSpotlight = () => {
           </p>
         </div>
 
-        {/* Edge-to-Edge Business Grid - Desktop */}
-        <div className="hidden md:flex justify-between items-start pb-8">
+        {/* Edge-to-Edge Business Grid - Desktop - CSS Grid for perfect spacing */}
+        <div className="hidden md:grid grid-cols-6 gap-0 pb-8 w-full">
           {featuredBusinesses.map((business) => (
             <button
               key={business.id}
               onClick={() => setSelectedBusiness(business)}
-              className="flex flex-col items-center gap-5 group"
+              className="flex flex-col items-center gap-5 group justify-self-center"
             >
               {/* Teal Glow Border - Spotlight Effect - 15% Larger */}
               <div className="relative spotlight">
-                <div className="w-36 h-36 lg:w-40 lg:h-40 rounded-full p-[3px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
+                <div className="w-32 h-32 lg:w-36 lg:h-36 xl:w-40 xl:h-40 rounded-full p-[3px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
                   <div className="w-full h-full rounded-full overflow-hidden bg-card p-1">
                     <img
                       src={business.logo}
@@ -120,7 +121,7 @@ const BusinessSpotlight = () => {
               </div>
               
               {/* Business Name - Larger Text */}
-              <span className="text-base font-medium text-foreground text-center max-w-[160px] leading-tight group-hover:text-primary transition-colors">
+              <span className="text-base font-medium text-foreground text-center max-w-[140px] leading-tight group-hover:text-primary transition-colors">
                 {business.name}
               </span>
             </button>
