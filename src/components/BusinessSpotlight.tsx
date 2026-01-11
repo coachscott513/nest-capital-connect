@@ -155,7 +155,7 @@ const BusinessSpotlight = () => {
   const [showVerifyModal, setShowVerifyModal] = useState(false);
   const [verifyingBusiness, setVerifyingBusiness] = useState<Business | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({ name: "", role: "", email: "" });
+  const [formData, setFormData] = useState({ name: "", phone: "", email: "" });
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -210,7 +210,8 @@ const BusinessSpotlight = () => {
       const { error } = await supabase.from("leads").insert({
         full_name: formData.name.trim(),
         email: formData.email.trim().toLowerCase(),
-        message: `Business Verification Request - ${verifyingBusiness?.name} | Role: ${formData.role}`,
+        phone: formData.phone.trim() || null,
+        message: `Business Verification Request - ${verifyingBusiness?.name}`,
         type: "business-verification",
         lead_type: "Business Owner",
         location: verifyingBusiness?.town || "Capital District",
@@ -224,7 +225,7 @@ const BusinessSpotlight = () => {
       });
 
       setShowVerifyModal(false);
-      setFormData({ name: "", role: "", email: "" });
+      setFormData({ name: "", phone: "", email: "" });
     } catch (error) {
       console.error("Verification error:", error);
       toast({
@@ -237,24 +238,35 @@ const BusinessSpotlight = () => {
     }
   };
 
-  // Social icons component
+  // Social icons component with blurred "locked" effect
   const SocialStack = ({ business }: { business: Business }) => (
-    <div className="flex items-center justify-center gap-2 mt-2">
-      {[
-        { Icon: Instagram, label: "Instagram" },
-        { Icon: Facebook, label: "Facebook" },
-        { Icon: TikTokIcon, label: "TikTok" },
-        { Icon: Globe, label: "Website" },
-      ].map(({ Icon, label }) => (
-        <button
-          key={label}
-          onClick={(e) => handleSocialClick(e, business)}
-          className="p-1.5 rounded-full text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all duration-200 hover:shadow-[0_0_8px_rgba(0,245,255,0.3)]"
-          title={`${label} - Verify to activate`}
-        >
-          <Icon className="w-3.5 h-3.5" />
-        </button>
-      ))}
+    <div className="flex items-center justify-center gap-2 mt-2 relative">
+      {/* Blurred overlay container */}
+      <div className="flex items-center gap-1.5 filter blur-[2px] opacity-50">
+        {[
+          { Icon: Instagram, label: "Instagram" },
+          { Icon: Facebook, label: "Facebook" },
+          { Icon: TikTokIcon, label: "TikTok" },
+          { Icon: Globe, label: "Website" },
+        ].map(({ Icon, label }) => (
+          <div
+            key={label}
+            className="p-1.5 rounded-full text-muted-foreground"
+          >
+            <Icon className="w-3.5 h-3.5" />
+          </div>
+        ))}
+      </div>
+      {/* Clickable overlay */}
+      <button
+        onClick={(e) => handleSocialClick(e, business)}
+        className="absolute inset-0 flex items-center justify-center cursor-pointer group"
+        title="Verify to unlock social links"
+      >
+        <span className="opacity-0 group-hover:opacity-100 text-[10px] font-medium text-primary bg-background/90 px-2 py-0.5 rounded-full transition-opacity duration-200 whitespace-nowrap">
+          Verify to unlock
+        </span>
+      </button>
     </div>
   );
 
@@ -457,13 +469,14 @@ const BusinessSpotlight = () => {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="role" className="text-foreground">Your Role *</Label>
+              <Label htmlFor="phone" className="text-foreground">Phone Number *</Label>
               <Input
-                id="role"
-                value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                id="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 required
-                placeholder="Owner, Manager, Marketing Director..."
+                placeholder="(518) 555-1234"
                 className="bg-background border-border"
               />
             </div>
