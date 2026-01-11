@@ -646,35 +646,52 @@ const AppleTownTemplate = ({
               <div className="absolute right-0 top-0 bottom-8 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
               
               <div className="flex gap-8 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory justify-center">
-                {/* Use town-specific businesses with real photos */}
-                {(TOWN_BUSINESSES[townSlug] || DEFAULT_BUSINESSES).map((business) => (
-                  <button
-                    key={business.id}
-                    onClick={() => setGatekeeperOpen(true)}
-                    className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
-                  >
-                    {/* Teal Glow Border - exact homepage styling */}
-                    <div className="relative spotlight">
-                      <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
-                        <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
-                          <img
-                            src={business.logo}
-                            alt={business.name}
-                            className="w-full h-full rounded-full object-cover"
-                          />
+                {/* Use town-specific businesses with real photos - clicking opens blurred narrative modal */}
+                {(TOWN_BUSINESSES[townSlug] || DEFAULT_BUSINESSES).map((business) => {
+                  // Create a LocalVoice object for the Sheet modal with unverified status
+                  const businessVoice: LocalVoice = {
+                    id: business.id,
+                    business_name: business.name,
+                    owner_name: business.name.split(' ')[0] + ' Owner',
+                    owner_photo_url: business.logo,
+                    business_logo_url: business.logo,
+                    origin_story: '',
+                    alpha_insight: '',
+                    growth_vision: '',
+                    primary_offering: `Local ${townName} business serving the community.`,
+                    website_url: '',
+                    is_verified: false // Always show as unverified to trigger blur
+                  };
+                  
+                  return (
+                    <button
+                      key={business.id}
+                      onClick={() => setSelectedVoice(businessVoice)}
+                      className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
+                    >
+                      {/* Teal Glow Border - exact homepage styling */}
+                      <div className="relative spotlight">
+                        <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
+                          <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
+                            <img
+                              src={business.logo}
+                              alt={business.name}
+                              className="w-full h-full rounded-full object-cover"
+                            />
+                          </div>
+                        </div>
+                        {/* Verified Badge - exact homepage styling */}
+                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+                          Verified
                         </div>
                       </div>
-                      {/* Verified Badge - exact homepage styling */}
-                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
-                        Verified
-                      </div>
-                    </div>
-                    
-                    <span className="text-sm font-medium text-foreground text-center max-w-[120px] leading-tight group-hover:text-primary transition-colors">
-                      {business.name}
-                    </span>
-                  </button>
-                ))}
+                      
+                      <span className="text-sm font-medium text-foreground text-center max-w-[120px] leading-tight group-hover:text-primary transition-colors">
+                        {business.name}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
