@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown, Phone, Search, X, Menu } from "lucide-react";
+import { ChevronDown, Phone, Search, X, Menu, Command } from "lucide-react";
 import cdnLogo from "@/assets/cdn-logo.png";
+import GlobalSearchCommand from "@/components/GlobalSearchCommand";
 
 // Town data - All 11 Counties: Albany, Schenectady, Rensselaer, Saratoga, 
 // Washington, Warren, Fulton, Montgomery, Greene, Schoharie + Boston Expansion
@@ -139,6 +140,19 @@ const CleanHeader = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [townSearch, setTownSearch] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Keyboard shortcut for search (Cmd+K or Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const filteredTowns = towns.filter((town) =>
     town.name.toLowerCase().includes(townSearch.toLowerCase())
@@ -369,28 +383,53 @@ const CleanHeader = () => {
                   )}
                 </div>
               ))}
+
+              {/* Global Search Button */}
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="flex items-center gap-2 px-4 py-2.5 text-[11px] uppercase tracking-[0.3em] font-[300] rounded-full transition-all duration-300 text-white/70 hover:text-primary hover:bg-white/10 border border-white/10 hover:border-primary/30 ml-2"
+              >
+                <Search className="h-3.5 w-3.5" />
+                <span className="hidden xl:inline">Search</span>
+                <kbd className="hidden xl:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-white/10 text-[9px] font-normal ml-1">
+                  <Command className="h-2.5 w-2.5" />K
+                </kbd>
+              </button>
             </div>
 
             {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden flex items-center gap-2 px-4 py-2 border border-border rounded-full text-sm font-medium hover:bg-muted transition-colors text-foreground"
-            >
-              {mobileMenuOpen ? (
-                <>
-                  <X className="h-4 w-4" />
-                  Close
-                </>
-              ) : (
-                <>
-                  <Menu className="h-4 w-4" />
-                  Menu
-                </>
-              )}
-            </button>
+            <div className="flex items-center gap-2 lg:hidden">
+              {/* Mobile Search */}
+              <button
+                onClick={() => setSearchOpen(true)}
+                className="flex items-center justify-center w-10 h-10 rounded-full border border-border hover:bg-muted transition-colors text-foreground"
+              >
+                <Search className="h-4 w-4" />
+              </button>
+              
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="flex items-center gap-2 px-4 py-2 border border-border rounded-full text-sm font-medium hover:bg-muted transition-colors text-foreground"
+              >
+                {mobileMenuOpen ? (
+                  <>
+                    <X className="h-4 w-4" />
+                    Close
+                  </>
+                ) : (
+                  <>
+                    <Menu className="h-4 w-4" />
+                    Menu
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </nav>
       </header>
+
+      {/* Global Search Modal */}
+      <GlobalSearchCommand isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
       {/* Mobile Menu Overlay - Deep Space */}
       <div
