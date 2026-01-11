@@ -35,6 +35,7 @@ import CivicDirectorySection from "@/components/CivicDirectorySection";
 import AcademicInstitutionsSection from "@/components/AcademicInstitutionsSection";
 import FeaturedIntelSection from "@/components/FeaturedIntelSection";
 import LiveInventoryModal from "@/components/LiveInventoryModal";
+import { getTownSEOContent, getCountyForTown } from "@/data/townSEOContent";
 
 interface TownLedgerEntry {
   id: string;
@@ -344,12 +345,16 @@ const AppleTownTemplate = ({
 
 
 
+  // Get hyper-local SEO content
+  const seoContent = getTownSEOContent(townSlug, townName);
+  const countyInfo = getCountyForTown(townSlug);
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={`${townName} | Yield Intelligence by Capital District Nest`}
-        description={`Exclusive market intelligence for ${townName} NY. ${avgYield} average yields, local business insights, and verified investment opportunities for NYC and Boston investors.`}
-        keywords={`${townName} investment properties, ${townName} cash on cash return, ${townName} real estate yields, ${townName} market intelligence`}
+        title={`${townName} Insights, Property Data & Local Guide | Capital District Nest`}
+        description={seoContent.metaDescription}
+        keywords={[...seoContent.focusKeywords, ...seoContent.civicKeywords, ...seoContent.lifestyleKeywords].join(', ')}
         canonical={`https://capitaldistrictnest.com/towns/${townSlug}`}
       />
 
@@ -451,9 +456,17 @@ const AppleTownTemplate = ({
             </h1>
             
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed body-airy">
-              Real-time market data, investment opportunities, and local insights — 
-              all in one place.
+              {seoContent.leadParagraph.substring(0, 150)}...
             </p>
+            
+            {countyInfo && (
+              <Link 
+                to={countyInfo.path}
+                className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 mb-6"
+              >
+                See all {countyInfo.name} Spotlights <ArrowRight className="w-4 h-4" />
+              </Link>
+            )}
 
             <div className="flex flex-col sm:flex-row gap-4">
               <button
