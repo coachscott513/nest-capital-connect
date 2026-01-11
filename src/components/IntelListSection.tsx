@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import alphaListReport from "@/assets/alpha-list-report.jpg";
 
-const AlphaListSection = () => {
+const IntelListSection = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -21,7 +21,7 @@ const AlphaListSection = () => {
     // Simulate submission - replace with actual API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    toast.success("You're on the list! Check your inbox for the Alpha Report.");
+    toast.success("You're on the list! Check your inbox for the Regional Insight Report.");
     setEmail("");
     setIsSubmitting(false);
   };
@@ -86,4 +86,4 @@ const AlphaListSection = () => {
   );
 };
 
-export default AlphaListSection;
+export default IntelListSection;

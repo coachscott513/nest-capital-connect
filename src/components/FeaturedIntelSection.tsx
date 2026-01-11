@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { TrendingUp, ArrowRight, Sparkles } from "lucide-react";
 
-interface FeaturedAlphaSectionProps {
+interface FeaturedIntelSectionProps {
   townName: string;
   townSlug: string;
   featuredAddress?: string;
@@ -10,14 +10,14 @@ interface FeaturedAlphaSectionProps {
   featuredType?: string;
 }
 
-const FeaturedAlphaSection = ({
+const FeaturedIntelSection = ({
   townName,
   townSlug,
   featuredAddress,
   featuredPrice,
   featuredYield,
   featuredType = "Multi-Family"
-}: FeaturedAlphaSectionProps) => {
+}: FeaturedIntelSectionProps) => {
   // If no specific property, show generic CTA
   if (!featuredAddress) {
     return (
@@ -30,7 +30,7 @@ const FeaturedAlphaSection = ({
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-6">
                 <Sparkles className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium text-primary">Featured Alpha</span>
+                <span className="text-sm font-medium text-primary">Featured Opportunity</span>
               </div>
               
               <h2 className="text-3xl md:text-4xl font-extralight text-foreground mb-4 tracking-tight">
@@ -69,7 +69,7 @@ const FeaturedAlphaSection = ({
               <div>
                 <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-4">
                   <Sparkles className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium text-primary">Featured Alpha</span>
+                  <span className="text-sm font-medium text-primary">Featured Opportunity</span>
                 </div>
                 
                 <h3 className="text-2xl md:text-3xl font-light text-foreground mb-2">
@@ -115,4 +115,4 @@ const FeaturedAlphaSection = ({
   );
 };
 
-export default FeaturedAlphaSection;
+export default FeaturedIntelSection;

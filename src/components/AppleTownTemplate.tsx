@@ -30,10 +30,10 @@ import SEOHead from "@/components/SEOHead";
 import IntelligenceGatekeeper from "@/components/IntelligenceGatekeeper";
 import RentalVault from "@/components/RentalVault";
 import MasterGatekeeperModal from "@/components/MasterGatekeeperModal";
-import AlphaDashboard from "@/components/AlphaDashboard";
+import IntelligenceDashboard from "@/components/IntelligenceDashboard";
 import CivicDirectorySection from "@/components/CivicDirectorySection";
 import AcademicInstitutionsSection from "@/components/AcademicInstitutionsSection";
-import FeaturedAlphaSection from "@/components/FeaturedAlphaSection";
+import FeaturedIntelSection from "@/components/FeaturedIntelSection";
 import LiveInventoryModal from "@/components/LiveInventoryModal";
 
 interface TownLedgerEntry {
@@ -253,7 +253,7 @@ const AppleTownTemplate = ({
   // Live Inventory Modal state
   const [inventoryModalOpen, setInventoryModalOpen] = useState(false);
   
-  // Regional average for Town Alpha comparison (Capital District benchmark)
+  // Regional average for Market Intelligence comparison (Capital District benchmark)
   const REGIONAL_AVG_PPSF = 165; // $/sqft regional benchmark
   const REGIONAL_AVG_DOM = 35; // days regional benchmark
 
@@ -355,8 +355,8 @@ const AppleTownTemplate = ({
 
       <CleanHeader />
 
-      {/* Institutional Alpha Dashboard */}
-      <AlphaDashboard
+      {/* Institutional Intelligence Dashboard */}
+      <IntelligenceDashboard
         townName={townName}
         avgYield={avgYield}
         nestScore={nestScore}
@@ -748,9 +748,9 @@ const AppleTownTemplate = ({
             <div className="w-px h-16 bg-gradient-to-b from-primary via-primary to-transparent" />
           </div>
 
-          {/* Town Alpha Badge + Investor Yield Toggle */}
+          {/* Market Intelligence Badge + Investor Yield Toggle */}
           <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
-            {/* Town Alpha Indicator */}
+            {/* Market Intelligence Indicator */}
             {(() => {
               const townPPSF = townMarketData?.median_price && townMarketData?.avg_sqft 
                 ? Math.round(townMarketData.median_price / townMarketData.avg_sqft) 
@@ -759,14 +759,14 @@ const AppleTownTemplate = ({
               const domDiff = townMarketData?.avg_days_on_market 
                 ? ((REGIONAL_AVG_DOM - townMarketData.avg_days_on_market) / REGIONAL_AVG_DOM * 100) 
                 : 0;
-              const alphaScore = ppsfDiff < 0 ? 'Value Zone' : ppsfDiff > 15 ? 'Premium Market' : 'Market Rate';
-              const alphaColor = ppsfDiff < 0 ? 'bg-primary/20 text-primary' : ppsfDiff > 15 ? 'bg-amber-500/20 text-amber-400' : 'bg-blue-500/20 text-blue-400';
+              const marketScore = ppsfDiff < 0 ? 'Value Zone' : ppsfDiff > 15 ? 'Premium Market' : 'Market Rate';
+              const marketColor = ppsfDiff < 0 ? 'bg-primary/20 text-primary' : ppsfDiff > 15 ? 'bg-amber-500/20 text-amber-400' : 'bg-blue-500/20 text-blue-400';
               
               return (
                 <div className="flex items-center gap-3">
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${alphaColor}`}>
+                  <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold ${marketColor}`}>
                     <TrendingUp className="w-4 h-4" />
-                    Town Alpha: {alphaScore}
+                    Market Intel: {marketScore}
                   </div>
                   <span className="text-xs text-muted-foreground">
                     {ppsfDiff > 0 ? '+' : ''}{ppsfDiff.toFixed(0)}% vs Regional Avg
@@ -1024,8 +1024,8 @@ const AppleTownTemplate = ({
       {/* Academic Institutions - Schools & Colleges */}
       <AcademicInstitutionsSection townSlug={townSlug} townName={townName} />
 
-      {/* Featured Alpha Section - Investment Opportunity Showcase */}
-      <FeaturedAlphaSection 
+      {/* Featured Intel Section - Investment Opportunity Showcase */}
+      <FeaturedIntelSection 
         townName={townName} 
         townSlug={townSlug}
         featuredAddress={highYieldAssets[0]?.address}
@@ -1139,7 +1139,7 @@ const AppleTownTemplate = ({
                     <p className="text-sm text-foreground italic">"{selectedVoice.origin_story}"</p>
                   </div>
                   <div className="p-4 glass rounded-xl">
-                    <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Market Alpha</h4>
+                    <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Market Insight</h4>
                     <p className="text-sm text-foreground italic">"{selectedVoice.alpha_insight}"</p>
                   </div>
                   <div className="p-4 glass rounded-xl">
@@ -1156,7 +1156,7 @@ const AppleTownTemplate = ({
                       <p className="text-sm text-foreground italic">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore."</p>
                     </div>
                     <div className="p-4 glass rounded-xl">
-                      <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Market Alpha</h4>
+                      <h4 className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Market Insight</h4>
                       <p className="text-sm text-foreground italic">"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo."</p>
                     </div>
                     <div className="p-4 glass rounded-xl">

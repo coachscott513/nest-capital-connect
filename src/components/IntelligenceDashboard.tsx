@@ -1,6 +1,6 @@
 import { TrendingUp, Gauge, Zap } from "lucide-react";
 
-interface AlphaDashboardProps {
+interface IntelligenceDashboardProps {
   townName: string;
   avgYield?: string;
   nestScore?: number;
@@ -8,15 +8,15 @@ interface AlphaDashboardProps {
   avgDaysOnMarket?: number;
 }
 
-const AlphaDashboard = ({
+const IntelligenceDashboard = ({
   townName = "Capital District",
   avgYield = "7.2%",
   nestScore = 7,
   marketVelocity = "High",
   avgDaysOnMarket = 28
-}: AlphaDashboardProps) => {
-  // Calculate regional alpha based on market velocity
-  const getRegionalAlpha = () => {
+}: IntelligenceDashboardProps) => {
+  // Calculate market edge based on market velocity
+  const getMarketEdge = () => {
     if (marketVelocity === "High") return "+2.4%";
     if (marketVelocity === "Medium") return "+1.2%";
     return "+0.6%";
@@ -24,8 +24,8 @@ const AlphaDashboard = ({
 
   const indicators = [
     { 
-      label: "Regional Alpha", 
-      value: getRegionalAlpha(), 
+      label: "Market Edge", 
+      value: getMarketEdge(), 
       color: "text-green-400",
       icon: TrendingUp
     },
@@ -51,10 +51,10 @@ const AlphaDashboard = ({
           className="text-4xl md:text-5xl lg:text-6xl text-foreground uppercase tracking-[0.8em] font-[100] leading-tight"
           style={{ letterSpacing: '0.8em' }}
         >
-          {townName.toUpperCase()} <span className="text-primary text-glow">: ALPHA</span>
+          {townName.toUpperCase()} <span className="text-primary text-glow">: INTEL</span>
         </h2>
         <p className="mt-4 text-sm md:text-base text-muted-foreground tracking-[0.3em] uppercase font-light">
-          [ Town Underwriting Dashboard ]
+          [ Town Intelligence Dashboard ]
         </p>
       </div>
 
@@ -95,4 +95,4 @@ const AlphaDashboard = ({
   );
 };
 
-export default AlphaDashboard;
+export default IntelligenceDashboard;

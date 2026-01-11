@@ -257,7 +257,7 @@ const MasterGatekeeperModal = ({
             />
             <p className="text-[10px] text-primary/80 flex items-center gap-1">
               <Sparkles className="w-3 h-3" />
-              Get SMS Alpha Alerts for off-market 30%+ yield opportunities
+              Get SMS Alerts for off-market 30%+ yield opportunities
             </p>
           </div>
 

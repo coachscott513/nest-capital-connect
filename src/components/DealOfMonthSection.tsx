@@ -11,7 +11,7 @@ const DealOfMonthSection = () => {
             Featured Investment
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            Investment Spotlight: <span className="text-[#10B981]">The Alpha Asset</span>
+            Investment Spotlight: <span className="text-[#10B981]">The Premium Asset</span>
           </h2>
           <p className="text-muted-foreground mt-3 text-lg">
             Selected for immediate cash flow potential. Off-market status.
