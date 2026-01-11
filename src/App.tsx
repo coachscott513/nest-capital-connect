@@ -109,6 +109,9 @@ import MarketReportThanks from "./pages/MarketReportThanks";
 import Ask from "./pages/Ask";
 import SiteIndex from "./pages/SiteIndex";
 import ClaimBusiness from "./pages/ClaimBusiness";
+import PartnerAuth from "./pages/PartnerAuth";
+import PartnerDashboard from "./pages/PartnerDashboard";
+import PartnerSuccess from "./pages/PartnerSuccess";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -301,6 +304,11 @@ const App = () => {
           
           {/* Business Claim/Edit Form */}
           <Route path="/claim-business" element={<ClaimBusiness />} />
+          
+          {/* Partner Dashboard */}
+          <Route path="/partner-auth" element={<PartnerAuth />} />
+          <Route path="/partner-dashboard" element={<PartnerDashboard />} />
+          <Route path="/partner-success" element={<PartnerSuccess />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

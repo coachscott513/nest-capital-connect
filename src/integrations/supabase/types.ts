@@ -14,6 +14,38 @@ export type Database = {
   }
   public: {
     Tables: {
+      business_partners: {
+        Row: {
+          created_at: string
+          id: string
+          local_voice_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          local_voice_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          local_voice_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_partners_local_voice_id_fkey"
+            columns: ["local_voice_id"]
+            isOneToOne: false
+            referencedRelation: "local_voices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       deal_desk_requests: {
         Row: {
           agreed_to_updates: boolean
@@ -271,6 +303,88 @@ export type Database = {
           town_slug?: string
         }
         Relationships: []
+      }
+      partner_referrals: {
+        Row: {
+          client_name: string
+          client_phone: string
+          created_at: string
+          id: string
+          notes: string | null
+          partner_id: string
+          project_type: Database["public"]["Enums"]["referral_project_type"]
+          status: string | null
+        }
+        Insert: {
+          client_name: string
+          client_phone: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          partner_id: string
+          project_type: Database["public"]["Enums"]["referral_project_type"]
+          status?: string | null
+        }
+        Update: {
+          client_name?: string
+          client_phone?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          partner_id?: string
+          project_type?: Database["public"]["Enums"]["referral_project_type"]
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_referrals_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "business_partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partner_subscriptions: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          is_active: boolean | null
+          partner_id: string
+          price_cents: number
+          purchased_at: string | null
+          subscription_type: Database["public"]["Enums"]["partner_subscription_type"]
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          partner_id: string
+          price_cents: number
+          purchased_at?: string | null
+          subscription_type: Database["public"]["Enums"]["partner_subscription_type"]
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          partner_id?: string
+          price_cents?: number
+          purchased_at?: string | null
+          subscription_type?: Database["public"]["Enums"]["partner_subscription_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_subscriptions_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "business_partners"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       properties: {
         Row: {
@@ -624,7 +738,11 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      partner_subscription_type:
+        | "live_social_stack"
+        | "priority_contact"
+        | "town_hero_video"
+      referral_project_type: "commercial" | "residential"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -751,6 +869,13 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      partner_subscription_type: [
+        "live_social_stack",
+        "priority_contact",
+        "town_hero_video",
+      ],
+      referral_project_type: ["commercial", "residential"],
+    },
   },
 } as const
