@@ -174,15 +174,15 @@ const CleanHeader = () => {
 
   return (
     <>
-      {/* Desktop Header - Apple-Style Glass Navigation with Enhanced Visibility */}
+      {/* Desktop Header - Liquid Glass Floating Navigation */}
       <header 
         className="sticky top-0 z-[2000]"
         style={{
-          background: 'rgba(0, 0, 0, 0.75)',
-          backdropFilter: 'blur(30px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(30px) saturate(180%)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)'
+          background: 'rgba(0, 0, 0, 0.65)',
+          backdropFilter: 'blur(50px) saturate(200%)',
+          WebkitBackdropFilter: 'blur(50px) saturate(200%)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          boxShadow: '0 8px 40px rgba(0, 0, 0, 0.6), inset 0 -1px 0 rgba(255, 255, 255, 0.05)'
         }}
       >
         <nav className="w-full px-4 md:px-8 lg:px-16">

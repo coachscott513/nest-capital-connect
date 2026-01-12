@@ -48,7 +48,7 @@ const InstitutionalHeader = () => {
               </p>
             </div>
 
-            {/* 4-Tile Bento Grid */}
+            {/* 4-Tile Bento Grid - Enhanced Glass Effect */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
               
               {/* Tile 1: Regional Map (Large - spans 2 cols) */}
@@ -56,9 +56,11 @@ const InstitutionalHeader = () => {
                 to="/communities"
                 className="lg:col-span-2 group relative rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.02]"
                 style={{
-                  background: 'rgba(11, 11, 11, 0.7)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  backdropFilter: 'blur(30px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 8px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
                 }}
               >
                 <div className="p-8 h-full min-h-[200px] flex flex-col justify-between">
@@ -90,9 +92,11 @@ const InstitutionalHeader = () => {
               <div 
                 className="rounded-3xl overflow-hidden"
                 style={{
-                  background: 'rgba(11, 11, 11, 0.7)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  backdropFilter: 'blur(30px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 8px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
                 }}
               >
                 <div className="p-6 h-full min-h-[200px] flex flex-col justify-between">
@@ -122,9 +126,11 @@ const InstitutionalHeader = () => {
                 to="/intelligence"
                 className="group rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.02]"
                 style={{
-                  background: 'rgba(11, 11, 11, 0.7)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  background: 'rgba(255, 255, 255, 0.04)',
+                  backdropFilter: 'blur(30px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 8px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
                 }}
               >
                 <div className="p-6 h-full min-h-[200px] flex flex-col justify-between">
@@ -152,9 +158,11 @@ const InstitutionalHeader = () => {
               <div 
                 className="lg:col-span-4 rounded-3xl overflow-hidden"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(0, 245, 255, 0.08) 0%, rgba(11, 11, 11, 0.8) 100%)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(0, 245, 255, 0.15)',
+                  background: 'linear-gradient(135deg, rgba(0, 245, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%)',
+                  backdropFilter: 'blur(40px) saturate(200%)',
+                  WebkitBackdropFilter: 'blur(40px) saturate(200%)',
+                  border: '1px solid rgba(0, 245, 255, 0.2)',
+                  boxShadow: '0 8px 48px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 245, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
                 }}
               >
                 <div className="p-6 md:p-8">
