@@ -164,74 +164,130 @@
     background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(185 100% 40%) 100%);
   }
   
-  /* ============= LIQUID GLASS - Deep Space Dark Mode ============= */
-  .glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  /* ============= GLOBAL LIQUID GLASS SYSTEM - Silicon Valley Premium ============= */
+  
+  /* Main page container overlay for deep immersion */
+  .liquid-glass-container {
+    position: relative;
   }
   
+  .liquid-glass-container::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  /* Standard Glass - Primary blur layer */
+  .glass {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Strong Glass - For primary feature areas */
   .glass-strong {
     background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(40px) saturate(200%);
-    -webkit-backdrop-filter: blur(40px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
-                inset 0 0 0 0.5px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(50px) saturate(220%);
+    -webkit-backdrop-filter: blur(50px) saturate(220%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                inset 0 0 0 0.5px rgba(255, 255, 255, 0.08);
   }
   
+  /* Glass Card - For content cards with deep blur */
   .glass-card {
     background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4),
-                0 1px 2px rgba(0, 0, 0, 0.2),
-                inset 0 0 0 0.5px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+                0 2px 8px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
   
+  /* Glass Navigation - Floating header/footer with blur */
   .glass-nav {
-    background: rgba(11, 11, 11, 0.85) !important;
-    backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
   }
   
-  /* ============= BENTO CARDS - Dark Glass 32px Radius ============= */
+  /* Glass Footer - Sticky with blur */
+  .glass-footer {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* ============= BENTO CARDS - Deep Glass 24px Radius with Blur ============= */
   .bento-card {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 2rem;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4),
-                0 8px 48px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+                0 16px 64px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
                 box-shadow 0.5s ease,
-                border-color 0.3s ease;
+                border-color 0.3s ease,
+                background 0.3s ease;
   }
   
   .bento-card:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
-                0 20px 60px rgba(0, 0, 0, 0.4),
-                0 0 40px rgba(0, 245, 255, 0.1);
-    border-color: rgba(0, 245, 255, 0.2);
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6),
+                0 24px 80px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(0, 245, 255, 0.15);
+    border-color: rgba(0, 245, 255, 0.25);
   }
   
-  /* Apple-style card - dark glass */
+  /* Apple-style card - Premium glass */
   .apple-card {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 2rem;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4),
-                0 8px 32px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+                0 16px 48px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .apple-card:hover {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
-                0 16px 48px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6),
+                0 24px 64px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  
+  /* Obsidian Glass - Deep black translucent */
+  .glass-obsidian {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Hero Glass Overlay - For hero sections with blurred backgrounds */
+  .glass-hero-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
   
   /* ============= PREMIUM HOVER LIFT ============= */

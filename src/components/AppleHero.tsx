@@ -26,7 +26,7 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
   return (
     <>
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
-        {/* Deep Space Cinematic Background */}
+        {/* Deep Space Cinematic Background with Liquid Glass Blur */}
         <div className="absolute inset-0">
           {/* High-Fidelity Video Background */}
           <video
@@ -34,7 +34,7 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover opacity-40"
+            className="absolute inset-0 w-full h-full object-cover opacity-50"
             poster="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1920&q=80"
           >
             <source 
@@ -43,12 +43,22 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
             />
           </video>
           
-          {/* Dark Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+          {/* LIQUID GLASS BLUR OVERLAY - 40px blur for depth */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'rgba(0, 0, 0, 0.55)',
+              backdropFilter: 'blur(40px)',
+              WebkitBackdropFilter: 'blur(40px)',
+            }}
+          />
           
-          {/* Teal glow orbs */}
-          <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[150px]" />
-          <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[120px]" />
+          {/* Dark Gradient Overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background" />
+          
+          {/* Teal glow orbs - Enhanced for glass effect */}
+          <div className="absolute top-1/3 right-1/4 w-[700px] h-[700px] rounded-full bg-primary/10 blur-[200px]" />
+          <div className="absolute bottom-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-primary/15 blur-[180px]" />
         </div>
 
         {/* Content - Maximum White Space */}
