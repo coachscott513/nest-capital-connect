@@ -103,6 +103,7 @@ interface TownBusiness {
   id: string;
   name: string;
   logo: string;
+  website?: string;
   instagram?: string;
   facebook?: string;
   twitter?: string;
@@ -166,7 +167,7 @@ const TOWN_BUSINESSES: Record<string, TownBusiness[]> = {
   ],
   "clifton-park": [
     { id: "1", name: "Clifton Park Coffee Co.", logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80", instagram: "#", facebook: "#" },
-    { id: "2", name: "Shenendehowa Brewing", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", instagram: "#", twitter: "#" },
+    { id: "2", name: "Druthers Brewing Co.", logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80", website: "https://www.druthersbrewing.com/", instagram: "https://www.instagram.com/druthersbrewing/", facebook: "https://www.facebook.com/druthersbrewing/" },
     { id: "3", name: "Exit 9 Fitness Studio", logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80", instagram: "#" },
     { id: "4", name: "Clifton Park Veterinary", logo: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=200&q=80", facebook: "#" },
     { id: "5", name: "The Tech Collective CP", logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80", twitter: "#", facebook: "#" },
