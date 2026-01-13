@@ -274,9 +274,12 @@ const BusinessSpotlight = () => {
   const doubledBusinesses = [...featuredBusinesses, ...featuredBusinesses];
 
   return (
-    <section className="section-massive bg-background overflow-hidden">
+    <section className="section-massive overflow-hidden relative">
+      {/* Liquid Glass Background Layer */}
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-[30px]" />
+      
       {/* Full-width container */}
-      <div className="px-[2%] lg:px-[3%]">
+      <div className="relative z-10 px-[2%] lg:px-[3%]">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Local Partners</p>
@@ -311,8 +314,8 @@ const BusinessSpotlight = () => {
                       />
                     </div>
                   </div>
-                  {/* Verified Badge */}
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+                  {/* Verified Badge with Neon Glow */}
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap shadow-[0_0_15px_rgba(0,255,255,0.5)]">
                     Verified
                   </div>
                 </div>
@@ -328,9 +331,9 @@ const BusinessSpotlight = () => {
             ))}
           </div>
           
-          {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent pointer-events-none z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
+          {/* Fade edges - seamless with glass background */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black/60 to-transparent pointer-events-none z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black/60 to-transparent pointer-events-none z-10" />
         </div>
 
         {/* Mobile Horizontal Scroll */}
@@ -353,8 +356,8 @@ const BusinessSpotlight = () => {
                       />
                     </div>
                   </div>
-                  {/* Verified Badge */}
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+                  {/* Verified Badge with Neon Glow */}
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap shadow-[0_0_15px_rgba(0,255,255,0.5)]">
                     Verified
                   </div>
                 </div>
@@ -370,9 +373,9 @@ const BusinessSpotlight = () => {
             ))}
           </div>
           
-          {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-8 w-12 bg-gradient-to-r from-background to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-8 w-12 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+          {/* Fade edges - seamless with glass background */}
+          <div className="absolute left-0 top-0 bottom-8 w-12 bg-gradient-to-r from-black/60 to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-8 w-12 bg-gradient-to-l from-black/60 to-transparent pointer-events-none" />
         </div>
       </div>
 
