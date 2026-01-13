@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { MapPin, Instagram, Facebook, Globe, Lock } from "lucide-react";
+import { MapPin, Instagram, Facebook, Globe, Lock, TrendingUp } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -154,6 +154,8 @@ const BusinessSpotlight = () => {
   const [selectedBusiness, setSelectedBusiness] = useState<Business | null>(null);
   const [showVerifyModal, setShowVerifyModal] = useState(false);
   const [verifyingBusiness, setVerifyingBusiness] = useState<Business | null>(null);
+  const [shouldScrollToVerify, setShouldScrollToVerify] = useState(false);
+  const verifyButtonRef = useRef<HTMLButtonElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "", email: "" });
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -197,6 +199,24 @@ const BusinessSpotlight = () => {
   }, []);
 
   const handleSocialClick = (e: React.MouseEvent, business: Business) => {
+    e.stopPropagation();
+    // Open drawer and scroll to verify section
+    setSelectedBusiness(business);
+    setShouldScrollToVerify(true);
+  };
+
+  // Effect to scroll to verify button when drawer opens
+  useEffect(() => {
+    if (shouldScrollToVerify && selectedBusiness && verifyButtonRef.current) {
+      // Small delay to ensure drawer is fully open
+      setTimeout(() => {
+        verifyButtonRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setShouldScrollToVerify(false);
+      }, 300);
+    }
+  }, [shouldScrollToVerify, selectedBusiness]);
+
+  const handleOpenVerifyModal = (e: React.MouseEvent, business: Business) => {
     e.stopPropagation();
     setVerifyingBusiness(business);
     setShowVerifyModal(true);
@@ -300,12 +320,15 @@ const BusinessSpotlight = () => {
             {doubledBusinesses.map((business, index) => (
               <div
                 key={`${business.id}-${index}`}
-                className="flex flex-col items-center gap-3 flex-shrink-0 group cursor-pointer"
-                onClick={() => setSelectedBusiness(business)}
+                className="flex flex-col items-center gap-3 flex-shrink-0 group cursor-pointer transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,255,255,0.3)] rounded-2xl p-3"
+                onClick={() => {
+                  setSelectedBusiness(business);
+                  setShouldScrollToVerify(true);
+                }}
               >
                 {/* Teal Glow Border */}
                 <div className="relative spotlight">
-                  <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
+                  <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-110 transition-transform duration-300 glow-primary group-hover:shadow-[0_0_40px_rgba(0,255,255,0.6)]">
                     <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
                       <img
                         src={business.logo}
@@ -342,12 +365,15 @@ const BusinessSpotlight = () => {
             {featuredBusinesses.map((business) => (
               <div
                 key={business.id}
-                className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group cursor-pointer"
-                onClick={() => setSelectedBusiness(business)}
+                className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group cursor-pointer transition-all duration-300 active:shadow-[0_0_30px_rgba(0,255,255,0.3)] rounded-2xl p-3"
+                onClick={() => {
+                  setSelectedBusiness(business);
+                  setShouldScrollToVerify(true);
+                }}
               >
                 {/* Teal Glow Border */}
                 <div className="relative spotlight">
-                  <div className="w-28 h-28 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
+                  <div className="w-28 h-28 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-110 transition-transform duration-300 glow-primary group-hover:shadow-[0_0_40px_rgba(0,255,255,0.6)]">
                     <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
                       <img
                         src={business.logo}
@@ -437,7 +463,7 @@ const BusinessSpotlight = () => {
                       <Button
                         size="sm"
                         className="rounded-full text-xs"
-                        onClick={(e) => handleSocialClick(e, selectedBusiness)}
+                        onClick={(e) => handleOpenVerifyModal(e, selectedBusiness)}
                       >
                         Owner: Verify to Unlock Narrative
                       </Button>
@@ -470,6 +496,31 @@ const BusinessSpotlight = () => {
                 <p className="text-muted-foreground">{selectedBusiness.offering}</p>
               </div>
 
+              {/* Market Intelligence Section */}
+              <div className="p-5 bg-black/50 backdrop-blur-[20px] border border-primary/20 rounded-2xl mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <TrendingUp className="w-4 h-4 text-primary" />
+                  <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">Nest Intelligence</h4>
+                </div>
+                <p className="text-sm text-muted-foreground mb-2">
+                  <span className="text-primary font-medium">Clifton Park Market Strength:</span> Seller-Leaning (102.7% Sale-to-List)
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  57-69% of homes sold over list price in 2025. Median home value ~$460,503 with high inventory velocity (~11 days on market).
+                </p>
+              </div>
+
+              {/* Primary Verify CTA with Pulse */}
+              <div id="verify-section" className="mb-6">
+                <Button
+                  ref={verifyButtonRef}
+                  onClick={(e) => handleOpenVerifyModal(e, selectedBusiness)}
+                  className="w-full rounded-full text-sm py-6 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.5)] animate-pulse border border-emerald-400/50"
+                >
+                  Verify This Business
+                </Button>
+              </div>
+
               {/* Social Links - Blurred & Gated */}
               <div className="relative mb-6">
                 <div className="flex items-center justify-center gap-3 blur-[3px] opacity-50 pointer-events-none">
@@ -483,7 +534,7 @@ const BusinessSpotlight = () => {
                   ))}
                 </div>
                 <button
-                  onClick={(e) => handleSocialClick(e, selectedBusiness)}
+                  onClick={(e) => handleOpenVerifyModal(e, selectedBusiness)}
                   className="absolute inset-0 flex items-center justify-center group cursor-pointer"
                 >
                   <span className="text-xs font-medium text-primary bg-background/90 px-3 py-1.5 rounded-full border border-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
