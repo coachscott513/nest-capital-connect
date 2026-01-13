@@ -30,33 +30,36 @@ interface Business {
 const featuredBusinesses: Business[] = [
   {
     id: "1",
-    name: "Saratoga Coffee Traders",
-    logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80",
-    ownerPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
-    ownerName: "Michael Chen",
-    story: "Started in a small garage roasting beans for neighbors, Michael grew Saratoga Coffee Traders into the region's premier specialty roaster. Now serving 40+ cafes across the Capital District.",
-    offering: "Specialty coffee roasting & wholesale distribution",
-    town: "Saratoga Springs"
+    name: "Druthers Brewing Co.",
+    logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80",
+    ownerPhoto: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80",
+    ownerName: "Chris Martell",
+    story: "Founded in 2012, Druthers has grown from a single Saratoga brewpub to a regional powerhouse with locations in Albany, Clifton Park, and Schenectady. A true Capital District anchor.",
+    offering: "Craft brewery, restaurant & neighborhood anchor",
+    town: "Clifton Park",
+    website: "https://www.druthersbrewing.com/"
   },
   {
     id: "2",
-    name: "Delmar Fitness Studio",
-    logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80",
-    ownerPhoto: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80",
-    ownerName: "Sarah Martinez",
-    story: "After 15 years as a physical therapist, Sarah founded Delmar Fitness to bridge the gap between rehab and performance training for the community.",
-    offering: "Boutique fitness & recovery services",
-    town: "Delmar"
+    name: "Clifton Park Coffee Co.",
+    logo: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=200&q=80",
+    ownerPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+    ownerName: "Michael Torres",
+    story: "What started as a mobile coffee cart at Exit 9 farmers market became the town's daily gathering spot. Michael sources beans directly from small farms in Colombia and Ethiopia.",
+    offering: "Specialty coffee & local community hub",
+    town: "Clifton Park",
+    website: "https://cliftonparkcoffee.com"
   },
   {
     id: "3",
-    name: "Troy Brewing Co.",
-    logo: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=200&q=80",
-    ownerPhoto: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80",
-    ownerName: "James O'Brien",
-    story: "A third-generation Troy native, James revived his grandfather's brewing recipes and opened Troy Brewing Co. in a renovated riverside warehouse.",
-    offering: "Craft brewery & taproom experience",
-    town: "Troy"
+    name: "Exit 9 Fitness Studio",
+    logo: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80",
+    ownerPhoto: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80",
+    ownerName: "Jennifer Walsh",
+    story: "A former D1 athlete, Jennifer built Exit 9 Fitness to bring elite training methods to everyday families in Clifton Park. Her studio now trains 500+ members monthly.",
+    offering: "Boutique fitness & athletic training",
+    town: "Clifton Park",
+    website: "https://exit9fitness.com"
   },
   {
     id: "4",
@@ -66,87 +69,96 @@ const featuredBusinesses: Business[] = [
     ownerName: "Dr. Emily Nguyen",
     story: "Dr. Nguyen brought cutting-edge veterinary care to Clifton Park after training at Cornell. Her clinic is now the go-to for pet families in the region.",
     offering: "Full-service veterinary care & pet wellness",
-    town: "Clifton Park"
+    town: "Clifton Park",
+    website: "https://cliftonparkvet.com"
   },
   {
     id: "5",
-    name: "Albany Tech Hub",
+    name: "The Tech Collective CP",
     logo: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80",
-    ownerPhoto: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80",
+    ownerPhoto: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80",
     ownerName: "David Park",
-    story: "David left his Silicon Valley role to build a tech ecosystem in his hometown. Albany Tech Hub now supports 50+ startups and remote workers.",
-    offering: "Coworking & startup incubator",
-    town: "Albany"
+    story: "David left his Silicon Valley role to build a tech ecosystem in Clifton Park. The Tech Collective now supports 30+ startups and remote workers driving local innovation.",
+    offering: "Coworking, tech incubator & innovation hub",
+    town: "Clifton Park",
+    website: "https://thetechcollectivecp.com"
   },
   {
     id: "6",
-    name: "Niskayuna Gardens",
-    logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80",
-    ownerPhoto: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80",
-    ownerName: "Lisa Thompson",
-    story: "Lisa transformed her family's 50-acre farm into a sustainable nursery and landscape design studio, becoming the region's authority on native plants.",
-    offering: "Landscape design & native plant nursery",
-    town: "Niskayuna"
+    name: "Wheatfields Bakehouse",
+    logo: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=200&q=80",
+    ownerPhoto: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
+    ownerName: "Rachel Anderson",
+    story: "A Capital District institution since 1982, Wheatfields has expanded from a small bakery to multiple locations. Their artisan breads and pastries define local food culture.",
+    offering: "Artisan bakery, café & catering",
+    town: "Clifton Park",
+    website: "https://wheatfields.com"
   },
   {
     id: "7",
-    name: "Schenectady Provisions",
-    logo: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=200&q=80",
-    ownerPhoto: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80",
-    ownerName: "Marcus Williams",
-    story: "Marcus left a corporate career to pursue his passion for artisanal charcuterie. Schenectady Provisions now supplies farm-to-table restaurants across the region.",
-    offering: "Artisanal meats & local provisions",
-    town: "Schenectady"
+    name: "Vischer Ferry Boutique",
+    logo: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=200&q=80",
+    ownerPhoto: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80",
+    ownerName: "Lisa Crawford",
+    story: "Lisa curates a collection of upscale home goods and fashion from designers across the Northeast. Vischer Ferry Boutique has become a destination for discerning shoppers.",
+    offering: "High-end retail & lifestyle goods",
+    town: "Clifton Park",
+    website: "https://vischerferry.com"
   },
   {
     id: "8",
-    name: "Guilderland Yoga",
-    logo: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=200&q=80",
-    ownerPhoto: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=400&q=80",
-    ownerName: "Priya Sharma",
-    story: "After training in India, Priya brought authentic yoga practices to Guilderland. Her studio has become a sanctuary for stressed professionals and families alike.",
-    offering: "Yoga & mindfulness studio",
-    town: "Guilderland"
+    name: "Saratoga Coffee Traders",
+    logo: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=200&q=80",
+    ownerPhoto: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80",
+    ownerName: "Michael Chen",
+    story: "Started in a small garage roasting beans for neighbors, Michael grew Saratoga Coffee Traders into the region's premier specialty roaster. Now serving 40+ cafes.",
+    offering: "Specialty coffee roasting & wholesale distribution",
+    town: "Saratoga Springs",
+    website: "https://saratogacoffeetraders.com"
   },
   {
     id: "9",
-    name: "Queensbury Outfitters",
-    logo: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=200&q=80",
+    name: "Troy Brewing Co.",
+    logo: "https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=200&q=80",
     ownerPhoto: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80",
-    ownerName: "Jake Morrison",
-    story: "A Lake George native and outdoor enthusiast, Jake created Queensbury Outfitters to gear up hikers, kayakers, and adventurers exploring the Adirondacks.",
-    offering: "Outdoor gear & guided adventures",
-    town: "Queensbury"
+    ownerName: "James O'Brien",
+    story: "A third-generation Troy native, James revived his grandfather's brewing recipes and opened Troy Brewing Co. in a renovated riverside warehouse.",
+    offering: "Craft brewery & taproom experience",
+    town: "Troy",
+    website: "https://troybrewing.com"
   },
   {
     id: "10",
-    name: "Colonie Flower Market",
-    logo: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=200&q=80",
-    ownerPhoto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
-    ownerName: "Elena Rossi",
-    story: "Elena's family has run Colonie Flower Market for three generations. Today she combines traditional floristry with modern sustainable practices.",
-    offering: "Floral design & event styling",
-    town: "Colonie"
+    name: "Albany Tech Hub",
+    logo: "https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=200&q=80",
+    ownerPhoto: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80",
+    ownerName: "Marcus Williams",
+    story: "Marcus transformed a vacant downtown building into Albany's premier innovation center. The Tech Hub now anchors a growing ecosystem of startups and remote workers.",
+    offering: "Coworking & startup incubator",
+    town: "Albany",
+    website: "https://albanytechhub.com"
   },
   {
     id: "11",
-    name: "Latham Auto Collective",
-    logo: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=200&q=80",
-    ownerPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
-    ownerName: "Tony Benedetto",
-    story: "Tony turned his childhood passion for classic cars into Latham Auto Collective, a premium detailing and restoration shop trusted by collectors across the Northeast.",
-    offering: "Auto detailing & restoration",
-    town: "Latham"
+    name: "Delmar Fitness Studio",
+    logo: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=200&q=80",
+    ownerPhoto: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80",
+    ownerName: "Sarah Martinez",
+    story: "After 15 years as a physical therapist, Sarah founded Delmar Fitness to bridge the gap between rehab and performance training for the community.",
+    offering: "Boutique fitness & recovery services",
+    town: "Delmar",
+    website: "https://delmarfitness.com"
   },
   {
     id: "12",
-    name: "Voorheesville Bakehouse",
-    logo: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=200&q=80",
-    ownerPhoto: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
-    ownerName: "Rachel Kim",
-    story: "Rachel left New York City's restaurant scene to open a neighborhood bakehouse. Her sourdough and pastries now draw visitors from across the Capital District.",
-    offering: "Artisan breads & pastries",
-    town: "Voorheesville"
+    name: "Niskayuna Gardens",
+    logo: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=200&q=80",
+    ownerPhoto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+    ownerName: "Elena Rossi",
+    story: "Elena transformed her family's 50-acre property into a sustainable nursery and landscape design studio, becoming the region's authority on native plants.",
+    offering: "Landscape design & native plant nursery",
+    town: "Niskayuna",
+    website: "https://niskayunagardens.com"
   }
 ];
 
@@ -491,19 +503,39 @@ const BusinessSpotlight = () => {
               </div>
 
               {/* Offering - Visible */}
-              <div className="p-5 glass rounded-2xl mb-6">
+              <div className="p-5 bg-black/50 backdrop-blur-[25px] border border-white/10 rounded-2xl mb-6">
                 <h4 className="text-sm font-semibold text-foreground mb-2">What They Offer</h4>
                 <p className="text-muted-foreground">{selectedBusiness.offering}</p>
               </div>
 
+              {/* Website Link - Visible */}
+              {selectedBusiness.website && (
+                <div className="p-4 bg-black/50 backdrop-blur-[25px] border border-white/10 rounded-2xl mb-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Globe className="w-4 h-4 text-primary" />
+                      <span className="text-sm text-muted-foreground">Website</span>
+                    </div>
+                    <a 
+                      href={selectedBusiness.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary hover:text-primary/80 transition-colors underline underline-offset-2"
+                    >
+                      {selectedBusiness.website.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
+                    </a>
+                  </div>
+                </div>
+              )}
+
               {/* Market Intelligence Section */}
-              <div className="p-5 bg-black/50 backdrop-blur-[20px] border border-primary/20 rounded-2xl mb-6">
+              <div className="p-5 bg-black/50 backdrop-blur-[25px] border border-primary/30 rounded-2xl mb-6 shadow-[0_0_20px_rgba(0,255,255,0.1)]">
                 <div className="flex items-center gap-2 mb-3">
                   <TrendingUp className="w-4 h-4 text-primary" />
                   <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">Nest Intelligence</h4>
                 </div>
                 <p className="text-sm text-muted-foreground mb-2">
-                  <span className="text-primary font-medium">Clifton Park Market Strength:</span> Seller-Leaning (102.7% Sale-to-List)
+                  <span className="text-primary font-medium">{selectedBusiness.town} Market Strength:</span> Seller-Leaning (102.7% Sale-to-List)
                 </p>
                 <p className="text-xs text-muted-foreground">
                   57-69% of homes sold over list price in 2025. Median home value ~$460,503 with high inventory velocity (~11 days on market).
