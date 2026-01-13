@@ -25,6 +25,7 @@ interface Business {
   offering: string;
   town: string;
   website?: string;
+  isVerified?: boolean; // SaaS Teaser - all start unverified
 }
 
 const featuredBusinesses: Business[] = [
@@ -270,30 +271,53 @@ const BusinessSpotlight = () => {
     }
   };
 
-  // Social icons component - visible but locked until verified
-  const SocialStack = ({ business }: { business: Business }) => (
-    <div className="flex items-center justify-center gap-1.5 mt-2">
-      {[
-        { Icon: Instagram, label: "Instagram", color: "hover:text-pink-500" },
-        { Icon: Facebook, label: "Facebook", color: "hover:text-blue-500" },
-        { Icon: TikTokIcon, label: "TikTok", color: "hover:text-foreground" },
-        { Icon: Globe, label: "Website", color: "hover:text-primary" },
-      ].map(({ Icon, label, color }) => (
-        <button
-          key={label}
-          onClick={(e) => handleSocialClick(e, business)}
-          className={`relative p-1.5 rounded-full text-muted-foreground ${color} transition-colors duration-200 group/icon`}
-          title={`Verify to unlock ${label}`}
-        >
-          <Icon className="w-4 h-4" />
-          {/* Tiny lock overlay */}
-          <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-background/90 rounded-full flex items-center justify-center border border-border shadow-sm opacity-80 group-hover/icon:opacity-100 group-hover/icon:scale-110 transition-all">
-            <Lock className="w-1.5 h-1.5 text-muted-foreground" />
+  // Social icons component - visible but locked (grayscale teaser) until verified
+  const SocialStack = ({ business }: { business: Business }) => {
+    const isVerified = business.isVerified ?? false;
+    
+    return (
+      <div className="flex items-center justify-center gap-1.5 mt-2 relative group/social">
+        {[
+          { Icon: Instagram, label: "Instagram", activeColor: "text-pink-500" },
+          { Icon: Facebook, label: "Facebook", activeColor: "text-blue-500" },
+          { Icon: TikTokIcon, label: "TikTok", activeColor: "text-foreground" },
+          { Icon: Globe, label: "Website", activeColor: "text-primary" },
+        ].map(({ Icon, label, activeColor }) => (
+          <button
+            key={label}
+            onClick={(e) => {
+              if (!isVerified) {
+                handleSocialClick(e, business);
+              }
+            }}
+            className={`relative p-1.5 rounded-full transition-all duration-300 group/icon ${
+              isVerified 
+                ? `${activeColor} hover:scale-110` 
+                : "text-muted-foreground/50 grayscale hover:grayscale-0 hover:text-muted-foreground cursor-pointer"
+            }`}
+            title={isVerified ? label : `Business Unverified. Claim to activate ${label}.`}
+          >
+            <Icon className="w-4 h-4" />
+            {/* Lock overlay for unverified */}
+            {!isVerified && (
+              <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-background/90 rounded-full flex items-center justify-center border border-border shadow-sm opacity-60 group-hover/icon:opacity-100 group-hover/icon:scale-110 transition-all">
+                <Lock className="w-1.5 h-1.5 text-muted-foreground" />
+              </div>
+            )}
+          </button>
+        ))}
+        
+        {/* Hover tooltip for unverified */}
+        {!isVerified && (
+          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/social:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
+            <span className="text-[10px] font-medium text-primary bg-background/95 backdrop-blur-sm px-2 py-1 rounded-full border border-primary/30 whitespace-nowrap shadow-lg">
+              Claim to unlock
+            </span>
           </div>
-        </button>
-      ))}
-    </div>
-  );
+        )}
+      </div>
+    );
+  };
 
   // Double the array for seamless loop
   const doubledBusinesses = [...featuredBusinesses, ...featuredBusinesses];
@@ -342,9 +366,13 @@ const BusinessSpotlight = () => {
                       />
                     </div>
                   </div>
-                  {/* Verified Badge with Neon Glow */}
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap shadow-[0_0_15px_hsl(var(--primary)/0.5)] filter-none backdrop-blur-none">
-                    Verified
+                  {/* Status Badge - Verified or Claim CTA */}
+                  <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap filter-none backdrop-blur-none ${
+                    business.isVerified 
+                      ? "bg-primary text-primary-foreground shadow-[0_0_15px_hsl(var(--primary)/0.5)]" 
+                      : "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-pulse"
+                  }`}>
+                    {business.isVerified ? "Verified" : "Claim"}
                   </div>
                 </div>
                 
@@ -387,9 +415,13 @@ const BusinessSpotlight = () => {
                       />
                     </div>
                   </div>
-                  {/* Verified Badge with Neon Glow */}
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap shadow-[0_0_15px_hsl(var(--primary)/0.5)] filter-none backdrop-blur-none">
-                    Verified
+                  {/* Status Badge - Verified or Claim CTA */}
+                  <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap filter-none backdrop-blur-none ${
+                    business.isVerified 
+                      ? "bg-primary text-primary-foreground shadow-[0_0_15px_hsl(var(--primary)/0.5)]" 
+                      : "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-pulse"
+                  }`}>
+                    {business.isVerified ? "Verified" : "Claim"}
                   </div>
                 </div>
                 
@@ -526,6 +558,41 @@ const BusinessSpotlight = () => {
                 </div>
               )}
 
+              {/* Elite Features Preview - Gated Map & Specials */}
+              <div className="p-5 bg-black/50 backdrop-blur-[25px] border border-white/10 rounded-2xl mb-6 relative overflow-hidden">
+                <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-muted-foreground" />
+                  Map & Weekly Specials
+                </h4>
+                
+                {/* Blurred preview content */}
+                <div className="relative">
+                  <div className="blur-[6px] opacity-40 pointer-events-none select-none">
+                    <div className="h-24 bg-gradient-to-br from-muted/30 to-muted/10 rounded-lg mb-3" />
+                    <div className="space-y-2">
+                      <div className="h-3 bg-muted-foreground/20 rounded w-3/4" />
+                      <div className="h-3 bg-muted-foreground/15 rounded w-1/2" />
+                    </div>
+                  </div>
+                  
+                  {/* Overlay CTA */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <Lock className="w-5 h-5 text-primary mb-2" />
+                    <p className="text-xs text-muted-foreground text-center mb-2">
+                      Unlock to list your current specials and menus
+                    </p>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="rounded-full text-[10px] px-3 py-1 h-auto border-primary/30 text-primary hover:bg-primary/10"
+                      onClick={(e) => handleOpenVerifyModal(e, selectedBusiness)}
+                    >
+                      Verify to Unlock Elite Features
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
               {/* Market Intelligence Section */}
               <div className="p-5 bg-black/50 backdrop-blur-[25px] border border-primary/30 rounded-2xl mb-6 shadow-[0_0_20px_rgba(0,255,255,0.1)]">
                 <div className="flex items-center gap-2 mb-3">
@@ -537,6 +604,20 @@ const BusinessSpotlight = () => {
                 </p>
                 <p className="text-xs text-muted-foreground">
                   57-69% of homes sold over list price in 2025. Median home value ~$460,503 with high inventory velocity (~11 days on market).
+                </p>
+              </div>
+
+              {/* Profile Completion Teaser */}
+              <div className="p-4 bg-gradient-to-r from-emerald-500/10 to-primary/10 border border-emerald-500/30 rounded-2xl mb-6">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-foreground uppercase tracking-wider">Profile Completion</span>
+                  <span className="text-xs font-bold text-emerald-400">20%</span>
+                </div>
+                <div className="w-full h-1.5 bg-muted/30 rounded-full overflow-hidden">
+                  <div className="h-full w-1/5 bg-gradient-to-r from-emerald-500 to-primary rounded-full" />
+                </div>
+                <p className="text-[10px] text-muted-foreground mt-2">
+                  Verify to unlock: Social Links • Contact Info • Map • Weekly Specials
                 </p>
               </div>
 
