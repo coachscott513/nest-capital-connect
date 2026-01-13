@@ -429,7 +429,7 @@ const BusinessSpotlight = () => {
                   
                   {/* Verification CTA Overlay */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <div className="glass px-6 py-4 rounded-2xl text-center max-w-[280px] border border-primary/20 shadow-lg">
+                    <div className="bg-black/70 backdrop-blur-[30px] px-6 py-4 rounded-2xl text-center max-w-[280px] border border-white/10 shadow-lg shadow-primary/20">
                       <Lock className="w-5 h-5 text-primary mx-auto mb-2" />
                       <p className="text-sm font-medium text-foreground mb-3">
                         Story Protected
