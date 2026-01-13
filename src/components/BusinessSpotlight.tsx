@@ -428,13 +428,18 @@ const BusinessSpotlight = () => {
                 </SheetTitle>
               </SheetHeader>
 
-              {/* Owner Photo */}
+              {/* Owner Photo (Gated / hidden until verification) */}
               <div className="mb-6 relative spotlight rounded-2xl overflow-hidden">
-                <img
-                  src={selectedBusiness.ownerPhoto}
-                  alt={selectedBusiness.ownerName}
-                  className="w-full h-64 object-cover"
-                />
+                {/* Intentionally do NOT render the actual photo until verified */}
+                <div className="w-full h-64 bg-gradient-to-br from-muted/40 via-background/30 to-muted/20" />
+                <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-background/40 to-background/80" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="bg-background/50 backdrop-blur-[25px] px-5 py-4 rounded-2xl text-center border border-border shadow-lg">
+                    <Lock className="w-5 h-5 text-primary mx-auto mb-2" />
+                    <p className="text-sm font-medium text-foreground">Photo Protected</p>
+                    <p className="text-xs text-muted-foreground mt-1">Verify to unlock founder details</p>
+                  </div>
+                </div>
               </div>
 
               {/* Owner Name & Town */}
