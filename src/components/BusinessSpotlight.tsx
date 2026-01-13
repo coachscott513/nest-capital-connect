@@ -306,9 +306,9 @@ const BusinessSpotlight = () => {
   const doubledBusinesses = [...featuredBusinesses, ...featuredBusinesses];
 
   return (
-    <section className="section-massive overflow-hidden relative">
-      {/* Liquid Glass Background Layer */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-[30px]" />
+    <section className="section-massive overflow-hidden relative isolate">
+      {/* Liquid Glass Background Layer (behind all content) */}
+      <div className="absolute inset-0 z-0 bg-black/40 backdrop-blur-[40px] pointer-events-none" />
       
       {/* Full-width container */}
       <div className="relative z-10 px-[2%] lg:px-[3%]">
@@ -340,17 +340,17 @@ const BusinessSpotlight = () => {
               >
                 {/* Teal Glow Border */}
                 <div className="relative spotlight">
-                  <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-110 transition-transform duration-300 glow-primary group-hover:shadow-[0_0_40px_rgba(0,255,255,0.6)]">
-                    <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
+                  <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-110 transition-transform duration-300 glow-primary group-hover:shadow-[0_0_40px_hsl(var(--primary)/0.6)]">
+                    <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5 filter-none backdrop-blur-none">
                       <img
                         src={business.logo}
                         alt={business.name}
-                        className="w-full h-full rounded-full object-cover"
+                        className="w-full h-full rounded-full object-cover filter-none"
                       />
                     </div>
                   </div>
                   {/* Verified Badge with Neon Glow */}
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap shadow-[0_0_15px_rgba(0,255,255,0.5)]">
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap shadow-[0_0_15px_hsl(var(--primary)/0.5)] filter-none backdrop-blur-none">
                     Verified
                   </div>
                 </div>
@@ -385,17 +385,17 @@ const BusinessSpotlight = () => {
               >
                 {/* Teal Glow Border */}
                 <div className="relative spotlight">
-                  <div className="w-28 h-28 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-110 transition-transform duration-300 glow-primary group-hover:shadow-[0_0_40px_rgba(0,255,255,0.6)]">
-                    <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
+                  <div className="w-28 h-28 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-110 transition-transform duration-300 glow-primary group-hover:shadow-[0_0_40px_hsl(var(--primary)/0.6)]">
+                    <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5 filter-none backdrop-blur-none">
                       <img
                         src={business.logo}
                         alt={business.name}
-                        className="w-full h-full rounded-full object-cover"
+                        className="w-full h-full rounded-full object-cover filter-none"
                       />
                     </div>
                   </div>
                   {/* Verified Badge with Neon Glow */}
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap shadow-[0_0_15px_rgba(0,255,255,0.5)]">
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap shadow-[0_0_15px_hsl(var(--primary)/0.5)] filter-none backdrop-blur-none">
                     Verified
                   </div>
                 </div>
