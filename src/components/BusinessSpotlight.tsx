@@ -381,7 +381,7 @@ const BusinessSpotlight = () => {
 
       {/* Business Detail Drawer */}
       <Sheet open={!!selectedBusiness} onOpenChange={() => setSelectedBusiness(null)}>
-        <SheetContent className="w-full sm:max-w-lg bg-card border-l border-border overflow-y-auto">
+        <SheetContent className="w-full sm:max-w-lg bg-black/70 backdrop-blur-[30px] border-l border-white/10 overflow-y-auto">
           {selectedBusiness && (
             <>
               <SheetHeader className="mb-6">
