@@ -469,7 +469,7 @@ const BusinessSpotlight = () => {
 
               {/* Owner Name & Town */}
               <div className="flex items-center justify-between mb-6">
-                <div>
+                <div className={`${!(selectedBusiness.isVerified ?? false) ? "blur-[5px] select-none" : ""}`}>
                   <h3 className="text-lg font-semibold text-foreground">{selectedBusiness.ownerName}</h3>
                   <p className="text-sm text-muted-foreground">Owner & Founder</p>
                 </div>
