@@ -429,14 +429,22 @@
   /* ============= SPOTLIGHT EFFECT for portraits ============= */
   .spotlight {
     position: relative;
+    isolation: isolate; /* ensures glow sits behind content, not over it */
   }
-  
+
+  /* Keep the halo BEHIND images/text (prevents "blurry" logos) */
   .spotlight::after {
     content: '';
     position: absolute;
     inset: -20%;
     background: radial-gradient(circle at center, rgba(0, 245, 255, 0.15) 0%, transparent 70%);
     pointer-events: none;
+    z-index: 0;
+  }
+
+  .spotlight > * {
+    position: relative;
+    z-index: 1;
   }
 }
 
