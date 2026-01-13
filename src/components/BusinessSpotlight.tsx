@@ -270,35 +270,28 @@ const BusinessSpotlight = () => {
     }
   };
 
-  // Social icons component with blurred "locked" effect
+  // Social icons component - visible but locked until verified
   const SocialStack = ({ business }: { business: Business }) => (
-    <div className="flex items-center justify-center gap-2 mt-2 relative">
-      {/* Blurred overlay container */}
-      <div className="flex items-center gap-1.5 filter blur-[2px] opacity-50">
-        {[
-          { Icon: Instagram, label: "Instagram" },
-          { Icon: Facebook, label: "Facebook" },
-          { Icon: TikTokIcon, label: "TikTok" },
-          { Icon: Globe, label: "Website" },
-        ].map(({ Icon, label }) => (
-          <div
-            key={label}
-            className="p-1.5 rounded-full text-muted-foreground"
-          >
-            <Icon className="w-3.5 h-3.5" />
+    <div className="flex items-center justify-center gap-1.5 mt-2">
+      {[
+        { Icon: Instagram, label: "Instagram", color: "hover:text-pink-500" },
+        { Icon: Facebook, label: "Facebook", color: "hover:text-blue-500" },
+        { Icon: TikTokIcon, label: "TikTok", color: "hover:text-foreground" },
+        { Icon: Globe, label: "Website", color: "hover:text-primary" },
+      ].map(({ Icon, label, color }) => (
+        <button
+          key={label}
+          onClick={(e) => handleSocialClick(e, business)}
+          className={`relative p-1.5 rounded-full text-muted-foreground ${color} transition-colors duration-200 group/icon`}
+          title={`Verify to unlock ${label}`}
+        >
+          <Icon className="w-4 h-4" />
+          {/* Tiny lock overlay */}
+          <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-background/90 rounded-full flex items-center justify-center border border-border shadow-sm opacity-80 group-hover/icon:opacity-100 group-hover/icon:scale-110 transition-all">
+            <Lock className="w-1.5 h-1.5 text-muted-foreground" />
           </div>
-        ))}
-      </div>
-      {/* Clickable overlay */}
-      <button
-        onClick={(e) => handleSocialClick(e, business)}
-        className="absolute inset-0 flex items-center justify-center cursor-pointer group"
-        title="Verify to unlock social links"
-      >
-        <span className="opacity-0 group-hover:opacity-100 text-[10px] font-medium text-primary bg-background/90 px-2 py-0.5 rounded-full transition-opacity duration-200 whitespace-nowrap">
-          Verify to unlock
-        </span>
-      </button>
+        </button>
+      ))}
     </div>
   );
 
