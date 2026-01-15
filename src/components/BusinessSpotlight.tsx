@@ -331,12 +331,12 @@ const BusinessSpotlight = () => {
       <div className="relative z-10 px-[2%] lg:px-[3%]">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
-          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Local Partners</p>
+          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Community</p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-6">
-            Featured Local Partners
+            Featured Local Businesses
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto body-airy font-light">
-            Discover the businesses that make the Capital District thrive
+            The staples that define Clifton Park living
           </p>
         </div>
 
