@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Search, ArrowRight, Home, Building, Trees, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MasterGatekeeperModal from "@/components/MasterGatekeeperModal";
+import { useNavigate } from "react-router-dom";
 
 type SearchType = "single-family" | "rental-investors" | "rehab-foreclosures" | "land" | "rentals";
 
@@ -10,6 +11,7 @@ interface SearchPill {
   label: string;
   icon: React.ReactNode;
   placeholder: string;
+  hubRoute: string;
 }
 
 const searchPills: SearchPill[] = [
@@ -17,31 +19,36 @@ const searchPills: SearchPill[] = [
     id: "single-family", 
     label: "Single Family", 
     icon: <Home className="w-4 h-4" />,
-    placeholder: "Enter an address to analyze..."
+    placeholder: "Enter an address to analyze...",
+    hubRoute: "/search/single-family"
   },
   { 
     id: "rental-investors", 
-    label: "Rental Property / Investors", 
+    label: "Investors", 
     icon: <Building className="w-4 h-4" />,
-    placeholder: "Enter a multi-unit address to analyze..."
+    placeholder: "Enter a multi-unit address...",
+    hubRoute: "/search/investors"
   },
   { 
     id: "rehab-foreclosures", 
-    label: "Rehab / Foreclosures", 
+    label: "Foreclosures", 
     icon: <Building2 className="w-4 h-4" />,
-    placeholder: "Enter a distressed property address..."
+    placeholder: "Enter a distressed property...",
+    hubRoute: "/search/foreclosures"
   },
   { 
     id: "land", 
     label: "Land", 
     icon: <Trees className="w-4 h-4" />,
-    placeholder: "Enter a land parcel address..."
+    placeholder: "Enter a parcel address...",
+    hubRoute: "/search/land"
   },
   { 
     id: "rentals", 
     label: "Rentals", 
     icon: <Home className="w-4 h-4" />,
-    placeholder: "Search for available rentals..."
+    placeholder: "Search available rentals...",
+    hubRoute: "/search/rentals"
   },
 ];
 
@@ -50,8 +57,15 @@ const SearchCommandCenter = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [gatekeeperOpen, setGatekeeperOpen] = useState(false);
   const [pendingRedirectUrl, setPendingRedirectUrl] = useState("");
+  const navigate = useNavigate();
 
   const currentPill = searchPills.find(p => p.id === selectedType) || searchPills[0];
+
+  const handlePillClick = (pill: SearchPill) => {
+    setSelectedType(pill.id);
+    // Navigate to the tailored hub page for this buyer type
+    navigate(pill.hubRoute);
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +89,7 @@ const SearchCommandCenter = () => {
           {searchPills.map((pill) => (
             <button
               key={pill.id}
-              onClick={() => setSelectedType(pill.id)}
+              onClick={() => handlePillClick(pill)}
               className={`
                 flex items-center gap-2 px-5 py-3 rounded-full font-medium text-sm whitespace-nowrap
                 transition-all duration-300 shrink-0

@@ -115,6 +115,11 @@ import PartnerDashboard from "./pages/PartnerDashboard";
 import PartnerSuccess from "./pages/PartnerSuccess";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
 import ScrollToTop from "./components/ScrollToTop";
+import SingleFamilyHub from "./pages/search/SingleFamilyHub";
+import InvestorsHub from "./pages/search/InvestorsHub";
+import ForeclosuresHub from "./pages/search/ForeclosuresHub";
+import LandHub from "./pages/search/LandHub";
+import RentalsSearchHub from "./pages/search/RentalsSearchHub";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -316,6 +321,13 @@ const App = () => {
           {/* Vendor Intelligence Hub */}
           <Route path="/vendors" element={<VendorHub />} />
           <Route path="/partners" element={<VendorHub />} />
+          
+          {/* Tailored Search Hubs */}
+          <Route path="/search/single-family" element={<SingleFamilyHub />} />
+          <Route path="/search/investors" element={<InvestorsHub />} />
+          <Route path="/search/foreclosures" element={<ForeclosuresHub />} />
+          <Route path="/search/land" element={<LandHub />} />
+          <Route path="/search/rentals" element={<RentalsSearchHub />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
