@@ -85,7 +85,11 @@ const navItems = [
   },
   {
     label: "Intelligence",
-    href: "/intelligence", // Direct link, no dropdown
+    href: "/intelligence",
+  },
+  {
+    label: "Partners",
+    href: "/vendors",
   },
 ];
 
@@ -516,6 +520,19 @@ const CleanHeader = () => {
               <Link to="/intelligence" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
                 Request a Report
               </Link>
+            </div>
+          </div>
+
+          {/* Partners */}
+          <div>
+            <h3 className="text-xs uppercase text-[#00F5FF] font-bold tracking-widest mb-3">Vendor Partners</h3>
+            <div className="space-y-2">
+              <Link to="/vendors" onClick={closeMobileMenu} className="block text-primary font-medium">
+                View All Partners →
+              </Link>
+              <p className="text-xs text-muted-foreground">
+                Mortgage • Legal • Insurance • Contractors
+              </p>
             </div>
           </div>
 

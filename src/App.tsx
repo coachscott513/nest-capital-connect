@@ -98,6 +98,7 @@ import FultonMontgomeryMultiUnitMarket from "./pages/FultonMontgomeryMultiUnitMa
 import VipBuyerAccess from "./pages/VipBuyerAccess";
 import DealDesk from "./pages/DealDesk";
 import DealDeskThanks from "./pages/DealDeskThanks";
+import VendorHub from "./pages/VendorHub";
 import BuyerRoadmap from "./pages/BuyerRoadmap";
 import InvestorJourney from "./pages/buyer-journey/InvestorJourney";
 import FirstTimeBuyerJourney from "./pages/buyer-journey/FirstTimeBuyerJourney";
@@ -311,6 +312,10 @@ const App = () => {
           <Route path="/dashboard" element={<PartnerDashboard />} />
           <Route path="/partner-success" element={<PartnerSuccess />} />
           <Route path="/business-login" element={<Navigate to="/partner-auth" replace />} />
+          
+          {/* Vendor Intelligence Hub */}
+          <Route path="/vendors" element={<VendorHub />} />
+          <Route path="/partners" element={<VendorHub />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
