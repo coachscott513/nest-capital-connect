@@ -3,7 +3,7 @@ import { Search, ArrowRight, Home, Building, Trees, Building2 } from "lucide-rea
 import { Button } from "@/components/ui/button";
 import MasterGatekeeperModal from "@/components/MasterGatekeeperModal";
 
-type SearchType = "single-family" | "rental" | "land" | "apartments";
+type SearchType = "single-family" | "rental-investors" | "rehab-foreclosures" | "land" | "rentals";
 
 interface SearchPill {
   id: SearchType;
@@ -20,10 +20,16 @@ const searchPills: SearchPill[] = [
     placeholder: "Enter an address to analyze..."
   },
   { 
-    id: "rental", 
-    label: "Rental Property", 
+    id: "rental-investors", 
+    label: "Rental Property / Investors", 
     icon: <Building className="w-4 h-4" />,
-    placeholder: "Enter a rental address to analyze..."
+    placeholder: "Enter a multi-unit address to analyze..."
+  },
+  { 
+    id: "rehab-foreclosures", 
+    label: "Rehab / Foreclosures", 
+    icon: <Building2 className="w-4 h-4" />,
+    placeholder: "Enter a distressed property address..."
   },
   { 
     id: "land", 
@@ -32,10 +38,10 @@ const searchPills: SearchPill[] = [
     placeholder: "Enter a land parcel address..."
   },
   { 
-    id: "apartments", 
-    label: "Apartments", 
-    icon: <Building2 className="w-4 h-4" />,
-    placeholder: "Enter a multi-family address..."
+    id: "rentals", 
+    label: "Rentals", 
+    icon: <Home className="w-4 h-4" />,
+    placeholder: "Search for available rentals..."
   },
 ];
 
