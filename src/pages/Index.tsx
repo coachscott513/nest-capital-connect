@@ -7,6 +7,7 @@ import AppleHero from "@/components/AppleHero";
 import TownTheater from "@/components/TownTheater";
 import InstitutionalHeader from "@/components/InstitutionalHeader";
 import BusinessSpotlight from "@/components/BusinessSpotlight";
+import ProfessionalNetwork from "@/components/ProfessionalNetwork";
 import RentalVault from "@/components/RentalVault";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
@@ -42,8 +43,11 @@ const Index = () => {
         <TownTheater />
       </div>
 
-      {/* Business Spotlight - Fixed Marquee */}
+      {/* Business Spotlight - Featured Local Businesses */}
       <BusinessSpotlight />
+
+      {/* Professional Network - Vetted Vendors */}
+      <ProfessionalNetwork />
 
       {/* Rental Vault */}
       <RentalVault limit={4} />
