@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import GuideLeadModal from "@/components/GuideLeadModal";
 import SEOHead from "@/components/SEOHead";
 import AppleHero from "@/components/AppleHero";
-import AppleTownCards from "@/components/AppleTownCards";
+import TownTheater from "@/components/TownTheater";
 import InstitutionalHeader from "@/components/InstitutionalHeader";
 import BusinessSpotlight from "@/components/BusinessSpotlight";
 import RentalVault from "@/components/RentalVault";
@@ -34,18 +34,15 @@ const Index = () => {
       {/* Clean Header Navigation */}
       <CleanHeader />
 
-      {/* Apple-Style Cinematic Hero */}
+      {/* Apple-Style Cinematic Hero with Search Command Center */}
       <AppleHero onScrollToTowns={scrollToTownSection} />
 
-      {/* Institutional Header - 3-Column Bento */}
-      <InstitutionalHeader />
-
-      {/* Town Intelligence Cards */}
+      {/* Town Theater - Swipeable Carousel */}
       <div ref={townSectionRef} id="town-intelligence" className="scroll-mt-24">
-        <AppleTownCards />
+        <TownTheater />
       </div>
 
-      {/* Business Spotlight */}
+      {/* Business Spotlight - Fixed Marquee */}
       <BusinessSpotlight />
 
       {/* Rental Vault */}
