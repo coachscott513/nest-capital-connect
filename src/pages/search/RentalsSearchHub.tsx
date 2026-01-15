@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Search, ArrowRight, Home, MapPin, DollarSign, Phone } from "lucide-react";
+import { Search, ArrowRight, Home, MapPin, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainLayout from "@/components/MainLayout";
+import AnalystCard from "@/components/AnalystCard";
 import { useNavigate } from "react-router-dom";
 
 const RentalsSearchHub = () => {
@@ -24,21 +25,18 @@ const RentalsSearchHub = () => {
       title: "Budget-Friendly",
       description: "Browse rentals under $1,500/month across the region",
       action: () => navigate("/rentals?maxPrice=1500"),
-      color: "from-violet-500/20 to-violet-600/10"
+      color: "from-violet-500/20 to-violet-600/10",
+      iconColor: "text-violet-400",
+      iconBg: "bg-violet-500/10"
     },
     {
       icon: MapPin,
       title: "Browse by Town",
       description: "Find rentals in Albany, Troy, Schenectady, and more",
       action: () => navigate("/rentals"),
-      color: "from-cyan-500/20 to-cyan-600/10"
-    },
-    {
-      icon: Phone,
-      title: "Speak with an Agent",
-      description: "Get help finding your perfect rental today",
-      action: () => navigate("/ask"),
-      color: "from-amber-500/20 to-amber-600/10"
+      color: "from-cyan-500/20 to-cyan-600/10",
+      iconColor: "text-violet-400",
+      iconBg: "bg-violet-500/10"
     }
   ];
 
@@ -108,13 +106,20 @@ const RentalsSearchHub = () => {
                 onClick={card.action}
                 className={`glass-strong rounded-2xl p-8 text-left transition-all duration-300 hover:scale-[1.02] hover:shadow-xl group bg-gradient-to-br ${card.color}`}
               >
-                <div className="w-14 h-14 rounded-xl bg-violet-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <card.icon className="w-7 h-7 text-violet-400" />
+                <div className={`w-14 h-14 rounded-xl ${card.iconBg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                  <card.icon className={`w-7 h-7 ${card.iconColor}`} />
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{card.title}</h3>
                 <p className="text-muted-foreground font-light">{card.description}</p>
               </button>
             ))}
+            
+            {/* Analyst Card with Drop-down */}
+            <AnalystCard 
+              title="Speak with an Agent"
+              description="Get help finding your perfect rental today"
+              accentColor="violet"
+            />
           </div>
         </div>
       </div>

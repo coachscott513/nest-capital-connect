@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Search, ArrowRight, Home, MapPin, Calculator, Phone } from "lucide-react";
+import { Search, ArrowRight, Home, MapPin, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainLayout from "@/components/MainLayout";
 import MasterGatekeeperModal from "@/components/MasterGatekeeperModal";
+import AnalystCard from "@/components/AnalystCard";
 import { useNavigate } from "react-router-dom";
 
 const SingleFamilyHub = () => {
@@ -27,21 +28,18 @@ const SingleFamilyHub = () => {
       title: "Get Pre-Approved",
       description: "Connect with our vetted mortgage lenders for competitive rates",
       action: () => navigate("/financing"),
-      color: "from-emerald-500/20 to-emerald-600/10"
+      color: "from-emerald-500/20 to-emerald-600/10",
+      iconColor: "text-emerald-400",
+      iconBg: "bg-emerald-500/10"
     },
     {
       icon: MapPin,
       title: "Explore Towns",
       description: "Discover the best neighborhoods in the Capital District",
       action: () => navigate("/communities"),
-      color: "from-cyan-500/20 to-cyan-600/10"
-    },
-    {
-      icon: Phone,
-      title: "Speak with an Analyst",
-      description: "Get personalized guidance from our local experts",
-      action: () => navigate("/ask"),
-      color: "from-amber-500/20 to-amber-600/10"
+      color: "from-cyan-500/20 to-cyan-600/10",
+      iconColor: "text-primary",
+      iconBg: "bg-primary/10"
     }
   ];
 
@@ -111,13 +109,20 @@ const SingleFamilyHub = () => {
                 onClick={card.action}
                 className={`glass-strong rounded-2xl p-8 text-left transition-all duration-300 hover:scale-[1.02] hover:shadow-xl group bg-gradient-to-br ${card.color}`}
               >
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <card.icon className="w-7 h-7 text-primary" />
+                <div className={`w-14 h-14 rounded-xl ${card.iconBg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                  <card.icon className={`w-7 h-7 ${card.iconColor}`} />
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{card.title}</h3>
                 <p className="text-muted-foreground font-light">{card.description}</p>
               </button>
             ))}
+            
+            {/* Analyst Card with Drop-down */}
+            <AnalystCard 
+              title="Speak with an Analyst"
+              description="Get personalized guidance from our local experts"
+              accentColor="amber"
+            />
           </div>
         </div>
       </div>

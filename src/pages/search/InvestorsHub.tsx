@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Search, ArrowRight, Building, TrendingUp, Calculator, Phone } from "lucide-react";
+import { Search, ArrowRight, Building, TrendingUp, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainLayout from "@/components/MainLayout";
 import MasterGatekeeperModal from "@/components/MasterGatekeeperModal";
+import AnalystCard from "@/components/AnalystCard";
 import { useNavigate } from "react-router-dom";
 
 const InvestorsHub = () => {
@@ -27,21 +28,18 @@ const InvestorsHub = () => {
       title: "Cash Flow Calculator",
       description: "Analyze cap rates and NOI for any multi-unit property",
       action: () => navigate("/investor/analyze-multifamily"),
-      color: "from-emerald-500/20 to-emerald-600/10"
+      color: "from-emerald-500/20 to-emerald-600/10",
+      iconColor: "text-emerald-400",
+      iconBg: "bg-emerald-500/10"
     },
     {
       icon: TrendingUp,
       title: "Market Intel Reports",
       description: "Access deep-dive analysis on high-yield neighborhoods",
       action: () => navigate("/investor/best-neighborhoods-cash-flow-capital-district"),
-      color: "from-cyan-500/20 to-cyan-600/10"
-    },
-    {
-      icon: Phone,
-      title: "Speak with an Analyst",
-      description: "Get personalized DSCR loan guidance and deal analysis",
-      action: () => navigate("/ask"),
-      color: "from-amber-500/20 to-amber-600/10"
+      color: "from-cyan-500/20 to-cyan-600/10",
+      iconColor: "text-emerald-400",
+      iconBg: "bg-emerald-500/10"
     }
   ];
 
@@ -111,13 +109,20 @@ const InvestorsHub = () => {
                 onClick={card.action}
                 className={`glass-strong rounded-2xl p-8 text-left transition-all duration-300 hover:scale-[1.02] hover:shadow-xl group bg-gradient-to-br ${card.color}`}
               >
-                <div className="w-14 h-14 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <card.icon className="w-7 h-7 text-emerald-400" />
+                <div className={`w-14 h-14 rounded-xl ${card.iconBg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                  <card.icon className={`w-7 h-7 ${card.iconColor}`} />
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{card.title}</h3>
                 <p className="text-muted-foreground font-light">{card.description}</p>
               </button>
             ))}
+            
+            {/* Analyst Card with Drop-down */}
+            <AnalystCard 
+              title="Speak with an Analyst"
+              description="Get personalized DSCR loan guidance and deal analysis"
+              accentColor="emerald"
+            />
           </div>
         </div>
       </div>
