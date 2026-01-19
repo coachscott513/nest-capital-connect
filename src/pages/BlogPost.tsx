@@ -439,7 +439,7 @@ const BlogPost = () => {
                           View Profile
                         </Button>
                         <Button variant="outline" size="sm" asChild>
-                          <a href="tel:+15186762347">Contact Scott</a>
+                          <a href="tel:+15186718048">Contact an Agent</a>
                         </Button>
                       </div>
                     </div>

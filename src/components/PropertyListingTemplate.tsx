@@ -255,7 +255,7 @@ const PropertyListingTemplate = ({ property }: PropertyListingTemplateProps) => 
               Thinking of selling your {property.city} home?
             </h2>
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Contact Scott Alvarez, your trusted RE/MAX agent, for a free valuation and expert guidance through the selling process.
+              Contact our team, your trusted RE/MAX agents, for a free valuation and expert guidance through the selling process.
             </p>
             <Button size="lg" asChild>
               <a href="/sell-investment-property">

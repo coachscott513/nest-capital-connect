@@ -21,9 +21,9 @@ const CallToActionLinks = ({ context, className = "", layout = 'horizontal' }: C
   const getContextualActions = (ctx: string): CTAAction[] => {
     const baseActions = [
       {
-        title: "Contact Scott",
+        title: "Contact an Agent",
         description: "Speak with our expert directly",
-        href: "tel:+15186762347",
+        href: "tel:+15186718048",
         icon: <Phone className="w-5 h-5" />,
         external: true
       },
