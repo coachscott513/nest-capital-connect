@@ -177,27 +177,91 @@ const RealEstateVendorDirectory = () => {
     setSelectedPhase(phase);
   };
 
+  // Flatten all vendors for horizontal display
+  const allVendors = vendorPhases.flatMap(phase => 
+    phase.vendors.map(vendor => ({ ...vendor, phase }))
+  );
+
   return (
-    <section className="section-massive overflow-hidden relative isolate">
+    <section className="py-16 md:py-20 overflow-hidden relative isolate">
       {/* Liquid Glass Background */}
       <div className="absolute inset-0 z-0 bg-black/40 backdrop-blur-[40px] pointer-events-none" />
       
-      <div className="relative z-10 px-[4%] lg:px-[6%]">
+      <div className="relative z-10 px-4 md:px-[4%] lg:px-[6%]">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">
+        <div className="text-center mb-8 md:mb-12">
+          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
             Trusted Team
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-foreground tracking-tight mb-4">
             Your Real Estate Partners
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto body-airy font-light">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light">
             Vetted professionals for every phase of your home purchase
           </p>
         </div>
 
-        {/* Timeline Phases */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* Mobile: Horizontal Scroll */}
+        <div className="md:hidden">
+          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
+            {allVendors.map((vendor, index) => {
+              const CategoryIcon = categoryIcons[vendor.category];
+              const phase = vendor.phase;
+              
+              return (
+                <motion.button
+                  key={vendor.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  onClick={() => handleVendorClick(vendor, phase)}
+                  className="flex-shrink-0 w-[160px] snap-start text-left p-4 rounded-2xl transition-all duration-300"
+                  style={{
+                    background: "rgba(0, 0, 0, 0.6)",
+                    backdropFilter: "blur(25px)",
+                    border: "1px solid rgba(255, 255, 255, 0.1)"
+                  }}
+                >
+                  {/* Icon */}
+                  <div 
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${phase.accentColor}`}
+                    style={{
+                      background: `linear-gradient(135deg, ${phase.glowColor}, transparent)`,
+                      boxShadow: `0 0 15px ${phase.glowColor}`
+                    }}
+                  >
+                    <CategoryIcon className="w-5 h-5" />
+                  </div>
+                  
+                  {/* Content */}
+                  <div>
+                    <span className="block font-semibold text-foreground text-sm leading-tight mb-1">
+                      {vendor.name}
+                    </span>
+                    <span className="block text-xs text-muted-foreground mb-2">
+                      {vendor.specialty}
+                    </span>
+                    {vendor.isPreferred && vendor.badgeLabel && (
+                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-semibold">
+                        <BadgeCheck className="w-3 h-3" />
+                        <span>{vendor.badgeLabel}</span>
+                      </div>
+                    )}
+                  </div>
+                </motion.button>
+              );
+            })}
+          </div>
+          
+          {/* Scroll hint */}
+          <p className="text-center text-xs text-muted-foreground mt-2">
+            ← Swipe to see all partners →
+          </p>
+        </div>
+
+        {/* Desktop: 3-Column Phase Layout */}
+        <div className="hidden md:grid grid-cols-3 gap-6 lg:gap-8">
           {vendorPhases.map((phase, phaseIndex) => {
             const PhaseIcon = phase.icon;
             
@@ -300,8 +364,8 @@ const RealEstateVendorDirectory = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-12 text-center">
-          <p className="text-muted-foreground mb-4">
+        <div className="mt-8 md:mt-12 text-center">
+          <p className="text-muted-foreground text-sm md:text-base mb-4">
             Need a specific recommendation? Our team knows the best partners for your situation.
           </p>
           <a href="tel:+15186718048">
