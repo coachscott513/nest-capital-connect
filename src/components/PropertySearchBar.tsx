@@ -146,14 +146,14 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
               Email My Report
             </a>
             <a
-              href={`sms:+15186762347?body=${encodeURIComponent(`Hi Scott, please analyze: ${keyword || "(paste address here)"}`)}`}
+              href={`sms:+15186718048?body=${encodeURIComponent(`Hi Scott, please analyze: ${keyword || "(paste address here)"}`)}`}
               className="flex items-center justify-center gap-3 h-14 bg-blue-600 hover:bg-blue-700 text-white font-bold text-base rounded-md transition-colors"
             >
               <MessageSquare className="w-5 h-5" />
               Text My Report
             </a>
             <a
-              href="tel:+15186762347"
+              href="tel:+15186718048"
               className="flex items-center justify-center gap-3 h-14 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base rounded-md transition-colors"
             >
               <Phone className="w-5 h-5" />

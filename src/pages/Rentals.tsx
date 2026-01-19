@@ -20,7 +20,7 @@ const Rentals = () => {
     "name": "Capital District Nest - Rentals & First-Time Buyers",
     "description": "Find quality rental properties and first-time homebuyer assistance in Albany, Troy, Schenectady, and Saratoga Springs, NY.",
     "url": "https://capitaldistrictnest.com/rentals",
-    "telephone": "+1-518-676-2347",
+    "telephone": "+1-518-671-8048",
     "email": "info@capitaldistrict.com",
     "address": {
       "@type": "PostalAddress",

@@ -103,10 +103,10 @@ const vendorPhases: VendorPhase[] = [
         category: "broker",
         description: "Capital District Nest operates under RE/MAX Solutions, bringing global reach with hyperlocal expertise. Full-service representation for buyers and sellers.",
         specialty: "Real Estate Brokerage",
-        phone: "518-676-2347",
+        phone: "518-671-8048",
         website: "https://capitaldistrictnest.com",
         ctaLabel: "Schedule Consultation",
-        ctaUrl: "tel:+15186762347",
+        ctaUrl: "tel:+15186718048",
         isPreferred: true
       },
       {
@@ -139,7 +139,7 @@ const vendorPhases: VendorPhase[] = [
         description: "We're currently vetting home inspectors to add to our Preferred Partner network. Contact us for a personal recommendation based on your property type.",
         specialty: "Home Inspection",
         ctaLabel: "Request Recommendation",
-        ctaUrl: "tel:+15186762347",
+        ctaUrl: "tel:+15186718048",
         isPreferred: false
       }
     ]
@@ -298,7 +298,7 @@ const RealEstateVendorDirectory = () => {
           <p className="text-muted-foreground mb-4">
             Need a specific recommendation? Our team knows the best partners for your situation.
           </p>
-          <a href="tel:+15186762347">
+          <a href="tel:+15186718048">
             <Button 
               size="lg"
               className="bg-primary/20 text-primary hover:bg-primary/30 border border-primary/30 backdrop-blur-sm"

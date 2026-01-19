@@ -11,8 +11,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const IDX_URL = "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady&min=0&max=100000000&beds=0&baths=0&types[]=3&statuses[]=0&sortby=listings.price+ASC&rtype=map";
-const SCOTT_PHONE = "518-676-2347";
-const SCOTT_PHONE_TEL = "+15186762347";
+const SCOTT_PHONE = "518-671-8048";
+const SCOTT_PHONE_TEL = "+15186718048";
 
 const SchenectadyMultiUnit = () => {
   const [formData, setFormData] = useState({
