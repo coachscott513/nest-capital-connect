@@ -40,7 +40,7 @@ const PropertyContactForm = ({ propertyAddress, mlsId }: PropertyContactFormProp
     try {
       // TODO: Integrate with edge function to send to scott@capitaldistrictnest.com and BoldTrail CRM
       console.log("Contact form submission:", { ...values, property: propertyAddress, mlsId });
-      toast.success("Thank you! Scott will contact you shortly.");
+      toast.success("Thank you! An agent will contact you shortly.");
       form.reset();
     } catch (error) {
       toast.error("Failed to send message. Please try again.");
@@ -116,7 +116,7 @@ const PropertyContactForm = ({ propertyAddress, mlsId }: PropertyContactFormProp
                   <FormLabel>Message</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Tell Scott about your needs..."
+                      placeholder="Tell us about your needs..."
                       className="min-h-[120px]"
                       {...field}
                     />

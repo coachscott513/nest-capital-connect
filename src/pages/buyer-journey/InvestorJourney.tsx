@@ -149,9 +149,9 @@ const InvestorJourney = () => {
 
                 <div className="pt-4 border-t border-border mt-4">
                   <p className="text-sm text-muted-foreground text-center">
-                    Call or Text Scott at{" "}
-                    <a href="tel:5186762347" className="text-primary font-medium hover:underline">
-                      518-676-2347
+                    Call or Text an Agent at{" "}
+                    <a href="tel:+15186718048" className="text-primary font-medium hover:underline">
+                      (518) 671-8048
                     </a>
                   </p>
                 </div>

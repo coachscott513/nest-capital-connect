@@ -100,7 +100,7 @@ const AlbanyMultiUnit = () => {
                   style={{ backgroundColor: '#dff7df' }}
                 >
                   <p className="text-center lg:text-left" style={{ color: '#000' }}>
-                    <span className="font-bold">Call/Text Scott directly: </span>
+                    <span className="font-bold">Call/Text an Agent: </span>
                     <a 
                       href={`tel:${SCOTT_PHONE_TEL}`}
                       className="font-bold hover:underline"
@@ -135,7 +135,7 @@ const AlbanyMultiUnit = () => {
                       </a>
                     </Button>
                     <p className="text-muted-foreground">
-                      Or call/text Scott now:{" "}
+                      Or call/text an agent now:{" "}
                       <a href={`tel:${SCOTT_PHONE_TEL}`} className="text-primary font-semibold hover:underline">
                         {SCOTT_PHONE}
                       </a>
@@ -560,7 +560,7 @@ const AlbanyMultiUnit = () => {
               
               {/* Phone CTA below VIP button */}
               <p className="text-foreground mt-6">
-                <span className="font-semibold">Call/Text Scott: </span>
+                <span className="font-semibold">Call/Text an Agent: </span>
                 <a href={`tel:${SCOTT_PHONE_TEL}`} className="text-primary font-semibold hover:underline">
                   {SCOTT_PHONE}
                 </a>

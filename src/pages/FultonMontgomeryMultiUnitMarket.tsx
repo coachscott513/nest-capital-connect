@@ -62,7 +62,7 @@ const FultonMontgomeryMultiUnitMarket = () => {
           className="inline-flex items-center gap-2 text-sm md:text-base font-medium hover:opacity-90 transition-opacity"
         >
           <Phone className="w-4 h-4" />
-          <span>📞 Call or Text Scott — {SCOTT_PHONE}</span>
+          <span>📞 Call or Text an Agent — {SCOTT_PHONE}</span>
         </a>
       </div>
 
@@ -93,7 +93,7 @@ const FultonMontgomeryMultiUnitMarket = () => {
                 style={{ backgroundColor: '#dff7df' }}
               >
                 <p className="text-center" style={{ color: '#000' }}>
-                  <span className="font-bold">Call/Text Scott Directly: </span>
+                  <span className="font-bold">Call/Text an Agent: </span>
                   <a 
                     href={`tel:${SCOTT_PHONE_TEL}`}
                     className="font-bold hover:underline"
