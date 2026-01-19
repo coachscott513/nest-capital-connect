@@ -27,6 +27,7 @@ interface Vendor {
   ctaLabel: string;
   ctaUrl?: string;
   isPreferred: boolean;
+  badgeLabel?: "Approved" | "Recommended";
 }
 
 interface VendorPhase {
@@ -54,37 +55,40 @@ const vendorPhases: VendorPhase[] = [
         id: "homestead",
         name: "Homestead Funding",
         category: "mortgage",
-        description: "Local mortgage experts with 25+ years serving the Capital District. Specializing in first-time buyers, investment properties, and complex financing.",
+        description: "A premier local lender known for personalized service and a deep understanding of the Capital District market. Homestead Funding provides the speed and reliability our clients need to win in today's competitive environment.",
         specialty: "Mortgage & Home Loans",
         phone: "518-464-1100",
         website: "https://www.homesteadfunding.com",
         ctaLabel: "Get Pre-Approved",
         ctaUrl: "https://www.homesteadfunding.com/apply",
-        isPreferred: true
+        isPreferred: true,
+        badgeLabel: "Approved"
       },
       {
         id: "broadview",
         name: "Broadview Federal Credit Union",
         category: "mortgage",
-        description: "Member-owned credit union offering competitive mortgage rates and personalized service. Strong presence throughout the Capital Region.",
+        description: "Member-owned credit union offering competitive mortgage rates and personalized service. Strong presence throughout the Capital Region with a commitment to community banking.",
         specialty: "Credit Union Mortgages",
         phone: "518-456-3300",
         website: "https://www.broadviewfcu.com",
         ctaLabel: "Check Rates",
         ctaUrl: "https://www.broadviewfcu.com/mortgages",
-        isPreferred: true
+        isPreferred: true,
+        badgeLabel: "Approved"
       },
       {
         id: "statefarm",
         name: "State Farm",
         category: "insurance",
-        description: "Comprehensive homeowners insurance with local agents throughout the Capital District. Bundle home and auto for maximum savings.",
+        description: "Providing comprehensive home and property protection, our local State Farm partners offer the reliable coverage and local expertise that Capital District homeowners trust.",
         specialty: "Homeowners Insurance",
         phone: "518-555-0100",
         website: "https://www.statefarm.com",
         ctaLabel: "Request a Quote",
         ctaUrl: "https://www.statefarm.com/get-a-quote",
-        isPreferred: true
+        isPreferred: true,
+        badgeLabel: "Approved"
       }
     ]
   },
@@ -101,25 +105,27 @@ const vendorPhases: VendorPhase[] = [
         id: "remax",
         name: "RE/MAX Solutions",
         category: "broker",
-        description: "Capital District Nest operates under RE/MAX Solutions, bringing global reach with hyperlocal expertise. Full-service representation for buyers and sellers.",
+        description: "The backbone of our local real estate practice. RE/MAX Solutions combines global reach with unmatched local knowledge to deliver results for every buyer and seller we represent.",
         specialty: "Real Estate Brokerage",
         phone: "518-671-8048",
         website: "https://capitaldistrictnest.com",
         ctaLabel: "Schedule Consultation",
         ctaUrl: "tel:+15186718048",
-        isPreferred: true
+        isPreferred: true,
+        badgeLabel: "Recommended"
       },
       {
         id: "gillberg",
         name: "Gillberg Law",
         category: "attorney",
-        description: "Real estate attorneys specializing in residential and investment property transactions. Title review, contract negotiation, and closing representation.",
+        description: "Specializing in local real estate law, Gillberg Law ensures every transaction is handled with precision and care. They are our top choice for protecting our clients' interests from contract to closing.",
         specialty: "Real Estate Law",
         phone: "518-555-0200",
         website: "https://gillberglaw.com",
         ctaLabel: "Request Consultation",
         ctaUrl: "https://gillberglaw.com/contact",
-        isPreferred: true
+        isPreferred: true,
+        badgeLabel: "Recommended"
       }
     ]
   },
@@ -271,10 +277,10 @@ const RealEstateVendorDirectory = () => {
                                 <span className="font-semibold text-foreground truncate">
                                   {vendor.name}
                                 </span>
-                                {vendor.isPreferred && (
+                                {vendor.isPreferred && vendor.badgeLabel && (
                                   <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-semibold flex-shrink-0">
                                     <BadgeCheck className="w-3 h-3" />
-                                    <span>Verified by Scott</span>
+                                    <span>{vendor.badgeLabel}</span>
                                   </div>
                                 )}
                               </div>
@@ -304,7 +310,7 @@ const RealEstateVendorDirectory = () => {
               className="bg-primary/20 text-primary hover:bg-primary/30 border border-primary/30 backdrop-blur-sm"
             >
               <Phone className="w-4 h-4 mr-2" />
-              Speak with Scott
+              Contact an Agent
             </Button>
           </a>
         </div>
@@ -346,11 +352,11 @@ const RealEstateVendorDirectory = () => {
                   </div>
                 </div>
                 
-                {selectedVendor.isPreferred && (
+                {selectedVendor.isPreferred && selectedVendor.badgeLabel && (
                   <div className="flex items-center gap-2 p-3 rounded-xl bg-primary/10 border border-primary/20">
                     <BadgeCheck className="w-5 h-5 text-primary" />
                     <span className="text-sm text-primary font-medium">
-                      Preferred Partner — Verified by Scott
+                      {selectedVendor.badgeLabel} Partner
                     </span>
                   </div>
                 )}
