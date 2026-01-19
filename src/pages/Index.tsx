@@ -6,7 +6,7 @@ import SEOHead from "@/components/SEOHead";
 import AppleHero from "@/components/AppleHero";
 import TownTheater from "@/components/TownTheater";
 import InstitutionalHeader from "@/components/InstitutionalHeader";
-import BusinessSpotlight from "@/components/BusinessSpotlight";
+import RealEstateVendorDirectory from "@/components/RealEstateVendorDirectory";
 import ProfessionalNetwork from "@/components/ProfessionalNetwork";
 import RentalVault from "@/components/RentalVault";
 import CleanHeader from "@/components/CleanHeader";
@@ -43,11 +43,8 @@ const Index = () => {
         <TownTheater />
       </div>
 
-      {/* Business Spotlight - Featured Local Businesses */}
-      <BusinessSpotlight />
-
-      {/* Professional Network - Vetted Vendors */}
-      <ProfessionalNetwork />
+      {/* Real Estate Vendor Directory - Home Purchase Timeline */}
+      <RealEstateVendorDirectory />
 
       {/* Rental Vault */}
       <RentalVault limit={4} />
