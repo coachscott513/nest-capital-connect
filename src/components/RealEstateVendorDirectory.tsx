@@ -236,18 +236,18 @@ const RealEstateVendorDirectory = () => {
                   
                   {/* Content */}
                   <div>
-                    <span className="block font-semibold text-foreground text-sm leading-tight mb-1">
-                      {vendor.name}
-                    </span>
-                    <span className="block text-xs text-muted-foreground mb-2">
-                      {vendor.specialty}
-                    </span>
                     {vendor.isPreferred && vendor.badgeLabel && (
-                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-semibold">
+                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-semibold mb-2">
                         <BadgeCheck className="w-3 h-3" />
                         <span>{vendor.badgeLabel}</span>
                       </div>
                     )}
+                    <span className="block font-semibold text-foreground text-sm leading-tight mb-1">
+                      {vendor.name}
+                    </span>
+                    <span className="block text-xs text-muted-foreground">
+                      {vendor.specialty}
+                    </span>
                   </div>
                 </motion.button>
               );
@@ -337,17 +337,15 @@ const RealEstateVendorDirectory = () => {
                             
                             {/* Content */}
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className="font-semibold text-foreground truncate">
-                                  {vendor.name}
-                                </span>
-                                {vendor.isPreferred && vendor.badgeLabel && (
-                                  <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-semibold flex-shrink-0">
-                                    <BadgeCheck className="w-3 h-3" />
-                                    <span>{vendor.badgeLabel}</span>
-                                  </div>
-                                )}
-                              </div>
+                              {vendor.isPreferred && vendor.badgeLabel && (
+                                <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-semibold mb-1">
+                                  <BadgeCheck className="w-3 h-3" />
+                                  <span>{vendor.badgeLabel}</span>
+                                </div>
+                              )}
+                              <span className="block font-semibold text-foreground">
+                                {vendor.name}
+                              </span>
                               <p className="text-xs text-muted-foreground">
                                 {vendor.specialty}
                               </p>
