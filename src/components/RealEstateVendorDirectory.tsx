@@ -76,19 +76,6 @@ const vendorPhases: VendorPhase[] = [
         ctaUrl: "https://www.broadviewfcu.com/mortgages",
         isPreferred: true,
         badgeLabel: "Approved"
-      },
-      {
-        id: "statefarm",
-        name: "State Farm",
-        category: "insurance",
-        description: "Providing comprehensive home and property protection, our local State Farm partners offer the reliable coverage and local expertise that Capital District homeowners trust.",
-        specialty: "Homeowners Insurance",
-        phone: "518-555-0100",
-        website: "https://www.statefarm.com",
-        ctaLabel: "Request a Quote",
-        ctaUrl: "https://www.statefarm.com/get-a-quote",
-        isPreferred: true,
-        badgeLabel: "Approved"
       }
     ]
   },
@@ -138,6 +125,19 @@ const vendorPhases: VendorPhase[] = [
     accentColor: "text-amber-400",
     glowColor: "rgba(251, 191, 36, 0.3)",
     vendors: [
+      {
+        id: "statefarm",
+        name: "State Farm",
+        category: "insurance",
+        description: "Providing comprehensive home and property protection, our local State Farm partners offer the reliable coverage and local expertise that Capital District homeowners trust.",
+        specialty: "Homeowners Insurance",
+        phone: "518-555-0100",
+        website: "https://www.statefarm.com",
+        ctaLabel: "Request a Quote",
+        ctaUrl: "https://www.statefarm.com/get-a-quote",
+        isPreferred: true,
+        badgeLabel: "Approved"
+      },
       {
         id: "inspector-placeholder",
         name: "Coming Soon",
