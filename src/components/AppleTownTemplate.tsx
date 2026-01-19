@@ -35,6 +35,7 @@ import CivicDirectorySection from "@/components/CivicDirectorySection";
 import AcademicInstitutionsSection from "@/components/AcademicInstitutionsSection";
 import FeaturedIntelSection from "@/components/FeaturedIntelSection";
 import LiveInventoryModal from "@/components/LiveInventoryModal";
+import RealEstateVendorDirectory from "@/components/RealEstateVendorDirectory";
 import { getTownSEOContent, getCountyForTown } from "@/data/townSEOContent";
 
 interface TownLedgerEntry {
@@ -651,106 +652,8 @@ const AppleTownTemplate = ({
         </section>
       </IntelligenceGatekeeper>
 
-      {/* LOCAL PARTNERS - Matches Homepage BusinessSpotlight Styling */}
-      <section className="section-massive px-[2%] lg:px-[3%] bg-background overflow-hidden">
-        <div className="w-full">
-          <div className="text-center mb-12 md:mb-16 px-[3%]">
-            <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Local Partners</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-6">
-              The Soul of {townName}
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto body-airy font-light">
-              Verified business owners building the community. Click to discover their stories.
-            </p>
-          </div>
-
-          {isLoading ? (
-            <div className="flex gap-8 justify-center">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="flex flex-col items-center gap-3 animate-pulse">
-                  <div className="w-28 h-28 rounded-full bg-muted" />
-                  <div className="h-4 bg-muted rounded w-20" />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="relative">
-              {/* Fade edges - matches homepage */}
-              <div className="absolute left-0 top-0 bottom-8 w-24 bg-gradient-to-r from-background to-transparent pointer-events-none z-10" />
-              <div className="absolute right-0 top-0 bottom-8 w-24 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
-              
-              <div className="flex gap-8 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory justify-center">
-                {/* Use town-specific businesses with blurred photos and social icons */}
-                {(TOWN_BUSINESSES[townSlug] || DEFAULT_BUSINESSES).map((business) => {
-                  // Create a LocalVoice object for the Sheet modal with unverified status
-                  const businessVoice: LocalVoice = {
-                    id: business.id,
-                    business_name: business.name,
-                    owner_name: business.name.split(' ')[0] + ' Owner',
-                    owner_photo_url: business.logo,
-                    business_logo_url: business.logo,
-                    origin_story: '',
-                    alpha_insight: '',
-                    growth_vision: '',
-                    primary_offering: `Local ${townName} business serving the community.`,
-                    website_url: '',
-                    is_verified: false // Always show as unverified to trigger blur
-                  };
-                  
-                  return (
-                    <button
-                      key={business.id}
-                      onClick={() => setSelectedVoice(businessVoice)}
-                      className="flex flex-col items-center gap-3 flex-shrink-0 snap-center group"
-                    >
-                      {/* Teal Glow Border - exact homepage styling */}
-                      <div className="relative spotlight">
-                        <div className="w-28 h-28 lg:w-32 lg:h-32 rounded-full p-[2px] bg-gradient-to-br from-primary to-primary/60 group-hover:scale-105 transition-transform duration-300 glow-primary">
-                          <div className="w-full h-full rounded-full overflow-hidden bg-card p-0.5">
-                            <img
-                              src={business.logo}
-                              alt={business.name}
-                              className="w-full h-full rounded-full object-cover"
-                            />
-                          </div>
-                        </div>
-                        {/* Verified Badge - exact homepage styling */}
-                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
-                          Verified
-                        </div>
-                      </div>
-                      
-                      {/* Business name */}
-                      <span className="text-sm font-medium text-foreground text-center max-w-[120px] leading-tight group-hover:text-primary transition-colors">
-                        {business.name}
-                      </span>
-                      
-                      {/* Social Media Icons */}
-                      <div className="flex items-center gap-2">
-                        {business.instagram && (
-                          <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-                            <Instagram className="w-3 h-3 text-primary" />
-                          </div>
-                        )}
-                        {business.facebook && (
-                          <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-                            <Facebook className="w-3 h-3 text-primary" />
-                          </div>
-                        )}
-                        {business.twitter && (
-                          <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-                            <Twitter className="w-3 h-3 text-primary" />
-                          </div>
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
+      {/* REAL ESTATE VENDOR DIRECTORY - Approved & Recommended Partners */}
+      <RealEstateVendorDirectory />
 
       {/* THE NUMBERS BRIDGE - Professional Transition */}
       <section className="py-20 px-[5%] bg-background relative overflow-hidden">
