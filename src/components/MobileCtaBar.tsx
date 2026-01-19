@@ -29,7 +29,7 @@ const MobileCtaBar = () => {
       <div className="grid grid-cols-3 divide-x divide-white/20">
         {/* Call Button */}
         <a
-          href="tel:+15186762347"
+          href="tel:+15186718048"
           className="flex flex-col items-center justify-center min-h-[56px] py-3 px-1 text-white hover:bg-white/10 transition-colors active:bg-white/20"
         >
           <Phone className="w-5 h-5 text-white mb-1" />
@@ -38,7 +38,7 @@ const MobileCtaBar = () => {
 
         {/* Text Button */}
         <a
-          href="sms:+15186762347?body=Hi%20Scott%2C%20I'd%20like%20to%20analyze%20this%20property%3A%20"
+          href="sms:+15186718048?body=Hi%20Scott%2C%20I'd%20like%20to%20analyze%20this%20property%3A%20"
           className="flex flex-col items-center justify-center min-h-[56px] py-3 px-1 text-white hover:bg-white/10 transition-colors active:bg-white/20"
         >
           <MessageSquare className="w-5 h-5 text-white mb-1" />

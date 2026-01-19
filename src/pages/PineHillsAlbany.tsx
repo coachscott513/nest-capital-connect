@@ -49,28 +49,28 @@ const PineHillsAlbany = () => {
           name: "Capital Region Mortgage",
           type: "finance",
           contactName: "Mike Thompson",
-          phone: "5186762347",
+          phone: "5186718048",
           badge: "Top Lender"
         },
         {
           name: "Harrison Law Group",
           type: "legal",
           contactName: "Sarah Harrison, Esq.",
-          phone: "5186762347",
+          phone: "5186718048",
           badge: "Closings Expert"
         },
         {
           name: "Pine Hills Contracting",
           type: "contractor",
           contactName: "Tom Russo",
-          phone: "5186762347",
+          phone: "5186718048",
           badge: "Rehab Specialist"
         },
         {
           name: "Upstate Insurance",
           type: "insurance",
           contactName: "Lisa Chen",
-          phone: "5186762347"
+          phone: "5186718048"
         }
       ]}
       highlights={[

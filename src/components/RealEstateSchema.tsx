@@ -30,7 +30,7 @@ const RealEstateSchema = ({ type, data }: RealEstateSchemaProps) => {
           "name": "Capital District Nest",
           "description": "Premier real estate investment specialists in Albany, Troy, Schenectady & Saratoga Springs NY. Expert services for multi-unit buildings, fix & flip properties, rental investments, and financing solutions.",
           "url": window.location.origin,
-          "telephone": "+15186762347",
+          "telephone": "+15186718048",
           "email": "info@capitaldistrict.com",
           "address": {
             "@type": "PostalAddress",
@@ -99,7 +99,7 @@ const RealEstateSchema = ({ type, data }: RealEstateSchemaProps) => {
           ],
           "contactPoint": {
             "@type": "ContactPoint",
-            "telephone": "+15186762347",
+            "telephone": "+15186718048",
             "contactType": "customer service",
             "areaServed": "US",
             "availableLanguage": "English"

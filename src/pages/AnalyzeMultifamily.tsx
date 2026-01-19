@@ -313,7 +313,7 @@ const AnalyzeMultifamily = () => {
               Want Us to Run the Numbers for You?
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Text any property address to <strong className="text-primary">518-676-2347</strong> and we'll send you a complete analysis including:
+              Text any property address to <strong className="text-primary">518-671-8048</strong> and we'll send you a complete analysis including:
             </p>
             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               {['NOI calculation', 'Cap rate analysis', 'Cash flow projection', 'DSCR qualification'].map((item) => (
@@ -324,13 +324,13 @@ const AnalyzeMultifamily = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
-                <a href="tel:+15186762347" className="flex items-center gap-2">
+                <a href="tel:+15186718048" className="flex items-center gap-2">
                   <Phone className="w-5 h-5" />
-                  Call: (518) 676-2347
+                  Call: (518) 671-8048
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="sms:+15186762347" className="flex items-center gap-2">
+                <a href="sms:+15186718048" className="flex items-center gap-2">
                   <MessageSquare className="w-5 h-5" />
                   Text an Address
                 </a>

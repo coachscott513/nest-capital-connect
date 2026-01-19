@@ -6,8 +6,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { TrendingUp, MapPin, Phone, CheckCircle, MessageCircle, Crown, Percent, Users, DollarSign, Building2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const SCOTT_PHONE = "518-676-2347";
-const SCOTT_PHONE_TEL = "+15186762347";
+const SCOTT_PHONE = "518-671-8048";
+const SCOTT_PHONE_TEL = "+15186718048";
 
 const SaratogaMultiUnitMarket = () => {
   const structuredData = {
