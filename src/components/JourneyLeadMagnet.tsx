@@ -106,7 +106,7 @@ const JourneyLeadMagnet = ({
           </div>
           <h3 className="text-xl font-bold text-foreground mb-2">Thanks!</h3>
           <p className="text-muted-foreground mb-4">
-            Your guide is on the way. If you asked for help, Scott will reach out shortly.
+            Your guide is on the way. If you asked for help, an agent will reach out shortly.
           </p>
           <p className="text-sm text-muted-foreground">
             Didn't receive it? Check your spam folder or contact us directly.

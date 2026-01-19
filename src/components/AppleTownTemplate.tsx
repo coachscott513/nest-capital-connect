@@ -36,6 +36,7 @@ import AcademicInstitutionsSection from "@/components/AcademicInstitutionsSectio
 import FeaturedIntelSection from "@/components/FeaturedIntelSection";
 import LiveInventoryModal from "@/components/LiveInventoryModal";
 import RealEstateVendorDirectory from "@/components/RealEstateVendorDirectory";
+import QuickMatchForm from "@/components/QuickMatchForm";
 import { getTownSEOContent, getCountyForTown } from "@/data/townSEOContent";
 
 interface TownLedgerEntry {
@@ -950,6 +951,24 @@ const AppleTownTemplate = ({
         featuredYield={highYieldAssets[0] ? `${highYieldAssets[0].cash_on_cash_return}%` : undefined}
         featuredType={highYieldAssets[0]?.property_type}
       />
+
+      {/* QUICK MATCH LEAD CAPTURE - VIP Property Access */}
+      <section className="section-massive px-[5%] bg-background">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-8">
+            <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">
+              VIP Access
+            </p>
+            <h2 className="text-3xl md:text-4xl font-extralight text-foreground mb-4 tracking-tight">
+              Get {townName} Listings First
+            </h2>
+            <p className="text-lg text-muted-foreground body-airy">
+              Including off-market opportunities matched to your criteria.
+            </p>
+          </div>
+          <QuickMatchForm townName={townName} />
+        </div>
+      </section>
 
       {/* CTA Section - Deep Space */}
       <section className="section-massive px-[5%] bg-background">

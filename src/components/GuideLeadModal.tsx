@@ -39,7 +39,7 @@ const GuideLeadModal = ({ open, onOpenChange, redirectPath, guideType }: GuideLe
 
       toast({
         title: "Success!",
-        description: "Thanks — your guide is on the way. If you asked for help, Scott will reach out shortly.",
+        description: "Thanks — your guide is on the way. If you asked for help, an agent will reach out shortly.",
       });
 
       // Close modal and redirect

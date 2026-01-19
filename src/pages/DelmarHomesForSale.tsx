@@ -219,8 +219,8 @@ const DelmarHomesForSale = () => {
 
             <div className="flex items-center justify-center gap-2 text-foreground font-medium">
               <Phone className="w-5 h-5 text-primary" />
-              <a href="tel:518-676-2347" className="hover:text-primary">
-                Call/Text Scott: 518-676-2347
+              <a href="tel:+15186718048" className="hover:text-primary">
+                Call/Text an Agent: (518) 671-8048
               </a>
             </div>
           </div>

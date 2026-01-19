@@ -126,7 +126,7 @@ const InvestmentLanding = () => {
               className="h-14 px-8 text-lg font-semibold"
               asChild
             >
-              <a href="tel:+15186762347">📞 Call or Text Scott: 518-676-2347</a>
+              <a href="tel:+15186718048">📞 Call or Text: (518) 671-8048</a>
             </Button>
           </div>
           

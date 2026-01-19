@@ -130,10 +130,10 @@ const Reviews = () => {
             Join hundreds of satisfied Capital District clients who trusted us with their real estate journey.
           </p>
           <a
-            href="tel:+15186762347"
+            href="tel:+15186718048"
             className="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform"
           >
-            Call (518) 676-2347
+            Call (518) 671-8048
           </a>
         </section>
       </main>

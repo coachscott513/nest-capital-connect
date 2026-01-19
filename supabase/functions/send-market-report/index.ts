@@ -57,7 +57,7 @@ const handler = async (req: Request): Promise<Response> => {
               <li>Cap rate & ROI projections</li>
             </ul>
             
-            <p>Questions? Reply to this email or call Scott directly at (518) 671-8048.</p>
+            <p>Questions? Reply to this email or call us directly at (518) 671-8048.</p>
             <p>Best,<br>The Capital District Nest Team</p>
           </div>
         `,
