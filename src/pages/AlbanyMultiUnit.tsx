@@ -56,7 +56,7 @@ const AlbanyMultiUnit = () => {
     <MainLayout>
       <Helmet>
         <title>Albany Multi-Unit Market Report | 10–14% Cap Rates | Cash-Flow Deals</title>
-        <meta name="description" content="Albany multi-unit investing: Real 10–14% cap rates, 15–30% cash-on-cash returns, $600–$1,800/mo net cash flow. Duplexes, triplexes & 4-units. Call Scott at 518-676-2347." />
+        <meta name="description" content="Albany multi-unit investing: Real 10–14% cap rates, 15–30% cash-on-cash returns, $600–$1,800/mo net cash flow. Duplexes, triplexes & 4-units. Call an Agent at 518-671-8048." />
         <meta name="keywords" content="albany multi family homes for sale, albany duplex for sale, albany triplex, albany investment property, albany county multi family, albany cap rate, albany cash flow" />
         <link rel="canonical" href="https://capitaldistrictnest.com/albany-multi-unit" />
       </Helmet>

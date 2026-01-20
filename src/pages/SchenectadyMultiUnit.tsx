@@ -57,7 +57,7 @@ const SchenectadyMultiUnit = () => {
     <MainLayout>
       <Helmet>
         <title>Schenectady Multi-Unit Market Report | 11–14% Cap Rates | Best Entry-Level ROI</title>
-        <meta name="description" content="Schenectady multi-unit investing: Real 11–14% cap rates, 20–30% cash-on-cash returns. Highest ROI market in the Capital District. Call Scott at 518-676-2347." />
+        <meta name="description" content="Schenectady multi-unit investing: Real 11–14% cap rates, 20–30% cash-on-cash returns. Highest ROI market in the Capital District. Call an Agent at 518-671-8048." />
         <meta name="keywords" content="schenectady multi family homes for sale, schenectady duplex for sale, schenectady triplex, schenectady investment property, schenectady cap rate" />
         <link rel="canonical" href="https://capitaldistrictnest.com/schenectady-multi-unit" />
       </Helmet>

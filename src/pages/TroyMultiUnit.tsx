@@ -57,7 +57,7 @@ const TroyMultiUnit = () => {
     <MainLayout>
       <Helmet>
         <title>Troy Multi-Unit Market Report | 10–13% Cap Rates | Cash-Flow Deals</title>
-        <meta name="description" content="Troy multi-unit investing: Real 10–13% cap rates, 15–28% cash-on-cash returns. Strong appreciation potential near RPI. Duplexes, triplexes & 4-units. Call Scott at 518-676-2347." />
+        <meta name="description" content="Troy multi-unit investing: Real 10–13% cap rates, 15–28% cash-on-cash returns. Strong appreciation potential near RPI. Duplexes, triplexes & 4-units. Call an Agent at 518-671-8048." />
         <meta name="keywords" content="troy multi family homes for sale, troy duplex for sale, troy triplex, troy investment property, troy ny multi family, troy cap rate" />
         <link rel="canonical" href="https://capitaldistrictnest.com/troy-multi-unit" />
       </Helmet>

@@ -343,13 +343,13 @@ const BestNeighborhoodsCashFlow = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
-                <a href="tel:+15186762347" className="flex items-center gap-2">
+                <a href="tel:+15186718048" className="flex items-center gap-2">
                   <Phone className="w-5 h-5" />
-                  Call: (518) 676-2347
+                  Call: (518) 671-8048
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="sms:+15186762347?body=NEIGHBORHOODS%20-%20My%20budget%20is:" className="flex items-center gap-2">
+                <a href="sms:+15186718048?body=NEIGHBORHOODS%20-%20My%20budget%20is:" className="flex items-center gap-2">
                   <MessageSquare className="w-5 h-5" />
                   Text "NEIGHBORHOODS"
                 </a>

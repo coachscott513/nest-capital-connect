@@ -49,7 +49,7 @@ const FultonMontgomeryMultiUnitMarket = () => {
     <MainLayout>
       <Helmet>
         <title>Fulton & Montgomery Multi-Unit Market Report (Cap Rates, ROI, BRRRR Deals)</title>
-        <meta name="description" content="Fulton & Montgomery County multi-unit market analysis. Cap rates 11–15%, cash-on-cash 20–35%, BRRRR deals, and top ROI markets. Call/Text 518-676-2347." />
+        <meta name="description" content="Fulton & Montgomery County multi-unit market analysis. Cap rates 11–15%, cash-on-cash 20–35%, BRRRR deals, and top ROI markets. Call/Text 518-671-8048." />
         <meta name="keywords" content="fulton county multi family, montgomery county investment property, amsterdam duplex, gloversville triplex, johnstown rental, fulton cap rate, brrrr ny" />
         <link rel="canonical" href="https://capitaldistrictnest.com/investor/fulton-montgomery-multi-unit-market" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>

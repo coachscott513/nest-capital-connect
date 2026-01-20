@@ -944,13 +944,13 @@ const RidgeRoadQueensbury = () => {
                 </p>
                 <div className="space-y-3 mb-8">
                   <a 
-                    href="tel:+15186762347" 
+                    href="tel:+15186718048" 
                     className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"
                   >
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                       <Phone className="h-5 w-5 text-primary" />
                     </div>
-                    <span className="font-medium">(518) 676-2347</span>
+                    <span className="font-medium">(518) 671-8048</span>
                   </a>
                   <a 
                     href="mailto:scott@capitaldistrictnest.com" 

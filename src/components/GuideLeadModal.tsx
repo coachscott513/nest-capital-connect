@@ -121,7 +121,7 @@ const GuideLeadModal = ({ open, onOpenChange, redirectPath, guideType }: GuideLe
             <Button variant="outline" className="flex-1" asChild>
               <a href="sms:5186718048">
                 <MessageSquare className="w-4 h-4 mr-2" />
-                Text Scott
+                Text an Agent
               </a>
             </Button>
           </div>
