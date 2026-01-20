@@ -58,7 +58,7 @@ const featuredMortgagePartner = {
   bio: "With nearly 20 years of experience, Courtney combines passion and expertise to help our clients achieve homeownership. Her personalized approach and deep knowledge of the Capital District market have earned her over 570 five-star reviews.",
   phone: "(518) 527-3650",
   address: "175 Water Street, Suite 5, Catskill, NY 12414",
-  applyUrl: "https://www.homesteadfunding.com/apply",
+  applyUrl: "https://www.homesteadfunding.com/loan-originators/courtney-b-parish",
   reviewCount: 570,
   yearsExperience: 20,
   homeTown: "catskill"
