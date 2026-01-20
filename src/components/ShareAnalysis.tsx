@@ -80,10 +80,10 @@ ${propertyAddress}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📞 CAPITAL DISTRICT NEST
-Scott Alvarez - Investment Property Specialist
+The Scott Alvarez Team - Investment Property Specialists
 RE/MAX Solutions
 
-📱 Call Now: (518) 676-2347
+📱 Call Now: (518) 671-8048
 📧 Email: scottalvarez@remax.net
 🌐 Serving Albany, Troy, Schenectady & Saratoga Springs
 
@@ -165,7 +165,7 @@ YouTube: @scottalvarez
 💰 Flip ROI: ${formatNumber(results.flipROI)}% | 📈 Rental CoC: ${formatNumber(results.rentalCoC)}%
 🏠 Monthly Cash Flow: $${formatNumber(results.rentalCashFlow)}
 
-Contact Scott Alvarez at (518) 676-2347
+Contact an Agent at (518) 671-8048
 #RealEstate #Investment #CapitalDistrict #Albany`;
     
     const url = window.location.href;
@@ -253,12 +253,12 @@ Contact Scott Alvarez at (518) 676-2347
 
     // Contact Information
     addText('CAPITAL DISTRICT NEST', 14, true);
-    addText('Scott Alvarez - Investment Property Specialist', 12, true);
+    addText('The Scott Alvarez Team - Investment Property Specialists', 12, true);
     addText('RE/MAX Solutions', 12);
     currentY += 5;
     
     addText('Contact Information:', 11, true);
-    addText('Phone: (518) 676-2347');
+    addText('Phone: (518) 671-8048');
     addText('Email: scottalvarez@remax.net');
     addText('Serving Albany, Troy, Schenectady & Saratoga Springs');
     currentY += 5;
@@ -430,7 +430,7 @@ Contact Scott Alvarez at (518) 676-2347
             </div>
           </div>
           <div className="text-sm">
-            <p className="mb-1">📱 (518) 676-2347 | 📧 scottalvarez@remax.net</p>
+            <p className="mb-1">📱 (518) 671-8048 | 📧 scottalvarez@remax.net</p>
             <p className="opacity-90">Serving Albany, Troy, Schenectady & Saratoga Springs</p>
           </div>
         </div>

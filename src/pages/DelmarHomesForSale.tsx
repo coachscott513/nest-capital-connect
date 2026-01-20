@@ -249,9 +249,9 @@ const DelmarHomesForSale = () => {
 
         {/* Persistent Contact Line - Mobile Friendly */}
         <div className="py-4 bg-primary text-primary-foreground text-center">
-          <a href="tel:518-676-2347" className="flex items-center justify-center gap-2 font-semibold text-lg">
+          <a href="tel:+15186718048" className="flex items-center justify-center gap-2 font-semibold text-lg">
             <Phone className="w-5 h-5" />
-            Call/Text Scott: 518-676-2347
+            Call/Text an Agent: (518) 671-8048
           </a>
         </div>
 

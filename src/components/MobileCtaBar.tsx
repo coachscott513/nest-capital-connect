@@ -33,12 +33,12 @@ const MobileCtaBar = () => {
           className="flex flex-col items-center justify-center min-h-[56px] py-3 px-1 text-white hover:bg-white/10 transition-colors active:bg-white/20"
         >
           <Phone className="w-5 h-5 text-white mb-1" />
-          <span className="text-[10px] font-medium text-white text-center leading-tight">Call Scott — Speak With an Analyst</span>
+          <span className="text-[10px] font-medium text-white text-center leading-tight">Call an Agent — Speak With an Analyst</span>
         </a>
 
         {/* Text Button */}
         <a
-          href="sms:+15186718048?body=Hi%20Scott%2C%20I'd%20like%20to%20analyze%20this%20property%3A%20"
+          href="sms:+15186718048?body=Hi%2C%20I'd%20like%20to%20analyze%20this%20property%3A%20"
           className="flex flex-col items-center justify-center min-h-[56px] py-3 px-1 text-white hover:bg-white/10 transition-colors active:bg-white/20"
         >
           <MessageSquare className="w-5 h-5 text-white mb-1" />

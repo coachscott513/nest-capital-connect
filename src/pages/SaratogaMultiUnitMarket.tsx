@@ -49,7 +49,7 @@ const SaratogaMultiUnitMarket = () => {
     <MainLayout>
       <Helmet>
         <title>Saratoga County Multi-Unit Market Report (Cap Rates, ROI, Cash Flow)</title>
-        <meta name="description" content="Saratoga County multi-unit investing guide. See cap rates (7–10%), cash-on-cash returns (12–20%), best towns (Saratoga Springs, Malta, Ballston Spa), and real investor deals. Call/Text 518-676-2347." />
+        <meta name="description" content="Saratoga County multi-unit investing guide. See cap rates (7–10%), cash-on-cash returns (12–20%), best towns (Saratoga Springs, Malta, Ballston Spa), and real investor deals. Call/Text 518-671-8048." />
         <meta name="keywords" content="saratoga county multi family, saratoga springs investment property, ballston spa duplex, malta rental property, saratoga cap rate, saratoga cash flow" />
         <link rel="canonical" href="https://capitaldistrictnest.com/investor/saratoga-multi-unit-market" />
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>

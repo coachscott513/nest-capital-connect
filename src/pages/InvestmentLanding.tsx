@@ -224,10 +224,10 @@ const InvestmentLanding = () => {
                 <div className="space-y-3">
                   <p className="text-primary text-sm opacity-90">Call Now for Expert Investment Advice</p>
                   <a 
-                    href="tel:+15186762347" 
+                    href="tel:+15186718048" 
                     className="text-primary text-3xl md:text-4xl font-bold hover:text-primary/80 transition-colors duration-200 flex items-center justify-center"
                   >
-                    📞 (518) 676-2347
+                    📞 (518) 671-8048
                   </a>
                   <a 
                     href="mailto:scottalvarez@remax.net" 
@@ -319,7 +319,7 @@ const InvestmentLanding = () => {
                       </div>
                       <div className="flex items-center gap-1">
                         <Phone className="w-3 h-3" />
-                        (518) 676-2347
+                        (518) 671-8048
                       </div>
                     </div>
                     

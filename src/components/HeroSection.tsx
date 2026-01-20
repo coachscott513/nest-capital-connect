@@ -149,14 +149,14 @@ const HeroSection = () => {
               {/* Secondary Links */}
               <div className="flex flex-wrap items-center gap-6 text-white/90">
                 <a 
-                  href="tel:+15186762347" 
+                  href="tel:+15186718048" 
                   className="flex items-center gap-2 hover:text-white transition-colors font-medium"
                 >
                   <Phone className="w-4 h-4" />
-                  Call 518-676-2347
+                  Call (518) 671-8048
                 </a>
                 <a 
-                  href="sms:+15186762347" 
+                  href="sms:+15186718048" 
                   className="flex items-center gap-2 hover:text-white transition-colors font-medium"
                 >
                   <MessageSquare className="w-4 h-4" />
