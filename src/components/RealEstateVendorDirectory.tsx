@@ -73,7 +73,7 @@ const featuredInsurancePartner = {
   bio: "Rob and his team specialize in personalized protection plans for home, auto, and business. With a 5-star reputation and a deep commitment to the Albany community, they are our top choice for safeguarding your new home.",
   phone: "(518) 389-2886",
   address: "431 New Scotland Ave, Albany, NY 12208",
-  quoteUrl: "https://www.statefarm.com/agent/us/ny/albany/rob-field-4bgxvkxsaak",
+  quoteUrl: "https://robfieldinsurance.com/",
   reviewCount: 560,
   yearsExperience: 15,
   homeTown: "albany",
