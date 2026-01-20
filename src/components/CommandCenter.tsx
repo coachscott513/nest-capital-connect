@@ -68,17 +68,17 @@ export const CommandCenter: React.FC = () => {
             href={option.href}
             target={option.href.startsWith("http") ? "_blank" : undefined}
             rel={option.href.startsWith("http") ? "noopener noreferrer" : undefined}
-            className="bg-card border border-border px-5 py-4 rounded-xl flex items-center gap-4 w-[280px] no-underline text-foreground transition-all duration-200 hover:-translate-x-2 hover:border-primary hover:shadow-lg"
+            className="bg-card border border-border px-6 py-5 rounded-2xl flex items-center gap-5 w-[320px] no-underline text-foreground transition-all duration-200 hover:-translate-x-2 hover:border-primary hover:shadow-xl hover:bg-card/90 active:scale-[0.98] cursor-pointer"
             style={{ 
               animationDelay: `${index * 50}ms`,
             }}
           >
-            <div className={`${option.bgColor} ${option.textColor} w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0`}>
+            <div className={`${option.bgColor} ${option.textColor} w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg`}>
               {option.icon}
             </div>
-            <div>
-              <div className="font-bold text-base mb-0.5">{option.label}</div>
-              <div className="text-sm text-muted-foreground">{option.subtitle}</div>
+            <div className="flex-1 min-w-0">
+              <div className="font-bold text-lg mb-1">{option.label}</div>
+              <div className="text-sm text-muted-foreground truncate">{option.subtitle}</div>
             </div>
           </a>
         ))}
