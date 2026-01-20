@@ -9,7 +9,10 @@ import {
   ExternalLink,
   Home,
   ClipboardCheck,
-  DollarSign
+  DollarSign,
+  Star,
+  MapPin,
+  Award
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -40,6 +43,26 @@ interface VendorPhase {
   glowColor: string;
   vendors: Vendor[];
 }
+
+interface RealEstateVendorDirectoryProps {
+  townSlug?: string;
+}
+
+// Featured Partner: Courtney B. Parish
+const featuredPartner = {
+  name: "Courtney B. Parish",
+  title: "Branch Manager",
+  nmls: "NMLS# 56395",
+  company: "Homestead Funding Corp.",
+  tagline: "Your Local Catskill & Capital District Mortgage Expert",
+  bio: "With nearly 20 years of experience, Courtney combines passion and expertise to help our clients achieve homeownership. Her personalized approach and deep knowledge of the Capital District market have earned her over 570 five-star reviews.",
+  phone: "(518) 527-3650",
+  address: "175 Water Street, Suite 5, Catskill, NY 12414",
+  applyUrl: "https://www.homesteadfunding.com/apply",
+  reviewCount: 570,
+  yearsExperience: 20,
+  homeTown: "catskill"
+};
 
 const vendorPhases: VendorPhase[] = [
   {
@@ -168,7 +191,7 @@ const categoryLabels: Record<string, string> = {
   inspector: "Inspector"
 };
 
-const RealEstateVendorDirectory = () => {
+const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps) => {
   const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
   const [selectedPhase, setSelectedPhase] = useState<VendorPhase | null>(null);
 
@@ -181,6 +204,10 @@ const RealEstateVendorDirectory = () => {
   const allVendors = vendorPhases.flatMap(phase => 
     phase.vendors.map(vendor => ({ ...vendor, phase }))
   );
+
+  // Determine if this is Courtney's home town
+  const isLocalBranch = townSlug?.toLowerCase() === featuredPartner.homeTown;
+  const partnerLabel = isLocalBranch ? "Local Branch Manager" : "Regional Approved Partner";
 
   return (
     <section className="py-16 md:py-20 overflow-hidden relative isolate">
@@ -200,6 +227,142 @@ const RealEstateVendorDirectory = () => {
             Vetted professionals for every phase of your home purchase
           </p>
         </div>
+
+        {/* ═══════════════════════════════════════════════════════════════════
+            FEATURED PARTNER SPOTLIGHT - Courtney B. Parish
+        ═══════════════════════════════════════════════════════════════════ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-10 md:mb-14"
+        >
+          <div 
+            className="relative rounded-3xl overflow-hidden"
+            style={{
+              background: "linear-gradient(135deg, rgba(52, 211, 153, 0.15) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(52, 211, 153, 0.1) 100%)",
+              backdropFilter: "blur(30px)",
+              border: "1px solid rgba(52, 211, 153, 0.3)",
+              boxShadow: "0 0 40px rgba(52, 211, 153, 0.15), inset 0 1px 0 rgba(255,255,255,0.1)"
+            }}
+          >
+            {/* Premium Badge Banner */}
+            <div className="bg-gradient-to-r from-emerald-500/20 via-emerald-400/10 to-emerald-500/20 px-6 py-3 border-b border-emerald-400/20">
+              <div className="flex items-center justify-center gap-3">
+                <Award className="w-5 h-5 text-emerald-400" />
+                <span className="text-sm font-semibold text-emerald-400 tracking-wider uppercase">
+                  Approved Mortgage Partner
+                </span>
+                <Award className="w-5 h-5 text-emerald-400" />
+              </div>
+            </div>
+
+            <div className="p-6 md:p-8">
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+                {/* Left: Avatar & Quick Stats */}
+                <div className="flex-shrink-0 w-full md:w-auto">
+                  <div className="flex flex-col items-center md:items-start gap-4">
+                    {/* Avatar Placeholder with Glow */}
+                    <div 
+                      className="w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center bg-gradient-to-br from-emerald-400/30 to-emerald-600/20"
+                      style={{
+                        boxShadow: "0 0 30px rgba(52, 211, 153, 0.4)",
+                        border: "2px solid rgba(52, 211, 153, 0.5)"
+                      }}
+                    >
+                      <Building2 className="w-12 h-12 md:w-14 md:h-14 text-emerald-400" />
+                    </div>
+                    
+                    {/* Local/Regional Badge */}
+                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${isLocalBranch ? 'bg-emerald-500/30 border-emerald-400/50' : 'bg-primary/20 border-primary/30'} border`}>
+                      <MapPin className={`w-3.5 h-3.5 ${isLocalBranch ? 'text-emerald-400' : 'text-primary'}`} />
+                      <span className={`text-xs font-semibold ${isLocalBranch ? 'text-emerald-400' : 'text-primary'}`}>
+                        {partnerLabel}
+                      </span>
+                    </div>
+
+                    {/* Quick Stats */}
+                    <div className="flex gap-4 text-center">
+                      <div>
+                        <div className="flex items-center justify-center gap-1 text-amber-400">
+                          <Star className="w-4 h-4 fill-amber-400" />
+                          <span className="font-bold text-lg">{featuredPartner.reviewCount}+</span>
+                        </div>
+                        <span className="text-xs text-muted-foreground">5-Star Reviews</span>
+                      </div>
+                      <div className="w-px bg-white/10" />
+                      <div>
+                        <span className="font-bold text-lg text-foreground">{featuredPartner.yearsExperience}</span>
+                        <span className="text-xs text-muted-foreground block">Years Exp.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: Content */}
+                <div className="flex-1 space-y-4">
+                  {/* Name & Title */}
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-1">
+                      {featuredPartner.name}
+                    </h3>
+                    <p className="text-emerald-400 font-medium">
+                      {featuredPartner.title} | {featuredPartner.nmls}
+                    </p>
+                    <p className="text-muted-foreground text-sm">
+                      {featuredPartner.company}
+                    </p>
+                  </div>
+
+                  {/* Tagline */}
+                  <p className="text-lg text-foreground/90 font-light italic border-l-2 border-emerald-400/50 pl-4">
+                    "{featuredPartner.tagline}"
+                  </p>
+
+                  {/* Bio */}
+                  <p className="text-muted-foreground leading-relaxed">
+                    {featuredPartner.bio}
+                  </p>
+
+                  {/* Address */}
+                  <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-emerald-400/70" />
+                    <span>{featuredPartner.address}</span>
+                  </div>
+
+                  {/* CTAs */}
+                  <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                    <a 
+                      href={featuredPartner.applyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1"
+                    >
+                      <Button 
+                        className="w-full h-12 text-base font-semibold bg-emerald-500 hover:bg-emerald-600 text-white"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Apply Now
+                      </Button>
+                    </a>
+                    <a 
+                      href={`tel:${featuredPartner.phone.replace(/[^0-9]/g, '')}`}
+                      className="flex-1"
+                    >
+                      <Button 
+                        variant="outline"
+                        className="w-full h-12 text-base font-semibold border-emerald-400/30 text-emerald-400 hover:bg-emerald-400/10"
+                      >
+                        <Phone className="w-4 h-4 mr-2" />
+                        {featuredPartner.phone}
+                      </Button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Mobile: Horizontal Scroll */}
         <div className="md:hidden">

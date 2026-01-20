@@ -654,7 +654,7 @@ const AppleTownTemplate = ({
       </IntelligenceGatekeeper>
 
       {/* REAL ESTATE VENDOR DIRECTORY - Approved & Recommended Partners */}
-      <RealEstateVendorDirectory />
+      <RealEstateVendorDirectory townSlug={townSlug} />
 
       {/* THE NUMBERS BRIDGE - Professional Transition */}
       <section className="py-20 px-[5%] bg-background relative overflow-hidden">
