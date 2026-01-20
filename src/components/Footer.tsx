@@ -141,11 +141,11 @@ const Footer = () => {
             <h4 className="text-sm font-semibold text-white/90 mb-4 uppercase tracking-wide">Contact</h4>
             <div className="space-y-3">
               <a 
-                href="tel:+15186718048" 
+                href="tel:+15186762347" 
                 className="flex items-center gap-2 text-white/50 hover:text-primary transition-colors text-sm"
               >
                 <Phone className="h-4 w-4" />
-                (518) 671-8048
+                (518) 676-2347
               </a>
               <a 
                 href="mailto:scott@capitaldistrictnest.com" 
@@ -153,6 +153,22 @@ const Footer = () => {
               >
                 <Mail className="h-4 w-4" />
                 scott@capitaldistrictnest.com
+              </a>
+              <a 
+                href="https://linktr.ee/scottalvarez" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-white/50 hover:text-primary transition-colors text-sm"
+              >
+                All Resources (Linktree)
+              </a>
+              <a 
+                href="https://calendly.com/alvarez-team/view-a-property" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-white/50 hover:text-primary transition-colors text-sm"
+              >
+                Schedule a Viewing
               </a>
             </div>
           </div>

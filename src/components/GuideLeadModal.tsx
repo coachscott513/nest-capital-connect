@@ -113,13 +113,13 @@ const GuideLeadModal = ({ open, onOpenChange, redirectPath, guideType }: GuideLe
           </p>
           <div className="flex flex-col sm:flex-row gap-2">
             <Button variant="outline" className="flex-1" asChild>
-              <a href="tel:5186718048">
+              <a href="tel:5186762347">
                 <Phone className="w-4 h-4 mr-2" />
                 Call Now
               </a>
             </Button>
             <Button variant="outline" className="flex-1" asChild>
-              <a href="sms:5186718048">
+              <a href="sms:5186762347">
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Text an Agent
               </a>

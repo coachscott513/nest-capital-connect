@@ -546,9 +546,9 @@ const CleanHeader = () => {
               <Link to="/investor-tools" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
                 Investor Tools
               </Link>
-              <a href="tel:+15186718048" className="flex items-center gap-2 text-foreground hover:text-primary">
+              <a href="tel:+15186762347" className="flex items-center gap-2 text-foreground hover:text-primary">
                 <Phone className="h-4 w-4" />
-                (518) 671-8048
+                (518) 676-2347
               </a>
             </div>
           </div>

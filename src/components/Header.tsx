@@ -36,11 +36,11 @@ const Header = () => {
             </span>
           </Link>
           <a 
-            href="tel:+15186718048" 
+            href="tel:+15186762347" 
             className="hidden sm:flex items-center space-x-1.5 text-white/90 hover:text-white transition-colors text-sm"
           >
             <Phone size={14} />
-            <span>(518) 671-8048</span>
+            <span>(518) 676-2347</span>
           </a>
         </div>
 

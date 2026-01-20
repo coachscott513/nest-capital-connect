@@ -79,7 +79,7 @@ const QuickMatchForm = ({ townName, className = "", onSuccess }: QuickMatchFormP
       console.error("Quick match form error:", error);
       toast({
         title: "Oops! Something went wrong",
-        description: "Please try again or call us at (518) 671-8048",
+        description: "Please try again or call us at (518) 676-2347",
         variant: "destructive",
       });
     } finally {
@@ -107,7 +107,7 @@ const QuickMatchForm = ({ townName, className = "", onSuccess }: QuickMatchFormP
           Check your phone — I'll text your curated property list within the hour.
         </p>
         <p className="text-sm text-muted-foreground/60">
-          Questions? Call or text: <a href="tel:+15186718048" className="text-primary hover:underline">(518) 671-8048</a>
+          Questions? Call or text: <a href="tel:+15186762347" className="text-primary hover:underline">(518) 676-2347</a>
         </p>
       </motion.div>
     );

@@ -29,7 +29,7 @@ const InvestorTools = () => {
         "alternateName": ["Capital District Investment Properties", "CDN Real Estate"],
         "description": "Premier investment property specialists for rental properties, rehab projects, and multi-unit buildings in Albany, Troy, Schenectady, and Saratoga Springs, NY.",
         "url": "https://capitaldistrictnest.com",
-        "telephone": "+1-518-671-8048",
+        "telephone": "+1-518-676-2347",
         "email": "scottalvarez@remax.net",
         "foundingDate": "2020",
         "address": {
@@ -59,7 +59,7 @@ const InvestorTools = () => {
         "@id": "https://capitaldistrictnest.com/#realestate",
         "name": "Capital District Nest Real Estate Services",
         "speciality": ["Investment Properties", "Multi-Unit Buildings", "Property Rehabilitation", "Rental Properties"],
-        "telephone": "+1-518-671-8048"
+        "telephone": "+1-518-676-2347"
       }
     ]
   };

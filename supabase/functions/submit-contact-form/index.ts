@@ -299,7 +299,7 @@ const handler = async (req: Request): Promise<Response> => {
                     <li>Price drops and market insights</li>
                     <li>Investment opportunities and cash flow deals</li>
                   </ul>
-                  <p>Have questions? Just reply to this email or text us at <strong>(518) 671-8048</strong>.</p>
+                  <p>Have questions? Just reply to this email or text us at <strong>(518) 676-2347</strong>.</p>
                   <p style="margin-top: 24px;">Best,<br/>The Capital District Nest Team</p>
                   <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;" />
                   <p style="color: #888; font-size: 12px;">

@@ -50,14 +50,14 @@ const handler = async (req: Request): Promise<Response> => {
             <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">
             
             <h3 style="color: #1a1a1a;">Want a Property-Specific Breakdown?</h3>
-            <p>Text any address to <strong>518-671-8048</strong> for a custom analysis including:</p>
+            <p>Text any address to <strong>518-676-2347</strong> for a custom analysis including:</p>
             <ul style="color: #444;">
               <li>Rent potential & cash flow estimates</li>
               <li>Tax history & comparable sales</li>
               <li>Cap rate & ROI projections</li>
             </ul>
             
-            <p>Questions? Reply to this email or call us directly at (518) 671-8048.</p>
+            <p>Questions? Reply to this email or call us directly at (518) 676-2347.</p>
             <p>Best,<br>The Capital District Nest Team</p>
           </div>
         `,

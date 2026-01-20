@@ -219,8 +219,8 @@ const DelmarHomesForSale = () => {
 
             <div className="flex items-center justify-center gap-2 text-foreground font-medium">
               <Phone className="w-5 h-5 text-primary" />
-              <a href="tel:+15186718048" className="hover:text-primary">
-                Call/Text an Agent: (518) 671-8048
+              <a href="tel:+15186762347" className="hover:text-primary">
+                Contact an Agent: (518) 676-2347
               </a>
             </div>
           </div>
@@ -249,9 +249,9 @@ const DelmarHomesForSale = () => {
 
         {/* Persistent Contact Line - Mobile Friendly */}
         <div className="py-4 bg-primary text-primary-foreground text-center">
-          <a href="tel:+15186718048" className="flex items-center justify-center gap-2 font-semibold text-lg">
+          <a href="tel:+15186762347" className="flex items-center justify-center gap-2 font-semibold text-lg">
             <Phone className="w-5 h-5" />
-            Call/Text an Agent: (518) 671-8048
+            Contact an Agent: (518) 676-2347
           </a>
         </div>
 

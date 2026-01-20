@@ -61,9 +61,9 @@ const HeroSection = () => {
               className="w-full h-14 text-base font-semibold bg-white/10 border-white text-white hover:bg-white/20"
               asChild
             >
-              <a href="tel:+15186718048">
+              <a href="tel:+15186762347">
                 <Phone className="w-5 h-5 mr-2" />
-                Call an Agent (518) 671-8048
+                Contact an Agent (518) 676-2347
               </a>
             </Button>
             <Button 
@@ -72,7 +72,7 @@ const HeroSection = () => {
               className="w-full h-14 text-base font-semibold bg-white/10 border-white text-white hover:bg-white/20"
               asChild
             >
-              <a href="sms:+15186718048">
+              <a href="sms:+15186762347">
                 <MessageSquare className="w-5 h-5 mr-2" />
                 Text an Address
               </a>
@@ -149,14 +149,14 @@ const HeroSection = () => {
               {/* Secondary Links */}
               <div className="flex flex-wrap items-center gap-6 text-white/90">
                 <a 
-                  href="tel:+15186718048" 
+                  href="tel:+15186762347" 
                   className="flex items-center gap-2 hover:text-white transition-colors font-medium"
                 >
                   <Phone className="w-4 h-4" />
-                  Call (518) 671-8048
+                  Contact an Agent (518) 676-2347
                 </a>
                 <a 
-                  href="sms:+15186718048" 
+                  href="sms:+15186762347" 
                   className="flex items-center gap-2 hover:text-white transition-colors font-medium"
                 >
                   <MessageSquare className="w-4 h-4" />
