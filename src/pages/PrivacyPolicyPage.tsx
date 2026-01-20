@@ -113,7 +113,7 @@ const PrivacyPolicyPage: React.FC = () => {
 
             <p className="text-foreground mb-2">To make a request, contact:</p>
             <p className="text-foreground mb-1"><strong>Email:</strong> <a href="mailto:scott@capitaldistrictnest.com" className="text-primary hover:underline">scott@capitaldistrictnest.com</a></p>
-            <p className="text-foreground mb-8"><strong>Phone:</strong> <a href="tel:+15186718048" className="text-primary hover:underline">518-671-8048</a></p>
+            <p className="text-foreground mb-8"><strong>Phone:</strong> <a href="tel:+15186762347" className="text-primary hover:underline">518-676-2347</a></p>
 
             <hr className="border-border my-8" />
 
@@ -139,7 +139,7 @@ const PrivacyPolicyPage: React.FC = () => {
               <p><strong>Capital District Nest</strong></p>
               <p>Albany, NY</p>
               <p><strong>Email:</strong> <a href="mailto:scott@capitaldistrictnest.com" className="text-primary hover:underline">scott@capitaldistrictnest.com</a></p>
-              <p><strong>Phone:</strong> <a href="tel:+15186718048" className="text-primary hover:underline">518-671-8048</a></p>
+              <p><strong>Phone:</strong> <a href="tel:+15186762347" className="text-primary hover:underline">518-676-2347</a></p>
             </div>
           </article>
         </div>

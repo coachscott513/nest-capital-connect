@@ -9,8 +9,8 @@ import {
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 
-const PHONE_NUMBER = '5186718048';
-const FORMATTED_PHONE = '(518) 671-8048';
+const PHONE_NUMBER = '5186762347';
+const FORMATTED_PHONE = '(518) 676-2347';
 
 interface AnalystCardProps {
   title?: string;

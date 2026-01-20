@@ -230,7 +230,7 @@ const PrivacyPolicy: React.FC = () => {
             <div className="space-y-2">
               <p><strong>Capital District Nest</strong></p>
               <p>Email: privacy@capitaldistrict.com</p>
-              <p>Phone: +1-518-671-8048</p>
+              <p>Phone: +1-518-676-2347</p>
               <p>Address: Capital District, Albany, NY</p>
             </div>
           </div>

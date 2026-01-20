@@ -15,8 +15,8 @@ interface LiveConversationButtonProps {
   showLabel?: boolean;
 }
 
-const PHONE_NUMBER = '5186718048';
-const FORMATTED_PHONE = '(518) 671-8048';
+const PHONE_NUMBER = '5186762347';
+const FORMATTED_PHONE = '(518) 676-2347';
 
 const LiveConversationButton: React.FC<LiveConversationButtonProps> = ({
   variant = 'default',

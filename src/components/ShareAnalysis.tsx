@@ -83,7 +83,7 @@ ${propertyAddress}
 The Scott Alvarez Team - Investment Property Specialists
 RE/MAX Solutions
 
-📱 Call Now: (518) 671-8048
+📱 Call Now: (518) 676-2347
 📧 Email: scottalvarez@remax.net
 🌐 Serving Albany, Troy, Schenectady & Saratoga Springs
 
@@ -165,7 +165,7 @@ YouTube: @scottalvarez
 💰 Flip ROI: ${formatNumber(results.flipROI)}% | 📈 Rental CoC: ${formatNumber(results.rentalCoC)}%
 🏠 Monthly Cash Flow: $${formatNumber(results.rentalCashFlow)}
 
-Contact an Agent at (518) 671-8048
+Contact an Agent at (518) 676-2347
 #RealEstate #Investment #CapitalDistrict #Albany`;
     
     const url = window.location.href;
@@ -258,7 +258,7 @@ Contact an Agent at (518) 671-8048
     currentY += 5;
     
     addText('Contact Information:', 11, true);
-    addText('Phone: (518) 671-8048');
+    addText('Phone: (518) 676-2347');
     addText('Email: scottalvarez@remax.net');
     addText('Serving Albany, Troy, Schenectady & Saratoga Springs');
     currentY += 5;
@@ -430,7 +430,7 @@ Contact an Agent at (518) 671-8048
             </div>
           </div>
           <div className="text-sm">
-            <p className="mb-1">📱 (518) 671-8048 | 📧 scottalvarez@remax.net</p>
+            <p className="mb-1">📱 (518) 676-2347 | 📧 scottalvarez@remax.net</p>
             <p className="opacity-90">Serving Albany, Troy, Schenectady & Saratoga Springs</p>
           </div>
         </div>

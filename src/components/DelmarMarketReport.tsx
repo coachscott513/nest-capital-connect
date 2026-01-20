@@ -144,8 +144,8 @@ const DelmarMarketReport = () => {
                 </p>
                 <p className="text-sm text-muted-foreground mt-1">
                   Text any address to{" "}
-                  <a href="tel:518-671-8048" className="text-primary font-semibold hover:underline">
-                    518-671-8048
+                  <a href="tel:518-676-2347" className="text-primary font-semibold hover:underline">
+                    518-676-2347
                   </a>{" "}
                   for a custom analysis.
                 </p>
@@ -158,8 +158,8 @@ const DelmarMarketReport = () => {
         {!isSubmitted && (
           <p className="text-center text-sm text-muted-foreground mt-8">
             Want the fastest answer on one address? Text it to{" "}
-            <a href="tel:518-671-8048" className="text-primary font-medium hover:underline">
-              518-671-8048
+            <a href="tel:518-676-2347" className="text-primary font-medium hover:underline">
+              518-676-2347
             </a>
             .
           </p>

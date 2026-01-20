@@ -212,7 +212,7 @@ const LeadCaptureForm = ({
     } catch (error) {
       toast({
         title: "Oops! Something went wrong",
-        description: "Please try again or call us at (518) 671-8048",
+        description: "Please try again or call us at (518) 676-2347",
         variant: "destructive",
       });
     } finally {
