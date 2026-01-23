@@ -90,10 +90,10 @@ const featuredInspectorPartner = {
   company: "Sanchez Home Inspections",
   tagline: "The Inspection Expert | 26+ Years Protecting Capital District Buyers",
   bio: "With over 26 years of structural and environmental assessment experience, Greg is the Capital District's most trusted home inspector. As a 32-year Voorheesville resident, he brings unmatched local knowledge to every inspection—from historic Albany row homes to modern Saratoga builds.",
-  phone: "(518) 555-1234", // Placeholder - update with real number
+  phone: "(518) 788-3435",
   address: "Voorheesville, NY 12186",
-  portalUrl: "#", // Update with Greg's booking portal
-  qualificationsUrl: "#", // Update with qualifications page
+  portalUrl: "https://www.certifiedhomeinspections.biz/",
+  qualificationsUrl: "https://www.certifiedhomeinspections.biz/",
   yearsExperience: 26,
   yearsResident: 32,
   homeTown: "voorheesville",
@@ -208,10 +208,10 @@ const vendorPhases: VendorPhase[] = [
         category: "inspector",
         description: "26+ years of structural and environmental assessment experience. NYS Licensed Home Inspector & Mold Assessor. 32-year Voorheesville resident with unmatched local knowledge.",
         specialty: "Home Inspection",
-        phone: "(518) 555-1234",
-        website: "#",
+        phone: "(518) 788-3435",
+        website: "https://www.certifiedhomeinspections.biz/",
         ctaLabel: "Book Inspection",
-        ctaUrl: "#",
+        ctaUrl: "https://www.certifiedhomeinspections.biz/",
         isPreferred: true,
         badgeLabel: "Approved"
       }
