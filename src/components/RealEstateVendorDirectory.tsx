@@ -238,6 +238,9 @@ const categoryLabels: Record<string, string> = {
 const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps) => {
   const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
   const [selectedPhase, setSelectedPhase] = useState<VendorPhase | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   const handleVendorClick = (vendor: Vendor, phase: VendorPhase) => {
     setSelectedVendor(vendor);
@@ -248,6 +251,26 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
   const allVendors = vendorPhases.flatMap(phase => 
     phase.vendors.map(vendor => ({ ...vendor, phase }))
   );
+
+  // Filter vendors based on search and active filter
+  const filteredVendors = allVendors.filter(vendor => {
+    const matchesSearch = searchQuery === "" || 
+      vendor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      vendor.specialty.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      vendor.description.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesFilter = !activeFilter || vendor.category === activeFilter;
+    
+    return matchesSearch && matchesFilter;
+  });
+
+  const filterPills = [
+    { id: "inspector", label: "Home Inspectors", icon: ClipboardCheck },
+    { id: "mortgage", label: "Lenders", icon: Building2 },
+    { id: "attorney", label: "Attorneys", icon: Scale },
+    { id: "insurance", label: "Insurance", icon: Shield },
+    { id: "broker", label: "Brokers", icon: Home }
+  ];
 
   // Determine if this is Courtney's home town (Mortgage)
   const isMortgageLocalBranch = townSlug?.toLowerCase() === featuredMortgagePartner.homeTown;
@@ -275,29 +298,107 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
     : isInspectorRegional 
       ? "Exclusive Partner" 
       : "Preferred Partner";
+
   return (
     <section className="py-16 md:py-20 overflow-hidden relative isolate">
-      {/* Liquid Glass Background */}
-      <div className="absolute inset-0 z-0 bg-black/40 backdrop-blur-[40px] pointer-events-none" />
+      {/* Liquid Glass Background - Enhanced blur when search focused */}
+      <div 
+        className={`absolute inset-0 z-0 bg-black/40 pointer-events-none transition-all duration-500 ${
+          isSearchFocused ? 'backdrop-blur-[60px]' : 'backdrop-blur-[40px]'
+        }`} 
+      />
       
       <div className="relative z-10 px-4 md:px-[4%] lg:px-[6%]">
-        {/* Section Header */}
-        <div className="text-center mb-8 md:mb-12">
-          <div className="inline-flex items-center gap-2 mb-4">
+        {/* Section Header - Apple Style */}
+        <div className="text-center mb-10 md:mb-14">
+          <div className="inline-flex items-center gap-2 mb-6">
             <NestVerifiedBadge size="lg" />
           </div>
-          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
-            Preferred Partner Network
-          </p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-foreground tracking-tight mb-4">
-            Your Real Estate Partners
+          
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-foreground tracking-tight mb-3">
+            Curated Expertise for the Capital District
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-3">
-            Exclusive professionals for every phase of your home purchase
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-light mb-8">
+            Access our exclusive network of vetted partners with 25+ years of local history
           </p>
-          <p className="text-sm text-muted-foreground/70 max-w-lg mx-auto">
-            Only one partner per category • Priority scheduling for Nest clients
-          </p>
+
+          {/* Apple-Style Search Bar */}
+          <div className="max-w-2xl mx-auto mb-6">
+            <div 
+              className={`relative transition-all duration-300 ${
+                isSearchFocused ? 'scale-[1.02]' : 'scale-100'
+              }`}
+            >
+              <div 
+                className="relative rounded-full overflow-hidden"
+                style={{
+                  background: isSearchFocused 
+                    ? "rgba(255, 255, 255, 0.12)" 
+                    : "rgba(255, 255, 255, 0.08)",
+                  backdropFilter: "blur(20px)",
+                  border: isSearchFocused 
+                    ? "1px solid rgba(255, 255, 255, 0.25)" 
+                    : "1px solid rgba(255, 255, 255, 0.1)",
+                  boxShadow: isSearchFocused 
+                    ? "0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)" 
+                    : "0 4px 16px rgba(0, 0, 0, 0.2)"
+                }}
+              >
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground/60" />
+                <input
+                  type="text"
+                  placeholder="Search top-rated local inspectors, lenders, and contractors..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setIsSearchFocused(true)}
+                  onBlur={() => setIsSearchFocused(false)}
+                  className="w-full bg-transparent py-4 pl-14 pr-6 text-foreground placeholder:text-muted-foreground/50 font-light text-base md:text-lg focus:outline-none"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                  >
+                    <span className="text-muted-foreground text-sm">×</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Filter Pills */}
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3">
+            {filterPills.map((pill) => {
+              const isActive = activeFilter === pill.id;
+              const PillIcon = pill.icon;
+              return (
+                <button
+                  key={pill.id}
+                  onClick={() => setActiveFilter(isActive ? null : pill.id)}
+                  className={`group inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    isActive 
+                      ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25' 
+                      : 'bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground border border-white/10'
+                  }`}
+                >
+                  <PillIcon className={`w-4 h-4 ${isActive ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'}`} />
+                  {pill.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Search Results Count */}
+          {(searchQuery || activeFilter) && (
+            <motion.p 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-sm text-muted-foreground mt-4"
+            >
+              {filteredVendors.length} partner{filteredVendors.length !== 1 ? 's' : ''} found
+              {activeFilter && ` in ${filterPills.find(p => p.id === activeFilter)?.label}`}
+            </motion.p>
+          )}
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════════
