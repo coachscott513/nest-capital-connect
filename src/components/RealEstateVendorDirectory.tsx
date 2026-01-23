@@ -12,8 +12,11 @@ import {
   DollarSign,
   Star,
   MapPin,
-  Award
+  Award,
+  FileCheck,
+  Calendar
 } from "lucide-react";
+import NestVerifiedBadge from "./NestVerifiedBadge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -78,6 +81,28 @@ const featuredInsurancePartner = {
   yearsExperience: 15,
   homeTown: "albany",
   highlight: "Chairman's Circle Qualifier"
+};
+
+// Featured Partner: Greg Sanchez (Home Inspector) - EXCLUSIVE
+const featuredInspectorPartner = {
+  name: "Greg Sanchez",
+  title: "Certified Home Inspector",
+  company: "Sanchez Home Inspections",
+  tagline: "The Inspection Expert | 26+ Years Protecting Capital District Buyers",
+  bio: "With over 26 years of structural and environmental assessment experience, Greg is the Capital District's most trusted home inspector. As a 32-year Voorheesville resident, he brings unmatched local knowledge to every inspection—from historic Albany row homes to modern Saratoga builds.",
+  phone: "(518) 555-1234", // Placeholder - update with real number
+  address: "Voorheesville, NY 12186",
+  portalUrl: "#", // Update with Greg's booking portal
+  qualificationsUrl: "#", // Update with qualifications page
+  yearsExperience: 26,
+  yearsResident: 32,
+  homeTown: "voorheesville",
+  licenses: [
+    { type: "NYS Home Inspector", number: "#16000010955" },
+    { type: "NYS Mold Assessor", number: "#01317" }
+  ],
+  specialties: ["Structural Assessment", "Environmental Testing", "Mold Inspection", "Radon Testing"],
+  nestAdvantage: "Nest clients receive priority scheduling and a dedicated walk-through call"
 };
 
 const vendorPhases: VendorPhase[] = [
@@ -178,14 +203,17 @@ const vendorPhases: VendorPhase[] = [
         badgeLabel: "Approved"
       },
       {
-        id: "inspector-placeholder",
-        name: "Coming Soon",
+        id: "sanchez-inspections",
+        name: "Greg Sanchez",
         category: "inspector",
-        description: "We're currently vetting home inspectors to add to our Preferred Partner network. Contact us for a personal recommendation based on your property type.",
+        description: "26+ years of structural and environmental assessment experience. NYS Licensed Home Inspector & Mold Assessor. 32-year Voorheesville resident with unmatched local knowledge.",
         specialty: "Home Inspection",
-        ctaLabel: "Request Recommendation",
-        ctaUrl: "tel:+15186718048",
-        isPreferred: false
+        phone: "(518) 555-1234",
+        website: "#",
+        ctaLabel: "Book Inspection",
+        ctaUrl: "#",
+        isPreferred: true,
+        badgeLabel: "Approved"
       }
     ]
   }
@@ -236,6 +264,17 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
       ? "Premier Regional Partner" 
       : "Recommended Partner";
 
+  // Determine Greg's label based on location (Inspector) - EXCLUSIVE
+  const inspectorLocalTowns = ["voorheesville", "altamont", "guilderland", "new-scotland"];
+  const inspectorRegionalTowns = ["delmar", "bethlehem", "albany", "colonie"];
+  const isInspectorLocal = townSlug?.toLowerCase() === featuredInspectorPartner.homeTown;
+  const isInspectorRegional = inspectorLocalTowns.includes(townSlug?.toLowerCase() || "") || 
+                               inspectorRegionalTowns.includes(townSlug?.toLowerCase() || "");
+  const inspectorPartnerLabel = isInspectorLocal 
+    ? "32-Year Local Resident" 
+    : isInspectorRegional 
+      ? "Exclusive Partner" 
+      : "Preferred Partner";
   return (
     <section className="py-16 md:py-20 overflow-hidden relative isolate">
       {/* Liquid Glass Background */}
@@ -244,14 +283,20 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
       <div className="relative z-10 px-4 md:px-[4%] lg:px-[6%]">
         {/* Section Header */}
         <div className="text-center mb-8 md:mb-12">
+          <div className="inline-flex items-center gap-2 mb-4">
+            <NestVerifiedBadge size="lg" />
+          </div>
           <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-3">
-            Trusted Team
+            Preferred Partner Network
           </p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-foreground tracking-tight mb-4">
             Your Real Estate Partners
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light">
-            Vetted professionals for every phase of your home purchase
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-3">
+            Exclusive professionals for every phase of your home purchase
+          </p>
+          <p className="text-sm text-muted-foreground/70 max-w-lg mx-auto">
+            Only one partner per category • Priority scheduling for Nest clients
           </p>
         </div>
 
@@ -534,7 +579,178 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
           </div>
         </motion.div>
 
-        {/* Mobile: Horizontal Scroll */}
+        {/* ═══════════════════════════════════════════════════════════════════
+            FEATURED PARTNER SPOTLIGHT - Greg Sanchez (Home Inspector) - EXCLUSIVE
+        ═══════════════════════════════════════════════════════════════════ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.15 }}
+          className="mb-10 md:mb-14"
+        >
+          <div 
+            className="relative rounded-3xl overflow-hidden"
+            style={{
+              background: "linear-gradient(135deg, rgba(0, 255, 255, 0.12) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 255, 255, 0.08) 100%)",
+              backdropFilter: "blur(30px)",
+              border: "1px solid rgba(0, 255, 255, 0.25)",
+              boxShadow: "0 0 50px rgba(0, 255, 255, 0.12), inset 0 1px 0 rgba(255,255,255,0.1)"
+            }}
+          >
+            {/* Premium Badge Banner - EXCLUSIVE */}
+            <div className="bg-gradient-to-r from-cyan-500/15 via-cyan-400/5 to-cyan-500/15 px-6 py-3 border-b border-cyan-400/20">
+              <div className="flex items-center justify-center gap-4">
+                <NestVerifiedBadge size="sm" showText={false} />
+                <span className="text-sm font-semibold text-cyan-400 tracking-wider uppercase">
+                  Exclusive Inspection Partner
+                </span>
+                <NestVerifiedBadge size="sm" showText={false} />
+              </div>
+            </div>
+
+            <div className="p-6 md:p-8">
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+                {/* Left: Avatar & Quick Stats */}
+                <div className="flex-shrink-0 w-full md:w-auto">
+                  <div className="flex flex-col items-center md:items-start gap-4">
+                    {/* Avatar with Glow */}
+                    <div 
+                      className="w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center bg-gradient-to-br from-cyan-400/20 to-cyan-600/10"
+                      style={{
+                        boxShadow: "0 0 35px rgba(0, 255, 255, 0.35)",
+                        border: "2px solid rgba(0, 255, 255, 0.4)"
+                      }}
+                    >
+                      <ClipboardCheck className="w-12 h-12 md:w-14 md:h-14 text-cyan-400" />
+                    </div>
+                    
+                    {/* Location Badge */}
+                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${isInspectorLocal ? 'bg-cyan-500/30 border-cyan-400/50' : isInspectorRegional ? 'bg-cyan-400/20 border-cyan-400/40' : 'bg-primary/20 border-primary/30'} border`}>
+                      <MapPin className={`w-3.5 h-3.5 ${isInspectorLocal || isInspectorRegional ? 'text-cyan-400' : 'text-primary'}`} />
+                      <span className={`text-xs font-semibold ${isInspectorLocal || isInspectorRegional ? 'text-cyan-400' : 'text-primary'}`}>
+                        {inspectorPartnerLabel}
+                      </span>
+                    </div>
+
+                    {/* Quick Stats */}
+                    <div className="flex gap-4 text-center">
+                      <div>
+                        <span className="font-bold text-lg text-foreground">{featuredInspectorPartner.yearsExperience}</span>
+                        <span className="text-xs text-muted-foreground block">Years Exp.</span>
+                      </div>
+                      <div className="w-px bg-white/10" />
+                      <div>
+                        <span className="font-bold text-lg text-foreground">{featuredInspectorPartner.yearsResident}</span>
+                        <span className="text-xs text-muted-foreground block">Years Local</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: Content */}
+                <div className="flex-1 space-y-4">
+                  {/* Name & Title */}
+                  <div>
+                    <div className="flex items-center gap-3 mb-1">
+                      <h3 className="text-2xl md:text-3xl font-semibold text-foreground">
+                        {featuredInspectorPartner.name}
+                      </h3>
+                      <NestVerifiedBadge size="md" />
+                    </div>
+                    <p className="text-cyan-400 font-medium">
+                      {featuredInspectorPartner.title}
+                    </p>
+                    <p className="text-muted-foreground text-sm">
+                      {featuredInspectorPartner.company}
+                    </p>
+                  </div>
+
+                  {/* Tagline */}
+                  <p className="text-lg text-foreground/90 font-light italic border-l-2 border-cyan-400/50 pl-4">
+                    "{featuredInspectorPartner.tagline}"
+                  </p>
+
+                  {/* Bio */}
+                  <p className="text-muted-foreground leading-relaxed">
+                    {featuredInspectorPartner.bio}
+                  </p>
+
+                  {/* License Badges */}
+                  <div className="flex flex-wrap gap-2">
+                    {featuredInspectorPartner.licenses.map((license, idx) => (
+                      <div 
+                        key={idx}
+                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/25"
+                      >
+                        <FileCheck className="w-3.5 h-3.5 text-cyan-400" />
+                        <span className="text-xs font-medium text-cyan-300">
+                          {license.type}: {license.number}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Nest Advantage Callout */}
+                  <div 
+                    className="p-4 rounded-xl"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(0, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.4) 100%)",
+                      border: "1px solid rgba(0, 255, 255, 0.15)"
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <Award className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <span className="text-sm font-semibold text-cyan-400 block mb-1">The Nest Advantage</span>
+                        <span className="text-sm text-muted-foreground">{featuredInspectorPartner.nestAdvantage}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Address */}
+                  <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-cyan-400/70" />
+                    <span>{featuredInspectorPartner.address}</span>
+                  </div>
+
+                  {/* CTAs */}
+                  <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                    <a 
+                      href={featuredInspectorPartner.portalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1"
+                    >
+                      <Button 
+                        className="w-full h-12 text-base font-semibold bg-cyan-500 hover:bg-cyan-600 text-black"
+                      >
+                        <Calendar className="w-4 h-4 mr-2" />
+                        Book Inspection
+                      </Button>
+                    </a>
+                    <a 
+                      href={featuredInspectorPartner.qualificationsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1"
+                    >
+                      <Button 
+                        variant="outline"
+                        className="w-full h-12 text-base font-semibold border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/10"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        View Qualifications
+                      </Button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+
         <div className="md:hidden">
           <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
             {allVendors.map((vendor, index) => {
