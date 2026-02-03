@@ -104,6 +104,7 @@ import InvestorJourney from "./pages/buyer-journey/InvestorJourney";
 import FirstTimeBuyerJourney from "./pages/buyer-journey/FirstTimeBuyerJourney";
 import LandBuyerJourney from "./pages/buyer-journey/LandBuyerJourney";
 import FinancingJourney from "./pages/buyer-journey/FinancingJourney";
+import InvestmentAnalyzer from "./pages/InvestmentAnalyzer";
 import ComingSoon from "./pages/ComingSoon";
 import IntelligenceHub from "./pages/IntelligenceHub";
 import MarketReportThanks from "./pages/MarketReportThanks";
@@ -293,6 +294,9 @@ const App = () => {
           <Route path="/investor/best-neighborhoods-cash-flow-capital-district" element={<BestNeighborhoodsCashFlow />} />
           <Route path="/investor/saratoga-multi-unit-market" element={<SaratogaMultiUnitMarket />} />
           <Route path="/investor/fulton-montgomery-multi-unit-market" element={<FultonMontgomeryMultiUnitMarket />} />
+          
+          {/* Investment Analyzer */}
+          <Route path="/analyzer" element={<InvestmentAnalyzer />} />
           
           {/* VIP Buyer Access */}
           <Route path="/vip-buyer-access" element={<VipBuyerAccess />} />
