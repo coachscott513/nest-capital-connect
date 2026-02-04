@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import MainLayout from '@/components/MainLayout';
 import { Button } from '@/components/ui/button';
@@ -6,8 +6,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Trash2, FileText, RotateCcw, Home, DollarSign, Calculator, TrendingUp, CheckCircle, BarChart3 } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Plus, Trash2, FileText, RotateCcw, Home, DollarSign, Calculator, TrendingUp, CheckCircle, BarChart3, HardHat, Hammer, Shield, Landmark, Wallet, CreditCard, AlertCircle, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
 import jsPDF from 'jspdf';
+import { cn } from '@/lib/utils';
+
+// Loan Type Definitions
+type FinancingType = 'Conventional' | 'FHA' | 'FHA 203(k) Rehab' | 'DSCR' | 'VA' | 'Hard Money' | 'Cash';
+
+const financingTypes: FinancingType[] = ['Conventional', 'FHA', 'FHA 203(k) Rehab', 'DSCR', 'VA', 'Hard Money', 'Cash'];
 
 // Types
 interface FormData {
@@ -19,12 +26,27 @@ interface FormData {
   units: number;
   unitDescription: string;
   purchasePrice: number;
-  financingType: string;
+  financingType: FinancingType;
   downPaymentPercent: number;
   interestRate: number;
   loanTerm: number;
+  loanTermMonths: number; // For hard money
   closingCostsPercent: number;
   sellerConcessionPercent: number;
+  // Rehab fields (203k)
+  rehabCost: number;
+  afterRepairValue: number;
+  contingencyPercent: number;
+  rehabTimeline: number;
+  holdingCostsMonthly: number;
+  // DSCR fields
+  originationPoints: number;
+  prepaymentPenalty: string;
+  // Hard Money fields
+  interestOnly: boolean;
+  exitStrategy: string;
+  estimatedSalePrice: number;
+  // Monthly expenses
   monthlyTaxes: number;
   monthlyInsurance: number;
   maintenanceReserve: number;
@@ -39,6 +61,7 @@ interface CalculatedMetrics {
   downPayment: number;
   baseLoan: number;
   upfrontMIP: number;
+  vaFundingFee: number;
   totalLoan: number;
   monthlyMIP: number;
   monthlyPI: number;
@@ -53,16 +76,27 @@ interface CalculatedMetrics {
   annualCashFlow: number;
   monthlyCashFlow: number;
   capRate: number;
+  capRateOnARV: number;
   cashOnCash: number;
   dscr: number;
   breakEvenOccupancy: number;
+  // Rehab specific
+  totalRehabWithContingency: number;
+  totalProjectCost: number;
+  totalInvestmentDuringRehab: number;
+  instantEquity: number;
+  // Hard Money specific
+  totalInterestCost: number;
+  grossFlipProfit: number;
+  flipROI: number;
+  annualizedROI: number;
 }
 
 const defaultHighlights = [
-  "FHA 3.5% down payment",
-  "6% seller concession covers closing costs",
+  "Strong financing terms available",
   "Two income-producing units",
-  "Positive monthly cash flow"
+  "Positive monthly cash flow",
+  "Below-market purchase opportunity"
 ];
 
 const defaultFormData: FormData = {
@@ -74,12 +108,23 @@ const defaultFormData: FormData = {
   units: 2,
   unitDescription: '',
   purchasePrice: 0,
-  financingType: 'FHA 3.5% Down',
-  downPaymentPercent: 3.5,
-  interestRate: 6.75,
+  financingType: 'Conventional',
+  downPaymentPercent: 20,
+  interestRate: 6.5,
   loanTerm: 30,
+  loanTermMonths: 12,
   closingCostsPercent: 3.0,
   sellerConcessionPercent: 6,
+  rehabCost: 0,
+  afterRepairValue: 0,
+  contingencyPercent: 15,
+  rehabTimeline: 6,
+  holdingCostsMonthly: 0,
+  originationPoints: 1.0,
+  prepaymentPenalty: 'None',
+  interestOnly: true,
+  exitStrategy: 'Refinance to Permanent Loan',
+  estimatedSalePrice: 0,
   monthlyTaxes: 0,
   monthlyInsurance: 0,
   maintenanceReserve: 0,
@@ -90,46 +135,87 @@ const defaultFormData: FormData = {
   highlights: [...defaultHighlights]
 };
 
-const financingOptions = [
-  { label: 'FHA 3.5% Down', downPercent: 3.5 },
-  { label: 'Conventional 5%', downPercent: 5 },
-  { label: 'Conventional 10%', downPercent: 10 },
-  { label: 'Conventional 15%', downPercent: 15 },
-  { label: 'Conventional 20%', downPercent: 20 },
-  { label: 'Conventional 25%', downPercent: 25 },
-  { label: 'Cash/No Financing', downPercent: 100 },
-];
-
 const propertyTypes = ['Single Family', 'Duplex', 'Triplex', 'Fourplex', 'Multi-Unit 5+', 'Mixed Use', 'Land', 'Commercial'];
 const conditionOptions = ['Recently Rehabbed', 'New Construction', 'Good Condition', 'Needs Updates', 'Needs Major Rehab'];
-const loanTerms = [30, 25, 20, 15];
+const loanTermsYears = [30, 25, 20, 15];
+const hardMoneyTermsMonths = [6, 9, 12, 18, 24];
+const prepaymentOptions = ['None', '1 Year', '2 Years', '3 Years', '5 Years'];
+const exitStrategies = ['Refinance to Permanent Loan', 'Sell / Flip', 'Other'];
+
+// Loan type defaults
+const loanDefaults: Record<FinancingType, Partial<FormData>> = {
+  'Conventional': { downPaymentPercent: 20, interestRate: 6.5, sellerConcessionPercent: 6 },
+  'FHA': { downPaymentPercent: 3.5, interestRate: 6.5, sellerConcessionPercent: 6 },
+  'FHA 203(k) Rehab': { downPaymentPercent: 3.5, interestRate: 6.5, sellerConcessionPercent: 6, contingencyPercent: 15, rehabTimeline: 6 },
+  'DSCR': { downPaymentPercent: 25, interestRate: 7.5, sellerConcessionPercent: 3, originationPoints: 1.0 },
+  'VA': { downPaymentPercent: 0, interestRate: 6.25, sellerConcessionPercent: 4 },
+  'Hard Money': { downPaymentPercent: 20, interestRate: 11.0, sellerConcessionPercent: 0, loanTermMonths: 12, originationPoints: 2.0, interestOnly: true },
+  'Cash': { downPaymentPercent: 100, interestRate: 0, sellerConcessionPercent: 6 }
+};
 
 const InvestmentAnalyzer = () => {
   const [formData, setFormData] = useState<FormData>(defaultFormData);
   const [newHighlight, setNewHighlight] = useState('');
+  const [rehabView, setRehabView] = useState<'during' | 'after'>('after');
+
+  const isFHA = formData.financingType === 'FHA' || formData.financingType === 'FHA 203(k) Rehab';
+  const is203k = formData.financingType === 'FHA 203(k) Rehab';
+  const isDSCR = formData.financingType === 'DSCR';
+  const isVA = formData.financingType === 'VA';
+  const isHardMoney = formData.financingType === 'Hard Money';
+  const isCash = formData.financingType === 'Cash';
+  const showFlipFields = isHardMoney && formData.exitStrategy === 'Sell / Flip';
 
   const metrics = useMemo<CalculatedMetrics>(() => {
-    const { purchasePrice, downPaymentPercent, interestRate, loanTerm, closingCostsPercent, sellerConcessionPercent, grossMonthlyRent, financingType, monthlyTaxes, monthlyInsurance, maintenanceReserve, propertyMgmt } = formData;
+    const { purchasePrice, downPaymentPercent, interestRate, loanTerm, loanTermMonths, closingCostsPercent, sellerConcessionPercent, grossMonthlyRent, monthlyTaxes, monthlyInsurance, maintenanceReserve, propertyMgmt, rehabCost, afterRepairValue, contingencyPercent, rehabTimeline, holdingCostsMonthly, originationPoints, estimatedSalePrice, interestOnly } = formData;
     
-    const isFHA = financingType.includes('FHA');
-    const isCash = financingType === 'Cash/No Financing';
+    // Rehab calculations (for 203k)
+    const totalRehabWithContingency = is203k ? rehabCost * (1 + contingencyPercent / 100) : 0;
+    const totalProjectCost = is203k ? purchasePrice + totalRehabWithContingency : purchasePrice;
     
-    // Down Payment and Loan
-    const downPayment = purchasePrice * (downPaymentPercent / 100);
-    const baseLoan = purchasePrice - downPayment;
+    // Down Payment calculation base
+    const downPaymentBase = is203k ? totalProjectCost : purchasePrice;
+    const downPayment = isVA ? 0 : (isCash ? purchasePrice : downPaymentBase * (downPaymentPercent / 100));
+    
+    // Base loan calculation
+    let baseLoan = 0;
+    if (isCash) {
+      baseLoan = 0;
+    } else if (is203k) {
+      baseLoan = totalProjectCost - downPayment;
+    } else {
+      baseLoan = purchasePrice - downPayment;
+    }
     
     // FHA MIP calculations
     const upfrontMIP = isFHA ? baseLoan * 0.0175 : 0;
-    const totalLoan = baseLoan + upfrontMIP;
     const monthlyMIP = isFHA ? (baseLoan * 0.0055) / 12 : 0;
     
-    // Monthly P&I (standard amortization)
-    const monthlyRate = interestRate / 100 / 12;
-    const numPayments = loanTerm * 12;
+    // VA Funding Fee
+    const vaFundingFee = isVA ? purchasePrice * 0.0215 : 0;
+    
+    // Total loan amount
+    let totalLoan = baseLoan;
+    if (isFHA) totalLoan = baseLoan + upfrontMIP;
+    if (isVA) totalLoan = purchasePrice + vaFundingFee;
+    
+    // Monthly payment calculation
     let monthlyPI = 0;
+    const effectiveRate = interestRate / 100;
+    const monthlyRate = effectiveRate / 12;
     
     if (!isCash && totalLoan > 0 && monthlyRate > 0) {
-      monthlyPI = totalLoan * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+      if (isHardMoney) {
+        if (interestOnly) {
+          monthlyPI = totalLoan * effectiveRate / 12;
+        } else {
+          const numPayments = loanTermMonths;
+          monthlyPI = totalLoan * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+        }
+      } else {
+        const numPayments = loanTerm * 12;
+        monthlyPI = totalLoan * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+      }
     }
     
     const totalMonthlyPayment = monthlyPI + monthlyMIP;
@@ -137,7 +223,20 @@ const InvestmentAnalyzer = () => {
     // Cash Required at Closing
     const closingCosts = purchasePrice * (closingCostsPercent / 100);
     const sellerConcession = purchasePrice * (sellerConcessionPercent / 100);
-    const cashRequired = Math.max(0, downPayment + closingCosts - sellerConcession);
+    
+    let cashRequired = 0;
+    if (isCash) {
+      cashRequired = purchasePrice + closingCosts - sellerConcession;
+    } else if (isDSCR || isHardMoney) {
+      const loanForPoints = isHardMoney ? (purchasePrice - downPayment) : baseLoan;
+      const points = loanForPoints * (originationPoints / 100);
+      cashRequired = downPayment + closingCosts + points - sellerConcession;
+    } else if (isVA) {
+      cashRequired = closingCosts - sellerConcession;
+    } else {
+      cashRequired = downPayment + closingCosts - sellerConcession;
+    }
+    cashRequired = Math.max(0, cashRequired);
     
     // Expenses
     const totalMonthlyExpenses = monthlyTaxes + monthlyInsurance + maintenanceReserve + propertyMgmt;
@@ -147,20 +246,37 @@ const InvestmentAnalyzer = () => {
     const annualRent = grossMonthlyRent * 12;
     const annualExpenses = totalMonthlyExpenses * 12;
     const noi = annualRent - annualExpenses;
-    const annualDebtService = totalMonthlyPayment * 12;
-    const annualCashFlow = noi - annualDebtService;
+    const annualDebtService = isHardMoney 
+      ? totalMonthlyPayment * loanTermMonths  // Total interest for hard money
+      : totalMonthlyPayment * 12;
+    const annualCashFlow = isCash ? noi : noi - (totalMonthlyPayment * 12);
     const monthlyCashFlow = grossMonthlyRent - totalMonthlyOutflow;
     
     // Key Metrics
     const capRate = purchasePrice > 0 ? (noi / purchasePrice) * 100 : 0;
+    const capRateOnARV = is203k && afterRepairValue > 0 ? (noi / afterRepairValue) * 100 : 0;
     const cashOnCash = cashRequired > 0 ? (annualCashFlow / cashRequired) * 100 : 0;
-    const dscr = annualDebtService > 0 ? noi / annualDebtService : 0;
-    const breakEvenOccupancy = annualRent > 0 ? ((annualExpenses + annualDebtService) / annualRent) * 100 : 0;
+    const dscr = isCash ? 0 : (totalMonthlyPayment > 0 ? noi / (totalMonthlyPayment * 12) : 0);
+    const breakEvenOccupancy = annualRent > 0 ? ((annualExpenses + (isCash ? 0 : totalMonthlyPayment * 12)) / annualRent) * 100 : 0;
+    
+    // Rehab specific
+    const totalInvestmentDuringRehab = is203k ? cashRequired + (holdingCostsMonthly * rehabTimeline) : 0;
+    const instantEquity = is203k && afterRepairValue > 0 ? afterRepairValue - totalLoan : 0;
+    
+    // Hard Money flip calculations
+    const totalInterestCost = isHardMoney ? monthlyPI * loanTermMonths : 0;
+    const loanForPoints = purchasePrice - downPayment;
+    const pointsCost = (isHardMoney || isDSCR) ? loanForPoints * (originationPoints / 100) : 0;
+    const fullProjectCost = purchasePrice + closingCosts + pointsCost + totalInterestCost;
+    const grossFlipProfit = showFlipFields && estimatedSalePrice > 0 ? estimatedSalePrice - fullProjectCost : 0;
+    const flipROI = showFlipFields && cashRequired > 0 ? (grossFlipProfit / cashRequired) * 100 : 0;
+    const annualizedROI = showFlipFields && loanTermMonths > 0 ? flipROI / (loanTermMonths / 12) : 0;
     
     return {
       downPayment,
       baseLoan,
       upfrontMIP,
+      vaFundingFee,
       totalLoan,
       monthlyMIP,
       monthlyPI,
@@ -175,22 +291,31 @@ const InvestmentAnalyzer = () => {
       annualCashFlow,
       monthlyCashFlow,
       capRate,
+      capRateOnARV,
       cashOnCash,
       dscr,
-      breakEvenOccupancy
+      breakEvenOccupancy,
+      totalRehabWithContingency,
+      totalProjectCost,
+      totalInvestmentDuringRehab,
+      instantEquity,
+      totalInterestCost,
+      grossFlipProfit,
+      flipROI,
+      annualizedROI
     };
-  }, [formData]);
+  }, [formData, is203k, isDSCR, isVA, isHardMoney, isCash, isFHA, showFlipFields]);
 
   const updateField = (field: keyof FormData, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleFinancingChange = (value: string) => {
-    const option = financingOptions.find(o => o.label === value);
+  const handleFinancingChange = (value: FinancingType) => {
+    const defaults = loanDefaults[value];
     setFormData(prev => ({
       ...prev,
       financingType: value,
-      downPaymentPercent: option?.downPercent || prev.downPaymentPercent
+      ...defaults
     }));
   };
 
@@ -225,8 +350,13 @@ const InvestmentAnalyzer = () => {
     }).format(value);
   };
 
-  const isFHA = formData.financingType.includes('FHA');
-  const isCash = formData.financingType === 'Cash/No Financing';
+  // DSCR qualification status
+  const getDSCRStatus = () => {
+    if (!isDSCR) return null;
+    if (metrics.dscr >= 1.25) return { color: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/30', text: 'Strong — exceeds most lender minimums', icon: CheckCircle2 };
+    if (metrics.dscr >= 1.0) return { color: 'text-amber-500 bg-amber-500/10 border-amber-500/30', text: 'Marginal — may not qualify with all lenders', icon: AlertTriangle };
+    return { color: 'text-red-500 bg-red-500/10 border-red-500/30', text: 'Below 1.0 — does not qualify for DSCR financing', icon: AlertCircle };
+  };
 
   const generatePDF = () => {
     const doc = new jsPDF();
@@ -278,16 +408,16 @@ const InvestmentAnalyzer = () => {
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(100, 100, 100);
-    doc.text(`${formData.propertyType} • ${formData.units} Unit${formData.units > 1 ? 's' : ''}`, margin, y);
+    doc.text(`${formData.propertyType} • ${formData.units} Unit${formData.units > 1 ? 's' : ''} • ${formData.financingType} Financing`, margin, y);
     y += 12;
     
     // 4 Metric Boxes
     const boxWidth = (pageWidth - margin * 2 - 12) / 4;
     const boxHeight = 26;
     const metricsData = [
-      { label: 'Cash on Cash', value: `${metrics.cashOnCash.toFixed(1)}%`, highlight: true },
+      { label: 'Cash on Cash', value: isCash ? 'N/A' : `${metrics.cashOnCash.toFixed(1)}%`, highlight: true },
       { label: 'Cap Rate', value: `${metrics.capRate.toFixed(1)}%`, highlight: false },
-      { label: 'DSCR', value: `${metrics.dscr.toFixed(2)}x`, highlight: false },
+      { label: 'DSCR', value: isCash ? 'N/A' : `${metrics.dscr.toFixed(2)}x`, highlight: false },
       { label: 'Break-Even', value: `${metrics.breakEvenOccupancy.toFixed(1)}%`, highlight: false }
     ];
     
@@ -324,7 +454,7 @@ const InvestmentAnalyzer = () => {
     let leftY = y;
     let rightY = y;
     
-    // Left Column - PROPERTY SNAPSHOT
+    // Left Column - THE DEAL
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(50, 50, 50);
@@ -334,13 +464,40 @@ const InvestmentAnalyzer = () => {
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(80, 80, 80);
-    const dealItems = [
-      `Purchase Price: ${formatCurrency(formData.purchasePrice)}`,
-      `Down Payment: ${formatCurrency(metrics.downPayment)} (${formData.downPaymentPercent}%)`,
-      `Loan Amount: ${formatCurrency(metrics.totalLoan)}`,
-      `Seller Concession: ${formatCurrency(formData.purchasePrice * formData.sellerConcessionPercent / 100)} (${formData.sellerConcessionPercent}%)`,
-      `Cash Required: ${formatCurrency(metrics.cashRequired)}`
+    
+    const dealItems: string[] = [
+      `Purchase Price: ${formatCurrency(formData.purchasePrice)}`
     ];
+    
+    if (!isCash) {
+      dealItems.push(`Down Payment: ${formatCurrency(metrics.downPayment)} (${formData.downPaymentPercent}%)`);
+      dealItems.push(`Loan Amount: ${formatCurrency(metrics.totalLoan)}`);
+    }
+    
+    if (isFHA) {
+      dealItems.push(`Upfront MIP: ${formatCurrency(metrics.upfrontMIP)} (1.75%)`);
+      dealItems.push(`Monthly MIP: ${formatCurrency(metrics.monthlyMIP)}`);
+    }
+    
+    if (isVA) {
+      dealItems.push(`VA Funding Fee: ${formatCurrency(metrics.vaFundingFee)} (2.15%)`);
+      dealItems.push('No monthly mortgage insurance');
+    }
+    
+    if (isDSCR || isHardMoney) {
+      dealItems.push(`Origination Points: ${formData.originationPoints}%`);
+    }
+    
+    if (is203k) {
+      dealItems.push(`Rehab Budget: ${formatCurrency(formData.rehabCost)}`);
+      dealItems.push(`Total w/Contingency: ${formatCurrency(metrics.totalRehabWithContingency)}`);
+      dealItems.push(`ARV: ${formatCurrency(formData.afterRepairValue)}`);
+      dealItems.push(`Instant Equity: ${formatCurrency(metrics.instantEquity)}`);
+    }
+    
+    dealItems.push(`Seller Concession: ${formatCurrency(formData.purchasePrice * formData.sellerConcessionPercent / 100)} (${formData.sellerConcessionPercent}%)`);
+    dealItems.push(`Cash Required: ${formatCurrency(metrics.cashRequired)}`);
+    
     dealItems.forEach(item => {
       doc.text(item, leftX, leftY);
       leftY += 5;
@@ -356,43 +513,43 @@ const InvestmentAnalyzer = () => {
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(80, 80, 80);
-    const returnsItems = [
-      `Monthly Rent: ${formatCurrency(formData.grossMonthlyRent)}`,
-      `Monthly Mortgage${isFHA ? ' (P&I + MIP)' : ''}: ${formatCurrency(metrics.totalMonthlyPayment)}`,
-      `Monthly Expenses: ${formatCurrency(metrics.totalMonthlyExpenses)}`,
-      `Monthly Cash Flow: ${formatCurrency(metrics.monthlyCashFlow)}`,
-      `Annual Cash Flow: ${formatCurrency(metrics.annualCashFlow)}`,
-      `NOI: ${formatCurrency(metrics.noi)}`
-    ];
+    
+    const returnsItems: string[] = [];
+    
+    if (isHardMoney && showFlipFields) {
+      returnsItems.push(`Sale Price: ${formatCurrency(formData.estimatedSalePrice)}`);
+      returnsItems.push(`Total Interest: ${formatCurrency(metrics.totalInterestCost)}`);
+      returnsItems.push(`Gross Profit: ${formatCurrency(metrics.grossFlipProfit)}`);
+      returnsItems.push(`ROI: ${metrics.flipROI.toFixed(1)}%`);
+      returnsItems.push(`Annualized ROI: ${metrics.annualizedROI.toFixed(1)}%`);
+    } else {
+      returnsItems.push(`Monthly Rent: ${formatCurrency(formData.grossMonthlyRent)}`);
+      
+      if (isCash) {
+        returnsItems.push('Monthly Mortgage: $0 — Cash Purchase');
+      } else if (isFHA) {
+        returnsItems.push(`Monthly Mortgage (P&I + MIP): ${formatCurrency(metrics.totalMonthlyPayment)}`);
+      } else {
+        returnsItems.push(`Monthly Mortgage (P&I): ${formatCurrency(metrics.totalMonthlyPayment)}`);
+      }
+      
+      returnsItems.push(`Monthly Expenses: ${formatCurrency(metrics.totalMonthlyExpenses)}`);
+      returnsItems.push(`Monthly Cash Flow: ${formatCurrency(metrics.monthlyCashFlow)}`);
+      returnsItems.push(`Annual Cash Flow: ${formatCurrency(metrics.annualCashFlow)}`);
+      returnsItems.push(`NOI: ${formatCurrency(metrics.noi)}`);
+      
+      if (is203k) {
+        returnsItems.push(`Cap Rate (Purchase): ${metrics.capRate.toFixed(1)}%`);
+        returnsItems.push(`Cap Rate (ARV): ${metrics.capRateOnARV.toFixed(1)}%`);
+      }
+    }
+    
     returnsItems.forEach(item => {
       doc.text(item, rightX, rightY);
       rightY += 5;
     });
     
     y = Math.max(leftY, rightY) + 10;
-    
-    // MONTHLY NUMBERS
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(50, 50, 50);
-    doc.text('MONTHLY NUMBERS', margin, y);
-    y += 8;
-    
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(80, 80, 80);
-    const monthlyItems = [
-      `Gross Rent: ${formatCurrency(formData.grossMonthlyRent)}`,
-      `Mortgage${isFHA ? ' (P&I + MIP)' : ' (P&I)'}: ${formatCurrency(metrics.totalMonthlyPayment)}`,
-      `Operating Expenses: ${formatCurrency(metrics.totalMonthlyExpenses)}`,
-      `Total Outflow: ${formatCurrency(metrics.totalMonthlyOutflow)}`
-    ];
-    monthlyItems.forEach(item => {
-      doc.text(item, margin, y);
-      y += 5;
-    });
-    
-    y += 5;
     
     // Highlights
     if (formData.highlights.length > 0) {
@@ -450,11 +607,11 @@ const InvestmentAnalyzer = () => {
   return (
     <MainLayout>
       <Helmet>
-        <title>Investment Property Analyzer | Capital District Nest</title>
-        <meta name="description" content="Free investment property analysis tool for New York real estate investors. Calculate cap rate, cash-on-cash return, DSCR, cash flow, and generate professional PDF reports instantly." />
+        <title>Investment Property Analyzer | 7 Loan Types | Capital District Nest</title>
+        <meta name="description" content="Analyze any investment property with FHA, conventional, 203(k) rehab, DSCR, VA, hard money, or cash scenarios. Calculate cap rate, cash flow, DSCR, and generate professional PDF reports instantly." />
         <link rel="canonical" href="https://capitaldistrictnest.com/analyzer" />
-        <meta property="og:title" content="Investment Property Analyzer | Capital District Nest" />
-        <meta property="og:description" content="Free investment property analysis tool for New York real estate investors. Calculate cap rate, cash-on-cash return, DSCR, cash flow, and generate professional PDF reports instantly." />
+        <meta property="og:title" content="Investment Property Analyzer | 7 Loan Types | Capital District Nest" />
+        <meta property="og:description" content="Analyze any investment property with FHA, conventional, 203(k) rehab, DSCR, VA, hard money, or cash scenarios. Calculate cap rate, cash flow, DSCR, and generate professional PDF reports instantly." />
         <meta property="og:type" content="website" />
       </Helmet>
 
@@ -469,8 +626,8 @@ const InvestmentAnalyzer = () => {
             <h1 className="text-3xl md:text-4xl font-light text-foreground mb-3">
               Investment Property <span className="text-primary font-normal">Analyzer</span>
             </h1>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Walk through the deal step-by-step. Live calculations update as you type.
+            <p className="text-muted-foreground max-w-xl mx-auto text-lg">
+              Analyze any deal. Any loan type. Institutional-quality reports in seconds.
             </p>
           </div>
 
@@ -544,7 +701,7 @@ const InvestmentAnalyzer = () => {
               </div>
               
               <div className="space-y-4">
-                {/* Purchase Price - Large and prominent */}
+                {/* Purchase Price */}
                 <div>
                   <Label htmlFor="purchasePrice" className="text-base font-medium">Purchase Price</Label>
                   <div className="relative mt-1">
@@ -560,57 +717,334 @@ const InvestmentAnalyzer = () => {
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-4 gap-3">
-                  <div>
-                    <Label>Financing Type</Label>
-                    <Select value={formData.financingType} onValueChange={handleFinancingChange}>
+                {/* Financing Type */}
+                <div>
+                  <Label className="flex items-center gap-2">
+                    <Landmark className="w-4 h-4 text-primary" />
+                    Financing Type
+                  </Label>
+                  <Select value={formData.financingType} onValueChange={(v) => handleFinancingChange(v as FinancingType)}>
+                    <SelectTrigger className="bg-background/50">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {financingTypes.map(type => (
+                        <SelectItem key={type} value={type}>
+                          {type === 'Cash' ? 'Cash (No Financing)' : type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Conditional Fields with transitions */}
+                <div className={cn(
+                  "space-y-4 transition-all duration-300 ease-in-out",
+                  isCash ? "opacity-0 max-h-0 overflow-hidden" : "opacity-100 max-h-[2000px]"
+                )}>
+                  <div className="grid grid-cols-4 gap-3">
+                    {/* Down Payment - hidden for VA and Cash */}
+                    <div className={cn(
+                      "transition-all duration-200",
+                      isVA ? "opacity-50" : ""
+                    )}>
+                      <Label htmlFor="downPercent">Down Payment %</Label>
+                      <Input 
+                        id="downPercent" 
+                        type="number" 
+                        step="0.5" 
+                        value={isVA ? 0 : formData.downPaymentPercent} 
+                        onChange={(e) => updateField('downPaymentPercent', parseFloat(e.target.value) || 0)} 
+                        className="bg-background/50"
+                        disabled={isVA}
+                        min={isFHA ? 3.5 : isDSCR ? 20 : 0}
+                      />
+                      {isVA && <p className="text-xs text-muted-foreground mt-1">VA requires $0 down</p>}
+                      {isFHA && <p className="text-xs text-muted-foreground mt-1">Min 3.5%</p>}
+                      {isDSCR && <p className="text-xs text-muted-foreground mt-1">Min 20%</p>}
+                    </div>
+                    <div>
+                      <Label htmlFor="rate">Interest Rate %</Label>
+                      <Input 
+                        id="rate" 
+                        type="number" 
+                        step={isHardMoney ? 0.25 : 0.125} 
+                        value={formData.interestRate} 
+                        onChange={(e) => updateField('interestRate', parseFloat(e.target.value) || 0)} 
+                        className="bg-background/50" 
+                      />
+                    </div>
+                    <div>
+                      <Label>Loan Term</Label>
+                      {isHardMoney ? (
+                        <Select value={formData.loanTermMonths.toString()} onValueChange={(v) => updateField('loanTermMonths', parseInt(v))}>
+                          <SelectTrigger className="bg-background/50"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            {hardMoneyTermsMonths.map(term => <SelectItem key={term} value={term.toString()}>{term} Months</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      ) : (
+                        <Select value={formData.loanTerm.toString()} onValueChange={(v) => updateField('loanTerm', parseInt(v))}>
+                          <SelectTrigger className="bg-background/50"><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            {loanTermsYears.map(term => <SelectItem key={term} value={term.toString()}>{term} Years</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor="closing">Closing Costs %</Label>
+                      <Input id="closing" type="number" step="0.5" value={formData.closingCostsPercent} onChange={(e) => updateField('closingCostsPercent', parseFloat(e.target.value) || 0)} className="bg-background/50" />
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <Label htmlFor="concession">Seller Concession %</Label>
+                      <Input id="concession" type="number" step="0.5" value={formData.sellerConcessionPercent} onChange={(e) => updateField('sellerConcessionPercent', parseFloat(e.target.value) || 0)} className="bg-background/50" />
+                    </div>
+                    
+                    {/* Origination Points - DSCR and Hard Money only */}
+                    <div className={cn(
+                      "transition-all duration-300",
+                      (isDSCR || isHardMoney) ? "opacity-100" : "opacity-0 pointer-events-none"
+                    )}>
+                      <Label htmlFor="origPoints">Origination Points %</Label>
+                      <Input 
+                        id="origPoints" 
+                        type="number" 
+                        step="0.5" 
+                        value={formData.originationPoints} 
+                        onChange={(e) => updateField('originationPoints', parseFloat(e.target.value) || 0)} 
+                        className="bg-background/50" 
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">Added to closing costs</p>
+                    </div>
+                  </div>
+
+                  {/* DSCR-specific: Prepayment Penalty */}
+                  <div className={cn(
+                    "transition-all duration-300",
+                    isDSCR ? "opacity-100 max-h-40" : "opacity-0 max-h-0 overflow-hidden"
+                  )}>
+                    <Label>Prepayment Penalty</Label>
+                    <Select value={formData.prepaymentPenalty} onValueChange={(v) => updateField('prepaymentPenalty', v)}>
                       <SelectTrigger className="bg-background/50"><SelectValue /></SelectTrigger>
                       <SelectContent>
-                        {financingOptions.map(opt => <SelectItem key={opt.label} value={opt.label}>{opt.label}</SelectItem>)}
+                        {prepaymentOptions.map(opt => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
                       </SelectContent>
                     </Select>
+                    <p className="text-xs text-muted-foreground mt-1">Penalty period if you refinance or sell early</p>
+                  </div>
+
+                  {/* Hard Money-specific fields */}
+                  <div className={cn(
+                    "space-y-4 transition-all duration-300",
+                    isHardMoney ? "opacity-100 max-h-[500px]" : "opacity-0 max-h-0 overflow-hidden"
+                  )}>
+                    <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
+                      <div>
+                        <Label htmlFor="interestOnly" className="text-sm font-medium">Interest Only</Label>
+                        <p className="text-xs text-muted-foreground">Most bridge loans are interest-only</p>
+                      </div>
+                      <Switch 
+                        id="interestOnly" 
+                        checked={formData.interestOnly} 
+                        onCheckedChange={(v) => updateField('interestOnly', v)} 
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label>Exit Strategy</Label>
+                      <Select value={formData.exitStrategy} onValueChange={(v) => updateField('exitStrategy', v)}>
+                        <SelectTrigger className="bg-background/50"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          {exitStrategies.map(strat => <SelectItem key={strat} value={strat}>{strat}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    {/* Sale Price for Flip */}
+                    <div className={cn(
+                      "transition-all duration-300",
+                      showFlipFields ? "opacity-100 max-h-40" : "opacity-0 max-h-0 overflow-hidden"
+                    )}>
+                      <Label htmlFor="salePrice">Estimated Sale Price</Label>
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+                        <Input 
+                          id="salePrice" 
+                          type="number" 
+                          value={formData.estimatedSalePrice || ''} 
+                          onChange={(e) => updateField('estimatedSalePrice', parseFloat(e.target.value) || 0)} 
+                          className="bg-background/50 pl-7" 
+                          placeholder="0" 
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Cash-specific: just show closing/concession */}
+                <div className={cn(
+                  "grid grid-cols-2 gap-3 transition-all duration-300",
+                  isCash ? "opacity-100" : "opacity-0 max-h-0 overflow-hidden"
+                )}>
+                  <div>
+                    <Label htmlFor="cashClosing">Closing Costs %</Label>
+                    <Input id="cashClosing" type="number" step="0.5" value={formData.closingCostsPercent} onChange={(e) => updateField('closingCostsPercent', parseFloat(e.target.value) || 0)} className="bg-background/50" />
                   </div>
                   <div>
-                    <Label htmlFor="downPercent">Down Payment %</Label>
-                    <Input id="downPercent" type="number" step="0.5" value={formData.downPaymentPercent} onChange={(e) => updateField('downPaymentPercent', parseFloat(e.target.value) || 0)} className="bg-background/50" />
-                  </div>
-                  <div>
-                    <Label htmlFor="rate">Interest Rate %</Label>
-                    <Input id="rate" type="number" step="0.125" value={formData.interestRate} onChange={(e) => updateField('interestRate', parseFloat(e.target.value) || 0)} className="bg-background/50" />
-                  </div>
-                  <div>
-                    <Label>Loan Term</Label>
-                    <Select value={formData.loanTerm.toString()} onValueChange={(v) => updateField('loanTerm', parseInt(v))}>
-                      <SelectTrigger className="bg-background/50"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        {loanTerms.map(term => <SelectItem key={term} value={term.toString()}>{term} Years</SelectItem>)}
-                      </SelectContent>
-                    </Select>
+                    <Label htmlFor="cashConcession">Seller Concession %</Label>
+                    <Input id="cashConcession" type="number" step="0.5" value={formData.sellerConcessionPercent} onChange={(e) => updateField('sellerConcessionPercent', parseFloat(e.target.value) || 0)} className="bg-background/50" />
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <Label htmlFor="closing">Closing Costs %</Label>
-                    <Input id="closing" type="number" step="0.5" value={formData.closingCostsPercent} onChange={(e) => updateField('closingCostsPercent', parseFloat(e.target.value) || 0)} className="bg-background/50" />
-                  </div>
-                  <div>
-                    <Label htmlFor="concession">Seller Concession %</Label>
-                    <Input id="concession" type="number" step="0.5" value={formData.sellerConcessionPercent} onChange={(e) => updateField('sellerConcessionPercent', parseFloat(e.target.value) || 0)} className="bg-background/50" />
-                  </div>
-                </div>
-                
-                {/* Calculated Read-Only Displays */}
-                <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border/30">
+                {/* FHA/VA Auto-displays */}
+                <div className={cn(
+                  "grid gap-4 pt-4 border-t border-border/30",
+                  isCash ? "hidden" : "",
+                  (isFHA || isVA) ? "grid-cols-2 md:grid-cols-3" : "grid-cols-2"
+                )}>
+                  {isFHA && (
+                    <>
+                      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+                        <p className="text-xs text-amber-600 uppercase tracking-wide mb-1">Upfront MIP</p>
+                        <p className="text-lg font-semibold text-foreground">{formatCurrency(metrics.upfrontMIP)}</p>
+                        <p className="text-xs text-muted-foreground">1.75% financed into loan</p>
+                      </div>
+                      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+                        <p className="text-xs text-amber-600 uppercase tracking-wide mb-1">Monthly MIP</p>
+                        <p className="text-lg font-semibold text-foreground">{formatCurrency(metrics.monthlyMIP)}</p>
+                        <p className="text-xs text-muted-foreground">0.55%/yr on base loan</p>
+                      </div>
+                    </>
+                  )}
+                  
+                  {isVA && (
+                    <>
+                      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                        <p className="text-xs text-blue-600 uppercase tracking-wide mb-1">VA Funding Fee</p>
+                        <p className="text-lg font-semibold text-foreground">{formatCurrency(metrics.vaFundingFee)}</p>
+                        <p className="text-xs text-muted-foreground">2.15% financed into loan</p>
+                      </div>
+                      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                        <p className="text-xs text-blue-600 uppercase tracking-wide mb-1">Monthly PMI</p>
+                        <p className="text-lg font-semibold text-foreground">$0</p>
+                        <p className="text-xs text-muted-foreground">No MI with VA loans</p>
+                      </div>
+                    </>
+                  )}
+                  
                   <div className="bg-muted/30 rounded-lg p-4">
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Loan Amount</p>
-                    <p className="text-xl font-semibold text-foreground">{formatCurrency(metrics.totalLoan)}</p>
-                    {isFHA && <p className="text-xs text-muted-foreground mt-1">Includes 1.75% upfront MIP</p>}
+                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                      {isCash ? 'Cash Required' : 'Loan Amount'}
+                    </p>
+                    <p className="text-xl font-semibold text-foreground">
+                      {isCash ? formatCurrency(metrics.cashRequired) : formatCurrency(metrics.totalLoan)}
+                    </p>
+                    {isFHA && <p className="text-xs text-muted-foreground mt-1">Includes upfront MIP</p>}
+                    {isVA && <p className="text-xs text-muted-foreground mt-1">Includes VA funding fee</p>}
                   </div>
+                  
                   <div className="bg-muted/30 rounded-lg p-4">
                     <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Cash Required at Closing</p>
                     <p className="text-xl font-semibold text-foreground">{formatCurrency(metrics.cashRequired)}</p>
                   </div>
+                </div>
+              </div>
+            </section>
+
+            {/* 203(k) REHAB SECTION */}
+            <section className={cn(
+              "bg-card/50 border-l-4 border-l-primary border border-border/50 rounded-2xl p-6 transition-all duration-300",
+              is203k ? "opacity-100 max-h-[1000px]" : "opacity-0 max-h-0 overflow-hidden py-0 px-0 border-0"
+            )}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                  <Hammer className="w-5 h-5 text-primary" />
+                </div>
+                <h2 className="text-xl font-semibold text-foreground">Rehab Budget</h2>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="rehabCost">Estimated Rehab Cost</Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+                      <Input id="rehabCost" type="number" value={formData.rehabCost || ''} onChange={(e) => updateField('rehabCost', parseFloat(e.target.value) || 0)} className="bg-background/50 pl-7" placeholder="0" />
+                    </div>
+                  </div>
+                  <div>
+                    <Label htmlFor="arv">After-Repair Value (ARV)</Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+                      <Input id="arv" type="number" value={formData.afterRepairValue || ''} onChange={(e) => updateField('afterRepairValue', parseFloat(e.target.value) || 0)} className="bg-background/50 pl-7" placeholder="0" />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor="contingency">Contingency %</Label>
+                    <Input id="contingency" type="number" value={formData.contingencyPercent} onChange={(e) => updateField('contingencyPercent', parseFloat(e.target.value) || 0)} className="bg-background/50" />
+                  </div>
+                  <div>
+                    <Label htmlFor="rehabTime">Timeline (months)</Label>
+                    <Input id="rehabTime" type="number" value={formData.rehabTimeline} onChange={(e) => updateField('rehabTimeline', parseInt(e.target.value) || 0)} className="bg-background/50" />
+                  </div>
+                  <div>
+                    <Label htmlFor="holding">Monthly Holding Costs</Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+                      <Input id="holding" type="number" value={formData.holdingCostsMonthly || ''} onChange={(e) => updateField('holdingCostsMonthly', parseFloat(e.target.value) || 0)} className="bg-background/50 pl-7" placeholder="0" />
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">Mortgage + insurance + utilities while vacant</p>
+                  </div>
+                </div>
+                
+                {/* Calculated Rehab Displays */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-border/30">
+                  <div className="bg-primary/5 border border-primary/20 rounded-lg p-3">
+                    <p className="text-xs text-primary uppercase tracking-wide mb-1">Total w/ Contingency</p>
+                    <p className="text-lg font-semibold">{formatCurrency(metrics.totalRehabWithContingency)}</p>
+                  </div>
+                  <div className="bg-muted/30 rounded-lg p-3">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Total Loan Amount</p>
+                    <p className="text-lg font-semibold">{formatCurrency(metrics.totalLoan)}</p>
+                  </div>
+                  <div className="bg-muted/30 rounded-lg p-3">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Investment During Rehab</p>
+                    <p className="text-lg font-semibold">{formatCurrency(metrics.totalInvestmentDuringRehab)}</p>
+                  </div>
+                  <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
+                    <p className="text-xs text-emerald-600 uppercase tracking-wide mb-1">Instant Equity</p>
+                    <p className="text-lg font-semibold text-emerald-600">{formatCurrency(metrics.instantEquity)}</p>
+                  </div>
+                </div>
+
+                {/* Rehab View Toggle */}
+                <div className="flex items-center gap-2 pt-4">
+                  <span className="text-sm text-muted-foreground">View:</span>
+                  <button 
+                    onClick={() => setRehabView('during')}
+                    className={cn(
+                      "px-3 py-1.5 rounded-full text-sm font-medium transition-colors",
+                      rehabView === 'during' ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    )}
+                  >
+                    During Rehab
+                  </button>
+                  <button 
+                    onClick={() => setRehabView('after')}
+                    className={cn(
+                      "px-3 py-1.5 rounded-full text-sm font-medium transition-colors",
+                      rehabView === 'after' ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    )}
+                  >
+                    After Stabilization
+                  </button>
                 </div>
               </div>
             </section>
@@ -625,17 +1059,17 @@ const InvestmentAnalyzer = () => {
               </div>
               
               <div className="space-y-4">
-                {/* Mortgage Payment - Calculated Display */}
+                {/* Mortgage Payment Display */}
                 <div className="bg-primary/5 border border-primary/20 rounded-xl p-5">
                   <p className="text-sm text-primary uppercase tracking-wide font-medium mb-1">Monthly Mortgage Payment</p>
                   <p className="text-3xl font-bold text-foreground">
                     {isCash ? '$0' : formatCurrency(metrics.totalMonthlyPayment)}
                   </p>
                   {isCash ? (
-                    <p className="text-sm text-muted-foreground mt-1">No Financing</p>
+                    <p className="text-sm text-muted-foreground mt-1">Cash Purchase — No Financing</p>
                   ) : (
                     <p className="text-sm text-muted-foreground mt-1">
-                      {isFHA ? 'P&I + MIP' : 'P&I'} • {formData.interestRate}% / {formData.loanTerm} yr • {formatCurrency(metrics.totalLoan)} loan
+                      {isFHA ? 'P&I + MIP' : isHardMoney && formData.interestOnly ? 'Interest Only' : 'P&I'} • {formData.interestRate}% / {isHardMoney ? `${formData.loanTermMonths} mo` : `${formData.loanTerm} yr`} • {formatCurrency(metrics.totalLoan)} loan
                     </p>
                   )}
                 </div>
@@ -648,7 +1082,6 @@ const InvestmentAnalyzer = () => {
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
                       <Input id="taxes" type="number" value={formData.monthlyTaxes || ''} onChange={(e) => updateField('monthlyTaxes', parseFloat(e.target.value) || 0)} className="bg-background/50 pl-7" placeholder="0" />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">Annual tax bill ÷ 12</p>
                   </div>
                   <div>
                     <Label htmlFor="insurance">Insurance (monthly)</Label>
@@ -656,7 +1089,6 @@ const InvestmentAnalyzer = () => {
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
                       <Input id="insurance" type="number" value={formData.monthlyInsurance || ''} onChange={(e) => updateField('monthlyInsurance', parseFloat(e.target.value) || 0)} className="bg-background/50 pl-7" placeholder="0" />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">Annual premium ÷ 12</p>
                   </div>
                   <div>
                     <Label htmlFor="maintenance">Maintenance Reserve</Label>
@@ -664,7 +1096,6 @@ const InvestmentAnalyzer = () => {
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
                       <Input id="maintenance" type="number" value={formData.maintenanceReserve || ''} onChange={(e) => updateField('maintenanceReserve', parseFloat(e.target.value) || 0)} className="bg-background/50 pl-7" placeholder="0" />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">Typical: 5-10% of rent</p>
                   </div>
                   <div>
                     <Label htmlFor="mgmt">Property Mgmt / Other</Label>
@@ -672,7 +1103,6 @@ const InvestmentAnalyzer = () => {
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
                       <Input id="mgmt" type="number" value={formData.propertyMgmt || ''} onChange={(e) => updateField('propertyMgmt', parseFloat(e.target.value) || 0)} className="bg-background/50 pl-7" placeholder="0" />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">Typical: 8-10% of rent if managed</p>
                   </div>
                 </div>
                 
@@ -721,18 +1151,18 @@ const InvestmentAnalyzer = () => {
                 {/* Cash Flow Display */}
                 <div className={`rounded-xl p-6 text-center ${metrics.monthlyCashFlow >= 0 ? 'bg-emerald-500/10 border border-emerald-500/30' : 'bg-red-500/10 border border-red-500/30'}`}>
                   <p className="text-sm uppercase tracking-wide mb-2 font-medium" style={{ color: metrics.monthlyCashFlow >= 0 ? 'rgb(16, 185, 129)' : 'rgb(239, 68, 68)' }}>
-                    Monthly Cash Flow
+                    {is203k && rehabView === 'during' ? 'Monthly Outflow During Rehab' : 'Monthly Cash Flow'}
                   </p>
                   <p className="text-4xl font-bold" style={{ color: metrics.monthlyCashFlow >= 0 ? 'rgb(16, 185, 129)' : 'rgb(239, 68, 68)' }}>
-                    {formatCurrency(metrics.monthlyCashFlow)}
+                    {is203k && rehabView === 'during' 
+                      ? formatCurrency(formData.holdingCostsMonthly) 
+                      : formatCurrency(metrics.monthlyCashFlow)
+                    }
                   </p>
                   <p className="text-lg mt-2" style={{ color: metrics.monthlyCashFlow >= 0 ? 'rgb(16, 185, 129)' : 'rgb(239, 68, 68)' }}>
-                    Annual: {formatCurrency(metrics.annualCashFlow)}
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-3">
-                    {metrics.monthlyCashFlow >= 0 
-                      ? `You keep ${formatCurrency(metrics.monthlyCashFlow)} per month after all costs`
-                      : `You're short ${formatCurrency(Math.abs(metrics.monthlyCashFlow))} per month`
+                    {is203k && rehabView === 'during' 
+                      ? `Total During Rehab: ${formatCurrency(formData.holdingCostsMonthly * formData.rehabTimeline)}`
+                      : `Annual: ${formatCurrency(metrics.annualCashFlow)}`
                     }
                   </p>
                 </div>
@@ -803,20 +1233,76 @@ const InvestmentAnalyzer = () => {
                 <h2 className="text-xl font-semibold text-foreground">⑥ Investment Analysis</h2>
               </div>
               
+              {/* DSCR Qualification Badge */}
+              {isDSCR && metrics.dscr > 0 && (() => {
+                const status = getDSCRStatus();
+                const StatusIcon = status?.icon;
+                return (
+                  <div className={cn(
+                    "rounded-lg p-4 mb-6 border flex items-center gap-3",
+                    status?.color
+                  )}>
+                    {StatusIcon && <StatusIcon className="w-5 h-5" />}
+                    <div>
+                      <p className="font-semibold">DSCR: {metrics.dscr.toFixed(2)}x</p>
+                      <p className="text-sm">{status?.text}</p>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Hard Money Flip Results */}
+              {showFlipFields && formData.estimatedSalePrice > 0 && (
+                <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-5 mb-6">
+                  <h3 className="text-sm font-semibold text-emerald-600 uppercase tracking-wide mb-4">Flip Analysis</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                      <p className="text-xs text-muted-foreground">Total Interest</p>
+                      <p className="text-lg font-semibold">{formatCurrency(metrics.totalInterestCost)}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">Gross Profit</p>
+                      <p className="text-lg font-semibold text-emerald-600">{formatCurrency(metrics.grossFlipProfit)}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">ROI</p>
+                      <p className="text-lg font-semibold text-emerald-600">{metrics.flipROI.toFixed(1)}%</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">Annualized ROI</p>
+                      <p className="text-lg font-semibold text-emerald-600">{metrics.annualizedROI.toFixed(1)}%</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
               {/* 4 Metric Cards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 text-center">
                   <p className="text-xs text-primary uppercase tracking-wider mb-1">Cash on Cash</p>
-                  <p className="text-2xl font-bold text-primary">{metrics.cashOnCash > 0 ? `${metrics.cashOnCash.toFixed(1)}%` : '—'}</p>
+                  <p className="text-2xl font-bold text-primary">
+                    {isCash ? 'N/A' : metrics.cashOnCash > 0 ? `${metrics.cashOnCash.toFixed(1)}%` : '—'}
+                  </p>
                 </div>
                 <div className="bg-muted/30 rounded-xl p-4 text-center">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Cap Rate</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
+                    {is203k ? 'Cap Rate (Purchase)' : 'Cap Rate'}
+                  </p>
                   <p className="text-2xl font-bold text-foreground">{metrics.capRate > 0 ? `${metrics.capRate.toFixed(1)}%` : '—'}</p>
                 </div>
-                <div className="bg-muted/30 rounded-xl p-4 text-center">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">DSCR</p>
-                  <p className="text-2xl font-bold text-foreground">{metrics.dscr > 0 ? `${metrics.dscr.toFixed(2)}x` : '—'}</p>
-                </div>
+                {is203k ? (
+                  <div className="bg-muted/30 rounded-xl p-4 text-center">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Cap Rate (ARV)</p>
+                    <p className="text-2xl font-bold text-foreground">{metrics.capRateOnARV > 0 ? `${metrics.capRateOnARV.toFixed(1)}%` : '—'}</p>
+                  </div>
+                ) : (
+                  <div className="bg-muted/30 rounded-xl p-4 text-center">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">DSCR</p>
+                    <p className="text-2xl font-bold text-foreground">
+                      {isCash ? 'N/A' : metrics.dscr > 0 ? `${metrics.dscr.toFixed(2)}x` : '—'}
+                    </p>
+                  </div>
+                )}
                 <div className="bg-muted/30 rounded-xl p-4 text-center">
                   <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Break-Even</p>
                   <p className="text-2xl font-bold text-foreground">{metrics.breakEvenOccupancy > 0 ? `${metrics.breakEvenOccupancy.toFixed(1)}%` : '—'}</p>
@@ -829,8 +1315,12 @@ const InvestmentAnalyzer = () => {
                   <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3">The Deal</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between"><span className="text-muted-foreground">Purchase Price</span><span className="font-medium">{formatCurrency(formData.purchasePrice)}</span></div>
-                    <div className="flex justify-between"><span className="text-muted-foreground">Down Payment</span><span className="font-medium">{formatCurrency(metrics.downPayment)} ({formData.downPaymentPercent}%)</span></div>
-                    <div className="flex justify-between"><span className="text-muted-foreground">Loan Amount</span><span className="font-medium">{formatCurrency(metrics.totalLoan)}</span></div>
+                    {!isCash && (
+                      <>
+                        <div className="flex justify-between"><span className="text-muted-foreground">Down Payment</span><span className="font-medium">{formatCurrency(metrics.downPayment)} ({formData.downPaymentPercent}%)</span></div>
+                        <div className="flex justify-between"><span className="text-muted-foreground">Loan Amount</span><span className="font-medium">{formatCurrency(metrics.totalLoan)}</span></div>
+                      </>
+                    )}
                     <div className="flex justify-between"><span className="text-muted-foreground">Seller Concession</span><span className="font-medium">{formatCurrency(formData.purchasePrice * formData.sellerConcessionPercent / 100)} ({formData.sellerConcessionPercent}%)</span></div>
                     <div className="flex justify-between border-t border-border/30 pt-2"><span className="text-foreground font-medium">Cash Required</span><span className="font-bold">{formatCurrency(metrics.cashRequired)}</span></div>
                   </div>
@@ -839,7 +1329,10 @@ const InvestmentAnalyzer = () => {
                   <h3 className="text-sm font-semibold text-foreground uppercase tracking-wide mb-3">The Returns</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between"><span className="text-muted-foreground">Monthly Rent</span><span className="font-medium">{formatCurrency(formData.grossMonthlyRent)}</span></div>
-                    <div className="flex justify-between"><span className="text-muted-foreground">Monthly Mortgage</span><span className="font-medium">{formatCurrency(metrics.totalMonthlyPayment)}</span></div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Monthly Mortgage</span>
+                      <span className="font-medium">{isCash ? '$0' : formatCurrency(metrics.totalMonthlyPayment)}</span>
+                    </div>
                     <div className="flex justify-between"><span className="text-muted-foreground">Monthly Expenses</span><span className="font-medium">{formatCurrency(metrics.totalMonthlyExpenses)}</span></div>
                     <div className="flex justify-between"><span className="text-muted-foreground">Monthly Cash Flow</span><span className={`font-medium ${metrics.monthlyCashFlow >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>{formatCurrency(metrics.monthlyCashFlow)}</span></div>
                     <div className="flex justify-between"><span className="text-muted-foreground">Annual Cash Flow</span><span className={`font-medium ${metrics.annualCashFlow >= 0 ? 'text-emerald-500' : 'text-red-500'}`}>{formatCurrency(metrics.annualCashFlow)}</span></div>
