@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import MasterGatekeeperModal from "@/components/MasterGatekeeperModal";
 import { useNavigate } from "react-router-dom";
 
-type SearchType = "single-family" | "rental-investors" | "rehab-foreclosures" | "land" | "rentals";
+type SearchType = "rental" | "multi-unit" | "rehab" | "land";
 
 interface SearchPill {
   id: SearchType;
@@ -16,44 +16,37 @@ interface SearchPill {
 
 const searchPills: SearchPill[] = [
   { 
-    id: "single-family", 
-    label: "Single Family", 
+    id: "rental", 
+    label: "Rental", 
     icon: <Home className="w-4 h-4" />,
-    placeholder: "Enter an address to analyze...",
-    hubRoute: "/search/single-family"
+    placeholder: "Enter a rental property address...",
+    hubRoute: "/analyzer"
   },
   { 
-    id: "rental-investors", 
-    label: "Investors", 
+    id: "multi-unit", 
+    label: "Multi-Unit", 
     icon: <Building className="w-4 h-4" />,
-    placeholder: "Enter a multi-unit address...",
-    hubRoute: "/search/investors"
+    placeholder: "Enter a multi-family address...",
+    hubRoute: "/analyzer"
   },
   { 
-    id: "rehab-foreclosures", 
-    label: "Foreclosures", 
+    id: "rehab", 
+    label: "Rehab / Flip", 
     icon: <Building2 className="w-4 h-4" />,
-    placeholder: "Enter a distressed property...",
-    hubRoute: "/search/foreclosures"
+    placeholder: "Enter a rehab property address...",
+    hubRoute: "/analyzer"
   },
   { 
     id: "land", 
     label: "Land", 
     icon: <Trees className="w-4 h-4" />,
-    placeholder: "Enter a parcel address...",
-    hubRoute: "/search/land"
-  },
-  { 
-    id: "rentals", 
-    label: "Rentals", 
-    icon: <Home className="w-4 h-4" />,
-    placeholder: "Search available rentals...",
-    hubRoute: "/search/rentals"
+    placeholder: "Enter a land parcel address...",
+    hubRoute: "/analyzer"
   },
 ];
 
 const SearchCommandCenter = () => {
-  const [selectedType, setSelectedType] = useState<SearchType>("single-family");
+  const [selectedType, setSelectedType] = useState<SearchType>("rental");
   const [searchQuery, setSearchQuery] = useState("");
   const [gatekeeperOpen, setGatekeeperOpen] = useState(false);
   const [pendingRedirectUrl, setPendingRedirectUrl] = useState("");

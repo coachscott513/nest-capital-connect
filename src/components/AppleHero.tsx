@@ -48,18 +48,18 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
         {/* Floating Glass Badge */}
         <div className="inline-flex items-center gap-2 glass-strong rounded-full px-6 py-3 mb-12 animate-fade-in">
           <Sparkles className="w-4 h-4 text-primary" />
-          <span className="text-sm font-semibold text-foreground tracking-wide">Capital District Real Estate Intelligence</span>
+          <span className="text-sm font-semibold text-foreground tracking-wide">Deal Analysis Platform</span>
         </div>
 
         {/* Headline - Extra Light 84px */}
         <h1 className="headline-hero text-foreground mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          Find clarity in<br />
-          <span className="text-gradient-premium text-glow">every property decision</span>
+          Know the deal.<br />
+          <span className="text-gradient-premium text-glow">Before you buy.</span>
         </h1>
 
         {/* Subheadline - Silver color */}
         <p className="text-xl md:text-2xl text-muted-foreground body-airy mb-12 max-w-2xl mx-auto animate-fade-in font-light" style={{ animationDelay: '0.15s' }}>
-          Clear data. Local context. Town-by-town intelligence built for buyers who demand precision.
+          Rental • Rehab • Land • Multi-Unit. Any loan type. Instant cash flow + return analysis.
         </p>
 
         {/* Search Command Center */}
