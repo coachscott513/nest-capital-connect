@@ -69,23 +69,19 @@ const towns = [
   { name: "Wynantskill", slug: "wynantskill" },
 ].sort((a, b) => a.name.localeCompare(b.name));
 
-// Simplified Navigation structure - Agent-Neutral, Clean
+// Money-First Navigation - Investment Focused
 const navItems = [
+  {
+    label: "Deals",
+    dropdown: "deals",
+  },
+  {
+    label: "Loan Types",
+    href: "/loan-types",
+  },
   {
     label: "Towns",
     dropdown: "towns",
-  },
-  {
-    label: "Regional Intel",
-    dropdown: "regional",
-  },
-  {
-    label: "Guide",
-    dropdown: "guide",
-  },
-  {
-    label: "Intelligence",
-    href: "/intelligence",
   },
   {
     label: "Partners",
@@ -293,100 +289,54 @@ const CleanHeader = () => {
                     </Dropdown>
                   )}
 
-                  {/* Regional Intelligence Dropdown */}
-                  {item.dropdown === "regional" && (
-                    <Dropdown isOpen={activeDropdown === "regional"} onClose={closeDropdowns}>
-                      <div className="space-y-4 w-80">
-                        <p className="text-xs uppercase text-[#00F5FF] tracking-widest font-semibold">Regional Intelligence</p>
+                  {/* Deals Dropdown - Investment Focused */}
+                  {item.dropdown === "deals" && (
+                    <Dropdown isOpen={activeDropdown === "deals"} onClose={closeDropdowns}>
+                      <div className="space-y-3 w-72">
+                        <p className="text-xs uppercase text-[#00F5FF] tracking-widest font-semibold">Deal Analysis</p>
                         
-                        {/* Colleges & Universities */}
-                        <div>
-                          <p className="text-xs uppercase text-muted-foreground tracking-wider mb-2">Colleges & Universities</p>
-                          <div className="space-y-1">
-                            <Link to="/towns/albany" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
-                              UAlbany / SUNY Poly
-                            </Link>
-                            <Link to="/towns/troy" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
-                              RPI / HVCC
-                            </Link>
-                            <Link to="/towns/schenectady" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
-                              Union College / SCCC
-                            </Link>
-                            <Link to="/towns/loudonville" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
-                              Siena College
-                            </Link>
-                          </div>
-                        </div>
-
-                        <div className="border-t border-border/50" />
-
-                        {/* K-12 School Districts */}
-                        <div>
-                          <p className="text-xs uppercase text-muted-foreground tracking-wider mb-2">Top K-12 Districts</p>
-                          <div className="space-y-1">
-                            <Link to="/towns/clifton-park" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
-                              Shenendehowa (Clifton Park)
-                            </Link>
-                            <Link to="/towns/niskayuna" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
-                              Niskayuna CSD
-                            </Link>
-                            <Link to="/towns/delmar" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
-                              Bethlehem (Delmar)
-                            </Link>
-                            <Link to="/towns/guilderland" onClick={closeDropdowns} className="block px-2 py-1.5 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
-                              Guilderland CSD
-                            </Link>
-                          </div>
-                        </div>
-
-                        <div className="border-t border-border/50" />
-
-                        {/* Civic Quick Links */}
-                        <div>
-                          <p className="text-xs uppercase text-muted-foreground tracking-wider mb-2">Civic & Government</p>
-                          <p className="text-xs text-muted-foreground mb-2">
-                            Tax assessors, building permits, and elected officials for each town.
-                          </p>
-                          <Link
-                            to="/communities"
-                            onClick={closeDropdowns}
-                            className="block text-sm font-medium text-primary hover:underline"
+                        <div className="space-y-1">
+                          <Link 
+                            to="/analyzer" 
+                            onClick={closeDropdowns} 
+                            className="block px-3 py-2.5 text-sm font-medium text-primary hover:bg-primary/10 rounded-lg transition-colors"
                           >
-                            Browse All Town Civic Directories →
+                            🔥 Investment Analyzer →
+                          </Link>
+                          <p className="text-xs text-muted-foreground px-3 mb-3">
+                            Cash flow, returns, and financing scenarios
+                          </p>
+                        </div>
+
+                        <div className="border-t border-border/50" />
+                        
+                        <div className="space-y-1">
+                          <Link to="/loan-types" onClick={closeDropdowns} className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                            Loan Types Guide
+                          </Link>
+                          <Link to="/intel/1999-ridge-road-queensbury-ny" onClick={closeDropdowns} className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                            Sample Deal Report
+                          </Link>
+                          <Link to="/investor-tools" onClick={closeDropdowns} className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                            Investor Tools
+                          </Link>
+                          <Link to="/rentals" onClick={closeDropdowns} className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                            Rental Properties
                           </Link>
                         </div>
                       </div>
                     </Dropdown>
                   )}
-
-                  {/* Guide Dropdown - Local Business Directory */}
-                  {item.dropdown === "guide" && (
-                    <Dropdown isOpen={activeDropdown === "guide"} onClose={closeDropdowns}>
-                      <div className="space-y-2">
-                        <p className="text-xs uppercase text-[#00F5FF] tracking-widest font-semibold mb-3">Local Partners</p>
-                        <p className="text-sm text-muted-foreground mb-4">
-                          Trusted businesses in every Capital District town — coffee shops, restaurants, gyms, and service providers.
-                        </p>
-                        <Link
-                          to="/communities"
-                          onClick={closeDropdowns}
-                          className="block px-3 py-2.5 text-sm font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
-                        >
-                          Browse All Town Guides →
-                        </Link>
-                        <div className="border-t border-border my-2" />
-                        <Link
-                          to="/claim-business"
-                          onClick={closeDropdowns}
-                          className="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-muted/50 rounded-md transition-colors"
-                        >
-                          <span>Join Our Community</span>
-                        </Link>
-                      </div>
-                    </Dropdown>
-                  )}
                 </div>
               ))}
+
+              {/* Prominent Analyzer CTA Button */}
+              <Link
+                to="/analyzer"
+                className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/30 ml-4"
+              >
+                Analyze a Deal
+              </Link>
 
               {/* Global Search Button */}
               <button
@@ -442,6 +392,39 @@ const CleanHeader = () => {
         }`}
       >
         <div className="space-y-6">
+          {/* Deal Analysis - Primary CTA */}
+          <div>
+            <Link 
+              to="/analyzer" 
+              onClick={closeMobileMenu} 
+              className="block w-full bg-primary text-primary-foreground text-center py-4 rounded-xl font-semibold text-lg shadow-lg shadow-primary/30"
+            >
+              🔥 Analyze a Deal
+            </Link>
+          </div>
+
+          {/* Deals */}
+          <div>
+            <h3 className="text-xs uppercase text-[#00F5FF] font-bold tracking-widest mb-3">Deal Analysis</h3>
+            <div className="space-y-2">
+              <Link to="/analyzer" onClick={closeMobileMenu} className="block text-primary font-medium">
+                Investment Analyzer →
+              </Link>
+              <Link to="/loan-types" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
+                Loan Types Guide
+              </Link>
+              <Link to="/intel/1999-ridge-road-queensbury-ny" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
+                Sample Deal Report
+              </Link>
+              <Link to="/investor-tools" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
+                Investor Tools
+              </Link>
+              <Link to="/rentals" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
+                Rental Properties
+              </Link>
+            </div>
+          </div>
+
           {/* Towns */}
           <div>
             <h3 className="text-xs uppercase text-[#6E6E73] font-bold tracking-widest mb-3">Towns</h3>
@@ -472,60 +455,9 @@ const CleanHeader = () => {
             </div>
           </div>
 
-          {/* Regional Intelligence */}
-          <div>
-            <h3 className="text-xs uppercase text-[#00F5FF] font-bold tracking-widest mb-3">Regional Intelligence</h3>
-            <div className="space-y-3">
-              <div>
-                <p className="text-xs text-muted-foreground mb-2">Colleges & Universities</p>
-                <div className="grid grid-cols-2 gap-1">
-                  <Link to="/towns/albany" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">UAlbany</Link>
-                  <Link to="/towns/troy" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">RPI</Link>
-                  <Link to="/towns/schenectady" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Union</Link>
-                  <Link to="/towns/loudonville" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Siena</Link>
-                </div>
-              </div>
-              <div>
-                <p className="text-xs text-muted-foreground mb-2">Top K-12 Districts</p>
-                <div className="grid grid-cols-2 gap-1">
-                  <Link to="/towns/clifton-park" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Shen</Link>
-                  <Link to="/towns/niskayuna" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Niskayuna</Link>
-                  <Link to="/towns/delmar" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Bethlehem</Link>
-                  <Link to="/towns/guilderland" onClick={closeMobileMenu} className="text-sm text-foreground hover:text-primary">Guilderland</Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Guide - Local Partners */}
-          <div>
-            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Local Guide</h3>
-            <div className="space-y-2">
-              <Link to="/communities" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Browse All Town Guides
-              </Link>
-              <Link to="/claim-business" onClick={closeMobileMenu} className="block text-muted-foreground hover:text-primary">
-                Join Our Community
-              </Link>
-            </div>
-          </div>
-
-          {/* Intelligence */}
-          <div>
-            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Intelligence</h3>
-            <div className="space-y-2">
-              <Link to="/intel/1999-ridge-road-queensbury-ny" onClick={closeMobileMenu} className="block text-primary font-medium">
-                View Sample Report →
-              </Link>
-              <Link to="/intelligence" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Request a Report
-              </Link>
-            </div>
-          </div>
-
           {/* Partners */}
           <div>
-            <h3 className="text-xs uppercase text-[#00F5FF] font-bold tracking-widest mb-3">Vendor Partners</h3>
+            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Partners</h3>
             <div className="space-y-2">
               <Link to="/vendors" onClick={closeMobileMenu} className="block text-primary font-medium">
                 View All Partners →
@@ -536,21 +468,13 @@ const CleanHeader = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Contact */}
           <div>
-            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Quick Links</h3>
-            <div className="space-y-2">
-              <Link to="/rentals" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Rentals Hub
-              </Link>
-              <Link to="/investor-tools" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
-                Investor Tools
-              </Link>
-              <a href="tel:+15186762347" className="flex items-center gap-2 text-foreground hover:text-primary">
-                <Phone className="h-4 w-4" />
-                (518) 676-2347
-              </a>
-            </div>
+            <h3 className="text-xs uppercase text-muted-foreground font-bold tracking-widest mb-3">Contact</h3>
+            <a href="tel:+15186762347" className="flex items-center gap-2 text-foreground hover:text-primary">
+              <Phone className="h-4 w-4" />
+              (518) 676-2347
+            </a>
           </div>
 
           {/* Footer Links */}
