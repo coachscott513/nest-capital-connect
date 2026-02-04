@@ -14,35 +14,48 @@ interface SearchPill {
   hubRoute: string;
 }
 
+interface QuickExample {
+  label: string;
+  address: string;
+  type: SearchType;
+}
+
 const searchPills: SearchPill[] = [
   { 
     id: "rental", 
     label: "Rental", 
     icon: <Home className="w-4 h-4" />,
-    placeholder: "Enter a rental property address...",
+    placeholder: "Enter a rental address…",
     hubRoute: "/analyzer"
   },
   { 
     id: "multi-unit", 
     label: "Multi-Unit", 
     icon: <Building className="w-4 h-4" />,
-    placeholder: "Enter a multi-family address...",
+    placeholder: "Enter a 2–4 unit address…",
     hubRoute: "/analyzer"
   },
   { 
     id: "rehab", 
     label: "Rehab / Flip", 
     icon: <Building2 className="w-4 h-4" />,
-    placeholder: "Enter a rehab property address...",
+    placeholder: "Enter a rehab address… (add ARV + budget next)",
     hubRoute: "/analyzer"
   },
   { 
     id: "land", 
     label: "Land", 
     icon: <Trees className="w-4 h-4" />,
-    placeholder: "Enter a land parcel address...",
+    placeholder: "Enter land address… (add build costs next)",
     hubRoute: "/analyzer"
   },
+];
+
+const quickExamples: QuickExample[] = [
+  { label: "177 Lancaster, Albany", address: "177 Lancaster St, Albany, NY", type: "rental" },
+  { label: "2–4 Unit Example", address: "45 South Lake Ave, Troy, NY", type: "multi-unit" },
+  { label: "Rehab Example", address: "22 Lavery Dr, Delmar, NY", type: "rehab" },
+  { label: "Land Example", address: "1999 Ridge Rd, Queensbury, NY", type: "land" },
 ];
 
 const SearchCommandCenter = () => {
@@ -128,6 +141,27 @@ const SearchCommandCenter = () => {
             </Button>
           </div>
         </form>
+
+        {/* Quick Examples */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mt-6 animate-fade-in" style={{ animationDelay: '0.25s' }}>
+          <span className="text-xs text-muted-foreground/60 font-light">Try:</span>
+          {quickExamples.map((example) => (
+            <button
+              key={example.label}
+              onClick={() => {
+                setSelectedType(example.type);
+                setSearchQuery(example.address);
+              }}
+              className="px-3 py-1.5 text-xs rounded-full glass hover:bg-primary/20 text-muted-foreground hover:text-foreground transition-all duration-200"
+              style={{
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+              }}
+            >
+              {example.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Master Gatekeeper Modal */}

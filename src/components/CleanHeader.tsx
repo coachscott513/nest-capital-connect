@@ -84,8 +84,8 @@ const navItems = [
     dropdown: "towns",
   },
   {
-    label: "Lenders",
-    href: "/vendors",
+    label: "Financing",
+    href: "/vendor-hub",
   },
 ];
 
