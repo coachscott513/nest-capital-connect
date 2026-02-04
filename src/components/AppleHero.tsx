@@ -51,15 +51,15 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
           <span className="text-sm font-semibold text-foreground tracking-wide">Deal Analysis Platform</span>
         </div>
 
-        {/* Headline - Extra Light 84px */}
+        {/* Headline - Investor-First */}
         <h1 className="headline-hero text-foreground mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          Know the deal.<br />
-          <span className="text-gradient-premium text-glow">Before you buy.</span>
+          Analyze Any Deal<br />
+          <span className="text-gradient-premium text-glow">In Seconds.</span>
         </h1>
 
-        {/* Subheadline - Silver color */}
+        {/* Subheadline - Money outcomes */}
         <p className="text-xl md:text-2xl text-muted-foreground body-airy mb-12 max-w-2xl mx-auto animate-fade-in font-light" style={{ animationDelay: '0.15s' }}>
-          Rental • Rehab • Land • Multi-Unit. Any loan type. Instant cash flow + return analysis.
+          Rentals • Rehab • Land. Cash flow, returns, and financing scenarios.
         </p>
 
         {/* Search Command Center */}

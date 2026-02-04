@@ -69,7 +69,7 @@ const towns = [
   { name: "Wynantskill", slug: "wynantskill" },
 ].sort((a, b) => a.name.localeCompare(b.name));
 
-// Money-First Navigation - Investment Focused
+// Yield Intelligence Platform - Investment Focused Navigation
 const navItems = [
   {
     label: "Deals",
@@ -80,11 +80,11 @@ const navItems = [
     href: "/loan-types",
   },
   {
-    label: "Towns",
+    label: "Markets",
     dropdown: "towns",
   },
   {
-    label: "Partners",
+    label: "Lenders",
     href: "/vendors",
   },
 ];
@@ -210,16 +210,23 @@ const CleanHeader = () => {
                 </svg>
               </div>
               
-              {/* Typography - Ultra Light, Wide Tracking */}
+              {/* Typography - Yield Intelligence Platform */}
               <div className="hidden sm:flex flex-col">
-                <span className="text-[13px] font-extralight text-white tracking-[0.4em] uppercase">
-                  Nest
+                <span className="text-[13px] font-extralight text-white tracking-[0.3em] uppercase">
+                  Yield
                 </span>
-                <span className="text-[9px] text-primary tracking-[0.3em] uppercase font-medium">
-                  Intelligence
+                <span className="text-[9px] text-primary tracking-[0.2em] uppercase font-medium">
+                  Intelligence Platform
                 </span>
               </div>
             </Link>
+
+            {/* 7-Word Promise - Desktop Only */}
+            <div className="hidden xl:flex items-center">
+              <span className="text-[10px] text-muted-foreground tracking-widest uppercase font-light border-l border-border/50 pl-6 ml-2">
+                Know the deal before you buy
+              </span>
+            </div>
 
             {/* Desktop Navigation - Apple-Style Institutional */}
             <div className="hidden lg:flex items-center gap-1">
@@ -252,22 +259,25 @@ const CleanHeader = () => {
                     </button>
                   )}
 
-                  {/* Towns Dropdown */}
+                  {/* Markets Dropdown (formerly Towns) */}
                   {item.dropdown === "towns" && (
                     <Dropdown isOpen={activeDropdown === "towns"} onClose={closeDropdowns}>
                       <div className="space-y-3">
+                        <p className="text-xs uppercase text-muted-foreground tracking-widest">
+                          Local intel for your deal analysis
+                        </p>
                         <Link
                           to="/communities"
                           onClick={closeDropdowns}
                           className="block text-sm font-semibold text-primary hover:underline"
                         >
-                          Browse All Towns →
+                          Browse All Markets →
                         </Link>
                         <div className="relative">
                           <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <input
                             type="text"
-                            placeholder="Search towns..."
+                            placeholder="Search markets..."
                             value={townSearch}
                             onChange={(e) => setTownSearch(e.target.value)}
                             className="w-full pl-8 pr-3 py-2 text-sm bg-muted border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
@@ -289,27 +299,26 @@ const CleanHeader = () => {
                     </Dropdown>
                   )}
 
-                  {/* Deals Dropdown - Investment Focused */}
+                  {/* Deals Dropdown - Analyzer First */}
                   {item.dropdown === "deals" && (
                     <Dropdown isOpen={activeDropdown === "deals"} onClose={closeDropdowns}>
-                      <div className="space-y-3 w-72">
-                        <p className="text-xs uppercase text-[#00F5FF] tracking-widest font-semibold">Deal Analysis</p>
-                        
-                        <div className="space-y-1">
+                      <div className="space-y-4 w-72">
+                        {/* Primary Tool - Isolated */}
+                        <div className="bg-primary/10 border border-primary/30 rounded-xl p-4">
+                          <p className="text-[10px] uppercase text-primary tracking-widest font-bold mb-2">PRIMARY TOOL</p>
                           <Link 
                             to="/analyzer" 
                             onClick={closeDropdowns} 
-                            className="block px-3 py-2.5 text-sm font-medium text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                            className="block text-lg font-semibold text-primary hover:underline"
                           >
-                            🔥 Investment Analyzer →
+                            Investment Analyzer →
                           </Link>
-                          <p className="text-xs text-muted-foreground px-3 mb-3">
+                          <p className="text-xs text-muted-foreground mt-1">
                             Cash flow, returns, and financing scenarios
                           </p>
                         </div>
 
-                        <div className="border-t border-border/50" />
-                        
+                        {/* Supporting Resources */}
                         <div className="space-y-1">
                           <Link to="/loan-types" onClick={closeDropdowns} className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
                             Loan Types Guide
@@ -321,7 +330,7 @@ const CleanHeader = () => {
                             Investor Tools
                           </Link>
                           <Link to="/rentals" onClick={closeDropdowns} className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
-                            Rental Properties
+                            Income Properties
                           </Link>
                         </div>
                       </div>
