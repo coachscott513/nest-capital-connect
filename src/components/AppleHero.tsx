@@ -58,8 +58,13 @@ const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
         </h1>
 
         {/* Subheadline - Money outcomes */}
-        <p className="text-xl md:text-2xl text-muted-foreground body-airy mb-12 max-w-2xl mx-auto animate-fade-in font-light" style={{ animationDelay: '0.15s' }}>
+        <p className="text-xl md:text-2xl text-muted-foreground body-airy mb-6 max-w-2xl mx-auto animate-fade-in font-light" style={{ animationDelay: '0.15s' }}>
           Rentals • Rehab • Land. Cash flow, returns, and financing scenarios.
+        </p>
+
+        {/* Outputs line - investor trust signal */}
+        <p className="text-sm text-muted-foreground/70 mb-12 animate-fade-in tracking-wide" style={{ animationDelay: '0.18s' }}>
+          <span className="text-primary font-medium">Outputs:</span> Cash Flow • Cap Rate • Cash-on-Cash • DSCR • Break-even
         </p>
 
         {/* Search Command Center */}
