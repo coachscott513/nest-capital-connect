@@ -105,6 +105,9 @@ import FirstTimeBuyerJourney from "./pages/buyer-journey/FirstTimeBuyerJourney";
 import LandBuyerJourney from "./pages/buyer-journey/LandBuyerJourney";
 import FinancingJourney from "./pages/buyer-journey/FinancingJourney";
 import InvestmentAnalyzer from "./pages/InvestmentAnalyzer";
+import YieldHome from "./pages/YieldHome";
+import LoanTypes from "./pages/LoanTypes";
+import Reports from "./pages/Reports";
 import ComingSoon from "./pages/ComingSoon";
 import IntelligenceHub from "./pages/IntelligenceHub";
 import MarketReportThanks from "./pages/MarketReportThanks";
@@ -295,8 +298,11 @@ const App = () => {
           <Route path="/investor/saratoga-multi-unit-market" element={<SaratogaMultiUnitMarket />} />
           <Route path="/investor/fulton-montgomery-multi-unit-market" element={<FultonMontgomeryMultiUnitMarket />} />
           
-          {/* Investment Analyzer */}
+          {/* Investment Analyzer & Yield Platform */}
           <Route path="/analyzer" element={<InvestmentAnalyzer />} />
+          <Route path="/yield" element={<YieldHome />} />
+          <Route path="/loan-types" element={<LoanTypes />} />
+          <Route path="/reports" element={<Reports />} />
           
           {/* VIP Buyer Access */}
           <Route path="/vip-buyer-access" element={<VipBuyerAccess />} />
