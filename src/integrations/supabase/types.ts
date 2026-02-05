@@ -83,6 +83,108 @@ export type Database = {
         }
         Relationships: []
       }
+      analyzer_leads: {
+        Row: {
+          asking_price: number | null
+          branding_brokerage: string | null
+          branding_company: string | null
+          branding_company_nmls: string | null
+          branding_email: string | null
+          branding_license: string | null
+          branding_name: string | null
+          branding_nmls: string | null
+          branding_phone: string | null
+          branding_title: string | null
+          branding_website: string | null
+          cap_rate: number | null
+          cash_to_close: number | null
+          created_at: string | null
+          email: string
+          full_name: string
+          has_custom_branding: boolean | null
+          id: string
+          loan_type: string | null
+          monthly_cash_flow: number | null
+          noi: number | null
+          phone: string | null
+          property_address: string | null
+          property_city: string | null
+          property_state: string | null
+          report_sent: boolean | null
+          source_url: string | null
+          user_type: string
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          asking_price?: number | null
+          branding_brokerage?: string | null
+          branding_company?: string | null
+          branding_company_nmls?: string | null
+          branding_email?: string | null
+          branding_license?: string | null
+          branding_name?: string | null
+          branding_nmls?: string | null
+          branding_phone?: string | null
+          branding_title?: string | null
+          branding_website?: string | null
+          cap_rate?: number | null
+          cash_to_close?: number | null
+          created_at?: string | null
+          email: string
+          full_name: string
+          has_custom_branding?: boolean | null
+          id?: string
+          loan_type?: string | null
+          monthly_cash_flow?: number | null
+          noi?: number | null
+          phone?: string | null
+          property_address?: string | null
+          property_city?: string | null
+          property_state?: string | null
+          report_sent?: boolean | null
+          source_url?: string | null
+          user_type: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          asking_price?: number | null
+          branding_brokerage?: string | null
+          branding_company?: string | null
+          branding_company_nmls?: string | null
+          branding_email?: string | null
+          branding_license?: string | null
+          branding_name?: string | null
+          branding_nmls?: string | null
+          branding_phone?: string | null
+          branding_title?: string | null
+          branding_website?: string | null
+          cap_rate?: number | null
+          cash_to_close?: number | null
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          has_custom_branding?: boolean | null
+          id?: string
+          loan_type?: string | null
+          monthly_cash_flow?: number | null
+          noi?: number | null
+          phone?: string | null
+          property_address?: string | null
+          property_city?: string | null
+          property_state?: string | null
+          report_sent?: boolean | null
+          source_url?: string | null
+          user_type?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       business_partners: {
         Row: {
           created_at: string

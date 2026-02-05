@@ -10,6 +10,21 @@ import { Switch } from '@/components/ui/switch';
 import { Plus, Trash2, FileText, RotateCcw, Home, DollarSign, Calculator, TrendingUp, CheckCircle, BarChart3, HardHat, Hammer, Shield, Landmark, Wallet, CreditCard, AlertCircle, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
 import jsPDF from 'jspdf';
 import { cn } from '@/lib/utils';
+import BrandedReportModal from '@/components/BrandedReportModal';
+
+// Branding data type
+interface BrandingData {
+  displayName: string;
+  companyName: string;
+  title: string;
+  businessPhone: string;
+  businessEmail: string;
+  website: string;
+  nmls: string;
+  companyNmls: string;
+  license: string;
+  brokerage: string;
+}
 
 // Loan Type Definitions
 type FinancingType = 'Conventional' | 'FHA' | 'FHA 203(k) Rehab' | 'DSCR' | 'VA' | 'Hard Money' | 'Cash';
@@ -157,6 +172,8 @@ const InvestmentAnalyzer = () => {
   const [formData, setFormData] = useState<FormData>(defaultFormData);
   const [newHighlight, setNewHighlight] = useState('');
   const [rehabView, setRehabView] = useState<'during' | 'after'>('after');
+  const [reportModalOpen, setReportModalOpen] = useState(false);
+
 
   const isFHA = formData.financingType === 'FHA' || formData.financingType === 'FHA 203(k) Rehab';
   const is203k = formData.financingType === 'FHA 203(k) Rehab';
@@ -358,11 +375,12 @@ const InvestmentAnalyzer = () => {
     return { color: 'text-red-500 bg-red-500/10 border-red-500/30', text: 'Below 1.0 — does not qualify for DSCR financing', icon: AlertCircle };
   };
 
-  const generatePDF = () => {
+  const generatePDF = (branding: BrandingData | null) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 15;
     let y = 0;
+    const hasBranding = branding && (branding.displayName || branding.companyName);
 
     // Header bar - dark navy background
     doc.setFillColor(15, 23, 42);
@@ -371,12 +389,40 @@ const InvestmentAnalyzer = () => {
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
-    doc.text('CAPITAL DISTRICT NEST', margin, 14);
     
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(180, 180, 180);
-    doc.text('THE YIELD INTELLIGENCE PLATFORM', margin, 23);
+    if (hasBranding) {
+      // Custom branding - LEFT side shows user's brand
+      doc.text(branding.displayName || 'Investment Analysis', margin, 14);
+      
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(212, 175, 55); // Gold for title/credentials
+      const credentials = [
+        branding.title,
+        branding.nmls ? `NMLS# ${branding.nmls}` : null,
+        branding.license ? `Lic# ${branding.license}` : null
+      ].filter(Boolean).join(' | ');
+      if (credentials) doc.text(credentials, margin, 20);
+      
+      doc.setTextColor(255, 255, 255);
+      if (branding.companyName) doc.text(branding.companyName, margin, 26);
+      
+      // RIGHT side - Platform attribution
+      doc.setFontSize(8);
+      doc.setTextColor(180, 180, 180);
+      doc.text('CAPITAL DISTRICT NEST', pageWidth - margin, 12, { align: 'right' });
+      doc.text('THE YIELD INTELLIGENCE PLATFORM', pageWidth - margin, 18, { align: 'right' });
+      doc.setFontSize(7);
+      doc.text('Scott Alvarez | RE/MAX Solutions', pageWidth - margin, 24, { align: 'right' });
+    } else {
+      // Default branding
+      doc.text('CAPITAL DISTRICT NEST', margin, 14);
+      
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(180, 180, 180);
+      doc.text('THE YIELD INTELLIGENCE PLATFORM', margin, 23);
+    }
     
     // Gold accent line
     doc.setDrawColor(212, 175, 55);
@@ -597,11 +643,22 @@ const InvestmentAnalyzer = () => {
     doc.setFontSize(7);
     doc.setTextColor(140, 140, 140);
     doc.text('This analysis is for informational purposes only and does not constitute investment advice.', margin, footerY);
-    doc.text(`Capital District Nest • The Yield Intelligence Platform • capitaldistrictnest.com`, margin, footerY + 4);
-    doc.text(`Report generated: ${new Date().toLocaleDateString()}`, pageWidth - margin, footerY + 4, { align: 'right' });
+    
+    if (hasBranding && (branding.businessPhone || branding.businessEmail)) {
+      // Custom footer with user contact + powered by
+      const contactInfo = [branding.displayName, branding.businessPhone, branding.businessEmail].filter(Boolean).join(' | ');
+      doc.text(`Ready to discuss? Contact: ${contactInfo}`, margin, footerY + 4);
+      doc.setFontSize(6);
+      doc.text('Powered by AnalyzeAnyDeal.com | Capital District Nest', pageWidth - margin, footerY + 4, { align: 'right' });
+    } else {
+      // Default footer
+      doc.text(`Capital District Nest • The Yield Intelligence Platform • capitaldistrictnest.com`, margin, footerY + 4);
+      doc.text(`Report generated: ${new Date().toLocaleDateString()}`, pageWidth - margin, footerY + 4, { align: 'right' });
+    }
     
     const addressSlug = formData.address.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-') || 'Property';
-    doc.save(`Nest_Investment_Report_${addressSlug}.pdf`);
+    const ownerSlug = hasBranding && branding.displayName ? branding.displayName.replace(/[^a-zA-Z0-9]/g, '_') : 'Nest';
+    doc.save(`${ownerSlug}_Investment_Report_${addressSlug}.pdf`);
   };
 
   return (
@@ -1344,7 +1401,7 @@ const InvestmentAnalyzer = () => {
 
             {/* Buttons */}
             <div className="flex justify-center gap-4 pt-4">
-              <Button onClick={generatePDF} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
+              <Button onClick={() => setReportModalOpen(true)} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
                 <FileText className="w-5 h-5 mr-2" />
                 Generate PDF Report
               </Button>
@@ -1356,6 +1413,24 @@ const InvestmentAnalyzer = () => {
           </div>
         </div>
       </div>
+      
+      {/* Branded Report Modal */}
+      <BrandedReportModal
+        isOpen={reportModalOpen}
+        onClose={() => setReportModalOpen(false)}
+        onGeneratePdf={generatePDF}
+        analysisData={{
+          propertyAddress: formData.address,
+          propertyCity: formData.city,
+          propertyState: formData.state,
+          askingPrice: formData.purchasePrice,
+          loanType: formData.financingType,
+          capRate: metrics.capRate,
+          monthlyCashFlow: metrics.monthlyCashFlow,
+          noi: metrics.noi,
+          cashToClose: metrics.cashRequired,
+        }}
+      />
     </MainLayout>
   );
 };
