@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import ReportPreviewShowcase from "@/components/ReportPreviewShowcase";
 import { 
   Home, 
   FileText, 
@@ -18,7 +19,9 @@ import {
   BarChart3,
   AlertCircle,
   Ruler,
-  Trees
+  Trees,
+  Download,
+  ArrowRight
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -88,16 +91,35 @@ const SamplePropertyIntelligenceReport = () => {
           </div>
           
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-foreground mb-4">
-            Sample Delmar Property
+            Investment Executive Summary
           </h1>
           <p className="text-lg text-primary font-medium mb-4">
-            Intelligence Report Example
+            See What You Get with Every Deal Analysis
           </p>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            This is a representative example for educational purposes. It shows the depth of analysis available when evaluating any property in Delmar.
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
+            This is a real investment report from 177 Lancaster St, Albany — a townhouse-style duplex. 
+            Every deal you analyze includes this level of detail.
           </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button size="lg" asChild>
+              <a href="/assets/sample-investment-report.pdf" target="_blank" rel="noopener noreferrer">
+                <Download className="w-4 h-4 mr-2" />
+                Download Full PDF
+              </a>
+            </Button>
+            <Button variant="outline" size="lg" asChild>
+              <Link to="/case-studies/177-lancaster-albany">
+                <ArrowRight className="w-4 h-4 mr-2" />
+                View Full Case Study
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
+
+      {/* Key Metrics Preview */}
+      <ReportPreviewShowcase />
 
       {/* Section 1: Property Snapshot */}
       <section className="px-[5%] py-12 md:py-16 bg-background">
