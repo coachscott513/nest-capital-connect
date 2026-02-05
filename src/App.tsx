@@ -109,6 +109,7 @@ import YieldHome from "./pages/YieldHome";
 import LoanTypes from "./pages/LoanTypes";
 import Reports from "./pages/Reports";
 import ComingSoon from "./pages/ComingSoon";
+import LancasterStreetCaseStudy from "./pages/LancasterStreetCaseStudy";
 import IntelligenceHub from "./pages/IntelligenceHub";
 import MarketReportThanks from "./pages/MarketReportThanks";
 import Ask from "./pages/Ask";
@@ -272,6 +273,9 @@ const App = () => {
           <Route path="/reports/template" element={<ReportTemplate />} />
           <Route path="/reports/sample-property-intelligence" element={<SamplePropertyIntelligenceReport />} />
           <Route path="/reports/old/1999-ridge-road-queensbury-ny" element={<RidgeRoadIntelReport />} />
+          
+          {/* Case Studies */}
+          <Route path="/case-studies/177-lancaster-albany" element={<LancasterStreetCaseStudy />} />
           
           {/* New Apple-style Property Intelligence Reports */}
           <Route path="/intel/1999-ridge-road-queensbury-ny" element={<RidgeRoadPropertyIntel />} />

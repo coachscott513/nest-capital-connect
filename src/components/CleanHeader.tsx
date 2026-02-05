@@ -323,7 +323,7 @@ const CleanHeader = () => {
                           <Link to="/loan-types" onClick={closeDropdowns} className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
                             Loan Types Guide
                           </Link>
-                          <Link to="/intel/1999-ridge-road-queensbury-ny" onClick={closeDropdowns} className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
+                          <Link to="/case-studies/177-lancaster-albany" onClick={closeDropdowns} className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
                             Sample Deal Report
                           </Link>
                           <Link to="/investor-tools" onClick={closeDropdowns} className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted/50 rounded transition-colors">
@@ -422,7 +422,7 @@ const CleanHeader = () => {
               <Link to="/loan-types" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
                 Loan Types Guide
               </Link>
-              <Link to="/intel/1999-ridge-road-queensbury-ny" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
+              <Link to="/case-studies/177-lancaster-albany" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
                 Sample Deal Report
               </Link>
               <Link to="/investor-tools" onClick={closeMobileMenu} className="block text-foreground hover:text-primary">
