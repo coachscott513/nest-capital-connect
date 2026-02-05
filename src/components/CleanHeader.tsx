@@ -72,6 +72,10 @@ const towns = [
 // Yield Intelligence Platform - Investment Focused Navigation
 const navItems = [
   {
+    label: "Home",
+    href: "/",
+  },
+  {
     label: "Deals",
     dropdown: "deals",
   },
