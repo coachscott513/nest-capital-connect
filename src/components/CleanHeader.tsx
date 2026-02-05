@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ChevronDown, Phone, Search, X, Menu, Command } from "lucide-react";
 import cdnLogo from "@/assets/cdn-logo.png";
 import GlobalSearchCommand from "@/components/GlobalSearchCommand";
@@ -141,10 +141,19 @@ const Dropdown = ({ isOpen, onClose, children, align = "left" }: DropdownProps) 
 };
 
 const CleanHeader = () => {
+  const location = useLocation();
+
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [townSearch, setTownSearch] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+
+  // Close menus whenever route changes (prevents invisible overlays blocking clicks)
+  useEffect(() => {
+    setActiveDropdown(null);
+    setMobileMenuOpen(false);
+    setTownSearch("");
+  }, [location.pathname]);
 
   // Keyboard shortcut for search (Cmd+K or Ctrl+K)
   useEffect(() => {
@@ -240,6 +249,7 @@ const CleanHeader = () => {
                     // Direct link (no dropdown)
                     <Link
                       to={item.href}
+                      onClick={closeDropdowns}
                       className="flex items-center gap-2 px-6 py-3 text-[12px] uppercase tracking-[0.4em] font-[200] rounded-full transition-all duration-300 text-white/90 hover:text-primary hover:bg-white/10"
                     >
                       {item.label}
