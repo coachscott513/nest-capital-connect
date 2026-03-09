@@ -125,7 +125,7 @@ const SamplePropertyCard = ({ deal = defaultDeal }: { deal?: FeaturedDeal }) => 
         {/* CTA */}
         <div className="p-4">
           <Link
-            to="/investment-analyzer"
+            to="/analyzer"
             className="flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground py-3 rounded-xl font-bold text-sm hover:brightness-110 transition-all"
           >
             <Calculator className="w-4 h-4" />
