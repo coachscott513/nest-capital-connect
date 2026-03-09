@@ -174,13 +174,13 @@ const Index = () => {
           <p className="text-2xl text-muted-foreground mb-12 body-airy font-light">
             Go deeper only when you're ready.
           </p>
-          <button
-            onClick={scrollToTownSection}
+          <Link
+            to="/communities"
             className="inline-flex items-center justify-center gap-3 bg-foreground text-background px-12 py-6 rounded-2xl font-semibold text-xl hover:scale-105 transition-transform"
           >
             Explore Towns
             <ArrowRight className="w-6 h-6" />
-          </button>
+          </Link>
         </div>
       </section>
 
