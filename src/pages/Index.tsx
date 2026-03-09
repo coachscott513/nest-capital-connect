@@ -3,7 +3,8 @@ import { ArrowRight, BarChart3, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import GuideLeadModal from "@/components/GuideLeadModal";
 import SEOHead from "@/components/SEOHead";
-import AppleHero from "@/components/AppleHero";
+import CinematicHero from "@/components/CinematicHero";
+import DealHeroSection from "@/components/DealHeroSection";
 import RealEstateVendorDirectory from "@/components/RealEstateVendorDirectory";
 import RentalVault from "@/components/RentalVault";
 import CleanHeader from "@/components/CleanHeader";
@@ -25,18 +26,19 @@ const Index = () => {
 
       <CleanHeader />
 
-      {/* Hero with Sample Property Card + Stats Bar */}
-      <AppleHero />
+      {/* Original Cinematic Hero */}
+      <CinematicHero />
 
-      {/* Real Estate Vendor Directory - Home Purchase Timeline */}
+      {/* Two-Column Deal Section with Sample Property Card */}
+      <DealHeroSection />
+
+      {/* Real Estate Vendor Directory */}
       <RealEstateVendorDirectory />
 
       {/* Rental Vault */}
       <RentalVault limit={4} />
 
-      {/* ========================================== */}
-      {/* SECTION: WHY THIS PLATFORM - Maximum Spacing */}
-      {/* ========================================== */}
+      {/* WHY THIS PLATFORM */}
       <section className="section-massive px-[5%] bg-background">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-20">
@@ -48,30 +50,14 @@ const Index = () => {
               No scraped estimates. No AI guesses. Real data, verified locally.
             </p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
-              {
-                title: "Verified data sources",
-                description: "Tax records, MLS activity, and market trends — combined for the full picture."
-              },
-              {
-                title: "Local intelligence, not generic feeds",
-                description: "Each town analyzed independently with its own market behavior and patterns."
-              },
-              {
-                title: "Signal, not noise",
-                description: "Designed to surface what matters — without the clutter of typical real estate sites."
-              },
-              {
-                title: "No ads. No lead selling.",
-                description: "Your information stays yours. This is where trust is earned."
-              }
+              { title: "Verified data sources", description: "Tax records, MLS activity, and market trends — combined for the full picture." },
+              { title: "Local intelligence, not generic feeds", description: "Each town analyzed independently with its own market behavior and patterns." },
+              { title: "Signal, not noise", description: "Designed to surface what matters — without the clutter of typical real estate sites." },
+              { title: "No ads. No lead selling.", description: "Your information stays yours. This is where trust is earned." }
             ].map((item) => (
-              <div 
-                key={item.title}
-                className="bento-card p-10 hover-lift"
-              >
+              <div key={item.title} className="bento-card p-10 hover-lift">
                 <div className="flex items-start gap-5">
                   <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <CheckCircle className="w-6 h-6 text-primary" />
@@ -87,9 +73,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ========================================== */}
-      {/* SECTION: PROPERTY INTELLIGENCE - Bento Card */}
-      {/* ========================================== */}
+      {/* PROPERTY INTELLIGENCE */}
       <section className="px-[5%] section-massive bg-card">
         <div className="max-w-5xl mx-auto">
           <div className="bento-card p-10 md:p-16 lg:p-20 text-center">
@@ -97,28 +81,18 @@ const Index = () => {
               <BarChart3 className="w-4 h-4 text-primary" />
               <span className="text-sm font-semibold text-foreground">Property Intelligence</span>
             </div>
-            
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-8">
               Beyond the listing.<br />
               <span className="text-gradient-premium font-normal">Into the intelligence.</span>
             </h2>
-            
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto body-airy font-light mb-12">
               Our reports combine verified public records, tax data, and real market activity — organized in a way that's easy to understand and act on.
             </p>
-            
             <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-              <Link 
-                to="/intel/1999-ridge-road-queensbury-ny"
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-10 py-5 rounded-2xl font-semibold hover:scale-105 transition-transform text-lg"
-              >
-                View Sample Report
-                <ArrowRight className="w-5 h-5" />
+              <Link to="/intel/1999-ridge-road-queensbury-ny" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-10 py-5 rounded-2xl font-semibold hover:scale-105 transition-transform text-lg">
+                View Sample Report <ArrowRight className="w-5 h-5" />
               </Link>
-              <Link 
-                to="/intelligence"
-                className="inline-flex items-center gap-2 glass px-10 py-5 rounded-2xl font-semibold text-foreground hover:bg-primary hover:text-primary-foreground transition-all text-lg"
-              >
+              <Link to="/intelligence" className="inline-flex items-center gap-2 glass px-10 py-5 rounded-2xl font-semibold text-foreground hover:bg-primary hover:text-primary-foreground transition-all text-lg">
                 Request a Report
               </Link>
             </div>
@@ -126,9 +100,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ========================================== */}
-      {/* SECTION: INVESTOR - Bento Card */}
-      {/* ========================================== */}
+      {/* INVESTOR */}
       <section className="px-[5%] py-20 bg-background">
         <div className="max-w-4xl mx-auto">
           <div className="bento-card p-10 md:p-12">
@@ -140,17 +112,10 @@ const Index = () => {
                   </div>
                   <span className="text-sm font-semibold text-muted-foreground">For Investors</span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-3">
-                  Cash-Flow, Multi-Unit & Return Analysis
-                </h3>
-                <p className="text-muted-foreground body-airy text-lg">
-                  Professional tools for serious investors. Rent potential, cash flow projections, and market reports.
-                </p>
+                <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-3">Cash-Flow, Multi-Unit & Return Analysis</h3>
+                <p className="text-muted-foreground body-airy text-lg">Professional tools for serious investors. Rent potential, cash flow projections, and market reports.</p>
               </div>
-              <Link 
-                to="/investor-tools" 
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-semibold hover:scale-105 transition-transform flex-shrink-0 text-lg"
-              >
+              <Link to="/investor-tools" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-semibold hover:scale-105 transition-transform flex-shrink-0 text-lg">
                 Explore Tools <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
@@ -158,41 +123,21 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ========================================== */}
-      {/* SECTION: FINAL CTA - Cinematic */}
-      {/* ========================================== */}
+      {/* FINAL CTA */}
       <section className="relative px-[5%] section-massive overflow-hidden bg-card">
-        {/* Background effects */}
         <div className="absolute inset-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[150px]" />
         </div>
-        
         <div className="relative z-10 max-w-3xl mx-auto text-center">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extralight text-foreground tracking-tight mb-8">
-            Start with your town.
-          </h2>
-          <p className="text-2xl text-muted-foreground mb-12 body-airy font-light">
-            Go deeper only when you're ready.
-          </p>
-          <Link
-            to="/communities"
-            className="inline-flex items-center justify-center gap-3 bg-foreground text-background px-12 py-6 rounded-2xl font-semibold text-xl hover:scale-105 transition-transform"
-          >
-            Explore Towns
-            <ArrowRight className="w-6 h-6" />
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extralight text-foreground tracking-tight mb-8">Start with your town.</h2>
+          <p className="text-2xl text-muted-foreground mb-12 body-airy font-light">Go deeper only when you're ready.</p>
+          <Link to="/communities" className="inline-flex items-center justify-center gap-3 bg-foreground text-background px-12 py-6 rounded-2xl font-semibold text-xl hover:scale-105 transition-transform">
+            Explore Towns <ArrowRight className="w-6 h-6" />
           </Link>
         </div>
       </section>
 
-      {/* Guide Lead Modal */}
-      <GuideLeadModal
-        open={guideModal.open}
-        onOpenChange={(open) => setGuideModal({ ...guideModal, open })}
-        guideType={guideModal.guideType}
-        redirectPath={guideModal.redirectPath}
-      />
-
-      {/* Footer with RE/MAX branding */}
+      <GuideLeadModal open={guideModal.open} onOpenChange={(open) => setGuideModal({ ...guideModal, open })} guideType={guideModal.guideType} redirectPath={guideModal.redirectPath} />
       <Footer />
     </div>
   );
