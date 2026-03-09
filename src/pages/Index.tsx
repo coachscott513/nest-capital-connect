@@ -1,25 +1,16 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { ArrowRight, BarChart3, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import GuideLeadModal from "@/components/GuideLeadModal";
 import SEOHead from "@/components/SEOHead";
 import AppleHero from "@/components/AppleHero";
-import TownTheater from "@/components/TownTheater";
-import InstitutionalHeader from "@/components/InstitutionalHeader";
 import RealEstateVendorDirectory from "@/components/RealEstateVendorDirectory";
-import ProfessionalNetwork from "@/components/ProfessionalNetwork";
 import RentalVault from "@/components/RentalVault";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   const [guideModal, setGuideModal] = useState<{ open: boolean; guideType: string; redirectPath: string }>({ open: false, guideType: "", redirectPath: "" });
-  
-  const townSectionRef = useRef<HTMLDivElement>(null);
-
-  const scrollToTownSection = () => {
-    townSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -32,16 +23,10 @@ const Index = () => {
         ogType="website"
       />
 
-      {/* Clean Header Navigation */}
       <CleanHeader />
 
-      {/* Apple-Style Cinematic Hero with Search Command Center */}
-      <AppleHero onScrollToTowns={scrollToTownSection} />
-
-      {/* Town Theater - Swipeable Carousel */}
-      <div ref={townSectionRef} id="town-intelligence" className="scroll-mt-24">
-        <TownTheater />
-      </div>
+      {/* Hero with Sample Property Card + Stats Bar */}
+      <AppleHero />
 
       {/* Real Estate Vendor Directory - Home Purchase Timeline */}
       <RealEstateVendorDirectory />
@@ -189,13 +174,13 @@ const Index = () => {
           <p className="text-2xl text-muted-foreground mb-12 body-airy font-light">
             Go deeper only when you're ready.
           </p>
-          <button
-            onClick={scrollToTownSection}
+          <Link
+            to="/communities"
             className="inline-flex items-center justify-center gap-3 bg-foreground text-background px-12 py-6 rounded-2xl font-semibold text-xl hover:scale-105 transition-transform"
           >
             Explore Towns
             <ArrowRight className="w-6 h-6" />
-          </button>
+          </Link>
         </div>
       </section>
 
