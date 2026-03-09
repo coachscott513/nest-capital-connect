@@ -22,7 +22,7 @@ const MarketStatsBar = ({ stats = defaultStats }: { stats?: MarketStats }) => {
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm">
           <div className="flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-amber" />
+            <TrendingUp className="w-4 h-4 text-primary" />
             <span className="text-muted-foreground">Active Deals:</span>
             <span className="font-bold text-foreground">{stats.totalDeals}</span>
           </div>
