@@ -1,5 +1,7 @@
-import { Sparkles } from "lucide-react";
-import SearchCommandCenter from "@/components/SearchCommandCenter";
+import { ArrowRight, CheckCircle, BarChart3 } from "lucide-react";
+import { Link } from "react-router-dom";
+import SamplePropertyCard from "@/components/SamplePropertyCard";
+import MarketStatsBar from "@/components/MarketStatsBar";
 
 interface AppleHeroProps {
   onScrollToTowns?: () => void;
@@ -7,81 +9,86 @@ interface AppleHeroProps {
 
 const AppleHero = ({ onScrollToTowns }: AppleHeroProps) => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
-      {/* Deep Space Cinematic Background with Liquid Glass Blur */}
-      <div className="absolute inset-0">
-        {/* High-Fidelity Video Background */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-50"
-          poster="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1920&q=80"
-        >
-          <source 
-            src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-small-town-in-nature-41460-large.mp4" 
-            type="video/mp4" 
-          />
-        </video>
-        
-        {/* LIQUID GLASS BLUR OVERLAY - 40px blur for depth */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'rgba(0, 0, 0, 0.55)',
-            backdropFilter: 'blur(40px)',
-            WebkitBackdropFilter: 'blur(40px)',
-          }}
-        />
-        
-        {/* Dark Gradient Overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background" />
-        
-        {/* Teal glow orbs - Enhanced for glass effect */}
-        <div className="absolute top-1/3 right-1/4 w-[700px] h-[700px] rounded-full bg-primary/10 blur-[200px]" />
-        <div className="absolute bottom-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-primary/15 blur-[180px]" />
-      </div>
-
-      {/* Content - Maximum White Space */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 md:px-8 text-center py-32 md:py-40">
-        {/* Floating Glass Badge */}
-        <div className="inline-flex items-center gap-2 glass-strong rounded-full px-6 py-3 mb-12 animate-fade-in">
-          <Sparkles className="w-4 h-4 text-primary" />
-          <span className="text-sm font-semibold text-foreground tracking-wide">Deal Analysis Platform</span>
+    <>
+      <section className="relative overflow-hidden bg-background">
+        {/* Background effects */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/3 right-1/4 w-[700px] h-[700px] rounded-full bg-amber/5 blur-[200px]" />
+          <div className="absolute bottom-1/4 left-1/3 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[180px]" />
         </div>
 
-        {/* Headline - Investor-First */}
-        <h1 className="headline-hero text-foreground mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-          Analyze Any Deal<br />
-          <span className="text-gradient-premium text-glow">In Seconds.</span>
-        </h1>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 py-16 md:py-24 lg:py-28">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* LEFT — Headlines & CTAs */}
+            <div className="space-y-8">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald" />
+                </span>
+                <span className="text-xs font-semibold text-emerald uppercase tracking-widest">Live MLS Data</span>
+                <span className="text-xs text-muted-foreground ml-2">101 Active Deals</span>
+              </div>
 
-        {/* Subheadline - Money outcomes */}
-        <p className="text-xl md:text-2xl text-muted-foreground body-airy mb-6 max-w-2xl mx-auto animate-fade-in font-light" style={{ animationDelay: '0.15s' }}>
-          Rentals • Rehab • Land. Cash flow, returns, and financing scenarios.
-        </p>
+              {/* Headline */}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-tight text-foreground">
+                Find Cash-Flowing
+                <br />
+                <span className="bg-gradient-to-r from-amber to-amber-muted bg-clip-text text-transparent">
+                  Multifamily Deals
+                </span>
+                <br />
+                in Seconds
+              </h1>
 
-        {/* Outputs line - investor trust signal */}
-        <p className="text-sm text-muted-foreground/70 mb-12 animate-fade-in tracking-wide" style={{ animationDelay: '0.18s' }}>
-          <span className="text-primary font-medium">Outputs:</span> Cash Flow • Cap Rate • Cash-on-Cash • DSCR • Break-even
-        </p>
+              {/* Subheadline */}
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
+                Pre-screened investment properties with real-time cap rates, cash flow projections, and deal scores. No guesswork.
+              </p>
 
-        {/* Search Command Center */}
-        <SearchCommandCenter />
-      </div>
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  to="/homes-for-sale"
+                  className="inline-flex items-center justify-center gap-2 bg-amber text-amber-foreground px-8 py-4 rounded-xl font-bold text-lg hover:brightness-110 transition-all"
+                >
+                  Browse 101 Deals
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  to="/investment-analyzer"
+                  className="inline-flex items-center justify-center gap-2 border border-border text-foreground px-8 py-4 rounded-xl font-semibold text-lg hover:bg-muted transition-all"
+                >
+                  <BarChart3 className="w-5 h-5" />
+                  Try the Analyzer
+                </Link>
+              </div>
 
-      {/* Premium Breathing Line Indicator - Teal Glow */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4 z-20">
-        {/* Breathing Vertical Line with Glow */}
-        <div className="h-16 w-[2px] bg-gradient-to-b from-transparent via-primary to-transparent animate-breathe rounded-full shadow-[0_0_8px_hsl(185_100%_50%_/_0.5)]" />
-        
-        {/* Property Insights Text - Premium Typography */}
-        <span className="text-[10px] font-light text-muted-foreground tracking-[0.35em] uppercase">
-          Explore Markets
-        </span>
-      </div>
-    </section>
+              {/* Trust row */}
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+                {["Updated Daily", "Direct MLS Feed", "7 Loan Types"].map((t) => (
+                  <span key={t} className="flex items-center gap-1.5">
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald" />
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* RIGHT — Property Card */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="w-full max-w-md">
+                <SamplePropertyCard />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats bar */}
+      <MarketStatsBar />
+    </>
   );
 };
 
