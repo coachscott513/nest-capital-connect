@@ -94,6 +94,15 @@ export default {
 					foreground: 'hsl(210 40% 98%)',
 					muted: 'hsl(215 20% 65%)',
 					border: 'hsl(222 30% 18%)'
+				},
+				amber: {
+					DEFAULT: 'hsl(var(--amber))',
+					foreground: 'hsl(var(--amber-foreground))',
+					muted: 'hsl(var(--amber-muted))'
+				},
+				emerald: {
+					DEFAULT: 'hsl(var(--emerald))',
+					muted: 'hsl(var(--emerald-muted))'
 				}
 			},
 			borderRadius: {

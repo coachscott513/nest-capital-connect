@@ -58,6 +58,13 @@
     --teal-glow: 185 100% 50%;
     --teal-glow-muted: 185 80% 40%;
 
+    /* Amber/Gold accent for deals and investment metrics */
+    --amber: 38 92% 50%;
+    --amber-foreground: 0 0% 0%;
+    --amber-muted: 38 80% 40%;
+    --emerald: 160 84% 39%;
+    --emerald-muted: 160 60% 30%;
+
     /* Report tokens - dark theme */
     --report-bg: 0 0% 4%;
     --report-card: 0 0% 7%;
