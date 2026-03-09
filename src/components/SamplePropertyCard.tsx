@@ -1,4 +1,4 @@
-import { Star, Calculator, TrendingUp } from "lucide-react";
+import { Star, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
 import troyProperty from "@/assets/troy-quadruplex-45-south-lake.jpg";
 
@@ -48,21 +48,21 @@ const SamplePropertyCard = ({ deal = defaultDeal }: { deal?: FeaturedDeal }) => 
   return (
     <div className="relative group">
       {/* Glow */}
-      <div className="absolute -inset-4 bg-amber/10 blur-[60px] rounded-3xl opacity-60 group-hover:opacity-80 transition-opacity" />
+      <div className="absolute -inset-4 bg-primary/10 blur-[60px] rounded-3xl opacity-60 group-hover:opacity-80 transition-opacity" />
 
       <div className="relative rounded-2xl border border-border/50 bg-card/90 backdrop-blur-xl overflow-hidden hover:-translate-y-1 transition-transform duration-300">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-3 border-b border-border/30">
           <div className="flex items-center gap-2">
             <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary" />
             </span>
             <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
               Sample Deal · Live Data
             </span>
           </div>
-          <div className="flex items-center gap-1 bg-emerald/15 text-emerald px-2.5 py-1 rounded-full">
+          <div className="flex items-center gap-1 bg-primary/15 text-primary px-2.5 py-1 rounded-full">
             <Star className="w-3 h-3 fill-current" />
             <span className="text-xs font-bold">{deal.dealScore}</span>
           </div>
@@ -84,7 +84,6 @@ const SamplePropertyCard = ({ deal = defaultDeal }: { deal?: FeaturedDeal }) => 
             <p className="text-2xl font-bold text-foreground">${deal.price.toLocaleString()}</p>
           </div>
 
-          {/* NEW badge */}
           {deal.isNew && (
             <div className="absolute top-3 right-3 bg-destructive text-destructive-foreground text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
               New Today
@@ -96,11 +95,11 @@ const SamplePropertyCard = ({ deal = defaultDeal }: { deal?: FeaturedDeal }) => 
         <div className="grid grid-cols-3 gap-px bg-border/20 border-t border-border/30">
           <div className="bg-card p-4 text-center">
             <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Cap Rate</p>
-            <p className="text-xl font-bold text-emerald">{deal.capRate}%</p>
+            <p className="text-xl font-bold text-primary">{deal.capRate}%</p>
           </div>
           <div className="bg-card p-4 text-center">
             <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Cash Flow</p>
-            <p className="text-xl font-bold text-emerald">+${deal.monthlyCashFlow}</p>
+            <p className="text-xl font-bold text-primary">+${deal.monthlyCashFlow}</p>
           </div>
           <div className="bg-card p-4 text-center">
             <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Cash to Close</p>
@@ -127,7 +126,7 @@ const SamplePropertyCard = ({ deal = defaultDeal }: { deal?: FeaturedDeal }) => 
         <div className="p-4">
           <Link
             to="/investment-analyzer"
-            className="flex items-center justify-center gap-2 w-full bg-amber text-amber-foreground py-3 rounded-xl font-bold text-sm hover:brightness-110 transition-all"
+            className="flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground py-3 rounded-xl font-bold text-sm hover:brightness-110 transition-all"
           >
             <Calculator className="w-4 h-4" />
             Run Full Analysis

@@ -22,17 +22,17 @@ const MarketStatsBar = ({ stats = defaultStats }: { stats?: MarketStats }) => {
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm">
           <div className="flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-amber" />
+            <TrendingUp className="w-4 h-4 text-primaryryry" />
             <span className="text-muted-foreground">Active Deals:</span>
             <span className="font-bold text-foreground">{stats.totalDeals}</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground">Avg Cap Rate:</span>
-            <span className="font-bold text-emerald">{stats.avgCapRate}%</span>
+            <span className="font-bold tprimaryryld">{stats.avgCapRate}%</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground">Cash Flow Positive:</span>
-            <span className="font-bold text-emerald">{stats.cashFlowPositivePercent}%</span>
+            <span className="font-bold texprimaryld">{stats.cashFlowPositivePercent}%</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-muted-foreground">Avg Price:</span>
