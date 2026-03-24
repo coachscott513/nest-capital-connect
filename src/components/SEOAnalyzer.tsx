@@ -163,7 +163,7 @@ const SEOAnalyzer: React.FC = () => {
     trackInteractions();
   }, []);
 
-  if (!isVisible && process.env.NODE_ENV === 'development') {
+  if (!isVisible && import.meta.env.DEV) {
     return (
       <div 
         className="fixed bottom-4 right-4 z-50"
