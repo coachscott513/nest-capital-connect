@@ -91,6 +91,10 @@ const navItems = [
     label: "Financing",
     href: "/vendor-hub",
   },
+  {
+    label: "South Florida",
+    href: "/south-florida",
+  },
 ];
 
 interface DropdownProps {
