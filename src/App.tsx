@@ -203,6 +203,16 @@ const App = () => {
           <Route path="/communities" element={<Communities />} />
           <Route path="/south-florida" element={<SouthFlorida />} />
           
+          {/* Analyzer Hub */}
+          <Route path="/analyze" element={<AnalyzeHub />} />
+          <Route path="/analyze/condo" element={<AnalyzeCondo />} />
+          <Route path="/analyze/single-family" element={<AnalyzeSingleFamily />} />
+          <Route path="/analyze/rental" element={<AnalyzeRental />} />
+          <Route path="/analyze/multifamily" element={<AnalyzeMultifamilyNew />} />
+          <Route path="/analyze/luxury" element={<AnalyzeLuxury />} />
+          <Route path="/analyze/commercial" element={<AnalyzeCommercial />} />
+          <Route path="/analyze/land" element={<AnalyzeLand />} />
+          
           {/* Market insights alias */}
           <Route path="/market-insights" element={<MarketInsights />} />
           <Route path="/single-family-market" element={<SingleFamilyMarket />} />
