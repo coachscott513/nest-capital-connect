@@ -126,8 +126,15 @@ import ForeclosuresHub from "./pages/search/ForeclosuresHub";
 import LandHub from "./pages/search/LandHub";
 import RentalsSearchHub from "./pages/search/RentalsSearchHub";
 import SouthFlorida from "./pages/SouthFlorida";
+import AnalyzeHub from "./pages/AnalyzeHub";
+import AnalyzeCondo from "./pages/analyze/AnalyzeCondo";
+import AnalyzeSingleFamily from "./pages/analyze/AnalyzeSingleFamily";
+import AnalyzeRental from "./pages/analyze/AnalyzeRental";
+import AnalyzeMultifamilyNew from "./pages/analyze/AnalyzeMultifamily";
+import AnalyzeLuxury from "./pages/analyze/AnalyzeLuxury";
+import AnalyzeCommercial from "./pages/analyze/AnalyzeCommercial";
+import AnalyzeLand from "./pages/analyze/AnalyzeLand";
 
-const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5,
