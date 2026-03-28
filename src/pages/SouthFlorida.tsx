@@ -94,7 +94,7 @@ const SouthFlorida = () => {
             <a href="#areas" className="inline-flex items-center gap-2 bg-white text-gray-900 px-10 py-5 rounded-2xl font-semibold text-lg hover:scale-105 transition-transform shadow-lg">
               Explore South Florida <ArrowRight className="w-5 h-5" />
             </a>
-            <Link to="/analyze-multifamily" className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl font-semibold text-lg hover:bg-white/20 transition-all">
+            <Link to="/analyze" className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl font-semibold text-lg hover:bg-white/20 transition-all">
               Analyze a Property
             </Link>
             <a href="#contact" className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl font-semibold text-lg hover:bg-white/20 transition-all">
@@ -271,7 +271,7 @@ const SouthFlorida = () => {
               Most buyers focus on the price.<br />
               <span className="font-semibold text-gray-900 not-italic">Smart buyers focus on the total cost.</span>
             </p>
-            <Link to="/analyze-multifamily" className="inline-flex items-center gap-2 bg-gray-900 text-white px-10 py-5 rounded-2xl font-semibold text-lg hover:scale-105 transition-transform">
+            <Link to="/analyze" className="inline-flex items-center gap-2 bg-gray-900 text-white px-10 py-5 rounded-2xl font-semibold text-lg hover:scale-105 transition-transform">
               Analyze Your Own Property <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -301,7 +301,7 @@ const SouthFlorida = () => {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Link to="/analyze-multifamily" className="inline-flex items-center gap-2 bg-gray-900 text-white px-10 py-5 rounded-2xl font-semibold text-lg hover:scale-105 transition-transform">
+            <Link to="/analyze" className="inline-flex items-center gap-2 bg-gray-900 text-white px-10 py-5 rounded-2xl font-semibold text-lg hover:scale-105 transition-transform">
               Try the Analyzer <ArrowRight className="w-5 h-5" />
             </Link>
           </div>

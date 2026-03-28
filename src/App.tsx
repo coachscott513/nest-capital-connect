@@ -126,6 +126,14 @@ import ForeclosuresHub from "./pages/search/ForeclosuresHub";
 import LandHub from "./pages/search/LandHub";
 import RentalsSearchHub from "./pages/search/RentalsSearchHub";
 import SouthFlorida from "./pages/SouthFlorida";
+import AnalyzeHub from "./pages/AnalyzeHub";
+import AnalyzeCondo from "./pages/analyze/AnalyzeCondo";
+import AnalyzeSingleFamily from "./pages/analyze/AnalyzeSingleFamily";
+import AnalyzeRental from "./pages/analyze/AnalyzeRental";
+import AnalyzeMultifamilyNew from "./pages/analyze/AnalyzeMultifamily";
+import AnalyzeLuxury from "./pages/analyze/AnalyzeLuxury";
+import AnalyzeCommercial from "./pages/analyze/AnalyzeCommercial";
+import AnalyzeLand from "./pages/analyze/AnalyzeLand";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -194,6 +202,16 @@ const App = () => {
           {/* Communities base route - Regional Command Center */}
           <Route path="/communities" element={<Communities />} />
           <Route path="/south-florida" element={<SouthFlorida />} />
+          
+          {/* Analyzer Hub */}
+          <Route path="/analyze" element={<AnalyzeHub />} />
+          <Route path="/analyze/condo" element={<AnalyzeCondo />} />
+          <Route path="/analyze/single-family" element={<AnalyzeSingleFamily />} />
+          <Route path="/analyze/rental" element={<AnalyzeRental />} />
+          <Route path="/analyze/multifamily" element={<AnalyzeMultifamilyNew />} />
+          <Route path="/analyze/luxury" element={<AnalyzeLuxury />} />
+          <Route path="/analyze/commercial" element={<AnalyzeCommercial />} />
+          <Route path="/analyze/land" element={<AnalyzeLand />} />
           
           {/* Market insights alias */}
           <Route path="/market-insights" element={<MarketInsights />} />
