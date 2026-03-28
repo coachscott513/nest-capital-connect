@@ -224,7 +224,61 @@ const SouthFlorida = () => {
         </div>
       </section>
 
-      {/* ANALYZER */}
+      {/* WHAT IT ACTUALLY COSTS */}
+      <section className="py-32 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-sm font-semibold tracking-[0.2em] uppercase text-gray-400 mb-4">Cost Intelligence</p>
+            <h2 className="text-4xl md:text-6xl font-extralight text-gray-900 tracking-tight mb-6">
+              What It Actually Costs to Own<br />
+              <span className="font-normal">in South Florida</span>
+            </h2>
+            <p className="text-xl text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
+              Beyond the purchase price — understand the full monthly cost before you buy.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {[
+              { label: "Purchase Price", value: "$450,000", sub: null, highlight: false },
+              { label: "Est. Monthly Payment", value: "$2,850", sub: "30yr fixed @ 6.5%", highlight: false },
+              { label: "Property Taxes", value: "$450", sub: "/ month", highlight: false },
+              { label: "Insurance", value: "$350", sub: "/ month · wind + flood", highlight: false },
+              { label: "HOA / Condo Fees", value: "$600", sub: "/ month · full amenities", highlight: false },
+              { label: "Total Monthly Cost", value: "$4,250", sub: "all-in monthly", highlight: true },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className={`p-8 rounded-3xl text-center transition-all duration-300 ${
+                  stat.highlight
+                    ? "bg-gray-900 text-white shadow-2xl shadow-gray-900/20 scale-[1.02]"
+                    : "bg-gray-50 border border-gray-100 hover:shadow-lg"
+                }`}
+              >
+                <p className={`text-xs font-semibold uppercase tracking-wider mb-3 ${stat.highlight ? "text-gray-400" : "text-gray-400"}`}>
+                  {stat.label}
+                </p>
+                <p className={`text-3xl md:text-4xl font-bold mb-2 ${stat.highlight ? "text-white" : "text-gray-900"}`}>
+                  {stat.value}
+                </p>
+                {stat.sub && (
+                  <p className={`text-sm ${stat.highlight ? "text-gray-400" : "text-gray-500"}`}>{stat.sub}</p>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-16">
+            <p className="text-lg text-gray-500 italic mb-10">
+              Most buyers focus on the price.<br />
+              <span className="font-semibold text-gray-900 not-italic">Smart buyers focus on the total cost.</span>
+            </p>
+            <Link to="/analyze-multifamily" className="inline-flex items-center gap-2 bg-gray-900 text-white px-10 py-5 rounded-2xl font-semibold text-lg hover:scale-105 transition-transform">
+              Analyze Your Own Property <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+
       <section className="py-32 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
