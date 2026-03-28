@@ -193,6 +193,7 @@ const App = () => {
           
           {/* Communities base route - Regional Command Center */}
           <Route path="/communities" element={<Communities />} />
+          <Route path="/south-florida" element={<SouthFlorida />} />
           
           {/* Market insights alias */}
           <Route path="/market-insights" element={<MarketInsights />} />
