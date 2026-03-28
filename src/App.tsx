@@ -125,6 +125,7 @@ import InvestorsHub from "./pages/search/InvestorsHub";
 import ForeclosuresHub from "./pages/search/ForeclosuresHub";
 import LandHub from "./pages/search/LandHub";
 import RentalsSearchHub from "./pages/search/RentalsSearchHub";
+import SouthFlorida from "./pages/SouthFlorida";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -192,6 +193,7 @@ const App = () => {
           
           {/* Communities base route - Regional Command Center */}
           <Route path="/communities" element={<Communities />} />
+          <Route path="/south-florida" element={<SouthFlorida />} />
           
           {/* Market insights alias */}
           <Route path="/market-insights" element={<MarketInsights />} />
