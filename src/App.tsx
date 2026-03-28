@@ -135,6 +135,7 @@ import AnalyzeLuxury from "./pages/analyze/AnalyzeLuxury";
 import AnalyzeCommercial from "./pages/analyze/AnalyzeCommercial";
 import AnalyzeLand from "./pages/analyze/AnalyzeLand";
 
+const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5,
