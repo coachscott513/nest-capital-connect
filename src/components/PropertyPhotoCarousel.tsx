@@ -30,7 +30,7 @@ const PropertyPhotoCarousel = ({ photos, address, price }: PropertyPhotoCarousel
 
   if (!photos || photos.length === 0) {
     return (
-      <Card className="relative h-[500px] bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+      <Card className="relative h-[500px] bg-gradient-to-br from-secondary to-gray-200 flex items-center justify-center">
         <p className="text-muted-foreground">No photos available</p>
       </Card>
     );
@@ -57,7 +57,7 @@ const PropertyPhotoCarousel = ({ photos, address, price }: PropertyPhotoCarousel
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 hover:bg-white"
+              className="absolute left-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-background/90 hover:bg-background"
               onClick={prevPhoto}
             >
               <ChevronLeft className="h-6 w-6" />
@@ -65,7 +65,7 @@ const PropertyPhotoCarousel = ({ photos, address, price }: PropertyPhotoCarousel
             <Button
               variant="outline"
               size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 hover:bg-white"
+              className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-background/90 hover:bg-background"
               onClick={nextPhoto}
             >
               <ChevronRight className="h-6 w-6" />
@@ -74,7 +74,7 @@ const PropertyPhotoCarousel = ({ photos, address, price }: PropertyPhotoCarousel
         )}
 
         {/* Photo counter */}
-        <div className="absolute top-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
+        <div className="absolute top-4 right-4 bg-primary/60 text-white px-3 py-1 rounded-full text-sm">
           {currentIndex + 1} / {photos.length}
         </div>
       </Card>

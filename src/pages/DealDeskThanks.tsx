@@ -42,7 +42,7 @@ const DealDeskThanks = () => {
             Request received ✅
           </h1>
           
-          <p className="text-xl text-gray-400 mb-8">
+          <p className="text-xl text-muted-foreground mb-8">
             Your Investor Snapshot is being prepared and will be delivered same-day (typically within a few hours).
           </p>
 
@@ -65,7 +65,7 @@ const DealDeskThanks = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <Link to="/">
-              <Button className="w-full sm:w-auto bg-white hover:bg-gray-100 text-black font-semibold px-8">
+              <Button className="w-full sm:w-auto bg-background hover:bg-secondary text-foreground font-semibold px-8">
                 Return to Home
               </Button>
             </Link>
@@ -78,7 +78,7 @@ const DealDeskThanks = () => {
             </Button>
           </div>
 
-          <p className="text-gray-500 text-sm">
+          <p className="text-muted-foreground text-sm">
             All reports are free & personalized • Same-day delivery on most requests
           </p>
         </div>

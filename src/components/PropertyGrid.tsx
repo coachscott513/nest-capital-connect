@@ -40,7 +40,7 @@ const PropertyGrid = ({ properties }: PropertyGridProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {properties.map((property) => (
-        <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300 border-gray-200">
+        <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300 border-border">
           {/* Property Image */}
           <div className="relative h-64 overflow-hidden group">
             <img 
@@ -56,7 +56,7 @@ const PropertyGrid = ({ properties }: PropertyGridProps) => {
               </Badge>
             </div>
             <div className="absolute top-4 left-4">
-              <Badge variant="secondary" className="bg-white/90 text-gray-900">
+              <Badge variant="secondary" className="bg-background/90 text-foreground">
                 {property.daysOnMarket} days on market
               </Badge>
             </div>
@@ -70,14 +70,14 @@ const PropertyGrid = ({ properties }: PropertyGridProps) => {
 
             {/* Address */}
             <div className="flex items-start gap-2 mb-4">
-              <MapPin className="w-4 h-4 text-gray-500 mt-1 flex-shrink-0" />
-              <p className="text-gray-700 font-medium leading-tight">
+              <MapPin className="w-4 h-4 text-muted-foreground mt-1 flex-shrink-0" />
+              <p className="text-foreground/80 font-medium leading-tight">
                 {property.address}
               </p>
             </div>
 
             {/* Property Details */}
-            <div className="flex items-center gap-4 mb-6 text-gray-600">
+            <div className="flex items-center gap-4 mb-6 text-muted-foreground">
               <div className="flex items-center gap-1">
                 <Bed className="w-4 h-4" />
                 <span className="font-semibold">{property.beds}</span>
@@ -100,7 +100,7 @@ const PropertyGrid = ({ properties }: PropertyGridProps) => {
               <Button 
                 onClick={() => openGoogleMaps(property.latitude, property.longitude, property.address)}
                 variant="outline"
-                className="flex-1 border-blue-600 text-blue-600 hover:bg-blue-50"
+                className="flex-1 border-blue-600 text-accent hover:bg-accent/10"
               >
                 <MapPin className="w-4 h-4 mr-2" />
                 View on Map

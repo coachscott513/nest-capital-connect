@@ -91,7 +91,7 @@ const SchenectadyCountyIntelligence = () => {
       description: "Analyze multi-unit properties, cap rates, rent rolls, and real cash-flow opportunities.",
       cta: "View Investment Data",
       ref: investorRef,
-      color: "bg-blue-500/10 text-blue-600 dark:text-blue-400"
+      color: "bg-accent/10 text-accent dark:text-blue-400"
     },
     {
       icon: Search,
@@ -318,7 +318,7 @@ const SchenectadyCountyIntelligence = () => {
                       <span className="text-sm">Active Listings</span>
                     </div>
                     <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-background border border-border">
-                      <div className="w-3 h-3 rounded-full bg-blue-500" />
+                      <div className="w-3 h-3 rounded-full bg-accent" />
                       <span className="text-sm">Sold (Last 12 Months)</span>
                     </div>
                     <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-background border border-border">
@@ -510,7 +510,7 @@ const SchenectadyCountyIntelligence = () => {
         <section ref={investorRef} className="py-20 px-4 scroll-mt-24">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-sm font-medium mb-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent dark:text-blue-400 text-sm font-medium mb-4">
                 <Briefcase className="w-4 h-4" />
                 For Investors
               </div>

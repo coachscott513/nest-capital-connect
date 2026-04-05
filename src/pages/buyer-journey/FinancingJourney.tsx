@@ -55,10 +55,10 @@ const FinancingJourney = () => {
         <section className="py-16 px-4 bg-background border-b border-border">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                <Wallet className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center">
+                <Wallet className="w-6 h-6 text-accent" />
               </div>
-              <span className="text-sm font-semibold text-blue-600 uppercase tracking-wider">Financing Journey</span>
+              <span className="text-sm font-semibold text-accent uppercase tracking-wider">Financing Journey</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
               Financing That Works For You
@@ -67,7 +67,7 @@ const FinancingJourney = () => {
               The right financing can save you thousands. We break down mortgage options, assistance programs, and how financing impacts your long-term costs.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700">
+              <Button asChild size="lg" className="bg-accent hover:bg-blue-700">
                 <Link to="/first-time-homebuyers">
                   See Assistance Programs
                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -120,8 +120,8 @@ const FinancingJourney = () => {
             <div className="grid md:grid-cols-3 gap-6">
               <Card className="bg-card border-border">
                 <CardContent className="pt-6">
-                  <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4">
-                    <Percent className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
+                    <Percent className="w-5 h-5 text-accent" />
                   </div>
                   <h3 className="font-semibold text-foreground mb-2">Interest Rates</h3>
                   <p className="text-sm text-muted-foreground">
@@ -131,8 +131,8 @@ const FinancingJourney = () => {
               </Card>
               <Card className="bg-card border-border">
                 <CardContent className="pt-6">
-                  <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4">
-                    <Calculator className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
+                    <Calculator className="w-5 h-5 text-accent" />
                   </div>
                   <h3 className="font-semibold text-foreground mb-2">Total Cost of Ownership</h3>
                   <p className="text-sm text-muted-foreground">
@@ -142,8 +142,8 @@ const FinancingJourney = () => {
               </Card>
               <Card className="bg-card border-border">
                 <CardContent className="pt-6">
-                  <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4">
-                    <Building className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
+                    <Building className="w-5 h-5 text-accent" />
                   </div>
                   <h3 className="font-semibold text-foreground mb-2">Investment Financing</h3>
                   <p className="text-sm text-muted-foreground">
@@ -167,15 +167,15 @@ const FinancingJourney = () => {
               </p>
               <ul className="space-y-3 text-foreground">
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5" />
+                  <CheckCircle className="w-5 h-5 text-accent mt-0.5" />
                   <span>Side-by-side loan comparison chart</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5" />
+                  <CheckCircle className="w-5 h-5 text-accent mt-0.5" />
                   <span>Complete list of NY assistance programs</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5" />
+                  <CheckCircle className="w-5 h-5 text-accent mt-0.5" />
                   <span>Monthly payment calculator template</span>
                 </li>
               </ul>
@@ -223,7 +223,7 @@ const FinancingJourney = () => {
         />
 
         {/* Final CTA */}
-        <section className="py-12 px-4 bg-blue-600 text-white text-center">
+        <section className="py-12 px-4 bg-accent text-white text-center">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-2xl font-bold mb-4">Ready to Get Pre-Approved?</h2>
             <p className="mb-6 opacity-90">

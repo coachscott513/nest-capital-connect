@@ -599,7 +599,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
             {/* Buyers */}
             <div className="space-y-3">
               <h3 className="font-semibold text-foreground flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-blue-500" />
+                <span className="w-2 h-2 rounded-full bg-accent" />
                 For Buyers
               </h3>
               <p className="text-muted-foreground text-sm">

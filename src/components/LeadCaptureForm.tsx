@@ -221,7 +221,7 @@ const LeadCaptureForm = ({
   };
 
   const cardClass = variant === "hero" 
-    ? "bg-white/95 backdrop-blur-sm border-white/20 shadow-2xl max-w-md mx-auto" 
+    ? "bg-background/95 backdrop-blur-sm border-white/20 shadow-2xl max-w-md mx-auto" 
     : "bg-card border shadow-lg max-w-md mx-auto";
 
   return (

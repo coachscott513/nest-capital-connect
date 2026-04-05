@@ -119,7 +119,7 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            className="absolute inset-0 bg-primary/80 backdrop-blur-sm"
             onClick={onClose}
           />
           
@@ -145,7 +145,7 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
                 </div>
                 <button
                   onClick={onClose}
-                  className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors"
+                  className="w-10 h-10 rounded-full bg-background/5 hover:bg-background/10 flex items-center justify-center transition-colors"
                 >
                   <X className="w-5 h-5 text-white/70" />
                 </button>
@@ -170,7 +170,7 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                         filter === key
                           ? 'bg-primary text-primary-foreground'
-                          : 'bg-white/5 text-white/70 hover:bg-white/10'
+                          : 'bg-background/5 text-white/70 hover:bg-background/10'
                       }`}
                     >
                       {label}
@@ -178,7 +178,7 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
                   ))}
                 </div>
                 
-                <div className="h-6 w-px bg-white/10" />
+                <div className="h-6 w-px bg-background/10" />
                 
                 <div className="flex gap-2">
                   {[
@@ -193,7 +193,7 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                         priceRange === key
                           ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                          : 'bg-white/5 text-white/70 hover:bg-white/10'
+                          : 'bg-background/5 text-white/70 hover:bg-background/10'
                       }`}
                     >
                       {label}
@@ -208,10 +208,10 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
               {isLoading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[1, 2, 3, 4, 5, 6].map(i => (
-                    <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-4 animate-pulse">
-                      <div className="h-40 bg-white/10 rounded-lg mb-4" />
-                      <div className="h-6 bg-white/10 rounded w-2/3 mb-2" />
-                      <div className="h-4 bg-white/10 rounded w-1/2" />
+                    <div key={i} className="bg-background/5 border border-white/10 rounded-xl p-4 animate-pulse">
+                      <div className="h-40 bg-background/10 rounded-lg mb-4" />
+                      <div className="h-6 bg-background/10 rounded w-2/3 mb-2" />
+                      <div className="h-4 bg-background/10 rounded w-1/2" />
                     </div>
                   ))}
                 </div>
@@ -222,10 +222,10 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
                       key={property.id}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="group bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all"
+                      className="group bg-background/5 border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all"
                     >
                       {/* Image */}
-                      <div className="relative h-40 bg-slate-800 overflow-hidden">
+                      <div className="relative h-40 bg-primary overflow-hidden">
                         {property.photos?.[0] ? (
                           <img
                             src={property.photos[0]}
@@ -244,7 +244,7 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
                         </div>
                         {property.days_on_market && (
                           <div className="absolute top-3 right-3">
-                            <span className="px-3 py-1 bg-black/60 text-white/80 text-xs font-medium rounded-full backdrop-blur-sm">
+                            <span className="px-3 py-1 bg-primary/60 text-white/80 text-xs font-medium rounded-full backdrop-blur-sm">
                               {property.days_on_market} days
                             </span>
                           </div>
@@ -258,7 +258,7 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
                             {formatPrice(property.price)}
                           </h3>
                           {property.property_type && (
-                            <span className="text-xs text-white/50 bg-white/5 px-2 py-1 rounded">
+                            <span className="text-xs text-white/50 bg-background/5 px-2 py-1 rounded">
                               {property.property_type}
                             </span>
                           )}
@@ -302,7 +302,7 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
                               href={property.boldtrail_url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="py-2 px-3 bg-white/5 text-white/70 rounded-lg hover:bg-white/10 transition-colors"
+                              className="py-2 px-3 bg-background/5 text-white/70 rounded-lg hover:bg-background/10 transition-colors"
                             >
                               <ExternalLink className="w-4 h-4" />
                             </a>
@@ -346,7 +346,7 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
                   href={searchUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-2.5 bg-white/5 hover:bg-white/10 text-white font-medium rounded-lg transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 bg-background/5 hover:bg-background/10 text-white font-medium rounded-lg transition-colors"
                 >
                   <TrendingUp className="w-4 h-4" />
                   Full MLS Search

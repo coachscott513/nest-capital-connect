@@ -47,7 +47,7 @@ const Header = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-1">
           <div className="relative group">
-            <button className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
+            <button className="text-white hover:bg-background/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
               Investment Properties
             </button>
             <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-56 border border-blue-700/50 z-50">
@@ -61,25 +61,25 @@ const Header = () => {
           </div>
           <button
             onClick={() => scrollToSection('rehab-properties')}
-            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
+            className="text-white hover:bg-background/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
           >
             Rehab Properties
           </button>
           <Link
             to="/rentals"
-            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
+            className="text-white hover:bg-background/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
             onClick={() => setIsMenuOpen(false)}
           >
             Rentals
           </Link>
           <button
             onClick={() => scrollToSection('contact')}
-            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
+            className="text-white hover:bg-background/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
           >
             First-Time Buyers
           </button>
           <div className="relative group">
-            <button className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
+            <button className="text-white hover:bg-background/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
               Markets
             </button>
             <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-56 border border-blue-700/50">
@@ -102,7 +102,7 @@ const Header = () => {
             </div>
           </div>
           <div className="relative group">
-            <button className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
+            <button className="text-white hover:bg-background/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
               Investor Guides
             </button>
             <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-72 border border-blue-700/50 z-50">
@@ -120,14 +120,14 @@ const Header = () => {
           </div>
           <Link
             to="/insights"
-            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
+            className="text-white hover:bg-background/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
             onClick={() => setIsMenuOpen(false)}
           >
             Insights
           </Link>
           <Link
             to="/blog"
-            className="text-white hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
+            className="text-white hover:bg-background/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium"
             onClick={() => setIsMenuOpen(false)}
           >
             Blog
@@ -141,7 +141,7 @@ const Header = () => {
           </Link>
           <button
             onClick={() => scrollToSection('contact')}
-            className="text-white bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-md transition-colors duration-200 text-sm font-medium ml-2"
+            className="text-white bg-blue-700 hover:bg-accent px-4 py-2 rounded-md transition-colors duration-200 text-sm font-medium ml-2"
           >
             Contact
           </button>
@@ -157,7 +157,7 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="absolute top-full left-0 right-0 bg-blue-600 p-4 md:hidden">
+          <div className="absolute top-full left-0 right-0 bg-accent p-4 md:hidden">
           <div className="flex flex-col space-y-4">
               <div className="text-white font-medium">Investment Properties</div>
               <div className="pl-4 flex flex-col space-y-2 mb-1">
@@ -232,7 +232,7 @@ const Header = () => {
                 >
                   Schenectady County
                 </Link>
-                <div className="border-t border-blue-500/30 my-1"></div>
+                <div className="border-t border-accent/30 my-1"></div>
                 <Link
                   to="/markets/albany-single-family-homes"
                   className="text-white hover:text-blue-200 transition-colors duration-200 text-left text-sm"

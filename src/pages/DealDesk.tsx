@@ -118,13 +118,13 @@ const DealDesk = () => {
               Paste any address.<br />
               <span className="text-emerald-400">See if the numbers work.</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-400 mb-8 max-w-2xl">
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl">
               Property insights by Capital District Nest. NY focus, nationwide available.
             </p>
             <Button 
               onClick={scrollToForm}
               size="lg"
-              className="bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-8 py-6 text-lg"
+              className="bg-emerald-500 hover:bg-emerald-600 text-foreground font-semibold px-8 py-6 text-lg"
             >
               Get My Snapshot
             </Button>
@@ -150,7 +150,7 @@ const DealDesk = () => {
                         <Input 
                           {...field} 
                           placeholder="Your first name"
-                          className="bg-[#1a1a1a] border-gray-700 text-white placeholder:text-gray-500"
+                          className="bg-[#1a1a1a] border-gray-700 text-white placeholder:text-muted-foreground"
                         />
                       </FormControl>
                       <FormMessage />
@@ -169,7 +169,7 @@ const DealDesk = () => {
                           {...field} 
                           type="email"
                           placeholder="you@email.com"
-                          className="bg-[#1a1a1a] border-gray-700 text-white placeholder:text-gray-500"
+                          className="bg-[#1a1a1a] border-gray-700 text-white placeholder:text-muted-foreground"
                         />
                       </FormControl>
                       <FormMessage />
@@ -187,7 +187,7 @@ const DealDesk = () => {
                         <Input 
                           {...field} 
                           placeholder="123 Main St, Albany NY or Zillow/Redfin URL"
-                          className="bg-[#1a1a1a] border-gray-700 text-white placeholder:text-gray-500"
+                          className="bg-[#1a1a1a] border-gray-700 text-white placeholder:text-muted-foreground"
                         />
                       </FormControl>
                       <FormMessage />
@@ -230,7 +230,7 @@ const DealDesk = () => {
                         <Textarea 
                           {...field} 
                           placeholder="Any additional context about your investment goals..."
-                          className="bg-[#1a1a1a] border-gray-700 text-white placeholder:text-gray-500 min-h-[100px]"
+                          className="bg-[#1a1a1a] border-gray-700 text-white placeholder:text-muted-foreground min-h-[100px]"
                         />
                       </FormControl>
                       <FormMessage />
@@ -251,7 +251,7 @@ const DealDesk = () => {
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">
-                        <FormLabel className="text-gray-400 text-sm font-normal">
+                        <FormLabel className="text-muted-foreground text-sm font-normal">
                           I agree to receive my Snapshot and Deal Desk updates by email. *
                         </FormLabel>
                         <FormMessage />
@@ -263,7 +263,7 @@ const DealDesk = () => {
                 <Button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-black font-semibold py-6 text-lg"
+                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-foreground font-semibold py-6 text-lg"
                 >
                   {isSubmitting ? "Submitting..." : "Get My Snapshot"}
                 </Button>
@@ -294,7 +294,7 @@ const DealDesk = () => {
               ))}
             </div>
 
-            <p className="text-center text-gray-500 text-sm">
+            <p className="text-center text-muted-foreground text-sm">
               Not an appraisal. Verify rent roll/expenses with seller or agent.
             </p>
           </div>
@@ -351,7 +351,7 @@ const DealDesk = () => {
               </ul>
               <Button 
                 onClick={scrollToForm}
-                className="bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-8"
+                className="bg-emerald-500 hover:bg-emerald-600 text-foreground font-semibold px-8"
               >
                 Request Your Free Report
               </Button>
@@ -387,12 +387,12 @@ const DealDesk = () => {
               ].map((faq, i) => (
                 <div key={i} className="bg-[#0a0a0a] rounded-lg p-6 border border-gray-800">
                   <h3 className="text-lg font-semibold text-emerald-400 mb-2">{faq.q}</h3>
-                  <p className="text-gray-400">{faq.a}</p>
+                  <p className="text-muted-foreground">{faq.a}</p>
                 </div>
               ))}
             </div>
 
-            <p className="text-center text-gray-500 text-sm mt-12">
+            <p className="text-center text-muted-foreground text-sm mt-12">
               Not investment advice. Always conduct your own due diligence. Referrals to local agents provided when appropriate.
             </p>
           </div>
@@ -409,7 +409,7 @@ const DealDesk = () => {
             >
               capitaldealdesk.com
             </a>
-            <p className="text-gray-500 text-sm mt-2">
+            <p className="text-muted-foreground text-sm mt-2">
               A Capital District Nest product
             </p>
           </div>

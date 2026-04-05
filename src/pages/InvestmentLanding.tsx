@@ -186,7 +186,7 @@ const InvestmentLanding = () => {
                 <div className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                   <p className="text-muted-foreground">
-                    <a href="https://www.broadviewfcu.com/personal/home-lending-solutions/meet-the-mortgage-team/christie-hoyt/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline">
+                    <a href="https://www.broadviewfcu.com/personal/home-lending-solutions/meet-the-mortgage-team/christie-hoyt/" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-blue-800 hover:underline">
                       Financing assistance and investor-friendly lenders
                     </a>
                   </p>
@@ -243,7 +243,7 @@ const InvestmentLanding = () => {
 
           {/* Right Column - Lead Capture Form */}
           <div className="lg:sticky lg:top-8">
-            <Card className="bg-white shadow-2xl border-primary/20">
+            <Card className="bg-background shadow-2xl border-primary/20">
               <CardHeader className="text-center">
                 <CardTitle className="text-2xl font-bold text-primary">
                   Get This Week's Exclusive Deals

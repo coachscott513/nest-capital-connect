@@ -170,7 +170,7 @@ const ProfessionalNetwork = () => {
   return (
     <section className="section-massive overflow-hidden relative isolate">
       {/* Liquid Glass Background Layer */}
-      <div className="absolute inset-0 z-0 bg-black/50 backdrop-blur-[40px] pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-primary/50 backdrop-blur-[40px] pointer-events-none" />
       
       <div className="relative z-10 px-[2%] lg:px-[3%]">
         {/* Section Header */}
@@ -297,7 +297,7 @@ const ProfessionalNetwork = () => {
 
       {/* Vendor Detail Sheet */}
       <Sheet open={!!selectedVendor} onOpenChange={() => setSelectedVendor(null)}>
-        <SheetContent className="w-full sm:max-w-lg bg-black/70 backdrop-blur-[30px] border-l border-white/10 overflow-y-auto">
+        <SheetContent className="w-full sm:max-w-lg bg-primary/70 backdrop-blur-[30px] border-l border-white/10 overflow-y-auto">
           {selectedVendor && (
             <>
               <SheetHeader className="mb-6">
@@ -337,13 +337,13 @@ const ProfessionalNetwork = () => {
                 {(selectedVendor.vendor.yearsInBusiness || selectedVendor.vendor.projectsCompleted) && (
                   <div className="grid grid-cols-2 gap-4">
                     {selectedVendor.vendor.yearsInBusiness && (
-                      <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                      <div className="p-4 rounded-xl bg-background/5 border border-white/10">
                         <p className="text-2xl font-bold text-primary">{selectedVendor.vendor.yearsInBusiness}</p>
                         <p className="text-xs text-muted-foreground">Years in Business</p>
                       </div>
                     )}
                     {selectedVendor.vendor.projectsCompleted && (
-                      <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                      <div className="p-4 rounded-xl bg-background/5 border border-white/10">
                         <p className="text-2xl font-bold text-primary">{selectedVendor.vendor.projectsCompleted}+</p>
                         <p className="text-xs text-muted-foreground">Projects Completed</p>
                       </div>

@@ -303,7 +303,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
     <section className="py-16 md:py-20 overflow-hidden relative isolate">
       {/* Liquid Glass Background - Enhanced blur when search focused */}
       <div 
-        className={`absolute inset-0 z-0 bg-black/40 pointer-events-none transition-all duration-500 ${
+        className={`absolute inset-0 z-0 bg-primary/40 pointer-events-none transition-all duration-500 ${
           isSearchFocused ? 'backdrop-blur-[60px]' : 'backdrop-blur-[40px]'
         }`} 
       />
@@ -357,7 +357,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                    className="absolute right-5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-background/10 flex items-center justify-center hover:bg-background/20 transition-colors"
                   >
                     <span className="text-muted-foreground text-sm">×</span>
                   </button>
@@ -378,7 +378,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
                   className={`group inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                     isActive 
                       ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25' 
-                      : 'bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground border border-white/10'
+                      : 'bg-background/5 text-muted-foreground hover:bg-background/10 hover:text-foreground border border-white/10'
                   }`}
                 >
                   <PillIcon className={`w-4 h-4 ${isActive ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground'}`} />
@@ -463,7 +463,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
                         </div>
                         <span className="text-xs text-muted-foreground">5-Star Reviews</span>
                       </div>
-                      <div className="w-px bg-white/10" />
+                      <div className="w-px bg-background/10" />
                       <div>
                         <span className="font-bold text-lg text-foreground">{featuredMortgagePartner.yearsExperience}</span>
                         <span className="text-xs text-muted-foreground block">Years Exp.</span>
@@ -600,7 +600,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
                         </div>
                         <span className="text-xs text-muted-foreground">5-Star Reviews</span>
                       </div>
-                      <div className="w-px bg-white/10" />
+                      <div className="w-px bg-background/10" />
                       <div>
                         <span className="font-bold text-lg text-foreground">{featuredInsurancePartner.yearsExperience}+</span>
                         <span className="text-xs text-muted-foreground block">Years Exp.</span>
@@ -655,7 +655,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
                       className="flex-1"
                     >
                       <Button 
-                        className="w-full h-12 text-base font-semibold bg-amber-500 hover:bg-amber-600 text-black"
+                        className="w-full h-12 text-base font-semibold bg-amber-500 hover:bg-amber-600 text-foreground"
                       >
                         <ExternalLink className="w-4 h-4 mr-2" />
                         Get a Personal Price Plan
@@ -740,7 +740,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
                         <span className="font-bold text-lg text-foreground">{featuredInspectorPartner.yearsExperience}</span>
                         <span className="text-xs text-muted-foreground block">Years Exp.</span>
                       </div>
-                      <div className="w-px bg-white/10" />
+                      <div className="w-px bg-background/10" />
                       <div>
                         <span className="font-bold text-lg text-foreground">{featuredInspectorPartner.yearsResident}</span>
                         <span className="text-xs text-muted-foreground block">Years Local</span>
@@ -824,7 +824,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
                       className="flex-1"
                     >
                       <Button 
-                        className="w-full h-12 text-base font-semibold bg-cyan-500 hover:bg-cyan-600 text-black"
+                        className="w-full h-12 text-base font-semibold bg-cyan-500 hover:bg-cyan-600 text-foreground"
                       >
                         <Calendar className="w-4 h-4 mr-2" />
                         Book Inspection
@@ -1112,7 +1112,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
                     <a href={`tel:${selectedVendor.phone.replace(/\D/g, "")}`} className="block">
                       <Button 
                         variant="outline" 
-                        className="w-full h-12 border-white/10 bg-white/5 hover:bg-white/10"
+                        className="w-full h-12 border-white/10 bg-background/5 hover:bg-background/10"
                       >
                         <Phone className="w-4 h-4 mr-2" />
                         {selectedVendor.phone}
@@ -1130,7 +1130,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
                     >
                       <Button 
                         variant="outline" 
-                        className="w-full h-12 border-white/10 bg-white/5 hover:bg-white/10"
+                        className="w-full h-12 border-white/10 bg-background/5 hover:bg-background/10"
                       >
                         <ExternalLink className="w-4 h-4 mr-2" />
                         Visit Website
@@ -1141,7 +1141,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
 
                 {/* Trust Note */}
                 {selectedVendor.isPreferred && (
-                  <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                  <div className="p-4 rounded-xl bg-background/5 border border-white/10">
                     <p className="text-sm text-muted-foreground italic">
                       "I've worked with {selectedVendor.name} on multiple transactions. 
                       They deliver reliable service and understand the Capital District market."

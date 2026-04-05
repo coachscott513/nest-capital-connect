@@ -149,7 +149,7 @@ const IntelligenceGatekeeper = ({
             <Button
               onClick={handleGoogleSignIn}
               disabled={isSigningIn}
-              className="w-full h-14 bg-white hover:bg-white/90 text-[#0B0B0B] rounded-2xl font-medium text-base flex items-center justify-center gap-3 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="w-full h-14 bg-background hover:bg-background/90 text-[#0B0B0B] rounded-2xl font-medium text-base flex items-center justify-center gap-3 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               {isSigningIn ? (
                 <Loader2 className="w-5 h-5 animate-spin" />

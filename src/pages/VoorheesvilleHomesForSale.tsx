@@ -156,7 +156,7 @@ const VoorheesvilleHomesForSale = () => {
             {/* Iframe or Fallback */}
             {!iframeError ? (
               <div
-                className="w-full max-w-[1200px] mx-auto rounded-[16px] overflow-hidden border-2 border-primary/30 bg-white"
+                className="w-full max-w-[1200px] mx-auto rounded-[16px] overflow-hidden border-2 border-primary/30 bg-background"
                 style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
               >
                 <iframe

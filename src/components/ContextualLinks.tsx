@@ -23,7 +23,7 @@ const ContextualLinks = ({ links, context }: ContextualLinksProps) => {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center text-blue-600 hover:text-blue-800 hover:underline transition-colors ${link.className || ''}`}
+              className={`inline-flex items-center text-accent hover:text-blue-800 hover:underline transition-colors ${link.className || ''}`}
             >
               {link.text}
               <ExternalLink className="w-3 h-3 ml-1" />
@@ -31,12 +31,12 @@ const ContextualLinks = ({ links, context }: ContextualLinksProps) => {
           ) : (
             <Link
               to={link.href}
-              className={`text-blue-600 hover:text-blue-800 hover:underline transition-colors ${link.className || ''}`}
+              className={`text-accent hover:text-blue-800 hover:underline transition-colors ${link.className || ''}`}
             >
               {link.text}
             </Link>
           )}
-          {index < links.length - 1 && <span className="text-gray-400">•</span>}
+          {index < links.length - 1 && <span className="text-muted-foreground">•</span>}
         </span>
       ))}
     </div>

@@ -56,7 +56,7 @@ const ReportHero = ({ data, onUnlockClick, isUnlocked = false }: ReportHeroProps
         {!isUnlocked && (
           <Button
             onClick={onUnlockClick}
-            className="bg-white text-report-hero-bg hover:bg-white/90 px-8 py-6 text-base font-medium rounded-full transition-all shadow-lg shadow-black/20 group"
+            className="bg-background text-report-hero-bg hover:bg-background/90 px-8 py-6 text-base font-medium rounded-full transition-all shadow-lg shadow-black/20 group"
           >
             <Lock className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
             Unlock Full Property Intelligence

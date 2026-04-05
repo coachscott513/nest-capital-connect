@@ -23,8 +23,8 @@ const ReportPreviewShowcase = ({ showCTA = true, compact = false }: ReportPrevie
       label: "Cap Rate",
       value: "6.5%",
       description: "Net income relative to price",
-      color: "text-blue-500",
-      bgColor: "bg-blue-500/10"
+      color: "text-accent",
+      bgColor: "bg-accent/10"
     },
     {
       icon: Calculator,
@@ -55,7 +55,7 @@ const ReportPreviewShowcase = ({ showCTA = true, compact = false }: ReportPrevie
       label: "Cash to Close",
       value: "$63,750",
       description: "Total capital required at closing",
-      color: "text-slate-500",
+      color: "text-muted-foreground",
       bgColor: "bg-slate-500/10"
     }
   ];

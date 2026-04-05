@@ -69,7 +69,7 @@ const InvestmentPropertiesSection = () => {
               href={area.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              className="group relative overflow-hidden rounded-2xl bg-background/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${area.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
               <div className="relative p-8 text-center">
@@ -82,7 +82,7 @@ const InvestmentPropertiesSection = () => {
                 <p className="text-slate-300 group-hover:text-slate-200 transition-colors">
                   {area.description}
                 </p>
-                <div className="mt-4 w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                <div className="mt-4 w-full h-1 bg-background/10 rounded-full overflow-hidden">
                   <div className={`h-full bg-gradient-to-r ${area.gradient} w-0 group-hover:w-full transition-all duration-500 ease-out`}></div>
                 </div>
               </div>
@@ -101,7 +101,7 @@ const InvestmentPropertiesSection = () => {
         </div>
 
         <div className="text-center">
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+          <div className="bg-background/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
             <h3 className="text-3xl font-bold mb-4 text-white">
               Ready to Build Your Portfolio?
             </h3>
@@ -128,7 +128,7 @@ const InvestmentPropertiesSection = () => {
                     element.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                className="bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+                className="bg-background/10 hover:bg-background/20 text-white border border-white/20 hover:border-white/30 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
               >
                 View Current Inventory
               </button>

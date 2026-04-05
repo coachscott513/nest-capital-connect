@@ -28,7 +28,7 @@ const MarketReportThanks = () => {
         <div className="max-w-lg mx-auto">
           <Card className="border-2 border-primary/20">
             <CardContent className="p-8 md:p-10 text-center">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-emerald/15 flex items-center justify-center">
                 <CheckCircle className="w-8 h-8 text-green-600" />
               </div>
               

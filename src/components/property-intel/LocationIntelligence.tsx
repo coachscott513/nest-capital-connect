@@ -46,7 +46,7 @@ const LocationIntelligence = ({ data, isUnlocked = false }: LocationIntelligence
         </p>
         
         {/* Map placeholder */}
-        <div className="w-full h-48 rounded-2xl bg-white/5 flex items-center justify-center mb-10">
+        <div className="w-full h-48 rounded-2xl bg-background/5 flex items-center justify-center mb-10">
           <MapPin className="w-8 h-8 text-white/20" strokeWidth={1.5} />
         </div>
         
@@ -56,7 +56,7 @@ const LocationIntelligence = ({ data, isUnlocked = false }: LocationIntelligence
             return (
               <div
                 key={index}
-                className="flex items-start gap-4 p-5 rounded-2xl bg-white/5 border border-white/10"
+                className="flex items-start gap-4 p-5 rounded-2xl bg-background/5 border border-white/10"
               >
                 <div className="w-10 h-10 rounded-full bg-report-accent/20 flex items-center justify-center flex-shrink-0">
                   <Icon className="w-5 h-5 text-report-accent" strokeWidth={1.5} />

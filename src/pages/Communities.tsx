@@ -191,7 +191,7 @@ const velocityColors: Record<string, string> = {
   "Hot": "bg-red-500/20 text-red-400 border-red-500/30",
   "Premium": "bg-amber-500/20 text-amber-400 border-amber-500/30",
   "Value": "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-  "Opportunity": "bg-blue-500/20 text-blue-400 border-blue-500/30",
+  "Opportunity": "bg-accent/20 text-blue-400 border-accent/30",
   "Resort": "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
   "Rural": "bg-green-500/20 text-green-400 border-green-500/30",
   "Luxury": "bg-purple-500/20 text-purple-400 border-purple-500/30",
@@ -235,7 +235,7 @@ const Communities = () => {
             
             {/* Glow effects */}
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
             
             <div className="relative max-w-7xl mx-auto">
               <motion.div 
@@ -244,7 +244,7 @@ const Communities = () => {
                 transition={{ duration: 0.6 }}
                 className="text-center mb-12"
               >
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-background/5 border border-white/10 rounded-full mb-6">
                   <Landmark className="w-4 h-4 text-primary" />
                   <span className="text-sm text-white/70 font-medium">Regional Command Center</span>
                 </div>
@@ -264,17 +264,17 @@ const Communities = () => {
                     <div className="text-3xl font-bold text-white">11</div>
                     <div className="text-sm text-white/50">Counties</div>
                   </div>
-                  <div className="w-px h-12 bg-white/10" />
+                  <div className="w-px h-12 bg-background/10" />
                   <div className="text-center">
                     <div className="text-3xl font-bold text-white">{totalTowns}+</div>
                     <div className="text-sm text-white/50">Towns</div>
                   </div>
-                  <div className="w-px h-12 bg-white/10" />
+                  <div className="w-px h-12 bg-background/10" />
                   <div className="text-center">
                     <div className="text-3xl font-bold text-emerald-400">{verifiedTowns}</div>
                     <div className="text-sm text-white/50">Verified Anchors</div>
                   </div>
-                  <div className="w-px h-12 bg-white/10" />
+                  <div className="w-px h-12 bg-background/10" />
                   <div className="text-center">
                     <div className="text-3xl font-bold text-primary">7.8%</div>
                     <div className="text-sm text-white/50">Avg. Yield</div>
@@ -287,7 +287,7 @@ const Communities = () => {
                   className={`inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all ${
                     showVerifiedOnly 
                       ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' 
-                      : 'bg-white/5 text-white/70 border border-white/10 hover:bg-white/10'
+                      : 'bg-background/5 text-white/70 border border-white/10 hover:bg-background/10'
                   }`}
                 >
                   <Filter className="w-4 h-4" />
@@ -337,12 +337,12 @@ const Communities = () => {
                           <div className="text-lg font-bold text-emerald-400">{county.avgYield}</div>
                           <div className="text-xs text-white/40">Avg. Yield</div>
                         </div>
-                        <div className="w-px h-8 bg-white/10" />
+                        <div className="w-px h-8 bg-background/10" />
                         <div>
                           <div className="text-lg font-bold text-white">{county.towns.length}</div>
                           <div className="text-xs text-white/40">Towns</div>
                         </div>
-                        <div className="w-px h-8 bg-white/10" />
+                        <div className="w-px h-8 bg-background/10" />
                         <div>
                           <div className="text-lg font-bold text-primary">{county.towns.filter(t => t.verified).length}</div>
                           <div className="text-xs text-white/40">Verified</div>
@@ -355,7 +355,7 @@ const Communities = () => {
                           <Link
                             key={town.slug}
                             to={`/towns/${town.slug}`}
-                            className="flex items-center justify-between py-2 px-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors group/town"
+                            className="flex items-center justify-between py-2 px-3 rounded-lg bg-background/5 hover:bg-background/10 transition-colors group/town"
                           >
                             <span className="text-sm text-white/80 group-hover/town:text-white transition-colors">
                               {town.name}
@@ -382,7 +382,7 @@ const Communities = () => {
           </section>
           
           {/* Expansion Counties Grid */}
-          <section className="py-16 px-4 bg-slate-900/50">
+          <section className="py-16 px-4 bg-primary/50">
             <div className="max-w-7xl mx-auto">
               <div className="flex items-center gap-3 mb-8">
                 <Mountain className="w-6 h-6 text-primary" />
@@ -399,7 +399,7 @@ const Communities = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 + index * 0.05 }}
-                    className="bg-white/5 border border-white/10 rounded-xl p-5 hover:border-white/20 transition-all"
+                    className="bg-background/5 border border-white/10 rounded-xl p-5 hover:border-white/20 transition-all"
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div>
@@ -416,7 +416,7 @@ const Communities = () => {
                         <div className="text-sm font-bold text-emerald-400">{county.avgYield}</div>
                         <div className="text-xs text-white/40">Yield</div>
                       </div>
-                      <div className="w-px h-6 bg-white/10" />
+                      <div className="w-px h-6 bg-background/10" />
                       <div>
                         <div className="text-sm font-bold text-white">{county.towns.length}</div>
                         <div className="text-xs text-white/40">Towns</div>
@@ -429,7 +429,7 @@ const Communities = () => {
                         <Link
                           key={town.slug}
                           to={`/towns/${town.slug}`}
-                          className="inline-flex items-center gap-1 px-2 py-1 bg-white/5 hover:bg-white/10 rounded text-xs text-white/70 hover:text-white transition-colors"
+                          className="inline-flex items-center gap-1 px-2 py-1 bg-background/5 hover:bg-background/10 rounded text-xs text-white/70 hover:text-white transition-colors"
                         >
                           {town.name}
                           {town.verified && <CheckCircle2 className="w-3 h-3 text-emerald-400" />}
@@ -453,10 +453,10 @@ const Communities = () => {
               >
                 {/* Decorative elements */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl" />
                 
                 <div className="relative">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-full mb-6">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-background/10 border border-white/20 rounded-full mb-6">
                     <BarChart3 className="w-4 h-4 text-primary" />
                     <span className="text-sm text-white/70 font-medium">Premium Intelligence</span>
                   </div>
@@ -479,7 +479,7 @@ const Communities = () => {
                     </Link>
                     <Link
                       to="/investment-properties"
-                      className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-8 py-4 rounded-xl font-semibold transition-all hover:scale-105"
+                      className="inline-flex items-center gap-2 bg-background/10 hover:bg-background/20 text-white border border-white/20 px-8 py-4 rounded-xl font-semibold transition-all hover:scale-105"
                     >
                       <TrendingUp className="w-5 h-5" />
                       View Active Opportunities

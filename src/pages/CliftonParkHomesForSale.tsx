@@ -82,7 +82,7 @@ const CliftonParkHomesForSale = () => {
               <h2 className="text-3xl font-bold text-foreground mb-3">Live Clifton Park Listings (RE/MAX)</h2>
             </div>
             {!iframeError ? (
-              <div className="w-full max-w-[1200px] mx-auto rounded-[16px] overflow-hidden border-2 border-primary/30 bg-white">
+              <div className="w-full max-w-[1200px] mx-auto rounded-[16px] overflow-hidden border-2 border-primary/30 bg-background">
                 <iframe id="cliftonpark-listings-iframe" title="Clifton Park Home Search" src={cliftonParkData.remaxSearchUrl} loading="lazy" className="w-full h-[800px] md:h-[1100px] block border-0" onError={() => setIframeError(true)} />
               </div>
             ) : (

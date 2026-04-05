@@ -678,7 +678,7 @@ const AppleTownTemplate = ({
                 ? ((REGIONAL_AVG_DOM - townMarketData.avg_days_on_market) / REGIONAL_AVG_DOM * 100) 
                 : 0;
               const marketScore = ppsfDiff < 0 ? 'Value Zone' : ppsfDiff > 15 ? 'Premium Market' : 'Market Rate';
-              const marketColor = ppsfDiff < 0 ? 'bg-primary/20 text-primary' : ppsfDiff > 15 ? 'bg-amber-500/20 text-amber-400' : 'bg-blue-500/20 text-blue-400';
+              const marketColor = ppsfDiff < 0 ? 'bg-primary/20 text-primary' : ppsfDiff > 15 ? 'bg-amber-500/20 text-amber-400' : 'bg-accent/20 text-blue-400';
               
               return (
                 <div className="flex items-center gap-3">

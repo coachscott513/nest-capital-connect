@@ -244,7 +244,7 @@ Host: ${baseUrl}`;
                       <span className={`px-2 py-1 rounded text-xs font-medium ${
                         issue.priority === 'high' ? 'bg-red-100 text-red-800' :
                         issue.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-blue-100 text-blue-800'
+                        'bg-accent/15 text-blue-800'
                       }`}>
                         {issue.priority.toUpperCase()}
                       </span>
@@ -279,9 +279,9 @@ Host: ${baseUrl}`;
                             <div key={town.slug} className="flex justify-between">
                               <span>{town.name}</span>
                               <span className={`px-1 rounded text-xs ${
-                                town.priority === 'high' ? 'bg-green-100 text-green-800' :
+                                town.priority === 'high' ? 'bg-emerald/15 text-green-800' :
                                 town.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                                'bg-gray-100 text-gray-800'
+                                'bg-secondary text-foreground'
                               }`}>
                                 {town.priority}
                               </span>

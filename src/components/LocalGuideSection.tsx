@@ -184,7 +184,7 @@ const BusinessCard = ({
               {business.phone && (
                 <Button 
                   size="sm" 
-                  className="h-9 flex-1 bg-[#00F5FF] hover:bg-[#00F5FF]/90 text-black font-medium"
+                  className="h-9 flex-1 bg-[#00F5FF] hover:bg-[#00F5FF]/90 text-foreground font-medium"
                   asChild
                 >
                   <a href={`tel:${business.phone}`}>
@@ -209,7 +209,7 @@ const BusinessCard = ({
               {business.website && !business.phone && !business.email && (
                 <Button 
                   size="sm" 
-                  className="h-9 w-full bg-[#00F5FF] hover:bg-[#00F5FF]/90 text-black font-medium"
+                  className="h-9 w-full bg-[#00F5FF] hover:bg-[#00F5FF]/90 text-foreground font-medium"
                   asChild
                 >
                   <a href={business.website} target="_blank" rel="noopener noreferrer">
@@ -249,7 +249,7 @@ const BusinessCard = ({
                   href={business.facebook} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-full bg-muted/80 flex items-center justify-center hover:bg-blue-500/20 hover:text-blue-400 transition-colors"
+                  className="w-8 h-8 rounded-full bg-muted/80 flex items-center justify-center hover:bg-accent/20 hover:text-blue-400 transition-colors"
                   title="Facebook"
                 >
                   <Facebook className="w-4 h-4" />

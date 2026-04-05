@@ -12,7 +12,7 @@ const GASetupGuide = () => {
       description: 'Lead form submissions (Contact, Investment, Rental forms)',
       value: '$100',
       priority: 'High',
-      color: 'bg-green-100 text-green-800',
+      color: 'bg-emerald/15 text-green-800',
     },
     {
       name: 'phone_call_intent',
@@ -20,7 +20,7 @@ const GASetupGuide = () => {
       description: 'Phone number clicks (mobile & desktop)',
       value: '$50',
       priority: 'High',
-      color: 'bg-blue-100 text-blue-800',
+      color: 'bg-accent/15 text-blue-800',
     },
     {
       name: 'email_intent',
@@ -60,7 +60,7 @@ const GASetupGuide = () => {
       description: 'Users spending 60+ seconds on key pages',
       value: '$10',
       priority: 'Medium',
-      color: 'bg-gray-100 text-gray-800',
+      color: 'bg-secondary text-foreground',
     },
   ];
 
@@ -110,10 +110,10 @@ const GASetupGuide = () => {
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        <h1 className="text-3xl font-bold text-foreground mb-4">
           Google Analytics 4 Conversion Tracking Setup
         </h1>
-        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
           Complete guide to set up comprehensive conversion tracking for your real estate website. 
           Track every lead, phone call, and high-value interaction.
         </p>
@@ -133,12 +133,12 @@ const GASetupGuide = () => {
         <CardContent>
           <div className="grid gap-4">
             {keyEvents.map((event, index) => (
-              <div key={index} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+              <div key={index} className="flex items-center justify-between p-4 border rounded-lg hover:bg-secondary">
                 <div className="flex items-center gap-4">
                   <div className="text-primary">{event.icon}</div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">{event.name}</h4>
-                    <p className="text-sm text-gray-600">{event.description}</p>
+                    <h4 className="font-semibold text-foreground">{event.name}</h4>
+                    <p className="text-sm text-muted-foreground">{event.description}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -153,7 +153,7 @@ const GASetupGuide = () => {
 
       {/* Setup Steps */}
       <div className="grid gap-6">
-        <h2 className="text-2xl font-bold text-gray-900">Setup Instructions</h2>
+        <h2 className="text-2xl font-bold text-foreground">Setup Instructions</h2>
         {setupSteps.map((step, index) => (
           <Card key={index}>
             <CardHeader>
@@ -170,7 +170,7 @@ const GASetupGuide = () => {
                 {step.details.map((detail, detailIndex) => (
                   <li key={detailIndex} className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700">{detail}</span>
+                    <span className="text-foreground/80">{detail}</span>
                   </li>
                 ))}
               </ul>
@@ -186,7 +186,7 @@ const GASetupGuide = () => {
           <CardDescription>Add this code to your website's head section</CardDescription>
         </CardHeader>
         <CardContent>
-          <pre className="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm">
+          <pre className="bg-primary text-green-400 p-4 rounded-lg overflow-x-auto text-sm">
 {`<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
@@ -196,7 +196,7 @@ const GASetupGuide = () => {
   gtag('config', 'G-XXXXXXXXXX');
 </script>`}
           </pre>
-          <p className="text-sm text-gray-600 mt-2">
+          <p className="text-sm text-muted-foreground mt-2">
             Replace 'G-XXXXXXXXXX' with your actual GA4 Measurement ID
           </p>
         </CardContent>
@@ -212,7 +212,7 @@ const GASetupGuide = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <h4 className="font-semibold">Automatic Event Tracking</h4>
-              <ul className="text-sm text-gray-600 space-y-1">
+              <ul className="text-sm text-muted-foreground space-y-1">
                 <li>• Lead form submissions</li>
                 <li>• Phone and email clicks</li>
                 <li>• Document downloads</li>
@@ -221,7 +221,7 @@ const GASetupGuide = () => {
             </div>
             <div className="space-y-2">
               <h4 className="font-semibold">Enhanced Features</h4>
-              <ul className="text-sm text-gray-600 space-y-1">
+              <ul className="text-sm text-muted-foreground space-y-1">
                 <li>• Property inquiry tracking</li>
                 <li>• Location-based segmentation</li>
                 <li>• User engagement metrics</li>
@@ -242,7 +242,7 @@ const GASetupGuide = () => {
           <div className="space-y-4">
             <div>
               <h4 className="font-semibold mb-2">Immediate (0-7 days)</h4>
-              <ul className="text-sm text-gray-600 space-y-1 ml-4">
+              <ul className="text-sm text-muted-foreground space-y-1 ml-4">
                 <li>1. Install GA4 tracking code</li>
                 <li>2. Configure the 7 key events as conversions</li>
                 <li>3. Test tracking with Google Tag Assistant</li>
@@ -252,7 +252,7 @@ const GASetupGuide = () => {
             <Separator />
             <div>
               <h4 className="font-semibold mb-2">Short-term (1-4 weeks)</h4>
-              <ul className="text-sm text-gray-600 space-y-1 ml-4">
+              <ul className="text-sm text-muted-foreground space-y-1 ml-4">
                 <li>• Create custom audiences for remarketing</li>
                 <li>• Set up automated alerts for conversion changes</li>
                 <li>• Build comprehensive lead tracking dashboard</li>
@@ -262,7 +262,7 @@ const GASetupGuide = () => {
             <Separator />
             <div>
               <h4 className="font-semibold mb-2">Long-term (1+ months)</h4>
-              <ul className="text-sm text-gray-600 space-y-1 ml-4">
+              <ul className="text-sm text-muted-foreground space-y-1 ml-4">
                 <li>• Analyze conversion patterns and optimize high-performing pages</li>
                 <li>• A/B test lead forms and call-to-action elements</li>
                 <li>• Create predictive audiences based on engagement patterns</li>

@@ -43,18 +43,18 @@ const DelmarSmartFilters = ({ onFilterChange }: SmartFiltersProps) => {
   };
 
   return (
-    <Card className="border-blue-200 bg-blue-50/50">
+    <Card className="border-accent/20 bg-accent/10/50">
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <Filter className="h-5 w-5 text-blue-600" />
-            <h3 className="text-lg font-semibold text-gray-900">Smart Filters</h3>
+            <Filter className="h-5 w-5 text-accent" />
+            <h3 className="text-lg font-semibold text-foreground">Smart Filters</h3>
           </div>
           <Button
             variant="outline"
             size="sm"
             onClick={handleReset}
-            className="text-gray-600"
+            className="text-muted-foreground"
           >
             <RotateCcw className="h-4 w-4 mr-2" />
             Reset
@@ -64,7 +64,7 @@ const DelmarSmartFilters = ({ onFilterChange }: SmartFiltersProps) => {
         <div className="space-y-6">
           {/* Walkability Score Slider */}
           <div>
-            <Label className="text-sm font-medium text-gray-700 mb-2 block">
+            <Label className="text-sm font-medium text-foreground/80 mb-2 block">
               Walkability Score ≥ {walkScore[0]}
             </Label>
             <Slider
@@ -87,7 +87,7 @@ const DelmarSmartFilters = ({ onFilterChange }: SmartFiltersProps) => {
               />
               <Label
                 htmlFor="bethlehem"
-                className="text-sm font-medium text-gray-700 cursor-pointer"
+                className="text-sm font-medium text-foreground/80 cursor-pointer"
               >
                 Bethlehem Central School District Only
               </Label>
@@ -101,7 +101,7 @@ const DelmarSmartFilters = ({ onFilterChange }: SmartFiltersProps) => {
               />
               <Label
                 htmlFor="googleEarth"
-                className="text-sm font-medium text-gray-700 cursor-pointer"
+                className="text-sm font-medium text-foreground/80 cursor-pointer"
               >
                 Has Google Earth & Street View Links
               </Label>
@@ -115,7 +115,7 @@ const DelmarSmartFilters = ({ onFilterChange }: SmartFiltersProps) => {
               />
               <Label
                 htmlFor="investor"
-                className="text-sm font-medium text-gray-700 cursor-pointer"
+                className="text-sm font-medium text-foreground/80 cursor-pointer"
               >
                 Investor-Ready (Multi-Unit with Cap Rate)
               </Label>
@@ -129,7 +129,7 @@ const DelmarSmartFilters = ({ onFilterChange }: SmartFiltersProps) => {
               />
               <Label
                 htmlFor="railTrail"
-                className="text-sm font-medium text-gray-700 cursor-pointer"
+                className="text-sm font-medium text-foreground/80 cursor-pointer"
               >
                 Within ½ mile of Rail Trail or Four Corners
               </Label>
@@ -138,7 +138,7 @@ const DelmarSmartFilters = ({ onFilterChange }: SmartFiltersProps) => {
 
           <Button
             onClick={handleApplyFilters}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+            className="w-full bg-accent hover:bg-blue-700 text-white"
           >
             Apply Filters
           </Button>

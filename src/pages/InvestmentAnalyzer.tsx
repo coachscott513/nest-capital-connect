@@ -980,13 +980,13 @@ const InvestmentAnalyzer = () => {
                   
                   {isVA && (
                     <>
-                      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                        <p className="text-xs text-blue-600 uppercase tracking-wide mb-1">VA Funding Fee</p>
+                      <div className="bg-accent/10 border border-accent/30 rounded-lg p-4">
+                        <p className="text-xs text-accent uppercase tracking-wide mb-1">VA Funding Fee</p>
                         <p className="text-lg font-semibold text-foreground">{formatCurrency(metrics.vaFundingFee)}</p>
                         <p className="text-xs text-muted-foreground">2.15% financed into loan</p>
                       </div>
-                      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                        <p className="text-xs text-blue-600 uppercase tracking-wide mb-1">Monthly PMI</p>
+                      <div className="bg-accent/10 border border-accent/30 rounded-lg p-4">
+                        <p className="text-xs text-accent uppercase tracking-wide mb-1">Monthly PMI</p>
                         <p className="text-lg font-semibold text-foreground">$0</p>
                         <p className="text-xs text-muted-foreground">No MI with VA loans</p>
                       </div>

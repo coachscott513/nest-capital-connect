@@ -429,7 +429,7 @@ const InteractiveMarketGuide = ({
                 <p className="text-3xl font-bold text-green-600">{marketData.investment.appreciation}%</p>
                 <p className="text-sm text-muted-foreground mt-1">Annual Growth Rate</p>
                 <div className="mt-4">
-                  <Badge variant="secondary" className="bg-green-50 text-green-700">Above Market</Badge>
+                  <Badge variant="secondary" className="bg-emerald/10 text-green-700">Above Market</Badge>
                 </div>
               </CardContent>
             </Card>
@@ -442,7 +442,7 @@ const InteractiveMarketGuide = ({
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold text-blue-600">{marketData.investment.rentalYield}%</p>
+                <p className="text-3xl font-bold text-accent">{marketData.investment.rentalYield}%</p>
                 <p className="text-sm text-muted-foreground mt-1">Gross Rental Yield</p>
                 <div className="mt-4 space-y-2">
                   <div className="flex justify-between text-sm">

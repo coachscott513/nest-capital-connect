@@ -40,32 +40,32 @@ const NeighborhoodsSection = () => {
 
   return (
     <>
-      <section id="neighborhoods" className="py-16 px-4 bg-white text-center">
+      <section id="neighborhoods" className="py-16 px-4 bg-background text-center">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-slate-800">
+          <h2 className="text-4xl font-bold mb-12 text-foreground">
             Explore Capital District Neighborhoods
           </h2>
           <p className="text-lg mb-8 max-w-2xl mx-auto">
-            From the historic charm of <Link to="/towns/albany" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Albany</Link> to the vibrant arts scene of <Link to="/towns/troy" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Troy</Link>, the revitalized energy of <Link to="/towns/schenectady" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Schenectady</Link>, and the elegant allure of <Link to="/towns/saratoga-springs" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">Saratoga Springs</Link>, we provide both <Link to="/rentals" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">rental opportunities</Link> and <Link to="/#investment-properties" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">investment properties</Link> across the Capital District.
+            From the historic charm of <Link to="/towns/albany" className="text-accent hover:text-blue-800 hover:underline transition-colors">Albany</Link> to the vibrant arts scene of <Link to="/towns/troy" className="text-accent hover:text-blue-800 hover:underline transition-colors">Troy</Link>, the revitalized energy of <Link to="/towns/schenectady" className="text-accent hover:text-blue-800 hover:underline transition-colors">Schenectady</Link>, and the elegant allure of <Link to="/towns/saratoga-springs" className="text-accent hover:text-blue-800 hover:underline transition-colors">Saratoga Springs</Link>, we provide both <Link to="/rentals" className="text-accent hover:text-blue-800 hover:underline transition-colors">rental opportunities</Link> and <Link to="/#investment-properties" className="text-accent hover:text-blue-800 hover:underline transition-colors">investment properties</Link> across the Capital District.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {neighborhoods.map((neighborhood, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                <h3 className="text-xl font-semibold mb-2 text-slate-800">
+              <div key={index} className="bg-background p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <h3 className="text-xl font-semibold mb-2 text-foreground">
                   {neighborhood.name}
                 </h3>
-                <p className="text-slate-600 mb-4">
+                <p className="text-muted-foreground mb-4">
                   {neighborhood.description}
                 </p>
                 {neighborhood.url ? (
                   <button 
                     onClick={() => handleGatedClick(neighborhood.url)}
-                    className="text-blue-500 hover:text-blue-600 hover:underline transition-colors"
+                    className="text-accent hover:text-accent hover:underline transition-colors"
                   >
                     {neighborhood.link}
                   </button>
                 ) : (
-                  <button className="text-blue-500 hover:text-blue-600 hover:underline transition-colors">
+                  <button className="text-accent hover:text-accent hover:underline transition-colors">
                     {neighborhood.link}
                   </button>
                 )}

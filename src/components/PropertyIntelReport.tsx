@@ -129,7 +129,7 @@ const PropertyIntelReport = ({
         {!isUnlocked && (
           <section className="py-24 md:py-32 text-center bg-report-section-dark">
             <div className="container mx-auto px-4 max-w-xl">
-              <div className="w-20 h-20 rounded-3xl bg-white/10 flex items-center justify-center mx-auto mb-8">
+              <div className="w-20 h-20 rounded-3xl bg-background/10 flex items-center justify-center mx-auto mb-8">
                 <svg
                   className="w-9 h-9 text-white/60"
                   fill="none"
@@ -155,7 +155,7 @@ const PropertyIntelReport = ({
               </p>
               <button
                 onClick={handleUnlockClick}
-                className="bg-white text-report-section-dark px-10 py-4 rounded-full font-medium hover:bg-white/90 transition-all shadow-lg shadow-black/20"
+                className="bg-background text-report-section-dark px-10 py-4 rounded-full font-medium hover:bg-background/90 transition-all shadow-lg shadow-black/20"
               >
                 Request Full Property Intelligence
               </button>

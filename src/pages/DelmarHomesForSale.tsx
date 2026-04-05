@@ -142,7 +142,7 @@ const DelmarHomesForSale = () => {
 
             {/* RE/MAX Embed - Responsive with branded styling */}
             <div
-              className="w-full max-w-[980px] mx-auto rounded-[18px] overflow-hidden border-2 border-primary bg-white"
+              className="w-full max-w-[980px] mx-auto rounded-[18px] overflow-hidden border-2 border-primary bg-background"
               style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
             >
               <iframe

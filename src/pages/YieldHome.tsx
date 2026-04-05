@@ -332,7 +332,7 @@ const YieldHome = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black border-t border-border px-6 py-12">
+      <footer className="bg-primary border-t border-border px-6 py-12">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>

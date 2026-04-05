@@ -349,7 +349,7 @@ const BlogPost = () => {
               </Link>
               
               <div className="mb-6">
-                <Badge className="mb-4 bg-white/20 text-white border-white/30">{post.category}</Badge>
+                <Badge className="mb-4 bg-background/20 text-white border-white/30">{post.category}</Badge>
                 <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-4">
                   {post.title}
                 </h1>
@@ -370,7 +370,7 @@ const BlogPost = () => {
                     <Clock className="w-4 h-4" />
                     <span>{post.readTime}</span>
                   </div>
-                  <Button variant="outline" size="sm" className="text-white border-white/30 hover:bg-white hover:text-primary">
+                  <Button variant="outline" size="sm" className="text-white border-white/30 hover:bg-background hover:text-primary">
                     <Share2 className="w-4 h-4 mr-2" />
                     Share
                   </Button>
@@ -455,10 +455,10 @@ const BlogPost = () => {
                     Get personalized investment advice and access to off-market deals in the Capital District.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button size="lg" className="bg-white text-primary hover:bg-white/90" asChild>
+                    <Button size="lg" className="bg-background text-primary hover:bg-background/90" asChild>
                       <a href="tel:+15186762347">Schedule Consultation</a>
                     </Button>
-                    <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
+                    <Button size="lg" variant="outline" className="border-white text-white hover:bg-background hover:text-primary">
                       View Current Deals
                     </Button>
                   </div>

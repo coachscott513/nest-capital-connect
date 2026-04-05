@@ -148,7 +148,7 @@ const QuickMatchForm = ({ townName, className = "", onSuccess }: QuickMatchFormP
             value={formData.searchIntent}
             onValueChange={(value) => setFormData(prev => ({ ...prev, searchIntent: value }))}
           >
-            <SelectTrigger className="h-12 bg-white/5 border-white/10 focus:border-primary">
+            <SelectTrigger className="h-12 bg-background/5 border-white/10 focus:border-primary">
               <SelectValue placeholder="Select your search type" />
             </SelectTrigger>
             <SelectContent>
@@ -178,7 +178,7 @@ const QuickMatchForm = ({ townName, className = "", onSuccess }: QuickMatchFormP
             placeholder="First name is fine"
             value={formData.name}
             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-            className="h-12 bg-white/5 border-white/10 focus:border-primary"
+            className="h-12 bg-background/5 border-white/10 focus:border-primary"
             required
           />
         </div>
@@ -192,7 +192,7 @@ const QuickMatchForm = ({ townName, className = "", onSuccess }: QuickMatchFormP
               placeholder="you@email.com"
               value={formData.email}
               onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-              className="h-12 bg-white/5 border-white/10 focus:border-primary"
+              className="h-12 bg-background/5 border-white/10 focus:border-primary"
               required
             />
           </div>
@@ -203,7 +203,7 @@ const QuickMatchForm = ({ townName, className = "", onSuccess }: QuickMatchFormP
               placeholder="(518) 555-0000"
               value={formData.phone}
               onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-              className="h-12 bg-white/5 border-white/10 focus:border-primary"
+              className="h-12 bg-background/5 border-white/10 focus:border-primary"
             />
           </div>
         </div>
@@ -216,7 +216,7 @@ const QuickMatchForm = ({ townName, className = "", onSuccess }: QuickMatchFormP
             placeholder="e.g., 3+ beds, under $400K, near Delmar"
             value={formData.additionalInfo}
             onChange={(e) => setFormData(prev => ({ ...prev, additionalInfo: e.target.value }))}
-            className="h-12 bg-white/5 border-white/10 focus:border-primary"
+            className="h-12 bg-background/5 border-white/10 focus:border-primary"
           />
         </div>
 
