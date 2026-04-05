@@ -301,6 +301,13 @@ const BlogArticle = () => {
         title={`${article.title} | Capital District Nest`}
         description={article.subtitle}
         keywords="Capital District real estate, market forecast, investment properties, Albany NY, Troy NY"
+        ogType="article"
+        structuredData={buildArticleSchema({
+          title: article.title,
+          description: article.subtitle,
+          slug: article.slug,
+          publishedAt: article.publishedAt || new Date().toISOString(),
+        })}
       />
 
       {/* WSJ-Style Article Layout */}

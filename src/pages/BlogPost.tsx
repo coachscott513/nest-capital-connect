@@ -335,7 +335,15 @@ const BlogPost = () => {
         title={`${post.title} | Capital District Nest Blog`}
         description={post.excerpt}
         keywords={post.tags.join(', ')}
-        canonical={`https://your-domain.com/blog/${post.slug}`}
+        canonical={`https://www.capitaldistrictnest.com/blog/${post.slug}`}
+        ogType="article"
+        structuredData={buildArticleSchema({
+          title: post.title,
+          description: post.excerpt,
+          slug: post.slug,
+          publishedAt: post.publishedAt || new Date().toISOString(),
+          image: post.image,
+        })}
       />
       
       <MainLayout>
