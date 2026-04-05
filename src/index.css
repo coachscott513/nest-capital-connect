@@ -7,134 +7,83 @@
 
 @layer base {
   :root {
-    /* ============= DEEP SPACE DARK MODE - Wall Street meets Apple ============= */
-    /* Rich charcoal, not pure black */
-    --background: 0 0% 2%;
-    --foreground: 0 0% 100%;
+    /* ============= BRIGHT APPLE MODE - Premium & Clean ============= */
+    --background: 0 0% 100%;
+    --foreground: 220 15% 15%;
 
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
+    --card: 220 10% 97%;
+    --card-foreground: 220 15% 15%;
 
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
 
-    /* Teal Glow accent - high-end Bloomberg terminal feel */
-    --primary: 185 100% 50%;
-    --primary-foreground: 0 0% 0%;
+    /* Refined teal accent - calm and premium */
+    --primary: 185 72% 42%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 220 10% 95%;
+    --secondary-foreground: 220 15% 25%;
 
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 53%;
+    --muted: 220 10% 95%;
+    --muted-foreground: 220 10% 46%;
 
-    --accent: 185 100% 50%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 185 72% 42%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 185 100% 50%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 185 72% 42%;
 
     --radius: 0.75rem;
 
-    --surface: 0 0% 6%;
-    --text-muted: 0 0% 53%;
-    
-    /* Deep Space specific tokens */
-    --slate-deep: 0 0% 2%;
-    --silver: 0 0% 53%;
-    --charcoal: 0 0% 5%;
-    
-    /* Liquid Glass tokens for dark mode */
-    --glass-bg: 0 0% 100% / 0.05;
-    --glass-border: 0 0% 100% / 0.1;
-    --glass-shadow: 0 0% 0% / 0.5;
-    --glass-blur: 25px;
-    
-    /* Teal Glow accent for yields and CTAs */
-    --teal-glow: 185 100% 50%;
-    --teal-glow-muted: 185 80% 40%;
+    --surface: 220 10% 98%;
+    --text-muted: 220 10% 46%;
 
-    /* Amber/Gold accent for deals and investment metrics */
+    /* Glass tokens for light mode */
+    --glass-bg: 0 0% 100% / 0.8;
+    --glass-border: 220 13% 91%;
+    --glass-shadow: 220 10% 50% / 0.08;
+    --glass-blur: 20px;
+
+    /* Accent tokens */
+    --teal-glow: 185 72% 42%;
+    --teal-glow-muted: 185 50% 55%;
+
     --amber: 38 92% 50%;
     --amber-foreground: 0 0% 0%;
-    --amber-muted: 38 80% 40%;
+    --amber-muted: 38 70% 55%;
     --emerald: 160 84% 39%;
-    --emerald-muted: 160 60% 30%;
+    --emerald-muted: 160 50% 50%;
 
-    /* Report tokens - dark theme */
-    --report-bg: 0 0% 4%;
-    --report-card: 0 0% 7%;
-    --report-card-alt: 0 0% 10%;
-    --report-border: 0 0% 18%;
-    --report-text-headline: 0 0% 100%;
-    --report-text-body: 0 0% 85%;
-    --report-text-muted: 0 0% 53%;
-    --report-fg: 0 0% 100%;
-    --report-muted: 0 0% 53%;
-    --report-section-dark: 0 0% 3%;
-    --report-section-light: 0 0% 8%;
-    --report-section-muted: 0 0% 12%;
-    --report-accent: 185 100% 50%;
+    /* Report tokens */
+    --report-bg: 0 0% 100%;
+    --report-card: 220 10% 97%;
+    --report-card-alt: 220 10% 95%;
+    --report-border: 220 13% 91%;
+    --report-text-headline: 220 15% 15%;
+    --report-text-body: 220 10% 30%;
+    --report-text-muted: 220 10% 46%;
+    --report-fg: 220 15% 15%;
+    --report-muted: 220 10% 46%;
+    --report-section-dark: 220 10% 97%;
+    --report-section-light: 220 10% 99%;
+    --report-section-muted: 220 10% 95%;
+    --report-accent: 185 72% 42%;
     --report-success: 160 70% 40%;
     --report-warning: 38 92% 50%;
-    --report-hero-bg: 0 0% 3%;
- 
-    --sidebar-background: 0 0% 3%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 185 100% 50%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: 185 100% 50%;
-  }
-
-  /* Light mode override if needed */
-  .light {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 11%;
-
-    --card: 0 0% 97%;
-    --card-foreground: 0 0% 11%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 11%;
-
-    --primary: 160 84% 39%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 11%;
-
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-
-    --accent: 160 84% 39%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 160 84% 39%;
-    
-    --glass-bg: 0 0% 100% / 0.72;
-    --glass-border: 0 0% 0% / 0.08;
-    --glass-shadow: 0 0% 0% / 0.08;
+    --report-hero-bg: 220 10% 97%;
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 0 0% 11%;
-    --sidebar-primary: 160 84% 39%;
+    --sidebar-foreground: 220 15% 15%;
+    --sidebar-primary: 185 72% 42%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 11%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 160 84% 39%;
+    --sidebar-accent: 220 10% 95%;
+    --sidebar-accent-foreground: 220 15% 25%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 185 72% 42%;
   }
 }
 
@@ -143,222 +92,176 @@
     @apply border-border;
   }
 
-  /* FORCE DEEP SPACE - Hard Reset */
   html {
-    background-color: #0B0B0B !important;
-    color-scheme: dark;
+    background-color: #ffffff;
+    color-scheme: light;
   }
 
   body {
     @apply bg-background text-foreground font-manrope antialiased;
-    background-color: #0B0B0B !important;
+    background-color: #ffffff;
     min-height: 100vh;
   }
 
   #root {
-    background-color: #0B0B0B;
+    background-color: #ffffff;
     min-height: 100vh;
   }
 
-  /* Prevent white flash on page load */
   .min-h-screen {
-    background-color: hsl(var(--background)) !important;
+    background-color: hsl(var(--background));
   }
 }
 
 @layer utilities {
   .hero-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(185 100% 40%) 100%);
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(185 60% 50%) 100%);
   }
   
-  /* ============= GLOBAL LIQUID GLASS SYSTEM - Silicon Valley Premium ============= */
-  
-  /* Main page container overlay for deep immersion */
+  /* ============= GLASS SYSTEM - Light Mode Premium ============= */
   .liquid-glass-container {
     position: relative;
   }
   
-  .liquid-glass-container::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    z-index: -1;
-    pointer-events: none;
-  }
-  
-  /* Standard Glass - Primary blur layer */
   .glass {
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(30px) saturate(200%);
-    -webkit-backdrop-filter: blur(30px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
-  
-  /* Strong Glass - For primary feature areas */
-  .glass-strong {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(50px) saturate(220%);
-    -webkit-backdrop-filter: blur(50px) saturate(220%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.12),
-                inset 0 0 0 0.5px rgba(255, 255, 255, 0.08);
-  }
-  
-  /* Glass Card - For content cards with deep blur */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
-                0 2px 8px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
-  
-  /* Glass Navigation - Floating header/footer with blur */
-  .glass-nav {
-    background: rgba(0, 0, 0, 0.7) !important;
-    backdrop-filter: blur(40px) saturate(200%);
-    -webkit-backdrop-filter: blur(40px) saturate(200%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
-  }
-  
-  /* Glass Footer - Sticky with blur */
-  .glass-footer {
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  /* ============= BENTO CARDS - Deep Glass 24px Radius with Blur ============= */
-  .bento-card {
-    background: rgba(255, 255, 255, 0.04);
+    background: hsla(0, 0%, 100%, 0.72);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-radius: 1.5rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
-                0 16px 64px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                box-shadow 0.5s ease,
-                border-color 0.3s ease,
-                background 0.3s ease;
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 1px 3px hsla(220, 10%, 50%, 0.06);
+  }
+  
+  .glass-strong {
+    background: hsla(0, 0%, 100%, 0.85);
+    backdrop-filter: blur(30px) saturate(200%);
+    -webkit-backdrop-filter: blur(30px) saturate(200%);
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 4px 16px hsla(220, 10%, 50%, 0.08);
+  }
+  
+  .glass-card {
+    background: hsla(0, 0%, 100%, 0.65);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 2px 8px hsla(220, 10%, 50%, 0.06);
+  }
+  
+  .glass-nav {
+    background: hsla(0, 0%, 100%, 0.85) !important;
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border-bottom: 1px solid hsl(var(--border));
+    box-shadow: 0 1px 3px hsla(220, 10%, 50%, 0.06);
+  }
+  
+  .glass-footer {
+    background: hsla(220, 15%, 15%, 1);
+    border-top: 1px solid hsla(220, 10%, 25%, 1);
+  }
+  
+  /* ============= CARDS - Clean & Premium ============= */
+  .bento-card {
+    background: hsl(var(--card));
+    border-radius: 1.25rem;
+    box-shadow: 0 1px 3px hsla(220, 10%, 50%, 0.06),
+                0 4px 16px hsla(220, 10%, 50%, 0.04);
+    border: 1px solid hsl(var(--border));
+    transition: transform 0.3s ease, 
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
   }
   
   .bento-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6),
-                0 24px 80px rgba(0, 0, 0, 0.5),
-                0 0 60px rgba(0, 245, 255, 0.15);
-    border-color: rgba(0, 245, 255, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px hsla(220, 10%, 50%, 0.1),
+                0 12px 32px hsla(220, 10%, 50%, 0.06);
+    border-color: hsl(var(--primary) / 0.3);
   }
   
-  /* Apple-style card - Premium glass */
   .apple-card {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-radius: 1.5rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
-                0 16px 48px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: hsl(var(--card));
+    border-radius: 1.25rem;
+    box-shadow: 0 1px 3px hsla(220, 10%, 50%, 0.06),
+                0 4px 16px hsla(220, 10%, 50%, 0.04);
+    border: 1px solid hsl(var(--border));
   }
   
   .apple-card:hover {
-    background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6),
-                0 24px 64px rgba(0, 0, 0, 0.5);
-    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 16px hsla(220, 10%, 50%, 0.1),
+                0 12px 32px hsla(220, 10%, 50%, 0.06);
+    border-color: hsl(var(--primary) / 0.2);
   }
   
-  /* Obsidian Glass - Deep black translucent */
   .glass-obsidian {
-    background: rgba(0, 0, 0, 0.75);
+    background: hsla(220, 15%, 15%, 0.95);
     backdrop-filter: blur(40px) saturate(200%);
     -webkit-backdrop-filter: blur(40px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid hsla(220, 10%, 25%, 1);
   }
   
-  /* Hero Glass Overlay - For hero sections with blurred backgrounds */
   .glass-hero-overlay {
-    background: rgba(0, 0, 0, 0.5);
+    background: hsla(0, 0%, 100%, 0.6);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
   
-  /* ============= PREMIUM HOVER LIFT ============= */
+  /* ============= HOVER LIFT ============= */
   .hover-lift {
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                box-shadow 0.5s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
   .hover-lift:hover {
-    transform: translateY(-6px) scale(1.02);
+    transform: translateY(-4px);
   }
   
-  /* ============= TYPOGRAPHY - Extra Light Headlines ============= */
+  /* ============= TYPOGRAPHY ============= */
   .headline-hero {
-    font-weight: 200;
-    font-size: 5.25rem;
-    line-height: 1.05;
+    font-weight: 700;
+    font-size: 4.5rem;
+    line-height: 1.08;
     letter-spacing: -0.03em;
+    color: hsl(var(--foreground));
   }
   
   @media (max-width: 768px) {
     .headline-hero {
-      font-size: 3rem;
-      font-weight: 300;
+      font-size: 2.75rem;
+      font-weight: 700;
     }
   }
   
-  /* Market Pulse Title - Institutional 4rem */
   .market-pulse-title {
-    font-weight: 100;
-    font-size: 4rem;
-    line-height: 1.1;
+    font-weight: 600;
+    font-size: 3rem;
+    line-height: 1.15;
   }
   
-  /* Market Pulse Cinematic - Massive Scale */
   .market-pulse-cinematic {
-    font-weight: 100;
-    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: 600;
+    font-size: clamp(2.5rem, 8vw, 5rem);
     line-height: 1.1;
-    letter-spacing: 0.8em;
+    letter-spacing: -0.02em;
   }
   
-  /* Market Pulse Ultra - 10vw Dynamic Scaling for Cinematic Impact */
   .market-pulse-ultra {
-    font-weight: 100;
-    font-size: 10vw;
+    font-weight: 700;
+    font-size: 8vw;
     line-height: 1.1;
-    letter-spacing: 0.8em;
+    letter-spacing: -0.02em;
   }
   
   @media (max-width: 768px) {
     .market-pulse-title {
       font-size: 2rem;
-      letter-spacing: 0.3em;
     }
     
     .market-pulse-cinematic {
       font-size: clamp(1.5rem, 8vw, 3rem);
-      letter-spacing: 0.3em;
     }
     
     .market-pulse-ultra {
       font-size: 10vw;
-      letter-spacing: 0.3em;
     }
   }
   
@@ -367,84 +270,73 @@
     letter-spacing: 0.01em;
   }
   
-  /* Teal Glow text gradient for yields and CTAs */
+  /* Premium text gradient */
   .text-gradient-premium {
-    background: linear-gradient(135deg, hsl(185 100% 50%) 0%, hsl(185 100% 70%) 100%);
+    background: linear-gradient(135deg, hsl(185 72% 42%) 0%, hsl(185 60% 55%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   
-  /* Neon Glow effect for yield numbers */
   .glow-primary {
-    box-shadow: 0 0 20px hsla(185 100% 50% / 0.4),
-                0 0 60px hsla(185 100% 50% / 0.2),
-                0 0 100px hsla(185 100% 50% / 0.1);
+    box-shadow: 0 4px 16px hsla(185, 72%, 42%, 0.15);
   }
   
   .glow-subtle {
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 16px hsla(220, 10%, 50%, 0.08);
   }
   
-  /* Teal glow for numbers and percentages */
   .text-glow {
-    text-shadow: 0 0 20px hsla(185 100% 50% / 0.6),
-                 0 0 40px hsla(185 100% 50% / 0.4),
-                 0 0 60px hsla(185 100% 50% / 0.2);
+    /* No glow in light mode — clean look */
   }
   
   /* ============= TOWN CARDS ============= */
-  /* Heavy overlay to mask placeholder images until official landmarks are uploaded */
   .town-card-overlay {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.9) 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.7) 100%);
   }
   
-  /* Nest Score badge - teal glow */
   .nest-badge {
-    background: rgba(0, 245, 255, 0.2);
+    background: hsla(185, 72%, 42%, 0.1);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 0.375rem 1rem;
     border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 600;
-    color: hsl(185 100% 50%);
-    border: 1px solid rgba(0, 245, 255, 0.3);
-    text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+    color: hsl(185 72% 35%);
+    border: 1px solid hsla(185, 72%, 42%, 0.2);
   }
   
-  /* ============= CIRCULAR GAUGES - Neon Style ============= */
+  /* ============= GAUGES ============= */
   .gauge-ring {
     stroke-linecap: round;
     transition: stroke-dashoffset 1s ease-out;
-    filter: drop-shadow(0 0 8px hsla(185 100% 50% / 0.5));
   }
   
-  /* ============= IMMENSE SPACING - 120px+ ============= */
+  /* ============= SPACING ============= */
   .section-massive {
-    padding-top: 7.5rem;
-    padding-bottom: 7.5rem;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
   }
   
   @media (min-width: 768px) {
     .section-massive {
-      padding-top: 10rem;
-      padding-bottom: 10rem;
+      padding-top: 8rem;
+      padding-bottom: 8rem;
     }
   }
   
-  /* ============= SPOTLIGHT EFFECT for portraits ============= */
+  /* ============= SPOTLIGHT ============= */
   .spotlight {
     position: relative;
-    isolation: isolate; /* ensures glow sits behind content, not over it */
+    isolation: isolate;
   }
 
-  /* Keep the halo BEHIND images/text (prevents "blurry" logos) */
   .spotlight::after {
     content: '';
     position: absolute;
     inset: -20%;
-    background: radial-gradient(circle at center, rgba(0, 245, 255, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle at center, hsla(185, 72%, 42%, 0.08) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
   }
@@ -465,63 +357,42 @@
   animation: ticker 30s linear infinite;
 }
 
-/* ============= BREATHING LINE ANIMATION - Premium Pulse ============= */
+/* Breathing animation */
 @keyframes breathe {
-  0%, 100% { 
-    opacity: 0.2;
-    filter: drop-shadow(0 0 4px hsl(185 100% 50% / 0.3));
-  }
-  50% { 
-    opacity: 1;
-    filter: drop-shadow(0 0 20px hsl(185 100% 50% / 0.8));
-  }
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
 }
 
-/* 4-second cinematic breathing for active intelligence signal */
 @keyframes breathe-cinematic {
-  0%, 100% { 
-    opacity: 0.2;
-    filter: drop-shadow(0 0 4px hsl(185 100% 50% / 0.2));
-  }
-  50% { 
-    opacity: 1;
-    filter: drop-shadow(0 0 30px hsl(185 100% 50% / 1));
-  }
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
 }
 
 .animate-breathe {
   animation: breathe 3s ease-in-out infinite;
 }
 
-/* Standard Breathing Line */
 .breathing-line {
-  background: linear-gradient(to bottom, hsl(185 100% 50%) 0%, hsl(185 100% 50% / 0.3) 100%);
+  background: linear-gradient(to bottom, hsl(185 72% 42%) 0%, hsl(185 72% 42% / 0.2) 100%);
   animation: breathe 3s ease-in-out infinite;
 }
 
-/* Cinematic Breathing Line for Market Pulse - 4 second pulse */
 .breathing-line-cinematic {
-  background: linear-gradient(to bottom, hsl(185 100% 50%) 0%, hsl(185 100% 50% / 0.1) 100%);
+  background: linear-gradient(to bottom, hsl(185 72% 42%) 0%, hsl(185 72% 42% / 0.1) 100%);
   animation: breathe-cinematic 4s ease-in-out infinite;
 }
 
-/* ============= PULSE RING ANIMATION ============= */
+/* Pulse ring */
 @keyframes pulse-ring {
-  0% { 
-    transform: scale(1); 
-    opacity: 1; 
-  }
-  100% { 
-    transform: scale(2.5); 
-    opacity: 0; 
-  }
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
 }
 
 .animate-pulse-ring {
   animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-/* Scroll Animation (legacy) */
+/* Scroll */
 @keyframes scroll {
   0%, 100% { opacity: 1; transform: translateY(0); }
   50% { opacity: 0.5; transform: translateY(4px); }
@@ -531,7 +402,7 @@
   animation: scroll 1.5s ease-in-out infinite;
 }
 
-/* Hide scrollbar */
+/* Scrollbar hide */
 .scrollbar-hide,
 .hide-scrollbar {
   -ms-overflow-style: none;
@@ -542,7 +413,6 @@
   display: none;
 }
 
-/* ============= CINEMATIC IMAGE FILTER ============= */
 .cinematic-filter {
-  filter: brightness(0.8) contrast(1.1) saturate(0.9);
+  filter: brightness(0.9) contrast(1.05) saturate(0.95);
 }
