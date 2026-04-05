@@ -209,7 +209,7 @@ const BrandHero = () => {
               <div
                 className="absolute rounded-full animate-pulse"
                 style={{
-                  left: '48%',
+                  left: '42%',
                   top: '58%',
                   width: 48,
                   height: 48,
