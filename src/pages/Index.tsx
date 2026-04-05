@@ -1,6 +1,7 @@
 import { ArrowRight, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
+import BrandHero from "@/components/BrandHero";
 import CinematicHero from "@/components/CinematicHero";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
@@ -19,19 +20,13 @@ const Index = () => {
 
       <CleanHeader />
 
-      {/* HERO */}
+      {/* BRAND HERO — identity first */}
+      <BrandHero />
+
+      {/* ANALYZER HERO — product second */}
       <CinematicHero />
 
-      {/* TRUST STRIP — editorial, quiet */}
-      <div className="border-t border-border">
-        <div className="max-w-5xl mx-auto px-6 py-6">
-          <p className="text-center text-sm text-muted-foreground tracking-wide">
-            Property intelligence for buyers, sellers & investors&ensp;·&ensp;Built for the Capital District&ensp;·&ensp;Local insight, premium presentation
-          </p>
-        </div>
-      </div>
-
-      {/* ANALYZER FEATURE SECTION — open layout, no cards */}
+      {/* ANALYZER FEATURE SECTION */}
       <section className="py-28 md:py-36 px-6 bg-background">
         <div className="max-w-4xl mx-auto text-center mb-20">
           <p className="text-xs font-medium text-muted-foreground tracking-[0.2em] uppercase mb-6">Property Intelligence</p>
@@ -43,7 +38,6 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Features as open text blocks, not boxed cards */}
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 mb-20">
           {[
             { title: "Cash Flow & Returns", desc: "Analyze cash flow, cap rate, rent potential, and investment scenarios." },
@@ -67,7 +61,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* TOWNS & MARKETS — cleaner, more spacious */}
+      {/* TOWNS & MARKETS */}
       <section className="py-28 md:py-36 px-6 bg-secondary/40">
         <div className="max-w-5xl mx-auto text-center mb-20">
           <p className="text-xs font-medium text-muted-foreground tracking-[0.2em] uppercase mb-6">Local Coverage</p>
@@ -106,7 +100,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* FIRST-TIME BUYERS — open layout, typographic */}
+      {/* FIRST-TIME BUYERS */}
       <section className="py-28 md:py-36 px-6 bg-background">
         <div className="max-w-3xl mx-auto">
           <p className="text-xs font-medium text-muted-foreground tracking-[0.2em] uppercase mb-6">For Buyers</p>
@@ -125,7 +119,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* SELLERS — different visual: centered, editorial */}
+      {/* SELLERS */}
       <section className="py-28 md:py-36 px-6 bg-secondary/40">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-xs font-medium text-muted-foreground tracking-[0.2em] uppercase mb-6">For Sellers</p>
@@ -152,7 +146,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* INVESTORS — left-aligned, spacious, product-preview feel */}
+      {/* INVESTORS */}
       <section className="py-28 md:py-36 px-6 bg-background">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -179,7 +173,6 @@ const Index = () => {
                 </Link>
               </div>
             </div>
-            {/* Right: subtle stat block */}
             <div className="hidden lg:block">
               <div className="space-y-8">
                 {[
@@ -198,7 +191,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ABOUT / CREDIBILITY — minimal, typographic */}
+      {/* CREDIBILITY */}
       <section className="py-28 md:py-36 px-6 bg-secondary/40">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight mb-8 leading-tight">
@@ -248,6 +241,13 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Powered by line */}
+      <div className="pb-6 text-center">
+        <p className="text-xs text-muted-foreground/50 tracking-wide">
+          Powered by Capital District Nest Property Intelligence
+        </p>
+      </div>
 
       <Footer />
     </div>
