@@ -28,7 +28,10 @@ const Index = () => {
       {/* PROPERTY TYPE BAND — choose your lane */}
       <PropertyTypeBand />
 
-      {/* ANALYZER HERO — product second */}
+      {/* FINANCING BAND — understand your options */}
+      <FinancingBand />
+
+      {/* ANALYZER HERO — product third */}
       <CinematicHero />
 
       {/* ANALYZER FEATURE SECTION */}
