@@ -12,11 +12,11 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Capital District Nest | Modern Real Estate Intelligence"
-        description="Clear data. Local context. Town-by-town real estate intelligence for Albany, Troy, Schenectady, Saratoga, and the Capital District."
-        keywords="Capital District real estate, Albany homes, Troy real estate, Schenectady homes, property intelligence, market data"
-        canonical="https://capitaldistrictnest.com"
-        ogImage="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+        title="Capital District Nest | Albany NY Real Estate Investment Intelligence"
+        description="Albany's hyperlocal real estate platform. Search homes, analyze any property, and track market trends across the Capital District. Updated daily."
+        keywords="Capital District real estate, Albany homes for sale, property analysis Albany NY, real estate investment, Troy real estate, Schenectady homes, Saratoga Springs"
+        canonical="https://www.capitaldistrictnest.com"
+        ogImage="https://www.capitaldistrictnest.com/og-image-capital-district.jpg"
         ogType="website"
       />
 

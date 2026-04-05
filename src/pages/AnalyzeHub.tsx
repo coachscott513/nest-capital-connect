@@ -60,10 +60,10 @@ const AnalyzeHub = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
-        title="Analyze Any Property | Property Intelligence"
-        description="Investment-grade deal analysis for buyers, homeowners, and investors. Break down monthly cost, financing, cash to close, and returns for any property type."
-        keywords="property analyzer, condo analyzer, rental property calculator, multifamily analysis, real estate investment calculator"
-        canonical="https://capitaldistrictnest.com/analyze"
+        title="Analyze Any Property | Free Real Estate Deal Analyzer | Albany NY"
+        description="Free investment property analyzer for Albany and Capital District real estate. Calculate cap rate, cash flow, and ROI in under 60 seconds."
+        keywords="property analyzer, deal analyzer Albany NY, cap rate calculator, cash flow calculator, real estate investment calculator Capital District"
+        canonical="https://www.capitaldistrictnest.com/analyze"
       />
       <CleanHeader />
 

@@ -11,12 +11,12 @@ interface SEOHeadProps {
   ogType?: string;
 }
 
-const BASE_URL = "https://capitaldistrictnest.com";
+const BASE_URL = "https://www.capitaldistrictnest.com";
 
 const SEOHead = ({ 
-  title = "Capital District Nest | The Yield Intelligence Platform",
-  description = "Exclusive 36% Cash-on-Cash property intelligence for NYC and Boston investors. Premium real estate data for Albany, Troy, Schenectady & Saratoga Springs NY.",
-  keywords = "investment properties Albany NY, 36% cash on cash return, NYC investors Albany, Boston investors Capital District, multi-unit properties Troy NY, yield intelligence, real estate investment platform, Capital District nest score",
+  title = "Capital District Nest | Albany NY Real Estate Investment Intelligence",
+  description = "Albany's hyperlocal real estate platform. Search homes, analyze any property, and track market trends across the Capital District. Updated daily.",
+  keywords = "Capital District real estate, Albany homes for sale, property analysis Albany NY, real estate investment Capital District, Troy real estate, Schenectady homes, Saratoga Springs real estate",
   canonical,
   structuredData,
   ogImage = `${BASE_URL}/og-image-capital-district.jpg`,
