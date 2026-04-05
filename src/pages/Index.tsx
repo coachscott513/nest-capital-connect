@@ -24,6 +24,9 @@ const Index = () => {
       {/* BRAND HERO — identity first */}
       <BrandHero />
 
+      {/* PROPERTY TYPE BAND — choose your lane */}
+      <PropertyTypeBand />
+
       {/* ANALYZER HERO — product second */}
       <CinematicHero />
 
