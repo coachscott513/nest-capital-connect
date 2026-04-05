@@ -4,6 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import BrandHero from "@/components/BrandHero";
 import PropertyTypeBand from "@/components/PropertyTypeBand";
 import CinematicHero from "@/components/CinematicHero";
+import FinancingBand from "@/components/FinancingBand";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 
@@ -27,7 +28,10 @@ const Index = () => {
       {/* PROPERTY TYPE BAND — choose your lane */}
       <PropertyTypeBand />
 
-      {/* ANALYZER HERO — product second */}
+      {/* FINANCING BAND — understand your options */}
+      <FinancingBand />
+
+      {/* ANALYZER HERO — product third */}
       <CinematicHero />
 
       {/* ANALYZER FEATURE SECTION */}
