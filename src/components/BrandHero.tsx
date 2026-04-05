@@ -85,7 +85,7 @@ const BrandHero = () => {
             transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="hidden lg:block relative"
           >
-            <div className="relative w-full aspect-square max-w-[520px] mx-auto">
+            <div className="relative w-full aspect-square max-w-[620px] mx-auto">
               {/* Topographic contour rings */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <ellipse cx="48" cy="50" rx="40" ry="38" fill="none" stroke="hsl(var(--border))" strokeWidth="0.3" opacity="0.5" />
