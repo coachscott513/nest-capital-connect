@@ -22,7 +22,7 @@ const HeroSection = () => {
         style={{ backgroundImage: `url(${heroBackground})` }}
         aria-label="Capital District Nest - Albany Real Estate Search"
       >
-        <div className="absolute inset-0 bg-black/60" aria-hidden="true"></div>
+        <div className="absolute inset-0 bg-primary/60" aria-hidden="true"></div>
         
         <div className="relative z-10 max-w-lg mx-auto text-center">
           <h1 className="text-3xl font-bold mb-4 text-white drop-shadow-lg leading-tight">
@@ -47,7 +47,7 @@ const HeroSection = () => {
             </Button>
             <Button 
               size="lg" 
-              className="w-full h-14 text-base font-bold bg-amber-500 hover:bg-amber-600 text-black"
+              className="w-full h-14 text-base font-bold bg-amber-500 hover:bg-amber-600 text-foreground"
               asChild
             >
               <Link to="/vip-buyer-access">
@@ -58,7 +58,7 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="w-full h-14 text-base font-semibold bg-white/10 border-white text-white hover:bg-white/20"
+              className="w-full h-14 text-base font-semibold bg-background/10 border-white text-white hover:bg-background/20"
               asChild
             >
               <a href="tel:+15186762347">
@@ -69,7 +69,7 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="w-full h-14 text-base font-semibold bg-white/10 border-white text-white hover:bg-white/20"
+              className="w-full h-14 text-base font-semibold bg-background/10 border-white text-white hover:bg-background/20"
               asChild
             >
               <a href="sms:+15186762347">
@@ -94,7 +94,7 @@ const HeroSection = () => {
         style={{ backgroundImage: `url(${heroBackground})` }}
         aria-label="Capital District Nest - Albany Real Estate Search"
       >
-        <div className="absolute inset-0 bg-black/55" aria-hidden="true"></div>
+        <div className="absolute inset-0 bg-primary/55" aria-hidden="true"></div>
         
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -125,7 +125,7 @@ const HeroSection = () => {
                 </Button>
                 <Button 
                   size="lg" 
-                  className="h-14 px-8 text-lg font-bold bg-amber-500 hover:bg-amber-600 text-black"
+                  className="h-14 px-8 text-lg font-bold bg-amber-500 hover:bg-amber-600 text-foreground"
                   asChild
                 >
                   <Link to="/vip-buyer-access">
@@ -136,7 +136,7 @@ const HeroSection = () => {
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="h-14 px-8 text-lg font-bold border-white text-white hover:bg-white/20"
+                  className="h-14 px-8 text-lg font-bold border-white text-white hover:bg-background/20"
                   asChild
                 >
                   <Link to="/albany-multi-unit">
@@ -174,7 +174,7 @@ const HeroSection = () => {
             
             {/* Right Visual - Analytics Card */}
             <div className="hidden lg:block">
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-2xl">
+              <div className="bg-background/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-2xl">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                     <BarChart3 className="w-5 h-5 text-primary-foreground" />

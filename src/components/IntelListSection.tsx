@@ -42,14 +42,14 @@ const IntelListSection = () => {
         </p>
 
         {/* Blurred Report Preview */}
-        <div className="relative mb-10 mx-auto max-w-2xl rounded-lg overflow-hidden border border-border">
+        <div className="relative mb-10 mx-auto max-w-2xl rounded-2xl overflow-hidden border border-border">
           <img 
             src={alphaListReport} 
             alt="Investment Report Preview" 
             className="w-full h-auto blur-md opacity-70"
           />
           <div className="absolute inset-0 flex items-center justify-center bg-background/40">
-            <div className="bg-card/90 backdrop-blur-sm px-6 py-4 rounded-lg border border-border">
+            <div className="bg-card/90 backdrop-blur-sm px-6 py-4 rounded-2xl border border-border">
               <p className="text-foreground font-semibold text-lg">
                 🔒 Sign up to unlock the full report
               </p>

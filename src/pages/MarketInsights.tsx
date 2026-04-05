@@ -110,7 +110,7 @@ const MarketInsights = () => {
                 {articles.map((article, index) => (
                   <article 
                     key={article.id} 
-                    className={`py-8 ${index !== articles.length - 1 ? 'border-b border-gray-200' : ''}`}
+                    className={`py-8 ${index !== articles.length - 1 ? 'border-b border-border' : ''}`}
                   >
                     {/* Tag */}
                     <span className="inline-block px-2.5 py-1 text-xs font-semibold tracking-wider text-white bg-primary rounded-sm mb-3">
@@ -118,20 +118,20 @@ const MarketInsights = () => {
                     </span>
                     
                     {/* Headline */}
-                    <h2 className="font-playfair text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-2 hover:text-primary transition-colors cursor-pointer">
+                    <h2 className="font-playfair text-xl md:text-2xl font-bold text-foreground leading-tight mb-2 hover:text-primary transition-colors cursor-pointer">
                       <Link to={`/blog/article/${article.slug}`}>
                         {article.headline}
                       </Link>
                     </h2>
                     
                     {/* Excerpt */}
-                    <p className="text-gray-600 text-base leading-relaxed mb-3 line-clamp-2">
+                    <p className="text-muted-foreground text-base leading-relaxed mb-3 line-clamp-2">
                       {article.excerpt}
                     </p>
                     
                     {/* Meta */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-muted-foreground">
                         {article.date} • By {article.author}
                       </span>
                       <Link 
@@ -151,21 +151,21 @@ const MarketInsights = () => {
             <aside className="hidden lg:block w-80 space-y-8">
               
               {/* Subscribe Box */}
-              <div className="bg-white border border-gray-200 p-6">
+              <div className="bg-background border border-border p-6">
                 <div className="flex items-center gap-2 mb-3">
                   <Mail className="w-5 h-5 text-primary" />
-                  <h3 className="font-playfair text-lg font-bold text-gray-900">
+                  <h3 className="font-playfair text-lg font-bold text-foreground">
                     Get the Daily Hot Sheet
                   </h3>
                 </div>
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-sm text-muted-foreground mb-4">
                   Receive our curated market intel, deal flow, and analysis straight to your inbox.
                 </p>
                 <form className="space-y-3">
                   <Input 
                     type="email" 
                     placeholder="Enter your email"
-                    className="bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-500"
+                    className="bg-secondary border-border text-foreground placeholder:text-muted-foreground"
                   />
                   <Button className="w-full bg-primary hover:bg-primary/90 text-white font-medium">
                     Subscribe
@@ -174,8 +174,8 @@ const MarketInsights = () => {
               </div>
 
               {/* Trending Topics */}
-              <div className="bg-white border border-gray-200 p-6">
-                <h3 className="font-playfair text-lg font-bold text-gray-900 mb-4">
+              <div className="bg-background border border-border p-6">
+                <h3 className="font-playfair text-lg font-bold text-foreground mb-4">
                   Trending Topics
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -183,7 +183,7 @@ const MarketInsights = () => {
                     <Link
                       key={topic.name}
                       to={topic.href}
-                      className="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-primary hover:text-white rounded-sm transition-colors"
+                      className="px-3 py-1.5 text-sm font-medium text-foreground/80 bg-secondary hover:bg-primary hover:text-white rounded-sm transition-colors"
                     >
                       {topic.name}
                     </Link>
@@ -192,28 +192,28 @@ const MarketInsights = () => {
               </div>
 
               {/* Quick Links */}
-              <div className="bg-white border border-gray-200 p-6">
-                <h3 className="font-playfair text-lg font-bold text-gray-900 mb-4">
+              <div className="bg-background border border-border p-6">
+                <h3 className="font-playfair text-lg font-bold text-foreground mb-4">
                   Quick Links
                 </h3>
                 <ul className="space-y-2">
                   <li>
-                    <Link to="/markets" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                    <Link to="/markets" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                       → All Markets
                     </Link>
                   </li>
                   <li>
-                    <Link to="/strategy/multi-family" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                    <Link to="/strategy/multi-family" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                       → Multi-Family Strategy
                     </Link>
                   </li>
                   <li>
-                    <Link to="/cash-flow-report" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                    <Link to="/cash-flow-report" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                       → Request Cash Flow Report
                     </Link>
                   </li>
                   <li>
-                    <Link to="/grants" className="text-sm text-gray-600 hover:text-primary transition-colors">
+                    <Link to="/grants" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                       → Grant Programs
                     </Link>
                   </li>

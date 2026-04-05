@@ -147,7 +147,7 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
             </a>
             <a
               href={`sms:+15186718048?body=${encodeURIComponent(`Hi Scott, please analyze: ${keyword || "(paste address here)"}`)}`}
-              className="flex items-center justify-center gap-3 h-14 bg-blue-600 hover:bg-blue-700 text-white font-bold text-base rounded-md transition-colors"
+              className="flex items-center justify-center gap-3 h-14 bg-accent hover:bg-blue-700 text-white font-bold text-base rounded-md transition-colors"
             >
               <MessageSquare className="w-5 h-5" />
               Text My Report

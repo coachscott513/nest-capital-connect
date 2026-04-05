@@ -45,7 +45,7 @@ const InteractivePropertyMap = ({ properties }: InteractivePropertyMapProps) => 
   };
 
   return (
-    <Card className="overflow-hidden border-gray-200">
+    <Card className="overflow-hidden border-border">
       {/* Map Preview - Click to view in Google Maps */}
       <div 
         className="h-96 bg-gradient-to-br from-blue-100 via-gray-100 to-green-50 relative cursor-pointer group overflow-hidden"
@@ -55,7 +55,7 @@ const InteractivePropertyMap = ({ properties }: InteractivePropertyMapProps) => 
         <div className="absolute inset-0 opacity-20">
           <div className="grid grid-cols-8 grid-rows-8 h-full w-full">
             {Array.from({ length: 64 }).map((_, i) => (
-              <div key={i} className="border border-gray-300" />
+              <div key={i} className="border border-border" />
             ))}
           </div>
         </div>
@@ -78,15 +78,15 @@ const InteractivePropertyMap = ({ properties }: InteractivePropertyMapProps) => 
         
         {/* Overlay with property count */}
         <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-          <Badge className="bg-white text-gray-900 shadow-lg">
+          <Badge className="bg-background text-foreground shadow-lg">
             <MapPin className="w-3 h-3 mr-1" />
             {properties.length} properties
           </Badge>
         </div>
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-          <div className="bg-white px-6 py-3 rounded-lg shadow-xl flex items-center gap-2">
+        <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+          <div className="bg-background px-6 py-3 rounded-2xl shadow-xl flex items-center gap-2">
             <ExternalLink className="w-4 h-4" />
             <span className="font-semibold">Open in Google Maps</span>
           </div>
@@ -95,29 +95,29 @@ const InteractivePropertyMap = ({ properties }: InteractivePropertyMapProps) => 
 
       {/* Property List */}
       <div className="p-4 max-h-96 overflow-y-auto">
-        <h4 className="font-semibold text-gray-900 mb-3">Property Locations</h4>
+        <h4 className="font-semibold text-foreground mb-3">Property Locations</h4>
         <div className="space-y-3">
           {properties.map((property, index) => (
             <div 
               key={property.id}
-              className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+              className="flex items-start gap-3 p-3 rounded-lg hover:bg-secondary transition-colors cursor-pointer"
               onClick={() => openGoogleEarth(property.latitude, property.longitude)}
             >
               <div className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
                 {index + 1}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-semibold text-gray-900 truncate">
+                <div className="text-sm font-semibold text-foreground truncate">
                   {property.address.split(",")[0]}
                 </div>
                 <div className="text-sm text-red-600 font-bold">
                   {formatPrice(property.price)}
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-muted-foreground">
                   {property.beds} bd • {property.baths} ba • {property.sqft.toLocaleString()} sqft
                 </div>
               </div>
-              <ExternalLink className="w-4 h-4 text-gray-400 flex-shrink-0" />
+              <ExternalLink className="w-4 h-4 text-muted-foreground flex-shrink-0" />
             </div>
           ))}
         </div>

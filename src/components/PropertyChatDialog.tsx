@@ -85,7 +85,7 @@ const PropertyChatDialog = ({ children, propertyAddress, propertyUrl }: Property
         </DialogHeader>
         
         {/* Property Context */}
-        <div className="bg-muted/50 rounded-lg p-3 border border-border">
+        <div className="bg-muted/50 rounded-2xl p-3 border border-border">
           <div className="flex items-start gap-2">
             <MapPin className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
             <div>

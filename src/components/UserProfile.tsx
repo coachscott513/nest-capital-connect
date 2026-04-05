@@ -21,15 +21,15 @@ const UserProfile = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <label className="text-sm font-medium text-gray-500">Email</label>
+          <label className="text-sm font-medium text-muted-foreground">Email</label>
           <p className="text-sm">{user.email}</p>
         </div>
         <div>
-          <label className="text-sm font-medium text-gray-500">User ID</label>
-          <p className="text-xs text-gray-400 font-mono">{user.id}</p>
+          <label className="text-sm font-medium text-muted-foreground">User ID</label>
+          <p className="text-xs text-muted-foreground font-mono">{user.id}</p>
         </div>
         <div>
-          <label className="text-sm font-medium text-gray-500">Last Sign In</label>
+          <label className="text-sm font-medium text-muted-foreground">Last Sign In</label>
           <p className="text-sm">{user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString() : 'N/A'}</p>
         </div>
         <Button onClick={signOut} variant="outline" className="w-full">

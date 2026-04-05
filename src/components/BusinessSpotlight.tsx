@@ -279,7 +279,7 @@ const BusinessSpotlight = () => {
       <div className="flex items-center justify-center gap-1.5 mt-2 relative group/social">
         {[
           { Icon: Instagram, label: "Instagram", activeColor: "text-pink-500" },
-          { Icon: Facebook, label: "Facebook", activeColor: "text-blue-500" },
+          { Icon: Facebook, label: "Facebook", activeColor: "text-accent" },
           { Icon: TikTokIcon, label: "TikTok", activeColor: "text-foreground" },
           { Icon: Globe, label: "Website", activeColor: "text-primary" },
         ].map(({ Icon, label, activeColor }) => (
@@ -325,7 +325,7 @@ const BusinessSpotlight = () => {
   return (
     <section className="section-massive overflow-hidden relative isolate">
       {/* Liquid Glass Background Layer (behind all content) */}
-      <div className="absolute inset-0 z-0 bg-black/40 backdrop-blur-[40px] pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-primary/40 backdrop-blur-[40px] pointer-events-none" />
       
       {/* Full-width container */}
       <div className="relative z-10 px-[2%] lg:px-[3%]">
@@ -444,7 +444,7 @@ const BusinessSpotlight = () => {
 
       {/* Business Detail Drawer */}
       <Sheet open={!!selectedBusiness} onOpenChange={() => setSelectedBusiness(null)}>
-        <SheetContent className="w-full sm:max-w-lg bg-black/70 backdrop-blur-[30px] border-l border-white/10 overflow-y-auto">
+        <SheetContent className="w-full sm:max-w-lg bg-primary/70 backdrop-blur-[30px] border-l border-white/10 overflow-y-auto">
           {selectedBusiness && (
             <>
               <SheetHeader className="mb-6">
@@ -497,7 +497,7 @@ const BusinessSpotlight = () => {
                   
                   {/* Verification CTA Overlay */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <div className="bg-black/70 backdrop-blur-[30px] px-6 py-4 rounded-2xl text-center max-w-[280px] border border-white/10 shadow-lg shadow-primary/20">
+                    <div className="bg-primary/70 backdrop-blur-[30px] px-6 py-4 rounded-2xl text-center max-w-[280px] border border-white/10 shadow-lg shadow-primary/20">
                       <Lock className="w-5 h-5 text-primary mx-auto mb-2" />
                       <p className="text-sm font-medium text-foreground mb-3">
                         Story Protected
@@ -533,14 +533,14 @@ const BusinessSpotlight = () => {
               </div>
 
               {/* Offering - Visible */}
-              <div className="p-5 bg-black/50 backdrop-blur-[25px] border border-white/10 rounded-2xl mb-6">
+              <div className="p-5 bg-primary/50 backdrop-blur-[25px] border border-white/10 rounded-2xl mb-6">
                 <h4 className="text-sm font-semibold text-foreground mb-2">What They Offer</h4>
                 <p className="text-muted-foreground">{selectedBusiness.offering}</p>
               </div>
 
               {/* Website Link - Visible */}
               {selectedBusiness.website && (
-                <div className="p-4 bg-black/50 backdrop-blur-[25px] border border-white/10 rounded-2xl mb-6">
+                <div className="p-4 bg-primary/50 backdrop-blur-[25px] border border-white/10 rounded-2xl mb-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Globe className="w-4 h-4 text-primary" />
@@ -559,7 +559,7 @@ const BusinessSpotlight = () => {
               )}
 
               {/* Elite Features Preview - Gated Map & Specials */}
-              <div className="p-5 bg-black/50 backdrop-blur-[25px] border border-white/10 rounded-2xl mb-6 relative overflow-hidden">
+              <div className="p-5 bg-primary/50 backdrop-blur-[25px] border border-white/10 rounded-2xl mb-6 relative overflow-hidden">
                 <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-muted-foreground" />
                   Map & Weekly Specials
@@ -594,7 +594,7 @@ const BusinessSpotlight = () => {
               </div>
 
               {/* Market Intelligence Section */}
-              <div className="p-5 bg-black/50 backdrop-blur-[25px] border border-primary/30 rounded-2xl mb-6 shadow-[0_0_20px_rgba(0,255,255,0.1)]">
+              <div className="p-5 bg-primary/50 backdrop-blur-[25px] border border-primary/30 rounded-2xl mb-6 shadow-[0_0_20px_rgba(0,255,255,0.1)]">
                 <div className="flex items-center gap-2 mb-3">
                   <TrendingUp className="w-4 h-4 text-primary" />
                   <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">Nest Intelligence</h4>

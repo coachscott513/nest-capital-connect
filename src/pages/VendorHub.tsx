@@ -392,7 +392,7 @@ const VendorDetailDrawer = ({
 
   return (
     <Sheet open={open} onOpenChange={onClose}>
-      <SheetContent className="w-full sm:max-w-lg bg-black/70 backdrop-blur-[30px] border-l border-white/10 overflow-y-auto">
+      <SheetContent className="w-full sm:max-w-lg bg-primary/70 backdrop-blur-[30px] border-l border-white/10 overflow-y-auto">
         <SheetHeader className="mb-6">
           <div className="flex items-center gap-2 mb-2">
             <div className={`
@@ -424,7 +424,7 @@ const VendorDetailDrawer = ({
         )}
 
         {/* Contact Person */}
-        <div className="mb-6 p-5 bg-black/50 backdrop-blur-[25px] border border-white/10 rounded-2xl">
+        <div className="mb-6 p-5 bg-primary/50 backdrop-blur-[25px] border border-white/10 rounded-2xl">
           <h4 className="text-xs font-semibold text-muted-foreground mb-3 uppercase tracking-wider">Primary Contact</h4>
           <div className="flex items-center justify-between">
             <div>
@@ -444,13 +444,13 @@ const VendorDetailDrawer = ({
         {(vendor.yearsInBusiness || vendor.projectsCompleted) && (
           <div className="grid grid-cols-2 gap-4 mb-6">
             {vendor.yearsInBusiness && (
-              <div className="p-4 bg-black/50 backdrop-blur-[25px] border border-white/10 rounded-xl text-center">
+              <div className="p-4 bg-primary/50 backdrop-blur-[25px] border border-white/10 rounded-xl text-center">
                 <p className="text-2xl font-bold text-primary">{vendor.yearsInBusiness}</p>
                 <p className="text-xs text-muted-foreground">Years in Business</p>
               </div>
             )}
             {vendor.projectsCompleted && (
-              <div className="p-4 bg-black/50 backdrop-blur-[25px] border border-white/10 rounded-xl text-center">
+              <div className="p-4 bg-primary/50 backdrop-blur-[25px] border border-white/10 rounded-xl text-center">
                 <p className="text-2xl font-bold text-primary">{vendor.projectsCompleted}+</p>
                 <p className="text-xs text-muted-foreground">Projects Completed</p>
               </div>
@@ -459,7 +459,7 @@ const VendorDetailDrawer = ({
         )}
 
         {/* Specialty & Description */}
-        <div className="mb-6 p-5 bg-black/50 backdrop-blur-[25px] border border-white/10 rounded-2xl">
+        <div className="mb-6 p-5 bg-primary/50 backdrop-blur-[25px] border border-white/10 rounded-2xl">
           <h4 className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wider">Specialty</h4>
           <p className="text-primary font-medium mb-4">{vendor.specialty}</p>
           <h4 className="text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wider">About</h4>
@@ -467,7 +467,7 @@ const VendorDetailDrawer = ({
         </div>
 
         {/* Location */}
-        <div className="mb-6 p-4 bg-black/50 backdrop-blur-[25px] border border-white/10 rounded-2xl">
+        <div className="mb-6 p-4 bg-primary/50 backdrop-blur-[25px] border border-white/10 rounded-2xl">
           <div className="flex items-center gap-3">
             <MapPin className="h-5 w-5 text-primary" />
             <div>
@@ -518,7 +518,7 @@ const VendorDetailDrawer = ({
             {vendor.website && (
               <Button 
                 variant="ghost"
-                className="w-full justify-start h-11 bg-black/30 hover:bg-black/50 border border-white/10"
+                className="w-full justify-start h-11 bg-primary/30 hover:bg-primary/50 border border-white/10"
                 onClick={() => window.open(vendor.website, "_blank")}
               >
                 <ExternalLink className="h-4 w-4 mr-3 text-primary" />
@@ -529,7 +529,7 @@ const VendorDetailDrawer = ({
             {vendor.linkedin && (
               <Button 
                 variant="ghost"
-                className="w-full justify-start h-11 bg-black/30 hover:bg-black/50 border border-white/10"
+                className="w-full justify-start h-11 bg-primary/30 hover:bg-primary/50 border border-white/10"
                 onClick={() => window.open(vendor.linkedin, "_blank")}
               >
                 <Linkedin className="h-4 w-4 mr-3 text-blue-400" />
@@ -592,7 +592,7 @@ const VendorHub = () => {
             </p>
             
             {/* Legend */}
-            <div className="inline-flex items-center gap-6 px-4 py-2 rounded-full bg-black/30 backdrop-blur-sm border border-white/10">
+            <div className="inline-flex items-center gap-6 px-4 py-2 rounded-full bg-primary/30 backdrop-blur-sm border border-white/10">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-primary shadow-[0_0_10px_hsl(var(--primary)/0.5)]" />
                 <span className="text-xs text-muted-foreground">Direct Experience</span>

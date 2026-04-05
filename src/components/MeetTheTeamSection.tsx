@@ -22,7 +22,7 @@ const MeetTheTeamSection = () => {
               rel="noopener noreferrer"
               className="block group"
             >
-              <div className="bg-card rounded-lg border border-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 p-6 text-center">
+              <div className="bg-card rounded-2xl border border-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 p-6 text-center">
                 <div className="mb-4">
                   <img 
                     src="https://img.boldtrail.com/H-Ms7cP2VxpNnFJ-pvDfSvZVHlxSzq5z9g1JhL8vMFg/rs:fit:500/plain/https://papiphotos.remax-im.com/Person/102119538/MainPhoto_cropped/MainPhoto_cropped.jpg" 

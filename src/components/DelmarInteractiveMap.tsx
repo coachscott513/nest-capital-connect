@@ -7,7 +7,7 @@ const DelmarInteractiveMap = () => {
   const [activeLayer, setActiveLayer] = useState<string>("schools");
 
   const layers = [
-    { id: "schools", label: "Schools & Districts", icon: GraduationCap, color: "bg-blue-600" },
+    { id: "schools", label: "Schools & Districts", icon: GraduationCap, color: "bg-accent" },
     { id: "safety", label: "Crime/Safety", icon: Shield, color: "bg-green-600" },
     { id: "businesses", label: "Nearby Businesses", icon: Building2, color: "bg-purple-600" },
     { id: "commute", label: "Commute Times", icon: Car, color: "bg-orange-600" },

@@ -126,7 +126,7 @@ const AnimatedCapitalDistrictMap = () => {
             <h3 className="text-3xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent mb-2">
               Capital District Region
             </h3>
-            <p className="text-slate-400 text-lg">Interactive investment opportunities map</p>
+            <p className="text-muted-foreground text-lg">Interactive investment opportunities map</p>
           </div>
           
           <div className="grid lg:grid-cols-3 gap-8 items-center">
@@ -270,7 +270,7 @@ const AnimatedCapitalDistrictMap = () => {
             <div className="space-y-6">
               {/* Active area info */}
               {hoveredArea && getActiveArea() && (
-                <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 animate-fade-in">
+                <div className="bg-background/5 backdrop-blur-sm rounded-xl border border-white/10 p-6 animate-fade-in">
                   <div className="flex items-center gap-3 mb-4">
                     <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${getActiveArea()?.color}`}></div>
                     <h4 className="text-xl font-bold text-white">{getActiveArea()?.name}</h4>
@@ -281,36 +281,36 @@ const AnimatedCapitalDistrictMap = () => {
                         <Users className="w-4 h-4 text-blue-400" />
                       </div>
                       <p className="text-2xl font-bold text-white">{getActiveArea()?.population}</p>
-                      <p className="text-xs text-slate-400">Population</p>
+                      <p className="text-xs text-muted-foreground">Population</p>
                     </div>
                     <div className="text-center">
                       <div className="flex items-center justify-center mb-2">
                         <TrendingUp className="w-4 h-4 text-emerald-400" />
                       </div>
                       <p className="text-2xl font-bold text-white">{getActiveArea()?.properties}</p>
-                      <p className="text-xs text-slate-400">Properties</p>
+                      <p className="text-xs text-muted-foreground">Properties</p>
                     </div>
                   </div>
                 </div>
               )}
               
               {/* Stats Overview */}
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-6">
+              <div className="bg-background/5 backdrop-blur-sm rounded-xl border border-white/10 p-6">
                 <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-blue-400" />
                   Market Overview
                 </h4>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-300">Total Cities</span>
+                    <span className="text-muted-foreground">Total Cities</span>
                     <span className="text-white font-semibold">{areas.length}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-300">Active Listings</span>
+                    <span className="text-muted-foreground">Active Listings</span>
                     <span className="text-white font-semibold">8.5K+</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-300">Investment Properties</span>
+                    <span className="text-muted-foreground">Investment Properties</span>
                     <span className="text-white font-semibold">1.2K+</span>
                   </div>
                 </div>
@@ -334,7 +334,7 @@ const AnimatedCapitalDistrictMap = () => {
                   className={`w-3 h-3 rounded-full transition-all duration-500 ${
                     activeAreas.includes(area.id) 
                       ? `bg-gradient-to-r ${area.color} shadow-lg scale-125` 
-                      : 'bg-slate-600 hover:bg-slate-500'
+                      : 'bg-muted hover:bg-muted/80'
                   }`}
                   title={area.name}
                 />

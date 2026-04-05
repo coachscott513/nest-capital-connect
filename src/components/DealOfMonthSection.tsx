@@ -70,7 +70,7 @@ const DealOfMonthSection = () => {
                 <span className="bg-[#10B981] text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg">
                   3-Unit Triplex
                 </span>
-                <span className="bg-white/10 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-sm font-semibold border border-white/20">
+                <span className="bg-background/10 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-sm font-semibold border border-white/20">
                   North Troy, NY
                 </span>
                 <span className="bg-[#FFD700]/20 backdrop-blur-sm text-[#FFD700] px-4 py-1.5 rounded-full text-sm font-bold border border-[#FFD700]/30">

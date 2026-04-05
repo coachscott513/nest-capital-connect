@@ -170,7 +170,7 @@ const RentalVault = ({ townSlug, townName, limit = 4, showTitle = true }: Rental
                       href={rental.property_video_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute inset-0 flex items-center justify-center bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                       <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center glow-primary">
                         <Play className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" />

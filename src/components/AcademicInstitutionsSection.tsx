@@ -38,7 +38,7 @@ interface AcademicInstitutionsSectionProps {
 
 const typeConfig: Record<string, { icon: React.ElementType; label: string; color: string }> = {
   university: { icon: GraduationCap, label: "University", color: "bg-violet-500/10 text-violet-400 border-violet-500/20" },
-  college: { icon: GraduationCap, label: "College", color: "bg-blue-500/10 text-blue-400 border-blue-500/20" },
+  college: { icon: GraduationCap, label: "College", color: "bg-accent/10 text-blue-400 border-accent/20" },
   community_college: { icon: BookOpen, label: "Community College", color: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20" },
   k12_district: { icon: School, label: "School District", color: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" },
   private_school: { icon: School, label: "Private School", color: "bg-amber-500/10 text-amber-400 border-amber-500/20" },
@@ -119,7 +119,7 @@ const AcademicInstitutionsSection = ({ townSlug, townName }: AcademicInstitution
               <img 
                 src={institution.logo_url} 
                 alt={institution.name}
-                className="w-12 h-12 rounded-lg object-contain bg-white p-1"
+                className="w-12 h-12 rounded-lg object-contain bg-background p-1"
               />
             ) : (
               <div className={`p-3 rounded-xl ${config.color}`}>

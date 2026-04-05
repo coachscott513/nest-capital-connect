@@ -296,7 +296,7 @@ Contact an Agent at (518) 676-2347
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2"
+        className="bg-accent hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-2xl shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2"
       >
         <Share2 className="w-5 h-5" />
         <span>Share Analysis</span>
@@ -305,15 +305,15 @@ Contact an Agent at (518) 676-2347
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mt-6">
+    <div className="bg-background rounded-xl shadow-lg border border-border p-6 mt-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-semibold text-gray-800 flex items-center">
-          <Share2 className="w-6 h-6 mr-2 text-blue-600" />
+        <h3 className="text-xl font-semibold text-foreground flex items-center">
+          <Share2 className="w-6 h-6 mr-2 text-accent" />
           Share Analysis
         </h3>
         <button
           onClick={() => setIsOpen(false)}
-          className="text-gray-400 hover:text-gray-600 text-xl"
+          className="text-muted-foreground hover:text-muted-foreground text-xl"
         >
           ✕
         </button>
@@ -327,32 +327,32 @@ Contact an Agent at (518) 676-2347
         >
           <Mail className="w-8 h-8 text-red-600" />
           <div className="text-left">
-            <div className="font-medium text-gray-800">Email</div>
-            <div className="text-sm text-gray-600">Send via email</div>
+            <div className="font-medium text-foreground">Email</div>
+            <div className="text-sm text-muted-foreground">Send via email</div>
           </div>
         </button>
 
         {/* Copy Link */}
         <button
           onClick={handleCopyLink}
-          className="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+          className="flex items-center space-x-3 p-4 bg-accent/10 hover:bg-accent/15 rounded-lg transition-colors"
         >
-          <Link className="w-8 h-8 text-blue-600" />
+          <Link className="w-8 h-8 text-accent" />
           <div className="text-left">
-            <div className="font-medium text-gray-800">Copy Link</div>
-            <div className="text-sm text-gray-600">Share shareable URL</div>
+            <div className="font-medium text-foreground">Copy Link</div>
+            <div className="text-sm text-muted-foreground">Share shareable URL</div>
           </div>
         </button>
 
         {/* Copy Text */}
         <button
           onClick={handleCopyText}
-          className="flex items-center space-x-3 p-4 bg-green-50 hover:bg-green-100 rounded-lg transition-colors"
+          className="flex items-center space-x-3 p-4 bg-emerald/10 hover:bg-emerald/15 rounded-lg transition-colors"
         >
           <Copy className="w-8 h-8 text-green-600" />
           <div className="text-left">
-            <div className="font-medium text-gray-800">Copy Summary</div>
-            <div className="text-sm text-gray-600">Copy analysis text</div>
+            <div className="font-medium text-foreground">Copy Summary</div>
+            <div className="text-sm text-muted-foreground">Copy analysis text</div>
           </div>
         </button>
 
@@ -363,20 +363,20 @@ Contact an Agent at (518) 676-2347
         >
           <Download className="w-8 h-8 text-purple-600" />
           <div className="text-left">
-            <div className="font-medium text-gray-800">Download</div>
-            <div className="text-sm text-gray-600">Save as PDF file</div>
+            <div className="font-medium text-foreground">Download</div>
+            <div className="text-sm text-muted-foreground">Save as PDF file</div>
           </div>
         </button>
 
         {/* Facebook Share */}
         <button
           onClick={() => handleSocialShare('facebook')}
-          className="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+          className="flex items-center space-x-3 p-4 bg-accent/10 hover:bg-accent/15 rounded-lg transition-colors"
         >
           <Facebook className="w-8 h-8 text-blue-800" />
           <div className="text-left">
-            <div className="font-medium text-gray-800">Facebook</div>
-            <div className="text-sm text-gray-600">Share on Facebook</div>
+            <div className="font-medium text-foreground">Facebook</div>
+            <div className="text-sm text-muted-foreground">Share on Facebook</div>
           </div>
         </button>
 
@@ -387,20 +387,20 @@ Contact an Agent at (518) 676-2347
         >
           <Twitter className="w-8 h-8 text-sky-600" />
           <div className="text-left">
-            <div className="font-medium text-gray-800">Twitter</div>
-            <div className="text-sm text-gray-600">Share on Twitter</div>
+            <div className="font-medium text-foreground">Twitter</div>
+            <div className="text-sm text-muted-foreground">Share on Twitter</div>
           </div>
         </button>
 
         {/* LinkedIn Share */}
         <button
           onClick={() => handleSocialShare('linkedin')}
-          className="flex items-center space-x-3 p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+          className="flex items-center space-x-3 p-4 bg-accent/10 hover:bg-accent/15 rounded-lg transition-colors"
         >
-          <Linkedin className="w-8 h-8 text-blue-700" />
+          <Linkedin className="w-8 h-8 text-accent" />
           <div className="text-left">
-            <div className="font-medium text-gray-800">LinkedIn</div>
-            <div className="text-sm text-gray-600">Share on LinkedIn</div>
+            <div className="font-medium text-foreground">LinkedIn</div>
+            <div className="text-sm text-muted-foreground">Share on LinkedIn</div>
           </div>
         </button>
 
@@ -411,17 +411,17 @@ Contact an Agent at (518) 676-2347
         >
           <Instagram className="w-8 h-8 text-purple-600" />
           <div className="text-left">
-            <div className="font-medium text-gray-800">Instagram</div>
-            <div className="text-sm text-gray-600">Copy for Instagram</div>
+            <div className="font-medium text-foreground">Instagram</div>
+            <div className="text-sm text-muted-foreground">Copy for Instagram</div>
           </div>
         </button>
       </div>
 
       {/* Brand Footer */}
-      <div className="mt-6 pt-4 border-t border-gray-200">
+      <div className="mt-6 pt-4 border-t border-border">
         <div className="bg-gradient-to-r from-blue-600 to-red-600 rounded-lg p-4 text-white text-center">
           <div className="flex items-center justify-center space-x-4 mb-2">
-            <div className="bg-white rounded px-3 py-1">
+            <div className="bg-background rounded px-3 py-1">
               <span className="text-red-600 font-bold">RE/MAX</span>
             </div>
             <div>
@@ -436,10 +436,10 @@ Contact an Agent at (518) 676-2347
         </div>
       </div>
 
-      <div className="mt-6 pt-4 border-t border-gray-200">
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <h4 className="font-medium text-gray-800 mb-2">Preview:</h4>
-          <div className="text-sm text-gray-600 max-h-32 overflow-y-auto">
+      <div className="mt-6 pt-4 border-t border-border">
+        <div className="bg-secondary p-4 rounded-lg">
+          <h4 className="font-medium text-foreground mb-2">Preview:</h4>
+          <div className="text-sm text-muted-foreground max-h-32 overflow-y-auto">
             <pre className="whitespace-pre-wrap font-sans">{generateShareableContent()}</pre>
           </div>
         </div>

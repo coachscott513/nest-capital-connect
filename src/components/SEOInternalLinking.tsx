@@ -248,13 +248,13 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'Rentals': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-      case 'Single-Family Homes': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+      case 'Rentals': return 'bg-accent/15 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+      case 'Single-Family Homes': return 'bg-emerald/15 text-green-800 dark:bg-green-900 dark:text-green-200';
       case 'Real Estate': return 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200';
       case 'Markets': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
       case 'Service': return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
       case 'Resource': return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
-      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+      default: return 'bg-secondary text-foreground dark:bg-primary dark:text-muted-foreground';
     }
   };
 
@@ -275,7 +275,7 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
             <div key={index} className="group">
               <Link
                 to={link.url}
-                className="block p-4 rounded-lg border border-border hover:border-primary/50 transition-all hover:shadow-md bg-card"
+                className="block p-4 rounded-2xl border border-border hover:border-primary/50 transition-all hover:shadow-md bg-card"
               >
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 mt-1">

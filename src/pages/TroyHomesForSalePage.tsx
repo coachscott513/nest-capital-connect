@@ -107,7 +107,7 @@ const TroyHomesForSalePage = () => {
               <p className="text-muted-foreground">Updated directly from RE/MAX. Map + list view.</p>
             </div>
             {!iframeError ? (
-              <div className="w-full max-w-[1200px] mx-auto rounded-[16px] overflow-hidden border-2 border-primary/30 bg-white" style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}>
+              <div className="w-full max-w-[1200px] mx-auto rounded-[16px] overflow-hidden border-2 border-primary/30 bg-background" style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}>
                 <iframe id="troy-listings-iframe" title="Troy Home Search" src={troyData.remaxSearchUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full h-[800px] md:h-[1100px] block border-0" onError={() => setIframeError(true)} />
               </div>
             ) : (

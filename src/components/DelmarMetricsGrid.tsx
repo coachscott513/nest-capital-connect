@@ -14,15 +14,15 @@ const DelmarMetricsGrid = () => {
       icon: TrendingUp,
       value: "$221",
       label: "Average Price/SqFt",
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
+      color: "text-accent",
+      bgColor: "bg-accent/10",
     },
     {
       icon: Clock,
       value: "23",
       label: "Average Days on Market",
       color: "text-green-600",
-      bgColor: "bg-green-50",
+      bgColor: "bg-emerald/10",
     },
     {
       icon: Home,

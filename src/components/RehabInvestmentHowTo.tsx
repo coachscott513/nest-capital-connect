@@ -211,7 +211,7 @@ const RehabInvestmentHowTo = () => {
     {
       label: "Typical Project Timeline",
       value: "4-8 months",
-      icon: <Clock className="w-5 h-5 text-blue-500" />
+      icon: <Clock className="w-5 h-5 text-accent" />
     },
     {
       label: "Minimum Down Payment", 
@@ -235,10 +235,10 @@ const RehabInvestmentHowTo = () => {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 text-slate-800">
+          <h2 className="text-4xl font-bold mb-4 text-foreground">
             How to Successfully Invest in Rehab Properties
           </h2>
-          <p className="text-lg text-slate-600 max-w-3xl mx-auto mb-8">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
             Follow our proven 7-step process to identify, finance, renovate, and profit from 
             rehabilitation properties in the Capital District. This comprehensive guide covers 
             everything from market analysis to exit strategies.
@@ -247,14 +247,14 @@ const RehabInvestmentHowTo = () => {
           {/* Key Metrics */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {keyMetrics.map((metric, index) => (
-              <div key={index} className="bg-white p-4 rounded-lg shadow-md">
+              <div key={index} className="bg-background p-4 rounded-2xl shadow-md">
                 <div className="flex items-center justify-center mb-2">
                   {metric.icon}
                 </div>
-                <div className="text-2xl font-bold text-slate-800 mb-1">
+                <div className="text-2xl font-bold text-foreground mb-1">
                   {metric.value}
                 </div>
-                <div className="text-sm text-slate-600">
+                <div className="text-sm text-muted-foreground">
                   {metric.label}
                 </div>
               </div>
@@ -265,12 +265,12 @@ const RehabInvestmentHowTo = () => {
         {/* Steps */}
         <div className="space-y-8">
           {steps.map((step, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div key={index} className="bg-background rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="p-6 md:p-8">
                 <div className="flex items-start gap-6">
                   {/* Step Number */}
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                    <div className="w-12 h-12 bg-accent text-white rounded-full flex items-center justify-center font-bold text-lg">
                       {step.number}
                     </div>
                   </div>
@@ -278,30 +278,30 @@ const RehabInvestmentHowTo = () => {
                   {/* Content */}
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="text-blue-600">
+                      <div className="text-accent">
                         {step.icon}
                       </div>
-                      <h3 className="text-2xl font-bold text-slate-800">
+                      <h3 className="text-2xl font-bold text-foreground">
                         {step.title}
                       </h3>
-                      <span className="text-sm text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                      <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full">
                         {step.duration}
                       </span>
                     </div>
                     
-                    <p className="text-slate-600 mb-4 text-lg">
+                    <p className="text-muted-foreground mb-4 text-lg">
                       {step.description}
                     </p>
                     
                     <div className="grid md:grid-cols-2 gap-6">
                       {/* Details */}
                       <div>
-                        <h4 className="font-semibold text-slate-800 mb-3">Key Actions:</h4>
+                        <h4 className="font-semibold text-foreground mb-3">Key Actions:</h4>
                         <ul className="space-y-2">
                           {step.details.map((detail, detailIndex) => (
                             <li key={detailIndex} className="flex items-start gap-2">
                               <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                              <span className="text-slate-600 text-sm">{detail}</span>
+                              <span className="text-muted-foreground text-sm">{detail}</span>
                             </li>
                           ))}
                         </ul>
@@ -309,9 +309,9 @@ const RehabInvestmentHowTo = () => {
                       
                       {/* Tips */}
                       <div>
-                        <h4 className="font-semibold text-slate-800 mb-3">Pro Tip:</h4>
-                        <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
-                          <p className="text-slate-700 text-sm italic">
+                        <h4 className="font-semibold text-foreground mb-3">Pro Tip:</h4>
+                        <div className="bg-accent/10 p-4 rounded-lg border-l-4 border-accent">
+                          <p className="text-foreground/80 text-sm italic">
                             {step.tips}
                           </p>
                         </div>
@@ -340,13 +340,13 @@ const RehabInvestmentHowTo = () => {
                   element.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              className="bg-background text-accent px-8 py-3 rounded-lg font-semibold hover:bg-secondary transition-colors"
             >
               Get Free Analysis
             </button>
             <a 
               href="tel:+15186762347"
-              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center"
+              className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-background hover:text-accent transition-colors text-center"
             >
               Schedule Consultation
             </a>

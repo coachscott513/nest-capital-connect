@@ -63,8 +63,8 @@ const InternalLinkingNav = () => {
   ];
 
   const categoryColors = {
-    "Location": "bg-blue-50 text-blue-600 border-blue-200",
-    "Property Type": "bg-green-50 text-green-600 border-green-200", 
+    "Location": "bg-accent/10 text-accent border-accent/20",
+    "Property Type": "bg-emerald/10 text-green-600 border-green-200", 
     "Strategy": "bg-purple-50 text-purple-600 border-purple-200",
     "Resources": "bg-orange-50 text-orange-600 border-orange-200"
   };
@@ -73,10 +73,10 @@ const InternalLinkingNav = () => {
     <section className="py-16 px-4 bg-gradient-to-br from-slate-50 to-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 text-slate-800">
+          <h2 className="text-4xl font-bold mb-4 text-foreground">
             Explore Capital District Investment Opportunities
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Navigate our comprehensive investment resources organized by location, property type, and investment strategy.
           </p>
         </div>
@@ -90,20 +90,20 @@ const InternalLinkingNav = () => {
                 <Link
                   key={index}
                   to={link.href}
-                  className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+                  className="group block p-6 bg-background rounded-xl shadow-sm border border-border hover:border-accent/20 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="flex items-center mb-3">
-                    <div className="text-blue-600 mr-3 group-hover:scale-110 transition-transform">
+                    <div className="text-accent mr-3 group-hover:scale-110 transition-transform">
                       {link.icon}
                     </div>
                     <span className={`text-xs font-medium px-2 py-1 rounded-full ${categoryColors[link.category as keyof typeof categoryColors]}`}>
                       {link.category}
                     </span>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">
                     {link.title}
                   </h3>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-muted-foreground text-sm">
                     {link.description}
                   </p>
                 </Link>
@@ -114,20 +114,20 @@ const InternalLinkingNav = () => {
               <a
                 key={index}
                 href={link.href}
-                className="group block p-6 bg-white rounded-xl shadow-sm border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+                className="group block p-6 bg-background rounded-xl shadow-sm border border-border hover:border-accent/20 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="flex items-center mb-3">
-                  <div className="text-blue-600 mr-3 group-hover:scale-110 transition-transform">
+                  <div className="text-accent mr-3 group-hover:scale-110 transition-transform">
                     {link.icon}
                   </div>
                   <span className={`text-xs font-medium px-2 py-1 rounded-full ${categoryColors[link.category as keyof typeof categoryColors]}`}>
                     {link.category}
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">
                   {link.title}
                 </h3>
-                <p className="text-gray-600 text-sm">
+                <p className="text-muted-foreground text-sm">
                   {link.description}
                 </p>
               </a>
@@ -136,7 +136,7 @@ const InternalLinkingNav = () => {
         </div>
         
         <div className="text-center mt-12">
-          <p className="text-slate-600 mb-6">
+          <p className="text-muted-foreground mb-6">
             Ready to start your Capital District investment journey?
           </p>
           <button
@@ -146,7 +146,7 @@ const InternalLinkingNav = () => {
                 element.scrollIntoView({ behavior: 'smooth' });
               }
             }}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300"
+            className="bg-accent hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-300"
           >
             Get Investment Analysis
           </button>

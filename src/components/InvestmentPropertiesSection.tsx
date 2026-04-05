@@ -56,7 +56,7 @@ const InvestmentPropertiesSection = () => {
           <h2 className="text-5xl font-bold mb-6 text-white">
             Investment & Rental Properties
           </h2>
-          <p className="text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-primary-foreground/70 max-w-4xl mx-auto leading-relaxed">
             Discover profitable real estate opportunities across the Capital District. From <Link to="/#investment-properties" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">multi-unit properties</Link> 
             to <Link to="/#rehab-properties" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">fix & flip investments</Link>, we connect you with the best deals in <Link to="/towns/albany" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">Albany</Link>, <Link to="/towns/troy" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">Troy</Link>, <Link to="/towns/schenectady" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">Schenectady</Link>, and <Link to="/towns/saratoga-springs" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">Saratoga</Link>. Need <Link to="/#financing" className="text-blue-300 hover:text-blue-200 hover:underline transition-colors">financing solutions</Link>? We've got you covered.
           </p>
@@ -69,7 +69,7 @@ const InvestmentPropertiesSection = () => {
               href={area.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              className="group relative overflow-hidden rounded-2xl bg-background/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${area.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
               <div className="relative p-8 text-center">
@@ -79,10 +79,10 @@ const InvestmentPropertiesSection = () => {
                 <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-white transition-colors">
                   {area.title}
                 </h3>
-                <p className="text-slate-300 group-hover:text-slate-200 transition-colors">
+                <p className="text-primary-foreground/70 group-hover:text-primary-foreground/85 transition-colors">
                   {area.description}
                 </p>
-                <div className="mt-4 w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                <div className="mt-4 w-full h-1 bg-background/10 rounded-full overflow-hidden">
                   <div className={`h-full bg-gradient-to-r ${area.gradient} w-0 group-hover:w-full transition-all duration-500 ease-out`}></div>
                 </div>
               </div>
@@ -101,11 +101,11 @@ const InvestmentPropertiesSection = () => {
         </div>
 
         <div className="text-center">
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+          <div className="bg-background/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
             <h3 className="text-3xl font-bold mb-4 text-white">
               Ready to Build Your Portfolio?
             </h3>
-            <p className="text-slate-300 mb-8 max-w-3xl mx-auto text-lg">
+            <p className="text-primary-foreground/70 mb-8 max-w-3xl mx-auto text-lg">
               Get personalized investment analysis and discover properties that match your investment strategy. 
               Our local expertise helps you make informed decisions in the Capital District market.
             </p>
@@ -128,7 +128,7 @@ const InvestmentPropertiesSection = () => {
                     element.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                className="bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
+                className="bg-background/10 hover:bg-background/20 text-white border border-white/20 hover:border-white/30 px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105"
               >
                 View Current Inventory
               </button>

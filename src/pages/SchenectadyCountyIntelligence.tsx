@@ -91,7 +91,7 @@ const SchenectadyCountyIntelligence = () => {
       description: "Analyze multi-unit properties, cap rates, rent rolls, and real cash-flow opportunities.",
       cta: "View Investment Data",
       ref: investorRef,
-      color: "bg-blue-500/10 text-blue-600 dark:text-blue-400"
+      color: "bg-accent/10 text-accent dark:text-blue-400"
     },
     {
       icon: Search,
@@ -318,7 +318,7 @@ const SchenectadyCountyIntelligence = () => {
                       <span className="text-sm">Active Listings</span>
                     </div>
                     <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-background border border-border">
-                      <div className="w-3 h-3 rounded-full bg-blue-500" />
+                      <div className="w-3 h-3 rounded-full bg-accent" />
                       <span className="text-sm">Sold (Last 12 Months)</span>
                     </div>
                     <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-background border border-border">
@@ -443,7 +443,7 @@ const SchenectadyCountyIntelligence = () => {
             </div>
             
             <Accordion type="single" collapsible className="space-y-4">
-              <AccordionItem value="multi-unit" className="border border-border rounded-lg px-6 bg-card">
+              <AccordionItem value="multi-unit" className="border border-border rounded-2xl px-6 bg-card">
                 <AccordionTrigger className="text-lg font-semibold hover:no-underline">
                   <div className="flex items-center gap-3">
                     <Building2 className="w-5 h-5 text-primary" />
@@ -463,7 +463,7 @@ const SchenectadyCountyIntelligence = () => {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="single-family" className="border border-border rounded-lg px-6 bg-card">
+              <AccordionItem value="single-family" className="border border-border rounded-2xl px-6 bg-card">
                 <AccordionTrigger className="text-lg font-semibold hover:no-underline">
                   <div className="flex items-center gap-3">
                     <Home className="w-5 h-5 text-primary" />
@@ -483,7 +483,7 @@ const SchenectadyCountyIntelligence = () => {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="all-listings" className="border border-border rounded-lg px-6 bg-card">
+              <AccordionItem value="all-listings" className="border border-border rounded-2xl px-6 bg-card">
                 <AccordionTrigger className="text-lg font-semibold hover:no-underline">
                   <div className="flex items-center gap-3">
                     <Search className="w-5 h-5 text-primary" />
@@ -510,7 +510,7 @@ const SchenectadyCountyIntelligence = () => {
         <section ref={investorRef} className="py-20 px-4 scroll-mt-24">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-sm font-medium mb-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent dark:text-blue-400 text-sm font-medium mb-4">
                 <Briefcase className="w-4 h-4" />
                 For Investors
               </div>
@@ -637,7 +637,7 @@ const SchenectadyCountyIntelligence = () => {
                 "Cash-flow expectations",
                 "Offer strategy"
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-background border border-border">
+                <div key={i} className="flex items-center gap-3 p-3 rounded-2xl bg-background border border-border">
                   <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
                   <span className="text-sm text-foreground">{item}</span>
                 </div>
@@ -667,7 +667,7 @@ const SchenectadyCountyIntelligence = () => {
                 "Clear P&L, cap rate, and cash flow math",
                 "Designed for confident offers"
               ].map((item, index) => (
-                <div key={index} className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border">
+                <div key={index} className="flex items-center gap-3 p-4 rounded-2xl bg-card border border-border">
                   <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="text-foreground">{item}</span>
                 </div>

@@ -138,23 +138,23 @@ const RehabPropertiesSection = () => {
             </div>
 
             {/* Condensed Key Highlights */}
-            <div className="bg-card p-8 rounded-lg border border-border mb-8">
+            <div className="bg-card p-8 rounded-2xl border border-border mb-8">
               <h4 className="text-2xl md:text-3xl font-bold text-foreground mb-6 text-center">
                 🏠 Example: $80k Purchase → $200k ARV
               </h4>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div className="text-center bg-background p-4 rounded-lg border border-border">
+                <div className="text-center bg-background p-4 rounded-2xl border border-border">
                   <div className="text-3xl font-bold text-primary">$41,000</div>
                   <div className="text-sm text-muted-foreground">Flip Profit</div>
                   <div className="text-xs text-muted-foreground">256% ROI</div>
                 </div>
-                <div className="text-center bg-background p-4 rounded-lg border border-border">
+                <div className="text-center bg-background p-4 rounded-2xl border border-border">
                   <div className="text-3xl font-bold text-primary">$945/mo</div>
                   <div className="text-sm text-muted-foreground">Rental Cash Flow</div>
                   <div className="text-xs text-muted-foreground">71% Annual ROI</div>
                 </div>
-                <div className="text-center bg-background p-4 rounded-lg border border-border">
+                <div className="text-center bg-background p-4 rounded-2xl border border-border">
                   <div className="text-3xl font-bold text-primary">$16,000</div>
                   <div className="text-sm text-muted-foreground">Down Payment</div>
                   <div className="text-xs text-muted-foreground">20% Required</div>
@@ -176,7 +176,7 @@ const RehabPropertiesSection = () => {
 
             {/* Detailed Spreadsheet Breakdown - Collapsible */}
             {showDetailedBreakdown && (
-              <div className="bg-background p-8 rounded-lg border border-border mb-8">
+              <div className="bg-background p-8 rounded-2xl border border-border mb-8">
                 <h4 className="text-2xl font-bold text-center text-foreground mb-8">
                   📊 Complete Financial Breakdown Spreadsheet
                 </h4>

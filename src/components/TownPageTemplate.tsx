@@ -599,7 +599,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
             {/* Buyers */}
             <div className="space-y-3">
               <h3 className="font-semibold text-foreground flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-blue-500" />
+                <span className="w-2 h-2 rounded-full bg-accent" />
                 For Buyers
               </h3>
               <p className="text-muted-foreground text-sm">
@@ -1133,7 +1133,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
             </h2>
             <div className="grid sm:grid-cols-2 gap-4">
               {town.whoFitFor.map((item, index) => (
-                <div key={index} className="flex items-center gap-3 p-4 bg-background rounded-lg border border-border">
+                <div key={index} className="flex items-center gap-3 p-4 bg-background rounded-2xl border border-border">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="text-foreground">{item}</span>
                 </div>
@@ -1155,7 +1155,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
                 <AccordionItem 
                   key={index} 
                   value={`item-${index}`}
-                  className="bg-background rounded-lg border border-border px-6"
+                  className="bg-background rounded-2xl border border-border px-6"
                 >
                   <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
                     {item.question}
