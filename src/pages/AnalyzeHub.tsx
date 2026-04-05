@@ -58,7 +58,7 @@ const analyzerTypes = [
 
 const AnalyzeHub = () => {
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-background text-foreground">
       <SEOHead
         title="Analyze Any Property | Property Intelligence"
         description="Investment-grade deal analysis for buyers, homeowners, and investors. Break down monthly cost, financing, cash to close, and returns for any property type."
@@ -68,37 +68,37 @@ const AnalyzeHub = () => {
       <CleanHeader />
 
       {/* HERO */}
-      <section className="pt-40 pb-20 px-6 bg-white">
+      <section className="pt-40 pb-20 px-6 bg-background">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm font-semibold tracking-[0.3em] uppercase text-gray-400 mb-6">
+          <p className="text-sm font-semibold tracking-[0.3em] uppercase text-muted-foreground/70 mb-6">
             Property Intelligence for Buyers, Homeowners, and Investors
           </p>
-          <h1 className="text-5xl md:text-7xl font-extralight text-gray-900 tracking-tight mb-8 leading-[1.05]">
+          <h1 className="text-5xl md:text-7xl font-extralight text-foreground tracking-tight mb-8 leading-[1.05]">
             Analyze Any Property<br />
             <span className="font-normal">Like a Pro</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-500 font-light max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
             Understand monthly cost, financing, cash needed to close, and investment potential before you buy.
           </p>
         </div>
       </section>
 
       {/* CARDS GRID */}
-      <section className="pb-32 px-6 bg-white">
+      <section className="pb-32 px-6 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {analyzerTypes.map((type) => (
               <Link
                 key={type.title}
                 to={type.href}
-                className="group relative p-10 rounded-3xl border border-gray-100 bg-gray-50/30 hover:bg-white hover:shadow-2xl hover:shadow-gray-200/60 hover:border-gray-200 transition-all duration-500 hover:-translate-y-1"
+                className="group relative p-10 rounded-2xl border border-border/50 bg-secondary/30 hover:bg-background hover:shadow-2xl hover:shadow-border/60 hover:border-border transition-all duration-500 hover:-translate-y-1"
               >
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${type.accent} flex items-center justify-center mb-8`}>
-                  <type.icon className="w-8 h-8 text-gray-900" />
+                <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${type.accent} flex items-center justify-center mb-8`}>
+                  <type.icon className="w-8 h-8 text-foreground" />
                 </div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">{type.title}</h3>
-                <p className="text-gray-500 text-lg leading-relaxed mb-8">{type.desc}</p>
-                <div className="flex items-center gap-2 text-gray-400 group-hover:text-gray-900 transition-colors font-medium">
+                <h3 className="text-2xl font-semibold text-foreground mb-4">{type.title}</h3>
+                <p className="text-muted-foreground text-lg leading-relaxed mb-8">{type.desc}</p>
+                <div className="flex items-center gap-2 text-muted-foreground/70 group-hover:text-foreground transition-colors font-medium">
                   Start Analysis <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
@@ -108,10 +108,10 @@ const AnalyzeHub = () => {
       </section>
 
       {/* DIFFERENTIATOR */}
-      <section className="py-24 px-6 bg-gray-50">
+      <section className="py-24 px-6 bg-secondary/40">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-lg text-gray-500 italic mb-2">Search on Zillow.</p>
-          <p className="text-2xl md:text-3xl font-semibold text-gray-900">Analyze like a Pro.</p>
+          <p className="text-lg text-muted-foreground italic mb-2">Search on Zillow.</p>
+          <p className="text-2xl md:text-3xl font-semibold text-foreground">Analyze like a Pro.</p>
         </div>
       </section>
 
