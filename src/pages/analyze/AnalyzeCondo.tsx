@@ -39,7 +39,7 @@ const AnalyzeCondo = () => {
             <ArrowLeft className="w-4 h-4" /> All Analyzers
           </Link>
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center">
+            <div className="w-14 h-14 rounded-full bg-secondary flex items-center justify-center">
               <Building2 className="w-7 h-7 text-foreground" />
             </div>
             <div>
@@ -53,7 +53,7 @@ const AnalyzeCondo = () => {
       <section className="py-12 px-6">
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* INPUTS */}
-          <div className="space-y-6 p-8 rounded-3xl border border-border/50 bg-secondary/50">
+          <div className="space-y-6 p-8 rounded-2xl border border-border/50 bg-secondary/50">
             <h2 className="text-xl font-semibold mb-4">Property Details</h2>
             {[
               { id: "price", label: "Purchase Price", prefix: "$", val: inputs.price, step: 5000 },
@@ -88,23 +88,23 @@ const AnalyzeCondo = () => {
                 { label: "Monthly Insurance", value: `$${fmt(monthlyIns)}` },
                 { label: "Monthly HOA", value: `$${fmt(inputs.hoa)}` },
               ].map((s) => (
-                <div key={s.label} className="p-6 rounded-2xl bg-secondary/40 border border-border/50 text-center">
+                <div key={s.label} className="p-6 rounded-full bg-secondary/40 border border-border/50 text-center">
                   <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">{s.label}</p>
                   <p className="text-2xl font-bold text-foreground">{s.value}</p>
                 </div>
               ))}
             </div>
-            <div className="p-8 rounded-3xl bg-foreground text-background text-center">
+            <div className="p-8 rounded-2xl bg-foreground text-background text-center">
               <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">Total Monthly Cost</p>
               <p className="text-5xl font-bold">${fmt(totalMonthly)}</p>
               <p className="text-muted-foreground/70 text-sm mt-2">all-in monthly ownership cost</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-6 rounded-2xl bg-secondary/40 border border-border/50 text-center">
+              <div className="p-6 rounded-full bg-secondary/40 border border-border/50 text-center">
                 <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">Down Payment</p>
                 <p className="text-2xl font-bold text-foreground">${fmt(downAmt)}</p>
               </div>
-              <div className="p-6 rounded-2xl bg-secondary/40 border border-border/50 text-center">
+              <div className="p-6 rounded-full bg-secondary/40 border border-border/50 text-center">
                 <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">Cash to Close</p>
                 <p className="text-2xl font-bold text-foreground">${fmt(cashToClose)}</p>
               </div>

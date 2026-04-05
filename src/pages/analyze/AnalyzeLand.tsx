@@ -33,7 +33,7 @@ const AnalyzeLand = () => {
         <div className="max-w-5xl mx-auto">
           <Link to="/analyze" className="inline-flex items-center gap-2 text-muted-foreground/70 hover:text-foreground transition-colors mb-8 text-sm font-medium"><ArrowLeft className="w-4 h-4" /> All Analyzers</Link>
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center"><Mountain className="w-7 h-7 text-foreground" /></div>
+            <div className="w-14 h-14 rounded-full bg-secondary flex items-center justify-center"><Mountain className="w-7 h-7 text-foreground" /></div>
             <h1 className="text-4xl md:text-5xl font-extralight tracking-tight">Land <span className="font-normal">Analyzer</span></h1>
           </div>
           <p className="text-lg text-muted-foreground max-w-2xl">Estimate carrying costs, acquisition basis, and build or resale scenarios.</p>
@@ -41,7 +41,7 @@ const AnalyzeLand = () => {
       </section>
       <section className="py-12 px-6">
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="space-y-6 p-8 rounded-3xl border border-border/50 bg-secondary/50">
+          <div className="space-y-6 p-8 rounded-2xl border border-border/50 bg-secondary/50">
             <h2 className="text-xl font-semibold mb-4">Land & Build Details</h2>
             {[
               { id: "price", label: "Land Purchase Price", val: inputs.price, step: 5000 },
@@ -69,17 +69,17 @@ const AnalyzeLand = () => {
                 { label: "Total Acquisition", value: `$${fmt(totalAcquisition)}` },
                 { label: "Build / Improve", value: `$${fmt(inputs.improvements)}` },
               ].map((s) => (
-                <div key={s.label} className="p-6 rounded-2xl bg-secondary/40 border border-border/50 text-center">
+                <div key={s.label} className="p-6 rounded-full bg-secondary/40 border border-border/50 text-center">
                   <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">{s.label}</p>
                   <p className="text-2xl font-bold text-foreground">{s.value}</p>
                 </div>
               ))}
             </div>
-            <div className="p-8 rounded-3xl bg-foreground text-background text-center">
+            <div className="p-8 rounded-2xl bg-foreground text-background text-center">
               <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">All-In Basis</p>
               <p className="text-5xl font-bold">${fmt(allInBasis)}</p>
             </div>
-            <div className={`p-6 rounded-2xl text-center ${estimatedEquity >= 0 ? "bg-secondary border border-emerald-100" : "bg-red-50 border border-red-100"}`}>
+            <div className={`p-6 rounded-full text-center ${estimatedEquity >= 0 ? "bg-secondary border border-emerald-100" : "bg-red-50 border border-red-100"}`}>
               <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">Estimated Equity at Completion</p>
               <p className={`text-3xl font-bold ${estimatedEquity >= 0 ? "text-emerald-700" : "text-red-700"}`}>${fmt(estimatedEquity)}</p>
             </div>

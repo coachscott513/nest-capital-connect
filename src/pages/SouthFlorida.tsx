@@ -91,13 +91,13 @@ const SouthFlorida = () => {
             Search smarter. Understand financing. Analyze properties like a pro.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#areas" className="inline-flex items-center gap-2 bg-background text-foreground px-10 py-5 rounded-2xl font-semibold text-lg hover:scale-105 transition-transform shadow-lg">
+            <a href="#areas" className="inline-flex items-center gap-2 bg-background text-foreground px-10 py-5 rounded-full font-semibold text-lg hover:scale-105 transition-transform shadow-lg">
               Explore South Florida <ArrowRight className="w-5 h-5" />
             </a>
-            <Link to="/analyze" className="inline-flex items-center gap-2 bg-background/10 backdrop-blur-md text-background border border-background/20 px-10 py-5 rounded-2xl font-semibold text-lg hover:bg-background/20 transition-all">
+            <Link to="/analyze" className="inline-flex items-center gap-2 bg-background/10 backdrop-blur-md text-background border border-background/20 px-10 py-5 rounded-full font-semibold text-lg hover:bg-background/20 transition-all">
               Analyze a Property
             </Link>
-            <a href="#contact" className="inline-flex items-center gap-2 bg-background/10 backdrop-blur-md text-background border border-background/20 px-10 py-5 rounded-2xl font-semibold text-lg hover:bg-background/20 transition-all">
+            <a href="#contact" className="inline-flex items-center gap-2 bg-background/10 backdrop-blur-md text-background border border-background/20 px-10 py-5 rounded-full font-semibold text-lg hover:bg-background/20 transition-all">
               Get Pre-Approved
             </a>
           </div>
@@ -113,8 +113,8 @@ const SouthFlorida = () => {
               { icon: DollarSign, title: "Understand Financing", desc: "Get clarity on payments, down payment options, and mortgage strategy." },
               { icon: BarChart3, title: "Analyze Any Property", desc: "Break down monthly cost, HOA impact, cash flow, and investment upside." },
             ].map((item) => (
-              <div key={item.title} className="group p-10 rounded-3xl border border-border/50 bg-secondary/50 hover:bg-secondary/40 hover:shadow-xl hover:shadow-border/50 transition-all duration-500">
-                <div className="w-14 h-14 rounded-2xl bg-foreground flex items-center justify-center mb-8">
+              <div key={item.title} className="group p-10 rounded-2xl border border-border/50 bg-secondary/50 hover:bg-secondary/40 hover:shadow-xl hover:shadow-border/50 transition-all duration-500">
+                <div className="w-14 h-14 rounded-full bg-foreground flex items-center justify-center mb-8">
                   <item.icon className="w-7 h-7 text-background" />
                 </div>
                 <h3 className="text-2xl font-semibold text-foreground mb-4">{item.title}</h3>
@@ -142,7 +142,7 @@ const SouthFlorida = () => {
               { icon: TrendingUp, title: "Investment Analysis", desc: "Cash flow & returns" },
               { icon: MapPin, title: "Local Market Insight", desc: "Neighborhood-level data" },
             ].map((item) => (
-              <div key={item.title} className="p-8 rounded-3xl bg-background border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300">
+              <div key={item.title} className="p-8 rounded-2xl bg-background border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300">
                 <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center mx-auto mb-5">
                   <item.icon className="w-6 h-6 text-foreground" />
                 </div>
@@ -165,7 +165,7 @@ const SouthFlorida = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {areas.map((area) => (
-              <div key={area.name} className="group relative rounded-3xl overflow-hidden aspect-[4/3] cursor-pointer">
+              <div key={area.name} className="group relative rounded-2xl overflow-hidden aspect-[4/3] cursor-pointer">
                 <img src={area.image} alt={area.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -206,12 +206,12 @@ const SouthFlorida = () => {
                   </div>
                 ))}
               </div>
-              <Link to="/financing" className="inline-flex items-center gap-2 bg-foreground text-background px-8 py-4 rounded-2xl font-semibold text-lg mt-10 hover:scale-105 transition-transform">
+              <Link to="/financing" className="inline-flex items-center gap-2 bg-foreground text-background px-8 py-4 rounded-full font-semibold text-lg mt-10 hover:scale-105 transition-transform">
                 Get Pre-Approved <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
             <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
+              <div className="rounded-2xl overflow-hidden shadow-2xl">
                 <img
                   src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80"
                   alt="South Florida luxury property"
@@ -248,7 +248,7 @@ const SouthFlorida = () => {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className={`p-8 rounded-3xl text-center transition-all duration-300 ${
+                className={`p-8 rounded-2xl text-center transition-all duration-300 ${
                   stat.highlight
                     ? "bg-foreground text-background shadow-2xl shadow-foreground/20 scale-[1.02]"
                     : "bg-secondary/40 border border-border/50 hover:shadow-lg"
@@ -271,7 +271,7 @@ const SouthFlorida = () => {
               Most buyers focus on the price.<br />
               <span className="font-semibold text-foreground not-italic">Smart buyers focus on the total cost.</span>
             </p>
-            <Link to="/analyze" className="inline-flex items-center gap-2 bg-foreground text-background px-10 py-5 rounded-2xl font-semibold text-lg hover:scale-105 transition-transform">
+            <Link to="/analyze" className="inline-flex items-center gap-2 bg-foreground text-background px-10 py-5 rounded-full font-semibold text-lg hover:scale-105 transition-transform">
               Analyze Your Own Property <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -293,7 +293,7 @@ const SouthFlorida = () => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {analyzerStats.map((stat) => (
-              <div key={stat.label} className="p-8 rounded-3xl bg-secondary/40 border border-border/50 text-center hover:shadow-lg transition-all duration-300">
+              <div key={stat.label} className="p-8 rounded-2xl bg-secondary/40 border border-border/50 text-center hover:shadow-lg transition-all duration-300">
                 <p className="text-sm font-semibold text-muted-foreground/70 uppercase tracking-wider mb-3">{stat.label}</p>
                 <p className="text-3xl font-bold text-foreground mb-2">{stat.value}</p>
                 <p className="text-sm text-muted-foreground">{stat.sub}</p>
@@ -301,7 +301,7 @@ const SouthFlorida = () => {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Link to="/analyze" className="inline-flex items-center gap-2 bg-foreground text-background px-10 py-5 rounded-2xl font-semibold text-lg hover:scale-105 transition-transform">
+            <Link to="/analyze" className="inline-flex items-center gap-2 bg-foreground text-background px-10 py-5 rounded-full font-semibold text-lg hover:scale-105 transition-transform">
               Try the Analyzer <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -326,7 +326,7 @@ const SouthFlorida = () => {
               { icon: DollarSign, label: "Selling & Upgrading" },
               { icon: Shield, label: "Financing Options" },
             ].map((item) => (
-              <div key={item.label} className="p-6 rounded-2xl bg-background border border-border/50 shadow-sm">
+              <div key={item.label} className="p-6 rounded-full bg-background border border-border/50 shadow-sm">
                 <item.icon className="w-8 h-8 text-foreground mx-auto mb-3" />
                 <p className="text-sm font-medium text-foreground/80">{item.label}</p>
               </div>
@@ -345,7 +345,7 @@ const SouthFlorida = () => {
             </h2>
             <p className="text-lg text-muted-foreground">Tell us what you're looking for and we'll connect you with a local specialist.</p>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-6 p-10 rounded-3xl border border-border/50 bg-secondary/50">
+          <form onSubmit={handleSubmit} className="space-y-6 p-10 rounded-2xl border border-border/50 bg-secondary/50">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <Label htmlFor="sf-name" className="text-foreground/80 text-sm font-medium">Name *</Label>

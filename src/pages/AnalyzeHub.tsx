@@ -91,9 +91,9 @@ const AnalyzeHub = () => {
               <Link
                 key={type.title}
                 to={type.href}
-                className="group relative p-10 rounded-3xl border border-border/50 bg-secondary/30 hover:bg-background hover:shadow-2xl hover:shadow-border/60 hover:border-border transition-all duration-500 hover:-translate-y-1"
+                className="group relative p-10 rounded-2xl border border-border/50 bg-secondary/30 hover:bg-background hover:shadow-2xl hover:shadow-border/60 hover:border-border transition-all duration-500 hover:-translate-y-1"
               >
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${type.accent} flex items-center justify-center mb-8`}>
+                <div className={`w-16 h-16 rounded-full bg-gradient-to-br ${type.accent} flex items-center justify-center mb-8`}>
                   <type.icon className="w-8 h-8 text-foreground" />
                 </div>
                 <h3 className="text-2xl font-semibold text-foreground mb-4">{type.title}</h3>
