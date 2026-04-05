@@ -178,12 +178,12 @@ const BrandHero = () => {
                       <span
                         className="transition-all duration-500"
                         style={{
-                          fontSize: isHovered ? 13 : town.size === 'lg' ? 11 : 9,
-                          fontWeight: isHovered ? 600 : town.size === 'lg' ? 500 : 400,
+                          fontSize: isHovered ? 15 : town.size === 'lg' ? 13 : 11,
+                          fontWeight: isHovered ? 600 : town.size === 'lg' ? 600 : 500,
                           color: isHovered
                             ? 'hsl(var(--foreground))'
                             : 'hsl(var(--muted-foreground))',
-                          opacity: isHovered ? 1 : town.size === 'sm' ? 0.5 : 0.7,
+                          opacity: isHovered ? 1 : town.size === 'sm' ? 0.6 : 0.8,
                           letterSpacing: isHovered ? '-0.01em' : '0',
                         }}
                       >
