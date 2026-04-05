@@ -4,21 +4,21 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 const towns = [
-  { name: "Albany", slug: "albany", x: 48, y: 58, size: "lg" },
-  { name: "Troy", slug: "troy", x: 58, y: 42, size: "lg" },
-  { name: "Schenectady", slug: "schenectady", x: 32, y: 50, size: "lg" },
-  { name: "Saratoga Springs", slug: "saratoga-springs", x: 52, y: 18, size: "lg" },
-  { name: "Clifton Park", slug: "clifton-park", x: 54, y: 32, size: "md" },
-  { name: "Delmar", slug: "delmar", x: 46, y: 68, size: "md" },
-  { name: "Guilderland", slug: "guilderland", x: 36, y: 62, size: "md" },
-  { name: "East Greenbush", slug: "east-greenbush", x: 62, y: 56, size: "sm" },
-  { name: "Queensbury", slug: "queensbury", x: 60, y: 10, size: "md" },
-  { name: "Niskayuna", slug: "niskayuna", x: 40, y: 44, size: "sm" },
-  { name: "Colonie", slug: "colonie", x: 44, y: 46, size: "sm" },
-  { name: "Mechanicville", slug: "mechanicville", x: 58, y: 26, size: "sm" },
-  { name: "Amsterdam", slug: "amsterdam", x: 18, y: 42, size: "sm" },
-  { name: "Voorheesville", slug: "voorheesville", x: 34, y: 72, size: "sm" },
-  { name: "Catskill", slug: "catskill", x: 55, y: 82, size: "sm" },
+  { name: "Albany", slug: "albany", x: 42, y: 58, size: "lg" },
+  { name: "Troy", slug: "troy", x: 52, y: 42, size: "lg" },
+  { name: "Schenectady", slug: "schenectady", x: 26, y: 50, size: "lg" },
+  { name: "Saratoga Springs", slug: "saratoga-springs", x: 46, y: 18, size: "lg" },
+  { name: "Clifton Park", slug: "clifton-park", x: 48, y: 32, size: "md" },
+  { name: "Delmar", slug: "delmar", x: 40, y: 68, size: "md" },
+  { name: "Guilderland", slug: "guilderland", x: 28, y: 62, size: "md" },
+  { name: "East Greenbush", slug: "east-greenbush", x: 56, y: 56, size: "sm" },
+  { name: "Queensbury", slug: "queensbury", x: 54, y: 10, size: "md" },
+  { name: "Niskayuna", slug: "niskayuna", x: 34, y: 44, size: "sm" },
+  { name: "Colonie", slug: "colonie", x: 38, y: 46, size: "sm" },
+  { name: "Mechanicville", slug: "mechanicville", x: 52, y: 26, size: "sm" },
+  { name: "Amsterdam", slug: "amsterdam", x: 10, y: 42, size: "sm" },
+  { name: "Voorheesville", slug: "voorheesville", x: 26, y: 72, size: "sm" },
+  { name: "Catskill", slug: "catskill", x: 48, y: 82, size: "sm" },
 ];
 
 const dotSize = { lg: 14, md: 10, sm: 7 };
