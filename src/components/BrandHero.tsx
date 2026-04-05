@@ -52,7 +52,7 @@ const BrandHero = () => {
               Capital District<br />Nest
             </h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg font-light">
+            <p className="text-lg md:text-xl text-foreground/60 leading-relaxed max-w-lg font-light">
               A smarter way to explore real estate in New York's Capital District — with local intelligence for buyers, sellers, and investors.
             </p>
 
