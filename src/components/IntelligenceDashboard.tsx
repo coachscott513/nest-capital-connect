@@ -23,23 +23,28 @@ const IntelligenceDashboard = ({
   };
 
   const indicators = [
-    { 
-      label: "Market Edge", 
-      value: getMarketEdge(), 
-      color: "text-green-400",
-      icon: TrendingUp
+    {
+      label: "Market Edge",
+      value: getMarketEdge(),
+      valueStyle: { color: "hsl(var(--emerald))" },
+      icon: TrendingUp,
     },
-    { 
-      label: "Nest Score", 
-      value: `${nestScore} / 10`, 
-      color: "text-primary",
-      icon: Gauge
+    {
+      label: "Nest Score",
+      value: `${nestScore} / 10`,
+      valueStyle: { color: "hsl(var(--primary-foreground))" },
+      icon: Gauge,
     },
-    { 
-      label: "Market Velocity", 
-      value: marketVelocity, 
-      color: marketVelocity === "High" ? "text-primary" : marketVelocity === "Medium" ? "text-yellow-400" : "text-muted-foreground",
-      icon: Zap
+    {
+      label: "Market Velocity",
+      value: marketVelocity,
+      valueStyle:
+        marketVelocity === "High"
+          ? { color: "hsl(var(--accent))" }
+          : marketVelocity === "Medium"
+            ? { color: "hsl(var(--amber))" }
+            : { color: "hsl(var(--primary-foreground) / 0.8)" },
+      icon: Zap,
     },
   ];
 
@@ -59,30 +64,37 @@ const IntelligenceDashboard = ({
       </div>
 
       {/* Market Indicators Bar */}
-      <div 
-        className="mx-auto max-w-4xl mb-8 rounded-2xl border border-border/50 overflow-hidden"
-        style={{
-          background: 'rgba(11, 11, 11, 0.8)',
-          backdropFilter: 'blur(25px)',
-          WebkitBackdropFilter: 'blur(25px)',
-        }}
+      <div
+        className="mx-auto max-w-5xl mb-8 rounded-[2rem] overflow-hidden bg-foreground/90 backdrop-blur-xl shadow-[0_18px_40px_-18px_hsl(var(--foreground)/0.45)]"
+        style={{ border: "1px solid hsl(var(--primary-foreground) / 0.18)" }}
       >
-        <div className="px-6 py-4 flex items-center justify-center gap-8 md:gap-16">
+        <div className="px-8 md:px-10 py-5 flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 md:gap-0">
           {indicators.map((indicator, index) => (
-            <div key={indicator.label} className="flex items-center gap-3">
-              <indicator.icon className={`w-4 h-4 ${indicator.color} opacity-70`} />
-              <div className="flex flex-col">
-                <span className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] font-light">
-                  {indicator.label}
-                </span>
-                <span className={`text-sm md:text-base font-light tracking-wide ${indicator.color}`}>
-                  {indicator.value}
-                </span>
+            <>
+              <div key={indicator.label} className="flex items-center gap-4 min-w-0 md:px-8">
+                <indicator.icon className="w-5 h-5 shrink-0" style={{ ...indicator.valueStyle, opacity: 0.85 }} />
+                <div className="flex flex-col min-w-0">
+                  <span
+                    className="text-[11px] uppercase tracking-[0.24em] font-medium"
+                    style={{ color: "hsl(var(--primary-foreground) / 0.58)" }}
+                  >
+                    {indicator.label}
+                  </span>
+                  <span
+                    className="text-lg md:text-[1.75rem] leading-none font-medium tracking-tight mt-1"
+                    style={indicator.valueStyle}
+                  >
+                    {indicator.value}
+                  </span>
+                </div>
               </div>
               {index < indicators.length - 1 && (
-                <div className="hidden md:block w-px h-8 bg-border/50 ml-8" />
+                <div
+                  className="hidden md:block w-px h-16"
+                  style={{ backgroundColor: "hsl(var(--primary-foreground) / 0.18)" }}
+                />
               )}
-            </div>
+            </>
           ))}
         </div>
       </div>
