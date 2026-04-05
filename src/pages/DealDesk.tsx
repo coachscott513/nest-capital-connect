@@ -247,7 +247,7 @@ const DealDesk = () => {
                         <Checkbox
                           checked={field.value}
                           onCheckedChange={field.onChange}
-                          className="border-gray-600 data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500"
+                          className="border-border data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500"
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">
@@ -287,7 +287,7 @@ const DealDesk = () => {
                 { icon: AlertTriangle, text: "Key risks + what to verify next" },
                 { icon: ArrowRight, text: "Clear next steps" },
               ].map((item, i) => (
-                <div key={i} className="flex items-start gap-4 p-4 bg-[#111111] rounded-lg border border-gray-800">
+                <div key={i} className="flex items-start gap-4 p-4 bg-[#111111] rounded-lg border border-border">
                   <item.icon className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <p className="text-muted-foreground">{item.text}</p>
                 </div>
@@ -316,7 +316,7 @@ const DealDesk = () => {
                 { icon: Shield, text: "Neighborhood risk assessment" },
                 { icon: Zap, text: "Quick take: buy, pass, or dig deeper" },
               ].map((item, i) => (
-                <div key={i} className="flex items-start gap-4 p-4 bg-[#0a0a0a] rounded-lg border border-gray-800">
+                <div key={i} className="flex items-start gap-4 p-4 bg-[#0a0a0a] rounded-lg border border-border">
                   <item.icon className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <p className="text-muted-foreground">{item.text}</p>
                 </div>
@@ -385,7 +385,7 @@ const DealDesk = () => {
                   a: "Most Snapshots are delivered same-day during business hours. All reports are free and personalized."
                 },
               ].map((faq, i) => (
-                <div key={i} className="bg-[#0a0a0a] rounded-lg p-6 border border-gray-800">
+                <div key={i} className="bg-[#0a0a0a] rounded-lg p-6 border border-border">
                   <h3 className="text-lg font-semibold text-emerald-400 mb-2">{faq.q}</h3>
                   <p className="text-muted-foreground">{faq.a}</p>
                 </div>
@@ -399,7 +399,7 @@ const DealDesk = () => {
         </section>
 
         {/* Footer */}
-        <footer className="py-8 px-4 border-t border-gray-800">
+        <footer className="py-8 px-4 border-t border-border">
           <div className="container mx-auto max-w-4xl text-center">
             <a 
               href="https://capitaldealdesk.com" 
