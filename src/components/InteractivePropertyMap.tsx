@@ -86,7 +86,7 @@ const InteractivePropertyMap = ({ properties }: InteractivePropertyMapProps) => 
 
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-          <div className="bg-background px-6 py-3 rounded-lg shadow-xl flex items-center gap-2">
+          <div className="bg-background px-6 py-3 rounded-2xl shadow-xl flex items-center gap-2">
             <ExternalLink className="w-4 h-4" />
             <span className="font-semibold">Open in Google Maps</span>
           </div>

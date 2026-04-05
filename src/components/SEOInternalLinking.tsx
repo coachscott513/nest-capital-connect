@@ -275,7 +275,7 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
             <div key={index} className="group">
               <Link
                 to={link.url}
-                className="block p-4 rounded-lg border border-border hover:border-primary/50 transition-all hover:shadow-md bg-card"
+                className="block p-4 rounded-2xl border border-border hover:border-primary/50 transition-all hover:shadow-md bg-card"
               >
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 mt-1">

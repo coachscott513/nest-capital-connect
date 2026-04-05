@@ -345,7 +345,7 @@ const PropertySearchTool = ({
                 {searchResults.slice(0, showResultsLimit ? 3 : searchResults.length).map((property) => (
                   <div 
                     key={property.id} 
-                    className="border border-border rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
+                    className="border border-border rounded-2xl p-4 hover:shadow-md transition-shadow cursor-pointer"
                     onClick={() => handlePropertyClick(property)}
                   >
                     <div className="flex flex-col md:flex-row gap-4">

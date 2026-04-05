@@ -19,7 +19,7 @@ const SchenectadyRentalsSection = () => {
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-left">
-            <div className="bg-card p-6 rounded-lg border border-border">
+            <div className="bg-card p-6 rounded-2xl border border-border">
               <h4 className="text-xl font-semibold mb-3 text-foreground">
                 Downtown Schenectady Apartments
               </h4>
@@ -28,7 +28,7 @@ const SchenectadyRentalsSection = () => {
               </p>
             </div>
             
-            <div className="bg-card p-6 rounded-lg border border-border">
+            <div className="bg-card p-6 rounded-2xl border border-border">
               <h4 className="text-xl font-semibold mb-3 text-foreground">
                 Family Homes & Multi-Unit Properties
               </h4>

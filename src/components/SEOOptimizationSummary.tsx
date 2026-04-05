@@ -46,7 +46,7 @@ const SEOOptimizationSummary = () => {
   };
 
   return (
-    <div className="bg-background p-6 rounded-lg shadow-lg border border-border">
+    <div className="bg-background p-6 rounded-2xl shadow-lg border border-border">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-foreground flex items-center mb-2">
           <TrendingUp className="w-6 h-6 mr-2 text-accent" />

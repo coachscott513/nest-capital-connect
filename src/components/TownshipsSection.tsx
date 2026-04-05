@@ -130,7 +130,7 @@ const TownshipsSection = () => {
           color="text-primary"
         />
 
-        <div className="text-center mt-12 p-6 bg-card rounded-lg border border-border">
+        <div className="text-center mt-12 p-6 bg-card rounded-2xl border border-border">
           <h3 className="text-xl font-bold mb-2 text-foreground">
             Looking for Properties in a Specific Area?
           </h3>

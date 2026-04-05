@@ -384,7 +384,7 @@ const BlogPost = () => {
         <section className="relative -mt-8">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <div className="aspect-video bg-muted rounded-lg overflow-hidden shadow-xl">
+              <div className="aspect-video bg-muted rounded-2xl overflow-hidden shadow-xl">
                 <img
                   src={post.image}
                   alt={post.title}

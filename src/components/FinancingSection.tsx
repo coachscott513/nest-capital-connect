@@ -303,7 +303,7 @@ const FinancingSection = () => {
                       id="home-price" 
                       value={homePrice} 
                       onChange={(e) => handleHomePriceChange(parseInt(e.target.value) || 0)}
-                      className="w-full pl-7 pr-4 py-2 rounded-lg border border-border bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
+                      className="w-full pl-7 pr-4 py-2 rounded-2xl border border-border bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
                     />
                   </div>
                 </div>
@@ -321,7 +321,7 @@ const FinancingSection = () => {
                       id="down-payment" 
                       value={downPayment} 
                       onChange={(e) => handleDownPaymentChange(parseInt(e.target.value) || 0)}
-                      className="w-full pl-7 pr-4 py-2 rounded-lg border border-border bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                      className="w-full pl-7 pr-4 py-2 rounded-2xl border border-border bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                     />
                   </div>
                   <input 
@@ -341,7 +341,7 @@ const FinancingSection = () => {
                     id="loan-term" 
                     value={loanTerm}
                     onChange={(e) => setLoanTerm(parseInt(e.target.value))}
-                    className="w-full px-4 py-2 rounded-lg bg-background border border-border text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                    className="w-full px-4 py-2 rounded-2xl bg-background border border-border text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                   >
                     <option value="30">30-Year Fixed</option>
                     <option value="20">20-Year Fixed</option>
@@ -361,7 +361,7 @@ const FinancingSection = () => {
                       value={interestRate} 
                       onChange={(e) => setInterestRate(parseFloat(e.target.value) || 0)}
                       step="0.01" 
-                      className="w-full pr-8 pl-4 py-2 rounded-lg border border-border bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                      className="w-full pr-8 pl-4 py-2 rounded-2xl border border-border bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                     />
                   </div>
                 </div>

@@ -331,7 +331,7 @@ const RealEstateAnalyzer: React.FC = () => {
 
       <form onSubmit={handleSubmit}>
         {/* Property Information Section */}
-        <section className="mb-8 p-6 bg-card rounded-lg border border-border">
+        <section className="mb-8 p-6 bg-card rounded-2xl border border-border">
           <h4 className="text-2xl font-semibold text-primary mb-4 pb-2 border-b border-border">
             Property Information
           </h4>
@@ -475,7 +475,7 @@ const RealEstateAnalyzer: React.FC = () => {
         </section>
 
         {/* Costs & Expenses Section */}
-        <section className="mb-8 p-6 bg-card rounded-lg border border-border">
+        <section className="mb-8 p-6 bg-card rounded-2xl border border-border">
           <h4 className="text-2xl font-semibold text-primary mb-4 pb-2 border-b border-border">
             Costs & Expenses
           </h4>
@@ -630,7 +630,7 @@ const RealEstateAnalyzer: React.FC = () => {
         </section>
 
         {/* Financing Details Section */}
-        <section className="mb-8 p-6 bg-card rounded-lg border border-border">
+        <section className="mb-8 p-6 bg-card rounded-2xl border border-border">
           <h4 className="text-2xl font-semibold text-primary mb-4 pb-2 border-b border-border">
             Financing Details
           </h4>

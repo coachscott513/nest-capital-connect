@@ -179,7 +179,7 @@ const SEOAnalyzer: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 bg-background rounded-lg shadow-xl border border-border p-4 z-50 max-w-sm">
+    <div className="fixed bottom-4 right-4 bg-background rounded-2xl shadow-xl border border-border p-4 z-50 max-w-sm">
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-foreground flex items-center">
           <TrendingUp className="w-4 h-4 mr-2 text-accent" />

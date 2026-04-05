@@ -296,7 +296,7 @@ Contact an Agent at (518) 676-2347
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-accent hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2"
+        className="bg-accent hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-2xl shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center space-x-2"
       >
         <Share2 className="w-5 h-5" />
         <span>Share Analysis</span>

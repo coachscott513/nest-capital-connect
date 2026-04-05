@@ -1170,7 +1170,7 @@ const InvestmentAnalyzer = () => {
                     <p className="text-lg font-semibold text-foreground">{formatCurrency(metrics.totalMonthlyExpenses)}</p>
                     <p className="text-xs text-muted-foreground">Excludes mortgage</p>
                   </div>
-                  <div className="bg-muted/50 rounded-lg p-4 border border-border/50">
+                  <div className="bg-muted/50 rounded-2xl p-4 border border-border/50">
                     <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Total Monthly Outflow</p>
                     <p className="text-xl font-bold text-foreground">{formatCurrency(metrics.totalMonthlyOutflow)}</p>
                     <p className="text-xs text-muted-foreground">Mortgage + Expenses</p>

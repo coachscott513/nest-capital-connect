@@ -123,7 +123,7 @@ const RelatedContentSuggestions = ({ currentPage, className = "" }: RelatedConte
             <Link
               key={content.href}
               to={content.href}
-              className="group bg-card rounded-lg p-6 border border-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1"
+              className="group bg-card rounded-2xl p-6 border border-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors text-primary">

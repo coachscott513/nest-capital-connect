@@ -247,7 +247,7 @@ const RehabInvestmentHowTo = () => {
           {/* Key Metrics */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {keyMetrics.map((metric, index) => (
-              <div key={index} className="bg-background p-4 rounded-lg shadow-md">
+              <div key={index} className="bg-background p-4 rounded-2xl shadow-md">
                 <div className="flex items-center justify-center mb-2">
                   {metric.icon}
                 </div>

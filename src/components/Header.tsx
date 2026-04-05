@@ -50,7 +50,7 @@ const Header = () => {
             <button className="text-white hover:bg-background/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
               Investment Properties
             </button>
-            <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-56 border border-blue-700/50 z-50">
+            <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-2xl shadow-xl p-2 hidden group-hover:block min-w-56 border border-blue-700/50 z-50">
               <Link to="/albany-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm font-semibold">Albany Multi-Units</Link>
               <Link to="/troy-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Troy Multi-Units</Link>
               <Link to="/schenectady-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Schenectady Multi-Units</Link>
@@ -82,7 +82,7 @@ const Header = () => {
             <button className="text-white hover:bg-background/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
               Markets
             </button>
-            <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-56 border border-blue-700/50">
+            <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-2xl shadow-xl p-2 hidden group-hover:block min-w-56 border border-blue-700/50">
               <Link to="/markets" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md font-semibold text-sm">All Markets</Link>
               <div className="border-t border-blue-700 my-2"></div>
               <div className="px-4 py-1 text-blue-300 text-xs font-semibold uppercase tracking-wide">County Intelligence</div>
@@ -105,7 +105,7 @@ const Header = () => {
             <button className="text-white hover:bg-background/10 px-3 py-2 rounded-md transition-colors duration-200 text-sm font-medium">
               Investor Guides
             </button>
-            <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-lg shadow-xl p-2 hidden group-hover:block min-w-72 border border-blue-700/50 z-50">
+            <div className="absolute top-full left-0 mt-1 bg-blue-800 rounded-2xl shadow-xl p-2 hidden group-hover:block min-w-72 border border-blue-700/50 z-50">
               <Link to="/investor/nyc-to-albany-roi" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">NYC → Albany ROI Playbook</Link>
               <Link to="/investor/albany-multi-unit-market" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Albany Multi-Unit Market Report</Link>
               <Link to="/troy-multi-unit" className="block px-4 py-2 text-white hover:bg-blue-700 rounded-md text-sm">Troy Multi-Unit Market Report</Link>

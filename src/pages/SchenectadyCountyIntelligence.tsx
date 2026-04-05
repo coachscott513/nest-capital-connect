@@ -443,7 +443,7 @@ const SchenectadyCountyIntelligence = () => {
             </div>
             
             <Accordion type="single" collapsible className="space-y-4">
-              <AccordionItem value="multi-unit" className="border border-border rounded-lg px-6 bg-card">
+              <AccordionItem value="multi-unit" className="border border-border rounded-2xl px-6 bg-card">
                 <AccordionTrigger className="text-lg font-semibold hover:no-underline">
                   <div className="flex items-center gap-3">
                     <Building2 className="w-5 h-5 text-primary" />
@@ -463,7 +463,7 @@ const SchenectadyCountyIntelligence = () => {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="single-family" className="border border-border rounded-lg px-6 bg-card">
+              <AccordionItem value="single-family" className="border border-border rounded-2xl px-6 bg-card">
                 <AccordionTrigger className="text-lg font-semibold hover:no-underline">
                   <div className="flex items-center gap-3">
                     <Home className="w-5 h-5 text-primary" />
@@ -483,7 +483,7 @@ const SchenectadyCountyIntelligence = () => {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="all-listings" className="border border-border rounded-lg px-6 bg-card">
+              <AccordionItem value="all-listings" className="border border-border rounded-2xl px-6 bg-card">
                 <AccordionTrigger className="text-lg font-semibold hover:no-underline">
                   <div className="flex items-center gap-3">
                     <Search className="w-5 h-5 text-primary" />
@@ -637,7 +637,7 @@ const SchenectadyCountyIntelligence = () => {
                 "Cash-flow expectations",
                 "Offer strategy"
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-background border border-border">
+                <div key={i} className="flex items-center gap-3 p-3 rounded-2xl bg-background border border-border">
                   <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
                   <span className="text-sm text-foreground">{item}</span>
                 </div>
@@ -667,7 +667,7 @@ const SchenectadyCountyIntelligence = () => {
                 "Clear P&L, cap rate, and cash flow math",
                 "Designed for confident offers"
               ].map((item, index) => (
-                <div key={index} className="flex items-center gap-3 p-4 rounded-lg bg-card border border-border">
+                <div key={index} className="flex items-center gap-3 p-4 rounded-2xl bg-card border border-border">
                   <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="text-foreground">{item}</span>
                 </div>
