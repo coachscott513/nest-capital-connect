@@ -36,22 +36,22 @@ const AnalyzeMultifamily = () => {
   const fmt = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits: 0 });
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-background text-foreground">
       <SEOHead title="Multifamily Analyzer | Property Intelligence" description="Analyze multifamily rent roll, NOI, DSCR, cash flow, and break-even occupancy." canonical="https://capitaldistrictnest.com/analyze/multifamily" />
       <CleanHeader />
       <section className="pt-32 pb-8 px-6">
         <div className="max-w-5xl mx-auto">
-          <Link to="/analyze" className="inline-flex items-center gap-2 text-gray-400 hover:text-gray-900 transition-colors mb-8 text-sm font-medium"><ArrowLeft className="w-4 h-4" /> All Analyzers</Link>
+          <Link to="/analyze" className="inline-flex items-center gap-2 text-muted-foreground/70 hover:text-foreground transition-colors mb-8 text-sm font-medium"><ArrowLeft className="w-4 h-4" /> All Analyzers</Link>
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-14 h-14 rounded-2xl bg-violet-50 flex items-center justify-center"><Users className="w-7 h-7 text-gray-900" /></div>
+            <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center"><Users className="w-7 h-7 text-foreground" /></div>
             <h1 className="text-4xl md:text-5xl font-extralight tracking-tight">Multifamily <span className="font-normal">Analyzer</span></h1>
           </div>
-          <p className="text-lg text-gray-500 max-w-2xl">Analyze rent roll, NOI, DSCR, cash flow, and break-even occupancy.</p>
+          <p className="text-lg text-muted-foreground max-w-2xl">Analyze rent roll, NOI, DSCR, cash flow, and break-even occupancy.</p>
         </div>
       </section>
       <section className="py-12 px-6">
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="space-y-6 p-8 rounded-3xl border border-gray-100 bg-gray-50/50">
+          <div className="space-y-6 p-8 rounded-3xl border border-border/50 bg-secondary/50">
             <h2 className="text-xl font-semibold mb-4">Property & Income</h2>
             {[
               { id: "price", label: "Purchase Price", val: inputs.price, step: 5000 },
@@ -67,8 +67,8 @@ const AnalyzeMultifamily = () => {
               { id: "management", label: "Management (%)", val: inputs.management, step: 1 },
             ].map((f) => (
               <div key={f.id}>
-                <Label className="text-gray-700 text-sm font-medium">{f.label}</Label>
-                <Input type="number" value={f.val} step={f.step} onChange={(e) => setInputs({ ...inputs, [f.id]: parseFloat(e.target.value) || 0 })} className="mt-1 bg-white border-gray-200 text-gray-900 rounded-xl h-12" />
+                <Label className="text-foreground/80 text-sm font-medium">{f.label}</Label>
+                <Input type="number" value={f.val} step={f.step} onChange={(e) => setInputs({ ...inputs, [f.id]: parseFloat(e.target.value) || 0 })} className="mt-1 bg-background border-border text-foreground rounded-xl h-12" />
               </div>
             ))}
           </div>
@@ -83,16 +83,16 @@ const AnalyzeMultifamily = () => {
                 { label: "Break-Even", value: `${breakEven.toFixed(0)}%` },
                 { label: "Price / Unit", value: `$${fmt(inputs.price / (inputs.units || 1))}` },
               ].map((s) => (
-                <div key={s.label} className="p-6 rounded-2xl bg-gray-50 border border-gray-100 text-center">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">{s.label}</p>
-                  <p className="text-2xl font-bold text-gray-900">{s.value}</p>
+                <div key={s.label} className="p-6 rounded-2xl bg-secondary/40 border border-border/50 text-center">
+                  <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">{s.label}</p>
+                  <p className="text-2xl font-bold text-foreground">{s.value}</p>
                 </div>
               ))}
             </div>
-            <div className={`p-8 rounded-3xl text-center ${cashFlow >= 0 ? "bg-gray-900 text-white" : "bg-red-900 text-white"}`}>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Monthly Cash Flow</p>
+            <div className={`p-8 rounded-3xl text-center ${cashFlow >= 0 ? "bg-foreground text-background" : "bg-red-900 text-background"}`}>
+              <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider mb-2">Monthly Cash Flow</p>
               <p className="text-5xl font-bold">${fmt(cashFlow / 12)}</p>
-              <p className="text-gray-400 text-sm mt-2">${fmt(cashFlow)} / year</p>
+              <p className="text-muted-foreground/70 text-sm mt-2">${fmt(cashFlow)} / year</p>
             </div>
           </div>
         </div>
