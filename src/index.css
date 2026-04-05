@@ -59,11 +59,11 @@
     --report-text-headline: 220 20% 12%;
     --report-text-body: 220 10% 30%;
     --report-text-muted: 220 8% 52%;
-    --report-fg: 220 20% 12%;
-    --report-muted: 220 8% 52%;
-    --report-section-dark: 0 0% 98%;
-    --report-section-light: 0 0% 99%;
-    --report-section-muted: 220 10% 96%;
+    --report-fg: 0 0% 95%;
+    --report-muted: 220 8% 65%;
+    --report-section-dark: 220 20% 14%;
+    --report-section-light: 220 18% 18%;
+    --report-section-muted: 220 15% 22%;
     --report-accent: 185 55% 42%;
     --report-success: 160 70% 40%;
     --report-warning: 38 92% 50%;

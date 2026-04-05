@@ -80,7 +80,7 @@ const SamplePropertyIntelligenceReport = () => {
         <link rel="canonical" href="https://www.capitaldistrictnest.com/reports/sample-property-intelligence" />
       </Helmet>
 
-      <MainHeader />
+      <CleanHeader />
 
       {/* Hero Section */}
       <section className="px-[5%] py-16 md:py-20 bg-gradient-to-br from-primary/5 via-background to-background border-b border-border">
