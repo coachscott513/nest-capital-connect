@@ -7,6 +7,7 @@ import CinematicHero from "@/components/CinematicHero";
 import FinancingBand from "@/components/FinancingBand";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import { localBusinessSchema } from "@/utils/seoSchemas";
 
 const Index = () => {
   return (
@@ -18,6 +19,8 @@ const Index = () => {
         canonical="https://www.capitaldistrictnest.com"
         ogImage="https://www.capitaldistrictnest.com/og-image-capital-district.jpg"
         ogType="website"
+        structuredData={localBusinessSchema}
+        noBreadcrumb
       />
 
       <CleanHeader />
