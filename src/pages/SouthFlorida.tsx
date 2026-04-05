@@ -79,7 +79,7 @@ const SouthFlorida = () => {
             backgroundPosition: "center",
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-white" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-[hsl(var(--background))]" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto text-center px-6 pt-32 pb-20">
           <p className="text-sm font-semibold tracking-[0.3em] uppercase text-background/80 mb-6">South Florida Property Intelligence</p>
