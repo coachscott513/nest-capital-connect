@@ -83,7 +83,7 @@ const FultonMontgomeryMultiUnitMarket = () => {
               <p className="text-xl text-primary font-semibold mb-4">
                 Highest Cash Flow in Upstate New York
               </p>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-8">
+              <p className="text-lg text-primary-foreground/70 max-w-3xl mx-auto mb-8">
                 Fulton and Montgomery Counties offer the strongest ROI opportunities in the entire region. These counties are ideal for investors focused on cash flow, BRRRR strategies, and long-term rental portfolios.
               </p>
               

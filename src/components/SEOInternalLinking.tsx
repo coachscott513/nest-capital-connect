@@ -254,7 +254,7 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
       case 'Markets': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
       case 'Service': return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
       case 'Resource': return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
-      default: return 'bg-secondary text-foreground dark:bg-primary dark:text-gray-200';
+      default: return 'bg-secondary text-foreground dark:bg-primary dark:text-muted-foreground';
     }
   };
 

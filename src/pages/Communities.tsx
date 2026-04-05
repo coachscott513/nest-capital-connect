@@ -226,7 +226,7 @@ const Communities = () => {
       
       <MainLayout>
         {/* Dark Mode Command Center */}
-        <div className="bg-slate-950 min-h-screen">
+        <div className="bg-background min-h-screen">
           
           {/* Hero Command Center Header */}
           <section className="relative py-20 px-4 overflow-hidden">

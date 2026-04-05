@@ -56,7 +56,7 @@ const ReportPreviewShowcase = ({ showCTA = true, compact = false }: ReportPrevie
       value: "$63,750",
       description: "Total capital required at closing",
       color: "text-muted-foreground",
-      bgColor: "bg-slate-500/10"
+      bgColor: "bg-muted"
     }
   ];
 

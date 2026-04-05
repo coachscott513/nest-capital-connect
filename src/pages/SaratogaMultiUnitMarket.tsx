@@ -80,7 +80,7 @@ const SaratogaMultiUnitMarket = () => {
               <p className="text-xl md:text-2xl text-primary font-semibold mb-4">
                 Cap Rates: 7–10% • Cash-on-Cash: 12–20% • Premium Appreciation Market
               </p>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-8">
+              <p className="text-lg text-primary-foreground/70 max-w-3xl mx-auto mb-8">
                 Saratoga County is the strongest appreciation market in the Capital District, known for high-income renters, low vacancy, and stable long-term growth. This makes Saratoga the preferred "blue-chip" investment market for investors seeking both cash flow and appreciation.
               </p>
               

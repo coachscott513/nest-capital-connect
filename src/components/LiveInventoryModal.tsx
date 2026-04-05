@@ -129,10 +129,10 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-6xl max-h-[90vh] bg-slate-950 border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
+            className="relative w-full max-w-6xl max-h-[90vh] bg-primary border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
           >
             {/* Header */}
-            <div className="sticky top-0 z-10 bg-slate-950/95 backdrop-blur-xl border-b border-white/10 p-6">
+            <div className="sticky top-0 z-10 bg-primary/95 backdrop-blur-xl border-b border-white/10 p-6">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
@@ -337,7 +337,7 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
             </div>
             
             {/* Footer */}
-            <div className="sticky bottom-0 bg-slate-950/95 backdrop-blur-xl border-t border-white/10 p-4 flex items-center justify-between">
+            <div className="sticky bottom-0 bg-primary/95 backdrop-blur-xl border-t border-white/10 p-4 flex items-center justify-between">
               <p className="text-sm text-white/50">
                 Showing {filteredProperties.length} of {properties.length} properties
               </p>

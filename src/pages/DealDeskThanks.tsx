@@ -46,19 +46,19 @@ const DealDeskThanks = () => {
             Your Investor Snapshot is being prepared and will be delivered same-day (typically within a few hours).
           </p>
 
-          <div className="bg-[#111111] border border-gray-800 rounded-lg p-6 mb-8 text-left">
+          <div className="bg-[#111111] border border-border rounded-lg p-6 mb-8 text-left">
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300">Check your inbox for a confirmation email.</span>
+                <span className="text-muted-foreground">Check your inbox for a confirmation email.</span>
               </li>
               <li className="flex items-start gap-3">
                 <Inbox className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300">If you don't see it, check spam/promotions.</span>
+                <span className="text-muted-foreground">If you don't see it, check spam/promotions.</span>
               </li>
               <li className="flex items-start gap-3">
                 <RefreshCw className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300">Redirecting you to explore Delmar market insights...</span>
+                <span className="text-muted-foreground">Redirecting you to explore Delmar market insights...</span>
               </li>
             </ul>
           </div>

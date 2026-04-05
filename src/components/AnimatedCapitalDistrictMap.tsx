@@ -302,15 +302,15 @@ const AnimatedCapitalDistrictMap = () => {
                 </h4>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-300">Total Cities</span>
+                    <span className="text-muted-foreground">Total Cities</span>
                     <span className="text-white font-semibold">{areas.length}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-300">Active Listings</span>
+                    <span className="text-muted-foreground">Active Listings</span>
                     <span className="text-white font-semibold">8.5K+</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-300">Investment Properties</span>
+                    <span className="text-muted-foreground">Investment Properties</span>
                     <span className="text-white font-semibold">1.2K+</span>
                   </div>
                 </div>
@@ -334,7 +334,7 @@ const AnimatedCapitalDistrictMap = () => {
                   className={`w-3 h-3 rounded-full transition-all duration-500 ${
                     activeAreas.includes(area.id) 
                       ? `bg-gradient-to-r ${area.color} shadow-lg scale-125` 
-                      : 'bg-slate-600 hover:bg-slate-500'
+                      : 'bg-muted hover:bg-muted/80'
                   }`}
                   title={area.name}
                 />
