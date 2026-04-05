@@ -88,13 +88,13 @@ const BrandHero = () => {
             <div className="relative w-full aspect-square max-w-[620px] mx-auto">
               {/* Topographic contour rings */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="48" cy="50" rx="40" ry="38" fill="none" stroke="hsl(var(--border))" strokeWidth="0.3" opacity="0.5" />
-                <ellipse cx="48" cy="50" rx="30" ry="28" fill="none" stroke="hsl(var(--border))" strokeWidth="0.25" opacity="0.4" />
-                <ellipse cx="48" cy="50" rx="20" ry="18" fill="none" stroke="hsl(var(--border))" strokeWidth="0.2" opacity="0.3" />
+                <ellipse cx="40" cy="50" rx="42" ry="40" fill="none" stroke="hsl(var(--border))" strokeWidth="0.3" opacity="0.5" />
+                <ellipse cx="40" cy="50" rx="32" ry="30" fill="none" stroke="hsl(var(--border))" strokeWidth="0.25" opacity="0.4" />
+                <ellipse cx="40" cy="50" rx="22" ry="20" fill="none" stroke="hsl(var(--border))" strokeWidth="0.2" opacity="0.3" />
                 {/* River line (Hudson) */}
-                <path d="M 56 5 Q 58 20, 55 35 Q 52 50, 55 65 Q 58 80, 56 95" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.4" opacity="0.2" />
+                <path d="M 50 5 Q 52 20, 49 35 Q 46 50, 49 65 Q 52 80, 50 95" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.4" opacity="0.2" />
                 {/* Mohawk */}
-                <path d="M 10 45 Q 25 42, 40 46 Q 48 48, 55 45" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.3" opacity="0.15" />
+                <path d="M 5 45 Q 18 42, 32 46 Q 40 48, 49 45" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.3" opacity="0.15" />
               </svg>
 
               {/* Connection lines between major towns */}
