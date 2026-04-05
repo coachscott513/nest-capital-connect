@@ -2,6 +2,7 @@ import { ArrowRight, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import BrandHero from "@/components/BrandHero";
+import PropertyTypeBand from "@/components/PropertyTypeBand";
 import CinematicHero from "@/components/CinematicHero";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
