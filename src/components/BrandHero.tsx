@@ -21,8 +21,8 @@ const towns = [
   { name: "Catskill", slug: "catskill", x: 55, y: 82, size: "sm" },
 ];
 
-const dotSize = { lg: 10, md: 7, sm: 5 };
-const glowSize = { lg: 32, md: 24, sm: 18 };
+const dotSize = { lg: 14, md: 10, sm: 7 };
+const glowSize = { lg: 44, md: 32, sm: 24 };
 
 const BrandHero = () => {
   const [hovered, setHovered] = useState<string | null>(null);
@@ -35,7 +35,7 @@ const BrandHero = () => {
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-primary/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 pt-28 pb-16 md:pt-40 md:pb-24 lg:pt-48 lg:pb-28">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-12 lg:gap-16 items-center">
           
           {/* Left: Brand statement */}
           <motion.div
@@ -52,11 +52,11 @@ const BrandHero = () => {
               Capital District<br />Nest
             </h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg font-light">
+            <p className="text-lg md:text-xl text-foreground/60 leading-relaxed max-w-lg font-light">
               A smarter way to explore real estate in New York's Capital District — with local intelligence for buyers, sellers, and investors.
             </p>
 
-            <p className="text-sm text-muted-foreground/70 max-w-md leading-relaxed">
+            <p className="text-sm text-foreground/45 max-w-md leading-relaxed">
               Not scraped estimates. Not generic national feeds.<br />
               Real local context, market insight, and property analysis built for this region.
             </p>
@@ -85,7 +85,7 @@ const BrandHero = () => {
             transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="hidden lg:block relative"
           >
-            <div className="relative w-full aspect-square max-w-[520px] mx-auto">
+            <div className="relative w-full aspect-square max-w-[620px] mx-auto">
               {/* Topographic contour rings */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <ellipse cx="48" cy="50" rx="40" ry="38" fill="none" stroke="hsl(var(--border))" strokeWidth="0.3" opacity="0.5" />
@@ -178,12 +178,12 @@ const BrandHero = () => {
                       <span
                         className="transition-all duration-500"
                         style={{
-                          fontSize: isHovered ? 13 : town.size === 'lg' ? 11 : 9,
-                          fontWeight: isHovered ? 600 : town.size === 'lg' ? 500 : 400,
+                          fontSize: isHovered ? 15 : town.size === 'lg' ? 13 : 11,
+                          fontWeight: isHovered ? 600 : town.size === 'lg' ? 600 : 500,
                           color: isHovered
                             ? 'hsl(var(--foreground))'
                             : 'hsl(var(--muted-foreground))',
-                          opacity: isHovered ? 1 : town.size === 'sm' ? 0.5 : 0.7,
+                          opacity: isHovered ? 1 : town.size === 'sm' ? 0.6 : 0.8,
                           letterSpacing: isHovered ? '-0.01em' : '0',
                         }}
                       >
