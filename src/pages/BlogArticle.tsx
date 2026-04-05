@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, User, Share2, Bookmark, TrendingUp, BarChart3 } from 'lucide-react';
 import MainLayout from '@/components/MainLayout';
 import SEOHead from '@/components/SEOHead';
+import { buildArticleSchema } from '@/utils/seoSchemas';
 import { Separator } from '@/components/ui/separator';
 
 // Article data - in production this would come from a CMS or database
