@@ -4,6 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import BrandHero from "@/components/BrandHero";
 import PropertyTypeBand from "@/components/PropertyTypeBand";
 import CinematicHero from "@/components/CinematicHero";
+import FinancingBand from "@/components/FinancingBand";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 
