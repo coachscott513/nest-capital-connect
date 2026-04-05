@@ -21,8 +21,8 @@ const towns = [
   { name: "Catskill", slug: "catskill", x: 55, y: 82, size: "sm" },
 ];
 
-const dotSize = { lg: 10, md: 7, sm: 5 };
-const glowSize = { lg: 32, md: 24, sm: 18 };
+const dotSize = { lg: 14, md: 10, sm: 7 };
+const glowSize = { lg: 44, md: 32, sm: 24 };
 
 const BrandHero = () => {
   const [hovered, setHovered] = useState<string | null>(null);
