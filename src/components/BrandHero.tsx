@@ -56,7 +56,7 @@ const BrandHero = () => {
               A smarter way to explore real estate in New York's Capital District — with local intelligence for buyers, sellers, and investors.
             </p>
 
-            <p className="text-sm text-muted-foreground/70 max-w-md leading-relaxed">
+            <p className="text-sm text-foreground/45 max-w-md leading-relaxed">
               Not scraped estimates. Not generic national feeds.<br />
               Real local context, market insight, and property analysis built for this region.
             </p>
