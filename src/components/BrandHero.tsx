@@ -100,13 +100,13 @@ const BrandHero = () => {
               {/* Connection lines between major towns */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 {[
-                  [48, 58, 58, 42],   // Albany-Troy
-                  [48, 58, 32, 50],   // Albany-Schenectady
-                  [48, 58, 54, 32],   // Albany-Clifton Park
-                  [54, 32, 52, 18],   // Clifton Park-Saratoga
-                  [58, 42, 54, 32],   // Troy-Clifton Park
-                  [48, 58, 46, 68],   // Albany-Delmar
-                  [32, 50, 36, 62],   // Schenectady-Guilderland
+                  [42, 58, 52, 42],   // Albany-Troy
+                  [42, 58, 26, 50],   // Albany-Schenectady
+                  [42, 58, 48, 32],   // Albany-Clifton Park
+                  [48, 32, 46, 18],   // Clifton Park-Saratoga
+                  [52, 42, 48, 32],   // Troy-Clifton Park
+                  [42, 58, 40, 68],   // Albany-Delmar
+                  [26, 50, 28, 62],   // Schenectady-Guilderland
                 ].map(([x1, y1, x2, y2], i) => (
                   <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
                     stroke="hsl(var(--border))" strokeWidth="0.2" opacity="0.4"
