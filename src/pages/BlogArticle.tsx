@@ -305,7 +305,7 @@ const BlogArticle = () => {
         structuredData={buildArticleSchema({
           title: article.title,
           description: article.subtitle,
-          slug: article.slug,
+          slug: slug || '',
           publishedAt: article.publishedAt || new Date().toISOString(),
         })}
       />
