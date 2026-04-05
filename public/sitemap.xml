@@ -1,126 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
-  <url>
-    <loc>https://capitaldistrictnest.com/</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <!-- Main Investment Pages -->
-  <url>
-    <loc>https://capitaldistrictnest.com/albany-investment-properties</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://capitaldistrictnest.com/albany-multi-unit</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://capitaldistrictnest.com/albany-land</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://capitaldistrictnest.com/first-time-buyer-programs-albany</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://capitaldistrictnest.com/sell-investment-property</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://capitaldistrictnest.com/cash-flow-report</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Market Pages -->
-  <url>
-    <loc>https://capitaldistrictnest.com/albany-real-estate</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://capitaldistrictnest.com/troy-real-estate</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://capitaldistrictnest.com/schenectady-real-estate</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://capitaldistrictnest.com/saratoga-real-estate</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <!-- Rental Pages -->
-  <url>
-    <loc>https://capitaldistrictnest.com/rentals</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Blog -->
-  <url>
-    <loc>https://capitaldistrictnest.com/blog</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Reviews -->
-  <url>
-    <loc>https://capitaldistrictnest.com/reviews</loc>
-    <lastmod>2025-12-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Additional Pages -->
-  <url>
-    <loc>https://capitaldistrictnest.com/grants</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://capitaldistrictnest.com/communities</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://capitaldistrictnest.com/markets</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Legal Pages -->
-  <url>
-    <loc>https://capitaldistrictnest.com/privacy-policy</loc>
-    <lastmod>2025-01-12</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
+  <!-- Static Pages - Priority 1.0/0.9 -->
+  <url><loc>https://www.capitaldistrictnest.com/</loc><lastmod>2026-04-05</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/analyze</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/markets</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/blog</loc><lastmod>2026-04-05</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/financing</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/communities</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/intelligence</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/sell-investment-property</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/first-time-homebuyers</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/investor-tools</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/rentals</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/loan-types</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/buyer-roadmap</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/reviews</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Analyzer Sub-Pages -->
+  <url><loc>https://www.capitaldistrictnest.com/analyze/condo</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/analyze/single-family</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/analyze/rental</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/analyze/multifamily</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/analyze/luxury</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/analyze/commercial</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/analyze/land</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Town Intelligence Pages - Priority 0.8 -->
+  <url><loc>https://www.capitaldistrictnest.com/towns/albany</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/towns/amsterdam</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/towns/clifton-park</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/towns/delmar</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/towns/guilderland</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/towns/mechanicville</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/towns/niskayuna</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/towns/queensbury</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/towns/saratoga-springs</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/towns/schenectady</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/towns/troy</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/towns/voorheesville</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+
+  <!-- Market Pages - Priority 0.8 -->
+  <url><loc>https://www.capitaldistrictnest.com/single-family-market</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/albany-multi-unit</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/schenectady-multi-unit</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/troy-multi-unit</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/albany-investment-properties</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/investment-properties</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/land-buyers</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/schenectady-county-real-estate</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+
+  <!-- Investor Pages - Priority 0.7 -->
+  <url><loc>https://www.capitaldistrictnest.com/investor/nyc-to-albany-roi</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/investor/albany-multi-unit-market</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/investor/1031-nyc-to-albany</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/investor/best-neighborhoods-cash-flow-capital-district</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/investor/saratoga-multi-unit-market</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/investor/fulton-montgomery-multi-unit-market</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Property Listings - Priority 0.7 -->
+  <url><loc>https://www.capitaldistrictnest.com/listings/137a-elsmere-ave-delmar-ny</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/listings/1999-ridge-road-queensbury-ny</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/listings/22-lavery-drive-delmar-ny</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+
+  <!-- Reports & Intel - Priority 0.7 -->
+  <url><loc>https://www.capitaldistrictnest.com/reports</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/reports/sample-property-intelligence</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/reports/1999-ridge-road-queensbury-ny</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/intel/1999-ridge-road-queensbury-ny</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/case-studies/177-lancaster-albany</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Buyer Journey - Priority 0.7 -->
+  <url><loc>https://www.capitaldistrictnest.com/buyer-journey/first-time-buyer</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/buyer-journey/financing</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/buyer-journey/investor</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/buyer-journey/land-buyer</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Search Hubs - Priority 0.7 -->
+  <url><loc>https://www.capitaldistrictnest.com/search/single-family</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/search/investors</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/search/foreclosures</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/search/land</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/search/rentals</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+
+  <!-- Blog Posts - Priority 0.6 -->
+  <url><loc>https://www.capitaldistrictnest.com/blog/article/2025-capital-district-market-forecast</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <!-- Supplementary Pages -->
+  <url><loc>https://www.capitaldistrictnest.com/grants</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/cash-flow-report</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/market-insights</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/vendors</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/ask</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/south-florida</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/delmar-market-insights</loc><lastmod>2026-04-05</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/site-index</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/privacy-policy</loc><lastmod>2026-04-05</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>
