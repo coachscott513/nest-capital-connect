@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar, Clock, User, ArrowLeft, Share2, BookOpen } from 'lucide-react';
 import MainLayout from '@/components/MainLayout';
 import SEOHead from '@/components/SEOHead';
+import { buildArticleSchema } from '@/utils/seoSchemas';
 import DOMPurify from 'dompurify';
 
 // Sample blog post data - you can replace with real data from Supabase later
