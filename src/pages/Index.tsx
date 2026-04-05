@@ -1,18 +1,12 @@
 import { useState } from "react";
-import { ArrowRight, BarChart3, CheckCircle } from "lucide-react";
+import { ArrowRight, BarChart3, CheckCircle, MapPin, Home, Users, TrendingUp, DollarSign, Shield, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
-import GuideLeadModal from "@/components/GuideLeadModal";
 import SEOHead from "@/components/SEOHead";
 import CinematicHero from "@/components/CinematicHero";
-import DealHeroSection from "@/components/DealHeroSection";
-import RealEstateVendorDirectory from "@/components/RealEstateVendorDirectory";
-import RentalVault from "@/components/RentalVault";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 
 const Index = () => {
-  const [guideModal, setGuideModal] = useState<{ open: boolean; guideType: string; redirectPath: string }>({ open: false, guideType: "", redirectPath: "" });
-
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
@@ -26,45 +20,229 @@ const Index = () => {
 
       <CleanHeader />
 
-      {/* Original Cinematic Hero */}
+      {/* HERO */}
       <CinematicHero />
 
-      {/* Two-Column Deal Section with Sample Property Card */}
-      <DealHeroSection />
+      {/* TRUST STRIP */}
+      <section className="border-y border-border bg-secondary/50">
+        <div className="max-w-7xl mx-auto px-6 py-5">
+          <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-2 text-sm text-muted-foreground">
+            <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-primary" /> Built for the Capital District</span>
+            <span className="flex items-center gap-2"><BarChart3 className="w-4 h-4 text-primary" /> Property intelligence for buyers, sellers & investors</span>
+            <span className="flex items-center gap-2"><Shield className="w-4 h-4 text-primary" /> Local market insight with premium presentation</span>
+            <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-primary" /> Direct guidance from a real local expert</span>
+          </div>
+        </div>
+      </section>
 
-      {/* Real Estate Vendor Directory */}
-      <RealEstateVendorDirectory />
+      {/* ANALYZER FEATURE SECTION */}
+      <section className="py-20 md:py-28 px-6 bg-background">
+        <div className="max-w-5xl mx-auto text-center mb-16">
+          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Signature Product</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight mb-6">
+            Everything you need to understand a property in one place
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Compare value, rent potential, investment returns, and local context — all in one analysis.
+          </p>
+        </div>
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            { icon: DollarSign, title: "Cash Flow & Returns", desc: "Analyze cash flow, cap rate, rent potential, and investment scenarios." },
+            { icon: TrendingUp, title: "Value & Equity", desc: "Understand value trends, pricing position, and potential equity." },
+            { icon: MapPin, title: "Local Intelligence", desc: "Connect property decisions to neighborhood and market context." },
+          ].map((item) => (
+            <div key={item.title} className="bento-card p-8 text-center">
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                <item.icon className="w-7 h-7 text-primary" />
+              </div>
+              <h3 className="font-semibold text-xl text-foreground mb-3">{item.title}</h3>
+              <p className="text-muted-foreground">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
+          <Link to="/analyze" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold text-lg hover:bg-primary/90 transition-colors">
+            Analyze a Property <ArrowRight className="w-5 h-5" />
+          </Link>
+          <Link to="/dealdesk" className="inline-flex items-center gap-2 border border-border text-foreground px-8 py-4 rounded-xl font-semibold hover:bg-secondary transition-colors">
+            Request a Custom Review
+          </Link>
+        </div>
+      </section>
 
-      {/* Rental Vault */}
-      <RentalVault limit={4} />
+      {/* TOWNS & MARKETS */}
+      <section className="py-20 md:py-28 px-6 bg-card">
+        <div className="max-w-5xl mx-auto text-center mb-16">
+          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Local Coverage</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight mb-6">
+            Explore the Capital District town by town
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Each town analyzed independently with its own market behavior and patterns.
+          </p>
+        </div>
+        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {[
+            { name: "Albany", slug: "albany" },
+            { name: "Troy", slug: "troy" },
+            { name: "Schenectady", slug: "schenectady" },
+            { name: "Saratoga Springs", slug: "saratoga-springs" },
+            { name: "Clifton Park", slug: "clifton-park" },
+            { name: "Delmar", slug: "delmar" },
+            { name: "Guilderland", slug: "guilderland" },
+            { name: "Queensbury", slug: "queensbury" },
+          ].map((town) => (
+            <Link
+              key={town.slug}
+              to={`/towns/${town.slug}`}
+              className="bento-card p-6 hover:border-primary/30 transition-all group"
+            >
+              <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">{town.name}</h3>
+              <p className="text-sm text-muted-foreground mt-1">View Insights →</p>
+            </Link>
+          ))}
+        </div>
+        <div className="text-center mt-10">
+          <Link to="/communities" className="inline-flex items-center gap-2 text-primary font-semibold hover:underline">
+            Browse All Towns <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </section>
 
-      {/* WHY THIS PLATFORM */}
-      <section className="section-massive px-[5%] bg-background">
+      {/* FIRST-TIME BUYERS */}
+      <section className="py-20 md:py-28 px-6 bg-background">
+        <div className="max-w-4xl mx-auto">
+          <div className="bento-card p-10 md:p-14">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Home className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-sm font-semibold text-muted-foreground">For Buyers</span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                  First-Time Buyer Guidance, Without the Noise
+                </h3>
+                <p className="text-muted-foreground text-lg">
+                  Low-down-payment options, grants, local insights, and practical guidance.
+                </p>
+              </div>
+              <Link
+                to="/first-time-homebuyers"
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:bg-primary/90 transition-colors flex-shrink-0"
+              >
+                Explore Programs <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SELLERS */}
+      <section className="py-20 md:py-28 px-6 bg-card">
+        <div className="max-w-4xl mx-auto">
+          <div className="bento-card p-10 md:p-14">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-sm font-semibold text-muted-foreground">For Sellers</span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                  A Smarter Way to Think About Selling
+                </h3>
+                <p className="text-muted-foreground text-lg">
+                  Use data, pricing insight, and local strategy to understand your next move.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 flex-shrink-0">
+                <Link
+                  to="/dealdesk"
+                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:bg-primary/90 transition-colors"
+                >
+                  Get a Property Review <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  to="/sell-investment-property"
+                  className="inline-flex items-center gap-2 border border-border text-foreground px-8 py-4 rounded-xl font-semibold hover:bg-secondary transition-colors"
+                >
+                  Explore Seller Options
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* INVESTORS */}
+      <section className="py-20 md:py-28 px-6 bg-background">
+        <div className="max-w-4xl mx-auto">
+          <div className="bento-card p-10 md:p-14">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <BarChart3 className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-sm font-semibold text-muted-foreground">For Investors</span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                  Investment Property Intelligence for the Capital District
+                </h3>
+                <p className="text-muted-foreground text-lg">
+                  Multi-unit, rehab, rental, off-market analysis, and value-add thinking.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 flex-shrink-0">
+                <Link
+                  to="/analyze"
+                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:bg-primary/90 transition-colors"
+                >
+                  Analyze a Property <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  to="/investor-tools"
+                  className="inline-flex items-center gap-2 border border-border text-foreground px-8 py-4 rounded-xl font-semibold hover:bg-secondary transition-colors"
+                >
+                  View Investor Tools
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT / CREDIBILITY */}
+      <section className="py-20 md:py-28 px-6 bg-card">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-20">
-            <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Why Choose Us</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-6">
+          <div className="text-center mb-16">
+            <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-4">Local Expertise</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight mb-6">
               Built different. On purpose.
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto body-airy font-light">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               No scraped estimates. No AI guesses. Real data, verified locally.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { title: "Verified data sources", description: "Tax records, MLS activity, and market trends — combined for the full picture." },
-              { title: "Local intelligence, not generic feeds", description: "Each town analyzed independently with its own market behavior and patterns." },
-              { title: "Signal, not noise", description: "Designed to surface what matters — without the clutter of typical real estate sites." },
-              { title: "No ads. No lead selling.", description: "Your information stays yours. This is where trust is earned." }
+              { title: "Verified data sources", desc: "Tax records, MLS activity, and market trends — combined for the full picture." },
+              { title: "Local intelligence, not generic feeds", desc: "Each town analyzed independently with its own market behavior and patterns." },
+              { title: "Signal, not noise", desc: "Designed to surface what matters — without the clutter of typical real estate sites." },
+              { title: "No ads. No lead selling.", desc: "Your information stays yours. This is where trust is earned." },
             ].map((item) => (
-              <div key={item.title} className="bento-card p-10 hover-lift">
-                <div className="flex items-start gap-5">
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-6 h-6 text-primary" />
+              <div key={item.title} className="bento-card p-8">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <CheckCircle className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-xl text-foreground mb-3">{item.title}</h3>
-                    <p className="text-muted-foreground body-airy">{item.description}</p>
+                    <h3 className="font-semibold text-lg text-foreground mb-2">{item.title}</h3>
+                    <p className="text-muted-foreground">{item.desc}</p>
                   </div>
                 </div>
               </div>
@@ -73,71 +251,33 @@ const Index = () => {
         </div>
       </section>
 
-      {/* PROPERTY INTELLIGENCE */}
-      <section className="px-[5%] section-massive bg-card">
-        <div className="max-w-5xl mx-auto">
-          <div className="bento-card p-10 md:p-16 lg:p-20 text-center">
-            <div className="inline-flex items-center gap-2 glass rounded-full px-5 py-2.5 mb-8">
-              <BarChart3 className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-foreground">Property Intelligence</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground tracking-tight mb-8">
-              Beyond the listing.<br />
-              <span className="text-gradient-premium font-normal">Into the intelligence.</span>
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto body-airy font-light mb-12">
-              Our reports combine verified public records, tax data, and real market activity — organized in a way that's easy to understand and act on.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-              <Link to="/intel/1999-ridge-road-queensbury-ny" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-10 py-5 rounded-2xl font-semibold hover:scale-105 transition-transform text-lg">
-                View Sample Report <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link to="/intelligence" className="inline-flex items-center gap-2 glass px-10 py-5 rounded-2xl font-semibold text-foreground hover:bg-primary hover:text-primary-foreground transition-all text-lg">
-                Request a Report
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* INVESTOR */}
-      <section className="px-[5%] py-20 bg-background">
-        <div className="max-w-4xl mx-auto">
-          <div className="bento-card p-10 md:p-12">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    <BarChart3 className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-sm font-semibold text-muted-foreground">For Investors</span>
-                </div>
-                <h3 className="text-2xl md:text-3xl font-semibold text-foreground mb-3">Cash-Flow, Multi-Unit & Return Analysis</h3>
-                <p className="text-muted-foreground body-airy text-lg">Professional tools for serious investors. Rent potential, cash flow projections, and market reports.</p>
-              </div>
-              <Link to="/investor-tools" className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-semibold hover:scale-105 transition-transform flex-shrink-0 text-lg">
-                Explore Tools <ArrowRight className="w-5 h-5" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* FINAL CTA */}
-      <section className="relative px-[5%] section-massive overflow-hidden bg-card">
-        <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[150px]" />
-        </div>
+      <section className="py-24 md:py-32 px-6 bg-background relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" />
         <div className="relative z-10 max-w-3xl mx-auto text-center">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extralight text-foreground tracking-tight mb-8">Start with your town.</h2>
-          <p className="text-2xl text-muted-foreground mb-12 body-airy font-light">Go deeper only when you're ready.</p>
-          <Link to="/communities" className="inline-flex items-center justify-center gap-3 bg-foreground text-background px-12 py-6 rounded-2xl font-semibold text-xl hover:scale-105 transition-transform">
-            Explore Towns <ArrowRight className="w-6 h-6" />
-          </Link>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight mb-6">
+            Real estate, but clearer.
+          </h2>
+          <p className="text-xl text-muted-foreground mb-10">
+            Talk with Scott or analyze a property now.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              to="/analyze"
+              className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-10 py-5 rounded-xl font-semibold text-lg hover:bg-foreground/90 transition-colors"
+            >
+              Analyze a Property <ArrowRight className="w-5 h-5" />
+            </Link>
+            <a
+              href="tel:+15186762347"
+              className="inline-flex items-center justify-center gap-2 border border-border text-foreground px-10 py-5 rounded-xl font-semibold text-lg hover:bg-secondary transition-colors"
+            >
+              <Phone className="w-5 h-5" /> Talk With Scott
+            </a>
+          </div>
         </div>
       </section>
 
-      <GuideLeadModal open={guideModal.open} onOpenChange={(open) => setGuideModal({ ...guideModal, open })} guideType={guideModal.guideType} redirectPath={guideModal.redirectPath} />
       <Footer />
     </div>
   );
