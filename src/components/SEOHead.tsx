@@ -11,7 +11,7 @@ interface SEOHeadProps {
   ogType?: string;
 }
 
-const BASE_URL = "https://capitaldistrictnest.com";
+const BASE_URL = "https://www.capitaldistrictnest.com";
 
 const SEOHead = ({ 
   title = "Capital District Nest | Albany NY Real Estate Investment Intelligence",
