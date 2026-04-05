@@ -4,21 +4,21 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 const towns = [
-  { name: "Albany", slug: "albany", x: 48, y: 58, size: "lg" },
-  { name: "Troy", slug: "troy", x: 58, y: 42, size: "lg" },
-  { name: "Schenectady", slug: "schenectady", x: 32, y: 50, size: "lg" },
-  { name: "Saratoga Springs", slug: "saratoga-springs", x: 52, y: 18, size: "lg" },
-  { name: "Clifton Park", slug: "clifton-park", x: 54, y: 32, size: "md" },
-  { name: "Delmar", slug: "delmar", x: 46, y: 68, size: "md" },
-  { name: "Guilderland", slug: "guilderland", x: 36, y: 62, size: "md" },
-  { name: "East Greenbush", slug: "east-greenbush", x: 62, y: 56, size: "sm" },
-  { name: "Queensbury", slug: "queensbury", x: 60, y: 10, size: "md" },
-  { name: "Niskayuna", slug: "niskayuna", x: 40, y: 44, size: "sm" },
-  { name: "Colonie", slug: "colonie", x: 44, y: 46, size: "sm" },
-  { name: "Mechanicville", slug: "mechanicville", x: 58, y: 26, size: "sm" },
-  { name: "Amsterdam", slug: "amsterdam", x: 18, y: 42, size: "sm" },
-  { name: "Voorheesville", slug: "voorheesville", x: 34, y: 72, size: "sm" },
-  { name: "Catskill", slug: "catskill", x: 55, y: 82, size: "sm" },
+  { name: "Albany", slug: "albany", x: 42, y: 58, size: "lg" },
+  { name: "Troy", slug: "troy", x: 52, y: 42, size: "lg" },
+  { name: "Schenectady", slug: "schenectady", x: 26, y: 50, size: "lg" },
+  { name: "Saratoga Springs", slug: "saratoga-springs", x: 46, y: 18, size: "lg" },
+  { name: "Clifton Park", slug: "clifton-park", x: 48, y: 32, size: "md" },
+  { name: "Delmar", slug: "delmar", x: 40, y: 68, size: "md" },
+  { name: "Guilderland", slug: "guilderland", x: 28, y: 62, size: "md" },
+  { name: "East Greenbush", slug: "east-greenbush", x: 56, y: 56, size: "sm" },
+  { name: "Queensbury", slug: "queensbury", x: 54, y: 10, size: "md" },
+  { name: "Niskayuna", slug: "niskayuna", x: 34, y: 44, size: "sm" },
+  { name: "Colonie", slug: "colonie", x: 38, y: 46, size: "sm" },
+  { name: "Mechanicville", slug: "mechanicville", x: 52, y: 26, size: "sm" },
+  { name: "Amsterdam", slug: "amsterdam", x: 10, y: 42, size: "sm" },
+  { name: "Voorheesville", slug: "voorheesville", x: 26, y: 72, size: "sm" },
+  { name: "Catskill", slug: "catskill", x: 48, y: 82, size: "sm" },
 ];
 
 const dotSize = { lg: 14, md: 10, sm: 7 };
@@ -88,25 +88,25 @@ const BrandHero = () => {
             <div className="relative w-full aspect-square max-w-[620px] mx-auto">
               {/* Topographic contour rings */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="48" cy="50" rx="40" ry="38" fill="none" stroke="hsl(var(--border))" strokeWidth="0.3" opacity="0.5" />
-                <ellipse cx="48" cy="50" rx="30" ry="28" fill="none" stroke="hsl(var(--border))" strokeWidth="0.25" opacity="0.4" />
-                <ellipse cx="48" cy="50" rx="20" ry="18" fill="none" stroke="hsl(var(--border))" strokeWidth="0.2" opacity="0.3" />
+                <ellipse cx="40" cy="50" rx="42" ry="40" fill="none" stroke="hsl(var(--border))" strokeWidth="0.3" opacity="0.5" />
+                <ellipse cx="40" cy="50" rx="32" ry="30" fill="none" stroke="hsl(var(--border))" strokeWidth="0.25" opacity="0.4" />
+                <ellipse cx="40" cy="50" rx="22" ry="20" fill="none" stroke="hsl(var(--border))" strokeWidth="0.2" opacity="0.3" />
                 {/* River line (Hudson) */}
-                <path d="M 56 5 Q 58 20, 55 35 Q 52 50, 55 65 Q 58 80, 56 95" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.4" opacity="0.2" />
+                <path d="M 50 5 Q 52 20, 49 35 Q 46 50, 49 65 Q 52 80, 50 95" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.4" opacity="0.2" />
                 {/* Mohawk */}
-                <path d="M 10 45 Q 25 42, 40 46 Q 48 48, 55 45" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.3" opacity="0.15" />
+                <path d="M 5 45 Q 18 42, 32 46 Q 40 48, 49 45" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.3" opacity="0.15" />
               </svg>
 
               {/* Connection lines between major towns */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 {[
-                  [48, 58, 58, 42],   // Albany-Troy
-                  [48, 58, 32, 50],   // Albany-Schenectady
-                  [48, 58, 54, 32],   // Albany-Clifton Park
-                  [54, 32, 52, 18],   // Clifton Park-Saratoga
-                  [58, 42, 54, 32],   // Troy-Clifton Park
-                  [48, 58, 46, 68],   // Albany-Delmar
-                  [32, 50, 36, 62],   // Schenectady-Guilderland
+                  [42, 58, 52, 42],   // Albany-Troy
+                  [42, 58, 26, 50],   // Albany-Schenectady
+                  [42, 58, 48, 32],   // Albany-Clifton Park
+                  [48, 32, 46, 18],   // Clifton Park-Saratoga
+                  [52, 42, 48, 32],   // Troy-Clifton Park
+                  [42, 58, 40, 68],   // Albany-Delmar
+                  [26, 50, 28, 62],   // Schenectady-Guilderland
                 ].map(([x1, y1, x2, y2], i) => (
                   <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
                     stroke="hsl(var(--border))" strokeWidth="0.2" opacity="0.4"
@@ -209,7 +209,7 @@ const BrandHero = () => {
               <div
                 className="absolute rounded-full animate-pulse"
                 style={{
-                  left: '48%',
+                  left: '42%',
                   top: '58%',
                   width: 48,
                   height: 48,
