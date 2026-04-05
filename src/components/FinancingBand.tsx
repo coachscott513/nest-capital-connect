@@ -60,18 +60,18 @@ const FinancingBand = () => {
           Explore down payment paths, pre-approval strategy, affordability, and financing options designed to help you move forward with confidence in the Capital District.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
           <Link
             to="/financing"
-            className="inline-flex items-center gap-2.5 bg-foreground text-background px-8 py-4 rounded-full font-semibold hover:bg-foreground/85 transition-colors"
+            className="inline-flex items-center gap-2.5 bg-foreground text-background px-10 py-4 rounded-full font-semibold shadow-lg shadow-foreground/10 hover:shadow-xl hover:shadow-foreground/15 hover:bg-foreground/90 hover:-translate-y-0.5 transition-all duration-300"
           >
             Explore Financing Options <ArrowRight className="w-4 h-4" />
           </Link>
           <a
             href="tel:+15186762347"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground font-medium transition-colors"
+            className="inline-flex items-center gap-2 text-muted-foreground/60 hover:text-muted-foreground text-sm font-medium transition-colors duration-300"
           >
-            <Phone className="w-4 h-4" /> Talk Through Your Options
+            <Phone className="w-3.5 h-3.5" /> Talk Through Your Options
           </a>
         </div>
       </div>
