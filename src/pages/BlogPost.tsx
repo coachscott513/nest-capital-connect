@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar, Clock, User, ArrowLeft, Share2, BookOpen } from 'lucide-react';
 import MainLayout from '@/components/MainLayout';
 import SEOHead from '@/components/SEOHead';
+import { buildArticleSchema } from '@/utils/seoSchemas';
 import DOMPurify from 'dompurify';
 
 // Sample blog post data - you can replace with real data from Supabase later
@@ -334,7 +335,15 @@ const BlogPost = () => {
         title={`${post.title} | Capital District Nest Blog`}
         description={post.excerpt}
         keywords={post.tags.join(', ')}
-        canonical={`https://your-domain.com/blog/${post.slug}`}
+        canonical={`https://www.capitaldistrictnest.com/blog/${post.slug}`}
+        ogType="article"
+        structuredData={buildArticleSchema({
+          title: post.title,
+          description: post.excerpt,
+          slug: post.slug,
+          publishedAt: post.publishedAt || new Date().toISOString(),
+          image: post.image,
+        })}
       />
       
       <MainLayout>
