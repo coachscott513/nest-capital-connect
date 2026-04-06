@@ -38,6 +38,7 @@ import LiveInventoryModal from "@/components/LiveInventoryModal";
 import RealEstateVendorDirectory from "@/components/RealEstateVendorDirectory";
 import QuickMatchForm from "@/components/QuickMatchForm";
 import TownHeroSection from "@/components/town/TownHeroSection";
+import TownCommandMap from "@/components/town/TownCommandMap";
 import TownBentoGrid from "@/components/town/TownBentoGrid";
 import { getTownSEOContent, getCountyForTown } from "@/data/townSEOContent";
 
@@ -390,6 +391,9 @@ const AppleTownTemplate = ({
         nestScore={nestScore}
         onSearchClick={handleSearchClick}
       />
+
+      {/* FULL-WIDTH COMMAND CENTER MAP */}
+      <TownCommandMap townSlug={townSlug} townName={townName} />
 
       {/* BENTO GRID — Schools · Local Flavor · Live Deals */}
       <TownBentoGrid
