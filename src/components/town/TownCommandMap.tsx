@@ -32,85 +32,82 @@ interface TownCommandMapProps {
   zoom?: number;
 }
 
-const ICON_MAP = {
+const ICON_MAP: Record<string, typeof Landmark> = {
   government: Landmark,
   school: GraduationCap,
   safety: Shield,
   lifestyle: TreePine,
   hub: BookOpen,
   dining: Coffee,
-  landmark: Landmark,
-  store: Coffee,
-  tree: TreePine,
-  shield: Shield,
 };
 
-// Map DB icon names to component icon keys
 const mapDbIcon = (icon: string): "government" | "school" | "safety" | "lifestyle" | "hub" | "dining" => {
   const mapping: Record<string, "government" | "school" | "safety" | "lifestyle" | "hub" | "dining"> = {
-    landmark: "government",
-    school: "school",
-    shield: "safety",
-    tree: "lifestyle",
-    store: "dining",
-    hub: "hub",
-    government: "government",
-    safety: "safety",
-    lifestyle: "lifestyle",
-    dining: "dining",
+    landmark: "government", school: "school", shield: "safety", tree: "lifestyle",
+    store: "dining", hub: "hub", government: "government", safety: "safety",
+    lifestyle: "lifestyle", dining: "dining",
   };
   return mapping[icon] || "government";
 };
 
-// Fallback hardcoded data for towns without DB entries
-const DELMAR_INTEL: IntelMarker[] = [
-  { id: "town-hall", label: "Bethlehem Town Hall", category: "Civic", icon: "government", x: 48, y: 42, nestScore: 8.5, headline: "Permit & Zoning HQ", detail: "Next community zoning meeting: Wed, April 22, 7PM. Direct access to Building Department." },
-  { id: "bc-high", label: "Bethlehem Central High", category: "Education", icon: "school", x: 35, y: 62, nestScore: 9.8, headline: "#1 School District in Albany Area", detail: "A-Rated by Niche · 98% graduation rate · Top 1% college readiness in NY." },
-  { id: "fire-district", label: "Delmar Fire District", category: "Safety", icon: "safety", x: 62, y: 55, nestScore: 9.0, headline: "Primary Safety Hub for 12054", detail: "Station 1 & 2 coverage. Volunteer department with full-time response capabilities." },
-  { id: "rail-trail", label: "Helderberg-Hudson Rail Trail", category: "Recreation", icon: "lifestyle", x: 20, y: 48, nestScore: 8.8, headline: "9.8-Mile Paved Recreational Artery", detail: "ADA-accessible. Connects directly to Albany and Voorheesville. Year-round access." },
-  { id: "library", label: "Bethlehem Public Library", category: "Community Hub", icon: "hub", x: 55, y: 32, nestScore: 8.5, headline: "Community Hub with Daily Events", detail: "Rated 4.6★ · Local art exhibitions, kids programs & 2026 event calendar." },
-];
-
-const FALLBACK_INTEL: Record<string, IntelMarker[]> = {
-  delmar: DELMAR_INTEL,
+// Category accent colors for markers
+const CATEGORY_COLORS: Record<string, string> = {
+  Civic: "hsl(var(--accent))",
+  Education: "hsl(210, 80%, 55%)",
+  Safety: "hsl(0, 70%, 55%)",
+  Recreation: "hsl(140, 60%, 45%)",
+  Commerce: "hsl(35, 80%, 50%)",
+  "Community Hub": "hsl(var(--primary))",
 };
 
-const ROAD_PATHS = [
-  "M 5,35 Q 25,32 50,35 T 95,37",
-  "M 5,55 Q 25,53 50,55 T 95,53",
-  "M 35,5 Q 33,25 35,50 T 37,95",
-  "M 60,5 Q 58,25 60,50 T 62,95",
-  "M 15,20 Q 30,30 45,40",
-  "M 70,25 Q 60,40 55,55",
-  "M 25,65 Q 40,72 55,70",
-  "M 65,60 Q 75,70 85,75",
-  "M 40,15 Q 50,25 55,35",
-  "M 30,45 Q 40,50 50,48",
-];
+// Generate procedural road network based on town slug (deterministic per town)
+const generateRoads = (slug: string): string[] => {
+  let seed = 0;
+  for (let i = 0; i < slug.length; i++) seed += slug.charCodeAt(i);
+  const rand = (i: number) => ((seed * (i + 1) * 9301 + 49297) % 233280) / 233280;
+
+  const roads: string[] = [];
+  // Main arteries (always present)
+  const mainY1 = 30 + rand(0) * 15;
+  const mainY2 = 55 + rand(1) * 15;
+  roads.push(`M 0,${mainY1.toFixed(0)} Q 25,${(mainY1 - 3 + rand(2) * 6).toFixed(0)} 50,${mainY1.toFixed(0)} T 100,${(mainY1 + rand(3) * 4).toFixed(0)}`);
+  roads.push(`M 0,${mainY2.toFixed(0)} Q 30,${(mainY2 + 2 - rand(4) * 4).toFixed(0)} 55,${mainY2.toFixed(0)} T 100,${(mainY2 - rand(5) * 3).toFixed(0)}`);
+
+  // Vertical arteries
+  const mainX1 = 30 + rand(6) * 15;
+  const mainX2 = 58 + rand(7) * 15;
+  roads.push(`M ${mainX1.toFixed(0)},0 Q ${(mainX1 + rand(8) * 4).toFixed(0)},30 ${mainX1.toFixed(0)},50 T ${(mainX1 - rand(9) * 3).toFixed(0)},100`);
+  roads.push(`M ${mainX2.toFixed(0)},0 Q ${(mainX2 - rand(10) * 3).toFixed(0)},25 ${mainX2.toFixed(0)},55 T ${(mainX2 + rand(11) * 4).toFixed(0)},100`);
+
+  // Secondary roads
+  for (let i = 0; i < 6; i++) {
+    const sx = rand(12 + i * 3) * 80 + 10;
+    const sy = rand(13 + i * 3) * 70 + 10;
+    const ex = rand(14 + i * 3) * 60 + 20;
+    const ey = rand(15 + i * 3) * 60 + 20;
+    roads.push(`M ${sx.toFixed(0)},${sy.toFixed(0)} Q ${((sx + ex) / 2 + rand(16 + i) * 10 - 5).toFixed(0)},${((sy + ey) / 2 + rand(17 + i) * 10 - 5).toFixed(0)} ${ex.toFixed(0)},${ey.toFixed(0)}`);
+  }
+
+  return roads;
+};
 
 const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: TownCommandMapProps) => {
   const [activeMarker, setActiveMarker] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState("All");
-  const [markers, setMarkers] = useState<IntelMarker[]>(FALLBACK_INTEL[townSlug] || DELMAR_INTEL);
+  const [markers, setMarkers] = useState<IntelMarker[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Default coordinates per town for fallback
-  const DEFAULT_COORDS: Record<string, { lat: number; lng: number }> = {
-    delmar: { lat: 42.6193, lng: -73.8329 },
-    troy: { lat: 42.7284, lng: -73.6918 },
-    "saratoga-springs": { lat: 43.0831, lng: -73.7846 },
-    latham: { lat: 42.7470, lng: -73.7550 },
-    schenectady: { lat: 42.8142, lng: -73.9396 },
-    amsterdam: { lat: 42.9387, lng: -74.1882 },
-  };
+  // Generate unique road network for this town
+  const roads = generateRoads(townSlug);
 
-  const mapLat = centerLat ?? DEFAULT_COORDS[townSlug]?.lat ?? 42.6526;
-  const mapLng = centerLng ?? DEFAULT_COORDS[townSlug]?.lng ?? -73.7562;
-  const mapZoom = zoom ?? 15;
-
-  // Fetch landmarks from database, fall back to hardcoded
+  // Fetch landmarks from database — no fallback to another town's data
   useEffect(() => {
+    setIsLoading(true);
+    setActiveMarker(null);
+    setActiveFilter("All");
+
     const fetchLandmarks = async () => {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('town_landmarks')
         .select('*')
         .eq('town_slug', townSlug)
@@ -130,19 +127,16 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
           detail: l.detail || '',
         })));
       } else {
-        setMarkers(FALLBACK_INTEL[townSlug] || DELMAR_INTEL);
+        // Empty state — no cross-town contamination
+        setMarkers([]);
       }
+      setIsLoading(false);
     };
     fetchLandmarks();
   }, [townSlug]);
 
   const uniqueCategories = ["All", ...Array.from(new Set(markers.map((m) => m.category)))];
   const filtered = activeFilter === "All" ? markers : markers.filter((m) => m.category === activeFilter);
-  const activeData = markers.find((m) => m.id === activeMarker);
-  const ActiveIcon = activeData ? ICON_MAP[activeData.icon] : null;
-
-  // Google Maps embed URL with monochrome styling
-  const mapUrl = `https://www.google.com/maps/embed/v1/view?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&center=${mapLat},${mapLng}&zoom=${mapZoom}&maptype=roadmap`;
 
   return (
     <section className="relative w-full bg-background border-t border-b border-border">
@@ -157,49 +151,111 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
               {townName}: Spatial Intelligence & Market Context
             </h2>
           </div>
-          {/* Category toggles */}
-          <div className="flex flex-wrap gap-2">
-            {uniqueCategories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveFilter(cat)}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
-                  activeFilter === cat
-                    ? "bg-foreground text-background"
-                    : "bg-muted text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+          {markers.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {uniqueCategories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveFilter(cat)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                    activeFilter === cat
+                      ? "bg-foreground text-background"
+                      : "bg-muted text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Hyper-local Google Map with marker overlay */}
-      <div className="relative w-full h-[70vh] min-h-[500px]">
-        {/* Google Maps Embed — monochrome, hyper-local */}
-        <iframe
-          className="absolute inset-0 w-full h-full grayscale contrast-[1.1] brightness-[1.05]"
-          src={mapUrl}
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          title={`${townName} Spatial Intelligence Map`}
-        />
+      {/* Embedded map — no external redirects */}
+      <div className="relative w-full h-[70vh] min-h-[500px] overflow-hidden select-none">
+        {/* SVG topographic base — unique per town */}
+        <svg
+          className="absolute inset-0 w-full h-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid slice"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <pattern id={`grid-${townSlug}`} width="2" height="2" patternUnits="userSpaceOnUse">
+              <path d="M 2 0 L 0 0 0 2" fill="none" stroke="hsl(var(--border))" strokeWidth="0.04" opacity="0.5" />
+            </pattern>
+            <radialGradient id={`glow-${townSlug}`} cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.06" />
+              <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0" />
+            </radialGradient>
+          </defs>
 
-        {/* Dark overlay for premium feel */}
-        <div className="absolute inset-0 bg-background/20 pointer-events-none" />
+          {/* Background grid */}
+          <rect width="100" height="100" fill="url(#grid-${townSlug})" />
 
-        {/* HTML marker overlays */}
+          {/* Ambient center glow */}
+          <ellipse cx="50" cy="50" rx="35" ry="35" fill={`url(#glow-${townSlug})`} />
+
+          {/* Contour rings — unique per town based on marker positions */}
+          {markers.length > 0 && (() => {
+            const cx = markers.reduce((s, m) => s + m.x, 0) / markers.length;
+            const cy = markers.reduce((s, m) => s + m.y, 0) / markers.length;
+            return (
+              <>
+                <ellipse cx={cx} cy={cy} rx="40" ry="38" fill="none" stroke="hsl(var(--border))" strokeWidth="0.15" opacity="0.3" />
+                <ellipse cx={cx} cy={cy} rx="28" ry="26" fill="none" stroke="hsl(var(--border))" strokeWidth="0.12" opacity="0.25" />
+                <ellipse cx={cx} cy={cy} rx="16" ry="14" fill="none" stroke="hsl(var(--border))" strokeWidth="0.1" opacity="0.2" />
+              </>
+            );
+          })()}
+
+          {/* Road network — procedurally generated per town */}
+          {roads.map((d, i) => (
+            <path
+              key={i}
+              d={d}
+              fill="none"
+              stroke="hsl(var(--border))"
+              strokeWidth={i < 4 ? "0.22" : "0.12"}
+              opacity={i < 4 ? "0.5" : "0.25"}
+              strokeLinecap="round"
+              strokeDasharray={i >= 4 ? "0.6 0.6" : undefined}
+            />
+          ))}
+
+          {/* Marker SVG elements — pulsing dots */}
+          {filtered.map((m) => {
+            const isActive = activeMarker === m.id;
+            const color = CATEGORY_COLORS[m.category] || "hsl(var(--accent))";
+            return (
+              <g key={m.id}>
+                {/* Pulse ring */}
+                <circle cx={m.x} cy={m.y} r="2" fill="none" stroke={color} strokeWidth="0.25" opacity="0.4">
+                  <animate attributeName="r" from="1.5" to="5" dur="3s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" from="0.4" to="0" dur="3s" repeatCount="indefinite" />
+                </circle>
+                {/* Core marker */}
+                <circle
+                  cx={m.x}
+                  cy={m.y}
+                  r={isActive ? "2.2" : "1.6"}
+                  fill={isActive ? color : "hsl(var(--foreground))"}
+                  opacity={isActive ? 1 : 0.7}
+                  style={{ filter: isActive ? `drop-shadow(0 0 4px ${color})` : "none", transition: "all 0.3s ease" }}
+                />
+              </g>
+            );
+          })}
+        </svg>
+
+        {/* HTML interactive marker overlays */}
         {filtered.map((m) => {
           const isActive = activeMarker === m.id;
-          const Icon = ICON_MAP[m.icon];
+          const Icon = ICON_MAP[m.icon] || Landmark;
           return (
             <div
               key={m.id}
-              className="absolute cursor-pointer group z-10"
+              className="absolute cursor-pointer z-10"
               style={{
                 left: `${m.x}%`,
                 top: `${m.y}%`,
@@ -211,39 +267,38 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
               onClick={() => setActiveMarker((prev) => (prev === m.id ? null : m.id))}
             >
               {/* Glowing pin */}
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
-                isActive 
-                  ? "bg-accent shadow-[0_0_20px_hsl(var(--accent)/0.6)] scale-125" 
-                  : "bg-foreground/90 shadow-[0_0_12px_hsl(var(--foreground)/0.3)] hover:scale-110"
+              <div className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 ${
+                isActive
+                  ? "bg-accent shadow-[0_0_24px_hsl(var(--accent)/0.5)] scale-[1.3]"
+                  : "bg-foreground/90 shadow-[0_0_10px_hsl(var(--foreground)/0.2)] hover:scale-110"
               }`}>
                 <Icon className={`w-4 h-4 ${isActive ? "text-accent-foreground" : "text-background"}`} />
               </div>
 
-              {/* Label */}
+              {/* Label + intel card */}
               <div
-                className="absolute whitespace-nowrap pointer-events-none transition-all duration-300"
-                style={{ left: "50%", top: "44px", transform: "translateX(-50%)" }}
+                className="absolute whitespace-nowrap pointer-events-none"
+                style={{ left: "50%", top: "42px", transform: "translateX(-50%)" }}
               >
                 <span
-                  className="text-center block px-2 py-0.5 rounded-md transition-all duration-300"
+                  className="text-center block px-2 py-0.5 rounded-md"
                   style={{
                     fontSize: isActive ? 12 : 10,
                     fontWeight: isActive ? 700 : 600,
                     color: "hsl(var(--foreground))",
-                    backgroundColor: isActive ? "hsl(var(--background))" : "hsl(var(--background) / 0.8)",
-                    boxShadow: "0 2px 8px hsl(var(--foreground) / 0.1)",
+                    backgroundColor: isActive ? "hsl(var(--background))" : "hsl(var(--background) / 0.85)",
+                    boxShadow: "0 2px 8px hsl(var(--foreground) / 0.08)",
                   }}
                 >
                   {m.label}
                 </span>
 
-                {/* Hover intel card */}
                 {isActive && (
                   <motion.div
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="mt-2 bg-background border border-border rounded-xl p-4 shadow-lg min-w-[260px] text-left"
+                    className="mt-2 bg-background border border-border rounded-xl p-4 shadow-xl min-w-[260px] text-left pointer-events-auto"
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <div className="w-6 h-6 rounded-lg bg-accent/10 flex items-center justify-center">
@@ -265,8 +320,19 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
           );
         })}
 
+        {/* Empty state for towns without landmarks */}
+        {!isLoading && markers.length === 0 && (
+          <div className="absolute inset-0 flex items-center justify-center z-20">
+            <div className="bg-background/90 backdrop-blur-sm border border-border rounded-2xl px-8 py-6 text-center max-w-sm">
+              <MapPin className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
+              <p className="text-sm font-semibold text-foreground mb-1">Intel Markers Coming Soon</p>
+              <p className="text-xs text-muted-foreground">Our team is mapping {townName}'s key infrastructure and lifestyle anchors.</p>
+            </div>
+          </div>
+        )}
+
         {/* Map legend */}
-        <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 bg-background/90 backdrop-blur-sm px-3 py-1.5 rounded-full">
+        <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 bg-background/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-border/50">
           <Layers className="w-3 h-3 text-muted-foreground" />
           <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">
             {townName} · Nest Intel
