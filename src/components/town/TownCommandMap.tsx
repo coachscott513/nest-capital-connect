@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   GraduationCap,
   Landmark,
@@ -9,6 +9,7 @@ import {
   Coffee,
   MapPin,
   Layers,
+  X,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
