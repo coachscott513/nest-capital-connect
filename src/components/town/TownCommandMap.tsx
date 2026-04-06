@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   GraduationCap,
   Landmark,
@@ -9,6 +9,7 @@ import {
   Coffee,
   MapPin,
   Layers,
+  X,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -50,14 +51,14 @@ const mapDbIcon = (icon: string): "government" | "school" | "safety" | "lifestyl
   return mapping[icon] || "government";
 };
 
-// Category accent colors for markers
+// Vivid category accent colors — high-vibrancy per category
 const CATEGORY_COLORS: Record<string, string> = {
-  Civic: "hsl(var(--accent))",
-  Education: "hsl(210, 80%, 55%)",
-  Safety: "hsl(0, 70%, 55%)",
-  Recreation: "hsl(140, 60%, 45%)",
-  Commerce: "hsl(35, 80%, 50%)",
-  "Community Hub": "hsl(var(--primary))",
+  Civic: "25, 100%, 50%",
+  Education: "210, 80%, 55%",
+  Safety: "0, 75%, 55%",
+  Recreation: "150, 65%, 42%",
+  Commerce: "35, 85%, 50%",
+  "Community Hub": "180, 60%, 45%",
 };
 
 // Generate procedural road network based on town slug (deterministic per town)
@@ -284,10 +285,11 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
           })}
         </svg>
 
-        {/* HTML interactive marker overlays */}
+        {/* HTML interactive marker pins */}
         {filtered.map((m) => {
           const isActive = activeMarker === m.id;
           const Icon = ICON_MAP[m.icon] || Landmark;
+          const accentHsl = CATEGORY_COLORS[m.category] || "var(--foreground)";
           return (
             <div
               key={m.id}
@@ -298,103 +300,141 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
                 transform: "translate(-50%, -50%)",
                 zIndex: isActive ? 30 : 10,
               }}
-              onMouseEnter={() => setActiveMarker(m.id)}
-              onMouseLeave={() => setActiveMarker(null)}
               onClick={() => setActiveMarker((prev) => (prev === m.id ? null : m.id))}
             >
-              {/* Minimal platinum pin */}
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500 ease-out ${
-                isActive
-                  ? "bg-foreground scale-125 shadow-[0_0_20px_hsl(var(--foreground)/0.3)]"
-                  : "bg-foreground/80 hover:bg-foreground hover:scale-110 shadow-[0_2px_12px_hsl(var(--foreground)/0.15)]"
-              }`}>
-                <Icon className="w-3.5 h-3.5 text-background" />
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-500 ease-out"
+                style={{
+                  backgroundColor: isActive ? `hsl(${accentHsl})` : 'hsl(var(--foreground) / 0.8)',
+                  transform: isActive ? 'scale(1.3)' : 'scale(1)',
+                  boxShadow: isActive
+                    ? `0 0 24px hsl(${accentHsl} / 0.5), 0 4px 12px hsl(${accentHsl} / 0.3)`
+                    : '0 2px 12px hsl(var(--foreground) / 0.15)',
+                }}
+                onMouseEnter={(e) => { if (!isActive) e.currentTarget.style.transform = 'scale(1.15)'; }}
+                onMouseLeave={(e) => { if (!isActive) e.currentTarget.style.transform = 'scale(1)'; }}
+              >
+                <Icon className="w-4 h-4 text-background" />
               </div>
-
-              {/* Floating label */}
-              {!isActive && (
-                <div className="absolute left-1/2 top-[36px] -translate-x-1/2 whitespace-nowrap pointer-events-none">
-                  <span className="text-[9px] font-semibold text-foreground/70 tracking-wide uppercase">
-                    {m.label}
-                  </span>
-                </div>
-              )}
-
-              {/* Glassmorphism intel card */}
-              {isActive && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                  className="absolute left-1/2 top-[44px] -translate-x-1/2 pointer-events-auto"
-                  style={{ width: 280 }}
+              <div className="absolute left-1/2 top-[40px] -translate-x-1/2 whitespace-nowrap pointer-events-none">
+                <span
+                  className="text-[9px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded"
+                  style={{
+                    color: isActive ? `hsl(${accentHsl})` : 'hsl(var(--foreground) / 0.6)',
+                    fontWeight: isActive ? 700 : 600,
+                    fontSize: isActive ? 10 : 9,
+                  }}
                 >
-                  <div
-                    className="rounded-2xl overflow-hidden"
-                    style={{
-                      background: 'hsla(var(--background), 0.75)',
-                      backdropFilter: 'blur(24px) saturate(1.4)',
-                      WebkitBackdropFilter: 'blur(24px) saturate(1.4)',
-                      border: '1px solid hsla(var(--foreground), 0.08)',
-                      boxShadow: '0 20px 50px hsla(var(--foreground), 0.1), 0 4px 16px hsla(var(--foreground), 0.05)',
-                    }}
-                  >
-                    {/* Card content */}
-                    <div className="p-6">
-                      {/* Category pill */}
-                      <div className="flex items-center gap-2 mb-4">
-                        <div className="w-6 h-6 rounded-lg bg-foreground/[0.04] flex items-center justify-center">
-                          <Icon className="w-3.5 h-3.5 text-foreground/60" />
-                        </div>
-                        <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                          {m.category}
-                        </span>
-                      </div>
-
-                      {/* Headline — "Know [Landmark]" */}
-                      <h4 className="text-base font-bold text-foreground tracking-tight leading-tight mb-2">
-                        {m.headline}
-                      </h4>
-
-                      {/* Intel line */}
-                      <p className="text-xs text-muted-foreground leading-relaxed mb-5">
-                        {m.detail}
-                      </p>
-
-                      {/* Nest Score — minimal bar */}
-                      <div className="flex items-center gap-3">
-                        <div className="flex-1">
-                          <div className="w-full h-[3px] rounded-full bg-foreground/[0.06] overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{ width: `${m.nestScore * 10}%` }}
-                              transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-                              className="h-full rounded-full bg-foreground/70"
-                            />
-                          </div>
-                        </div>
-                        <span className="text-xs font-bold text-foreground tabular-nums">
-                          {m.nestScore}<span className="text-[9px] font-medium text-muted-foreground">/10</span>
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Footer divider + branding */}
-                    <div className="px-6 py-3 border-t border-foreground/[0.05]">
-                      <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-muted-foreground/60">
-                        Nest Intel · {townName}
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
+                  {m.label}
+                </span>
+              </div>
             </div>
           );
         })}
 
+        {/* Large Vivid Intelligence Panel — right-anchored slide */}
+        <AnimatePresence>
+          {activeMarker && (() => {
+            const m = filtered.find((f) => f.id === activeMarker);
+            if (!m) return null;
+            const Icon = ICON_MAP[m.icon] || Landmark;
+            const accentHsl = CATEGORY_COLORS[m.category] || "var(--foreground)";
+            return (
+              <motion.div
+                key={m.id}
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 40 }}
+                transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+                className="absolute top-4 right-4 bottom-4 z-40 w-[340px] max-w-[90%] pointer-events-auto"
+              >
+                <div
+                  className="h-full rounded-3xl overflow-hidden flex flex-col"
+                  style={{
+                    background: 'hsl(var(--background) / 0.82)',
+                    backdropFilter: 'blur(32px) saturate(1.5)',
+                    WebkitBackdropFilter: 'blur(32px) saturate(1.5)',
+                    border: '1px solid hsl(var(--foreground) / 0.06)',
+                    boxShadow: '0 30px 60px hsl(var(--foreground) / 0.12), 0 8px 24px hsl(var(--foreground) / 0.06)',
+                  }}
+                >
+                  {/* Vivid accent header */}
+                  <div
+                    className="relative h-28 flex items-end p-6"
+                    style={{ background: `linear-gradient(135deg, hsl(${accentHsl}), hsl(${accentHsl} / 0.7))` }}
+                  >
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setActiveMarker(null); }}
+                      className="absolute top-3 right-3 w-7 h-7 rounded-full bg-background/20 backdrop-blur-sm flex items-center justify-center hover:bg-background/40 transition-colors"
+                    >
+                      <X className="w-3.5 h-3.5 text-background" />
+                    </button>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-2xl bg-background/20 backdrop-blur-sm flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-background" />
+                      </div>
+                      <div>
+                        <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-background/70 block">{m.category}</span>
+                        <h3 className="text-lg font-bold text-background tracking-tight leading-tight">{m.label}</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content body */}
+                  <div className="flex-1 p-6 overflow-y-auto">
+                    <h4 className="text-base font-bold text-foreground tracking-tight leading-snug mb-3">{m.headline}</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-6">{m.detail}</p>
+
+                    {/* Nest Score vivid bar */}
+                    <div className="mb-6">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Nest Score</span>
+                        <span className="text-sm font-bold text-foreground tabular-nums">
+                          {m.nestScore}<span className="text-xs font-medium text-muted-foreground">/10</span>
+                        </span>
+                      </div>
+                      <div className="w-full h-1.5 rounded-full bg-foreground/[0.06] overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${m.nestScore * 10}%` }}
+                          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                          className="h-full rounded-full"
+                          style={{ backgroundColor: `hsl(${accentHsl})` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="w-full h-px bg-foreground/[0.06] mb-4" />
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="rounded-xl bg-foreground/[0.03] p-3">
+                        <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground block mb-1">Category</span>
+                        <span className="text-xs font-bold text-foreground">{m.category}</span>
+                      </div>
+                      <div className="rounded-xl bg-foreground/[0.03] p-3">
+                        <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-muted-foreground block mb-1">Rating</span>
+                        <span className="text-xs font-bold" style={{ color: `hsl(${accentHsl})` }}>
+                          {m.nestScore >= 8 ? 'Premium' : m.nestScore >= 6 ? 'Strong' : 'Emerging'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="px-6 py-3 border-t border-foreground/[0.05]">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-muted-foreground/50">Nest Intel · {townName}</span>
+                      <MapPin className="w-3 h-3 text-muted-foreground/30" />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })()}
+        </AnimatePresence>
 
         {/* Map legend */}
-        <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 bg-background/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-border/50">
+        <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2 bg-background/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-border/50">
           <Layers className="w-3 h-3 text-muted-foreground" />
           <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">
             {townName} · Nest Intel
