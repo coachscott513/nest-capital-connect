@@ -12,7 +12,7 @@ interface TownBentoGridProps {
 const TownBentoGrid = ({ townName, townSlug, schoolDistrict, nestScore }: TownBentoGridProps) => {
   return (
     <section className="py-16 px-[5%] bg-card">
-      <div className="max-w-6xl mx-auto">
+      <div className="w-full">
         <div className="mb-10">
           <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-2">Local Intelligence</p>
           <h2 className="text-3xl md:text-4xl font-extralight text-foreground tracking-tight">

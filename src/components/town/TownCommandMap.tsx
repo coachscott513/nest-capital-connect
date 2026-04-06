@@ -206,7 +206,7 @@ const TownCommandMap = ({ townSlug, townName }: TownCommandMapProps) => {
   return (
     <section className="relative w-full bg-background border-t border-b border-border">
       {/* Section header */}
-      <div className="max-w-7xl mx-auto px-6 md:px-8 pt-12 pb-6">
+      <div className="w-full px-[5%] pt-12 pb-6">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <p className="text-xs font-semibold tracking-[0.25em] uppercase text-muted-foreground mb-2">
