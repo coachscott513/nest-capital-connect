@@ -50,14 +50,14 @@ const mapDbIcon = (icon: string): "government" | "school" | "safety" | "lifestyl
   return mapping[icon] || "government";
 };
 
-// Category accent colors for markers
+// Vivid category accent colors — high-vibrancy per category
 const CATEGORY_COLORS: Record<string, string> = {
-  Civic: "hsl(var(--accent))",
-  Education: "hsl(210, 80%, 55%)",
-  Safety: "hsl(0, 70%, 55%)",
-  Recreation: "hsl(140, 60%, 45%)",
-  Commerce: "hsl(35, 80%, 50%)",
-  "Community Hub": "hsl(var(--primary))",
+  Civic: "25, 100%, 50%",
+  Education: "210, 80%, 55%",
+  Safety: "0, 75%, 55%",
+  Recreation: "150, 65%, 42%",
+  Commerce: "35, 85%, 50%",
+  "Community Hub": "180, 60%, 45%",
 };
 
 // Generate procedural road network based on town slug (deterministic per town)
