@@ -236,7 +236,7 @@ const TownCommandMap = ({ townSlug, townName }: TownCommandMapProps) => {
       </div>
 
       {/* Full-width map */}
-      <div className="relative w-full h-[70vh] min-h-[500px] max-h-[700px]">
+      <div className="relative w-full h-[70vh] min-h-[500px]">
         {/* SVG topographic map */}
         <svg
           className="absolute inset-0 w-full h-full"
