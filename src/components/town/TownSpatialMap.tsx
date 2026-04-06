@@ -199,7 +199,7 @@ const TownSpatialMap = ({
     if (!apiKey) return;
 
     // Check if already loaded
-    if (window.google?.maps) {
+    if ((window as any).google?.maps) {
       initMap();
       return;
     }
