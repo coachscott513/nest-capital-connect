@@ -91,6 +91,9 @@ interface TownMarketData {
   target_yield: number | null;
   nest_score: number | null;
   region_category: string | null;
+  map_center_lat: number | null;
+  map_center_lng: number | null;
+  default_zoom: number | null;
 }
 
 interface AppleTownTemplateProps {
