@@ -1,11 +1,6 @@
+/// <reference types="@types/google.maps" />
 import { useState, useEffect, useRef, useCallback } from "react";
 import { GraduationCap, Coffee, TreePine, Star } from "lucide-react";
-
-declare global {
-  interface Window {
-    google: typeof google;
-  }
-}
 
 interface NestMarker {
   id: string;
