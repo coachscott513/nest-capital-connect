@@ -4,6 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import PropertyListingTemplate from "@/components/PropertyListingTemplate";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
+import { buildRealEstateListingSchema } from "@/utils/seoSchemas";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
