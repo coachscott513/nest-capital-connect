@@ -127,13 +127,50 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
           detail: l.detail || '',
         })));
       } else {
-        // Empty state — no cross-town contamination
         setMarkers([]);
       }
       setIsLoading(false);
     };
     fetchLandmarks();
   }, [townSlug]);
+
+  // Premium branded placeholder when no markers exist
+  if (!isLoading && markers.length === 0) {
+    return (
+      <section className="relative w-full bg-background border-t border-border overflow-hidden">
+        <div className="relative w-full py-24 md:py-32 px-[5%]">
+          {/* Architectural background — blurred monochrome */}
+          <div className="absolute inset-0">
+            <img
+              src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1920&q=80"
+              alt=""
+              className="w-full h-full object-cover grayscale opacity-[0.07]"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
+          </div>
+
+          <div className="relative z-10 max-w-2xl">
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase text-muted-foreground mb-3">
+              Spatial Intelligence
+            </p>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-4">
+              {townName} Intelligence
+            </h2>
+            <div className="w-12 h-px bg-foreground/20 mb-6" />
+            <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-md">
+              Our analysts are mapping {townName}'s key infrastructure, school zones, and investment corridors. 
+              Spatial markers will appear here once the data sync is complete.
+            </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted text-muted-foreground text-xs font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              Data Sync in Progress
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const uniqueCategories = ["All", ...Array.from(new Set(markers.map((m) => m.category)))];
   const filtered = activeFilter === "All" ? markers : markers.filter((m) => m.category === activeFilter);
@@ -320,16 +357,6 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
           );
         })}
 
-        {/* Empty state for towns without landmarks */}
-        {!isLoading && markers.length === 0 && (
-          <div className="absolute inset-0 flex items-center justify-center z-20">
-            <div className="bg-background/90 backdrop-blur-sm border border-border rounded-2xl px-8 py-6 text-center max-w-sm">
-              <MapPin className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
-              <p className="text-sm font-semibold text-foreground mb-1">Intel Markers Coming Soon</p>
-              <p className="text-xs text-muted-foreground">Our team is mapping {townName}'s key infrastructure and lifestyle anchors.</p>
-            </div>
-          </div>
-        )}
 
         {/* Map legend */}
         <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 bg-background/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-border/50">
