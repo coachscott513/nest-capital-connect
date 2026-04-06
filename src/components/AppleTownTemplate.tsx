@@ -396,7 +396,13 @@ const AppleTownTemplate = ({
       />
 
       {/* FULL-WIDTH COMMAND CENTER MAP */}
-      <TownCommandMap townSlug={townSlug} townName={townName} />
+      <TownCommandMap
+        townSlug={townSlug}
+        townName={townName}
+        centerLat={townMarketData?.map_center_lat ?? undefined}
+        centerLng={townMarketData?.map_center_lng ?? undefined}
+        zoom={townMarketData?.default_zoom ?? undefined}
+      />
 
       {/* BENTO GRID — Schools · Local Flavor · Live Deals */}
       <TownBentoGrid
