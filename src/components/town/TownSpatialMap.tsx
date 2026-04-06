@@ -121,10 +121,10 @@ const TownSpatialMap = ({
   const center = TOWN_CENTERS[townSlug] || { lat: lat || 42.6185, lng: lng || -73.837 };
 
   const initMap = useCallback(async () => {
-    if (!containerRef.current || !window.google) return;
+    if (!containerRef.current || !(window as any).google) return;
 
-    const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+    const { Map } = await (window as any).google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+    const { AdvancedMarkerElement } = await (window as any).google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
     const map = new Map(containerRef.current, {
       center,
