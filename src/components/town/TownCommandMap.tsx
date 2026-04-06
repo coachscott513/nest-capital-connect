@@ -357,16 +357,6 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
           );
         })}
 
-        {/* Empty state for towns without landmarks */}
-        {!isLoading && markers.length === 0 && (
-          <div className="absolute inset-0 flex items-center justify-center z-20">
-            <div className="bg-background/90 backdrop-blur-sm border border-border rounded-2xl px-8 py-6 text-center max-w-sm">
-              <MapPin className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
-              <p className="text-sm font-semibold text-foreground mb-1">Intel Markers Coming Soon</p>
-              <p className="text-xs text-muted-foreground">Our team is mapping {townName}'s key infrastructure and lifestyle anchors.</p>
-            </div>
-          </div>
-        )}
 
         {/* Map legend */}
         <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 bg-background/90 backdrop-blur-sm px-3 py-1.5 rounded-full border border-border/50">
