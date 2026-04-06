@@ -239,7 +239,7 @@ const App = () => {
           <Route path="/homes-for-sale/saratoga-springs" element={<Navigate to="/towns/saratoga-springs" replace />} />
           <Route path="/homes-for-sale/albany/pine-hills" element={<Navigate to="/towns/albany" replace />} />
           <Route path="/delmar-homes-for-sale" element={<Navigate to="/towns/delmar" replace />} />
-          <Route path="/delmar-market-insights" element={<DelmarMarketInsights />} />
+          <Route path="/delmar-market-insights" element={<Navigate to="/towns/delmar" replace />} />
           <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
           
           {/* Town Intelligence Pages - Specific overrides for existing pages */}

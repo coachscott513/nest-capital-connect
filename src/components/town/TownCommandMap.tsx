@@ -213,7 +213,7 @@ const TownCommandMap = ({ townSlug, townName }: TownCommandMapProps) => {
               Spatial Intelligence
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-              {townName} Command Center
+              {townName}: Spatial Intelligence & Market Context
             </h2>
           </div>
           {/* Category toggles */}
