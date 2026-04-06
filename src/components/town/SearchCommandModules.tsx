@@ -9,28 +9,28 @@ interface SearchCommandModulesProps {
 const MODULES = [
   {
     id: "residential",
-    label: "Search Residential",
+    label: "Find a Nest",
     icon: Home,
     placeholderTemplate: (town: string) => `Find ${town} residential nests...`,
     description: "Single-family homes, condos & townhouses",
   },
   {
     id: "multi-unit",
-    label: "Search Multi-Unit",
+    label: "Analyze Yields",
     icon: Building2,
     placeholderTemplate: (town: string) => `Analyze ${town} multi-unit yields...`,
     description: "2–4 unit & apartment buildings",
   },
   {
     id: "rehab",
-    label: "Search Rehabs",
+    label: "Scout Rehabs",
     icon: Wrench,
-    placeholderTemplate: (town: string) => `Find ${town} fixer-upper opportunities...`,
+    placeholderTemplate: (town: string) => `Scout ${town} fixer-upper opportunities...`,
     description: "Value-add & renovation plays",
   },
   {
     id: "land",
-    label: "Search Land",
+    label: "Acquire Land",
     icon: TreePine,
     placeholderTemplate: (town: string) => `Discover ${town} vacant parcels...`,
     description: "Vacant lots, acreage & development sites",

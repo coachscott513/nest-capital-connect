@@ -176,16 +176,16 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
   return (
     <section className="relative w-full bg-background border-t border-b border-border">
       {/* Section header */}
-      <div className="w-full px-[5%] pt-12 pb-6">
+      <div className="w-full px-[5%] pt-16 pb-8">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase text-muted-foreground mb-2">
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase text-muted-foreground mb-4">
               Neighborhood Guide
             </p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground tracking-tight">
-              Explore {townName}
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-foreground tracking-tight">
+              Know {townName}
             </h2>
-            <p className="text-sm text-muted-foreground mt-2">Vetted local insights for your next move.</p>
+            <p className="text-sm text-muted-foreground mt-3">Vetted local insights for your next move.</p>
           </div>
           {markers.length > 0 && (
             <div className="flex flex-wrap gap-2">
