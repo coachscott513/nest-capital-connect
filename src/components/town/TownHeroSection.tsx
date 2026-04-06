@@ -40,7 +40,7 @@ const TownHeroSection = ({
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-primary/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 pt-28 pb-0 md:pt-40 md:pb-0 lg:pt-48 lg:pb-0">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-12 lg:gap-16 items-center">
+        <div className="max-w-3xl">
 
           {/* LEFT — Narrative */}
           <motion.div
