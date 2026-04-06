@@ -331,24 +331,66 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
 
                 {isActive && (
                   <motion.div
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="mt-2 bg-background border border-border rounded-xl p-4 shadow-xl min-w-[260px] text-left pointer-events-auto"
+                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 4, scale: 0.98 }}
+                    transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
+                    className="mt-2 backdrop-blur-xl bg-background/80 border border-border/30 rounded-2xl p-5 shadow-2xl min-w-[280px] max-w-[320px] text-left pointer-events-auto"
+                    style={{
+                      boxShadow: '0 8px 32px hsl(var(--foreground) / 0.12), 0 2px 8px hsl(var(--foreground) / 0.06)',
+                    }}
                   >
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-6 h-6 rounded-lg bg-accent/10 flex items-center justify-center">
-                        <Icon className="w-3.5 h-3.5 text-accent" />
+                    {/* Category bar + Nest Score */}
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-xl bg-foreground/5 backdrop-blur-sm flex items-center justify-center">
+                          <Icon className="w-4 h-4 text-foreground/70" />
+                        </div>
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+                          {m.category}
+                        </span>
                       </div>
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                        {m.category}
-                      </span>
-                      <span className="ml-auto text-xs font-bold text-accent">
-                        {m.nestScore}/10
-                      </span>
+                      <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-foreground text-background">
+                        <span className="text-[10px] font-bold tracking-wide">{m.nestScore}</span>
+                        <span className="text-[8px] font-medium opacity-70">/10</span>
+                      </div>
                     </div>
-                    <p className="text-sm font-semibold text-foreground leading-snug mb-1">{m.headline}</p>
-                    <p className="text-[11px] text-muted-foreground leading-relaxed">{m.detail}</p>
+
+                    {/* Headline */}
+                    <h4 className="text-sm font-bold text-foreground leading-snug mb-1.5 tracking-tight">
+                      {m.headline}
+                    </h4>
+
+                    {/* Intel detail */}
+                    <p className="text-[11px] text-muted-foreground leading-relaxed mb-4">
+                      {m.detail}
+                    </p>
+
+                    {/* Nest Score bar visualization */}
+                    <div className="mb-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Nest Score</span>
+                      </div>
+                      <div className="w-full h-1 rounded-full bg-muted overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${m.nestScore * 10}%` }}
+                          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+                          className="h-full rounded-full bg-foreground"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="w-full h-px bg-border/50 mb-3" />
+
+                    {/* Action label */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+                        Nest Intel · {townName}
+                      </span>
+                      <MapPin className="w-3 h-3 text-muted-foreground/50" />
+                    </div>
                   </motion.div>
                 )}
               </div>
