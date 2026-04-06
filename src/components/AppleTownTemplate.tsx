@@ -37,6 +37,8 @@ import FeaturedIntelSection from "@/components/FeaturedIntelSection";
 import LiveInventoryModal from "@/components/LiveInventoryModal";
 import RealEstateVendorDirectory from "@/components/RealEstateVendorDirectory";
 import QuickMatchForm from "@/components/QuickMatchForm";
+import TownHeroSection from "@/components/town/TownHeroSection";
+import TownBentoGrid from "@/components/town/TownBentoGrid";
 import { getTownSEOContent, getCountyForTown } from "@/data/townSEOContent";
 
 interface TownLedgerEntry {
