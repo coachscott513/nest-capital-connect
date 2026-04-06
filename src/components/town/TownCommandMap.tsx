@@ -152,19 +152,17 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
 
           <div className="relative z-10 max-w-2xl">
             <p className="text-xs font-semibold tracking-[0.25em] uppercase text-muted-foreground mb-3">
-              Spatial Intelligence
+              Neighborhood Guide
             </p>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-4">
-              {townName} Intelligence
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground tracking-tight mb-4">
+              Explore {townName}
             </h2>
-            <div className="w-12 h-px bg-foreground/20 mb-6" />
-            <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-md">
-              Our analysts are mapping {townName}'s key infrastructure, school zones, and investment corridors. 
-              Spatial markers will appear here once the data sync is complete.
+            <p className="text-base text-muted-foreground leading-relaxed mb-8 max-w-md">
+              Our {townName} guide is coming soon — vetted local insights for your next move.
             </p>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted text-muted-foreground text-xs font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              Data Sync in Progress
+              Guide Coming Soon
             </div>
           </div>
         </div>
@@ -182,11 +180,12 @@ const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: Town
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <p className="text-xs font-semibold tracking-[0.25em] uppercase text-muted-foreground mb-2">
-              Spatial Intelligence
+              Neighborhood Guide
             </p>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-              {townName}: Spatial Intelligence & Market Context
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground tracking-tight">
+              Explore {townName}
             </h2>
+            <p className="text-sm text-muted-foreground mt-2">Vetted local insights for your next move.</p>
           </div>
           {markers.length > 0 && (
             <div className="flex flex-wrap gap-2">
