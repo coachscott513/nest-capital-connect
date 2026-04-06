@@ -1,12 +1,11 @@
-/// <reference types="@types/google.maps" />
-import { useState, useEffect, useRef, useCallback } from "react";
-import { GraduationCap, Coffee, TreePine, Star } from "lucide-react";
+import { useState } from "react";
+import { GraduationCap, Coffee, TreePine, Star, MapPin } from "lucide-react";
 
 interface NestMarker {
   id: string;
   label: string;
-  lat: number;
-  lng: number;
+  x: number; // percentage position 0-100
+  y: number;
   icon: "school" | "lifestyle" | "nature" | "destination";
   nestScore: number;
   stat: string;
@@ -22,13 +21,12 @@ interface TownSpatialMapProps {
   markers?: NestMarker[];
 }
 
-// Default Delmar markers — other towns override via props
 const DELMAR_MARKERS: NestMarker[] = [
   {
     id: "four-corners",
     label: "The Four Corners",
-    lat: 42.6219,
-    lng: -73.8328,
+    x: 52,
+    y: 35,
     icon: "lifestyle",
     nestScore: 9.2,
     stat: "Historic walkability meets modern dining",
@@ -37,8 +35,8 @@ const DELMAR_MARKERS: NestMarker[] = [
   {
     id: "bc-high",
     label: "Bethlehem Central High",
-    lat: 42.6087,
-    lng: -73.8385,
+    x: 35,
+    y: 62,
     icon: "school",
     nestScore: 9.8,
     stat: "Top 1% college readiness in NY",
@@ -47,8 +45,8 @@ const DELMAR_MARKERS: NestMarker[] = [
   {
     id: "rail-trail",
     label: "Helderberg-Hudson Rail Trail",
-    lat: 42.6140,
-    lng: -73.8480,
+    x: 22,
+    y: 48,
     icon: "nature",
     nestScore: 8.8,
     stat: "9+ miles of premium recreational access",
@@ -56,36 +54,36 @@ const DELMAR_MARKERS: NestMarker[] = [
   },
 ];
 
+const TROY_MARKERS: NestMarker[] = [
+  { id: "monument-sq", label: "Monument Square", x: 55, y: 38, icon: "lifestyle", nestScore: 8.5, stat: "Historic downtown revitalization hub", detail: "Farmers market, dining & nightlife corridor" },
+  { id: "troy-high", label: "Troy High School", x: 40, y: 58, icon: "school", nestScore: 7.5, stat: "Expanding STEM curriculum", detail: "Troy City School District" },
+  { id: "riverfront", label: "Hudson Riverfront Park", x: 68, y: 45, icon: "nature", nestScore: 8.2, stat: "Direct waterfront access", detail: "3+ miles of scenic river trails" },
+];
+
+const SARATOGA_MARKERS: NestMarker[] = [
+  { id: "broadway", label: "Broadway District", x: 50, y: 40, icon: "lifestyle", nestScore: 9.5, stat: "Premier upstate shopping & dining", detail: "National-caliber restaurant scene" },
+  { id: "saratoga-high", label: "Saratoga Springs High", x: 35, y: 60, icon: "school", nestScore: 9.6, stat: "Top 3% in New York State", detail: "Blue Streaks · 96% graduation rate" },
+  { id: "spa-park", label: "Spa State Park", x: 60, y: 55, icon: "nature", nestScore: 9.3, stat: "2,379-acre mineral springs preserve", detail: "SPAC, pools, golf & year-round recreation" },
+];
+
+const ALBANY_MARKERS: NestMarker[] = [
+  { id: "lark-st", label: "Lark Street District", x: 50, y: 35, icon: "lifestyle", nestScore: 8.0, stat: "Capital Region's arts & culture corridor", detail: "Independent shops, galleries & restaurants" },
+  { id: "albany-high", label: "Albany High School", x: 32, y: 55, icon: "school", nestScore: 6.8, stat: "Diverse magnet programs available", detail: "Albany City School District" },
+  { id: "washington-park", label: "Washington Park", x: 55, y: 50, icon: "nature", nestScore: 8.5, stat: "81-acre Frederick Law Olmsted park", detail: "Tulip Festival, lake & historic architecture" },
+];
+
+const SCHENECTADY_MARKERS: NestMarker[] = [
+  { id: "proctors", label: "Proctors Theatre", x: 50, y: 38, icon: "lifestyle", nestScore: 8.3, stat: "Broadway-caliber entertainment", detail: "Downtown revitalization anchor" },
+  { id: "sch-high", label: "Niskayuna High School", x: 70, y: 55, icon: "school", nestScore: 9.2, stat: "Top 5% STEM programs in NY", detail: "Niskayuna Central School District" },
+  { id: "central-park", label: "Central Park", x: 45, y: 52, icon: "nature", nestScore: 7.8, stat: "Urban green space", detail: "Playground, pool & community events" },
+];
+
 const TOWN_MARKERS: Record<string, NestMarker[]> = {
   delmar: DELMAR_MARKERS,
-  troy: [
-    { id: "monument-sq", label: "Monument Square", lat: 42.7284, lng: -73.6918, icon: "lifestyle", nestScore: 8.5, stat: "Historic downtown revitalization hub", detail: "Farmers market, dining & nightlife corridor" },
-    { id: "troy-high", label: "Troy High School", lat: 42.7350, lng: -73.6810, icon: "school", nestScore: 7.5, stat: "Expanding STEM curriculum", detail: "Troy City School District" },
-    { id: "riverfront", label: "Hudson Riverfront Park", lat: 42.7310, lng: -73.6880, icon: "nature", nestScore: 8.2, stat: "Direct waterfront access", detail: "3+ miles of scenic river trails" },
-  ],
-  "saratoga-springs": [
-    { id: "broadway", label: "Broadway District", lat: 42.7663, lng: -73.7857, icon: "lifestyle", nestScore: 9.5, stat: "Premier upstate shopping & dining", detail: "National-caliber restaurant scene" },
-    { id: "saratoga-high", label: "Saratoga Springs High", lat: 42.7750, lng: -73.7920, icon: "school", nestScore: 9.6, stat: "Top 3% in New York State", detail: "Blue Streaks · 96% graduation rate" },
-    { id: "spa-park", label: "Saratoga Spa State Park", lat: 42.7520, lng: -73.7810, icon: "nature", nestScore: 9.3, stat: "2,379-acre mineral springs preserve", detail: "SPAC, pools, golf & year-round recreation" },
-  ],
-  albany: [
-    { id: "lark-st", label: "Lark Street District", lat: 42.6570, lng: -73.7630, icon: "lifestyle", nestScore: 8.0, stat: "Capital Region's arts & culture corridor", detail: "Independent shops, galleries & restaurants" },
-    { id: "albany-high", label: "Albany High School", lat: 42.6640, lng: -73.7860, icon: "school", nestScore: 6.8, stat: "Diverse magnet programs available", detail: "Albany City School District" },
-    { id: "washington-park", label: "Washington Park", lat: 42.6555, lng: -73.7700, icon: "nature", nestScore: 8.5, stat: "81-acre Frederick Law Olmsted park", detail: "Tulip Festival, lake & historic architecture" },
-  ],
-  schenectady: [
-    { id: "proctors", label: "Proctors Theatre District", lat: 42.8142, lng: -73.9396, icon: "lifestyle", nestScore: 8.3, stat: "Broadway-caliber entertainment venue", detail: "Downtown revitalization anchor" },
-    { id: "sch-high", label: "Niskayuna High School", lat: 42.7920, lng: -73.8570, icon: "school", nestScore: 9.2, stat: "Top 5% STEM programs in NY", detail: "Niskayuna Central School District" },
-    { id: "central-park", label: "Central Park", lat: 42.8100, lng: -73.9350, icon: "nature", nestScore: 7.8, stat: "Urban green space in the Electric City", detail: "Playground, pool & community events" },
-  ],
-};
-
-const TOWN_CENTERS: Record<string, { lat: number; lng: number }> = {
-  delmar: { lat: 42.6185, lng: -73.8370 },
-  troy: { lat: 42.7284, lng: -73.6918 },
-  "saratoga-springs": { lat: 42.7663, lng: -73.7857 },
-  albany: { lat: 42.6526, lng: -73.7562 },
-  schenectady: { lat: 42.8142, lng: -73.9396 },
+  troy: TROY_MARKERS,
+  "saratoga-springs": SARATOGA_MARKERS,
+  albany: ALBANY_MARKERS,
+  schenectady: SCHENECTADY_MARKERS,
 };
 
 const ICON_MAP = {
@@ -95,157 +93,190 @@ const ICON_MAP = {
   destination: Star,
 };
 
-const ICON_COLORS = {
+const ICON_COLORS: Record<string, string> = {
   school: "text-blue-400",
   lifestyle: "text-amber-400",
   nature: "text-emerald-400",
   destination: "text-purple-400",
 };
 
+const PULSE_COLORS: Record<string, string> = {
+  school: "rgba(96, 165, 250, 0.4)",
+  lifestyle: "rgba(251, 191, 36, 0.4)",
+  nature: "rgba(52, 211, 153, 0.4)",
+  destination: "rgba(168, 85, 247, 0.4)",
+};
+
+// SVG road network segments for the abstract town map
+const ROAD_PATHS = [
+  // Main horizontal arteries
+  "M 10,35 Q 30,33 50,35 T 90,37",
+  "M 5,55 Q 25,53 50,55 T 95,53",
+  // Main vertical arteries
+  "M 35,10 Q 33,30 35,50 T 37,90",
+  "M 60,8 Q 58,28 60,50 T 62,92",
+  // Diagonal connectors
+  "M 15,20 Q 30,30 45,40",
+  "M 70,25 Q 60,40 55,55",
+  "M 25,65 Q 40,72 55,70",
+  "M 65,60 Q 75,70 85,75",
+  // Minor roads
+  "M 20,42 L 40,42",
+  "M 55,45 L 75,43",
+  "M 42,25 L 42,45",
+  "M 50,60 L 50,80",
+];
+
 const TownSpatialMap = ({
   townSlug,
   townName,
-  lat,
-  lng,
-  zoom = 14,
   markers: propMarkers,
 }: TownSpatialMapProps) => {
   const [activeMarker, setActiveMarker] = useState<string | null>(null);
-  const [mapReady, setMapReady] = useState(false);
-  const [scrollEnabled, setScrollEnabled] = useState(false);
-  const mapRef = useRef<google.maps.Map | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const markersRef = useRef<google.maps.marker.AdvancedMarkerElement[]>([]);
 
   const resolvedMarkers = propMarkers || TOWN_MARKERS[townSlug] || DELMAR_MARKERS;
-  const center = TOWN_CENTERS[townSlug] || { lat: lat || 42.6185, lng: lng || -73.837 };
-
-  const initMap = useCallback(async () => {
-    if (!containerRef.current || !(window as any).google) return;
-
-    const { Map } = await (window as any).google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = await (window as any).google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
-
-    const map = new Map(containerRef.current, {
-      center,
-      zoom,
-      mapId: "nest-spatial-map",
-      disableDefaultUI: true,
-      gestureHandling: "cooperative",
-      styles: [
-        { elementType: "geometry", stylers: [{ color: "#1a1a2e" }] },
-        { elementType: "labels.text.fill", stylers: [{ color: "#8892a4" }] },
-        { elementType: "labels.text.stroke", stylers: [{ color: "#1a1a2e" }] },
-        { featureType: "water", elementType: "geometry", stylers: [{ color: "#0d1b2a" }] },
-        { featureType: "road", elementType: "geometry", stylers: [{ color: "#2a2a4a" }] },
-        { featureType: "road", elementType: "geometry.stroke", stylers: [{ color: "#1a1a2e" }] },
-        { featureType: "poi", stylers: [{ visibility: "off" }] },
-        { featureType: "transit", stylers: [{ visibility: "off" }] },
-        { featureType: "administrative", elementType: "geometry.stroke", stylers: [{ color: "#2a2a4a" }] },
-      ],
-    });
-
-    mapRef.current = map;
-
-    // Add custom markers
-    resolvedMarkers.forEach((m) => {
-      const markerEl = document.createElement("div");
-      markerEl.className = "nest-map-marker";
-      markerEl.innerHTML = `
-        <div style="
-          width: 36px; height: 36px;
-          background: rgba(139, 92, 246, 0.9);
-          border: 2px solid rgba(255,255,255,0.3);
-          border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
-          cursor: pointer;
-          box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
-          transition: transform 0.2s, box-shadow 0.2s;
-        ">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            ${m.icon === "school" ? '<path d="m4 6 8-4 8 4"/><path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"/><path d="M14 22v-4a2 2 0 0 0-4 0v4"/>' : m.icon === "nature" ? '<path d="M17 14h2a2 2 0 0 1 2 2v6H3v-6a2 2 0 0 1 2-2h2"/><path d="M12 2 7 7h10Z"/><path d="m12 7-5 5h10Z"/><path d="m12 12-5 5h10Z"/>' : m.icon === "lifestyle" ? '<path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/>' : '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>'}
-          </svg>
-        </div>
-      `;
-
-      markerEl.addEventListener("mouseenter", () => {
-        markerEl.querySelector("div")!.style.transform = "scale(1.3)";
-        markerEl.querySelector("div")!.style.boxShadow = "0 0 30px rgba(139, 92, 246, 0.7)";
-        setActiveMarker(m.id);
-      });
-      markerEl.addEventListener("mouseleave", () => {
-        markerEl.querySelector("div")!.style.transform = "scale(1)";
-        markerEl.querySelector("div")!.style.boxShadow = "0 0 20px rgba(139, 92, 246, 0.4)";
-      });
-      markerEl.addEventListener("click", () => {
-        setActiveMarker((prev) => (prev === m.id ? null : m.id));
-      });
-
-      const advMarker = new AdvancedMarkerElement({
-        position: { lat: m.lat, lng: m.lng },
-        map,
-        content: markerEl,
-        title: m.label,
-      });
-
-      markersRef.current.push(advMarker);
-    });
-
-    setMapReady(true);
-  }, [townSlug]);
-
-  useEffect(() => {
-    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-    if (!apiKey) return;
-
-    // Check if already loaded
-    if ((window as any).google?.maps) {
-      initMap();
-      return;
-    }
-
-    const existingScript = document.querySelector('script[src*="maps.googleapis.com"]');
-    if (existingScript) {
-      existingScript.addEventListener("load", () => initMap());
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=marker&v=weekly`;
-    script.async = true;
-    script.defer = true;
-    script.onload = () => initMap();
-    document.head.appendChild(script);
-
-    return () => {
-      markersRef.current = [];
-    };
-  }, [initMap]);
-
   const activeData = resolvedMarkers.find((m) => m.id === activeMarker);
   const ActiveIcon = activeData ? ICON_MAP[activeData.icon] : null;
 
   return (
-    <div className="relative w-full h-full min-h-[400px] rounded-2xl overflow-hidden border border-border/30">
-      {/* Map container */}
-      <div
-        ref={containerRef}
+    <div className="relative w-full h-full min-h-[400px] rounded-2xl overflow-hidden border border-border/30 bg-[#0d1117]">
+      {/* Abstract SVG Town Map */}
+      <svg
+        viewBox="0 0 100 100"
         className="absolute inset-0 w-full h-full"
-        style={{ filter: "saturate(0.7) contrast(1.05)" }}
-      />
+        preserveAspectRatio="xMidYMid slice"
+      >
+        {/* Background grid */}
+        <defs>
+          <pattern id="grid" width="5" height="5" patternUnits="userSpaceOnUse">
+            <path d="M 5 0 L 0 0 0 5" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="0.1" />
+          </pattern>
+          <radialGradient id="center-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="rgba(139, 92, 246, 0.08)" />
+            <stop offset="100%" stopColor="transparent" />
+          </radialGradient>
+          <filter id="road-glow">
+            <feGaussianBlur stdDeviation="0.3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
 
-      {/* Scroll-to-zoom unlock overlay */}
-      {!scrollEnabled && mapReady && (
+        <rect width="100" height="100" fill="url(#grid)" />
+        <rect width="100" height="100" fill="url(#center-glow)" />
+
+        {/* Block fills — simulating neighborhoods */}
+        <rect x="25" y="28" width="20" height="15" rx="1" fill="rgba(139, 92, 246, 0.04)" />
+        <rect x="48" y="42" width="18" height="16" rx="1" fill="rgba(139, 92, 246, 0.03)" />
+        <rect x="15" y="50" width="15" height="12" rx="1" fill="rgba(52, 211, 153, 0.03)" />
+
+        {/* Road network */}
+        {ROAD_PATHS.map((d, i) => (
+          <path
+            key={i}
+            d={d}
+            fill="none"
+            stroke="rgba(255,255,255,0.08)"
+            strokeWidth={i < 4 ? "0.6" : "0.3"}
+            strokeLinecap="round"
+            filter={i < 4 ? "url(#road-glow)" : undefined}
+          />
+        ))}
+
+        {/* Marker positions — interactive circles */}
+        {resolvedMarkers.map((m) => {
+          const isActive = activeMarker === m.id;
+          const pulseColor = PULSE_COLORS[m.icon];
+          return (
+            <g key={m.id}>
+              {/* Pulse ring */}
+              <circle
+                cx={m.x}
+                cy={m.y}
+                r={isActive ? 5 : 3.5}
+                fill="none"
+                stroke={pulseColor}
+                strokeWidth="0.4"
+                opacity={isActive ? 0.8 : 0.4}
+              >
+                <animate
+                  attributeName="r"
+                  from={isActive ? "4" : "3"}
+                  to={isActive ? "8" : "5"}
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+                <animate
+                  attributeName="opacity"
+                  from={isActive ? "0.8" : "0.4"}
+                  to="0"
+                  dur="2s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              {/* Core marker */}
+              <circle
+                cx={m.x}
+                cy={m.y}
+                r={isActive ? 2.5 : 2}
+                fill={isActive ? "rgba(139, 92, 246, 0.9)" : "rgba(139, 92, 246, 0.6)"}
+                stroke="rgba(255,255,255,0.3)"
+                strokeWidth="0.3"
+                className="cursor-pointer transition-all duration-300"
+                style={{ filter: isActive ? "drop-shadow(0 0 4px rgba(139, 92, 246, 0.7))" : "drop-shadow(0 0 2px rgba(139, 92, 246, 0.3))" }}
+              />
+              {/* Label */}
+              <text
+                x={m.x}
+                y={m.y - 4}
+                textAnchor="middle"
+                fill="rgba(255,255,255,0.6)"
+                fontSize="2"
+                fontWeight="600"
+                letterSpacing="0.05"
+                className="pointer-events-none select-none"
+              >
+                {m.label.split(" ").slice(0, 2).join(" ")}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* Invisible click targets (HTML overlay for better hit areas) */}
+      {resolvedMarkers.map((m) => (
         <button
-          onClick={() => {
-            setScrollEnabled(true);
-            mapRef.current?.setOptions({ gestureHandling: "greedy" });
-          }}
-          className="absolute top-3 right-3 z-20 glass rounded-full px-3 py-1.5 text-xs font-medium text-foreground/80 hover:text-foreground transition-colors"
-        >
-          🔓 Enable scroll zoom
-        </button>
-      )}
+          key={m.id}
+          onClick={() => setActiveMarker((prev) => (prev === m.id ? null : m.id))}
+          onMouseEnter={() => setActiveMarker(m.id)}
+          className="absolute w-8 h-8 rounded-full -translate-x-1/2 -translate-y-1/2 z-10"
+          style={{ left: `${m.x}%`, top: `${m.y}%` }}
+          aria-label={`View intel for ${m.label}`}
+        />
+      ))}
+
+      {/* Legend pills */}
+      <div className="absolute top-3 left-3 z-20 flex flex-wrap gap-1.5">
+        {resolvedMarkers.map((m) => {
+          const Icon = ICON_MAP[m.icon];
+          return (
+            <button
+              key={m.id}
+              onClick={() => setActiveMarker(m.id)}
+              className={`glass rounded-full px-2.5 py-1 text-[10px] font-semibold flex items-center gap-1 transition-all ${
+                activeMarker === m.id
+                  ? "bg-primary/30 text-primary border border-primary/40"
+                  : "text-foreground/70 hover:text-foreground"
+              }`}
+            >
+              <Icon className="w-3 h-3" />
+              {m.label.split(" ").slice(0, 2).join(" ")}
+            </button>
+          );
+        })}
+      </div>
 
       {/* Glassmorphism popup */}
       {activeData && ActiveIcon && (
@@ -268,39 +299,11 @@ const TownSpatialMap = ({
         </div>
       )}
 
-      {/* Legend pills */}
-      <div className="absolute top-3 left-3 z-20 flex flex-wrap gap-1.5">
-        {resolvedMarkers.map((m) => {
-          const Icon = ICON_MAP[m.icon];
-          return (
-            <button
-              key={m.id}
-              onClick={() => {
-                setActiveMarker(m.id);
-                mapRef.current?.panTo({ lat: m.lat, lng: m.lng });
-              }}
-              className={`glass rounded-full px-2.5 py-1 text-[10px] font-semibold flex items-center gap-1 transition-all ${
-                activeMarker === m.id
-                  ? "bg-primary/30 text-primary border border-primary/40"
-                  : "text-foreground/70 hover:text-foreground"
-              }`}
-            >
-              <Icon className="w-3 h-3" />
-              {m.label.split(" ").slice(0, 2).join(" ")}
-            </button>
-          );
-        })}
+      {/* Town label */}
+      <div className="absolute bottom-4 right-4 z-10 text-[10px] text-muted-foreground/40 font-mono uppercase tracking-widest">
+        <MapPin className="w-3 h-3 inline mr-1 opacity-40" />
+        {townName} · Spatial Intel
       </div>
-
-      {/* Loading state */}
-      {!mapReady && (
-        <div className="absolute inset-0 bg-background/80 flex items-center justify-center z-30">
-          <div className="text-center">
-            <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-xs text-muted-foreground">Loading {townName} intelligence map...</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
