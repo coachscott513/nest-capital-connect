@@ -392,6 +392,9 @@ const AppleTownTemplate = ({
         onSearchClick={handleSearchClick}
       />
 
+      {/* FULL-WIDTH COMMAND CENTER MAP */}
+      <TownCommandMap townSlug={townSlug} townName={townName} />
+
       {/* BENTO GRID — Schools · Local Flavor · Live Deals */}
       <TownBentoGrid
         townName={townName}
