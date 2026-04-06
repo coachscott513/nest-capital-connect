@@ -37,6 +37,8 @@ import FeaturedIntelSection from "@/components/FeaturedIntelSection";
 import LiveInventoryModal from "@/components/LiveInventoryModal";
 import RealEstateVendorDirectory from "@/components/RealEstateVendorDirectory";
 import QuickMatchForm from "@/components/QuickMatchForm";
+import TownHeroSection from "@/components/town/TownHeroSection";
+import TownBentoGrid from "@/components/town/TownBentoGrid";
 import { getTownSEOContent, getCountyForTown } from "@/data/townSEOContent";
 
 interface TownLedgerEntry {
@@ -372,123 +374,30 @@ const AppleTownTemplate = ({
         avgDaysOnMarket={townMarketData?.avg_days_on_market || 28}
       />
 
-      {/* DEEP SPACE CINEMATIC HERO */}
-      <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-background">
-        {/* Background Image with Cinematic Filter - Uses DB hero_landmark or prop fallback */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ 
-            backgroundImage: `url(${townMarketData?.hero_landmark || heroImage})`,
-            filter: 'brightness(0.6) grayscale(20%)'
-          }}
-        />
-        {/* Monochromatic Black-to-Teal Gradient Overlay - 0.6 opacity */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(135deg, rgba(11, 11, 11, 0.85) 0%, rgba(11, 11, 11, 0.6) 40%, rgba(0, 245, 255, 0.15) 100%)',
-          }}
-        />
-        {/* Deep Space Gradient Overlay for text legibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
+      {/* CINEMATIC HERO WITH STATS OVERLAY */}
+      <TownHeroSection
+        townName={townName}
+        townSlug={townSlug}
+        schoolDistrict={schoolDistrict}
+        leadParagraph={seoContent.leadParagraph}
+        countyInfo={countyInfo}
+        heroImage={townMarketData?.hero_landmark || heroImage}
+        avgYield={avgYield}
+        marketVelocity={marketVelocity}
+        medianPrice={townMarketData?.median_price}
+        activeListings={townMarketData?.active_listings}
+        avgDaysOnMarket={townMarketData?.avg_days_on_market}
+        nestScore={nestScore}
+        onSearchClick={handleSearchClick}
+      />
 
-        {/* Floating Nest Intelligence Gauge - Glass Morphism */}
-        <div className="absolute top-8 right-8 md:top-12 md:right-12 z-20">
-          <div className="glass-strong rounded-2xl p-6 min-w-[220px] border border-primary/20">
-            <div className="flex items-center gap-2 mb-4">
-              <Gauge className="w-5 h-5 text-primary" />
-              <span className="text-sm font-semibold text-foreground">Nest Intelligence</span>
-            </div>
-            
-            <div className="space-y-3">
-              <div>
-                <p className="text-xs text-muted-foreground mb-1">Average Town Yield</p>
-                <p className="text-3xl font-bold text-primary text-glow">{avgYield}</p>
-              </div>
-              <div>
-                <p className="text-xs text-muted-foreground mb-1">Market Velocity</p>
-                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${
-                  marketVelocity === 'High' ? 'bg-primary/20 text-primary' :
-                  marketVelocity === 'Medium' ? 'bg-yellow-500/20 text-yellow-400' :
-                  'bg-red-500/20 text-red-400'
-                }`}>
-                  {marketVelocity}
-                </span>
-              </div>
-              {townMarketData && (
-                <>
-                  <div className="pt-2 border-t border-border">
-                    <div className="flex justify-between items-center">
-                      <p className="text-xs text-muted-foreground">Active Listings</p>
-                      <p className="text-sm font-bold text-foreground">{townMarketData.active_listings || 0}</p>
-                    </div>
-                  </div>
-                  {townMarketData.median_price && (
-                    <div className="flex justify-between items-center">
-                      <p className="text-xs text-muted-foreground">Median Price</p>
-                      <p className="text-sm font-bold text-foreground">
-                        ${(townMarketData.median_price / 1000).toFixed(0)}K
-                      </p>
-                    </div>
-                  )}
-                  {townMarketData.avg_days_on_market && (
-                    <div className="flex justify-between items-center">
-                      <p className="text-xs text-muted-foreground">Avg Days on Market</p>
-                      <p className="text-sm font-bold text-foreground">{townMarketData.avg_days_on_market}</p>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 py-20">
-          <div className="max-w-2xl">
-            {schoolDistrict && (
-              <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-6">
-                <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium text-foreground">{schoolDistrict}</span>
-              </div>
-            )}
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground leading-tight mb-6 tracking-tight">
-              {townName} <span className="text-primary text-glow">Intelligence</span>
-            </h1>
-            
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed body-airy">
-              {seoContent.leadParagraph.substring(0, 150)}...
-            </p>
-            
-            {countyInfo && (
-              <Link 
-                to={countyInfo.path}
-                className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 mb-6"
-              >
-                See all {countyInfo.name} Spotlights <ArrowRight className="w-4 h-4" />
-              </Link>
-            )}
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={handleSearchClick}
-                className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform glow-primary"
-              >
-                <Search className="w-5 h-5" />
-                Search {townName} Homes
-              </button>
-              <Link
-                to="/dealdesk"
-                className="inline-flex items-center justify-center gap-2 glass border border-primary/30 text-foreground px-8 py-4 rounded-xl font-semibold hover:bg-primary/20 transition-colors"
-              >
-                Request Property Intel
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* BENTO GRID — Schools · Local Flavor · Live Deals */}
+      <TownBentoGrid
+        townName={townName}
+        townSlug={townSlug}
+        schoolDistrict={schoolDistrict}
+        nestScore={nestScore}
+      />
 
       {/* TOWN LEDGER - Deep Space Bento Cards */}
       <section className="section-massive px-[5%] bg-card">
