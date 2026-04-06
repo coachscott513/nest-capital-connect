@@ -107,10 +107,61 @@ const DELMAR_INTEL: IntelMarker[] = [
 ];
 
 const TROY_INTEL: IntelMarker[] = [
-  { id: "city-hall", label: "Troy City Hall", category: "Government", icon: "government", x: 50, y: 40, nestScore: 7.5, headline: "Municipal Services HQ", detail: "Building permits, zoning inquiries & property records." },
-  { id: "troy-high", label: "Troy High School", category: "Education", icon: "school", x: 38, y: 58, nestScore: 7.5, headline: "Expanding STEM Curriculum", detail: "Troy City School District. Growing magnet programs." },
-  { id: "monument-sq", label: "Monument Square", category: "Dining & Lifestyle", icon: "dining", x: 55, y: 30, nestScore: 8.5, headline: "Downtown Revitalization Hub", detail: "Farmers market, dining & nightlife corridor." },
-  { id: "riverfront", label: "Hudson Riverfront Park", category: "Recreation", icon: "lifestyle", x: 68, y: 45, nestScore: 8.2, headline: "Direct Waterfront Access", detail: "3+ miles of scenic river trails." },
+  {
+    id: "city-hall",
+    label: "Troy City Hall",
+    category: "Permits & Zoning",
+    icon: "government",
+    x: 50,
+    y: 40,
+    nestScore: 8.0,
+    headline: "Downtown Revitalization Zone HQ",
+    detail: "433 River St. Access the Planning Dept for Historic District Tax Credits — reduces renovation costs by up to 20%.",
+  },
+  {
+    id: "rpi",
+    label: "Rensselaer Polytechnic Institute",
+    category: "Elite Education",
+    icon: "school",
+    x: 35,
+    y: 28,
+    nestScore: 9.5,
+    headline: "Global Tech Anchor & Rental Engine",
+    detail: "1,100+ faculty, 7,000+ students. High-prestige tenant pool guarantees low vacancy for multi-unit lofts.",
+  },
+  {
+    id: "farmers-market",
+    label: "Troy Waterfront Farmers Market",
+    category: "Dining & Lifestyle",
+    icon: "dining",
+    x: 58,
+    y: 22,
+    nestScore: 9.2,
+    headline: "Nationally Ranked Saturday Heartbeat",
+    detail: "Year-round market at the Atrium. Leading indicator: $20M+ ongoing waterfront investment.",
+  },
+  {
+    id: "fire-hq",
+    label: "Troy Fire Department HQ",
+    category: "Safety",
+    icon: "safety",
+    x: 62,
+    y: 55,
+    nestScore: 8.5,
+    headline: "Central Safety Hub — Historic District",
+    detail: "Full-time professional department. Primary coverage for Downtown & South Troy investment corridors.",
+  },
+  {
+    id: "post-office",
+    label: "Troy Post Office (4th St)",
+    category: "Community Hub",
+    icon: "hub",
+    x: 42,
+    y: 65,
+    nestScore: 7.8,
+    headline: "Legal & Closing Document Flow",
+    detail: "Historic hub for certified mail. Essential for real estate closings and investor correspondence.",
+  },
 ];
 
 const SARATOGA_INTEL: IntelMarker[] = [
@@ -162,7 +213,7 @@ const TownCommandMap = ({ townSlug, townName }: TownCommandMapProps) => {
               Spatial Intelligence
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-              {townName} Command Center
+              {townName}: Spatial Intelligence & Market Context
             </h2>
           </div>
           {/* Category toggles */}
