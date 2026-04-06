@@ -404,6 +404,14 @@ const AppleTownTemplate = ({
         centerLng={townMarketData?.map_center_lng ?? undefined}
         zoom={townMarketData?.default_zoom ?? undefined}
       />
+      {/* BIG-SEARCH COMMAND MODULES — Intent-Based Navigation */}
+      <SearchCommandModules
+        townName={townName}
+        townSlug={townSlug}
+        onSearchClick={(category) => {
+          setInventoryModalOpen(true);
+        }}
+      />
 
       {/* BENTO GRID — Schools · Local Flavor · Live Deals */}
       <TownBentoGrid
