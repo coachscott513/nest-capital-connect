@@ -27,6 +27,9 @@ interface IntelMarker {
 interface TownCommandMapProps {
   townSlug: string;
   townName: string;
+  centerLat?: number;
+  centerLng?: number;
+  zoom?: number;
 }
 
 const ICON_MAP = {
