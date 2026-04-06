@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Search, MapPin, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import TownSpatialMap from "@/components/town/TownSpatialMap";
-import delmarHeroImg from "@/assets/delmar-hero.jpg";
 
 interface TownHeroSectionProps {
   townName: string;
@@ -19,17 +19,12 @@ interface TownHeroSectionProps {
   onSearchClick: () => void;
 }
 
-const TOWN_HEROES: Record<string, string> = {
-  delmar: delmarHeroImg,
-};
-
 const TownHeroSection = ({
   townName,
   townSlug,
   schoolDistrict,
   leadParagraph,
   countyInfo,
-  heroImage,
   avgYield,
   marketVelocity,
   medianPrice,
@@ -38,78 +33,75 @@ const TownHeroSection = ({
   nestScore,
   onSearchClick,
 }: TownHeroSectionProps) => {
-  const resolvedHero = TOWN_HEROES[townSlug] || heroImage || "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1920&q=80";
-
   return (
-    <section className="relative min-h-[85vh] flex items-end overflow-hidden bg-background">
-      {/* Full-bleed cinematic background at reduced opacity */}
-      <img
-        src={resolvedHero}
-        alt={`${townName} streetscape`}
-        width={1920}
-        height={1080}
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ filter: "brightness(0.25) saturate(0.6)", opacity: 0.4 }}
-      />
+    <section className="relative bg-background overflow-hidden">
+      {/* Subtle ambient glow — matches homepage */}
+      <div className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-accent/[0.04] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-primary/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/40" />
-      <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/50 to-transparent" />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 pt-28 pb-0 md:pt-40 md:pb-0 lg:pt-48 lg:pb-0">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-12 lg:gap-16 items-center">
 
-      {/* Split-pane hero content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 pb-0">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-end mb-0">
           {/* LEFT — Narrative */}
-          <div className="mb-8 lg:mb-12">
-            {schoolDistrict && (
-              <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-6">
-                <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium text-foreground">{schoolDistrict}</span>
-              </div>
-            )}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="space-y-8 lg:space-y-10"
+          >
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase text-muted-foreground">
+              {schoolDistrict || `${townName} Intelligence`}
+            </p>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight text-foreground leading-tight mb-6 tracking-tight">
-              {townName} <span className="text-primary text-glow">Intelligence</span>
+            <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-foreground tracking-[-0.035em] leading-[1.02]">
+              {townName}
             </h1>
 
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed body-airy">
-              {leadParagraph.substring(0, 150)}...
+            <p className="text-lg md:text-xl text-foreground/60 leading-relaxed max-w-lg font-light">
+              {leadParagraph.substring(0, 180)}...
             </p>
 
             {countyInfo && (
               <Link
                 to={countyInfo.path}
-                className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 mb-6"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 See all {countyInfo.name} Spotlights <ArrowRight className="w-4 h-4" />
               </Link>
             )}
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row items-start gap-4 pt-4">
               <button
                 onClick={onSearchClick}
-                className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform glow-primary"
+                className="inline-flex items-center justify-center gap-2.5 bg-foreground text-background px-8 py-4 rounded-full font-semibold text-base hover:bg-foreground/85 transition-colors"
               >
-                <Search className="w-5 h-5" />
+                <Search className="w-4 h-4" />
                 Search {townName} Homes
               </button>
               <Link
                 to="/dealdesk"
-                className="inline-flex items-center justify-center gap-2 glass border border-primary/30 text-foreground px-8 py-4 rounded-full font-semibold hover:bg-primary/20 transition-colors"
+                className="inline-flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground px-2 py-4 font-medium text-base transition-colors"
               >
-                Request Property Intel
+                Request Property Intel →
               </Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* RIGHT — Spatial Intelligence Map */}
-          <div className="hidden lg:block h-[420px] mb-0">
-            <TownSpatialMap townSlug={townSlug} townName={townName} />
-          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden lg:block"
+          >
+            <div className="relative w-full aspect-square max-w-[580px] mx-auto">
+              <TownSpatialMap townSlug={townSlug} townName={townName} />
+            </div>
+          </motion.div>
         </div>
 
-        {/* At-a-Glance Stats Overlay — borderless tiles at bottom */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border/20 rounded-t-2xl overflow-hidden backdrop-blur-xl">
+        {/* At-a-Glance Stats — clean borderless tiles */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px mt-16 border-t border-border">
           {[
             {
               label: "Median Sale Price",
@@ -131,18 +123,20 @@ const TownHeroSection = ({
               value: avgYield,
               sub: "Cash-on-Cash Return",
             },
-          ].map((stat) => (
-            <div key={stat.label} className="bg-background/80 backdrop-blur-sm p-6 text-center">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-2">{stat.label}</p>
-              <p className="text-2xl md:text-3xl font-bold text-foreground">{stat.value}</p>
+          ].map((stat, i) => (
+            <div key={stat.label} className={`py-8 px-6 text-center ${i < 3 ? "border-r border-border" : ""}`}>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-[0.15em] mb-2">{stat.label}</p>
+              <p className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">{stat.value}</p>
               {stat.sub && <p className="text-xs text-muted-foreground mt-1">{stat.sub}</p>}
             </div>
           ))}
         </div>
 
-        {/* Mobile map — shown below stats on small screens */}
-        <div className="lg:hidden mt-6 mb-8 h-[300px]">
-          <TownSpatialMap townSlug={townSlug} townName={townName} zoom={13} />
+        {/* Mobile map */}
+        <div className="lg:hidden mt-8 mb-8">
+          <div className="aspect-square max-w-sm mx-auto">
+            <TownSpatialMap townSlug={townSlug} townName={townName} />
+          </div>
         </div>
       </div>
     </section>
