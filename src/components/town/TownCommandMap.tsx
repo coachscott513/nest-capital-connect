@@ -27,6 +27,9 @@ interface IntelMarker {
 interface TownCommandMapProps {
   townSlug: string;
   townName: string;
+  centerLat?: number;
+  centerLng?: number;
+  zoom?: number;
 }
 
 const ICON_MAP = {
@@ -85,10 +88,24 @@ const ROAD_PATHS = [
   "M 30,45 Q 40,50 50,48",
 ];
 
-const TownCommandMap = ({ townSlug, townName }: TownCommandMapProps) => {
+const TownCommandMap = ({ townSlug, townName, centerLat, centerLng, zoom }: TownCommandMapProps) => {
   const [activeMarker, setActiveMarker] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState("All");
   const [markers, setMarkers] = useState<IntelMarker[]>(FALLBACK_INTEL[townSlug] || DELMAR_INTEL);
+
+  // Default coordinates per town for fallback
+  const DEFAULT_COORDS: Record<string, { lat: number; lng: number }> = {
+    delmar: { lat: 42.6193, lng: -73.8329 },
+    troy: { lat: 42.7284, lng: -73.6918 },
+    "saratoga-springs": { lat: 43.0831, lng: -73.7846 },
+    latham: { lat: 42.7470, lng: -73.7550 },
+    schenectady: { lat: 42.8142, lng: -73.9396 },
+    amsterdam: { lat: 42.9387, lng: -74.1882 },
+  };
+
+  const mapLat = centerLat ?? DEFAULT_COORDS[townSlug]?.lat ?? 42.6526;
+  const mapLng = centerLng ?? DEFAULT_COORDS[townSlug]?.lng ?? -73.7562;
+  const mapZoom = zoom ?? 15;
 
   // Fetch landmarks from database, fall back to hardcoded
   useEffect(() => {
@@ -124,6 +141,9 @@ const TownCommandMap = ({ townSlug, townName }: TownCommandMapProps) => {
   const activeData = markers.find((m) => m.id === activeMarker);
   const ActiveIcon = activeData ? ICON_MAP[activeData.icon] : null;
 
+  // Google Maps embed URL with monochrome styling
+  const mapUrl = `https://www.google.com/maps/embed/v1/view?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&center=${mapLat},${mapLng}&zoom=${mapZoom}&maptype=roadmap`;
+
   return (
     <section className="relative w-full bg-background border-t border-b border-border">
       {/* Section header */}
@@ -156,75 +176,30 @@ const TownCommandMap = ({ townSlug, townName }: TownCommandMapProps) => {
         </div>
       </div>
 
-      {/* Full-width map */}
+      {/* Hyper-local Google Map with marker overlay */}
       <div className="relative w-full h-[70vh] min-h-[500px]">
-        {/* SVG topographic map */}
-        <svg
-          className="absolute inset-0 w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="xMidYMid slice"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <pattern id="cmd-grid" width="2.5" height="2.5" patternUnits="userSpaceOnUse">
-              <path d="M 2.5 0 L 0 0 0 2.5" fill="none" stroke="hsl(var(--border))" strokeWidth="0.05" opacity="0.4" />
-            </pattern>
-          </defs>
+        {/* Google Maps Embed — monochrome, hyper-local */}
+        <iframe
+          className="absolute inset-0 w-full h-full grayscale contrast-[1.1] brightness-[1.05]"
+          src={mapUrl}
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title={`${townName} Spatial Intelligence Map`}
+        />
 
-          <rect width="100" height="100" fill="url(#cmd-grid)" />
+        {/* Dark overlay for premium feel */}
+        <div className="absolute inset-0 bg-background/20 pointer-events-none" />
 
-          {/* Contour rings */}
-          <ellipse cx="48" cy="45" rx="40" ry="38" fill="none" stroke="hsl(var(--border))" strokeWidth="0.2" opacity="0.4" />
-          <ellipse cx="48" cy="45" rx="30" ry="28" fill="none" stroke="hsl(var(--border))" strokeWidth="0.15" opacity="0.3" />
-          <ellipse cx="48" cy="45" rx="18" ry="16" fill="none" stroke="hsl(var(--border))" strokeWidth="0.12" opacity="0.2" />
-
-          {/* Roads */}
-          {ROAD_PATHS.map((d, i) => (
-            <path
-              key={i}
-              d={d}
-              fill="none"
-              stroke="hsl(var(--border))"
-              strokeWidth={i < 4 ? "0.25" : "0.15"}
-              opacity={i < 4 ? "0.5" : "0.3"}
-              strokeLinecap="round"
-              strokeDasharray={i >= 4 ? "0.8 0.8" : undefined}
-            />
-          ))}
-
-          {/* Marker positions in SVG */}
-          {filtered.map((m) => {
-            const isActive = activeMarker === m.id;
-            return (
-              <g key={m.id}>
-                {/* Pulse */}
-                <circle cx={m.x} cy={m.y} r="3" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.3" opacity="0.3">
-                  <animate attributeName="r" from="2" to="6" dur="3s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" from="0.3" to="0" dur="3s" repeatCount="indefinite" />
-                </circle>
-                {/* Core dot */}
-                <circle
-                  cx={m.x}
-                  cy={m.y}
-                  r={isActive ? "2" : "1.5"}
-                  fill={isActive ? "hsl(var(--accent))" : "hsl(var(--foreground))"}
-                  opacity={isActive ? 1 : 0.6}
-                  className="transition-all duration-300"
-                  style={{ filter: isActive ? "drop-shadow(0 0 3px hsl(var(--accent) / 0.5))" : "none" }}
-                />
-              </g>
-            );
-          })}
-        </svg>
-
-        {/* HTML click targets + labels */}
+        {/* HTML marker overlays */}
         {filtered.map((m) => {
           const isActive = activeMarker === m.id;
           const Icon = ICON_MAP[m.icon];
           return (
             <div
               key={m.id}
-              className="absolute cursor-pointer group"
+              className="absolute cursor-pointer group z-10"
               style={{
                 left: `${m.x}%`,
                 top: `${m.y}%`,
@@ -235,33 +210,40 @@ const TownCommandMap = ({ townSlug, townName }: TownCommandMapProps) => {
               onMouseLeave={() => setActiveMarker(null)}
               onClick={() => setActiveMarker((prev) => (prev === m.id ? null : m.id))}
             >
-              {/* Hit area */}
-              <div className="w-10 h-10 rounded-full" />
+              {/* Glowing pin */}
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                isActive 
+                  ? "bg-accent shadow-[0_0_20px_hsl(var(--accent)/0.6)] scale-125" 
+                  : "bg-foreground/90 shadow-[0_0_12px_hsl(var(--foreground)/0.3)] hover:scale-110"
+              }`}>
+                <Icon className={`w-4 h-4 ${isActive ? "text-accent-foreground" : "text-background"}`} />
+              </div>
 
               {/* Label */}
               <div
                 className="absolute whitespace-nowrap pointer-events-none transition-all duration-300"
-                style={{ left: "50%", top: "22px", transform: "translateX(-50%)" }}
+                style={{ left: "50%", top: "44px", transform: "translateX(-50%)" }}
               >
                 <span
-                  className="text-center block transition-all duration-300"
+                  className="text-center block px-2 py-0.5 rounded-md transition-all duration-300"
                   style={{
-                    fontSize: isActive ? 13 : 11,
-                    fontWeight: isActive ? 600 : 500,
-                    color: isActive ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))",
-                    opacity: isActive ? 1 : 0.7,
+                    fontSize: isActive ? 12 : 10,
+                    fontWeight: isActive ? 700 : 600,
+                    color: "hsl(var(--foreground))",
+                    backgroundColor: isActive ? "hsl(var(--background))" : "hsl(var(--background) / 0.8)",
+                    boxShadow: "0 2px 8px hsl(var(--foreground) / 0.1)",
                   }}
                 >
                   {m.label}
                 </span>
 
-                {/* Hover card */}
+                {/* Hover intel card */}
                 {isActive && (
                   <motion.div
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="mt-2 bg-background border border-border rounded-xl p-4 shadow-lg min-w-[240px] text-left"
+                    className="mt-2 bg-background border border-border rounded-xl p-4 shadow-lg min-w-[260px] text-left"
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <div className="w-6 h-6 rounded-lg bg-accent/10 flex items-center justify-center">
@@ -284,9 +266,9 @@ const TownCommandMap = ({ townSlug, townName }: TownCommandMapProps) => {
         })}
 
         {/* Map legend */}
-        <div className="absolute bottom-4 right-4 z-10 flex items-center gap-1.5">
-          <Layers className="w-3 h-3 text-muted-foreground/40" />
-          <span className="text-[10px] text-muted-foreground/40 font-mono uppercase tracking-widest">
+        <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2 bg-background/90 backdrop-blur-sm px-3 py-1.5 rounded-full">
+          <Layers className="w-3 h-3 text-muted-foreground" />
+          <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest">
             {townName} · Nest Intel
           </span>
         </div>

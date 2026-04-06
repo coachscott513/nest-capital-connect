@@ -91,6 +91,9 @@ interface TownMarketData {
   target_yield: number | null;
   nest_score: number | null;
   region_category: string | null;
+  map_center_lat: number | null;
+  map_center_lng: number | null;
+  default_zoom: number | null;
 }
 
 interface AppleTownTemplateProps {
@@ -321,7 +324,7 @@ const AppleTownTemplate = ({
           .limit(7), // Town pages show 7 businesses (homepage shows 12 for "Big Time" scale)
         supabase
           .from('town_market_data')
-          .select('avg_price, median_price, active_listings, avg_days_on_market, avg_sqft, avg_beds, avg_baths, single_family_count, multi_family_count, hero_landmark, target_yield, nest_score, region_category')
+          .select('avg_price, median_price, active_listings, avg_days_on_market, avg_sqft, avg_beds, avg_baths, single_family_count, multi_family_count, hero_landmark, target_yield, nest_score, region_category, map_center_lat, map_center_lng, default_zoom')
           .eq('town_slug', townSlug)
           .order('scraped_at', { ascending: false })
           .maybeSingle()
@@ -393,7 +396,13 @@ const AppleTownTemplate = ({
       />
 
       {/* FULL-WIDTH COMMAND CENTER MAP */}
-      <TownCommandMap townSlug={townSlug} townName={townName} />
+      <TownCommandMap
+        townSlug={townSlug}
+        townName={townName}
+        centerLat={townMarketData?.map_center_lat ?? undefined}
+        centerLng={townMarketData?.map_center_lng ?? undefined}
+        zoom={townMarketData?.default_zoom ?? undefined}
+      />
 
       {/* BENTO GRID — Schools · Local Flavor · Live Deals */}
       <TownBentoGrid

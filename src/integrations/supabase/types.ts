@@ -920,6 +920,7 @@ export type Database = {
           avg_sqft: number | null
           condo_count: number | null
           created_at: string
+          default_zoom: number | null
           hero_landmark: string | null
           id: string
           is_active: boolean | null
@@ -929,6 +930,8 @@ export type Database = {
           listings_data: Json | null
           listings_over_750k: number | null
           listings_under_300k: number | null
+          map_center_lat: number | null
+          map_center_lng: number | null
           market_activity_last_checked: string | null
           market_activity_pdf_url: string | null
           max_price: number | null
@@ -960,6 +963,7 @@ export type Database = {
           avg_sqft?: number | null
           condo_count?: number | null
           created_at?: string
+          default_zoom?: number | null
           hero_landmark?: string | null
           id?: string
           is_active?: boolean | null
@@ -969,6 +973,8 @@ export type Database = {
           listings_data?: Json | null
           listings_over_750k?: number | null
           listings_under_300k?: number | null
+          map_center_lat?: number | null
+          map_center_lng?: number | null
           market_activity_last_checked?: string | null
           market_activity_pdf_url?: string | null
           max_price?: number | null
@@ -1000,6 +1006,7 @@ export type Database = {
           avg_sqft?: number | null
           condo_count?: number | null
           created_at?: string
+          default_zoom?: number | null
           hero_landmark?: string | null
           id?: string
           is_active?: boolean | null
@@ -1009,6 +1016,8 @@ export type Database = {
           listings_data?: Json | null
           listings_over_750k?: number | null
           listings_under_300k?: number | null
+          map_center_lat?: number | null
+          map_center_lng?: number | null
           market_activity_last_checked?: string | null
           market_activity_pdf_url?: string | null
           max_price?: number | null
