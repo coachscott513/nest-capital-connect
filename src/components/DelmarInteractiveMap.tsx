@@ -3,19 +3,31 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GraduationCap, Shield, Building2, Car, TrendingUp, CloudRain, MapPin, Clock, DollarSign } from "lucide-react";
 
-const DelmarInteractiveMap = () => {
+interface DelmarInteractiveMapProps {
+  townName?: string;
+  townSlug?: string;
+  lat?: number;
+  lng?: number;
+}
+
+const DelmarInteractiveMap = ({ 
+  townName = "Delmar", 
+  townSlug = "delmar",
+  lat = 42.622707, 
+  lng = -73.823115 
+}: DelmarInteractiveMapProps) => {
   const [activeLayer, setActiveLayer] = useState<string>("schools");
 
   const layers = [
-    { id: "schools", label: "Schools & Districts", icon: GraduationCap, color: "bg-accent" },
-    { id: "safety", label: "Crime/Safety", icon: Shield, color: "bg-green-600" },
-    { id: "businesses", label: "Nearby Businesses", icon: Building2, color: "bg-purple-600" },
-    { id: "commute", label: "Commute Times", icon: Car, color: "bg-orange-600" },
-    { id: "investment", label: "Investment Heatmap", icon: TrendingUp, color: "bg-red-600" },
-    { id: "weather", label: "Flood/Weather", icon: CloudRain, color: "bg-cyan-600" },
+    { id: "schools", label: "Schools", icon: GraduationCap, color: "bg-primary" },
+    { id: "safety", label: "Safety", icon: Shield, color: "bg-emerald-600" },
+    { id: "businesses", label: "Businesses", icon: Building2, color: "bg-purple-600" },
+    { id: "commute", label: "Commute", icon: Car, color: "bg-amber-600" },
+    { id: "investment", label: "Investment", icon: TrendingUp, color: "bg-red-600" },
+    { id: "weather", label: "Flood Risk", icon: CloudRain, color: "bg-cyan-600" },
   ];
 
-  const layerContent = {
+  const layerContent: Record<string, { title: string; items: { name: string; detail: string; distance: string; icon: typeof GraduationCap }[] }> = {
     schools: {
       title: "Top-Rated Schools & Districts",
       items: [
@@ -72,20 +84,24 @@ const DelmarInteractiveMap = () => {
     },
   };
 
+  // Monochrome/Silver Google Maps style
+  const mapStyle = "&styles=feature:all|element:geometry|color:0x1a1a2e&styles=feature:all|element:labels.text.fill|color:0x8892a4&styles=feature:all|element:labels.text.stroke|color:0x1a1a2e&styles=feature:water|element:geometry|color:0x0d1b2a&styles=feature:road|element:geometry|color:0x2a2a4a";
+
   return (
-    <section className="py-16 px-6 bg-muted/30">
+    <section className="py-16 px-[5%] bg-muted/30">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
-            Interactive Neighborhood Insights
+          <p className="text-sm font-semibold text-primary tracking-widest uppercase mb-2">Neighborhood Intel</p>
+          <h2 className="text-3xl md:text-4xl font-extralight text-foreground tracking-tight mb-4">
+            Interactive {townName} Map
           </h2>
           <p className="text-lg text-muted-foreground">
-            Click below to explore schools, businesses, safety, commute times, and more
+            Explore schools, businesses, safety, commute times, and more
           </p>
         </div>
 
-        {/* Layer Toggle Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 mb-8">
+        {/* Layer Toggle Pills */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
           {layers.map((layer) => {
             const Icon = layer.icon;
             const isActive = activeLayer === layer.id;
@@ -94,72 +110,77 @@ const DelmarInteractiveMap = () => {
                 key={layer.id}
                 onClick={() => setActiveLayer(layer.id)}
                 variant={isActive ? "default" : "outline"}
-                className={`${isActive ? layer.color + ' text-white' : ''} transition-all duration-300`}
+                size="sm"
+                className={`rounded-full ${isActive ? 'bg-primary text-primary-foreground' : ''}`}
               >
-                <Icon className="w-4 h-4 mr-2" />
+                <Icon className="w-4 h-4 mr-1.5" />
                 {layer.label}
               </Button>
             );
           })}
         </div>
 
-        {/* Map Container */}
-        <Card className="w-full h-[500px] overflow-hidden mb-8">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23591.44!2d-73.823115!3d42.622707!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89de0d0d2b0b0b0b%3A0x0!2sDelmar%2C+NY!5e0!3m2!1sen!2sus!4v1234567890"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Delmar NY Interactive Map"
-          />
-        </Card>
+        {/* Map + Data side by side on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          {/* Map — 3 columns */}
+          <Card className="lg:col-span-3 overflow-hidden border-0">
+            <iframe
+              src={`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d23591!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus${mapStyle}`}
+              width="100%"
+              height="450"
+              style={{ border: 0, filter: "saturate(0.6) contrast(1.1)" }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title={`${townName} NY Interactive Map`}
+            />
+          </Card>
 
-        {/* Layer Content Cards */}
-        <Card className="border-2">
-          <CardHeader className="bg-primary/5">
-            <CardTitle className="text-2xl flex items-center gap-2">
-              {(() => {
-                const layer = layers.find(l => l.id === activeLayer);
-                if (layer) {
-                  const Icon = layer.icon;
+          {/* Data Panel — 2 columns */}
+          <Card className="lg:col-span-2 border-border">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-xl flex items-center gap-2">
+                {(() => {
+                  const layer = layers.find(l => l.id === activeLayer);
+                  if (layer) {
+                    const Icon = layer.icon;
+                    return (
+                      <>
+                        <Icon className="w-5 h-5 text-primary" />
+                        {layerContent[activeLayer].title}
+                      </>
+                    );
+                  }
+                  return null;
+                })()}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {layerContent[activeLayer].items.map((item, index) => {
+                  const ItemIcon = item.icon;
                   return (
-                    <>
-                      <Icon className="w-6 h-6" />
-                      {layerContent[activeLayer as keyof typeof layerContent].title}
-                    </>
+                    <div key={index} className="flex items-start gap-3 p-3 bg-muted/30 rounded-xl hover:bg-muted/50 transition-colors">
+                      <div className="mt-0.5">
+                        <ItemIcon className="w-4 h-4 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-foreground text-sm">{item.name}</div>
+                        <div className="text-xs text-muted-foreground">{item.detail}</div>
+                        {item.distance && (
+                          <div className="text-[10px] text-muted-foreground mt-0.5 flex items-center gap-1">
+                            <MapPin className="w-3 h-3" />
+                            {item.distance}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   );
-                }
-              })()}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {layerContent[activeLayer as keyof typeof layerContent].items.map((item, index) => {
-                const ItemIcon = item.icon;
-                return (
-                  <div key={index} className="flex items-start gap-3 p-4 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
-                    <div className="mt-1">
-                      <ItemIcon className="w-5 h-5 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="font-semibold text-foreground">{item.name}</div>
-                      <div className="text-sm text-muted-foreground">{item.detail}</div>
-                      {item.distance && (
-                        <div className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
-                          {item.distance}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </section>
   );
