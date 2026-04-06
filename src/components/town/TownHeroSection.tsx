@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Search, MapPin, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import TownSpatialMap from "@/components/town/TownSpatialMap";
+
 
 interface TownHeroSectionProps {
   townName: string;
