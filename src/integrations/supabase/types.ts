@@ -814,6 +814,57 @@ export type Database = {
         }
         Relationships: []
       }
+      town_landmarks: {
+        Row: {
+          category: string
+          created_at: string
+          detail: string | null
+          display_order: number | null
+          headline: string | null
+          icon: string
+          id: string
+          is_active: boolean | null
+          label: string
+          nest_score: number
+          town_slug: string
+          updated_at: string
+          x: number
+          y: number
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          detail?: string | null
+          display_order?: number | null
+          headline?: string | null
+          icon?: string
+          id?: string
+          is_active?: boolean | null
+          label: string
+          nest_score?: number
+          town_slug: string
+          updated_at?: string
+          x: number
+          y: number
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          detail?: string | null
+          display_order?: number | null
+          headline?: string | null
+          icon?: string
+          id?: string
+          is_active?: boolean | null
+          label?: string
+          nest_score?: number
+          town_slug?: string
+          updated_at?: string
+          x?: number
+          y?: number
+        }
+        Relationships: []
+      }
       town_ledger: {
         Row: {
           category: string

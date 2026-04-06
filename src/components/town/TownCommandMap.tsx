@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   GraduationCap,
@@ -10,6 +10,7 @@ import {
   MapPin,
   Layers,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface IntelMarker {
   id: string;
@@ -35,149 +36,41 @@ const ICON_MAP = {
   lifestyle: TreePine,
   hub: BookOpen,
   dining: Coffee,
+  landmark: Landmark,
+  store: Coffee,
+  tree: TreePine,
+  shield: Shield,
 };
 
+// Map DB icon names to component icon keys
+const mapDbIcon = (icon: string): "government" | "school" | "safety" | "lifestyle" | "hub" | "dining" => {
+  const mapping: Record<string, "government" | "school" | "safety" | "lifestyle" | "hub" | "dining"> = {
+    landmark: "government",
+    school: "school",
+    shield: "safety",
+    tree: "lifestyle",
+    store: "dining",
+    hub: "hub",
+    government: "government",
+    safety: "safety",
+    lifestyle: "lifestyle",
+    dining: "dining",
+  };
+  return mapping[icon] || "government";
+};
+
+// Fallback hardcoded data for towns without DB entries
 const DELMAR_INTEL: IntelMarker[] = [
-  {
-    id: "town-hall",
-    label: "Bethlehem Town Hall",
-    category: "Permits & Zoning",
-    icon: "government",
-    x: 48,
-    y: 42,
-    nestScore: 8.5,
-    headline: "Permit & Zoning HQ",
-    detail: "Next community zoning meeting: Wed, April 22, 7PM. Direct access to Building Department.",
-  },
-  {
-    id: "bc-high",
-    label: "Bethlehem Central High",
-    category: "Elite Education",
-    icon: "school",
-    x: 35,
-    y: 62,
-    nestScore: 9.8,
-    headline: "#1 School District in Albany Area",
-    detail: "A-Rated by Niche · 98% graduation rate · Top 1% college readiness in NY.",
-  },
-  {
-    id: "fire-district",
-    label: "Delmar Fire District",
-    category: "Safety",
-    icon: "safety",
-    x: 62,
-    y: 55,
-    nestScore: 9.0,
-    headline: "Primary Safety Hub for 12054",
-    detail: "Station 1 & 2 coverage. Volunteer department with full-time response capabilities.",
-  },
-  {
-    id: "rail-trail",
-    label: "Helderberg-Hudson Rail Trail",
-    category: "Recreation",
-    icon: "lifestyle",
-    x: 20,
-    y: 48,
-    nestScore: 8.8,
-    headline: "9.8-Mile Paved Recreational Artery",
-    detail: "ADA-accessible. Connects directly to Albany and Voorheesville. Year-round access.",
-  },
-  {
-    id: "library",
-    label: "Bethlehem Public Library",
-    category: "Community Hub",
-    icon: "hub",
-    x: 55,
-    y: 32,
-    nestScore: 8.5,
-    headline: "Community Hub with Daily Events",
-    detail: "Rated 4.6★ · Local art exhibitions, kids programs & 2026 event calendar.",
-  },
-  {
-    id: "four-corners",
-    label: "The Four Corners",
-    category: "Dining & Lifestyle",
-    icon: "dining",
-    x: 50,
-    y: 22,
-    nestScore: 9.2,
-    headline: "Historic Walkability Meets Modern Dining",
-    detail: "Delaware Cafe, Four Corners Luncheonette. Cultural heart of Delmar.",
-  },
+  { id: "town-hall", label: "Bethlehem Town Hall", category: "Civic", icon: "government", x: 48, y: 42, nestScore: 8.5, headline: "Permit & Zoning HQ", detail: "Next community zoning meeting: Wed, April 22, 7PM. Direct access to Building Department." },
+  { id: "bc-high", label: "Bethlehem Central High", category: "Education", icon: "school", x: 35, y: 62, nestScore: 9.8, headline: "#1 School District in Albany Area", detail: "A-Rated by Niche · 98% graduation rate · Top 1% college readiness in NY." },
+  { id: "fire-district", label: "Delmar Fire District", category: "Safety", icon: "safety", x: 62, y: 55, nestScore: 9.0, headline: "Primary Safety Hub for 12054", detail: "Station 1 & 2 coverage. Volunteer department with full-time response capabilities." },
+  { id: "rail-trail", label: "Helderberg-Hudson Rail Trail", category: "Recreation", icon: "lifestyle", x: 20, y: 48, nestScore: 8.8, headline: "9.8-Mile Paved Recreational Artery", detail: "ADA-accessible. Connects directly to Albany and Voorheesville. Year-round access." },
+  { id: "library", label: "Bethlehem Public Library", category: "Community Hub", icon: "hub", x: 55, y: 32, nestScore: 8.5, headline: "Community Hub with Daily Events", detail: "Rated 4.6★ · Local art exhibitions, kids programs & 2026 event calendar." },
 ];
 
-const TROY_INTEL: IntelMarker[] = [
-  {
-    id: "city-hall",
-    label: "Troy City Hall",
-    category: "Permits & Zoning",
-    icon: "government",
-    x: 50,
-    y: 40,
-    nestScore: 8.0,
-    headline: "Downtown Revitalization Zone HQ",
-    detail: "433 River St. Access the Planning Dept for Historic District Tax Credits — reduces renovation costs by up to 20%.",
-  },
-  {
-    id: "rpi",
-    label: "Rensselaer Polytechnic Institute",
-    category: "Elite Education",
-    icon: "school",
-    x: 35,
-    y: 28,
-    nestScore: 9.5,
-    headline: "Global Tech Anchor & Rental Engine",
-    detail: "1,100+ faculty, 7,000+ students. High-prestige tenant pool guarantees low vacancy for multi-unit lofts.",
-  },
-  {
-    id: "farmers-market",
-    label: "Troy Waterfront Farmers Market",
-    category: "Dining & Lifestyle",
-    icon: "dining",
-    x: 58,
-    y: 22,
-    nestScore: 9.2,
-    headline: "Nationally Ranked Saturday Heartbeat",
-    detail: "Year-round market at the Atrium. Leading indicator: $20M+ ongoing waterfront investment.",
-  },
-  {
-    id: "fire-hq",
-    label: "Troy Fire Department HQ",
-    category: "Safety",
-    icon: "safety",
-    x: 62,
-    y: 55,
-    nestScore: 8.5,
-    headline: "Central Safety Hub — Historic District",
-    detail: "Full-time professional department. Primary coverage for Downtown & South Troy investment corridors.",
-  },
-  {
-    id: "post-office",
-    label: "Troy Post Office (4th St)",
-    category: "Community Hub",
-    icon: "hub",
-    x: 42,
-    y: 65,
-    nestScore: 7.8,
-    headline: "Legal & Closing Document Flow",
-    detail: "Historic hub for certified mail. Essential for real estate closings and investor correspondence.",
-  },
-];
-
-const SARATOGA_INTEL: IntelMarker[] = [
-  { id: "city-center", label: "City Center", category: "Government", icon: "government", x: 48, y: 38, nestScore: 8.0, headline: "Municipal Hub", detail: "Convention center & city services." },
-  { id: "saratoga-high", label: "Saratoga Springs High", category: "Education", icon: "school", x: 35, y: 60, nestScore: 9.6, headline: "Top 3% in New York State", detail: "96% graduation rate. Blue Streaks athletics." },
-  { id: "broadway", label: "Broadway District", category: "Dining & Lifestyle", icon: "dining", x: 52, y: 28, nestScore: 9.5, headline: "Premier Upstate Shopping & Dining", detail: "National-caliber restaurant scene." },
-  { id: "spa-park", label: "Spa State Park", category: "Recreation", icon: "lifestyle", x: 60, y: 55, nestScore: 9.3, headline: "2,379-Acre Mineral Springs Preserve", detail: "SPAC, pools, golf & year-round recreation." },
-];
-
-const TOWN_INTEL: Record<string, IntelMarker[]> = {
+const FALLBACK_INTEL: Record<string, IntelMarker[]> = {
   delmar: DELMAR_INTEL,
-  troy: TROY_INTEL,
-  "saratoga-springs": SARATOGA_INTEL,
 };
-
-const CATEGORIES = ["All", "Permits & Zoning", "Elite Education", "Safety", "Recreation", "Community Hub", "Dining & Lifestyle", "Government", "Education"];
 
 const ROAD_PATHS = [
   "M 5,35 Q 25,32 50,35 T 95,37",
@@ -195,10 +88,38 @@ const ROAD_PATHS = [
 const TownCommandMap = ({ townSlug, townName }: TownCommandMapProps) => {
   const [activeMarker, setActiveMarker] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState("All");
+  const [markers, setMarkers] = useState<IntelMarker[]>(FALLBACK_INTEL[townSlug] || DELMAR_INTEL);
 
-  const markers = TOWN_INTEL[townSlug] || DELMAR_INTEL;
+  // Fetch landmarks from database, fall back to hardcoded
+  useEffect(() => {
+    const fetchLandmarks = async () => {
+      const { data, error } = await supabase
+        .from('town_landmarks')
+        .select('*')
+        .eq('town_slug', townSlug)
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+
+      if (data && data.length > 0) {
+        setMarkers(data.map((l) => ({
+          id: l.id,
+          label: l.label,
+          category: l.category,
+          icon: mapDbIcon(l.icon),
+          x: Number(l.x),
+          y: Number(l.y),
+          nestScore: l.nest_score,
+          headline: l.headline || l.label,
+          detail: l.detail || '',
+        })));
+      } else {
+        setMarkers(FALLBACK_INTEL[townSlug] || DELMAR_INTEL);
+      }
+    };
+    fetchLandmarks();
+  }, [townSlug]);
+
   const uniqueCategories = ["All", ...Array.from(new Set(markers.map((m) => m.category)))];
-
   const filtered = activeFilter === "All" ? markers : markers.filter((m) => m.category === activeFilter);
   const activeData = markers.find((m) => m.id === activeMarker);
   const ActiveIcon = activeData ? ICON_MAP[activeData.icon] : null;
