@@ -321,7 +321,7 @@ const AppleTownTemplate = ({
           .limit(7), // Town pages show 7 businesses (homepage shows 12 for "Big Time" scale)
         supabase
           .from('town_market_data')
-          .select('avg_price, median_price, active_listings, avg_days_on_market, avg_sqft, avg_beds, avg_baths, single_family_count, multi_family_count, hero_landmark, target_yield, nest_score, region_category')
+          .select('avg_price, median_price, active_listings, avg_days_on_market, avg_sqft, avg_beds, avg_baths, single_family_count, multi_family_count, hero_landmark, target_yield, nest_score, region_category, map_center_lat, map_center_lng, default_zoom')
           .eq('town_slug', townSlug)
           .order('scraped_at', { ascending: false })
           .maybeSingle()
