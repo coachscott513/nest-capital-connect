@@ -92,8 +92,27 @@ const PropertyListing = () => {
     );
   }
 
+  const listingSchema = buildRealEstateListingSchema({
+    address: property.address,
+    city: property.city,
+    state: property.state || "NY",
+    price: property.price,
+    beds: property.beds,
+    baths: property.baths,
+    sqft: property.sqft,
+    description: property.description,
+    photos: property.photos,
+    created_at: property.created_at,
+    slug: property.mls_id || property.id,
+  });
+
   return (
     <>
+      <SEOHead
+        title={`${property.address}, ${property.city} NY | Capital District Nest`}
+        description={`${property.beds || ''}bd/${property.baths || ''}ba ${property.sqft ? property.sqft + ' sqft' : ''} property at ${property.address}, ${property.city} NY. Listed at $${Number(property.price).toLocaleString()}.`}
+        structuredData={listingSchema}
+      />
       <MainHeader />
       <PropertyListingTemplate property={property} />
       <Footer />
