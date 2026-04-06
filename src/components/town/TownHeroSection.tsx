@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Search, MapPin, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import TownSpatialMap from "@/components/town/TownSpatialMap";
+
 
 interface TownHeroSectionProps {
   townName: string;
@@ -40,7 +40,7 @@ const TownHeroSection = ({
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-primary/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 pt-28 pb-0 md:pt-40 md:pb-0 lg:pt-48 lg:pb-0">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-12 lg:gap-16 items-center">
+        <div className="max-w-3xl">
 
           {/* LEFT — Narrative */}
           <motion.div
@@ -87,17 +87,6 @@ const TownHeroSection = ({
             </div>
           </motion.div>
 
-          {/* RIGHT — Spatial Intelligence Map */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="hidden lg:block"
-          >
-            <div className="relative w-full aspect-square max-w-[580px] mx-auto">
-              <TownSpatialMap townSlug={townSlug} townName={townName} />
-            </div>
-          </motion.div>
         </div>
 
         {/* At-a-Glance Stats — clean borderless tiles */}
@@ -132,12 +121,6 @@ const TownHeroSection = ({
           ))}
         </div>
 
-        {/* Mobile map */}
-        <div className="lg:hidden mt-8 mb-8">
-          <div className="aspect-square max-w-sm mx-auto">
-            <TownSpatialMap townSlug={townSlug} townName={townName} />
-          </div>
-        </div>
       </div>
     </section>
   );
