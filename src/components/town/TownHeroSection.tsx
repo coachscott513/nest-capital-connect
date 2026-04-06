@@ -121,12 +121,6 @@ const TownHeroSection = ({
           ))}
         </div>
 
-        {/* Mobile map */}
-        <div className="lg:hidden mt-8 mb-8">
-          <div className="aspect-square max-w-sm mx-auto">
-            <TownSpatialMap townSlug={townSlug} townName={townName} />
-          </div>
-        </div>
       </div>
     </section>
   );
