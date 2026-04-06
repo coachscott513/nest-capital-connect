@@ -121,6 +121,7 @@ const TownCommandMap = ({ townSlug, townName }: TownCommandMapProps) => {
 
   const uniqueCategories = ["All", ...Array.from(new Set(markers.map((m) => m.category)))];
   const filtered = activeFilter === "All" ? markers : markers.filter((m) => m.category === activeFilter);
+  const activeData = markers.find((m) => m.id === activeMarker);
   const ActiveIcon = activeData ? ICON_MAP[activeData.icon] : null;
 
   return (
