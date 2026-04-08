@@ -64,7 +64,6 @@ const navItems = [
   { label: "Markets", href: "/communities" },
   { label: "Buyers", href: "/first-time-homebuyers" },
   { label: "Investors", href: "/investor-tools" },
-  { label: "South Florida", href: "/south-florida" },
 ];
 
 interface DropdownProps {
