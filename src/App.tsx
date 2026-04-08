@@ -127,6 +127,7 @@ import LandHub from "./pages/search/LandHub";
 import RentalsSearchHub from "./pages/search/RentalsSearchHub";
 import SouthFlorida from "./pages/SouthFlorida";
 import AnalyzeHub from "./pages/AnalyzeHub";
+import AnalyzeAnyDealHome from "./pages/AnalyzeAnyDealHome";
 import AnalyzeCondo from "./pages/analyze/AnalyzeCondo";
 import AnalyzeSingleFamily from "./pages/analyze/AnalyzeSingleFamily";
 import AnalyzeRental from "./pages/analyze/AnalyzeRental";
