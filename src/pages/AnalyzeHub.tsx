@@ -8,6 +8,9 @@ import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 
+const GOLD = "#C9A84C";
+const NAVY = "#0A0F1E";
+
 const sampleDeals = [
   {
     address: "Delaware Ave, Delmar NY 12054",
@@ -71,7 +74,7 @@ const trustStats = [
 ];
 
 function ScoreBadge({ score }: { score: number }) {
-  const cls = score >= 7
+  const cls = score >= 8
     ? "bg-emerald-500/10 text-emerald-600"
     : score >= 5
       ? "bg-amber-500/10 text-amber-600"
@@ -87,47 +90,14 @@ function MetricPill({ label, value, positive }: { label: string; value: string; 
   return (
     <span className="text-xs">
       <span className="text-muted-foreground">{label}</span>{" "}
-      <span className={`font-semibold ${positive ? "text-emerald-600" : "text-amber-600"}`}>{value}</span>
+      <span className={`font-semibold ${positive ? "text-emerald-600" : "text-red-500"}`}>{value}</span>
     </span>
   );
 }
 
-function AnalyzerInputBar() {
-  const navigate = useNavigate();
-  const [address, setAddress] = useState("");
-
-  const handleAnalyze = () => navigate("/analyzer");
-
-  return (
-    <div className="w-full max-w-3xl mx-auto">
-      <div className="flex flex-col md:flex-row items-stretch gap-3 p-2 rounded-2xl border border-border bg-card/80 backdrop-blur-sm shadow-lg">
-        <div className="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary">
-          <Search className="w-5 h-5 text-muted-foreground shrink-0" />
-          <input
-            type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleAnalyze()}
-            placeholder="Enter any property address to analyze..."
-            className="w-full bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-base"
-          />
-        </div>
-        <button
-          onClick={handleAnalyze}
-          className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm tracking-wide bg-primary text-primary-foreground hover:opacity-90 transition-opacity shrink-0"
-        >
-          Analyze This Deal
-          <ArrowRight className="w-4 h-4" />
-        </button>
-      </div>
-      <p className="text-center text-muted-foreground/60 text-xs mt-3">
-        Free to use · No account required · Professional PDF reports
-      </p>
-    </div>
-  );
-}
-
 const AnalyzeHub = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEOHead
@@ -142,7 +112,7 @@ const AnalyzeHub = () => {
       <section className="relative pt-40 pb-24 px-6 hero-gradient">
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-transparent" />
         <div className="relative max-w-4xl mx-auto text-left">
-          <p className="text-xs font-bold tracking-[0.35em] uppercase text-accent mb-6">
+          <p className="text-xs font-bold tracking-[0.35em] uppercase mb-6" style={{ color: GOLD }}>
             Analyze Any Deal · Any Market · Any Loan Type
           </p>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-primary-foreground tracking-tight mb-6 leading-[1.05]">
@@ -152,7 +122,7 @@ const AnalyzeHub = () => {
             Institutional-quality investment analysis in 60 seconds. Find deals before anyone else. Replace your spreadsheet forever.
           </p>
 
-          {/* Input bar on dark hero */}
+          {/* Hero input bar */}
           <div className="w-full max-w-3xl">
             <div className="flex flex-col md:flex-row items-stretch gap-3 p-2 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
               <div className="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10">
@@ -161,15 +131,16 @@ const AnalyzeHub = () => {
                   type="text"
                   placeholder="Enter any property address to analyze..."
                   className="w-full bg-transparent text-white placeholder:text-white/40 outline-none text-base"
-                  onKeyDown={(e) => { if (e.key === "Enter") window.location.href = "/analyzer"; }}
+                  onKeyDown={(e) => { if (e.key === "Enter") navigate("/analyzer"); }}
                 />
               </div>
-              <Link
-                to="/analyzer"
-                className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm tracking-wide bg-accent text-accent-foreground hover:opacity-90 transition-opacity shrink-0"
+              <button
+                onClick={() => navigate("/analyzer")}
+                className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm tracking-wide hover:opacity-90 transition-opacity shrink-0"
+                style={{ backgroundColor: GOLD, color: NAVY }}
               >
                 Analyze This Deal <ArrowRight className="w-4 h-4" />
-              </Link>
+              </button>
             </div>
             <p className="text-white/30 text-xs mt-3">
               Free to use · No account required · Professional PDF reports
@@ -193,7 +164,7 @@ const AnalyzeHub = () => {
       {/* ===== DEAL FEED ===== */}
       <section className="py-24 px-6 bg-background">
         <div className="max-w-6xl mx-auto">
-          <p className="text-xs font-bold tracking-[0.35em] uppercase text-accent mb-3">
+          <p className="text-xs font-bold tracking-[0.35em] uppercase mb-3" style={{ color: GOLD }}>
             Live Capital District Deal Feed
           </p>
           <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight mb-3">
@@ -227,7 +198,7 @@ const AnalyzeHub = () => {
                     <MetricPill label="DSCR" value={`${deal.dscr}`} positive={deal.dscr >= 1} />
                   </div>
 
-                  <button className="text-xs font-semibold text-accent inline-flex items-center gap-1 hover:gap-2 transition-all">
+                  <button className="text-xs font-semibold inline-flex items-center gap-1 hover:gap-2 transition-all" style={{ color: GOLD }}>
                     Unlock full address <ChevronRight className="w-3 h-3" />
                   </button>
                 </div>
@@ -247,19 +218,19 @@ const AnalyzeHub = () => {
       </section>
 
       {/* ===== 4 PROMISES ===== */}
-      <section className="py-24 px-6 bg-secondary/50">
+      <section className="py-20 px-6 bg-secondary/50">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight text-left mb-16">
+          <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight text-left mb-10">
             Everything you need to<br />make the right call.
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {features.map((f) => (
-              <div key={f.title} className="p-8 rounded-2xl bg-background border border-border hover-lift">
-                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
-                  <f.icon className="w-6 h-6 text-accent" />
+              <div key={f.title} className="p-7 rounded-2xl bg-background border border-border hover-lift">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-5" style={{ backgroundColor: `${GOLD}18` }}>
+                  <f.icon className="w-5 h-5" style={{ color: GOLD }} />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">{f.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{f.text}</p>
+                <h3 className="text-lg font-bold text-foreground mb-2">{f.title}</h3>
+                <p className="text-muted-foreground leading-relaxed text-sm">{f.text}</p>
               </div>
             ))}
           </div>
@@ -269,7 +240,7 @@ const AnalyzeHub = () => {
       {/* ===== LOAN TYPE SWITCHER ===== */}
       <section className="py-24 px-6 hero-gradient">
         <div className="max-w-4xl mx-auto text-left">
-          <p className="text-xs font-bold tracking-[0.35em] uppercase text-accent mb-3">
+          <p className="text-xs font-bold tracking-[0.35em] uppercase mb-3" style={{ color: GOLD }}>
             7 Loan Types · Dynamic Inputs
           </p>
           <h2 className="text-3xl md:text-5xl font-black text-primary-foreground tracking-tight mb-4">
@@ -306,7 +277,10 @@ const AnalyzeHub = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {steps.map((s) => (
               <div key={s.num}>
-                <div className="w-14 h-14 rounded-full bg-primary text-primary-foreground flex items-center justify-center mb-5 text-lg font-black">
+                <div
+                  className="w-14 h-14 rounded-full flex items-center justify-center mb-5 text-lg font-black"
+                  style={{ backgroundColor: NAVY, color: GOLD }}
+                >
                   {s.num}
                 </div>
                 <h3 className="text-lg font-bold text-foreground mb-2">{s.title}</h3>
@@ -340,13 +314,14 @@ const AnalyzeHub = () => {
               </div>
             </div>
 
-            <div className="rounded-2xl bg-primary text-primary-foreground p-6 flex flex-col justify-center">
-              <p className="font-bold text-lg mb-4">
+            <div className="rounded-2xl p-6 flex flex-col justify-center" style={{ backgroundColor: NAVY }}>
+              <p className="font-bold text-lg mb-4 text-white">
                 Get pre-approved before you make an offer.
               </p>
               <a
                 href="tel:5186762347"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-sm bg-accent text-accent-foreground hover:opacity-90 transition-opacity"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity"
+                style={{ backgroundColor: GOLD, color: NAVY }}
               >
                 <Phone className="w-4 h-4" />
                 Talk to Joel
@@ -357,15 +332,40 @@ const AnalyzeHub = () => {
       </section>
 
       {/* ===== FINAL CTA ===== */}
-      <section className="py-24 px-6 bg-accent">
+      <section className="py-24 px-6" style={{ backgroundColor: GOLD }}>
         <div className="max-w-4xl mx-auto text-left">
-          <h2 className="text-4xl md:text-6xl font-black text-accent-foreground tracking-tight mb-4">
+          <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-4" style={{ color: NAVY }}>
             Stop guessing.<br />Start analyzing.
           </h2>
-          <p className="text-lg text-accent-foreground/70 mb-14 max-w-xl">
+          <p className="text-lg mb-14 max-w-xl" style={{ color: `${NAVY}B3` }}>
             Free to use. No account required. Any property. Any loan type. In seconds.
           </p>
-          <AnalyzerInputBar />
+
+          {/* Bottom input bar */}
+          <div className="w-full max-w-3xl">
+            <div className="flex flex-col md:flex-row items-stretch gap-3 p-2 rounded-2xl border bg-white/20 backdrop-blur-sm" style={{ borderColor: `${NAVY}20` }}>
+              <div className="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl" style={{ backgroundColor: `${NAVY}10` }}>
+                <Search className="w-5 h-5 shrink-0" style={{ color: `${NAVY}60` }} />
+                <input
+                  type="text"
+                  placeholder="Enter any property address to analyze..."
+                  className="w-full bg-transparent outline-none text-base placeholder:opacity-50"
+                  style={{ color: NAVY }}
+                  onKeyDown={(e) => { if (e.key === "Enter") navigate("/analyzer"); }}
+                />
+              </div>
+              <button
+                onClick={() => navigate("/analyzer")}
+                className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm tracking-wide hover:opacity-90 transition-opacity shrink-0"
+                style={{ backgroundColor: NAVY, color: GOLD }}
+              >
+                Analyze This Deal <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+            <p className="text-xs mt-3" style={{ color: `${NAVY}50` }}>
+              Free to use · No account required · Professional PDF reports
+            </p>
+          </div>
         </div>
       </section>
 
