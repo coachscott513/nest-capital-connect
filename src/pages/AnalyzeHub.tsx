@@ -484,8 +484,6 @@ const AnalyzeHub = () => {
           </div>
         </div>
 
-        {/* Gold accent strip */}
-        <div className="absolute bottom-0 left-0 right-0 h-1" style={{ backgroundColor: GOLD }} />
       </section>
 
       <Footer />
