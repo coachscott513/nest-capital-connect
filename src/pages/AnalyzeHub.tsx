@@ -2,11 +2,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   Search, TrendingUp, Clock, Globe, FileText, ChevronRight,
-  Phone, ArrowRight
+  Phone, ArrowRight, X
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const GOLD = "#C9A84C";
 const NAVY = "#0A0F1E";
@@ -15,6 +17,7 @@ const sampleDeals = [
   {
     address: "Delaware Ave, Delmar NY 12054",
     masked: "XXX",
+    fullAddress: "142 Delaware Ave, Delmar NY 12054",
     type: "3-unit · Multi-family",
     score: 8.4,
     capRate: 7.2,
@@ -26,6 +29,7 @@ const sampleDeals = [
   {
     address: "Kenwood Ave, Troy NY 12180",
     masked: "XXX",
+    fullAddress: "87 Kenwood Ave, Troy NY 12180",
     type: "2-unit · Multi-family",
     score: 6.1,
     capRate: 5.8,
@@ -37,6 +41,7 @@ const sampleDeals = [
   {
     address: "3rd Street, Troy NY 12180",
     masked: "XXX",
+    fullAddress: "219 3rd Street, Troy NY 12180",
     type: "4-unit · Multi-family",
     score: 9.1,
     capRate: 8.4,
@@ -95,8 +100,101 @@ function MetricPill({ label, value, positive }: { label: string; value: string; 
   );
 }
 
+function UnlockModal({
+  deal,
+  onClose,
+  onUnlocked,
+}: {
+  deal: typeof sampleDeals[0];
+  onClose: () => void;
+  onUnlocked: (idx: number) => void;
+}) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const dealIdx = sampleDeals.indexOf(deal);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !email.trim()) return;
+
+    setSubmitting(true);
+    try {
+      await supabase.from("leads").insert({
+        full_name: name.trim(),
+        email: email.trim(),
+        message: `Unlock address request: ${deal.address} (${deal.price})`,
+        type: "deal_unlock",
+        lead_type: "investor",
+      });
+      onUnlocked(dealIdx);
+      toast.success("Address unlocked!");
+      onClose();
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
+      <div
+        className="relative w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button onClick={onClose} className="absolute top-4 right-4 text-muted-foreground hover:text-foreground">
+          <X className="w-5 h-5" />
+        </button>
+        <h3 className="text-xl font-black text-foreground mb-1">Unlock Full Address</h3>
+        <p className="text-sm text-muted-foreground mb-6">
+          Enter your info to see the full address for this {deal.type} at {deal.price}.
+        </p>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            placeholder="Full name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            maxLength={100}
+            className="w-full px-4 py-3 rounded-xl border border-border bg-secondary text-foreground placeholder:text-muted-foreground outline-none text-sm"
+          />
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            maxLength={255}
+            className="w-full px-4 py-3 rounded-xl border border-border bg-secondary text-foreground placeholder:text-muted-foreground outline-none text-sm"
+          />
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity disabled:opacity-50"
+            style={{ backgroundColor: GOLD, color: NAVY }}
+          >
+            {submitting ? "Unlocking..." : "Unlock Address"}
+            {!submitting && <ArrowRight className="w-4 h-4" />}
+          </button>
+        </form>
+        <p className="text-xs text-muted-foreground/60 text-center mt-4">
+          Free · No spam · Your data stays private
+        </p>
+      </div>
+    </div>
+  );
+}
+
 const AnalyzeHub = () => {
   const navigate = useNavigate();
+  const [unlockDeal, setUnlockDeal] = useState<typeof sampleDeals[0] | null>(null);
+  const [unlockedIndexes, setUnlockedIndexes] = useState<Set<number>>(new Set());
+
+  const handleUnlocked = (idx: number) => {
+    setUnlockedIndexes((prev) => new Set(prev).add(idx));
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -162,7 +260,7 @@ const AnalyzeHub = () => {
       </section>
 
       {/* ===== DEAL FEED ===== */}
-      <section className="py-24 px-6 bg-background">
+      <section className="pt-12 pb-24 px-6 bg-background">
         <div className="max-w-6xl mx-auto">
           <p className="text-xs font-bold tracking-[0.35em] uppercase mb-3" style={{ color: GOLD }}>
             Live Capital District Deal Feed
@@ -175,35 +273,54 @@ const AnalyzeHub = () => {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {sampleDeals.map((deal, i) => (
-              <div
-                key={i}
-                className="rounded-2xl border border-border bg-card hover-lift overflow-hidden"
-              >
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs text-muted-foreground">{deal.type}</span>
-                    <ScoreBadge score={deal.score} />
-                  </div>
-                  <p className="text-foreground font-semibold mb-1">
-                    <span className="blur-[4px] select-none">{deal.masked}</span>{" "}
-                    {deal.address}
-                  </p>
-                  <p className="text-3xl font-black text-foreground tracking-tight mb-5">{deal.price}</p>
+            {sampleDeals.map((deal, i) => {
+              const isUnlocked = unlockedIndexes.has(i);
+              return (
+                <div
+                  key={i}
+                  className="rounded-2xl border border-border bg-card hover-lift overflow-hidden"
+                >
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-xs text-muted-foreground">{deal.type}</span>
+                      <ScoreBadge score={deal.score} />
+                    </div>
+                    <p className="text-foreground font-semibold mb-1">
+                      {isUnlocked ? (
+                        deal.fullAddress
+                      ) : (
+                        <>
+                          <span className="blur-[4px] select-none">{deal.masked}</span>{" "}
+                          {deal.address}
+                        </>
+                      )}
+                    </p>
+                    <p className="text-3xl font-black text-foreground tracking-tight mb-5">{deal.price}</p>
 
-                  <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-5">
-                    <MetricPill label="Cap Rate" value={`${deal.capRate}%`} positive={deal.capRate >= 7} />
-                    <MetricPill label="Cash Flow" value={`${deal.cashFlow >= 0 ? "+" : ""}$${deal.cashFlow}/mo`} positive={deal.cashFlow >= 0} />
-                    <MetricPill label="Rent" value={deal.grossRent} positive />
-                    <MetricPill label="DSCR" value={`${deal.dscr}`} positive={deal.dscr >= 1} />
-                  </div>
+                    <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-5">
+                      <MetricPill label="Cap Rate" value={`${deal.capRate}%`} positive={deal.capRate >= 7} />
+                      <MetricPill label="Cash Flow" value={`${deal.cashFlow >= 0 ? "+" : ""}$${deal.cashFlow}/mo`} positive={deal.cashFlow >= 0} />
+                      <MetricPill label="Rent" value={deal.grossRent} positive />
+                      <MetricPill label="DSCR" value={`${deal.dscr}`} positive={deal.dscr >= 1} />
+                    </div>
 
-                  <button className="text-xs font-semibold inline-flex items-center gap-1 hover:gap-2 transition-all" style={{ color: GOLD }}>
-                    Unlock full address <ChevronRight className="w-3 h-3" />
-                  </button>
+                    {isUnlocked ? (
+                      <span className="text-xs font-semibold text-emerald-600 inline-flex items-center gap-1">
+                        ✓ Address unlocked
+                      </span>
+                    ) : (
+                      <button
+                        onClick={() => setUnlockDeal(deal)}
+                        className="text-xs font-semibold inline-flex items-center gap-1 hover:gap-2 transition-all"
+                        style={{ color: GOLD }}
+                      >
+                        Unlock full address <ChevronRight className="w-3 h-3" />
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="text-center">
@@ -332,41 +449,43 @@ const AnalyzeHub = () => {
       </section>
 
       {/* ===== FINAL CTA ===== */}
-      <section className="py-24 px-6" style={{ backgroundColor: GOLD }}>
+      <section className="py-24 px-6 hero-gradient">
         <div className="max-w-4xl mx-auto text-left">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-4" style={{ color: NAVY }}>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-white">
             Stop guessing.<br />Start analyzing.
           </h2>
-          <p className="text-lg mb-14 max-w-xl" style={{ color: `${NAVY}B3` }}>
+          <p className="text-lg mb-14 max-w-xl text-white/60">
             Free to use. No account required. Any property. Any loan type. In seconds.
           </p>
 
           {/* Bottom input bar */}
           <div className="w-full max-w-3xl">
-            <div className="flex flex-col md:flex-row items-stretch gap-3 p-2 rounded-2xl border bg-white/20 backdrop-blur-sm" style={{ borderColor: `${NAVY}20` }}>
-              <div className="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl" style={{ backgroundColor: `${NAVY}10` }}>
-                <Search className="w-5 h-5 shrink-0" style={{ color: `${NAVY}60` }} />
+            <div className="flex flex-col md:flex-row items-stretch gap-3 p-2 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+              <div className="flex-1 flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10">
+                <Search className="w-5 h-5 text-white/40 shrink-0" />
                 <input
                   type="text"
                   placeholder="Enter any property address to analyze..."
-                  className="w-full bg-transparent outline-none text-base placeholder:opacity-50"
-                  style={{ color: NAVY }}
+                  className="w-full bg-transparent text-white placeholder:text-white/40 outline-none text-base"
                   onKeyDown={(e) => { if (e.key === "Enter") navigate("/analyzer"); }}
                 />
               </div>
               <button
                 onClick={() => navigate("/analyzer")}
                 className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm tracking-wide hover:opacity-90 transition-opacity shrink-0"
-                style={{ backgroundColor: NAVY, color: GOLD }}
+                style={{ backgroundColor: GOLD, color: NAVY }}
               >
                 Analyze This Deal <ArrowRight className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-xs mt-3" style={{ color: `${NAVY}50` }}>
+            <p className="text-white/30 text-xs mt-3">
               Free to use · No account required · Professional PDF reports
             </p>
           </div>
         </div>
+
+        {/* Gold accent strip */}
+        <div className="absolute bottom-0 left-0 right-0 h-1" style={{ backgroundColor: GOLD }} />
       </section>
 
       <Footer />
@@ -374,6 +493,15 @@ const AnalyzeHub = () => {
       <div className="py-4 text-center text-xs text-muted-foreground border-t border-border">
         AnalyzeAnyDeal.com is powered by Capital District Nest · Built by Scott Alvarez · RE/MAX Solutions · Albany, NY
       </div>
+
+      {/* Unlock modal */}
+      {unlockDeal && (
+        <UnlockModal
+          deal={unlockDeal}
+          onClose={() => setUnlockDeal(null)}
+          onUnlocked={handleUnlocked}
+        />
+      )}
     </div>
   );
 };
