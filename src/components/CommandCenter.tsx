@@ -76,7 +76,7 @@ export const CommandCenter: React.FC = () => {
         ) : (
           <>
             <span className="w-1.5 h-1.5 bg-accent rounded-full" />
-            <span>Contact</span>
+            <span>Live Help</span>
           </>
         )}
       </button>
