@@ -127,6 +127,7 @@ import LandHub from "./pages/search/LandHub";
 import RentalsSearchHub from "./pages/search/RentalsSearchHub";
 import SouthFlorida from "./pages/SouthFlorida";
 import AnalyzeHub from "./pages/AnalyzeHub";
+import AnalyzeAnyDealHome from "./pages/AnalyzeAnyDealHome";
 import AnalyzeCondo from "./pages/analyze/AnalyzeCondo";
 import AnalyzeSingleFamily from "./pages/analyze/AnalyzeSingleFamily";
 import AnalyzeRental from "./pages/analyze/AnalyzeRental";
@@ -205,6 +206,7 @@ const App = () => {
           
           {/* Analyzer Hub */}
           <Route path="/analyze" element={<AnalyzeHub />} />
+          <Route path="/analyze-any-deal" element={<AnalyzeAnyDealHome />} />
           <Route path="/analyze/condo" element={<AnalyzeCondo />} />
           <Route path="/analyze/single-family" element={<AnalyzeSingleFamily />} />
           <Route path="/analyze/rental" element={<AnalyzeRental />} />
