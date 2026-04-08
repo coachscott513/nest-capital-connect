@@ -155,34 +155,34 @@ const AnalyzeHub = () => {
             Institutional-quality investment analysis in seconds — built for investors, agents, and serious buyers.
           </p>
 
-          {/* ── Input bar — glass panel ── */}
+          {/* ── Input bar — bright white shell ── */}
           <div className="max-w-xl mx-auto">
             <div
-              className="flex flex-col md:flex-row items-stretch gap-1.5 p-1.5 rounded-2xl"
+              className="flex flex-col md:flex-row items-stretch gap-1.5 p-2 rounded-2xl"
               style={{
-                background: "rgba(255,255,255,0.035)",
-                border: "1px solid rgba(255,255,255,0.06)",
-                boxShadow: "0 1px 40px rgba(0,0,0,0.25)",
+                background: "#FFFFFF",
+                border: "1px solid rgba(0,0,0,0.08)",
+                boxShadow: "0 4px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.05)",
               }}
             >
-              <div className="flex-1 flex items-center gap-3 px-5 py-4 rounded-xl" style={{ background: "rgba(255,255,255,0.05)" }}>
-                <Search className="w-4 h-4 text-white/20 shrink-0" />
+              <div className="flex-1 flex items-center gap-3 px-5 py-4 rounded-xl">
+                <Search className="w-4 h-4 text-gray-300 shrink-0" />
                 <input
                   type="text"
                   placeholder="Enter any property address..."
-                  className="w-full bg-transparent text-white placeholder:text-white/20 outline-none text-[15px] font-light"
+                  className="w-full bg-transparent text-gray-900 placeholder:text-gray-400 outline-none text-[15px] font-light"
                   onKeyDown={(e) => { if (e.key === "Enter") navigate("/analyzer"); }}
                 />
               </div>
               <button
                 onClick={() => navigate("/analyzer")}
-                className="flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-semibold text-[13px] tracking-wide shrink-0 transition-all hover:brightness-125"
-                style={{ backgroundColor: "rgba(255,255,255,0.10)", color: "white" }}
+                className="flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-semibold text-[13px] tracking-wide shrink-0 transition-all text-white hover:opacity-90"
+                style={{ backgroundColor: NAVY }}
               >
                 Analyze This Deal <ArrowRight className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-white/15 text-[11px] mt-5 tracking-wide">
+            <p className="text-white/25 text-[11px] mt-5 tracking-wide">
               Free to use · No account required · Professional PDF reports
             </p>
           </div>
