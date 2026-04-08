@@ -17,35 +17,36 @@ const PLATINUM = "#E2E8F0";
 
 function InputBar({ variant = "dark" }: { variant?: "dark" | "light" }) {
   const navigate = useNavigate();
-  const d = variant === "dark";
   return (
     <div className="w-full">
       <div
-        className="flex flex-col md:flex-row items-stretch gap-1.5 p-1.5 rounded-2xl"
+        className="flex flex-col md:flex-row items-stretch gap-1.5 p-2 rounded-2xl"
         style={{
-          background: d ? "rgba(255,255,255,0.035)" : "rgba(0,0,0,0.025)",
-          border: `1px solid ${d ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
-          boxShadow: d ? "0 1px 40px rgba(0,0,0,0.25)" : "0 2px 16px rgba(0,0,0,0.04)",
+          background: "#FFFFFF",
+          border: "1px solid rgba(0,0,0,0.08)",
+          boxShadow: variant === "dark"
+            ? "0 4px 48px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.05)"
+            : "0 2px 20px rgba(0,0,0,0.06)",
         }}
       >
-        <div className="flex-1 flex items-center gap-3 px-5 py-4 rounded-xl" style={{ background: d ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.02)" }}>
-          <Search className={`w-4 h-4 shrink-0 ${d ? "text-white/20" : "text-gray-300"}`} />
+        <div className="flex-1 flex items-center gap-3 px-5 py-4 rounded-xl">
+          <Search className="w-4 h-4 shrink-0 text-gray-300" />
           <input
             type="text"
             placeholder="Enter any property address..."
-            className={`w-full bg-transparent outline-none text-[15px] font-light ${d ? "text-white placeholder:text-white/20" : "text-gray-900 placeholder:text-gray-300"}`}
+            className="w-full bg-transparent outline-none text-[15px] font-light text-gray-900 placeholder:text-gray-400"
             onKeyDown={(e) => { if (e.key === "Enter") navigate("/analyzer"); }}
           />
         </div>
         <button
           onClick={() => navigate("/analyzer")}
-          className={`flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-semibold text-[13px] tracking-wide shrink-0 transition-all hover:brightness-125 ${d ? "bg-white/10 text-white" : "text-white"}`}
-          style={d ? {} : { backgroundColor: NAVY }}
+          className="flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-semibold text-[13px] tracking-wide shrink-0 transition-all text-white hover:opacity-90"
+          style={{ backgroundColor: NAVY }}
         >
           Analyze This Deal <ArrowRight className="w-4 h-4" />
         </button>
       </div>
-      <p className={`text-[11px] mt-5 tracking-wide ${d ? "text-white/15" : "text-gray-300"}`}>
+      <p className={`text-[11px] mt-5 tracking-wide ${variant === "dark" ? "text-white/25" : "text-gray-400"}`}>
         Free to use · No account required · Professional PDF reports
       </p>
     </div>
