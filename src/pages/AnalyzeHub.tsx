@@ -411,7 +411,7 @@ const AnalyzeHub = () => {
         AnalyzeAnyDeal.com is powered by Capital District Nest · Built by Scott Alvarez · RE/MAX Solutions · Albany, NY
       </div>
 
-      {unlockDeal && <UnlockModal deal={unlockDeal} onClose={() => setUnlockDeal(null)} onUnlocked={handleUnlocked} />}
+      {unlockListing && <UnlockModal listing={unlockListing} onClose={() => setUnlockListing(null)} onUnlocked={handleUnlocked} />}
     </div>
   );
 };

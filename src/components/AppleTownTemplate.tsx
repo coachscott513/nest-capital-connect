@@ -948,6 +948,9 @@ const AppleTownTemplate = ({
         searchUrl={searchUrl}
       />
 
+      {/* New This Week — Live Investment Listings */}
+      <NewThisWeekSection townName={townName} />
+
       <TownFAQSection townSlug={townSlug} townName={townName} />
       <NearbyMarkets townSlug={townSlug} townName={townName} />
 
