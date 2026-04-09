@@ -34,26 +34,26 @@ const SchenectadyRealEstate = () => {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "How much is a house in Schenectady right now?",
+        "name": "What is the median home price in Schenectady NY?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The current median list price for a home in Schenectady, NY is approximately $230,000. Prices range from under $100,000 for value-add multi-units to over $400,000 in premium neighborhoods like the Stockade District and GE Realty Plot. Schenectady remains one of the most affordable markets in the Capital District."
+          "text": "The median list price in Schenectady NY is approximately $279,900 as of April 2026, with active inventory averaging 20 days on market."
         }
       },
       {
         "@type": "Question",
-        "name": "Is Schenectady a good place for real estate investors?",
+        "name": "Is Schenectady NY a good place to invest in rental property?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Schenectady offers some of the strongest cash-flow potential in the Capital District, with cap rates typically ranging from 5% to 9% on multi-unit properties. Strong rental demand from Union College students, GE/GlobalFoundries employees, and young professionals creates reliable tenant pools. The low entry price relative to rent levels makes Schenectady one of the best ROI markets in upstate New York."
+          "text": "Schenectady offers some of the Capital District's strongest rental yields, with duplexes available from $209,000 and multi-family properties generating cap rates in the 5-8% range. The city's proximity to Union College and Ellis Hospital creates consistent rental demand."
         }
       },
       {
         "@type": "Question",
-        "name": "How fast are homes selling in the Stockade District?",
+        "name": "How fast are homes selling in the Stockade District Schenectady?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Homes in Schenectady's Stockade District are currently selling in an average of 24 days — significantly faster than the broader Capital District average. The Stockade is one of the oldest neighborhoods in America, with unique colonial architecture and walkable access to downtown Schenectady, driving consistent buyer demand."
+          "text": "Properties in desirable Schenectady neighborhoods including the Stockade District are going under contract in 20-25 days on average as of 2026, reflecting strong buyer demand."
         }
       }
     ]
@@ -215,39 +215,33 @@ const SchenectadyRealEstate = () => {
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="price">
                   <AccordionTrigger className="text-lg font-semibold text-left">
-                    How much is a house in Schenectady right now?
+                    What is the median home price in Schenectady NY?
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
-                    The current median list price for a home in Schenectady, NY is approximately <strong>$230,000</strong>. 
-                    Prices range from under $100,000 for value-add multi-units to over $400,000 in premium neighborhoods 
-                    like the Stockade District and GE Realty Plot. Schenectady remains one of the most affordable markets 
-                    in the Capital District — which is exactly why investors are paying attention.
+                    The median list price in Schenectady NY is approximately <strong>$279,900</strong> as of April 2026, 
+                    with active inventory averaging <strong>20 days</strong> on market.
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="investing">
                   <AccordionTrigger className="text-lg font-semibold text-left">
-                    Is Schenectady a good place for real estate investors?
+                    Is Schenectady NY a good place to invest in rental property?
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
-                    Yes. Schenectady offers some of the strongest cash-flow potential in the Capital District, 
-                    with cap rates typically ranging from <strong>5% to 9%</strong> on multi-unit properties. 
-                    Strong rental demand from Union College students, GE/GlobalFoundries employees, and young professionals 
-                    creates reliable tenant pools. The low entry price relative to rent levels makes Schenectady 
-                    one of the best ROI markets in upstate New York. 
+                    Schenectady offers some of the Capital District's strongest rental yields, with duplexes available 
+                    from <strong>$209,000</strong> and multi-family properties generating cap rates in the <strong>5–8% range</strong>. 
+                    The city's proximity to Union College and Ellis Hospital creates consistent rental demand. 
                     <Link to="/analyze" className="text-primary hover:underline ml-1">Run the numbers on a Schenectady deal →</Link>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="stockade">
                   <AccordionTrigger className="text-lg font-semibold text-left">
-                    How fast are homes selling in the Stockade District?
+                    How fast are homes selling in the Stockade District Schenectady?
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
-                    Homes in Schenectady's Stockade District are currently selling in an average of <strong>24 days</strong> — 
-                    significantly faster than the broader Capital District average. The Stockade is one of the oldest 
-                    neighborhoods in America, with unique colonial architecture and walkable access to downtown 
-                    Schenectady, driving consistent buyer demand.
+                    Properties in desirable Schenectady neighborhoods including the Stockade District are going 
+                    under contract in <strong>20–25 days</strong> on average as of 2026, reflecting strong buyer demand.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
