@@ -121,7 +121,7 @@ const AnalyzeHub = () => {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       <SEOHead
-        title="Analyze Any Deal | Free Investment Property Calculator | AnalyzeAnyDeal"
+        title="Investment Property Analyzer — Any Deal, Any Loan Type | AnalyzeAnyDeal"
         description="Institutional-quality investment analysis in 60 seconds. Cap rate, cash flow, DSCR, and NOI for any property, any loan type, any market. Free professional PDF reports."
         keywords="investment property analyzer, deal analyzer, cap rate calculator, cash flow calculator, DSCR calculator, real estate investment calculator, analyze any deal"
         canonical="https://www.capitaldistrictnest.com/analyze"
