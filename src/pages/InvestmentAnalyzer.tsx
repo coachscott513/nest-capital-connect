@@ -411,7 +411,7 @@ const InvestmentAnalyzer = () => {
       doc.setFontSize(8);
       doc.setTextColor(180, 180, 180);
       doc.text('CAPITAL DISTRICT NEST', pageWidth - margin, 12, { align: 'right' });
-      doc.text('THE YIELD INTELLIGENCE PLATFORM', pageWidth - margin, 18, { align: 'right' });
+      doc.text('KNOW THE NUMBERS BEFORE YOU BUY', pageWidth - margin, 18, { align: 'right' });
       doc.setFontSize(7);
       doc.text('Scott Alvarez | RE/MAX Solutions', pageWidth - margin, 24, { align: 'right' });
     } else {
