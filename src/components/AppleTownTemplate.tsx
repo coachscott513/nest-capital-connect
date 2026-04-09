@@ -362,7 +362,7 @@ const AppleTownTemplate = ({
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={`${townName} Insights, Property Data & Local Guide | Capital District Nest`}
+        title={`${townName}, NY Real Estate & Investment Properties | Capital District Nest`}
         description={seoContent.metaDescription}
         keywords={[...seoContent.focusKeywords, ...seoContent.civicKeywords, ...seoContent.lifestyleKeywords].join(', ')}
         canonical={`https://capitaldistrictnest.com/towns/${townSlug}`}
