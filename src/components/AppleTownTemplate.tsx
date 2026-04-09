@@ -43,6 +43,7 @@ import SearchCommandModules from "@/components/town/SearchCommandModules";
 import TownBentoGrid from "@/components/town/TownBentoGrid";
 import { getTownSEOContent, getCountyForTown } from "@/data/townSEOContent";
 import NearbyMarkets from "@/components/town/NearbyMarkets";
+import TownFAQSection from "@/components/town/TownFAQSection";
 
 interface TownLedgerEntry {
   id: string;
@@ -947,6 +948,7 @@ const AppleTownTemplate = ({
         searchUrl={searchUrl}
       />
 
+      <TownFAQSection townSlug={townSlug} townName={townName} />
       <NearbyMarkets townSlug={townSlug} townName={townName} />
 
       <Footer />
