@@ -49,70 +49,7 @@ const trustStats = [
   { label: "PDF Reports", sub: "Share with your lender or partner" },
 ];
 
-function ScoreBadge({ score }: { score: number }) {
-  const cls = score >= 8
-    ? "bg-emerald-500/8 text-emerald-500 ring-1 ring-emerald-500/15"
-    : score >= 5
-      ? "bg-amber-500/8 text-amber-500 ring-1 ring-amber-500/15"
-      : "bg-red-500/8 text-red-500 ring-1 ring-red-500/15";
-  return (
-    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium tracking-wide ${cls}`}>
-      {score.toFixed(1)}
-    </span>
-  );
-}
-
-function MetricPill({ label, value, positive }: { label: string; value: string; positive: boolean }) {
-  return (
-    <div className="flex flex-col">
-      <span className="text-[10px] uppercase tracking-wider text-gray-400/70">{label}</span>
-      <span className={`text-sm font-medium tabular-nums ${positive ? "text-emerald-500" : "text-red-400"}`}>{value}</span>
-    </div>
-  );
-}
-
-function UnlockModal({ deal, onClose, onUnlocked }: { deal: typeof sampleDeals[0]; onClose: () => void; onUnlocked: (idx: number) => void }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const dealIdx = sampleDeals.indexOf(deal);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !email.trim()) return;
-    setSubmitting(true);
-    try {
-      await supabase.from("leads").insert({ full_name: name.trim(), email: email.trim(), message: `Unlock address request: ${deal.address} (${deal.price})`, type: "deal_unlock", lead_type: "investor" });
-      onUnlocked(dealIdx);
-      toast.success("Address unlocked!");
-      onClose();
-    } catch { toast.error("Something went wrong. Please try again."); }
-    finally { setSubmitting(false); }
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md" onClick={onClose}>
-      <div className="relative w-full max-w-md rounded-3xl bg-white p-10 shadow-2xl" style={{ border: "1px solid rgba(0,0,0,0.06)" }} onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-5 right-5 text-gray-300 hover:text-gray-500 transition-colors"><X className="w-5 h-5" /></button>
-        <h3 className="text-xl font-semibold text-gray-900 mb-1 tracking-tight">Unlock Full Address</h3>
-        <p className="text-sm text-gray-400 mb-8">Enter your info to see the full address for this {deal.type} at {deal.price}.</p>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input type="text" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required maxLength={100}
-            className="w-full px-5 py-3.5 rounded-xl bg-gray-50 text-gray-900 placeholder:text-gray-300 outline-none text-sm focus:ring-1 focus:ring-gray-200 transition-shadow" style={{ border: "1px solid rgba(0,0,0,0.06)" }} />
-          <input type="email" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} required maxLength={255}
-            className="w-full px-5 py-3.5 rounded-xl bg-gray-50 text-gray-900 placeholder:text-gray-300 outline-none text-sm focus:ring-1 focus:ring-gray-200 transition-shadow" style={{ border: "1px solid rgba(0,0,0,0.06)" }} />
-          <button type="submit" disabled={submitting}
-            className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-[13px] tracking-wide transition-all disabled:opacity-50 text-white hover:brightness-110"
-            style={{ backgroundColor: NAVY }}>
-            {submitting ? "Unlocking..." : "Unlock Address"}{!submitting && <ArrowRight className="w-4 h-4" />}
-          </button>
-        </form>
-        <p className="text-[11px] text-gray-300 text-center mt-5">Free · No spam · Your data stays private</p>
-      </div>
-    </div>
-  );
-}
-
+// ScoreBadge, MetricPill, and UnlockModal are now imported from DealCard
 /* ─── Page ─── */
 const AnalyzeHub = () => {
   const navigate = useNavigate();
