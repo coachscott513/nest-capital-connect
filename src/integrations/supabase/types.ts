@@ -388,6 +388,117 @@ export type Database = {
         }
         Relationships: []
       }
+      listings: {
+        Row: {
+          agency: string | null
+          annual_taxes: number | null
+          bathrooms: number | null
+          bedrooms: number | null
+          cap_rate: number | null
+          cash_flow_monthly: number | null
+          city: string
+          county: string | null
+          created_at: string
+          days_on_market: number | null
+          deal_score: number | null
+          dscr: number | null
+          full_address: string | null
+          gross_rent_monthly: number | null
+          id: string
+          is_investment: boolean | null
+          list_date: string | null
+          list_price: number | null
+          listing_agent: string | null
+          masked_address: string | null
+          mls_number: string | null
+          noi_annual: number | null
+          photo_url: string | null
+          property_type: string | null
+          property_type_code: string | null
+          remarks: string | null
+          sqft: number | null
+          status: string | null
+          street_name: string | null
+          street_number: string | null
+          units: number | null
+          updated_at: string
+          year_built: number | null
+          zipcode: string | null
+        }
+        Insert: {
+          agency?: string | null
+          annual_taxes?: number | null
+          bathrooms?: number | null
+          bedrooms?: number | null
+          cap_rate?: number | null
+          cash_flow_monthly?: number | null
+          city: string
+          county?: string | null
+          created_at?: string
+          days_on_market?: number | null
+          deal_score?: number | null
+          dscr?: number | null
+          full_address?: string | null
+          gross_rent_monthly?: number | null
+          id?: string
+          is_investment?: boolean | null
+          list_date?: string | null
+          list_price?: number | null
+          listing_agent?: string | null
+          masked_address?: string | null
+          mls_number?: string | null
+          noi_annual?: number | null
+          photo_url?: string | null
+          property_type?: string | null
+          property_type_code?: string | null
+          remarks?: string | null
+          sqft?: number | null
+          status?: string | null
+          street_name?: string | null
+          street_number?: string | null
+          units?: number | null
+          updated_at?: string
+          year_built?: number | null
+          zipcode?: string | null
+        }
+        Update: {
+          agency?: string | null
+          annual_taxes?: number | null
+          bathrooms?: number | null
+          bedrooms?: number | null
+          cap_rate?: number | null
+          cash_flow_monthly?: number | null
+          city?: string
+          county?: string | null
+          created_at?: string
+          days_on_market?: number | null
+          deal_score?: number | null
+          dscr?: number | null
+          full_address?: string | null
+          gross_rent_monthly?: number | null
+          id?: string
+          is_investment?: boolean | null
+          list_date?: string | null
+          list_price?: number | null
+          listing_agent?: string | null
+          masked_address?: string | null
+          mls_number?: string | null
+          noi_annual?: number | null
+          photo_url?: string | null
+          property_type?: string | null
+          property_type_code?: string | null
+          remarks?: string | null
+          sqft?: number | null
+          status?: string | null
+          street_name?: string | null
+          street_number?: string | null
+          units?: number | null
+          updated_at?: string
+          year_built?: number | null
+          zipcode?: string | null
+        }
+        Relationships: []
+      }
       local_voices: {
         Row: {
           alpha_insight: string | null

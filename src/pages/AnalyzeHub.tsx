@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Search, TrendingUp, Clock, Globe, FileText, ChevronRight,
   Phone, ArrowRight, X
@@ -9,6 +9,8 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { getTopDeals, type Listing } from "@/lib/listings";
+import { DealCard, UnlockModal, type UnlockedDetails } from "@/components/DealCard";
 
 /* ─── Brand tokens — Platinum / Charcoal / Navy system ─── */
 const NAVY = "#0B0F19";
@@ -22,7 +24,7 @@ const sampleDeals = [
   { address: "Delaware Ave, Delmar NY 12054", masked: "XXX", fullAddress: "142 Delaware Ave, Delmar NY 12054", type: "3-unit · Multi-family", score: 8.4, capRate: 7.2, cashFlow: 318, grossRent: "$3,400", dscr: 1.18, price: "$415,000" },
   { address: "Kenwood Ave, Troy NY 12180", masked: "XXX", fullAddress: "87 Kenwood Ave, Troy NY 12180", type: "2-unit · Multi-family", score: 6.1, capRate: 5.8, cashFlow: -84, grossRent: "$2,600", dscr: 0.97, price: "$349,000" },
   { address: "3rd Street, Troy NY 12180", masked: "XXX", fullAddress: "219 3rd Street, Troy NY 12180", type: "4-unit · Multi-family", score: 9.1, capRate: 8.4, cashFlow: 621, grossRent: "$4,800", dscr: 1.31, price: "$389,000" },
-];
+]; // fallback only
 
 const loanTypes = ["FHA 3.5% Down", "Conventional", "DSCR", "203(k) Rehab", "VA Loan", "Hard Money", "Cash Purchase"];
 
@@ -47,76 +49,28 @@ const trustStats = [
   { label: "PDF Reports", sub: "Share with your lender or partner" },
 ];
 
-function ScoreBadge({ score }: { score: number }) {
-  const cls = score >= 8
-    ? "bg-emerald-500/8 text-emerald-500 ring-1 ring-emerald-500/15"
-    : score >= 5
-      ? "bg-amber-500/8 text-amber-500 ring-1 ring-amber-500/15"
-      : "bg-red-500/8 text-red-500 ring-1 ring-red-500/15";
-  return (
-    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium tracking-wide ${cls}`}>
-      {score.toFixed(1)}
-    </span>
-  );
-}
-
-function MetricPill({ label, value, positive }: { label: string; value: string; positive: boolean }) {
-  return (
-    <div className="flex flex-col">
-      <span className="text-[10px] uppercase tracking-wider text-gray-400/70">{label}</span>
-      <span className={`text-sm font-medium tabular-nums ${positive ? "text-emerald-500" : "text-red-400"}`}>{value}</span>
-    </div>
-  );
-}
-
-function UnlockModal({ deal, onClose, onUnlocked }: { deal: typeof sampleDeals[0]; onClose: () => void; onUnlocked: (idx: number) => void }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const dealIdx = sampleDeals.indexOf(deal);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !email.trim()) return;
-    setSubmitting(true);
-    try {
-      await supabase.from("leads").insert({ full_name: name.trim(), email: email.trim(), message: `Unlock address request: ${deal.address} (${deal.price})`, type: "deal_unlock", lead_type: "investor" });
-      onUnlocked(dealIdx);
-      toast.success("Address unlocked!");
-      onClose();
-    } catch { toast.error("Something went wrong. Please try again."); }
-    finally { setSubmitting(false); }
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md" onClick={onClose}>
-      <div className="relative w-full max-w-md rounded-3xl bg-white p-10 shadow-2xl" style={{ border: "1px solid rgba(0,0,0,0.06)" }} onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} className="absolute top-5 right-5 text-gray-300 hover:text-gray-500 transition-colors"><X className="w-5 h-5" /></button>
-        <h3 className="text-xl font-semibold text-gray-900 mb-1 tracking-tight">Unlock Full Address</h3>
-        <p className="text-sm text-gray-400 mb-8">Enter your info to see the full address for this {deal.type} at {deal.price}.</p>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input type="text" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required maxLength={100}
-            className="w-full px-5 py-3.5 rounded-xl bg-gray-50 text-gray-900 placeholder:text-gray-300 outline-none text-sm focus:ring-1 focus:ring-gray-200 transition-shadow" style={{ border: "1px solid rgba(0,0,0,0.06)" }} />
-          <input type="email" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} required maxLength={255}
-            className="w-full px-5 py-3.5 rounded-xl bg-gray-50 text-gray-900 placeholder:text-gray-300 outline-none text-sm focus:ring-1 focus:ring-gray-200 transition-shadow" style={{ border: "1px solid rgba(0,0,0,0.06)" }} />
-          <button type="submit" disabled={submitting}
-            className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-[13px] tracking-wide transition-all disabled:opacity-50 text-white hover:brightness-110"
-            style={{ backgroundColor: NAVY }}>
-            {submitting ? "Unlocking..." : "Unlock Address"}{!submitting && <ArrowRight className="w-4 h-4" />}
-          </button>
-        </form>
-        <p className="text-[11px] text-gray-300 text-center mt-5">Free · No spam · Your data stays private</p>
-      </div>
-    </div>
-  );
-}
-
+// ScoreBadge, MetricPill, and UnlockModal are now imported from DealCard
 /* ─── Page ─── */
 const AnalyzeHub = () => {
   const navigate = useNavigate();
-  const [unlockDeal, setUnlockDeal] = useState<typeof sampleDeals[0] | null>(null);
-  const [unlockedIndexes, setUnlockedIndexes] = useState<Set<number>>(new Set());
-  const handleUnlocked = (idx: number) => { setUnlockedIndexes((prev) => new Set(prev).add(idx)); };
+  const [liveDeals, setLiveDeals] = useState<Listing[]>([]);
+  const [dealsLoading, setDealsLoading] = useState(true);
+  const [unlockListing, setUnlockListing] = useState<Listing | null>(null);
+  const [unlockedMap, setUnlockedMap] = useState<Record<string, UnlockedDetails>>({});
+
+  useEffect(() => {
+    getTopDeals(9).then((deals) => {
+      setLiveDeals(deals);
+      setDealsLoading(false);
+    });
+  }, []);
+
+  const handleUnlocked = (mlsNumber: string, details: UnlockedDetails) => {
+    setUnlockedMap((prev) => ({ ...prev, [mlsNumber]: details }));
+  };
+
+  // Use live deals if available, fall back to sample data structure
+  const displayDeals = liveDeals;
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -233,38 +187,47 @@ const AnalyzeHub = () => {
             Every active multi-family listing in the Capital District — scored, ranked, and analyzed. Updated weekly from live MLS data.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
-            {sampleDeals.map((deal, i) => {
-              const isUnlocked = unlockedIndexes.has(i);
-              return (
+          {dealsLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="rounded-2xl bg-white p-8 animate-pulse" style={{ border: "1px solid rgba(0,0,0,0.05)" }}>
+                  <div className="h-4 bg-gray-100 rounded w-1/3 mb-6" />
+                  <div className="h-5 bg-gray-100 rounded w-2/3 mb-2" />
+                  <div className="h-8 bg-gray-100 rounded w-1/2 mb-7" />
+                  <div className="grid grid-cols-4 gap-3">
+                    {[1, 2, 3, 4].map((j) => <div key={j} className="h-10 bg-gray-50 rounded" />)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : displayDeals.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+              {displayDeals.map((listing) => (
+                <DealCard
+                  key={listing.id}
+                  listing={listing}
+                  unlockedDetails={unlockedMap[listing.mls_number || listing.id]}
+                  onUnlockClick={setUnlockListing}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+              {sampleDeals.map((deal, i) => (
                 <div key={i} className="group rounded-2xl bg-white transition-all duration-300 hover:shadow-[0_6px_32px_rgba(0,0,0,0.05)] hover:-translate-y-0.5" style={{ border: "1px solid rgba(0,0,0,0.05)" }}>
                   <div className="p-8">
                     <div className="flex items-center justify-between mb-6">
                       <span className="text-[10px] tracking-[0.2em] uppercase text-gray-300 font-medium">{deal.type}</span>
-                      <ScoreBadge score={deal.score} />
                     </div>
                     <p className="text-gray-900 font-medium text-sm mb-1.5">
-                      {isUnlocked ? deal.fullAddress : (<><span className="blur-[4px] select-none">{deal.masked}</span> {deal.address}</>)}
+                      <span className="blur-[4px] select-none">{deal.masked}</span> {deal.address}
                     </p>
                     <p className="text-2xl font-semibold text-gray-900 tracking-tight mb-7">{deal.price}</p>
-                    <div className="grid grid-cols-4 gap-3 pb-6 mb-5" style={{ borderBottom: "1px solid rgba(0,0,0,0.04)" }}>
-                      <MetricPill label="Cap" value={`${deal.capRate}%`} positive={deal.capRate >= 7} />
-                      <MetricPill label="Flow" value={`${deal.cashFlow >= 0 ? "+" : ""}$${deal.cashFlow}`} positive={deal.cashFlow >= 0} />
-                      <MetricPill label="Rent" value={deal.grossRent} positive />
-                      <MetricPill label="DSCR" value={`${deal.dscr}`} positive={deal.dscr >= 1} />
-                    </div>
-                    {isUnlocked ? (
-                      <span className="text-[11px] font-medium text-emerald-500 inline-flex items-center gap-1.5">✓ Address unlocked</span>
-                    ) : (
-                      <button onClick={() => setUnlockDeal(deal)} className="text-[11px] font-medium inline-flex items-center gap-1 tracking-wide transition-all hover:gap-2 opacity-60 group-hover:opacity-100" style={{ color: SLATE }}>
-                        Unlock full address <ChevronRight className="w-3 h-3" />
-                      </button>
-                    )}
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          )}
 
           <div className="text-center">
             <Link to="/dealdesk" className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-gray-900 font-medium text-[13px] transition-colors tracking-wide hover:bg-gray-100" style={{ border: "1px solid rgba(0,0,0,0.08)" }}>
@@ -448,7 +411,7 @@ const AnalyzeHub = () => {
         AnalyzeAnyDeal.com is powered by Capital District Nest · Built by Scott Alvarez · RE/MAX Solutions · Albany, NY
       </div>
 
-      {unlockDeal && <UnlockModal deal={unlockDeal} onClose={() => setUnlockDeal(null)} onUnlocked={handleUnlocked} />}
+      {unlockListing && <UnlockModal listing={unlockListing} onClose={() => setUnlockListing(null)} onUnlocked={handleUnlocked} />}
     </div>
   );
 };

@@ -44,6 +44,7 @@ import TownBentoGrid from "@/components/town/TownBentoGrid";
 import { getTownSEOContent, getCountyForTown } from "@/data/townSEOContent";
 import NearbyMarkets from "@/components/town/NearbyMarkets";
 import TownFAQSection from "@/components/town/TownFAQSection";
+import NewThisWeekSection from "@/components/town/NewThisWeekSection";
 
 interface TownLedgerEntry {
   id: string;
@@ -947,6 +948,9 @@ const AppleTownTemplate = ({
         townSlug={townSlug}
         searchUrl={searchUrl}
       />
+
+      {/* New This Week — Live Investment Listings */}
+      <NewThisWeekSection townName={townName} />
 
       <TownFAQSection townSlug={townSlug} townName={townName} />
       <NearbyMarkets townSlug={townSlug} townName={townName} />
