@@ -36,17 +36,19 @@ interface UnlockModalProps {
 
 function UnlockModal({ listing, onClose, onUnlocked }: UnlockModalProps) {
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !email.trim()) return;
+    if (!name.trim() || !phone.trim() || !email.trim()) return;
     setSubmitting(true);
     try {
       await supabase.from("leads").insert({
         full_name: name.trim(),
         email: email.trim(),
+        phone: phone.trim(),
         message: `Unlock address: ${listing.masked_address || listing.city} (${listing.list_price ? `$${listing.list_price.toLocaleString()}` : "N/A"})`,
         type: "deal_unlock",
         lead_type: "investor",
@@ -81,6 +83,8 @@ function UnlockModal({ listing, onClose, onUnlocked }: UnlockModalProps) {
         </p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input type="text" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required maxLength={100}
+            className="w-full px-5 py-3.5 rounded-xl bg-gray-50 text-gray-900 placeholder:text-gray-300 outline-none text-sm focus:ring-1 focus:ring-gray-200 transition-shadow" style={{ border: "1px solid rgba(0,0,0,0.06)" }} />
+          <input type="tel" placeholder="(518) 555-0100" value={phone} onChange={(e) => setPhone(e.target.value)} required maxLength={20}
             className="w-full px-5 py-3.5 rounded-xl bg-gray-50 text-gray-900 placeholder:text-gray-300 outline-none text-sm focus:ring-1 focus:ring-gray-200 transition-shadow" style={{ border: "1px solid rgba(0,0,0,0.06)" }} />
           <input type="email" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} required maxLength={255}
             className="w-full px-5 py-3.5 rounded-xl bg-gray-50 text-gray-900 placeholder:text-gray-300 outline-none text-sm focus:ring-1 focus:ring-gray-200 transition-shadow" style={{ border: "1px solid rgba(0,0,0,0.06)" }} />
