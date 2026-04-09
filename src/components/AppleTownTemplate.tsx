@@ -42,6 +42,7 @@ import TownCommandMap from "@/components/town/TownCommandMap";
 import SearchCommandModules from "@/components/town/SearchCommandModules";
 import TownBentoGrid from "@/components/town/TownBentoGrid";
 import { getTownSEOContent, getCountyForTown } from "@/data/townSEOContent";
+import NearbyMarkets from "@/components/town/NearbyMarkets";
 
 interface TownLedgerEntry {
   id: string;
