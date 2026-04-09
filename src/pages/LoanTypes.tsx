@@ -171,7 +171,7 @@ const LoanTypes = () => {
           <div className="flex items-center justify-between">
             <Link to="/yield" className="flex flex-col">
               <span className="text-lg font-bold text-white">Capital District Nest</span>
-              <span className="text-xs text-primary tracking-wide">The Yield Intelligence Platform</span>
+              <span className="text-xs text-primary tracking-wide">Know the numbers before you buy</span>
             </Link>
             
             <div className="hidden md:flex items-center gap-8">
@@ -287,7 +287,7 @@ const LoanTypes = () => {
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
               <h3 className="text-lg font-bold text-white mb-2">Capital District Nest</h3>
-              <p className="text-sm text-muted-foreground">The Yield Intelligence Platform</p>
+              <p className="text-sm text-muted-foreground">Know the numbers before you buy</p>
             </div>
             <div className="flex flex-wrap gap-6 text-sm">
               <Link to="/yield" className="text-muted-foreground hover:text-white transition-colors">Home</Link>

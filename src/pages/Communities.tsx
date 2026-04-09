@@ -197,8 +197,8 @@ const Communities = () => {
   return (
     <>
       <SEOHead 
-        title="Regional Command Center | 11-County Capital District Intelligence | Capital District Nest"
-        description="Access institutional-grade real estate intelligence across 11 counties and 52+ towns in New York's Capital District. County-by-county market analysis, yield data, and investment opportunities."
+        title="Regional Command Center | 11-County Capital District Investor Intel | Capital District Nest"
+        description="Access vetted local real estate insights across 11 counties and 52+ towns in New York's Capital District. County-by-county market analysis, yield data, and investment opportunities."
         keywords="Capital District real estate, Albany County homes, Saratoga real estate, multi-county investment, NY property market, regional real estate intelligence"
         canonical="https://capitaldistrictnest.com/communities"
       />

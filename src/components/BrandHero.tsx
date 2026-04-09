@@ -45,7 +45,7 @@ const BrandHero = () => {
             className="space-y-8 lg:space-y-10"
           >
             <p className="text-xs font-semibold tracking-[0.25em] uppercase text-muted-foreground">
-              Capital District Intelligence
+              Know the numbers before you buy.
             </p>
 
             <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-foreground tracking-[-0.035em] leading-[1.02]">
