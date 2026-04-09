@@ -118,6 +118,7 @@ export function DealCard({ listing, unlockedDetails, onUnlockClick }: DealCardPr
 
   const dom = listing.days_on_market ?? 999;
   const newBadge = dom <= 3 ? "NEW TODAY" : dom <= 7 ? "NEW THIS WEEK" : null;
+  const isRehab = (listing.list_price ?? Infinity) < 100000;
 
   return (
     <div className="group rounded-2xl bg-white transition-all duration-300 hover:shadow-[0_6px_32px_rgba(0,0,0,0.05)] hover:-translate-y-0.5" style={{ border: "1px solid rgba(0,0,0,0.05)" }}>
@@ -127,6 +128,11 @@ export function DealCard({ listing, unlockedDetails, onUnlockClick }: DealCardPr
             {newBadge && (
               <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-emerald-500/10 text-emerald-500 ring-1 ring-emerald-500/15">
                 {newBadge}
+              </span>
+            )}
+            {isRehab && (
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-500 ring-1 ring-amber-500/15">
+                POSSIBLE REHAB
               </span>
             )}
             {listing.property_type || "Residential"}{listing.units && listing.units > 1 ? ` · ${listing.units} units` : ""}
