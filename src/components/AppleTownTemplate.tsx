@@ -946,6 +946,8 @@ const AppleTownTemplate = ({
         searchUrl={searchUrl}
       />
 
+      <NearbyMarkets townSlug={townSlug} townName={townName} />
+
       <Footer />
 
       {/* Local Voice Interview Side Panel with Blurred Narrative for Unverified */}
