@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Search, TrendingUp, Clock, Globe, FileText, ChevronRight,
   Phone, ArrowRight, X
@@ -9,6 +9,8 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { getTopDeals, type Listing } from "@/lib/listings";
+import { DealCard, UnlockModal, type UnlockedDetails } from "@/components/DealCard";
 
 /* ─── Brand tokens — Platinum / Charcoal / Navy system ─── */
 const NAVY = "#0B0F19";
@@ -22,7 +24,7 @@ const sampleDeals = [
   { address: "Delaware Ave, Delmar NY 12054", masked: "XXX", fullAddress: "142 Delaware Ave, Delmar NY 12054", type: "3-unit · Multi-family", score: 8.4, capRate: 7.2, cashFlow: 318, grossRent: "$3,400", dscr: 1.18, price: "$415,000" },
   { address: "Kenwood Ave, Troy NY 12180", masked: "XXX", fullAddress: "87 Kenwood Ave, Troy NY 12180", type: "2-unit · Multi-family", score: 6.1, capRate: 5.8, cashFlow: -84, grossRent: "$2,600", dscr: 0.97, price: "$349,000" },
   { address: "3rd Street, Troy NY 12180", masked: "XXX", fullAddress: "219 3rd Street, Troy NY 12180", type: "4-unit · Multi-family", score: 9.1, capRate: 8.4, cashFlow: 621, grossRent: "$4,800", dscr: 1.31, price: "$389,000" },
-];
+]; // fallback only
 
 const loanTypes = ["FHA 3.5% Down", "Conventional", "DSCR", "203(k) Rehab", "VA Loan", "Hard Money", "Cash Purchase"];
 
