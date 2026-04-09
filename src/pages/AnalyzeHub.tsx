@@ -53,9 +53,24 @@ const trustStats = [
 /* ─── Page ─── */
 const AnalyzeHub = () => {
   const navigate = useNavigate();
-  const [unlockDeal, setUnlockDeal] = useState<typeof sampleDeals[0] | null>(null);
-  const [unlockedIndexes, setUnlockedIndexes] = useState<Set<number>>(new Set());
-  const handleUnlocked = (idx: number) => { setUnlockedIndexes((prev) => new Set(prev).add(idx)); };
+  const [liveDeals, setLiveDeals] = useState<Listing[]>([]);
+  const [dealsLoading, setDealsLoading] = useState(true);
+  const [unlockListing, setUnlockListing] = useState<Listing | null>(null);
+  const [unlockedMap, setUnlockedMap] = useState<Record<string, UnlockedDetails>>({});
+
+  useEffect(() => {
+    getTopDeals(9).then((deals) => {
+      setLiveDeals(deals);
+      setDealsLoading(false);
+    });
+  }, []);
+
+  const handleUnlocked = (mlsNumber: string, details: UnlockedDetails) => {
+    setUnlockedMap((prev) => ({ ...prev, [mlsNumber]: details }));
+  };
+
+  // Use live deals if available, fall back to sample data structure
+  const displayDeals = liveDeals;
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -172,38 +187,47 @@ const AnalyzeHub = () => {
             Every active multi-family listing in the Capital District — scored, ranked, and analyzed. Updated weekly from live MLS data.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
-            {sampleDeals.map((deal, i) => {
-              const isUnlocked = unlockedIndexes.has(i);
-              return (
+          {dealsLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="rounded-2xl bg-white p-8 animate-pulse" style={{ border: "1px solid rgba(0,0,0,0.05)" }}>
+                  <div className="h-4 bg-gray-100 rounded w-1/3 mb-6" />
+                  <div className="h-5 bg-gray-100 rounded w-2/3 mb-2" />
+                  <div className="h-8 bg-gray-100 rounded w-1/2 mb-7" />
+                  <div className="grid grid-cols-4 gap-3">
+                    {[1, 2, 3, 4].map((j) => <div key={j} className="h-10 bg-gray-50 rounded" />)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : displayDeals.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+              {displayDeals.map((listing) => (
+                <DealCard
+                  key={listing.id}
+                  listing={listing}
+                  unlockedDetails={unlockedMap[listing.mls_number || listing.id]}
+                  onUnlockClick={setUnlockListing}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+              {sampleDeals.map((deal, i) => (
                 <div key={i} className="group rounded-2xl bg-white transition-all duration-300 hover:shadow-[0_6px_32px_rgba(0,0,0,0.05)] hover:-translate-y-0.5" style={{ border: "1px solid rgba(0,0,0,0.05)" }}>
                   <div className="p-8">
                     <div className="flex items-center justify-between mb-6">
                       <span className="text-[10px] tracking-[0.2em] uppercase text-gray-300 font-medium">{deal.type}</span>
-                      <ScoreBadge score={deal.score} />
                     </div>
                     <p className="text-gray-900 font-medium text-sm mb-1.5">
-                      {isUnlocked ? deal.fullAddress : (<><span className="blur-[4px] select-none">{deal.masked}</span> {deal.address}</>)}
+                      <span className="blur-[4px] select-none">{deal.masked}</span> {deal.address}
                     </p>
                     <p className="text-2xl font-semibold text-gray-900 tracking-tight mb-7">{deal.price}</p>
-                    <div className="grid grid-cols-4 gap-3 pb-6 mb-5" style={{ borderBottom: "1px solid rgba(0,0,0,0.04)" }}>
-                      <MetricPill label="Cap" value={`${deal.capRate}%`} positive={deal.capRate >= 7} />
-                      <MetricPill label="Flow" value={`${deal.cashFlow >= 0 ? "+" : ""}$${deal.cashFlow}`} positive={deal.cashFlow >= 0} />
-                      <MetricPill label="Rent" value={deal.grossRent} positive />
-                      <MetricPill label="DSCR" value={`${deal.dscr}`} positive={deal.dscr >= 1} />
-                    </div>
-                    {isUnlocked ? (
-                      <span className="text-[11px] font-medium text-emerald-500 inline-flex items-center gap-1.5">✓ Address unlocked</span>
-                    ) : (
-                      <button onClick={() => setUnlockDeal(deal)} className="text-[11px] font-medium inline-flex items-center gap-1 tracking-wide transition-all hover:gap-2 opacity-60 group-hover:opacity-100" style={{ color: SLATE }}>
-                        Unlock full address <ChevronRight className="w-3 h-3" />
-                      </button>
-                    )}
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          )}
 
           <div className="text-center">
             <Link to="/dealdesk" className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-gray-900 font-medium text-[13px] transition-colors tracking-wide hover:bg-gray-100" style={{ border: "1px solid rgba(0,0,0,0.08)" }}>
