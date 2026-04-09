@@ -29,7 +29,7 @@ const loanTypes = ["FHA 3.5% Down", "Conventional", "DSCR", "203(k) Rehab", "VA 
 const features = [
   { icon: TrendingUp, title: "Find deals before anyone else", text: "Live MLS-powered deal feed scored and ranked by cap rate, cash flow, and DSCR. The best opportunities surface first." },
   { icon: Clock, title: "Know if a deal works in 60 seconds", text: "Enter an address, choose your loan type, see every number that matters. Cap rate, NOI, cash-on-cash return, DSCR — calculated live." },
-  { icon: Globe, title: "Institutional-quality analysis, any market", text: "The same rigor a commercial underwriter applies to a $10M deal — applied to your duplex in 60 seconds. Three scenarios included." },
+  { icon: Globe, title: "Expert-level analysis, any market", text: "The same rigor a commercial underwriter applies to a $10M deal — applied to your duplex in 60 seconds. Three scenarios included." },
   { icon: FileText, title: "Replace your spreadsheet forever", text: "Generate a professional PDF investment summary you can download, print, or send to your lender, partner, or client." },
 ];
 
@@ -151,9 +151,25 @@ const AnalyzeHub = () => {
             <span className="font-semibold">before you make it.</span>
           </h1>
 
-          <p className="text-[17px] text-white/35 max-w-md mx-auto mb-20 leading-relaxed font-light">
-            Institutional-quality investment analysis in seconds — built for investors, agents, and serious buyers.
+          <p className="text-[17px] text-white/35 max-w-md mx-auto mb-14 leading-relaxed font-light">
+            Expert-level investment analysis in seconds — built for investors, agents, and serious buyers.
           </p>
+
+          {/* Internal links to key markets */}
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-20">
+            <span className="text-[11px] text-white/20 tracking-wide uppercase">Popular markets:</span>
+            {[
+              { name: "Schenectady", slug: "schenectady" },
+              { name: "Albany", slug: "albany" },
+              { name: "Troy", slug: "troy" },
+              { name: "Saratoga Springs", slug: "saratoga-springs" },
+            ].map((t) => (
+              <Link key={t.slug} to={`/towns/${t.slug}`}
+                className="text-[12px] text-white/30 hover:text-white/60 transition-colors font-light underline underline-offset-2 decoration-white/10 hover:decoration-white/30">
+                {t.name}
+              </Link>
+            ))}
+          </div>
 
           {/* ── Input bar — bright white shell ── */}
           <div className="max-w-xl mx-auto">
