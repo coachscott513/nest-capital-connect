@@ -421,7 +421,7 @@ const InvestmentAnalyzer = () => {
       doc.setFontSize(9);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(180, 180, 180);
-      doc.text('THE YIELD INTELLIGENCE PLATFORM', margin, 23);
+      doc.text('KNOW THE NUMBERS BEFORE YOU BUY', margin, 23);
     }
     
     // Gold accent line
@@ -652,7 +652,7 @@ const InvestmentAnalyzer = () => {
       doc.text('Powered by AnalyzeAnyDeal.com | Capital District Nest', pageWidth - margin, footerY + 4, { align: 'right' });
     } else {
       // Default footer
-      doc.text(`Capital District Nest • The Yield Intelligence Platform • capitaldistrictnest.com`, margin, footerY + 4);
+      doc.text(`Capital District Nest • Know the numbers before you buy • capitaldistrictnest.com`, margin, footerY + 4);
       doc.text(`Report generated: ${new Date().toLocaleDateString()}`, pageWidth - margin, footerY + 4, { align: 'right' });
     }
     
