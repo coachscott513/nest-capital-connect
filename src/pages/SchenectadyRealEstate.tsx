@@ -55,6 +55,14 @@ const SchenectadyRealEstate = () => {
           "@type": "Answer",
           "text": "Properties in desirable Schenectady neighborhoods including the Stockade District are going under contract in 20-25 days on average as of 2026, reflecting strong buyer demand."
         }
+      },
+      {
+        "@type": "Question",
+        "name": "What types of investment properties are available in Schenectady NY?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Schenectady has active multi-family inventory including duplexes, triplexes, and 5+ unit buildings. As of April 2026, active investment listings range from $70,000 for a 5-unit value-add building to $460,000 for a turnkey triple-decker in the Burnt Hills-Ballston Lake school district. Duplexes are priced between $209,000 and $345,000. New listings this week include properties on Wabash Avenue, Frank Street, and Hawk Street. Analyze any Schenectady investment property free at AnalyzeAnyDeal.com."
+        }
       }
     ]
   };
@@ -242,6 +250,22 @@ const SchenectadyRealEstate = () => {
                   <AccordionContent className="text-muted-foreground leading-relaxed">
                     Properties in desirable Schenectady neighborhoods including the Stockade District are going 
                     under contract in <strong>20–25 days</strong> on average as of 2026, reflecting strong buyer demand.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="property-types">
+                  <AccordionTrigger className="text-lg font-semibold text-left">
+                    What types of investment properties are available in Schenectady NY?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed">
+                    Schenectady has active multi-family inventory including duplexes, triplexes, and 5+ unit buildings. 
+                    As of April 2026, active investment listings range from <strong>$70,000</strong> for a 5-unit value-add building 
+                    to <strong>$460,000</strong> for a turnkey triple-decker in the Burnt Hills-Ballston Lake school district. 
+                    Duplexes — the most common entry point — are priced between <strong>$209,000 and $345,000</strong>. 
+                    Several new listings hit the market this week including properties on Wabash Avenue, Frank Street, and Hawk Street. 
+                    <a href="https://www.analyzeanydeal.com" className="text-primary hover:underline ml-1" target="_blank" rel="noopener noreferrer">
+                      Analyze any Schenectady investment property free at AnalyzeAnyDeal.com →
+                    </a>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
