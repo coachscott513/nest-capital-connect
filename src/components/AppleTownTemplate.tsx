@@ -365,7 +365,7 @@ const AppleTownTemplate = ({
         title={`${townName}, NY Real Estate & Investment Properties | Capital District Nest`}
         description={seoContent.metaDescription}
         keywords={[...seoContent.focusKeywords, ...seoContent.civicKeywords, ...seoContent.lifestyleKeywords].join(', ')}
-        canonical={`https://capitaldistrictnest.com/towns/${townSlug}`}
+        canonical={`https://www.capitaldistrictnest.com/towns/${townSlug}`}
       />
 
       <CleanHeader />
