@@ -64,7 +64,7 @@ const AnalyzeAnyProperty = () => {
               <p className="text-base text-muted-foreground mb-10 flex-1 leading-[1.7]">
                 Monthly payment, cash to close, affordability check, and first-time buyer programs. No investor jargon.
               </p>
-              <Button asChild className="w-full text-white font-semibold h-12 text-base" style={{ backgroundColor: GOLD }}>
+              <Button asChild className="w-full font-semibold h-12 text-base bg-white border-2" style={{ borderColor: NAVY, color: NAVY }}>
                 <Link to="/analyze-home">Analyze a Home →</Link>
               </Button>
             </div>
@@ -94,7 +94,7 @@ const AnalyzeAnyProperty = () => {
               <p className="text-base text-muted-foreground mb-10 flex-1 leading-[1.7]">
                 See what your monthly rent buys as a mortgage payment. Compare rent vs own in your Capital District town.
               </p>
-              <Button asChild className="w-full font-semibold h-12 text-base text-white" style={{ backgroundColor: GOLD }}>
+              <Button asChild className="w-full font-semibold h-12 text-base text-white" style={{ backgroundColor: NAVY }}>
                 <Link to="/rentals">Compare Rent vs Own →</Link>
               </Button>
             </div>
