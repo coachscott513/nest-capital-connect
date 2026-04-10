@@ -797,13 +797,20 @@ export type Database = {
           bathrooms: number
           bedrooms: number
           created_at: string
+          days_on_market: number | null
           description: string | null
           featured_order: number | null
           id: string
           is_active: boolean | null
+          latitude: number | null
+          listing_agent: string | null
+          longitude: number | null
+          mls_number: string | null
           pet_friendly: boolean | null
           photos: string[] | null
+          property_sub_type: string | null
           property_video_url: string | null
+          remarks: string | null
           rent_price: number
           sqft: number | null
           town_slug: string
@@ -816,13 +823,20 @@ export type Database = {
           bathrooms?: number
           bedrooms?: number
           created_at?: string
+          days_on_market?: number | null
           description?: string | null
           featured_order?: number | null
           id?: string
           is_active?: boolean | null
+          latitude?: number | null
+          listing_agent?: string | null
+          longitude?: number | null
+          mls_number?: string | null
           pet_friendly?: boolean | null
           photos?: string[] | null
+          property_sub_type?: string | null
           property_video_url?: string | null
+          remarks?: string | null
           rent_price: number
           sqft?: number | null
           town_slug: string
@@ -835,13 +849,20 @@ export type Database = {
           bathrooms?: number
           bedrooms?: number
           created_at?: string
+          days_on_market?: number | null
           description?: string | null
           featured_order?: number | null
           id?: string
           is_active?: boolean | null
+          latitude?: number | null
+          listing_agent?: string | null
+          longitude?: number | null
+          mls_number?: string | null
           pet_friendly?: boolean | null
           photos?: string[] | null
+          property_sub_type?: string | null
           property_video_url?: string | null
+          remarks?: string | null
           rent_price?: number
           sqft?: number | null
           town_slug?: string
