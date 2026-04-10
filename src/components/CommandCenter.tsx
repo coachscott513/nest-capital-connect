@@ -32,7 +32,7 @@ export const CommandCenter: React.FC = () => {
   ];
 
   return (
-    <div className="fixed bottom-6 right-6 z-[60] hidden md:flex flex-col items-end font-manrope pointer-events-auto">
+    <div className="fixed bottom-6 right-6 z-[60] hidden md:flex flex-col items-end font-manrope pointer-events-auto mb-0">
       {/* Options */}
       <div
         className={`mb-3 flex flex-col gap-2 transition-all duration-300 ease-out ${
@@ -61,23 +61,13 @@ export const CommandCenter: React.FC = () => {
       {/* FAB — small, glass-like */}
       <button
         onClick={() => setIsActive(!isActive)}
-        className={`border border-border h-11 px-4 rounded-full text-xs font-semibold cursor-pointer transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md ${
-          isActive
-            ? 'bg-background text-foreground'
-            : 'bg-background text-foreground'
-        }`}
+        className="border border-border w-10 h-10 rounded-full text-xs font-semibold cursor-pointer transition-all duration-200 flex items-center justify-center shadow-sm hover:shadow-md bg-background text-foreground"
         aria-label={isActive ? "Close contact menu" : "Open contact menu"}
       >
         {isActive ? (
-          <>
-            <X className="w-3.5 h-3.5" />
-            <span>Close</span>
-          </>
+          <X className="w-4 h-4" />
         ) : (
-          <>
-            <span className="w-1.5 h-1.5 bg-accent rounded-full" />
-            <span>Live Help</span>
-          </>
+          <MessageCircle className="w-4 h-4" />
         )}
       </button>
     </div>
