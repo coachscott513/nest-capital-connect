@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Home, BarChart3, Key, MapPin, Building2, Calculator, Zap, Phone } from "lucide-react";
 
-const GOLD = "#C9A84C";
+const GOLD = "#0D9488";
 const NAVY = "#0A0F1E";
 
 const AnalyzeAnyProperty = () => {
