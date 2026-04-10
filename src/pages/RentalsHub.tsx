@@ -422,6 +422,12 @@ const RentalsHub = () => {
             </div>
           </div>
         </section>
+
+        <RentalDetailModal
+          rental={selectedRental}
+          open={!!selectedRental}
+          onClose={() => setSelectedRental(null)}
+        />
       </main>
     </MainLayout>
   );
