@@ -281,7 +281,10 @@ const RentalsHub = () => {
                         {/* Mortgage line */}
                         <p className="text-xs text-foreground/70 leading-relaxed mb-5">
                           ≈ ${getMortgageEquivalent(rental.rent_price)} home at current rates.{" "}
-                          <Link to="/analyze" className="text-[#C9A84C] hover:text-[#b8963f] transition-colors font-bold">
+                          <Link
+                            to={`/analyze?city=${encodeURIComponent(rental.town_slug.replace(/-/g, " "))}&budget=${getMortgageEquivalent(rental.rent_price).replace(/,/g, "")}`}
+                            className="text-[#C9A84C] hover:text-[#b8963f] transition-colors font-bold"
+                          >
                             Own instead? →
                           </Link>
                         </p>
@@ -298,7 +301,7 @@ const RentalsHub = () => {
                             to="/first-time-homebuyers"
                             className="text-xs text-muted-foreground hover:text-foreground transition-colors"
                           >
-                            Ownership options →
+                            Ownership options in {rental.town_slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase())} →
                           </Link>
                         </div>
                       </div>
