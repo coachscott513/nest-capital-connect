@@ -11,7 +11,7 @@ const NAVY = "#0A0F1E";
 
 const AnalyzeAnyProperty = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-white text-foreground">
       <SEOHead
         title="Analyze Any Property | AnalyzeAnyProperty.com"
         description="Whether you're buying your first home, investing in a rental, or comparing rent vs owning — get the numbers you need to decide with confidence."
@@ -19,23 +19,23 @@ const AnalyzeAnyProperty = () => {
       />
       <CleanHeader />
 
-      {/* HERO */}
-      <section className="pt-32 pb-20 px-6 min-h-[400px] flex items-center" style={{ background: NAVY }}>
+      {/* HERO — white, clean */}
+      <section className="pt-32 pb-16 px-6 min-h-[400px] flex items-center bg-white">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-xs font-bold uppercase tracking-[0.2em] mb-6" style={{ color: GOLD }}>
             Analyze Any Property
           </p>
-          <h1 className="text-4xl md:text-[56px] font-bold text-white leading-[1.1] mb-6">
+          <h1 className="text-4xl md:text-[56px] font-bold leading-[1.1] mb-6" style={{ color: NAVY }}>
             Analyze any property.<br />Any situation. In minutes.
           </h1>
-          <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Whether you're buying your first home, investing in a rental, or comparing rent vs owning — get the numbers you need to decide with confidence.
           </p>
         </div>
       </section>
 
-      {/* STATS BAR */}
-      <section className="py-5 px-6" style={{ background: "#0D1117" }}>
+      {/* STATS BAR — light gray */}
+      <section className="py-5 px-6 bg-[#F7F7F5] border-y border-border/40">
         <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm">
           {[
             { icon: Building2, label: "Active Listings", value: "366" },
@@ -45,18 +45,18 @@ const AnalyzeAnyProperty = () => {
           ].map((stat) => (
             <div key={stat.label} className="flex items-center gap-2">
               <stat.icon className="w-4 h-4" style={{ color: GOLD }} />
-              <span className="text-white/50">{stat.label}:</span>
-              <span className="font-bold text-white">{stat.value}</span>
+              <span className="text-muted-foreground">{stat.label}:</span>
+              <span className="font-bold" style={{ color: NAVY }}>{stat.value}</span>
             </div>
           ))}
         </div>
       </section>
 
       {/* THREE PATH CARDS */}
-      <section className="py-24 px-6 bg-[#F8F9FA]">
+      <section className="py-24 px-6 bg-white">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Card 1 — Buying a Home */}
-          <Card className="overflow-hidden bg-white border-t-4 flex flex-col min-h-[380px] shadow-lg" style={{ borderTopColor: GOLD }}>
+          <Card className="overflow-hidden bg-white border border-border/60 flex flex-col min-h-[380px] shadow-sm hover:shadow-md transition-shadow">
             <div className="p-10 flex flex-col flex-1">
               <Home className="w-11 h-11 mb-5" style={{ color: GOLD }} />
               <p className="text-xs font-bold uppercase tracking-[0.15em] mb-3" style={{ color: GOLD }}>First-Time Buyer</p>
@@ -70,13 +70,13 @@ const AnalyzeAnyProperty = () => {
             </div>
           </Card>
 
-          {/* Card 2 — Investing */}
-          <Card className="overflow-hidden border-2 flex flex-col min-h-[380px] shadow-xl" style={{ background: NAVY, borderColor: `${GOLD}30` }}>
+          {/* Card 2 — Investing (featured) */}
+          <Card className="overflow-hidden bg-white border border-border/60 border-t-4 flex flex-col min-h-[380px] shadow-sm hover:shadow-md transition-shadow" style={{ borderTopColor: GOLD }}>
             <div className="p-10 flex flex-col flex-1">
               <BarChart3 className="w-11 h-11 mb-5" style={{ color: GOLD }} />
               <p className="text-xs font-bold uppercase tracking-[0.15em] mb-3" style={{ color: GOLD }}>Real Estate Investor</p>
-              <h2 className="text-2xl font-bold text-white mb-4">Does this deal cash flow?</h2>
-              <p className="text-base text-white/50 mb-10 flex-1 leading-[1.7]">
+              <h2 className="text-2xl font-bold mb-4" style={{ color: NAVY }}>Does this deal cash flow?</h2>
+              <p className="text-base text-muted-foreground mb-10 flex-1 leading-[1.7]">
                 Cap rate, cash flow, DSCR, and deal score for any multi-family or investment property. 7 loan types.
               </p>
               <Button asChild className="w-full text-white font-semibold h-12 text-base" style={{ backgroundColor: GOLD }}>
@@ -86,10 +86,10 @@ const AnalyzeAnyProperty = () => {
           </Card>
 
           {/* Card 3 — Renting */}
-          <Card className="overflow-hidden bg-[#F0F1F3] border-t-4 flex flex-col min-h-[380px] shadow-lg" style={{ borderTopColor: NAVY }}>
+          <Card className="overflow-hidden bg-white border border-border/60 flex flex-col min-h-[380px] shadow-sm hover:shadow-md transition-shadow">
             <div className="p-10 flex flex-col flex-1">
-              <Key className="w-11 h-11 mb-5" style={{ color: NAVY }} />
-              <p className="text-xs font-bold uppercase tracking-[0.15em] mb-3" style={{ color: NAVY }}>Currently Renting</p>
+              <Key className="w-11 h-11 mb-5" style={{ color: GOLD }} />
+              <p className="text-xs font-bold uppercase tracking-[0.15em] mb-3" style={{ color: GOLD }}>Currently Renting</p>
               <h2 className="text-2xl font-bold mb-4" style={{ color: NAVY }}>Am I closer to owning than I think?</h2>
               <p className="text-base text-muted-foreground mb-10 flex-1 leading-[1.7]">
                 See what your monthly rent buys as a mortgage payment. Compare rent vs own in your Capital District town.
@@ -102,16 +102,16 @@ const AnalyzeAnyProperty = () => {
         </div>
       </section>
 
-      {/* GUIDANCE SECTION */}
-      <section className="py-24 px-6" style={{ background: NAVY }}>
+      {/* GUIDANCE SECTION — light gray */}
+      <section className="py-24 px-6 bg-[#F7F7F5]">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: NAVY }}>
             Not sure which tool is right for you?
           </h2>
-          <div className="text-white/60 text-lg leading-relaxed space-y-4 mb-12">
-            <p>If you're buying a home to live in — start with <span className="text-white font-semibold">Analyze a Home</span>.</p>
-            <p>If you're buying to rent out or generate income — start with <span className="text-white font-semibold">Analyze a Deal</span>.</p>
-            <p>If you're currently renting and wondering if you could own — start with <span className="text-white font-semibold">Compare Rent vs Own</span>.</p>
+          <div className="text-muted-foreground text-lg leading-relaxed space-y-4 mb-12">
+            <p>If you're buying a home to live in — start with <span className="font-semibold" style={{ color: NAVY }}>Analyze a Home</span>.</p>
+            <p>If you're buying to rent out or generate income — start with <span className="font-semibold" style={{ color: NAVY }}>Analyze a Deal</span>.</p>
+            <p>If you're currently renting and wondering if you could own — start with <span className="font-semibold" style={{ color: NAVY }}>Compare Rent vs Own</span>.</p>
           </div>
           <Button asChild className="h-13 px-10 text-base font-semibold text-white" style={{ backgroundColor: GOLD }}>
             <a href="tel:5186762347" className="inline-flex items-center gap-2">
