@@ -5,6 +5,7 @@ import MainLayout from "@/components/MainLayout";
 import { ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
+import RentalDetailModal from "@/components/RentalDetailModal";
 
 const RentalMap = lazy(() => import("@/components/RentalMap"));
 
@@ -42,6 +43,9 @@ interface Rental {
   days_on_market: number | null;
   pet_friendly: boolean | null;
   utilities_included: boolean | null;
+  listing_agent: string | null;
+  agency: string | null;
+  remarks: string | null;
   created_at: string;
 }
 
@@ -60,6 +64,7 @@ const RentalsHub = () => {
   const [rentals, setRentals] = useState<Rental[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
+  const [selectedRental, setSelectedRental] = useState<Rental | null>(null);
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   useEffect(() => {
@@ -81,7 +86,7 @@ const RentalsHub = () => {
       }
 
       const { data } = await query;
-      setRentals((data as Rental[]) || []);
+      setRentals((data as unknown as Rental[]) || []);
       setIsLoading(false);
     };
 
@@ -274,16 +279,19 @@ const RentalsHub = () => {
                         </p>
 
                         {/* Mortgage line */}
-                        <p className="text-xs text-muted-foreground/70 leading-relaxed mb-5">
+                        <p className="text-xs text-foreground/70 leading-relaxed mb-5">
                           ≈ ${getMortgageEquivalent(rental.rent_price)} home at current rates.{" "}
-                          <Link to="/analyze" className="text-accent hover:text-foreground transition-colors font-medium">
+                          <Link to="/analyze" className="text-[#C9A84C] hover:text-[#b8963f] transition-colors font-bold">
                             Own instead? →
                           </Link>
                         </p>
 
                         {/* Actions */}
                         <div className="flex items-center justify-between">
-                          <button className="inline-flex items-center gap-2 bg-foreground text-background px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-foreground/85 transition-colors">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setSelectedRental(rental); }}
+                            className="inline-flex items-center gap-2 bg-foreground text-background px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-foreground/85 transition-colors"
+                          >
                             View Rental
                           </button>
                           <Link
@@ -414,6 +422,12 @@ const RentalsHub = () => {
             </div>
           </div>
         </section>
+
+        <RentalDetailModal
+          rental={selectedRental}
+          open={!!selectedRental}
+          onClose={() => setSelectedRental(null)}
+        />
       </main>
     </MainLayout>
   );
