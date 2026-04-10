@@ -1,15 +1,6 @@
-import { useEffect, useRef, useMemo } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useEffect, useMemo, useRef } from "react";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
-
-// Fix default marker icons
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
-  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
-});
 
 interface RentalPin {
   id: string;
@@ -35,85 +26,161 @@ const townCenters: Record<string, { lat: number; lng: number; zoom: number }> = 
   troy: { lat: 42.7284, lng: -73.6918, zoom: 13 },
   schenectady: { lat: 42.8142, lng: -73.9396, zoom: 13 },
   "saratoga-springs": { lat: 43.0831, lng: -73.7846, zoom: 13 },
-  colonie: { lat: 42.7179, lng: -73.8340, zoom: 13 },
+  colonie: { lat: 42.7179, lng: -73.834, zoom: 13 },
   cohoes: { lat: 42.7743, lng: -73.7001, zoom: 14 },
 };
 
-const MapController = ({ center, zoom }: { center: [number, number]; zoom: number }) => {
-  const map = useMap();
-  useEffect(() => {
-    map.flyTo(center, zoom, { duration: 1.2 });
-  }, [center, zoom, map]);
-  return null;
-};
-
 const formatPrice = (price: number) =>
-  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(price);
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(price);
 
 const maskAddress = (address: string) => address.replace(/^\d+\s*/, "");
 
+const createPinIcon = (highlighted = false) => {
+  const size = highlighted ? 18 : 12;
+  const anchor = size / 2;
+
+  return L.divIcon({
+    className: highlighted ? "rental-map-pin-highlight" : "rental-map-pin",
+    html: `<div style="width:${size}px;height:${size}px;border-radius:9999px;background:${highlighted ? "hsl(var(--accent))" : "hsl(var(--foreground))"};border:2px solid hsl(var(--background));box-shadow:0 2px 10px rgba(15,23,42,0.22);"></div>`,
+    iconSize: [size, size],
+    iconAnchor: [anchor, anchor],
+    popupAnchor: [0, -anchor],
+  });
+};
+
+const createPopupContent = (rental: RentalPin, onPinClick: (id: string) => void) => {
+  const wrapper = document.createElement("div");
+  wrapper.style.minWidth = "160px";
+  wrapper.style.fontSize = "12px";
+  wrapper.style.lineHeight = "1.4";
+
+  const title = document.createElement("p");
+  title.textContent = maskAddress(rental.address);
+  title.style.margin = "0 0 4px";
+  title.style.fontSize = "14px";
+  title.style.fontWeight = "600";
+  title.style.color = "hsl(var(--foreground))";
+
+  const price = document.createElement("p");
+  price.textContent = `${formatPrice(rental.rent_price)}/mo`;
+  price.style.margin = "0 0 4px";
+  price.style.fontSize = "16px";
+  price.style.fontWeight = "700";
+  price.style.color = "hsl(var(--foreground))";
+
+  const meta = document.createElement("p");
+  meta.textContent = `${rental.bedrooms} bed · ${rental.bathrooms} bath`;
+  meta.style.margin = "0";
+  meta.style.color = "hsl(var(--muted-foreground))";
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = "View Details ↓";
+  button.style.display = "block";
+  button.style.marginTop = "8px";
+  button.style.padding = "0";
+  button.style.border = "0";
+  button.style.background = "transparent";
+  button.style.color = "hsl(var(--accent))";
+  button.style.fontWeight = "600";
+  button.style.cursor = "pointer";
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    onPinClick(rental.id);
+  });
+
+  wrapper.append(title, price, meta, button);
+  L.DomEvent.disableClickPropagation(wrapper);
+
+  return wrapper;
+};
+
 const RentalMap = ({ rentals, activeFilter, highlightedId, onPinClick }: RentalMapProps) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const mapRef = useRef<L.Map | null>(null);
+  const markersLayerRef = useRef<L.LayerGroup | null>(null);
   const target = townCenters[activeFilter] || townCenters.all;
 
-  const activeIcon = useMemo(
-    () =>
-      new L.DivIcon({
-        className: "rental-map-pin",
-        html: `<div style="width:12px;height:12px;border-radius:50%;background:hsl(185,55%,42%);border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
-        iconSize: [12, 12],
-        iconAnchor: [6, 6],
-      }),
-    []
-  );
+  const activeIcon = useMemo(() => createPinIcon(false), []);
+  const highlightIcon = useMemo(() => createPinIcon(true), []);
 
-  const highlightIcon = useMemo(
-    () =>
-      new L.DivIcon({
-        className: "rental-map-pin-highlight",
-        html: `<div style="width:18px;height:18px;border-radius:50%;background:hsl(38,92%,50%);border:2px solid white;box-shadow:0 2px 10px rgba(0,0,0,0.4);"></div>`,
-        iconSize: [18, 18],
-        iconAnchor: [9, 9],
-      }),
-    []
-  );
+  useEffect(() => {
+    if (!containerRef.current || mapRef.current) return;
+
+    const map = L.map(containerRef.current, {
+      scrollWheelZoom: false,
+      zoomControl: true,
+      attributionControl: true,
+    });
+
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+
+    map.setView([townCenters.all.lat, townCenters.all.lng], townCenters.all.zoom);
+    markersLayerRef.current = L.layerGroup().addTo(map);
+    mapRef.current = map;
+
+    const timer = window.setTimeout(() => {
+      map.invalidateSize();
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timer);
+      markersLayerRef.current?.clearLayers();
+      markersLayerRef.current?.remove();
+      map.remove();
+      markersLayerRef.current = null;
+      mapRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    map.flyTo([target.lat, target.lng], target.zoom, { duration: 1.2 });
+  }, [target.lat, target.lng, target.zoom]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const markersLayer = markersLayerRef.current;
+    if (!map || !markersLayer) return;
+
+    markersLayer.clearLayers();
+    const markers = new Map<string, L.Marker>();
+
+    rentals.forEach((rental) => {
+      const marker = L.marker([rental.lat, rental.lng], {
+        icon: highlightedId === rental.id ? highlightIcon : activeIcon,
+        title: maskAddress(rental.address),
+      });
+
+      marker.on("click", () => onPinClick(rental.id));
+      marker.bindPopup(createPopupContent(rental, onPinClick), {
+        closeButton: false,
+        offset: [0, -8],
+      });
+      marker.addTo(markersLayer);
+      markers.set(rental.id, marker);
+    });
+
+    if (highlightedId) {
+      const highlightedMarker = markers.get(highlightedId);
+      if (highlightedMarker) {
+        highlightedMarker.openPopup();
+        map.panTo(highlightedMarker.getLatLng(), { animate: true });
+      }
+    }
+  }, [rentals, highlightedId, activeIcon, highlightIcon, onPinClick]);
 
   return (
-    <div className="rounded-2xl overflow-hidden border border-border shadow-sm">
-      <MapContainer
-        center={[target.lat, target.lng]}
-        zoom={target.zoom}
-        style={{ height: "100%", width: "100%" }}
-        className="h-[250px] md:h-[400px] z-0"
-        scrollWheelZoom={false}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-        />
-        <MapController center={[target.lat, target.lng]} zoom={target.zoom} />
-        {rentals.map((r) => (
-          <Marker
-            key={r.id}
-            position={[r.lat, r.lng]}
-            icon={highlightedId === r.id ? highlightIcon : activeIcon}
-            eventHandlers={{ click: () => onPinClick(r.id) }}
-          >
-            <Popup>
-              <div className="text-xs space-y-1 min-w-[160px]">
-                <p className="font-semibold text-sm">{maskAddress(r.address)}</p>
-                <p className="text-base font-bold">{formatPrice(r.rent_price)}/mo</p>
-                <p className="text-muted-foreground">{r.bedrooms} bed · {r.bathrooms} bath</p>
-                <button
-                  onClick={() => onPinClick(r.id)}
-                  className="text-accent font-medium hover:underline mt-1 block"
-                >
-                  View Details ↓
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+    <div className="rounded-2xl overflow-hidden border border-border shadow-sm bg-background">
+      <div ref={containerRef} className="h-[250px] md:h-[400px] w-full" />
     </div>
   );
 };
