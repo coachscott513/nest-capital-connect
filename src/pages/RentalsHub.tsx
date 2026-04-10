@@ -282,7 +282,7 @@ const RentalsHub = () => {
                         <p className="text-xs text-foreground/70 leading-relaxed mb-5">
                           ≈ ${getMortgageEquivalent(rental.rent_price)} home at current rates.{" "}
                           <Link
-                            to={`/analyze?city=${encodeURIComponent(rental.town_slug.replace(/-/g, " "))}&budget=${getMortgageEquivalent(rental.rent_price).replace(/,/g, "")}`}
+                            to={`/analyze-home?city=${encodeURIComponent(rental.town_slug.replace(/-/g, " "))}&budget=${getMortgageEquivalent(rental.rent_price).replace(/,/g, "")}`}
                             className="text-[#C9A84C] hover:text-[#b8963f] transition-colors font-bold"
                           >
                             Own instead? →
