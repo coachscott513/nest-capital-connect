@@ -4,7 +4,10 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Home, BarChart3, Key } from "lucide-react";
+import { Home, BarChart3, Key, MapPin, Building2, Calculator, Zap, Phone } from "lucide-react";
+
+const GOLD = "#C9A84C";
+const NAVY = "#0A0F1E";
 
 const AnalyzeAnyProperty = () => {
   return (
@@ -17,69 +20,106 @@ const AnalyzeAnyProperty = () => {
       <CleanHeader />
 
       {/* HERO */}
-      <section className="pt-32 pb-16 px-6 bg-[hsl(var(--primary))]">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
-            Analyze any property. Any situation. In minutes.
+      <section className="pt-32 pb-20 px-6 min-h-[400px] flex items-center" style={{ background: NAVY }}>
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] mb-6" style={{ color: GOLD }}>
+            Analyze Any Property
+          </p>
+          <h1 className="text-4xl md:text-[56px] font-bold text-white leading-[1.1] mb-6">
+            Analyze any property.<br />Any situation. In minutes.
           </h1>
-          <p className="text-lg text-white/70">
+          <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">
             Whether you're buying your first home, investing in a rental, or comparing rent vs owning — get the numbers you need to decide with confidence.
           </p>
         </div>
       </section>
 
+      {/* STATS BAR */}
+      <section className="py-5 px-6" style={{ background: "#0D1117" }}>
+        <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-sm">
+          {[
+            { icon: Building2, label: "Active Listings", value: "366" },
+            { icon: MapPin, label: "Capital District Towns", value: "44" },
+            { icon: Calculator, label: "Loan Types", value: "7" },
+            { icon: Zap, label: "Free to Use", value: "Always" },
+          ].map((stat) => (
+            <div key={stat.label} className="flex items-center gap-2">
+              <stat.icon className="w-4 h-4" style={{ color: GOLD }} />
+              <span className="text-white/50">{stat.label}:</span>
+              <span className="font-bold text-white">{stat.value}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* THREE PATH CARDS */}
-      <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="py-24 px-6 bg-[#F8F9FA]">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Card 1 — Buying a Home */}
-          <Card className="overflow-hidden bg-white border-t-4 border-t-[hsl(var(--accent))] flex flex-col">
-            <div className="p-8 flex flex-col flex-1">
-              <Home className="w-10 h-10 text-[hsl(var(--accent))] mb-4" />
-              <p className="text-xs font-bold uppercase tracking-[0.15em] text-[hsl(var(--accent))] mb-2">First-Time Buyer</p>
-              <h2 className="text-xl font-bold text-[hsl(var(--primary))] mb-3">What will this home really cost me?</h2>
-              <p className="text-sm text-muted-foreground mb-8 flex-1">
+          <Card className="overflow-hidden bg-white border-t-4 flex flex-col min-h-[380px] shadow-lg" style={{ borderTopColor: GOLD }}>
+            <div className="p-10 flex flex-col flex-1">
+              <Home className="w-11 h-11 mb-5" style={{ color: GOLD }} />
+              <p className="text-xs font-bold uppercase tracking-[0.15em] mb-3" style={{ color: GOLD }}>First-Time Buyer</p>
+              <h2 className="text-2xl font-bold mb-4" style={{ color: NAVY }}>What will this home really cost me?</h2>
+              <p className="text-base text-muted-foreground mb-10 flex-1 leading-[1.7]">
                 Monthly payment, cash to close, affordability check, and first-time buyer programs. No investor jargon.
               </p>
-              <Button asChild className="w-full bg-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/90 text-white font-semibold">
+              <Button asChild className="w-full text-white font-semibold h-12 text-base" style={{ backgroundColor: GOLD }}>
                 <Link to="/analyze-home">Analyze a Home →</Link>
               </Button>
             </div>
           </Card>
 
           {/* Card 2 — Investing */}
-          <Card className="overflow-hidden bg-[hsl(var(--primary))] border-2 border-[hsl(var(--accent))]/30 flex flex-col">
-            <div className="p-8 flex flex-col flex-1">
-              <BarChart3 className="w-10 h-10 text-[hsl(var(--accent))] mb-4" />
-              <p className="text-xs font-bold uppercase tracking-[0.15em] text-[hsl(var(--accent))] mb-2">Real Estate Investor</p>
-              <h2 className="text-xl font-bold text-white mb-3">Does this deal cash flow?</h2>
-              <p className="text-sm text-white/60 mb-8 flex-1">
+          <Card className="overflow-hidden border-2 flex flex-col min-h-[380px] shadow-xl" style={{ background: NAVY, borderColor: `${GOLD}30` }}>
+            <div className="p-10 flex flex-col flex-1">
+              <BarChart3 className="w-11 h-11 mb-5" style={{ color: GOLD }} />
+              <p className="text-xs font-bold uppercase tracking-[0.15em] mb-3" style={{ color: GOLD }}>Real Estate Investor</p>
+              <h2 className="text-2xl font-bold text-white mb-4">Does this deal cash flow?</h2>
+              <p className="text-base text-white/50 mb-10 flex-1 leading-[1.7]">
                 Cap rate, cash flow, DSCR, and deal score for any multi-family or investment property. 7 loan types.
               </p>
-              <Button asChild className="w-full bg-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/90 text-white font-semibold">
+              <Button asChild className="w-full text-white font-semibold h-12 text-base" style={{ backgroundColor: GOLD }}>
                 <Link to="/analyze">Analyze a Deal →</Link>
               </Button>
             </div>
           </Card>
 
           {/* Card 3 — Renting */}
-          <Card className="overflow-hidden bg-secondary border-t-4 border-t-[hsl(var(--primary))] flex flex-col">
-            <div className="p-8 flex flex-col flex-1">
-              <Key className="w-10 h-10 text-[hsl(var(--primary))] mb-4" />
-              <p className="text-xs font-bold uppercase tracking-[0.15em] text-[hsl(var(--primary))] mb-2">Currently Renting</p>
-              <h2 className="text-xl font-bold text-[hsl(var(--primary))] mb-3">Am I closer to owning than I think?</h2>
-              <p className="text-sm text-muted-foreground mb-8 flex-1">
+          <Card className="overflow-hidden bg-[#F0F1F3] border-t-4 flex flex-col min-h-[380px] shadow-lg" style={{ borderTopColor: NAVY }}>
+            <div className="p-10 flex flex-col flex-1">
+              <Key className="w-11 h-11 mb-5" style={{ color: NAVY }} />
+              <p className="text-xs font-bold uppercase tracking-[0.15em] mb-3" style={{ color: NAVY }}>Currently Renting</p>
+              <h2 className="text-2xl font-bold mb-4" style={{ color: NAVY }}>Am I closer to owning than I think?</h2>
+              <p className="text-base text-muted-foreground mb-10 flex-1 leading-[1.7]">
                 See what your monthly rent buys as a mortgage payment. Compare rent vs own in your Capital District town.
               </p>
-              <Button asChild variant="outline" className="w-full border-[hsl(var(--primary))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/10 font-semibold">
+              <Button asChild className="w-full font-semibold h-12 text-base text-white" style={{ backgroundColor: NAVY }}>
                 <Link to="/rentals">Compare Rent vs Own →</Link>
               </Button>
             </div>
           </Card>
         </div>
+      </section>
 
-        <p className="text-center text-xs text-muted-foreground mt-12">
-          Powered by Capital District Nest · Built by Scott Alvarez · RE/MAX Solutions · Albany, NY
-        </p>
+      {/* GUIDANCE SECTION */}
+      <section className="py-24 px-6" style={{ background: NAVY }}>
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Not sure which tool is right for you?
+          </h2>
+          <div className="text-white/60 text-lg leading-relaxed space-y-4 mb-12">
+            <p>If you're buying a home to live in — start with <span className="text-white font-semibold">Analyze a Home</span>.</p>
+            <p>If you're buying to rent out or generate income — start with <span className="text-white font-semibold">Analyze a Deal</span>.</p>
+            <p>If you're currently renting and wondering if you could own — start with <span className="text-white font-semibold">Compare Rent vs Own</span>.</p>
+          </div>
+          <Button asChild className="h-13 px-10 text-base font-semibold text-white" style={{ backgroundColor: GOLD }}>
+            <a href="tel:5186762347" className="inline-flex items-center gap-2">
+              <Phone className="w-4 h-4" />
+              Talk to Scott Alvarez → (518) 676-2347
+            </a>
+          </Button>
+        </div>
       </section>
 
       <Footer />
