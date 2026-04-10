@@ -5,6 +5,7 @@ import MainLayout from "@/components/MainLayout";
 import { ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
+import RentalDetailModal from "@/components/RentalDetailModal";
 
 const RentalMap = lazy(() => import("@/components/RentalMap"));
 
@@ -42,6 +43,9 @@ interface Rental {
   days_on_market: number | null;
   pet_friendly: boolean | null;
   utilities_included: boolean | null;
+  listing_agent: string | null;
+  agency: string | null;
+  remarks: string | null;
   created_at: string;
 }
 
