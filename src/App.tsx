@@ -135,6 +135,8 @@ import AnalyzeMultifamilyNew from "./pages/analyze/AnalyzeMultifamily";
 import AnalyzeLuxury from "./pages/analyze/AnalyzeLuxury";
 import AnalyzeCommercial from "./pages/analyze/AnalyzeCommercial";
 import AnalyzeLand from "./pages/analyze/AnalyzeLand";
+import AnalyzeAnyHome from "./pages/AnalyzeAnyHome";
+import AnalyzeAnyProperty from "./pages/AnalyzeAnyProperty";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -358,6 +360,10 @@ const App = () => {
           <Route path="/vendors" element={<VendorHub />} />
           <Route path="/partners" element={<VendorHub />} />
           
+          {/* Analyzer Domain Pages */}
+          <Route path="/analyze-home" element={<AnalyzeAnyHome />} />
+          <Route path="/analyze-any-property" element={<AnalyzeAnyProperty />} />
+
           {/* Tailored Search Hubs */}
           <Route path="/search/single-family" element={<SingleFamilyHub />} />
           <Route path="/search/investors" element={<InvestorsHub />} />
