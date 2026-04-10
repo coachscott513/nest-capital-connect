@@ -21,7 +21,7 @@ interface RentalMapProps {
 }
 
 const townCenters: Record<string, { lat: number; lng: number; zoom: number }> = {
-  all: { lat: 42.6526, lng: -73.7562, zoom: 10 },
+  all: { lat: 42.7, lng: -73.8, zoom: 9 },
   albany: { lat: 42.6526, lng: -73.7562, zoom: 13 },
   troy: { lat: 42.7284, lng: -73.6918, zoom: 13 },
   schenectady: { lat: 42.8142, lng: -73.9396, zoom: 13 },
