@@ -62,6 +62,7 @@ const navItems = [
   { label: "Analyze", href: "/analyze" },
   { label: "Towns", dropdown: "towns" },
   { label: "Markets", href: "/communities" },
+  { label: "Rentals", href: "/rentals" },
   { label: "Buyers", href: "/first-time-homebuyers" },
   { label: "Investors", href: "/investor-tools" },
 ];
