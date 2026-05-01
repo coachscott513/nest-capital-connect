@@ -78,17 +78,12 @@ export default defineConfig(({ mode }) => ({
           // jsdom needs these to avoid crashing on browser-only APIs
           maxConcurrentRoutes: 4,
         },
-        postProcess(renderedRoute: {
-          route: string;
-          html: string;
-          originalRoute: string;
-        }) {
+        postProcess(renderedRoute: { route: string; html: string }) {
           // Strip any prerender-specific noise; ensure SPA still rehydrates
           renderedRoute.html = renderedRoute.html.replace(
             /<script (.*?)data-prerender(.*?)<\/script>/g,
             ""
           );
-          return renderedRoute;
         },
       }),
   ].filter(Boolean),
