@@ -155,7 +155,7 @@ const PrerenderReadySignal = () => {
       document.dispatchEvent(new Event("render-complete"));
     };
 
-    const timeoutId = window.setTimeout(signalReady, 500);
+    const timeoutId = window.setTimeout(signalReady, 3000);
     return () => window.clearTimeout(timeoutId);
   }, []);
 
