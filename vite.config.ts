@@ -71,14 +71,18 @@ export default defineConfig(({ mode }) => ({
     mode !== "development" &&
       prerender({
         routes: PRERENDER_ROUTES,
-        renderer: "@prerenderer/renderer-jsdom",
+        renderer: "@prerenderer/renderer-puppeteer",
         rendererOptions: {
           // Prefer an explicit signal from React once the routed page has mounted.
           renderAfterDocumentEvent: "render-complete",
           // Fallback wait for pages with browser-only effects or slower content.
           renderAfterTime: 3000,
-          // jsdom needs these to avoid crashing on browser-only APIs
-          maxConcurrentRoutes: 4,
+          maxConcurrentRoutes: 2,
+          skipThirdPartyRequests: true,
+          launchOptions: {
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/bin/chromium",
+            args: ["--no-sandbox", "--disable-setuid-sandbox"],
+          },
         },
         postProcess(renderedRoute: { route: string; html: string }) {
           // Strip any prerender-specific noise; ensure SPA still rehydrates
