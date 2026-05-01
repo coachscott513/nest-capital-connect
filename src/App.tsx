@@ -147,6 +147,21 @@ const queryClient = new QueryClient({
   },
 });
 
+const PrerenderReadySignal = () => {
+  React.useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const signalReady = () => {
+      document.dispatchEvent(new Event("render-complete"));
+    };
+
+    const timeoutId = window.setTimeout(signalReady, 500);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
+  return null;
+};
+
 const App = () => {
 
   return (
@@ -159,6 +174,7 @@ const App = () => {
             <BrowserRouter>
               <ScrollToTop />
               <GARouteTracker />
+              <PrerenderReadySignal />
             <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/investor-tools" element={<InvestorTools />} />

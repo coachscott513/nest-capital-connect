@@ -73,8 +73,10 @@ export default defineConfig(({ mode }) => ({
         routes: PRERENDER_ROUTES,
         renderer: "@prerenderer/renderer-jsdom",
         rendererOptions: {
-          // Wait briefly for React to mount + Helmet to inject head tags
-          renderAfterTime: 1500,
+          // Prefer an explicit signal from React once the routed page has mounted.
+          renderAfterDocumentEvent: "render-complete",
+          // Fallback wait for pages with browser-only effects or slower content.
+          renderAfterTime: 3000,
           // jsdom needs these to avoid crashing on browser-only APIs
           maxConcurrentRoutes: 4,
         },
