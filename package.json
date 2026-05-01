@@ -78,6 +78,7 @@
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@prerenderer/renderer-jsdom": "^1.1.9",
+    "@prerenderer/renderer-puppeteer": "^1.2.4",
     "@prerenderer/rollup-plugin": "^0.3.12",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^22.5.5",
@@ -91,6 +92,7 @@
     "globals": "^15.9.0",
     "lovable-tagger": "^1.1.7",
     "postcss": "^8.4.47",
+    "puppeteer": "^24.42.0",
     "tailwindcss": "^3.4.11",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
