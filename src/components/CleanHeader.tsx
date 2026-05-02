@@ -268,7 +268,8 @@ const CleanHeader = () => {
 
           <div>
             <h3 className="text-xs text-muted-foreground font-medium tracking-[0.15em] uppercase mb-4">Towns</h3>
-            <Link to="/communities" onClick={closeMobileMenu} className="block text-accent font-medium mb-3 text-sm">Browse All →</Link>
+            <Link to="/communities" onClick={closeMobileMenu} className="block text-accent font-medium mb-2 text-sm">Browse All →</Link>
+            <Link to="/living-in-delmar" onClick={closeMobileMenu} className="block text-foreground font-medium mb-3 text-sm">★ Living in Delmar →</Link>
             <div className="relative mb-3">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
               <input
