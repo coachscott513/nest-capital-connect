@@ -13,6 +13,7 @@ const PRERENDER_ROUTES = [
   "/analyze-any-property",
   "/analyze-any-deal",
   "/analyze-home",
+  "/analyze-any-home",
   "/financing",
   "/first-time-buyers",
   "/first-time-homebuyers",
@@ -27,8 +28,13 @@ const PRERENDER_ROUTES = [
   "/privacy-policy",
   "/markets",
   "/investment-properties",
+  "/investor-tools",
   "/land-buyers",
   "/sell-investment-property",
+  // High-value Delmar landing pages
+  "/living-in-delmar",
+  "/delmar-homes-for-sale",
+  "/delmar-market-insights",
   // Explicit high-value town intelligence pages
   "/towns/albany",
   "/towns/troy",
