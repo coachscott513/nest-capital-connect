@@ -264,7 +264,34 @@ const App = () => {
           <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
           <Route path="/living-in-delmar" element={<LivingInDelmar />} />
           <Route path="/app/living-in-delmar" element={<LivingInDelmar />} />
-          
+
+          {/* Static SEO pages live at /living-in-{slug}/index.html in /public.
+              Real browsers are bounced by inline JS to /app/living-in-{slug},
+              which we map to the existing town intelligence pages so users
+              land on a real interactive page (not a 404). */}
+          <Route path="/app/living-in-albany" element={<Navigate to="/towns/albany" replace />} />
+          <Route path="/app/living-in-troy" element={<Navigate to="/towns/troy" replace />} />
+          <Route path="/app/living-in-schenectady" element={<Navigate to="/towns/schenectady" replace />} />
+          <Route path="/app/living-in-saratoga-springs" element={<Navigate to="/towns/saratoga-springs" replace />} />
+          <Route path="/app/living-in-clifton-park" element={<Navigate to="/towns/clifton-park" replace />} />
+          <Route path="/app/living-in-niskayuna" element={<Navigate to="/towns/niskayuna" replace />} />
+          <Route path="/app/living-in-guilderland" element={<Navigate to="/towns/guilderland" replace />} />
+          <Route path="/app/living-in-voorheesville" element={<Navigate to="/towns/voorheesville" replace />} />
+          <Route path="/app/living-in-queensbury" element={<Navigate to="/towns/queensbury" replace />} />
+          <Route path="/app/living-in-amsterdam" element={<Navigate to="/towns/amsterdam" replace />} />
+          {/* Also map the public /living-in-{slug} routes to the same town
+              pages, in case Lovable's hosting falls through to the SPA before
+              serving the static file (e.g. dev/preview). */}
+          <Route path="/living-in-albany" element={<Navigate to="/towns/albany" replace />} />
+          <Route path="/living-in-troy" element={<Navigate to="/towns/troy" replace />} />
+          <Route path="/living-in-schenectady" element={<Navigate to="/towns/schenectady" replace />} />
+          <Route path="/living-in-saratoga-springs" element={<Navigate to="/towns/saratoga-springs" replace />} />
+          <Route path="/living-in-clifton-park" element={<Navigate to="/towns/clifton-park" replace />} />
+          <Route path="/living-in-niskayuna" element={<Navigate to="/towns/niskayuna" replace />} />
+          <Route path="/living-in-guilderland" element={<Navigate to="/towns/guilderland" replace />} />
+          <Route path="/living-in-voorheesville" element={<Navigate to="/towns/voorheesville" replace />} />
+          <Route path="/living-in-queensbury" element={<Navigate to="/towns/queensbury" replace />} />
+          <Route path="/living-in-amsterdam" element={<Navigate to="/towns/amsterdam" replace />} />
           {/* Town Intelligence Pages - Specific overrides for existing pages */}
           <Route path="/towns/albany" element={<AlbanyIntelligence />} />
           <Route path="/towns/amsterdam" element={<AmsterdamIntelligence />} />
