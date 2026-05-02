@@ -18,6 +18,19 @@
   <url><loc>https://www.capitaldistrictnest.com/buyer-roadmap</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.capitaldistrictnest.com/reviews</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 
+  <!-- Living-In Town Guides (static SEO pages) - Priority 0.9 -->
+  <url><loc>https://www.capitaldistrictnest.com/living-in-delmar</loc><lastmod>2026-05-02</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/living-in-albany</loc><lastmod>2026-05-02</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/living-in-troy</loc><lastmod>2026-05-02</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/living-in-schenectady</loc><lastmod>2026-05-02</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/living-in-saratoga-springs</loc><lastmod>2026-05-02</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/living-in-clifton-park</loc><lastmod>2026-05-02</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/living-in-niskayuna</loc><lastmod>2026-05-02</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/living-in-guilderland</loc><lastmod>2026-05-02</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/living-in-voorheesville</loc><lastmod>2026-05-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/living-in-queensbury</loc><lastmod>2026-05-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.capitaldistrictnest.com/living-in-amsterdam</loc><lastmod>2026-05-02</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+
   <!-- Analyzer Sub-Pages -->
   <url><loc>https://www.capitaldistrictnest.com/analyze/condo</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.capitaldistrictnest.com/analyze/single-family</loc><lastmod>2026-04-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
