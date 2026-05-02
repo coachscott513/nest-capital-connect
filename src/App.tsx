@@ -55,6 +55,7 @@ import DelmarHomesForSale from "./pages/DelmarHomesForSale";
 import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 
 import DelmarIntelligence from "./pages/DelmarIntelligence";
+import LivingInDelmar from "./pages/LivingInDelmar";
 import DynamicTownIntelligence from "./pages/DynamicTownIntelligence";
 import NiskayunaIntelligence from "./pages/NiskayunaIntelligence";
 import VoorheesvilleIntelligence from "./pages/VoorheesvilleIntelligence";
@@ -261,6 +262,7 @@ const App = () => {
           <Route path="/delmar-homes-for-sale" element={<Navigate to="/towns/delmar" replace />} />
           <Route path="/delmar-market-insights" element={<Navigate to="/towns/delmar" replace />} />
           <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
+          <Route path="/living-in-delmar" element={<LivingInDelmar />} />
           
           {/* Town Intelligence Pages - Specific overrides for existing pages */}
           <Route path="/towns/albany" element={<AlbanyIntelligence />} />
