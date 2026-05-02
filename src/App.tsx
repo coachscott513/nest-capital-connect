@@ -263,6 +263,7 @@ const App = () => {
           <Route path="/delmar-market-insights" element={<Navigate to="/towns/delmar" replace />} />
           <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
           <Route path="/living-in-delmar" element={<LivingInDelmar />} />
+          <Route path="/app/living-in-delmar" element={<LivingInDelmar />} />
           
           {/* Town Intelligence Pages - Specific overrides for existing pages */}
           <Route path="/towns/albany" element={<AlbanyIntelligence />} />
