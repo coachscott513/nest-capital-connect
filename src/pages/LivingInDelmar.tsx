@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -15,10 +15,18 @@ import {
   TrendingUp,
   Home as HomeIcon,
   Briefcase,
+  Mail,
+  Sparkles,
+  Newspaper,
+  LineChart,
+  Bell,
 } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import delmarHero from "@/assets/delmar-hero-premium.jpg";
 
 const fadeUp = {
