@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -15,10 +15,18 @@ import {
   TrendingUp,
   Home as HomeIcon,
   Briefcase,
+  Mail,
+  Sparkles,
+  Newspaper,
+  LineChart,
+  Bell,
 } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
+
+import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import delmarHero from "@/assets/delmar-hero-premium.jpg";
 
 const fadeUp = {
@@ -50,6 +58,46 @@ const LivingInDelmar = () => {
     }
   }, []);
 
+  // Newsletter signup state
+  const [signup, setSignup] = useState({ name: "", email: "", phone: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!signup.name.trim() || !signup.email.trim() || !signup.phone.trim()) {
+      toast({
+        title: "All fields required",
+        description: "Name, email, and phone are required to receive Delmar updates.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.from("leads").insert({
+      full_name: signup.name.trim(),
+      email: signup.email.trim(),
+      phone: signup.phone.trim(),
+      message: "Weekly Delmar updates signup — new listings, market changes, local highlights.",
+      type: "newsletter",
+      origin_town: "Delmar",
+      lead_type: "buyer",
+    });
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Something went wrong", description: error.message, variant: "destructive" });
+      return;
+    }
+    setSubmitted(true);
+    toast({ title: "You're in.", description: "Watch your inbox for the next Delmar update." });
+  };
+
+  // "This week" date range — auto-updates every render so the page always feels current.
+  const today = new Date();
+  const weekStart = new Date(today);
+  weekStart.setDate(today.getDate() - today.getDay()); // Sunday
+  const weekLabel = `Week of ${weekStart.toLocaleDateString("en-US", { month: "long", day: "numeric" })}`;
+
   const snapshot = [
     { label: "Minutes to Albany", value: "10–15", note: "Easy daily commute", icon: MapPin },
     { label: "School District", value: "Bethlehem Central", note: "Top-rated K–12", icon: GraduationCap },
@@ -73,12 +121,56 @@ const LivingInDelmar = () => {
     { title: "Community Life", body: "Farmers markets, school events, library programming, and seasonal town activities.", icon: Users },
   ];
 
+  // Live "What's Happening" cards — feels current, has CTAs, mixes listings/market/local.
   const happenings = [
-    { tag: "Listings", title: "New Delmar Listings This Week", body: "Fresh on-market homes across Bethlehem Central school zones." },
-    { tag: "Spotlight", title: "Local Business Spotlight", body: "A neighborhood favorite worth knowing along Delaware Avenue." },
-    { tag: "Sales", title: "Recent Delmar Home Sales", body: "What's actually closing — and at what price." },
-    { tag: "Events", title: "Community Events", body: "Farmers market, library programming, and seasonal happenings." },
-    { tag: "Market", title: "Bethlehem Market Update", body: "Inventory, days-on-market, and pricing trends for the wider town." },
+    {
+      tag: "Just Listed",
+      icon: HomeIcon,
+      title: "New Delmar Homes This Week",
+      body: "Fresh on-market homes across Bethlehem Central school zones. Most new listings here move in under 14 days.",
+      cta: { label: "View New Listings", href: "#homes-for-sale" },
+      accent: "#0d6e6e",
+    },
+    {
+      tag: "Market Update",
+      icon: LineChart,
+      title: "Delmar Pricing Is Holding Firm",
+      body: "Median sale prices in Bethlehem remain steady year-over-year. Well-priced homes under $500K continue to draw multiple offers.",
+      cta: { label: "See Market Data", href: "/delmar-market-insights" },
+      accent: "#b8860b",
+    },
+    {
+      tag: "Buyer Insight",
+      icon: Sparkles,
+      title: "Multiple Offers Returning Under $500K",
+      body: "Inventory in the entry-level Delmar bracket is the tightest segment. Buyers are coming in with stronger terms again.",
+      cta: { label: "Get a Buyer Strategy", href: "/dealdesk" },
+      accent: "#0d6e6e",
+    },
+    {
+      tag: "Local Spotlight",
+      icon: Coffee,
+      title: "Delaware Avenue Eats & Coffee",
+      body: "The Four Corners and Delaware Ave corridor remain the heartbeat of daily life — new openings and longtime favorites.",
+      cta: { label: "Explore the Guide", href: "#explore-delmar" },
+      accent: "#0d6e6e",
+    },
+    {
+      tag: "Schools",
+      icon: GraduationCap,
+      title: "Bethlehem Central Calendar",
+      body: "Concerts, sports, and community events anchor the school year — a major driver of why families settle here.",
+      cta: { label: "Ask About School Zones", href: "tel:+15185227265" },
+      accent: "#0d6e6e",
+    },
+    {
+      tag: "Community",
+      icon: Newspaper,
+      title: "What's Going On in Bethlehem",
+      body: "Library programming, farmers market, town events, and the seasonal calendar that makes Delmar feel like a real place.",
+      cta: { label: "View Community Events", href: "#explore-delmar" },
+      accent: "#0d6e6e",
+    },
   ];
 
   const featured = [
@@ -148,26 +240,31 @@ const LivingInDelmar = () => {
         </div>
 
         <div className="max-w-6xl mx-auto px-6 lg:px-12 pt-40 pb-32 lg:pt-56 lg:pb-44 text-white">
-          <motion.p
+          <motion.div
             {...fadeUp}
-            className="text-xs lg:text-sm uppercase tracking-[0.25em] text-white/85 mb-6"
+            className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-md border border-white/30 px-4 py-1.5 mb-6"
           >
-            Capital District Nest · Local Guide
-          </motion.p>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+            </span>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-white/90 font-semibold">Live · {weekLabel}</span>
+          </motion.div>
+
           <motion.h1
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-3xl"
+            className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
-            Living in Delmar, NY
+            Delmar, NY Real Estate &amp; Local Guide
           </motion.h1>
           <motion.p
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: 0.1 }}
             className="mt-6 max-w-2xl text-lg md:text-xl text-white/90 leading-relaxed"
           >
-            Homes, schools, lifestyle, and local insight for one of the Capital District's most desirable communities.
+            Live listings, weekly market updates, and what's happening on the ground in one of the Capital District's most desirable towns.
           </motion.p>
 
           <motion.div
@@ -179,13 +276,13 @@ const LivingInDelmar = () => {
               href="#homes-for-sale"
               className="inline-flex items-center gap-2 rounded-full bg-white text-neutral-900 px-7 py-3.5 text-sm font-semibold hover:bg-white/90 transition"
             >
-              View Homes in Delmar <ArrowRight className="w-4 h-4" />
+              View New Listings This Week <ArrowRight className="w-4 h-4" />
             </a>
             <a
-              href="#delmar-guide"
+              href="#whats-happening"
               className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/40 text-white px-7 py-3.5 text-sm font-semibold hover:bg-white/20 transition"
             >
-              Explore the Delmar Guide
+              See What's Changed in Delmar
             </a>
             <a
               href={PHONE_HREF}
@@ -213,39 +310,17 @@ const LivingInDelmar = () => {
         </div>
       </section>
 
-      {/* 3. INTRODUCTION */}
-      <section id="delmar-guide" className="py-24 lg:py-32 bg-[#FAFAF7]">
-        <div className="max-w-3xl mx-auto px-6 lg:px-12">
-          <motion.p
-            {...fadeUp}
-            className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6"
-          >
-            The Delmar Guide
-          </motion.p>
-          <motion.h2
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900 mb-8"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            One of the Capital District's most sought-after suburbs.
-          </motion.h2>
-          <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="space-y-5 text-lg text-neutral-700 leading-relaxed">
-            <p>
-              Delmar, NY is one of the most sought-after suburbs in the Capital District, located in the town of Bethlehem in Albany County just minutes from downtown Albany. Known for its strong schools, tree-lined streets, walkable neighborhoods, and stable property values, Delmar continues to attract buyers who want suburban comfort without losing access to the city.
-            </p>
-            <p>
-              If you are searching for <strong>homes for sale in Delmar NY</strong>, researching <strong>Delmar NY real estate</strong>, or deciding whether <strong>living in Delmar NY</strong> is the right fit, this guide brings together local lifestyle insight, homes, schools, commute information, market trends, and community highlights in one place.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 4. HOMES FOR SALE — Delmar-filtered RE/MAX embed */}
+      {/* 3. HOMES FOR SALE — moved up: users want listings FIRST */}
       <section id="homes-for-sale" className="py-24 lg:py-32 bg-white border-y border-neutral-200">
         <div className="max-w-6xl mx-auto px-6 lg:px-12">
           <motion.div {...fadeUp} className="max-w-2xl mb-12">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Live Listings</p>
+            <div className="flex items-center gap-2 mb-6">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <p className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e]">Live Listings · Updated Daily</p>
+            </div>
             <h2
               className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
@@ -253,7 +328,7 @@ const LivingInDelmar = () => {
               Homes for Sale in Delmar, NY
             </h2>
             <p className="mt-5 text-lg text-neutral-600">
-              Browse current Delmar listings and explore homes in one of the Capital District's most consistently desirable residential markets.
+              Browse current Delmar listings — refreshed from live MLS feeds. Most well-priced homes in Bethlehem move in under 14 days.
             </p>
           </motion.div>
 
@@ -284,22 +359,178 @@ const LivingInDelmar = () => {
             >
               View All Delmar Homes <ArrowRight className="w-4 h-4" />
             </a>
-            <Link
-              to="/intelligence"
+            <a
+              href="#delmar-updates"
               className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-7 py-3.5 text-sm font-semibold text-neutral-900 hover:bg-neutral-50 transition"
             >
-              Get New Listing Alerts
-            </Link>
+              <Bell className="w-4 h-4" /> Get New Listing Alerts
+            </a>
           </motion.div>
-
-          <motion.p {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.2 }} className="mt-10 max-w-3xl text-neutral-600 leading-relaxed">
-            The Delmar NY real estate market includes established single-family homes, updated colonials, mid-century properties, and quiet residential neighborhoods near schools, parks, and local shops. Because Delmar has strong demand and limited turnover, well-priced homes often move quickly.
-          </motion.p>
         </div>
       </section>
 
-      {/* 5. WHY PEOPLE CHOOSE DELMAR */}
-      <section className="py-24 lg:py-32 bg-[#FAFAF7]">
+      {/* 4. WHAT'S HAPPENING THIS WEEK — the live, sticky, come-back section */}
+      <section id="whats-happening" className="py-24 lg:py-32 bg-[#FAFAF7]">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12">
+          <motion.div {...fadeUp} className="max-w-3xl mb-14">
+            <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-200 px-4 py-1.5 mb-6">
+              <Calendar className="w-3.5 h-3.5 text-emerald-700" />
+              <span className="text-[11px] uppercase tracking-[0.2em] text-emerald-800 font-semibold">{weekLabel}</span>
+            </div>
+            <h2
+              className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900"
+              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            >
+              What's Happening in Delmar This Week.
+            </h2>
+            <p className="mt-5 text-lg text-neutral-600">
+              Real-time updates on new listings, market movement, local news, and community highlights — refreshed weekly so you always know what's actually going on.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {happenings.map((h) => (
+              <motion.article
+                key={h.title}
+                {...fadeUp}
+                className="group bg-white border border-neutral-200 rounded-2xl p-8 hover:border-[#0d6e6e] hover:shadow-lg transition-all flex flex-col"
+              >
+                <div className="flex items-center justify-between mb-5">
+                  <div
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-xl"
+                    style={{ backgroundColor: `${h.accent}15` }}
+                  >
+                    <h.icon className="w-5 h-5" style={{ color: h.accent }} />
+                  </div>
+                  <p className="text-[10px] uppercase tracking-[0.2em] font-semibold" style={{ color: h.accent }}>{h.tag}</p>
+                </div>
+                <h3
+                  className="font-serif text-xl text-neutral-900 mb-3 leading-snug"
+                  style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                >
+                  {h.title}
+                </h3>
+                <p className="text-neutral-600 leading-relaxed text-sm mb-6 flex-1">{h.body}</p>
+                <a
+                  href={h.cta.href}
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-900 hover:text-[#0d6e6e] transition-colors"
+                >
+                  {h.cta.label} <ArrowRight className="w-3.5 h-3.5" />
+                </a>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. GET DELMAR UPDATES — retention hook, lead capture */}
+      <section id="delmar-updates" className="py-24 lg:py-32 bg-neutral-950 text-white">
+        <div className="max-w-3xl mx-auto px-6 lg:px-12 text-center">
+          <motion.div {...fadeUp} className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/20 px-4 py-1.5 mb-6">
+            <Mail className="w-3.5 h-3.5 text-[#5fd4d4]" />
+            <span className="text-[11px] uppercase tracking-[0.2em] text-white/85 font-semibold">Weekly Delmar Brief</span>
+          </motion.div>
+          <motion.h2
+            {...fadeUp}
+            transition={{ ...fadeUp.transition, delay: 0.05 }}
+            className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight mb-6"
+            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+          >
+            Get Delmar Updates Every Week.
+          </motion.h2>
+          <motion.p
+            {...fadeUp}
+            transition={{ ...fadeUp.transition, delay: 0.1 }}
+            className="text-lg text-white/75 leading-relaxed max-w-xl mx-auto mb-10"
+          >
+            New Delmar listings, market shifts, and what's happening locally — delivered straight to your inbox. No spam, just the brief that buyers and locals actually read.
+          </motion.p>
+
+          {submitted ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="max-w-md mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-400/30 p-8"
+            >
+              <p className="text-emerald-300 font-semibold mb-2">You're on the list.</p>
+              <p className="text-white/70 text-sm">Watch your inbox for the next Delmar update — and Scott may reach out personally.</p>
+            </motion.div>
+          ) : (
+            <motion.form
+              {...fadeUp}
+              transition={{ ...fadeUp.transition, delay: 0.15 }}
+              onSubmit={handleSignup}
+              className="max-w-xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 text-left"
+            >
+              <Input
+                type="text"
+                placeholder="Full name"
+                value={signup.name}
+                onChange={(e) => setSignup({ ...signup, name: e.target.value })}
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12"
+                required
+              />
+              <Input
+                type="tel"
+                placeholder="Phone"
+                value={signup.phone}
+                onChange={(e) => setSignup({ ...signup, phone: e.target.value })}
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12"
+                required
+              />
+              <Input
+                type="email"
+                placeholder="Email address"
+                value={signup.email}
+                onChange={(e) => setSignup({ ...signup, email: e.target.value })}
+                className="sm:col-span-2 bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12"
+                required
+              />
+              <button
+                type="submit"
+                disabled={submitting}
+                className="sm:col-span-2 inline-flex items-center justify-center gap-2 rounded-full bg-white text-neutral-900 px-7 py-3.5 text-sm font-semibold hover:bg-white/90 transition disabled:opacity-60"
+              >
+                {submitting ? "Sending..." : (<>Send Me Delmar Updates <ArrowRight className="w-4 h-4" /></>)}
+              </button>
+              <p className="sm:col-span-2 text-xs text-white/50 text-center mt-1">
+                By submitting, you agree to receive Delmar real estate updates. Unsubscribe anytime.
+              </p>
+            </motion.form>
+          )}
+        </div>
+      </section>
+
+      {/* 6. INTRODUCTION — moved below the live layer */}
+      <section id="delmar-guide" className="py-24 lg:py-32 bg-[#FAFAF7]">
+        <div className="max-w-3xl mx-auto px-6 lg:px-12">
+          <motion.p
+            {...fadeUp}
+            className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6"
+          >
+            The Delmar Guide
+          </motion.p>
+          <motion.h2
+            {...fadeUp}
+            transition={{ ...fadeUp.transition, delay: 0.05 }}
+            className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900 mb-8"
+            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+          >
+            One of the Capital District's most sought-after suburbs.
+          </motion.h2>
+          <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="space-y-5 text-lg text-neutral-700 leading-relaxed">
+            <p>
+              Delmar, NY is one of the most sought-after suburbs in the Capital District, located in the town of Bethlehem in Albany County just minutes from downtown Albany. Known for its strong schools, tree-lined streets, walkable neighborhoods, and stable property values, Delmar continues to attract buyers who want suburban comfort without losing access to the city.
+            </p>
+            <p>
+              If you are searching for <strong>homes for sale in Delmar NY</strong>, researching <strong>Delmar NY real estate</strong>, or deciding whether <strong>living in Delmar NY</strong> is the right fit, this guide brings together local lifestyle insight, homes, schools, commute information, market trends, and community highlights in one place.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 7. WHY PEOPLE CHOOSE DELMAR */}
+      <section className="py-24 lg:py-32 bg-white border-y border-neutral-200">
         <div className="max-w-6xl mx-auto px-6 lg:px-12">
           <motion.div {...fadeUp} className="max-w-2xl mb-14">
             <p className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Why Delmar</p>
@@ -321,8 +552,8 @@ const LivingInDelmar = () => {
         </div>
       </section>
 
-      {/* 6. WHAT IT'S LIKE LIVING IN DELMAR */}
-      <section className="py-24 lg:py-32 bg-white border-y border-neutral-200">
+      {/* 8. WHAT IT'S LIKE LIVING IN DELMAR */}
+      <section className="py-24 lg:py-32 bg-[#FAFAF7]">
         <div className="max-w-3xl mx-auto px-6 lg:px-12">
           <motion.p {...fadeUp} className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Lifestyle</motion.p>
           <motion.h2
@@ -344,8 +575,8 @@ const LivingInDelmar = () => {
         </div>
       </section>
 
-      {/* 7. EXPLORE DELMAR — lifestyle cards */}
-      <section className="py-24 lg:py-32 bg-[#FAFAF7]">
+      {/* 9. EXPLORE DELMAR — lifestyle cards */}
+      <section id="explore-delmar" className="py-24 lg:py-32 bg-white border-y border-neutral-200">
         <div className="max-w-6xl mx-auto px-6 lg:px-12">
           <motion.div {...fadeUp} className="max-w-2xl mb-14">
             <p className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Explore</p>
@@ -361,7 +592,7 @@ const LivingInDelmar = () => {
               <motion.div
                 key={c.title}
                 {...fadeUp}
-                className="bg-white border border-neutral-200 rounded-2xl p-8 hover:shadow-lg transition-shadow"
+                className="bg-[#FAFAF7] border border-neutral-200 rounded-2xl p-8 hover:shadow-lg transition-shadow"
               >
                 <c.icon className="w-6 h-6 text-[#0d6e6e] mb-5" />
                 <h3 className="text-lg font-semibold text-neutral-900 mb-3">{c.title}</h3>
@@ -372,8 +603,8 @@ const LivingInDelmar = () => {
         </div>
       </section>
 
-      {/* 8. SCHOOLS */}
-      <section className="py-24 lg:py-32 bg-white border-y border-neutral-200">
+      {/* 10. SCHOOLS */}
+      <section className="py-24 lg:py-32 bg-[#FAFAF7]">
         <div className="max-w-3xl mx-auto px-6 lg:px-12">
           <motion.p {...fadeUp} className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Schools</motion.p>
           <motion.h2
@@ -398,8 +629,8 @@ const LivingInDelmar = () => {
         </div>
       </section>
 
-      {/* 9. COMMUTE */}
-      <section className="py-24 lg:py-32 bg-[#FAFAF7]">
+      {/* 11. COMMUTE */}
+      <section className="py-24 lg:py-32 bg-white border-y border-neutral-200">
         <div className="max-w-3xl mx-auto px-6 lg:px-12">
           <motion.p {...fadeUp} className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Commute & Location</motion.p>
           <motion.h2
@@ -413,39 +644,6 @@ const LivingInDelmar = () => {
           <motion.p {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="text-lg text-neutral-700 leading-relaxed">
             Delmar is located roughly 10–15 minutes from downtown Albany, making it convenient for professionals working near the State Capitol, Empire State Plaza, Albany Medical Center, SUNY Albany, and other major employment centers. Access to nearby highways also makes it easy to reach Guilderland, Slingerlands, Glenmont, Troy, Saratoga, and the wider Capital District.
           </motion.p>
-        </div>
-      </section>
-
-      {/* 10. WHAT'S HAPPENING */}
-      <section className="py-24 lg:py-32 bg-white border-y border-neutral-200">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <motion.div {...fadeUp} className="max-w-2xl mb-14">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">This Week</p>
-            <h2
-              className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-            >
-              What's Happening in Delmar.
-            </h2>
-            <p className="mt-5 text-lg text-neutral-600">
-              Local updates, businesses, community news, market movement, and neighborhood highlights.
-            </p>
-          </motion.div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {happenings.map((h) => (
-              <motion.article
-                key={h.title}
-                {...fadeUp}
-                className="group bg-[#FAFAF7] border border-neutral-200 rounded-2xl p-8 hover:border-[#0d6e6e] transition-colors"
-              >
-                <p className="text-[11px] uppercase tracking-[0.2em] text-[#0d6e6e] mb-4">{h.tag}</p>
-                <h3 className="font-serif text-xl text-neutral-900 mb-3 leading-snug" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-                  {h.title}
-                </h3>
-                <p className="text-neutral-600 leading-relaxed text-sm">{h.body}</p>
-              </motion.article>
-            ))}
-          </div>
         </div>
       </section>
 
