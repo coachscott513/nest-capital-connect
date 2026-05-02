@@ -1,6 +1,61 @@
+# Capital District Nest — robots.txt
+# Default: open to all standard search engines
 User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /partner-dashboard
+Disallow: /partner-auth
+
+# ───────────────────────────────────────────────
+# AI crawlers — explicitly allowed
+# ───────────────────────────────────────────────
+
+# OpenAI / ChatGPT
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Anthropic / Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Google Gemini / Vertex AI training
+User-agent: Google-Extended
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Common Crawl (powers many LLM datasets)
+User-agent: CCBot
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Bytespider (TikTok / Doubao)
+User-agent: Bytespider
+Allow: /
 
 Sitemap: https://www.capitaldistrictnest.com/sitemap.xml
