@@ -240,26 +240,31 @@ const LivingInDelmar = () => {
         </div>
 
         <div className="max-w-6xl mx-auto px-6 lg:px-12 pt-40 pb-32 lg:pt-56 lg:pb-44 text-white">
-          <motion.p
+          <motion.div
             {...fadeUp}
-            className="text-xs lg:text-sm uppercase tracking-[0.25em] text-white/85 mb-6"
+            className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-md border border-white/30 px-4 py-1.5 mb-6"
           >
-            Capital District Nest · Local Guide
-          </motion.p>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+            </span>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-white/90 font-semibold">Live · {weekLabel}</span>
+          </motion.div>
+
           <motion.h1
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-3xl"
+            className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
-            Living in Delmar, NY
+            Delmar, NY Real Estate &amp; Local Guide
           </motion.h1>
           <motion.p
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: 0.1 }}
             className="mt-6 max-w-2xl text-lg md:text-xl text-white/90 leading-relaxed"
           >
-            Homes, schools, lifestyle, and local insight for one of the Capital District's most desirable communities.
+            Live listings, weekly market updates, and what's happening on the ground in one of the Capital District's most desirable towns.
           </motion.p>
 
           <motion.div
@@ -271,13 +276,13 @@ const LivingInDelmar = () => {
               href="#homes-for-sale"
               className="inline-flex items-center gap-2 rounded-full bg-white text-neutral-900 px-7 py-3.5 text-sm font-semibold hover:bg-white/90 transition"
             >
-              View Homes in Delmar <ArrowRight className="w-4 h-4" />
+              View New Listings This Week <ArrowRight className="w-4 h-4" />
             </a>
             <a
-              href="#delmar-guide"
+              href="#whats-happening"
               className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/40 text-white px-7 py-3.5 text-sm font-semibold hover:bg-white/20 transition"
             >
-              Explore the Delmar Guide
+              See What's Changed in Delmar
             </a>
             <a
               href={PHONE_HREF}
