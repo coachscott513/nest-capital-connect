@@ -58,6 +58,46 @@ const LivingInDelmar = () => {
     }
   }, []);
 
+  // Newsletter signup state
+  const [signup, setSignup] = useState({ name: "", email: "", phone: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!signup.name.trim() || !signup.email.trim() || !signup.phone.trim()) {
+      toast({
+        title: "All fields required",
+        description: "Name, email, and phone are required to receive Delmar updates.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.from("leads").insert({
+      full_name: signup.name.trim(),
+      email: signup.email.trim(),
+      phone: signup.phone.trim(),
+      message: "Weekly Delmar updates signup — new listings, market changes, local highlights.",
+      type: "newsletter",
+      origin_town: "Delmar",
+      lead_type: "buyer",
+    });
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Something went wrong", description: error.message, variant: "destructive" });
+      return;
+    }
+    setSubmitted(true);
+    toast({ title: "You're in.", description: "Watch your inbox for the next Delmar update." });
+  };
+
+  // "This week" date range — auto-updates every render so the page always feels current.
+  const today = new Date();
+  const weekStart = new Date(today);
+  weekStart.setDate(today.getDate() - today.getDay()); // Sunday
+  const weekLabel = `Week of ${weekStart.toLocaleDateString("en-US", { month: "long", day: "numeric" })}`;
+
   const snapshot = [
     { label: "Minutes to Albany", value: "10–15", note: "Easy daily commute", icon: MapPin },
     { label: "School District", value: "Bethlehem Central", note: "Top-rated K–12", icon: GraduationCap },
@@ -81,12 +121,56 @@ const LivingInDelmar = () => {
     { title: "Community Life", body: "Farmers markets, school events, library programming, and seasonal town activities.", icon: Users },
   ];
 
+  // Live "What's Happening" cards — feels current, has CTAs, mixes listings/market/local.
   const happenings = [
-    { tag: "Listings", title: "New Delmar Listings This Week", body: "Fresh on-market homes across Bethlehem Central school zones." },
-    { tag: "Spotlight", title: "Local Business Spotlight", body: "A neighborhood favorite worth knowing along Delaware Avenue." },
-    { tag: "Sales", title: "Recent Delmar Home Sales", body: "What's actually closing — and at what price." },
-    { tag: "Events", title: "Community Events", body: "Farmers market, library programming, and seasonal happenings." },
-    { tag: "Market", title: "Bethlehem Market Update", body: "Inventory, days-on-market, and pricing trends for the wider town." },
+    {
+      tag: "Just Listed",
+      icon: HomeIcon,
+      title: "New Delmar Homes This Week",
+      body: "Fresh on-market homes across Bethlehem Central school zones. Most new listings here move in under 14 days.",
+      cta: { label: "View New Listings", href: "#homes-for-sale" },
+      accent: "#0d6e6e",
+    },
+    {
+      tag: "Market Update",
+      icon: LineChart,
+      title: "Delmar Pricing Is Holding Firm",
+      body: "Median sale prices in Bethlehem remain steady year-over-year. Well-priced homes under $500K continue to draw multiple offers.",
+      cta: { label: "See Market Data", href: "/delmar-market-insights" },
+      accent: "#b8860b",
+    },
+    {
+      tag: "Buyer Insight",
+      icon: Sparkles,
+      title: "Multiple Offers Returning Under $500K",
+      body: "Inventory in the entry-level Delmar bracket is the tightest segment. Buyers are coming in with stronger terms again.",
+      cta: { label: "Get a Buyer Strategy", href: "/dealdesk" },
+      accent: "#0d6e6e",
+    },
+    {
+      tag: "Local Spotlight",
+      icon: Coffee,
+      title: "Delaware Avenue Eats & Coffee",
+      body: "The Four Corners and Delaware Ave corridor remain the heartbeat of daily life — new openings and longtime favorites.",
+      cta: { label: "Explore the Guide", href: "#explore-delmar" },
+      accent: "#0d6e6e",
+    },
+    {
+      tag: "Schools",
+      icon: GraduationCap,
+      title: "Bethlehem Central Calendar",
+      body: "Concerts, sports, and community events anchor the school year — a major driver of why families settle here.",
+      cta: { label: "Ask About School Zones", href: "tel:+15185227265" },
+      accent: "#0d6e6e",
+    },
+    {
+      tag: "Community",
+      icon: Newspaper,
+      title: "What's Going On in Bethlehem",
+      body: "Library programming, farmers market, town events, and the seasonal calendar that makes Delmar feel like a real place.",
+      cta: { label: "View Community Events", href: "#explore-delmar" },
+      accent: "#0d6e6e",
+    },
   ];
 
   const featured = [
