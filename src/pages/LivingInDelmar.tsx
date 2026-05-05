@@ -1,36 +1,29 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  GraduationCap,
-  MapPin,
-  Trees,
-  Coffee,
-  Users,
   ArrowRight,
-  Calendar,
-  Store,
   Phone,
-  TrendingUp,
-  Home as HomeIcon,
+  Bell,
+  Coffee,
   Briefcase,
-  Mail,
+  Calendar,
+  Home as HomeIcon,
+  TrendingUp,
   Sparkles,
   Newspaper,
-  LineChart,
-  Bell,
+  Star,
+  Mail,
 } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
-
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import delmarHero from "@/assets/delmar-hero-premium.jpg";
 
 const fadeUp = {
-  initial: { opacity: 0, y: 24 },
+  initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-80px" } as const,
   transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
@@ -38,13 +31,11 @@ const fadeUp = {
 
 const PHONE = "518-522-7265";
 const PHONE_HREF = "tel:+15185227265";
-const REMAX_DELMAR =
-  "https://scottalvarez.remax.com/wide.php?city=Delmar";
+const REMAX_DELMAR = "https://scottalvarez.remax.com/wide.php?city=Delmar";
+const TEAL = "#0D9488";
 
 const LivingInDelmar = () => {
-  // History API rewrite: if React mounted at /app/living-in-delmar (because
-  // the static SEO HTML bounced real browsers there), put the canonical URL
-  // back in the address bar so the user stays on /living-in-delmar.
+  // Keep canonical URL in the address bar if SPA mounted at /app/living-in-delmar
   useEffect(() => {
     if (
       typeof window !== "undefined" &&
@@ -58,7 +49,7 @@ const LivingInDelmar = () => {
     }
   }, []);
 
-  // Newsletter signup state
+  // Newsletter
   const [signup, setSignup] = useState({ name: "", email: "", phone: "" });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -78,7 +69,7 @@ const LivingInDelmar = () => {
       full_name: signup.name.trim(),
       email: signup.email.trim(),
       phone: signup.phone.trim(),
-      message: "Weekly Delmar updates signup — new listings, market changes, local highlights.",
+      message: "Weekly Delmar updates signup — listings, local news, market updates every Friday.",
       type: "newsletter",
       origin_town: "Delmar",
       lead_type: "buyer",
@@ -89,118 +80,85 @@ const LivingInDelmar = () => {
       return;
     }
     setSubmitted(true);
-    toast({ title: "You're in.", description: "Watch your inbox for the next Delmar update." });
+    toast({ title: "You're in.", description: "Watch your inbox Friday for the next Delmar update." });
   };
 
-  // "This week" date range — auto-updates every render so the page always feels current.
+  // Auto "Week of" label
   const today = new Date();
   const weekStart = new Date(today);
-  weekStart.setDate(today.getDate() - today.getDay()); // Sunday
+  weekStart.setDate(today.getDate() - today.getDay());
   const weekLabel = `Week of ${weekStart.toLocaleDateString("en-US", { month: "long", day: "numeric" })}`;
 
-  const snapshot = [
-    { label: "Minutes to Albany", value: "10–15", note: "Easy daily commute", icon: MapPin },
-    { label: "School District", value: "Bethlehem Central", note: "Top-rated K–12", icon: GraduationCap },
-    { label: "Lifestyle", value: "Suburban", note: "Walkable & established", icon: Trees },
-    { label: "Market Feel", value: "Competitive", note: "Stable, low turnover", icon: TrendingUp },
-  ];
-
-  const whyDelmar = [
-    { title: "Bethlehem Central Schools", body: "One of the strongest public school districts in the Capital Region — the dominant driver of long-term value." },
-    { title: "Quiet Residential Streets", body: "Tree-lined neighborhoods, sidewalks, and a true sense of community block by block." },
-    { title: "Strong Property Values", body: "Stable appreciation, low foreclosure rates, and limited annual turnover." },
-    { title: "Easy Albany Commute", body: "10–15 minutes to the State Capitol, Empire State Plaza, and Albany Med." },
-    { title: "Walkable Local Shops", body: "Delaware Avenue and Four Corners anchor day-to-day life with restaurants and cafés." },
-    { title: "Parks & Trails", body: "Elm Avenue Park, the Albany County Rail Trail, and quick access to Thacher State Park." },
-  ];
-
-  const lifestyleCards = [
-    { title: "Restaurants & Cafés", body: "Local dining and coffee shops along Delaware Avenue and Four Corners.", icon: Coffee },
-    { title: "Parks & Trails", body: "Elm Avenue Park, the Albany County Rail Trail, and Bethlehem outdoor access.", icon: Trees },
-    { title: "Shopping & Services", body: "Small businesses, professional services, and convenient everyday shopping.", icon: Store },
-    { title: "Community Life", body: "Farmers markets, school events, library programming, and seasonal town activities.", icon: Users },
-  ];
-
-  // Live "What's Happening" cards — feels current, has CTAs, mixes listings/market/local.
-  const happenings = [
+  // Section 2: Live Feed cards
+  const liveFeed = [
     {
-      tag: "Just Listed",
       icon: HomeIcon,
-      title: "New Delmar Homes This Week",
-      body: "Fresh on-market homes across Bethlehem Central school zones. Most new listings here move in under 14 days.",
-      cta: { label: "View New Listings", href: "#homes-for-sale" },
-      accent: "#0d6e6e",
+      tag: "Real Estate",
+      title: "3 homes sold in Delmar this week",
+      body: "Highest sale closed at $485K. Well-priced homes under $500K continue to draw multiple offers.",
+      href: "#homes",
     },
     {
-      tag: "Market Update",
-      icon: LineChart,
-      title: "Delmar Pricing Is Holding Firm",
-      body: "Median sale prices in Bethlehem remain steady year-over-year. Well-priced homes under $500K continue to draw multiple offers.",
-      cta: { label: "See Market Data", href: "/delmar-market-insights" },
-      accent: "#b8860b",
+      icon: TrendingUp,
+      tag: "Market",
+      title: "Inventory down 12% this month",
+      body: "Bethlehem supply remains tight. Median pricing is holding firm year-over-year.",
+      href: "#homes",
     },
     {
-      tag: "Buyer Insight",
-      icon: Sparkles,
-      title: "Multiple Offers Returning Under $500K",
-      body: "Inventory in the entry-level Delmar bracket is the tightest segment. Buyers are coming in with stronger terms again.",
-      cta: { label: "Get a Buyer Strategy", href: "/dealdesk" },
-      accent: "#0d6e6e",
-    },
-    {
-      tag: "Local Spotlight",
       icon: Coffee,
-      title: "Delaware Avenue Eats & Coffee",
-      body: "The Four Corners and Delaware Ave corridor remain the heartbeat of daily life — new openings and longtime favorites.",
-      cta: { label: "Explore the Guide", href: "#explore-delmar" },
-      accent: "#0d6e6e",
+      tag: "Local",
+      title: "New café opening on Delaware Ave",
+      body: "Another addition to the Four Corners corridor — stay tuned for the opening date.",
+      href: "#favorites",
     },
     {
-      tag: "Schools",
-      icon: GraduationCap,
-      title: "Bethlehem Central Calendar",
-      body: "Concerts, sports, and community events anchor the school year — a major driver of why families settle here.",
-      cta: { label: "Ask About School Zones", href: "tel:+15185227265" },
-      accent: "#0d6e6e",
-    },
-    {
+      icon: Calendar,
       tag: "Community",
-      icon: Newspaper,
-      title: "What's Going On in Bethlehem",
-      body: "Library programming, farmers market, town events, and the seasonal calendar that makes Delmar feel like a real place.",
-      cta: { label: "View Community Events", href: "#explore-delmar" },
-      accent: "#0d6e6e",
+      title: "Farmers Market — Saturday 9am",
+      body: "Bethlehem Farmers Market returns this weekend at the Bethlehem Town Hall lot.",
+      href: "#events",
+    },
+    {
+      icon: Sparkles,
+      tag: "Insight",
+      title: "Multiple offers returning under $500K",
+      body: "The entry-level Delmar bracket is the tightest segment. Buyers are bringing stronger terms again.",
+      href: "#homes",
     },
   ];
 
-  const featured = [
-    { kind: "Restaurant Spotlight", body: "A go-to for dinner along Delaware Avenue.", icon: Coffee },
-    { kind: "Coffee Shop Spotlight", body: "The morning ritual locals rely on.", icon: Coffee },
-    { kind: "Home Services", body: "Trusted contractors, inspectors, and trades.", icon: Briefcase },
-    { kind: "Local Professional", body: "Attorneys, lenders, and service pros who know Bethlehem.", icon: Users },
+  // Section 4: Featured Local — 7 max (3 restaurants, 2 coffee, 2 home services)
+  const favorites = [
+    { kind: "Restaurant", name: "Four Corners Bistro", body: "Neighborhood dinner spot at the heart of Delmar.", icon: Coffee },
+    { kind: "Restaurant", name: "Delaware Ave Kitchen", body: "Casual American along the main corridor.", icon: Coffee },
+    { kind: "Restaurant", name: "Bethlehem Tavern", body: "Local pub with a steady weekend crowd.", icon: Coffee },
+    { kind: "Coffee", name: "The Perfect Blend", body: "The morning ritual locals rely on.", icon: Coffee },
+    { kind: "Coffee", name: "Daily Grind Delmar", body: "Quick stop for espresso and pastries.", icon: Coffee },
+    { kind: "Home Services", name: "Bethlehem Home Pros", body: "Trusted contractors and inspectors.", icon: Briefcase },
+    { kind: "Home Services", name: "Delmar Trades Co.", body: "Plumbing, electric, and seasonal home care.", icon: Briefcase },
   ];
 
-  const nearby = [
-    { slug: "albany", label: "Living in Albany, NY" },
-    { slug: "guilderland", label: "Living in Guilderland, NY" },
-    { slug: "voorheesville", label: "Living in Voorheesville, NY" },
-    { slug: "niskayuna", label: "Living in Niskayuna, NY" },
-    { slug: "troy", label: "Living in Troy, NY" },
+  // Section 5: Events (3 max)
+  const events = [
+    { date: "Saturday · 9am", title: "Bethlehem Farmers Market", body: "Local produce, bakers, and makers at the Town Hall lot." },
+    { date: "Thursday · 7pm", title: "Bethlehem Central Concert", body: "School music program performance — open to the community." },
+    { date: "Sunday · 10am", title: "Albany County Rail Trail Walk", body: "Group walk along the Delmar segment of the rail trail." },
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAFAF7] text-neutral-900">
+    <div className="min-h-screen bg-white text-neutral-900 antialiased">
       <Helmet>
-        <title>Living in Delmar, NY | Homes, Schools & Lifestyle Guide | Capital District Nest</title>
+        <title>Living in Delmar, NY | Weekly Real Estate & Local Updates</title>
         <meta
           name="description"
-          content="Living in Delmar, NY: top-rated Bethlehem Central schools, walkable neighborhoods, homes for sale, things to do, and a 10-minute commute to Albany. Local guide from Capital District Nest."
+          content="Delmar Weekly: homes for sale, market updates, local businesses, and community events in Delmar, NY — refreshed every Friday."
         />
         <link rel="canonical" href="https://www.capitaldistrictnest.com/living-in-delmar" />
         <meta property="og:title" content="Living in Delmar, NY | Capital District Nest" />
         <meta
           property="og:description"
-          content="Homes, lifestyle, schools, and everything you need to know about one of the Capital District's most sought-after communities."
+          content="Real estate, local businesses, and community updates in Delmar, NY — refreshed weekly."
         />
         <meta property="og:image" content={delmarHero} />
         <meta property="og:url" content="https://www.capitaldistrictnest.com/living-in-delmar" />
@@ -217,17 +175,13 @@ const LivingInDelmar = () => {
             postalCode: "12054",
             addressCountry: "US",
           },
-          containedInPlace: {
-            "@type": "AdministrativeArea",
-            name: "Town of Bethlehem, Albany County, New York",
-          },
         })}</script>
       </Helmet>
 
       <MainHeader />
 
-      {/* 1. HERO */}
-      <section className="relative w-full">
+      {/* ============ 1. HERO ============ */}
+      <section className="relative w-full overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <img
             src={delmarHero}
@@ -236,35 +190,37 @@ const LivingInDelmar = () => {
             width={1920}
             height={1080}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-black/55" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/15 to-black/45" />
         </div>
 
-        <div className="max-w-6xl mx-auto px-6 lg:px-12 pt-40 pb-32 lg:pt-56 lg:pb-44 text-white">
+        <div className="max-w-5xl mx-auto px-6 lg:px-12 pt-40 pb-32 lg:pt-52 lg:pb-44 text-white">
           <motion.div
             {...fadeUp}
-            className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-md border border-white/30 px-4 py-1.5 mb-6"
+            className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-md border border-white/30 px-4 py-1.5 mb-8"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
             </span>
-            <span className="text-[11px] uppercase tracking-[0.2em] text-white/90 font-semibold">Live · {weekLabel}</span>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-white/90 font-semibold">
+              Live · {weekLabel}
+            </span>
           </motion.div>
 
           <motion.h1
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight max-w-4xl"
           >
-            Delmar, NY Real Estate &amp; Local Guide
+            What's Happening in Delmar
           </motion.h1>
+
           <motion.p
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: 0.1 }}
-            className="mt-6 max-w-2xl text-lg md:text-xl text-white/90 leading-relaxed"
+            className="mt-6 max-w-2xl text-lg md:text-xl text-white/85 leading-relaxed font-light"
           >
-            Live listings, weekly market updates, and what's happening on the ground in one of the Capital District's most desirable towns.
+            Real estate, local businesses, and community updates — refreshed weekly.
           </motion.p>
 
           <motion.div
@@ -273,62 +229,89 @@ const LivingInDelmar = () => {
             className="mt-10 flex flex-wrap gap-3"
           >
             <a
-              href="#homes-for-sale"
+              href="#feed"
               className="inline-flex items-center gap-2 rounded-full bg-white text-neutral-900 px-7 py-3.5 text-sm font-semibold hover:bg-white/90 transition"
             >
-              View New Listings This Week <ArrowRight className="w-4 h-4" />
+              See This Week <ArrowRight className="w-4 h-4" />
             </a>
             <a
-              href="#whats-happening"
-              className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/40 text-white px-7 py-3.5 text-sm font-semibold hover:bg-white/20 transition"
+              href="#updates"
+              className="inline-flex items-center gap-2 rounded-full border border-white/40 backdrop-blur-sm bg-white/10 text-white px-7 py-3.5 text-sm font-semibold hover:bg-white/20 transition"
             >
-              See What's Changed in Delmar
-            </a>
-            <a
-              href={PHONE_HREF}
-              className="inline-flex items-center gap-2 rounded-full bg-[#0d6e6e] text-white px-7 py-3.5 text-sm font-semibold hover:bg-[#0a5959] transition"
-            >
-              <Phone className="w-4 h-4" /> Talk to a Local Expert
+              Get Weekly Updates
             </a>
           </motion.div>
         </div>
       </section>
 
-      {/* 2. QUICK SNAPSHOT */}
-      <section className="bg-[#FAFAF7] border-b border-neutral-200">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12 -mt-16 lg:-mt-24 relative z-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-neutral-200 rounded-2xl overflow-hidden shadow-xl">
-            {snapshot.map((s) => (
-              <div key={s.label} className="bg-white p-6 lg:p-8">
-                <s.icon className="w-5 h-5 text-[#0d6e6e] mb-4" />
-                <p className="text-[11px] uppercase tracking-[0.18em] text-neutral-500 mb-2">{s.label}</p>
-                <p className="text-xl lg:text-2xl font-semibold text-neutral-900 leading-tight">{s.value}</p>
-                <p className="text-sm text-neutral-600 mt-1">{s.note}</p>
-              </div>
+      {/* ============ 2. LIVE FEED ============ */}
+      <section id="feed" className="py-24 lg:py-32 bg-white">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12">
+          <motion.div {...fadeUp} className="max-w-2xl mb-14">
+            <div className="inline-flex items-center gap-2 mb-5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: TEAL }} />
+                <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: TEAL }} />
+              </span>
+              <p className="text-[11px] uppercase tracking-[0.22em] font-semibold" style={{ color: TEAL }}>
+                {weekLabel}
+              </p>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
+              This week in Delmar.
+            </h2>
+            <p className="mt-5 text-lg text-neutral-500 font-light">
+              Listings, market shifts, and local moments — what actually changed this week.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {liveFeed.map((item) => (
+              <motion.a
+                key={item.title}
+                href={item.href}
+                {...fadeUp}
+                className="group block rounded-2xl bg-neutral-50 hover:bg-white border border-transparent hover:border-neutral-200 p-7 transition-all duration-300 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.12)]"
+              >
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-5"
+                  style={{ background: `${TEAL}14` }}
+                >
+                  <item.icon className="w-5 h-5" style={{ color: TEAL }} />
+                </div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-semibold mb-3">
+                  {item.tag}
+                </p>
+                <h3 className="text-lg font-semibold text-neutral-900 leading-snug mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-[15px] text-neutral-600 leading-relaxed font-light">
+                  {item.body}
+                </p>
+                <span
+                  className="inline-flex items-center gap-1 mt-5 text-sm font-semibold group-hover:gap-2 transition-all"
+                  style={{ color: TEAL }}
+                >
+                  Read more <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </motion.a>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 3. HOMES FOR SALE — moved up: users want listings FIRST */}
-      <section id="homes-for-sale" className="py-24 lg:py-32 bg-white border-y border-neutral-200">
+      {/* ============ 3. REAL ESTATE ============ */}
+      <section id="homes" className="py-24 lg:py-32 bg-neutral-50">
         <div className="max-w-6xl mx-auto px-6 lg:px-12">
           <motion.div {...fadeUp} className="max-w-2xl mb-12">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <p className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e]">Live Listings · Updated Daily</p>
-            </div>
-            <h2
-              className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-            >
+            <p className="text-[11px] uppercase tracking-[0.22em] font-semibold mb-5" style={{ color: TEAL }}>
+              Live Listings
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
               Homes for Sale in Delmar, NY
             </h2>
-            <p className="mt-5 text-lg text-neutral-600">
-              Browse current Delmar listings — refreshed from live MLS feeds. Most well-priced homes in Bethlehem move in under 14 days.
+            <p className="mt-5 text-lg text-neutral-500 font-light">
+              Browse current Delmar listings — refreshed daily from live MLS feeds.
             </p>
           </motion.div>
 
@@ -336,13 +319,13 @@ const LivingInDelmar = () => {
             {...fadeUp}
             transition={{ ...fadeUp.transition, delay: 0.1 }}
             className="rounded-2xl overflow-hidden bg-white"
-            style={{ boxShadow: "0 24px 60px -24px rgba(0,0,0,0.18)" }}
+            style={{ boxShadow: "0 20px 60px -20px rgba(0,0,0,0.12)" }}
           >
             <iframe
               title="Homes for Sale in Delmar, NY"
               src={REMAX_DELMAR}
               loading="lazy"
-              className="w-full h-[720px] md:h-[820px] block border-0"
+              className="w-full h-[680px] md:h-[780px] block border-0"
             />
           </motion.div>
 
@@ -355,430 +338,218 @@ const LivingInDelmar = () => {
               href={REMAX_DELMAR}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-neutral-900 text-white px-7 py-3.5 text-sm font-semibold hover:bg-neutral-800 transition"
+              className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition"
+              style={{ background: TEAL }}
             >
-              View All Delmar Homes <ArrowRight className="w-4 h-4" />
+              View All Listings <ArrowRight className="w-4 h-4" />
             </a>
             <a
-              href="#delmar-updates"
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-7 py-3.5 text-sm font-semibold text-neutral-900 hover:bg-neutral-50 transition"
+              href="#updates"
+              className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-7 py-3.5 text-sm font-semibold text-neutral-900 hover:bg-neutral-100 transition"
             >
-              <Bell className="w-4 h-4" /> Get New Listing Alerts
+              <Bell className="w-4 h-4" /> Get Alerts
             </a>
           </motion.div>
         </div>
       </section>
 
-      {/* 4. WHAT'S HAPPENING THIS WEEK — the live, sticky, come-back section */}
-      <section id="whats-happening" className="py-24 lg:py-32 bg-[#FAFAF7]">
+      {/* ============ 4. FEATURED LOCAL ============ */}
+      <section id="favorites" className="py-24 lg:py-32 bg-white">
         <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <motion.div {...fadeUp} className="max-w-3xl mb-14">
-            <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-200 px-4 py-1.5 mb-6">
-              <Calendar className="w-3.5 h-3.5 text-emerald-700" />
-              <span className="text-[11px] uppercase tracking-[0.2em] text-emerald-800 font-semibold">{weekLabel}</span>
-            </div>
-            <h2
-              className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-            >
-              What's Happening in Delmar This Week.
+          <motion.div {...fadeUp} className="max-w-2xl mb-14">
+            <p className="text-[11px] uppercase tracking-[0.22em] font-semibold mb-5" style={{ color: TEAL }}>
+              Local Favorites
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
+              Delmar Favorites
             </h2>
-            <p className="mt-5 text-lg text-neutral-600">
-              Real-time updates on new listings, market movement, local news, and community highlights — refreshed weekly so you always know what's actually going on.
+            <p className="mt-5 text-lg text-neutral-500 font-light">
+              The places locals actually go — restaurants, coffee, and trusted home services.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {happenings.map((h) => (
-              <motion.article
-                key={h.title}
+          {/* Spotlight */}
+          <motion.div
+            {...fadeUp}
+            className="mb-12 rounded-3xl p-8 lg:p-12 border border-neutral-200 bg-gradient-to-br from-neutral-50 to-white"
+            style={{ boxShadow: "0 12px 40px -16px rgba(0,0,0,0.08)" }}
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <Star className="w-4 h-4 fill-current" style={{ color: TEAL }} />
+              <p className="text-[11px] uppercase tracking-[0.22em] font-semibold" style={{ color: TEAL }}>
+                Delmar Spotlight · This Week
+              </p>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-3">
+              Four Corners Bistro
+            </h3>
+            <p className="text-lg text-neutral-600 font-light max-w-2xl mb-6">
+              The neighborhood dinner spot anchoring Delmar's Four Corners — seasonal menu, warm room, and one of the most consistent kitchens in Bethlehem.
+            </p>
+            <a
+              href="tel:+15185227265"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition"
+              style={{ background: TEAL }}
+            >
+              <Phone className="w-4 h-4" /> {PHONE}
+            </a>
+          </motion.div>
+
+          {/* 7 cards */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {favorites.map((f) => (
+              <motion.div
+                key={f.name}
                 {...fadeUp}
-                className="group bg-white border border-neutral-200 rounded-2xl p-8 hover:border-[#0d6e6e] hover:shadow-lg transition-all flex flex-col"
+                className="rounded-2xl bg-neutral-50 p-6 hover:bg-white hover:shadow-[0_16px_40px_-16px_rgba(0,0,0,0.1)] transition-all"
               >
-                <div className="flex items-center justify-between mb-5">
-                  <div
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-xl"
-                    style={{ backgroundColor: `${h.accent}15` }}
-                  >
-                    <h.icon className="w-5 h-5" style={{ color: h.accent }} />
-                  </div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] font-semibold" style={{ color: h.accent }}>{h.tag}</p>
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center mb-4"
+                  style={{ background: `${TEAL}14` }}
+                >
+                  <f.icon className="w-4 h-4" style={{ color: TEAL }} />
                 </div>
-                <h3
-                  className="font-serif text-xl text-neutral-900 mb-3 leading-snug"
-                  style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-                >
-                  {h.title}
-                </h3>
-                <p className="text-neutral-600 leading-relaxed text-sm mb-6 flex-1">{h.body}</p>
-                <a
-                  href={h.cta.href}
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-900 hover:text-[#0d6e6e] transition-colors"
-                >
-                  {h.cta.label} <ArrowRight className="w-3.5 h-3.5" />
-                </a>
-              </motion.article>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-semibold mb-2">
+                  {f.kind}
+                </p>
+                <h4 className="text-lg font-semibold text-neutral-900 mb-1.5">{f.name}</h4>
+                <p className="text-sm text-neutral-600 font-light leading-relaxed">{f.body}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 5. GET DELMAR UPDATES — retention hook, lead capture */}
-      <section id="delmar-updates" className="py-24 lg:py-32 bg-neutral-950 text-white">
-        <div className="max-w-3xl mx-auto px-6 lg:px-12 text-center">
-          <motion.div {...fadeUp} className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/20 px-4 py-1.5 mb-6">
-            <Mail className="w-3.5 h-3.5 text-[#5fd4d4]" />
-            <span className="text-[11px] uppercase tracking-[0.2em] text-white/85 font-semibold">Weekly Delmar Brief</span>
+      {/* ============ 5. EVENTS ============ */}
+      <section id="events" className="py-24 lg:py-32 bg-neutral-50">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12">
+          <motion.div {...fadeUp} className="max-w-2xl mb-14">
+            <p className="text-[11px] uppercase tracking-[0.22em] font-semibold mb-5" style={{ color: TEAL }}>
+              {weekLabel}
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
+              This Week in Delmar
+            </h2>
+            <p className="mt-5 text-lg text-neutral-500 font-light">
+              Three things worth showing up for this week.
+            </p>
           </motion.div>
-          <motion.h2
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight mb-6"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            Get Delmar Updates Every Week.
-          </motion.h2>
-          <motion.p
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.1 }}
-            className="text-lg text-white/75 leading-relaxed max-w-xl mx-auto mb-10"
-          >
-            New Delmar listings, market shifts, and what's happening locally — delivered straight to your inbox. No spam, just the brief that buyers and locals actually read.
-          </motion.p>
+
+          <div className="grid md:grid-cols-3 gap-5">
+            {events.map((e) => (
+              <motion.div
+                key={e.title}
+                {...fadeUp}
+                className="rounded-2xl bg-white p-7 hover:shadow-[0_16px_40px_-16px_rgba(0,0,0,0.1)] transition-all"
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <Calendar className="w-4 h-4" style={{ color: TEAL }} />
+                  <p className="text-[11px] uppercase tracking-[0.2em] font-semibold" style={{ color: TEAL }}>
+                    {e.date}
+                  </p>
+                </div>
+                <h3 className="text-xl font-semibold text-neutral-900 mb-2 leading-snug">{e.title}</h3>
+                <p className="text-sm text-neutral-600 font-light leading-relaxed">{e.body}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ 6. EMAIL CAPTURE ============ */}
+      <section id="updates" className="py-28 lg:py-36 bg-white">
+        <div className="max-w-3xl mx-auto px-6 lg:px-12 text-center">
+          <motion.div {...fadeUp}>
+            <div
+              className="inline-flex w-14 h-14 rounded-2xl items-center justify-center mb-8"
+              style={{ background: `${TEAL}14` }}
+            >
+              <Mail className="w-6 h-6" style={{ color: TEAL }} />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
+              Get Delmar Updates Weekly
+            </h2>
+            <p className="mt-5 text-lg text-neutral-500 font-light">
+              Listings, local news, and market updates every Friday. No spam.
+            </p>
+          </motion.div>
 
           {submitted ? (
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="max-w-md mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-400/30 p-8"
+              {...fadeUp}
+              className="mt-10 rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-left"
             >
-              <p className="text-emerald-300 font-semibold mb-2">You're on the list.</p>
-              <p className="text-white/70 text-sm">Watch your inbox for the next Delmar update — and Scott may reach out personally.</p>
+              <p className="text-base font-semibold text-emerald-900">You're in.</p>
+              <p className="mt-1.5 text-sm text-emerald-800 font-light">
+                The next Delmar update lands in your inbox this Friday.
+              </p>
             </motion.div>
           ) : (
             <motion.form
               {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: 0.15 }}
               onSubmit={handleSignup}
-              className="max-w-xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 text-left"
+              className="mt-10 grid sm:grid-cols-3 gap-3 text-left"
             >
               <Input
-                type="text"
                 placeholder="Full name"
                 value={signup.name}
-                onChange={(e) => setSignup({ ...signup, name: e.target.value })}
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12"
+                onChange={(e) => setSignup((s) => ({ ...s, name: e.target.value }))}
+                className="h-12 rounded-xl border-neutral-200 bg-neutral-50 focus-visible:ring-2"
+                required
+              />
+              <Input
+                type="email"
+                placeholder="Email"
+                value={signup.email}
+                onChange={(e) => setSignup((s) => ({ ...s, email: e.target.value }))}
+                className="h-12 rounded-xl border-neutral-200 bg-neutral-50 focus-visible:ring-2"
                 required
               />
               <Input
                 type="tel"
                 placeholder="Phone"
                 value={signup.phone}
-                onChange={(e) => setSignup({ ...signup, phone: e.target.value })}
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12"
-                required
-              />
-              <Input
-                type="email"
-                placeholder="Email address"
-                value={signup.email}
-                onChange={(e) => setSignup({ ...signup, email: e.target.value })}
-                className="sm:col-span-2 bg-white/10 border-white/20 text-white placeholder:text-white/50 h-12"
+                onChange={(e) => setSignup((s) => ({ ...s, phone: e.target.value }))}
+                className="h-12 rounded-xl border-neutral-200 bg-neutral-50 focus-visible:ring-2"
                 required
               />
               <button
                 type="submit"
                 disabled={submitting}
-                className="sm:col-span-2 inline-flex items-center justify-center gap-2 rounded-full bg-white text-neutral-900 px-7 py-3.5 text-sm font-semibold hover:bg-white/90 transition disabled:opacity-60"
+                className="sm:col-span-3 mt-2 h-12 rounded-full text-white font-semibold text-sm transition disabled:opacity-60"
+                style={{ background: TEAL }}
               >
-                {submitting ? "Sending..." : (<>Send Me Delmar Updates <ArrowRight className="w-4 h-4" /></>)}
+                {submitting ? "Subscribing…" : "Subscribe to Delmar Weekly"}
               </button>
-              <p className="sm:col-span-2 text-xs text-white/50 text-center mt-1">
-                By submitting, you agree to receive Delmar real estate updates. Unsubscribe anytime.
+              <p className="sm:col-span-3 text-xs text-neutral-400 text-center font-light mt-1">
+                Name, email, and phone required. Unsubscribe anytime.
               </p>
             </motion.form>
           )}
         </div>
       </section>
 
-      {/* 6. INTRODUCTION — moved below the live layer */}
-      <section id="delmar-guide" className="py-24 lg:py-32 bg-[#FAFAF7]">
-        <div className="max-w-3xl mx-auto px-6 lg:px-12">
-          <motion.p
-            {...fadeUp}
-            className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6"
-          >
-            The Delmar Guide
-          </motion.p>
-          <motion.h2
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900 mb-8"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            One of the Capital District's most sought-after suburbs.
-          </motion.h2>
-          <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="space-y-5 text-lg text-neutral-700 leading-relaxed">
-            <p>
-              Delmar, NY is one of the most sought-after suburbs in the Capital District, located in the town of Bethlehem in Albany County just minutes from downtown Albany. Known for its strong schools, tree-lined streets, walkable neighborhoods, and stable property values, Delmar continues to attract buyers who want suburban comfort without losing access to the city.
+      {/* ============ 7. FOOTER CONTACT ============ */}
+      <section className="border-t border-neutral-200 bg-neutral-50 py-16">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.22em] font-semibold mb-2" style={{ color: TEAL }}>
+              Talk to a Local Expert
             </p>
-            <p>
-              If you are searching for <strong>homes for sale in Delmar NY</strong>, researching <strong>Delmar NY real estate</strong>, or deciding whether <strong>living in Delmar NY</strong> is the right fit, this guide brings together local lifestyle insight, homes, schools, commute information, market trends, and community highlights in one place.
+            <p className="text-2xl font-semibold text-neutral-900">
+              Scott Alvarez · Capital District Nest
             </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 7. WHY PEOPLE CHOOSE DELMAR */}
-      <section className="py-24 lg:py-32 bg-white border-y border-neutral-200">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <motion.div {...fadeUp} className="max-w-2xl mb-14">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Why Delmar</p>
-            <h2
-              className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-            >
-              Why People Choose Delmar.
-            </h2>
-          </motion.div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-200 rounded-2xl overflow-hidden border border-neutral-200">
-            {whyDelmar.map((w) => (
-              <div key={w.title} className="bg-white p-8 lg:p-10">
-                <h3 className="text-lg font-semibold text-neutral-900 mb-3">{w.title}</h3>
-                <p className="text-neutral-600 leading-relaxed">{w.body}</p>
-              </div>
-            ))}
+            <p className="text-sm text-neutral-500 font-light mt-1">
+              Delmar · Bethlehem · Capital District, NY
+            </p>
           </div>
-        </div>
-      </section>
-
-      {/* 8. WHAT IT'S LIKE LIVING IN DELMAR */}
-      <section className="py-24 lg:py-32 bg-[#FAFAF7]">
-        <div className="max-w-3xl mx-auto px-6 lg:px-12">
-          <motion.p {...fadeUp} className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Lifestyle</motion.p>
-          <motion.h2
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900 mb-8"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            What It's Like Living in Delmar.
-          </motion.h2>
-          <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="space-y-5 text-lg text-neutral-700 leading-relaxed">
-            <p>
-              Living in Delmar offers a quieter pace than downtown Albany while keeping work, restaurants, schools, parks, and daily conveniences close by. The community has a mature, established feel, with tree-lined streets, neighborhood sidewalks, local businesses, and an active community calendar.
-            </p>
-            <p>
-              Delmar is especially attractive to buyers who want a strong school district, a stable residential market, and a location that still feels connected to the larger Capital District.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 9. EXPLORE DELMAR — lifestyle cards */}
-      <section id="explore-delmar" className="py-24 lg:py-32 bg-white border-y border-neutral-200">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <motion.div {...fadeUp} className="max-w-2xl mb-14">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Explore</p>
-            <h2
-              className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-            >
-              Explore Delmar.
-            </h2>
-          </motion.div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {lifestyleCards.map((c) => (
-              <motion.div
-                key={c.title}
-                {...fadeUp}
-                className="bg-[#FAFAF7] border border-neutral-200 rounded-2xl p-8 hover:shadow-lg transition-shadow"
-              >
-                <c.icon className="w-6 h-6 text-[#0d6e6e] mb-5" />
-                <h3 className="text-lg font-semibold text-neutral-900 mb-3">{c.title}</h3>
-                <p className="text-neutral-600 leading-relaxed text-sm">{c.body}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 10. SCHOOLS */}
-      <section className="py-24 lg:py-32 bg-[#FAFAF7]">
-        <div className="max-w-3xl mx-auto px-6 lg:px-12">
-          <motion.p {...fadeUp} className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Schools</motion.p>
-          <motion.h2
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900 mb-8"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            Schools in Delmar, NY.
-          </motion.h2>
-          <motion.p {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="text-lg text-neutral-700 leading-relaxed mb-10">
-            Delmar is served by the <strong>Bethlehem Central School District</strong>, one of the strongest public school districts in the Capital Region. For many buyers, school quality is one of the biggest reasons they focus their home search in Delmar and the surrounding Bethlehem area.
-          </motion.p>
-          <motion.a
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.15 }}
+          <a
             href={PHONE_HREF}
-            className="inline-flex items-center gap-2 rounded-full bg-[#0d6e6e] text-white px-7 py-3.5 text-sm font-semibold hover:bg-[#0a5959] transition"
+            className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition"
+            style={{ background: TEAL }}
           >
-            Ask About Delmar School Zones <ArrowRight className="w-4 h-4" />
-          </motion.a>
-        </div>
-      </section>
-
-      {/* 11. COMMUTE */}
-      <section className="py-24 lg:py-32 bg-white border-y border-neutral-200">
-        <div className="max-w-3xl mx-auto px-6 lg:px-12">
-          <motion.p {...fadeUp} className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Commute & Location</motion.p>
-          <motion.h2
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900 mb-8"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            Commute from Delmar to Albany.
-          </motion.h2>
-          <motion.p {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="text-lg text-neutral-700 leading-relaxed">
-            Delmar is located roughly 10–15 minutes from downtown Albany, making it convenient for professionals working near the State Capitol, Empire State Plaza, Albany Medical Center, SUNY Albany, and other major employment centers. Access to nearby highways also makes it easy to reach Guilderland, Slingerlands, Glenmont, Troy, Saratoga, and the wider Capital District.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* 11. FEATURED BUSINESSES */}
-      <section className="py-24 lg:py-32 bg-[#FAFAF7]">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <motion.div {...fadeUp} className="max-w-2xl mb-14">
-            <p className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Local Network</p>
-            <h2
-              className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-            >
-              Featured in Delmar.
-            </h2>
-            <p className="mt-5 text-lg text-neutral-600">
-              Local businesses, restaurants, services, and professionals that help make Delmar one of the Capital District's strongest communities.
-            </p>
-          </motion.div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featured.map((f) => (
-              <motion.div key={f.kind} {...fadeUp} className="bg-white border border-neutral-200 rounded-2xl p-8">
-                <f.icon className="w-6 h-6 text-[#0d6e6e] mb-5" />
-                <p className="text-[11px] uppercase tracking-[0.2em] text-neutral-500 mb-3">{f.kind}</p>
-                <p className="text-neutral-700 text-sm leading-relaxed">{f.body}</p>
-              </motion.div>
-            ))}
-          </div>
-          <motion.div {...fadeUp} className="mt-10">
-            <Link
-              to="/claim-business"
-              className="inline-flex items-center gap-2 text-[#0d6e6e] font-medium hover:underline"
-            >
-              Own a local business in Delmar? Request to be featured. <ArrowRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 12. ANALYZER CTA */}
-      <section className="py-24 lg:py-32 bg-neutral-950 text-white">
-        <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center">
-          <motion.p {...fadeUp} className="text-xs uppercase tracking-[0.25em] text-[#5fd4d4] mb-6">Property Intelligence</motion.p>
-          <motion.h2
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight mb-6"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            Thinking About a Home in Delmar?
-          </motion.h2>
-          <motion.p
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.1 }}
-            className="text-lg text-white/75 leading-relaxed max-w-2xl mx-auto mb-10"
-          >
-            Before you make an offer, understand the numbers. Capital District Nest helps buyers compare monthly payment, taxes, estimated cash flow, neighborhood strength, and long-term value.
-          </motion.p>
-          <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.15 }} className="flex flex-wrap justify-center gap-3">
-            <Link
-              to="/analyze-home"
-              className="inline-flex items-center gap-2 rounded-full bg-white text-neutral-900 px-7 py-3.5 text-sm font-semibold hover:bg-white/90 transition"
-            >
-              Analyze a Delmar Property <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/intelligence"
-              className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/30 text-white px-7 py-3.5 text-sm font-semibold hover:bg-white/20 transition"
-            >
-              Request a Property Report
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 13. WORK WITH SCOTT */}
-      <section className="py-24 lg:py-32 bg-white border-y border-neutral-200">
-        <div className="max-w-3xl mx-auto px-6 lg:px-12 text-center">
-          <motion.p {...fadeUp} className="text-xs uppercase tracking-[0.25em] text-[#0d6e6e] mb-6">Work With a Local Expert</motion.p>
-          <motion.h2
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight text-neutral-900 mb-6"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            Buying or Selling in Delmar?
-          </motion.h2>
-          <motion.p {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }} className="text-lg text-neutral-700 leading-relaxed mb-10">
-            Delmar is a competitive market where pricing, timing, and neighborhood knowledge matter. Whether you are buying your first home, selling a property, or evaluating an investment, Capital District Nest gives you local insight before you make a move.
-          </motion.p>
-          <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.15 }} className="flex flex-wrap justify-center gap-3">
-            <a
-              href={PHONE_HREF}
-              className="inline-flex items-center gap-2 rounded-full bg-[#0d6e6e] text-white px-7 py-3.5 text-sm font-semibold hover:bg-[#0a5959] transition"
-            >
-              <Phone className="w-4 h-4" /> Talk to Scott Alvarez
-            </a>
-            <a
-              href={PHONE_HREF}
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-7 py-3.5 text-sm font-semibold text-neutral-900 hover:bg-neutral-50 transition"
-            >
-              Call / Text: {PHONE}
-            </a>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 14. EXPLORE NEARBY — internal link graph */}
-      <section className="py-20 bg-[#FAFAF7]">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <motion.h2 {...fadeUp} className="font-serif text-2xl md:text-3xl text-neutral-900 mb-8" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-            Explore Nearby
-          </motion.h2>
-          <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.05 }} className="flex flex-wrap gap-3">
-            {nearby.map((n) => (
-              <Link
-                key={n.slug}
-                to={`/living-in-${n.slug}`}
-                className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-5 py-2.5 text-sm text-neutral-900 hover:border-[#0d6e6e] hover:text-[#0d6e6e] transition"
-              >
-                {n.label} <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            ))}
-            <Link
-              to="/homes-for-sale"
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-5 py-2.5 text-sm text-neutral-900 hover:border-[#0d6e6e] hover:text-[#0d6e6e] transition"
-            >
-              Capital District Homes for Sale <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-            <Link
-              to="/investment-properties"
-              className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-5 py-2.5 text-sm text-neutral-900 hover:border-[#0d6e6e] hover:text-[#0d6e6e] transition"
-            >
-              Capital District Investment Properties <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </motion.div>
+            <Phone className="w-4 h-4" /> {PHONE}
+          </a>
         </div>
       </section>
 
