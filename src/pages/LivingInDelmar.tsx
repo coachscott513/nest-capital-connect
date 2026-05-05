@@ -89,42 +89,35 @@ const LivingInDelmar = () => {
   weekStart.setDate(today.getDate() - today.getDay());
   const weekLabel = `Week of ${weekStart.toLocaleDateString("en-US", { month: "long", day: "numeric" })}`;
 
-  // Section 2: Live Feed cards
+  // Section 2: This Week in Delmar — 4 specific, high-signal updates
   const liveFeed = [
     {
       icon: HomeIcon,
-      tag: "Real Estate",
-      title: "3 homes sold in Delmar this week",
-      body: "Highest sale closed at $485K. Well-priced homes under $500K continue to draw multiple offers.",
+      tag: "Homes Sold",
+      title: "3 homes closed this week",
+      body: "Highest sale: $485K on Roweland Ave. Two others closed within 1.8% of asking — both under contract in under 10 days.",
       href: "#homes",
     },
     {
       icon: TrendingUp,
-      tag: "Market",
-      title: "Inventory down 12% this month",
-      body: "Bethlehem supply remains tight. Median pricing is holding firm year-over-year.",
+      tag: "Market Shift",
+      title: "Inventory dropped to 12 active homes",
+      body: "Lowest active count in 60 days. Bethlehem supply continues to tighten heading into the back half of the season.",
+      href: "#homes",
+    },
+    {
+      icon: Sparkles,
+      tag: "Buyer Trend",
+      title: "Multiple offers returning under $500K",
+      body: "Entry-level Delmar is the tightest bracket again. Well-priced homes are seeing 3+ offers within the first weekend.",
       href: "#homes",
     },
     {
       icon: Coffee,
-      tag: "Local",
+      tag: "Local Update",
       title: "New café opening on Delaware Ave",
-      body: "Another addition to the Four Corners corridor — stay tuned for the opening date.",
+      body: "Another addition to the Four Corners corridor — opening expected next month. We'll post the date here first.",
       href: "#favorites",
-    },
-    {
-      icon: Calendar,
-      tag: "Community",
-      title: "Farmers Market — Saturday 9am",
-      body: "Bethlehem Farmers Market returns this weekend at the Bethlehem Town Hall lot.",
-      href: "#events",
-    },
-    {
-      icon: Sparkles,
-      tag: "Insight",
-      title: "Multiple offers returning under $500K",
-      body: "The entry-level Delmar bracket is the tightest segment. Buyers are bringing stronger terms again.",
-      href: "#homes",
     },
   ];
 
