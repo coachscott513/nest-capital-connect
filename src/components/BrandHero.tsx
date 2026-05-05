@@ -88,13 +88,13 @@ const BrandHero = () => {
             <div className="relative w-full aspect-square max-w-[620px] mx-auto">
               {/* Topographic contour rings */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="40" cy="50" rx="42" ry="40" fill="none" stroke="hsl(var(--border))" strokeWidth="0.3" opacity="0.5" />
-                <ellipse cx="40" cy="50" rx="32" ry="30" fill="none" stroke="hsl(var(--border))" strokeWidth="0.25" opacity="0.4" />
-                <ellipse cx="40" cy="50" rx="22" ry="20" fill="none" stroke="hsl(var(--border))" strokeWidth="0.2" opacity="0.3" />
+                <ellipse cx="40" cy="50" rx="42" ry="40" fill="none" stroke="hsl(var(--foreground))" strokeWidth="0.35" opacity="0.28" />
+                <ellipse cx="40" cy="50" rx="32" ry="30" fill="none" stroke="hsl(var(--foreground))" strokeWidth="0.3" opacity="0.22" />
+                <ellipse cx="40" cy="50" rx="22" ry="20" fill="none" stroke="hsl(var(--foreground))" strokeWidth="0.25" opacity="0.18" />
                 {/* River line (Hudson) */}
-                <path d="M 50 5 Q 52 20, 49 35 Q 46 50, 49 65 Q 52 80, 50 95" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.4" opacity="0.2" />
+                <path d="M 50 5 Q 52 20, 49 35 Q 46 50, 49 65 Q 52 80, 50 95" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.6" opacity="0.55" />
                 {/* Mohawk */}
-                <path d="M 5 45 Q 18 42, 32 46 Q 40 48, 49 45" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.3" opacity="0.15" />
+                <path d="M 5 45 Q 18 42, 32 46 Q 40 48, 49 45" fill="none" stroke="hsl(var(--accent))" strokeWidth="0.5" opacity="0.45" />
               </svg>
 
               {/* Connection lines between major towns */}
@@ -109,7 +109,7 @@ const BrandHero = () => {
                   [26, 50, 28, 62],   // Schenectady-Guilderland
                 ].map(([x1, y1, x2, y2], i) => (
                   <line key={i} x1={x1} y1={y1} x2={x2} y2={y2}
-                    stroke="hsl(var(--border))" strokeWidth="0.2" opacity="0.4"
+                    stroke="hsl(var(--foreground))" strokeWidth="0.25" opacity="0.5"
                     strokeDasharray="1 1" />
                 ))}
               </svg>
@@ -161,8 +161,8 @@ const BrandHero = () => {
                         backgroundColor: isHovered
                           ? 'hsl(var(--accent))'
                           : 'hsl(var(--foreground))',
-                        opacity: isHovered ? 1 : town.size === 'lg' ? 0.7 : 0.4,
-                        boxShadow: isHovered ? '0 0 12px hsl(var(--accent) / 0.4)' : 'none',
+                        opacity: isHovered ? 1 : town.size === 'lg' ? 1 : town.size === 'md' ? 0.85 : 0.7,
+                        boxShadow: isHovered ? '0 0 14px hsl(var(--accent) / 0.5)' : '0 1px 3px hsl(var(--foreground) / 0.15)',
                       }}
                     />
 
@@ -180,11 +180,9 @@ const BrandHero = () => {
                         style={{
                           fontSize: isHovered ? 15 : town.size === 'lg' ? 13 : 11,
                           fontWeight: isHovered ? 600 : town.size === 'lg' ? 600 : 500,
-                          color: isHovered
-                            ? 'hsl(var(--foreground))'
-                            : 'hsl(var(--muted-foreground))',
-                          opacity: isHovered ? 1 : town.size === 'sm' ? 0.6 : 0.8,
-                          letterSpacing: isHovered ? '-0.01em' : '0',
+                        color: 'hsl(var(--foreground))',
+                        opacity: isHovered ? 1 : town.size === 'lg' ? 1 : town.size === 'md' ? 0.9 : 0.75,
+                        letterSpacing: isHovered ? '-0.01em' : '0',
                         }}
                       >
                         {town.name}
