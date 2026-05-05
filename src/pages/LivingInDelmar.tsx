@@ -205,7 +205,7 @@ const LivingInDelmar = () => {
             transition={{ ...fadeUp.transition, delay: 0.05 }}
             className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight max-w-4xl"
           >
-            What's Happening in Delmar
+            Delmar This Week
           </motion.h1>
 
           <motion.p
@@ -213,7 +213,7 @@ const LivingInDelmar = () => {
             transition={{ ...fadeUp.transition, delay: 0.1 }}
             className="mt-6 max-w-2xl text-lg md:text-xl text-white/85 leading-relaxed font-light"
           >
-            Real estate, local businesses, and community updates — refreshed weekly.
+            Live updates on homes, prices, and what's happening locally — refreshed every Friday.
           </motion.p>
 
           <motion.div
@@ -225,13 +225,13 @@ const LivingInDelmar = () => {
               href="#feed"
               className="inline-flex items-center gap-2 rounded-full bg-white text-neutral-900 px-7 py-3.5 text-sm font-semibold hover:bg-white/90 transition"
             >
-              See This Week <ArrowRight className="w-4 h-4" />
+              See This Week's Update <ArrowRight className="w-4 h-4" />
             </a>
             <a
               href="#updates"
               className="inline-flex items-center gap-2 rounded-full border border-white/40 backdrop-blur-sm bg-white/10 text-white px-7 py-3.5 text-sm font-semibold hover:bg-white/20 transition"
             >
-              Get Weekly Updates
+              Get It Every Friday
             </a>
           </motion.div>
         </div>
