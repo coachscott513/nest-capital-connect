@@ -474,11 +474,16 @@ const LivingInDelmar = () => {
               <Mail className="w-6 h-6" style={{ color: TEAL }} />
             </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              Get Delmar Updates Weekly
+              Get Delmar Updates Every Friday
             </h2>
             <p className="mt-5 text-lg text-neutral-500 font-light">
-              Listings, local news, and market updates every Friday. No spam.
+              One short email. Three things every week:
             </p>
+            <ul className="mt-6 inline-flex flex-col gap-2 text-left text-[15px] text-neutral-700 font-light">
+              <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full" style={{ background: TEAL }} /> New Delmar listings</li>
+              <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full" style={{ background: TEAL }} /> What sold and for how much</li>
+              <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full" style={{ background: TEAL }} /> What changed locally this week</li>
+            </ul>
           </motion.div>
 
           {submitted ? (
