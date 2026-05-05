@@ -296,15 +296,29 @@ const LivingInDelmar = () => {
       {/* ============ 3. REAL ESTATE ============ */}
       <section id="homes" className="py-24 lg:py-32 bg-neutral-50">
         <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <motion.div {...fadeUp} className="max-w-2xl mb-12">
+          <motion.div {...fadeUp} className="max-w-2xl mb-10">
             <p className="text-[11px] uppercase tracking-[0.22em] font-semibold mb-5" style={{ color: TEAL }}>
-              Live Listings
+              Updated Daily
             </p>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              Homes for Sale in Delmar, NY
+              Homes for Sale in Delmar — Updated Daily
             </h2>
             <p className="mt-5 text-lg text-neutral-500 font-light">
-              Browse current Delmar listings — refreshed daily from live MLS feeds.
+              These are the newest Delmar listings available right now — straight from live MLS feeds.
+            </p>
+          </motion.div>
+
+          {/* Insider Line — what Zillow doesn't tell you */}
+          <motion.div
+            {...fadeUp}
+            className="mb-8 rounded-2xl border-l-4 bg-white p-5 lg:p-6"
+            style={{ borderColor: TEAL, boxShadow: "0 8px 30px -16px rgba(0,0,0,0.08)" }}
+          >
+            <p className="text-[10px] uppercase tracking-[0.22em] font-semibold mb-2" style={{ color: TEAL }}>
+              Insider Line · {weekLabel}
+            </p>
+            <p className="text-base lg:text-lg text-neutral-800 font-light leading-relaxed">
+              Most Delmar homes under $500K are getting multiple offers again this month. Anything priced cleanly in the Bethlehem Central district is moving in under two weekends.
             </p>
           </motion.div>
 
