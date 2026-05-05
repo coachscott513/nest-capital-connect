@@ -89,42 +89,35 @@ const LivingInDelmar = () => {
   weekStart.setDate(today.getDate() - today.getDay());
   const weekLabel = `Week of ${weekStart.toLocaleDateString("en-US", { month: "long", day: "numeric" })}`;
 
-  // Section 2: Live Feed cards
+  // Section 2: This Week in Delmar — 4 specific, high-signal updates
   const liveFeed = [
     {
       icon: HomeIcon,
-      tag: "Real Estate",
-      title: "3 homes sold in Delmar this week",
-      body: "Highest sale closed at $485K. Well-priced homes under $500K continue to draw multiple offers.",
+      tag: "Homes Sold",
+      title: "3 homes closed this week",
+      body: "Highest sale: $485K on Roweland Ave. Two others closed within 1.8% of asking — both under contract in under 10 days.",
       href: "#homes",
     },
     {
       icon: TrendingUp,
-      tag: "Market",
-      title: "Inventory down 12% this month",
-      body: "Bethlehem supply remains tight. Median pricing is holding firm year-over-year.",
+      tag: "Market Shift",
+      title: "Inventory dropped to 12 active homes",
+      body: "Lowest active count in 60 days. Bethlehem supply continues to tighten heading into the back half of the season.",
+      href: "#homes",
+    },
+    {
+      icon: Sparkles,
+      tag: "Buyer Trend",
+      title: "Multiple offers returning under $500K",
+      body: "Entry-level Delmar is the tightest bracket again. Well-priced homes are seeing 3+ offers within the first weekend.",
       href: "#homes",
     },
     {
       icon: Coffee,
-      tag: "Local",
+      tag: "Local Update",
       title: "New café opening on Delaware Ave",
-      body: "Another addition to the Four Corners corridor — stay tuned for the opening date.",
+      body: "Another addition to the Four Corners corridor — opening expected next month. We'll post the date here first.",
       href: "#favorites",
-    },
-    {
-      icon: Calendar,
-      tag: "Community",
-      title: "Farmers Market — Saturday 9am",
-      body: "Bethlehem Farmers Market returns this weekend at the Bethlehem Town Hall lot.",
-      href: "#events",
-    },
-    {
-      icon: Sparkles,
-      tag: "Insight",
-      title: "Multiple offers returning under $500K",
-      body: "The entry-level Delmar bracket is the tightest segment. Buyers are bringing stronger terms again.",
-      href: "#homes",
     },
   ];
 
@@ -212,7 +205,7 @@ const LivingInDelmar = () => {
             transition={{ ...fadeUp.transition, delay: 0.05 }}
             className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight max-w-4xl"
           >
-            What's Happening in Delmar
+            Delmar This Week
           </motion.h1>
 
           <motion.p
@@ -220,7 +213,7 @@ const LivingInDelmar = () => {
             transition={{ ...fadeUp.transition, delay: 0.1 }}
             className="mt-6 max-w-2xl text-lg md:text-xl text-white/85 leading-relaxed font-light"
           >
-            Real estate, local businesses, and community updates — refreshed weekly.
+            Live updates on homes, prices, and what's happening locally — refreshed every Friday.
           </motion.p>
 
           <motion.div
@@ -232,13 +225,13 @@ const LivingInDelmar = () => {
               href="#feed"
               className="inline-flex items-center gap-2 rounded-full bg-white text-neutral-900 px-7 py-3.5 text-sm font-semibold hover:bg-white/90 transition"
             >
-              See This Week <ArrowRight className="w-4 h-4" />
+              See This Week's Update <ArrowRight className="w-4 h-4" />
             </a>
             <a
               href="#updates"
               className="inline-flex items-center gap-2 rounded-full border border-white/40 backdrop-blur-sm bg-white/10 text-white px-7 py-3.5 text-sm font-semibold hover:bg-white/20 transition"
             >
-              Get Weekly Updates
+              Get It Every Friday
             </a>
           </motion.div>
         </div>
@@ -254,14 +247,14 @@ const LivingInDelmar = () => {
                 <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: TEAL }} />
               </span>
               <p className="text-[11px] uppercase tracking-[0.22em] font-semibold" style={{ color: TEAL }}>
-                {weekLabel}
+                This Week in Delmar · {weekLabel}
               </p>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              This week in Delmar.
+              What actually changed this week.
             </h2>
             <p className="mt-5 text-lg text-neutral-500 font-light">
-              Listings, market shifts, and local moments — what actually changed this week.
+              Homes sold, market shifts, buyer behavior, and one local update — written by someone who works here every day.
             </p>
           </motion.div>
 
@@ -303,15 +296,29 @@ const LivingInDelmar = () => {
       {/* ============ 3. REAL ESTATE ============ */}
       <section id="homes" className="py-24 lg:py-32 bg-neutral-50">
         <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <motion.div {...fadeUp} className="max-w-2xl mb-12">
+          <motion.div {...fadeUp} className="max-w-2xl mb-10">
             <p className="text-[11px] uppercase tracking-[0.22em] font-semibold mb-5" style={{ color: TEAL }}>
-              Live Listings
+              Updated Daily
             </p>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              Homes for Sale in Delmar, NY
+              Homes for Sale in Delmar — Updated Daily
             </h2>
             <p className="mt-5 text-lg text-neutral-500 font-light">
-              Browse current Delmar listings — refreshed daily from live MLS feeds.
+              These are the newest Delmar listings available right now — straight from live MLS feeds.
+            </p>
+          </motion.div>
+
+          {/* Insider Line — what Zillow doesn't tell you */}
+          <motion.div
+            {...fadeUp}
+            className="mb-8 rounded-2xl border-l-4 bg-white p-5 lg:p-6"
+            style={{ borderColor: TEAL, boxShadow: "0 8px 30px -16px rgba(0,0,0,0.08)" }}
+          >
+            <p className="text-[10px] uppercase tracking-[0.22em] font-semibold mb-2" style={{ color: TEAL }}>
+              Insider Line · {weekLabel}
+            </p>
+            <p className="text-base lg:text-lg text-neutral-800 font-light leading-relaxed">
+              Most Delmar homes under $500K are getting multiple offers again this month. Anything priced cleanly in the Bethlehem Central district is moving in under two weekends.
             </p>
           </motion.div>
 
@@ -467,11 +474,16 @@ const LivingInDelmar = () => {
               <Mail className="w-6 h-6" style={{ color: TEAL }} />
             </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              Get Delmar Updates Weekly
+              Get Delmar Updates Every Friday
             </h2>
             <p className="mt-5 text-lg text-neutral-500 font-light">
-              Listings, local news, and market updates every Friday. No spam.
+              One short email. Three things every week:
             </p>
+            <ul className="mt-6 inline-flex flex-col gap-2 text-left text-[15px] text-neutral-700 font-light">
+              <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full" style={{ background: TEAL }} /> New Delmar listings</li>
+              <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full" style={{ background: TEAL }} /> What sold and for how much</li>
+              <li className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full" style={{ background: TEAL }} /> What changed locally this week</li>
+            </ul>
           </motion.div>
 
           {submitted ? (
