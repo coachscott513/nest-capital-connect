@@ -247,14 +247,14 @@ const LivingInDelmar = () => {
                 <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: TEAL }} />
               </span>
               <p className="text-[11px] uppercase tracking-[0.22em] font-semibold" style={{ color: TEAL }}>
-                {weekLabel}
+                This Week in Delmar · {weekLabel}
               </p>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              This week in Delmar.
+              What actually changed this week.
             </h2>
             <p className="mt-5 text-lg text-neutral-500 font-light">
-              Listings, market shifts, and local moments — what actually changed this week.
+              Homes sold, market shifts, buyer behavior, and one local update — written by someone who works here every day.
             </p>
           </motion.div>
 
