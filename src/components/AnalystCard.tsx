@@ -20,8 +20,9 @@ const EMAIL = 'scott@capitaldistrictnest.com';
 const SMS_BODY = "Hi Scott, I'd like help with a Capital District property.";
 const WA_BODY = "Hi Scott, I'd like help with a Capital District property.";
 
-const REMAX_RED = '#DC1C2E';
-const REMAX_BLUE = '#003DA5';
+const RED_CALL = '#DC1C2E';   // strict: call button only
+const TEAL = '#0d6e66';        // primary brand
+const CHARCOAL = '#0e0f12';    // dark surfaces
 
 interface AnalystCardProps {
   title?: string;
