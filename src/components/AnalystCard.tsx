@@ -44,7 +44,7 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
       <div className="flex items-center gap-4">
         <div
           className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-base shrink-0 relative"
-          style={{ backgroundColor: REMAX_RED }}
+          style={{ backgroundColor: TEAL }}
         >
           SA
           <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full ring-2 ring-white" />
@@ -65,22 +65,22 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
         side="right"
         className="p-0 w-full sm:max-w-[440px] bg-[#fafafa] border-l border-border"
       >
-        {/* Branded header band */}
+        {/* Branded header band — charcoal, not blue */}
         <div
           className="relative px-6 pt-8 pb-6 text-white"
-          style={{ background: `linear-gradient(135deg, ${REMAX_BLUE} 0%, #002a78 100%)` }}
+          style={{ background: `linear-gradient(135deg, ${CHARCOAL} 0%, #1a1c22 100%)` }}
         >
           <div className="flex items-start gap-4">
             <div
-              className="w-16 h-16 rounded-full flex items-center justify-center font-bold text-xl shrink-0 ring-4 ring-white/20 bg-white"
-              style={{ color: REMAX_RED }}
+              className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0 ring-4 ring-white/10"
+              style={{ backgroundColor: TEAL }}
             >
               SA
             </div>
             <div className="leading-tight pt-1">
               <p className="text-xl font-bold tracking-tight">Scott Alvarez</p>
-              <p className="text-sm font-semibold text-white/90">RE/MAX Solutions</p>
-              <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-white/80">
+              <p className="text-sm font-semibold text-white/85">RE/MAX Solutions</p>
+              <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-white/75">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 Live agent · usually replies in minutes
               </p>
@@ -90,11 +90,11 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
 
         {/* Options */}
         <div className="px-5 py-6 space-y-3">
-          {/* Call — primary RE/MAX red */}
+          {/* Call — ONLY surface allowed to use red */}
           <a
             href={`tel:+1${PHONE_NUMBER}`}
             className="flex items-center gap-4 p-4 rounded-2xl text-white shadow-sm transition-transform active:scale-[0.99]"
-            style={{ backgroundColor: REMAX_RED }}
+            style={{ backgroundColor: RED_CALL }}
           >
             <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center">
               <Phone className="w-5 h-5" />
@@ -105,13 +105,16 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
             </div>
           </a>
 
-          {/* Text */}
+          {/* Text — teal accent (no blue) */}
           <a
             href={`sms:+1${PHONE_NUMBER}?body=${encodeURIComponent(SMS_BODY)}`}
             className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-border hover:border-foreground/20 transition"
           >
-            <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
-              <MessageCircle className="w-5 h-5" style={{ color: REMAX_BLUE }} />
+            <div
+              className="w-11 h-11 rounded-xl flex items-center justify-center"
+              style={{ backgroundColor: 'rgba(13,110,102,0.10)' }}
+            >
+              <MessageCircle className="w-5 h-5" style={{ color: TEAL }} />
             </div>
             <div className="flex-1">
               <p className="font-semibold text-foreground">Text</p>
