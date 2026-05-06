@@ -217,13 +217,13 @@ function Intelligence() {
     <section className="relative bg-foreground text-background py-28 md:py-40 overflow-hidden">
       <div className="max-w-5xl mx-auto px-6 md:px-10 text-center relative z-10">
         <p className="text-sm font-semibold tracking-[0.2em] uppercase text-background/50 mb-4">
-          Market Intelligence
+          Live Local
         </p>
         <h2 className="text-5xl md:text-7xl lg:text-[5.5rem] font-semibold tracking-[-0.035em] leading-[1.02]">
-          Know what's changing locally.
+          Live local. Know more.
         </h2>
         <p className="mt-6 text-xl md:text-2xl text-background/70 font-light leading-relaxed max-w-2xl mx-auto">
-          Weekly town updates, new listings, price movement, and local insight.
+          Weekly town updates, new listings, events, and the local stories behind the market.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-lg font-medium">
           <Link
