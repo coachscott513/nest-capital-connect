@@ -105,7 +105,6 @@ const LivingInDelmar = () => {
         ]}
       />
 
-      {/* 5 — LOCAL FAVORITES · ivory + green */}
       {/* 5 — LOCAL FAVORITES · pure white break (light, but distinct from cream above) */}
       <HeroBand
         mood="white"
