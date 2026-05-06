@@ -443,8 +443,10 @@
     white-space: nowrap;
   }
   .btn-dark-cta:hover {
-    transform: translateY(-1px);
+    transform: translateY(-1px) scale(1.025);
     filter: brightness(1.06);
+    box-shadow: 0 14px 36px -8px rgba(233, 185, 73, 0.55),
+                0 4px 10px -2px rgba(233, 185, 73, 0.3);
   }
 
   /* CALL button — strict red, used ONLY for tel: triggers */
