@@ -638,3 +638,26 @@
   from { opacity: 0; transform: translateY(-6px) scale(0.98); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* Apple arrow micro-interaction — pair with any inline-flex link/button containing
+   an SVG arrow as the last child. Add `.cta-arrow` to that wrapper. */
+.cta-arrow svg:last-child {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cta-arrow:hover svg:last-child {
+  transform: translateX(4px);
+}
+
+/* Universal subtle card lift for tiles, callouts, business cards, etc. */
+.card-lift {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.18);
+}
+
+/* Prevent any rogue horizontal scroll on mobile */
+html, body { overflow-x: hidden; }
