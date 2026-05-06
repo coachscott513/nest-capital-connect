@@ -1,189 +1,173 @@
 import React from 'react';
-import { Phone, MessageCircle } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Phone, MessageCircle, Mail, Calendar, X } from 'lucide-react';
+
+/**
+ * AnalystCard — Live Agent contact modal.
+ * Branded for Scott Alvarez · RE/MAX Solutions · Capital District Nest.
+ *
+ * Props:
+ *  - children: optional custom trigger. If omitted, renders a default branded card trigger.
+ */
 
 const PHONE_NUMBER = '5185227265';
 const FORMATTED_PHONE = '(518) 522-7265';
 const EMAIL = 'scott@capitaldistrictnest.com';
+const SMS_BODY = "Hi Scott, I'd like help with a Capital District property.";
+const WA_BODY = "Hi Scott, I'd like help with a Capital District property.";
+
+const REMAX_RED = '#DC1C2E';
+const REMAX_BLUE = '#003DA5';
 
 interface AnalystCardProps {
   title?: string;
   description?: string;
+  /** kept for backward compat; visual style is now consistent */
   accentColor?: 'amber' | 'primary' | 'emerald' | 'orange' | 'green' | 'violet';
+  children?: React.ReactNode;
 }
 
 const AnalystCard: React.FC<AnalystCardProps> = ({
-  title = "Speak with an Analyst",
-  description = "Get personalized guidance from our local experts",
-  accentColor = 'amber'
+  title = "Talk to a Local Agent",
+  description = "Scott Alvarez · RE/MAX Solutions · Capital District",
+  children,
 }) => {
-  const colorMap = {
-    amber: {
-      gradient: 'from-amber-500/20 to-amber-600/10',
-      iconBg: 'bg-amber-500/10',
-      iconText: 'text-amber-400',
-      hoverGlow: 'hover:shadow-[0_0_30px_rgba(251,191,36,0.15)]',
-      borderGlow: 'hover:border-amber-500/30'
-    },
-    primary: {
-      gradient: 'from-primary/20 to-primary/10',
-      iconBg: 'bg-primary/10',
-      iconText: 'text-primary',
-      hoverGlow: 'hover:shadow-[0_0_30px_rgba(0,212,255,0.15)]',
-      borderGlow: 'hover:border-primary/30'
-    },
-    emerald: {
-      gradient: 'from-emerald-500/20 to-emerald-600/10',
-      iconBg: 'bg-emerald-500/10',
-      iconText: 'text-emerald-400',
-      hoverGlow: 'hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]',
-      borderGlow: 'hover:border-emerald-500/30'
-    },
-    orange: {
-      gradient: 'from-orange-500/20 to-orange-600/10',
-      iconBg: 'bg-orange-500/10',
-      iconText: 'text-orange-400',
-      hoverGlow: 'hover:shadow-[0_0_30px_rgba(249,115,22,0.15)]',
-      borderGlow: 'hover:border-orange-500/30'
-    },
-    green: {
-      gradient: 'from-green-500/20 to-green-600/10',
-      iconBg: 'bg-green-500/10',
-      iconText: 'text-green-400',
-      hoverGlow: 'hover:shadow-[0_0_30px_rgba(34,197,94,0.15)]',
-      borderGlow: 'hover:border-green-500/30'
-    },
-    violet: {
-      gradient: 'from-violet-500/20 to-violet-600/10',
-      iconBg: 'bg-violet-500/10',
-      iconText: 'text-violet-400',
-      hoverGlow: 'hover:shadow-[0_0_30px_rgba(139,92,246,0.15)]',
-      borderGlow: 'hover:border-violet-500/30'
-    }
-  };
-
-  const colors = colorMap[accentColor];
+  const trigger = children ?? (
+    <button
+      className="group w-full text-left rounded-2xl bg-white border border-border p-7 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.15)] transition-shadow"
+    >
+      <div className="flex items-center gap-4">
+        <div
+          className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-base shrink-0 relative"
+          style={{ backgroundColor: REMAX_RED }}
+        >
+          SA
+          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full ring-2 ring-white" />
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+          <p className="text-sm text-muted-foreground">{description}</p>
+        </div>
+      </div>
+    </button>
+  );
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <button
-          className={`glass-strong rounded-2xl p-8 text-left transition-all duration-300 hover:scale-[1.02] group bg-gradient-to-br ${colors.gradient} border border-transparent ${colors.borderGlow} ${colors.hoverGlow}`}
-          style={{ backdropFilter: 'blur(30px)' }}
-        >
-          <div className={`w-14 h-14 rounded-xl ${colors.iconBg} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform relative`}>
-            <Phone className={`w-7 h-7 ${colors.iconText}`} />
-            {/* Live indicator */}
-            <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse border-2 border-background" />
-          </div>
-          <h3 className="text-xl font-semibold mb-2">{title}</h3>
-          <p className="text-muted-foreground font-light">{description}</p>
-          
-          {/* Hover hint */}
-          <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground/60 opacity-0 group-hover:opacity-100 transition-opacity">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            Tap for instant contact options
-          </div>
-        </button>
-      </SheetTrigger>
-      
-      <SheetContent 
-        side="bottom" 
-        className="rounded-t-3xl border-t border-border/50"
-        style={{ 
-          background: 'rgba(0, 0, 0, 0.85)',
-          backdropFilter: 'blur(25px)'
-        }}
+      <SheetTrigger asChild>{trigger}</SheetTrigger>
+
+      <SheetContent
+        side="right"
+        className="p-0 w-full sm:max-w-[440px] bg-[#fafafa] border-l border-border"
       >
-        <SheetHeader className="pb-6">
-          <div className="flex items-center justify-center gap-4 mb-3">
+        {/* Branded header band */}
+        <div
+          className="relative px-6 pt-8 pb-6 text-white"
+          style={{ background: `linear-gradient(135deg, ${REMAX_BLUE} 0%, #002a78 100%)` }}
+        >
+          <div className="flex items-start gap-4">
             <div
-              className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0"
-              style={{ backgroundColor: '#DC1C2E' }}
+              className="w-16 h-16 rounded-full flex items-center justify-center font-bold text-xl shrink-0 ring-4 ring-white/20 bg-white"
+              style={{ color: REMAX_RED }}
             >
               SA
             </div>
-            <div className="text-left leading-tight">
-              <SheetTitle className="text-xl font-bold flex items-center gap-2">
-                Scott Alvarez
-                <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
-              </SheetTitle>
-              <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#003DA5' }}>
-                RE/MAX Solutions
+            <div className="leading-tight pt-1">
+              <p className="text-xl font-bold tracking-tight">Scott Alvarez</p>
+              <p className="text-sm font-semibold text-white/90">RE/MAX Solutions</p>
+              <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-white/80">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                Live agent · usually replies in minutes
               </p>
-              <p className="text-xs text-muted-foreground mt-0.5">{FORMATTED_PHONE} · {EMAIL}</p>
             </div>
           </div>
-          <p className="text-muted-foreground text-center font-light text-sm">
-            Live agent — connect directly for personalized Capital District guidance
-          </p>
-        </SheetHeader>
-        
-        <div className="space-y-4 pb-8">
-          {/* Text Option */}
-          <a
-            href={`sms:+1${PHONE_NUMBER}?body=Hi Scott, I'm interested in getting market analysis for a property in the Capital District.`}
-            className="flex items-center gap-4 p-5 rounded-2xl bg-primary/10 border border-primary/20 hover:bg-primary/20 transition-all group"
-          >
-            <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <MessageCircle className="w-7 h-7 text-primary" />
-            </div>
-            <div className="flex-1">
-              <p className="font-semibold text-lg">Text an Analyst</p>
-              <p className="text-sm text-muted-foreground">Quick response • Usually within minutes</p>
-            </div>
-          </a>
-          
-          {/* Call Option */}
+        </div>
+
+        {/* Options */}
+        <div className="px-5 py-6 space-y-3">
+          {/* Call — primary RE/MAX red */}
           <a
             href={`tel:+1${PHONE_NUMBER}`}
-            className="flex items-center gap-4 p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all group"
+            className="flex items-center gap-4 p-4 rounded-2xl text-white shadow-sm transition-transform active:scale-[0.99]"
+            style={{ backgroundColor: REMAX_RED }}
           >
-            <div className="w-14 h-14 rounded-xl bg-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Phone className="w-7 h-7 text-emerald-400" />
+            <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center">
+              <Phone className="w-5 h-5" />
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-lg">Call Live</p>
-              <p className="text-sm text-muted-foreground">{FORMATTED_PHONE} • Available now</p>
+              <p className="font-semibold">Call now</p>
+              <p className="text-sm text-white/85">{FORMATTED_PHONE}</p>
             </div>
           </a>
-          
-          {/* WhatsApp Option */}
+
+          {/* Text */}
           <a
-            href={`https://wa.me/1${PHONE_NUMBER}?text=Hi Scott, I'm interested in getting market analysis for a property in the Capital District.`}
+            href={`sms:+1${PHONE_NUMBER}?body=${encodeURIComponent(SMS_BODY)}`}
+            className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-border hover:border-foreground/20 transition"
+          >
+            <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center">
+              <MessageCircle className="w-5 h-5" style={{ color: REMAX_BLUE }} />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-foreground">Text</p>
+              <p className="text-sm text-muted-foreground">Quick SMS conversation</p>
+            </div>
+          </a>
+
+          {/* WhatsApp */}
+          <a
+            href={`https://wa.me/1${PHONE_NUMBER}?text=${encodeURIComponent(WA_BODY)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-4 p-5 rounded-2xl bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 transition-all group"
+            className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-border hover:border-foreground/20 transition"
           >
-            <div className="w-14 h-14 rounded-xl bg-green-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <svg className="w-7 h-7 text-green-400" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            <div className="w-11 h-11 rounded-xl bg-green-50 flex items-center justify-center">
+              <svg className="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
               </svg>
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-lg">WhatsApp Scott</p>
-              <p className="text-sm text-muted-foreground">International friendly • End-to-end encrypted</p>
+              <p className="font-semibold text-foreground">WhatsApp</p>
+              <p className="text-sm text-muted-foreground">Chat on WhatsApp</p>
+            </div>
+          </a>
+
+          {/* Email */}
+          <a
+            href={`mailto:${EMAIL}?subject=Capital%20District%20Nest%20inquiry`}
+            className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-border hover:border-foreground/20 transition"
+          >
+            <div className="w-11 h-11 rounded-xl bg-secondary flex items-center justify-center">
+              <Mail className="w-5 h-5 text-foreground" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-foreground">Email</p>
+              <p className="text-sm text-muted-foreground truncate">{EMAIL}</p>
+            </div>
+          </a>
+
+          {/* Schedule */}
+          <a
+            href={`mailto:${EMAIL}?subject=Schedule%20a%20consultation`}
+            className="flex items-center gap-4 p-4 rounded-2xl bg-foreground text-white hover:bg-foreground/90 transition"
+          >
+            <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center">
+              <Calendar className="w-5 h-5" />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold">Schedule</p>
+              <p className="text-sm text-white/75">Book a consultation</p>
             </div>
           </a>
         </div>
-        
-        {/* Schedule Option */}
-        <div className="border-t border-border/30 pt-6">
-          <Button 
-            variant="outline" 
-            className="w-full h-14 rounded-xl text-lg font-medium"
-            onClick={() => window.open('mailto:scott@capitaldistrictnest.com?subject=Schedule%20Analysis%20Call', '_blank')}
-          >
-            Schedule a Consultation
-          </Button>
-        </div>
+
+        <p className="px-6 pb-6 text-xs text-center text-muted-foreground">
+          Capital District Nest · Powered by RE/MAX Solutions
+        </p>
       </SheetContent>
     </Sheet>
   );
