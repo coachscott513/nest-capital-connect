@@ -601,14 +601,15 @@ const LivingInDelmar = () => {
                   <p className="text-[14.5px] text-neutral-600 leading-relaxed font-light">
                     {item.body}
                   </p>
-                <span
-                  className="inline-flex items-center gap-1 mt-5 text-sm font-semibold group-hover:gap-2 transition-all"
-                  style={{ color: TEAL }}
-                >
-                  Read more <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </motion.a>
-            ))}
+                  <span
+                    className="inline-flex items-center gap-1 mt-5 text-sm font-semibold group-hover:gap-2 transition-all"
+                    style={{ color: TEAL }}
+                  >
+                    Read more <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </motion.a>
+              );
+            })}
           </div>
         </div>
       </section>
