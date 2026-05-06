@@ -20,6 +20,7 @@ export type HeroMood =
   | "clay"          // muted clay/taupe + cream (Rentals)
   | "sky"           // soft blue-gray + teal (Buyers / Search)
   | "ivory"         // soft ivory + muted green (Local Businesses)
+  | "white"         // pure white + teal (breathing room / break)
   | "slate";        // dark slate + gold (Weekly Updates)
 
 interface Callout {
