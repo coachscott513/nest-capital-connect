@@ -126,26 +126,56 @@ const Index = () => {
       {/* 1 — CINEMATIC HERO */}
       <CinematicHero />
 
-      {/* 2 — TOWNS · cream + teal */}
-      <HeroBand
-        mood="cream"
-        eyebrow="Browse by Town"
-        headline={<>Start with the town.</>}
-        sub="Explore Delmar, Albany, Saratoga, Troy, Schenectady, and Clifton Park — with local listings, market activity, and lifestyle insight."
-        ctaLabel="Browse all towns"
-        ctaHref="/communities"
-        callouts={[
-          { title: "Delmar this week", body: "New listings, pendings, and price activity in Bethlehem." },
-          { title: "Saratoga lifestyle",  body: "Resort-town living with a year-round local economy." },
-          { title: "Albany market activity", body: "Capital city momentum and neighborhood-level data." },
-        ]}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          {TOWN_TILES.map((t) => (
-            <TownTile key={t.name} {...t} />
-          ))}
+      {/* 2 — TOWNS · one unified split section (text + tile grid together) */}
+      <section className="bg-[#f5efe4] w-full">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-[72px] md:py-[120px]">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* LEFT — narrative (sticky on desktop so it stays as you scan tiles) */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-5 lg:sticky lg:top-28"
+            >
+              <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#0d6e66]">
+                Browse by Town
+              </p>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-[#1d1d1f]">
+                Start with<br />the town.
+              </h2>
+              <p className="mt-8 text-lg md:text-xl text-[#1d1d1f]/65 max-w-md font-light leading-relaxed">
+                Explore Delmar, Albany, Saratoga, Troy, Schenectady, and Clifton Park —
+                with local listings, market activity, and lifestyle insight.
+              </p>
+              <div className="mt-10">
+                <Link
+                  to="/communities"
+                  className="inline-flex items-center gap-2 bg-[#0d6e66] text-white hover:bg-[#0a5d57] px-8 py-4 rounded-full font-semibold text-base transition-colors"
+                >
+                  Browse all towns <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* RIGHT — tile grid */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-7"
+            >
+              <div className="grid grid-cols-2 gap-4 md:gap-5">
+                {TOWN_TILES.map((t) => (
+                  <TownTile key={t.name} {...t} />
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </HeroBand>
+      </section>
+
 
       {/* 3 — ANALYZER · graphite + teal */}
       <HeroBand

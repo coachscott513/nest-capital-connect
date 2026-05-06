@@ -66,7 +66,7 @@ const navItems: { label: string; href?: string; dropdown?: string }[] = [
   { label: "Investors", href: "/investor-tools" },
 ];
 
-const TEAL = "#0d9488";
+const TEAL = "#0d6e66";
 const REMAX_RED = "#DC1C2E";
 
 interface DropdownProps {
