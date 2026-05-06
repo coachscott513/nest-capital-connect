@@ -176,44 +176,40 @@ const HeroBand = ({
   const m = MOODS[mood];
   const isExternal = ctaExternal || /^https?:\/\//.test(ctaHref);
 
+  // Pick the locked button class based on mood (light vs dark surface)
+  const isDark = ["graphite", "dark-gold", "forest", "clay", "slate"].includes(mood);
+  const ctaClass = isDark ? "btn-dark-cta" : "btn-primary-apple";
+
   const Cta = isExternal ? (
-    <a
-      href={ctaHref}
-      target="_blank"
-      rel="noreferrer"
-      className={`inline-flex items-center gap-2 ${m.btnBg} ${m.btnText} ${m.btnHover} px-8 py-4 rounded-full font-semibold text-base transition-colors`}
-    >
+    <a href={ctaHref} target="_blank" rel="noreferrer" className={ctaClass}>
       {ctaLabel} <ArrowRight className="w-4 h-4" />
     </a>
   ) : (
-    <Link
-      to={ctaHref}
-      className={`inline-flex items-center gap-2 ${m.btnBg} ${m.btnText} ${m.btnHover} px-8 py-4 rounded-full font-semibold text-base transition-colors`}
-    >
+    <Link to={ctaHref} className={ctaClass}>
       {ctaLabel} <ArrowRight className="w-4 h-4" />
     </Link>
   );
 
   return (
     <section className={`${m.bg} ${m.text} w-full`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-[72px] md:py-[120px]">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 section-apple">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           {/* LEFT — narrative */}
           <motion.div {...fadeUp} className="lg:col-span-7">
             {eyebrow && (
-              <p className={`text-xs font-semibold tracking-[0.25em] uppercase mb-6 ${m.eyebrow}`}>
+              <p className={`eyebrow-apple mb-6 ${m.eyebrow}`}>
                 {eyebrow}
               </p>
             )}
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.035em] leading-[1.02]">
+            <h2 className="h-hero">
               {headline}
             </h2>
             {sub && (
-              <p className={`mt-8 text-lg md:text-xl max-w-xl font-light leading-relaxed ${m.sub}`}>
+              <p className={`mt-8 max-w-xl ${isDark ? "body-apple-dark" : "body-apple"}`}>
                 {sub}
               </p>
             )}
-            <div className="mt-10">{Cta}</div>
+            <div className="cta-anchor">{Cta}</div>
           </motion.div>
 
           {/* RIGHT — 3 vertical-rule callouts */}
