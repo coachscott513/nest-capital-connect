@@ -1,415 +1,216 @@
-import { ArrowRight, Search, MapPin, TrendingUp, Sparkles, Building2, Home, Trees } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { localBusinessSchema } from "@/utils/seoSchemas";
+import { delmarBusinesses } from "@/data/businesses";
+
+import heroCapital from "@/assets/hero-capital-district.jpg";
+import imgDelmar from "@/assets/town-delmar.jpg";
+import imgAlbany from "@/assets/town-albany.jpg";
+import imgSaratoga from "@/assets/town-saratoga.jpg";
+import imgTroy from "@/assets/town-troy.jpg";
+import imgSchenectady from "@/assets/town-schenectady.jpg";
+import imgCliftonPark from "@/assets/town-clifton-park.jpg";
 
 /* ============================================================
-   CAPITAL DISTRICT NEST — HOMEPAGE
-   Apple product page + real estate intelligence platform
-   Full-width sections · glass UI used intentionally · no tile grids
+   CAPITAL DISTRICT NEST — HOMEPAGE (Apple-style reboot)
+   Full-width hero bands · huge type · 2 CTA links · large visuals
+   No dashboards. No glass card stacks. No tile grids.
    ============================================================ */
 
-const GLASS = {
-  background: "rgba(255,255,255,0.55)",
-  backdropFilter: "blur(22px) saturate(180%)",
-  WebkitBackdropFilter: "blur(22px) saturate(180%)",
-  border: "1px solid rgba(255,255,255,0.55)",
-  boxShadow:
-    "0 30px 80px -25px rgba(15,23,42,0.22), 0 1px 0 rgba(255,255,255,0.9) inset",
-} as const;
+/* ---------- Reusable primitives ---------- */
 
-const GLASS_DARK = {
-  background: "rgba(15,23,42,0.92)",
-  backdropFilter: "blur(22px) saturate(180%)",
-  WebkitBackdropFilter: "blur(22px) saturate(180%)",
-  border: "1px solid rgba(255,255,255,0.08)",
-  boxShadow:
-    "0 30px 80px -25px rgba(15,23,42,0.45), 0 1px 0 rgba(255,255,255,0.06) inset",
-} as const;
+const SectionEyebrow = ({ children }: { children: React.ReactNode }) => (
+  <p className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-4">
+    {children}
+  </p>
+);
 
-/* ============ SECTION 1 — HERO ============ */
+const Headline = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+  <h2 className={`text-5xl md:text-7xl lg:text-[5.5rem] font-semibold tracking-[-0.035em] leading-[1.02] text-foreground ${className}`}>
+    {children}
+  </h2>
+);
+
+const Subhead = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+  <p className={`text-xl md:text-2xl text-muted-foreground font-light leading-relaxed ${className}`}>
+    {children}
+  </p>
+);
+
+const CTALinks = ({
+  primary,
+  secondary,
+  light = false,
+}: {
+  primary: { label: string; to: string };
+  secondary: { label: string; to: string };
+  light?: boolean;
+}) => (
+  <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-lg font-medium">
+    <Link
+      to={primary.to}
+      className={`inline-flex items-center gap-1.5 ${light ? "text-white" : "text-primary"} hover:underline underline-offset-4`}
+    >
+      {primary.label} <ArrowRight className="w-4 h-4" />
+    </Link>
+    <Link
+      to={secondary.to}
+      className={`inline-flex items-center gap-1.5 ${light ? "text-white/85" : "text-foreground"} hover:underline underline-offset-4`}
+    >
+      {secondary.label} <ArrowRight className="w-4 h-4" />
+    </Link>
+  </div>
+);
+
+/* ============ SECTION 1 — MAIN HERO ============ */
 function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      {/* Ambient background */}
-      <div className="absolute inset-0 -z-10">
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(180deg, #ffffff 0%, #f7f9fc 55%, #eef3f8 100%)",
-          }}
+    <section className="relative overflow-hidden bg-background">
+      <div className="relative w-full h-[92vh] min-h-[640px] max-h-[900px]">
+        <img
+          src={heroCapital}
+          alt="Capital District at sunrise"
+          className="absolute inset-0 w-full h-full object-cover"
+          width={1920}
+          height={1080}
         />
-        {/* Floating blobs */}
-        <div
-          className="absolute -top-24 -left-32 w-[640px] h-[640px] rounded-full opacity-60"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(13,148,136,0.18), transparent 70%)",
-            filter: "blur(60px)",
-          }}
-        />
-        <div
-          className="absolute top-32 right-[-180px] w-[720px] h-[720px] rounded-full opacity-70"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(99,102,241,0.14), transparent 70%)",
-            filter: "blur(70px)",
-          }}
-        />
-        <div
-          className="absolute bottom-[-120px] left-1/3 w-[520px] h-[520px] rounded-full opacity-50"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(251,191,36,0.12), transparent 70%)",
-            filter: "blur(60px)",
-          }}
-        />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-32 md:pb-40">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-          {/* LEFT — Headline + CTAs */}
-          <div className="lg:col-span-6 space-y-8">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-medium tracking-[0.18em] uppercase text-neutral-700"
-                 style={{ background: "rgba(255,255,255,0.7)", border: "1px solid rgba(15,23,42,0.06)" }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-teal-600 animate-pulse" />
-              Live · Capital District
-            </div>
-
-            <h1 className="text-[44px] sm:text-6xl lg:text-[72px] font-semibold leading-[1.02] tracking-[-0.035em] text-neutral-900">
-              Capital District<br />
-              real estate<br />
-              <span className="text-teal-700">intelligence.</span>
+        {/* Soft white wash so type stays Apple-clean */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/55 to-white/90" />
+        <div className="relative z-10 h-full flex items-center justify-center text-center px-6">
+          <div className="max-w-5xl">
+            <h1 className="text-6xl md:text-8xl lg:text-[7.5rem] font-semibold tracking-[-0.04em] leading-[0.95] text-foreground">
+              Capital District Nest
             </h1>
-
-            <p className="text-lg md:text-xl text-neutral-600 leading-relaxed max-w-lg font-light">
-              Search homes, analyze any property, and understand what's happening
-              in your market — in real time.
+            <p className="mt-8 text-xl md:text-2xl lg:text-3xl text-foreground/70 font-light max-w-3xl mx-auto leading-snug">
+              Explore homes, towns, and market intelligence across New York's Capital District.
             </p>
-
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Link
-                to="/analyze"
-                className="inline-flex items-center gap-2 bg-neutral-900 text-white px-7 py-4 rounded-full font-medium text-[15px] hover:bg-neutral-800 transition-colors"
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-lg font-medium">
+              <a
+                href="#towns"
+                className="inline-flex items-center gap-1.5 text-primary hover:underline underline-offset-4"
               >
-                Analyze a Property <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/communities"
-                className="inline-flex items-center gap-2 px-6 py-4 rounded-full font-medium text-[15px] text-neutral-800 hover:bg-white/60 transition-colors"
-                style={{ border: "1px solid rgba(15,23,42,0.12)" }}
-              >
-                Explore Towns
-              </Link>
+                Explore Towns <ArrowRight className="w-4 h-4" />
+              </a>
               <Link
                 to="/homes-for-sale"
-                className="text-neutral-600 hover:text-neutral-900 font-medium text-[15px] px-2 py-4 transition-colors"
+                className="inline-flex items-center gap-1.5 text-primary hover:underline underline-offset-4"
               >
-                Search Homes →
+                Search Homes <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
-
-          {/* RIGHT — Floating glass card stack */}
-          <div className="lg:col-span-6 relative h-[520px] md:h-[560px]">
-            {/* Card 1 — Delmar This Week (top, slight left tilt) */}
-            <Link
-              to="/living-in-delmar"
-              className="absolute top-0 left-0 md:left-4 w-[78%] md:w-[68%] rounded-[28px] p-6 transition-transform hover:-translate-y-1"
-              style={{ ...GLASS, transform: "rotate(-2.2deg)" }}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center bg-teal-600/10">
-                    <MapPin className="w-4 h-4 text-teal-700" />
-                  </div>
-                  <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-neutral-500">
-                    Delmar · This Week
-                  </span>
-                </div>
-                <Sparkles className="w-4 h-4 text-amber-500" />
-              </div>
-              <p className="text-[22px] font-semibold text-neutral-900 leading-snug mb-3">
-                3 closed · 2 new listings
-              </p>
-              <p className="text-sm text-neutral-600 leading-relaxed">
-                Inventory still tight on Delaware Ave. Median list moved up
-                <span className="text-teal-700 font-semibold"> +1.8%</span>.
-              </p>
-            </Link>
-
-            {/* Card 2 — Market Snapshot (middle right, opposite tilt, overlapping) */}
-            <div
-              className="absolute top-[170px] right-0 w-[72%] md:w-[60%] rounded-[28px] p-6"
-              style={{ ...GLASS, transform: "rotate(1.6deg)" }}
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center bg-indigo-600/10">
-                  <TrendingUp className="w-4 h-4 text-indigo-700" />
-                </div>
-                <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-neutral-500">
-                  Market Snapshot
-                </span>
-              </div>
-              <div className="flex items-baseline gap-2 mb-1">
-                <span className="text-[34px] font-semibold tracking-tight text-neutral-900">$465K</span>
-                <span className="text-sm text-neutral-500">median</span>
-              </div>
-              <div className="flex items-center gap-4 text-sm text-neutral-600 mb-4">
-                <span><strong className="text-neutral-900">12</strong> active</span>
-                <span className="text-neutral-300">·</span>
-                <span><strong className="text-neutral-900">9</strong> pending</span>
-              </div>
-              {/* Mini sparkline */}
-              <svg viewBox="0 0 200 50" className="w-full h-10">
-                <defs>
-                  <linearGradient id="spark" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgb(13,148,136)" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="rgb(13,148,136)" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M0,38 L25,32 L50,34 L75,24 L100,28 L125,18 L150,22 L175,12 L200,8 L200,50 L0,50 Z"
-                  fill="url(#spark)"
-                />
-                <path
-                  d="M0,38 L25,32 L50,34 L75,24 L100,28 L125,18 L150,22 L175,12 L200,8"
-                  fill="none"
-                  stroke="rgb(13,148,136)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-
-            {/* Card 3 — Analyze Property (bottom left, dark, larger tilt) */}
-            <Link
-              to="/analyze"
-              className="absolute bottom-0 left-2 md:left-12 w-[80%] md:w-[68%] rounded-[28px] p-6 transition-transform hover:-translate-y-1 text-white"
-              style={{ ...GLASS_DARK, transform: "rotate(-1.2deg)" }}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white/10">
-                  <Search className="w-4 h-4 text-white" />
-                </div>
-                <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-white/60">
-                  Analyze Property
-                </span>
-              </div>
-              <div
-                className="rounded-2xl px-4 py-3.5 mb-4 text-sm text-white/80 flex items-center gap-2"
-                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}
-              >
-                <MapPin className="w-4 h-4 text-white/40" />
-                <span>137A Elsmere Ave, Delmar NY</span>
-              </div>
-              <div className="grid grid-cols-3 gap-3 text-center">
-                <div>
-                  <p className="text-[10px] uppercase tracking-wider text-white/50 mb-1">Cash Flow</p>
-                  <p className="text-base font-semibold">$412/mo</p>
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-wider text-white/50 mb-1">Cap Rate</p>
-                  <p className="text-base font-semibold">7.8%</p>
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-wider text-white/50 mb-1">Score</p>
-                  <p className="text-base font-semibold text-emerald-400">A−</p>
-                </div>
-              </div>
-            </Link>
-          </div>
         </div>
       </div>
     </section>
   );
 }
 
-/* ============ SECTION 2 — ANALYZE ANY PROPERTY ============ */
-function AnalyzeSection() {
-  return (
-    <section className="relative py-32 md:py-40 px-6 md:px-10 bg-white">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-        <div className="lg:col-span-5">
-          <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-teal-700 mb-5">
-            Property Intelligence
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-[56px] font-semibold leading-[1.05] tracking-[-0.03em] text-neutral-900 mb-6">
-            Know the deal<br />before you make it.
-          </h2>
-          <p className="text-lg text-neutral-600 leading-relaxed font-light max-w-md mb-10">
-            Analyze any property for monthly cost, taxes, cash flow, and long-term
-            value — instantly.
-          </p>
-          <Link
-            to="/analyze"
-            className="inline-flex items-center gap-2 bg-neutral-900 text-white px-7 py-4 rounded-full font-medium text-[15px] hover:bg-neutral-800 transition-colors"
-          >
-            Try the Analyzer <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-
-        {/* Right — Analyzer UI preview */}
-        <div className="lg:col-span-7">
-          <div
-            className="rounded-[32px] p-8 md:p-10"
-            style={{
-              background: "linear-gradient(160deg, #fafbfc 0%, #f0f4f8 100%)",
-              border: "1px solid rgba(15,23,42,0.06)",
-              boxShadow: "0 40px 100px -30px rgba(15,23,42,0.18)",
-            }}
-          >
-            {/* Address bar */}
-            <div
-              className="rounded-2xl px-5 py-4 mb-6 flex items-center gap-3 bg-white"
-              style={{ border: "1px solid rgba(15,23,42,0.08)" }}
-            >
-              <Search className="w-4 h-4 text-neutral-400" />
-              <span className="text-[15px] text-neutral-700 flex-1">
-                Enter any Capital District address
-              </span>
-              <span className="text-xs text-neutral-400">⏎</span>
-            </div>
-
-            {/* Stats grid */}
-            <div className="grid grid-cols-3 gap-3 mb-5">
-              {[
-                { label: "Monthly Cost", value: "$3,142", sub: "PITI + maint." },
-                { label: "Cash Flow", value: "+$412", sub: "after expenses", positive: true },
-                { label: "Cap Rate", value: "7.8%", sub: "stabilized" },
-              ].map((s) => (
-                <div
-                  key={s.label}
-                  className="bg-white rounded-2xl p-4"
-                  style={{ border: "1px solid rgba(15,23,42,0.06)" }}
-                >
-                  <p className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 mb-2">
-                    {s.label}
-                  </p>
-                  <p className={`text-xl font-semibold ${s.positive ? "text-emerald-600" : "text-neutral-900"}`}>
-                    {s.value}
-                  </p>
-                  <p className="text-[11px] text-neutral-500 mt-1">{s.sub}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Long row */}
-            <div
-              className="bg-white rounded-2xl p-5 flex items-center justify-between"
-              style={{ border: "1px solid rgba(15,23,42,0.06)" }}
-            >
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.15em] text-neutral-500 mb-1">
-                  10-Year Value Forecast
-                </p>
-                <p className="text-lg font-semibold text-neutral-900">$612K projected</p>
-              </div>
-              <div className="text-right">
-                <p className="text-[11px] text-neutral-500">Equity gain</p>
-                <p className="text-base font-semibold text-teal-700">+$147K</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============ SECTION 3 — EXPLORE TOWNS (3 only) ============ */
-const FEATURED_TOWNS = [
-  {
-    name: "Delmar",
-    slug: "delmar",
-    insight: "3 closed · 2 new listings this week",
-    gradient: "linear-gradient(135deg, #0f766e 0%, #14b8a6 100%)",
-    href: "/living-in-delmar",
-  },
-  {
-    name: "Albany",
-    slug: "albany",
-    insight: "Median $295K · 47 active",
-    gradient: "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
-    href: "/towns/albany",
-  },
-  {
-    name: "Saratoga Springs",
-    slug: "saratoga-springs",
-    insight: "Luxury inventory up · DOM 22",
-    gradient: "linear-gradient(135deg, #7c2d12 0%, #ea580c 100%)",
-    href: "/towns/saratoga-springs",
-  },
+/* ============ SECTION 2 — TOWNS ============ */
+const TOWNS = [
+  { name: "Delmar", img: imgDelmar, to: "/living-in-delmar", tag: "Bethlehem · Top Schools" },
+  { name: "Albany", img: imgAlbany, to: "/albany-real-estate", tag: "Capital City" },
+  { name: "Saratoga Springs", img: imgSaratoga, to: "/saratoga-real-estate", tag: "Lifestyle · Resort Town" },
+  { name: "Troy", img: imgTroy, to: "/troy-real-estate", tag: "Riverfront · Historic" },
+  { name: "Schenectady", img: imgSchenectady, to: "/schenectady-real-estate", tag: "Stockade · Value" },
+  { name: "Clifton Park", img: imgCliftonPark, to: "/clifton-park-intelligence", tag: "Family · Suburbs" },
 ];
 
-function ExploreTowns() {
+function Towns() {
   return (
-    <section className="relative py-32 md:py-40 px-6 md:px-10" style={{ background: "#fafbfc" }}>
-      <div className="max-w-7xl mx-auto">
-        <div className="max-w-2xl mb-16">
-          <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-teal-700 mb-5">
-            Local Coverage
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-[56px] font-semibold leading-[1.05] tracking-[-0.03em] text-neutral-900 mb-6">
-            Explore the Capital District<br />by town.
-          </h2>
-          <p className="text-lg text-neutral-600 leading-relaxed font-light">
-            Live updates, market trends, and local insight.
-          </p>
+    <section id="towns" className="bg-background py-28 md:py-36">
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+          <SectionEyebrow>Towns</SectionEyebrow>
+          <Headline>Explore the Capital District by town.</Headline>
+          <Subhead className="mt-6">Start with the places people search most.</Subhead>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {FEATURED_TOWNS.map((t, i) => (
+        {/* Large image panels — 1 col mobile, 2 col tablet, 3 col desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {TOWNS.map((t) => (
             <Link
-              key={t.slug}
-              to={t.href}
-              className={`group block rounded-[32px] overflow-hidden relative h-[420px] transition-transform duration-500 hover:-translate-y-2 ${
-                i === 1 ? "md:translate-y-8" : ""
-              }`}
-              style={{ boxShadow: "0 30px 70px -25px rgba(15,23,42,0.25)" }}
+              key={t.name}
+              to={t.to}
+              className="group relative block overflow-hidden rounded-3xl aspect-[4/5] bg-muted"
             >
-              <div className="absolute inset-0" style={{ background: t.gradient }} />
-              {/* Soft texture */}
-              <div
-                className="absolute inset-0 opacity-30"
-                style={{
-                  background:
-                    "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.4), transparent 60%)",
-                }}
+              <img
+                src={t.img}
+                alt={`${t.name}, NY`}
+                loading="lazy"
+                width={1600}
+                height={2000}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
               />
-              <div className="absolute inset-0 p-8 flex flex-col justify-between text-white">
-                <div>
-                  <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-white/70 mb-3">
-                    This Week
-                  </p>
-                  <h3 className="text-4xl font-semibold tracking-tight">{t.name}</h3>
-                </div>
-                <div>
-                  <p className="text-[15px] text-white/85 leading-relaxed mb-5">{t.insight}</p>
-                  <div
-                    className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium"
-                    style={{ background: "rgba(255,255,255,0.18)", backdropFilter: "blur(12px)" }}
-                  >
-                    Explore {t.name} <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute inset-0 p-7 md:p-9 flex flex-col justify-end text-white">
+                <p className="text-xs font-semibold tracking-[0.2em] uppercase text-white/80 mb-2">
+                  {t.tag}
+                </p>
+                <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.name}</h3>
+                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-white/90">
+                  Explore {t.name} <ArrowRight className="w-4 h-4" />
+                </span>
               </div>
             </Link>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
 
-        <div className="mt-16">
-          <Link
-            to="/communities"
-            className="text-neutral-600 hover:text-neutral-900 font-medium transition-colors"
-          >
-            Browse all towns →
-          </Link>
+/* ============ SECTION 3 — ANALYZE ============ */
+function Analyze() {
+  return (
+    <section className="bg-[hsl(var(--muted))] py-28 md:py-40">
+      <div className="max-w-6xl mx-auto px-6 md:px-10 text-center">
+        <SectionEyebrow>Property Intelligence</SectionEyebrow>
+        <Headline>Analyze any property.</Headline>
+        <Subhead className="mt-6 max-w-2xl mx-auto">
+          Understand monthly cost, cash flow, taxes, and long-term value before you make a move.
+        </Subhead>
+        <CTALinks
+          primary={{ label: "Analyze a Property", to: "/investment-analyzer" }}
+          secondary={{ label: "Learn More", to: "/intelligence" }}
+        />
+
+        {/* Clean product mockup — single device-style card, not a working form */}
+        <div className="mt-20 md:mt-24 mx-auto max-w-4xl">
+          <div className="rounded-[28px] bg-background shadow-[0_40px_120px_-30px_rgba(15,23,42,0.25)] border border-border overflow-hidden text-left">
+            <div className="px-6 md:px-10 py-5 border-b border-border flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+                <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                <span className="w-3 h-3 rounded-full bg-[#28c840]" />
+              </div>
+              <p className="text-xs text-muted-foreground font-medium">capitaldistrictnest.com / analyze</p>
+              <span className="w-12" />
+            </div>
+            <div className="p-8 md:p-12">
+              <p className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">Property Report</p>
+              <p className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
+                137A Elsmere Ave · Delmar, NY
+              </p>
+              <p className="text-muted-foreground mt-1">2-Family · Listed at $389,000</p>
+
+              <div className="mt-10 grid grid-cols-3 gap-px bg-border rounded-2xl overflow-hidden">
+                {[
+                  { l: "Monthly Cash Flow", v: "+$612" },
+                  { l: "Cap Rate", v: "7.2%" },
+                  { l: "5-Year Value", v: "$486K" },
+                ].map((s) => (
+                  <div key={s.l} className="bg-background px-5 py-7 text-center">
+                    <p className="text-[11px] font-semibold tracking-[0.15em] uppercase text-muted-foreground">{s.l}</p>
+                    <p className="text-2xl md:text-3xl font-semibold text-foreground mt-2 tracking-tight">{s.v}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -417,243 +218,154 @@ function ExploreTowns() {
 }
 
 /* ============ SECTION 4 — HOMES ============ */
-function HomesSection() {
+function Homes() {
   return (
-    <section className="relative py-32 md:py-40 px-6 md:px-10 bg-white">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-        <div className="lg:col-span-5 lg:order-2">
-          <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-teal-700 mb-5">
-            Homes
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-[56px] font-semibold leading-[1.05] tracking-[-0.03em] text-neutral-900 mb-6">
-            Search homes across<br />the Capital District.
-          </h2>
-          <p className="text-lg text-neutral-600 leading-relaxed font-light max-w-md mb-10">
-            Find listings and track the market — directly from MLS, updated daily.
-          </p>
+    <section className="bg-background py-28 md:py-40">
+      <div className="max-w-5xl mx-auto px-6 md:px-10 text-center">
+        <SectionEyebrow>Listings</SectionEyebrow>
+        <Headline>Search homes across the Capital District.</Headline>
+        <Subhead className="mt-6 max-w-2xl mx-auto">
+          Browse listings by town, property type, and market.
+        </Subhead>
+        <div className="mt-10">
           <Link
             to="/homes-for-sale"
-            className="inline-flex items-center gap-2 bg-neutral-900 text-white px-7 py-4 rounded-full font-medium text-[15px] hover:bg-neutral-800 transition-colors"
+            className="inline-flex items-center gap-1.5 text-lg font-medium text-primary hover:underline underline-offset-4"
           >
-            Browse Listings <ArrowRight className="w-4 h-4" />
+            Search Homes <ArrowRight className="w-4 h-4" />
           </Link>
-        </div>
-
-        <div className="lg:col-span-7 lg:order-1">
-          <div
-            className="rounded-[32px] p-8"
-            style={{
-              background: "linear-gradient(160deg, #f0f4f8 0%, #fafbfc 100%)",
-              border: "1px solid rgba(15,23,42,0.06)",
-              boxShadow: "0 40px 100px -30px rgba(15,23,42,0.18)",
-            }}
-          >
-            {/* Search bar */}
-            <div className="bg-white rounded-2xl p-2 flex items-center gap-2 mb-6"
-                 style={{ border: "1px solid rgba(15,23,42,0.08)" }}>
-              <div className="flex items-center gap-2 px-3 flex-1">
-                <Search className="w-4 h-4 text-neutral-400" />
-                <span className="text-[15px] text-neutral-500">Town, ZIP, or address</span>
-              </div>
-              <button className="bg-neutral-900 text-white text-sm font-medium px-5 py-2.5 rounded-xl">
-                Search
-              </button>
-            </div>
-
-            {/* Listing preview */}
-            <div className="space-y-3">
-              {[
-                { addr: "47 Kenwood Ave, Delmar", price: "$489,000", beds: "4 bd · 2 ba · 2,140 sf", tag: "New" },
-                { addr: "12 Marion Ave, Albany", price: "$315,000", beds: "3 bd · 2 ba · 1,820 sf", tag: "Price ↓" },
-                { addr: "88 Phila St, Saratoga", price: "$725,000", beds: "3 bd · 2.5 ba · 2,400 sf" },
-              ].map((l) => (
-                <div
-                  key={l.addr}
-                  className="bg-white rounded-2xl p-4 flex items-center justify-between"
-                  style={{ border: "1px solid rgba(15,23,42,0.06)" }}
-                >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-12 h-12 rounded-xl flex-shrink-0"
-                         style={{ background: "linear-gradient(135deg, #cbd5e1, #94a3b8)" }} />
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold text-neutral-900 truncate">{l.addr}</p>
-                      <p className="text-xs text-neutral-500 mt-0.5">{l.beds}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 flex-shrink-0">
-                    {l.tag && (
-                      <span className="text-[10px] uppercase tracking-wider font-semibold text-teal-700 bg-teal-600/10 px-2 py-1 rounded-full">
-                        {l.tag}
-                      </span>
-                    )}
-                    <p className="text-base font-semibold text-neutral-900">{l.price}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </section>
   );
 }
 
-/* ============ SECTION 5 — PROPERTY TYPES ============ */
-function PropertyTypes() {
+/* ============ SECTION 5 — MARKET INTELLIGENCE ============ */
+function Intelligence() {
   return (
-    <section className="relative py-32 md:py-40 px-6 md:px-10" style={{ background: "#fafbfc" }}>
-      <div className="max-w-7xl mx-auto">
-        <div className="max-w-2xl mb-16">
-          <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-teal-700 mb-5">
-            Strategy
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-[56px] font-semibold leading-[1.05] tracking-[-0.03em] text-neutral-900 mb-6">
-            Find the right property<br />for your strategy.
-          </h2>
-        </div>
-
-        {/* Featured + 2 supporting */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
-          {/* Featured — Multi-unit */}
-          <Link
-            to="/analyze/multifamily"
-            className="lg:col-span-7 group block rounded-[32px] p-10 md:p-12 relative overflow-hidden h-[440px] transition-transform hover:-translate-y-2"
-            style={{
-              background: "linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0f766e 100%)",
-              boxShadow: "0 40px 100px -30px rgba(15,23,42,0.4)",
-            }}
-          >
-            <div
-              className="absolute -top-20 -right-20 w-[400px] h-[400px] rounded-full opacity-30"
-              style={{ background: "radial-gradient(circle, rgba(20,184,166,0.5), transparent 70%)" }}
-            />
-            <div className="relative h-full flex flex-col justify-between text-white">
-              <div className="flex items-center gap-2">
-                <Building2 className="w-5 h-5 text-teal-400" />
-                <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-white/60">
-                  Featured · Multi-Unit
-                </span>
-              </div>
-              <div>
-                <h3 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-                  Cash-flowing<br />multifamily.
-                </h3>
-                <p className="text-white/70 leading-relaxed max-w-md mb-6">
-                  Pre-screened 2–4 unit properties with cap rate, cash flow, and
-                  deal score — across the Capital District.
-                </p>
-                <div className="inline-flex items-center gap-2 text-sm font-medium">
-                  Explore Multi-Unit <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </div>
-              </div>
-            </div>
-          </Link>
-
-          {/* Supporting */}
-          <div className="lg:col-span-5 grid grid-cols-1 gap-6 md:gap-8">
-            <Link
-              to="/homes-for-sale"
-              className="group block rounded-[32px] p-8 relative overflow-hidden h-[208px] transition-transform hover:-translate-y-2 bg-white"
-              style={{
-                border: "1px solid rgba(15,23,42,0.06)",
-                boxShadow: "0 20px 60px -20px rgba(15,23,42,0.15)",
-              }}
-            >
-              <div className="h-full flex flex-col justify-between">
-                <Home className="w-6 h-6 text-neutral-700" />
-                <div>
-                  <h3 className="text-2xl font-semibold tracking-tight text-neutral-900 mb-2">
-                    Single Family
-                  </h3>
-                  <p className="text-sm text-neutral-600 mb-3">
-                    Owner-occupant homes with full intelligence layer.
-                  </p>
-                  <span className="text-sm font-medium text-teal-700 inline-flex items-center gap-1">
-                    Explore <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
-              </div>
-            </Link>
-
-            <Link
-              to="/analyze/land"
-              className="group block rounded-[32px] p-8 relative overflow-hidden h-[208px] transition-transform hover:-translate-y-2"
-              style={{
-                background: "linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)",
-                border: "1px solid rgba(15,23,42,0.04)",
-                boxShadow: "0 20px 60px -20px rgba(15,23,42,0.12)",
-              }}
-            >
-              <div className="h-full flex flex-col justify-between">
-                <Trees className="w-6 h-6 text-emerald-700" />
-                <div>
-                  <h3 className="text-2xl font-semibold tracking-tight text-neutral-900 mb-2">
-                    Land
-                  </h3>
-                  <p className="text-sm text-neutral-700 mb-3">
-                    Lots, acreage, and development opportunities.
-                  </p>
-                  <span className="text-sm font-medium text-emerald-700 inline-flex items-center gap-1">
-                    Explore <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ============ SECTION 6 — EMAIL CAPTURE ============ */
-function EmailCapture() {
-  const [email, setEmail] = useState("");
-  return (
-    <section className="relative py-32 md:py-40 px-6 md:px-10 bg-white overflow-hidden">
-      {/* Ambient */}
-      <div
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(ellipse at top, rgba(13,148,136,0.08), transparent 60%), #ffffff",
-        }}
-      />
-      <div className="max-w-3xl mx-auto text-center">
-        <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-teal-700 mb-5">
-          Weekly Updates
+    <section className="relative bg-foreground text-background py-28 md:py-40 overflow-hidden">
+      <div className="max-w-5xl mx-auto px-6 md:px-10 text-center relative z-10">
+        <p className="text-sm font-semibold tracking-[0.2em] uppercase text-background/50 mb-4">
+          Market Intelligence
         </p>
-        <h2 className="text-4xl md:text-5xl lg:text-[56px] font-semibold leading-[1.05] tracking-[-0.03em] text-neutral-900 mb-6">
-          Get weekly market<br />updates.
+        <h2 className="text-5xl md:text-7xl lg:text-[5.5rem] font-semibold tracking-[-0.035em] leading-[1.02]">
+          Know what's changing locally.
         </h2>
-        <p className="text-lg text-neutral-600 leading-relaxed font-light mb-10 max-w-xl mx-auto">
-          Listings, price changes, and what's happening locally — every Sunday morning.
+        <p className="mt-6 text-xl md:text-2xl text-background/70 font-light leading-relaxed max-w-2xl mx-auto">
+          Weekly town updates, new listings, price movement, and local insight.
         </p>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-lg font-medium">
+          <Link
+            to="/living-in-delmar"
+            className="inline-flex items-center gap-1.5 text-background hover:underline underline-offset-4"
+          >
+            View Delmar This Week <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            to="/intelligence"
+            className="inline-flex items-center gap-1.5 text-background/70 hover:underline underline-offset-4"
+          >
+            All Towns <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============ SECTION 6 — BUSINESSES ============ */
+function Businesses() {
+  const featured = delmarBusinesses.slice(0, 3);
+  return (
+    <section className="bg-background py-28 md:py-36">
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <SectionEyebrow>Local Businesses</SectionEyebrow>
+          <Headline>Discover local businesses.</Headline>
+          <Subhead className="mt-6">
+            Restaurants, coffee shops, home services, and local professionals featured by town.
+          </Subhead>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          {featured.map((b) => (
+            <Link
+              key={b.slug}
+              to={`/business/${b.slug}`}
+              className="group block"
+            >
+              <div className="relative overflow-hidden rounded-3xl aspect-[4/3] bg-muted mb-5">
+                <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--accent))]/15 via-[hsl(var(--primary))]/10 to-[hsl(var(--muted))]" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-5xl font-semibold tracking-tight text-foreground/20">
+                    {b.name.split(" ").map(w => w[0]).slice(0,2).join("")}
+                  </span>
+                </div>
+              </div>
+              <p className="text-xs font-semibold tracking-[0.18em] uppercase text-muted-foreground mb-1.5">
+                {b.category} · Delmar
+              </p>
+              <h3 className="text-2xl font-semibold text-foreground tracking-tight">{b.name}</h3>
+              <p className="text-muted-foreground mt-1.5 leading-relaxed">{b.tagline}</p>
+              <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+                View Details <ArrowRight className="w-4 h-4" />
+              </span>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-14 text-center">
+          <Link
+            to="/living-in-delmar#businesses"
+            className="inline-flex items-center gap-1.5 text-lg font-medium text-primary hover:underline underline-offset-4"
+          >
+            Explore Delmar Businesses <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============ SECTION 7 — EMAIL SIGNUP ============ */
+function EmailSignup() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "ok">("idle");
+
+  return (
+    <section className="bg-[hsl(var(--muted))] py-28 md:py-36">
+      <div className="max-w-3xl mx-auto px-6 md:px-10 text-center">
+        <SectionEyebrow>Weekly Updates</SectionEyebrow>
+        <Headline>Get weekly Capital District updates.</Headline>
+        <Subhead className="mt-6">
+          Town updates, listings, market changes, and local highlights.
+        </Subhead>
 
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            // Future: route to /api/subscribe or supabase function
+            if (email) setStatus("ok");
           }}
-          className="flex flex-col sm:flex-row items-stretch gap-3 max-w-md mx-auto"
+          className="mt-12 flex flex-col sm:flex-row gap-3 max-w-xl mx-auto"
         >
           <input
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@email.com"
-            className="flex-1 bg-white px-5 py-4 rounded-full text-[15px] text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-teal-600/30"
-            style={{ border: "1px solid rgba(15,23,42,0.12)" }}
+            placeholder="you@example.com"
+            className="flex-1 h-14 px-5 rounded-full bg-background border border-border text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
           />
           <button
             type="submit"
-            className="bg-neutral-900 text-white px-7 py-4 rounded-full font-medium text-[15px] hover:bg-neutral-800 transition-colors"
+            className="h-14 px-8 rounded-full bg-foreground text-background font-semibold text-base hover:bg-foreground/85 transition-colors"
           >
             Subscribe
           </button>
         </form>
-        <p className="text-xs text-neutral-500 mt-4">No spam. Unsubscribe anytime.</p>
+        {status === "ok" && (
+          <p className="mt-4 text-sm text-muted-foreground">Thanks — you'll hear from us this week.</p>
+        )}
       </div>
     </section>
   );
@@ -662,27 +374,23 @@ function EmailCapture() {
 /* ============ PAGE ============ */
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white text-neutral-900">
+    <div className="min-h-screen bg-background">
       <SEOHead
-        title="Capital District Nest | Albany NY Real Estate Intelligence"
-        description="Search homes, analyze any property, and understand what's happening in your market — in real time. Capital District real estate intelligence platform."
-        keywords="Capital District real estate, Albany homes for sale, property analysis Albany NY, Delmar real estate, Saratoga Springs"
-        canonical="https://www.capitaldistrictnest.com"
-        ogImage="https://www.capitaldistrictnest.com/og-image-capital-district.jpg"
-        ogType="website"
-        structuredData={localBusinessSchema}
-        noBreadcrumb
+        title="Capital District Nest — Homes, Towns & Market Intelligence in Upstate NY"
+        description="Explore homes, towns, and market intelligence across New York's Capital District. Delmar, Albany, Saratoga, Troy, Schenectady, Clifton Park."
+        canonical="https://www.capitaldistrictnest.com/"
+        schema={localBusinessSchema}
       />
-
       <CleanHeader />
-
-      <Hero />
-      <AnalyzeSection />
-      <ExploreTowns />
-      <HomesSection />
-      <PropertyTypes />
-      <EmailCapture />
-
+      <main>
+        <Hero />
+        <Towns />
+        <Analyze />
+        <Homes />
+        <Intelligence />
+        <Businesses />
+        <EmailSignup />
+      </main>
       <Footer />
     </div>
   );
