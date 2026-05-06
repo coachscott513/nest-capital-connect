@@ -94,7 +94,7 @@ const Dropdown = ({ isOpen, onClose, children, align = "left" }: DropdownProps) 
   return (
     <div
       ref={ref}
-      className={`absolute top-full mt-3 rounded-2xl p-5 min-w-72 z-[9999] animate-in fade-in slide-in-from-top-2 duration-200 bg-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.18)] border border-border ${
+      className={`absolute top-full mt-3 p-5 min-w-72 z-[9999] dropdown-panel ${
         align === "right" ? "right-0" : "left-0"
       }`}
     >
@@ -109,12 +109,20 @@ const CleanHeader = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [townSearch, setTownSearch] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setActiveDropdown(null);
     setMobileMenuOpen(false);
     setTownSearch("");
   }, [location.pathname]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -145,9 +153,12 @@ const CleanHeader = () => {
     setTownSearch("");
   };
 
+  // Frosted on scroll, when a dropdown is open, or when mobile menu is open.
+  const isFrosted = scrolled || activeDropdown !== null || mobileMenuOpen;
+
   return (
     <>
-      <header className="sticky top-0 z-[2000] bg-white border-b border-border/70 shadow-[0_1px_0_0_rgba(0,0,0,0.02)]">
+      <header className={`fixed top-0 left-0 right-0 z-[2000] nav-shell ${isFrosted ? "nav-frost" : "nav-transparent"}`}>
         <nav className="w-full max-w-7xl mx-auto px-5 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-[68px]">
             {/* Logo — circular teal dot + wordmark */}
