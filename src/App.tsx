@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import CommandCenter from "@/components/CommandCenter";
+import FloatingLiveAgent from "@/components/FloatingLiveAgent";
 import GARouteTracker from "@/components/GARouteTracker";
 import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext";
 import Index from "./pages/Index";
