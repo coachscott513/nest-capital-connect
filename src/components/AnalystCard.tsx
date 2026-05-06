@@ -9,8 +9,9 @@ import {
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 
-const PHONE_NUMBER = '5186762347';
-const FORMATTED_PHONE = '(518) 676-2347';
+const PHONE_NUMBER = '5185227265';
+const FORMATTED_PHONE = '(518) 522-7265';
+const EMAIL = 'scott@capitaldistrictnest.com';
 
 interface AnalystCardProps {
   title?: string;
