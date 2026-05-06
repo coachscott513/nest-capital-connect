@@ -181,11 +181,11 @@ const HeroBand = ({
   const ctaClass = isDark ? "btn-dark-cta" : "btn-primary-apple";
 
   const Cta = isExternal ? (
-    <a href={ctaHref} target="_blank" rel="noreferrer" className={ctaClass}>
+    <a href={ctaHref} target="_blank" rel="noreferrer" className={`${ctaClass} cta-arrow`}>
       {ctaLabel} <ArrowRight className="w-4 h-4" />
     </a>
   ) : (
-    <Link to={ctaHref} className={ctaClass}>
+    <Link to={ctaHref} className={`${ctaClass} cta-arrow`}>
       {ctaLabel} <ArrowRight className="w-4 h-4" />
     </Link>
   );

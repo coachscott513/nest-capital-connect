@@ -92,18 +92,19 @@ function TownTile({
   return (
     <Link
       to={to}
-      className="group relative block overflow-hidden rounded-[24px] aspect-[4/5] md:aspect-[3/4]"
+      className="group relative block overflow-hidden rounded-[24px] aspect-[4/5] md:aspect-[3/4] cta-arrow"
     >
       <img
         src={img}
         alt={name}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[700ms] group-hover:scale-[1.04]"
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-6 md:p-7 text-white">
         <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">{name}</h3>
         <p className="text-sm md:text-base text-white/85 mt-1 font-light">{sub}</p>
-        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-white/95 opacity-0 group-hover:opacity-100 transition-opacity">
+        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-white/95 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
           Explore <ArrowRight className="w-3.5 h-3.5" />
         </span>
       </div>
@@ -148,11 +149,8 @@ const Index = () => {
                 Explore Delmar, Albany, Saratoga, Troy, Schenectady, and Clifton Park —
                 with local listings, market activity, and lifestyle insight.
               </p>
-              <div className="mt-10">
-                <Link
-                  to="/communities"
-                  className="inline-flex items-center gap-2 bg-[#0d6e66] text-white hover:bg-[#0a5d57] px-8 py-4 rounded-full font-semibold text-base transition-colors"
-                >
+              <div className="cta-anchor">
+                <Link to="/communities" className="btn-primary-apple cta-arrow">
                   Browse all towns <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
