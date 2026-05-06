@@ -173,42 +173,78 @@ const LivingInDelmar = () => {
 
       <MainHeader />
 
-      {/* ============ 1. HERO — Glass Dashboard (no photo) ============ */}
-      <section className="relative w-full overflow-hidden bg-white">
-        {/* Soft ambient gradient + blurred shapes */}
-        <div aria-hidden className="absolute inset-0 -z-10">
+      {/* ============ 1. HERO — Layered Glass (Vision Pro depth) ============ */}
+      <section className="relative w-full overflow-hidden">
+        {/* Layer 1: ambient gradient */}
+        <div aria-hidden className="absolute inset-0 -z-30">
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, #ffffff 0%, #f6fafa 55%, #eef4f5 100%)",
-            }}
-          />
-          <div
-            className="absolute -top-32 -right-24 w-[600px] h-[600px] rounded-full opacity-50"
-            style={{
-              background:
-                "radial-gradient(circle at center, rgba(13,148,136,0.22) 0%, rgba(13,148,136,0) 70%)",
-              filter: "blur(40px)",
-            }}
-          />
-          <div
-            className="absolute top-1/2 -left-32 w-[480px] h-[480px] rounded-full opacity-50"
-            style={{
-              background:
-                "radial-gradient(circle at center, rgba(99,179,237,0.18) 0%, rgba(99,179,237,0) 70%)",
-              filter: "blur(40px)",
+                "linear-gradient(160deg, #fdfdfb 0%, #f3f8f8 40%, #e8f1f2 75%, #f5eef0 100%)",
             }}
           />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-28 pb-24 lg:pt-36 lg:pb-32">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        {/* Layer 2: blurred floating blobs (depth + motion) */}
+        <div aria-hidden className="absolute inset-0 -z-20 overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.6, ease: "easeOut" }}
+            className="absolute -top-40 -right-32 w-[720px] h-[720px] rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(13,148,136,0.32) 0%, rgba(13,148,136,0) 65%)",
+              filter: "blur(60px)",
+            }}
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.8, ease: "easeOut", delay: 0.1 }}
+            className="absolute top-1/3 -left-40 w-[560px] h-[560px] rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(99,179,237,0.28) 0%, rgba(99,179,237,0) 65%)",
+              filter: "blur(70px)",
+            }}
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2, ease: "easeOut", delay: 0.2 }}
+            className="absolute bottom-0 right-1/4 w-[420px] h-[420px] rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(244,180,170,0.28) 0%, rgba(244,180,170,0) 65%)",
+              filter: "blur(80px)",
+            }}
+          />
+          {/* subtle noise / grain */}
+          <div
+            className="absolute inset-0 opacity-[0.035] mix-blend-overlay"
+            style={{
+              backgroundImage:
+                "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+            }}
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-28 pb-32 lg:pt-36 lg:pb-40">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
             {/* LEFT — copy */}
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-6">
               <motion.div
                 {...fadeUp}
-                className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur-md border border-white/60 px-4 py-1.5 mb-7 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)]"
+                className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8"
+                style={{
+                  background: "rgba(255,255,255,0.55)",
+                  backdropFilter: "blur(22px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(22px) saturate(180%)",
+                  border: "1px solid rgba(255,255,255,0.55)",
+                  boxShadow: "0 8px 24px -10px rgba(0,0,0,0.08)",
+                }}
               >
                 <span className="relative flex h-2 w-2">
                   <span
@@ -220,7 +256,7 @@ const LivingInDelmar = () => {
                     style={{ background: TEAL }}
                   />
                 </span>
-                <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-neutral-700">
+                <span className="text-[11px] uppercase tracking-[0.22em] font-semibold text-neutral-700">
                   Live · {weekLabel}
                 </span>
               </motion.div>
@@ -228,17 +264,19 @@ const LivingInDelmar = () => {
               <motion.h1
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: 0.05 }}
-                className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.04] tracking-tight text-neutral-900"
+                className="text-[3.5rem] md:text-7xl lg:text-[5.5rem] font-bold leading-[0.98] tracking-[-0.04em] text-neutral-900"
               >
-                Delmar <span style={{ color: TEAL }}>This Week.</span>
+                Delmar.
+                <br />
+                <span style={{ color: TEAL }}>This week.</span>
               </motion.h1>
 
               <motion.p
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: 0.1 }}
-                className="mt-6 max-w-xl text-lg md:text-xl text-neutral-500 leading-relaxed font-light"
+                className="mt-7 max-w-md text-lg md:text-xl text-neutral-500 leading-relaxed font-light"
               >
-                Real estate activity, local updates, and community highlights — refreshed every Friday.
+                Listings, market shifts, and local intel — refreshed every Friday by someone who works here.
               </motion.p>
 
               <motion.div
@@ -248,101 +286,105 @@ const LivingInDelmar = () => {
               >
                 <a
                   href="#homes"
-                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition shadow-[0_8px_24px_-8px_rgba(13,148,136,0.5)] hover:shadow-[0_12px_30px_-8px_rgba(13,148,136,0.6)] hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition shadow-[0_12px_30px_-8px_rgba(13,148,136,0.55)] hover:shadow-[0_16px_40px_-8px_rgba(13,148,136,0.65)] hover:-translate-y-0.5"
                   style={{ background: TEAL }}
                 >
                   View New Listings <ArrowRight className="w-4 h-4" />
                 </a>
                 <a
                   href="#updates"
-                  className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur-md border border-white/70 px-7 py-3.5 text-sm font-semibold text-neutral-900 hover:bg-white transition shadow-[0_4px_16px_-6px_rgba(0,0,0,0.08)]"
+                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-neutral-900 hover:-translate-y-0.5 transition"
+                  style={{
+                    background: "rgba(255,255,255,0.55)",
+                    backdropFilter: "blur(22px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(22px) saturate(180%)",
+                    border: "1px solid rgba(255,255,255,0.55)",
+                    boxShadow: "0 8px 24px -10px rgba(0,0,0,0.08)",
+                  }}
                 >
                   Get Weekly Updates
                 </a>
                 <a
                   href={PHONE_HREF}
-                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-neutral-700 hover:text-neutral-900 transition"
+                  className="inline-flex items-center gap-2 rounded-full px-5 py-3.5 text-sm font-semibold text-neutral-700 hover:text-neutral-900 transition"
                 >
                   <Phone className="w-4 h-4" /> Talk to Scott
                 </a>
               </motion.div>
             </div>
 
-            {/* RIGHT — glass preview cards */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative mx-auto max-w-[460px]">
-                {/* Top card — This Week */}
+            {/* RIGHT — staggered floating glass cards */}
+            <div className="lg:col-span-6 relative">
+              <div className="relative mx-auto max-w-[520px] h-[520px] lg:h-[560px]">
+                {/* Card 1 — Market Pulse (back / largest) */}
                 <motion.div
-                  initial={{ opacity: 0, y: 30, rotate: -1.5 }}
-                  animate={{ opacity: 1, y: 0, rotate: -1.5 }}
-                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-                  className="relative z-30 rounded-3xl p-6"
+                  initial={{ opacity: 0, y: 30, rotate: -3 }}
+                  animate={{ opacity: 1, y: 0, rotate: -3 }}
+                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                  className="absolute top-2 left-0 w-[78%] z-10 rounded-[28px] p-6"
                   style={{
-                    background: "rgba(255,255,255,0.72)",
-                    backdropFilter: "blur(24px) saturate(180%)",
-                    WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                    border: "1px solid rgba(255,255,255,0.7)",
+                    background: "rgba(255,255,255,0.55)",
+                    backdropFilter: "blur(26px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(26px) saturate(180%)",
+                    border: "1px solid rgba(255,255,255,0.45)",
                     boxShadow:
-                      "0 24px 60px -20px rgba(15,23,42,0.18), 0 1px 0 rgba(255,255,255,0.9) inset",
+                      "0 30px 80px -25px rgba(15,23,42,0.22), 0 1px 0 rgba(255,255,255,0.8) inset",
                   }}
                 >
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between mb-5">
                     <div className="flex items-center gap-2.5">
                       <div
                         className="w-9 h-9 rounded-xl flex items-center justify-center"
                         style={{ background: `${TEAL}1A` }}
                       >
-                        <Newspaper className="w-4 h-4" style={{ color: TEAL }} />
+                        <TrendingUp className="w-4 h-4" style={{ color: TEAL }} />
                       </div>
                       <div>
-                        <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-neutral-500">
-                          This Week
+                        <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-neutral-500">
+                          Delmar 12054
                         </p>
-                        <p className="text-sm font-semibold text-neutral-900">
-                          What changed in Delmar
-                        </p>
+                        <p className="text-sm font-semibold text-neutral-900">Market Pulse</p>
                       </div>
                     </div>
                     <span
-                      className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
+                      className="text-[9px] font-semibold px-2 py-0.5 rounded-full"
                       style={{ background: `${TEAL}14`, color: TEAL }}
                     >
                       LIVE
                     </span>
                   </div>
-                  <div className="space-y-2.5">
-                    {[
-                      { icon: HomeIcon, label: "3 closed", meta: "highest $485K" },
-                      { icon: TrendingUp, label: "12 active", meta: "−15% in 60d" },
-                      { icon: Sparkles, label: "Under $500K", meta: "multiple offers" },
-                    ].map((row) => (
-                      <div
-                        key={row.label}
-                        className="flex items-center justify-between rounded-xl bg-white/60 border border-white/60 px-3 py-2.5"
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <row.icon className="w-4 h-4" style={{ color: TEAL }} />
-                          <span className="text-sm font-medium text-neutral-900">{row.label}</span>
-                        </div>
-                        <span className="text-xs text-neutral-500 font-light">{row.meta}</span>
-                      </div>
-                    ))}
+                  <p className="text-[15px] font-medium text-neutral-900 leading-snug mb-4">
+                    Inventory is tight. Demand is rising.
+                  </p>
+                  <div className="flex items-end gap-5">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-neutral-500 font-semibold">Median</p>
+                      <p className="text-2xl font-bold text-neutral-900 tracking-tight">$465K</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-neutral-500 font-semibold">Active</p>
+                      <p className="text-2xl font-bold text-neutral-900 tracking-tight">12</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-neutral-500 font-semibold">DOM</p>
+                      <p className="text-2xl font-bold text-neutral-900 tracking-tight">9d</p>
+                    </div>
                   </div>
                 </motion.div>
 
-                {/* Bottom card — Market Snapshot */}
+                {/* Card 2 — This Week (middle / overlapping right) */}
                 <motion.div
-                  initial={{ opacity: 0, y: 40, rotate: 2 }}
-                  animate={{ opacity: 1, y: 0, rotate: 2 }}
-                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-                  className="relative z-20 -mt-6 ml-6 sm:ml-12 rounded-3xl p-6"
+                  initial={{ opacity: 0, y: 40, rotate: 2.5 }}
+                  animate={{ opacity: 1, y: 0, rotate: 2.5 }}
+                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
+                  className="absolute top-[38%] right-0 w-[72%] z-20 rounded-[28px] p-5"
                   style={{
-                    background: "rgba(255,255,255,0.7)",
-                    backdropFilter: "blur(24px) saturate(180%)",
-                    WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                    border: "1px solid rgba(255,255,255,0.7)",
+                    background: "rgba(255,255,255,0.6)",
+                    backdropFilter: "blur(28px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(28px) saturate(180%)",
+                    border: "1px solid rgba(255,255,255,0.5)",
                     boxShadow:
-                      "0 24px 60px -20px rgba(15,23,42,0.16), 0 1px 0 rgba(255,255,255,0.9) inset",
+                      "0 30px 80px -22px rgba(15,23,42,0.22), 0 1px 0 rgba(255,255,255,0.8) inset",
                   }}
                 >
                   <div className="flex items-center gap-2.5 mb-4">
@@ -350,31 +392,62 @@ const LivingInDelmar = () => {
                       className="w-9 h-9 rounded-xl flex items-center justify-center"
                       style={{ background: `${TEAL}1A` }}
                     >
-                      <TrendingUp className="w-4 h-4" style={{ color: TEAL }} />
+                      <Newspaper className="w-4 h-4" style={{ color: TEAL }} />
                     </div>
                     <div>
-                      <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-neutral-500">
-                        Delmar 12054
+                      <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-neutral-500">
+                        This Week
                       </p>
-                      <p className="text-sm font-semibold text-neutral-900">Market Snapshot</p>
+                      <p className="text-sm font-semibold text-neutral-900">What changed</p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="space-y-2">
                     {[
-                      { label: "Median", value: "$465K" },
-                      { label: "Active", value: "12" },
-                      { label: "DOM", value: "9d" },
-                    ].map((m) => (
-                      <div key={m.label} className="rounded-xl bg-white/60 border border-white/60 p-2.5">
-                        <p className="text-[10px] uppercase tracking-wider text-neutral-500 font-medium">
-                          {m.label}
-                        </p>
-                        <p className="text-base font-bold text-neutral-900 mt-0.5 tracking-tight">
-                          {m.value}
-                        </p>
+                      { icon: HomeIcon, label: "3 homes closed", meta: "high $485K" },
+                      { icon: Sparkles, label: "Multi-offers under $500K", meta: "returning" },
+                    ].map((row) => (
+                      <div
+                        key={row.label}
+                        className="flex items-center justify-between rounded-xl px-3 py-2.5"
+                        style={{
+                          background: "rgba(255,255,255,0.5)",
+                          border: "1px solid rgba(255,255,255,0.5)",
+                        }}
+                      >
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <row.icon className="w-4 h-4 shrink-0" style={{ color: TEAL }} />
+                          <span className="text-[13px] font-medium text-neutral-900 truncate">{row.label}</span>
+                        </div>
+                        <span className="text-[11px] text-neutral-500 font-light shrink-0 ml-2">{row.meta}</span>
                       </div>
                     ))}
                   </div>
+                </motion.div>
+
+                {/* Card 3 — Insider Line (front / smallest, bottom) */}
+                <motion.div
+                  initial={{ opacity: 0, y: 50, rotate: -1.5 }}
+                  animate={{ opacity: 1, y: 0, rotate: -1.5 }}
+                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+                  className="absolute bottom-0 left-[8%] w-[68%] z-30 rounded-[24px] p-5"
+                  style={{
+                    background: "rgba(15,23,42,0.78)",
+                    backdropFilter: "blur(24px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    boxShadow:
+                      "0 30px 70px -20px rgba(15,23,42,0.4), 0 1px 0 rgba(255,255,255,0.08) inset",
+                  }}
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <Sparkles className="w-3.5 h-3.5" style={{ color: TEAL }} />
+                    <p className="text-[10px] uppercase tracking-[0.22em] font-semibold" style={{ color: TEAL }}>
+                      Insider Line
+                    </p>
+                  </div>
+                  <p className="text-[14px] text-white/90 font-light leading-relaxed">
+                    Cleanly priced Bethlehem Central homes are moving in under two weekends.
+                  </p>
                 </motion.div>
               </div>
             </div>
@@ -382,99 +455,161 @@ const LivingInDelmar = () => {
         </div>
       </section>
 
-      {/* ============ 1b. MARKET SNAPSHOT BAR ============ */}
-      <section className="bg-white border-b border-neutral-100">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12 py-10 lg:py-14">
-          <div className="flex items-end justify-between mb-6 flex-wrap gap-3">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] font-semibold mb-2" style={{ color: TEAL }}>
-                Delmar Market Snapshot
+      {/* ============ 1b. INSIGHT-LED MARKET SNAPSHOT ============ */}
+      <section className="relative bg-white border-b border-neutral-100 overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute -top-20 right-0 w-[360px] h-[360px] rounded-full opacity-60 -z-0"
+          style={{
+            background:
+              "radial-gradient(circle at center, rgba(13,148,136,0.10) 0%, rgba(13,148,136,0) 70%)",
+            filter: "blur(50px)",
+          }}
+        />
+        <div className="relative max-w-6xl mx-auto px-6 lg:px-12 py-16 lg:py-20">
+          <div className="grid lg:grid-cols-12 gap-10 items-end">
+            <motion.div {...fadeUp} className="lg:col-span-7">
+              <p className="text-[11px] uppercase tracking-[0.22em] font-semibold mb-4" style={{ color: TEAL }}>
+                Delmar Market · {weekLabel}
               </p>
-              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 tracking-tight">
-                The numbers, right now.
+              <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold text-neutral-900 tracking-[-0.03em] leading-[1.02]">
+                Inventory is tight.
+                <br />
+                <span className="text-neutral-400">Demand is rising.</span>
               </h2>
-            </div>
-            <p className="text-xs text-neutral-400 font-light">{weekLabel}</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[
-              { label: "Active Listings", value: "12" },
-              { label: "Sold (30 days)", value: "8" },
-              { label: "Median List", value: "$465K" },
-              { label: "Avg Days on Market", value: "9" },
-            ].map((m) => (
-              <div
-                key={m.label}
-                className="rounded-2xl p-5 border border-neutral-100"
-                style={{
-                  background: "rgba(255,255,255,0.7)",
-                  backdropFilter: "blur(20px) saturate(180%)",
-                  WebkitBackdropFilter: "blur(20px) saturate(180%)",
-                  boxShadow: "0 8px 30px -16px rgba(0,0,0,0.08)",
-                }}
-              >
-                <p className="text-[11px] uppercase tracking-[0.18em] text-neutral-500 font-semibold">
-                  {m.label}
-                </p>
-                <p className="text-3xl font-bold text-neutral-900 mt-2 tracking-tight">{m.value}</p>
-              </div>
-            ))}
+            </motion.div>
+
+            <motion.div
+              {...fadeUp}
+              transition={{ ...fadeUp.transition, delay: 0.1 }}
+              className="lg:col-span-5 space-y-3"
+            >
+              {[
+                { label: "Active homes", value: "12", note: "−15% in 60 days" },
+                { label: "Closed (30d)", value: "8", note: "median $465K" },
+                { label: "Avg days on market", value: "9", note: "down from 14" },
+              ].map((m) => (
+                <div
+                  key={m.label}
+                  className="flex items-baseline justify-between rounded-2xl px-5 py-4"
+                  style={{
+                    background: "rgba(255,255,255,0.6)",
+                    backdropFilter: "blur(20px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(20px) saturate(180%)",
+                    border: "1px solid rgba(255,255,255,0.6)",
+                    boxShadow: "0 12px 40px -20px rgba(0,0,0,0.10)",
+                  }}
+                >
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-neutral-500 font-semibold">
+                      {m.label}
+                    </p>
+                    <p className="text-xs text-neutral-400 font-light mt-0.5">{m.note}</p>
+                  </div>
+                  <p className="text-3xl font-bold text-neutral-900 tracking-tight">{m.value}</p>
+                </div>
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ============ 2. LIVE FEED ============ */}
-      <section id="feed" className="py-24 lg:py-32 bg-white">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <motion.div {...fadeUp} className="max-w-2xl mb-14">
+      {/* ============ 2. LIVE FEED — Floating Glass, Broken Grid ============ */}
+      <section id="feed" className="relative py-28 lg:py-36 overflow-hidden">
+        <div aria-hidden className="absolute inset-0 -z-10">
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, #ffffff 0%, #f7faf9 60%, #ffffff 100%)",
+            }}
+          />
+          <div
+            className="absolute top-20 left-1/3 w-[500px] h-[500px] rounded-full opacity-50"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(13,148,136,0.14) 0%, rgba(13,148,136,0) 70%)",
+              filter: "blur(60px)",
+            }}
+          />
+          <div
+            className="absolute bottom-10 right-10 w-[420px] h-[420px] rounded-full opacity-50"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(244,180,170,0.18) 0%, rgba(244,180,170,0) 70%)",
+              filter: "blur(70px)",
+            }}
+          />
+        </div>
+
+        <div className="relative max-w-6xl mx-auto px-6 lg:px-12">
+          <motion.div {...fadeUp} className="max-w-2xl mb-16">
             <div className="inline-flex items-center gap-2 mb-5">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: TEAL }} />
                 <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: TEAL }} />
               </span>
               <p className="text-[11px] uppercase tracking-[0.22em] font-semibold" style={{ color: TEAL }}>
-                This Week in Delmar · {weekLabel}
+                This Week · {weekLabel}
               </p>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              What actually changed this week.
+            <h2 className="text-4xl md:text-6xl font-bold tracking-[-0.03em] text-neutral-900 leading-[1.02]">
+              What actually
+              <br />
+              <span className="text-neutral-400">changed this week.</span>
             </h2>
-            <p className="mt-5 text-lg text-neutral-500 font-light">
-              Homes sold, market shifts, buyer behavior, and one local update — written by someone who works here every day.
-            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {liveFeed.map((item) => (
-              <motion.a
-                key={item.title}
-                href={item.href}
-                {...fadeUp}
-                className="group block rounded-2xl bg-neutral-50 hover:bg-white border border-transparent hover:border-neutral-200 p-7 transition-all duration-300 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.12)]"
-              >
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: `${TEAL}14` }}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {liveFeed.map((item, i) => {
+              const offsets = ["lg:translate-y-0", "lg:translate-y-10", "lg:-translate-y-4", "lg:translate-y-6"];
+              const rotations = [-0.6, 0.8, -0.4, 0.5];
+              return (
+                <motion.a
+                  key={item.title}
+                  href={item.href}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
+                  style={{
+                    background: "rgba(255,255,255,0.55)",
+                    backdropFilter: "blur(22px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(22px) saturate(180%)",
+                    border: "1px solid rgba(255,255,255,0.5)",
+                    boxShadow:
+                      "0 20px 60px -20px rgba(15,23,42,0.14), 0 1px 0 rgba(255,255,255,0.7) inset",
+                    rotate: `${rotations[i % rotations.length]}deg`,
+                  }}
+                  className={`group block rounded-[28px] p-7 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_80px_-20px_rgba(15,23,42,0.22)] ${offsets[i % offsets.length]}`}
                 >
-                  <item.icon className="w-5 h-5" style={{ color: TEAL }} />
-                </div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-semibold mb-3">
-                  {item.tag}
-                </p>
-                <h3 className="text-lg font-semibold text-neutral-900 leading-snug mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-[15px] text-neutral-600 leading-relaxed font-light">
-                  {item.body}
-                </p>
-                <span
-                  className="inline-flex items-center gap-1 mt-5 text-sm font-semibold group-hover:gap-2 transition-all"
-                  style={{ color: TEAL }}
-                >
-                  Read more <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </motion.a>
-            ))}
+                  <div
+                    className="w-11 h-11 rounded-2xl flex items-center justify-center mb-5"
+                    style={{
+                      background: `${TEAL}14`,
+                      boxShadow: `inset 0 0 0 1px ${TEAL}1F`,
+                    }}
+                  >
+                    <item.icon className="w-5 h-5" style={{ color: TEAL }} />
+                  </div>
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-neutral-500 font-semibold mb-3">
+                    {item.tag}
+                  </p>
+                  <h3 className="text-[1.35rem] font-semibold text-neutral-900 leading-[1.2] tracking-tight mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-[14.5px] text-neutral-600 leading-relaxed font-light">
+                    {item.body}
+                  </p>
+                  <span
+                    className="inline-flex items-center gap-1 mt-5 text-sm font-semibold group-hover:gap-2 transition-all"
+                    style={{ color: TEAL }}
+                  >
+                    Read more <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </motion.a>
+              );
+            })}
           </div>
         </div>
       </section>
