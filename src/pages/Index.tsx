@@ -63,15 +63,6 @@ function Hero() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/80" />
 
-        {/* Agent badge — top right */}
-        <div className="absolute top-6 right-6 md:top-8 md:right-10 z-20 hidden sm:flex items-center gap-3 bg-white/95 backdrop-blur rounded-full pl-1 pr-4 py-1 shadow-lg">
-          <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground font-bold flex items-center justify-center text-sm">SA</div>
-          <div className="text-left leading-tight">
-            <p className="text-xs font-bold text-foreground">Scott Alvarez</p>
-            <p className="text-[10px] uppercase tracking-wider text-muted-foreground">RE/MAX Capital</p>
-          </div>
-        </div>
-
         <div className="relative z-10 w-full px-6 py-20 md:py-28 text-center text-white">
           <p className="text-xs md:text-sm font-semibold tracking-[0.3em] uppercase text-white/80 mb-6">
             Welcome to

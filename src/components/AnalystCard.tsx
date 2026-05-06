@@ -9,8 +9,9 @@ import {
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 
-const PHONE_NUMBER = '5186762347';
-const FORMATTED_PHONE = '(518) 676-2347';
+const PHONE_NUMBER = '5185227265';
+const FORMATTED_PHONE = '(518) 522-7265';
+const EMAIL = 'scott@capitaldistrictnest.com';
 
 interface AnalystCardProps {
   title?: string;
@@ -102,12 +103,26 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
         }}
       >
         <SheetHeader className="pb-6">
-          <SheetTitle className="text-2xl font-bold text-center flex items-center justify-center gap-3">
-            <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-            Live Analyst Available
-          </SheetTitle>
-          <p className="text-muted-foreground text-center font-light">
-            Connect directly with Scott for personalized market intelligence
+          <div className="flex items-center justify-center gap-4 mb-3">
+            <div
+              className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0"
+              style={{ backgroundColor: '#DC1C2E' }}
+            >
+              SA
+            </div>
+            <div className="text-left leading-tight">
+              <SheetTitle className="text-xl font-bold flex items-center gap-2">
+                Scott Alvarez
+                <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
+              </SheetTitle>
+              <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#003DA5' }}>
+                RE/MAX Solutions
+              </p>
+              <p className="text-xs text-muted-foreground mt-0.5">{FORMATTED_PHONE} · {EMAIL}</p>
+            </div>
+          </div>
+          <p className="text-muted-foreground text-center font-light text-sm">
+            Live agent — connect directly for personalized Capital District guidance
           </p>
         </SheetHeader>
         
