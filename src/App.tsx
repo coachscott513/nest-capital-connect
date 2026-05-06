@@ -424,6 +424,8 @@ const App = () => {
           <MobileCtaBar />
           {/* Global Command Center - shows on desktop only */}
           <CommandCenter />
+          {/* Global Floating Live Agent — bottom right, every page (desktop) */}
+          <FloatingLiveAgent />
         </BrowserRouter>
         </QueryClientProvider>
       </DelmarConfirmationProvider>
