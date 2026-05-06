@@ -131,8 +131,8 @@ function Towns() {
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <SectionEyebrow>Towns</SectionEyebrow>
-          <Headline>Explore the Capital District by town.</Headline>
-          <Subhead className="mt-6">Start with the places people search most.</Subhead>
+          <Headline>Start with a town.</Headline>
+          <Subhead className="mt-6">Six places that define the Capital District.</Subhead>
         </div>
 
         {/* Large image panels — 1 col mobile, 2 col tablet, 3 col desktop */}
