@@ -20,7 +20,7 @@ import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import delmarHero from "@/assets/delmar-hero-premium.jpg";
+// Note: photo hero replaced with soft gradient + glass dashboard (Vision Pro style)
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
