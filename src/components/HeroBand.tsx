@@ -20,6 +20,7 @@ export type HeroMood =
   | "clay"          // muted clay/taupe + cream (Rentals)
   | "sky"           // soft blue-gray + teal (Buyers / Search)
   | "ivory"         // soft ivory + muted green (Local Businesses)
+  | "white"         // pure white + teal (breathing room / break)
   | "slate";        // dark slate + gold (Weekly Updates)
 
 interface Callout {
@@ -129,6 +130,17 @@ const MOODS: Record<
     btnBg: "bg-[#5d7a4f]",
     btnText: "text-white",
     btnHover: "hover:bg-[#4a6440]",
+  },
+  white: {
+    bg: "bg-white",
+    text: "text-[#1d1d1f]",
+    sub: "text-[#1d1d1f]/65",
+    eyebrow: "text-[#0d6e66]",
+    rule: "bg-[#0d6e66]",
+    accent: "text-[#0d6e66]",
+    btnBg: "bg-[#0d6e66]",
+    btnText: "text-white",
+    btnHover: "hover:bg-[#0a5d57]",
   },
   slate: {
     bg: "bg-[#1a2530]",
