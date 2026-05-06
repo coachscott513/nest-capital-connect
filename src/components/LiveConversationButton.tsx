@@ -21,8 +21,8 @@ const PHONE_NUMBER = '5185227265';
 const FORMATTED_PHONE = '(518) 522-7265';
 const EMAIL = 'scott@capitaldistrictnest.com';
 
-const REMAX_RED = '#DC1C2E';
-const REMAX_BLUE = '#003DA5';
+const RED_CALL = '#DC1C2E'; // strict: call button only
+const TEAL = '#0d6e66';     // primary brand
 
 const LiveConversationButton: React.FC<LiveConversationButtonProps> = ({
   variant = 'default',
