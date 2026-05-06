@@ -262,22 +262,52 @@ const CleanHeader = () => {
                 <Search className="h-4 w-4" />
               </button>
 
-              {/* Languages pill (teal) */}
-              <button
-                className="lift-hover inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[13px] font-semibold text-white shadow-sm"
-                style={{ backgroundColor: TEAL }}
-                onClick={() => {
-                  /* placeholder for future translation integration */
-                }}
-              >
-                <Globe className="h-3.5 w-3.5" />
-                Languages
-                <ChevronDown className="h-3 w-3" />
-              </button>
+              {/* Languages pill (teal) — opens dropdown of coming-soon languages */}
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown("languages")}
+                  className="lift-hover inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[13px] font-semibold text-white shadow-sm"
+                  style={{ backgroundColor: TEAL }}
+                >
+                  <Globe className="h-3.5 w-3.5" />
+                  Languages
+                  <ChevronDown
+                    className={`h-3 w-3 transition-transform ${
+                      activeDropdown === "languages" ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <Dropdown
+                  isOpen={activeDropdown === "languages"}
+                  onClose={closeDropdowns}
+                  align="right"
+                >
+                  <div className="space-y-1 min-w-[200px]">
+                    <p className="text-[11px] uppercase tracking-[0.18em] font-semibold text-muted-foreground mb-2 px-2">
+                      Translation
+                    </p>
+                    <div className="px-2 py-1.5 text-sm font-medium text-foreground rounded">
+                      English <span className="text-xs text-muted-foreground ml-1">· Active</span>
+                    </div>
+                    {["Spanish", "Portuguese", "French", "Italian"].map((lang) => (
+                      <div
+                        key={lang}
+                        className="px-2 py-1.5 text-sm text-foreground/60 rounded flex items-center justify-between"
+                      >
+                        <span>{lang}</span>
+                        <span className="text-[10px] uppercase tracking-wider font-semibold text-muted-foreground">
+                          Coming soon
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </Dropdown>
+              </div>
 
               {/* International */}
               <Link
-                to="/communities"
+                to="/international"
+                onClick={closeDropdowns}
                 className="px-3 py-1.5 text-[13px] font-medium text-foreground/75 hover:text-foreground transition-colors"
               >
                 International
