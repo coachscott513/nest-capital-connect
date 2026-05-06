@@ -8,7 +8,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import MobileCtaBar from "@/components/MobileCtaBar";
-import CommandCenter from "@/components/CommandCenter";
 import FloatingLiveAgent from "@/components/FloatingLiveAgent";
 import RouteFade from "@/components/RouteFade";
 import GARouteTracker from "@/components/GARouteTracker";
@@ -426,9 +425,7 @@ const App = () => {
           </RouteFade>
           {/* Global Mobile CTA Bar - shows on mobile only */}
           <MobileCtaBar />
-          {/* Global Command Center - shows on desktop only */}
-          <CommandCenter />
-          {/* Global Floating Live Agent — bottom right, every page (desktop) */}
+          {/* Global Floating Live Agent — bottom right, every page (desktop). SINGLE source of truth. */}
           <FloatingLiveAgent />
         </BrowserRouter>
         </QueryClientProvider>
