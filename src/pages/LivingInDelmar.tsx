@@ -514,50 +514,93 @@ const LivingInDelmar = () => {
         </div>
       </section>
 
-      {/* ============ 2. LIVE FEED ============ */}
-      <section id="feed" className="py-24 lg:py-32 bg-white">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <motion.div {...fadeUp} className="max-w-2xl mb-14">
+      {/* ============ 2. LIVE FEED — Floating Glass, Broken Grid ============ */}
+      <section id="feed" className="relative py-28 lg:py-36 overflow-hidden">
+        <div aria-hidden className="absolute inset-0 -z-10">
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, #ffffff 0%, #f7faf9 60%, #ffffff 100%)",
+            }}
+          />
+          <div
+            className="absolute top-20 left-1/3 w-[500px] h-[500px] rounded-full opacity-50"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(13,148,136,0.14) 0%, rgba(13,148,136,0) 70%)",
+              filter: "blur(60px)",
+            }}
+          />
+          <div
+            className="absolute bottom-10 right-10 w-[420px] h-[420px] rounded-full opacity-50"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(244,180,170,0.18) 0%, rgba(244,180,170,0) 70%)",
+              filter: "blur(70px)",
+            }}
+          />
+        </div>
+
+        <div className="relative max-w-6xl mx-auto px-6 lg:px-12">
+          <motion.div {...fadeUp} className="max-w-2xl mb-16">
             <div className="inline-flex items-center gap-2 mb-5">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: TEAL }} />
                 <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: TEAL }} />
               </span>
               <p className="text-[11px] uppercase tracking-[0.22em] font-semibold" style={{ color: TEAL }}>
-                This Week in Delmar · {weekLabel}
+                This Week · {weekLabel}
               </p>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 leading-[1.1]">
-              What actually changed this week.
+            <h2 className="text-4xl md:text-6xl font-bold tracking-[-0.03em] text-neutral-900 leading-[1.02]">
+              What actually
+              <br />
+              <span className="text-neutral-400">changed this week.</span>
             </h2>
-            <p className="mt-5 text-lg text-neutral-500 font-light">
-              Homes sold, market shifts, buyer behavior, and one local update — written by someone who works here every day.
-            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {liveFeed.map((item) => (
-              <motion.a
-                key={item.title}
-                href={item.href}
-                {...fadeUp}
-                className="group block rounded-2xl bg-neutral-50 hover:bg-white border border-transparent hover:border-neutral-200 p-7 transition-all duration-300 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.12)]"
-              >
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: `${TEAL}14` }}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {liveFeed.map((item, i) => {
+              const offsets = ["lg:translate-y-0", "lg:translate-y-10", "lg:-translate-y-4", "lg:translate-y-6"];
+              const rotations = [-0.6, 0.8, -0.4, 0.5];
+              return (
+                <motion.a
+                  key={item.title}
+                  href={item.href}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
+                  style={{
+                    background: "rgba(255,255,255,0.55)",
+                    backdropFilter: "blur(22px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(22px) saturate(180%)",
+                    border: "1px solid rgba(255,255,255,0.5)",
+                    boxShadow:
+                      "0 20px 60px -20px rgba(15,23,42,0.14), 0 1px 0 rgba(255,255,255,0.7) inset",
+                    rotate: `${rotations[i % rotations.length]}deg`,
+                  }}
+                  className={`group block rounded-[28px] p-7 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_80px_-20px_rgba(15,23,42,0.22)] ${offsets[i % offsets.length]}`}
                 >
-                  <item.icon className="w-5 h-5" style={{ color: TEAL }} />
-                </div>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-semibold mb-3">
-                  {item.tag}
-                </p>
-                <h3 className="text-lg font-semibold text-neutral-900 leading-snug mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-[15px] text-neutral-600 leading-relaxed font-light">
-                  {item.body}
-                </p>
+                  <div
+                    className="w-11 h-11 rounded-2xl flex items-center justify-center mb-5"
+                    style={{
+                      background: `${TEAL}14`,
+                      boxShadow: `inset 0 0 0 1px ${TEAL}1F`,
+                    }}
+                  >
+                    <item.icon className="w-5 h-5" style={{ color: TEAL }} />
+                  </div>
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-neutral-500 font-semibold mb-3">
+                    {item.tag}
+                  </p>
+                  <h3 className="text-[1.35rem] font-semibold text-neutral-900 leading-[1.2] tracking-tight mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-[14.5px] text-neutral-600 leading-relaxed font-light">
+                    {item.body}
+                  </p>
                 <span
                   className="inline-flex items-center gap-1 mt-5 text-sm font-semibold group-hover:gap-2 transition-all"
                   style={{ color: TEAL }}
