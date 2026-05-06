@@ -264,7 +264,7 @@ const CleanHeader = () => {
 
               {/* Languages pill (teal) */}
               <button
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[13px] font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+                className="lift-hover inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[13px] font-semibold text-white shadow-sm"
                 style={{ backgroundColor: TEAL }}
                 onClick={() => {
                   /* placeholder for future translation integration */
@@ -278,14 +278,14 @@ const CleanHeader = () => {
               {/* International */}
               <Link
                 to="/communities"
-                className="px-3 py-1.5 text-[13px] font-medium text-foreground/75 hover:text-foreground transition"
+                className="px-3 py-1.5 text-[13px] font-medium text-foreground/75 hover:text-foreground transition-colors"
               >
                 International
               </Link>
 
               {/* Get Started — black pill */}
               <AnalystCard>
-                <button className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-white bg-foreground hover:bg-foreground/85 transition">
+                <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-white bg-foreground hover:bg-foreground/90">
                   Get Started
                 </button>
               </AnalystCard>
