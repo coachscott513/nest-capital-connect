@@ -119,7 +119,7 @@ const Index = () => {
         title="Capital District Nest | Capital District Real Estate Intelligence"
         description="Explore homes, towns, and investment opportunities across New York's Capital District. Albany, Delmar, Saratoga, Troy, Schenectady — analyzed honestly."
         keywords="Capital District real estate, Albany homes, Delmar homes, Saratoga real estate, Troy investment property"
-        schemaData={localBusinessSchema}
+        structuredData={localBusinessSchema}
       />
       <CleanHeader />
 
