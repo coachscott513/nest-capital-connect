@@ -139,6 +139,7 @@ import AnalyzeCommercial from "./pages/analyze/AnalyzeCommercial";
 import AnalyzeLand from "./pages/analyze/AnalyzeLand";
 import AnalyzeAnyHome from "./pages/AnalyzeAnyHome";
 import AnalyzeAnyProperty from "./pages/AnalyzeAnyProperty";
+import International from "./pages/International";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -411,6 +412,7 @@ const App = () => {
           {/* Analyzer Domain Pages */}
           <Route path="/analyze-home" element={<AnalyzeAnyHome />} />
           <Route path="/analyze-any-property" element={<AnalyzeAnyProperty />} />
+          <Route path="/international" element={<International />} />
 
           {/* Tailored Search Hubs */}
           <Route path="/search/single-family" element={<SingleFamilyHub />} />
