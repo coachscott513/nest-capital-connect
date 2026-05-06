@@ -357,7 +357,7 @@ const AnalyzeHub = () => {
               <p className="font-medium text-lg mb-6 tracking-tight leading-snug" style={{ color: PLATINUM }}>
                 Get pre-approved before you make an offer.
               </p>
-              <a href="tel:5186762347"
+              <a href="tel:5185227265"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-[13px] tracking-wide transition-all hover:brightness-125 bg-white/10 text-white">
                 <Phone className="w-4 h-4" /> Talk to Joel
               </a>

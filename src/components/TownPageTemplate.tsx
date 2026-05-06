@@ -1445,8 +1445,8 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
             <div className="text-center sm:text-left">
               <p className="font-semibold text-foreground mb-1">Want a fast answer?</p>
               <div className="flex flex-col sm:flex-row items-center gap-2 text-sm text-muted-foreground">
-                <a href="tel:+15186762347" className="hover:text-primary transition-colors">
-                  (518) 676-2347
+                <a href="tel:+15185227265" className="hover:text-primary transition-colors">
+                  (518) 522-7265
                 </a>
                 <span className="hidden sm:inline">•</span>
                 <a href="mailto:scott@capitaldistrictnest.com" className="hover:text-primary transition-colors">

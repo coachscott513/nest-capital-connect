@@ -142,20 +142,20 @@ const DueDiligenceEngine = () => {
         {/* Secondary Actions */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
           <a
-            href="tel:+15186762347"
+            href="tel:+15185227265"
             className="group w-full sm:w-auto flex items-center justify-center gap-2 border-2 border-primary text-primary px-8 py-4 text-lg font-bold rounded-full hover:bg-primary/10 transition-colors"
           >
             <Phone className="w-5 h-5" />
-            Contact an Agent: (518) 676-2347
+            Contact an Agent: (518) 522-7265
           </a>
         </div>
 
         {/* Text Option */}
         <a
-          href={`sms:+15186762347${address ? `?body=${encodeURIComponent(`I'd like a financial report for: ${address}`)}` : ''}`}
+          href={`sms:+15185227265${address ? `?body=${encodeURIComponent(`I'd like a financial report for: ${address}`)}` : ''}`}
           className="inline-block mb-6 text-primary/70 hover:text-primary transition-colors text-sm font-medium"
         >
-          Prefer to text? SMS any address to (518) 676-2347 and I'll send your report.
+          Prefer to text? SMS any address to (518) 522-7265 and I'll send your report.
         </a>
 
         {/* Disclaimer */}

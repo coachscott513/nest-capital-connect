@@ -30,8 +30,8 @@ const COMMUNITIES: { name: string; tagline: string; to: string }[] = [
   { name: "Mechanicville",     tagline: "Compact, affordable, commuter-friendly", to: "/towns/mechanicville" },
 ];
 
-const PHONE_DISPLAY = "(518) 676-2347";
-const PHONE_TEL = "+15186762347";
+const PHONE_DISPLAY = "(518) 522-7265";
+const PHONE_TEL = "+15185227265";
 const EMAIL = "scott@capitaldistrictnest.com";
 
 /* ============ SECTION 1 — HERO ============ */

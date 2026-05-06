@@ -113,7 +113,7 @@ const AnalyzeAnyHome = () => {
               <div>
                 <Label className="text-sm font-semibold text-foreground">Interest Rate (%)</Label>
                 <Input type="number" value={rate} step={0.125} onChange={e => setRate(parseFloat(e.target.value) || 0)} className="mt-1 h-12" />
-                <p className="text-xs text-muted-foreground mt-1">Today's avg: 6.75% — <a href="tel:5186762347" className="text-[hsl(var(--accent))] underline">Get pre-approved with Joel Casso</a></p>
+                <p className="text-xs text-muted-foreground mt-1">Today's avg: 6.75% — <a href="tel:5185227265" className="text-[hsl(var(--accent))] underline">Get pre-approved with Joel Casso</a></p>
               </div>
 
               {/* Taxes */}
@@ -224,8 +224,8 @@ const AnalyzeAnyHome = () => {
               <li className="flex items-start gap-2"><span className="text-[hsl(var(--accent))] font-bold">•</span> FHA loans — as low as 3.5% down</li>
             </ul>
             <Button asChild className="bg-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))]/90 text-white font-semibold h-12 px-8">
-              <a href="tel:5186762347" className="inline-flex items-center gap-2">
-                <Phone className="w-4 h-4" /> Talk to Joel Casso about your options → (518) 676-2347
+              <a href="tel:5185227265" className="inline-flex items-center gap-2">
+                <Phone className="w-4 h-4" /> Talk to Joel Casso about your options → (518) 522-7265
               </a>
             </Button>
           </div>

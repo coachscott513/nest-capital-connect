@@ -114,9 +114,9 @@ const AnalyzeAnyProperty = () => {
             <p>If you're currently renting and wondering if you could own — start with <span className="font-semibold" style={{ color: NAVY }}>Compare Rent vs Own</span>.</p>
           </div>
           <Button asChild className="h-13 px-10 text-base font-semibold text-white" style={{ backgroundColor: GOLD }}>
-            <a href="tel:5186762347" className="inline-flex items-center gap-2">
+            <a href="tel:5185227265" className="inline-flex items-center gap-2">
               <Phone className="w-4 h-4" />
-              Talk to Scott Alvarez → (518) 676-2347
+              Talk to Scott Alvarez → (518) 522-7265
             </a>
           </Button>
         </div>
