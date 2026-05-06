@@ -379,7 +379,7 @@ const Index = () => {
         title="Capital District Nest — Homes, Towns & Market Intelligence in Upstate NY"
         description="Explore homes, towns, and market intelligence across New York's Capital District. Delmar, Albany, Saratoga, Troy, Schenectady, Clifton Park."
         canonical="https://www.capitaldistrictnest.com/"
-        schema={localBusinessSchema}
+        structuredData={localBusinessSchema}
       />
       <CleanHeader />
       <main>
