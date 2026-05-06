@@ -116,53 +116,110 @@ function Hero() {
 }
 
 /* ============ SECTION 2 — TOWNS ============ */
-const TOWNS = [
-  { name: "Delmar", img: imgDelmar, to: "/living-in-delmar", tag: "Bethlehem · Top Schools" },
-  { name: "Albany", img: imgAlbany, to: "/albany-real-estate", tag: "Capital City" },
-  { name: "Saratoga Springs", img: imgSaratoga, to: "/saratoga-real-estate", tag: "Lifestyle · Resort Town" },
-  { name: "Troy", img: imgTroy, to: "/troy-real-estate", tag: "Riverfront · Historic" },
-  { name: "Schenectady", img: imgSchenectady, to: "/schenectady-real-estate", tag: "Stockade · Value" },
-  { name: "Clifton Park", img: imgCliftonPark, to: "/clifton-park-intelligence", tag: "Family · Suburbs" },
+type TownTileData = {
+  name: string;
+  img: string;
+  to: string;
+  descriptor: string;
+  thisWeek: string;
+};
+
+const TOWNS: TownTileData[] = [
+  { name: "Delmar",           img: imgDelmar,       to: "/living-in-delmar",          descriptor: "Bethlehem · Suburban · High demand",       thisWeek: "3 homes sold this week" },
+  { name: "Albany",           img: imgAlbany,       to: "/albany-real-estate",        descriptor: "Capital City · Urban · Investor-friendly", thisWeek: "12 new listings this week" },
+  { name: "Saratoga Springs", img: imgSaratoga,     to: "/saratoga-real-estate",      descriptor: "Resort town · Lifestyle · Luxury",         thisWeek: "Median up 4.2% this month" },
+  { name: "Troy",             img: imgTroy,         to: "/troy-real-estate",          descriptor: "Hudson riverfront · Historic",             thisWeek: "8 homes sold this week" },
+  { name: "Schenectady",      img: imgSchenectady,  to: "/schenectady-real-estate",   descriptor: "Stockade · Value · Cash flow",             thisWeek: "15 new listings this week" },
+  { name: "Clifton Park",     img: imgCliftonPark,  to: "/clifton-park-intelligence", descriptor: "Family · Suburbs · Shen schools",          thisWeek: "5 homes pending this week" },
 ];
 
+const TownTile = ({ t, ratio = "aspect-[4/3]" }: { t: TownTileData; ratio?: string }) => (
+  <Link
+    to={t.to}
+    className={`group relative block overflow-hidden rounded-[28px] ${ratio} bg-muted`}
+  >
+    <img
+      src={t.img}
+      alt={`${t.name}, NY`}
+      loading="lazy"
+      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent transition-opacity duration-300 group-hover:from-black/75" />
+    <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white transition-transform duration-300 group-hover:-translate-y-1">
+      <h3 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-none">
+        {t.name}
+      </h3>
+      <p className="mt-2 text-sm md:text-base text-white/80 font-light">
+        {t.descriptor}
+      </p>
+      <p className="mt-1 text-sm md:text-base text-white font-medium">
+        {t.thisWeek}
+      </p>
+      <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-white/90">
+        Explore <ArrowRight className="w-4 h-4" />
+      </span>
+    </div>
+  </Link>
+);
+
 function Towns() {
+  const [delmar, albany, saratoga, troy, schenectady, cliftonPark] = TOWNS;
   return (
-    <section id="towns" className="bg-background py-28 md:py-36">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-          <SectionEyebrow>Towns</SectionEyebrow>
+    <section id="towns" className="bg-background py-20 md:py-28">
+      <div className="max-w-[1500px] mx-auto px-4 md:px-8">
+        <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
           <Headline>Start with a town.</Headline>
-          <Subhead className="mt-6">Six places that define the Capital District.</Subhead>
+          <Subhead className="mt-6">
+            Explore homes, prices, and what's happening locally — updated weekly.
+          </Subhead>
         </div>
 
-        {/* Large image panels — 1 col mobile, 2 col tablet, 3 col desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* Mobile: simple stack */}
+        <div className="grid grid-cols-1 gap-4 md:hidden">
           {TOWNS.map((t) => (
+            <TownTile key={t.name} t={t} ratio="aspect-[16/10]" />
+          ))}
+        </div>
+
+        {/* Desktop: asymmetric Apple-style grid */}
+        <div className="hidden md:flex md:flex-col gap-5 lg:gap-6">
+          {/* Row 1 — Delmar 60% / Albany 40% */}
+          <div className="grid grid-cols-5 gap-5 lg:gap-6">
+            <div className="col-span-3">
+              <TownTile t={delmar} ratio="aspect-[16/10]" />
+            </div>
+            <div className="col-span-2">
+              <TownTile t={albany} ratio="aspect-[16/10]" />
+            </div>
+          </div>
+
+          {/* Row 2 — Saratoga / Troy / Schenectady */}
+          <div className="grid grid-cols-3 gap-5 lg:gap-6">
+            <TownTile t={saratoga} ratio="aspect-[4/5]" />
+            <TownTile t={troy} ratio="aspect-[4/5]" />
+            <TownTile t={schenectady} ratio="aspect-[4/5]" />
+          </div>
+
+          {/* Row 3 — Clifton Park 50% / All Communities CTA 50% */}
+          <div className="grid grid-cols-2 gap-5 lg:gap-6">
+            <TownTile t={cliftonPark} ratio="aspect-[16/9]" />
             <Link
-              key={t.name}
-              to={t.to}
-              className="group relative block overflow-hidden rounded-3xl aspect-[4/5] bg-muted"
+              to="/communities"
+              className="group relative flex items-center justify-center rounded-[28px] aspect-[16/9] bg-[hsl(var(--muted))] overflow-hidden"
             >
-              <img
-                src={t.img}
-                alt={`${t.name}, NY`}
-                loading="lazy"
-                width={1600}
-                height={2000}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-              <div className="absolute inset-0 p-7 md:p-9 flex flex-col justify-end text-white">
-                <p className="text-xs font-semibold tracking-[0.2em] uppercase text-white/80 mb-2">
-                  {t.tag}
+              <div className="text-center px-6">
+                <p className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-3">
+                  All Communities
                 </p>
-                <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.name}</h3>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-white/90">
-                  Explore {t.name} <ArrowRight className="w-4 h-4" />
-                </span>
+                <p className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
+                  See every town →
+                </p>
+                <p className="mt-3 text-muted-foreground font-light">
+                  Niskayuna, Voorheesville, Queensbury, Amsterdam & more.
+                </p>
               </div>
             </Link>
-          ))}
+          </div>
         </div>
       </div>
     </section>
