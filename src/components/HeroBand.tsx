@@ -101,8 +101,7 @@ const HeroBand = ({
   const isDark = DARK_MOODS.includes(mood);
   const isExternal = ctaExternal || /^https?:\/\//.test(ctaHref);
 
-  // Pick the locked button class based on mood (light vs dark surface)
-  const isDark = ["graphite", "dark-gold", "forest", "clay", "slate"].includes(mood);
+  // Pick the locked button class based on surface
   const ctaClass = isDark ? "btn-dark-cta" : "btn-primary-apple";
 
   const Cta = isExternal ? (
