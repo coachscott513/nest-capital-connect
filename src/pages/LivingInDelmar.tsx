@@ -106,8 +106,9 @@ const LivingInDelmar = () => {
       />
 
       {/* 5 — LOCAL FAVORITES · ivory + green */}
+      {/* 5 — LOCAL FAVORITES · pure white break (light, but distinct from cream above) */}
       <HeroBand
-        mood="ivory"
+        mood="white"
         eyebrow="Local Favorites"
         headline={<>Where Delmar<br />actually goes.</>}
         sub="Restaurants, coffee shops, home services, and local businesses that shape the community."
