@@ -336,6 +336,190 @@
   .cinematic-filter {
     filter: brightness(0.9) contrast(1.05) saturate(0.95);
   }
+
+  /* ============================================================
+     APPLE-STYLE BUTTON SYSTEM (LOCKED)
+     Three variants only. Always pill. Always anchored.
+     ============================================================ */
+
+  /* 1. PRIMARY — brand teal gradient. Money button. */
+  .btn-primary-apple {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #0d6e66 0%, #14857b 100%);
+    color: #ffffff;
+    border-radius: 9999px;
+    padding: 16px 28px;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    box-shadow: 0 8px 24px -8px rgba(13, 110, 102, 0.5),
+                0 2px 6px -1px rgba(13, 110, 102, 0.25);
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.25s ease;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-primary-apple:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 12px 32px -8px rgba(13, 110, 102, 0.6),
+                0 4px 10px -2px rgba(13, 110, 102, 0.3);
+  }
+  .btn-primary-apple:active { transform: translateY(0); }
+
+  /* 2. SECONDARY — quiet, framed. Explore / Browse / Learn. */
+  .btn-secondary-apple {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: #1d1d1f;
+    border: 1px solid rgba(29, 29, 31, 0.18);
+    border-radius: 9999px;
+    padding: 15px 26px;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-secondary-apple:hover {
+    background: rgba(29, 29, 31, 0.05);
+    border-color: rgba(29, 29, 31, 0.32);
+  }
+
+  /* Secondary on dark backgrounds */
+  .btn-secondary-apple-dark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 9999px;
+    padding: 15px 26px;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-secondary-apple-dark:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* 3. DARK-SECTION CTA — gold pill on dark backgrounds. */
+  .btn-dark-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #e9b949 0%, #f0c768 100%);
+    color: #16181d;
+    border-radius: 9999px;
+    padding: 16px 28px;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    box-shadow: 0 8px 24px -8px rgba(233, 185, 73, 0.45),
+                0 2px 6px -1px rgba(233, 185, 73, 0.25);
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), filter 0.2s;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-dark-cta:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+  }
+
+  /* CALL button — strict red, used ONLY for tel: triggers */
+  .btn-call {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #DC1C2E;
+    color: #ffffff;
+    border-radius: 9999px;
+    padding: 16px 28px;
+    font-weight: 600;
+    box-shadow: 0 8px 24px -8px rgba(220, 28, 46, 0.5);
+    transition: transform 0.2s, filter 0.2s;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-call:hover { transform: translateY(-1px); filter: brightness(1.05); }
+
+  /* ============================================================
+     APPLE-STYLE TYPOGRAPHY HIERARCHY (LOCKED)
+     ============================================================ */
+
+  .h-hero {
+    font-weight: 600;
+    font-size: clamp(2.75rem, 7vw, 5.5rem); /* 44px → 88px */
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+
+  .h-section {
+    font-weight: 600;
+    font-size: clamp(2rem, 4.2vw, 3rem); /* 32px → 48px */
+    line-height: 1.1;
+    letter-spacing: -0.018em;
+  }
+
+  .h-sub {
+    font-weight: 600;
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem); /* 24px → 30px */
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+  }
+
+  .body-apple {
+    font-size: clamp(1.0625rem, 1.4vw, 1.25rem); /* 17px → 20px */
+    line-height: 1.6;
+    color: #4b5563;
+    font-weight: 400;
+  }
+
+  .body-apple-dark {
+    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 300;
+  }
+
+  .eyebrow-apple {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+
+  /* Section spacing — Apple-grade breathing room */
+  .section-apple {
+    padding-top: clamp(72px, 10vw, 140px);
+    padding-bottom: clamp(72px, 10vw, 140px);
+  }
+  .cta-anchor {
+    margin-top: clamp(24px, 3vw, 32px);
+  }
 }
 
 @keyframes ticker {
