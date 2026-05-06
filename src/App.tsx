@@ -10,6 +10,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import CommandCenter from "@/components/CommandCenter";
 import FloatingLiveAgent from "@/components/FloatingLiveAgent";
+import RouteFade from "@/components/RouteFade";
 import GARouteTracker from "@/components/GARouteTracker";
 import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext";
 import Index from "./pages/Index";
@@ -177,6 +178,7 @@ const App = () => {
               <ScrollToTop />
               <GARouteTracker />
               <PrerenderReadySignal />
+            <RouteFade>
             <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/investor-tools" element={<InvestorTools />} />
@@ -421,6 +423,7 @@ const App = () => {
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </RouteFade>
           {/* Global Mobile CTA Bar - shows on mobile only */}
           <MobileCtaBar />
           {/* Global Command Center - shows on desktop only */}

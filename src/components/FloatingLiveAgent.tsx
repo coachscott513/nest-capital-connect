@@ -15,20 +15,23 @@ const FloatingLiveAgent = () => {
       <AnalystCard>
         <button
           aria-label="Open Live Agent"
-          className="group flex items-center gap-2.5 pl-2 pr-5 py-2 rounded-full text-white font-semibold text-sm shadow-[0_12px_30px_-8px_rgba(0,0,0,0.35)] hover:shadow-[0_18px_40px_-8px_rgba(0,0,0,0.5)] transition-all"
+          className="group lift-hover flex items-center gap-2.5 pl-2 pr-5 py-2 rounded-full text-white font-semibold text-sm shadow-[0_12px_30px_-8px_rgba(0,0,0,0.35)] hover:shadow-[0_20px_44px_-8px_rgba(0,0,0,0.55)]"
           style={{ backgroundColor: CHARCOAL }}
         >
           <span
-            className="relative w-8 h-8 rounded-full flex items-center justify-center"
+            className="relative w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110"
             style={{ backgroundColor: TEAL }}
           >
             <Phone className="w-4 h-4" />
             <span
-              className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-green-400 ring-2 animate-pulse"
-              style={{ ['--tw-ring-color' as never]: CHARCOAL, boxShadow: `0 0 0 2px ${CHARCOAL}` }}
+              className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"
+              style={{ boxShadow: `0 0 0 2px ${CHARCOAL}` }}
             />
           </span>
-          Live Agent
+          <span className="transition-all duration-300 max-w-0 overflow-hidden opacity-0 group-hover:max-w-[140px] group-hover:opacity-100 group-hover:ml-0 whitespace-nowrap">
+            Talk to Scott
+          </span>
+          <span className="group-hover:hidden">Live Agent</span>
         </button>
       </AnalystCard>
     </div>
