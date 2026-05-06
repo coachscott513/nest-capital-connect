@@ -158,7 +158,7 @@ const CleanHeader = () => {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-[2000] nav-shell ${isFrosted ? "nav-frost" : "nav-transparent"}`}>
+      <header className={`sticky top-0 z-[2000] nav-shell ${isFrosted ? "nav-frost" : "nav-transparent"}`}>
         <nav className="w-full max-w-7xl mx-auto px-5 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-[68px]">
             {/* Logo — circular teal dot + wordmark */}
