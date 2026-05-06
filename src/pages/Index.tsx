@@ -97,9 +97,15 @@ function Hero() {
               </a>
               <Link
                 to="/homes-for-sale"
-                className="inline-flex items-center gap-1.5 text-primary hover:underline underline-offset-4"
+                className="inline-flex items-center gap-1.5 text-foreground hover:underline underline-offset-4"
               >
                 Search Homes <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/investment-analyzer"
+                className="inline-flex items-center gap-1.5 text-foreground hover:underline underline-offset-4"
+              >
+                Analyze Property <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
