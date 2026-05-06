@@ -37,7 +37,7 @@ const LiveConversationButton: React.FC<LiveConversationButtonProps> = ({
           variant={variant}
           size={size}
           className={className}
-          style={variant === 'default' ? { backgroundColor: REMAX_RED, color: '#fff' } : undefined}
+          style={variant === 'default' ? { backgroundColor: TEAL, color: '#fff' } : undefined}
         >
           <MessageCircle className="h-4 w-4" />
           {showLabel && <span className="ml-2">Talk to Scott</span>}
@@ -48,13 +48,13 @@ const LiveConversationButton: React.FC<LiveConversationButtonProps> = ({
           <div className="flex items-center gap-3">
             <div
               className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0"
-              style={{ backgroundColor: REMAX_RED }}
+              style={{ backgroundColor: TEAL }}
             >
               SA
             </div>
             <div className="leading-tight">
               <p className="font-semibold text-sm text-foreground">Scott Alvarez</p>
-              <p className="text-[11px] uppercase tracking-wider font-semibold" style={{ color: REMAX_BLUE }}>
+              <p className="text-[11px] uppercase tracking-wider font-semibold" style={{ color: RED_CALL }}>
                 RE/MAX Solutions
               </p>
             </div>
@@ -63,7 +63,7 @@ const LiveConversationButton: React.FC<LiveConversationButtonProps> = ({
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <a href={`tel:+1${PHONE_NUMBER}`} className="flex items-center gap-3 cursor-pointer py-2">
-            <Phone className="h-4 w-4 shrink-0" style={{ color: REMAX_RED }} />
+            <Phone className="h-4 w-4 shrink-0" style={{ color: RED_CALL }} />
             <div>
               <p className="font-medium text-sm">Call</p>
               <p className="text-xs text-muted-foreground">{FORMATTED_PHONE}</p>
@@ -72,7 +72,7 @@ const LiveConversationButton: React.FC<LiveConversationButtonProps> = ({
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <a href={`sms:+1${PHONE_NUMBER}`} className="flex items-center gap-3 cursor-pointer py-2">
-            <MessageCircle className="h-4 w-4 shrink-0" style={{ color: REMAX_BLUE }} />
+            <MessageCircle className="h-4 w-4 shrink-0" style={{ color: RED_CALL }} />
             <div>
               <p className="font-medium text-sm">Text</p>
               <p className="text-xs text-muted-foreground">{FORMATTED_PHONE}</p>
