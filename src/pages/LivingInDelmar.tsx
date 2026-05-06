@@ -20,7 +20,7 @@ import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import delmarHero from "@/assets/delmar-hero-premium.jpg";
+// Note: photo hero replaced with soft gradient + glass dashboard (Vision Pro style)
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -153,7 +153,7 @@ const LivingInDelmar = () => {
           property="og:description"
           content="Real estate, local businesses, and community updates in Delmar, NY — refreshed weekly."
         />
-        <meta property="og:image" content={delmarHero} />
+        <meta property="og:image" content="https://www.capitaldistrictnest.com/og-image-capital-district.jpg" />
         <meta property="og:url" content="https://www.capitaldistrictnest.com/living-in-delmar" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
@@ -173,67 +173,253 @@ const LivingInDelmar = () => {
 
       <MainHeader />
 
-      {/* ============ 1. HERO ============ */}
-      <section className="relative w-full overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <img
-            src={delmarHero}
-            alt="Tree-lined residential street in Delmar, NY at golden hour"
-            className="w-full h-full object-cover"
-            width={1920}
-            height={1080}
+      {/* ============ 1. HERO — Glass Dashboard (no photo) ============ */}
+      <section className="relative w-full overflow-hidden bg-white">
+        {/* Soft ambient gradient + blurred shapes */}
+        <div aria-hidden className="absolute inset-0 -z-10">
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, #ffffff 0%, #f6fafa 55%, #eef4f5 100%)",
+            }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/15 to-black/45" />
+          <div
+            className="absolute -top-32 -right-24 w-[600px] h-[600px] rounded-full opacity-50"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(13,148,136,0.22) 0%, rgba(13,148,136,0) 70%)",
+              filter: "blur(40px)",
+            }}
+          />
+          <div
+            className="absolute top-1/2 -left-32 w-[480px] h-[480px] rounded-full opacity-50"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(99,179,237,0.18) 0%, rgba(99,179,237,0) 70%)",
+              filter: "blur(40px)",
+            }}
+          />
         </div>
 
-        <div className="max-w-5xl mx-auto px-6 lg:px-12 pt-40 pb-32 lg:pt-52 lg:pb-44 text-white">
-          <motion.div
-            {...fadeUp}
-            className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-md border border-white/30 px-4 py-1.5 mb-8"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-            </span>
-            <span className="text-[11px] uppercase tracking-[0.2em] text-white/90 font-semibold">
-              Live · {weekLabel}
-            </span>
-          </motion.div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-28 pb-24 lg:pt-36 lg:pb-32">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* LEFT — copy */}
+            <div className="lg:col-span-7">
+              <motion.div
+                {...fadeUp}
+                className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur-md border border-white/60 px-4 py-1.5 mb-7 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)]"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span
+                    className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                    style={{ background: TEAL }}
+                  />
+                  <span
+                    className="relative inline-flex rounded-full h-2 w-2"
+                    style={{ background: TEAL }}
+                  />
+                </span>
+                <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-neutral-700">
+                  Live · {weekLabel}
+                </span>
+              </motion.div>
 
-          <motion.h1
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight max-w-4xl"
-          >
-            Delmar This Week
-          </motion.h1>
+              <motion.h1
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: 0.05 }}
+                className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.04] tracking-tight text-neutral-900"
+              >
+                Delmar <span style={{ color: TEAL }}>This Week.</span>
+              </motion.h1>
 
-          <motion.p
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.1 }}
-            className="mt-6 max-w-2xl text-lg md:text-xl text-white/85 leading-relaxed font-light"
-          >
-            Live updates on homes, prices, and what's happening locally — refreshed every Friday.
-          </motion.p>
+              <motion.p
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: 0.1 }}
+                className="mt-6 max-w-xl text-lg md:text-xl text-neutral-500 leading-relaxed font-light"
+              >
+                Real estate activity, local updates, and community highlights — refreshed every Friday.
+              </motion.p>
 
-          <motion.div
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.15 }}
-            className="mt-10 flex flex-wrap gap-3"
-          >
-            <a
-              href="#feed"
-              className="inline-flex items-center gap-2 rounded-full bg-white text-neutral-900 px-7 py-3.5 text-sm font-semibold hover:bg-white/90 transition"
-            >
-              See This Week's Update <ArrowRight className="w-4 h-4" />
-            </a>
-            <a
-              href="#updates"
-              className="inline-flex items-center gap-2 rounded-full border border-white/40 backdrop-blur-sm bg-white/10 text-white px-7 py-3.5 text-sm font-semibold hover:bg-white/20 transition"
-            >
-              Get It Every Friday
-            </a>
-          </motion.div>
+              <motion.div
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: 0.15 }}
+                className="mt-10 flex flex-wrap gap-3"
+              >
+                <a
+                  href="#homes"
+                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-white transition shadow-[0_8px_24px_-8px_rgba(13,148,136,0.5)] hover:shadow-[0_12px_30px_-8px_rgba(13,148,136,0.6)] hover:-translate-y-0.5"
+                  style={{ background: TEAL }}
+                >
+                  View New Listings <ArrowRight className="w-4 h-4" />
+                </a>
+                <a
+                  href="#updates"
+                  className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur-md border border-white/70 px-7 py-3.5 text-sm font-semibold text-neutral-900 hover:bg-white transition shadow-[0_4px_16px_-6px_rgba(0,0,0,0.08)]"
+                >
+                  Get Weekly Updates
+                </a>
+                <a
+                  href={PHONE_HREF}
+                  className="inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold text-neutral-700 hover:text-neutral-900 transition"
+                >
+                  <Phone className="w-4 h-4" /> Talk to Scott
+                </a>
+              </motion.div>
+            </div>
+
+            {/* RIGHT — glass preview cards */}
+            <div className="lg:col-span-5 relative">
+              <div className="relative mx-auto max-w-[460px]">
+                {/* Top card — This Week */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30, rotate: -1.5 }}
+                  animate={{ opacity: 1, y: 0, rotate: -1.5 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+                  className="relative z-30 rounded-3xl p-6"
+                  style={{
+                    background: "rgba(255,255,255,0.72)",
+                    backdropFilter: "blur(24px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                    border: "1px solid rgba(255,255,255,0.7)",
+                    boxShadow:
+                      "0 24px 60px -20px rgba(15,23,42,0.18), 0 1px 0 rgba(255,255,255,0.9) inset",
+                  }}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2.5">
+                      <div
+                        className="w-9 h-9 rounded-xl flex items-center justify-center"
+                        style={{ background: `${TEAL}1A` }}
+                      >
+                        <Newspaper className="w-4 h-4" style={{ color: TEAL }} />
+                      </div>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-neutral-500">
+                          This Week
+                        </p>
+                        <p className="text-sm font-semibold text-neutral-900">
+                          What changed in Delmar
+                        </p>
+                      </div>
+                    </div>
+                    <span
+                      className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
+                      style={{ background: `${TEAL}14`, color: TEAL }}
+                    >
+                      LIVE
+                    </span>
+                  </div>
+                  <div className="space-y-2.5">
+                    {[
+                      { icon: HomeIcon, label: "3 closed", meta: "highest $485K" },
+                      { icon: TrendingUp, label: "12 active", meta: "−15% in 60d" },
+                      { icon: Sparkles, label: "Under $500K", meta: "multiple offers" },
+                    ].map((row) => (
+                      <div
+                        key={row.label}
+                        className="flex items-center justify-between rounded-xl bg-white/60 border border-white/60 px-3 py-2.5"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <row.icon className="w-4 h-4" style={{ color: TEAL }} />
+                          <span className="text-sm font-medium text-neutral-900">{row.label}</span>
+                        </div>
+                        <span className="text-xs text-neutral-500 font-light">{row.meta}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Bottom card — Market Snapshot */}
+                <motion.div
+                  initial={{ opacity: 0, y: 40, rotate: 2 }}
+                  animate={{ opacity: 1, y: 0, rotate: 2 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                  className="relative z-20 -mt-6 ml-6 sm:ml-12 rounded-3xl p-6"
+                  style={{
+                    background: "rgba(255,255,255,0.7)",
+                    backdropFilter: "blur(24px) saturate(180%)",
+                    WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                    border: "1px solid rgba(255,255,255,0.7)",
+                    boxShadow:
+                      "0 24px 60px -20px rgba(15,23,42,0.16), 0 1px 0 rgba(255,255,255,0.9) inset",
+                  }}
+                >
+                  <div className="flex items-center gap-2.5 mb-4">
+                    <div
+                      className="w-9 h-9 rounded-xl flex items-center justify-center"
+                      style={{ background: `${TEAL}1A` }}
+                    >
+                      <TrendingUp className="w-4 h-4" style={{ color: TEAL }} />
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-neutral-500">
+                        Delmar 12054
+                      </p>
+                      <p className="text-sm font-semibold text-neutral-900">Market Snapshot</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { label: "Median", value: "$465K" },
+                      { label: "Active", value: "12" },
+                      { label: "DOM", value: "9d" },
+                    ].map((m) => (
+                      <div key={m.label} className="rounded-xl bg-white/60 border border-white/60 p-2.5">
+                        <p className="text-[10px] uppercase tracking-wider text-neutral-500 font-medium">
+                          {m.label}
+                        </p>
+                        <p className="text-base font-bold text-neutral-900 mt-0.5 tracking-tight">
+                          {m.value}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ 1b. MARKET SNAPSHOT BAR ============ */}
+      <section className="bg-white border-b border-neutral-100">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 py-10 lg:py-14">
+          <div className="flex items-end justify-between mb-6 flex-wrap gap-3">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.22em] font-semibold mb-2" style={{ color: TEAL }}>
+                Delmar Market Snapshot
+              </p>
+              <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 tracking-tight">
+                The numbers, right now.
+              </h2>
+            </div>
+            <p className="text-xs text-neutral-400 font-light">{weekLabel}</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {[
+              { label: "Active Listings", value: "12" },
+              { label: "Sold (30 days)", value: "8" },
+              { label: "Median List", value: "$465K" },
+              { label: "Avg Days on Market", value: "9" },
+            ].map((m) => (
+              <div
+                key={m.label}
+                className="rounded-2xl p-5 border border-neutral-100"
+                style={{
+                  background: "rgba(255,255,255,0.7)",
+                  backdropFilter: "blur(20px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(20px) saturate(180%)",
+                  boxShadow: "0 8px 30px -16px rgba(0,0,0,0.08)",
+                }}
+              >
+                <p className="text-[11px] uppercase tracking-[0.18em] text-neutral-500 font-semibold">
+                  {m.label}
+                </p>
+                <p className="text-3xl font-bold text-neutral-900 mt-2 tracking-tight">{m.value}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
