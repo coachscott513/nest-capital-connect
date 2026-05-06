@@ -128,7 +128,7 @@ const Index = () => {
       <CinematicHero />
 
       {/* 2 — TOWNS · one unified split section (text + tile grid together) */}
-      <section className="bg-[#f5efe4] w-full">
+      <section className="bg-white w-full">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-[72px] md:py-[120px]">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* LEFT — narrative (sticky on desktop so it stays as you scan tiles) */}

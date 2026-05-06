@@ -40,120 +40,44 @@ interface HeroBandProps {
   children?: ReactNode; // optional content rendered below the band (e.g. tile grid, IDX embed)
 }
 
-const MOODS: Record<
-  HeroMood,
-  {
-    bg: string;          // tailwind classes or inline style
-    text: string;
-    sub: string;
-    eyebrow: string;
-    rule: string;        // vertical accent line color
-    accent: string;      // accent text (callout titles)
-    btnBg: string;
-    btnText: string;
-    btnHover: string;
-  }
-> = {
-  graphite: {
-    bg: "bg-[#0e0f12]",
-    text: "text-white",
-    sub: "text-white/65",
-    eyebrow: "text-[#5eead4]",
-    rule: "bg-[#5eead4]",
-    accent: "text-[#5eead4]",
-    btnBg: "bg-[#5eead4]",
-    btnText: "text-[#0e0f12]",
-    btnHover: "hover:bg-[#7df0dd]",
-  },
-  "dark-gold": {
-    bg: "bg-[#16181d]",
-    text: "text-white",
-    sub: "text-white/70",
-    eyebrow: "text-[#e9b949]",
-    rule: "bg-[#e9b949]",
-    accent: "text-[#e9b949]",
-    btnBg: "bg-[#e9b949]",
-    btnText: "text-[#16181d]",
-    btnHover: "hover:bg-[#f0c768]",
-  },
-  forest: {
-    bg: "bg-[#0f2a23]",
-    text: "text-white",
-    sub: "text-white/70",
-    eyebrow: "text-[#e9c97a]",
-    rule: "bg-[#e9c97a]",
-    accent: "text-[#e9c97a]",
-    btnBg: "bg-[#e9c97a]",
-    btnText: "text-[#0f2a23]",
-    btnHover: "hover:bg-[#f1d693]",
-  },
-  cream: {
-    bg: "bg-[#f5efe4]",
-    text: "text-[#1d1d1f]",
-    sub: "text-[#1d1d1f]/65",
-    eyebrow: "text-[#0d6e66]",
-    rule: "bg-[#0d6e66]",
-    accent: "text-[#0d6e66]",
-    btnBg: "bg-[#0d6e66]",
-    btnText: "text-white",
-    btnHover: "hover:bg-[#0a5d57]",
-  },
-  clay: {
-    bg: "bg-[#9b6f5c]",
-    text: "text-white",
-    sub: "text-white/80",
-    eyebrow: "text-[#fdf3e4]",
-    rule: "bg-[#fdf3e4]",
-    accent: "text-[#fdf3e4]",
-    btnBg: "bg-[#fdf3e4]",
-    btnText: "text-[#5c3e30]",
-    btnHover: "hover:bg-white",
-  },
-  sky: {
-    bg: "bg-[#e8eef4]",
-    text: "text-[#0f1f33]",
-    sub: "text-[#0f1f33]/65",
-    eyebrow: "text-[#0d6e66]",
-    rule: "bg-[#0d6e66]",
-    accent: "text-[#0d6e66]",
-    btnBg: "bg-[#0f1f33]",
-    btnText: "text-white",
-    btnHover: "hover:bg-[#1a3654]",
-  },
-  ivory: {
-    bg: "bg-[#faf6ee]",
-    text: "text-[#1d1d1f]",
-    sub: "text-[#1d1d1f]/65",
-    eyebrow: "text-[#5d7a4f]",
-    rule: "bg-[#5d7a4f]",
-    accent: "text-[#5d7a4f]",
-    btnBg: "bg-[#5d7a4f]",
-    btnText: "text-white",
-    btnHover: "hover:bg-[#4a6440]",
-  },
-  white: {
-    bg: "bg-white",
-    text: "text-[#1d1d1f]",
-    sub: "text-[#1d1d1f]/65",
-    eyebrow: "text-[#0d6e66]",
-    rule: "bg-[#0d6e66]",
-    accent: "text-[#0d6e66]",
-    btnBg: "bg-[#0d6e66]",
-    btnText: "text-white",
-    btnHover: "hover:bg-[#0a5d57]",
-  },
-  slate: {
-    bg: "bg-[#1a2530]",
-    text: "text-white",
-    sub: "text-white/70",
-    eyebrow: "text-[#e9b949]",
-    rule: "bg-[#e9b949]",
-    accent: "text-[#e9b949]",
-    btnBg: "bg-[#e9b949]",
-    btnText: "text-[#1a2530]",
-    btnHover: "hover:bg-[#f0c768]",
-  },
+/**
+ * LOCKED color system: Apple-style black / white / teal.
+ * All historical mood keys are kept for compatibility but collapse into
+ * exactly TWO visual surfaces — DARK (graphite + teal) or LIGHT (white + teal).
+ * This kills random gold / forest / sky / ivory sprawl across the site.
+ */
+type Surface = {
+  bg: string;
+  text: string;
+  sub: string;
+  eyebrow: string;
+  rule: string;
+  accent: string;
 };
+
+const DARK: Surface = {
+  bg: "bg-[#0e0f12]",
+  text: "text-white",
+  sub: "text-white/65",
+  eyebrow: "text-[#5eead4]",
+  rule: "bg-[#5eead4]",
+  accent: "text-[#5eead4]",
+};
+
+const LIGHT: Surface = {
+  bg: "bg-white",
+  text: "text-[#1d1d1f]",
+  sub: "text-[#1d1d1f]/65",
+  eyebrow: "text-[#0d6e66]",
+  rule: "bg-[#0d6e66]",
+  accent: "text-[#0d6e66]",
+};
+
+const DARK_MOODS: HeroMood[] = ["graphite", "dark-gold", "forest", "slate", "clay"];
+
+const surfaceFor = (mood: HeroMood): Surface =>
+  DARK_MOODS.includes(mood) ? DARK : LIGHT;
+
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -173,11 +97,11 @@ const HeroBand = ({
   mood,
   children,
 }: HeroBandProps) => {
-  const m = MOODS[mood];
+  const m = surfaceFor(mood);
+  const isDark = DARK_MOODS.includes(mood);
   const isExternal = ctaExternal || /^https?:\/\//.test(ctaHref);
 
-  // Pick the locked button class based on mood (light vs dark surface)
-  const isDark = ["graphite", "dark-gold", "forest", "clay", "slate"].includes(mood);
+  // Pick the locked button class based on surface
   const ctaClass = isDark ? "btn-dark-cta" : "btn-primary-apple";
 
   const Cta = isExternal ? (

@@ -8,7 +8,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import MobileCtaBar from "@/components/MobileCtaBar";
-import CommandCenter from "@/components/CommandCenter";
 import FloatingLiveAgent from "@/components/FloatingLiveAgent";
 import RouteFade from "@/components/RouteFade";
 import GARouteTracker from "@/components/GARouteTracker";
@@ -140,6 +139,7 @@ import AnalyzeCommercial from "./pages/analyze/AnalyzeCommercial";
 import AnalyzeLand from "./pages/analyze/AnalyzeLand";
 import AnalyzeAnyHome from "./pages/AnalyzeAnyHome";
 import AnalyzeAnyProperty from "./pages/AnalyzeAnyProperty";
+import International from "./pages/International";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -412,6 +412,7 @@ const App = () => {
           {/* Analyzer Domain Pages */}
           <Route path="/analyze-home" element={<AnalyzeAnyHome />} />
           <Route path="/analyze-any-property" element={<AnalyzeAnyProperty />} />
+          <Route path="/international" element={<International />} />
 
           {/* Tailored Search Hubs */}
           <Route path="/search/single-family" element={<SingleFamilyHub />} />
@@ -426,9 +427,7 @@ const App = () => {
           </RouteFade>
           {/* Global Mobile CTA Bar - shows on mobile only */}
           <MobileCtaBar />
-          {/* Global Command Center - shows on desktop only */}
-          <CommandCenter />
-          {/* Global Floating Live Agent — bottom right, every page (desktop) */}
+          {/* Global Floating Live Agent — bottom right, every page (desktop). SINGLE source of truth. */}
           <FloatingLiveAgent />
         </BrowserRouter>
         </QueryClientProvider>
