@@ -68,7 +68,7 @@ const FinancingBand = () => {
             Explore Financing Options <ArrowRight className="w-4 h-4" />
           </Link>
           <a
-            href="tel:+15186762347"
+            href="tel:+15185227265"
             className="inline-flex items-center gap-2 text-muted-foreground/60 hover:text-muted-foreground text-sm font-medium transition-colors duration-300"
           >
             <Phone className="w-3.5 h-3.5" /> Talk Through Your Options

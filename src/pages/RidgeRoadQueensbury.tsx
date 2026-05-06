@@ -912,7 +912,7 @@ const RidgeRoadQueensbury = () => {
                     className="w-full rounded-full font-bold"
                     asChild
                   >
-                    <a href="tel:+15186762347">
+                    <a href="tel:+15185227265">
                       <Phone className="h-5 w-5 mr-2" />
                       Schedule a Quick Call
                     </a>

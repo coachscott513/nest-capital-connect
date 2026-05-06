@@ -14,13 +14,13 @@ export const CommandCenter: React.FC = () => {
     {
       label: "Call",
       subtitle: "Speak to a human",
-      href: "tel:+15186762347",
+      href: "tel:+15185227265",
       icon: <Phone className="w-4 h-4" />,
     },
     {
       label: "Text",
       subtitle: "Avg response: 2 min",
-      href: "sms:+15186762347",
+      href: "sms:+15185227265",
       icon: <MessageCircle className="w-4 h-4" />,
     },
     {

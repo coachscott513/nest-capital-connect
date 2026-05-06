@@ -116,8 +116,8 @@ const Footer = () => {
           <div>
             <h4 className="text-xs font-medium text-muted-foreground mb-4 uppercase tracking-[0.15em]">Contact</h4>
             <div className="space-y-3">
-              <a href="tel:+15186762347" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                <Phone className="h-3.5 w-3.5" /> (518) 676-2347
+              <a href="tel:+15185227265" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Phone className="h-3.5 w-3.5" /> (518) 522-7265
               </a>
               <a href="mailto:scott@capitaldistrictnest.com" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
                 <Mail className="h-3.5 w-3.5" /> scott@capitaldistrictnest.com

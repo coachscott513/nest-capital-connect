@@ -85,7 +85,7 @@ const InvestmentLanding = () => {
       console.error('Error submitting lead:', error);
       toast({
         title: "Oops! Something went wrong",
-        description: "Please try again or call us at (518) 676-2347",
+        description: "Please try again or call us at (518) 522-7265",
         variant: "destructive",
       });
     } finally {
@@ -126,7 +126,7 @@ const InvestmentLanding = () => {
               className="h-14 px-8 text-lg font-semibold"
               asChild
             >
-              <a href="tel:+15186762347">📞 Contact an Agent: (518) 676-2347</a>
+              <a href="tel:+15185227265">📞 Contact an Agent: (518) 522-7265</a>
             </Button>
           </div>
           
@@ -224,10 +224,10 @@ const InvestmentLanding = () => {
                 <div className="space-y-3">
                   <p className="text-primary text-sm opacity-90">Call Now for Expert Investment Advice</p>
                   <a 
-                    href="tel:+15186762347" 
+                    href="tel:+15185227265" 
                     className="text-primary text-3xl md:text-4xl font-bold hover:text-primary/80 transition-colors duration-200 flex items-center justify-center"
                   >
-                    📞 (518) 676-2347
+                    📞 (518) 522-7265
                   </a>
                   <a 
                     href="mailto:scottalvarez@remax.net" 
@@ -319,7 +319,7 @@ const InvestmentLanding = () => {
                       </div>
                       <div className="flex items-center gap-1">
                         <Phone className="w-3 h-3" />
-                        (518) 676-2347
+                        (518) 522-7265
                       </div>
                     </div>
                     

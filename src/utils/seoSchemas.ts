@@ -6,7 +6,7 @@ export const localBusinessSchema = {
   "name": "Capital District Nest",
   "description": "Albany NY hyperlocal real estate investment intelligence platform",
   "url": BASE_URL,
-  "telephone": "+1-518-676-2347",
+  "telephone": "+1-518-522-7265",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Albany",

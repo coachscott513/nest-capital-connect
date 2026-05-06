@@ -10,7 +10,7 @@ const LocalBusinessSchema = () => {
           "name": "Capital District Nest Team at RE/MAX",
           "image": "https://capitaldistrictnest.com/logo.png",
           "url": "https://capitaldistrictnest.com",
-          "telephone": "+15186762347",
+          "telephone": "+15185227265",
           "priceRange": "$$",
           "address": {
             "@type": "PostalAddress",

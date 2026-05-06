@@ -183,8 +183,8 @@ const TroyHomesForSalePage = () => {
         </section>
 
         <div className="py-4 bg-primary text-primary-foreground text-center">
-          <a href="tel:+15186762347" className="flex items-center justify-center gap-2 font-semibold text-lg">
-            <Phone className="w-5 h-5" />Contact an Agent: (518) 676-2347
+          <a href="tel:+15185227265" className="flex items-center justify-center gap-2 font-semibold text-lg">
+            <Phone className="w-5 h-5" />Contact an Agent: (518) 522-7265
           </a>
         </div>
 

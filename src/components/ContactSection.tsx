@@ -126,11 +126,11 @@ const ContactSection = () => {
                 <TrackedButton
                   trackingType="phone"
                   trackingLabel="Contact Section Phone"
-                  href="tel:+15186762347"
+                  href="tel:+15185227265"
                   variant="link"
                   className="ml-2 text-primary hover:underline p-0 h-auto"
                 >
-                  (518) 676-2347
+                  (518) 522-7265
                 </TrackedButton>
               </p>
               <p className="flex items-center justify-center text-muted-foreground">

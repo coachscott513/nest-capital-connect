@@ -465,7 +465,7 @@ const BlogPost = () => {
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Button size="lg" className="bg-background text-primary hover:bg-background/90" asChild>
-                      <a href="tel:+15186762347">Schedule Consultation</a>
+                      <a href="tel:+15185227265">Schedule Consultation</a>
                     </Button>
                     <Button size="lg" variant="outline" className="border-white text-white hover:bg-background hover:text-primary">
                       View Current Deals

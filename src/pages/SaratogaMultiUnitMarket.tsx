@@ -24,7 +24,7 @@ const SaratogaMultiUnitMarket = () => {
       {
         "@type": "LocalBusiness",
         "name": "Capital District Nest",
-        "telephone": "+15186762347",
+        "telephone": "+15185227265",
         "address": { "@type": "PostalAddress", "addressLocality": "Saratoga Springs", "addressRegion": "NY" }
       },
       {

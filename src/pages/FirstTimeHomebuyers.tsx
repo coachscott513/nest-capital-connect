@@ -170,13 +170,13 @@ const FirstTimeHomebuyers = () => {
             <div className="border-t border-border pt-8">
               <p className="text-center text-sm text-muted-foreground mb-4">Or reach Scott directly</p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <a href="tel:5186762347" className="flex-1">
+                <a href="tel:5185227265" className="flex-1">
                   <Button className="w-full h-12 gap-2 bg-[#C9A84C] hover:bg-[#b89740] text-white font-semibold">
                     <Phone className="w-4 h-4" />
                     Call Scott
                   </Button>
                 </a>
-                <a href="sms:5186762347" className="flex-1">
+                <a href="sms:5185227265" className="flex-1">
                   <Button variant="outline" className="w-full h-12 gap-2 border-[#C9A84C] text-[#C9A84C] hover:bg-[#C9A84C]/10 font-semibold">
                     <MessageCircle className="w-4 h-4" />
                     Text Scott

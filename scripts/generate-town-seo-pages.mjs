@@ -683,7 +683,7 @@ function renderTownPage(t) {
         <p class="lede">Homes for sale, lifestyle, schools, and everything you need to know about ${escapeHtml(t.name)} — part of the Capital District, NY.</p>
         <p>
           <a class="cta" href="/towns/${t.slug}">View Homes in ${escapeHtml(t.name)}</a>
-          <a class="cta secondary" href="tel:+15186762347">Talk to a Local Expert · (518) 676-2347</a>
+          <a class="cta secondary" href="tel:+15185227265">Talk to a Local Expert · (518) 522-7265</a>
         </p>
       </header>
 
@@ -731,7 +731,7 @@ function renderTownPage(t) {
         <h2>Buying or Selling in ${escapeHtml(t.name)}?</h2>
         <p>If you're considering buying or selling in ${escapeHtml(t.name)}, working with a local expert who knows the street-by-street differences makes a real difference. Capital District Nest provides free property intelligence reports and local market guidance for buyers, sellers, and investors throughout the Capital Region.</p>
         <p>
-          <a class="cta" href="tel:+15186762347">Talk to Scott Alvarez · (518) 676-2347</a>
+          <a class="cta" href="tel:+15185227265">Talk to Scott Alvarez · (518) 522-7265</a>
           <a class="cta secondary" href="/towns/${t.slug}">Browse ${escapeHtml(t.name)} Listings</a>
         </p>
       </section>
@@ -742,10 +742,10 @@ function renderTownPage(t) {
         <a href="/communities">Browse all Capital District towns</a>
       </nav>
 
-      <p class="meta">Capital District Nest · Local real estate intelligence for Albany, Troy, Schenectady, Saratoga Springs, and the surrounding Capital Region. Contact: (518) 676-2347.</p>
+      <p class="meta">Capital District Nest · Local real estate intelligence for Albany, Troy, Schenectady, Saratoga Springs, and the surrounding Capital Region. Contact: (518) 522-7265.</p>
 
       <noscript>
-        <p style="margin-top:24px;color:#666;">For the interactive ${escapeHtml(t.name)} guide with maps and live listings, please enable JavaScript or call (518) 676-2347.</p>
+        <p style="margin-top:24px;color:#666;">For the interactive ${escapeHtml(t.name)} guide with maps and live listings, please enable JavaScript or call (518) 522-7265.</p>
       </noscript>
     </main>
   </body>

@@ -158,10 +158,10 @@ const vendorPhases: VendorPhase[] = [
         category: "broker",
         description: "The backbone of our local real estate practice. RE/MAX Solutions combines global reach with unmatched local knowledge to deliver results for every buyer and seller we represent.",
         specialty: "Real Estate Brokerage",
-        phone: "(518) 676-2347",
+        phone: "(518) 522-7265",
         website: "https://capitaldistrictnest.com",
         ctaLabel: "Contact an Agent",
-        ctaUrl: "tel:+15186762347",
+        ctaUrl: "tel:+15185227265",
         isPreferred: true,
         badgeLabel: "Recommended"
       },
