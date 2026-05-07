@@ -44,7 +44,7 @@ const WeeklyFeed = ({
       id="weekly-feed"
       className={
         compact
-          ? "pt-10 md:pt-12 pb-20 md:pb-24 px-6 md:px-10 bg-[#F9FAFB] border-b border-[#1d1d1f]/[0.06]"
+          ? "pt-6 md:pt-8 pb-16 md:pb-20 px-6 md:px-10 bg-[#F9FAFB] border-b border-[#1d1d1f]/[0.06]"
           : "py-28 md:py-40 px-6 md:px-10 bg-[#F9FAFB] border-y border-[#1d1d1f]/[0.06]"
       }
     >

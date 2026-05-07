@@ -38,6 +38,8 @@ interface HeroBandProps {
   callouts?: Callout[];
   mood: HeroMood;
   children?: ReactNode; // optional content rendered below the band (e.g. tile grid, IDX embed)
+  /** Collapse bottom padding so the next section flows right under this one. */
+  tightBottom?: boolean;
 }
 
 /**
@@ -96,6 +98,7 @@ const HeroBand = ({
   callouts = [],
   mood,
   children,
+  tightBottom = false,
 }: HeroBandProps) => {
   const m = surfaceFor(mood);
   const isDark = DARK_MOODS.includes(mood);
@@ -116,7 +119,10 @@ const HeroBand = ({
 
   return (
     <section className={`${m.bg} ${m.text} w-full`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-10 section-apple">
+      <div
+        className="max-w-7xl mx-auto px-6 md:px-10 section-apple"
+        style={tightBottom ? { paddingBottom: "32px" } : undefined}
+      >
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           {/* LEFT — narrative */}
           <motion.div {...fadeUp} className="lg:col-span-7">
@@ -162,7 +168,9 @@ const HeroBand = ({
           )}
         </div>
 
-        {children && <div className="mt-16 md:mt-24">{children}</div>}
+        {children && (
+          <div className={tightBottom ? "mt-10 md:mt-12" : "mt-16 md:mt-24"}>{children}</div>
+        )}
       </div>
     </section>
   );
