@@ -59,11 +59,12 @@ const towns = [
 ].sort((a, b) => a.name.localeCompare(b.name));
 
 const navItems: { label: string; href?: string; dropdown?: string }[] = [
-  { label: "Markets", href: "/communities" },
-  { label: "Analyze", href: "/analyze" },
-  { label: "Explore", dropdown: "towns" },
-  { label: "Buyers", href: "/first-time-homebuyers" },
-  { label: "Investors", href: "/investor-tools" },
+  { label: "Home", href: "/" },
+  { label: "Towns", dropdown: "towns" },
+  { label: "Homes", href: "/homes-for-sale" },
+  { label: "Local Businesses", href: "/living-in-delmar#local-favorites" },
+  { label: "Financing", href: "/financing" },
+  { label: "Analyze a Property", href: "/analyze" },
 ];
 
 const TEAL = "#0d6e66";

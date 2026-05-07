@@ -11,6 +11,13 @@ export type BusinessCategory =
   | "Wellness"
   | "Bookstore";
 
+export interface BusinessSocials {
+  facebook?: string;
+  instagram?: string;
+  linkedin?: string;
+  tiktok?: string;
+}
+
 export interface Business {
   slug: string;
   name: string;
@@ -25,6 +32,11 @@ export interface Business {
   hours?: string;
   lat?: number;
   lng?: number;
+  /** Paid/claimed listing — unlocks active social icons + featured styling. */
+  verified?: boolean;
+  /** Premium placement. */
+  featured?: boolean;
+  socials?: BusinessSocials;
 }
 
 export const delmarBusinesses: Business[] = [

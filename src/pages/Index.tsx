@@ -223,20 +223,46 @@ const Index = () => {
         ]}
       />
 
-      {/* 6 — LOCAL BUSINESSES · ivory + muted green (LIGHT) */}
-      <HeroBand
-        mood="ivory"
-        eyebrow="Local Businesses"
-        headline={<>Local businesses,<br />by town.</>}
-        sub="Restaurants, coffee shops, home services, and the professionals that shape each Capital District community."
-        ctaLabel="Explore local businesses"
-        ctaHref="/living-in-delmar#local-favorites"
-        callouts={[
-          { title: "Restaurants & cafés", body: "Where Delmar, Saratoga, and Troy actually go to eat." },
-          { title: "Home services",       body: "Vetted contractors, inspectors, lenders, and attorneys." },
-          { title: "Community partners",  body: "Schools, libraries, parks, and the people behind them." },
-        ]}
-      />
+      {/* 6 — CATEGORY DESTINATIONS · light */}
+      <section className="bg-[#f7f5f0] py-24 md:py-32 px-6 md:px-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14 md:mb-20">
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4" style={{ color: "#0d6e66" }}>
+              Where to Start
+            </p>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.03em] text-[#1d1d1f] leading-[1.05]">
+              Pick your path.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+            {[
+              { title: "New Properties This Week", sub: "Fresh listings across the Capital District.", to: "/homes-for-sale" },
+              { title: "Land for Sale",            sub: "Lots, acreage, and build sites.",             to: "/land-buyers" },
+              { title: "Investment Properties",    sub: "2–4 unit, multifamily, and rentals.",         to: "/investment-properties" },
+              { title: "First-Time Buyer Help",    sub: "Roadmap, programs, and what to expect.",      to: "/first-time-homebuyers" },
+              { title: "Financing & Grants",       sub: "Loan types and down-payment assistance.",     to: "/financing" },
+              { title: "Local Businesses & Vendors", sub: "Curated by town, not crowdsourced.",        to: "/living-in-delmar#local-favorites" },
+            ].map((c) => (
+              <Link
+                key={c.title}
+                to={c.to}
+                className="group relative block rounded-2xl bg-white p-7 md:p-8 border border-foreground/[0.06] hover:border-[#0d6e66]/25 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.25)]"
+              >
+                <h3 className="text-lg md:text-xl font-semibold tracking-tight text-[#1d1d1f]">
+                  {c.title}
+                </h3>
+                <p className="mt-2 text-sm md:text-[15px] text-[#1d1d1f]/65 font-light leading-relaxed">
+                  {c.sub}
+                </p>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: "#0d6e66" }}>
+                  Explore <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* 7 — WEEKLY NEWSLETTER CTA */}
       <WeeklyNewsletterCTA />
