@@ -38,20 +38,20 @@ const WeeklyFeed = ({
   return (
     <section
       id="weekly-feed"
-      className="py-24 md:py-32 px-6 md:px-10 bg-white"
+      className="py-28 md:py-40 px-6 md:px-10 bg-[#F9FAFB] border-y border-[#1d1d1f]/[0.06]"
     >
       <div className="max-w-6xl mx-auto">
-        <div className="mb-16 max-w-2xl">
+        <div className="mb-16 max-w-3xl">
+          <span className="inline-flex items-center gap-2 rounded-full bg-[#0d6e66]/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0d6e66] mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0d6e66] animate-pulse" />
+            Updated This Week
+          </span>
           <p className="eyebrow-apple text-[#0d6e66] mb-4">{eyebrow}</p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.025em] text-[#1d1d1f] leading-[1.05]">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.03em] text-[#1d1d1f] leading-[1.02]">
             {title}
           </h2>
           <p className="mt-6 text-lg md:text-xl text-[#1d1d1f]/65 font-light leading-relaxed">
             {sub}
-          </p>
-          <p className="mt-5 inline-flex items-center gap-2 text-xs font-medium tracking-wide text-[#1d1d1f]/55">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0d6e66] animate-pulse" />
-            Updated May 7, 2026
           </p>
         </div>
 

@@ -49,13 +49,18 @@ const LivingInDelmar = () => {
         ctaHref={REMAX_DELMAR}
         ctaExternal
       >
-        <div className="flex justify-start">
-          <a
-            href="#weekly-newsletter"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-white/20 text-white text-sm font-semibold hover:bg-white/15 transition"
-          >
-            Get Weekly Updates <ArrowRight className="w-4 h-4" />
-          </a>
+        <div className="flex flex-col gap-5">
+          <p className="text-[13px] md:text-sm font-medium tracking-[0.08em] text-white/70">
+            Updated weekly · Local insights · Real-time market activity
+          </p>
+          <div>
+            <a
+              href="#weekly-newsletter"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-white/20 text-white text-sm font-semibold hover:bg-white/15 transition"
+            >
+              Get Weekly Updates <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </HeroBand>
 
@@ -95,7 +100,7 @@ const LivingInDelmar = () => {
       />
 
       {/* 5 — DELMAR SPOTLIGHT */}
-      <section className="bg-white py-24 md:py-28 px-6 md:px-10">
+      <section className="bg-[#F9FAFB] py-24 md:py-28 px-6 md:px-10 border-y border-[#1d1d1f]/[0.06]">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12 max-w-2xl">
             <p className="eyebrow-apple text-[#0d6e66] mb-3">Delmar Spotlight</p>
@@ -113,7 +118,7 @@ const LivingInDelmar = () => {
               </div>
               <div className="p-8 md:p-12 flex flex-col justify-center">
                 <span className="inline-flex items-center gap-1.5 self-start px-3 py-1 rounded-full bg-[#c9a449]/15 text-[#9a7d2e] text-xs font-semibold mb-5">
-                  <Sparkles className="w-3 h-3" /> Featured · {town.featuredBusiness.category}
+                  <Sparkles className="w-3 h-3" /> Featured This Week · {town.featuredBusiness.category}
                 </span>
                 <h3 className="text-3xl md:text-4xl font-semibold tracking-tight text-[#1d1d1f] leading-tight">
                   {town.featuredBusiness.name}
