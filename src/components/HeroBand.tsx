@@ -168,7 +168,9 @@ const HeroBand = ({
           )}
         </div>
 
-        {children && <div className="mt-16 md:mt-24">{children}</div>}
+        {children && (
+          <div className={tightBottom ? "mt-10 md:mt-12" : "mt-16 md:mt-24"}>{children}</div>
+        )}
       </div>
     </section>
   );
