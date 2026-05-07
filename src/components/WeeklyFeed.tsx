@@ -61,9 +61,14 @@ const WeeklyFeed = ({
             return (
               <article
                 key={i}
-                className="card-lift group bg-white border border-[#1d1d1f]/8 rounded-2xl p-8 md:p-10 transition-all"
+                className="card-lift group relative bg-white border border-[#1d1d1f]/8 rounded-2xl p-8 md:p-10 transition-all"
                 style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}
               >
+                {i < 2 && (
+                  <span className="absolute top-5 right-5 inline-flex items-center gap-1 rounded-full bg-[#0d6e66] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
+                    This Week
+                  </span>
+                )}
                 <div className="flex items-center gap-3 mb-6">
                   <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0d6e66]/8">
                     <Icon className="w-5 h-5 text-[#0d6e66]" strokeWidth={1.75} />
@@ -84,6 +89,15 @@ const WeeklyFeed = ({
               </article>
             );
           })}
+        </div>
+
+        <div className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href="#weekly-newsletter"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
+          >
+            Get New Listings + Weekly Updates <ArrowRight className="w-4 h-4" />
+          </a>
         </div>
       </div>
     </section>
