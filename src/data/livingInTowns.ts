@@ -261,11 +261,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "Stockade Outdoor Art Show", date: "Sept 12–13, 2026",   description: "100+ artists in the historic Stockade neighborhood." },
       { title: "Schenectady Greenmarket",   date: "Sundays year-round", description: "Farmers market on Jay Street pedestrian zone." },
     ],
-    essentials: baseEssentials(
-      "https://www.cityofschenectady.com/",
-      "https://www.schenectady.k12.ny.us/",
-      "https://www.cityofschenectady.com/195/Bureau-of-Receipts",
-    ),
+    essentials: [
+      { icon: "townHall", title: "City of Schenectady", description: "Official city services and departments.",   href: "https://www.cityofschenectady.com" },
+      { icon: "tax",      title: "Taxes & Finance",     description: "Property taxes and city payments.",         href: "https://www.cityofschenectady.com" },
+      { icon: "permit",   title: "Building Department", description: "Permits, codes, and inspections.",          href: "https://www.cityofschenectady.com" },
+      { icon: "school",   title: "Schenectady Schools", description: "District info, calendar, and enrollment.",  href: "https://www.schenectadyschools.org" },
+      { icon: "trash",    title: "Trash & Recycling",   description: "Public works and sanitation services.",     href: "https://www.cityofschenectady.com" },
+      { icon: "utility",  title: "Utilities",           description: "Water, sewer, and city services.",          href: "https://www.cityofschenectady.com" },
+    ],
     nearbyTowns: [
       { slug: "niskayuna",    name: "Niskayuna" },
       { slug: "colonie",      name: "Colonie" },
@@ -303,11 +306,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "SPAC summer season",        date: "June – August",       description: "Live at SPAC: orchestras, ballet, and concerts." },
       { title: "Saratoga Farmers Market",   date: "Saturdays year-round", description: "Year-round market downtown at High Rock Park." },
     ],
-    essentials: baseEssentials(
-      "https://www.saratoga-springs.org/",
-      "https://www.saratogaschools.org/",
-      "https://www.saratoga-springs.org/192/Account-Management",
-    ),
+    essentials: [
+      { icon: "townHall", title: "Saratoga Springs",    description: "Official city services and announcements.",   href: "https://www.saratoga-springs.org" },
+      { icon: "tax",      title: "Property Search",     description: "Assessments, property info, and payments.",   href: "https://www.saratoga-springs.org/101/Services" },
+      { icon: "permit",   title: "Forms & Permits",     description: "Building, planning, zoning, and permits.",    href: "https://www.saratoga-springs.org" },
+      { icon: "school",   title: "Saratoga Schools",    description: "District info, calendar, and enrollment.",     href: "https://www.saratogaschools.org" },
+      { icon: "trash",    title: "Trash & Recycling",   description: "Transfer station and public works services.", href: "https://www.saratoga-springs.org/574/Department-of-Public-Works" },
+      { icon: "utility",  title: "City Services",       description: "Payments, utilities, and city services.",     href: "https://www.saratoga-springs.org/101/Services" },
+    ],
     nearbyTowns: [
       { slug: "clifton-park", name: "Clifton Park" },
       { slug: "latham",       name: "Latham" },
@@ -345,11 +351,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "Shen Music Festival",     date: "April 2026",        description: "Annual high school music showcase." },
       { title: "Clifton Park 4th of July", date: "July 4, 2026",      description: "Fireworks at Clifton Common." },
     ],
-    essentials: baseEssentials(
-      "https://www.cliftonpark.org/",
-      "https://www.shenet.org/",
-      "https://www.cliftonpark.org/179/Receiver-of-Taxes",
-    ),
+    essentials: [
+      { icon: "townHall", title: "Town of Clifton Park",  description: "Official town services and announcements.", href: "https://cliftonparkny.gov" },
+      { icon: "tax",      title: "Town Services",         description: "Taxes, permits, forms, and departments.",   href: "https://cliftonparkny.gov" },
+      { icon: "permit",   title: "Permits & Forms",       description: "Building permits and town forms.",          href: "https://cliftonparkny.gov" },
+      { icon: "school",   title: "Shenendehowa Schools",  description: "District info, calendar, and enrollment.",  href: "https://www.shenet.org" },
+      { icon: "trash",    title: "Trash & Recycling",     description: "Town and county disposal resources.",       href: "https://cliftonparkny.gov" },
+      { icon: "utility",  title: "Utilities",             description: "Water, sewer, and local services.",         href: "https://cliftonparkny.gov" },
+    ],
     nearbyTowns: [
       { slug: "latham",            name: "Latham" },
       { slug: "saratoga-springs",  name: "Saratoga Springs" },
@@ -387,11 +396,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "Guilderland Farmers Market", date: "Sundays summer", description: "Local market at Tawasentha Park." },
       { title: "Town park summer concerts", date: "July",            description: "Free Wednesday night concerts at Tawasentha." },
     ],
-    essentials: baseEssentials(
-      "https://www.townofguilderland.org/",
-      "https://www.guilderlandschools.org/",
-      "https://www.townofguilderland.org/receiver-taxes",
-    ),
+    essentials: [
+      { icon: "townHall", title: "Town of Guilderland",   description: "Official town services and departments.",   href: "https://www.townofguilderland.gov" },
+      { icon: "tax",      title: "Town Departments",      description: "Assessor, taxes, building, and services.",  href: "https://www.townofguilderland.gov/101/Departments" },
+      { icon: "permit",   title: "Building & Zoning",     description: "Permits, zoning, and inspections.",         href: "https://www.townofguilderland.gov/101/Departments" },
+      { icon: "school",   title: "Guilderland Schools",   description: "District info, calendar, and enrollment.",  href: "https://www.guilderlandschools.org" },
+      { icon: "trash",    title: "Town Services",         description: "Trash, public works, and resident services.", href: "https://www.townofguilderland.gov/101/Departments" },
+      { icon: "utility",  title: "Utilities",             description: "Water, sewer, and town services.",          href: "https://www.townofguilderland.gov/101/Departments" },
+    ],
     nearbyTowns: [
       { slug: "albany",        name: "Albany" },
       { slug: "delmar",        name: "Delmar" },
@@ -430,11 +442,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "Latham Farmers Market",   date: "Saturdays summer",  description: "Seasonal market in central Latham." },
       { title: "North Colonie Music Fest", date: "May 2026",         description: "Annual school music celebration." },
     ],
-    essentials: baseEssentials(
-      "https://www.colonie.org/",
-      "https://www.northcolonie.org/",
-      "https://www.colonie.org/departments/receiver-of-taxes/",
-    ),
+    essentials: [
+      { icon: "townHall", title: "Town of Colonie",      description: "Official town services and departments.",      href: "https://www.townofcolonie.gov" },
+      { icon: "tax",      title: "Tax Department",       description: "General tax, school tax, and water bills.",    href: "https://www.townofcolonie.gov/departments/tax/" },
+      { icon: "permit",   title: "Building Services",    description: "Building permits, forms, and inspections.",    href: "https://www.townofcolonie.gov/departments/building/" },
+      { icon: "school",   title: "North Colonie Schools",description: "District info, calendar, and enrollment.",     href: "https://www.northcolonie.org" },
+      { icon: "trash",    title: "Town Services",        description: "Yard waste, public works, and services.",      href: "https://www.townofcolonie.gov" },
+      { icon: "utility",  title: "Utilities",            description: "Water, tax, and local services.",              href: "https://www.townofcolonie.gov/departments/tax/" },
+    ],
     nearbyTowns: [
       { slug: "colonie",      name: "Colonie" },
       { slug: "clifton-park", name: "Clifton Park" },
@@ -472,11 +487,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "Mohawk-Hudson bike path", date: "Year-round",    description: "Top-rated cycling and walking trail along the river." },
       { title: "Niskayuna Co-op events",  date: "Year-round",    description: "Cooking classes and community programs." },
     ],
-    essentials: baseEssentials(
-      "https://www.niskayuna.org/",
-      "https://www.niskyschools.org/",
-      "https://www.niskayuna.org/receiver-taxes",
-    ),
+    essentials: [
+      { icon: "townHall", title: "Town of Niskayuna",    description: "Official town services and departments.",   href: "https://www.niskayuna.gov" },
+      { icon: "tax",      title: "Property Taxes",       description: "Receiver of Taxes and tax information.",    href: "https://www.niskayuna.gov/departments/receiver_of_taxes/index.php" },
+      { icon: "permit",   title: "Building Department",  description: "Permits, forms, and inspections.",          href: "https://www.niskayuna.gov/departments/building_department/index.php" },
+      { icon: "school",   title: "Niskayuna Schools",    description: "District info, calendar, and enrollment.",  href: "https://www.niskayunaschools.org" },
+      { icon: "townHall", title: "Departments",          description: "Town departments and public services.",     href: "https://www.niskayuna.gov/departments/" },
+      { icon: "utility",  title: "Utilities & Taxes",    description: "Utility bills and tax resources.",          href: "https://www.niskayuna.gov/departments/receiver_of_taxes/view_your_tax_bill_online.php" },
+    ],
     nearbyTowns: [
       { slug: "schenectady",  name: "Schenectady" },
       { slug: "colonie",      name: "Colonie" },
@@ -509,11 +527,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "Glenmont Job Fair", date: "Annual",     description: "Bethlehem business community job fair." },
       { title: "Tri-Village events", date: "Year-round", description: "Bethlehem community programming." },
     ],
-    essentials: baseEssentials(
-      "https://www.townofbethlehem.org/",
-      "https://www.bethlehemschools.org/",
-      "https://www.townofbethlehem.org/197/Receiver-of-Taxes",
-    ),
+    essentials: [
+      { icon: "townHall", title: "Town of Bethlehem",   description: "Official services for Glenmont via Bethlehem.",      href: "https://www.townofbethlehem.org" },
+      { icon: "tax",      title: "Property Taxes",      description: "Search tax bills and property assessments.",         href: "https://egov.basny.com/bethlehem/" },
+      { icon: "permit",   title: "Building Permits",    description: "Permits, zoning, and inspections.",                  href: "https://www.townofbethlehem.org/179/Building-Department" },
+      { icon: "school",   title: "Bethlehem Schools",   description: "District info, calendar, and enrollment.",            href: "https://www.bethlehemschools.org" },
+      { icon: "trash",    title: "Trash & Recycling",   description: "Pickup schedule and recycling guidelines.",           href: "https://www.townofbethlehem.org/492/Recycling-Transfer-Station-Trash" },
+      { icon: "utility",  title: "Water & Sewer",       description: "Water, sewer, and town utility services.",            href: "https://www.townofbethlehem.org/170/Water-Sewer" },
+    ],
     nearbyTowns: [
       { slug: "delmar",       name: "Delmar" },
       { slug: "slingerlands", name: "Slingerlands" },
@@ -546,11 +567,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "Bethlehem Public Library events",  date: "Weekly",     description: "Library serves Slingerlands residents." },
       { title: "Albany County Rail Trail",         date: "Year-round", description: "10-mile trail passing through Slingerlands." },
     ],
-    essentials: baseEssentials(
-      "https://www.townofbethlehem.org/",
-      "https://www.bethlehemschools.org/",
-      "https://www.townofbethlehem.org/197/Receiver-of-Taxes",
-    ),
+    essentials: [
+      { icon: "townHall", title: "Town of Bethlehem",   description: "Official services for Slingerlands via Bethlehem.",  href: "https://www.townofbethlehem.org" },
+      { icon: "tax",      title: "Property Taxes",      description: "Search tax bills and property assessments.",         href: "https://egov.basny.com/bethlehem/" },
+      { icon: "permit",   title: "Building Permits",    description: "Permits, zoning, and inspections.",                  href: "https://www.townofbethlehem.org/179/Building-Department" },
+      { icon: "school",   title: "Bethlehem Schools",   description: "District info, calendar, and enrollment.",            href: "https://www.bethlehemschools.org" },
+      { icon: "trash",    title: "Trash & Recycling",   description: "Pickup schedule and recycling guidelines.",           href: "https://www.townofbethlehem.org/492/Recycling-Transfer-Station-Trash" },
+      { icon: "utility",  title: "Water & Sewer",       description: "Water, sewer, and town utility services.",            href: "https://www.townofbethlehem.org/170/Water-Sewer" },
+    ],
     nearbyTowns: [
       { slug: "delmar",       name: "Delmar" },
       { slug: "voorheesville", name: "Voorheesville" },
@@ -582,11 +606,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "Colonie 4th of July",            date: "July 4, 2026",     description: "Fireworks at the Crossings." },
       { title: "Mohawk River trails",            date: "Year-round",       description: "Hiking and biking along the Mohawk." },
     ],
-    essentials: baseEssentials(
-      "https://www.colonie.org/",
-      "https://www.southcolonieschools.org/",
-      "https://www.colonie.org/departments/receiver-of-taxes/",
-    ),
+    essentials: [
+      { icon: "townHall", title: "Town of Colonie",      description: "Official town services and departments.",      href: "https://www.townofcolonie.gov" },
+      { icon: "tax",      title: "Tax Department",       description: "General tax, school tax, and water bills.",    href: "https://www.townofcolonie.gov/departments/tax/" },
+      { icon: "permit",   title: "Building Services",    description: "Building permits, forms, and inspections.",    href: "https://www.townofcolonie.gov/departments/building/" },
+      { icon: "school",   title: "South Colonie Schools",description: "District info, calendar, and enrollment.",     href: "https://www.southcolonieschools.org" },
+      { icon: "trash",    title: "Town Services",        description: "Yard waste, public works, and services.",      href: "https://www.townofcolonie.gov" },
+      { icon: "utility",  title: "Utilities",            description: "Water, tax, and local services.",              href: "https://www.townofcolonie.gov/departments/tax/" },
+    ],
     nearbyTowns: [
       { slug: "latham",      name: "Latham" },
       { slug: "albany",      name: "Albany" },
@@ -624,11 +651,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "Cohoes Falls overlook",    date: "Year-round",  description: "Free public viewing of the iconic falls." },
       { title: "Riverspark Summerfest",    date: "August 2026", description: "Annual community festival." },
     ],
-    essentials: baseEssentials(
-      "https://www.ci.cohoes.ny.us/",
-      "https://www.cohoes.org/",
-      "https://www.ci.cohoes.ny.us/197/Tax-Office",
-    ),
+    essentials: [
+      { icon: "townHall", title: "City of Cohoes",       description: "Official city services and departments.",     href: "https://www.ci.cohoes.ny.us" },
+      { icon: "tax",      title: "Property Taxes",       description: "Taxes, bills, and city finance.",             href: "https://www.ci.cohoes.ny.us" },
+      { icon: "permit",   title: "Building & Codes",     description: "Permits, codes, and inspections.",            href: "https://www.ci.cohoes.ny.us" },
+      { icon: "school",   title: "Cohoes Schools",       description: "District info, calendar, and enrollment.",    href: "https://www.cohoes.org" },
+      { icon: "trash",    title: "Trash & Recycling",    description: "Public works and sanitation services.",       href: "https://www.ci.cohoes.ny.us" },
+      { icon: "utility",  title: "Utilities",            description: "Water, sewer, and city services.",            href: "https://www.ci.cohoes.ny.us" },
+    ],
     nearbyTowns: [
       { slug: "watervliet", name: "Watervliet" },
       { slug: "troy",       name: "Troy" },
@@ -660,11 +690,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "Watervliet Memorial Day parade", date: "May 26, 2026", description: "Annual community parade." },
       { title: "Riverfront 4th of July", date: "July 4, 2026", description: "Fireworks along the Hudson." },
     ],
-    essentials: baseEssentials(
-      "https://www.watervliet.com/",
-      "https://www.vlietschools.org/",
-      "https://www.watervliet.com/240/Treasurer",
-    ),
+    essentials: [
+      { icon: "townHall", title: "City of Watervliet",   description: "Official city services and departments.",     href: "https://www.watervliet.com" },
+      { icon: "tax",      title: "Taxes & Payments",     description: "Property taxes and city payments.",           href: "https://www.watervliet.com" },
+      { icon: "permit",   title: "Building & Codes",     description: "Permits, codes, and inspections.",            href: "https://www.watervliet.com" },
+      { icon: "school",   title: "Watervliet Schools",   description: "District info, calendar, and enrollment.",    href: "https://www.watervlietcityschools.org" },
+      { icon: "trash",    title: "Trash & Recycling",    description: "Public works and sanitation services.",       href: "https://www.watervliet.com" },
+      { icon: "utility",  title: "Utilities",            description: "Water, sewer, and city services.",            href: "https://www.watervliet.com" },
+    ],
     nearbyTowns: [
       { slug: "cohoes",     name: "Cohoes" },
       { slug: "troy",       name: "Troy" },
@@ -696,11 +729,14 @@ export const livingInTowns: Record<string, LivingInTown> = {
       { title: "Hampton Manor concerts",          date: "Summer",       description: "Free outdoor concerts at Hampton Manor." },
       { title: "Independence Day fireworks",      date: "July 4, 2026", description: "Town-sponsored fireworks." },
     ],
-    essentials: baseEssentials(
-      "https://www.eastgreenbush.org/",
-      "https://www.egcsd.org/",
-      "https://www.eastgreenbush.org/departments/tax-office",
-    ),
+    essentials: [
+      { icon: "townHall", title: "Town of East Greenbush", description: "Official town services and departments.", href: "https://www.eastgreenbush.org" },
+      { icon: "tax",      title: "Taxes & Assessment",     description: "Tax and assessment resources.",          href: "https://www.eastgreenbush.org" },
+      { icon: "permit",   title: "Building Department",    description: "Permits, zoning, and inspections.",      href: "https://www.eastgreenbush.org" },
+      { icon: "school",   title: "East Greenbush Schools", description: "District info, calendar, and enrollment.", href: "https://egcsd.org" },
+      { icon: "trash",    title: "Trash & Recycling",      description: "Town services and disposal resources.",  href: "https://www.eastgreenbush.org" },
+      { icon: "utility",  title: "Utilities",              description: "Water, sewer, and town services.",       href: "https://www.eastgreenbush.org" },
+    ],
     nearbyTowns: [
       { slug: "albany",   name: "Albany" },
       { slug: "troy",     name: "Troy" },
