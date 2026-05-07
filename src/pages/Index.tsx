@@ -140,12 +140,75 @@ const Index = () => {
       {/* 2 — WHAT'S HAPPENING THIS WEEK (the weekly feed) */}
       <WeeklyFeed scope="region" />
 
+      {/* 1.5 — MICRO-PROOF STRIP */}
+      <section className="bg-white border-b border-foreground/[0.06]">
+        <div className="max-w-6xl mx-auto px-6 md:px-10 py-5 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-8 text-center sm:text-left">
+          {[
+            "Tracking 50+ properties weekly",
+            "Featuring local businesses",
+            "Updated every Friday",
+          ].map((t) => (
+            <p key={t} className="text-xs sm:text-[13px] font-medium text-[#1d1d1f]/65 inline-flex items-center justify-center sm:justify-start gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#0d6e66]" />
+              {t}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      {/* 1.7 — START HERE */}
+      <section className="bg-[#f5efe4] py-20 md:py-28 px-6 md:px-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-12 text-center">
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#0d6e66]">
+              Start Here
+            </p>
+            <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-[#1d1d1f] leading-[1.05]">
+              New to the Capital District?
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+            <Link
+              to="/rentals"
+              className="group block rounded-3xl bg-white p-9 md:p-10 border border-foreground/[0.06] hover:border-[#0d6e66]/25 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.25)]"
+            >
+              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66] mb-3">Renting</p>
+              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Find a place to rent.</h3>
+              <p className="mt-3 text-[15px] text-[#1d1d1f]/65 font-light leading-relaxed">
+                Apartments, pricing, and move-in help across the region.
+              </p>
+              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#0d6e66]">
+                Start Renting <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </Link>
+            <Link
+              to="/first-time-homebuyers"
+              className="group block rounded-3xl bg-white p-9 md:p-10 border border-foreground/[0.06] hover:border-[#0d6e66]/25 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.25)]"
+            >
+              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66] mb-3">Buying</p>
+              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Buy your first home.</h3>
+              <p className="mt-3 text-[15px] text-[#1d1d1f]/65 font-light leading-relaxed">
+                What you can afford, programs, and the next step.
+              </p>
+              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#0d6e66]">
+                Start Buying <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* 2 — TOWNS · one unified split section (text + tile grid together) */}
       <section className="bg-white w-full">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-[72px] md:py-[120px]">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* LEFT — narrative (sticky on desktop so it stays as you scan tiles) */}
             <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-5 lg:sticky lg:top-28"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
