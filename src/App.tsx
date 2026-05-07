@@ -57,6 +57,7 @@ import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 
 import DelmarIntelligence from "./pages/DelmarIntelligence";
 import LivingInDelmar from "./pages/LivingInDelmar";
+import LivingInTown from "./pages/LivingInTown";
 import DynamicTownIntelligence from "./pages/DynamicTownIntelligence";
 import NiskayunaIntelligence from "./pages/NiskayunaIntelligence";
 import VoorheesvilleIntelligence from "./pages/VoorheesvilleIntelligence";
