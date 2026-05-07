@@ -269,22 +269,9 @@ const App = () => {
           {/* Reusable town template — drives every /living-in-:slug page from src/data/livingInTowns.ts */}
           <Route path="/living-in-:slug" element={<LivingInTown />} />
           <Route path="/app/living-in-:slug" element={<LivingInTown />} />
-          {/* Town Intelligence Pages - Specific overrides for existing pages */}
-          <Route path="/towns/albany" element={<AlbanyIntelligence />} />
-          <Route path="/towns/amsterdam" element={<AmsterdamIntelligence />} />
-          <Route path="/towns/clifton-park" element={<CliftonParkIntelligence />} />
-          <Route path="/towns/delmar" element={<DelmarIntelligence />} />
-          <Route path="/towns/guilderland" element={<GuilderlandIntelligence />} />
-          <Route path="/towns/mechanicville" element={<MechanicvilleIntelligence />} />
-          <Route path="/towns/niskayuna" element={<NiskayunaIntelligence />} />
-          <Route path="/towns/queensbury" element={<QueensburyIntelligence />} />
-          <Route path="/towns/saratoga-springs" element={<SaratogaIntelligence />} />
-          <Route path="/towns/schenectady" element={<SchenectadyIntelligence />} />
-          <Route path="/towns/troy" element={<TroyIntelligence />} />
-          <Route path="/towns/voorheesville" element={<VoorheesvilleIntelligence />} />
-          
-          {/* Dynamic Town Intelligence - catches all other towns from the 30-town inventory */}
-          <Route path="/towns/:slug" element={<DynamicTownIntelligence />} />
+          {/* Town pages — UNIFIED. /towns/:slug → /living-in-:slug (master template). */}
+          <Route path="/towns/:slug" element={<TownsRedirect />} />
+
           
           {/* Market Report Thank You Pages */}
           <Route path="/towns/:townSlug/report-request-thanks" element={<MarketReportThanks />} />
