@@ -5,6 +5,7 @@ import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import HeroBand from "@/components/HeroBand";
 import { delmarBusinesses } from "@/data/businesses";
+import BusinessCategoriesGrid from "@/components/town/BusinessCategoriesGrid";
 
 const REMAX_DELMAR = "https://scottalvarez.remax.com/wide.php?city=Delmar";
 
