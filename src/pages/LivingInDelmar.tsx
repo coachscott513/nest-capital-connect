@@ -49,13 +49,18 @@ const LivingInDelmar = () => {
         ctaHref={REMAX_DELMAR}
         ctaExternal
       >
-        <div className="flex justify-start">
-          <a
-            href="#weekly-newsletter"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-white/20 text-white text-sm font-semibold hover:bg-white/15 transition"
-          >
-            Get Weekly Updates <ArrowRight className="w-4 h-4" />
-          </a>
+        <div className="flex flex-col gap-5">
+          <p className="text-[13px] md:text-sm font-medium tracking-[0.08em] text-white/70">
+            Updated weekly · Local insights · Real-time market activity
+          </p>
+          <div>
+            <a
+              href="#weekly-newsletter"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-white/20 text-white text-sm font-semibold hover:bg-white/15 transition"
+            >
+              Get Weekly Updates <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </HeroBand>
 
