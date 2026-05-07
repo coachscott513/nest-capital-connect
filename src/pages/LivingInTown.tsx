@@ -18,8 +18,13 @@ import {
 } from "@/components/town/TownSections";
 import { livingInTowns } from "@/data/livingInTowns";
 
-const LivingInTown = () => {
-  const { slug = "" } = useParams();
+interface LivingInTownProps {
+  slugOverride?: string;
+}
+
+const LivingInTown = ({ slugOverride }: LivingInTownProps) => {
+  const { slug: routeSlug = "" } = useParams();
+  const slug = slugOverride ?? routeSlug;
   const town = livingInTowns[slug];
 
   useEffect(() => {
