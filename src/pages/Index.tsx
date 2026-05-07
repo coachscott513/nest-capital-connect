@@ -5,6 +5,7 @@ import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import HeroBand from "@/components/HeroBand";
+import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
 import heroCapital from "@/assets/hero-capital-district.jpg";
@@ -61,17 +62,17 @@ function CinematicHero() {
             </p>
 
             <div className="mt-12 flex flex-wrap gap-4">
-              <Link
-                to="/communities"
+              <a
+                href="#weekly-feed"
                 className="inline-flex items-center gap-2 bg-white text-foreground px-8 py-4 rounded-full font-semibold hover:bg-white/90 transition-colors"
               >
-                Explore Towns <ArrowRight className="w-4 h-4" />
-              </Link>
+                What's Happening This Week <ArrowRight className="w-4 h-4" />
+              </a>
               <Link
-                to="/blog"
+                to="/communities"
                 className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-8 py-4 rounded-full font-semibold hover:bg-white/20 transition-colors"
               >
-                What's Happening This Week
+                Explore Towns
               </Link>
             </div>
           </motion.div>
@@ -125,6 +126,9 @@ const Index = () => {
 
       {/* 1 — CINEMATIC HERO */}
       <CinematicHero />
+
+      {/* 2 — WHAT'S HAPPENING THIS WEEK (the weekly feed) */}
+      <WeeklyFeed scope="region" />
 
       {/* 2 — TOWNS · one unified split section (text + tile grid together) */}
       <section className="bg-white w-full">
@@ -234,20 +238,8 @@ const Index = () => {
         ]}
       />
 
-      {/* 7 — WEEKLY UPDATES · slate + gold (DARK) */}
-      <HeroBand
-        mood="slate"
-        eyebrow="Weekly Updates"
-        headline={<>Get the Capital District,<br />weekly.</>}
-        sub="Town updates, new listings, price movement, and local highlights — delivered every Sunday morning."
-        ctaLabel="Get weekly updates"
-        ctaHref="/dealdesk"
-        callouts={[
-          { title: "Town-by-town",   body: "Activity in Delmar, Albany, Saratoga, Troy, Schenectady, and more." },
-          { title: "New listings",   body: "Just-listed homes that match your search." },
-          { title: "Price movement", body: "Pendings, closings, and where the market is actually trading." },
-        ]}
-      />
+      {/* 7 — WEEKLY NEWSLETTER CTA */}
+      <WeeklyNewsletterCTA />
 
       <Footer />
     </div>
