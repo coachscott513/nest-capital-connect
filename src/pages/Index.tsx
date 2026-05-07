@@ -210,7 +210,6 @@ const Index = () => {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-5 lg:sticky lg:top-28"
             >
-            >
               <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#0d6e66]">
                 Browse by Town
               </p>
