@@ -209,11 +209,7 @@ const Index = () => {
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-5 lg:sticky lg:top-28"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:col-span-5 lg:sticky lg:top-28"
+            >
             >
               <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#0d6e66]">
                 Browse by Town
