@@ -1,16 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { MapPin } from "lucide-react";
+import { MapPin, ArrowUpRight } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import HeroBand from "@/components/HeroBand";
-import { delmarBusinesses } from "@/data/businesses";
+import { delmarBusinesses, type Business } from "@/data/businesses";
 import BusinessCategoriesGrid from "@/components/town/BusinessCategoriesGrid";
+import BusinessModal from "@/components/town/BusinessModal";
 import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 
 const REMAX_DELMAR = "https://scottalvarez.remax.com/wide.php?city=Delmar";
 
 const LivingInDelmar = () => {
+  const [activeBusiness, setActiveBusiness] = useState<Business | null>(null);
+
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.pathname === "/app/living-in-delmar") {
       window.history.replaceState(
@@ -132,28 +135,40 @@ const LivingInDelmar = () => {
           { title: "Year-round",    body: "Farmers market, library events, and seasonal happenings." },
         ]}
       >
-        <ul id="local-favorites" className="divide-y divide-foreground/10 border-y border-foreground/10 bg-white/40 rounded-2xl px-6">
+        <ul id="local-favorites" className="divide-y divide-foreground/10 border-y border-foreground/10 bg-white/40 rounded-2xl px-2 md:px-4">
           {delmarBusinesses.map((b) => (
-            <li key={b.slug} className="py-6 flex items-start justify-between gap-6">
-              <div className="min-w-0">
-                <h3 className="text-xl font-semibold text-foreground">{b.name}</h3>
-                <p className="mt-1 text-foreground/65">{b.tagline}</p>
-                <p className="mt-2 text-sm text-foreground/55 inline-flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5" /> {b.address}
-                </p>
-              </div>
-              {b.phone && (
-                <a
-                  href={`tel:${b.phone.replace(/[^\d+]/g, "")}`}
-                  className="shrink-0 text-foreground font-medium hover:text-[#5d7a4f] transition whitespace-nowrap"
-                >
-                  {b.phone}
-                </a>
-              )}
+            <li key={b.slug}>
+              <button
+                type="button"
+                onClick={() => setActiveBusiness(b)}
+                className="w-full text-left py-6 px-4 flex items-start justify-between gap-6 rounded-xl hover:bg-foreground/[0.03] transition-colors group"
+              >
+                <div className="min-w-0">
+                  <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
+                    {b.name}
+                    <ArrowUpRight className="w-4 h-4 text-foreground/40 group-hover:text-foreground/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  </h3>
+                  <p className="mt-1 text-foreground/65">{b.tagline}</p>
+                  <p className="mt-2 text-sm text-foreground/55 inline-flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5" /> {b.address}
+                  </p>
+                </div>
+                {b.phone && (
+                  <span className="shrink-0 text-foreground/70 font-medium whitespace-nowrap text-sm">
+                    {b.phone}
+                  </span>
+                )}
+              </button>
             </li>
           ))}
         </ul>
       </HeroBand>
+
+      <BusinessModal
+        business={activeBusiness}
+        open={!!activeBusiness}
+        onOpenChange={(o) => !o && setActiveBusiness(null)}
+      />
 
       <WeeklyNewsletterCTA />
 
