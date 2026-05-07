@@ -64,6 +64,7 @@ import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 import DelmarIntelligence from "./pages/DelmarIntelligence";
 import LivingInDelmar from "./pages/LivingInDelmar";
 import LivingInTown from "./pages/LivingInTown";
+import { livingInTownsList } from "./data/livingInTowns";
 import DynamicTownIntelligence from "./pages/DynamicTownIntelligence";
 import NiskayunaIntelligence from "./pages/NiskayunaIntelligence";
 import VoorheesvilleIntelligence from "./pages/VoorheesvilleIntelligence";
@@ -272,9 +273,21 @@ const App = () => {
           <Route path="/delmar-homes-for-sale" element={<Navigate to="/towns/delmar" replace />} />
           <Route path="/delmar-market-insights" element={<Navigate to="/towns/delmar" replace />} />
           <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
-          {/* Reusable town template — drives every /living-in-:slug page from src/data/livingInTowns.ts */}
-          <Route path="/living-in-:slug" element={<LivingInTown />} />
-          <Route path="/app/living-in-:slug" element={<LivingInTown />} />
+          {/* Reusable town template — explicit routes keep /living-in-[slug] URLs canonical in React Router v6. */}
+          {livingInTownsList.map((town) => (
+            <Route
+              key={`living-in-${town.slug}`}
+              path={`/living-in-${town.slug}`}
+              element={<LivingInTown slugOverride={town.slug} />}
+            />
+          ))}
+          {livingInTownsList.map((town) => (
+            <Route
+              key={`app-living-in-${town.slug}`}
+              path={`/app/living-in-${town.slug}`}
+              element={<LivingInTown slugOverride={town.slug} />}
+            />
+          ))}
           {/* Town pages — UNIFIED. /towns/:slug → /living-in-:slug (master template). */}
           <Route path="/towns/:slug" element={<TownsRedirect />} />
 
