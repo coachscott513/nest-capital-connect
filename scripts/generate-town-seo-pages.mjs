@@ -1,6 +1,6 @@
 // scripts/generate-town-seo-pages.mjs
-// Generates static crawlable HTML at public/living-in-{slug}/index.html
-// for each town in TOWNS. Run with: node scripts/generate-town-seo-pages.mjs
+// Archived generator: static public/living-in-* pages were removed because they shadow the React town template.
+// Do not run this script unless the output path is changed away from public/living-in-{slug}/index.html
 //
 // These files are served by Lovable hosting BEFORE the SPA fallback,
 // giving search engines and AI crawlers (GPTBot, ClaudeBot, Google-Extended,
@@ -12,7 +12,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const PUBLIC_DIR = join(__dirname, "..", "public");
+const PUBLIC_DIR = join(__dirname, "..", "public", "seo-archive");
 
 /** @typedef {{
  *   slug: string;
