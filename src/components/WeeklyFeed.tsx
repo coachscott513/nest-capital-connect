@@ -7,6 +7,8 @@ interface Props {
   title?: string;
   eyebrow?: string;
   sub?: string;
+  limit?: number;
+  compact?: boolean;
 }
 
 const ICONS: Record<WeeklyFeedType, typeof Home> = {
