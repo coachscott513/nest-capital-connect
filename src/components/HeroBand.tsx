@@ -38,6 +38,8 @@ interface HeroBandProps {
   callouts?: Callout[];
   mood: HeroMood;
   children?: ReactNode; // optional content rendered below the band (e.g. tile grid, IDX embed)
+  /** Collapse bottom padding so the next section flows right under this one. */
+  tightBottom?: boolean;
 }
 
 /**
