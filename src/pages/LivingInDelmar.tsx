@@ -118,7 +118,7 @@ const LivingInDelmar = () => {
               </div>
               <div className="p-8 md:p-12 flex flex-col justify-center">
                 <span className="inline-flex items-center gap-1.5 self-start px-3 py-1 rounded-full bg-[#c9a449]/15 text-[#9a7d2e] text-xs font-semibold mb-5">
-                  <Sparkles className="w-3 h-3" /> Featured · {town.featuredBusiness.category}
+                  <Sparkles className="w-3 h-3" /> Featured This Week · {town.featuredBusiness.category}
                 </span>
                 <h3 className="text-3xl md:text-4xl font-semibold tracking-tight text-[#1d1d1f] leading-tight">
                   {town.featuredBusiness.name}
