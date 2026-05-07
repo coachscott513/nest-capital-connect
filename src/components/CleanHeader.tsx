@@ -62,9 +62,8 @@ const navItems: { label: string; href?: string; dropdown?: string }[] = [
   { label: "Home", href: "/" },
   { label: "Towns", dropdown: "towns" },
   { label: "Homes", href: "/homes-for-sale" },
-  { label: "Local Businesses", href: "/living-in-delmar#local-favorites" },
+  { label: "Local", href: "/living-in-delmar#local-favorites" },
   { label: "Financing", href: "/financing" },
-  { label: "Analyze a Property", href: "/analyze" },
 ];
 
 const TEAL = "#0d6e66";
@@ -176,21 +175,21 @@ const CleanHeader = () => {
             </Link>
 
             {/* Centered nav */}
-            <div className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+            <div className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
               {navItems.map((item) => (
                 <div key={item.label} className="relative">
                   {item.href ? (
                     <Link
                       to={item.href}
                       onClick={closeDropdowns}
-                      className="px-4 py-2 text-[14px] font-medium text-foreground/75 hover:text-foreground rounded-lg transition-colors"
+                      className="px-3 py-2 text-[14px] font-medium text-foreground/75 hover:text-foreground rounded-lg transition-colors whitespace-nowrap"
                     >
                       {item.label}
                     </Link>
                   ) : (
                     <button
                       onClick={() => toggleDropdown(item.dropdown!)}
-                      className={`flex items-center gap-1 px-4 py-2 text-[14px] font-medium rounded-lg transition-colors ${
+                      className={`flex items-center gap-1 px-3 py-2 text-[14px] font-medium rounded-lg transition-colors whitespace-nowrap ${
                         activeDropdown === item.dropdown
                           ? "text-foreground"
                           : "text-foreground/75 hover:text-foreground"
@@ -253,7 +252,7 @@ const CleanHeader = () => {
             </div>
 
             {/* Right cluster */}
-            <div className="hidden lg:flex items-center gap-2 shrink-0">
+            <div className="hidden lg:flex items-center gap-2 shrink-0 whitespace-nowrap">
               {/* Search icon */}
               <button
                 onClick={() => setSearchOpen(true)}
@@ -263,19 +262,19 @@ const CleanHeader = () => {
                 <Search className="h-4 w-4" />
               </button>
 
-              {/* International */}
+              {/* Analyze (compact) */}
               <Link
-                to="/international"
+                to="/analyze"
                 onClick={closeDropdowns}
                 className="px-3 py-1.5 text-[13px] font-medium text-foreground/75 hover:text-foreground transition-colors"
               >
-                International
+                Analyze
               </Link>
 
-              {/* Get Started — black pill */}
+              {/* Talk to an Expert — primary pill */}
               <AnalystCard>
                 <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-white bg-foreground hover:bg-foreground/90">
-                  Get Started
+                  Talk to an Expert
                 </button>
               </AnalystCard>
             </div>
