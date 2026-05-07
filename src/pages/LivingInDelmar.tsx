@@ -8,6 +8,7 @@ import { delmarBusinesses, type Business } from "@/data/businesses";
 import BusinessCategoriesGrid from "@/components/town/BusinessCategoriesGrid";
 import BusinessModal from "@/components/town/BusinessModal";
 import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
+import LocalBusinessesDirectory from "@/components/town/LocalBusinessesDirectory";
 
 const REMAX_DELMAR = "https://scottalvarez.remax.com/wide.php?city=Delmar";
 
@@ -61,6 +62,8 @@ const LivingInDelmar = () => {
         title="What's happening in Delmar."
         sub="Real estate, local businesses, and community updates — refreshed every Friday."
       />
+
+      <LocalBusinessesDirectory townName="Delmar" />
 
       {/* 2 — HOMES · cream + teal */}
       <HeroBand
