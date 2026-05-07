@@ -5,7 +5,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
+
+// Canonicalize all /towns/:slug → /living-in-:slug (master Delmar template)
+const TownsRedirect = () => {
+  const { slug } = useParams();
+  return <Navigate to={`/living-in-${slug}`} replace />;
+};
 import { AuthProvider } from "@/contexts/AuthContext";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import FloatingLiveAgent from "@/components/FloatingLiveAgent";
