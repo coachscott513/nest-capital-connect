@@ -42,16 +42,23 @@ const WeeklyFeed = ({
   return (
     <section
       id="weekly-feed"
-      className="py-28 md:py-40 px-6 md:px-10 bg-[#F9FAFB] border-y border-[#1d1d1f]/[0.06]"
+      className={
+        compact
+          ? "pt-10 md:pt-12 pb-20 md:pb-24 px-6 md:px-10 bg-[#F9FAFB] border-b border-[#1d1d1f]/[0.06]"
+          : "py-28 md:py-40 px-6 md:px-10 bg-[#F9FAFB] border-y border-[#1d1d1f]/[0.06]"
+      }
     >
       <div className="max-w-6xl mx-auto">
-        <div className="mb-16 max-w-3xl">
+        <div className={compact ? "mb-10 max-w-3xl" : "mb-16 max-w-3xl"}>
           <span className="inline-flex items-center gap-2 rounded-full bg-[#0d6e66]/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0d6e66] mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#0d6e66] animate-pulse" />
             Updated This Week
           </span>
           <p className="eyebrow-apple text-[#0d6e66] mb-4">{eyebrow}</p>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.03em] text-[#1d1d1f] leading-[1.02]">
+          <h2 className={compact
+            ? "text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-[#1d1d1f] leading-[1.05]"
+            : "text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.03em] text-[#1d1d1f] leading-[1.02]"
+          }>
             {title}
           </h2>
           <p className="mt-6 text-lg md:text-xl text-[#1d1d1f]/65 font-light leading-relaxed">
@@ -60,7 +67,7 @@ const WeeklyFeed = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-          {items.slice(0, 6).map((item, i) => {
+          {items.slice(0, limit).map((item, i) => {
             const Icon = ICONS[item.type];
             return (
               <article
