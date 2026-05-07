@@ -5,6 +5,7 @@ import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import HeroBand from "@/components/HeroBand";
 import { delmarBusinesses } from "@/data/businesses";
+import BusinessCategoriesGrid from "@/components/town/BusinessCategoriesGrid";
 
 const REMAX_DELMAR = "https://scottalvarez.remax.com/wide.php?city=Delmar";
 
@@ -106,6 +107,8 @@ const LivingInDelmar = () => {
       />
 
       {/* 5 — LOCAL FAVORITES · pure white break (light, but distinct from cream above) */}
+      <BusinessCategoriesGrid townName="Delmar" />
+
       <HeroBand
         mood="white"
         eyebrow="Local Favorites"

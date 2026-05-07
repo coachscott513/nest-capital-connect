@@ -54,11 +54,10 @@ function CinematicHero() {
             </p>
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-semibold tracking-[-0.035em] leading-[0.98] text-white">
               Capital District<br />
-              <span className="font-light text-white/85">real estate intelligence.</span>
+              <span className="font-light text-white/85">Nest.</span>
             </h1>
             <p className="mt-8 text-lg md:text-2xl text-white/85 max-w-2xl font-light leading-relaxed">
-              Explore homes, towns, and investment opportunities across New York's
-              Capital District — analyzed honestly.
+              The weekly pulse of real estate, local businesses, and life in the Capital District.
             </p>
 
             <div className="mt-12 flex flex-wrap gap-4">
@@ -69,10 +68,10 @@ function CinematicHero() {
                 Explore Towns <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                to="/analyze"
+                to="/blog"
                 className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-8 py-4 rounded-full font-semibold hover:bg-white/20 transition-colors"
               >
-                Analyze a Property
+                What's Happening This Week
               </Link>
             </div>
           </motion.div>
