@@ -30,6 +30,8 @@ const WeeklyFeed = ({
   title = "What's Happening This Week",
   eyebrow = "The Weekly Feed",
   sub = "Real estate, local businesses, and community updates — refreshed every Friday.",
+  limit = 6,
+  compact = false,
 }: Props) => {
   const items = weeklyFeed.filter(
     (item) => item.scope === scope || item.scope === "all",
