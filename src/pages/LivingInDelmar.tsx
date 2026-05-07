@@ -107,6 +107,8 @@ const LivingInDelmar = () => {
       />
 
       {/* 5 — LOCAL FAVORITES · pure white break (light, but distinct from cream above) */}
+      <BusinessCategoriesGrid townName="Delmar" />
+
       <HeroBand
         mood="white"
         eyebrow="Local Favorites"
