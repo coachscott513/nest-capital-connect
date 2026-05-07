@@ -72,6 +72,7 @@ const LivingInDelmar = () => {
         sub="2 new listings this week. Live MLS feed, updated continuously."
         ctaLabel="Get new-listing alerts"
         ctaHref="#weekly-newsletter"
+        tightBottom
       >
         <div className="rounded-3xl overflow-hidden bg-white shadow-[0_20px_60px_-20px_rgba(0,0,0,0.18)]">
           <iframe
