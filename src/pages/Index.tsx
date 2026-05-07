@@ -74,7 +74,17 @@ function CinematicHero() {
               >
                 Explore Towns
               </Link>
+              <a
+                href="#weekly-newsletter"
+                className="inline-flex items-center gap-2 text-white/85 hover:text-white px-2 py-4 font-medium underline-offset-4 hover:underline"
+              >
+                Get Alerts →
+              </a>
             </div>
+
+            <p className="mt-8 text-xs font-medium tracking-wide text-white/55">
+              Updated May 7, 2026
+            </p>
           </motion.div>
         </div>
       </div>
