@@ -119,7 +119,10 @@ const HeroBand = ({
 
   return (
     <section className={`${m.bg} ${m.text} w-full`}>
-      <div className="max-w-7xl mx-auto px-6 md:px-10 section-apple">
+      <div
+        className="max-w-7xl mx-auto px-6 md:px-10 section-apple"
+        style={tightBottom ? { paddingBottom: "32px" } : undefined}
+      >
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           {/* LEFT — narrative */}
           <motion.div {...fadeUp} className="lg:col-span-7">
