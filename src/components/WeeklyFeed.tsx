@@ -49,6 +49,10 @@ const WeeklyFeed = ({
           <p className="mt-6 text-lg md:text-xl text-[#1d1d1f]/65 font-light leading-relaxed">
             {sub}
           </p>
+          <p className="mt-5 inline-flex items-center gap-2 text-xs font-medium tracking-wide text-[#1d1d1f]/55">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0d6e66] animate-pulse" />
+            Updated May 7, 2026
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
@@ -57,9 +61,14 @@ const WeeklyFeed = ({
             return (
               <article
                 key={i}
-                className="card-lift group bg-white border border-[#1d1d1f]/8 rounded-2xl p-8 md:p-10 transition-all"
+                className="card-lift group relative bg-white border border-[#1d1d1f]/8 rounded-2xl p-8 md:p-10 transition-all"
                 style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}
               >
+                {i < 2 && (
+                  <span className="absolute top-5 right-5 inline-flex items-center gap-1 rounded-full bg-[#0d6e66] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
+                    This Week
+                  </span>
+                )}
                 <div className="flex items-center gap-3 mb-6">
                   <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0d6e66]/8">
                     <Icon className="w-5 h-5 text-[#0d6e66]" strokeWidth={1.75} />
@@ -81,6 +90,15 @@ const WeeklyFeed = ({
             );
           })}
         </div>
+
+        <div className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a
+            href="#weekly-newsletter"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
+          >
+            Get New Listings + Weekly Updates <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -89,7 +107,7 @@ const WeeklyFeed = ({
 export default WeeklyFeed;
 
 export const WeeklyNewsletterCTA = () => (
-  <section className="py-24 md:py-32 px-6 md:px-10 bg-[#0e0f12]">
+  <section id="weekly-newsletter" className="py-24 md:py-32 px-6 md:px-10 bg-[#0e0f12]">
     <div className="max-w-2xl mx-auto text-center">
       <p className="eyebrow-apple text-[#5eead4] mb-4">Weekly Newsletter</p>
       <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.02em] text-white leading-[1.08]">

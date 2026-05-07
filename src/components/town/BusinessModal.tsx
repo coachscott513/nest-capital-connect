@@ -151,9 +151,20 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
               <SocialIcon href={socials.tiktok}    enabled={verified} Icon={TikTokIcon}  label="TikTok" />
             </div>
             {!verified && (
-              <p className="mt-3 text-xs text-foreground/45 leading-relaxed">
-                Social links available for verified businesses.
-              </p>
+              <>
+                <p className="mt-3 text-xs text-foreground/45 leading-relaxed">
+                  Social links available for verified businesses.
+                </p>
+                <a
+                  href={`/claim-business?name=${encodeURIComponent(b.name)}`}
+                  className="mt-4 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-[#0d6e66]/25 text-[#0d6e66] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66] transition-all"
+                >
+                  Claim this listing
+                </a>
+                <p className="mt-2 text-[11px] text-foreground/45 text-center">
+                  Activate full profile + social links
+                </p>
+              </>
             )}
           </div>
         </div>
