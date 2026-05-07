@@ -376,7 +376,7 @@ const CleanHeader = () => {
 
             <AnalystCard>
               <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white bg-foreground">
-                Get Started
+                Talk to an Expert
               </button>
             </AnalystCard>
           </div>
