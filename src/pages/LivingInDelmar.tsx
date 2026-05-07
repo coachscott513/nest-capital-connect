@@ -64,15 +64,7 @@ const LivingInDelmar = () => {
         </div>
       </HeroBand>
 
-      {/* 2 — WEEKLY FEED */}
-      <WeeklyFeed
-        scope="delmar"
-        eyebrow="The Weekly Feed"
-        title="This week in Delmar."
-        sub="Listings, sales, openings, and market shifts — refreshed every Friday."
-      />
-
-      {/* 3 — HOMES */}
+      {/* 2 — HOMES */}
       <HeroBand
         mood="cream"
         eyebrow="Homes for Sale"
@@ -90,6 +82,16 @@ const LivingInDelmar = () => {
           />
         </div>
       </HeroBand>
+
+      {/* 3 — WEEKLY FEED (compact, directly under search) */}
+      <WeeklyFeed
+        scope="delmar"
+        eyebrow="The Weekly Feed"
+        title="This week in Delmar."
+        sub="Listings, sales, openings, and market shifts — refreshed every Friday."
+        limit={4}
+        compact
+      />
 
       {/* 4 — DELMAR FAVORITES (locked/unlocked business directory) */}
       <LocalBusinessesDirectory
