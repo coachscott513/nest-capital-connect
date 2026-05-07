@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import HeroBand from "@/components/HeroBand";
 import { delmarBusinesses } from "@/data/businesses";
 import BusinessCategoriesGrid from "@/components/town/BusinessCategoriesGrid";
+import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 
 const REMAX_DELMAR = "https://scottalvarez.remax.com/wide.php?city=Delmar";
 
@@ -48,6 +49,14 @@ const LivingInDelmar = () => {
           { title: "10–15 minutes to Albany",  body: "Easy commute to downtown employers and amenities." },
           { title: "Strong residential demand", body: "Tight inventory and consistent sale activity year over year." },
         ]}
+      />
+
+      {/* 1.5 — DELMAR WEEKLY FEED */}
+      <WeeklyFeed
+        scope="delmar"
+        eyebrow="Delmar This Week"
+        title="What's happening in Delmar."
+        sub="Real estate, local businesses, and community updates — refreshed every Friday."
       />
 
       {/* 2 — HOMES · cream + teal */}
@@ -145,6 +154,8 @@ const LivingInDelmar = () => {
           ))}
         </ul>
       </HeroBand>
+
+      <WeeklyNewsletterCTA />
 
       <Footer />
     </div>
