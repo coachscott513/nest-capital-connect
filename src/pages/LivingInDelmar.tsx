@@ -100,7 +100,7 @@ const LivingInDelmar = () => {
       />
 
       {/* 5 — DELMAR SPOTLIGHT */}
-      <section className="bg-white py-24 md:py-28 px-6 md:px-10">
+      <section className="bg-[#F9FAFB] py-24 md:py-28 px-6 md:px-10 border-y border-[#1d1d1f]/[0.06]">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12 max-w-2xl">
             <p className="eyebrow-apple text-[#0d6e66] mb-3">Delmar Spotlight</p>
