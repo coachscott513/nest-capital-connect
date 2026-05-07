@@ -107,7 +107,7 @@ const WeeklyFeed = ({
 export default WeeklyFeed;
 
 export const WeeklyNewsletterCTA = () => (
-  <section className="py-24 md:py-32 px-6 md:px-10 bg-[#0e0f12]">
+  <section id="weekly-newsletter" className="py-24 md:py-32 px-6 md:px-10 bg-[#0e0f12]">
     <div className="max-w-2xl mx-auto text-center">
       <p className="eyebrow-apple text-[#5eead4] mb-4">Weekly Newsletter</p>
       <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.02em] text-white leading-[1.08]">
