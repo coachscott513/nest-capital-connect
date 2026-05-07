@@ -48,9 +48,16 @@ const LivingInDelmar = () => {
         ctaLabel="View Homes in Delmar"
         ctaHref={REMAX_DELMAR}
         ctaExternal
-        secondaryCtaLabel="Get Weekly Updates"
-        secondaryCtaHref="#weekly-newsletter"
-      />
+      >
+        <div className="flex justify-start">
+          <a
+            href="#weekly-newsletter"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-white/20 text-white text-sm font-semibold hover:bg-white/15 transition"
+          >
+            Get Weekly Updates <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+      </HeroBand>
 
       {/* 2 — WEEKLY FEED */}
       <WeeklyFeed
