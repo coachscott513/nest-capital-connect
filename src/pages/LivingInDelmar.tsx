@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { MapPin, ArrowUpRight } from "lucide-react";
+import { ArrowRight, Phone, Calendar, Sparkles } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import HeroBand from "@/components/HeroBand";
-import { delmarBusinesses, type Business } from "@/data/businesses";
 import BusinessCategoriesGrid from "@/components/town/BusinessCategoriesGrid";
-import BusinessModal from "@/components/town/BusinessModal";
 import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 import LocalBusinessesDirectory from "@/components/town/LocalBusinessesDirectory";
+import { TownEssentials } from "@/components/town/TownSections";
+import { livingInTowns } from "@/data/livingInTowns";
 
 const REMAX_DELMAR = "https://scottalvarez.remax.com/wide.php?city=Delmar";
 
 const LivingInDelmar = () => {
-  const [activeBusiness, setActiveBusiness] = useState<Business | null>(null);
+  const town = livingInTowns.delmar;
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.pathname === "/app/living-in-delmar") {
@@ -29,56 +29,45 @@ const LivingInDelmar = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Helmet>
-        <title>Living in Delmar, NY | Homes, Market & Local Insight</title>
+        <title>What's Happening in Delmar, NY | Homes, Local & Weekly Updates</title>
         <meta
           name="description"
-          content="Homes for sale in Delmar, NY. Market trends, local businesses, schools and lifestyle in one of the Capital District's most desirable communities."
+          content="Real estate, local businesses, and community updates in Delmar, NY — refreshed weekly. Homes for sale, market activity, and the businesses locals actually use."
         />
         <link rel="canonical" href="https://capitaldistrictnest.com/living-in-delmar" />
       </Helmet>
 
       <MainHeader />
 
-      {/* 1 — DELMAR HERO · forest + gold */}
+      {/* 1 — HERO */}
       <HeroBand
         mood="forest"
-        eyebrow="Bethlehem · Albany County"
-        headline={<>Living in Delmar, NY.</>}
-        sub="Homes, schools, lifestyle, and local insight in one of the Capital District's most desirable communities."
-        ctaLabel="View Delmar homes"
+        eyebrow="Updated May 7, 2026"
+        headline={<>What's Happening<br />in Delmar.</>}
+        sub="Real estate, local businesses, and community updates — refreshed weekly."
+        ctaLabel="View Homes in Delmar"
         ctaHref={REMAX_DELMAR}
         ctaExternal
-        callouts={[
-          { title: "Bethlehem Central schools", body: "One of the highest-ranked districts in the Capital Region." },
-          { title: "10–15 minutes to Albany",  body: "Easy commute to downtown employers and amenities." },
-          { title: "Strong residential demand", body: "Tight inventory and consistent sale activity year over year." },
-        ]}
+        secondaryCtaLabel="Get Weekly Updates"
+        secondaryCtaHref="#weekly-newsletter"
       />
 
-      {/* 1.5 — DELMAR WEEKLY FEED */}
+      {/* 2 — WEEKLY FEED */}
       <WeeklyFeed
         scope="delmar"
-        eyebrow="Delmar This Week"
-        title="What's happening in Delmar."
-        sub="Real estate, local businesses, and community updates — refreshed every Friday."
+        eyebrow="The Weekly Feed"
+        title="This week in Delmar."
+        sub="Listings, sales, openings, and market shifts — refreshed every Friday."
       />
 
-      <LocalBusinessesDirectory townName="Delmar" />
-
-      {/* 2 — HOMES · cream + teal */}
+      {/* 3 — HOMES */}
       <HeroBand
         mood="cream"
         eyebrow="Homes for Sale"
-        headline={<>Homes for sale in Delmar.</>}
-        sub="Browse current listings and see what's moving. Live MLS feed, updated continuously."
-        ctaLabel="Open full search"
-        ctaHref={REMAX_DELMAR}
-        ctaExternal
-        callouts={[
-          { title: "Single-family",   body: "Classic Delmar colonials, capes, and ranches." },
-          { title: "New construction", body: "Select infill and Bethlehem subdivisions." },
-          { title: "Move-up homes",    body: "$500K–$900K range, where most of Delmar trades." },
-        ]}
+        headline={<>Homes for sale in Delmar, NY.</>}
+        sub="2 new listings this week. Live MLS feed, updated continuously."
+        ctaLabel="Get new-listing alerts"
+        ctaHref="#weekly-newsletter"
       >
         <div className="rounded-3xl overflow-hidden bg-white shadow-[0_20px_60px_-20px_rgba(0,0,0,0.18)]">
           <iframe
@@ -90,90 +79,129 @@ const LivingInDelmar = () => {
         </div>
       </HeroBand>
 
-      {/* 3 — MARKET SNAPSHOT · graphite + teal */}
-      <HeroBand
-        mood="graphite"
-        eyebrow="Market Snapshot"
-        headline={<>The Delmar market,<br />at a glance.</>}
-        sub="A simple snapshot of price, inventory, and activity — refreshed regularly with MLS data."
-        ctaLabel="Get market updates"
-        ctaHref="/dealdesk"
-        callouts={[
-          { title: "Median price",      body: "~$465K · trending up year-over-year." },
-          { title: "Active listings",   body: "~12 homes on market · tight inventory." },
-          { title: "Days on market",    body: "~9 days median · fast-moving market." },
-        ]}
+      {/* 4 — DELMAR FAVORITES (locked/unlocked business directory) */}
+      <LocalBusinessesDirectory
+        townName="Delmar"
+        eyebrow="Local Directory"
+        headline="Delmar Favorites."
+        sub="The restaurants, coffee shops, and home services Delmar actually uses."
       />
 
-      {/* 4 — WHY DELMAR · cream + teal (warm beige variant) */}
-      <HeroBand
-        mood="cream"
-        eyebrow="Why Delmar"
-        headline={<>Quiet streets. Strong schools.<br />Close to Albany.</>}
-        sub="Delmar combines suburban comfort with access to the Capital District's major employers and amenities. Tree-lined streets, a walkable Four Corners village, and one of the most respected school districts in the region."
-        ctaLabel="Explore Delmar"
-        ctaHref={REMAX_DELMAR}
-        ctaExternal
-        callouts={[
-          { title: "Walkable village",    body: "Four Corners with cafés, library, and parks." },
-          { title: "Bethlehem Central",   body: "Top-tier elementary through high school." },
-          { title: "10 min to downtown",  body: "Direct access to Albany via Delaware Ave." },
-        ]}
-      />
+      {/* 5 — DELMAR SPOTLIGHT */}
+      <section className="bg-white py-24 md:py-28 px-6 md:px-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-12 max-w-2xl">
+            <p className="eyebrow-apple text-[#0d6e66] mb-3">Delmar Spotlight</p>
+            <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-[#1d1d1f] leading-[1.05]">
+              This month's featured business.
+            </h2>
+          </div>
 
-      {/* 5 — LOCAL FAVORITES · pure white break (light, but distinct from cream above) */}
+          <article className="group relative overflow-hidden rounded-3xl border border-foreground/[0.06] bg-[#f5efe4] shadow-[0_20px_60px_-30px_rgba(0,0,0,0.2)]">
+            <div className="grid md:grid-cols-2 gap-0">
+              <div className="aspect-[4/3] md:aspect-auto bg-gradient-to-br from-[#0d6e66]/15 via-[#c9a449]/15 to-[#0d6e66]/10 flex items-center justify-center">
+                <span className="text-7xl md:text-8xl font-semibold text-[#0d6e66]/40 tracking-tight">
+                  {town.featuredBusiness.name.charAt(0)}
+                </span>
+              </div>
+              <div className="p-8 md:p-12 flex flex-col justify-center">
+                <span className="inline-flex items-center gap-1.5 self-start px-3 py-1 rounded-full bg-[#c9a449]/15 text-[#9a7d2e] text-xs font-semibold mb-5">
+                  <Sparkles className="w-3 h-3" /> Featured · {town.featuredBusiness.category}
+                </span>
+                <h3 className="text-3xl md:text-4xl font-semibold tracking-tight text-[#1d1d1f] leading-tight">
+                  {town.featuredBusiness.name}
+                </h3>
+                <p className="mt-4 text-lg text-[#1d1d1f]/65 font-light leading-relaxed">
+                  {town.featuredBusiness.tagline}
+                </p>
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <a
+                    href={`tel:${town.featuredBusiness.phone?.replace(/\D/g, "")}`}
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
+                  >
+                    <Phone className="w-4 h-4" /> {town.featuredBusiness.phone}
+                  </a>
+                  <span className="inline-flex items-center px-5 py-3 rounded-full bg-white/70 text-[#1d1d1f]/70 text-sm font-medium">
+                    {town.featuredBusiness.address}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      {/* 6 — BUSINESS CATEGORIES */}
       <BusinessCategoriesGrid townName="Delmar" />
 
-      <HeroBand
-        mood="white"
-        eyebrow="Local Favorites"
-        headline={<>Where Delmar<br />actually goes.</>}
-        sub="Restaurants, coffee shops, home services, and local businesses that shape the community."
-        ctaLabel="Talk to Scott"
-        ctaHref="tel:+15185227265"
-        ctaExternal
-        callouts={[
-          { title: "Four Corners",  body: "The unofficial center of Delmar." },
-          { title: "Family-owned",  body: "Most of the businesses below are locally run." },
-          { title: "Year-round",    body: "Farmers market, library events, and seasonal happenings." },
-        ]}
-      >
-        <ul id="local-favorites" className="divide-y divide-foreground/10 border-y border-foreground/10 bg-white/40 rounded-2xl px-2 md:px-4">
-          {delmarBusinesses.map((b) => (
-            <li key={b.slug}>
-              <button
-                type="button"
-                onClick={() => setActiveBusiness(b)}
-                className="w-full text-left py-6 px-4 flex items-start justify-between gap-6 rounded-xl hover:bg-foreground/[0.03] transition-colors group"
+      {/* 7 — EVENTS */}
+      <section className="bg-[#f5efe4] py-24 md:py-28 px-6 md:px-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12 max-w-2xl">
+            <p className="eyebrow-apple text-[#0d6e66] mb-3">Happening Locally</p>
+            <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-[#1d1d1f] leading-[1.05]">
+              This week in Delmar.
+            </h2>
+            <p className="mt-5 text-lg text-[#1d1d1f]/65 font-light">
+              Markets, school events, and community gatherings worth your weekend.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+            {town.events.slice(0, 3).map((e) => (
+              <div
+                key={e.title}
+                className="rounded-2xl bg-white p-7 md:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_-12px_rgba(0,0,0,0.18)] transition-all"
               >
-                <div className="min-w-0">
-                  <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
-                    {b.name}
-                    <ArrowUpRight className="w-4 h-4 text-foreground/40 group-hover:text-foreground/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                  </h3>
-                  <p className="mt-1 text-foreground/65">{b.tagline}</p>
-                  <p className="mt-2 text-sm text-foreground/55 inline-flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5" /> {b.address}
-                  </p>
-                </div>
-                {b.phone && (
-                  <span className="shrink-0 text-foreground/70 font-medium whitespace-nowrap text-sm">
-                    {b.phone}
-                  </span>
-                )}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </HeroBand>
+                <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0d6e66]/8 mb-5">
+                  <Calendar className="w-5 h-5 text-[#0d6e66]" strokeWidth={1.75} />
+                </span>
+                <h3 className="text-lg md:text-xl font-semibold tracking-tight text-[#1d1d1f]">
+                  {e.title}
+                </h3>
+                <p className="mt-2 text-sm text-[#0d6e66] font-medium">{e.date}</p>
+                <p className="mt-3 text-[14px] text-[#1d1d1f]/60 font-light leading-relaxed">
+                  {e.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <BusinessModal
-        business={activeBusiness}
-        open={!!activeBusiness}
-        onOpenChange={(o) => !o && setActiveBusiness(null)}
-      />
+      {/* 8 — LOCAL ESSENTIALS */}
+      <TownEssentials town={town} />
 
+      {/* 9 — EMAIL */}
       <WeeklyNewsletterCTA />
+
+      {/* 10 — FINAL CTA */}
+      <section className="bg-white py-24 md:py-28 px-6 md:px-10">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="eyebrow-apple text-[#0d6e66] mb-4">Ready When You Are</p>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-[#1d1d1f] leading-[1.05]">
+            Thinking about moving to Delmar?
+          </h2>
+          <p className="mt-5 text-lg text-[#1d1d1f]/65 font-light">
+            Talk to Scott Alvarez — your local Delmar expert at RE/MAX Solutions.
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a
+              href="tel:+15185227265"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#DC1C2E] text-white font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(220,28,46,0.55)]"
+            >
+              <Phone className="w-4 h-4" /> Talk to Scott
+            </a>
+            <a
+              href={REMAX_DELMAR}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white font-semibold hover:opacity-90 transition"
+            >
+              View Homes <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>
