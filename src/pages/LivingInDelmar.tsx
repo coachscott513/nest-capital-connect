@@ -51,6 +51,14 @@ const LivingInDelmar = () => {
         ]}
       />
 
+      {/* 1.5 — DELMAR WEEKLY FEED */}
+      <WeeklyFeed
+        scope="delmar"
+        eyebrow="Delmar This Week"
+        title="What's happening in Delmar."
+        sub="Real estate, local businesses, and community updates — refreshed every Friday."
+      />
+
       {/* 2 — HOMES · cream + teal */}
       <HeroBand
         mood="cream"
@@ -146,6 +154,8 @@ const LivingInDelmar = () => {
           ))}
         </ul>
       </HeroBand>
+
+      <WeeklyNewsletterCTA />
 
       <Footer />
     </div>
