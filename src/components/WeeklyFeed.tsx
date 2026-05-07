@@ -49,6 +49,10 @@ const WeeklyFeed = ({
           <p className="mt-6 text-lg md:text-xl text-[#1d1d1f]/65 font-light leading-relaxed">
             {sub}
           </p>
+          <p className="mt-5 inline-flex items-center gap-2 text-xs font-medium tracking-wide text-[#1d1d1f]/55">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0d6e66] animate-pulse" />
+            Updated May 7, 2026
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
