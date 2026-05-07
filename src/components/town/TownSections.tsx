@@ -293,8 +293,8 @@ export const TownEssentials = ({ town }: Props) => (
           Permits, taxes, schools, and official town resources.
         </p>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
-        {town.essentials.slice(0, 8).map((e) => {
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+        {town.essentials.slice(0, 6).map((e) => {
           const Icon = ESSENTIAL_ICONS[e.icon];
           return (
             <a
@@ -302,21 +302,34 @@ export const TownEssentials = ({ town }: Props) => (
               href={e.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block rounded-2xl bg-white p-6 md:p-7 border border-foreground/[0.06] hover:border-[#0d6e66]/25 transition-all hover:-translate-y-0.5"
+              className="group block rounded-2xl bg-white p-7 md:p-8 border border-foreground/[0.06] hover:border-[#0d6e66]/25 transition-all hover:-translate-y-0.5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_-12px_rgba(0,0,0,0.18)]"
             >
               <span className="flex items-center justify-center w-11 h-11 rounded-full bg-[#0d6e66]/8 mb-5">
                 <Icon className="w-5 h-5 text-[#0d6e66]" strokeWidth={1.75} />
               </span>
-              <h3 className="text-base md:text-[17px] font-semibold tracking-tight text-[#1d1d1f] inline-flex items-center gap-1">
+              <h3 className="text-lg md:text-xl font-semibold tracking-tight text-[#1d1d1f] inline-flex items-center gap-1.5">
                 {e.title}
-                <ArrowUpRight className="w-3.5 h-3.5 text-foreground/35 group-hover:text-[#0d6e66] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                <ArrowUpRight className="w-4 h-4 text-foreground/35 group-hover:text-[#0d6e66] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
               </h3>
-              <p className="mt-2 text-[13px] text-[#1d1d1f]/60 font-light leading-relaxed">
+              <p className="mt-2 text-[14px] text-[#1d1d1f]/60 font-light leading-relaxed">
                 {e.description}
               </p>
             </a>
           );
         })}
+      </div>
+
+      {/* CTA */}
+      <div className="mt-14 flex flex-col items-center text-center">
+        <p className="text-base md:text-lg text-[#1d1d1f]/70 font-light mb-5">
+          Need help with this?
+        </p>
+        <a
+          href="tel:+15185227265"
+          className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#DC1C2E] text-white font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(220,28,46,0.55)]"
+        >
+          <Phone className="w-4 h-4" /> Talk to Scott
+        </a>
       </div>
     </div>
   </section>
