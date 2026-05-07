@@ -98,6 +98,7 @@ const HeroBand = ({
   callouts = [],
   mood,
   children,
+  tightBottom = false,
 }: HeroBandProps) => {
   const m = surfaceFor(mood);
   const isDark = DARK_MOODS.includes(mood);
