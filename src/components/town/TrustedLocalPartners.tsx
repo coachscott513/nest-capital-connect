@@ -83,7 +83,7 @@ const TrustedLocalPartners = ({
                 className={`group block overflow-hidden rounded-[28px] border transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_30px_80px_-30px_rgba(0,0,0,0.35)] ${
                   isDark
                     ? "border-white/10 bg-white/[0.03] hover:bg-white/[0.05]"
-                    : "border-[#1d1d1f]/[0.06] bg-[#f5efe4] hover:bg-[#f1ead d]"
+                    : "border-[#1d1d1f]/[0.06] bg-[#f5efe4] hover:bg-[#efe7d8]"
                 }`}
               >
                 <div className={`grid md:grid-cols-5 gap-0 ${reverse ? "md:[direction:rtl]" : ""}`}>
