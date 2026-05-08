@@ -83,6 +83,7 @@ const LivingInTown = ({ slugOverride }: LivingInTownProps) => {
       <TownHero town={town} />
       <TownWeeklyUpdates town={town} />
       <TownHomes town={town} />
+      <TrustedLocalPartners townName={town.townName} />
       <BusinessCategoriesGrid townName={town.townName} />
       <TownFeatured town={town} />
       <TownEvents town={town} />
