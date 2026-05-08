@@ -7,6 +7,7 @@ import HeroBand from "@/components/HeroBand";
 import BusinessCategoriesGrid from "@/components/town/BusinessCategoriesGrid";
 import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 import LocalBusinessesDirectory from "@/components/town/LocalBusinessesDirectory";
+import TrustedLocalPartners from "@/components/town/TrustedLocalPartners";
 import { TownEssentials } from "@/components/town/TownSections";
 import { livingInTowns } from "@/data/livingInTowns";
 
@@ -94,7 +95,10 @@ const LivingInDelmar = () => {
         compact
       />
 
-      {/* 4 — DELMAR FAVORITES (locked/unlocked business directory) */}
+      {/* 4 — TRUSTED LOCAL PARTNERS (curated, Apple-style) */}
+      <TrustedLocalPartners townName="Delmar" />
+
+      {/* 5 — DELMAR FAVORITES (locked/unlocked business directory) */}
       <LocalBusinessesDirectory
         townName="Delmar"
         eyebrow="Local Directory"
