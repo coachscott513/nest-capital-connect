@@ -5,6 +5,7 @@ import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 import BusinessCategoriesGrid from "@/components/town/BusinessCategoriesGrid";
+import TrustedLocalPartners from "@/components/town/TrustedLocalPartners";
 import {
   TownHero,
   TownWeeklyUpdates,
@@ -82,6 +83,7 @@ const LivingInTown = ({ slugOverride }: LivingInTownProps) => {
       <TownHero town={town} />
       <TownWeeklyUpdates town={town} />
       <TownHomes town={town} />
+      <TrustedLocalPartners townName={town.townName} />
       <BusinessCategoriesGrid townName={town.townName} />
       <TownFeatured town={town} />
       <TownEvents town={town} />
