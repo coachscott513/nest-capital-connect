@@ -7,10 +7,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 
-// Canonicalize all /towns/:slug → /living-in-:slug (master Delmar template)
+// Canonicalize all /towns/:slug → /living-in/:slug (master town template)
 const TownsRedirect = () => {
   const { slug } = useParams();
-  return <Navigate to={`/living-in-${slug}`} replace />;
+  return <Navigate to={`/living-in/${slug}`} replace />;
 };
 import { AuthProvider } from "@/contexts/AuthContext";
 import MobileCtaBar from "@/components/MobileCtaBar";
@@ -65,9 +65,7 @@ import DelmarHomesForSale from "./pages/DelmarHomesForSale";
 import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 
 import DelmarIntelligence from "./pages/DelmarIntelligence";
-import LivingInDelmar from "./pages/LivingInDelmar";
 import LivingInTown from "./pages/LivingInTown";
-import { livingInTownsList } from "./data/livingInTowns";
 import DynamicTownIntelligence from "./pages/DynamicTownIntelligence";
 import NiskayunaIntelligence from "./pages/NiskayunaIntelligence";
 import VoorheesvilleIntelligence from "./pages/VoorheesvilleIntelligence";
