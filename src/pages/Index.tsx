@@ -127,6 +127,101 @@ function TownTile({
   );
 }
 
+/* ========== Section 4 — APPLE-STYLE SEARCH PREVIEW ========== */
+function HomeSearchPreview() {
+  const navigate = useNavigate();
+  const [town, setTown] = useState("");
+  const [price, setPrice] = useState("");
+  const [type, setType] = useState("");
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = new URLSearchParams();
+    if (town) q.set("town", town);
+    if (price) q.set("price", price);
+    if (type) q.set("type", type);
+    const qs = q.toString();
+    navigate(`/homes-for-sale${qs ? `?${qs}` : ""}`);
+  };
+
+  const fieldClass =
+    "w-full bg-transparent text-[15px] text-[#1d1d1f] placeholder:text-[#1d1d1f]/45 focus:outline-none appearance-none cursor-pointer";
+
+  return (
+    <section className="bg-white py-24 md:py-32 px-6 md:px-10">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-10 md:mb-12 max-w-2xl mx-auto">
+          <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#0d6e66]">
+            Search Homes
+          </p>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-[#1d1d1f] leading-[1.05]">
+            Search homes across the Capital District.
+          </h2>
+          <p className="mt-5 text-lg text-[#1d1d1f]/65 font-light">
+            Browse by town, price, and property type — straight from the live MLS feed.
+          </p>
+        </div>
+
+        <form
+          onSubmit={submit}
+          className="rounded-2xl bg-white border border-[#1d1d1f]/[0.08] shadow-[0_18px_48px_-24px_rgba(0,0,0,0.18)] p-2.5 grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_auto] gap-2"
+        >
+          <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition">
+            <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">Town</span>
+            <select value={town} onChange={(e) => setTown(e.target.value)} className={fieldClass}>
+              <option value="">All towns</option>
+              <option value="albany">Albany</option>
+              <option value="delmar">Delmar</option>
+              <option value="saratoga-springs">Saratoga Springs</option>
+              <option value="troy">Troy</option>
+              <option value="schenectady">Schenectady</option>
+              <option value="clifton-park">Clifton Park</option>
+            </select>
+          </label>
+
+          <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
+            <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">Price</span>
+            <select value={price} onChange={(e) => setPrice(e.target.value)} className={fieldClass}>
+              <option value="">Any price</option>
+              <option value="0-300000">Under $300K</option>
+              <option value="300000-500000">$300K – $500K</option>
+              <option value="500000-750000">$500K – $750K</option>
+              <option value="750000-1000000">$750K – $1M</option>
+              <option value="1000000-">$1M+</option>
+            </select>
+          </label>
+
+          <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
+            <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">Type</span>
+            <select value={type} onChange={(e) => setType(e.target.value)} className={fieldClass}>
+              <option value="">All types</option>
+              <option value="single-family">Single-Family</option>
+              <option value="multifamily">Multifamily</option>
+              <option value="condo">Condo / Townhome</option>
+              <option value="land">Land</option>
+            </select>
+          </label>
+
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.55)]"
+          >
+            <Search className="w-4 h-4" /> Search Homes
+          </button>
+        </form>
+
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-[#1d1d1f]/60">
+          <span>Live MLS via RE/MAX</span>
+          <span className="hidden sm:inline">·</span>
+          <Link to="/homes-for-sale" className="text-[#0d6e66] font-semibold hover:underline inline-flex items-center gap-1">
+            Browse all listings <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ========== PAGE ========== */
 const Index = () => {
   return (
