@@ -109,10 +109,15 @@ export interface Business {
   hours?: string;
   lat?: number;
   lng?: number;
-  /** Paid/claimed listing — unlocks active social icons. */
+  /** Owner has claimed the listing — unlocks contact details, hours, socials. */
+  claimed?: boolean;
+  /** Legacy alias for `claimed`. Prefer `claimed` going forward. */
   verified?: boolean;
-  /** Premium hero placement on /local. */
+  /** Premium paid placement — top of category, town pages, badge. */
   featured?: boolean;
+  /** Reserved for future tiers (e.g. spotlight, sponsored). */
+  premium?: boolean;
+  tags?: string[];
   logo?: string;
   image?: string;
   socials?: BusinessSocials;
