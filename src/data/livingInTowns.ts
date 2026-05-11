@@ -786,4 +786,51 @@ export const livingInTowns: Record<string, LivingInTown> = {
   },
 };
 
+const makeTownPlaceholder = (
+  townName: string,
+  slug: string,
+  county: string,
+  zip = "12000",
+  schoolDistrict = `${townName} Area Schools`,
+): LivingInTown => ({
+  townName,
+  slug,
+  county,
+  zip,
+  schoolDistrict,
+  updatedDate: "May 7, 2026",
+  listingSearchUrl: REMAX(townName),
+  weeklyUpdates: [
+    { type: "listings", title: `${townName} listings are being monitored`, description: "Live MLS activity and local updates are being prepared for this town guide.", date: "Updated weekly" },
+    { type: "sold", title: "Recent sales snapshot coming soon", description: "Pricing, days on market, and buyer activity will be added as the guide expands.", date: "Coming soon" },
+    { type: "business", title: "Local business partners coming soon", description: "Featured restaurants, services, lenders, and attorneys will be curated here.", date: "Coming soon" },
+    { type: "event", title: "Community updates coming soon", description: "Recurring town events and local activity will be added to this page.", date: "Coming soon" },
+  ],
+  events: [
+    { title: `${townName} community calendar`, date: "Coming soon", description: "Local events and weekly updates are being curated." },
+    { title: "Town market refresh", date: "Weekly", description: "Market data placeholders will update as the town guide expands." },
+    { title: "Local business spotlight", date: "Coming soon", description: "Partner and community spotlights will appear here." },
+  ],
+  essentials: baseEssentials("https://www.ny.gov", "https://www.nysed.gov", "https://www.ny.gov"),
+  nearbyTowns: [
+    { slug: "albany", name: "Albany" },
+    { slug: "delmar", name: "Delmar" },
+    { slug: "saratoga-springs", name: "Saratoga Springs" },
+  ],
+  seoTitle: `Living in ${townName}, NY | Homes & Local Guide`,
+  seoDescription: `${townName}, NY homes, market snapshot placeholders, local businesses, and community updates from Capital District Nest.`,
+  seoIntro: `${townName} is part of the broader Capital District Nest town network, with local real estate intelligence, homes, businesses, and community updates being expanded here.`,
+});
+
+[
+  makeTownPlaceholder("Saratoga Springs", "saratoga-springs", "Saratoga County", "12866", "Saratoga Springs City School District"),
+  makeTownPlaceholder("Clifton Park", "clifton-park", "Saratoga County", "12065", "Shenendehowa Central School District"),
+  makeTownPlaceholder("Ballston Spa", "ballston-spa", "Saratoga County", "12020", "Ballston Spa Central School District"),
+  makeTownPlaceholder("Amsterdam", "amsterdam", "Montgomery County", "12010", "Greater Amsterdam School District"),
+  makeTownPlaceholder("Catskill", "catskill", "Greene County", "12414", "Catskill Central School District"),
+  makeTownPlaceholder("Cobleskill", "cobleskill", "Schoharie County", "12043", "Cobleskill-Richmondville Central School District"),
+].forEach((town) => {
+  livingInTowns[town.slug] ??= town;
+});
+
 export const livingInTownsList = Object.values(livingInTowns);
