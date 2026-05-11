@@ -38,47 +38,51 @@ function CinematicHero() {
       <div className="relative w-full min-h-[88vh] md:min-h-[92vh] flex items-center">
         <img
           src={heroCapital}
-          alt="Capital District of New York at sunrise"
+          alt="Aerial view of downtown Albany, New York with the Empire State Plaza, Hudson River, and Hudson Valley hills at golden hour"
           className="absolute inset-0 w-full h-full object-cover"
+          width={1920}
+          height={1080}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/80" />
+        {/* Soft directional gradient — keeps headline crisp without flattening the photo */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/15" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 py-32 md:py-40">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-4xl"
+            className="max-w-2xl"
           >
             <p className="text-xs md:text-sm font-semibold tracking-[0.3em] uppercase text-white/75 mb-6">
               Capital District · New York
             </p>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-semibold tracking-[-0.035em] leading-[0.98] text-white">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.75rem] font-semibold tracking-[-0.035em] leading-[0.98] text-white">
               Capital District<br />
               <span className="font-light text-white/85">Nest.</span>
             </h1>
-            <p className="mt-8 text-lg md:text-2xl text-white/85 max-w-2xl font-light leading-relaxed">
+            <p className="mt-7 text-lg md:text-xl text-white/85 max-w-xl font-light leading-relaxed">
               The weekly pulse of real estate, local businesses, and life in the Capital District.
             </p>
 
-            <div className="mt-12 flex flex-wrap gap-4">
+            <div className="mt-10 flex flex-wrap items-center gap-3">
               <a
                 href="#weekly-feed"
-                className="inline-flex items-center gap-2 bg-white text-foreground px-8 py-4 rounded-full font-semibold hover:bg-white/90 transition-colors"
+                className="inline-flex items-center gap-2 bg-white text-foreground px-6 py-3 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-12px_rgba(255,255,255,0.45)] transition"
               >
                 What's Happening This Week <ArrowRight className="w-4 h-4" />
               </a>
               <Link
                 to="/communities"
-                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-8 py-4 rounded-full font-semibold hover:bg-white/20 transition-colors"
+                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/25 px-6 py-3 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:bg-white/15 transition"
               >
                 Explore Towns
               </Link>
               <a
                 href="#weekly-newsletter"
-                className="inline-flex items-center gap-2 text-white/85 hover:text-white px-2 py-4 font-medium underline-offset-4 hover:underline"
+                className="inline-flex items-center gap-2 text-white/85 hover:text-white px-3 py-3 text-sm font-semibold underline-offset-4 hover:underline transition"
               >
-                Get Alerts →
+                Get Alerts <ArrowRight className="w-4 h-4" />
               </a>
             </div>
 
