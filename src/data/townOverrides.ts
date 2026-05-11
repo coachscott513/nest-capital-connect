@@ -1,0 +1,306 @@
+/**
+ * Per-town visual + copy overrides for the master TownPageTemplate.
+ * Add new towns here — page will gracefully fall back to defaults.
+ */
+
+export interface TownCallout {
+  title: string;
+  body: string;
+}
+
+export interface TownMarketStats {
+  medianPrice: string;
+  medianNote?: string;
+  activeListings: string;
+  activeNote?: string;
+  avgDom: string;
+  domNote?: string;
+}
+
+export interface TownOverride {
+  heroImage: string;
+  whyImage: string;
+  callouts: [TownCallout, TownCallout, TownCallout];
+  stats: TownMarketStats;
+  whyHeadline?: string;
+  whyCopy: string;
+  whyBullets: string[];
+}
+
+const DEFAULT_HERO =
+  "https://images.unsplash.com/photo-1605146768851-eda79da39897?auto=format&fit=crop&w=2400&q=80";
+const DEFAULT_WHY =
+  "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1800&q=80";
+
+export const townOverrides: Record<string, TownOverride> = {
+  delmar: {
+    heroImage: DEFAULT_HERO,
+    whyImage: DEFAULT_WHY,
+    callouts: [
+      { title: "Bethlehem Central Schools", body: "Top-rated K–12 district." },
+      { title: "10 Minutes to Albany", body: "Easy commute to downtown." },
+      { title: "Strong Residential Demand", body: "Homes move fast year-round." },
+    ],
+    stats: {
+      medianPrice: "$485K",
+      medianNote: "Up 4.2% YoY",
+      activeListings: "12",
+      activeNote: "As of this week",
+      avgDom: "8",
+      domNote: "Strong demand",
+    },
+    whyCopy:
+      "Delmar combines suburban comfort, strong schools, and easy access to Albany — a community where families stay for decades.",
+    whyBullets: [
+      "Tree-lined neighborhoods",
+      "Bethlehem Central schools",
+      "Local dining at Four Corners",
+      "10-minute Albany commute",
+    ],
+  },
+  albany: {
+    heroImage:
+      "https://images.unsplash.com/photo-1572276596237-5db2c3e16c5d?auto=format&fit=crop&w=2400&q=80",
+    whyImage:
+      "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1800&q=80",
+    callouts: [
+      { title: "Capital Region Hub", body: "New York State's seat of government." },
+      { title: "Walkable Neighborhoods", body: "Pine Hills, Center Square, Delaware Ave." },
+      { title: "Investment Opportunities", body: "Strong cash-flow market for investors." },
+    ],
+    stats: {
+      medianPrice: "$245K",
+      medianNote: "Citywide median",
+      activeListings: "186",
+      activeNote: "Across all neighborhoods",
+      avgDom: "21",
+      domNote: "Steady absorption",
+    },
+    whyCopy:
+      "Albany blends historic urban character with one of the strongest small-city investment markets in the Northeast.",
+    whyBullets: [
+      "Walkable historic neighborhoods",
+      "Capital Region job hub",
+      "Strong rental demand",
+      "Multiple universities nearby",
+    ],
+  },
+  "saratoga-springs": {
+    heroImage:
+      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2400&q=80",
+    whyImage:
+      "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1800&q=80",
+    callouts: [
+      { title: "Downtown Broadway", body: "Walkable shops, restaurants, theater." },
+      { title: "Saratoga Race Course", body: "Iconic summer racing season." },
+      { title: "Luxury Market Activity", body: "Strongest premium segment in the region." },
+    ],
+    stats: {
+      medianPrice: "$615K",
+      medianNote: "Premium market",
+      activeListings: "94",
+      activeNote: "Citywide",
+      avgDom: "14",
+      domNote: "Competitive",
+    },
+    whyCopy:
+      "Saratoga Springs offers the rare combination of a walkable downtown, year-round culture, and a luxury real estate market.",
+    whyBullets: [
+      "Walkable Broadway downtown",
+      "Year-round arts and culture",
+      "Top-tier dining scene",
+      "Iconic summer race meet",
+    ],
+  },
+  troy: {
+    heroImage:
+      "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=2400&q=80",
+    whyImage:
+      "https://images.unsplash.com/photo-1494522358652-f30e61a60313?auto=format&fit=crop&w=1800&q=80",
+    callouts: [
+      { title: "Historic Downtown", body: "19th-century architecture, restored." },
+      { title: "Creative Community", body: "RPI, Sage, and a growing arts scene." },
+      { title: "Revitalization Underway", body: "New development along the river." },
+    ],
+    stats: {
+      medianPrice: "$235K",
+      medianNote: "Citywide median",
+      activeListings: "78",
+      activeNote: "Across neighborhoods",
+      avgDom: "18",
+      domNote: "Healthy turnover",
+    },
+    whyCopy:
+      "Troy pairs historic 19th-century architecture with one of the most exciting urban revitalization stories in the Northeast.",
+    whyBullets: [
+      "Restored historic architecture",
+      "RPI and Russell Sage anchors",
+      "Riverfront redevelopment",
+      "Vibrant arts and food scene",
+    ],
+  },
+  schenectady: {
+    heroImage:
+      "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=2400&q=80",
+    whyImage:
+      "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=1800&q=80",
+    callouts: [
+      { title: "Stockade Historic District", body: "One of the oldest in the U.S." },
+      { title: "GE & Tech Heritage", body: "Long-standing engineering job base." },
+      { title: "Affordable Entry Point", body: "Strong value for first-time buyers." },
+    ],
+    stats: {
+      medianPrice: "$215K",
+      medianNote: "Citywide median",
+      activeListings: "112",
+      activeNote: "Across neighborhoods",
+      avgDom: "22",
+      domNote: "Steady",
+    },
+    whyCopy:
+      "Schenectady offers historic neighborhoods, a major engineering employer base, and one of the strongest affordability stories in the Capital Region.",
+    whyBullets: [
+      "Historic Stockade district",
+      "Engineering and tech employers",
+      "Affordable home prices",
+      "Proximity to Albany and Saratoga",
+    ],
+  },
+  "clifton-park": {
+    heroImage:
+      "https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=2400&q=80",
+    whyImage:
+      "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=1800&q=80",
+    callouts: [
+      { title: "Family-Friendly Suburbs", body: "Quiet streets, modern subdivisions." },
+      { title: "New Development", body: "One of the fastest-growing areas." },
+      { title: "Strong School Districts", body: "Shenendehowa schools draw families." },
+    ],
+    stats: {
+      medianPrice: "$435K",
+      medianNote: "Up YoY",
+      activeListings: "68",
+      activeNote: "Across the town",
+      avgDom: "12",
+      domNote: "Competitive",
+    },
+    whyCopy:
+      "Clifton Park is one of the Capital Region's most desirable family suburbs — modern homes, top schools, and easy access to Albany and Saratoga.",
+    whyBullets: [
+      "Shenendehowa school district",
+      "Modern suburban neighborhoods",
+      "Easy I-87 access",
+      "Halfway between Albany and Saratoga",
+    ],
+  },
+  niskayuna: {
+    heroImage:
+      "https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=2400&q=80",
+    whyImage:
+      "https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&w=1800&q=80",
+    callouts: [
+      { title: "Top-Ranked Schools", body: "Niskayuna CSD draws families." },
+      { title: "Quiet Neighborhoods", body: "Mature trees, established streets." },
+      { title: "GE Research Anchor", body: "Long-standing engineering base." },
+    ],
+    stats: {
+      medianPrice: "$365K",
+      medianNote: "Townwide median",
+      activeListings: "32",
+      activeNote: "Across the town",
+      avgDom: "11",
+      domNote: "Strong demand",
+    },
+    whyCopy:
+      "Niskayuna is a quiet, established suburb with one of the highest-ranked school districts in the region.",
+    whyBullets: [
+      "Niskayuna Central Schools",
+      "Established neighborhoods",
+      "Mohawk River access",
+      "Quick commute to Schenectady & Albany",
+    ],
+  },
+  colonie: {
+    heroImage:
+      "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=2400&q=80",
+    whyImage:
+      "https://images.unsplash.com/photo-1416331108676-a22ccb276e35?auto=format&fit=crop&w=1800&q=80",
+    callouts: [
+      { title: "Central Location", body: "Minutes from Albany and the airport." },
+      { title: "Wide Inventory", body: "From starter homes to executive." },
+      { title: "Stable Suburb", body: "Long-standing residential demand." },
+    ],
+    stats: {
+      medianPrice: "$315K",
+      medianNote: "Townwide median",
+      activeListings: "104",
+      activeNote: "Across the town",
+      avgDom: "14",
+      domNote: "Healthy",
+    },
+    whyCopy:
+      "Colonie is one of the Capital Region's most central and convenient suburbs — well-connected, well-priced, and consistently in demand.",
+    whyBullets: [
+      "Central Capital Region location",
+      "Wide range of price points",
+      "Albany Airport access",
+      "South Colonie & North Colonie schools",
+    ],
+  },
+  guilderland: {
+    heroImage:
+      "https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=2400&q=80",
+    whyImage:
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1800&q=80",
+    callouts: [
+      { title: "Guilderland Schools", body: "Strong, well-regarded district." },
+      { title: "Western Albany Suburb", body: "Quick access to downtown." },
+      { title: "Family Neighborhoods", body: "Quiet, established communities." },
+    ],
+    stats: {
+      medianPrice: "$355K",
+      medianNote: "Townwide median",
+      activeListings: "58",
+      activeNote: "Across the town",
+      avgDom: "13",
+      domNote: "Steady",
+    },
+    whyCopy:
+      "Guilderland delivers quiet family neighborhoods, a strong school district, and quick access to both Albany and the western suburbs.",
+    whyBullets: [
+      "Guilderland Central Schools",
+      "Established residential streets",
+      "Quick I-90 access",
+      "Crossgates and retail nearby",
+    ],
+  },
+};
+
+const FALLBACK: TownOverride = {
+  heroImage: DEFAULT_HERO,
+  whyImage: DEFAULT_WHY,
+  callouts: [
+    { title: "Strong Local Schools", body: "Well-regarded district." },
+    { title: "Capital Region Access", body: "Convenient regional commute." },
+    { title: "Active Local Market", body: "Consistent buyer demand." },
+  ],
+  stats: {
+    medianPrice: "—",
+    medianNote: "Updated weekly",
+    activeListings: "—",
+    activeNote: "Live MLS feed",
+    avgDom: "—",
+    domNote: "Updated weekly",
+  },
+  whyCopy:
+    "A welcoming Capital Region community with established neighborhoods, local businesses, and convenient access across the region.",
+  whyBullets: [
+    "Established neighborhoods",
+    "Capital Region access",
+    "Local restaurants and services",
+    "Active community life",
+  ],
+};
+
+export const getTownOverride = (slug: string): TownOverride =>
+  townOverrides[slug] ?? FALLBACK;
