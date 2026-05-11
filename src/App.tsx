@@ -19,6 +19,9 @@ import RouteFade from "@/components/RouteFade";
 import GARouteTracker from "@/components/GARouteTracker";
 import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext";
 import Index from "./pages/Index";
+import HomesPage from "./pages/HomesPage";
+import LocalPage from "./pages/LocalPage";
+import ContactPage from "./pages/ContactPage";
 import InvestorTools from "./pages/InvestorTools";
 import Rentals from "./pages/Rentals";
 import RentalsHub from "./pages/RentalsHub";
@@ -215,7 +218,7 @@ const App = () => {
           <Route path="/troy-rentals" element={<Navigate to="/towns/troy" replace />} />
           <Route path="/schenectady-rentals" element={<Navigate to="/towns/schenectady" replace />} />
           <Route path="/saratoga-rentals" element={<Navigate to="/towns/saratoga-springs" replace />} />
-          <Route path="/contact" element={<Index />} />
+          {/* /contact handled below by ContactPage */}
           <Route path="/about" element={<Index />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/article/:slug" element={<BlogArticle />} />
@@ -290,6 +293,12 @@ const App = () => {
           ))}
           {/* Town pages — UNIFIED. /towns/:slug → /living-in-:slug (master template). */}
           <Route path="/towns/:slug" element={<TownsRedirect />} />
+          {/* Wildcard fallback so any /living-in-* slug works (renders or redirects to /communities). */}
+          <Route path="/living-in-:slug" element={<LivingInTown />} />
+          {/* Simplified canonical destinations from main nav */}
+          <Route path="/homes" element={<HomesPage />} />
+          <Route path="/local" element={<LocalPage />} />
+          <Route path="/contact" element={<ContactPage />} />
 
           
           {/* Market Report Thank You Pages */}

@@ -4,66 +4,27 @@ import { ChevronDown, Search, X, Menu, Globe, Phone } from "lucide-react";
 import GlobalSearchCommand from "@/components/GlobalSearchCommand";
 import AnalystCard from "@/components/AnalystCard";
 
+// Featured towns shown in the main nav. Keep tight + canonical.
 const towns = [
-  { name: "Albany", slug: "albany" },
-  { name: "Altamont", slug: "altamont" },
-  { name: "Amsterdam", slug: "amsterdam" },
-  { name: "Athens", slug: "athens" },
-  { name: "Averill Park", slug: "averill-park" },
-  { name: "Ballston Spa", slug: "ballston-spa" },
-  { name: "Brunswick", slug: "brunswick" },
-  { name: "Cambridge", slug: "cambridge" },
-  { name: "Canajoharie", slug: "canajoharie" },
-  { name: "Catskill", slug: "catskill" },
-  { name: "Clifton Park", slug: "clifton-park" },
-  { name: "Cobleskill", slug: "cobleskill" },
-  { name: "Cohoes", slug: "cohoes" },
-  { name: "Colonie", slug: "colonie" },
-  { name: "Coxsackie", slug: "coxsackie" },
   { name: "Delmar", slug: "delmar" },
-  { name: "East Greenbush", slug: "east-greenbush" },
-  { name: "Fonda", slug: "fonda" },
-  { name: "Glens Falls", slug: "glens-falls" },
-  { name: "Gloversville", slug: "gloversville" },
-  { name: "Green Island", slug: "green-island" },
-  { name: "Greenwich", slug: "greenwich" },
-  { name: "Guilderland", slug: "guilderland" },
-  { name: "Hudson Falls", slug: "hudson-falls" },
-  { name: "Hunter", slug: "hunter" },
-  { name: "Johnstown", slug: "johnstown" },
-  { name: "Lake George", slug: "lake-george" },
-  { name: "Latham", slug: "latham" },
-  { name: "Loudonville", slug: "loudonville" },
-  { name: "Malta", slug: "malta" },
-  { name: "Mechanicville", slug: "mechanicville" },
-  { name: "Menands", slug: "menands" },
-  { name: "Middleburgh", slug: "middleburgh" },
-  { name: "Niskayuna", slug: "niskayuna" },
-  { name: "North Greenbush", slug: "north-greenbush" },
-  { name: "Northville", slug: "northville" },
-  { name: "Queensbury", slug: "queensbury" },
-  { name: "Ravena", slug: "ravena" },
-  { name: "Rensselaer", slug: "rensselaer" },
+  { name: "Albany", slug: "albany" },
   { name: "Saratoga Springs", slug: "saratoga-springs" },
-  { name: "Schaghticoke", slug: "schaghticoke" },
-  { name: "Schenectady", slug: "schenectady" },
-  { name: "Schoharie", slug: "schoharie" },
-  { name: "Sharon Springs", slug: "sharon-springs" },
-  { name: "Stillwater", slug: "stillwater" },
   { name: "Troy", slug: "troy" },
-  { name: "Voorheesville", slug: "voorheesville" },
-  { name: "Waterford", slug: "waterford" },
-  { name: "Watervliet", slug: "watervliet" },
-  { name: "Windham", slug: "windham" },
-  { name: "Wynantskill", slug: "wynantskill" },
-].sort((a, b) => a.name.localeCompare(b.name));
+  { name: "Schenectady", slug: "schenectady" },
+  { name: "Clifton Park", slug: "clifton-park" },
+  { name: "Niskayuna", slug: "niskayuna" },
+  { name: "Colonie", slug: "colonie" },
+  { name: "Guilderland", slug: "guilderland" },
+  { name: "Bethlehem", slug: "bethlehem" },
+];
 
 const navItems: { label: string; href?: string; dropdown?: string }[] = [
   { label: "Home", href: "/" },
   { label: "Towns", dropdown: "towns" },
-  { label: "Homes", href: "/homes-for-sale" },
-  { label: "Local", href: "/living-in-delmar#local-favorites" },
-  { label: "Financing", href: "/financing" },
+  { label: "Homes", href: "/homes" },
+  { label: "Local", href: "/local" },
+  { label: "Analyze", href: "/analyze" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const TEAL = "#0d6e66";
@@ -215,28 +176,11 @@ const CleanHeader = () => {
                         >
                           Browse all towns →
                         </Link>
-                        <Link
-                          to="/living-in-delmar"
-                          onClick={closeDropdowns}
-                          className="block text-sm font-medium text-foreground hover:opacity-80"
-                        >
-                          ★ Living in Delmar →
-                        </Link>
-                        <div className="relative">
-                          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-                          <input
-                            type="text"
-                            placeholder="Search towns..."
-                            value={townSearch}
-                            onChange={(e) => setTownSearch(e.target.value)}
-                            className="w-full pl-8 pr-3 py-2 text-sm bg-secondary/50 rounded-lg focus:outline-none focus:ring-1 focus:ring-foreground/20"
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-0.5 max-h-64 overflow-y-auto">
+                        <div className="grid grid-cols-2 gap-0.5 pt-1">
                           {filteredTowns.map((town) => (
                             <Link
                               key={town.slug}
-                              to={`/towns/${town.slug}`}
+                              to={`/living-in-${town.slug}`}
                               onClick={closeDropdowns}
                               className="px-2 py-1.5 text-[13px] text-foreground hover:opacity-80 rounded transition-colors"
                             >
@@ -344,28 +288,11 @@ const CleanHeader = () => {
             >
               Browse all →
             </Link>
-            <Link
-              to="/living-in-delmar"
-              onClick={closeMobileMenu}
-              className="block text-foreground font-medium mb-3 text-sm"
-            >
-              ★ Living in Delmar →
-            </Link>
-            <div className="relative mb-3">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search towns..."
-                value={townSearch}
-                onChange={(e) => setTownSearch(e.target.value)}
-                className="w-full pl-8 pr-3 py-2 text-sm bg-secondary/50 rounded-lg"
-              />
-            </div>
             <div className="grid grid-cols-2 gap-0.5 mb-8">
               {filteredTowns.map((town) => (
                 <Link
                   key={town.slug}
-                  to={`/towns/${town.slug}`}
+                  to={`/living-in-${town.slug}`}
                   onClick={closeMobileMenu}
                   className="px-2 py-1.5 text-sm text-muted-foreground hover:text-foreground"
                 >

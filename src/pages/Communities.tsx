@@ -197,9 +197,9 @@ const Communities = () => {
   return (
     <>
       <SEOHead 
-        title="Regional Command Center | 11-County Capital District Investor Intel | Capital District Nest"
-        description="Access vetted local real estate insights across 11 counties and 52+ towns in New York's Capital District. County-by-county market analysis, yield data, and investment opportunities."
-        keywords="Capital District real estate, Albany County homes, Saratoga real estate, multi-county investment, NY property market, regional real estate intelligence"
+        title="Explore Capital District Towns | Capital District Nest"
+        description="Find homes, market updates, local businesses, and community insight by town across New York's Capital District."
+        keywords="Capital District towns, Albany, Delmar, Saratoga Springs, Troy, Schenectady, Clifton Park, Niskayuna"
         canonical="https://capitaldistrictnest.com/communities"
       />
       <RealEstateSchema type="agent" />
@@ -219,18 +219,17 @@ const Communities = () => {
                 transition={{ duration: 0.6 }}
               >
                 <p className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-6">
-                  Regional Command Center
+                  Towns
                 </p>
                 
                 <h1 className="text-5xl md:text-7xl font-bold text-foreground mb-6 tracking-tight leading-[1.05]">
-                  11-County Intelligence<br className="hidden md:block" /> Network
+                  Explore Capital<br className="hidden md:block" /> District Towns
                 </h1>
                 
                 <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-                  Institutional-grade market intelligence across New York's Capital District. 
-                  From the Catskills to the Adirondacks.
+                  Find homes, market updates, local businesses, and community insight by town.
                 </p>
-                
+
                 {/* Stats */}
                 <div className="flex flex-wrap justify-center gap-10 md:gap-16 mb-10">
                   <div className="text-center">
