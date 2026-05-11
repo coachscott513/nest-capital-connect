@@ -748,6 +748,42 @@ export const livingInTowns: Record<string, LivingInTown> = {
     seoDescription: "Homes for sale in East Greenbush, NY. East Greenbush Central School District, Columbia High School, family neighborhoods, and easy Albany commute.",
     seoIntro: "East Greenbush offers the East Greenbush Central School District, family neighborhoods, and a 10-minute commute across the Hudson into downtown Albany.",
   },
+
+  bethlehem: {
+    townName: "Bethlehem",
+    slug: "bethlehem",
+    county: "Albany County",
+    township: "town of Bethlehem",
+    zip: "12054",
+    schoolDistrict: "Bethlehem Central School District",
+    updatedDate: "May 7, 2026",
+    listingSearchUrl: REMAX("Bethlehem"),
+    weeklyUpdates: [
+      { type: "listings", title: "New listings across Bethlehem",   description: "Mostly Delmar, Slingerlands, and Glenmont activity.",     date: "May 7, 2026" },
+      { type: "sold",     title: "Recent closings townwide",        description: "Median sale prices remain in the high $400Ks.",          date: "May 6, 2026" },
+      { type: "business", title: "Local spotlight: Four Corners",   description: "The unofficial morning meeting room of Delmar.",         date: "May 5, 2026" },
+      { type: "event",    title: "Bethlehem Library programs",      description: "Weekly community events and story times.",                date: "Ongoing" },
+    ],
+    events: [
+      { title: "Delmar Farmers Market",       date: "Saturdays · May–Oct", description: "Local produce at the Bethlehem Library." },
+      { title: "Bethlehem Library events",    date: "Weekly",              description: "Free family programming year-round." },
+      { title: "Town of Bethlehem 5K",        date: "June 14, 2026",       description: "Community run starting at Elm Avenue Park." },
+    ],
+    essentials: baseEssentials(
+      "https://www.townofbethlehem.org",
+      "https://www.bethlehemschools.org",
+      "https://egov.basny.com/bethlehem/",
+    ),
+    nearbyTowns: [
+      { slug: "delmar",        name: "Delmar" },
+      { slug: "slingerlands",  name: "Slingerlands" },
+      { slug: "glenmont",      name: "Glenmont" },
+      { slug: "albany",        name: "Albany" },
+    ],
+    seoTitle: "Living in Bethlehem, NY | Schools, Homes & Local Guide",
+    seoDescription: "Homes for sale in the Town of Bethlehem, NY — Delmar, Slingerlands, and Glenmont. Bethlehem Central schools, market activity, and local life.",
+    seoIntro: "Bethlehem is one of the Capital District's most desirable towns — top-rated Bethlehem Central schools, walkable Delmar, and quick access to downtown Albany.",
+  },
 };
 
 export const livingInTownsList = Object.values(livingInTowns);
