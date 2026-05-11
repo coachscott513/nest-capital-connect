@@ -250,23 +250,25 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             <span className="inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-semibold text-[#1d1d1f]/55">
               <Filter className="w-3.5 h-3.5" /> Filters
             </span>
-            <FilterChip active={featuredOnly} onClick={() => setFeaturedOnly((v) => !v)}>
-              Featured only
-            </FilterChip>
+            {(["all", "featured", "claimed", "unclaimed"] as TierFilter[]).map((t) => (
+              <FilterChip key={t} active={tier === t} onClick={() => setTier(t)}>
+                {t === "all" ? "All" : t.charAt(0).toUpperCase() + t.slice(1)}
+              </FilterChip>
+            ))}
             <FilterChip active={hasWebsite} onClick={() => setHasWebsite((v) => !v)}>
               Has website
             </FilterChip>
             <FilterChip active={hasPhone} onClick={() => setHasPhone((v) => !v)}>
               Has phone
             </FilterChip>
-            {(q || town || category || featuredOnly || hasWebsite || hasPhone) && (
+            {(q || town || category || tier !== "all" || hasWebsite || hasPhone) && (
               <button
                 type="button"
                 onClick={() => {
                   setQ("");
                   if (!townSlug) setTown("");
                   setCategory("");
-                  setFeaturedOnly(false);
+                  setTier("all");
                   setHasWebsite(false);
                   setHasPhone(false);
                 }}
