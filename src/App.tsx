@@ -168,6 +168,23 @@ const PrerenderReadySignal = () => {
   return null;
 };
 
+// Canonicalize all /towns/:slug → /living-in/:slug (master town template)
+const TownsRedirect = () => {
+  const { slug } = useParams();
+  return <Navigate to={`/living-in/${slug}`} replace />;
+};
+
+const NotFoundOrLegacyTown = () => {
+  const { pathname } = useLocation();
+  const match = pathname.match(/^\/living-in-([a-z0-9-]+)\/?$/i);
+
+  if (match?.[1]) {
+    return <LivingInTown slugOverride={match[1].toLowerCase()} />;
+  }
+
+  return <NotFound />;
+};
+
 const App = () => {
 
   return (
