@@ -55,11 +55,15 @@ const ALL_CATEGORIES: BusinessCategory[] = Object.values(
   CATEGORY_GROUPS,
 ).flat() as BusinessCategory[];
 
+const isClaimed = (b: Business) => Boolean(b.claimed ?? b.verified);
+
+type TierFilter = "all" | "featured" | "claimed" | "unclaimed";
+
 const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [q, setQ] = useState("");
   const [town, setTown] = useState(townSlug ?? "");
   const [category, setCategory] = useState<string>("");
-  const [featuredOnly, setFeaturedOnly] = useState(false);
+  const [tier, setTier] = useState<TierFilter>("all");
   const [hasWebsite, setHasWebsite] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
   const [openBiz, setOpenBiz] = useState<Business | null>(null);
@@ -71,7 +75,9 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         return false;
       if (town && b.town !== town) return false;
       if (category && b.category !== category) return false;
-      if (featuredOnly && !b.featured) return false;
+      if (tier === "featured" && !b.featured) return false;
+      if (tier === "claimed" && !isClaimed(b)) return false;
+      if (tier === "unclaimed" && isClaimed(b)) return false;
       if (hasWebsite && !b.website) return false;
       if (hasPhone && !b.phone) return false;
       if (!needle) return true;
@@ -89,7 +95,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         .toLowerCase();
       return hay.includes(needle);
     });
-  }, [q, town, category, featuredOnly, hasWebsite, hasPhone, townSlug]);
+  }, [q, town, category, tier, hasWebsite, hasPhone, townSlug]);
 
   const featured = useMemo(
     () => ALL.filter((b) => b.featured && (!townSlug || b.town === "capital-district")),
