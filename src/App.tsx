@@ -290,6 +290,11 @@ const App = () => {
           ))}
           {/* Town pages — UNIFIED. /towns/:slug → /living-in-:slug (master template). */}
           <Route path="/towns/:slug" element={<TownsRedirect />} />
+          {/* Wildcard fallback so any /living-in-* slug works (renders or redirects to /communities). */}
+          <Route path="/living-in-:slug" element={<LivingInTown />} />
+          {/* Simplified canonical destinations from main nav */}
+          <Route path="/homes" element={<Navigate to="/homes-for-sale" replace />} />
+          <Route path="/local" element={<Navigate to="/communities" replace />} />
 
           
           {/* Market Report Thank You Pages */}
