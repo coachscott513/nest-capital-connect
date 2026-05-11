@@ -274,36 +274,21 @@ const App = () => {
           {/* Intelligence Hub */}
           <Route path="/intelligence" element={<IntelligenceHub />} />
           
-          {/* Hyperlocal SEO Pages - Redirect legacy /homes-for-sale/ to /towns/ */}
+          {/* Hyperlocal SEO Pages - Redirect legacy /homes-for-sale/ to canonical town pages */}
           <Route path="/homes-for-sale" element={<Navigate to="/communities" replace />} />
-          <Route path="/homes-for-sale/troy" element={<Navigate to="/towns/troy" replace />} />
-          <Route path="/homes-for-sale/albany" element={<Navigate to="/towns/albany" replace />} />
-          <Route path="/homes-for-sale/schenectady" element={<Navigate to="/towns/schenectady" replace />} />
+          <Route path="/homes-for-sale/troy" element={<Navigate to="/living-in/troy" replace />} />
+          <Route path="/homes-for-sale/albany" element={<Navigate to="/living-in/albany" replace />} />
+          <Route path="/homes-for-sale/schenectady" element={<Navigate to="/living-in/schenectady" replace />} />
           <Route path="/schenectady-county-real-estate" element={<SchenectadyCountyIntelligence />} />
-          <Route path="/homes-for-sale/saratoga-springs" element={<Navigate to="/towns/saratoga-springs" replace />} />
-          <Route path="/homes-for-sale/albany/pine-hills" element={<Navigate to="/towns/albany" replace />} />
-          <Route path="/delmar-homes-for-sale" element={<Navigate to="/towns/delmar" replace />} />
-          <Route path="/delmar-market-insights" element={<Navigate to="/towns/delmar" replace />} />
-          <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
-          {/* Reusable town template — explicit routes keep /living-in-[slug] URLs canonical in React Router v6. */}
-          {livingInTownsList.map((town) => (
-            <Route
-              key={`living-in-${town.slug}`}
-              path={`/living-in-${town.slug}`}
-              element={<LivingInTown slugOverride={town.slug} />}
-            />
-          ))}
-          {livingInTownsList.map((town) => (
-            <Route
-              key={`app-living-in-${town.slug}`}
-              path={`/app/living-in-${town.slug}`}
-              element={<LivingInTown slugOverride={town.slug} />}
-            />
-          ))}
-          {/* Town pages — UNIFIED. /towns/:slug → /living-in-:slug (master template). */}
+          <Route path="/homes-for-sale/saratoga-springs" element={<Navigate to="/living-in/saratoga-springs" replace />} />
+          <Route path="/homes-for-sale/albany/pine-hills" element={<Navigate to="/living-in/albany" replace />} />
+          <Route path="/delmar-homes-for-sale" element={<Navigate to="/living-in/delmar" replace />} />
+          <Route path="/delmar-market-insights" element={<Navigate to="/living-in/delmar" replace />} />
+          <Route path="/delmar" element={<Navigate to="/living-in/delmar" replace />} />
+          {/* Town pages — UNIFIED. /living-in/:townSlug renders the master template or a coming-soon fallback. */}
+          <Route path="/living-in/:townSlug" element={<LivingInTown />} />
+          <Route path="/app/living-in/:townSlug" element={<LivingInTown />} />
           <Route path="/towns/:slug" element={<TownsRedirect />} />
-          {/* Wildcard fallback so any /living-in-* slug works (renders or redirects to /communities). */}
-          <Route path="/living-in-:slug" element={<LivingInTown />} />
           {/* Simplified canonical destinations from main nav */}
           <Route path="/homes" element={<HomesPage />} />
           <Route path="/local" element={<LocalPage />} />
