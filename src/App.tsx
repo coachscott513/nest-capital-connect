@@ -273,21 +273,28 @@ const App = () => {
           <Route path="/delmar-homes-for-sale" element={<Navigate to="/towns/delmar" replace />} />
           <Route path="/delmar-market-insights" element={<Navigate to="/towns/delmar" replace />} />
           <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
+          {/* Delmar — master Apple-style template (overrides generic LivingInTown). */}
+          <Route path="/living-in-delmar" element={<LivingInDelmar />} />
+          <Route path="/app/living-in-delmar" element={<LivingInDelmar />} />
           {/* Reusable town template — explicit routes keep /living-in-[slug] URLs canonical in React Router v6. */}
-          {livingInTownsList.map((town) => (
-            <Route
-              key={`living-in-${town.slug}`}
-              path={`/living-in-${town.slug}`}
-              element={<LivingInTown slugOverride={town.slug} />}
-            />
-          ))}
-          {livingInTownsList.map((town) => (
-            <Route
-              key={`app-living-in-${town.slug}`}
-              path={`/app/living-in-${town.slug}`}
-              element={<LivingInTown slugOverride={town.slug} />}
-            />
-          ))}
+          {livingInTownsList
+            .filter((town) => town.slug !== "delmar")
+            .map((town) => (
+              <Route
+                key={`living-in-${town.slug}`}
+                path={`/living-in-${town.slug}`}
+                element={<LivingInTown slugOverride={town.slug} />}
+              />
+            ))}
+          {livingInTownsList
+            .filter((town) => town.slug !== "delmar")
+            .map((town) => (
+              <Route
+                key={`app-living-in-${town.slug}`}
+                path={`/app/living-in-${town.slug}`}
+                element={<LivingInTown slugOverride={town.slug} />}
+              />
+            ))}
           {/* Town pages — UNIFIED. /towns/:slug → /living-in-:slug (master template). */}
           <Route path="/towns/:slug" element={<TownsRedirect />} />
 
