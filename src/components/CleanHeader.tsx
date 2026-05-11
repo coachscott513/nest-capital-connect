@@ -176,28 +176,11 @@ const CleanHeader = () => {
                         >
                           Browse all towns →
                         </Link>
-                        <Link
-                          to="/living-in-delmar"
-                          onClick={closeDropdowns}
-                          className="block text-sm font-medium text-foreground hover:opacity-80"
-                        >
-                          ★ Living in Delmar →
-                        </Link>
-                        <div className="relative">
-                          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-                          <input
-                            type="text"
-                            placeholder="Search towns..."
-                            value={townSearch}
-                            onChange={(e) => setTownSearch(e.target.value)}
-                            className="w-full pl-8 pr-3 py-2 text-sm bg-secondary/50 rounded-lg focus:outline-none focus:ring-1 focus:ring-foreground/20"
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-0.5 max-h-64 overflow-y-auto">
+                        <div className="grid grid-cols-2 gap-0.5 pt-1">
                           {filteredTowns.map((town) => (
                             <Link
                               key={town.slug}
-                              to={`/towns/${town.slug}`}
+                              to={`/living-in-${town.slug}`}
                               onClick={closeDropdowns}
                               className="px-2 py-1.5 text-[13px] text-foreground hover:opacity-80 rounded transition-colors"
                             >
