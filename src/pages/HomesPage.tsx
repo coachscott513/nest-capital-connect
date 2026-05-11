@@ -28,7 +28,7 @@ const HomesPage = () => {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (town) {
-      navigate(`/living-in-${town}`);
+      navigate(`/living-in/${town}`);
       return;
     }
     const q = new URLSearchParams();
@@ -121,7 +121,7 @@ const HomesPage = () => {
               {TOWNS.map((t) => (
                 <Link
                   key={t.slug}
-                  to={`/living-in-${t.slug}`}
+                  to={`/living-in/${t.slug}`}
                   className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#1d1d1f]/10 text-sm text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
                 >
                   {t.name}

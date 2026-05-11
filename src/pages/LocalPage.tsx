@@ -70,7 +70,7 @@ const LocalPage = () => (
           {TOWNS.map((t) => (
             <Link
               key={t.slug}
-              to={`/living-in-${t.slug}`}
+              to={`/living-in/${t.slug}`}
               className="group rounded-2xl bg-white border border-[#1d1d1f]/[0.08] p-7 hover:border-[#0d6e66]/30 hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.25)] transition-all"
             >
               <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66] mb-2">

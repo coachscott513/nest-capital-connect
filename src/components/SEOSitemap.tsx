@@ -41,49 +41,49 @@ const SEOSitemap = () => {
       
       // Capital District Hub Pages - Canonical /towns/ URLs
       { 
-        url: '/towns/albany', 
+        url: '/living-in/albany', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate
       },
       { 
-        url: '/towns/troy', 
+        url: '/living-in/troy', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate
       },
       { 
-        url: '/towns/schenectady', 
+        url: '/living-in/schenectady', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate
       },
       { 
-        url: '/towns/saratoga-springs', 
+        url: '/living-in/saratoga-springs', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate
       },
       { 
-        url: '/towns/delmar', 
+        url: '/living-in/delmar', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate
       },
       { 
-        url: '/towns/clifton-park', 
+        url: '/living-in/clifton-park', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate
       },
       { 
-        url: '/towns/niskayuna', 
+        url: '/living-in/niskayuna', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate
       },
       { 
-        url: '/towns/queensbury', 
+        url: '/living-in/queensbury', 
         changefreq: 'daily', 
         priority: '0.9',
         lastmod: currentDate

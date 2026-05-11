@@ -45,14 +45,14 @@ const ContextualLinks = ({ links, context }: ContextualLinksProps) => {
 
 // Predefined contextual link sets for different page types
 export const investmentLinks: ContextualLink[] = [
-  { text: "Albany Properties", href: "/towns/albany" },
-  { text: "Troy Investments", href: "/towns/troy" },
+  { text: "Albany Properties", href: "/living-in/albany" },
+  { text: "Troy Investments", href: "/living-in/troy" },
   { text: "Financing Options", href: "/financing" },
   { text: "Rehab Opportunities", href: "/rehab-properties" }
 ];
 
 export const rentalLinks: ContextualLink[] = [
-  { text: "Investment Analysis", href: "/towns/albany" },
+  { text: "Investment Analysis", href: "/living-in/albany" },
   { text: "Multi-Unit Properties", href: "/markets" },
   { text: "Financing Solutions", href: "/#financing" },
   { text: "Neighborhood Guide", href: "/communities" }
@@ -66,10 +66,10 @@ export const financingLinks: ContextualLink[] = [
 ];
 
 export const neighborhoodLinks: ContextualLink[] = [
-  { text: "Albany", href: "/towns/albany" },
-  { text: "Troy", href: "/towns/troy" },
-  { text: "Schenectady", href: "/towns/schenectady" },
-  { text: "Saratoga Springs", href: "/towns/saratoga-springs" }
+  { text: "Albany", href: "/living-in/albany" },
+  { text: "Troy", href: "/living-in/troy" },
+  { text: "Schenectady", href: "/living-in/schenectady" },
+  { text: "Saratoga Springs", href: "/living-in/saratoga-springs" }
 ];
 
 export default ContextualLinks;

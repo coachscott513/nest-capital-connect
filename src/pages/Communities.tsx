@@ -321,7 +321,7 @@ const Communities = () => {
                         {towns.slice(0, 5).map(town => (
                           <Link
                             key={town.slug}
-                            to={`/towns/${town.slug}`}
+                            to={`/living-in/${town.slug}`}
                             className="flex items-center justify-between py-2.5 px-3 rounded-xl hover:bg-secondary transition-colors group/town"
                           >
                             <span className="text-sm text-foreground/80 group-hover/town:text-foreground transition-colors">
@@ -396,7 +396,7 @@ const Communities = () => {
                         {towns.map(town => (
                           <Link
                             key={town.slug}
-                            to={`/towns/${town.slug}`}
+                            to={`/living-in/${town.slug}`}
                             className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-background hover:bg-muted rounded-lg text-xs text-foreground/70 hover:text-foreground transition-colors border border-border/50"
                           >
                             {town.name}
@@ -467,28 +467,28 @@ const Communities = () => {
                 <div>
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Adirondack</h4>
                   <ul className="space-y-2.5">
-                    <li><Link to="/towns/queensbury" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Queensbury</Link></li>
-                    <li><Link to="/towns/glens-falls" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Glens Falls</Link></li>
-                    <li><Link to="/towns/lake-george" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Lake George</Link></li>
-                    <li><Link to="/towns/greenwich" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Greenwich</Link></li>
+                    <li><Link to="/living-in/queensbury" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Queensbury</Link></li>
+                    <li><Link to="/living-in/glens-falls" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Glens Falls</Link></li>
+                    <li><Link to="/living-in/lake-george" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Lake George</Link></li>
+                    <li><Link to="/living-in/greenwich" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Greenwich</Link></li>
                   </ul>
                 </div>
                 <div>
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Catskill Region</h4>
                   <ul className="space-y-2.5">
-                    <li><Link to="/towns/catskill" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Catskill</Link></li>
-                    <li><Link to="/towns/windham" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Windham</Link></li>
-                    <li><Link to="/towns/cobleskill" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Cobleskill</Link></li>
-                    <li><Link to="/towns/sharon-springs" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Sharon Springs</Link></li>
+                    <li><Link to="/living-in/catskill" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Catskill</Link></li>
+                    <li><Link to="/living-in/windham" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Windham</Link></li>
+                    <li><Link to="/living-in/cobleskill" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Cobleskill</Link></li>
+                    <li><Link to="/living-in/sharon-springs" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Sharon Springs</Link></li>
                   </ul>
                 </div>
                 <div>
                   <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Mohawk Valley</h4>
                   <ul className="space-y-2.5">
                     <li><Link to="/amsterdam-homes-for-sale" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Amsterdam</Link></li>
-                    <li><Link to="/towns/gloversville" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Gloversville</Link></li>
-                    <li><Link to="/towns/johnstown" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Johnstown</Link></li>
-                    <li><Link to="/towns/hudson" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Hudson</Link></li>
+                    <li><Link to="/living-in/gloversville" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Gloversville</Link></li>
+                    <li><Link to="/living-in/johnstown" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Johnstown</Link></li>
+                    <li><Link to="/living-in/hudson" className="text-sm text-foreground/70 hover:text-foreground transition-colors">Hudson</Link></li>
                   </ul>
                 </div>
               </div>

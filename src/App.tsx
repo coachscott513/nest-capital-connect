@@ -5,13 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
-
-// Canonicalize all /towns/:slug → /living-in-:slug (master Delmar template)
-const TownsRedirect = () => {
-  const { slug } = useParams();
-  return <Navigate to={`/living-in-${slug}`} replace />;
-};
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import FloatingLiveAgent from "@/components/FloatingLiveAgent";
@@ -65,9 +59,7 @@ import DelmarHomesForSale from "./pages/DelmarHomesForSale";
 import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 
 import DelmarIntelligence from "./pages/DelmarIntelligence";
-import LivingInDelmar from "./pages/LivingInDelmar";
 import LivingInTown from "./pages/LivingInTown";
-import { livingInTownsList } from "./data/livingInTowns";
 import DynamicTownIntelligence from "./pages/DynamicTownIntelligence";
 import NiskayunaIntelligence from "./pages/NiskayunaIntelligence";
 import VoorheesvilleIntelligence from "./pages/VoorheesvilleIntelligence";
@@ -176,6 +168,23 @@ const PrerenderReadySignal = () => {
   return null;
 };
 
+// Canonicalize all /towns/:slug → /living-in/:slug (master town template)
+const TownsRedirect = () => {
+  const { slug } = useParams();
+  return <Navigate to={`/living-in/${slug}`} replace />;
+};
+
+const NotFoundOrLegacyTown = () => {
+  const { pathname } = useLocation();
+  const match = pathname.match(/^\/living-in-([a-z0-9-]+)\/?$/i);
+
+  if (match?.[1]) {
+    return <LivingInTown slugOverride={match[1].toLowerCase()} />;
+  }
+
+  return <NotFound />;
+};
+
 const App = () => {
 
   return (
@@ -214,10 +223,10 @@ const App = () => {
           <Route path="/investment-landing" element={<InvestmentLanding />} />
           <Route path="/rehab-properties" element={<Index />} />
           <Route path="/financing" element={<Financing />} />
-          <Route path="/albany-rentals" element={<Navigate to="/towns/albany" replace />} />
-          <Route path="/troy-rentals" element={<Navigate to="/towns/troy" replace />} />
-          <Route path="/schenectady-rentals" element={<Navigate to="/towns/schenectady" replace />} />
-          <Route path="/saratoga-rentals" element={<Navigate to="/towns/saratoga-springs" replace />} />
+          <Route path="/albany-rentals" element={<Navigate to="/living-in/albany" replace />} />
+          <Route path="/troy-rentals" element={<Navigate to="/living-in/troy" replace />} />
+          <Route path="/schenectady-rentals" element={<Navigate to="/living-in/schenectady" replace />} />
+          <Route path="/saratoga-rentals" element={<Navigate to="/living-in/saratoga-springs" replace />} />
           {/* /contact handled below by ContactPage */}
           <Route path="/about" element={<Index />} />
           <Route path="/blog" element={<Blog />} />
@@ -227,11 +236,11 @@ const App = () => {
           <Route path="/terms-of-service" element={<PrivacyPolicyPage />} />
           <Route path="/reviews" element={<Reviews />} />
           
-          {/* City Real Estate Redirects - canonical URLs are /towns/:slug */}
-          <Route path="/albany-real-estate" element={<Navigate to="/towns/albany" replace />} />
-          <Route path="/troy-real-estate" element={<Navigate to="/towns/troy" replace />} />
-          <Route path="/schenectady-real-estate" element={<Navigate to="/towns/schenectady" replace />} />
-          <Route path="/saratoga-real-estate" element={<Navigate to="/towns/saratoga-springs" replace />} />
+          {/* City Real Estate Redirects - canonical URLs are /living-in/:slug */}
+          <Route path="/albany-real-estate" element={<Navigate to="/living-in/albany" replace />} />
+          <Route path="/troy-real-estate" element={<Navigate to="/living-in/troy" replace />} />
+          <Route path="/schenectady-real-estate" element={<Navigate to="/living-in/schenectady" replace />} />
+          <Route path="/saratoga-real-estate" element={<Navigate to="/living-in/saratoga-springs" replace />} />
           
           {/* Communities base route - Regional Command Center */}
           <Route path="/communities" element={<Communities />} />
@@ -265,36 +274,21 @@ const App = () => {
           {/* Intelligence Hub */}
           <Route path="/intelligence" element={<IntelligenceHub />} />
           
-          {/* Hyperlocal SEO Pages - Redirect legacy /homes-for-sale/ to /towns/ */}
+          {/* Hyperlocal SEO Pages - Redirect legacy /homes-for-sale/ to canonical town pages */}
           <Route path="/homes-for-sale" element={<Navigate to="/communities" replace />} />
-          <Route path="/homes-for-sale/troy" element={<Navigate to="/towns/troy" replace />} />
-          <Route path="/homes-for-sale/albany" element={<Navigate to="/towns/albany" replace />} />
-          <Route path="/homes-for-sale/schenectady" element={<Navigate to="/towns/schenectady" replace />} />
+          <Route path="/homes-for-sale/troy" element={<Navigate to="/living-in/troy" replace />} />
+          <Route path="/homes-for-sale/albany" element={<Navigate to="/living-in/albany" replace />} />
+          <Route path="/homes-for-sale/schenectady" element={<Navigate to="/living-in/schenectady" replace />} />
           <Route path="/schenectady-county-real-estate" element={<SchenectadyCountyIntelligence />} />
-          <Route path="/homes-for-sale/saratoga-springs" element={<Navigate to="/towns/saratoga-springs" replace />} />
-          <Route path="/homes-for-sale/albany/pine-hills" element={<Navigate to="/towns/albany" replace />} />
-          <Route path="/delmar-homes-for-sale" element={<Navigate to="/towns/delmar" replace />} />
-          <Route path="/delmar-market-insights" element={<Navigate to="/towns/delmar" replace />} />
-          <Route path="/delmar" element={<Navigate to="/towns/delmar" replace />} />
-          {/* Reusable town template — explicit routes keep /living-in-[slug] URLs canonical in React Router v6. */}
-          {livingInTownsList.map((town) => (
-            <Route
-              key={`living-in-${town.slug}`}
-              path={`/living-in-${town.slug}`}
-              element={<LivingInTown slugOverride={town.slug} />}
-            />
-          ))}
-          {livingInTownsList.map((town) => (
-            <Route
-              key={`app-living-in-${town.slug}`}
-              path={`/app/living-in-${town.slug}`}
-              element={<LivingInTown slugOverride={town.slug} />}
-            />
-          ))}
-          {/* Town pages — UNIFIED. /towns/:slug → /living-in-:slug (master template). */}
+          <Route path="/homes-for-sale/saratoga-springs" element={<Navigate to="/living-in/saratoga-springs" replace />} />
+          <Route path="/homes-for-sale/albany/pine-hills" element={<Navigate to="/living-in/albany" replace />} />
+          <Route path="/delmar-homes-for-sale" element={<Navigate to="/living-in/delmar" replace />} />
+          <Route path="/delmar-market-insights" element={<Navigate to="/living-in/delmar" replace />} />
+          <Route path="/delmar" element={<Navigate to="/living-in/delmar" replace />} />
+          {/* Town pages — UNIFIED. /living-in/:townSlug renders the master template or a coming-soon fallback. */}
+          <Route path="/living-in/:townSlug" element={<LivingInTown />} />
+          <Route path="/app/living-in/:townSlug" element={<LivingInTown />} />
           <Route path="/towns/:slug" element={<TownsRedirect />} />
-          {/* Wildcard fallback so any /living-in-* slug works (renders or redirects to /communities). */}
-          <Route path="/living-in-:slug" element={<LivingInTown />} />
           {/* Simplified canonical destinations from main nav */}
           <Route path="/homes" element={<HomesPage />} />
           <Route path="/local" element={<LocalPage />} />
@@ -304,15 +298,15 @@ const App = () => {
           {/* Market Report Thank You Pages */}
           <Route path="/towns/:townSlug/report-request-thanks" element={<MarketReportThanks />} />
           
-          {/* Town Homes for Sale Pages - Redirect to /towns/ */}
-          <Route path="/voorheesville-homes-for-sale" element={<Navigate to="/towns/voorheesville" replace />} />
-          <Route path="/troy-homes-for-sale" element={<Navigate to="/towns/troy" replace />} />
-          <Route path="/niskayuna-homes-for-sale" element={<Navigate to="/towns/niskayuna" replace />} />
-          <Route path="/saratoga-springs-homes-for-sale" element={<Navigate to="/towns/saratoga-springs" replace />} />
-          <Route path="/clifton-park-homes-for-sale" element={<Navigate to="/towns/clifton-park" replace />} />
-          <Route path="/schenectady-homes-for-sale" element={<Navigate to="/towns/schenectady" replace />} />
-          <Route path="/amsterdam-homes-for-sale" element={<Navigate to="/towns/amsterdam" replace />} />
-          <Route path="/queensbury-homes-for-sale" element={<Navigate to="/towns/queensbury" replace />} />
+          {/* Town Homes for Sale Pages - Redirect to canonical town pages */}
+          <Route path="/voorheesville-homes-for-sale" element={<Navigate to="/living-in/voorheesville" replace />} />
+          <Route path="/troy-homes-for-sale" element={<Navigate to="/living-in/troy" replace />} />
+          <Route path="/niskayuna-homes-for-sale" element={<Navigate to="/living-in/niskayuna" replace />} />
+          <Route path="/saratoga-springs-homes-for-sale" element={<Navigate to="/living-in/saratoga-springs" replace />} />
+          <Route path="/clifton-park-homes-for-sale" element={<Navigate to="/living-in/clifton-park" replace />} />
+          <Route path="/schenectady-homes-for-sale" element={<Navigate to="/living-in/schenectady" replace />} />
+          <Route path="/amsterdam-homes-for-sale" element={<Navigate to="/living-in/amsterdam" replace />} />
+          <Route path="/queensbury-homes-for-sale" element={<Navigate to="/living-in/queensbury" replace />} />
           
           {/* Capital District Hub Pages */}
           {/* Capital District Hub Pages - All Towns */}
@@ -411,7 +405,7 @@ const App = () => {
           <Route path="/search/rentals" element={<RentalsSearchHub />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFoundOrLegacyTown />} />
           </Routes>
           </RouteFade>
           {/* Global Mobile CTA Bar - shows on mobile only */}

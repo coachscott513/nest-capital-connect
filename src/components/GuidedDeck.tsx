@@ -9,15 +9,15 @@ type SelectedTown = string | null;
 type DepthLevel = "quick" | "full" | null;
 
 const towns = [
-  { name: "Delmar", href: "/towns/delmar" },
-  { name: "Niskayuna", href: "/towns/niskayuna" },
-  { name: "Voorheesville", href: "/towns/voorheesville" },
-  { name: "Clifton Park", href: "/towns/clifton-park" },
-  { name: "Albany", href: "/towns/albany" },
-  { name: "Troy", href: "/towns/troy" },
-  { name: "Schenectady", href: "/towns/schenectady" },
-  { name: "Saratoga", href: "/towns/saratoga-springs" },
-  { name: "Amsterdam", href: "/towns/amsterdam" },
+  { name: "Delmar", href: "/living-in/delmar" },
+  { name: "Niskayuna", href: "/living-in/niskayuna" },
+  { name: "Voorheesville", href: "/living-in/voorheesville" },
+  { name: "Clifton Park", href: "/living-in/clifton-park" },
+  { name: "Albany", href: "/living-in/albany" },
+  { name: "Troy", href: "/living-in/troy" },
+  { name: "Schenectady", href: "/living-in/schenectady" },
+  { name: "Saratoga", href: "/living-in/saratoga-springs" },
+  { name: "Amsterdam", href: "/living-in/amsterdam" },
 ];
 
 const GuidedDeck = () => {

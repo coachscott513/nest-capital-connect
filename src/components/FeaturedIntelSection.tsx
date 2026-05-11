@@ -102,7 +102,7 @@ const FeaturedIntelSection = ({
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                to={`/towns/${townSlug}`}
+                to={`/living-in/${townSlug}`}
                 className="inline-flex items-center justify-center gap-2 glass border border-primary/30 text-foreground px-6 py-3 rounded-xl font-semibold hover:bg-primary/20 transition-colors"
               >
                 View All {townName} Properties

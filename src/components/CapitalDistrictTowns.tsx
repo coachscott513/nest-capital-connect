@@ -477,7 +477,7 @@ export const generateTownUrl = (town: TownData, type: 'real-estate' | 'rentals' 
   if (type === 'rentals') {
     return `/${town.slug}-rentals`;
   }
-  return `/towns/${town.slug}`;
+  return `/living-in/${town.slug}`;
 };
 
 export const generateCanonicalUrl = (town: TownData, type: 'real-estate' | 'rentals' = 'real-estate'): string => {

@@ -34,7 +34,7 @@ const townHubs: TownCardData[] = [
   {
     name: "Delmar",
     slug: "delmar",
-    href: "/towns/delmar",
+    href: "/living-in/delmar",
     description: "Bethlehem Central Schools",
     nestScore: 91,
     businessCount: 6,
@@ -43,7 +43,7 @@ const townHubs: TownCardData[] = [
   {
     name: "Albany",
     slug: "albany",
-    href: "/towns/albany",
+    href: "/living-in/albany",
     description: "Capital City, diverse neighborhoods",
     nestScore: 88,
     businessCount: 15,
@@ -79,7 +79,7 @@ const townHubs: TownCardData[] = [
   {
     name: "Guilderland",
     slug: "guilderland",
-    href: "/towns/guilderland",
+    href: "/living-in/guilderland",
     description: "Top schools, Crossgates area",
     nestScore: 90,
     businessCount: 5,

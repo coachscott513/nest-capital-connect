@@ -40,28 +40,28 @@ const RelatedContentSuggestions = ({ currentPage, className = "" }: RelatedConte
     {
       title: "Albany",
       description: "Premium listings in Albany and surrounding areas",
-      href: "/towns/albany",
+      href: "/living-in/albany",
       icon: <Home className="w-5 h-5" />,
       category: "rental"
     },
     {
       title: "Troy",
       description: "Quality properties in historic Troy with modern amenities",
-      href: "/towns/troy",
+      href: "/living-in/troy",
       icon: <Home className="w-5 h-5" />,
       category: "rental"
     },
     {
       title: "Schenectady",
       description: "Affordable options in diverse Schenectady communities",
-      href: "/towns/schenectady",
+      href: "/living-in/schenectady",
       icon: <Home className="w-5 h-5" />,
       category: "rental"
     },
     {
       title: "Saratoga Springs",
       description: "Elegant properties in charming Saratoga Springs",
-      href: "/towns/saratoga-springs",
+      href: "/living-in/saratoga-springs",
       icon: <Home className="w-5 h-5" />,
       category: "rental"
     }

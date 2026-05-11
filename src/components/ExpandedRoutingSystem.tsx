@@ -14,7 +14,7 @@ export const generateTownRoutes = () => {
     <Route 
       key={`${town.slug}-real-estate-redirect`}
       path={`/${town.slug}-real-estate`} 
-      element={<Navigate to={`/towns/${town.slug}`} replace />} 
+      element={<Navigate to={`/living-in/${town.slug}`} replace />} 
     />
   ));
 };

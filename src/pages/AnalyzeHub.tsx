@@ -118,7 +118,7 @@ const AnalyzeHub = () => {
               { name: "Troy", slug: "troy" },
               { name: "Saratoga Springs", slug: "saratoga-springs" },
             ].map((t) => (
-              <Link key={t.slug} to={`/towns/${t.slug}`}
+              <Link key={t.slug} to={`/living-in/${t.slug}`}
                 className="text-[12px] text-white/30 hover:text-white/60 transition-colors font-light underline underline-offset-2 decoration-white/10 hover:decoration-white/30">
                 {t.name}
               </Link>

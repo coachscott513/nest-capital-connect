@@ -48,7 +48,7 @@ const MarketReportThanks = () => {
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" className="flex-1 h-12" asChild>
-                  <Link to={`/towns/${townSlug}`}>
+                  <Link to={`/living-in/${townSlug}`}>
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Back to {townName}
                   </Link>

@@ -65,19 +65,19 @@ const BreadcrumbNavigation = () => {
     }
 
     if (pathname.includes("/towns/albany")) {
-      crumbs.push({ label: "Albany", href: "/towns/albany" });
+      crumbs.push({ label: "Albany", href: "/living-in/albany" });
     }
 
     if (pathname.includes("/towns/troy")) {
-      crumbs.push({ label: "Troy", href: "/towns/troy" });
+      crumbs.push({ label: "Troy", href: "/living-in/troy" });
     }
 
     if (pathname.includes("/towns/schenectady")) {
-      crumbs.push({ label: "Schenectady", href: "/towns/schenectady" });
+      crumbs.push({ label: "Schenectady", href: "/living-in/schenectady" });
     }
 
     if (pathname.includes("/towns/saratoga-springs")) {
-      crumbs.push({ label: "Saratoga Springs", href: "/towns/saratoga-springs" });
+      crumbs.push({ label: "Saratoga Springs", href: "/living-in/saratoga-springs" });
     }
 
     return crumbs;

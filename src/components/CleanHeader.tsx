@@ -180,7 +180,7 @@ const CleanHeader = () => {
                           {filteredTowns.map((town) => (
                             <Link
                               key={town.slug}
-                              to={`/living-in-${town.slug}`}
+                              to={`/living-in/${town.slug}`}
                               onClick={closeDropdowns}
                               className="px-2 py-1.5 text-[13px] text-foreground hover:opacity-80 rounded transition-colors"
                             >
@@ -292,7 +292,7 @@ const CleanHeader = () => {
               {filteredTowns.map((town) => (
                 <Link
                   key={town.slug}
-                  to={`/living-in-${town.slug}`}
+                  to={`/living-in/${town.slug}`}
                   onClick={closeMobileMenu}
                   className="px-2 py-1.5 text-sm text-muted-foreground hover:text-foreground"
                 >

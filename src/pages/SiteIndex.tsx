@@ -45,7 +45,7 @@ const SiteIndex = () => {
                 </li>
                 {towns.map((town) => (
                   <li key={town.slug}>
-                    <Link to={`/towns/${town.slug}`} className="text-foreground hover:text-primary">
+                    <Link to={`/living-in/${town.slug}`} className="text-foreground hover:text-primary">
                       {town.name}
                     </Link>
                   </li>
