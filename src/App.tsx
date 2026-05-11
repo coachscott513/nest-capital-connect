@@ -298,15 +298,15 @@ const App = () => {
           {/* Market Report Thank You Pages */}
           <Route path="/towns/:townSlug/report-request-thanks" element={<MarketReportThanks />} />
           
-          {/* Town Homes for Sale Pages - Redirect to /towns/ */}
-          <Route path="/voorheesville-homes-for-sale" element={<Navigate to="/towns/voorheesville" replace />} />
-          <Route path="/troy-homes-for-sale" element={<Navigate to="/towns/troy" replace />} />
-          <Route path="/niskayuna-homes-for-sale" element={<Navigate to="/towns/niskayuna" replace />} />
-          <Route path="/saratoga-springs-homes-for-sale" element={<Navigate to="/towns/saratoga-springs" replace />} />
-          <Route path="/clifton-park-homes-for-sale" element={<Navigate to="/towns/clifton-park" replace />} />
-          <Route path="/schenectady-homes-for-sale" element={<Navigate to="/towns/schenectady" replace />} />
-          <Route path="/amsterdam-homes-for-sale" element={<Navigate to="/towns/amsterdam" replace />} />
-          <Route path="/queensbury-homes-for-sale" element={<Navigate to="/towns/queensbury" replace />} />
+          {/* Town Homes for Sale Pages - Redirect to canonical town pages */}
+          <Route path="/voorheesville-homes-for-sale" element={<Navigate to="/living-in/voorheesville" replace />} />
+          <Route path="/troy-homes-for-sale" element={<Navigate to="/living-in/troy" replace />} />
+          <Route path="/niskayuna-homes-for-sale" element={<Navigate to="/living-in/niskayuna" replace />} />
+          <Route path="/saratoga-springs-homes-for-sale" element={<Navigate to="/living-in/saratoga-springs" replace />} />
+          <Route path="/clifton-park-homes-for-sale" element={<Navigate to="/living-in/clifton-park" replace />} />
+          <Route path="/schenectady-homes-for-sale" element={<Navigate to="/living-in/schenectady" replace />} />
+          <Route path="/amsterdam-homes-for-sale" element={<Navigate to="/living-in/amsterdam" replace />} />
+          <Route path="/queensbury-homes-for-sale" element={<Navigate to="/living-in/queensbury" replace />} />
           
           {/* Capital District Hub Pages */}
           {/* Capital District Hub Pages - All Towns */}
@@ -405,7 +405,7 @@ const App = () => {
           <Route path="/search/rentals" element={<RentalsSearchHub />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFoundOrLegacyTown />} />
           </Routes>
           </RouteFade>
           {/* Global Mobile CTA Bar - shows on mobile only */}
