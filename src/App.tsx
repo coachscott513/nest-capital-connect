@@ -218,7 +218,7 @@ const App = () => {
           <Route path="/troy-rentals" element={<Navigate to="/towns/troy" replace />} />
           <Route path="/schenectady-rentals" element={<Navigate to="/towns/schenectady" replace />} />
           <Route path="/saratoga-rentals" element={<Navigate to="/towns/saratoga-springs" replace />} />
-          <Route path="/contact" element={<Index />} />
+          {/* /contact handled below by ContactPage */}
           <Route path="/about" element={<Index />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/article/:slug" element={<BlogArticle />} />
