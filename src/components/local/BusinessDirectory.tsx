@@ -385,49 +385,74 @@ const FilterChip = ({
   </button>
 );
 
-const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
-  <button
-    onClick={onOpen}
-    className="text-left rounded-2xl bg-white border border-[#1d1d1f]/[0.08] p-7 hover:border-[#0d6e66]/30 hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.18)] transition-all flex flex-col"
-  >
-    <div className="flex items-start justify-between gap-3 mb-3">
-      <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
-        {b.category}
+const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
+  const claimed = isClaimed(b);
+  return (
+    <button
+      onClick={onOpen}
+      className={`text-left rounded-2xl bg-white border p-7 hover:-translate-y-0.5 transition-all flex flex-col ${
+        b.featured
+          ? "border-[#0d6e66]/30 shadow-[0_18px_48px_-18px_rgba(13,110,102,0.18)] hover:shadow-[0_24px_56px_-18px_rgba(13,110,102,0.28)]"
+          : "border-[#1d1d1f]/[0.08] hover:border-[#0d6e66]/30 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.18)]"
+      }`}
+    >
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
+          {b.category}
+        </p>
+        {b.featured ? (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66] text-white text-[10px] font-semibold uppercase tracking-wider">
+            <Sparkles className="w-3 h-3" /> Featured Partner
+          </span>
+        ) : claimed ? (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66]/10 text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
+            Claimed
+          </span>
+        ) : null}
+      </div>
+      <h3 className="text-lg font-semibold tracking-tight text-[#1d1d1f] leading-snug">
+        {b.name}
+      </h3>
+      {b.townLabel && (
+        <p className="mt-1 text-xs text-[#1d1d1f]/55 inline-flex items-center gap-1">
+          <MapPin className="w-3 h-3" /> {b.townLabel}
+        </p>
+      )}
+      <p className="mt-3 text-sm text-[#1d1d1f]/65 font-light leading-relaxed line-clamp-3">
+        {b.tagline}
       </p>
-      {b.featured && (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66]/10 text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
-          <Sparkles className="w-3 h-3" /> Featured
-        </span>
+
+      {claimed ? (
+        <div className="mt-5 flex items-center gap-3 text-xs text-[#1d1d1f]/55">
+          {b.phone && (
+            <span className="inline-flex items-center gap-1">
+              <Phone className="w-3 h-3" /> Phone
+            </span>
+          )}
+          {b.website && (
+            <span className="inline-flex items-center gap-1">
+              <Globe className="w-3 h-3" /> Web
+            </span>
+          )}
+          {b.address && (
+            <span className="inline-flex items-center gap-1">
+              <MapPin className="w-3 h-3" /> Address
+            </span>
+          )}
+        </div>
+      ) : (
+        <div className="mt-5 px-3 py-2 rounded-lg bg-[#1d1d1f]/[0.04] text-[11px] text-[#1d1d1f]/60">
+          Contact info available after claim
+        </div>
       )}
-    </div>
-    <h3 className="text-lg font-semibold tracking-tight text-[#1d1d1f] leading-snug">
-      {b.name}
-    </h3>
-    {b.townLabel && (
-      <p className="mt-1 text-xs text-[#1d1d1f]/55 inline-flex items-center gap-1">
-        <MapPin className="w-3 h-3" /> {b.townLabel}
-      </p>
-    )}
-    <p className="mt-3 text-sm text-[#1d1d1f]/65 font-light leading-relaxed line-clamp-3">
-      {b.tagline}
-    </p>
-    <div className="mt-5 flex items-center gap-3 text-xs text-[#1d1d1f]/55">
-      {b.phone && (
-        <span className="inline-flex items-center gap-1">
-          <Phone className="w-3 h-3" /> Phone
-        </span>
-      )}
-      {b.website && (
-        <span className="inline-flex items-center gap-1">
-          <Globe className="w-3 h-3" /> Web
-        </span>
-      )}
-    </div>
-    <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#0d6e66]">
-      View Details <ArrowUpRight className="w-3.5 h-3.5" />
-    </span>
-  </button>
-);
+
+      <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#0d6e66]">
+        {claimed ? "View Details" : "View & Claim"}
+        <ArrowUpRight className="w-3.5 h-3.5" />
+      </span>
+    </button>
+  );
+};
 
 const BusinessDetailModal = ({
   biz,
