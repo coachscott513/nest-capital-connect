@@ -55,11 +55,15 @@ const ALL_CATEGORIES: BusinessCategory[] = Object.values(
   CATEGORY_GROUPS,
 ).flat() as BusinessCategory[];
 
+const isClaimed = (b: Business) => Boolean(b.claimed ?? b.verified);
+
+type TierFilter = "all" | "featured" | "claimed" | "unclaimed";
+
 const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [q, setQ] = useState("");
   const [town, setTown] = useState(townSlug ?? "");
   const [category, setCategory] = useState<string>("");
-  const [featuredOnly, setFeaturedOnly] = useState(false);
+  const [tier, setTier] = useState<TierFilter>("all");
   const [hasWebsite, setHasWebsite] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
   const [openBiz, setOpenBiz] = useState<Business | null>(null);
@@ -71,7 +75,9 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         return false;
       if (town && b.town !== town) return false;
       if (category && b.category !== category) return false;
-      if (featuredOnly && !b.featured) return false;
+      if (tier === "featured" && !b.featured) return false;
+      if (tier === "claimed" && !isClaimed(b)) return false;
+      if (tier === "unclaimed" && isClaimed(b)) return false;
       if (hasWebsite && !b.website) return false;
       if (hasPhone && !b.phone) return false;
       if (!needle) return true;
@@ -89,7 +95,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         .toLowerCase();
       return hay.includes(needle);
     });
-  }, [q, town, category, featuredOnly, hasWebsite, hasPhone, townSlug]);
+  }, [q, town, category, tier, hasWebsite, hasPhone, townSlug]);
 
   const featured = useMemo(
     () => ALL.filter((b) => b.featured && (!townSlug || b.town === "capital-district")),
@@ -117,14 +123,14 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         <section className="bg-white pt-24 md:pt-32 pb-12 px-6 md:px-10">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#0d6e66]">
-              Local Directory
+              Local Businesses
             </p>
             <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-[#1d1d1f] leading-[1.02]">
-              {title ?? "Find local businesses across the Capital District."}
+              {title ?? "The Capital District business directory."}
             </h1>
             <p className="mt-6 text-lg text-[#1d1d1f]/65 font-light">
-              Search restaurants, lenders, attorneys, contractors, home services, and local
-              professionals by town.
+              Discover trusted local businesses — restaurants, lenders, attorneys, contractors,
+              home services, and more — by town and category.
             </p>
             <a
               href="/claim-business"
@@ -244,23 +250,25 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             <span className="inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-semibold text-[#1d1d1f]/55">
               <Filter className="w-3.5 h-3.5" /> Filters
             </span>
-            <FilterChip active={featuredOnly} onClick={() => setFeaturedOnly((v) => !v)}>
-              Featured only
-            </FilterChip>
+            {(["all", "featured", "claimed", "unclaimed"] as TierFilter[]).map((t) => (
+              <FilterChip key={t} active={tier === t} onClick={() => setTier(t)}>
+                {t === "all" ? "All" : t.charAt(0).toUpperCase() + t.slice(1)}
+              </FilterChip>
+            ))}
             <FilterChip active={hasWebsite} onClick={() => setHasWebsite((v) => !v)}>
               Has website
             </FilterChip>
             <FilterChip active={hasPhone} onClick={() => setHasPhone((v) => !v)}>
               Has phone
             </FilterChip>
-            {(q || town || category || featuredOnly || hasWebsite || hasPhone) && (
+            {(q || town || category || tier !== "all" || hasWebsite || hasPhone) && (
               <button
                 type="button"
                 onClick={() => {
                   setQ("");
                   if (!townSlug) setTown("");
                   setCategory("");
-                  setFeaturedOnly(false);
+                  setTier("all");
                   setHasWebsite(false);
                   setHasPhone(false);
                 }}
@@ -377,49 +385,74 @@ const FilterChip = ({
   </button>
 );
 
-const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
-  <button
-    onClick={onOpen}
-    className="text-left rounded-2xl bg-white border border-[#1d1d1f]/[0.08] p-7 hover:border-[#0d6e66]/30 hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.18)] transition-all flex flex-col"
-  >
-    <div className="flex items-start justify-between gap-3 mb-3">
-      <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
-        {b.category}
+const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
+  const claimed = isClaimed(b);
+  return (
+    <button
+      onClick={onOpen}
+      className={`text-left rounded-2xl bg-white border p-7 hover:-translate-y-0.5 transition-all flex flex-col ${
+        b.featured
+          ? "border-[#0d6e66]/30 shadow-[0_18px_48px_-18px_rgba(13,110,102,0.18)] hover:shadow-[0_24px_56px_-18px_rgba(13,110,102,0.28)]"
+          : "border-[#1d1d1f]/[0.08] hover:border-[#0d6e66]/30 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.18)]"
+      }`}
+    >
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
+          {b.category}
+        </p>
+        {b.featured ? (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66] text-white text-[10px] font-semibold uppercase tracking-wider">
+            <Sparkles className="w-3 h-3" /> Featured Partner
+          </span>
+        ) : claimed ? (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66]/10 text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
+            Claimed
+          </span>
+        ) : null}
+      </div>
+      <h3 className="text-lg font-semibold tracking-tight text-[#1d1d1f] leading-snug">
+        {b.name}
+      </h3>
+      {b.townLabel && (
+        <p className="mt-1 text-xs text-[#1d1d1f]/55 inline-flex items-center gap-1">
+          <MapPin className="w-3 h-3" /> {b.townLabel}
+        </p>
+      )}
+      <p className="mt-3 text-sm text-[#1d1d1f]/65 font-light leading-relaxed line-clamp-3">
+        {b.tagline}
       </p>
-      {b.featured && (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66]/10 text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
-          <Sparkles className="w-3 h-3" /> Featured
-        </span>
+
+      {claimed ? (
+        <div className="mt-5 flex items-center gap-3 text-xs text-[#1d1d1f]/55">
+          {b.phone && (
+            <span className="inline-flex items-center gap-1">
+              <Phone className="w-3 h-3" /> Phone
+            </span>
+          )}
+          {b.website && (
+            <span className="inline-flex items-center gap-1">
+              <Globe className="w-3 h-3" /> Web
+            </span>
+          )}
+          {b.address && (
+            <span className="inline-flex items-center gap-1">
+              <MapPin className="w-3 h-3" /> Address
+            </span>
+          )}
+        </div>
+      ) : (
+        <div className="mt-5 px-3 py-2 rounded-lg bg-[#1d1d1f]/[0.04] text-[11px] text-[#1d1d1f]/60">
+          Contact info available after claim
+        </div>
       )}
-    </div>
-    <h3 className="text-lg font-semibold tracking-tight text-[#1d1d1f] leading-snug">
-      {b.name}
-    </h3>
-    {b.townLabel && (
-      <p className="mt-1 text-xs text-[#1d1d1f]/55 inline-flex items-center gap-1">
-        <MapPin className="w-3 h-3" /> {b.townLabel}
-      </p>
-    )}
-    <p className="mt-3 text-sm text-[#1d1d1f]/65 font-light leading-relaxed line-clamp-3">
-      {b.tagline}
-    </p>
-    <div className="mt-5 flex items-center gap-3 text-xs text-[#1d1d1f]/55">
-      {b.phone && (
-        <span className="inline-flex items-center gap-1">
-          <Phone className="w-3 h-3" /> Phone
-        </span>
-      )}
-      {b.website && (
-        <span className="inline-flex items-center gap-1">
-          <Globe className="w-3 h-3" /> Web
-        </span>
-      )}
-    </div>
-    <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#0d6e66]">
-      View Details <ArrowUpRight className="w-3.5 h-3.5" />
-    </span>
-  </button>
-);
+
+      <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#0d6e66]">
+        {claimed ? "View Details" : "View & Claim"}
+        <ArrowUpRight className="w-3.5 h-3.5" />
+      </span>
+    </button>
+  );
+};
 
 const BusinessDetailModal = ({
   biz,
@@ -441,105 +474,145 @@ const BusinessDetailModal = ({
             />
           )}
           <div className="p-7 md:p-9">
-            <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
-              {biz.category}
-              {biz.townLabel && ` · ${biz.townLabel}`}
-            </p>
-            <h2 className="mt-2 text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-[#1d1d1f]">
+            <div className="flex items-center gap-2 mb-2">
+              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
+                {biz.category}
+                {biz.townLabel && ` · ${biz.townLabel}`}
+              </p>
+              {biz.featured ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66] text-white text-[10px] font-semibold uppercase tracking-wider">
+                  <Sparkles className="w-3 h-3" /> Featured Partner
+                </span>
+              ) : isClaimed(biz) ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66]/10 text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
+                  Claimed
+                </span>
+              ) : null}
+            </div>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-[#1d1d1f]">
               {biz.name}
             </h2>
             <p className="mt-3 text-base text-[#1d1d1f]/70 font-light leading-relaxed">
               {biz.about ?? biz.tagline}
             </p>
 
-            {biz.services && biz.services.length > 0 && (
-              <div className="mt-5 flex flex-wrap gap-1.5">
-                {biz.services.map((s) => (
-                  <span
-                    key={s}
-                    className="text-xs px-2.5 py-1 rounded-full bg-[#1d1d1f]/[0.05] text-[#1d1d1f]/75"
+            {isClaimed(biz) ? (
+              <>
+                {biz.services && biz.services.length > 0 && (
+                  <div className="mt-5 flex flex-wrap gap-1.5">
+                    {biz.services.map((s) => (
+                      <span
+                        key={s}
+                        className="text-xs px-2.5 py-1 rounded-full bg-[#1d1d1f]/[0.05] text-[#1d1d1f]/75"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <div className="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
+                  {biz.phone && (
+                    <Info icon={<Phone className="w-4 h-4" />} label="Phone" value={biz.phone} />
+                  )}
+                  {biz.email && (
+                    <Info icon={<Mail className="w-4 h-4" />} label="Email" value={biz.email} />
+                  )}
+                  {biz.website && (
+                    <Info
+                      icon={<Globe className="w-4 h-4" />}
+                      label="Website"
+                      value={biz.website.replace(/^https?:\/\//, "")}
+                    />
+                  )}
+                  {biz.address && (
+                    <Info icon={<MapPin className="w-4 h-4" />} label="Address" value={biz.address} />
+                  )}
+                  {biz.hours && (
+                    <Info icon={<Clock className="w-4 h-4" />} label="Hours" value={biz.hours} />
+                  )}
+                </div>
+
+                {biz.socials && (
+                  <div className="mt-6 flex items-center gap-2">
+                    {biz.socials.instagram && (
+                      <SocialBtn href={biz.socials.instagram} Icon={Instagram} />
+                    )}
+                    {biz.socials.facebook && (
+                      <SocialBtn href={biz.socials.facebook} Icon={Facebook} />
+                    )}
+                    {biz.socials.linkedin && (
+                      <SocialBtn href={biz.socials.linkedin} Icon={Linkedin} />
+                    )}
+                    {biz.socials.twitter && <SocialBtn href={biz.socials.twitter} Icon={XIcon} />}
+                  </div>
+                )}
+
+                <div className="mt-7 flex flex-wrap gap-2">
+                  {biz.phone && (
+                    <a
+                      href={`tel:${biz.phone.replace(/[^\d+]/g, "")}`}
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#DC1C2E] text-white text-sm font-semibold hover:opacity-90 transition"
+                    >
+                      <Phone className="w-4 h-4" /> Call
+                    </a>
+                  )}
+                  {biz.email && (
+                    <a
+                      href={`mailto:${biz.email}`}
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
+                    >
+                      <Mail className="w-4 h-4" /> Email
+                    </a>
+                  )}
+                  {biz.website && (
+                    <a
+                      href={biz.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
+                    >
+                      <Globe className="w-4 h-4" /> Website
+                    </a>
+                  )}
+                  {biz.address && (
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(biz.address)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
+                    >
+                      <MapPin className="w-4 h-4" /> Directions
+                    </a>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="mt-7 rounded-2xl border border-dashed border-[#1d1d1f]/15 bg-[#1d1d1f]/[0.025] p-6">
+                <p className="text-sm font-semibold text-[#1d1d1f]">
+                  Is this your business?
+                </p>
+                <p className="mt-1.5 text-sm text-[#1d1d1f]/65 font-light">
+                  Claim your profile to add phone, website, hours, photos, and social links —
+                  free. Upgrade to Featured Partner for top placement across the directory and
+                  town pages.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <a
+                    href={`/claim-business?biz=${biz.slug}`}
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
                   >
-                    {s}
-                  </span>
-                ))}
+                    <Sparkles className="w-4 h-4" /> Claim this business
+                  </a>
+                  <a
+                    href={`/claim-business?biz=${biz.slug}&tier=featured`}
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
+                  >
+                    Upgrade to Featured Partner
+                  </a>
+                </div>
               </div>
             )}
-
-            <div className="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
-              {biz.phone && (
-                <Info icon={<Phone className="w-4 h-4" />} label="Phone" value={biz.phone} />
-              )}
-              {biz.email && (
-                <Info icon={<Mail className="w-4 h-4" />} label="Email" value={biz.email} />
-              )}
-              {biz.website && (
-                <Info
-                  icon={<Globe className="w-4 h-4" />}
-                  label="Website"
-                  value={biz.website.replace(/^https?:\/\//, "")}
-                />
-              )}
-              {biz.address && (
-                <Info icon={<MapPin className="w-4 h-4" />} label="Address" value={biz.address} />
-              )}
-              {biz.hours && (
-                <Info icon={<Clock className="w-4 h-4" />} label="Hours" value={biz.hours} />
-              )}
-            </div>
-
-            {biz.socials && (
-              <div className="mt-6 flex items-center gap-2">
-                {biz.socials.instagram && (
-                  <SocialBtn href={biz.socials.instagram} Icon={Instagram} />
-                )}
-                {biz.socials.facebook && (
-                  <SocialBtn href={biz.socials.facebook} Icon={Facebook} />
-                )}
-                {biz.socials.linkedin && (
-                  <SocialBtn href={biz.socials.linkedin} Icon={Linkedin} />
-                )}
-                {biz.socials.twitter && <SocialBtn href={biz.socials.twitter} Icon={XIcon} />}
-              </div>
-            )}
-
-            <div className="mt-7 flex flex-wrap gap-2">
-              {biz.phone && (
-                <a
-                  href={`tel:${biz.phone.replace(/[^\d+]/g, "")}`}
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#DC1C2E] text-white text-sm font-semibold hover:opacity-90 transition"
-                >
-                  <Phone className="w-4 h-4" /> Call
-                </a>
-              )}
-              {biz.email && (
-                <a
-                  href={`mailto:${biz.email}`}
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
-                >
-                  <Mail className="w-4 h-4" /> Email
-                </a>
-              )}
-              {biz.website && (
-                <a
-                  href={biz.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
-                >
-                  <Globe className="w-4 h-4" /> Website
-                </a>
-              )}
-              {biz.address && (
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(biz.address)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
-                >
-                  <MapPin className="w-4 h-4" /> Directions
-                </a>
-              )}
-            </div>
           </div>
         </>
       )}

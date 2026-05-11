@@ -22,7 +22,7 @@ const navItems: { label: string; href?: string; dropdown?: string }[] = [
   { label: "Home", href: "/" },
   { label: "Towns", dropdown: "towns" },
   { label: "Homes", href: "/homes" },
-  { label: "Local", href: "/local" },
+  { label: "Local Businesses", href: "/local" },
   { label: "Analyze", href: "/analyze" },
   { label: "Contact", href: "/contact" },
 ];
