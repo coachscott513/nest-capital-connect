@@ -265,20 +265,8 @@ const Index = () => {
         ]}
       />
 
-      {/* 4 — SEARCH HOMES · pure white break (LIGHT) */}
-      <HeroBand
-        mood="white"
-        eyebrow="Search Homes"
-        headline={<>Find homes across<br />the Capital District.</>}
-        sub="Search by town, price, property type, and lifestyle — straight from the live MLS feed."
-        ctaLabel="Search homes"
-        ctaHref="/homes-for-sale"
-        callouts={[
-          { title: "By town",     body: "Albany, Delmar, Saratoga, Troy, Schenectady, Clifton Park, and more." },
-          { title: "By strategy", body: "Single-family, multifamily, land, foreclosures, rentals." },
-          { title: "Live MLS",    body: "Updated continuously from the Capital Region MLS via RE/MAX." },
-        ]}
-      />
+      {/* 4 — SEARCH HOMES · clean Apple-style preview (LIGHT) */}
+      <HomeSearchPreview />
 
       {/* 5 — MULTIFAMILY · dark + gold (DARK — the design reference) */}
       <HeroBand
