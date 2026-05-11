@@ -19,6 +19,9 @@ import RouteFade from "@/components/RouteFade";
 import GARouteTracker from "@/components/GARouteTracker";
 import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext";
 import Index from "./pages/Index";
+import HomesPage from "./pages/HomesPage";
+import LocalPage from "./pages/LocalPage";
+import ContactPage from "./pages/ContactPage";
 import InvestorTools from "./pages/InvestorTools";
 import Rentals from "./pages/Rentals";
 import RentalsHub from "./pages/RentalsHub";
@@ -293,8 +296,9 @@ const App = () => {
           {/* Wildcard fallback so any /living-in-* slug works (renders or redirects to /communities). */}
           <Route path="/living-in-:slug" element={<LivingInTown />} />
           {/* Simplified canonical destinations from main nav */}
-          <Route path="/homes" element={<Navigate to="/homes-for-sale" replace />} />
-          <Route path="/local" element={<Navigate to="/communities" replace />} />
+          <Route path="/homes" element={<HomesPage />} />
+          <Route path="/local" element={<LocalPage />} />
+          <Route path="/contact" element={<ContactPage />} />
 
           
           {/* Market Report Thank You Pages */}
