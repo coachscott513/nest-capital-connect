@@ -20,12 +20,12 @@ const SECTION_PAD = "py-24 md:py-32 px-6 md:px-10";
 
 /**
  * Master town-page template.
- * Drives every /living-in-{slug} page with the same Apple-style 7-section structure.
+ * Drives every /living-in/{slug} page with the same Apple-style 7-section structure.
  * Town-specific imagery / callouts / stats live in src/data/townOverrides.ts.
  */
 const TownPageTemplate = ({ town }: Props) => {
   const o = getTownOverride(town.slug);
-  const url = `https://www.capitaldistrictnest.com/living-in-${town.slug}`;
+  const url = `https://www.capitaldistrictnest.com/living-in/${town.slug}`;
   const listingUrl = town.listingSearchUrl;
 
   useEffect(() => {
