@@ -7,6 +7,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import HeroBand from "@/components/HeroBand";
 import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
+import SupportLocalSection from "@/components/home/SupportLocalSection";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
 import heroCapital from "@/assets/hero-capital-district.jpg";
@@ -344,6 +345,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* 2.5 — SUPPORT LOCAL · warm light */}
+      <SupportLocalSection />
 
 
       {/* 3 — ANALYZER · graphite + teal (DARK) */}
