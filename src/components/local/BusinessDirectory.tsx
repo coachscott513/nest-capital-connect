@@ -474,105 +474,145 @@ const BusinessDetailModal = ({
             />
           )}
           <div className="p-7 md:p-9">
-            <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
-              {biz.category}
-              {biz.townLabel && ` · ${biz.townLabel}`}
-            </p>
-            <h2 className="mt-2 text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-[#1d1d1f]">
+            <div className="flex items-center gap-2 mb-2">
+              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
+                {biz.category}
+                {biz.townLabel && ` · ${biz.townLabel}`}
+              </p>
+              {biz.featured ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66] text-white text-[10px] font-semibold uppercase tracking-wider">
+                  <Sparkles className="w-3 h-3" /> Featured Partner
+                </span>
+              ) : isClaimed(biz) ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66]/10 text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
+                  Claimed
+                </span>
+              ) : null}
+            </div>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-[#1d1d1f]">
               {biz.name}
             </h2>
             <p className="mt-3 text-base text-[#1d1d1f]/70 font-light leading-relaxed">
               {biz.about ?? biz.tagline}
             </p>
 
-            {biz.services && biz.services.length > 0 && (
-              <div className="mt-5 flex flex-wrap gap-1.5">
-                {biz.services.map((s) => (
-                  <span
-                    key={s}
-                    className="text-xs px-2.5 py-1 rounded-full bg-[#1d1d1f]/[0.05] text-[#1d1d1f]/75"
+            {isClaimed(biz) ? (
+              <>
+                {biz.services && biz.services.length > 0 && (
+                  <div className="mt-5 flex flex-wrap gap-1.5">
+                    {biz.services.map((s) => (
+                      <span
+                        key={s}
+                        className="text-xs px-2.5 py-1 rounded-full bg-[#1d1d1f]/[0.05] text-[#1d1d1f]/75"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                <div className="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
+                  {biz.phone && (
+                    <Info icon={<Phone className="w-4 h-4" />} label="Phone" value={biz.phone} />
+                  )}
+                  {biz.email && (
+                    <Info icon={<Mail className="w-4 h-4" />} label="Email" value={biz.email} />
+                  )}
+                  {biz.website && (
+                    <Info
+                      icon={<Globe className="w-4 h-4" />}
+                      label="Website"
+                      value={biz.website.replace(/^https?:\/\//, "")}
+                    />
+                  )}
+                  {biz.address && (
+                    <Info icon={<MapPin className="w-4 h-4" />} label="Address" value={biz.address} />
+                  )}
+                  {biz.hours && (
+                    <Info icon={<Clock className="w-4 h-4" />} label="Hours" value={biz.hours} />
+                  )}
+                </div>
+
+                {biz.socials && (
+                  <div className="mt-6 flex items-center gap-2">
+                    {biz.socials.instagram && (
+                      <SocialBtn href={biz.socials.instagram} Icon={Instagram} />
+                    )}
+                    {biz.socials.facebook && (
+                      <SocialBtn href={biz.socials.facebook} Icon={Facebook} />
+                    )}
+                    {biz.socials.linkedin && (
+                      <SocialBtn href={biz.socials.linkedin} Icon={Linkedin} />
+                    )}
+                    {biz.socials.twitter && <SocialBtn href={biz.socials.twitter} Icon={XIcon} />}
+                  </div>
+                )}
+
+                <div className="mt-7 flex flex-wrap gap-2">
+                  {biz.phone && (
+                    <a
+                      href={`tel:${biz.phone.replace(/[^\d+]/g, "")}`}
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#DC1C2E] text-white text-sm font-semibold hover:opacity-90 transition"
+                    >
+                      <Phone className="w-4 h-4" /> Call
+                    </a>
+                  )}
+                  {biz.email && (
+                    <a
+                      href={`mailto:${biz.email}`}
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
+                    >
+                      <Mail className="w-4 h-4" /> Email
+                    </a>
+                  )}
+                  {biz.website && (
+                    <a
+                      href={biz.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
+                    >
+                      <Globe className="w-4 h-4" /> Website
+                    </a>
+                  )}
+                  {biz.address && (
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(biz.address)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
+                    >
+                      <MapPin className="w-4 h-4" /> Directions
+                    </a>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="mt-7 rounded-2xl border border-dashed border-[#1d1d1f]/15 bg-[#1d1d1f]/[0.025] p-6">
+                <p className="text-sm font-semibold text-[#1d1d1f]">
+                  Is this your business?
+                </p>
+                <p className="mt-1.5 text-sm text-[#1d1d1f]/65 font-light">
+                  Claim your profile to add phone, website, hours, photos, and social links —
+                  free. Upgrade to Featured Partner for top placement across the directory and
+                  town pages.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <a
+                    href={`/claim-business?biz=${biz.slug}`}
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
                   >
-                    {s}
-                  </span>
-                ))}
+                    <Sparkles className="w-4 h-4" /> Claim this business
+                  </a>
+                  <a
+                    href={`/claim-business?biz=${biz.slug}&tier=featured`}
+                    className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
+                  >
+                    Upgrade to Featured Partner
+                  </a>
+                </div>
               </div>
             )}
-
-            <div className="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
-              {biz.phone && (
-                <Info icon={<Phone className="w-4 h-4" />} label="Phone" value={biz.phone} />
-              )}
-              {biz.email && (
-                <Info icon={<Mail className="w-4 h-4" />} label="Email" value={biz.email} />
-              )}
-              {biz.website && (
-                <Info
-                  icon={<Globe className="w-4 h-4" />}
-                  label="Website"
-                  value={biz.website.replace(/^https?:\/\//, "")}
-                />
-              )}
-              {biz.address && (
-                <Info icon={<MapPin className="w-4 h-4" />} label="Address" value={biz.address} />
-              )}
-              {biz.hours && (
-                <Info icon={<Clock className="w-4 h-4" />} label="Hours" value={biz.hours} />
-              )}
-            </div>
-
-            {biz.socials && (
-              <div className="mt-6 flex items-center gap-2">
-                {biz.socials.instagram && (
-                  <SocialBtn href={biz.socials.instagram} Icon={Instagram} />
-                )}
-                {biz.socials.facebook && (
-                  <SocialBtn href={biz.socials.facebook} Icon={Facebook} />
-                )}
-                {biz.socials.linkedin && (
-                  <SocialBtn href={biz.socials.linkedin} Icon={Linkedin} />
-                )}
-                {biz.socials.twitter && <SocialBtn href={biz.socials.twitter} Icon={XIcon} />}
-              </div>
-            )}
-
-            <div className="mt-7 flex flex-wrap gap-2">
-              {biz.phone && (
-                <a
-                  href={`tel:${biz.phone.replace(/[^\d+]/g, "")}`}
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#DC1C2E] text-white text-sm font-semibold hover:opacity-90 transition"
-                >
-                  <Phone className="w-4 h-4" /> Call
-                </a>
-              )}
-              {biz.email && (
-                <a
-                  href={`mailto:${biz.email}`}
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
-                >
-                  <Mail className="w-4 h-4" /> Email
-                </a>
-              )}
-              {biz.website && (
-                <a
-                  href={biz.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
-                >
-                  <Globe className="w-4 h-4" /> Website
-                </a>
-              )}
-              {biz.address && (
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(biz.address)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
-                >
-                  <MapPin className="w-4 h-4" /> Directions
-                </a>
-              )}
-            </div>
           </div>
         </>
       )}
