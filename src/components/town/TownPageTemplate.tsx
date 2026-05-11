@@ -124,10 +124,10 @@ const TownPageTemplate = ({ town }: Props) => {
         </div>
       </section>
 
-      {/* 2 — HOMES FOR SALE (LIGHT) */}
+      {/* 2 — HOMES FOR SALE (LIGHT) — compact search preview, matches /homes */}
       <section className={`bg-white ${SECTION_PAD}`}>
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-12 max-w-2xl">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10 md:mb-12 max-w-2xl mx-auto">
             <p
               className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
               style={{ color: TEAL }}
@@ -142,14 +142,69 @@ const TownPageTemplate = ({ town }: Props) => {
             </p>
           </div>
 
-          <div className="rounded-3xl overflow-hidden bg-white shadow-[0_20px_60px_-20px_rgba(0,0,0,0.18)] border border-[#1d1d1f]/[0.06]">
-            <iframe
-              src={town.listingEmbedUrl ?? listingUrl}
-              title={`${town.townName} Homes for Sale`}
-              className="w-full h-[720px] border-0"
-              loading="lazy"
-            />
+          <form
+            action={listingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-2xl bg-white border border-[#1d1d1f]/[0.08] shadow-[0_18px_48px_-24px_rgba(0,0,0,0.18)] p-2.5 grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_auto] gap-2"
+          >
+            <div className="flex flex-col gap-1 px-4 py-3 rounded-xl bg-[#1d1d1f]/[0.03]">
+              <span className="text-[10px] font-semibold tracking-[0.18em] uppercase" style={{ color: TEAL }}>Town</span>
+              <span className="text-[15px] text-[#1d1d1f] font-medium">{town.townName}</span>
+            </div>
+            <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
+              <span className="text-[10px] font-semibold tracking-[0.18em] uppercase" style={{ color: TEAL }}>Price</span>
+              <select name="price" className="w-full bg-transparent text-[15px] text-[#1d1d1f] focus:outline-none cursor-pointer">
+                <option value="">Any price</option>
+                <option>Under $300K</option>
+                <option>$300K – $500K</option>
+                <option>$500K – $750K</option>
+                <option>$750K – $1M</option>
+                <option>$1M+</option>
+              </select>
+            </label>
+            <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
+              <span className="text-[10px] font-semibold tracking-[0.18em] uppercase" style={{ color: TEAL }}>Type</span>
+              <select name="type" className="w-full bg-transparent text-[15px] text-[#1d1d1f] focus:outline-none cursor-pointer">
+                <option value="">All types</option>
+                <option>Single-Family</option>
+                <option>Multifamily</option>
+                <option>Condo / Townhome</option>
+                <option>Land</option>
+              </select>
+            </label>
+            <button
+              type="submit"
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-white text-sm font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.55)]"
+              style={{ backgroundColor: TEAL }}
+            >
+              Search Homes <ArrowRight className="w-4 h-4" />
+            </button>
+          </form>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+            <a
+              href={listingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#1d1d1f]/10 text-sm text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
+            >
+              View all {town.townName} homes
+            </a>
+            <a
+              href="#weekly"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#1d1d1f]/10 text-sm text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
+            >
+              Get listing alerts
+            </a>
+            <a
+              href="/contact"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#1d1d1f]/10 text-sm text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
+            >
+              Talk to Scott
+            </a>
           </div>
+          <p className="mt-4 text-center text-xs text-[#1d1d1f]/50">Live MLS via RE/MAX</p>
         </div>
       </section>
 

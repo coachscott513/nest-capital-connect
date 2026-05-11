@@ -42,7 +42,7 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     description: "Independent roaster taking over the old Stewart's space in Delmar.",
     type: "business",
     date: "May 5, 2026",
-    scope: "all",
+    scope: "delmar",
   },
   {
     title: "Tulip Festival weekend in Albany",
