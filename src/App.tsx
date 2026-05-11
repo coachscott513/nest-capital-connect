@@ -6,23 +6,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
-
-// Canonicalize all /towns/:slug → /living-in/:slug (master town template)
-const TownsRedirect = () => {
-  const { slug } = useParams();
-  return <Navigate to={`/living-in/${slug}`} replace />;
-};
-
-const NotFoundOrLegacyTown = () => {
-  const { pathname } = useLocation();
-  const match = pathname.match(/^\/living-in-([a-z0-9-]+)\/?$/i);
-
-  if (match?.[1]) {
-    return <LivingInTown slugOverride={match[1].toLowerCase()} />;
-  }
-
-  return <NotFound />;
-};
 import { AuthProvider } from "@/contexts/AuthContext";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import FloatingLiveAgent from "@/components/FloatingLiveAgent";
