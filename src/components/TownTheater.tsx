@@ -35,7 +35,7 @@ const staticTowns: TownData[] = [
   {
     name: "Delmar",
     slug: "delmar",
-    href: "/towns/delmar",
+    href: "/living-in/delmar",
     description: "Bethlehem Central Schools",
     appreciation: "+3.1%",
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
@@ -43,7 +43,7 @@ const staticTowns: TownData[] = [
   {
     name: "Albany",
     slug: "albany",
-    href: "/towns/albany",
+    href: "/living-in/albany",
     description: "Capital City, diverse neighborhoods",
     appreciation: "+2.4%",
     image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1600&q=80"
@@ -75,7 +75,7 @@ const staticTowns: TownData[] = [
   {
     name: "Guilderland",
     slug: "guilderland",
-    href: "/towns/guilderland",
+    href: "/living-in/guilderland",
     description: "Top schools, Crossgates area",
     appreciation: "+3.6%",
     image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1600&q=80"

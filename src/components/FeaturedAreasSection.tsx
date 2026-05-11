@@ -43,7 +43,7 @@ const FeaturedAreasSection = () => {
           {cities.map((city) => (
             <Link 
               key={city.slug} 
-              to={`/towns/${city.slug}`}
+              to={`/living-in/${city.slug}`}
               className="block transition-transform hover:scale-105"
             >
               <Card className="h-full hover:shadow-lg transition-shadow">

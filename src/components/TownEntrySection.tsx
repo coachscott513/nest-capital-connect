@@ -2,16 +2,16 @@ import { Link } from "react-router-dom";
 import { MapPin, ChevronRight, BarChart3 } from "lucide-react";
 
 const towns = [
-  { name: "Delmar", href: "/towns/delmar", description: "Bethlehem Central Schools" },
-  { name: "Clifton Park", href: "/towns/clifton-park", description: "Shenendehowa Schools" },
-  { name: "Niskayuna", href: "/towns/niskayuna", description: "Top-Rated Schools" },
-  { name: "Voorheesville", href: "/towns/voorheesville", description: "Rural Character" },
-  { name: "Troy", href: "/towns/troy", description: "Collar City" },
-  { name: "Albany", href: "/towns/albany", description: "Capital City" },
-  { name: "Schenectady", href: "/towns/schenectady", description: "Electric City" },
-  { name: "Saratoga", href: "/towns/saratoga-springs", description: "Springs & Racing" },
-  { name: "Amsterdam", href: "/towns/amsterdam", description: "Affordable Opportunity" },
-  { name: "Queensbury", href: "/towns/queensbury", description: "Lake George Area" },
+  { name: "Delmar", href: "/living-in/delmar", description: "Bethlehem Central Schools" },
+  { name: "Clifton Park", href: "/living-in/clifton-park", description: "Shenendehowa Schools" },
+  { name: "Niskayuna", href: "/living-in/niskayuna", description: "Top-Rated Schools" },
+  { name: "Voorheesville", href: "/living-in/voorheesville", description: "Rural Character" },
+  { name: "Troy", href: "/living-in/troy", description: "Collar City" },
+  { name: "Albany", href: "/living-in/albany", description: "Capital City" },
+  { name: "Schenectady", href: "/living-in/schenectady", description: "Electric City" },
+  { name: "Saratoga", href: "/living-in/saratoga-springs", description: "Springs & Racing" },
+  { name: "Amsterdam", href: "/living-in/amsterdam", description: "Affordable Opportunity" },
+  { name: "Queensbury", href: "/living-in/queensbury", description: "Lake George Area" },
 ];
 
 const TownEntrySection = () => {

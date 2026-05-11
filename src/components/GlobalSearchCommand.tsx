@@ -201,7 +201,7 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
   };
 
   const handleSelect = (result: SearchResult) => {
-    navigate(`/towns/${result.slug}`);
+    navigate(`/living-in/${result.slug}`);
     setQuery("");
     onClose();
   };

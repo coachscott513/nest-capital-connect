@@ -103,7 +103,7 @@ const SchenectadyRealEstate = () => {
                   </Link>
                 </Button>
                 <Button variant="outline" size="lg" asChild>
-                  <Link to="/towns/schenectady">
+                  <Link to="/living-in/schenectady">
                     <MapPin className="w-5 h-5 mr-2" />
                     Explore Schenectady Neighborhoods
                   </Link>
@@ -183,7 +183,7 @@ const SchenectadyRealEstate = () => {
                     <CardContent>
                       <CardDescription>{neighborhood.description}</CardDescription>
                       <Button variant="link" className="p-0 mt-2" asChild>
-                        <Link to="/towns/schenectady">View Properties →</Link>
+                        <Link to="/living-in/schenectady">View Properties →</Link>
                       </Button>
                     </CardContent>
                   </Card>

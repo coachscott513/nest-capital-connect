@@ -476,7 +476,7 @@ const SamplePropertyIntelligenceReport = () => {
 
           <div className="text-center mt-8">
             <Link 
-              to="/towns/delmar" 
+              to="/living-in/delmar" 
               className="text-primary font-medium hover:underline"
             >
               ← Back to Delmar Market Intelligence

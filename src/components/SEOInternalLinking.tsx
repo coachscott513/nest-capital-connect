@@ -76,7 +76,7 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
     // Real Estate Pages - Canonical /towns/ URLs
     {
       title: "Albany Real Estate",
-      url: "/towns/albany",
+      url: "/living-in/albany",
       description: "Explore Albany's real estate market, neighborhoods, and investment opportunities.",
       category: "Real Estate",
       priority: 8,
@@ -84,7 +84,7 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
     },
     {
       title: "Troy Real Estate",
-      url: "/towns/troy",
+      url: "/living-in/troy",
       description: "Discover Troy's housing market, historic properties, and investment opportunities.",
       category: "Real Estate",
       priority: 7,
@@ -92,7 +92,7 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
     },
     {
       title: "Schenectady Real Estate",
-      url: "/towns/schenectady",
+      url: "/living-in/schenectady",
       description: "Learn about Schenectady's real estate market, neighborhoods, and property options.",
       category: "Real Estate",
       priority: 7,
@@ -100,7 +100,7 @@ const SEOInternalLinking: React.FC<SEOInternalLinkingProps> = ({
     },
     {
       title: "Saratoga Springs Real Estate",
-      url: "/towns/saratoga-springs",
+      url: "/living-in/saratoga-springs",
       description: "Explore Saratoga Springs' premium real estate market and luxury properties.",
       category: "Real Estate",
       priority: 6,
