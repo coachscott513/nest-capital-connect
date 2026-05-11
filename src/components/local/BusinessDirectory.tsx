@@ -123,14 +123,14 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         <section className="bg-white pt-24 md:pt-32 pb-12 px-6 md:px-10">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#0d6e66]">
-              Local Directory
+              Local Businesses
             </p>
             <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-[#1d1d1f] leading-[1.02]">
-              {title ?? "Find local businesses across the Capital District."}
+              {title ?? "The Capital District business directory."}
             </h1>
             <p className="mt-6 text-lg text-[#1d1d1f]/65 font-light">
-              Search restaurants, lenders, attorneys, contractors, home services, and local
-              professionals by town.
+              Discover trusted local businesses — restaurants, lenders, attorneys, contractors,
+              home services, and more — by town and category.
             </p>
             <a
               href="/claim-business"
