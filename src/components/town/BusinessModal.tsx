@@ -148,7 +148,7 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
               <SocialIcon href={socials.facebook}  enabled={verified} Icon={Facebook}    label="Facebook" />
               <SocialIcon href={socials.instagram} enabled={verified} Icon={Instagram}   label="Instagram" />
               <SocialIcon href={socials.linkedin}  enabled={verified} Icon={Linkedin}    label="LinkedIn" />
-              <SocialIcon href={socials.tiktok}    enabled={verified} Icon={TikTokIcon}  label="TikTok" />
+              <SocialIcon href={socials.twitter}   enabled={verified} Icon={TikTokIcon}  label="X" />
             </div>
             {!verified && (
               <>
