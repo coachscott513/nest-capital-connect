@@ -95,7 +95,7 @@ const ClaimBusiness = () => {
               We'll review your request and get back to you within 24-48 hours.
             </p>
             <Button asChild>
-              <Link to={town ? `/towns/${town}` : "/"}>
+              <Link to={town ? `/living-in/${town}` : "/"}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to {town ? `${town.charAt(0).toUpperCase() + town.slice(1).replace(/-/g, ' ')}` : "Home"}
               </Link>
@@ -124,7 +124,7 @@ const ClaimBusiness = () => {
       <nav className="bg-background/80 backdrop-blur-sm border-b border-border py-3 px-4 md:px-[5%]">
         <div className="max-w-7xl mx-auto">
           <Link 
-            to={town ? `/towns/${town}` : "/"} 
+            to={town ? `/living-in/${town}` : "/"} 
             className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />

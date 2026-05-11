@@ -13,14 +13,14 @@ const DealDeskThanks = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowConfirmation(true);
-      navigate("/towns/delmar");
+      navigate("/living-in/delmar");
     }, 3000);
     return () => clearTimeout(timer);
   }, [navigate, setShowConfirmation]);
 
   const handleExploreDelmar = () => {
     setShowConfirmation(true);
-    navigate("/towns/delmar");
+    navigate("/living-in/delmar");
   };
 
   return (
