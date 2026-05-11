@@ -33,9 +33,51 @@ const WeeklyFeed = ({
   limit = 6,
   compact = false,
 }: Props) => {
-  const items = weeklyFeed.filter(
-    (item) => item.scope === scope || item.scope === "all",
+  const isRegion = scope === "region";
+  // Region page: show region + cross-town items.
+  // Town page: ONLY items explicitly scoped to that town (no Delmar bleed via "all").
+  let items = weeklyFeed.filter((item) =>
+    isRegion ? item.scope === "region" || item.scope === "all" : item.scope === scope,
   );
+
+  // Town fallback: if no curated items for this town yet, render neutral
+  // town-named placeholders so the section still feels local (never empty).
+  if (items.length === 0 && !isRegion) {
+    const townName = scope
+      .split("-")
+      .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+      .join(" ");
+    items = [
+      {
+        title: `New listings across ${townName} this week`,
+        description: `Fresh inventory and recent activity from across ${townName} and nearby neighborhoods.`,
+        type: "real_estate",
+        date: "Updated weekly",
+        scope,
+      },
+      {
+        title: `${townName} market snapshot`,
+        description: `Pricing, days on market, and demand trends for ${townName}.`,
+        type: "market",
+        date: "Updated weekly",
+        scope,
+      },
+      {
+        title: `Local businesses in ${townName}`,
+        description: `Restaurants, shops, and services worth knowing about in ${townName}.`,
+        type: "business",
+        date: "Updated weekly",
+        scope,
+      },
+      {
+        title: `What's happening in ${townName}`,
+        description: `Community events and seasonal happenings around ${townName}.`,
+        type: "event",
+        date: "Updated weekly",
+        scope,
+      },
+    ];
+  }
 
   if (items.length === 0) return null;
 
