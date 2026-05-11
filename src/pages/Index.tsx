@@ -24,12 +24,12 @@ import townCliftonPark from "@/assets/town-clifton-park.jpg";
    ============================================================= */
 
 const TOWN_TILES = [
-  { name: "Delmar",           sub: "Bethlehem · Suburban classic",   img: townDelmar,      to: "/living-in-delmar" },
-  { name: "Albany",           sub: "Capital city · Urban revival",   img: townAlbany,      to: "/albany-real-estate" },
-  { name: "Saratoga Springs", sub: "Resort town · Racing & spas",    img: townSaratoga,    to: "/saratoga-real-estate" },
-  { name: "Troy",             sub: "Riverfront · Historic collar",   img: townTroy,        to: "/troy-real-estate" },
-  { name: "Schenectady",      sub: "Stockade · Value & cash flow",   img: townSchenectady, to: "/schenectady-real-estate" },
-  { name: "Clifton Park",     sub: "Shen schools · Family suburb",   img: townCliftonPark, to: "/clifton-park-intelligence" },
+  { name: "Delmar",           sub: "Bethlehem · Suburban classic",   img: townDelmar,      to: "/living-in/delmar" },
+  { name: "Albany",           sub: "Capital city · Urban revival",   img: townAlbany,      to: "/living-in/albany" },
+  { name: "Saratoga Springs", sub: "Resort town · Racing & spas",    img: townSaratoga,    to: "/living-in/saratoga-springs" },
+  { name: "Troy",             sub: "Riverfront · Historic collar",   img: townTroy,        to: "/living-in/troy" },
+  { name: "Schenectady",      sub: "Stockade · Value & cash flow",   img: townSchenectady, to: "/living-in/schenectady" },
+  { name: "Clifton Park",     sub: "Shen schools · Family suburb",   img: townCliftonPark, to: "/living-in/clifton-park" },
 ];
 
 /* ========== Section 1 — CINEMATIC HERO ========== */
@@ -398,7 +398,7 @@ const Index = () => {
               { title: "Investment Properties",    sub: "2–4 unit, multifamily, and rentals.",         to: "/investment-properties" },
               { title: "First-Time Buyer Help",    sub: "Roadmap, programs, and what to expect.",      to: "/first-time-homebuyers" },
               { title: "Financing & Grants",       sub: "Loan types and down-payment assistance.",     to: "/financing" },
-              { title: "Local Businesses & Vendors", sub: "Curated by town, not crowdsourced.",        to: "/living-in-delmar#local-favorites" },
+              { title: "Local Businesses & Vendors", sub: "Curated by town, not crowdsourced.",        to: "/living-in/delmar#local-favorites" },
             ].map((c) => (
               <Link
                 key={c.title}
