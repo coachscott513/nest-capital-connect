@@ -223,10 +223,10 @@ const App = () => {
           <Route path="/investment-landing" element={<InvestmentLanding />} />
           <Route path="/rehab-properties" element={<Index />} />
           <Route path="/financing" element={<Financing />} />
-          <Route path="/albany-rentals" element={<Navigate to="/towns/albany" replace />} />
-          <Route path="/troy-rentals" element={<Navigate to="/towns/troy" replace />} />
-          <Route path="/schenectady-rentals" element={<Navigate to="/towns/schenectady" replace />} />
-          <Route path="/saratoga-rentals" element={<Navigate to="/towns/saratoga-springs" replace />} />
+          <Route path="/albany-rentals" element={<Navigate to="/living-in/albany" replace />} />
+          <Route path="/troy-rentals" element={<Navigate to="/living-in/troy" replace />} />
+          <Route path="/schenectady-rentals" element={<Navigate to="/living-in/schenectady" replace />} />
+          <Route path="/saratoga-rentals" element={<Navigate to="/living-in/saratoga-springs" replace />} />
           {/* /contact handled below by ContactPage */}
           <Route path="/about" element={<Index />} />
           <Route path="/blog" element={<Blog />} />
@@ -236,11 +236,11 @@ const App = () => {
           <Route path="/terms-of-service" element={<PrivacyPolicyPage />} />
           <Route path="/reviews" element={<Reviews />} />
           
-          {/* City Real Estate Redirects - canonical URLs are /towns/:slug */}
-          <Route path="/albany-real-estate" element={<Navigate to="/towns/albany" replace />} />
-          <Route path="/troy-real-estate" element={<Navigate to="/towns/troy" replace />} />
-          <Route path="/schenectady-real-estate" element={<Navigate to="/towns/schenectady" replace />} />
-          <Route path="/saratoga-real-estate" element={<Navigate to="/towns/saratoga-springs" replace />} />
+          {/* City Real Estate Redirects - canonical URLs are /living-in/:slug */}
+          <Route path="/albany-real-estate" element={<Navigate to="/living-in/albany" replace />} />
+          <Route path="/troy-real-estate" element={<Navigate to="/living-in/troy" replace />} />
+          <Route path="/schenectady-real-estate" element={<Navigate to="/living-in/schenectady" replace />} />
+          <Route path="/saratoga-real-estate" element={<Navigate to="/living-in/saratoga-springs" replace />} />
           
           {/* Communities base route - Regional Command Center */}
           <Route path="/communities" element={<Communities />} />
