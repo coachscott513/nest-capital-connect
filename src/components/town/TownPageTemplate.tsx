@@ -213,7 +213,7 @@ const TownPageTemplate = ({ town }: Props) => {
         townName={town.townName}
         variant="dark"
         eyebrow={`Trusted Local Businesses in ${town.townName}`}
-        headline={<>Trusted local businesses in {town.townName}.</>}
+        headline={`Trusted local businesses in ${town.townName}.`}
         sub={`Restaurants, lenders, attorneys, contractors, and local services connected to the ${town.townName} community.`}
       />
 
