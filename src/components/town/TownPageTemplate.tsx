@@ -208,6 +208,77 @@ const TownPageTemplate = ({ town }: Props) => {
         </div>
       </section>
 
+      {/* 3 — TRUSTED LOCAL BUSINESSES (DARK) — high priority on town pages */}
+      <TrustedLocalPartners
+        townName={town.townName}
+        variant="dark"
+        eyebrow={`Trusted Local Businesses in ${town.townName}`}
+        headline={`Trusted local businesses in ${town.townName}.`}
+        sub={`Restaurants, lenders, attorneys, contractors, and local services connected to the ${town.townName} community.`}
+      />
+
+      {/* 3.5 — BUSINESS SEARCH (LIGHT) — town-scoped */}
+      <section className="bg-[#faf8f3] py-20 md:py-24 px-6 md:px-10">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8 md:mb-10">
+            <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-3" style={{ color: TEAL }}>
+              Search Local Businesses
+            </p>
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em] text-[#1d1d1f] leading-[1.1]">
+              Search businesses in {town.townName}.
+            </h2>
+          </div>
+
+          <form
+            action="/local"
+            method="get"
+            className="rounded-2xl bg-white border border-[#1d1d1f]/[0.08] shadow-[0_18px_48px_-24px_rgba(0,0,0,0.18)] p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_auto] gap-2"
+          >
+            <input type="hidden" name="town" value={town.slug} />
+            <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition">
+              <span className="text-[10px] font-semibold tracking-[0.18em] uppercase" style={{ color: TEAL }}>Keyword</span>
+              <input
+                name="q"
+                type="text"
+                placeholder={`e.g. coffee, lender, attorney`}
+                className="w-full bg-transparent text-[15px] text-[#1d1d1f] placeholder:text-[#1d1d1f]/45 focus:outline-none"
+              />
+            </label>
+            <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
+              <span className="text-[10px] font-semibold tracking-[0.18em] uppercase" style={{ color: TEAL }}>Category</span>
+              <select name="category" className="w-full bg-transparent text-[15px] text-[#1d1d1f] focus:outline-none cursor-pointer">
+                <option value="">All categories</option>
+                <option>Restaurant</option>
+                <option>Coffee</option>
+                <option>Bakery</option>
+                <option>Mortgage</option>
+                <option>Real Estate Attorney</option>
+                <option>Roofer</option>
+                <option>HVAC</option>
+                <option>Local Services</option>
+              </select>
+            </label>
+            <button
+              type="submit"
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-white text-sm font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.55)]"
+              style={{ backgroundColor: TEAL }}
+            >
+              Search <ArrowRight className="w-4 h-4" />
+            </button>
+          </form>
+
+          <div className="mt-6 text-center">
+            <a
+              href={`/local?town=${town.slug}`}
+              className="inline-flex items-center gap-1.5 text-sm font-semibold hover:opacity-80 transition"
+              style={{ color: TEAL }}
+            >
+              View all businesses in {town.townName} <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* 3 — MARKET SNAPSHOT (DARK) */}
       <section className={`bg-[#0e0f12] text-white ${SECTION_PAD}`}>
         <div className="max-w-6xl mx-auto">
@@ -297,12 +368,7 @@ const TownPageTemplate = ({ town }: Props) => {
         </div>
       </section>
 
-      {/* 5 — TRUSTED LOCAL PARTNERS (DARK) */}
-      <TrustedLocalPartners
-        townName={town.townName}
-        variant="dark"
-        sub={`Recommended lenders, attorneys, and local services connected to the ${town.townName} community.`}
-      />
+      {/* (Trusted Local Businesses moved up — section 3) */}
 
       {/* 6 — THIS WEEK (LIGHT) */}
       <div id="weekly">

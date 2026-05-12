@@ -119,7 +119,7 @@ function TownTile({
   return (
     <Link
       to={to}
-      className="group relative block overflow-hidden rounded-[28px] aspect-[4/5] md:aspect-[3/4] shadow-[0_20px_60px_-30px_rgba(0,0,0,0.45)] hover:shadow-[0_28px_72px_-28px_rgba(0,0,0,0.55)] transition-shadow duration-500"
+      className="group relative block overflow-hidden rounded-[28px] aspect-[16/11] sm:aspect-[4/5] md:aspect-[3/4] shadow-[0_20px_60px_-30px_rgba(0,0,0,0.45)] hover:shadow-[0_28px_72px_-28px_rgba(0,0,0,0.55)] transition-shadow duration-500"
     >
       <img
         src={img}
@@ -363,7 +363,7 @@ const Index = () => {
               transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-7"
             >
-              <div className="grid grid-cols-2 gap-4 md:gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-7 md:gap-8">
                 {TOWN_TILES.map((t) => (
                   <TownTile key={t.name} {...t} />
                 ))}
@@ -373,11 +373,13 @@ const Index = () => {
         </div>
       </section>
 
-      {/* 2.5 — SUPPORT LOCAL · warm light */}
+      {/* 2.5 — SUPPORT LOCAL · warm light (sits directly under Towns) */}
       <SupportLocalSection />
 
+      {/* 3 — SEARCH HOMES · clean Apple-style preview (LIGHT) */}
+      <HomeSearchPreview />
 
-      {/* 3 — ANALYZER · graphite + teal (DARK) */}
+      {/* 4 — ANALYZER · graphite + teal (DARK) */}
       <HeroBand
         mood="graphite"
         eyebrow="Analyze Any Property"
@@ -391,9 +393,6 @@ const Index = () => {
           { title: "Cash flow & cap rate", body: "Investor-grade math for 1–4 unit properties." },
         ]}
       />
-
-      {/* 4 — SEARCH HOMES · clean Apple-style preview (LIGHT) */}
-      <HomeSearchPreview />
 
       {/* 5 — MULTIFAMILY · dark + gold (DARK — the design reference) */}
       <HeroBand
