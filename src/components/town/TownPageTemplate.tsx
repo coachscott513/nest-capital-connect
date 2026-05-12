@@ -368,12 +368,7 @@ const TownPageTemplate = ({ town }: Props) => {
         </div>
       </section>
 
-      {/* 5 — TRUSTED LOCAL PARTNERS (DARK) */}
-      <TrustedLocalPartners
-        townName={town.townName}
-        variant="dark"
-        sub={`Recommended lenders, attorneys, and local services connected to the ${town.townName} community.`}
-      />
+      {/* (Trusted Local Businesses moved up — section 3) */}
 
       {/* 6 — THIS WEEK (LIGHT) */}
       <div id="weekly">
