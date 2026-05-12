@@ -66,7 +66,7 @@ const SupportLocalSection = () => {
 
   return (
     <section className="bg-[#faf8f3] w-full">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-[72px] md:py-[120px]">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 py-[88px] md:py-[140px]">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -78,7 +78,7 @@ const SupportLocalSection = () => {
           <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-5 text-[#0d6e66]">
             Local Businesses
           </p>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-[#1d1d1f]">
+          <h2 className="text-5xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.035em] leading-[1.0] text-[#1d1d1f]">
             Support local.
           </h2>
           <p className="mt-7 text-lg md:text-xl text-[#1d1d1f]/65 font-light leading-relaxed">
@@ -87,33 +87,33 @@ const SupportLocalSection = () => {
           </p>
         </motion.div>
 
-        {/* Search bar */}
+        {/* Search bar — large, equal weight to home search */}
         <motion.form
           onSubmit={submit}
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10 md:mt-12 rounded-2xl bg-white border border-[#1d1d1f]/[0.08] shadow-[0_18px_48px_-24px_rgba(0,0,0,0.18)] p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2"
+          className="mt-12 md:mt-14 rounded-2xl bg-white border border-[#1d1d1f]/[0.08] shadow-[0_24px_60px_-22px_rgba(0,0,0,0.22)] p-3 md:p-3.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2"
         >
-          <label className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-[#1d1d1f]/[0.03]">
-            <Search className="w-4 h-4 text-[#0d6e66]" />
+          <label className="flex items-center gap-3 px-5 py-4 md:py-5 rounded-xl bg-[#1d1d1f]/[0.03]">
+            <Search className="w-5 h-5 text-[#0d6e66]" />
             <input
               type="text"
               value={q}
               onChange={(e) => setQ(e.target.value.slice(0, 120))}
               placeholder={placeholder}
-              className="w-full bg-transparent text-[15px] text-[#1d1d1f] placeholder:text-[#1d1d1f]/45 focus:outline-none"
+              className="w-full bg-transparent text-[16px] md:text-[17px] text-[#1d1d1f] placeholder:text-[#1d1d1f]/45 focus:outline-none"
             />
           </label>
-          <label className="flex flex-col gap-1 px-4 py-2.5 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
+          <label className="flex flex-col gap-1 px-5 py-3 md:py-3.5 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
             <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
               Town
             </span>
             <select
               value={town}
               onChange={(e) => setTown(e.target.value)}
-              className="w-full bg-transparent text-[15px] text-[#1d1d1f] focus:outline-none cursor-pointer"
+              className="w-full bg-transparent text-[16px] text-[#1d1d1f] focus:outline-none cursor-pointer"
             >
               <option value="">All towns</option>
               {TOWN_CHIPS.map((t) => (
@@ -123,14 +123,14 @@ const SupportLocalSection = () => {
               ))}
             </select>
           </label>
-          <label className="flex flex-col gap-1 px-4 py-2.5 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
+          <label className="flex flex-col gap-1 px-5 py-3 md:py-3.5 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
             <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
               Category
             </span>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full bg-transparent text-[15px] text-[#1d1d1f] focus:outline-none cursor-pointer"
+              className="w-full bg-transparent text-[16px] text-[#1d1d1f] focus:outline-none cursor-pointer"
             >
               <option value="">All categories</option>
               {ALL_CATEGORIES.map((c) => (
@@ -142,9 +142,9 @@ const SupportLocalSection = () => {
           </label>
           <button
             type="submit"
-            className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-white text-sm font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.55)] bg-[#0d6e66]"
+            className="inline-flex items-center justify-center gap-2 px-7 py-5 md:py-6 rounded-xl text-white text-[15px] font-semibold hover:opacity-90 transition shadow-[0_12px_32px_-10px_rgba(13,110,102,0.55)] bg-[#0d6e66]"
           >
-            <Search className="w-4 h-4" /> Search
+            <Search className="w-5 h-5" /> Search Businesses
           </button>
         </motion.form>
 
