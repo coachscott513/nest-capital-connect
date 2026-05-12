@@ -387,69 +387,97 @@ const FilterChip = ({
 
 const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
   const claimed = isClaimed(b);
+  // Stable placeholder gradient based on business name
+  const seed = b.name.charCodeAt(0) + b.name.charCodeAt(b.name.length - 1);
+  const hueA = (seed * 7) % 360;
+  const hueB = (hueA + 35) % 360;
+  const monogram = b.name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+
   return (
     <button
       onClick={onOpen}
-      className={`text-left rounded-2xl bg-white border p-7 hover:-translate-y-0.5 transition-all flex flex-col ${
+      className={`text-left rounded-[22px] bg-white border overflow-hidden hover:-translate-y-1 transition-all duration-300 flex flex-col ${
         b.featured
-          ? "border-[#0d6e66]/30 shadow-[0_18px_48px_-18px_rgba(13,110,102,0.18)] hover:shadow-[0_24px_56px_-18px_rgba(13,110,102,0.28)]"
-          : "border-[#1d1d1f]/[0.08] hover:border-[#0d6e66]/30 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.18)]"
+          ? "border-[#0d6e66]/30 shadow-[0_18px_48px_-18px_rgba(13,110,102,0.18)] hover:shadow-[0_28px_64px_-20px_rgba(13,110,102,0.32)]"
+          : "border-[#1d1d1f]/[0.08] hover:border-[#0d6e66]/30 hover:shadow-[0_24px_56px_-22px_rgba(13,110,102,0.22)]"
       }`}
     >
-      <div className="flex items-start justify-between gap-3 mb-3">
+      {/* Cinematic header strip */}
+      <div
+        className="relative h-28 w-full overflow-hidden"
+        style={
+          b.image
+            ? { backgroundImage: `url(${b.image})`, backgroundSize: "cover", backgroundPosition: "center" }
+            : {
+                background: `linear-gradient(135deg, hsl(${hueA} 55% 28%) 0%, hsl(${hueB} 60% 18%) 100%)`,
+              }
+        }
+      >
+        <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
+        {/* Logo monogram */}
+        <div className="absolute -bottom-6 left-6 w-14 h-14 rounded-2xl bg-white shadow-[0_10px_24px_-10px_rgba(0,0,0,0.35)] flex items-center justify-center text-[#0d6e66] font-semibold text-lg tracking-tight border border-white">
+          {monogram}
+        </div>
+        {/* Top-right badge */}
+        <div className="absolute top-3 right-3">
+          {b.featured ? (
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
+              <Sparkles className="w-3 h-3" /> Featured
+            </span>
+          ) : claimed ? (
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/90 text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
+              Claimed
+            </span>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="px-6 pt-9 pb-6 flex flex-col flex-1">
         <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
           {b.category}
+          {b.townLabel && <span className="text-[#1d1d1f]/40"> · {b.townLabel}</span>}
         </p>
-        {b.featured ? (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66] text-white text-[10px] font-semibold uppercase tracking-wider">
-            <Sparkles className="w-3 h-3" /> Featured Partner
-          </span>
-        ) : claimed ? (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66]/10 text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
-            Claimed
-          </span>
-        ) : null}
+        <h3 className="mt-1.5 text-lg font-semibold tracking-tight text-[#1d1d1f] leading-snug">
+          {b.name}
+        </h3>
+        <p className="mt-2.5 text-sm text-[#1d1d1f]/65 font-light leading-relaxed line-clamp-3">
+          {b.tagline}
+        </p>
+
+        {claimed ? (
+          <div className="mt-4 flex items-center gap-3 text-xs text-[#1d1d1f]/55">
+            {b.phone && (
+              <span className="inline-flex items-center gap-1">
+                <Phone className="w-3 h-3" /> Phone
+              </span>
+            )}
+            {b.website && (
+              <span className="inline-flex items-center gap-1">
+                <Globe className="w-3 h-3" /> Web
+              </span>
+            )}
+            {b.address && (
+              <span className="inline-flex items-center gap-1">
+                <MapPin className="w-3 h-3" /> Address
+              </span>
+            )}
+          </div>
+        ) : (
+          <div className="mt-4 px-3 py-2 rounded-lg bg-[#1d1d1f]/[0.04] text-[11px] text-[#1d1d1f]/60">
+            Contact info available after claim
+          </div>
+        )}
+
+        <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#0d6e66]">
+          {claimed ? "View Details" : "View & Claim"}
+          <ArrowUpRight className="w-3.5 h-3.5" />
+        </span>
       </div>
-      <h3 className="text-lg font-semibold tracking-tight text-[#1d1d1f] leading-snug">
-        {b.name}
-      </h3>
-      {b.townLabel && (
-        <p className="mt-1 text-xs text-[#1d1d1f]/55 inline-flex items-center gap-1">
-          <MapPin className="w-3 h-3" /> {b.townLabel}
-        </p>
-      )}
-      <p className="mt-3 text-sm text-[#1d1d1f]/65 font-light leading-relaxed line-clamp-3">
-        {b.tagline}
-      </p>
-
-      {claimed ? (
-        <div className="mt-5 flex items-center gap-3 text-xs text-[#1d1d1f]/55">
-          {b.phone && (
-            <span className="inline-flex items-center gap-1">
-              <Phone className="w-3 h-3" /> Phone
-            </span>
-          )}
-          {b.website && (
-            <span className="inline-flex items-center gap-1">
-              <Globe className="w-3 h-3" /> Web
-            </span>
-          )}
-          {b.address && (
-            <span className="inline-flex items-center gap-1">
-              <MapPin className="w-3 h-3" /> Address
-            </span>
-          )}
-        </div>
-      ) : (
-        <div className="mt-5 px-3 py-2 rounded-lg bg-[#1d1d1f]/[0.04] text-[11px] text-[#1d1d1f]/60">
-          Contact info available after claim
-        </div>
-      )}
-
-      <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#0d6e66]">
-        {claimed ? "View Details" : "View & Claim"}
-        <ArrowUpRight className="w-3.5 h-3.5" />
-      </span>
     </button>
   );
 };

@@ -25,12 +25,12 @@ import townCliftonPark from "@/assets/town-clifton-park.jpg";
    ============================================================= */
 
 const TOWN_TILES = [
-  { name: "Delmar",           sub: "Bethlehem · Suburban classic",   img: townDelmar,      to: "/living-in/delmar" },
-  { name: "Albany",           sub: "Capital city · Urban revival",   img: townAlbany,      to: "/living-in/albany" },
-  { name: "Saratoga Springs", sub: "Resort town · Racing & spas",    img: townSaratoga,    to: "/living-in/saratoga-springs" },
-  { name: "Troy",             sub: "Riverfront · Historic collar",   img: townTroy,        to: "/living-in/troy" },
-  { name: "Schenectady",      sub: "Stockade · Value & cash flow",   img: townSchenectady, to: "/living-in/schenectady" },
-  { name: "Clifton Park",     sub: "Shen schools · Family suburb",   img: townCliftonPark, to: "/living-in/clifton-park" },
+  { name: "Delmar",           descriptor: "Tree-lined suburban core",   meta: "Bethlehem Schools",        median: "$542K", businesses: 18, img: townDelmar,      to: "/living-in/delmar" },
+  { name: "Albany",           descriptor: "Urban neighborhoods · revival", meta: "Capital Region hub",     median: "$268K", businesses: 31, img: townAlbany,      to: "/living-in/albany" },
+  { name: "Saratoga Springs", descriptor: "Walkable downtown · historic", meta: "Saratoga Schools",         median: "$612K", businesses: 26, img: townSaratoga,    to: "/living-in/saratoga-springs" },
+  { name: "Troy",             descriptor: "Riverfront brick & arts",     meta: "Historic collar city",     median: "$258K", businesses: 22, img: townTroy,        to: "/living-in/troy" },
+  { name: "Schenectady",      descriptor: "Stockade · value & cash flow", meta: "Investor activity",       median: "$215K", businesses: 14, img: townSchenectady, to: "/living-in/schenectady" },
+  { name: "Clifton Park",     descriptor: "Family suburb · Shen schools", meta: "Top-rated schools",       median: "$485K", businesses: 16, img: townCliftonPark, to: "/living-in/clifton-park" },
 ];
 
 /* ========== Section 1 — CINEMATIC HERO ========== */
@@ -59,37 +59,37 @@ function CinematicHero() {
             <p className="text-xs md:text-sm font-semibold tracking-[0.3em] uppercase text-white/75 mb-6">
               Capital District · New York
             </p>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.75rem] font-semibold tracking-[-0.035em] leading-[0.98] text-white">
+            <h1 className="text-[3.5rem] sm:text-7xl md:text-[6.25rem] lg:text-[7rem] font-semibold tracking-[-0.04em] leading-[0.94] text-white">
               Capital District<br />
               <span className="font-light text-white/85">Nest.</span>
             </h1>
-            <p className="mt-7 text-lg md:text-xl text-white/85 max-w-xl font-light leading-relaxed">
-              The weekly pulse of real estate, local businesses, and life in the Capital District.
+            <p className="mt-8 text-lg md:text-xl text-white/85 max-w-xl font-light leading-relaxed">
+              Homes, towns, businesses, and local intelligence across the Capital District.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-3">
-              <a
-                href="#weekly-feed"
-                className="inline-flex items-center gap-2 bg-white text-foreground px-6 py-3 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-12px_rgba(255,255,255,0.45)] transition"
-              >
-                What's Happening This Week <ArrowRight className="w-4 h-4" />
-              </a>
               <Link
                 to="/communities"
-                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/25 px-6 py-3 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:bg-white/15 transition"
+                className="inline-flex items-center gap-2 bg-white text-[#0e0f12] px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(255,255,255,0.55)] transition"
               >
-                Explore Towns
+                Explore Towns <ArrowRight className="w-4 h-4" />
               </Link>
-              <a
-                href="#weekly-newsletter"
-                className="inline-flex items-center gap-2 text-white/85 hover:text-white px-3 py-3 text-sm font-semibold underline-offset-4 hover:underline transition"
+              <Link
+                to="/local"
+                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/25 px-6 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:bg-white/15 transition"
               >
-                Get Alerts <ArrowRight className="w-4 h-4" />
-              </a>
+                Support Local
+              </Link>
+              <Link
+                to="/homes-for-sale"
+                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/25 px-6 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:bg-white/15 transition"
+              >
+                Search Homes
+              </Link>
             </div>
 
             <p className="mt-8 text-xs font-medium tracking-wide text-white/55">
-              Updated May 7, 2026
+              Updated weekly · This week's pulse below
             </p>
           </motion.div>
         </div>
@@ -98,30 +98,57 @@ function CinematicHero() {
   );
 }
 
-/* ========== Town tile (rendered as children of Towns HeroBand) ========== */
+/* ========== Cinematic town tile ========== */
 function TownTile({
   name,
-  sub,
+  descriptor,
+  meta,
+  median,
+  businesses,
   img,
   to,
-}: { name: string; sub: string; img: string; to: string }) {
+}: {
+  name: string;
+  descriptor: string;
+  meta: string;
+  median: string;
+  businesses: number;
+  img: string;
+  to: string;
+}) {
   return (
     <Link
       to={to}
-      className="group relative block overflow-hidden rounded-[24px] aspect-[4/5] md:aspect-[3/4] cta-arrow"
+      className="group relative block overflow-hidden rounded-[28px] aspect-[4/5] md:aspect-[3/4] shadow-[0_20px_60px_-30px_rgba(0,0,0,0.45)] hover:shadow-[0_28px_72px_-28px_rgba(0,0,0,0.55)] transition-shadow duration-500"
     >
       <img
         src={img}
-        alt={name}
+        alt={`${name}, NY — ${descriptor}`}
         loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.08]"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/5" />
+
+      {/* Top-right pill: business count */}
+      <div className="absolute top-5 right-5">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur text-white text-[11px] font-semibold tracking-wide border border-white/20">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#5eead4]" />
+          {businesses} local businesses
+        </span>
+      </div>
+
       <div className="absolute bottom-0 left-0 right-0 p-6 md:p-7 text-white">
-        <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">{name}</h3>
-        <p className="text-sm md:text-base text-white/85 mt-1 font-light">{sub}</p>
-        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-white/95 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-          Explore <ArrowRight className="w-3.5 h-3.5" />
+        <h3 className="text-2xl md:text-[2rem] font-semibold tracking-[-0.02em] leading-tight">{name}</h3>
+        <p className="text-sm md:text-[15px] text-white/85 mt-1.5 font-light leading-snug">{descriptor}</p>
+
+        <div className="mt-4 flex items-center gap-3 text-[12px] text-white/75">
+          <span>{meta}</span>
+          <span className="w-1 h-1 rounded-full bg-white/35" />
+          <span>Median <strong className="font-semibold text-white">{median}</strong></span>
+        </div>
+
+        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-white/95 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+          Explore {name} <ArrowRight className="w-3.5 h-3.5" />
         </span>
       </div>
     </Link>
