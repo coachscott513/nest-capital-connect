@@ -5,6 +5,10 @@ import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import WeeklyFeed from "@/components/WeeklyFeed";
 import TrustedLocalPartners from "@/components/town/TrustedLocalPartners";
+import LocalBusinessesDirectory from "@/components/town/LocalBusinessesDirectory";
+import MorningPulse from "@/components/town/MorningPulse";
+import TownProjects from "@/components/town/TownProjects";
+import LocalHeroes from "@/components/town/LocalHeroes";
 import type { LivingInTown } from "@/data/livingInTowns";
 import { getTownOverride } from "@/data/townOverrides";
 
@@ -368,7 +372,17 @@ const TownPageTemplate = ({ town }: Props) => {
         </div>
       </section>
 
-      {/* (Trusted Local Businesses moved up — section 3) */}
+      {/* 5 — LOCAL BUSINESS DIRECTORY (LIGHT) */}
+      <LocalBusinessesDirectory townName={town.townName} />
+
+      {/* 5b — MORNING PULSE (CREAM) */}
+      <MorningPulse townName={town.townName} />
+
+      {/* 5c — TOWN PROJECTS (LIGHT) */}
+      <TownProjects townName={town.townName} />
+
+      {/* 5d — LOCAL HEROES (CREAM) */}
+      <LocalHeroes townName={town.townName} />
 
       {/* 6 — THIS WEEK (LIGHT) */}
       <div id="weekly">

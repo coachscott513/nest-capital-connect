@@ -133,42 +133,122 @@ const ClaimBusiness = () => {
         </div>
       </nav>
 
-      <section className="px-[5%] py-12 md:py-20">
+      {/* Pricing Tiers */}
+      <section className="px-[5%] py-12 md:py-16 bg-[#faf8f3]">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <h1 className="text-3xl md:text-5xl font-semibold text-foreground tracking-tight mb-3">
+              Get your business listed.
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Join 500+ Capital District businesses — start FREE.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
+            {[
+              {
+                name: "Basic",
+                price: "FREE",
+                priceNote: "forever",
+                features: ["Directory listing", "Contact info", "Category placement", "Town & city tagging"],
+                cta: "Get Started",
+                highlight: false,
+              },
+              {
+                name: "Featured",
+                price: "$25",
+                priceNote: "/month",
+                features: [
+                  "Everything in Basic",
+                  "“Featured” gold badge",
+                  "Priority placement",
+                  "Larger card with description",
+                ],
+                cta: "Get Started",
+                highlight: true,
+                badge: "Most Popular",
+              },
+              {
+                name: "Premium",
+                price: "$50",
+                priceNote: "/month",
+                features: [
+                  "Everything in Featured",
+                  "60-second video reel",
+                  "Social media promotion",
+                  "Monthly spotlight feature",
+                ],
+                cta: "Get Started",
+                highlight: false,
+                premium: true,
+              },
+            ].map((t) => (
+              <div
+                key={t.name}
+                className={`relative rounded-3xl p-7 md:p-8 bg-white transition-all hover:-translate-y-1 ${
+                  t.highlight
+                    ? "border-2 border-[#c9a449] shadow-[0_18px_48px_-18px_rgba(201,164,73,0.45)]"
+                    : t.premium
+                    ? "border border-[#c9a449]/40 shadow-[0_0_24px_rgba(201,164,73,0.12)]"
+                    : "border border-foreground/10"
+                }`}
+              >
+                {t.badge && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#c9a449] text-white text-[11px] font-bold tracking-wider uppercase">
+                    {t.badge}
+                  </span>
+                )}
+                <div className="flex items-center gap-2 mb-4">
+                  <h3 className="text-lg font-bold text-foreground tracking-wide uppercase">
+                    {t.name}
+                  </h3>
+                  {t.highlight && <Star className="w-4 h-4 text-[#c9a449] fill-[#c9a449]" />}
+                </div>
+                <div className="mb-6">
+                  <span className="text-5xl font-semibold text-foreground tracking-tight">
+                    {t.price}
+                  </span>
+                  <span className="text-foreground/55 ml-1">{t.priceNote}</span>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  {t.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2.5 text-sm text-foreground/75">
+                      <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button
+                  asChild
+                  className={`w-full rounded-full ${
+                    t.highlight ? "bg-[#c9a449] hover:bg-[#b3902f] text-white" : ""
+                  }`}
+                  variant={t.highlight ? "default" : "outline"}
+                >
+                  <a href="#claim-form">{t.cta}</a>
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="claim-form" className="px-[5%] py-12 md:py-20 scroll-mt-24">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="text-center mb-10">
             <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
               <Building2 className="w-8 h-8 text-primary" />
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
               {businessName ? `Manage "${businessName}"` : "Add Your Business"}
-            </h1>
+            </h2>
             <p className="text-lg text-muted-foreground">
-              Get featured in our Local Guide and connect with new residents
+              Fill out the form below — listings appear in the directory within 24 hours.
             </p>
           </div>
 
-          {/* Partner Benefits */}
-          <Card className="mb-8 border-primary/30 bg-primary/5">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
-                  <Star className="w-5 h-5 text-primary fill-primary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">
-                    Become a Local Partner
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Featured partners get top placement, a "Local Partner" badge, and priority display when we scale our direct mailers to new residents.
-                  </p>
-                  <Badge variant="outline" className="text-xs">
-                    Starting at $20/mo once we launch mailers
-                  </Badge>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
           {/* Form */}
           <Card>
