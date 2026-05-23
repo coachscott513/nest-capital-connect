@@ -292,16 +292,13 @@ const Index = () => {
       {/* 1 — CINEMATIC HERO */}
       <CinematicHero />
 
-      {/* 2 — WHAT'S HAPPENING THIS WEEK (the weekly feed) */}
-      <WeeklyFeed scope="region" />
-
-      {/* 1.5 — MICRO-PROOF STRIP */}
+      {/* 2 — MICRO-PROOF STRIP */}
       <section className="bg-white border-b border-foreground/[0.06]">
         <div className="max-w-6xl mx-auto px-6 md:px-10 py-5 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-8 text-center sm:text-left">
           {[
-            "Tracking 50+ properties weekly",
-            "Featuring local businesses",
-            "Updated every Friday",
+            "52 towns · curated weekly",
+            "Local businesses, neighborhoods & culture",
+            "Homes, rentals & investment intelligence",
           ].map((t) => (
             <p key={t} className="text-xs sm:text-[13px] font-medium text-[#1d1d1f]/65 inline-flex items-center justify-center sm:justify-start gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#0d6e66]" />
@@ -311,7 +308,58 @@ const Index = () => {
         </div>
       </section>
 
-      {/* 1.7 — START HERE */}
+      {/* 3 — TOWNS · the lead section */}
+      <section className="bg-white w-full">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-[72px] md:py-[120px]">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-5 lg:sticky lg:top-28"
+            >
+              <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#0d6e66]">
+                Explore Towns
+              </p>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-[#1d1d1f]">
+                Discover the<br />neighborhoods.
+              </h2>
+              <p className="mt-8 text-lg md:text-xl text-[#1d1d1f]/65 max-w-md font-light leading-relaxed">
+                The streets, schools, cafés, and character that shape the Capital District —
+                town by town.
+              </p>
+              <div className="cta-anchor">
+                <Link to="/communities" className="btn-primary-apple cta-arrow">
+                  Browse all towns <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-7"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-7 md:gap-8">
+                {TOWN_TILES.map((t) => (
+                  <TownTile key={t.name} {...t} />
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4 — LOCAL BUSINESSES · core engagement layer */}
+      <SupportLocalSection />
+
+      {/* 5 — WHAT'S HAPPENING · weekly editorial pulse */}
+      <WeeklyFeed scope="region" />
+
+      {/* 6 — START HERE · onramps */}
       <section className="bg-[#f5efe4] py-20 md:py-28 px-6 md:px-10">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12 text-center">
@@ -353,63 +401,13 @@ const Index = () => {
         </div>
       </section>
 
-      {/* 2 — TOWNS · one unified split section (text + tile grid together) */}
-      <section className="bg-white w-full">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-[72px] md:py-[120px]">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* LEFT — narrative (sticky on desktop so it stays as you scan tiles) */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:col-span-5 lg:sticky lg:top-28"
-            >
-              <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#0d6e66]">
-                Browse by Town
-              </p>
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-[#1d1d1f]">
-                Start with<br />the town.
-              </h2>
-              <p className="mt-8 text-lg md:text-xl text-[#1d1d1f]/65 max-w-md font-light leading-relaxed">
-                Explore Delmar, Albany, Saratoga, Troy, Schenectady, and Clifton Park —
-                with local listings, market activity, and lifestyle insight.
-              </p>
-              <div className="cta-anchor">
-                <Link to="/communities" className="btn-primary-apple cta-arrow">
-                  Browse all towns <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* RIGHT — tile grid */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:col-span-7"
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-7 md:gap-8">
-                {TOWN_TILES.map((t) => (
-                  <TownTile key={t.name} {...t} />
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2.5 — SUPPORT LOCAL · warm light (sits directly under Towns) */}
-      <SupportLocalSection />
-
-      {/* 3 — SEARCH HOMES · clean Apple-style preview (LIGHT) */}
+      {/* 7 — REAL ESTATE · lowered, lifestyle-integrated */}
       <HomeSearchPreview />
 
-      {/* 4 — ANALYZER · graphite + teal (DARK) */}
+      {/* 8 — INVESTMENT INTELLIGENCE · dark Bloomberg-meets-Apple */}
       <HeroBand
         mood="graphite"
-        eyebrow="Analyze Any Property"
+        eyebrow="Investment Intelligence"
         headline={<>Know the numbers<br />before you make a move.</>}
         sub="Estimate monthly cost, taxes, cash flow, and investment potential before you offer — built for the Capital District market."
         ctaLabel="Analyze a property"
@@ -421,10 +419,9 @@ const Index = () => {
         ]}
       />
 
-      {/* 5 — MULTIFAMILY · dark + gold (DARK — the design reference) */}
       <HeroBand
         mood="dark-gold"
-        eyebrow="Investment Properties"
+        eyebrow="Multifamily"
         headline={<>Buying a 2–4 unit in Albany<br />is different.</>}
         sub="Multifamily isn't a single-family home with extra doors. Underwrite rent rolls, vacancy, and CapEx the way investors actually do."
         ctaLabel="Analyze a multifamily"
@@ -436,7 +433,43 @@ const Index = () => {
         ]}
       />
 
-      {/* 6 — CATEGORY DESTINATIONS · light */}
+      {/* 9 — CLAIM YOUR BUSINESS · elegant CTA */}
+      <section className="relative bg-[#0e0f12] overflow-hidden">
+        <div className="absolute inset-0 opacity-60 pointer-events-none"
+             style={{
+               background:
+                 "radial-gradient(60% 80% at 20% 30%, rgba(13,110,102,0.35), transparent 60%), radial-gradient(50% 70% at 80% 70%, rgba(201,164,73,0.18), transparent 60%)",
+             }}
+        />
+        <div className="relative max-w-5xl mx-auto px-6 md:px-10 py-24 md:py-32 text-center">
+          <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-6">
+            For Local Business Owners
+          </p>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white max-w-3xl mx-auto">
+            Own a local business?
+          </h2>
+          <p className="mt-7 text-lg md:text-xl text-white/75 font-light max-w-2xl mx-auto leading-relaxed">
+            Claim your free business profile and join the Capital District's fastest-growing
+            local discovery platform.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              to="/claim-business"
+              className="inline-flex items-center gap-2 bg-white text-[#0e0f12] px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(255,255,255,0.45)] transition"
+            >
+              Claim Your Profile <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/local"
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/25 px-6 py-3.5 rounded-full text-sm font-semibold hover:bg-white/15 transition"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 10 — CATEGORY DESTINATIONS */}
       <section className="bg-[#f7f5f0] py-24 md:py-32 px-6 md:px-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14 md:mb-20">
@@ -455,7 +488,7 @@ const Index = () => {
               { title: "Investment Properties",    sub: "2–4 unit, multifamily, and rentals.",         to: "/investment-properties" },
               { title: "First-Time Buyer Help",    sub: "Roadmap, programs, and what to expect.",      to: "/first-time-homebuyers" },
               { title: "Financing & Grants",       sub: "Loan types and down-payment assistance.",     to: "/financing" },
-              { title: "Local Businesses & Vendors", sub: "Curated by town, not crowdsourced.",        to: "/living-in/delmar#local-favorites" },
+              { title: "Local Businesses & Vendors", sub: "Curated by town, not crowdsourced.",        to: "/local" },
             ].map((c) => (
               <Link
                 key={c.title}
@@ -477,7 +510,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* 7 — WEEKLY NEWSLETTER CTA */}
+      {/* 11 — WEEKLY NEWSLETTER CTA */}
       <WeeklyNewsletterCTA />
 
       <Footer />
