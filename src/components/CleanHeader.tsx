@@ -206,19 +206,19 @@ const CleanHeader = () => {
                 <Search className="h-4 w-4" />
               </button>
 
-              {/* Analyze (compact) */}
+              {/* Claim Business — subtle */}
               <Link
-                to="/analyze"
+                to="/claim-business"
                 onClick={closeDropdowns}
                 className="px-3 py-1.5 text-[13px] font-medium text-foreground/75 hover:text-foreground transition-colors"
               >
-                Analyze
+                Claim Business
               </Link>
 
               {/* Talk to an Expert — primary pill */}
               <AnalystCard>
                 <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-white bg-foreground hover:bg-foreground/90">
-                  Talk to an Expert
+                  Sign In
                 </button>
               </AnalystCard>
             </div>
