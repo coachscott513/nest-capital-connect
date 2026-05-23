@@ -19,12 +19,12 @@ const towns = [
 ];
 
 const navItems: { label: string; href?: string; dropdown?: string }[] = [
-  { label: "Home", href: "/" },
+  { label: "Discover", href: "/" },
   { label: "Towns", dropdown: "towns" },
-  { label: "Homes", href: "/homes" },
-  { label: "Local Businesses", href: "/local" },
-  { label: "Analyze", href: "/analyze" },
-  { label: "Contact", href: "/contact" },
+  { label: "Local Business", href: "/local" },
+  { label: "Real Estate", href: "/homes" },
+  { label: "Investment", href: "/analyze" },
+  { label: "About", href: "/contact" },
 ];
 
 const TEAL = "#0d6e66";
