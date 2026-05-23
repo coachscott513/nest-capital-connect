@@ -35,39 +35,70 @@ const TOWN_TILES = [
 
 /* ========== Section 1 — CINEMATIC HERO ========== */
 function CinematicHero() {
+  const navigate = useNavigate();
+  const [q, setQ] = useState("");
+
+  const onSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const v = q.trim();
+    if (!v) return navigate("/local");
+    navigate(`/local?q=${encodeURIComponent(v)}`);
+  };
+
   return (
     <section className="relative w-full overflow-hidden bg-black">
-      <div className="relative w-full min-h-[88vh] md:min-h-[92vh] flex items-center">
+      <div className="relative w-full min-h-[92vh] md:min-h-[96vh] flex items-center">
         <img
           src={heroCapital}
-          alt="Aerial view of downtown Albany, New York with the Empire State Plaza, Hudson River, and Hudson Valley hills at golden hour"
+          alt="Capital District, New York — towns, neighborhoods, and local life"
           className="absolute inset-0 w-full h-full object-cover"
           width={1920}
           height={1080}
         />
-        {/* Soft directional gradient — keeps headline crisp without flattening the photo */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/15" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/75" />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 py-32 md:py-40">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-2xl"
+            className="max-w-3xl"
           >
             <p className="text-xs md:text-sm font-semibold tracking-[0.3em] uppercase text-white/75 mb-6">
-              Capital District · New York
+              The Digital Front Door of Upstate New York
             </p>
-            <h1 className="text-[3.5rem] sm:text-7xl md:text-[6.25rem] lg:text-[7rem] font-semibold tracking-[-0.04em] leading-[0.94] text-white">
-              Capital District<br />
-              <span className="font-light text-white/85">Nest.</span>
+            <h1 className="text-[3.25rem] sm:text-7xl md:text-[6.25rem] lg:text-[7.25rem] font-semibold tracking-[-0.045em] leading-[0.94] text-white">
+              Discover the<br />
+              <span className="font-light text-white/90">Capital District.</span>
             </h1>
             <p className="mt-8 text-lg md:text-xl text-white/85 max-w-xl font-light leading-relaxed">
-              Homes, towns, businesses, and local intelligence across the Capital District.
+              Local businesses, neighborhoods, homes, restaurants, events, and the best of Upstate New York.
             </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-3">
+            {/* Apple-style pill search */}
+            <form
+              onSubmit={onSearch}
+              className="mt-9 max-w-xl flex items-center gap-2 bg-white/12 backdrop-blur-xl border border-white/25 rounded-full pl-5 pr-2 py-2 shadow-[0_18px_48px_-18px_rgba(0,0,0,0.55)]"
+            >
+              <Search className="w-4 h-4 text-white/70 shrink-0" />
+              <input
+                type="text"
+                value={q}
+                onChange={(e) => setQ(e.target.value.slice(0, 120))}
+                placeholder="Search towns, restaurants, cafés, businesses, homes…"
+                className="flex-1 bg-transparent text-[15px] text-white placeholder:text-white/55 focus:outline-none py-2"
+                aria-label="Search the Capital District"
+              />
+              <button
+                type="submit"
+                className="shrink-0 inline-flex items-center justify-center px-5 py-2 rounded-full bg-white text-[#0e0f12] text-[13px] font-semibold hover:opacity-90 transition"
+              >
+                Search
+              </button>
+            </form>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
                 to="/communities"
                 className="inline-flex items-center gap-2 bg-white text-[#0e0f12] px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(255,255,255,0.55)] transition"
@@ -78,19 +109,15 @@ function CinematicHero() {
                 to="/local"
                 className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/25 px-6 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:bg-white/15 transition"
               >
-                Support Local
+                Explore Local Businesses
               </Link>
               <Link
                 to="/homes-for-sale"
-                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/25 px-6 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:bg-white/15 transition"
+                className="inline-flex items-center gap-1.5 text-white/75 hover:text-white text-sm font-medium px-2 py-3.5 transition"
               >
-                Search Homes
+                Search Homes <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-
-            <p className="mt-8 text-xs font-medium tracking-wide text-white/55">
-              Updated weekly · This week's pulse below
-            </p>
           </motion.div>
         </div>
       </div>
