@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Trophy } from "lucide-react";
 
 /* =============================================================
    LIVE LOCAL PULSE
@@ -8,38 +9,73 @@ import { Link } from "react-router-dom";
    - very slow horizontal drift
    - hover pauses
    - category pills filter
-   - mobile: auto-rotating single card
+   - paired with a compact LIVE SCORES module on desktop
    ============================================================= */
 
-type PulseCategory = "Events" | "Businesses" | "Homes" | "Investing" | "Lifestyle" | "Development";
+type PulseCategory =
+  | "Events"
+  | "Businesses"
+  | "Homes"
+  | "Investing"
+  | "Lifestyle"
+  | "Development"
+  | "Sports";
 
 interface PulseItem {
   category: PulseCategory;
-  text: string;
-  to: string;
-  town?: string;
+  title: string;
+  location?: string;
+  date?: string;
+  url: string;
+  featured?: boolean;
+  type?: "headline" | "score" | "event";
 }
 
 const PULSE_ITEMS: PulseItem[] = [
-  { category: "Events",       text: "Jazz Festival returns to SPAC this weekend",        to: "/#weekly-feed",                   town: "Saratoga" },
-  { category: "Businesses",   text: "New café opening on Lark Street",                    to: "/local?town=albany",              town: "Albany" },
-  { category: "Investing",    text: "Albany multifamily inventory tightening",            to: "/analyze?q=albany+multifamily",   town: "Capital Region" },
-  { category: "Homes",        text: "14 new Delmar listings this week",                   to: "/living-in/delmar",               town: "Delmar" },
-  { category: "Events",       text: "Live music tonight in downtown Troy",                to: "/#weekly-feed",                   town: "Troy" },
-  { category: "Homes",        text: "Delmar home values up 6% year-over-year",            to: "/intelligence",                   town: "Delmar" },
-  { category: "Development",  text: "New mixed-use proposal near Mohawk Harbor",          to: "/intelligence",                   town: "Schenectady" },
-  { category: "Lifestyle",    text: "Clifton Park restaurant week announced",             to: "/local?town=clifton-park",        town: "Clifton Park" },
-  { category: "Homes",        text: "Open houses this weekend across the Capital Region", to: "/homes-for-sale",                 town: "Region" },
-  { category: "Businesses",   text: "Saratoga boutique expands to second location",       to: "/local?town=saratoga-springs",    town: "Saratoga" },
-  { category: "Investing",    text: "Schenectady duplex cash-flow yields trending up",    to: "/analyze?q=schenectady+duplex",   town: "Schenectady" },
-  { category: "Events",       text: "Farmers market season opens in Delmar",              to: "/#weekly-feed",                   town: "Delmar" },
+  { category: "Events",      title: "Jazz Festival returns to SPAC this weekend",        location: "Saratoga",       url: "/#weekly-feed", type: "event" },
+  { category: "Businesses",  title: "New café opening on Lark Street",                    location: "Albany",         url: "/local?town=albany", type: "headline" },
+  { category: "Sports",      title: "Siena tips off MAAC opener Friday at MVP Arena",     location: "Albany",         url: "/#weekly-feed", type: "event" },
+  { category: "Investing",   title: "Albany multifamily inventory tightening",            location: "Capital Region", url: "/analyze?q=albany+multifamily", type: "headline" },
+  { category: "Homes",       title: "14 new Delmar listings this week",                   location: "Delmar",         url: "/living-in/delmar", type: "headline" },
+  { category: "Sports",      title: "UAlbany lacrosse cracks national top 20",            location: "Albany",         url: "/#weekly-feed", type: "headline" },
+  { category: "Events",      title: "Live music tonight in downtown Troy",                location: "Troy",           url: "/#weekly-feed", type: "event" },
+  { category: "Sports",      title: "RPI hockey hosts Union Friday — Mayor's Cup energy", location: "Troy",           url: "/#weekly-feed", type: "event" },
+  { category: "Homes",       title: "Delmar home values up 6% year-over-year",            location: "Delmar",         url: "/intelligence", type: "headline" },
+  { category: "Sports",      title: "Skidmore advances to Liberty League final",          location: "Saratoga",       url: "/#weekly-feed", type: "score" },
+  { category: "Development", title: "New mixed-use proposal near Mohawk Harbor",          location: "Schenectady",    url: "/intelligence", type: "headline" },
+  { category: "Lifestyle",   title: "Clifton Park restaurant week announced",             location: "Clifton Park",   url: "/local?town=clifton-park", type: "event" },
+  { category: "Sports",      title: "Section II playoff scores updated nightly",          location: "Capital Region", url: "/#weekly-feed", type: "score" },
+  { category: "Homes",       title: "Open houses this weekend across the Capital Region", location: "Region",         url: "/homes-for-sale", type: "event" },
+  { category: "Businesses",  title: "Saratoga boutique expands to second location",       location: "Saratoga",       url: "/local?town=saratoga-springs", type: "headline" },
+  { category: "Sports",      title: "Albany Patroons return home Saturday night",         location: "Albany",         url: "/#weekly-feed", type: "event" },
+  { category: "Investing",   title: "Schenectady duplex cash-flow yields trending up",    location: "Schenectady",    url: "/analyze?q=schenectady+duplex", type: "headline" },
+  { category: "Events",      title: "Farmers market season opens in Delmar",              location: "Delmar",         url: "/#weekly-feed", type: "event" },
 ];
 
-const CATEGORIES: ("All" | PulseCategory)[] = ["All", "Events", "Businesses", "Homes", "Investing"];
+const CATEGORIES: ("All" | PulseCategory)[] = ["All", "Events", "Businesses", "Homes", "Investing", "Sports"];
+
+/* Local "live scores" — hand-curated, structured for future API swap-in */
+interface ScoreItem {
+  league: string;
+  homeTeam: string;
+  awayTeam: string;
+  homeScore: number | null;
+  awayScore: number | null;
+  status: "FINAL" | "LIVE" | "UPCOMING";
+  note?: string;
+}
+
+const LIVE_SCORES: ScoreItem[] = [
+  { league: "MAAC",          homeTeam: "Siena",    awayTeam: "Marist",  homeScore: 74, awayScore: 68, status: "FINAL" },
+  { league: "ECAC Hockey",   homeTeam: "Union",    awayTeam: "RPI",     homeScore: 3,  awayScore: 2,  status: "FINAL", note: "OT" },
+  { league: "Liberty League", homeTeam: "Skidmore", awayTeam: "RIT",    homeScore: 81, awayScore: 70, status: "FINAL" },
+  { league: "America East",  homeTeam: "UAlbany",  awayTeam: "Vermont", homeScore: null, awayScore: null, status: "UPCOMING", note: "Sat 7:00" },
+];
 
 function CategoryPill({ label }: { label: PulseCategory }) {
   return (
-    <span className="inline-flex items-center px-2 py-[3px] rounded-full bg-[#5eead4]/10 border border-[#5eead4]/25 text-[#5eead4] text-[10px] font-semibold tracking-[0.12em] uppercase">
+    <span className="inline-flex items-center gap-1 px-2 py-[3px] rounded-full bg-[#5eead4]/10 border border-[#5eead4]/25 text-[#5eead4] text-[10px] font-semibold tracking-[0.12em] uppercase">
+      {label === "Sports" && <Trophy className="w-2.5 h-2.5" strokeWidth={2.25} />}
       {label}
     </span>
   );
@@ -47,19 +83,52 @@ function CategoryPill({ label }: { label: PulseCategory }) {
 
 function PulseRow({ item }: { item: PulseItem }) {
   return (
-    <Link
-      to={item.to}
-      className="group inline-flex items-center gap-3 px-5 py-1 whitespace-nowrap"
-    >
+    <Link to={item.url} className="group inline-flex items-center gap-3 px-5 py-1 whitespace-nowrap">
       <CategoryPill label={item.category} />
       <span className="text-[13px] text-white/80 group-hover:text-white transition-colors font-light tracking-[-0.005em]">
-        {item.text}
+        {item.title}
       </span>
-      {item.town && (
-        <span className="text-[11px] text-white/35 font-light">· {item.town}</span>
+      {item.location && (
+        <span className="text-[11px] text-white/35 font-light">· {item.location}</span>
       )}
       <span className="w-1 h-1 rounded-full bg-white/15 ml-2" aria-hidden />
     </Link>
+  );
+}
+
+function LiveScoresModule() {
+  return (
+    <aside
+      aria-label="Live local scores"
+      className="hidden xl:flex shrink-0 items-center gap-4 pl-5 ml-2 border-l border-white/10"
+    >
+      <div className="flex items-center gap-1.5 shrink-0">
+        <Trophy className="w-3 h-3 text-[#5eead4]" strokeWidth={2.25} />
+        <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/70">
+          Live Scores
+        </span>
+      </div>
+      <div className="flex items-center gap-4">
+        {LIVE_SCORES.slice(0, 3).map((s, i) => {
+          const isFinal = s.status === "FINAL";
+          const homeWin = isFinal && s.homeScore != null && s.awayScore != null && s.homeScore > s.awayScore;
+          return (
+            <div key={i} className="flex items-center gap-2 whitespace-nowrap">
+              <span className="text-[10px] tracking-[0.18em] uppercase text-white/35 font-medium">
+                {isFinal ? (s.note ? `F/${s.note}` : "Final") : s.note ?? s.status}
+              </span>
+              <span className={`text-[12px] font-medium ${homeWin ? "text-white" : "text-white/70"}`}>
+                {s.homeTeam} {s.homeScore ?? "—"}
+              </span>
+              <span className="text-white/25 text-[10px]">·</span>
+              <span className={`text-[12px] font-medium ${!homeWin && isFinal ? "text-white" : "text-white/70"}`}>
+                {s.awayTeam} {s.awayScore ?? "—"}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </aside>
   );
 }
 
@@ -68,14 +137,10 @@ export default function LiveLocalPulse() {
   const [paused, setPaused] = useState(false);
 
   const filtered = filter === "All" ? PULSE_ITEMS : PULSE_ITEMS.filter((i) => i.category === filter);
-  // duplicate for seamless loop
   const loop = [...filtered, ...filtered];
 
   return (
-    <section
-      aria-label="Live Local Pulse"
-      className="relative w-full bg-[#0B0F19] border-b border-[#2D3748]"
-    >
+    <section aria-label="Live Local Pulse" className="relative w-full bg-[#0B0F19] border-b border-[#2D3748]">
       <div
         className="absolute inset-0 pointer-events-none opacity-70"
         style={{
@@ -113,16 +178,19 @@ export default function LiveLocalPulse() {
           <div
             className="flex items-center"
             style={{
-              animation: "pulseDrift 80s linear infinite",
+              animation: "pulseDrift 90s linear infinite",
               animationPlayState: paused ? "paused" : "running",
               width: "max-content",
             }}
           >
             {loop.map((item, i) => (
-              <PulseRow key={`${item.text}-${i}`} item={item} />
+              <PulseRow key={`${item.title}-${i}`} item={item} />
             ))}
           </div>
         </div>
+
+        {/* RIGHT: live scores micro module (xl+) */}
+        <LiveScoresModule />
 
         {/* RIGHT: category filters (desktop) */}
         <div className="hidden lg:flex items-center gap-1.5 shrink-0">
@@ -133,12 +201,13 @@ export default function LiveLocalPulse() {
                 key={c}
                 onClick={() => setFilter(c)}
                 className={[
-                  "px-3 py-1 rounded-full text-[11px] font-medium tracking-wide transition-all border",
+                  "px-3 py-1 rounded-full text-[11px] font-medium tracking-wide transition-all border inline-flex items-center gap-1",
                   active
                     ? "bg-[#5eead4]/15 text-[#5eead4] border-[#5eead4]/40"
                     : "bg-white/[0.03] text-white/55 border-white/10 hover:text-white/85 hover:border-white/20",
                 ].join(" ")}
               >
+                {c === "Sports" && <Trophy className="w-3 h-3" strokeWidth={2.25} />}
                 {c}
               </button>
             );
