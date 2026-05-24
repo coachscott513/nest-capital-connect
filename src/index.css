@@ -429,31 +429,62 @@
   }
 
   /* 3. DARK-SECTION CTA — gold pill on dark backgrounds. */
+  /* DARK-SURFACE PRIMARY CTA — crisp white pill, black text.
+     Replaces previous gold gradient. Apple-system aesthetic. */
   .btn-dark-cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    background: linear-gradient(135deg, #e9b949 0%, #f0c768 100%);
-    color: #16181d;
+    background: #ffffff;
+    color: #0B0F19;
     border-radius: 9999px;
     padding: 16px 28px;
     font-weight: 600;
     font-size: 1rem;
     line-height: 1;
     letter-spacing: -0.01em;
-    box-shadow: 0 8px 24px -8px rgba(233, 185, 73, 0.45),
-                0 2px 6px -1px rgba(233, 185, 73, 0.25);
-    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), filter 0.2s;
-    border: none;
+    box-shadow: 0 10px 28px -10px rgba(0, 0, 0, 0.6),
+                0 2px 6px -1px rgba(255, 255, 255, 0.08);
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                background 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.9);
     cursor: pointer;
     white-space: nowrap;
   }
   .btn-dark-cta:hover {
-    transform: translateY(-1px) scale(1.025);
-    filter: brightness(1.06);
-    box-shadow: 0 14px 36px -8px rgba(233, 185, 73, 0.55),
-                0 4px 10px -2px rgba(233, 185, 73, 0.3);
+    transform: translateY(-1px) scale(1.02);
+    background: #f5f5f7;
+    box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.7),
+                0 4px 10px -2px rgba(255, 255, 255, 0.12);
+  }
+
+  /* DARK-SURFACE TEAL OUTLINE PILL — secondary high-end action */
+  .btn-dark-teal-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(94, 234, 212, 0.06);
+    color: #5eead4;
+    border: 1px solid rgba(94, 234, 212, 0.4);
+    border-radius: 9999px;
+    padding: 12px 22px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1;
+    letter-spacing: -0.005em;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+                background 0.2s, border-color 0.2s, color 0.2s;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-dark-teal-outline:hover {
+    transform: translateY(-1px);
+    background: rgba(94, 234, 212, 0.12);
+    border-color: rgba(94, 234, 212, 0.75);
+    color: #ffffff;
   }
 
   /* CALL button — strict red, used ONLY for tel: triggers */
@@ -597,16 +628,16 @@
   transform: translateY(-1px) scale(1.025);
 }
 
-/* Apple-style frosted nav on scroll */
+/* Apple-style frosted nav — DARK onyx surface (matches global dark canvas) */
 .nav-frost {
-  background: hsla(0, 0%, 100%, 0.72);
+  background: rgba(11, 15, 25, 0.78);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid hsla(0, 0%, 0%, 0.06);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid #1F2937;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
 }
 .nav-transparent {
-  background: hsla(0, 0%, 100%, 0.45);
+  background: rgba(11, 15, 25, 0.55);
   backdrop-filter: saturate(160%) blur(12px);
   -webkit-backdrop-filter: saturate(160%) blur(12px);
   border-bottom: 1px solid transparent;
@@ -629,15 +660,16 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Dropdown panel polish */
+/* Dropdown panel polish — dark onyx surface */
 .dropdown-panel {
-  background: hsla(0, 0%, 100%, 0.96);
+  background: rgba(17, 22, 34, 0.96);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border: 1px solid hsla(0, 0%, 0%, 0.06);
-  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.22),
-              0 4px 12px -4px rgba(0, 0, 0, 0.06);
+  border: 1px solid #1F2937;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7),
+              0 4px 12px -4px rgba(0, 0, 0, 0.4);
   border-radius: 1rem;
+  color: #ffffff;
   animation: dropdown-in 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
   transform-origin: top center;
 }

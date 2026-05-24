@@ -418,16 +418,38 @@ function HomeSearchPreview() {
    Single consolidated onramp — replaces "New to the Capital
    District?" + "Pick your path" with one tabbed editorial block.
    ============================================================= */
-const INTEL_TABS = [
+type IntelTab = {
+  id: string;
+  label: string;
+  icon: typeof Calendar;
+  headline: string;
+  ctaVerb: string; // verb shown on each card link
+  // Optional prominent action pill rendered next to the headline
+  inlineAction?: { label: string; to: string };
+  // Optional asymmetrical full-width banner shown above the card grid
+  focusBanner?: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    ctaLabel: string;
+    ctaTo: string;
+  };
+  items: { title: string; sub: string; to: string }[];
+};
+
+const INTEL_TABS: IntelTab[] = [
   {
     id: "events",
     label: "Events",
     icon: Calendar,
     headline: "What's happening this week, this weekend, this season.",
+    ctaVerb: "Browse",
+    inlineAction: { label: "+ Submit an Event", to: "/contact?intent=add-event" },
     items: [
       { title: "This week's pulse",       sub: "Festivals, concerts, openings, markets.", to: "/#weekly-feed" },
-      { title: "Add your event",          sub: "Concerts, charity, sports, kids, networking.", to: "/contact?intent=add-event" },
       { title: "Explore towns & culture", sub: "Town-by-town happenings across the region.",   to: "/communities" },
+      { title: "Venues & organizers",     sub: "Proctors, MVP Arena, SPAC, local series.",      to: "/local?q=venue" },
+      { title: "Promote a special",       sub: "Happy hour, brunch, grand opening, seminars.",  to: "/contact?intent=promote-special" },
     ],
   },
   {
@@ -435,12 +457,14 @@ const INTEL_TABS = [
     label: "Real Estate",
     icon: HomeIcon,
     headline: "Homes, rentals, land, and the next move — all in one place.",
+    ctaVerb: "Explore",
     items: [
-      { title: "Homes for sale",          sub: "Fresh listings across the Capital District.", to: "/homes-for-sale" },
-      { title: "Rentals",                 sub: "Apartments, houses, and move-in help.",       to: "/rentals" },
-      { title: "Land for sale",           sub: "Lots, acreage, and build sites.",             to: "/land-buyers" },
-      { title: "First-time buyer help",   sub: "Roadmap, programs, and what to expect.",      to: "/first-time-homebuyers" },
-      { title: "Financing & grants",      sub: "Loan types and down-payment assistance.",     to: "/financing" },
+      { title: "Homes for sale",            sub: "Fresh listings across the Capital District.",    to: "/homes-for-sale" },
+      { title: "Rentals",                   sub: "Apartments, houses, and move-in help.",          to: "/rentals" },
+      { title: "Land for sale",             sub: "Lots, acreage, and build sites.",                to: "/land-buyers" },
+      { title: "Market heatmap",            sub: "Median price, days-on-market, YoY by town.",     to: "/market-insights" },
+      { title: "Mortgage & Grants Portal",  sub: "Loan types and local down-payment assistance.",  to: "/financing" },
+      { title: "First-time buyer help",     sub: "Roadmap, programs, and what to expect.",         to: "/first-time-homebuyers" },
     ],
   },
   {
@@ -448,10 +472,19 @@ const INTEL_TABS = [
     label: "Local Businesses",
     icon: Coffee,
     headline: "The cafés, shops, lenders, and trades that make the region work.",
+    ctaVerb: "Browse",
+    focusBanner: {
+      eyebrow: "For business owners",
+      title: "Claim Your Free Digital Profile",
+      body: "Get on the Capital District's pulse — verified listing, photos, hours, and direct leads. Free for local owners.",
+      ctaLabel: "Claim Your Profile",
+      ctaTo: "/claim-business",
+    },
     items: [
-      { title: "Browse the directory",    sub: "Curated by town, not crowdsourced.",          to: "/local" },
-      { title: "Claim your business",     sub: "Free profile on the Capital District's pulse.", to: "/claim-business" },
-      { title: "Promote a special",       sub: "Happy hour, brunch, grand opening, seminars.", to: "/contact?intent=promote-special" },
+      { title: "Browse the directory",    sub: "Curated by town, not crowdsourced.",              to: "/local" },
+      { title: "Restaurants & cafés",     sub: "Eat local — by neighborhood.",                    to: "/local?q=restaurant" },
+      { title: "Trades & services",       sub: "Contractors, plumbers, electricians, more.",      to: "/local?q=contractor" },
+      { title: "Promote a special",       sub: "Happy hour, brunch, grand opening, seminars.",    to: "/contact?intent=promote-special" },
     ],
   },
   {
@@ -459,11 +492,15 @@ const INTEL_TABS = [
     label: "Investing",
     icon: TrendingUp,
     headline: "Where the region's next chapter is being written — backed by math.",
+    ctaVerb: "Open",
+    inlineAction: { label: "Run Local Underwriting Tools", to: "/analyze" },
     items: [
-      { title: "Run the numbers",         sub: "Cash flow, cap rate, DSCR, all-in monthly cost.", to: "/analyze" },
-      { title: "Multifamily intelligence",sub: "2–4 unit underwriting the way investors actually do it.", to: "/analyze/multifamily" },
-      { title: "Investment properties",   sub: "Active deals scored by cash flow and yield.",  to: "/investment-properties" },
-      { title: "Best cash-flow neighborhoods", sub: "Where rent-to-price still works.",        to: "/best-neighborhoods-cash-flow" },
+      { title: "Run the numbers",              sub: "Cash flow, cap rate, DSCR, all-in monthly cost.",         to: "/analyze" },
+      { title: "Calculate Local Cap Rates",    sub: "Live market caps by town and asset class.",               to: "/analyze?metric=cap-rate" },
+      { title: "Multifamily intelligence",     sub: "2–4 unit underwriting the way investors actually do it.", to: "/analyze/multifamily" },
+      { title: "Investment properties",        sub: "Active deals scored by cash flow and yield.",             to: "/investment-properties" },
+      { title: "Best cash-flow neighborhoods", sub: "Where rent-to-price still works.",                        to: "/best-neighborhoods-cash-flow" },
+      { title: "View Cash Flow Metrics",       sub: "Sample reports + deal-by-deal breakdowns.",               to: "/cash-flow-report" },
     ],
   },
   {
@@ -471,6 +508,7 @@ const INTEL_TABS = [
     label: "Neighborhoods",
     icon: MapPin,
     headline: "Streets, schools, and character — town by town.",
+    ctaVerb: "Visit",
     items: [
       { title: "Explore all towns",       sub: "52 towns, curated weekly.",                    to: "/communities" },
       { title: "Living in Delmar",        sub: "Tree-lined streets, Bethlehem schools, cafés.", to: "/living-in/delmar" },
@@ -534,25 +572,63 @@ function CapitalDistrictIntelligence() {
             <h3 className="text-2xl md:text-3xl font-semibold text-white tracking-[-0.02em] leading-snug">
               {tab.headline}
             </h3>
-          </div>
-          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-            {tab.items.map((c) => (
+            {tab.inlineAction && (
               <Link
-                key={c.title}
-                to={c.to}
-                className="group relative block rounded-2xl bg-[#1E2230] p-6 md:p-7 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.4)]"
+                to={tab.inlineAction.to}
+                className="btn-dark-teal-outline mt-6"
               >
-                <h4 className="text-base md:text-lg font-semibold tracking-tight text-white">
-                  {c.title}
-                </h4>
-                <p className="mt-2 text-sm text-white/60 font-light leading-relaxed">
-                  {c.sub}
-                </p>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#5eead4]">
-                  Open <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                </span>
+                {tab.inlineAction.label}
               </Link>
-            ))}
+            )}
+          </div>
+
+          <div className="lg:col-span-8 space-y-5 md:space-y-6">
+            {/* Asymmetrical focus banner (e.g. Claim Your Profile) */}
+            {tab.focusBanner && (
+              <div className="relative overflow-hidden rounded-2xl border border-[#0d6e66]/40 bg-gradient-to-br from-[#0d6e66]/15 via-[#0B0F19] to-[#0B0F19] p-6 md:p-8">
+                <div className="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-[#0d6e66]/20 blur-3xl pointer-events-none" />
+                <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                  <div className="max-w-xl">
+                    <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-[#5eead4] mb-2">
+                      {tab.focusBanner.eyebrow}
+                    </p>
+                    <h4 className="text-xl md:text-2xl font-semibold text-white tracking-[-0.01em]">
+                      {tab.focusBanner.title}
+                    </h4>
+                    <p className="mt-2 text-sm md:text-base text-white/65 font-light leading-relaxed">
+                      {tab.focusBanner.body}
+                    </p>
+                  </div>
+                  <Link
+                    to={tab.focusBanner.ctaTo}
+                    className="shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-[#0d6e66] text-white hover:bg-[#0d6e66]/90 transition-colors shadow-[0_10px_28px_-10px_rgba(13,110,102,0.7)]"
+                  >
+                    {tab.focusBanner.ctaLabel}
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+              {tab.items.map((c) => (
+                <Link
+                  key={c.title}
+                  to={c.to}
+                  className="group relative block rounded-2xl bg-[#1E2230] p-6 md:p-7 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.4)]"
+                >
+                  <h4 className="text-base md:text-lg font-semibold tracking-tight text-white">
+                    {c.title}
+                  </h4>
+                  <p className="mt-2 text-sm text-white/60 font-light leading-relaxed">
+                    {c.sub}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#5eead4]">
+                    {tab.ctaVerb} <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
