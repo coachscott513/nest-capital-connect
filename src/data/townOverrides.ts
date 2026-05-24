@@ -24,6 +24,24 @@ export interface TownFeel {
   commute: string;
 }
 
+export interface TownRibbonStat {
+  label: string;
+  value: string;
+}
+
+export interface TownScore {
+  team: string;
+  league: string;
+  status: string;
+  detail?: string;
+}
+
+export interface TownFinanceLink {
+  title: string;
+  body: string;
+  href: string;
+}
+
 export interface TownOverride {
   heroImage: string;
   whyImage: string;
@@ -32,15 +50,17 @@ export interface TownOverride {
   whyHeadline?: string;
   whyCopy: string;
   whyBullets: string[];
-  /** Cinematic hero copy overrides */
   heroHeadline?: string;
   heroSub?: string;
-  /** Editorial "Feel of [Town]" section */
   feel?: TownFeel;
-  /** Sub-neighborhood chips for the explorer */
   neighborhoods?: string[];
-  /** Subtle signature accent glow color */
   accentGlow?: string;
+  /** Glassmorphic micro-intelligence ribbon under the hero */
+  ribbon?: TownRibbonStat[];
+  /** Minimal local sports scorecards */
+  sports?: TownScore[];
+  /** Buyer / investor utility links */
+  financeLinks?: TownFinanceLink[];
 }
 
 const DEFAULT_HERO =
@@ -96,6 +116,28 @@ export const townOverrides: Record<string, TownOverride> = {
       "Glenmont",
     ],
     accentGlow: "rgba(13,110,102,0.35)",
+    ribbon: [
+      { label: "Median Home Price", value: "$485K" },
+      { label: "Bethlehem Schools", value: "Top Rated" },
+      { label: "Albany Commute", value: "12 Minutes" },
+      { label: "Lifestyle", value: "Walkable + Family" },
+      { label: "Inventory", value: "Low Supply" },
+    ],
+    sports: [
+      { team: "Bethlehem Eagles", league: "Section II Baseball", status: "W 5–2", detail: "vs Shenendehowa" },
+      { team: "Siena Saints", league: "MAAC Basketball", status: "Final", detail: "Sat night home win" },
+      { team: "UAlbany Great Danes", league: "America East", status: "Sun 1pm", detail: "vs Vermont" },
+      { team: "RPI Engineers", league: "ECAC Hockey", status: "L 3–4 OT", detail: "vs Union" },
+      { team: "Union Dutchmen", league: "ECAC Hockey", status: "W 4–3 OT", detail: "vs RPI" },
+      { team: "Skidmore Thoroughbreds", league: "Liberty League", status: "Sat 12pm", detail: "Lacrosse vs RPI" },
+    ],
+    financeLinks: [
+      { title: "First-Time Buyer Help",     body: "Programs, grants, and step-by-step guidance.", href: "/first-time-buyers" },
+      { title: "Bethlehem Tax Estimator",   body: "Estimate property taxes for any Delmar home.", href: "https://egov.basny.com/bethlehem/" },
+      { title: "Affordability Calculator",  body: "See what you can comfortably afford.",          href: "/financing" },
+      { title: "Local Grant Programs",       body: "Down payment and closing cost assistance.",     href: "/grants" },
+      { title: "Investor Underwriting",     body: "Run cash flow, cap rate, and DSCR instantly.",  href: "/analyze" },
+    ],
   },
   albany: {
     heroImage:
