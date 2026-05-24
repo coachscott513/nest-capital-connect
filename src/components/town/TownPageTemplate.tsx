@@ -22,6 +22,10 @@ import LocalBusinessesDirectory from "@/components/town/LocalBusinessesDirectory
 import MorningPulse from "@/components/town/MorningPulse";
 import TownProjects from "@/components/town/TownProjects";
 import LocalHeroes from "@/components/town/LocalHeroes";
+import LiveNowTicker from "@/components/town/LiveNowTicker";
+import HeroMetadataPulse from "@/components/town/HeroMetadataPulse";
+import WhatChangedThisWeek from "@/components/town/WhatChangedThisWeek";
+import ThisWeekendIn from "@/components/town/ThisWeekendIn";
 import type { LivingInTown } from "@/data/livingInTowns";
 import { getTownOverride } from "@/data/townOverrides";
 
@@ -33,7 +37,8 @@ interface Props {
 const TEAL = "#0d6e66";
 const TEAL_DARK = "#5eead4";
 
-const SECTION_PAD = "py-24 md:py-32 px-6 md:px-10";
+// Tighter, more cinematic flow between sections
+const SECTION_PAD = "py-20 md:py-24 px-6 md:px-10";
 
 /**
  * MASTER TOWN TEMPLATE
