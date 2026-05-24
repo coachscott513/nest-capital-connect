@@ -491,6 +491,7 @@ const INTEL_TABS: IntelTab[] = [
       { title: "Investment properties",        sub: "Active deals scored by cash flow and yield.",             to: "/investment-properties" },
       { title: "Best cash-flow neighborhoods", sub: "Where rent-to-price still works.",                        to: "/best-neighborhoods-cash-flow" },
       { title: "View Cash Flow Metrics",       sub: "Sample reports + deal-by-deal breakdowns.",               to: "/cash-flow-report" },
+      { title: "Calculate Local ROI & Taxes",  sub: "Effective tax rates + ROI by town, instantly.",           to: "/analyze?metric=roi-taxes" },
     ],
   },
   {
