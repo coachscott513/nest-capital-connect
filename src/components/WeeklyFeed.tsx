@@ -86,24 +86,24 @@ const WeeklyFeed = ({
       id="weekly-feed"
       className={
         compact
-          ? "pt-6 md:pt-8 pb-16 md:pb-20 px-6 md:px-10 bg-[#F9FAFB] border-b border-[#1d1d1f]/[0.06]"
-          : "py-28 md:py-40 px-6 md:px-10 bg-[#F9FAFB] border-y border-[#1d1d1f]/[0.06]"
+          ? "pt-6 md:pt-8 pb-16 md:pb-20 px-6 md:px-10 bg-[#0B0F19] border-b border-[#2D3748]"
+          : "py-28 md:py-40 px-6 md:px-10 bg-[#0B0F19] border-y border-[#2D3748]"
       }
     >
       <div className="max-w-6xl mx-auto">
         <div className={compact ? "mb-10 max-w-3xl" : "mb-16 max-w-3xl"}>
-          <span className="inline-flex items-center gap-2 rounded-full bg-[#0d6e66]/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0d6e66] mb-5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0d6e66] animate-pulse" />
+          <span className="inline-flex items-center gap-2 rounded-full bg-[#0d6e66]/20 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#5eead4] mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#5eead4] animate-pulse" />
             Updated This Week
           </span>
-          <p className="eyebrow-apple text-[#0d6e66] mb-4">{eyebrow}</p>
+          <p className="eyebrow-apple text-[#5eead4] mb-4">{eyebrow}</p>
           <h2 className={compact
-            ? "text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-[#1d1d1f] leading-[1.05]"
-            : "text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.03em] text-[#1d1d1f] leading-[1.02]"
+            ? "text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-white leading-[1.05]"
+            : "text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.03em] text-white leading-[1.02]"
           }>
             {title}
           </h2>
-          <p className="mt-6 text-lg md:text-xl text-[#1d1d1f]/65 font-light leading-relaxed">
+          <p className="mt-6 text-lg md:text-xl text-white/60 font-light leading-relaxed">
             {sub}
           </p>
         </div>
@@ -114,8 +114,8 @@ const WeeklyFeed = ({
             return (
               <article
                 key={i}
-                className="card-lift group relative bg-white border border-[#1d1d1f]/8 rounded-2xl p-8 md:p-10 transition-all"
-                style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}
+                className="card-lift group relative bg-[#1E2230] border border-[#2D3748] rounded-2xl p-8 md:p-10 transition-all hover:border-[#0d6e66]/50"
+                style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.4)" }}
               >
                 {i < 2 && (
                   <span className="absolute top-5 right-5 inline-flex items-center gap-1 rounded-full bg-[#0d6e66] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
@@ -123,20 +123,20 @@ const WeeklyFeed = ({
                   </span>
                 )}
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0d6e66]/8">
-                    <Icon className="w-5 h-5 text-[#0d6e66]" strokeWidth={1.75} />
+                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0d6e66]/20">
+                    <Icon className="w-5 h-5 text-[#5eead4]" strokeWidth={1.75} />
                   </span>
-                  <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-[#0d6e66]">
+                  <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-[#5eead4]">
                     {LABELS[item.type]}
                   </span>
                 </div>
-                <h3 className="text-xl md:text-2xl font-semibold text-[#1d1d1f] tracking-tight leading-snug">
+                <h3 className="text-xl md:text-2xl font-semibold text-white tracking-tight leading-snug">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-base text-[#1d1d1f]/65 font-light leading-relaxed">
+                <p className="mt-3 text-base text-white/60 font-light leading-relaxed">
                   {item.description}
                 </p>
-                <p className="mt-6 text-xs text-[#1d1d1f]/45 font-medium tracking-wide">
+                <p className="mt-6 text-xs text-white/40 font-medium tracking-wide">
                   {item.date}
                 </p>
               </article>
