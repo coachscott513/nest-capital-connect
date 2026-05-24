@@ -195,6 +195,11 @@ export const businesses: Business[] = [
     featured: true,
     verified: true,
     image: STOCK("photo-1582407947304-fd86f028f716"),
+    socials: {
+      facebook: "https://www.facebook.com/USMortgageCorp",
+      linkedin: "https://www.linkedin.com/company/u-s--mortgage-corp",
+      instagram: "https://www.instagram.com/usmortgagecorp",
+    },
   },
   {
     slug: "deangelis-law",
