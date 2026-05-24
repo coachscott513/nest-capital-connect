@@ -15,7 +15,7 @@ const BUSINESS_TERMS = [
   "finance", "financial", "financial advisor", "mortgage", "lender", "bank", "credit union",
   "coffee", "cafe", "cafes", "café", "cafés", "restaurant", "restaurants", "dining", "bar",
   "bakery", "attorney", "lawyer", "contractor", "hvac", "plumber", "electrician", "roofer",
-  "gym", "dentist", "doctor", "insurance", "accountant", "salon", "retail", "shop", "service",
+  "gym", "gyms", "dentist", "dentists", "doctor", "doctors", "insurance", "accountant", "accountants", "salon", "retail", "shop", "shops", "service", "services",
 ];
 
 const EVENT_RE = /\b(events?|festival|festivals|concerts?|live music|things to do|weekend|farmers market)\b/i;
