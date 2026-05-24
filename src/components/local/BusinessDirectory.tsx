@@ -93,6 +93,22 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [hasPhone, setHasPhone] = useState(false);
   const [openBiz, setOpenBiz] = useState<Business | null>(null);
 
+  const { rows: dbBusinesses } = useDbBusinesses();
+
+  // Merge static seed + imported DB rows. DB rows always render
+  // regardless of claim/verification status.
+  const ALL = useMemo<Business[]>(() => {
+    const seen = new Set<string>();
+    const out: Business[] = [];
+    for (const b of [...STATIC_BUSINESSES, ...dbBusinesses]) {
+      const key = b.slug;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push(b);
+    }
+    return out;
+  }, [dbBusinesses]);
+
   useEffect(() => {
     const next = new URLSearchParams();
     if (q.trim()) next.set("search", q.trim());
@@ -102,31 +118,55 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   }, [q, town, category, townSlug, setSearchParams]);
 
   const results = useMemo(() => {
-    const needle = q.trim().toLowerCase();
-    const searchTerms = expandBusinessSearch(q);
+    const needleRaw = q.trim().toLowerCase();
+    // Tokenize: "delmar restaurants" -> ["delmar", "restaurants"]
+    const tokens = needleRaw.split(/\s+/).filter(Boolean);
+    // Expand each token with aliases so "finance" pulls bank/mortgage etc.
+    const expandedPerToken = tokens.map((t) => expandBusinessSearch(t));
+
+    // Extract any town token so it filters by town instead of by name.
+    const townFromQuery = tokens.find((t) =>
+      TOWN_LIST.some((tl) => tl.slug === t || tl.name.toLowerCase() === t),
+    );
+    const effectiveTown = town || townFromQuery || "";
+    const normalizedTown = effectiveTown.toLowerCase().replace(/\s+/g, "-");
+
+    // Tokens still used for keyword matching (drop the town token).
+    const keywordTokens = expandedPerToken.filter(
+      (_aliases, i) => tokens[i] !== townFromQuery,
+    );
+
     return ALL.filter((b) => {
       if (townSlug && b.town !== townSlug && b.town !== "capital-district")
         return false;
-      const normalizedTown = town.toLowerCase().replace(/\s+/g, "-");
-      if (town && b.town !== town && b.town !== normalizedTown && b.townLabel?.toLowerCase() !== town.toLowerCase()) return false;
+      if (effectiveTown) {
+        const matchTown =
+          b.town === effectiveTown ||
+          b.town === normalizedTown ||
+          b.townLabel?.toLowerCase() === effectiveTown.toLowerCase();
+        if (!matchTown) return false;
+      }
       if (category && b.category.toLowerCase() !== category.toLowerCase()) return false;
       if (tier === "featured" && !b.featured) return false;
       if (tier === "claimed" && !isClaimed(b)) return false;
       if (tier === "unclaimed" && isClaimed(b)) return false;
       if (hasWebsite && !b.website) return false;
       if (hasPhone && !b.phone) return false;
-      if (!needle) return true;
+
+      if (keywordTokens.length === 0) return true;
       const hay = [
         b.name, b.category, b.subcategory, b.tagline, b.about, b.townLabel,
+        ...(b.tags ?? []),
         ...(b.services ?? []), ...(b.knownFor ?? []),
       ].filter(Boolean).join(" ").toLowerCase();
-      return searchTerms.some((term) => hay.includes(term));
+      // Every keyword token must match at least one of its aliases.
+      return keywordTokens.every((aliases) => aliases.some((a) => hay.includes(a)));
     });
-  }, [q, town, category, tier, hasWebsite, hasPhone, townSlug]);
+  }, [q, town, category, tier, hasWebsite, hasPhone, townSlug, ALL]);
 
   const featured = useMemo(
     () => ALL.filter((b) => b.featured && (!townSlug || b.town === "capital-district")),
-    [townSlug],
+    [townSlug, ALL],
   );
 
   const grouped = useMemo(() => {
