@@ -3,13 +3,8 @@ import { Helmet } from "react-helmet-async";
 import {
   ArrowRight,
   Phone,
-  Calendar,
   Search,
   GraduationCap,
-  Coffee,
-  Users,
-  Sunrise,
-  Car,
   Trophy,
   Calculator,
   ChevronRight,
@@ -67,15 +62,9 @@ const TownPageTemplate = ({ town }: Props) => {
     },
   };
 
-  // ── Default editorial "feel" fallback ───────────────────────────────
-  const feel = o.feel ?? {
-    morning: `Quiet mornings, neighborhood coffee, the slow rhythm of ${town.townName}.`,
-    families: `${town.schoolDistrict}, local parks, and a community built around families.`,
-    weekends: `Farmers markets, local dining, and seasonal community events.`,
-    commute: `Easy regional access to Albany, the Northway, and beyond.`,
-  };
-
+  // ── Neighborhoods fallback ──────────────────────────────────────────
   const neighborhoods = o.neighborhoods ?? [];
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -161,7 +150,7 @@ const TownPageTemplate = ({ town }: Props) => {
             {/* Premium action chips — glass pills, teal hover glow */}
             <div className="mt-8 flex flex-wrap gap-2">
               {[
-                { label: "Explore Delmar", href: "#feel" },
+                { label: "Discover Delmar", href: "#discover" },
                 { label: "Local Businesses", href: "#businesses" },
                 { label: "This Week", href: "#changed" },
                 { label: "Homes", href: "#homes" },
@@ -278,47 +267,61 @@ const TownPageTemplate = ({ town }: Props) => {
         </div>
       )}
 
-      {/* ───────── 3. THE FEEL OF [TOWN] ───────── */}
-      <section id="feel" className={`bg-background ${SECTION_PAD}`}>
-        <div className="max-w-6xl mx-auto">
-          <div className="max-w-2xl mb-16 md:mb-20">
-            <p
-              className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
-              style={{ color: TEAL_DARK }}
-            >
-              The Feel of {town.townName}
-            </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-              What it feels like to live here.
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-px bg-white/[0.06] rounded-3xl overflow-hidden border border-white/[0.08]">
-            {[
-              { icon: Sunrise, label: "Mornings", body: feel.morning },
-              { icon: Users, label: "Families & Schools", body: feel.families },
-              { icon: Coffee, label: "Weekends", body: feel.weekends },
-              { icon: Car, label: "Commute", body: feel.commute },
-            ].map(({ icon: Icon, label, body }) => (
-              <div
-                key={label}
-                className="bg-card/40 backdrop-blur-sm p-10 md:p-14 hover:bg-card/60 transition"
+      {/* ───────── 3. DISCOVER [TOWN] (modular bento) ───────── */}
+      {o.discoverCards && o.discoverCards.length > 0 && (
+        <section id="discover" className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
+          <div className="max-w-6xl mx-auto">
+            <div className="max-w-2xl mb-12 md:mb-16">
+              <p
+                className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
+                style={{ color: TEAL_DARK }}
               >
-                <Icon className="w-5 h-5 mb-6" style={{ color: TEAL_DARK }} />
-                <p
-                  className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
-                  style={{ color: TEAL_DARK }}
+                Discover {town.townName}
+              </p>
+              <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
+                Discover {town.townName}.
+              </h2>
+              <p className="mt-5 text-lg font-light text-white/65">
+                Explore the places, businesses, neighborhoods, events, and local rhythm that make {town.townName} one of the Capital Region's most desirable communities.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {o.discoverCards.map((card) => (
+                <a
+                  key={card.title}
+                  href={card.href}
+                  className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-card/40 hover:border-white/20 hover:shadow-[0_0_36px_-8px_rgba(94,234,212,0.35)] transition"
                 >
-                  {label}
-                </p>
-                <p className="text-xl md:text-2xl font-light text-white/85 leading-relaxed tracking-[-0.005em]">
-                  {body}
-                </p>
-              </div>
-            ))}
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent pointer-events-none" />
+                  </div>
+                  <div className="p-6">
+                    <p
+                      className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-2"
+                      style={{ color: TEAL_DARK }}
+                    >
+                      {card.eyebrow}
+                    </p>
+                    <h3 className="text-xl font-semibold text-white tracking-[-0.01em]">{card.title}</h3>
+                    <p className="mt-2 text-sm font-light text-white/65 leading-relaxed">{card.body}</p>
+                    <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-white/85 group-hover:text-white">
+                      {card.cta} <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
 
       {/* ───────── 4. LOCAL BUSINESSES WE LOVE (curated, no directory dump) ───────── */}
       <div id="businesses">
@@ -342,13 +345,13 @@ const TownPageTemplate = ({ town }: Props) => {
                 className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
                 style={{ color: TEAL_DARK }}
               >
-                Schools & Community
+                Why People Move Here
               </p>
               <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                Why families plant roots here.
+                Why people move to {town.townName}.
               </h2>
               <p className="mt-6 text-lg font-light text-white/65 leading-relaxed">
-                {town.schoolDistrict} anchors {town.townName} — alongside neighborhood parks, the local library, and a youth-sports culture that brings families together every weekend.
+                The reasons families, professionals, and long-term buyers keep choosing {town.townName}.
               </p>
 
               <ul className="mt-8 space-y-4">
@@ -549,30 +552,79 @@ const TownPageTemplate = ({ town }: Props) => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {o.financeLinks.map((f) => (
-                <a
-                  key={f.title}
-                  href={f.href}
-                  target={f.href.startsWith("http") ? "_blank" : undefined}
-                  rel={f.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-6 hover:bg-white/[0.06] hover:border-white/15 transition flex items-start gap-4"
-                >
-                  <div
-                    className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-white/[0.04]"
-                  >
-                    <Calculator className="w-4 h-4" style={{ color: TEAL_DARK }} />
+            {(() => {
+              const grouped = o.financeLinks.reduce<Record<string, typeof o.financeLinks>>((acc, f) => {
+                const key = f.category ?? "Resources";
+                (acc[key] ||= []).push(f);
+                return acc;
+              }, {});
+              const categories = Object.keys(grouped);
+              const hasCategories = categories.some((c) => c !== "Resources");
+
+              if (!hasCategories) {
+                return (
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {o.financeLinks.map((f) => (
+                      <a
+                        key={f.title}
+                        href={f.href}
+                        target={f.href.startsWith("http") ? "_blank" : undefined}
+                        rel={f.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-6 hover:bg-white/[0.06] hover:border-white/15 transition flex items-start gap-4"
+                      >
+                        <div className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-white/[0.04]">
+                          <Calculator className="w-4 h-4" style={{ color: TEAL_DARK }} />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="text-base font-semibold text-white">{f.title}</p>
+                            <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition" />
+                          </div>
+                          <p className="mt-1.5 text-sm text-white/60 font-light leading-relaxed">{f.body}</p>
+                        </div>
+                      </a>
+                    ))}
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="text-base font-semibold text-white">{f.title}</p>
-                      <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition" />
+                );
+              }
+
+              return (
+                <div className="space-y-12">
+                  {categories.map((cat) => (
+                    <div key={cat}>
+                      <p
+                        className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-5"
+                        style={{ color: TEAL_DARK }}
+                      >
+                        {cat}
+                      </p>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+                        {grouped[cat].map((f) => (
+                          <a
+                            key={f.title}
+                            href={f.href}
+                            target={f.href.startsWith("http") ? "_blank" : undefined}
+                            rel={f.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                            className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-5 hover:bg-white/[0.06] hover:border-white/15 transition flex items-start gap-4"
+                          >
+                            <div className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-white/[0.04]">
+                              <Calculator className="w-4 h-4" style={{ color: TEAL_DARK }} />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center justify-between gap-2">
+                                <p className="text-sm font-semibold text-white">{f.title}</p>
+                                <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition" />
+                              </div>
+                              <p className="mt-1.5 text-xs text-white/60 font-light leading-relaxed">{f.body}</p>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
                     </div>
-                    <p className="mt-1.5 text-sm text-white/60 font-light leading-relaxed">{f.body}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
+                  ))}
+                </div>
+              );
+            })()}
           </div>
         </section>
       )}

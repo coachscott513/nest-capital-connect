@@ -40,6 +40,16 @@ export interface TownFinanceLink {
   title: string;
   body: string;
   href: string;
+  category?: string;
+}
+
+export interface TownDiscoverCard {
+  eyebrow: string;
+  title: string;
+  body: string;
+  cta: string;
+  href: string;
+  image: string;
 }
 
 export interface TownPartnerSeed {
@@ -106,6 +116,8 @@ export interface TownOverride {
   financeLinks?: TownFinanceLink[];
   /** Hyper-local partner seeds for the Trusted Local Partners section */
   partners?: TownPartnerSeed[];
+  /** "Discover [Town]" modular bento cards */
+  discoverCards?: TownDiscoverCard[];
 }
 
 const DEFAULT_HERO =
@@ -118,10 +130,9 @@ export const townOverrides: Record<string, TownOverride> = {
     heroImage:
       "https://images.unsplash.com/photo-1502175353174-a7a05e4bebb4?auto=format&fit=crop&w=2400&q=80",
     whyImage: DEFAULT_WHY,
-    heroHeadline:
-      "Tree-lined streets, top schools, and a slower pace — minutes from Albany.",
+    heroHeadline: "Discover Delmar.",
     heroSub:
-      "Discover Delmar through its cafés, neighborhoods, local businesses, markets, schools, sports, and everyday rhythm.",
+      "Explore the places, businesses, neighborhoods, events, and local rhythm that make Delmar one of the Capital Region's most desirable communities.",
     callouts: [
       { title: "Bethlehem Central Schools", body: "Top-rated K–12 district." },
       { title: "10 Minutes to Albany", body: "Easy commute to downtown." },
@@ -138,10 +149,13 @@ export const townOverrides: Record<string, TownOverride> = {
     whyCopy:
       "Delmar combines suburban comfort, strong schools, and easy access to Albany — a community where families stay for decades.",
     whyBullets: [
-      "Tree-lined neighborhoods",
-      "Bethlehem Central schools",
-      "Local dining at Four Corners",
-      "12-minute Albany commute",
+      "Bethlehem Central Schools",
+      "Walkable Four Corners",
+      "Fast Albany commute",
+      "Local cafés & businesses",
+      "Parks and youth programs",
+      "Strong long-term demand",
+      "Community-centered lifestyle",
     ],
     feel: {
       morning:
@@ -236,25 +250,27 @@ export const townOverrides: Record<string, TownOverride> = {
       },
     ],
     sports: [
-      { team: "Bethlehem Eagles Baseball", league: "This Weekend", status: "Fri 6pm", detail: "vs Shenendehowa" },
-      { team: "Siena Saints", league: "MVP Arena", status: "Sat 7pm", detail: "Home game Saturday night" },
-      { team: "UAlbany Football", league: "America East", status: "Season", detail: "Season tickets available" },
-      { team: "RPI vs Union", league: "ECAC Hockey", status: "Fri", detail: "Mayor's Cup rivalry returns" },
-      { team: "Skidmore Lacrosse", league: "Liberty League", status: "Playoffs", detail: "Postseason appearance" },
-      { team: "Bethlehem Soccer Club", league: "Youth", status: "Open", detail: "Youth registration now open" },
-      { team: "Bethlehem Summer Hoops", league: "Community", status: "Announced", detail: "Summer basketball camps" },
-      { team: "Elm Avenue Park Pickleball", league: "Recreation", status: "Daily", detail: "Open play all summer" },
+      { team: "Bethlehem YMCA", league: "YMCA", status: "Open", detail: "Youth programs, fitness, swimming, basketball, and family activities." },
+      { team: "Bethlehem Youth Basketball", league: "Youth Programs", status: "Registration", detail: "Community leagues and youth development." },
+      { team: "Local Fitness & Training", league: "Gyms & Wellness", status: "Open", detail: "Gyms, wellness, and training facilities around Delmar." },
+      { team: "Bethlehem Eagles Athletics", league: "School Athletics", status: "In Season", detail: "Schedules, programs, and school spirit." },
+      { team: "Town Parks & Recreation", league: "Parks & Rec", status: "Daily", detail: "Fields, trails, playgrounds, and outdoor activities." },
     ],
     financeLinks: [
-      { title: "First-Time Buyer Guide",   body: "Programs, grants, and step-by-step help.",                       href: "/first-time-buyers" },
-      { title: "Local Grants & Programs",  body: "Down payment help, rebates, and community resources.",           href: "/grants" },
-      { title: "School District Guide",    body: "Bethlehem Central schools, maps, and local information.",        href: "#schools" },
-      { title: "Property Tax Guide",       body: "Estimate taxes and understand assessments.",                     href: "https://egov.basny.com/bethlehem/" },
-      { title: "Affordability Calculator", body: "Understand what fits your monthly budget.",                      href: "/financing" },
-      { title: "Local Services",           body: "Utilities, permits, DMV, trash pickup, and local offices.",      href: "https://www.townofbethlehem.org/" },
-      { title: "Community Directory",      body: "Parks, library, sports, recreation, and town resources.",        href: "https://www.bethlehempubliclibrary.org/" },
-      { title: "Investment Analyzer",      body: "Run cash flow, cap rate, and long-term projections.",            href: "/analyze" },
-      { title: "Talk to a Local Expert",   body: "Connect with a Delmar specialist.",                              href: "tel:+15185227265" },
+      { category: "Buying a Home", title: "First-Time Buyer Programs", body: "Programs, grants, and step-by-step help.", href: "/first-time-buyers" },
+      { category: "Buying a Home", title: "Affordability Calculator", body: "Understand what fits your monthly budget.", href: "/financing" },
+      { category: "Buying a Home", title: "Mortgage Payment Estimator", body: "Estimate principal, interest, taxes, and insurance.", href: "/financing" },
+      { category: "Buying a Home", title: "Local Grant Programs", body: "Down payment help, rebates, and community resources.", href: "/grants" },
+
+      { category: "Property & Taxes", title: "Bethlehem Property Taxes", body: "Estimate taxes and understand assessments.", href: "https://egov.basny.com/bethlehem/" },
+      { category: "Property & Taxes", title: "School Tax Information", body: "Bethlehem Central school tax overview.", href: "#schools" },
+      { category: "Property & Taxes", title: "Estimated Utility Costs", body: "Typical monthly utility ranges for Delmar homes.", href: "/financing" },
+      { category: "Property & Taxes", title: "Insurance Guidance", body: "Homeowners insurance basics and local considerations.", href: "/financing" },
+
+      { category: "Investing", title: "Cash Flow Analyzer", body: "Run cash flow, cap rate, and long-term projections.", href: "/analyze" },
+      { category: "Investing", title: "Investor Underwriting", body: "Underwrite a Delmar deal with investor-grade math.", href: "/analyze" },
+      { category: "Investing", title: "Rental Property Analysis", body: "Model rent, expenses, and returns for Delmar rentals.", href: "/analyze" },
+      { category: "Investing", title: "Market Demand Trends", body: "Track pricing, velocity, and absorption trends.", href: "/delmar-market-insights" },
     ],
     partners: [
       {
@@ -304,6 +320,56 @@ export const townOverrides: Record<string, TownOverride> = {
         hours: "Wed–Sun · 5:00 PM – 10:00 PM",
         image:
           "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80",
+      },
+    ],
+    discoverCards: [
+      {
+        eyebrow: "Daily Life",
+        title: "Morning in Delmar",
+        body: "Coffee shops, sidewalks, and local routines that define daily life.",
+        cta: "Explore Cafés",
+        href: "#businesses",
+        image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1600&q=80",
+      },
+      {
+        eyebrow: "Neighborhoods",
+        title: "Neighborhoods",
+        body: "From Four Corners to Slingerlands — every pocket has its own feel.",
+        cta: "Explore Neighborhoods",
+        href: "#homes",
+        image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1600&q=80",
+      },
+      {
+        eyebrow: "Community",
+        title: "Community",
+        body: "Events, parks, local traditions, and community life.",
+        cta: "See What's Happening",
+        href: "#weekend",
+        image: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1600&q=80",
+      },
+      {
+        eyebrow: "Schools",
+        title: "Schools & Education",
+        body: "Why Bethlehem schools continue attracting long-term buyers.",
+        cta: "Explore Schools",
+        href: "#schools",
+        image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=80",
+      },
+      {
+        eyebrow: "Dining",
+        title: "Dining & Local Favorites",
+        body: "The local businesses residents return to every week.",
+        cta: "Explore Local Businesses",
+        href: "#businesses",
+        image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80",
+      },
+      {
+        eyebrow: "Real Estate",
+        title: "Real Estate Snapshot",
+        body: "Inventory, pricing, demand, and market movement.",
+        cta: "View Market",
+        href: "#homes",
+        image: "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?auto=format&fit=crop&w=1600&q=80",
       },
     ],
   },
