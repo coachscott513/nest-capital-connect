@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search, Calendar, Home as HomeIcon, Coffee, TrendingUp, MapPin } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
@@ -413,7 +413,155 @@ function HomeSearchPreview() {
 }
 
 /* ========== PAGE ========== */
+/* =============================================================
+   CAPITAL DISTRICT INTELLIGENCE
+   Single consolidated onramp — replaces "New to the Capital
+   District?" + "Pick your path" with one tabbed editorial block.
+   ============================================================= */
+const INTEL_TABS = [
+  {
+    id: "events",
+    label: "Events",
+    icon: Calendar,
+    headline: "What's happening this week, this weekend, this season.",
+    items: [
+      { title: "This week's pulse",       sub: "Festivals, concerts, openings, markets.", to: "/#weekly-feed" },
+      { title: "Add your event",          sub: "Concerts, charity, sports, kids, networking.", to: "/contact?intent=add-event" },
+      { title: "Explore towns & culture", sub: "Town-by-town happenings across the region.",   to: "/communities" },
+    ],
+  },
+  {
+    id: "real-estate",
+    label: "Real Estate",
+    icon: HomeIcon,
+    headline: "Homes, rentals, land, and the next move — all in one place.",
+    items: [
+      { title: "Homes for sale",          sub: "Fresh listings across the Capital District.", to: "/homes-for-sale" },
+      { title: "Rentals",                 sub: "Apartments, houses, and move-in help.",       to: "/rentals" },
+      { title: "Land for sale",           sub: "Lots, acreage, and build sites.",             to: "/land-buyers" },
+      { title: "First-time buyer help",   sub: "Roadmap, programs, and what to expect.",      to: "/first-time-homebuyers" },
+      { title: "Financing & grants",      sub: "Loan types and down-payment assistance.",     to: "/financing" },
+    ],
+  },
+  {
+    id: "local",
+    label: "Local Businesses",
+    icon: Coffee,
+    headline: "The cafés, shops, lenders, and trades that make the region work.",
+    items: [
+      { title: "Browse the directory",    sub: "Curated by town, not crowdsourced.",          to: "/local" },
+      { title: "Claim your business",     sub: "Free profile on the Capital District's pulse.", to: "/claim-business" },
+      { title: "Promote a special",       sub: "Happy hour, brunch, grand opening, seminars.", to: "/contact?intent=promote-special" },
+    ],
+  },
+  {
+    id: "investing",
+    label: "Investing",
+    icon: TrendingUp,
+    headline: "Where the region's next chapter is being written — backed by math.",
+    items: [
+      { title: "Run the numbers",         sub: "Cash flow, cap rate, DSCR, all-in monthly cost.", to: "/analyze" },
+      { title: "Multifamily intelligence",sub: "2–4 unit underwriting the way investors actually do it.", to: "/analyze/multifamily" },
+      { title: "Investment properties",   sub: "Active deals scored by cash flow and yield.",  to: "/investment-properties" },
+      { title: "Best cash-flow neighborhoods", sub: "Where rent-to-price still works.",        to: "/best-neighborhoods-cash-flow" },
+    ],
+  },
+  {
+    id: "neighborhoods",
+    label: "Neighborhoods",
+    icon: MapPin,
+    headline: "Streets, schools, and character — town by town.",
+    items: [
+      { title: "Explore all towns",       sub: "52 towns, curated weekly.",                    to: "/communities" },
+      { title: "Living in Delmar",        sub: "Tree-lined streets, Bethlehem schools, cafés.", to: "/living-in/delmar" },
+      { title: "Living in Saratoga",      sub: "Historic charm, culture, top schools.",        to: "/living-in/saratoga-springs" },
+      { title: "Living in Troy",          sub: "Brownstones, RPI, downtown creativity.",       to: "/living-in/troy" },
+    ],
+  },
+];
+
+function CapitalDistrictIntelligence() {
+  const [active, setActive] = useState(INTEL_TABS[0].id);
+  const tab = INTEL_TABS.find((t) => t.id === active) ?? INTEL_TABS[0];
+
+  return (
+    <section className="bg-[#0B0F19] py-24 md:py-36 px-6 md:px-10 border-t border-[#2D3748]">
+      <div className="max-w-6xl mx-auto">
+        <div className="max-w-3xl mb-12 md:mb-16">
+          <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-5 text-[#5eead4]">
+            Capital District Intelligence
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.03em] text-white leading-[1.04]">
+            Explore the region.
+          </h2>
+          <p className="mt-6 text-lg md:text-xl text-white/60 font-light leading-relaxed">
+            One front door. Every way in — events, real estate, local businesses, investing,
+            and the neighborhoods that make the Capital District feel like home.
+          </p>
+        </div>
+
+        {/* Tab rail */}
+        <div className="flex flex-wrap gap-2 mb-10 md:mb-12 border-b border-[#2D3748] pb-2">
+          {INTEL_TABS.map((t) => {
+            const Icon = t.icon;
+            const isActive = t.id === active;
+            return (
+              <button
+                key={t.id}
+                onClick={() => setActive(t.id)}
+                className={`group inline-flex items-center gap-2 px-4 md:px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                  isActive
+                    ? "bg-[#0d6e66] text-white shadow-[0_10px_28px_-12px_rgba(13,110,102,0.6)]"
+                    : "bg-transparent text-white/55 hover:text-white hover:bg-white/[0.04]"
+                }`}
+              >
+                <Icon className="w-4 h-4" strokeWidth={1.75} />
+                {t.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Active tab content */}
+        <motion.div
+          key={tab.id}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-10"
+        >
+          <div className="lg:col-span-4">
+            <h3 className="text-2xl md:text-3xl font-semibold text-white tracking-[-0.02em] leading-snug">
+              {tab.headline}
+            </h3>
+          </div>
+          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+            {tab.items.map((c) => (
+              <Link
+                key={c.title}
+                to={c.to}
+                className="group relative block rounded-2xl bg-[#1E2230] p-6 md:p-7 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.4)]"
+              >
+                <h4 className="text-base md:text-lg font-semibold tracking-tight text-white">
+                  {c.title}
+                </h4>
+                <p className="mt-2 text-sm text-white/60 font-light leading-relaxed">
+                  {c.sub}
+                </p>
+                <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#5eead4]">
+                  Open <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 const Index = () => {
+
   return (
     <div className="min-h-screen bg-[#0B0F19]">
       <SEOHead
@@ -532,121 +680,29 @@ const Index = () => {
       {/* 5 — WHAT'S HAPPENING · weekly editorial pulse */}
       <WeeklyFeed scope="region" />
 
-      {/* 6 — START HERE · onramps */}
-      <section className="bg-[#0B0F19] py-20 md:py-28 px-6 md:px-10 border-t border-[#2D3748]">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-12 text-center">
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#5eead4]">
-              Start Here
-            </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-white leading-[1.05]">
-              New to the Capital District?
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-            <Link
-              to="/rentals"
-              className="group block rounded-3xl bg-[#1E2230] p-9 md:p-10 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-24px_rgba(13,110,102,0.4)]"
-            >
-              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#5eead4] mb-3">Renting</p>
-              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-white">Find a place to rent.</h3>
-              <p className="mt-3 text-[15px] text-white/60 font-light leading-relaxed">
-                Apartments, pricing, and move-in help across the region.
-              </p>
-              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4]">
-                Start Renting <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
-            </Link>
-            <Link
-              to="/first-time-homebuyers"
-              className="group block rounded-3xl bg-[#1E2230] p-9 md:p-10 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-24px_rgba(13,110,102,0.4)]"
-            >
-              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#5eead4] mb-3">Buying</p>
-              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-white">Buy your first home.</h3>
-              <p className="mt-3 text-[15px] text-white/60 font-light leading-relaxed">
-                What you can afford, programs, and the next step.
-              </p>
-              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4]">
-                Start Buying <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* 6 — CAPITAL DISTRICT INTELLIGENCE · single consolidated tabbed onramp */}
+      <CapitalDistrictIntelligence />
+
 
       {/* 7 — REAL ESTATE · lowered, lifestyle-integrated */}
       <HomeSearchPreview />
 
-      {/* 8 — INVESTMENT INTELLIGENCE · dark Bloomberg-meets-Apple */}
+      {/* 8 — INVEST IN THE CAPITAL DISTRICT · emotional, then analytical */}
       <HeroBand
         mood="graphite"
-        eyebrow="Investment Intelligence"
-        headline={<>Know the numbers<br />before you make a move.</>}
-        sub="Estimate monthly cost, taxes, cash flow, and investment potential before you offer — built for the Capital District market."
-        ctaLabel="Analyze a property"
+        eyebrow="Invest in the Capital District"
+        headline={<>Where the region's<br />next chapter is being written.</>}
+        sub="Major infrastructure, multifamily demand, and small-business growth are reshaping Albany, Schenectady, Troy, and Saratoga. See where the numbers — and the neighborhoods — are heading."
+        ctaLabel="Run the numbers"
         ctaHref="/analyze"
         callouts={[
-          { title: "Monthly payment", body: "Principal, interest, taxes, insurance, HOA — all in." },
-          { title: "Taxes & insurance", body: "Capital District averages ~2.2% effective property tax." },
-          { title: "Cash flow & cap rate", body: "Investor-grade math for 1–4 unit properties." },
-        ]}
-      />
-
-      <HeroBand
-        mood="dark-gold"
-        eyebrow="Multifamily"
-        headline={<>Buying a 2–4 unit in Albany<br />is different.</>}
-        sub="Multifamily isn't a single-family home with extra doors. Underwrite rent rolls, vacancy, and CapEx the way investors actually do."
-        ctaLabel="Analyze a multifamily"
-        ctaHref="/analyze/multifamily"
-        callouts={[
-          { title: "Rent roll & vacancy", body: "Real Capital Region rents, not Zillow Rent Estimate guesses." },
-          { title: "CapEx reserves",    body: "Roof, mechanicals, tenant turnover — built into the numbers." },
-          { title: "Financing fit",     body: "Conventional, FHA house-hack, DSCR, portfolio — what fits this deal." },
+          { title: "Development & growth", body: "NanoTech expansion, Mohawk Harbor, downtown Albany rebuild." },
+          { title: "Multifamily demand",   body: "2–4 unit rents up, vacancy near historic lows region-wide." },
+          { title: "Investor-grade math",  body: "Underwrite cash flow, cap rate, and DSCR before you offer." },
         ]}
       />
 
 
-      {/* 10 — CATEGORY DESTINATIONS */}
-      <section className="bg-[#0B0F19] py-24 md:py-32 px-6 md:px-10 border-t border-[#2D3748]">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14 md:mb-20">
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#5eead4]">
-              Where to Start
-            </p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
-              Pick your path.
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-            {[
-              { title: "New Properties This Week", sub: "Fresh listings across the Capital District.", to: "/homes-for-sale" },
-              { title: "Land for Sale",            sub: "Lots, acreage, and build sites.",             to: "/land-buyers" },
-              { title: "Investment Properties",    sub: "2–4 unit, multifamily, and rentals.",         to: "/investment-properties" },
-              { title: "First-Time Buyer Help",    sub: "Roadmap, programs, and what to expect.",      to: "/first-time-homebuyers" },
-              { title: "Financing & Grants",       sub: "Loan types and down-payment assistance.",     to: "/financing" },
-              { title: "Local Businesses & Vendors", sub: "Curated by town, not crowdsourced.",        to: "/local" },
-            ].map((c) => (
-              <Link
-                key={c.title}
-                to={c.to}
-                className="group relative block rounded-2xl bg-[#1E2230] p-7 md:p-8 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.4)]"
-              >
-                <h3 className="text-lg md:text-xl font-semibold tracking-tight text-white">
-                  {c.title}
-                </h3>
-                <p className="mt-2 text-sm md:text-[15px] text-white/60 font-light leading-relaxed">
-                  {c.sub}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4]">
-                  Explore <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* 11 — WEEKLY NEWSLETTER CTA */}
       <WeeklyNewsletterCTA />
