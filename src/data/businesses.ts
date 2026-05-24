@@ -171,6 +171,12 @@ export const businesses: Business[] = [
     featured: true,
     verified: true,
     image: STOCK("photo-1556761175-5973dc0f32e7"),
+    socials: {
+      facebook: "https://www.facebook.com/BroadviewFCU",
+      instagram: "https://www.instagram.com/broadviewfcu",
+      linkedin: "https://www.linkedin.com/company/broadview-fcu",
+      youtube: "https://www.youtube.com/@BroadviewFCU",
+    },
   },
   {
     slug: "us-mortgage",
