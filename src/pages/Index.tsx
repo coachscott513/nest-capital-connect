@@ -539,76 +539,22 @@ const Index = () => {
       {/* 7 — REAL ESTATE · lowered, lifestyle-integrated */}
       <HomeSearchPreview />
 
-      {/* 8 — INVESTMENT INTELLIGENCE · dark Bloomberg-meets-Apple */}
+      {/* 8 — INVEST IN THE CAPITAL DISTRICT · emotional, then analytical */}
       <HeroBand
         mood="graphite"
-        eyebrow="Investment Intelligence"
-        headline={<>Know the numbers<br />before you make a move.</>}
-        sub="Estimate monthly cost, taxes, cash flow, and investment potential before you offer — built for the Capital District market."
-        ctaLabel="Analyze a property"
+        eyebrow="Invest in the Capital District"
+        headline={<>Where the region's<br />next chapter is being written.</>}
+        sub="Major infrastructure, multifamily demand, and small-business growth are reshaping Albany, Schenectady, Troy, and Saratoga. See where the numbers — and the neighborhoods — are heading."
+        ctaLabel="Run the numbers"
         ctaHref="/analyze"
         callouts={[
-          { title: "Monthly payment", body: "Principal, interest, taxes, insurance, HOA — all in." },
-          { title: "Taxes & insurance", body: "Capital District averages ~2.2% effective property tax." },
-          { title: "Cash flow & cap rate", body: "Investor-grade math for 1–4 unit properties." },
-        ]}
-      />
-
-      <HeroBand
-        mood="dark-gold"
-        eyebrow="Multifamily"
-        headline={<>Buying a 2–4 unit in Albany<br />is different.</>}
-        sub="Multifamily isn't a single-family home with extra doors. Underwrite rent rolls, vacancy, and CapEx the way investors actually do."
-        ctaLabel="Analyze a multifamily"
-        ctaHref="/analyze/multifamily"
-        callouts={[
-          { title: "Rent roll & vacancy", body: "Real Capital Region rents, not Zillow Rent Estimate guesses." },
-          { title: "CapEx reserves",    body: "Roof, mechanicals, tenant turnover — built into the numbers." },
-          { title: "Financing fit",     body: "Conventional, FHA house-hack, DSCR, portfolio — what fits this deal." },
+          { title: "Development & growth", body: "NanoTech expansion, Mohawk Harbor, downtown Albany rebuild." },
+          { title: "Multifamily demand",   body: "2–4 unit rents up, vacancy near historic lows region-wide." },
+          { title: "Investor-grade math",  body: "Underwrite cash flow, cap rate, and DSCR before you offer." },
         ]}
       />
 
 
-      {/* 10 — CATEGORY DESTINATIONS */}
-      <section className="bg-[#0B0F19] py-24 md:py-32 px-6 md:px-10 border-t border-[#2D3748]">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14 md:mb-20">
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#5eead4]">
-              Where to Start
-            </p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
-              Pick your path.
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-            {[
-              { title: "New Properties This Week", sub: "Fresh listings across the Capital District.", to: "/homes-for-sale" },
-              { title: "Land for Sale",            sub: "Lots, acreage, and build sites.",             to: "/land-buyers" },
-              { title: "Investment Properties",    sub: "2–4 unit, multifamily, and rentals.",         to: "/investment-properties" },
-              { title: "First-Time Buyer Help",    sub: "Roadmap, programs, and what to expect.",      to: "/first-time-homebuyers" },
-              { title: "Financing & Grants",       sub: "Loan types and down-payment assistance.",     to: "/financing" },
-              { title: "Local Businesses & Vendors", sub: "Curated by town, not crowdsourced.",        to: "/local" },
-            ].map((c) => (
-              <Link
-                key={c.title}
-                to={c.to}
-                className="group relative block rounded-2xl bg-[#1E2230] p-7 md:p-8 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.4)]"
-              >
-                <h3 className="text-lg md:text-xl font-semibold tracking-tight text-white">
-                  {c.title}
-                </h3>
-                <p className="mt-2 text-sm md:text-[15px] text-white/60 font-light leading-relaxed">
-                  {c.sub}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4]">
-                  Explore <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* 11 — WEEKLY NEWSLETTER CTA */}
       <WeeklyNewsletterCTA />
