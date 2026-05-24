@@ -40,6 +40,16 @@ export interface TownFinanceLink {
   title: string;
   body: string;
   href: string;
+  category?: string;
+}
+
+export interface TownDiscoverCard {
+  eyebrow: string;
+  title: string;
+  body: string;
+  cta: string;
+  href: string;
+  image: string;
 }
 
 export interface TownPartnerSeed {
