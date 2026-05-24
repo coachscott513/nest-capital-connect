@@ -171,6 +171,12 @@ export const businesses: Business[] = [
     featured: true,
     verified: true,
     image: STOCK("photo-1556761175-5973dc0f32e7"),
+    socials: {
+      facebook: "https://www.facebook.com/BroadviewFCU",
+      instagram: "https://www.instagram.com/broadviewfcu",
+      linkedin: "https://www.linkedin.com/company/broadview-fcu",
+      youtube: "https://www.youtube.com/@BroadviewFCU",
+    },
   },
   {
     slug: "us-mortgage",
@@ -189,6 +195,11 @@ export const businesses: Business[] = [
     featured: true,
     verified: true,
     image: STOCK("photo-1582407947304-fd86f028f716"),
+    socials: {
+      facebook: "https://www.facebook.com/USMortgageCorp",
+      linkedin: "https://www.linkedin.com/company/u-s--mortgage-corp",
+      instagram: "https://www.instagram.com/usmortgagecorp",
+    },
   },
   {
     slug: "deangelis-law",
@@ -207,6 +218,11 @@ export const businesses: Business[] = [
     featured: true,
     verified: true,
     image: STOCK("photo-1450101499163-c8848c66ca85"),
+    socials: {
+      facebook: "https://www.facebook.com/deangelislawfirm",
+      linkedin: "https://www.linkedin.com/company/deangelis-law-firm",
+      instagram: "https://www.instagram.com/deangelislaw",
+    },
   },
 
   // ───────── DELMAR ─────────
