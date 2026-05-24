@@ -563,30 +563,79 @@ const TownPageTemplate = ({ town }: Props) => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {o.financeLinks.map((f) => (
-                <a
-                  key={f.title}
-                  href={f.href}
-                  target={f.href.startsWith("http") ? "_blank" : undefined}
-                  rel={f.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-6 hover:bg-white/[0.06] hover:border-white/15 transition flex items-start gap-4"
-                >
-                  <div
-                    className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-white/[0.04]"
-                  >
-                    <Calculator className="w-4 h-4" style={{ color: TEAL_DARK }} />
+            {(() => {
+              const grouped = o.financeLinks.reduce<Record<string, typeof o.financeLinks>>((acc, f) => {
+                const key = f.category ?? "Resources";
+                (acc[key] ||= []).push(f);
+                return acc;
+              }, {});
+              const categories = Object.keys(grouped);
+              const hasCategories = categories.some((c) => c !== "Resources");
+
+              if (!hasCategories) {
+                return (
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {o.financeLinks.map((f) => (
+                      <a
+                        key={f.title}
+                        href={f.href}
+                        target={f.href.startsWith("http") ? "_blank" : undefined}
+                        rel={f.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-6 hover:bg-white/[0.06] hover:border-white/15 transition flex items-start gap-4"
+                      >
+                        <div className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-white/[0.04]">
+                          <Calculator className="w-4 h-4" style={{ color: TEAL_DARK }} />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="text-base font-semibold text-white">{f.title}</p>
+                            <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition" />
+                          </div>
+                          <p className="mt-1.5 text-sm text-white/60 font-light leading-relaxed">{f.body}</p>
+                        </div>
+                      </a>
+                    ))}
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-2">
-                      <p className="text-base font-semibold text-white">{f.title}</p>
-                      <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition" />
+                );
+              }
+
+              return (
+                <div className="space-y-12">
+                  {categories.map((cat) => (
+                    <div key={cat}>
+                      <p
+                        className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-5"
+                        style={{ color: TEAL_DARK }}
+                      >
+                        {cat}
+                      </p>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+                        {grouped[cat].map((f) => (
+                          <a
+                            key={f.title}
+                            href={f.href}
+                            target={f.href.startsWith("http") ? "_blank" : undefined}
+                            rel={f.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                            className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-5 hover:bg-white/[0.06] hover:border-white/15 transition flex items-start gap-4"
+                          >
+                            <div className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-white/[0.04]">
+                              <Calculator className="w-4 h-4" style={{ color: TEAL_DARK }} />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center justify-between gap-2">
+                                <p className="text-sm font-semibold text-white">{f.title}</p>
+                                <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition" />
+                              </div>
+                              <p className="mt-1.5 text-xs text-white/60 font-light leading-relaxed">{f.body}</p>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
                     </div>
-                    <p className="mt-1.5 text-sm text-white/60 font-light leading-relaxed">{f.body}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
+                  ))}
+                </div>
+              );
+            })()}
           </div>
         </section>
       )}
