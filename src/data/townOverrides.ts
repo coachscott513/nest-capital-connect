@@ -477,8 +477,7 @@ export const townOverrides: Record<string, TownOverride> = {
     ],
   },
   "saratoga-springs": {
-    heroImage:
-      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2400&q=80",
+    heroImage: "/assets/towns/saratoga-hero.jpg",
     whyImage:
       "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1800&q=80",
     heroHeadline: "Discover Saratoga Springs.",
