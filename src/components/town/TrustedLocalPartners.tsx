@@ -40,6 +40,7 @@ interface Props {
   sub?: string;
   partners?: LocalPartner[];
   variant?: "light" | "dark";
+  showClaimCard?: boolean;
 }
 
 const TEAL = "#0d6e66";
@@ -285,6 +286,7 @@ const TrustedLocalPartners = ({
   sub = "A curated set of lenders, attorneys, and local favorites we recommend across the Capital District.",
   partners = DEFAULT_PARTNERS,
   variant = "light",
+  showClaimCard = false,
 }: Props) => {
   const isDark = variant === "dark";
   const [active, setActive] = useState<LocalPartner | null>(null);
@@ -354,6 +356,38 @@ const TrustedLocalPartners = ({
               </div>
             </button>
           ))}
+
+          {showClaimCard && (
+            <a
+              href="/claim-business"
+              className="group relative text-left overflow-hidden rounded-[28px] aspect-[4/5] md:aspect-[5/6] bg-[#0e0f12] border border-[#0d6e66]/40 hover:border-[#5eead4]/60 transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_30px_80px_-30px_rgba(13,110,102,0.55)] focus:outline-none focus:ring-2 focus:ring-[#0d6e66]/40 flex flex-col justify-between p-7 md:p-9"
+            >
+              <div
+                className="absolute -top-24 -right-24 w-[360px] h-[360px] rounded-full blur-[100px] pointer-events-none"
+                style={{ backgroundColor: "rgba(13,110,102,0.35)" }}
+              />
+              <div className="relative">
+                <span
+                  className="text-[11px] font-semibold tracking-[0.18em] uppercase"
+                  style={{ color: "#5eead4" }}
+                >
+                  For Business Owners
+                </span>
+                <h3 className="mt-4 text-2xl md:text-[30px] font-semibold tracking-tight leading-[1.1] text-white">
+                  Operating in {townName}?
+                </h3>
+                <p className="mt-3 text-[15px] md:text-base font-light text-white/70 max-w-md">
+                  Claim your free digital profile and appear alongside the town's most-loved local businesses.
+                </p>
+              </div>
+              <span
+                className="relative mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white transition w-fit shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)]"
+                style={{ backgroundColor: TEAL }}
+              >
+                Claim Your Free Digital Profile <ArrowUpRight className="w-4 h-4" />
+              </span>
+            </a>
+          )}
         </div>
 
         <p

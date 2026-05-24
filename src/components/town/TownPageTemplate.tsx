@@ -412,6 +412,8 @@ const TownPageTemplate = ({ town }: Props) => {
           eyebrow={`Featured in ${town.townName}`}
           headline={`Local businesses we love in ${town.townName}.`}
           sub={`Cafés, restaurants, boutiques, services, and the people behind them.`}
+          partners={o.partners as any}
+          showClaimCard
         />
       </div>
 
