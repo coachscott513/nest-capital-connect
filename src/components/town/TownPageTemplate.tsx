@@ -22,6 +22,10 @@ import LocalBusinessesDirectory from "@/components/town/LocalBusinessesDirectory
 import MorningPulse from "@/components/town/MorningPulse";
 import TownProjects from "@/components/town/TownProjects";
 import LocalHeroes from "@/components/town/LocalHeroes";
+import LiveNowTicker from "@/components/town/LiveNowTicker";
+import HeroMetadataPulse from "@/components/town/HeroMetadataPulse";
+import WhatChangedThisWeek from "@/components/town/WhatChangedThisWeek";
+import ThisWeekendIn from "@/components/town/ThisWeekendIn";
 import type { LivingInTown } from "@/data/livingInTowns";
 import { getTownOverride } from "@/data/townOverrides";
 
@@ -33,7 +37,8 @@ interface Props {
 const TEAL = "#0d6e66";
 const TEAL_DARK = "#5eead4";
 
-const SECTION_PAD = "py-24 md:py-32 px-6 md:px-10";
+// Tighter, more cinematic flow between sections
+const SECTION_PAD = "py-20 md:py-24 px-6 md:px-10";
 
 /**
  * MASTER TOWN TEMPLATE
@@ -101,10 +106,20 @@ const TownPageTemplate = ({ town }: Props) => {
         {/* Onyx wash + signature glow */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/75 to-background" />
         <div
-          className="absolute -top-32 left-1/3 w-[680px] h-[680px] rounded-full blur-[140px] pointer-events-none"
+          className="absolute -top-32 left-1/3 w-[680px] h-[680px] rounded-full blur-[140px] pointer-events-none animate-[townGlowDrift_18s_ease-in-out_infinite]"
           style={{ backgroundColor: accent }}
         />
-        <div className="absolute bottom-0 right-1/4 w-[420px] h-[420px] rounded-full blur-[120px] pointer-events-none bg-[rgba(13,110,102,0.18)]" />
+        <div className="absolute bottom-0 right-1/4 w-[420px] h-[420px] rounded-full blur-[120px] pointer-events-none bg-[rgba(13,110,102,0.18)] animate-[townGlowDriftAlt_22s_ease-in-out_infinite]" />
+        <style>{`
+          @keyframes townGlowDrift {
+            0%,100% { transform: translate(0,0) scale(1); opacity: 0.85; }
+            50%     { transform: translate(40px,30px) scale(1.08); opacity: 1; }
+          }
+          @keyframes townGlowDriftAlt {
+            0%,100% { transform: translate(0,0) scale(1); opacity: 0.7; }
+            50%     { transform: translate(-50px,-20px) scale(1.12); opacity: 0.95; }
+          }
+        `}</style>
 
         <div className={`relative max-w-6xl mx-auto ${SECTION_PAD}`}>
           <div className="max-w-3xl">
@@ -146,14 +161,20 @@ const TownPageTemplate = ({ town }: Props) => {
               </button>
             </form>
 
+            {o.heroPulses && o.heroPulses.length > 0 && (
+              <HeroMetadataPulse items={o.heroPulses} />
+            )}
+
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/55">
               <a href="#pulse" className="hover:text-white transition">The Pulse</a>
               <span className="text-white/15">·</span>
               <a href="#feel" className="hover:text-white transition">The Feel</a>
               <span className="text-white/15">·</span>
-              <a href="#homes" className="hover:text-white transition">Homes</a>
+              <a href="#weekend" className="hover:text-white transition">This Weekend</a>
               <span className="text-white/15">·</span>
-              <a href="#schools" className="hover:text-white transition">Schools</a>
+              <a href="#changed" className="hover:text-white transition">What Changed</a>
+              <span className="text-white/15">·</span>
+              <a href="#homes" className="hover:text-white transition">Homes</a>
               <span className="text-white/15">·</span>
               <a href="#businesses" className="hover:text-white transition">Businesses</a>
             </div>
@@ -201,10 +222,35 @@ const TownPageTemplate = ({ town }: Props) => {
         </section>
       )}
 
-      {/* ───────── 2. THE [TOWN] PULSE ───────── */}
-      <div id="pulse" className="pt-20 md:pt-28">
+      {/* ───────── 1c. LIVE NOW TICKER (Bloomberg × Apple) ───────── */}
+      {o.liveNow && o.liveNow.length > 0 && (
+        <div className="mt-12 md:mt-16">
+          <LiveNowTicker townName={town.townName} items={o.liveNow} />
+        </div>
+      )}
+
+      {/* ───────── 2. THIS WEEKEND IN [TOWN] ───────── */}
+      {o.thisWeekend && o.thisWeekend.length > 0 && (
+        <div id="weekend">
+          <ThisWeekendIn townName={town.townName} items={o.thisWeekend} />
+        </div>
+      )}
+
+      {/* ───────── 2b. THE [TOWN] PULSE ───────── */}
+      <div id="pulse" className="pt-16 md:pt-20">
         <MorningPulse townName={town.townName} />
       </div>
+
+      {/* ───────── 2c. WHAT CHANGED THIS WEEK ───────── */}
+      {o.changedThisWeek && o.changedThisWeek.length > 0 && (
+        <div id="changed">
+          <WhatChangedThisWeek
+            townName={town.townName}
+            items={o.changedThisWeek}
+            updatedLabel="Updated 2 hours ago"
+          />
+        </div>
+      )}
 
       {/* ───────── 3. THE FEEL OF [TOWN] ───────── */}
       <section id="feel" className={`bg-background ${SECTION_PAD}`}>

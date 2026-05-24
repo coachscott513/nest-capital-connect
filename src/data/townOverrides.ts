@@ -55,6 +55,28 @@ export interface TownPartnerSeed {
   image?: string;
 }
 
+export interface TownLiveNowItem {
+  label: string;
+  text: string;
+  tone?: "event" | "market" | "business" | "sports" | "civic";
+}
+
+export interface TownWeeklyChangeItem {
+  icon?: "up" | "down" | "new" | "permit" | "school" | "park" | "spark";
+  label: string;
+  detail?: string;
+}
+
+export interface TownWeekendItem {
+  day: string;
+  time?: string;
+  category: string;
+  title: string;
+  location?: string;
+  image?: string;
+  href?: string;
+}
+
 export interface TownOverride {
   heroImage: string;
   whyImage: string;
@@ -70,6 +92,14 @@ export interface TownOverride {
   accentGlow?: string;
   /** Glassmorphic micro-intelligence ribbon under the hero */
   ribbon?: TownRibbonStat[];
+  /** Rotating "right now" pulses inside the hero */
+  heroPulses?: string[];
+  /** Bloomberg-style live ticker under the ribbon */
+  liveNow?: TownLiveNowItem[];
+  /** "What Changed This Week" intelligence feed */
+  changedThisWeek?: TownWeeklyChangeItem[];
+  /** "This Weekend in [Town]" — exactly 5 curated items */
+  thisWeekend?: TownWeekendItem[];
   /** Minimal local sports scorecards */
   sports?: TownScore[];
   /** Buyer / investor utility links */
@@ -136,6 +166,74 @@ export const townOverrides: Record<string, TownOverride> = {
       { label: "School Rank", value: "Top 5%" },
       { label: "Velocity", value: "High" },
       { label: "Albany Commute", value: "12 Mins" },
+    ],
+    heroPulses: [
+      "Farmers Market opens Saturday 9 AM at Four Corners",
+      "Bethlehem Eagles win 5–2 vs Shenendehowa",
+      "Median price up 2.4% month over month",
+      "Tulip Festival weekend — Albany traffic elevated",
+      "3 new Delmar listings hit the market today",
+      "Live music tonight at The War Room Tavern",
+    ],
+    liveNow: [
+      { label: "Event",    tone: "event",    text: "Farmers Market opens Saturday 9 AM at Four Corners" },
+      { label: "Business", tone: "business", text: "New café opening near Four Corners next month" },
+      { label: "Sports",   tone: "sports",   text: "Bethlehem baseball sectional game tonight" },
+      { label: "Market",   tone: "market",   text: "Delmar inventory remains tight — 12 active listings" },
+      { label: "Nightlife",tone: "event",    text: "Live music tonight at The War Room Tavern" },
+      { label: "Civic",    tone: "civic",    text: "Tulip Festival traffic elevated through downtown Albany" },
+      { label: "Schools",  tone: "civic",    text: "Bethlehem CSD spring concert series begins this week" },
+      { label: "Market",   tone: "market",   text: "3 Delmar homes went pending in the last 48 hours" },
+    ],
+    changedThisWeek: [
+      { icon: "up",     label: "3 Delmar homes sold over asking",            detail: "Average 4.1% above list price" },
+      { icon: "permit", label: "New café permit filed near Four Corners",    detail: "Espresso bar + bakery concept" },
+      { icon: "school", label: "Bethlehem CSD ranking updated",              detail: "Now Top 5% in New York State" },
+      { icon: "park",   label: "Town board approves trail expansion",        detail: "New connector through Elm Avenue Park" },
+      { icon: "down",   label: "Rental inventory tightened again",           detail: "Down 2 units week over week" },
+      { icon: "new",    label: "New mixed-use proposal on Delaware Avenue",  detail: "Retail below, residential above" },
+    ],
+    thisWeekend: [
+      {
+        day: "Sat", time: "9 AM",
+        category: "Farmers Market",
+        title: "Delmar Farmers Market — opening weekend",
+        location: "Bethlehem Central Middle School",
+        image: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1600&q=80",
+        href: "#",
+      },
+      {
+        day: "Fri", time: "8 PM",
+        category: "Live Music",
+        title: "Live acoustic set at The War Room Tavern",
+        location: "Delaware Avenue, Delmar",
+        image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80",
+        href: "#",
+      },
+      {
+        day: "Sat", time: "1 PM",
+        category: "College Baseball",
+        title: "Siena baseball home opener",
+        location: "Siena College, Loudonville",
+        image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80",
+        href: "#",
+      },
+      {
+        day: "Sun", time: "10 AM",
+        category: "Brunch",
+        title: "Roux launches a new spring brunch menu",
+        location: "Delaware Avenue, Delmar",
+        image: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=1200&q=80",
+        href: "#",
+      },
+      {
+        day: "Sun", time: "All Day",
+        category: "Festival",
+        title: "Tulip Festival in Washington Park",
+        location: "Albany — 10 minutes from Delmar",
+        image: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=80",
+        href: "#",
+      },
     ],
     sports: [
       { team: "Bethlehem Eagles", league: "Section II Baseball", status: "W 5–2", detail: "vs Shenendehowa" },
