@@ -277,7 +277,32 @@ const TownPageTemplate = ({ town }: Props) => {
             </a>
           </div>
 
+          {/* Filter pills */}
+          <div className="flex flex-wrap items-center gap-2 mb-10">
+            {[
+              { label: "All Homes", href: listingUrl },
+              { label: "New Listings", href: listingUrl },
+              { label: "Investment Deals", href: "/analyze" },
+              { label: "Rentals", href: "/rentals" },
+            ].map((p, i) => (
+              <a
+                key={p.label}
+                href={p.href}
+                target={p.href.startsWith("http") ? "_blank" : undefined}
+                rel={p.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium border transition ${
+                  i === 0
+                    ? "bg-white text-black border-white"
+                    : "bg-white/[0.04] text-white/75 border-white/10 hover:bg-white/[0.08] hover:text-white hover:border-white/20"
+                }`}
+              >
+                {p.label}
+              </a>
+            ))}
+          </div>
+
           <div className="grid md:grid-cols-3 gap-px bg-white/[0.06] rounded-3xl overflow-hidden border border-white/[0.08]">
+
             {[
               { label: "Median Price", value: o.stats.medianPrice, note: o.stats.medianNote },
               { label: "Active Listings", value: o.stats.activeListings, note: o.stats.activeNote },
