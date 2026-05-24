@@ -685,8 +685,7 @@ export const townOverrides: Record<string, TownOverride> = {
     ],
   },
   schenectady: {
-    heroImage:
-      "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=2400&q=80",
+    heroImage: "/assets/towns/schenectady-hero.jpg",
     whyImage:
       "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=1800&q=80",
     heroHeadline: "Discover Schenectady.",
