@@ -87,7 +87,7 @@ const ClaimBusiness = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.businessName.trim() || !form.ownerName.trim() || !form.email.trim()) {
+    if (!form.businessName.trim() || !form.email.trim()) {
       toast.error("Business name and email are required.");
       return;
     }
