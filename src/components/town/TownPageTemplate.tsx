@@ -161,14 +161,20 @@ const TownPageTemplate = ({ town }: Props) => {
               </button>
             </form>
 
+            {o.heroPulses && o.heroPulses.length > 0 && (
+              <HeroMetadataPulse items={o.heroPulses} />
+            )}
+
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/55">
               <a href="#pulse" className="hover:text-white transition">The Pulse</a>
               <span className="text-white/15">·</span>
               <a href="#feel" className="hover:text-white transition">The Feel</a>
               <span className="text-white/15">·</span>
-              <a href="#homes" className="hover:text-white transition">Homes</a>
+              <a href="#weekend" className="hover:text-white transition">This Weekend</a>
               <span className="text-white/15">·</span>
-              <a href="#schools" className="hover:text-white transition">Schools</a>
+              <a href="#changed" className="hover:text-white transition">What Changed</a>
+              <span className="text-white/15">·</span>
+              <a href="#homes" className="hover:text-white transition">Homes</a>
               <span className="text-white/15">·</span>
               <a href="#businesses" className="hover:text-white transition">Businesses</a>
             </div>
