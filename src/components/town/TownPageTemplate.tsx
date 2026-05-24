@@ -507,10 +507,9 @@ const TownPageTemplate = ({ town }: Props) => {
             {/* Community submission CTA row */}
             <div className="mt-10 flex flex-wrap items-center gap-2.5">
               {[
+                { label: "Submit Your Team or Program", href: "/contact?topic=team" },
                 { label: "Submit a Local Event", href: "/contact?topic=event" },
-                { label: "Submit a Score", href: "/contact?topic=score" },
-                { label: "Promote Your Team", href: "/contact?topic=team" },
-                { label: "Community Calendar", href: "#weekly-feed" },
+                { label: "Community Calendar", href: "#pulse" },
               ].map((c) => (
                 <a
                   key={c.label}
