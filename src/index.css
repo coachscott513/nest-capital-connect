@@ -628,16 +628,16 @@
   transform: translateY(-1px) scale(1.025);
 }
 
-/* Apple-style frosted nav on scroll */
+/* Apple-style frosted nav — DARK onyx surface (matches global dark canvas) */
 .nav-frost {
-  background: hsla(0, 0%, 100%, 0.72);
+  background: rgba(11, 15, 25, 0.78);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid hsla(0, 0%, 0%, 0.06);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid #1F2937;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
 }
 .nav-transparent {
-  background: hsla(0, 0%, 100%, 0.45);
+  background: rgba(11, 15, 25, 0.55);
   backdrop-filter: saturate(160%) blur(12px);
   -webkit-backdrop-filter: saturate(160%) blur(12px);
   border-bottom: 1px solid transparent;
