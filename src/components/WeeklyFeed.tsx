@@ -297,7 +297,7 @@ const WeeklyFeed = ({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/30 to-transparent" />
                   <span className="absolute top-5 left-5 inline-flex items-center gap-1.5 rounded-full bg-[#0d6e66] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-white">
-                    <Sparkles className="w-3 h-3" /> Featured this week
+                    <Sparkles className="w-3 h-3" /> {featuredBadge ?? "Featured this week"}
                   </span>
                 </div>
               )}
