@@ -140,7 +140,7 @@ export default function LiveLocalPulse() {
   const loop = [...filtered, ...filtered];
 
   return (
-    <section aria-label="Live Local Pulse" className="relative w-full bg-[#0B0F19] border-b border-[#2D3748]">
+    <section aria-label="Live Local Pulse" className="relative w-full overflow-visible bg-[#0B0F19] border-b border-[#2D3748] select-none">
       <div
         className="absolute inset-0 pointer-events-none opacity-70"
         style={{
@@ -149,7 +149,8 @@ export default function LiveLocalPulse() {
         }}
       />
 
-      <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 py-3 md:py-3.5 flex items-center gap-4 md:gap-6">
+      <div className="relative w-full mx-auto px-4 md:px-8 py-3 md:py-3.5 flex flex-nowrap items-center gap-3 md:gap-6 overflow-visible">
+
         {/* LEFT: live indicator */}
         <div className="flex items-center gap-2 shrink-0">
           <span className="relative flex h-2 w-2">
