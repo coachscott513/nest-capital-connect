@@ -19,7 +19,20 @@ import HeroMetadataPulse from "@/components/town/HeroMetadataPulse";
 import WhatChangedThisWeek from "@/components/town/WhatChangedThisWeek";
 import ThisWeekendIn from "@/components/town/ThisWeekendIn";
 import type { LivingInTown } from "@/data/livingInTowns";
-import { getTownOverride } from "@/data/townOverrides";
+import { getTownOverride, townOverrides } from "@/data/townOverrides";
+import { findTownInDirectory } from "@/data/capitalDistrictCounties";
+
+// County → regional hub slug used to backfill local partners
+// when a small town has fewer than 5 verified businesses.
+const COUNTY_HUB_SLUG: Record<string, string> = {
+  "Albany County": "albany",
+  "Saratoga County": "saratoga-springs",
+  "Rensselaer County": "troy",
+  "Schenectady County": "schenectady",
+  "Schoharie County": "schenectady",
+  "Fulton County": "saratoga-springs",
+  "Montgomery County": "schenectady",
+};
 
 interface Props {
   town: LivingInTown;
