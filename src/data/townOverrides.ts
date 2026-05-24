@@ -74,6 +74,8 @@ export interface TownOverride {
   sports?: TownScore[];
   /** Buyer / investor utility links */
   financeLinks?: TownFinanceLink[];
+  /** Hyper-local partner seeds for the Trusted Local Partners section */
+  partners?: TownPartnerSeed[];
 }
 
 const DEFAULT_HERO =
