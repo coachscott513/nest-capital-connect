@@ -149,10 +149,13 @@ export const townOverrides: Record<string, TownOverride> = {
     whyCopy:
       "Delmar combines suburban comfort, strong schools, and easy access to Albany — a community where families stay for decades.",
     whyBullets: [
-      "Tree-lined neighborhoods",
-      "Bethlehem Central schools",
-      "Local dining at Four Corners",
-      "12-minute Albany commute",
+      "Bethlehem Central Schools",
+      "Walkable Four Corners",
+      "Fast Albany commute",
+      "Local cafés & businesses",
+      "Parks and youth programs",
+      "Strong long-term demand",
+      "Community-centered lifestyle",
     ],
     feel: {
       morning:
