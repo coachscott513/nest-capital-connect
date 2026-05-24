@@ -1,12 +1,14 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, Search, MapPin, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Search, MapPin, Sparkles, Building2 } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   businesses as ALL,
   CATEGORY_GROUPS,
+  type Business,
   type BusinessCategory,
 } from "@/data/businesses";
+import { BusinessDetailModal } from "@/components/local/BusinessDirectory";
 
 const TOWN_CHIPS = [
   { name: "Delmar", slug: "delmar" },
@@ -35,6 +37,7 @@ const SupportLocalSection = () => {
   const [q, setQ] = useState("");
   const [town, setTown] = useState("");
   const [category, setCategory] = useState("");
+  const [openBiz, setOpenBiz] = useState<Business | null>(null);
   const placeholder = useMemo(
     () => PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)],
     [],
@@ -87,7 +90,7 @@ const SupportLocalSection = () => {
           </p>
         </motion.div>
 
-        {/* Search bar — large, equal weight to home search */}
+        {/* Search bar */}
         <motion.form
           onSubmit={submit}
           initial={{ opacity: 0, y: 16 }}
@@ -177,65 +180,109 @@ const SupportLocalSection = () => {
             </div>
             <Link
               to="/local"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] hover:opacity-80 transition"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border border-white/20 bg-white/[0.04] text-white hover:border-[#5eead4]/50 hover:text-[#5eead4] hover:bg-white/[0.08] transition"
             >
-              View the directory <ArrowRight className="w-4 h-4" />
+              View Full Directory <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {featured.map((b) => (
-              <Link
+              <button
                 key={b.slug}
-                to={`/local?biz=${b.slug}`}
-                className={`group text-left rounded-2xl bg-[#1E2230] border p-6 transition-all hover:-translate-y-0.5 ${
+                type="button"
+                onClick={() => setOpenBiz(b)}
+                className={`group relative text-left rounded-2xl overflow-hidden bg-[#1E2230] border transition-all duration-300 hover:-translate-y-1 flex flex-col ${
                   b.featured
-                    ? "border-[#0d6e66]/50 shadow-[0_18px_48px_-22px_rgba(13,110,102,0.4)] hover:shadow-[0_24px_56px_-22px_rgba(13,110,102,0.55)]"
-                    : "border-[#2D3748] hover:border-[#0d6e66]/60 hover:shadow-[0_18px_48px_-22px_rgba(13,110,102,0.35)]"
+                    ? "border-[#5eead4]/30 hover:border-[#5eead4]/60 hover:shadow-[0_28px_64px_-20px_rgba(94,234,212,0.30)]"
+                    : "border-[#2D3748] hover:border-[#5eead4]/40 hover:shadow-[0_22px_56px_-22px_rgba(94,234,212,0.18)]"
                 }`}
               >
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">
-                    {b.category}
-                  </p>
+                <div className="relative h-40 w-full overflow-hidden">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-110"
+                    style={
+                      b.image
+                        ? { backgroundImage: `url(${b.image})` }
+                        : { background: "linear-gradient(135deg, #0d6e66 0%, #0B0F19 100%)" }
+                    }
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
                   {b.featured && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66] text-white text-[10px] font-semibold uppercase tracking-wider">
+                    <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/15 backdrop-blur text-[#5eead4] text-[10px] font-semibold uppercase tracking-wider border border-[#5eead4]/30">
                       <Sparkles className="w-3 h-3" /> Featured
                     </span>
                   )}
                 </div>
-                <h4 className="text-lg font-semibold tracking-tight text-white leading-snug">
-                  {b.name}
-                </h4>
-                {b.townLabel && (
-                  <p className="mt-1 text-xs text-white/50 inline-flex items-center gap-1">
-                    <MapPin className="w-3 h-3" /> {b.townLabel}
+                <div className="p-6 flex flex-col flex-1">
+                  <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">
+                    {b.category}
                   </p>
-                )}
-                <p className="mt-3 text-sm text-white/60 font-light leading-relaxed line-clamp-2">
-                  {b.tagline}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4] group-hover:gap-2 transition-all">
-                  View business <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </Link>
+                  <h4 className="mt-1.5 text-lg font-semibold tracking-tight text-white leading-snug">
+                    {b.name}
+                  </h4>
+                  {b.townLabel && (
+                    <p className="mt-1 text-xs text-white/50 inline-flex items-center gap-1">
+                      <MapPin className="w-3 h-3" /> {b.townLabel}
+                    </p>
+                  )}
+                  <p className="mt-3 text-sm text-white/60 font-light leading-relaxed line-clamp-2">
+                    {b.tagline}
+                  </p>
+                  <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4]">
+                    View profile <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </span>
+                </div>
+              </button>
             ))}
+          </div>
+
+          {/* Centered directory CTA below cards */}
+          <div className="mt-10 flex justify-center">
+            <Link
+              to="/local"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90 transition"
+            >
+              Explore All Local Businesses <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
 
+        {/* Business owner CTA — distinct from featured cards & directory button */}
+        <div className="mt-16 md:mt-20 rounded-2xl border border-[#5eead4]/25 bg-gradient-to-br from-[#0d6e66]/15 via-[#1E2230] to-[#1E2230] p-7 md:p-9 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="flex items-start gap-4 max-w-2xl">
+            <div className="w-12 h-12 rounded-2xl border border-[#5eead4]/40 bg-[#5eead4]/10 flex items-center justify-center shrink-0">
+              <Building2 className="w-5 h-5 text-[#5eead4]" />
+            </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.22em] text-[#5eead4] font-semibold">
+                Business Owners
+              </p>
+              <h4 className="mt-1.5 text-xl md:text-2xl font-semibold tracking-tight text-white leading-tight">
+                Own a local business?
+              </h4>
+              <p className="mt-2 text-sm md:text-[15px] text-white/65 font-light leading-relaxed">
+                Claim your free profile and add photos, specials, events, and social links.
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/claim-business"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition shrink-0 self-start md:self-auto"
+          >
+            Claim Your Business <ArrowUpRight className="w-4 h-4" />
+          </Link>
+        </div>
+
         {/* Footer line */}
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 text-sm text-white/55">
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 text-sm text-white/55">
           <p className="font-light">
             Local services across the Capital District — curated, not crowdsourced.
           </p>
-          <Link
-            to="/claim-business"
-            className="inline-flex items-center gap-1.5 font-semibold text-[#5eead4] hover:opacity-80 transition"
-          >
-            List your business <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
       </div>
+
+      <BusinessDetailModal biz={openBiz} onClose={() => setOpenBiz(null)} all={ALL} />
     </section>
   );
 };

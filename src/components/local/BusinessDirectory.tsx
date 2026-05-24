@@ -528,7 +528,7 @@ const PromoteCtaCard = () => (
 
 /* ─────────────────────────  MODAL  ───────────────────────── */
 
-const BusinessDetailModal = ({
+export const BusinessDetailModal = ({
   biz,
   onClose,
   all,
