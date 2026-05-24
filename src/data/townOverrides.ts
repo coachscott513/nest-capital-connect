@@ -374,10 +374,8 @@ export const townOverrides: Record<string, TownOverride> = {
     ],
   },
   albany: {
-    heroImage:
-      "https://images.unsplash.com/photo-1572276596237-5db2c3e16c5d?auto=format&fit=crop&w=2400&q=80",
-    whyImage:
-      "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1800&q=80",
+    heroImage: "/assets/towns/albany-hero.jpg",
+    whyImage: "/assets/towns/albany-why.jpg",
     heroHeadline: "Discover Albany.",
     heroSub:
       "The capital city — Washington Park, Lark Street, Empire State Plaza, and the urban rhythm of New York's seat of government.",
@@ -479,8 +477,7 @@ export const townOverrides: Record<string, TownOverride> = {
     ],
   },
   "saratoga-springs": {
-    heroImage:
-      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2400&q=80",
+    heroImage: "/assets/towns/saratoga-hero.jpg",
     whyImage:
       "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1800&q=80",
     heroHeadline: "Discover Saratoga Springs.",
@@ -584,8 +581,7 @@ export const townOverrides: Record<string, TownOverride> = {
     ],
   },
   troy: {
-    heroImage:
-      "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=2400&q=80",
+    heroImage: "/assets/towns/troy-hero.jpg",
     whyImage:
       "https://images.unsplash.com/photo-1494522358652-f30e61a60313?auto=format&fit=crop&w=1800&q=80",
     heroHeadline: "Discover Troy.",
@@ -689,8 +685,7 @@ export const townOverrides: Record<string, TownOverride> = {
     ],
   },
   schenectady: {
-    heroImage:
-      "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=2400&q=80",
+    heroImage: "/assets/towns/schenectady-hero.jpg",
     whyImage:
       "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=1800&q=80",
     heroHeadline: "Discover Schenectady.",
