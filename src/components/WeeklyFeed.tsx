@@ -185,13 +185,12 @@ const WeeklyFeed = ({
     ];
   }, [allItems, isRegion, scope]);
 
-  if (items.length === 0) return null;
-
   // Featured selection:
   // 1. Explicitly featured + still live
-  // 2. Soonest upcoming live event/music/sports/family
+  // 2. Soonest upcoming live event/music/sports/family/dining
   // 3. First live item in the sorted pool
-  const featured = useMemo(() => {
+  const pickFeatured = (): WeeklyFeedItem | null => {
+    if (items.length === 0) return null;
     const explicit = items.find((i) => i.featured);
     if (explicit) return explicit;
     const eventy: WeeklyFeedType[] = ["event", "music", "sports", "family", "dining"];
@@ -199,8 +198,10 @@ const WeeklyFeed = ({
       (i) => eventy.includes(i.type) && i.startDate && (daysUntil(i) ?? 0) >= 0,
     );
     return upcoming ?? items[0];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
+  };
+  const featured = pickFeatured();
+
+  if (!featured) return null;
 
   const pool = items.filter((i) => i !== featured);
 
