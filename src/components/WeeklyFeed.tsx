@@ -91,13 +91,63 @@ const WeeklyFeed = ({
   const isRegion = scope === "region";
   const [filter, setFilter] = useState<FilterKey>("all");
 
-  const allItems: WeeklyFeedItem[] = useMemo(
-    () =>
-      weeklyFeed.filter((item) =>
-        isRegion ? item.scope === "region" || item.scope === "all" : item.scope === scope,
-      ),
-    [isRegion, scope],
-  );
+  // Today at local midnight, for freshness filtering.
+  const today = useMemo(() => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }, []);
+
+  const isLive = (item: WeeklyFeedItem) => {
+    const end = item.endDate ?? item.startDate;
+    if (!end) return true; // evergreen
+    const endDate = new Date(`${end}T23:59:59`);
+    return endDate.getTime() >= today.getTime();
+  };
+
+  const daysUntil = (item: WeeklyFeedItem): number | null => {
+    if (!item.startDate) return null;
+    const s = new Date(`${item.startDate}T00:00:00`);
+    return Math.round((s.getTime() - today.getTime()) / 86_400_000);
+  };
+
+  /** "Tonight" / "This weekend" / "Starts Friday" / "Trending now" */
+  const freshnessBadge = (item: WeeklyFeedItem): string | null => {
+    const d = daysUntil(item);
+    if (d === null) return "Trending now";
+    if (d < 0) {
+      // already started but still live (multi-day)
+      return "Happening now";
+    }
+    if (d === 0) return "Tonight";
+    const dow = new Date(`${item.startDate}T00:00:00`).getDay(); // 0=Sun..6=Sat
+    if (d <= 2 && (dow === 5 || dow === 6 || dow === 0)) return "This weekend";
+    if (d <= 7) {
+      const dayName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dow];
+      return `Starts ${dayName}`;
+    }
+    return null;
+  };
+
+  const allItems: WeeklyFeedItem[] = useMemo(() => {
+    const scoped = weeklyFeed.filter((item) =>
+      isRegion ? item.scope === "region" || item.scope === "all" : item.scope === scope,
+    );
+    // Drop expired
+    const live = scoped.filter(isLive);
+    // Sort: upcoming events first by soonest start, evergreen after
+    return live.slice().sort((a, b) => {
+      const da = daysUntil(a);
+      const db = daysUntil(b);
+      if (da === null && db === null) return 0;
+      if (da === null) return 1;
+      if (db === null) return -1;
+      const sa = da < 0 ? 0 : da;
+      const sb = db < 0 ? 0 : db;
+      return sa - sb;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRegion, scope, today]);
 
   // Town fallback so the section is never empty.
   const items: WeeklyFeedItem[] = useMemo(() => {
@@ -137,7 +187,21 @@ const WeeklyFeed = ({
 
   if (items.length === 0) return null;
 
-  const featured = items.find((i) => i.featured) ?? items[0];
+  // Featured selection:
+  // 1. Explicitly featured + still live
+  // 2. Soonest upcoming live event/music/sports/family
+  // 3. First live item in the sorted pool
+  const featured = useMemo(() => {
+    const explicit = items.find((i) => i.featured);
+    if (explicit) return explicit;
+    const eventy: WeeklyFeedType[] = ["event", "music", "sports", "family", "dining"];
+    const upcoming = items.find(
+      (i) => eventy.includes(i.type) && i.startDate && (daysUntil(i) ?? 0) >= 0,
+    );
+    return upcoming ?? items[0];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items]);
+
   const pool = items.filter((i) => i !== featured);
 
   const activeFilter = FILTERS.find((f) => f.key === filter)!;
@@ -153,6 +217,7 @@ const WeeklyFeed = ({
   const updatedLabel = "Updated 2 hours ago";
 
   const FeaturedIcon = ICONS[featured.type];
+  const featuredBadge = freshnessBadge(featured);
 
   return (
     <section
