@@ -10,6 +10,9 @@ import {
   Users,
   Sunrise,
   Car,
+  Trophy,
+  Calculator,
+  ChevronRight,
 } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
