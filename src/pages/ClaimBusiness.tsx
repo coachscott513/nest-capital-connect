@@ -236,7 +236,7 @@ const ClaimBusiness = () => {
           <SectionBlock
             eyebrow="Section 01"
             title="Basic info"
-            desc="Only your business name, your name, and email are required. Everything else helps us build your profile faster."
+            desc="Only your business name and email are required. Everything else helps us build your profile faster."
           >
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Business name" required>
@@ -248,12 +248,11 @@ const ClaimBusiness = () => {
                   className={inputCls}
                 />
               </Field>
-              <Field label="Your name" required>
+              <Field label="Your name">
                 <input
                   value={form.ownerName}
                   onChange={(e) => update("ownerName", e.target.value)}
                   placeholder="Owner or contact"
-                  required
                   className={inputCls}
                 />
               </Field>
