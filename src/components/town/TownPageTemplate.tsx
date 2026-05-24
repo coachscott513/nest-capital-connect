@@ -533,13 +533,13 @@ const TownPageTemplate = ({ town }: Props) => {
                 className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
                 style={{ color: TEAL_DARK }}
               >
-                Local Resources
+                Local Buyer Resources
               </p>
               <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                Local resources for {town.townName}.
+                Local buyer resources for {town.townName}.
               </h2>
               <p className="mt-5 text-lg font-light text-white/65">
-                Housing, taxes, schools, grants, local services, and tools for navigating {town.townName}.
+                Explore local grants, affordability tools, taxes, financing, insurance, and homeownership resources.
               </p>
             </div>
 
