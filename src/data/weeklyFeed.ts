@@ -2,10 +2,17 @@
  * CAPITAL DISTRICT NEST — WEEKLY FEED
  * Hand-curated. Update every Friday.
  *
- * Categories drive icons, pill colors, and the filter system on the homepage.
- * scope     — "region" appears on homepage. A town slug appears on that town's
- *             page. "all" appears on both.
- * featured  — set true on ONE region item per week (becomes editorial hero).
+ * DATE FIELDS:
+ * - `date` is the human-readable label rendered on the card.
+ * - `startDate` / `endDate` (ISO YYYY-MM-DD) drive freshness logic. Items
+ *   whose endDate is in the past are filtered out automatically. Items
+ *   without dates are treated as evergreen.
+ *
+ * scope    — "region" appears on homepage. A town slug appears on that town's
+ *            page. "all" appears on both.
+ * featured — preferred hero candidate. The component still validates against
+ *            the date; expired featured items fall back to the next best
+ *            upcoming event/music/sports item, then to recent stories.
  */
 
 export type WeeklyFeedType =
@@ -26,6 +33,10 @@ export interface WeeklyFeedItem {
   type: WeeklyFeedType;
   date: string;
   scope: "region" | "all" | string;
+  /** ISO YYYY-MM-DD. Used for freshness filtering. */
+  startDate?: string;
+  /** ISO YYYY-MM-DD. Falls back to startDate if absent. */
+  endDate?: string;
   featured?: boolean;
   town?: string;
   venue?: string;
@@ -35,44 +46,23 @@ export interface WeeklyFeedItem {
 }
 
 export const weeklyFeed: WeeklyFeedItem[] = [
-  // ===== EDITORIAL HERO =====
-  {
-    title: "Tulip Festival takes over Washington Park",
-    description:
-      "150,000 tulips, live music on three stages, and 100+ local vendors. Expect heavy traffic on Madison and State all weekend.",
-    type: "event",
-    date: "May 9–10",
-    time: "10:00 AM – 6:00 PM",
-    scope: "region",
-    featured: true,
-    town: "Albany",
-    venue: "Washington Park",
-    image:
-      "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1600&q=80",
-    cta: { label: "See the full weekend guide", href: "#weekly-feed" },
-  },
-
   // ===== MUSIC =====
   {
     title: "Jazz Festival kicks off at SPAC",
     description:
-      "Two nights of headliners under the pavilion. Lawn tickets still available.",
+      "Two nights of headliners under the pavilion to open the summer season. Lawn tickets still available.",
     type: "music",
-    date: "May 26",
+    date: "May 26–27",
     time: "7:00 PM",
     venue: "SPAC",
     town: "Saratoga",
     scope: "region",
-  },
-  {
-    title: "Trampled by Turtles at The Egg",
-    description: "Folk-rock sextet on a rare Capital Region stop.",
-    type: "music",
-    date: "May 22",
-    time: "8:00 PM",
-    venue: "The Egg",
-    town: "Albany",
-    scope: "region",
+    featured: true,
+    startDate: "2026-05-26",
+    endDate: "2026-05-27",
+    image:
+      "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1600&q=80",
+    cta: { label: "See the full SPAC summer slate", href: "#weekly-feed" },
   },
   {
     title: "Live on the Hudson returns to Troy",
@@ -83,18 +73,34 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     venue: "Riverfront Park",
     town: "Troy",
     scope: "region",
+    startDate: "2026-05-29",
+    endDate: "2026-08-28",
+  },
+  {
+    title: "Alive at Five lineup announced",
+    description:
+      "Albany's free Thursday concert series returns to Tricentennial Park in June.",
+    type: "music",
+    date: "Starts Jun 4",
+    time: "5:00 PM",
+    venue: "Tricentennial Park",
+    town: "Albany",
+    scope: "region",
+    startDate: "2026-06-04",
+    endDate: "2026-07-30",
   },
 
   // ===== SPORTS =====
   {
-    title: "Albany Firebirds home opener",
-    description: "Arena football returns to MVP Arena with a divisional matchup.",
+    title: "Albany Patroons playoff push",
+    description: "Two home games at Washington Avenue Armory this weekend.",
     type: "sports",
-    date: "May 17",
-    time: "7:00 PM",
-    venue: "MVP Arena",
+    date: "May 24–25",
+    venue: "Washington Avenue Armory",
     town: "Albany",
     scope: "region",
+    startDate: "2026-05-24",
+    endDate: "2026-05-25",
   },
   {
     title: "Saratoga Race Course opens July 11",
@@ -105,46 +111,33 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     venue: "Saratoga Race Course",
     town: "Saratoga",
     scope: "region",
+    startDate: "2026-07-11",
+    endDate: "2026-09-01",
   },
   {
-    title: "Siena vs. UAlbany rivalry tip-off",
-    description: "Capital District hoops crosstown showdown returns this season.",
+    title: "Albany Firebirds vs. Jacksonville",
+    description: "Arena football divisional matchup at MVP Arena.",
     type: "sports",
-    date: "Nov 14",
+    date: "May 30",
     time: "7:00 PM",
     venue: "MVP Arena",
     town: "Albany",
     scope: "region",
-  },
-  {
-    title: "Albany Patroons playoff push",
-    description: "Two home games at Washington Avenue Armory this weekend.",
-    type: "sports",
-    date: "May 24–25",
-    venue: "Washington Avenue Armory",
-    town: "Albany",
-    scope: "region",
+    startDate: "2026-05-30",
   },
 
   // ===== DINING =====
-  {
-    title: "New rooftop restaurant opens in Troy",
-    description: "River-view bar and Mediterranean menu debuts on River Street.",
-    type: "dining",
-    date: "Opens Fri May 23",
-    venue: "River Street",
-    town: "Troy",
-    scope: "region",
-  },
   {
     title: "Mohawk Harbor adds two new restaurants",
     description:
       "Waterfront Italian and a Japanese izakaya open along the river this month.",
     type: "dining",
-    date: "May",
+    date: "Opens May 30",
     venue: "Mohawk Harbor",
     town: "Schenectady",
     scope: "region",
+    startDate: "2026-05-30",
+    endDate: "2026-06-30",
   },
   {
     title: "Lark Street Tavern launches new brunch",
@@ -155,15 +148,30 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     venue: "Lark Street",
     town: "Albany",
     scope: "region",
+    startDate: "2026-05-24",
+    endDate: "2026-09-01",
   },
   {
     title: "New café opening on Delaware Ave",
     description: "Independent roaster taking over the old Stewart's space.",
     type: "dining",
-    date: "May 5",
+    date: "Opens May 29",
     venue: "Delaware Ave",
     town: "Delmar",
     scope: "all",
+    startDate: "2026-05-29",
+    endDate: "2026-06-15",
+  },
+  {
+    title: "Restaurant Week returns to Downtown Albany",
+    description: "$25 three-course menus at 30+ restaurants across Albany.",
+    type: "dining",
+    date: "Jun 9–15",
+    venue: "Downtown Albany",
+    town: "Albany",
+    scope: "region",
+    startDate: "2026-06-09",
+    endDate: "2026-06-15",
   },
 
   // ===== DEVELOPMENT =====
@@ -172,9 +180,11 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     description:
       "120 residential units + ground-floor retail on Broadway. Construction starts Q3.",
     type: "development",
-    date: "May 6",
+    date: "This week",
     town: "Albany",
     scope: "region",
+    startDate: "2026-05-22",
+    endDate: "2026-06-22",
   },
   {
     title: "Empire State Plaza renovation underway",
@@ -184,16 +194,19 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     venue: "Empire State Plaza",
     town: "Albany",
     scope: "region",
+    startDate: "2026-05-15",
+    endDate: "2026-06-30",
   },
   {
     title: "Clifton Park Center expansion proposal",
     description:
-      "Town board reviews 80,000 sq ft retail + dining addition next week.",
+      "Town board reviews 80,000 sq ft retail + dining addition.",
     type: "development",
-    date: "May 20",
-    venue: "Clifton Park Center",
+    date: "Jun 3 hearing",
+    venue: "Clifton Park Town Hall",
     town: "Clifton Park",
     scope: "region",
+    startDate: "2026-06-03",
   },
 
   // ===== EVENTS / FESTIVALS =====
@@ -206,6 +219,8 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     venue: "Proctors",
     town: "Schenectady",
     scope: "region",
+    startDate: "2026-06-15",
+    endDate: "2026-08-31",
   },
   {
     title: "Troy Farmers Market returns to River Street",
@@ -217,6 +232,8 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     venue: "River Street",
     town: "Troy",
     scope: "region",
+    startDate: "2026-05-24",
+    endDate: "2026-10-31",
   },
   {
     title: "Rivers Casino summer concert series announced",
@@ -226,19 +243,23 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     venue: "Rivers Casino",
     town: "Schenectady",
     scope: "region",
+    startDate: "2026-06-01",
+    endDate: "2026-08-31",
+  },
+  {
+    title: "Memorial Day weekend on Lark Street",
+    description:
+      "Block party, live music, and outdoor patios across Lark Street businesses.",
+    type: "event",
+    date: "May 24–25",
+    venue: "Lark Street",
+    town: "Albany",
+    scope: "region",
+    startDate: "2026-05-24",
+    endDate: "2026-05-25",
   },
 
   // ===== FAMILY =====
-  {
-    title: "Crossgates kids' weekend takeover",
-    description:
-      "Free magician, balloon artists, and play zones throughout the mall Saturday.",
-    type: "family",
-    date: "May 18",
-    venue: "Crossgates",
-    town: "Albany",
-    scope: "region",
-  },
   {
     title: "Family movie night in Washington Park",
     description: "Free outdoor screening with food trucks. Bring a blanket.",
@@ -248,6 +269,17 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     venue: "Washington Park",
     town: "Albany",
     scope: "region",
+    startDate: "2026-05-31",
+  },
+  {
+    title: "Children's Museum free admission day",
+    description: "Sponsored by Broadview FCU — Sunday only.",
+    type: "family",
+    date: "May 31",
+    venue: "miSci",
+    town: "Schenectady",
+    scope: "region",
+    startDate: "2026-05-31",
   },
 
   // ===== NETWORKING =====
@@ -255,11 +287,12 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     title: "Capital Region Chamber YPN mixer",
     description: "Young professionals networking night at Mohawk Harbor.",
     type: "networking",
-    date: "May 23",
+    date: "May 28",
     time: "5:30 PM",
     venue: "Mohawk Harbor",
     town: "Schenectady",
     scope: "region",
+    startDate: "2026-05-28",
   },
   {
     title: "Tech Valley pitch night",
@@ -270,34 +303,41 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     venue: "UAlbany ETEC",
     town: "Albany",
     scope: "region",
+    startDate: "2026-06-06",
   },
 
-  // ===== REAL ESTATE / MARKET =====
+  // ===== REAL ESTATE / MARKET (evergreen weekly) =====
   {
     title: "47 homes sold across Albany County",
     description:
       "Median sale price up 4.2% from last week. Tightest inventory in Delmar and Loudonville.",
     type: "real_estate",
-    date: "May 7",
+    date: "Updated this week",
     town: "Albany County",
     scope: "region",
+    startDate: "2026-05-22",
+    endDate: "2026-05-29",
   },
   {
     title: "Saratoga market heating up",
     description:
       "Pre-track season pending sales jumped 18% week-over-week.",
     type: "market",
-    date: "May 6",
+    date: "Updated this week",
     town: "Saratoga",
     scope: "region",
+    startDate: "2026-05-22",
+    endDate: "2026-05-29",
   },
   {
     title: "Troy multi-family demand at 5-year high",
     description: "Investor offers averaging 98% of list across 2–4 unit stock.",
     type: "market",
-    date: "May 5",
+    date: "Updated this week",
     town: "Troy",
     scope: "region",
+    startDate: "2026-05-22",
+    endDate: "2026-05-29",
   },
 
   // ===== DELMAR (town-scoped) =====
@@ -305,23 +345,29 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     title: "3 homes sold in Delmar this week",
     description: "Highest sale: $612K on Roweland Ave. Average 7 days on market.",
     type: "real_estate",
-    date: "May 7",
+    date: "Updated this week",
     scope: "delmar",
+    startDate: "2026-05-22",
+    endDate: "2026-05-29",
   },
   {
     title: "Inventory down 12% in Bethlehem",
     description: "Just 11 active single-family listings under $700K.",
     type: "market",
-    date: "May 6",
+    date: "Updated this week",
     scope: "delmar",
+    startDate: "2026-05-22",
+    endDate: "2026-05-29",
   },
   {
-    title: "Bethlehem Farmers Market opens Saturday",
+    title: "Bethlehem Farmers Market returns Saturday",
     description: "9am at the Four Corners. New vendors this season.",
     type: "event",
-    date: "May 10",
+    date: "Saturdays",
     time: "9:00 AM",
     venue: "Four Corners",
     scope: "delmar",
+    startDate: "2026-05-30",
+    endDate: "2026-10-31",
   },
 ];
