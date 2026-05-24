@@ -218,6 +218,11 @@ export const businesses: Business[] = [
     featured: true,
     verified: true,
     image: STOCK("photo-1450101499163-c8848c66ca85"),
+    socials: {
+      facebook: "https://www.facebook.com/deangelislawfirm",
+      linkedin: "https://www.linkedin.com/company/deangelis-law-firm",
+      instagram: "https://www.instagram.com/deangelislaw",
+    },
   },
 
   // ───────── DELMAR ─────────
