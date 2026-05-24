@@ -651,12 +651,23 @@ export const BusinessDetailModal = ({
                 </a>
               )}
               {biz.socials?.instagram && (
-                <a href={biz.socials.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
+                <a href={biz.socials.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 hover:text-[#5eead4] transition">
                   <Instagram className="w-4 h-4" /> Instagram
+                </a>
+              )}
+              {biz.socials?.facebook && (
+                <a href={biz.socials.facebook} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 hover:text-[#5eead4] transition">
+                  <Facebook className="w-4 h-4" /> Facebook
+                </a>
+              )}
+              {biz.socials?.linkedin && (
+                <a href={biz.socials.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 hover:text-[#5eead4] transition">
+                  <Linkedin className="w-4 h-4" /> LinkedIn
                 </a>
               )}
             </div>
           )}
+
 
           {/* SECTION B — STORY */}
           <Section eyebrow="The story" title="Why locals come here">
