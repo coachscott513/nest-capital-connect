@@ -237,13 +237,20 @@ const SupportLocalSection = () => {
             ))}
           </div>
 
-          {/* Centered directory CTA below cards */}
-          <div className="mt-10 flex justify-center">
+          {/* Large centered directory CTA below cards */}
+          <div className="mt-14 md:mt-16 flex flex-col items-center text-center gap-5">
+            <p className="text-[11px] font-semibold tracking-[0.22em] uppercase" style={{ color: "#5eead4" }}>
+              The Full Directory
+            </p>
+            <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white max-w-xl">
+              Discover trusted local partners across the Capital District.
+            </h3>
             <Link
               to="/local"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90 transition"
+              className="group mt-2 inline-flex items-center gap-2.5 px-9 py-4 rounded-full text-base font-semibold border border-white/15 bg-white/[0.06] backdrop-blur-xl text-white hover:bg-white/[0.12] hover:border-[#5eead4]/50 hover:text-[#5eead4] transition-all shadow-[0_18px_50px_-20px_rgba(94,234,212,0.35)]"
             >
-              Explore All Local Businesses <ArrowRight className="w-4 h-4" />
+              Explore the full Capital District directory
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </div>

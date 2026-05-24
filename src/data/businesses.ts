@@ -239,6 +239,7 @@ export const businesses: Business[] = [
     why: ["Locals' default Saturday breakfast", "Cash-only old-school charm"],
     address: "Delaware Ave, Delmar, NY",
     hours: "Mon–Sat 6a–2p",
+    image: STOCK("photo-1565299624946-b28f40a0ae38"),
   },
   {
     slug: "perfect-blend",
@@ -251,6 +252,7 @@ export const businesses: Business[] = [
     about: "Locally roasted coffee, light bites, and a slow-morning crowd.",
     address: "Delaware Ave, Delmar, NY",
     hours: "Daily 6:30a–5p",
+    image: STOCK("photo-1495474472287-4d71bcdd2085"),
   },
   {
     slug: "bountiful-bread",
@@ -262,6 +264,7 @@ export const businesses: Business[] = [
     tagline: "Bread, pastries, and the line to prove it.",
     address: "Delaware Ave, Delmar, NY",
     hours: "Wed–Sun 7a–3p",
+    image: STOCK("photo-1509440159596-0249088772ff"),
   },
   {
     slug: "bethlehem-public-library",
@@ -273,6 +276,7 @@ export const businesses: Business[] = [
     tagline: "Not a business — but the heart of Delmar.",
     address: "451 Delaware Ave, Delmar, NY",
     hours: "Mon–Thu 9a–9p · Fri–Sat 9a–5p",
+    image: STOCK("photo-1481627834876-b7833e8f5570"),
   },
   {
     slug: "delmar-yoga",
@@ -284,6 +288,7 @@ export const businesses: Business[] = [
     tagline: "Drop-in studio with a strong morning crowd.",
     address: "Delaware Ave, Delmar, NY",
     hours: "Daily 6a–8p",
+    image: STOCK("photo-1545205597-3d9d02c29597"),
   },
 
   // ───────── ALBANY ─────────
@@ -297,6 +302,7 @@ export const businesses: Business[] = [
     tagline: "Center Square neighborhood pub with a loyal crowd.",
     address: "Lark St, Albany, NY",
     hours: "Daily 11a–11p",
+    image: STOCK("photo-1572116469696-31de0f17cc34"),
   },
   {
     slug: "stacks-espresso",
@@ -308,6 +314,7 @@ export const businesses: Business[] = [
     tagline: "Downtown espresso with a serious bean program.",
     address: "Broadway, Albany, NY",
     hours: "Mon–Fri 7a–4p",
+    image: STOCK("photo-1442512595331-e89e73853f31"),
   },
   {
     slug: "capital-district-roofing",
@@ -320,6 +327,7 @@ export const businesses: Business[] = [
     services: ["Roof replacement", "Repairs", "Gutters"],
     phone: "(518) 555-0101",
     address: "Albany, NY",
+    image: STOCK("photo-1632935190508-bb33b1a64fae"),
   },
   {
     slug: "hudson-valley-inspections",
@@ -330,6 +338,7 @@ export const businesses: Business[] = [
     category: "Home Inspector",
     tagline: "Pre-purchase inspections across the Capital Region.",
     phone: "(518) 555-0144",
+    image: STOCK("photo-1581094288338-2314dddb7ece"),
   },
 
   // ───────── SARATOGA SPRINGS ─────────
@@ -343,6 +352,7 @@ export const businesses: Business[] = [
     tagline: "Iconic Broadway pastry shop.",
     address: "Broadway, Saratoga Springs, NY",
     hours: "Wed–Sun 8a–5p",
+    image: STOCK("photo-1568254183919-78a4f43a2877"),
   },
   {
     slug: "uncommon-grounds-saratoga",
@@ -353,6 +363,7 @@ export const businesses: Business[] = [
     category: "Coffee",
     tagline: "Local coffee + bagels staple downtown.",
     address: "Broadway, Saratoga Springs, NY",
+    image: STOCK("photo-1453614512568-c4024d13c247"),
   },
   {
     slug: "saratoga-prime-realty-law",
@@ -363,6 +374,7 @@ export const businesses: Business[] = [
     category: "Real Estate Attorney",
     tagline: "Closings and investor work in Saratoga County.",
     phone: "(518) 555-0190",
+    image: STOCK("photo-1589994965851-a8f479c573a9"),
   },
 
   // ───────── TROY ─────────
@@ -375,6 +387,7 @@ export const businesses: Business[] = [
     category: "Restaurant",
     tagline: "River Street brunch favorite.",
     address: "River St, Troy, NY",
+    image: STOCK("photo-1533089860892-a7c6f0a88666"),
   },
   {
     slug: "collar-city-hvac",
@@ -386,6 +399,7 @@ export const businesses: Business[] = [
     tagline: "Heating, cooling, and tune-ups across Rensselaer County.",
     phone: "(518) 555-0211",
     services: ["AC install", "Furnace repair", "Mini-splits"],
+    image: STOCK("photo-1631545806609-92e9e87bf3a3"),
   },
   {
     slug: "river-street-coffee",
@@ -396,6 +410,7 @@ export const businesses: Business[] = [
     category: "Coffee",
     tagline: "Independent roaster on the Hudson.",
     address: "River St, Troy, NY",
+    image: STOCK("photo-1521017432531-fbd92d768814"),
   },
 
   // ───────── SCHENECTADY ─────────
@@ -408,6 +423,7 @@ export const businesses: Business[] = [
     category: "Electrician",
     tagline: "Licensed residential electrical across Schenectady County.",
     phone: "(518) 555-0233",
+    image: STOCK("photo-1621905251918-48416bd8575a"),
   },
   {
     slug: "proctors-cafe",
@@ -418,6 +434,7 @@ export const businesses: Business[] = [
     category: "Coffee",
     tagline: "Pre-show coffee right next to Proctors Theatre.",
     address: "State St, Schenectady, NY",
+    image: STOCK("photo-1554118811-1e0d58224f24"),
   },
 
   // ───────── CLIFTON PARK ─────────
@@ -431,6 +448,7 @@ export const businesses: Business[] = [
     tagline: "Family-run plumbing serving the Route 9 corridor.",
     phone: "(518) 555-0277",
     services: ["Repairs", "Water heaters", "Fixtures"],
+    image: STOCK("photo-1585704032915-c3400ca199e7"),
   },
   {
     slug: "exit-9-fitness",
@@ -441,6 +459,7 @@ export const businesses: Business[] = [
     category: "Gym",
     tagline: "24/7 strength + cardio gym off Route 9.",
     address: "Route 9, Clifton Park, NY",
+    image: STOCK("photo-1534438327276-14e5300c3a48"),
   },
 
   // ───────── NISKAYUNA ─────────
@@ -453,6 +472,7 @@ export const businesses: Business[] = [
     category: "Landscaper",
     tagline: "Design, install, and weekly maintenance.",
     phone: "(518) 555-0301",
+    image: STOCK("photo-1416879595882-3373a0480b5b"),
   },
 
   // ───────── COLONIE ─────────
@@ -465,6 +485,7 @@ export const businesses: Business[] = [
     category: "Auto",
     tagline: "Honest auto repair on Wolf Road.",
     address: "Wolf Rd, Colonie, NY",
+    image: STOCK("photo-1486006920555-c77dcf18193c"),
   },
   {
     slug: "colonie-handyman",
@@ -475,6 +496,7 @@ export const businesses: Business[] = [
     category: "Handyman",
     tagline: "Punch-list jobs done in a single visit.",
     phone: "(518) 555-0344",
+    image: STOCK("photo-1581244277943-fe4a9c777189"),
   },
 
   // ───────── GUILDERLAND ─────────
@@ -487,6 +509,7 @@ export const businesses: Business[] = [
     category: "Cleaner",
     tagline: "Move-in / move-out + recurring residential cleans.",
     phone: "(518) 555-0388",
+    image: STOCK("photo-1581578731548-c64695cc6952"),
   },
   {
     slug: "guilderland-cpa",
@@ -496,6 +519,7 @@ export const businesses: Business[] = [
     county: "Albany",
     category: "Accountant",
     tagline: "Tax + bookkeeping for households and small businesses.",
+    image: STOCK("photo-1554224155-6726b3ff858f"),
   },
 ];
 
