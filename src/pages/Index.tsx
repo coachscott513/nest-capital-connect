@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowRight, Search } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -25,12 +25,28 @@ import townCliftonPark from "@/assets/town-clifton-park.jpg";
    ============================================================= */
 
 const TOWN_TILES = [
-  { name: "Delmar",           descriptor: "Tree-lined suburban core",   meta: "Bethlehem Schools",        median: "$542K", businesses: 18, img: townDelmar,      to: "/living-in/delmar" },
-  { name: "Albany",           descriptor: "Urban neighborhoods · revival", meta: "Capital Region hub",     median: "$268K", businesses: 31, img: townAlbany,      to: "/living-in/albany" },
-  { name: "Saratoga Springs", descriptor: "Walkable downtown · historic", meta: "Saratoga Schools",         median: "$612K", businesses: 26, img: townSaratoga,    to: "/living-in/saratoga-springs" },
-  { name: "Troy",             descriptor: "Riverfront brick & arts",     meta: "Historic collar city",     median: "$258K", businesses: 22, img: townTroy,        to: "/living-in/troy" },
-  { name: "Schenectady",      descriptor: "Stockade · value & cash flow", meta: "Investor activity",       median: "$215K", businesses: 14, img: townSchenectady, to: "/living-in/schenectady" },
-  { name: "Clifton Park",     descriptor: "Family suburb · Shen schools", meta: "Top-rated schools",       median: "$485K", businesses: 16, img: townCliftonPark, to: "/living-in/clifton-park" },
+  { name: "Delmar",           descriptor: "Tree-lined streets & local cafés", meta: "Bethlehem Schools",   median: "$542K", businesses: 18, img: townDelmar,      to: "/living-in/delmar" },
+  { name: "Albany",           descriptor: "Capital energy & architecture",    meta: "Capital Region hub",  median: "$268K", businesses: 31, img: townAlbany,      to: "/living-in/albany" },
+  { name: "Saratoga Springs", descriptor: "Historic charm & culture",         meta: "Saratoga Schools",    median: "$612K", businesses: 26, img: townSaratoga,    to: "/living-in/saratoga-springs" },
+  { name: "Troy",             descriptor: "Brownstones & creativity",         meta: "Historic collar city", median: "$258K", businesses: 22, img: townTroy,        to: "/living-in/troy" },
+  { name: "Schenectady",      descriptor: "Stockade · value & cash flow",     meta: "Investor activity",   median: "$215K", businesses: 14, img: townSchenectady, to: "/living-in/schenectady" },
+  { name: "Clifton Park",     descriptor: "Family suburb · Shen schools",     meta: "Top-rated schools",   median: "$485K", businesses: 16, img: townCliftonPark, to: "/living-in/clifton-park" },
+];
+
+const ROTATING_HEADLINES = [
+  "Discover the Capital District.",
+  "The Capital District's Digital Front Door.",
+  "Local culture, business & neighborhoods.",
+  "Where the Capital District lives.",
+];
+
+const ROTATING_PLACEHOLDERS = [
+  "Search Delmar homes",
+  "Search Saratoga homes",
+  "Search Troy homes",
+  "Search Albany homes",
+  "Find a Delmar café",
+  "Find a Troy restaurant",
 ];
 
 /* ========== Section 1 — CINEMATIC HERO ========== */
