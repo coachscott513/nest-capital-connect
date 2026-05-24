@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import HeroBand from "@/components/HeroBand";
 import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 import SupportLocalSection from "@/components/home/SupportLocalSection";
+import LiveLocalPulse from "@/components/home/LiveLocalPulse";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
 import heroCapital from "@/assets/hero-capital-district.jpg";
