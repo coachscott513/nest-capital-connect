@@ -286,6 +286,7 @@ const TrustedLocalPartners = ({
   sub = "A curated set of lenders, attorneys, and local favorites we recommend across the Capital District.",
   partners = DEFAULT_PARTNERS,
   variant = "light",
+  showClaimCard = false,
 }: Props) => {
   const isDark = variant === "dark";
   const [active, setActive] = useState<LocalPartner | null>(null);
