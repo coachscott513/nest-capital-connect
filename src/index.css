@@ -5,46 +5,52 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 220 20% 12%;
+    /* ============================================================
+       GLOBAL DARK CANVAS (Capital District Nest design system)
+       Every page that uses bg-background / text-foreground / min-h-screen
+       now inherits the homepage onyx + teal palette. Legacy sections
+       that explicitly set bg-white or bg-cream remain light by choice.
+       ============================================================ */
+    --background: 222 40% 7%;          /* #0B0F19 onyx canvas */
+    --foreground: 0 0% 100%;           /* white */
 
-    --card: 0 0% 98%;
-    --card-foreground: 220 20% 12%;
+    --card: 225 22% 16%;               /* #1E2230 elevated surface */
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 12%;
+    --popover: 225 22% 16%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 220 12% 18%;
+    --primary: 173 79% 24%;            /* teal #0d6e66 */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 10% 96%;
-    --secondary-foreground: 220 20% 12%;
+    --secondary: 225 22% 16%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 10% 96%;
-    --muted-foreground: 220 8% 52%;
+    --muted: 225 18% 20%;
+    --muted-foreground: 0 0% 65%;      /* white/65 muted body */
 
-    --accent: 185 55% 42%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 166 76% 65%;             /* on-dark teal #5eead4 */
+    --accent-foreground: 222 40% 7%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 10% 92%;
-    --input: 220 10% 92%;
-    --ring: 220 12% 18%;
+    --border: 218 24% 23%;             /* #2D3748 hairline */
+    --input: 218 24% 23%;
+    --ring: 173 79% 24%;
 
     --radius: 0.75rem;
 
-    --surface: 220 10% 98%;
-    --text-muted: 220 8% 52%;
+    --surface: 225 22% 16%;
+    --text-muted: 0 0% 65%;
 
-    --glass-bg: 0 0% 100% / 0.8;
-    --glass-border: 220 10% 92%;
-    --glass-shadow: 220 10% 50% / 0.06;
+    --glass-bg: 225 22% 16% / 0.7;
+    --glass-border: 218 24% 23%;
+    --glass-shadow: 0 0% 0% / 0.4;
     --glass-blur: 20px;
 
-    --teal-glow: 185 55% 42%;
-    --teal-glow-muted: 185 40% 55%;
+    --teal-glow: 173 79% 24%;
+    --teal-glow-muted: 166 76% 65%;
 
     --amber: 38 92% 50%;
     --amber-foreground: 0 0% 0%;
@@ -52,6 +58,7 @@
     --emerald: 160 84% 39%;
     --emerald-muted: 160 50% 50%;
 
+    /* Report tokens kept on light paper — reports print on white */
     --report-bg: 0 0% 100%;
     --report-card: 0 0% 98%;
     --report-card-alt: 220 10% 96%;
@@ -69,14 +76,14 @@
     --report-warning: 38 92% 50%;
     --report-hero-bg: 220 20% 14%;
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 220 20% 12%;
-    --sidebar-primary: 220 12% 18%;
+    --sidebar-background: 225 22% 16%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 173 79% 24%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 10% 96%;
-    --sidebar-accent-foreground: 220 20% 12%;
-    --sidebar-border: 220 10% 92%;
-    --sidebar-ring: 220 12% 18%;
+    --sidebar-accent: 225 18% 20%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 218 24% 23%;
+    --sidebar-ring: 173 79% 24%;
   }
 }
 
@@ -86,18 +93,18 @@
   }
 
   html {
-    background-color: #ffffff;
-    color-scheme: light;
+    background-color: #0B0F19;
+    color-scheme: dark;
   }
 
   body {
     @apply bg-background text-foreground font-manrope antialiased;
-    background-color: #ffffff;
+    background-color: #0B0F19;
     min-height: 100vh;
   }
 
   #root {
-    background-color: #ffffff;
+    background-color: #0B0F19;
     min-height: 100vh;
   }
 
