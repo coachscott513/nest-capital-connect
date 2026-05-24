@@ -403,6 +403,18 @@ const ContactPreview = ({ b, claimed }: { b: Business; claimed: boolean }) => (
   </div>
 );
 
+const GhostPill = ({ icon, label }: { icon: React.ReactNode; label: string }) => (
+  <span
+    title="Business owners can personalize this profile."
+    aria-label={`${label} — claim to activate`}
+    className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.03] border border-white/10 text-[11px] text-white/35 backdrop-blur-md cursor-default select-none"
+    style={{ filter: "blur(0.4px)" }}
+  >
+    <span className="opacity-70">{icon}</span>
+    <span className="tracking-wide">{label}</span>
+  </span>
+);
+
 const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
   <button
     onClick={onOpen}
@@ -427,51 +439,73 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
       <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-white">{b.name}</h3>
       <p className="mt-3 text-sm text-white/65 font-light leading-relaxed line-clamp-2">{b.tagline}</p>
 
-      {/* Premium visible contact row */}
-      <div className="mt-5 flex flex-wrap gap-1.5">
-        {b.phone && (
+      {/* Premium visible contact row — horizontally scrollable on mobile, snap pills */}
+      <div className="mt-5 -mx-1 px-1 flex gap-1.5 overflow-x-auto snap-x snap-mandatory scrollbar-none flex-nowrap md:flex-wrap">
+        {b.phone ? (
           <a
             href={`tel:${b.phone.replace(/[^\d+]/g, "")}`}
             onClick={(e) => e.stopPropagation()}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/10 border border-[#5eead4]/25 text-[11px] text-[#5eead4] hover:bg-[#5eead4]/20 transition"
+            className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/10 border border-[#5eead4]/25 text-[11px] text-[#5eead4] hover:bg-[#5eead4]/20 transition"
           >
             <Phone className="w-3 h-3" /> Call
           </a>
+        ) : (
+          <GhostPill icon={<Phone className="w-3 h-3" />} label="Call" />
         )}
-        {b.website && (
+        {b.website ? (
           <a
             href={b.website}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
+            className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
           >
             <Globe className="w-3 h-3" /> Website
           </a>
+        ) : (
+          <GhostPill icon={<Globe className="w-3 h-3" />} label="Website" />
         )}
-        {b.address && (
+        {b.address ? (
           <a
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.address)}`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
+            className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
           >
             <Navigation className="w-3 h-3" /> Directions
           </a>
+        ) : (
+          <GhostPill icon={<Navigation className="w-3 h-3" />} label="Directions" />
         )}
-        {b.socials?.instagram && (
+        {b.socials?.facebook ? (
+          <a
+            href={b.socials.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
+          >
+            <Facebook className="w-3 h-3" /> Facebook
+          </a>
+        ) : (
+          <GhostPill icon={<Facebook className="w-3 h-3" />} label="Facebook" />
+        )}
+        {b.socials?.instagram ? (
           <a
             href={b.socials.instagram}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
+            className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
           >
             <Instagram className="w-3 h-3" /> Instagram
           </a>
+        ) : (
+          <GhostPill icon={<Instagram className="w-3 h-3" />} label="Instagram" />
         )}
       </div>
+
 
       <span className="mt-5 inline-flex items-center gap-1 text-sm text-[#5eead4]">
         View profile <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -737,14 +771,14 @@ export const BusinessDetailModal = ({
                   <CalendarPlus className="w-4 h-4" /> Book
                 </a>
               )}
-              {biz.socials?.instagram && (
-                <a href={biz.socials.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 hover:text-[#5eead4] transition">
-                  <Instagram className="w-4 h-4" /> Instagram
-                </a>
-              )}
               {biz.socials?.facebook && (
                 <a href={biz.socials.facebook} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 hover:text-[#5eead4] transition">
                   <Facebook className="w-4 h-4" /> Facebook
+                </a>
+              )}
+              {biz.socials?.instagram && (
+                <a href={biz.socials.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 hover:text-[#5eead4] transition">
+                  <Instagram className="w-4 h-4" /> Instagram
                 </a>
               )}
               {biz.socials?.linkedin && (
@@ -868,8 +902,8 @@ export const BusinessDetailModal = ({
 
               {biz.socials && (
                 <div className="mt-6 flex items-center gap-2 flex-wrap">
-                  {biz.socials.instagram && <SocialBtn href={biz.socials.instagram} Icon={Instagram} />}
                   {biz.socials.facebook && <SocialBtn href={biz.socials.facebook} Icon={Facebook} />}
+                  {biz.socials.instagram && <SocialBtn href={biz.socials.instagram} Icon={Instagram} />}
                   {biz.socials.linkedin && <SocialBtn href={biz.socials.linkedin} Icon={Linkedin} />}
                   {biz.socials.twitter && <SocialBtn href={biz.socials.twitter} Icon={XIcon} />}
                   {biz.socials.tiktok && <SocialBtn href={biz.socials.tiktok} Icon={TikTokIcon} />}
