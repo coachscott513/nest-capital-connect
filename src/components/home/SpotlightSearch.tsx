@@ -23,6 +23,7 @@ import {
   MapPin,
   Flame,
 } from "lucide-react";
+import { getSearchRoute } from "@/lib/searchIntent";
 
 /* =============================================================
    SPOTLIGHT SEARCH
@@ -96,86 +97,6 @@ const THIS_WEEK = [
   { label: "Mohawk Harbor development update",   to: "/intelligence" },
 ];
 
-/* Search routing — mirrors the hero's original priorities */
-const KNOWN_TOWNS: { slug: string; aliases: string[] }[] = [
-  { slug: "delmar",           aliases: ["delmar"] },
-  { slug: "albany",           aliases: ["albany"] },
-  { slug: "saratoga-springs", aliases: ["saratoga", "saratoga springs"] },
-  { slug: "troy",             aliases: ["troy"] },
-  { slug: "schenectady",      aliases: ["schenectady"] },
-  { slug: "clifton-park",     aliases: ["clifton park", "clifton"] },
-  { slug: "niskayuna",        aliases: ["niskayuna"] },
-  { slug: "guilderland",      aliases: ["guilderland"] },
-  { slug: "bethlehem",        aliases: ["bethlehem"] },
-  { slug: "colonie",          aliases: ["colonie"] },
-];
-/* Intent classification — business/lifestyle vs property */
-const BIZ_CATEGORY_MAP: { re: RegExp; category: string }[] = [
-  { re: /\b(restaurants?|dining|food|eats?|eatery|pizza|pizzeria|bistro|diner|sushi|tacos?)\b/i, category: "restaurant" },
-  { re: /\b(caf[eé]s?|coffee|espresso|roasters?)\b/i, category: "cafe" },
-  { re: /\b(bars?|pubs?|brewery|breweries|taproom|cocktails?|wine bar)\b/i, category: "bar" },
-  { re: /\b(boutiques?|shops?|shopping|stores?|retail)\b/i, category: "shop" },
-  { re: /\b(events?|festivals?|live music|concerts?|things to do)\b/i, category: "events" },
-  { re: /\b(contractors?|surveying|surveyors?|plumbers?|electricians?|hvac|roofers?|landscapers?|handyman)\b/i, category: "services" },
-  { re: /\b(gyms?|yoga|pilates|fitness|salons?|spa|barber)\b/i, category: "wellness" },
-  { re: /\b(bakery|bakeries|delis?|markets?|grocery|butcher)\b/i, category: "food" },
-  { re: /\b(attorneys?|lawyers?|dentists?|doctors?|pediatricians?|vets?|veterinarians?)\b/i, category: "professional" },
-];
-const BIZ_RE = new RegExp(BIZ_CATEGORY_MAP.map((b) => b.re.source).join("|"), "i");
-
-const PROPERTY_KEYWORDS = /\b(homes?|house|houses|condo|condos|townhouse|townhome|investment|multi[- ]?family|duplex|triplex|rent|rentals?|for sale|listing|mls|mls#|cap rate|cash flow|land|lot|acreage|acres?|sqft|bedroom|bed|bath)\b/i;
-const MLS_RE = /\b(mls\s*#?\s*)?[a-z]?\d{5,8}\b/i;
-const ADDRESS_RE = /\b\d{1,6}\s+[a-z0-9.'-]+\s+(st|street|ave|avenue|rd|road|dr|drive|ln|lane|blvd|boulevard|ct|court|way|pl|place|ter|terrace|hwy|highway)\b/i;
-
-function detectBizCategory(v: string): string | null {
-  for (const { re, category } of BIZ_CATEGORY_MAP) if (re.test(v)) return category;
-  return null;
-}
-
-function routeSearch(raw: string): string {
-  const v = raw.trim().toLowerCase();
-  if (!v) return "/communities";
-
-  const townHit = KNOWN_TOWNS.find((t) => t.aliases.some((a) => v === a || v.includes(a)));
-  const bizCategory = detectBizCategory(v);
-
-  // Rule A — Business / lifestyle intent
-  if (bizCategory) {
-    if (townHit) {
-      return `/living-in/${townHit.slug}?category=${encodeURIComponent(bizCategory)}#directory`;
-    }
-    return `/local?q=${encodeURIComponent(raw)}&category=${encodeURIComponent(bizCategory)}`;
-  }
-
-  // Bare biz keyword without our map (still lifestyle-ish)
-  if (BIZ_RE.test(v) && townHit) {
-    return `/living-in/${townHit.slug}#directory`;
-  }
-
-  // Rule B — Property intent (only with explicit property indicators)
-  const isProperty = PROPERTY_KEYWORDS.test(v) || MLS_RE.test(v) || ADDRESS_RE.test(v);
-  if (isProperty) {
-    if (/\b(multi[- ]?family|duplex|triplex|investment|cap rate|cash flow)\b/i.test(v)) {
-      return `/analyze?q=${encodeURIComponent(raw)}`;
-    }
-    if (/\b(land|lot|acreage|acres?)\b/i.test(v)) {
-      return `/homes-for-sale?type=land&q=${encodeURIComponent(raw)}`;
-    }
-    if (/\b(rent|rentals?)\b/i.test(v)) {
-      return townHit ? `/rentals?town=${townHit.slug}` : `/rentals?q=${encodeURIComponent(raw)}`;
-    }
-    return townHit
-      ? `/homes-for-sale?town=${townHit.slug}&q=${encodeURIComponent(raw)}`
-      : `/homes-for-sale?q=${encodeURIComponent(raw)}`;
-  }
-
-  // Town-only query → town guide (NOT external IDX)
-  if (townHit) return `/living-in/${townHit.slug}`;
-
-  // Ambiguous / unknown → safe internal hub, never an external broker frame
-  return `/communities?q=${encodeURIComponent(raw)}`;
-}
-
 interface Props {
   /** Optional tag rendered above the input (e.g. "Explore the Capital District"). */
   eyebrow?: string;
@@ -216,14 +137,14 @@ export default function SpotlightSearch({ eyebrow }: Props) {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     setOpen(false);
-    navigate(routeSearch(q));
+    navigate(getSearchRoute(q));
   };
 
   const onKeyDownInput = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
       setOpen(false);
-      navigate(routeSearch(q));
+      navigate(getSearchRoute(q));
     }
   };
 

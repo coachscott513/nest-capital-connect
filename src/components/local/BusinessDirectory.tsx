@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   Search,
   Phone,
@@ -62,27 +63,52 @@ const TOWN_LIST = [
 const ALL_CATEGORIES: BusinessCategory[] = Object.values(
   CATEGORY_GROUPS,
 ).flat() as BusinessCategory[];
+const isKnownCategory = (value: string | null): value is BusinessCategory =>
+  Boolean(value && ALL_CATEGORIES.some((category) => category.toLowerCase() === value.toLowerCase()));
 
 const isClaimed = (b: Business) => Boolean(b.claimed ?? b.verified);
 
 type TierFilter = "all" | "featured" | "claimed" | "unclaimed";
 
+const expandBusinessSearch = (value: string) => {
+  const needle = value.trim().toLowerCase();
+  const aliases: Record<string, string[]> = {
+    finance: ["finance", "financial", "financial advisor", "bank", "credit union", "mortgage", "lender", "accountant"],
+    cafe: ["cafe", "cafes", "café", "cafés", "coffee"],
+    cafes: ["cafe", "cafes", "café", "cafés", "coffee"],
+    attorney: ["attorney", "lawyer", "legal", "real estate attorney"],
+    contractor: ["contractor", "home service", "roofer", "plumber", "electrician", "hvac", "handyman"],
+  };
+  return aliases[needle] ?? [needle];
+};
+
 const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
-  const [q, setQ] = useState("");
-  const [town, setTown] = useState(townSlug ?? "");
-  const [category, setCategory] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [q, setQ] = useState(() => searchParams.get("search") ?? searchParams.get("q") ?? searchParams.get("category") ?? "");
+  const [town, setTown] = useState(() => townSlug ?? searchParams.get("town") ?? "");
+  const [category, setCategory] = useState<string>(() => isKnownCategory(searchParams.get("category")) ? searchParams.get("category")! : "");
   const [tier, setTier] = useState<TierFilter>("all");
   const [hasWebsite, setHasWebsite] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
   const [openBiz, setOpenBiz] = useState<Business | null>(null);
 
+  useEffect(() => {
+    const next = new URLSearchParams();
+    if (q.trim()) next.set("search", q.trim());
+    if (!townSlug && town) next.set("town", town);
+    if (category) next.set("category", category);
+    setSearchParams(next, { replace: true });
+  }, [q, town, category, townSlug, setSearchParams]);
+
   const results = useMemo(() => {
     const needle = q.trim().toLowerCase();
+    const searchTerms = expandBusinessSearch(q);
     return ALL.filter((b) => {
       if (townSlug && b.town !== townSlug && b.town !== "capital-district")
         return false;
-      if (town && b.town !== town) return false;
-      if (category && b.category !== category) return false;
+      const normalizedTown = town.toLowerCase().replace(/\s+/g, "-");
+      if (town && b.town !== town && b.town !== normalizedTown && b.townLabel?.toLowerCase() !== town.toLowerCase()) return false;
+      if (category && b.category.toLowerCase() !== category.toLowerCase()) return false;
       if (tier === "featured" && !b.featured) return false;
       if (tier === "claimed" && !isClaimed(b)) return false;
       if (tier === "unclaimed" && isClaimed(b)) return false;
@@ -93,7 +119,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         b.name, b.category, b.subcategory, b.tagline, b.about, b.townLabel,
         ...(b.services ?? []), ...(b.knownFor ?? []),
       ].filter(Boolean).join(" ").toLowerCase();
-      return hay.includes(needle);
+      return searchTerms.some((term) => hay.includes(term));
     });
   }, [q, town, category, tier, hasWebsite, hasPhone, townSlug]);
 
@@ -182,7 +208,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       {/* SEARCH BAR */}
       <section className={embedded ? "px-0" : "pt-16 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
-          <div className="rounded-2xl bg-[#1E2230] border border-white/[0.08] p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2">
+          <form onSubmit={(e) => e.preventDefault()} className="rounded-2xl bg-[#1E2230] border border-white/[0.08] p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2">
             <label className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-white/[0.04]">
               <Search className="w-4 h-4 text-[#5eead4]" />
               <input
@@ -203,7 +229,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 >
                   <option value="">All towns</option>
                   {TOWN_LIST.map((t) => (
-                    <option key={t.slug} value={t.slug}>{t.name}</option>
+                    <option key={t.slug} value={t.name}>{t.name}</option>
                   ))}
                 </select>
               </label>
@@ -222,12 +248,12 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
               </select>
             </label>
             <button
-              type="button"
+              type="submit"
               className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
             >
               <Search className="w-4 h-4" /> Search
             </button>
-          </div>
+          </form>
 
           {/* Filter chips */}
           <div className="mt-5 flex flex-wrap items-center gap-2">
