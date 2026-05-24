@@ -371,10 +371,10 @@ const TownPageTemplate = ({ town }: Props) => {
         <TrustedLocalPartners
           townName={town.townName}
           variant="dark"
-          eyebrow={`Featured in ${town.townName}`}
-          headline={`Local businesses we love in ${town.townName}.`}
-          sub={`Cafés, restaurants, boutiques, services, and the people behind them.`}
-          partners={o.partners as any}
+          eyebrow={needsRegionalBackfill ? `In & around ${town.townName}` : `Featured in ${town.townName}`}
+          headline={partnersHeadline}
+          sub={partnersSub}
+          partners={partnersForDisplay as any}
           showClaimCard
         />
       </div>
