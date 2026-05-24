@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ArrowRight, Search, Calendar, Home as HomeIcon, Coffee, TrendingUp, MapPin } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { ArrowRight, Calendar, Home as HomeIcon, Coffee, TrendingUp, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
