@@ -3,72 +3,131 @@ import { useSearchParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { 
-  Building2, 
-  CheckCircle, 
-  Star, 
+import {
+  Building2,
+  Sparkles,
   ArrowLeft,
+  ArrowUpRight,
+  CheckCircle,
   Mail,
   Phone,
   Globe,
+  MapPin,
   Instagram,
-  Facebook
+  Facebook,
+  Linkedin,
+  Youtube,
+  Music2,
+  Calendar,
+  Star,
+  Handshake,
+  Megaphone,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
+const TEAL = "#5eead4";
+
+const initialState = {
+  // Basic
+  businessName: "",
+  ownerName: "",
+  email: "",
+  phone: "",
+  website: "",
+  address: "",
+  town: "",
+  // Socials
+  instagram: "",
+  facebook: "",
+  tiktok: "",
+  linkedin: "",
+  youtube: "",
+  // Details
+  category: "",
+  shortDescription: "",
+  services: "",
+  hours: "",
+  // Growth interests (checkboxes)
+  interestEvents: false,
+  interestFeatured: false,
+  interestRealEstate: false,
+  interestPromotions: false,
+};
+
+const TownOptions = [
+  "Delmar", "Albany", "Saratoga Springs", "Troy", "Schenectady",
+  "Clifton Park", "Niskayuna", "Colonie", "Guilderland", "Other / Capital District",
+];
+
+const CategoryOptions = [
+  "Restaurant", "Coffee", "Bakery", "Retail", "Wellness", "Gym", "Salon", "Pet", "Auto",
+  "Mortgage Lender", "Bank/Credit Union", "Real Estate Attorney", "Insurance", "Home Inspector",
+  "Contractor", "Roofer", "Plumber", "Electrician", "HVAC", "Landscaper", "Handyman", "Cleaner",
+  "Accountant", "Financial Advisor", "Attorney", "Marketing", "Other",
+];
+
 const ClaimBusiness = () => {
   const [searchParams] = useSearchParams();
-  const town = searchParams.get("town") || "";
-  const category = searchParams.get("category") || "";
-  const businessName = searchParams.get("name") || "";
+  const prefillBiz = searchParams.get("biz") || searchParams.get("name") || "";
+  const prefillTown = searchParams.get("town") || "";
 
-  const [formData, setFormData] = useState({
-    ownerName: "",
-    email: "",
-    phone: "",
-    businessName: businessName,
-    website: "",
-    instagram: "",
-    facebook: "",
-    description: "",
-    action: "claim" as "claim" | "edit" | "remove"
+  const [form, setForm] = useState({
+    ...initialState,
+    businessName: prefillBiz,
+    town: prefillTown
+      ? prefillTown.charAt(0).toUpperCase() + prefillTown.slice(1).replace(/-/g, " ")
+      : "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const update = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
+    setForm((p) => ({ ...p, [k]: v }));
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.ownerName || !formData.email || !formData.businessName) {
-      toast.error("Please fill in all required fields");
+    if (!form.businessName.trim() || !form.ownerName.trim() || !form.email.trim()) {
+      toast.error("Business name, your name, and email are required.");
       return;
     }
-
     setIsSubmitting(true);
     try {
+      const interests = [
+        form.interestEvents && "Events",
+        form.interestFeatured && "Featured placement",
+        form.interestRealEstate && "Real estate partnerships",
+        form.interestPromotions && "Promotions/specials",
+      ].filter(Boolean).join(", ") || "None specified";
+
+      const message = [
+        `Business: ${form.businessName}`,
+        form.category && `Category: ${form.category}`,
+        form.town && `Town: ${form.town}`,
+        form.address && `Address: ${form.address}`,
+        form.phone && `Phone: ${form.phone}`,
+        form.website && `Website: ${form.website}`,
+        form.hours && `Hours: ${form.hours}`,
+        form.shortDescription && `Description: ${form.shortDescription}`,
+        form.services && `Services: ${form.services}`,
+        (form.instagram || form.facebook || form.tiktok || form.linkedin || form.youtube) &&
+          `Socials — IG:${form.instagram || "-"} | FB:${form.facebook || "-"} | TT:${form.tiktok || "-"} | LI:${form.linkedin || "-"} | YT:${form.youtube || "-"}`,
+        `Interests: ${interests}`,
+      ].filter(Boolean).join("\n");
+
       const { error } = await supabase.from("leads").insert({
-        full_name: formData.ownerName,
-        email: formData.email,
-        phone: formData.phone || null,
-        message: `Business ${formData.action} request: ${formData.businessName} | Category: ${category} | Town: ${town} | Website: ${formData.website || 'N/A'} | Instagram: ${formData.instagram || 'N/A'} | Facebook: ${formData.facebook || 'N/A'} | Description: ${formData.description || 'N/A'}`,
+        full_name: form.ownerName,
+        email: form.email,
+        phone: form.phone || null,
+        message,
         type: "business_claim",
-        origin_town: town,
-        lead_type: "business_owner"
+        origin_town: form.town || prefillTown || null,
+        lead_type: "business_owner",
       });
-
       if (error) throw error;
-
       setIsSubmitted(true);
-      toast.success("Request submitted! We'll be in touch soon.");
-    } catch (error) {
-      console.error("Error submitting claim:", error);
+    } catch (err) {
+      console.error("Claim submit error:", err);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -77,333 +136,360 @@ const ClaimBusiness = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-[#0B0F19] text-white">
         <Helmet>
-          <title>Request Received | Capital District Nest</title>
+          <title>Thanks — Capital District Nest</title>
         </Helmet>
         <MainHeader />
-        
-        <section className="px-[5%] py-20 md:py-28">
-          <div className="max-w-lg mx-auto text-center">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-green-500/10 flex items-center justify-center">
-              <CheckCircle className="w-10 h-10 text-green-500" />
+        <section className="pt-32 md:pt-40 pb-28 px-6">
+          <div className="max-w-xl mx-auto text-center">
+            <div
+              className="w-20 h-20 mx-auto mb-7 rounded-2xl border flex items-center justify-center"
+              style={{ borderColor: `${TEAL}66`, background: `${TEAL}1a` }}
+            >
+              <Sparkles className="w-9 h-9" style={{ color: TEAL }} />
             </div>
-            <h1 className="text-3xl font-bold text-foreground mb-4">
-              Request Received
-            </h1>
-            <p className="text-lg text-muted-foreground mb-8">
-              We'll review your request and get back to you within 24-48 hours.
+            <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-4" style={{ color: TEAL }}>
+              Received
             </p>
-            <Button asChild>
-              <Link to={town ? `/living-in/${town}` : "/"}>
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to {town ? `${town.charAt(0).toUpperCase() + town.slice(1).replace(/-/g, ' ')}` : "Home"}
+            <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05]">
+              Thank you.
+            </h1>
+            <p className="mt-6 text-lg text-white/70 font-light leading-relaxed">
+              Our team will personally review your profile and reach out to help build your
+              Capital District Nest presence. No automated funnels — a real person from our
+              team will be in touch shortly.
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                to="/local"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
+              >
+                Browse the directory <ArrowUpRight className="w-4 h-4" />
               </Link>
-            </Button>
+              <Link
+                to="/"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition"
+              >
+                <ArrowLeft className="w-4 h-4" /> Back home
+              </Link>
+            </div>
           </div>
         </section>
-
         <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#0B0F19] text-white">
       <Helmet>
-        <title>Claim Your Business | Capital District Nest Local Guide</title>
-        <meta 
-          name="description" 
-          content="Claim, edit, or remove your business listing on Capital District Nest's Local Guide. Connect with new residents and homebuyers in your community."
+        <title>Join Capital District Nest | Curated Local Business Concierge</title>
+        <meta
+          name="description"
+          content="Be considered for Capital District Nest — a curated, concierge platform elevating the Capital District's best local businesses."
         />
       </Helmet>
 
       <MainHeader />
 
-      {/* Breadcrumb */}
-      <nav className="bg-background/80 backdrop-blur-sm border-b border-border py-3 px-4 md:px-[5%]">
-        <div className="max-w-7xl mx-auto">
-          <Link 
-            to={town ? `/living-in/${town}` : "/"} 
-            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to {town ? `${town.charAt(0).toUpperCase() + town.slice(1).replace(/-/g, ' ')}` : "Home"}
-          </Link>
-        </div>
-      </nav>
-
-      {/* Pricing Tiers */}
-      <section className="px-[5%] py-12 md:py-16 bg-[#faf8f3]">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10">
-            <h1 className="text-3xl md:text-5xl font-semibold text-foreground tracking-tight mb-3">
-              Get your business listed.
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Join 500+ Capital District businesses — start FREE.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-5 md:gap-6">
-            {[
-              {
-                name: "Basic",
-                price: "FREE",
-                priceNote: "forever",
-                features: ["Directory listing", "Contact info", "Category placement", "Town & city tagging"],
-                cta: "Get Started",
-                highlight: false,
-              },
-              {
-                name: "Featured",
-                price: "$25",
-                priceNote: "/month",
-                features: [
-                  "Everything in Basic",
-                  "“Featured” gold badge",
-                  "Priority placement",
-                  "Larger card with description",
-                ],
-                cta: "Get Started",
-                highlight: true,
-                badge: "Most Popular",
-              },
-              {
-                name: "Premium",
-                price: "$50",
-                priceNote: "/month",
-                features: [
-                  "Everything in Featured",
-                  "60-second video reel",
-                  "Social media promotion",
-                  "Monthly spotlight feature",
-                ],
-                cta: "Get Started",
-                highlight: false,
-                premium: true,
-              },
-            ].map((t) => (
-              <div
-                key={t.name}
-                className={`relative rounded-3xl p-7 md:p-8 bg-white transition-all hover:-translate-y-1 ${
-                  t.highlight
-                    ? "border-2 border-[#c9a449] shadow-[0_18px_48px_-18px_rgba(201,164,73,0.45)]"
-                    : t.premium
-                    ? "border border-[#c9a449]/40 shadow-[0_0_24px_rgba(201,164,73,0.12)]"
-                    : "border border-foreground/10"
-                }`}
-              >
-                {t.badge && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#c9a449] text-white text-[11px] font-bold tracking-wider uppercase">
-                    {t.badge}
-                  </span>
-                )}
-                <div className="flex items-center gap-2 mb-4">
-                  <h3 className="text-lg font-bold text-foreground tracking-wide uppercase">
-                    {t.name}
-                  </h3>
-                  {t.highlight && <Star className="w-4 h-4 text-[#c9a449] fill-[#c9a449]" />}
-                </div>
-                <div className="mb-6">
-                  <span className="text-5xl font-semibold text-foreground tracking-tight">
-                    {t.price}
-                  </span>
-                  <span className="text-foreground/55 ml-1">{t.priceNote}</span>
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {t.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-sm text-foreground/75">
-                      <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  asChild
-                  className={`w-full rounded-full ${
-                    t.highlight ? "bg-[#c9a449] hover:bg-[#b3902f] text-white" : ""
-                  }`}
-                  variant={t.highlight ? "default" : "outline"}
-                >
-                  <a href="#claim-form">{t.cta}</a>
-                </Button>
-              </div>
-            ))}
+      {/* HERO */}
+      <section className="pt-28 md:pt-36 pb-14 px-6 md:px-10 relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-[0.35] pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(60% 50% at 50% 0%, rgba(94,234,212,0.18) 0%, rgba(11,15,25,0) 70%)",
+          }}
+        />
+        <div className="max-w-3xl mx-auto text-center relative">
+          <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-5" style={{ color: TEAL }}>
+            For Local Business Owners
+          </p>
+          <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
+            Become part of the Capital District's digital front door.
+          </h1>
+          <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
+            Capital District Nest is a curated, invite-led platform — not a directory.
+            Share a few details and our team will personally review and reach out about how
+            to elevate your business across the region.
+          </p>
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3 text-xs text-white/55">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04]">
+              <Handshake className="w-3.5 h-3.5" style={{ color: TEAL }} /> Concierge onboarding
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04]">
+              <Star className="w-3.5 h-3.5" style={{ color: TEAL }} /> Editorial profile
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04]">
+              <Megaphone className="w-3.5 h-3.5" style={{ color: TEAL }} /> Weekly pulse reach
+            </span>
           </div>
         </div>
       </section>
 
-      <section id="claim-form" className="px-[5%] py-12 md:py-20 scroll-mt-24">
-        <div className="max-w-2xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-10">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
-              <Building2 className="w-8 h-8 text-primary" />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              {businessName ? `Manage "${businessName}"` : "Add Your Business"}
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Fill out the form below — listings appear in the directory within 24 hours.
-            </p>
-          </div>
-
-
-          {/* Form */}
-          <Card>
-            <CardContent className="p-6 md:p-8">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Action Type */}
-                <div className="space-y-2">
-                  <Label>What would you like to do?</Label>
-                  <div className="grid grid-cols-3 gap-3">
-                    {[
-                      { value: "claim", label: "Claim / Add" },
-                      { value: "edit", label: "Edit Info" },
-                      { value: "remove", label: "Remove" }
-                    ].map((option) => (
-                      <button
-                        key={option.value}
-                        type="button"
-                        onClick={() => setFormData(prev => ({ ...prev, action: option.value as any }))}
-                        className={`p-3 rounded-lg border text-sm font-medium transition-all ${
-                          formData.action === option.value
-                            ? "border-primary bg-primary/10 text-primary"
-                            : "border-border bg-background text-muted-foreground hover:border-primary/50"
-                        }`}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Owner Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="ownerName">Your Name *</Label>
-                    <Input
-                      id="ownerName"
-                      value={formData.ownerName}
-                      onChange={(e) => setFormData(prev => ({ ...prev, ownerName: e.target.value }))}
-                      placeholder="John Smith"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email *</Label>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                      <Input
-                        id="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                        placeholder="john@business.com"
-                        className="pl-10"
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone</Label>
-                    <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                      <Input
-                        id="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                        placeholder="(518) 555-1234"
-                        className="pl-10"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="businessName">Business Name *</Label>
-                    <Input
-                      id="businessName"
-                      value={formData.businessName}
-                      onChange={(e) => setFormData(prev => ({ ...prev, businessName: e.target.value }))}
-                      placeholder="Your Business Name"
-                      required
-                    />
-                  </div>
-                </div>
-
-                {/* Business Links */}
-                <div className="space-y-4">
-                  <Label>Business Links (optional)</Label>
-                  <div className="grid grid-cols-1 gap-3">
-                    <div className="relative">
-                      <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                      <Input
-                        value={formData.website}
-                        onChange={(e) => setFormData(prev => ({ ...prev, website: e.target.value }))}
-                        placeholder="https://yourbusiness.com"
-                        className="pl-10"
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="relative">
-                        <Instagram className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                        <Input
-                          value={formData.instagram}
-                          onChange={(e) => setFormData(prev => ({ ...prev, instagram: e.target.value }))}
-                          placeholder="@instagram"
-                          className="pl-10"
-                        />
-                      </div>
-                      <div className="relative">
-                        <Facebook className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                        <Input
-                          value={formData.facebook}
-                          onChange={(e) => setFormData(prev => ({ ...prev, facebook: e.target.value }))}
-                          placeholder="Facebook page"
-                          className="pl-10"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Description */}
-                <div className="space-y-2">
-                  <Label htmlFor="description">Brief Description</Label>
-                  <Textarea
-                    id="description"
-                    value={formData.description}
-                    onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                    placeholder="Tell us about your business in 1-2 sentences..."
-                    rows={3}
-                  />
-                </div>
-
-                <Button 
-                  type="submit" 
-                  size="lg" 
-                  className="w-full h-12 font-semibold"
-                  disabled={isSubmitting}
+      {/* FORM */}
+      <section className="pb-28 px-6 md:px-10">
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-3xl mx-auto rounded-3xl bg-[#1E2230] border border-white/[0.08] p-7 md:p-10 space-y-10"
+        >
+          {/* SECTION: Basic */}
+          <SectionBlock
+            eyebrow="Section 01"
+            title="Basic info"
+            desc="Only your business name, your name, and email are required. Everything else helps us build your profile faster."
+          >
+            <div className="grid sm:grid-cols-2 gap-4">
+              <Field label="Business name" required>
+                <input
+                  value={form.businessName}
+                  onChange={(e) => update("businessName", e.target.value)}
+                  placeholder="e.g. The Perfect Blend"
+                  required
+                  className={inputCls}
+                />
+              </Field>
+              <Field label="Your name" required>
+                <input
+                  value={form.ownerName}
+                  onChange={(e) => update("ownerName", e.target.value)}
+                  placeholder="Owner or contact"
+                  required
+                  className={inputCls}
+                />
+              </Field>
+              <Field label="Email" required icon={<Mail className="w-4 h-4" />}>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => update("email", e.target.value)}
+                  placeholder="you@business.com"
+                  required
+                  className={inputCls + " pl-10"}
+                />
+              </Field>
+              <Field label="Phone" icon={<Phone className="w-4 h-4" />}>
+                <input
+                  type="tel"
+                  value={form.phone}
+                  onChange={(e) => update("phone", e.target.value)}
+                  placeholder="(518) 555-0123"
+                  className={inputCls + " pl-10"}
+                />
+              </Field>
+              <Field label="Website" icon={<Globe className="w-4 h-4" />}>
+                <input
+                  value={form.website}
+                  onChange={(e) => update("website", e.target.value)}
+                  placeholder="https://"
+                  className={inputCls + " pl-10"}
+                />
+              </Field>
+              <Field label="Town / City">
+                <select
+                  value={form.town}
+                  onChange={(e) => update("town", e.target.value)}
+                  className={inputCls + " cursor-pointer [&>option]:text-black"}
                 >
-                  {isSubmitting ? "Submitting..." : "Submit Request"}
-                </Button>
+                  <option value="">Select town</option>
+                  {TownOptions.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </Field>
+              <Field label="Street address" icon={<MapPin className="w-4 h-4" />}>
+                <input
+                  value={form.address}
+                  onChange={(e) => update("address", e.target.value)}
+                  placeholder="123 Main St"
+                  className={inputCls + " pl-10"}
+                />
+              </Field>
+            </div>
+          </SectionBlock>
 
-                <p className="text-xs text-center text-muted-foreground">
-                  We'll review your request and respond within 24-48 hours.
-                </p>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+          {/* SECTION: Social */}
+          <SectionBlock
+            eyebrow="Section 02"
+            title="Social media"
+            desc="Optional. Add any platforms you actively maintain — we'll wire them into your profile."
+          >
+            <div className="grid sm:grid-cols-2 gap-4">
+              <Field label="Instagram" icon={<Instagram className="w-4 h-4" />}>
+                <input value={form.instagram} onChange={(e) => update("instagram", e.target.value)} placeholder="@handle or URL" className={inputCls + " pl-10"} />
+              </Field>
+              <Field label="Facebook" icon={<Facebook className="w-4 h-4" />}>
+                <input value={form.facebook} onChange={(e) => update("facebook", e.target.value)} placeholder="facebook.com/..." className={inputCls + " pl-10"} />
+              </Field>
+              <Field label="TikTok" icon={<Music2 className="w-4 h-4" />}>
+                <input value={form.tiktok} onChange={(e) => update("tiktok", e.target.value)} placeholder="@handle" className={inputCls + " pl-10"} />
+              </Field>
+              <Field label="LinkedIn" icon={<Linkedin className="w-4 h-4" />}>
+                <input value={form.linkedin} onChange={(e) => update("linkedin", e.target.value)} placeholder="linkedin.com/company/..." className={inputCls + " pl-10"} />
+              </Field>
+              <Field label="YouTube" icon={<Youtube className="w-4 h-4" />}>
+                <input value={form.youtube} onChange={(e) => update("youtube", e.target.value)} placeholder="youtube.com/@..." className={inputCls + " pl-10"} />
+              </Field>
+            </div>
+          </SectionBlock>
+
+          {/* SECTION: Business details */}
+          <SectionBlock
+            eyebrow="Section 03"
+            title="Business details"
+            desc="Help us understand what you do. All optional — share what's easy."
+          >
+            <div className="grid sm:grid-cols-2 gap-4">
+              <Field label="Category">
+                <select
+                  value={form.category}
+                  onChange={(e) => update("category", e.target.value)}
+                  className={inputCls + " cursor-pointer [&>option]:text-black"}
+                >
+                  <option value="">Select category</option>
+                  {CategoryOptions.map((c) => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </Field>
+              <Field label="Hours" icon={<Calendar className="w-4 h-4" />}>
+                <input value={form.hours} onChange={(e) => update("hours", e.target.value)} placeholder="e.g. Mon–Fri 9a–5p" className={inputCls + " pl-10"} />
+              </Field>
+            </div>
+            <Field label="Short description">
+              <textarea
+                value={form.shortDescription}
+                onChange={(e) => update("shortDescription", e.target.value)}
+                placeholder="One or two sentences about your business."
+                rows={3}
+                className={inputCls + " resize-none"}
+              />
+            </Field>
+            <Field label="Services">
+              <textarea
+                value={form.services}
+                onChange={(e) => update("services", e.target.value)}
+                placeholder="Comma-separated list, e.g. Espresso, Pastries, Catering"
+                rows={2}
+                className={inputCls + " resize-none"}
+              />
+            </Field>
+            <p className="text-xs text-white/45 leading-relaxed">
+              Logo and photo uploads aren't required here — our team will collect them
+              directly with you during onboarding, so you get the visual treatment right.
+            </p>
+          </SectionBlock>
+
+          {/* SECTION: Growth interests */}
+          <SectionBlock
+            eyebrow="Section 04"
+            title="What are you interested in?"
+            desc="Optional. Just check what sounds relevant — we'll bring ideas, not invoices."
+          >
+            <div className="grid sm:grid-cols-2 gap-3">
+              <Check
+                label="Local events & sponsorships"
+                checked={form.interestEvents}
+                onChange={(v) => update("interestEvents", v)}
+              />
+              <Check
+                label="Featured placement on the platform"
+                checked={form.interestFeatured}
+                onChange={(v) => update("interestFeatured", v)}
+              />
+              <Check
+                label="Real estate / new-resident partnerships"
+                checked={form.interestRealEstate}
+                onChange={(v) => update("interestRealEstate", v)}
+              />
+              <Check
+                label="Promotions, specials & weekly feed"
+                checked={form.interestPromotions}
+                onChange={(v) => update("interestPromotions", v)}
+              />
+            </div>
+          </SectionBlock>
+
+          {/* Submit */}
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/[0.06] pt-7">
+            <p className="text-xs text-white/55 max-w-md leading-relaxed">
+              A real person from our team will review your submission and reach out personally.
+              No automated drip sequences.
+            </p>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition disabled:opacity-60"
+            >
+              {isSubmitting ? "Submitting…" : "Submit for review"}
+              {!isSubmitting && <ArrowUpRight className="w-4 h-4" />}
+            </button>
+          </div>
+        </form>
       </section>
 
       <Footer />
     </div>
   );
 };
+
+/* ─── primitives ─── */
+
+const inputCls =
+  "w-full bg-[#0B0F19] text-white placeholder:text-white/40 text-[15px] rounded-xl border border-white/10 px-4 py-3 focus:outline-none focus:border-[#5eead4]/50 transition";
+
+const SectionBlock = ({
+  eyebrow, title, desc, children,
+}: { eyebrow: string; title: string; desc: string; children: React.ReactNode }) => (
+  <div className="space-y-5">
+    <div>
+      <p className="text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: TEAL }}>
+        {eyebrow}
+      </p>
+      <h2 className="mt-1.5 text-2xl md:text-3xl font-semibold tracking-[-0.02em]">{title}</h2>
+      <p className="mt-2 text-sm text-white/55 font-light max-w-xl">{desc}</p>
+    </div>
+    <div className="space-y-4">{children}</div>
+  </div>
+);
+
+const Field = ({
+  label, required, icon, children,
+}: { label: string; required?: boolean; icon?: React.ReactNode; children: React.ReactNode }) => (
+  <label className="block space-y-1.5">
+    <span className="text-xs font-semibold text-white/70 inline-flex items-center gap-1.5">
+      {label}
+      {required && <span style={{ color: TEAL }}>*</span>}
+    </span>
+    <div className="relative">
+      {icon && (
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
+          {icon}
+        </span>
+      )}
+      {children}
+    </div>
+  </label>
+);
+
+const Check = ({
+  label, checked, onChange,
+}: { label: string; checked: boolean; onChange: (v: boolean) => void }) => (
+  <button
+    type="button"
+    onClick={() => onChange(!checked)}
+    className={`text-left px-4 py-3.5 rounded-xl border text-sm transition flex items-start gap-3 ${
+      checked
+        ? "border-[#5eead4]/50 bg-[#5eead4]/[0.08] text-white"
+        : "border-white/10 bg-white/[0.03] text-white/70 hover:border-white/20 hover:text-white"
+    }`}
+  >
+    <span
+      className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 transition ${
+        checked ? "bg-[#5eead4] border-[#5eead4]" : "border-white/30"
+      }`}
+    >
+      {checked && <CheckCircle className="w-3.5 h-3.5 text-[#0B0F19]" strokeWidth={3} />}
+    </span>
+    <span className="leading-snug">{label}</span>
+  </button>
+);
 
 export default ClaimBusiness;
