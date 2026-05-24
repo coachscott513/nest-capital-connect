@@ -62,13 +62,8 @@ const TownPageTemplate = ({ town }: Props) => {
     },
   };
 
-  // ── Default editorial "feel" fallback ───────────────────────────────
-  const feel = o.feel ?? {
-    morning: `Quiet mornings, neighborhood coffee, the slow rhythm of ${town.townName}.`,
-    families: `${town.schoolDistrict}, local parks, and a community built around families.`,
-    weekends: `Farmers markets, local dining, and seasonal community events.`,
-    commute: `Easy regional access to Albany, the Northway, and beyond.`,
-  };
+  // ── Neighborhoods fallback ──────────────────────────────────────────
+  const neighborhoods = o.neighborhoods ?? [];
 
   const neighborhoods = o.neighborhoods ?? [];
 
