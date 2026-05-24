@@ -86,7 +86,10 @@ export interface BusinessSocials {
   instagram?: string;
   linkedin?: string;
   twitter?: string;
+  tiktok?: string;
+  youtube?: string;
 }
+
 
 export interface Business {
   slug: string;
