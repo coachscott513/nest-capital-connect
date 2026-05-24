@@ -127,9 +127,8 @@ const DEFAULT_WHY =
 
 export const townOverrides: Record<string, TownOverride> = {
   delmar: {
-    heroImage:
-      "https://images.unsplash.com/photo-1502175353174-a7a05e4bebb4?auto=format&fit=crop&w=2400&q=80",
-    whyImage: DEFAULT_WHY,
+    heroImage: "/assets/towns/delmar-hero.jpg",
+    whyImage: "/assets/towns/delmar-why.jpg",
     heroHeadline: "Discover Delmar.",
     heroSub:
       "Explore the places, businesses, neighborhoods, events, and local rhythm that make Delmar one of the Capital Region's most desirable communities.",
@@ -478,8 +477,7 @@ export const townOverrides: Record<string, TownOverride> = {
   },
   "saratoga-springs": {
     heroImage: "/assets/towns/saratoga-hero.jpg",
-    whyImage:
-      "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1800&q=80",
+    whyImage: "/assets/towns/saratoga-why.jpg",
     heroHeadline: "Discover Saratoga Springs.",
     heroSub:
       "Broadway dining, the Race Course, SPAC, mineral springs, and Skidmore — the Capital Region's year-round resort city.",
@@ -582,8 +580,7 @@ export const townOverrides: Record<string, TownOverride> = {
   },
   troy: {
     heroImage: "/assets/towns/troy-hero.jpg",
-    whyImage:
-      "https://images.unsplash.com/photo-1494522358652-f30e61a60313?auto=format&fit=crop&w=1800&q=80",
+    whyImage: "/assets/towns/troy-why.jpg",
     heroHeadline: "Discover Troy.",
     heroSub:
       "Restored brownstones, the Waterfront Farmers Market, RPI, and one of the most exciting urban revivals in the Northeast.",
@@ -686,8 +683,7 @@ export const townOverrides: Record<string, TownOverride> = {
   },
   schenectady: {
     heroImage: "/assets/towns/schenectady-hero.jpg",
-    whyImage:
-      "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=1800&q=80",
+    whyImage: "/assets/towns/schenectady-why.jpg",
     heroHeadline: "Discover Schenectady.",
     heroSub:
       "Proctors Theatre, Mohawk Harbor, Union College, and one of the Capital Region's strongest value markets.",
