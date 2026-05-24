@@ -434,6 +434,102 @@ const TownPageTemplate = ({ town }: Props) => {
         />
       </div>
 
+      {/* ───────── 10b. LOCAL SPORTS PULSE ───────── */}
+      {o.sports && o.sports.length > 0 && (
+        <section className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-end justify-between gap-6 mb-12">
+              <div className="max-w-2xl">
+                <p
+                  className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
+                  style={{ color: TEAL_DARK }}
+                >
+                  Local Sports Pulse
+                </p>
+                <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
+                  Scores from around {town.townName}.
+                </h2>
+              </div>
+              <Trophy className="hidden md:block w-6 h-6 shrink-0" style={{ color: TEAL_DARK }} />
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {o.sports.map((s) => (
+                <div
+                  key={s.team}
+                  className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-5 hover:bg-white/[0.06] hover:border-white/15 transition"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/45 mb-1.5">
+                        {s.league}
+                      </p>
+                      <p className="text-base font-semibold text-white truncate">{s.team}</p>
+                      {s.detail && (
+                        <p className="mt-1 text-xs text-white/55 font-light">{s.detail}</p>
+                      )}
+                    </div>
+                    <span
+                      className="shrink-0 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border border-white/10 bg-white/[0.04]"
+                      style={{ color: TEAL_DARK }}
+                    >
+                      {s.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ───────── 10c. LOCAL FINANCING + BUYER HELP ───────── */}
+      {o.financeLinks && o.financeLinks.length > 0 && (
+        <section className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
+          <div className="max-w-6xl mx-auto">
+            <div className="max-w-2xl mb-12">
+              <p
+                className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
+                style={{ color: TEAL_DARK }}
+              >
+                Buyer & Investor Tools
+              </p>
+              <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
+                Make the numbers work.
+              </h2>
+              <p className="mt-5 text-lg font-light text-white/65">
+                First-time buyers, families, and investors — purpose-built tools for {town.townName}.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {o.financeLinks.map((f) => (
+                <a
+                  key={f.title}
+                  href={f.href}
+                  target={f.href.startsWith("http") ? "_blank" : undefined}
+                  rel={f.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-6 hover:bg-white/[0.06] hover:border-white/15 transition flex items-start gap-4"
+                >
+                  <div
+                    className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-white/[0.04]"
+                  >
+                    <Calculator className="w-4 h-4" style={{ color: TEAL_DARK }} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="text-base font-semibold text-white">{f.title}</p>
+                      <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition" />
+                    </div>
+                    <p className="mt-1.5 text-sm text-white/60 font-light leading-relaxed">{f.body}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ───────── 11. FINAL CTA ───────── */}
       <section className={`relative isolate overflow-hidden bg-background ${SECTION_PAD}`}>
         <div
@@ -448,11 +544,10 @@ const TownPageTemplate = ({ town }: Props) => {
             Ready When You Are
           </p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
-            Thinking about life in {town.townName}?
+            Making a move to {town.townName}?
           </h2>
           <p className="mt-6 text-lg md:text-xl font-light text-white/65">
-            Talk with Scott Alvarez about homes, neighborhoods, and what daily
-            life is really like in {town.townName}.
+            Connect with a local specialist for homes, neighborhoods, schools, investing, and local insight.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
