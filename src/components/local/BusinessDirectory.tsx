@@ -448,20 +448,10 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
           </div>
         )}
 
-        {claimed ? (
-          <div className="mt-4 flex items-center gap-3 text-xs text-white/50">
-            {b.phone && <span className="inline-flex items-center gap-1"><Phone className="w-3 h-3" /> Phone</span>}
-            {b.website && <span className="inline-flex items-center gap-1"><Globe className="w-3 h-3" /> Web</span>}
-            {b.address && <span className="inline-flex items-center gap-1"><MapPin className="w-3 h-3" /> Address</span>}
-          </div>
-        ) : (
-          <div className="mt-4 px-3 py-2 rounded-lg bg-white/[0.04] text-[11px] text-white/55 border border-white/[0.06]">
-            Contact info available after claim
-          </div>
-        )}
+        <ContactPreview b={b} claimed={claimed} />
 
         <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4]">
-          {claimed ? "View profile" : "View & claim"}
+          {claimed ? "View profile" : "Claim this profile"}
           <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </span>
       </div>
