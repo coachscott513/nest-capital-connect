@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowRight, Search } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -25,143 +25,155 @@ import townCliftonPark from "@/assets/town-clifton-park.jpg";
    ============================================================= */
 
 const TOWN_TILES = [
-  { name: "Delmar",           descriptor: "Tree-lined suburban core",   meta: "Bethlehem Schools",        median: "$542K", businesses: 18, img: townDelmar,      to: "/living-in/delmar" },
-  { name: "Albany",           descriptor: "Urban neighborhoods · revival", meta: "Capital Region hub",     median: "$268K", businesses: 31, img: townAlbany,      to: "/living-in/albany" },
-  { name: "Saratoga Springs", descriptor: "Walkable downtown · historic", meta: "Saratoga Schools",         median: "$612K", businesses: 26, img: townSaratoga,    to: "/living-in/saratoga-springs" },
-  { name: "Troy",             descriptor: "Riverfront brick & arts",     meta: "Historic collar city",     median: "$258K", businesses: 22, img: townTroy,        to: "/living-in/troy" },
-  { name: "Schenectady",      descriptor: "Stockade · value & cash flow", meta: "Investor activity",       median: "$215K", businesses: 14, img: townSchenectady, to: "/living-in/schenectady" },
-  { name: "Clifton Park",     descriptor: "Family suburb · Shen schools", meta: "Top-rated schools",       median: "$485K", businesses: 16, img: townCliftonPark, to: "/living-in/clifton-park" },
+  { name: "Delmar",           descriptor: "Tree-lined streets & local cafés", meta: "Bethlehem Schools",   median: "$542K", businesses: 18, img: townDelmar,      to: "/living-in/delmar" },
+  { name: "Albany",           descriptor: "Capital energy & architecture",    meta: "Capital Region hub",  median: "$268K", businesses: 31, img: townAlbany,      to: "/living-in/albany" },
+  { name: "Saratoga Springs", descriptor: "Historic charm & culture",         meta: "Saratoga Schools",    median: "$612K", businesses: 26, img: townSaratoga,    to: "/living-in/saratoga-springs" },
+  { name: "Troy",             descriptor: "Brownstones & creativity",         meta: "Historic collar city", median: "$258K", businesses: 22, img: townTroy,        to: "/living-in/troy" },
+  { name: "Schenectady",      descriptor: "Stockade · value & cash flow",     meta: "Investor activity",   median: "$215K", businesses: 14, img: townSchenectady, to: "/living-in/schenectady" },
+  { name: "Clifton Park",     descriptor: "Family suburb · Shen schools",     meta: "Top-rated schools",   median: "$485K", businesses: 16, img: townCliftonPark, to: "/living-in/clifton-park" },
+];
+
+const ROTATING_HEADLINES = [
+  "Discover the Capital District.",
+  "The Capital District's Digital Front Door.",
+  "Local culture, business & neighborhoods.",
+  "Where the Capital District lives.",
+];
+
+const ROTATING_PLACEHOLDERS = [
+  "Search Delmar homes",
+  "Search Saratoga homes",
+  "Search Troy homes",
+  "Search Albany homes",
+  "Find a Delmar café",
+  "Find a Troy restaurant",
 ];
 
 /* ========== Section 1 — CINEMATIC HERO ========== */
 function CinematicHero() {
   const navigate = useNavigate();
-  const [homesQ, setHomesQ] = useState("");
-  const [bizQ, setBizQ] = useState("");
+  const [q, setQ] = useState("");
+  const [phIdx, setPhIdx] = useState(0);
+  const [hlIdx, setHlIdx] = useState(0);
 
-  const onHomes = (e: React.FormEvent) => {
+  useEffect(() => {
+    const a = setInterval(() => setPhIdx((i) => (i + 1) % ROTATING_PLACEHOLDERS.length), 2800);
+    const b = setInterval(() => setHlIdx((i) => (i + 1) % ROTATING_HEADLINES.length), 5200);
+    return () => { clearInterval(a); clearInterval(b); };
+  }, []);
+
+  const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const v = homesQ.trim();
-    navigate(v ? `/homes-for-sale?q=${encodeURIComponent(v)}` : "/homes-for-sale");
-  };
-  const onBiz = (e: React.FormEvent) => {
-    e.preventDefault();
-    const v = bizQ.trim();
-    navigate(v ? `/local?q=${encodeURIComponent(v)}` : "/local");
+    const v = q.trim();
+    if (!v) return navigate("/communities");
+    const looksLikeBiz = /caf|coffee|restaurant|pizza|attorney|shop|bar|gym|salon/i.test(v);
+    navigate(looksLikeBiz ? `/local?q=${encodeURIComponent(v)}` : `/homes-for-sale?q=${encodeURIComponent(v)}`);
   };
 
   return (
     <section className="relative w-full overflow-hidden bg-black">
-      <div className="relative w-full min-h-[94vh] flex items-center">
+      <div className="relative w-full min-h-[100vh] flex items-center">
         <img
           src={heroCapital}
           alt="Capital District, New York — towns, neighborhoods, and local life"
-          className="absolute inset-0 w-full h-full object-cover scale-[1.02]"
-          style={{ filter: "grayscale(100%) contrast(1.05)" }}
+          className="absolute inset-0 w-full h-full object-cover scale-[1.03]"
+          style={{ filter: "grayscale(100%) contrast(1.08) brightness(0.95)" }}
           width={1920}
           height={1080}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/45 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/85" />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 py-28 md:py-36">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 py-28 md:py-40">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-5xl mx-auto text-center"
           >
-            <p className="text-[11px] md:text-xs font-semibold tracking-[0.32em] uppercase text-white/65 mb-7">
+            <p className="text-[11px] md:text-xs font-semibold tracking-[0.32em] uppercase text-white/65 mb-8">
               The Digital Front Door of the Capital District
             </p>
-            <h1 className="text-[2.75rem] sm:text-6xl md:text-[5.5rem] lg:text-[7rem] font-semibold tracking-[-0.045em] leading-[0.95] text-white">
-              The Capital District,<br />
-              <span className="font-light text-white/85 italic">Reimagined.</span>
+
+            <h1 className="relative text-[2.5rem] sm:text-6xl md:text-[5.5rem] lg:text-[7rem] font-semibold tracking-[-0.045em] leading-[0.98] text-white">
+              <motion.span
+                key={hlIdx}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className="block"
+              >
+                {ROTATING_HEADLINES[hlIdx]}
+              </motion.span>
             </h1>
+
             <p className="mt-8 text-base md:text-xl text-white/75 max-w-2xl mx-auto font-light leading-relaxed">
-              Real estate, local business, development, and community — all in one place.
+              Explore local businesses, neighborhoods, homes, restaurants, events,
+              and the best of Upstate New York.
             </p>
 
-            {/* Dual glass search cards */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+            {/* Apple-style single pill search */}
+            <motion.form
+              onSubmit={onSearch}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-12 md:mt-14 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 max-w-4xl mx-auto"
+              transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-12 md:mt-14 mx-auto max-w-2xl flex items-center gap-2 bg-white/[0.10] backdrop-blur-2xl border border-white/20 rounded-full pl-6 pr-2 py-2 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.7)] hover:bg-white/[0.13] hover:border-white/30 transition-all duration-500"
             >
-              {/* CARD 1 — Homes */}
-              <form
-                onSubmit={onHomes}
-                className="group text-left rounded-3xl p-6 md:p-7 bg-white/[0.08] backdrop-blur-2xl border border-white/15 hover:bg-white/[0.12] hover:border-white/25 transition-all duration-500 shadow-[0_24px_60px_-24px_rgba(0,0,0,0.55)]"
-              >
-                <div className="flex items-center justify-between mb-5">
-                  <span className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/55">
-                    Real Estate
+              <Search className="w-4 h-4 text-white/60 shrink-0" />
+              <div className="relative flex-1 min-w-0">
+                <input
+                  type="text"
+                  value={q}
+                  onChange={(e) => setQ(e.target.value.slice(0, 120))}
+                  className="w-full bg-transparent text-[15px] md:text-base text-white placeholder:text-transparent focus:outline-none py-2.5"
+                  aria-label="Search the Capital District"
+                />
+                {!q && (
+                  <span className="pointer-events-none absolute inset-0 flex items-center text-[15px] md:text-base text-white/55 overflow-hidden">
+                    <motion.span
+                      key={phIdx}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      {ROTATING_PLACEHOLDERS[phIdx]}
+                    </motion.span>
                   </span>
-                  <Search className="w-4 h-4 text-white/55" />
-                </div>
-                <h3 className="text-2xl md:text-[1.7rem] font-semibold text-white tracking-[-0.02em] leading-tight">
-                  Search Homes
-                </h3>
-                <p className="mt-1.5 text-sm text-white/60 font-light">
-                  Live MLS across 52 towns.
-                </p>
-                <div className="mt-5 flex items-center gap-2 bg-white/10 border border-white/15 rounded-full pl-4 pr-1.5 py-1.5">
-                  <input
-                    type="text"
-                    value={homesQ}
-                    onChange={(e) => setHomesQ(e.target.value.slice(0, 120))}
-                    placeholder="Town, zip, or address"
-                    className="flex-1 bg-transparent text-[14px] text-white placeholder:text-white/50 focus:outline-none py-1.5"
-                    aria-label="Search homes"
-                  />
-                  <button
-                    type="submit"
-                    className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-[#0e0f12] text-[12.5px] font-semibold hover:opacity-90 transition"
-                  >
-                    Search <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </form>
+                )}
+              </div>
+              <button
+                type="submit"
+                className="shrink-0 inline-flex items-center gap-1.5 px-5 md:px-6 py-2.5 rounded-full bg-white text-[#0e0f12] text-[13px] font-semibold hover:opacity-90 transition"
+              >
+                Search <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </motion.form>
 
-              {/* CARD 2 — Local Businesses */}
-              <form
-                onSubmit={onBiz}
-                className="group text-left rounded-3xl p-6 md:p-7 bg-white/[0.08] backdrop-blur-2xl border border-white/15 hover:bg-white/[0.12] hover:border-white/25 transition-all duration-500 shadow-[0_24px_60px_-24px_rgba(0,0,0,0.55)]"
+            {/* Primary CTAs — Towns + Local Business */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-9 flex flex-wrap items-center justify-center gap-3"
+            >
+              <Link
+                to="/communities"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0e0f12] text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_18px_44px_-18px_rgba(255,255,255,0.5)] transition"
               >
-                <div className="flex items-center justify-between mb-5">
-                  <span className="text-[10px] font-semibold tracking-[0.25em] uppercase text-white/55">
-                    Local Business
-                  </span>
-                  <Search className="w-4 h-4 text-white/55" />
-                </div>
-                <h3 className="text-2xl md:text-[1.7rem] font-semibold text-white tracking-[-0.02em] leading-tight">
-                  Discover Local
-                </h3>
-                <p className="mt-1.5 text-sm text-white/60 font-light">
-                  Restaurants, cafés, services & makers.
-                </p>
-                <div className="mt-5 flex items-center gap-2 bg-white/10 border border-white/15 rounded-full pl-4 pr-1.5 py-1.5">
-                  <input
-                    type="text"
-                    value={bizQ}
-                    onChange={(e) => setBizQ(e.target.value.slice(0, 120))}
-                    placeholder="Coffee, pizza, attorney…"
-                    className="flex-1 bg-transparent text-[14px] text-white placeholder:text-white/50 focus:outline-none py-1.5"
-                    aria-label="Search local businesses"
-                  />
-                  <button
-                    type="submit"
-                    className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-[#0e0f12] text-[12.5px] font-semibold hover:opacity-90 transition"
-                  >
-                    Explore <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </form>
+                Explore Towns <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/local"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 backdrop-blur text-white border border-white/25 text-sm font-semibold hover:bg-white/15 transition"
+              >
+                Explore Local Businesses
+              </Link>
             </motion.div>
 
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] text-white/55">
-              <Link to="/communities" className="hover:text-white transition inline-flex items-center gap-1">
-                Explore towns <ArrowRight className="w-3 h-3" />
+            {/* Secondary, quieter */}
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] text-white/55">
+              <Link to="/homes-for-sale" className="hover:text-white transition inline-flex items-center gap-1">
+                Search homes <ArrowRight className="w-3 h-3" />
               </Link>
               <span className="w-1 h-1 rounded-full bg-white/25" />
               <Link to="/analyze" className="hover:text-white transition">
