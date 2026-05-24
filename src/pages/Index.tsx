@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import HeroBand from "@/components/HeroBand";
 import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 import SupportLocalSection from "@/components/home/SupportLocalSection";
+import LiveLocalPulse from "@/components/home/LiveLocalPulse";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
 import heroCapital from "@/assets/hero-capital-district.jpg";
@@ -641,6 +642,9 @@ const Index = () => {
 
       {/* 1 — CINEMATIC HERO */}
       <CinematicHero />
+
+      {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip */}
+      <LiveLocalPulse />
 
       {/* 2 — B2B CONVERSION · Claim Your Business (flywheel CTA, directly under hero) */}
       <section className="relative bg-[#0B0F19] overflow-hidden border-b border-[#2D3748]">
