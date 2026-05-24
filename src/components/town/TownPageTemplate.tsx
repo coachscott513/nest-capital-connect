@@ -15,6 +15,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
+import AnalystCard from "@/components/AnalystCard";
 import Footer from "@/components/Footer";
 import WeeklyFeed from "@/components/WeeklyFeed";
 import TrustedLocalPartners from "@/components/town/TrustedLocalPartners";
