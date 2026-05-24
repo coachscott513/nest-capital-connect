@@ -157,23 +157,45 @@ const TownPageTemplate = ({ town }: Props) => {
               </button>
             </form>
 
+            {/* Premium action chips — glass pills, teal hover glow */}
+            <div className="mt-8 flex flex-wrap gap-2">
+              {[
+                { label: "Explore Delmar", href: "#feel" },
+                { label: "Local Businesses", href: "#businesses" },
+                { label: "This Week", href: "#changed" },
+                { label: "Homes", href: "#homes" },
+                { label: "Sports", href: "#sports" },
+                { label: "Events", href: "#weekend" },
+              ].map((chip) => (
+                <a
+                  key={chip.label}
+                  href={chip.href}
+                  className="group inline-flex items-center px-4 py-2 rounded-full text-[13px] font-medium text-white/75 bg-white/[0.04] border border-white/10 backdrop-blur-xl transition-all duration-300 hover:text-white hover:bg-white/[0.07] hover:border-[#5eead4]/40 hover:shadow-[0_0_24px_-4px_rgba(94,234,212,0.35)]"
+                >
+                  {chip.label}
+                </a>
+              ))}
+            </div>
+
+            {/* Subtle live status line */}
+            <div className="mt-5 flex items-center gap-2.5 text-[12px] text-white/40 font-light tracking-[-0.005em]">
+              <span className="relative flex h-1.5 w-1.5">
+                <span
+                  className="absolute inset-0 rounded-full opacity-60 animate-ping"
+                  style={{ background: TEAL_DARK }}
+                />
+                <span
+                  className="relative inline-flex h-1.5 w-1.5 rounded-full"
+                  style={{ background: TEAL_DARK, boxShadow: `0 0 8px ${TEAL_DARK}` }}
+                />
+              </span>
+              <span>Updated today with local events, businesses, listings, and community activity.</span>
+            </div>
+
             {o.heroPulses && o.heroPulses.length > 0 && (
               <HeroMetadataPulse items={o.heroPulses} />
             )}
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/55">
-              <a href="#pulse" className="hover:text-white transition">The Pulse</a>
-              <span className="text-white/15">·</span>
-              <a href="#feel" className="hover:text-white transition">The Feel</a>
-              <span className="text-white/15">·</span>
-              <a href="#weekend" className="hover:text-white transition">This Weekend</a>
-              <span className="text-white/15">·</span>
-              <a href="#changed" className="hover:text-white transition">What Changed</a>
-              <span className="text-white/15">·</span>
-              <a href="#homes" className="hover:text-white transition">Homes</a>
-              <span className="text-white/15">·</span>
-              <a href="#businesses" className="hover:text-white transition">Businesses</a>
-            </div>
           </div>
 
           {/* Callout rail */}
