@@ -17,6 +17,13 @@ export interface TownMarketStats {
   domNote?: string;
 }
 
+export interface TownFeel {
+  morning: string;
+  families: string;
+  weekends: string;
+  commute: string;
+}
+
 export interface TownOverride {
   heroImage: string;
   whyImage: string;
@@ -25,6 +32,15 @@ export interface TownOverride {
   whyHeadline?: string;
   whyCopy: string;
   whyBullets: string[];
+  /** Cinematic hero copy overrides */
+  heroHeadline?: string;
+  heroSub?: string;
+  /** Editorial "Feel of [Town]" section */
+  feel?: TownFeel;
+  /** Sub-neighborhood chips for the explorer */
+  neighborhoods?: string[];
+  /** Subtle signature accent glow color */
+  accentGlow?: string;
 }
 
 const DEFAULT_HERO =
