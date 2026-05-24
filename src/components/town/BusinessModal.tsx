@@ -37,8 +37,7 @@ const SocialIcon = ({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={label}
-        className={`${base} border-[#0d6e66]/20 text-[${TEAL}] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66]`}
-        style={{ color: TEAL }}
+        className={`${base} border-[#5eead4]/30 text-[#5eead4] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66]`}
       >
         <Icon className="w-4 h-4" />
       </a>
@@ -48,7 +47,7 @@ const SocialIcon = ({
     <span
       aria-label={`${label} (locked)`}
       title="Claim this profile to activate social links."
-      className={`${base} border-foreground/10 text-foreground/25 cursor-not-allowed bg-foreground/[0.02]`}
+      className={`${base} border-white/10 text-white/25 cursor-not-allowed bg-white/[0.02]`}
     >
       <Icon className="w-4 h-4" />
     </span>
@@ -64,18 +63,18 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg p-0 gap-0 rounded-3xl overflow-hidden border-0 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.35)] bg-white">
-        <div className="p-7 md:p-8">
+      <DialogContent className="max-w-lg p-0 gap-0 rounded-3xl overflow-hidden border border-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] bg-[#0B0F19] text-white">
+        <div className="p-7 md:p-8 bg-[#0B0F19]">
           {/* Header */}
           <div className="flex items-start justify-between gap-4 mb-2">
             <div className="min-w-0">
               <p
                 className="text-[11px] font-semibold tracking-[0.18em] uppercase mb-2"
-                style={{ color: TEAL }}
+                style={{ color: "#5eead4" }}
               >
                 {b.category}
               </p>
-              <DialogTitle className="text-2xl md:text-[28px] font-semibold tracking-tight text-foreground leading-tight">
+              <DialogTitle className="text-2xl md:text-[28px] font-semibold tracking-tight text-white leading-tight">
                 {b.name}
               </DialogTitle>
             </div>
@@ -89,7 +88,7 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
             )}
           </div>
 
-          <DialogDescription className="text-foreground/70 text-[15px] leading-relaxed mt-3">
+          <DialogDescription className="text-white/70 text-[15px] leading-relaxed mt-3">
             {b.about}
           </DialogDescription>
 
@@ -98,9 +97,9 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
             {b.phone && (
               <a
                 href={telHref}
-                className="flex items-center gap-3 text-[15px] text-foreground hover:opacity-70 transition"
+                className="flex items-center gap-3 text-[15px] text-white/85 hover:text-white transition"
               >
-                <Phone className="w-4 h-4 text-foreground/50" />
+                <Phone className="w-4 h-4 text-white/45" />
                 <span>{b.phone}</span>
               </a>
             )}
@@ -109,14 +108,14 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
                 href={b.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-[15px] text-foreground hover:opacity-70 transition truncate"
+                className="flex items-center gap-3 text-[15px] text-white/85 hover:text-white transition truncate"
               >
-                <Globe className="w-4 h-4 text-foreground/50 shrink-0" />
+                <Globe className="w-4 h-4 text-white/45 shrink-0" />
                 <span className="truncate">{b.website.replace(/^https?:\/\//, "")}</span>
               </a>
             )}
-            <div className="flex items-center gap-3 text-[15px] text-foreground/75">
-              <MapPin className="w-4 h-4 text-foreground/50" />
+            <div className="flex items-center gap-3 text-[15px] text-white/70">
+              <MapPin className="w-4 h-4 text-white/45" />
               <span>{b.address}</span>
             </div>
           </div>
@@ -132,14 +131,14 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
             </a>
           )}
 
-          {/* Socials */}
-          <div className="mt-7 pt-6 border-t border-foreground/[0.08]">
+          {/* Socials — Facebook first */}
+          <div className="mt-7 pt-6 border-t border-white/10">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-foreground/60">
+              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-white/55">
                 Social
               </p>
               {!verified && (
-                <span className="inline-flex items-center gap-1 text-[11px] text-foreground/45">
+                <span className="inline-flex items-center gap-1 text-[11px] text-white/45">
                   <Lock className="w-3 h-3" /> Claim to activate
                 </span>
               )}
@@ -152,23 +151,24 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
             </div>
             {!verified && (
               <>
-                <p className="mt-3 text-xs text-foreground/45 leading-relaxed">
-                  Social links available for verified businesses.
+                <p className="mt-3 text-xs text-white/45 leading-relaxed">
+                  Business owner? Claim this profile to activate social links.
                 </p>
                 <a
                   href={`/claim-business?name=${encodeURIComponent(b.name)}`}
-                  className="mt-4 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-[#0d6e66]/25 text-[#0d6e66] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66] transition-all"
+                  className="mt-4 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-[#5eead4]/30 text-[#5eead4] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66] transition-all"
                 >
                   Claim this listing
                 </a>
-                <p className="mt-2 text-[11px] text-foreground/45 text-center">
-                  Activate full profile + social links
+                <p className="mt-2 text-[11px] text-white/45 text-center">
+                  Free · No payment required
                 </p>
               </>
             )}
           </div>
         </div>
       </DialogContent>
+
     </Dialog>
   );
 };

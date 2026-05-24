@@ -157,7 +157,7 @@ const PartnerModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-xl p-0 gap-0 rounded-3xl overflow-hidden border-0 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.45)] bg-white">
+      <DialogContent className="max-w-xl p-0 gap-0 rounded-3xl overflow-hidden border border-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] bg-[#0B0F19] text-white">
         {/* Hero */}
         <div className="relative h-48 md:h-56 overflow-hidden bg-[#0e0f12]">
           {p.image && (
@@ -167,7 +167,7 @@ const PartnerModal = ({
               className="w-full h-full object-cover opacity-90"
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0e0f12]/80 via-[#0e0f12]/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/55 to-transparent" />
           <div className="absolute bottom-4 left-6 right-6">
             <p
               className="text-[11px] font-semibold tracking-[0.18em] uppercase mb-1.5"
@@ -181,15 +181,15 @@ const PartnerModal = ({
           </div>
         </div>
 
-        <div className="p-7 md:p-8">
-          <DialogDescription className="text-foreground/70 text-[15px] leading-relaxed">
+        <div className="p-7 md:p-8 bg-[#0B0F19]">
+          <DialogDescription className="text-white/70 text-[15px] leading-relaxed">
             {p.about ?? p.tagline}
           </DialogDescription>
 
           <div className="mt-6 space-y-2.5">
             {p.phone && (
-              <a href={tel} className="flex items-center gap-3 text-[15px] text-foreground hover:opacity-70">
-                <Phone className="w-4 h-4 text-foreground/50" /> {p.phone}
+              <a href={tel} className="flex items-center gap-3 text-[15px] text-white/85 hover:text-white">
+                <Phone className="w-4 h-4 text-white/45" /> {p.phone}
               </a>
             )}
             {p.website && p.website !== "#" && (
@@ -197,25 +197,25 @@ const PartnerModal = ({
                 href={p.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-[15px] text-foreground hover:opacity-70 truncate"
+                className="flex items-center gap-3 text-[15px] text-white/85 hover:text-white truncate"
               >
-                <Globe className="w-4 h-4 text-foreground/50 shrink-0" />
+                <Globe className="w-4 h-4 text-white/45 shrink-0" />
                 <span className="truncate">{p.website.replace(/^https?:\/\//, "")}</span>
               </a>
             )}
             {p.email && (
-              <a href={mailto} className="flex items-center gap-3 text-[15px] text-foreground hover:opacity-70">
-                <Mail className="w-4 h-4 text-foreground/50" /> {p.email}
+              <a href={mailto} className="flex items-center gap-3 text-[15px] text-white/85 hover:text-white">
+                <Mail className="w-4 h-4 text-white/45" /> {p.email}
               </a>
             )}
             {p.address && (
-              <div className="flex items-center gap-3 text-[15px] text-foreground/75">
-                <MapPin className="w-4 h-4 text-foreground/50" /> {p.address}
+              <div className="flex items-center gap-3 text-[15px] text-white/70">
+                <MapPin className="w-4 h-4 text-white/45" /> {p.address}
               </div>
             )}
             {p.hours && (
-              <div className="flex items-center gap-3 text-[15px] text-foreground/75">
-                <Clock className="w-4 h-4 text-foreground/50" /> {p.hours}
+              <div className="flex items-center gap-3 text-[15px] text-white/70">
+                <Clock className="w-4 h-4 text-white/45" /> {p.hours}
               </div>
             )}
           </div>
@@ -236,7 +236,7 @@ const PartnerModal = ({
                 href={p.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full text-sm font-semibold border border-[#0d6e66]/25 text-[#0d6e66] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66] transition"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full text-sm font-semibold border border-[#5eead4]/30 text-[#5eead4] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66] transition"
               >
                 <Globe className="w-4 h-4" /> Website
               </a>
@@ -244,7 +244,7 @@ const PartnerModal = ({
             {mailto && (
               <a
                 href={mailto}
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full text-sm font-semibold border border-foreground/15 text-foreground hover:bg-foreground/5 transition"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full text-sm font-semibold border border-white/15 text-white/85 hover:bg-white/[0.06] hover:text-white transition"
               >
                 <Mail className="w-4 h-4" /> Email
               </a>
@@ -254,21 +254,21 @@ const PartnerModal = ({
                 href={directions}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full text-sm font-semibold border border-foreground/15 text-foreground hover:bg-foreground/5 transition"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full text-sm font-semibold border border-white/15 text-white/85 hover:bg-white/[0.06] hover:text-white transition"
               >
                 <MapPin className="w-4 h-4" /> Directions
               </a>
             )}
           </div>
 
-          {/* Socials */}
-          <div className="mt-7 pt-6 border-t border-foreground/[0.08]">
-            <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-foreground/60 mb-3">
+          {/* Socials — Facebook first */}
+          <div className="mt-7 pt-6 border-t border-white/10">
+            <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-white/55 mb-3">
               Social
             </p>
             <div className="flex items-center gap-2.5">
-              <SocialBtn href={p.socials?.instagram} Icon={Instagram} label="Instagram" />
               <SocialBtn href={p.socials?.facebook} Icon={Facebook} label="Facebook" />
+              <SocialBtn href={p.socials?.instagram} Icon={Instagram} label="Instagram" />
               <SocialBtn href={p.socials?.linkedin} Icon={Linkedin} label="LinkedIn" />
               <SocialBtn href={p.socials?.twitter} Icon={XIcon} label="X" />
             </div>
