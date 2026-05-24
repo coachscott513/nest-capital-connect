@@ -150,7 +150,7 @@ const TownPageTemplate = ({ town }: Props) => {
             {/* Premium action chips — glass pills, teal hover glow */}
             <div className="mt-8 flex flex-wrap gap-2">
               {[
-                { label: "Discover Delmar", href: "#discover" },
+                { label: `Discover ${town.townName}`, href: "#discover" },
                 { label: "Local Businesses", href: "#businesses" },
                 { label: "This Week", href: "#changed" },
                 { label: "Homes", href: "#homes" },
