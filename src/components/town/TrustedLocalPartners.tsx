@@ -40,6 +40,7 @@ interface Props {
   sub?: string;
   partners?: LocalPartner[];
   variant?: "light" | "dark";
+  showClaimCard?: boolean;
 }
 
 const TEAL = "#0d6e66";
