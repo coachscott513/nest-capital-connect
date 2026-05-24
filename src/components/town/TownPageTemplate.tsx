@@ -538,13 +538,13 @@ const TownPageTemplate = ({ town }: Props) => {
                 className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
                 style={{ color: TEAL_DARK }}
               >
-                Buyer & Investor Tools
+                Local Resources
               </p>
               <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                Make the numbers work.
+                Local resources for {town.townName}.
               </h2>
               <p className="mt-5 text-lg font-light text-white/65">
-                First-time buyers, families, and investors — purpose-built tools for {town.townName}.
+                Housing, taxes, schools, grants, local services, and tools for navigating {town.townName}.
               </p>
             </div>
 
