@@ -36,7 +36,7 @@ export default function LiveNowTicker({ townName, items }: Props) {
   return (
     <section
       aria-label={`Live now in ${townName}`}
-      className="relative w-full bg-[#0B0F19] border-y border-white/[0.06]"
+      className="relative w-full overflow-visible bg-[#0B0F19] border-y border-white/[0.06] select-none"
     >
       <div
         className="absolute inset-0 pointer-events-none opacity-60"
