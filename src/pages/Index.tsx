@@ -196,6 +196,25 @@ function CinematicHero() {
               </button>
             </motion.form>
 
+            {/* Trending searches — teaches users what the search can do */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="mt-5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-[12px] text-white/55"
+            >
+              <span className="uppercase tracking-[0.2em] text-[10px] text-white/40 mr-1">Trending</span>
+              {TRENDING_SEARCHES.map((t, i) => (
+                <span key={t.label} className="inline-flex items-center gap-2">
+                  <Link to={t.to} className="hover:text-white transition underline-offset-4 hover:underline">
+                    {t.label}
+                  </Link>
+                  {i < TRENDING_SEARCHES.length - 1 && <span className="w-0.5 h-0.5 rounded-full bg-white/25" />}
+                </span>
+              ))}
+            </motion.div>
+
+
             {/* Primary CTAs — Towns + Local Business */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
