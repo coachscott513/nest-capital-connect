@@ -98,7 +98,7 @@ export const townOverrides: Record<string, TownOverride> = {
       { title: "Strong Residential Demand", body: "Homes move fast year-round." },
     ],
     stats: {
-      medianPrice: "$485K",
+      medianPrice: "$445K",
       medianNote: "Up 4.2% YoY",
       activeListings: "12",
       activeNote: "As of this week",
@@ -111,7 +111,7 @@ export const townOverrides: Record<string, TownOverride> = {
       "Tree-lined neighborhoods",
       "Bethlehem Central schools",
       "Local dining at Four Corners",
-      "10-minute Albany commute",
+      "12-minute Albany commute",
     ],
     feel: {
       morning:
@@ -121,7 +121,7 @@ export const townOverrides: Record<string, TownOverride> = {
       weekends:
         "Saturday farmers market, brunch on Delaware Ave, ice cream at the Snowman after dinner.",
       commute:
-        "10 minutes to downtown Albany. Quick to I-87, the airport, and the Thruway.",
+        "12 minutes to downtown Albany. Quick to I-87, the airport, and the Thruway.",
     },
     neighborhoods: [
       "Four Corners",
@@ -132,11 +132,10 @@ export const townOverrides: Record<string, TownOverride> = {
     ],
     accentGlow: "rgba(13,110,102,0.35)",
     ribbon: [
-      { label: "Median Home Price", value: "$485K" },
-      { label: "Bethlehem Schools", value: "Top Rated" },
-      { label: "Albany Commute", value: "12 Minutes" },
-      { label: "Lifestyle", value: "Walkable + Family" },
-      { label: "Inventory", value: "Low Supply" },
+      { label: "Median Price", value: "$445K" },
+      { label: "School Rank", value: "Top 5%" },
+      { label: "Velocity", value: "High" },
+      { label: "Albany Commute", value: "12 Mins" },
     ],
     sports: [
       { team: "Bethlehem Eagles", league: "Section II Baseball", status: "W 5–2", detail: "vs Shenendehowa" },
@@ -152,6 +151,56 @@ export const townOverrides: Record<string, TownOverride> = {
       { title: "Affordability Calculator",  body: "See what you can comfortably afford.",          href: "/financing" },
       { title: "Local Grant Programs",       body: "Down payment and closing cost assistance.",     href: "/grants" },
       { title: "Investor Underwriting",     body: "Run cash flow, cap rate, and DSCR instantly.",  href: "/analyze" },
+    ],
+    partners: [
+      {
+        id: "perfect-blend",
+        name: "The Perfect Blend Café",
+        category: "Coffee & Café · Four Corners",
+        tagline: "The morning ritual at Delmar's Four Corners.",
+        about:
+          "A neighborhood coffee shop at Four Corners — locally roasted espresso, fresh pastries, and the kind of place where every regular has a usual order.",
+        address: "Four Corners, Delmar, NY",
+        hours: "Mon–Sun · 6:30 AM – 6:00 PM",
+        image:
+          "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1600&q=80",
+      },
+      {
+        id: "mccarrolls-butcher",
+        name: "McCarroll's The Village Butcher",
+        category: "Butcher & Provisions",
+        tagline: "Capital Region's classic neighborhood butcher.",
+        about:
+          "A family-run butcher and provisions shop serving Delmar for generations — dry-aged steaks, house-made sausage, and weekly specials for the family table.",
+        address: "Delaware Avenue, Delmar, NY",
+        hours: "Tue–Sat · 9:00 AM – 6:00 PM",
+        image:
+          "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1600&q=80",
+      },
+      {
+        id: "swiftys",
+        name: "Swifty's Restaurant & Pub",
+        category: "Restaurant & Pub",
+        tagline: "Delmar's go-to for dinner, drinks, and game night.",
+        about:
+          "A long-standing Delmar pub and restaurant — comfort menu, local beer, and the community living room for weekend dinners and Sunday games.",
+        address: "Delaware Avenue, Delmar, NY",
+        hours: "Daily · 11:30 AM – 11:00 PM",
+        image:
+          "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&q=80",
+      },
+      {
+        id: "roux",
+        name: "Roux",
+        category: "Modern Dining",
+        tagline: "Refined neighborhood dining on Delaware Avenue.",
+        about:
+          "A modern American restaurant bringing a more elevated dining experience to Delmar — seasonal menus, a thoughtful wine list, and a warm room.",
+        address: "Delaware Avenue, Delmar, NY",
+        hours: "Wed–Sun · 5:00 PM – 10:00 PM",
+        image:
+          "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80",
+      },
     ],
   },
   albany: {
