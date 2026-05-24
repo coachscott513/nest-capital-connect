@@ -427,6 +427,45 @@ const Index = () => {
       {/* 1 — CINEMATIC HERO */}
       <CinematicHero />
 
+      {/* 2 — B2B CONVERSION · Claim Your Business (flywheel CTA, directly under hero) */}
+      <section className="relative bg-[#0B0F19] overflow-hidden border-b border-[#2D3748]">
+        <div
+          className="absolute inset-0 opacity-60 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(60% 80% at 20% 30%, rgba(13,110,102,0.35), transparent 60%), radial-gradient(50% 70% at 80% 70%, rgba(94,234,212,0.12), transparent 60%)",
+          }}
+        />
+        <div className="relative max-w-5xl mx-auto px-6 md:px-10 py-20 md:py-28 text-center">
+          <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-6">
+            For Local Business Owners
+          </p>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white max-w-3xl mx-auto">
+            Own a local business?
+          </h2>
+          <p className="mt-7 text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
+            Claim your free business profile and join the Capital District's fastest-growing
+            local discovery platform.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              to="/claim-business"
+              className="inline-flex items-center gap-2 bg-[#0d6e66] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(13,110,102,0.6)] transition"
+            >
+              Claim Your Profile <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/local"
+              className="inline-flex items-center gap-2 bg-white/[0.06] backdrop-blur text-white border border-white/20 px-6 py-3.5 rounded-full text-sm font-semibold hover:bg-white/10 transition"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
+      </section>
+
+
+
       {/* 2 — MICRO-PROOF STRIP */}
       <section className="bg-[#0B0F19] border-b border-[#2D3748]">
         <div className="max-w-6xl mx-auto px-6 md:px-10 py-5 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-8 text-center sm:text-left">
@@ -567,41 +606,6 @@ const Index = () => {
         ]}
       />
 
-      {/* 9 — CLAIM YOUR BUSINESS · elegant CTA */}
-      <section className="relative bg-[#0B0F19] overflow-hidden">
-        <div className="absolute inset-0 opacity-60 pointer-events-none"
-             style={{
-               background:
-                 "radial-gradient(60% 80% at 20% 30%, rgba(13,110,102,0.35), transparent 60%), radial-gradient(50% 70% at 80% 70%, rgba(13,110,102,0.18), transparent 60%)",
-             }}
-        />
-        <div className="relative max-w-5xl mx-auto px-6 md:px-10 py-24 md:py-32 text-center">
-          <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-6">
-            For Local Business Owners
-          </p>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white max-w-3xl mx-auto">
-            Own a local business?
-          </h2>
-          <p className="mt-7 text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
-            Claim your free business profile and join the Capital District's fastest-growing
-            local discovery platform.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              to="/claim-business"
-              className="inline-flex items-center gap-2 bg-[#0d6e66] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(13,110,102,0.6)] transition"
-            >
-              Claim Your Profile <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/local"
-              className="inline-flex items-center gap-2 bg-white/[0.06] backdrop-blur text-white border border-white/20 px-6 py-3.5 rounded-full text-sm font-semibold hover:bg-white/10 transition"
-            >
-              Learn More
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* 10 — CATEGORY DESTINATIONS */}
       <section className="bg-[#0B0F19] py-24 md:py-32 px-6 md:px-10 border-t border-[#2D3748]">
