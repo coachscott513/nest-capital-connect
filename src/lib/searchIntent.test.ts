@@ -9,7 +9,7 @@ describe("resolveSearchIntent", () => {
     ["attorney", "/local?search=attorney"],
     ["Delmar", "/living-in/delmar"],
     ["Delmar homes", "/homes?town=Delmar"],
-    ["Troy cafés", "/local?search=caf%C3%A9s&town=Troy"],
+    ["Troy cafés", "/local?search=cafes&town=Troy"],
     ["investment properties Albany", "/investment-properties?town=Albany"],
   ])("routes %s to %s", (query, route) => {
     expect(getSearchRoute(query)).toBe(route);
