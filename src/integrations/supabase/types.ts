@@ -217,6 +217,153 @@ export type Database = {
           },
         ]
       }
+      businesses: {
+        Row: {
+          address: string | null
+          category: string
+          category_group: string | null
+          city: string | null
+          claimed_at: string | null
+          claimed_by_user_id: string | null
+          county: string | null
+          created_at: string
+          description: string | null
+          editorial_note: string | null
+          email: string | null
+          external_id: string | null
+          facebook: string | null
+          featured_order: number | null
+          google_maps_url: string | null
+          hero_image_url: string | null
+          hours: Json | null
+          id: string
+          import_batch_id: string | null
+          instagram: string | null
+          is_active: boolean | null
+          is_claimed: boolean | null
+          is_editor_pick: boolean | null
+          is_featured: boolean | null
+          is_hidden_gem: boolean | null
+          is_trending: boolean | null
+          is_verified: boolean | null
+          latitude: number | null
+          logo_url: string | null
+          longitude: number | null
+          name: string
+          phone: string | null
+          photos: string[] | null
+          rating: number | null
+          review_count: number | null
+          slug: string
+          source: string | null
+          state: string | null
+          subcategory: string | null
+          tagline: string | null
+          tags: string[] | null
+          town_name: string | null
+          town_slug: string
+          updated_at: string
+          website: string | null
+          zipcode: string | null
+        }
+        Insert: {
+          address?: string | null
+          category: string
+          category_group?: string | null
+          city?: string | null
+          claimed_at?: string | null
+          claimed_by_user_id?: string | null
+          county?: string | null
+          created_at?: string
+          description?: string | null
+          editorial_note?: string | null
+          email?: string | null
+          external_id?: string | null
+          facebook?: string | null
+          featured_order?: number | null
+          google_maps_url?: string | null
+          hero_image_url?: string | null
+          hours?: Json | null
+          id?: string
+          import_batch_id?: string | null
+          instagram?: string | null
+          is_active?: boolean | null
+          is_claimed?: boolean | null
+          is_editor_pick?: boolean | null
+          is_featured?: boolean | null
+          is_hidden_gem?: boolean | null
+          is_trending?: boolean | null
+          is_verified?: boolean | null
+          latitude?: number | null
+          logo_url?: string | null
+          longitude?: number | null
+          name: string
+          phone?: string | null
+          photos?: string[] | null
+          rating?: number | null
+          review_count?: number | null
+          slug: string
+          source?: string | null
+          state?: string | null
+          subcategory?: string | null
+          tagline?: string | null
+          tags?: string[] | null
+          town_name?: string | null
+          town_slug: string
+          updated_at?: string
+          website?: string | null
+          zipcode?: string | null
+        }
+        Update: {
+          address?: string | null
+          category?: string
+          category_group?: string | null
+          city?: string | null
+          claimed_at?: string | null
+          claimed_by_user_id?: string | null
+          county?: string | null
+          created_at?: string
+          description?: string | null
+          editorial_note?: string | null
+          email?: string | null
+          external_id?: string | null
+          facebook?: string | null
+          featured_order?: number | null
+          google_maps_url?: string | null
+          hero_image_url?: string | null
+          hours?: Json | null
+          id?: string
+          import_batch_id?: string | null
+          instagram?: string | null
+          is_active?: boolean | null
+          is_claimed?: boolean | null
+          is_editor_pick?: boolean | null
+          is_featured?: boolean | null
+          is_hidden_gem?: boolean | null
+          is_trending?: boolean | null
+          is_verified?: boolean | null
+          latitude?: number | null
+          logo_url?: string | null
+          longitude?: number | null
+          name?: string
+          phone?: string | null
+          photos?: string[] | null
+          rating?: number | null
+          review_count?: number | null
+          slug?: string
+          source?: string | null
+          state?: string | null
+          subcategory?: string | null
+          tagline?: string | null
+          tags?: string[] | null
+          town_name?: string | null
+          town_slug?: string
+          updated_at?: string
+          website?: string | null
+          zipcode?: string | null
+        }
+        Relationships: []
+      }
       deal_desk_requests: {
         Row: {
           agreed_to_updates: boolean
