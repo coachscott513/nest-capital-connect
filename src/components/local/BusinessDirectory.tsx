@@ -32,12 +32,13 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import {
-  businesses as ALL,
+  businesses as STATIC_BUSINESSES,
   CATEGORY_GROUPS,
   type Business,
   type BusinessCategory,
   type CategoryGroup,
 } from "@/data/businesses";
+import { useDbBusinesses } from "@/hooks/useDbBusinesses";
 
 const TEAL = "#5eead4";
 const TEAL_DEEP = "#0d6e66";
