@@ -172,21 +172,10 @@ function CinematicHero() {
                   type="text"
                   value={q}
                   onChange={(e) => setQ(e.target.value.slice(0, 120))}
-                  className="w-full bg-transparent text-[15px] md:text-base text-white placeholder:text-transparent focus:outline-none py-2.5"
+                  placeholder="Search anything local… (e.g., Delmar homes, Troy cafés, corporate events)"
+                  className="w-full bg-transparent text-[15px] md:text-base text-white placeholder:text-white/55 focus:outline-none py-2.5 truncate"
                   aria-label="Search the Capital District"
                 />
-                {!q && (
-                  <span className="pointer-events-none absolute inset-0 flex items-center text-[15px] md:text-base text-white/55 overflow-hidden">
-                    <motion.span
-                      key={phIdx}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      {ROTATING_PLACEHOLDERS[phIdx]}
-                    </motion.span>
-                  </span>
-                )}
               </div>
               <button
                 type="submit"
