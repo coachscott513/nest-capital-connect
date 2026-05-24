@@ -741,11 +741,21 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8"
           >
-            {TOWN_TILES.map((t) => (
-              <TownTile key={t.name} {...t} />
-            ))}
+            {/* Mobile: horizontal swipe carousel — first card in focus, next peeks from the right */}
+            <div className="sm:hidden -mx-6 px-6 flex flex-row overflow-x-auto scrollbar-hide snap-x snap-mandatory gap-4 pb-2">
+              {TOWN_TILES.map((t) => (
+                <div key={t.name} className="w-[85vw] flex-shrink-0 snap-center">
+                  <TownTile {...t} />
+                </div>
+              ))}
+            </div>
+            {/* Tablet/Desktop: symmetrical centered grid */}
+            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8">
+              {TOWN_TILES.map((t) => (
+                <TownTile key={t.name} {...t} />
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>
