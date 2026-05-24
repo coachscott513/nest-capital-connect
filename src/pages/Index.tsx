@@ -9,6 +9,7 @@ import HeroBand from "@/components/HeroBand";
 import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 import SupportLocalSection from "@/components/home/SupportLocalSection";
 import LiveLocalPulse from "@/components/home/LiveLocalPulse";
+import SpotlightSearch from "@/components/home/SpotlightSearch";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
 import heroCapital from "@/assets/hero-capital-district.jpg";
@@ -34,91 +35,10 @@ const TOWN_TILES = [
   { name: "Clifton Park",     descriptor: "Family suburb · Shen schools",     meta: "Top-rated schools",   median: "$485K", businesses: 16, img: townCliftonPark, to: "/living-in/clifton-park" },
 ];
 
-const ROTATING_HEADLINES = [
-  "Discover the Capital District.",
-  "The Capital District's Digital Front Door.",
-  "Local culture, business & neighborhoods.",
-  "Where the Capital District lives.",
-];
-
-const ROTATING_PLACEHOLDERS = [
-  "Search Delmar homes",
-  "Search Saratoga homes",
-  "Search Troy homes",
-  "Search Albany homes",
-  "Find a Delmar café",
-  "Find a Troy restaurant",
-];
-
-/* Known towns for search priority routing */
-const KNOWN_TOWNS: { slug: string; aliases: string[] }[] = [
-  { slug: "delmar",           aliases: ["delmar"] },
-  { slug: "albany",           aliases: ["albany"] },
-  { slug: "saratoga-springs", aliases: ["saratoga", "saratoga springs"] },
-  { slug: "troy",             aliases: ["troy"] },
-  { slug: "schenectady",      aliases: ["schenectady"] },
-  { slug: "clifton-park",     aliases: ["clifton park", "clifton"] },
-  { slug: "niskayuna",        aliases: ["niskayuna"] },
-  { slug: "guilderland",      aliases: ["guilderland"] },
-  { slug: "bethlehem",        aliases: ["bethlehem"] },
-  { slug: "colonie",          aliases: ["colonie"] },
-  { slug: "voorheesville",    aliases: ["voorheesville"] },
-  { slug: "queensbury",       aliases: ["queensbury"] },
-];
-
-const BIZ_KEYWORDS = /\b(caf[eé]|coffee|restaurant|pizza|attorney|lawyer|shop|bar|gym|salon|bakery|brewery|contractor|plumber|electrician|dentist|doctor|spa|yoga)\b/i;
-const INVESTMENT_KEYWORDS = /\b(investment|multi[- ]?family|duplex|cap rate|cash flow|rental)\b/i;
-const LAND_KEYWORDS = /\b(land|lot|acreage)\b/i;
-
-/**
- * Search routing priority:
- *   1. Exact town match           → /living-in/:slug (or /local scoped to town if biz keyword present)
- *   2. Business/service keywords  → /local?q=
- *   3. Investment keywords        → /analyze?q=
- *   4. Land keywords              → /homes-for-sale?type=land&q=
- *   5. Fallback                   → /homes-for-sale?q=
- */
-function routeSearch(raw: string): string {
-  const v = raw.trim().toLowerCase();
-  if (!v) return "/communities";
-  const townHit = KNOWN_TOWNS.find((t) => t.aliases.some((a) => v === a || v.startsWith(a + " ")));
-  if (townHit) {
-    if (BIZ_KEYWORDS.test(v)) return `/local?q=${encodeURIComponent(raw)}&town=${townHit.slug}`;
-    return `/living-in/${townHit.slug}`;
-  }
-  if (BIZ_KEYWORDS.test(v))        return `/local?q=${encodeURIComponent(raw)}`;
-  if (INVESTMENT_KEYWORDS.test(v)) return `/analyze?q=${encodeURIComponent(raw)}`;
-  if (LAND_KEYWORDS.test(v))       return `/homes-for-sale?type=land&q=${encodeURIComponent(raw)}`;
-  return `/homes-for-sale?q=${encodeURIComponent(raw)}`;
-}
-
-const TRENDING_SEARCHES = [
-  { label: "Delmar homes",             to: "/living-in/delmar" },
-  { label: "Saratoga restaurants",     to: "/local?q=restaurant&town=saratoga-springs" },
-  { label: "Clifton Park contractors", to: "/local?q=contractor&town=clifton-park" },
-  { label: "Albany investment",        to: "/analyze?q=albany+investment" },
-  { label: "Troy cafés",               to: "/local?q=cafe&town=troy" },
-];
-
 /* ========== Section 1 — CINEMATIC HERO ========== */
 function CinematicHero() {
-  const navigate = useNavigate();
-  const [q, setQ] = useState("");
-  const [phIdx, setPhIdx] = useState(0);
-  const [hlIdx, setHlIdx] = useState(0);
-
-  useEffect(() => {
-    const a = setInterval(() => setPhIdx((i) => (i + 1) % ROTATING_PLACEHOLDERS.length), 2800);
-    const b = setInterval(() => setHlIdx((i) => (i + 1) % ROTATING_HEADLINES.length), 5200);
-    return () => { clearInterval(a); clearInterval(b); };
-  }, []);
-
-  const onSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate(routeSearch(q));
-  };
-
   return (
+
     <section className="relative w-full overflow-hidden bg-black">
       <div className="relative w-full min-h-[100vh] flex items-center">
         <img
@@ -138,98 +58,32 @@ function CinematicHero() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-5xl mx-auto text-center"
           >
-            <p className="text-[11px] md:text-xs font-semibold tracking-[0.32em] uppercase text-white/65 mb-8">
-              The Digital Front Door of the Capital District
-            </p>
-
-            <h1 className="relative text-[2.5rem] sm:text-6xl md:text-[5.5rem] lg:text-[7rem] font-semibold tracking-[-0.045em] leading-[0.98] text-white">
-              <motion.span
-                key={hlIdx}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="block"
-              >
-                {ROTATING_HEADLINES[hlIdx]}
-              </motion.span>
+            <h1 className="relative text-[2.75rem] sm:text-6xl md:text-[5.5rem] lg:text-[6.75rem] font-semibold tracking-[-0.045em] leading-[0.98] text-white">
+              <span className="block">Explore the</span>
+              <span className="block bg-gradient-to-r from-white via-white to-[#5eead4] bg-clip-text text-transparent">
+                Capital District.
+              </span>
             </h1>
 
-            <p className="mt-8 text-base md:text-xl text-white/75 max-w-2xl mx-auto font-light leading-relaxed">
-              Explore local businesses, neighborhoods, homes, restaurants, events,
-              and the best of Upstate New York.
+            <p className="mt-7 text-base md:text-xl text-white/75 max-w-2xl mx-auto font-light leading-relaxed">
+              Search towns, homes, neighborhoods, local businesses, investment
+              opportunities, and community updates — all in one place.
             </p>
 
-            {/* Apple-style single pill search */}
-            <motion.form
-              onSubmit={onSearch}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-12 md:mt-14 mx-auto max-w-2xl flex items-center gap-2 bg-white/[0.10] backdrop-blur-2xl border border-white/20 rounded-full pl-6 pr-2 py-2 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.7)] hover:bg-white/[0.13] hover:border-white/30 transition-all duration-500"
-            >
-              <Search className="w-4 h-4 text-white/60 shrink-0" />
-              <div className="relative flex-1 min-w-0">
-                <input
-                  type="text"
-                  value={q}
-                  onChange={(e) => setQ(e.target.value.slice(0, 120))}
-                  placeholder="Search anything local… (e.g., Delmar homes, Troy cafés, corporate events)"
-                  className="w-full bg-transparent text-[15px] md:text-base text-white placeholder:text-white/55 focus:outline-none py-2.5 truncate"
-                  aria-label="Search the Capital District"
-                />
-              </div>
-              <button
-                type="submit"
-                className="shrink-0 inline-flex items-center gap-1.5 px-5 md:px-6 py-2.5 rounded-full bg-white text-[#0e0f12] text-[13px] font-semibold hover:opacity-90 transition"
-              >
-                Search <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </motion.form>
-
-            {/* Trending searches — teaches users what the search can do */}
+            {/* CINEMATIC SPOTLIGHT SEARCH — the operating system of the page */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="mt-5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1.5 text-[12px] text-white/55"
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-12 md:mt-14"
             >
-              <span className="uppercase tracking-[0.2em] text-[10px] text-white/40 mr-1">Trending</span>
-              {TRENDING_SEARCHES.map((t, i) => (
-                <span key={t.label} className="inline-flex items-center gap-2">
-                  <Link to={t.to} className="hover:text-white transition underline-offset-4 hover:underline">
-                    {t.label}
-                  </Link>
-                  {i < TRENDING_SEARCHES.length - 1 && <span className="w-0.5 h-0.5 rounded-full bg-white/25" />}
-                </span>
-              ))}
+              <SpotlightSearch eyebrow="The Digital Front Door of the Capital District" />
             </motion.div>
 
-
-            {/* Primary CTAs — Towns + Local Business */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-9 flex flex-wrap items-center justify-center gap-3"
-            >
-              <Link
-                to="/communities"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0e0f12] text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_18px_44px_-18px_rgba(255,255,255,0.5)] transition"
-              >
-                Explore Towns <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/local"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white/10 backdrop-blur text-white border border-white/25 text-sm font-semibold hover:bg-white/15 transition"
-              >
-                Explore Local Businesses
-              </Link>
-            </motion.div>
-
-            {/* Secondary, quieter */}
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] text-white/55">
-              <Link to="/homes-for-sale" className="hover:text-white transition inline-flex items-center gap-1">
-                Search homes <ArrowRight className="w-3 h-3" />
+            {/* Quieter secondary nav */}
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] text-white/55">
+              <Link to="/communities" className="hover:text-white transition inline-flex items-center gap-1">
+                Browse all towns <ArrowRight className="w-3 h-3" />
               </Link>
               <span className="w-1 h-1 rounded-full bg-white/25" />
               <Link to="/analyze" className="hover:text-white transition">
@@ -240,6 +94,7 @@ function CinematicHero() {
                 Claim your business
               </Link>
             </div>
+
           </motion.div>
         </div>
       </div>
