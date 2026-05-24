@@ -87,8 +87,8 @@ const ClaimBusiness = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.businessName.trim() || !form.ownerName.trim() || !form.email.trim()) {
-      toast.error("Business name, your name, and email are required.");
+    if (!form.businessName.trim() || !form.email.trim()) {
+      toast.error("Business name and email are required.");
       return;
     }
     setIsSubmitting(true);
@@ -207,12 +207,10 @@ const ClaimBusiness = () => {
             For Local Business Owners
           </p>
           <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
-            Become part of the Capital District's digital front door.
+            Let's build your Capital District profile.
           </h1>
           <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
-            Capital District Nest is a curated, invite-led platform — not a directory.
-            Share a few details and our team will personally review and reach out about how
-            to elevate your business across the region.
+            Tell us about your business and our team will reach out to help create your profile.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3 text-xs text-white/55">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04]">
@@ -238,7 +236,7 @@ const ClaimBusiness = () => {
           <SectionBlock
             eyebrow="Section 01"
             title="Basic info"
-            desc="Only your business name, your name, and email are required. Everything else helps us build your profile faster."
+            desc="Only your business name and email are required. Everything else helps us build your profile faster."
           >
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Business name" required>
@@ -250,12 +248,11 @@ const ClaimBusiness = () => {
                   className={inputCls}
                 />
               </Field>
-              <Field label="Your name" required>
+              <Field label="Your name">
                 <input
                   value={form.ownerName}
                   onChange={(e) => update("ownerName", e.target.value)}
                   placeholder="Owner or contact"
-                  required
                   className={inputCls}
                 />
               </Field>
