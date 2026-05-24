@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   Phone,
@@ -21,6 +22,7 @@ import ThisWeekendIn from "@/components/town/ThisWeekendIn";
 import type { LivingInTown } from "@/data/livingInTowns";
 import { getTownOverride, townOverrides } from "@/data/townOverrides";
 import { findTownInDirectory } from "@/data/capitalDistrictCounties";
+import { getSearchRoute } from "@/lib/searchIntent";
 
 // County → regional hub slug used to backfill local partners
 // when a small town has fewer than 5 verified businesses.
@@ -59,14 +61,23 @@ const SECTION_PAD = "py-20 md:py-24 px-6 md:px-10";
  * lives in src/data/townOverrides.ts.
  */
 const TownPageTemplate = ({ town }: Props) => {
+  const navigate = useNavigate();
   const o = getTownOverride(town.slug);
   const url = `https://www.capitaldistrictnest.com/living-in/${town.slug}`;
   const listingUrl = town.listingSearchUrl;
   const accent = o.accentGlow ?? "rgba(94,234,212,0.22)";
+  const [townSearch, setTownSearch] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [town.slug]);
+
+  const handleTownSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = townSearch.trim();
+    if (!query) return;
+    navigate(getSearchRoute(`${query} ${town.townName}`));
+  };
 
   const placeSchema = {
     "@context": "https://schema.org",
@@ -169,15 +180,15 @@ const TownPageTemplate = ({ town }: Props) => {
 
             {/* Inline universal search */}
             <form
-              action={listingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              onSubmit={handleTownSearch}
               className="mt-10 flex items-center gap-2 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-xl px-2 py-2 max-w-xl shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] focus-within:border-white/20 transition"
             >
               <Search className="w-4 h-4 ml-3 text-white/40 shrink-0" />
               <input
                 type="text"
                 name="q"
+                value={townSearch}
+                onChange={(event) => setTownSearch(event.target.value.slice(0, 120))}
                 placeholder={`Search ${town.townName} homes, cafés, parks, schools…`}
                 className="flex-1 bg-transparent text-[15px] text-white placeholder:text-white/40 px-2 py-2.5 focus:outline-none"
               />
