@@ -1,49 +1,53 @@
-# Capital District Nest — "Local Operating System" Redesign Plan
+This is a 10-section system-wide overhaul. Before I write thousands of lines, I want to confirm scope and sequencing so we don't waste a build cycle. Here's the proposed execution plan.
 
-This is a large multi-week scope. Shipping it in one pass would break the live site (SBA demo tomorrow). I'm proposing a **phased build** so each phase is demo-safe on its own.
+## Phase 1 — Town Template Restructure (`TownPageTemplate.tsx`)
 
-## Guiding rules (locked across all phases)
-- Strict monochrome: black, white, soft grays, glass blur. Teal (#0d6e66) kept ONLY as the brand dot per locked color memory — no new accents.
-- Typography: existing `.h-hero` / `.body-apple` / `.eyebrow-apple` system (locked). Larger hero sizes, tighter tracking.
-- Motion: existing `<Reveal>`, `lift-hover`, `nav-frost` system. Add subtle parallax + opacity-only hovers.
-- No business-logic changes. Frontend/presentation only unless a phase explicitly touches Supabase.
+Apply to all `/living-in/:slug` routes (Delmar, Saratoga, Troy, Albany, Clifton Park, Schenectady, and any others).
 
----
+1. **Hero copy** — Replace "Tree-lined streets…" / "What it feels like…" with `Discover {Town}.` + one-line subhead.
+2. **Discover Bento Grid** — 4–6 asymmetric modules per town: Morning Routine, Neighborhoods, Community, Schools, Local Businesses, Market Snapshot. Pulls from existing `townOverrides` data (dining, culture, ribbon stats) — no new DB.
+3. **"This Week in {Town}"** — Replace "What it feels like to live here." Reuses `weeklyFeed.ts` filtered by town tag; modules: farmers markets, town events, school events, library, business openings, market movement.
+4. **"Why People Move to {Town}"** — Keep concept, convert paragraph → 6–8 scannable bullet rows.
+5. **"Local Sports & Community"** — Delete fake scores. Replace with YMCA/youth programs/rec/gyms/school athletics + "Submit Your Team or Program" CTA → opens lead modal.
+6. **"Local Buyer Resources"** (renamed from Make the Numbers Work) — 3 columns: Buying a Home / Property & Ownership / Investing. Each is a link list to existing routes (`/first-time-buyer-guide`, `/grants`, `/financing`, `/investment-analyzer`, etc.).
+7. **CTA wiring** — Every primary CTA (Connect with Specialist, Talk to Scott, Ask About This Town, Explore Homes) opens the global Live Agent (`AnalystCard` modal).
 
-## Phase 1 — Homepage hero + Towns (ship first)
-**Files:** `src/components/CinematicHero.tsx`, `src/pages/Index.tsx`, new `src/components/home/TownsGridPremium.tsx`
+## Phase 2 — Town Imagery System
 
-- Rebuild hero: full-bleed monochrome image, soft black overlay, centered cinematic headline "The Capital District, Reimagined.", subhead, and **two side-by-side glass search cards** (Homes / Local Businesses). Stacks on mobile.
-- New premium Towns grid below hero: 8 large editorial tiles (Albany, Troy, Saratoga, Delmar, Colonie, Clifton Park, Schenectady, Bethlehem) with monochrome image, glass overlay, town name, micro-stats (placeholder), hover zoom + blur.
+Create `src/data/townVisuals.ts` as the single source of truth: `{ slug: { hero, why, bento: {...} } }`. Backfill `townOverrides` to read from it. Reuse existing local photos in `public/assets/towns/`; generate any missing town heroes (Clifton Park, Cohoes, Watervliet, Guilderland, Colonie, Niskayuna, Rotterdam, Glenville, East Greenbush, Ballston Spa, etc.) as needed in batches via `imagegen`. Add a build-time fallback so any unmapped town renders a neutral regional photo (never NYC/Toronto).
 
-## Phase 2 — Local Businesses promoted + Local Pulse
-**Files:** `src/components/local/BusinessDirectory.tsx` (reuse), new `src/components/home/LocalPulseFeed.tsx`, `src/pages/Index.tsx`
+## Phase 3 — `/communities` Master Index Rebuild
 
-- Move Businesses section up directly under Towns. Add large Apple-style search bar + chip filters (Restaurants, Coffee, Real Estate, Fitness, Home Services, Legal, Health, Shopping). Editorial cards (not Yelp).
-- New "The Local Pulse" feed section: clean monochrome rows (date · category · headline). Town filter chips. Pulls from `town_ledger` table (already exists, publicly readable).
+Full Apple dark-mode regional directory grouped by county. Add the missing counties:
 
-## Phase 3 — Market Intelligence visualization + Dual Nav
-**Files:** new `src/components/home/MarketIntelligence.tsx`, `src/components/CleanHeader.tsx`
+- **Existing**: Albany, Saratoga, Rensselaer, Schenectady (expand town lists to match the master list)
+- **New**: Schoharie, Fulton, Montgomery
 
-- Minimal gauges/heat indicators (Buyer / Balanced / Seller) per town. SVG, monochrome.
-- Header: add subtle segmented `[ For Residents ] | [ For Businesses ]` pill. Toggles which dropdown set shows. Does not break existing nav links.
+Each county = card section with town rows: `name · median price · → arrow` linking to `/living-in/{slug}`. Towns without a dedicated page link to a lightweight `LivingInTown` route that renders `TownPageTemplate` with sensible defaults (no 404s). 4-col desktop / 2-col tablet / 1-col mobile accordion.
 
-## Phase 4 — Business Profile editorial pages
-**Files:** new `src/pages/BusinessProfile.tsx`, route added to `src/App.tsx`
+## Phase 4 — Hero Search Ticker Fix
 
-- Editorial hero (monochrome image, overlay, name/category/tagline, Website/Call/Directions/Share).
-- Sections: About · Services · Local Connection · Gallery · Related. Data wired to `local_voices` table.
+Find ticker component, apply `w-full overflow-visible flex-nowrap whitespace-nowrap`, mobile `text-sm md:text-base`. Verify no clipping on 888px viewport.
 
-## Phase 5 — Claim Business polish + global micro-interactions pass
-**Files:** `src/pages/ClaimBusiness.tsx`, `src/index.css`
+## Phase 5 — Global CTA Audit
 
-- Glass form styling, premium button animation. Minimal fields only.
-- Global pass: fade-ins on every section via `<Reveal>`, lift hovers, animated underline on links.
+Sweep `TownPageTemplate` + homepage for dead-end buttons; route all major CTAs to `<AnalystCard>` trigger or `/dealdesk`.
 
----
+## Technical Notes
 
-## What I'd ship TONIGHT (pre-SBA)
-**Phase 1 only.** It delivers the visible "wow" — new hero + premium town tiles — without touching backend, profile routes, or the existing demo flows. Phases 2–5 follow after the meeting.
+- No new DB tables. All content rides on `townOverrides.ts`, `weeklyFeed.ts`, `townVisuals.ts`.
+- Brand-locked colors preserved (teal #0d6e66, charcoal #0e0f12, dark canvas #0B0F19, gold investor-only, red call-button-only).
+- Apple typography utilities already in `index.css` (`.h-hero`, `.body-apple`, `.eyebrow-apple`, `.btn-primary-apple`, `.btn-dark-cta`) — reuse, do not invent.
+- `<Reveal>` and `<RouteFade>` already global — apply for section entrances.
+- No `react-leaflet`. No fake live data.
 
-## Open question
-**Confirm Phase 1 as tonight's scope?** Or do you want me to push further (Phase 1 + 2) and risk a longer build window? Phase 1 alone is ~30–45 min and is the highest-impact slice for the screen share.
+## Sequencing Question
+
+This is roughly **6–10 build cycles** of work. I'd like to confirm priority before starting. My recommendation:
+
+1. **Phase 1 first** (template restructure) — biggest visual/positioning lift, applies to all 6 live town pages at once.
+2. Then Phase 3 (/communities expansion).
+3. Then Phase 2 imagery (so the new bento has correct visuals).
+4. Phases 4 & 5 in the same final pass.
+
+If you approve, I'll start Phase 1 immediately in the next message and ship it as a single cohesive PR before moving to Phase 3.
