@@ -15,6 +15,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
+import AnalystCard from "@/components/AnalystCard";
 import Footer from "@/components/Footer";
 import WeeklyFeed from "@/components/WeeklyFeed";
 import TrustedLocalPartners from "@/components/town/TrustedLocalPartners";
@@ -593,25 +594,39 @@ const TownPageTemplate = ({ town }: Props) => {
             Making a move to {town.townName}?
           </h2>
           <p className="mt-6 text-lg md:text-xl font-light text-white/65">
-            Connect with a local specialist for homes, neighborhoods, schools, investing, and local insight.
+            Ready to explore {town.townName} with a real local guide? Homes, neighborhoods, schools, businesses, and local insight — instantly.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href={listingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)]"
-              style={{ backgroundColor: TEAL }}
+            <AnalystCard
+              title={`Explore ${town.townName} with a Local Specialist`}
+              description="Homes · Neighborhoods · Schools · Local Insight"
             >
-              <ArrowRight className="w-4 h-4" /> Connect with a {town.townName} Specialist
-            </a>
-            <a
-              href="tel:+15185227265"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(220,28,46,0.55)]"
-              style={{ backgroundColor: "#DC1C2E" }}
+              <button
+                className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)] hover:shadow-[0_18px_44px_-10px_rgba(94,234,212,0.55)]"
+                style={{ backgroundColor: TEAL }}
+              >
+                <ArrowRight className="w-4 h-4" /> Connect with a {town.townName} Specialist
+              </button>
+            </AnalystCard>
+            <AnalystCard
+              title="Talk to Scott"
+              description="Private concierge access · Call · Text · Email · Schedule"
             >
-              <Phone className="w-4 h-4" /> Talk to Scott
-            </a>
+              <button
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white bg-white/[0.04] border border-white/15 backdrop-blur-sm hover:bg-white/[0.08] hover:border-white/25 hover:shadow-[0_18px_44px_-10px_rgba(94,234,212,0.45)] transition"
+              >
+                <Phone className="w-4 h-4" style={{ color: TEAL_DARK }} /> Talk to Scott
+              </button>
+            </AnalystCard>
+          </div>
+
+          {/* Live status indicator */}
+          <div className="mt-6 flex items-center justify-center gap-2 text-xs text-white/55 font-light">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inset-0 rounded-full bg-green-400 opacity-60 animate-ping" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.7)]" />
+            </span>
+            Live local support available · usually responds within minutes
           </div>
         </div>
       </section>
