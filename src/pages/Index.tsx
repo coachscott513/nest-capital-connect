@@ -331,76 +331,79 @@ function HomeSearchPreview() {
     navigate(`/homes-for-sale${qs ? `?${qs}` : ""}`);
   };
 
-  const fieldClass =
-    "w-full bg-transparent text-[15px] text-[#1d1d1f] placeholder:text-[#1d1d1f]/45 focus:outline-none appearance-none cursor-pointer";
+
+
+
+  const fieldClassDark =
+    "w-full bg-transparent text-[15px] text-white placeholder:text-white/45 focus:outline-none appearance-none cursor-pointer";
 
   return (
-    <section className="bg-white py-24 md:py-32 px-6 md:px-10">
+    <section className="bg-[#0B0F19] py-24 md:py-32 px-6 md:px-10">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10 md:mb-12 max-w-2xl mx-auto">
-          <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#0d6e66]">
+          <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#5eead4]">
             Search Homes
           </p>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-[#1d1d1f] leading-[1.05]">
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-white leading-[1.05]">
             Search homes across the Capital District.
           </h2>
-          <p className="mt-5 text-lg text-[#1d1d1f]/65 font-light">
+          <p className="mt-5 text-lg text-white/60 font-light">
             Browse by town, price, and property type — straight from the live MLS feed.
           </p>
         </div>
 
         <form
           onSubmit={submit}
-          className="rounded-2xl bg-white border border-[#1d1d1f]/[0.08] shadow-[0_18px_48px_-24px_rgba(0,0,0,0.18)] p-2.5 grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_auto] gap-2"
+          className="rounded-2xl bg-[#1E2230] border border-[#2D3748] shadow-[0_24px_60px_-24px_rgba(0,0,0,0.6)] p-2.5 grid grid-cols-1 md:grid-cols-[1.2fr_1fr_1fr_auto] gap-2"
         >
-          <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition">
-            <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">Town</span>
-            <select value={town} onChange={(e) => setTown(e.target.value)} className={fieldClass}>
-              <option value="">All towns</option>
-              <option value="albany">Albany</option>
-              <option value="delmar">Delmar</option>
-              <option value="saratoga-springs">Saratoga Springs</option>
-              <option value="troy">Troy</option>
-              <option value="schenectady">Schenectady</option>
-              <option value="clifton-park">Clifton Park</option>
+          <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-white/[0.04] transition">
+            <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">Town</span>
+            <select value={town} onChange={(e) => setTown(e.target.value)} className={fieldClassDark}>
+              <option value="" className="bg-[#1E2230]">All towns</option>
+              <option value="albany" className="bg-[#1E2230]">Albany</option>
+              <option value="delmar" className="bg-[#1E2230]">Delmar</option>
+              <option value="saratoga-springs" className="bg-[#1E2230]">Saratoga Springs</option>
+              <option value="troy" className="bg-[#1E2230]">Troy</option>
+              <option value="schenectady" className="bg-[#1E2230]">Schenectady</option>
+              <option value="clifton-park" className="bg-[#1E2230]">Clifton Park</option>
             </select>
           </label>
 
-          <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
-            <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">Price</span>
-            <select value={price} onChange={(e) => setPrice(e.target.value)} className={fieldClass}>
-              <option value="">Any price</option>
-              <option value="0-300000">Under $300K</option>
-              <option value="300000-500000">$300K – $500K</option>
-              <option value="500000-750000">$500K – $750K</option>
-              <option value="750000-1000000">$750K – $1M</option>
-              <option value="1000000-">$1M+</option>
+          <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-white/[0.04] transition border-t md:border-t-0 md:border-l border-[#2D3748]">
+            <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">Price</span>
+            <select value={price} onChange={(e) => setPrice(e.target.value)} className={fieldClassDark}>
+              <option value="" className="bg-[#1E2230]">Any price</option>
+              <option value="0-300000" className="bg-[#1E2230]">Under $300K</option>
+              <option value="300000-500000" className="bg-[#1E2230]">$300K – $500K</option>
+              <option value="500000-750000" className="bg-[#1E2230]">$500K – $750K</option>
+              <option value="750000-1000000" className="bg-[#1E2230]">$750K – $1M</option>
+              <option value="1000000-" className="bg-[#1E2230]">$1M+</option>
             </select>
           </label>
 
-          <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
-            <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">Type</span>
-            <select value={type} onChange={(e) => setType(e.target.value)} className={fieldClass}>
-              <option value="">All types</option>
-              <option value="single-family">Single-Family</option>
-              <option value="multifamily">Multifamily</option>
-              <option value="condo">Condo / Townhome</option>
-              <option value="land">Land</option>
+          <label className="flex flex-col gap-1 px-4 py-3 rounded-xl hover:bg-white/[0.04] transition border-t md:border-t-0 md:border-l border-[#2D3748]">
+            <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">Type</span>
+            <select value={type} onChange={(e) => setType(e.target.value)} className={fieldClassDark}>
+              <option value="" className="bg-[#1E2230]">All types</option>
+              <option value="single-family" className="bg-[#1E2230]">Single-Family</option>
+              <option value="multifamily" className="bg-[#1E2230]">Multifamily</option>
+              <option value="condo" className="bg-[#1E2230]">Condo / Townhome</option>
+              <option value="land" className="bg-[#1E2230]">Land</option>
             </select>
           </label>
 
           <button
             type="submit"
-            className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.55)]"
+            className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)]"
           >
             <Search className="w-4 h-4" /> Search Homes
           </button>
         </form>
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-[#1d1d1f]/60">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-white/55">
           <span>Live MLS via RE/MAX</span>
           <span className="hidden sm:inline">·</span>
-          <Link to="/homes-for-sale" className="text-[#0d6e66] font-semibold hover:underline inline-flex items-center gap-1">
+          <Link to="/homes-for-sale" className="text-[#5eead4] font-semibold hover:underline inline-flex items-center gap-1">
             Browse all listings <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -412,7 +415,7 @@ function HomeSearchPreview() {
 /* ========== PAGE ========== */
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#0B0F19]">
       <SEOHead
         title="Capital District Nest | Capital District Real Estate Intelligence"
         description="Explore homes, towns, and investment opportunities across New York's Capital District. Albany, Delmar, Saratoga, Troy, Schenectady — analyzed honestly."
@@ -425,15 +428,15 @@ const Index = () => {
       <CinematicHero />
 
       {/* 2 — MICRO-PROOF STRIP */}
-      <section className="bg-white border-b border-foreground/[0.06]">
+      <section className="bg-[#0B0F19] border-b border-[#2D3748]">
         <div className="max-w-6xl mx-auto px-6 md:px-10 py-5 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-8 text-center sm:text-left">
           {[
             "52 towns · curated weekly",
             "Local businesses, neighborhoods & culture",
             "Homes, rentals & investment intelligence",
           ].map((t) => (
-            <p key={t} className="text-xs sm:text-[13px] font-medium text-[#1d1d1f]/65 inline-flex items-center justify-center sm:justify-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0d6e66]" />
+            <p key={t} className="text-xs sm:text-[13px] font-medium text-white/60 inline-flex items-center justify-center sm:justify-start gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#5eead4]" />
               {t}
             </p>
           ))}
@@ -441,7 +444,7 @@ const Index = () => {
       </section>
 
       {/* 3 — TOWNS · the lead section */}
-      <section className="bg-white w-full">
+      <section className="bg-[#0B0F19] w-full">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-[72px] md:py-[120px]">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             <motion.div
@@ -451,18 +454,21 @@ const Index = () => {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-5 lg:sticky lg:top-28"
             >
-              <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#0d6e66]">
+              <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#5eead4]">
                 Explore Towns
               </p>
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-[#1d1d1f]">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
                 Discover the<br />neighborhoods.
               </h2>
-              <p className="mt-8 text-lg md:text-xl text-[#1d1d1f]/65 max-w-md font-light leading-relaxed">
+              <p className="mt-8 text-lg md:text-xl text-white/60 max-w-md font-light leading-relaxed">
                 The streets, schools, cafés, and character that shape the Capital District —
                 town by town.
               </p>
-              <div className="cta-anchor">
-                <Link to="/communities" className="btn-primary-apple cta-arrow">
+              <div className="cta-anchor mt-8">
+                <Link
+                  to="/communities"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
+                >
                   Browse all towns <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -492,40 +498,40 @@ const Index = () => {
       <WeeklyFeed scope="region" />
 
       {/* 6 — START HERE · onramps */}
-      <section className="bg-[#f5efe4] py-20 md:py-28 px-6 md:px-10">
+      <section className="bg-[#0B0F19] py-20 md:py-28 px-6 md:px-10 border-t border-[#2D3748]">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12 text-center">
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#0d6e66]">
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#5eead4]">
               Start Here
             </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-[#1d1d1f] leading-[1.05]">
+            <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-white leading-[1.05]">
               New to the Capital District?
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <Link
               to="/rentals"
-              className="group block rounded-3xl bg-white p-9 md:p-10 border border-foreground/[0.06] hover:border-[#0d6e66]/25 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.25)]"
+              className="group block rounded-3xl bg-[#1E2230] p-9 md:p-10 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-24px_rgba(13,110,102,0.4)]"
             >
-              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66] mb-3">Renting</p>
-              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Find a place to rent.</h3>
-              <p className="mt-3 text-[15px] text-[#1d1d1f]/65 font-light leading-relaxed">
+              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#5eead4] mb-3">Renting</p>
+              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-white">Find a place to rent.</h3>
+              <p className="mt-3 text-[15px] text-white/60 font-light leading-relaxed">
                 Apartments, pricing, and move-in help across the region.
               </p>
-              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#0d6e66]">
+              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4]">
                 Start Renting <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </span>
             </Link>
             <Link
               to="/first-time-homebuyers"
-              className="group block rounded-3xl bg-white p-9 md:p-10 border border-foreground/[0.06] hover:border-[#0d6e66]/25 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.25)]"
+              className="group block rounded-3xl bg-[#1E2230] p-9 md:p-10 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-24px_rgba(13,110,102,0.4)]"
             >
-              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66] mb-3">Buying</p>
-              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#1d1d1f]">Buy your first home.</h3>
-              <p className="mt-3 text-[15px] text-[#1d1d1f]/65 font-light leading-relaxed">
+              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#5eead4] mb-3">Buying</p>
+              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-white">Buy your first home.</h3>
+              <p className="mt-3 text-[15px] text-white/60 font-light leading-relaxed">
                 What you can afford, programs, and the next step.
               </p>
-              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#0d6e66]">
+              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4]">
                 Start Buying <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </span>
             </Link>
@@ -566,11 +572,11 @@ const Index = () => {
       />
 
       {/* 9 — CLAIM YOUR BUSINESS · elegant CTA */}
-      <section className="relative bg-[#0e0f12] overflow-hidden">
+      <section className="relative bg-[#0B0F19] overflow-hidden">
         <div className="absolute inset-0 opacity-60 pointer-events-none"
              style={{
                background:
-                 "radial-gradient(60% 80% at 20% 30%, rgba(13,110,102,0.35), transparent 60%), radial-gradient(50% 70% at 80% 70%, rgba(201,164,73,0.18), transparent 60%)",
+                 "radial-gradient(60% 80% at 20% 30%, rgba(13,110,102,0.35), transparent 60%), radial-gradient(50% 70% at 80% 70%, rgba(13,110,102,0.18), transparent 60%)",
              }}
         />
         <div className="relative max-w-5xl mx-auto px-6 md:px-10 py-24 md:py-32 text-center">
@@ -580,20 +586,20 @@ const Index = () => {
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white max-w-3xl mx-auto">
             Own a local business?
           </h2>
-          <p className="mt-7 text-lg md:text-xl text-white/75 font-light max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-7 text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
             Claim your free business profile and join the Capital District's fastest-growing
             local discovery platform.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Link
               to="/claim-business"
-              className="inline-flex items-center gap-2 bg-white text-[#0e0f12] px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(255,255,255,0.45)] transition"
+              className="inline-flex items-center gap-2 bg-[#0d6e66] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(13,110,102,0.6)] transition"
             >
               Claim Your Profile <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/local"
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/25 px-6 py-3.5 rounded-full text-sm font-semibold hover:bg-white/15 transition"
+              className="inline-flex items-center gap-2 bg-white/[0.06] backdrop-blur text-white border border-white/20 px-6 py-3.5 rounded-full text-sm font-semibold hover:bg-white/10 transition"
             >
               Learn More
             </Link>
@@ -602,13 +608,13 @@ const Index = () => {
       </section>
 
       {/* 10 — CATEGORY DESTINATIONS */}
-      <section className="bg-[#f7f5f0] py-24 md:py-32 px-6 md:px-10">
+      <section className="bg-[#0B0F19] py-24 md:py-32 px-6 md:px-10 border-t border-[#2D3748]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14 md:mb-20">
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4" style={{ color: "#0d6e66" }}>
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#5eead4]">
               Where to Start
             </p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.03em] text-[#1d1d1f] leading-[1.05]">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
               Pick your path.
             </h2>
           </div>
@@ -625,15 +631,15 @@ const Index = () => {
               <Link
                 key={c.title}
                 to={c.to}
-                className="group relative block rounded-2xl bg-white p-7 md:p-8 border border-foreground/[0.06] hover:border-[#0d6e66]/25 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.25)]"
+                className="group relative block rounded-2xl bg-[#1E2230] p-7 md:p-8 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_48px_-18px_rgba(13,110,102,0.4)]"
               >
-                <h3 className="text-lg md:text-xl font-semibold tracking-tight text-[#1d1d1f]">
+                <h3 className="text-lg md:text-xl font-semibold tracking-tight text-white">
                   {c.title}
                 </h3>
-                <p className="mt-2 text-sm md:text-[15px] text-[#1d1d1f]/65 font-light leading-relaxed">
+                <p className="mt-2 text-sm md:text-[15px] text-white/60 font-light leading-relaxed">
                   {c.sub}
                 </p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: "#0d6e66" }}>
+                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4]">
                   Explore <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </span>
               </Link>
