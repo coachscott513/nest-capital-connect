@@ -3,13 +3,8 @@ import { Helmet } from "react-helmet-async";
 import {
   ArrowRight,
   Phone,
-  Calendar,
   Search,
   GraduationCap,
-  Coffee,
-  Users,
-  Sunrise,
-  Car,
   Trophy,
   Calculator,
   ChevronRight,
