@@ -70,7 +70,7 @@ export default function LiveNowTicker({ townName, items }: Props) {
           }}
         >
           <div
-            className="flex items-center"
+            className="flex flex-nowrap items-center whitespace-nowrap"
             style={{
               animation: "liveNowDrift 80s linear infinite",
               animationPlayState: paused ? "paused" : "running",
