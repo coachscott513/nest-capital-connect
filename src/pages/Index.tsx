@@ -35,91 +35,10 @@ const TOWN_TILES = [
   { name: "Clifton Park",     descriptor: "Family suburb · Shen schools",     meta: "Top-rated schools",   median: "$485K", businesses: 16, img: townCliftonPark, to: "/living-in/clifton-park" },
 ];
 
-const ROTATING_HEADLINES = [
-  "Discover the Capital District.",
-  "The Capital District's Digital Front Door.",
-  "Local culture, business & neighborhoods.",
-  "Where the Capital District lives.",
-];
-
-const ROTATING_PLACEHOLDERS = [
-  "Search Delmar homes",
-  "Search Saratoga homes",
-  "Search Troy homes",
-  "Search Albany homes",
-  "Find a Delmar café",
-  "Find a Troy restaurant",
-];
-
-/* Known towns for search priority routing */
-const KNOWN_TOWNS: { slug: string; aliases: string[] }[] = [
-  { slug: "delmar",           aliases: ["delmar"] },
-  { slug: "albany",           aliases: ["albany"] },
-  { slug: "saratoga-springs", aliases: ["saratoga", "saratoga springs"] },
-  { slug: "troy",             aliases: ["troy"] },
-  { slug: "schenectady",      aliases: ["schenectady"] },
-  { slug: "clifton-park",     aliases: ["clifton park", "clifton"] },
-  { slug: "niskayuna",        aliases: ["niskayuna"] },
-  { slug: "guilderland",      aliases: ["guilderland"] },
-  { slug: "bethlehem",        aliases: ["bethlehem"] },
-  { slug: "colonie",          aliases: ["colonie"] },
-  { slug: "voorheesville",    aliases: ["voorheesville"] },
-  { slug: "queensbury",       aliases: ["queensbury"] },
-];
-
-const BIZ_KEYWORDS = /\b(caf[eé]|coffee|restaurant|pizza|attorney|lawyer|shop|bar|gym|salon|bakery|brewery|contractor|plumber|electrician|dentist|doctor|spa|yoga)\b/i;
-const INVESTMENT_KEYWORDS = /\b(investment|multi[- ]?family|duplex|cap rate|cash flow|rental)\b/i;
-const LAND_KEYWORDS = /\b(land|lot|acreage)\b/i;
-
-/**
- * Search routing priority:
- *   1. Exact town match           → /living-in/:slug (or /local scoped to town if biz keyword present)
- *   2. Business/service keywords  → /local?q=
- *   3. Investment keywords        → /analyze?q=
- *   4. Land keywords              → /homes-for-sale?type=land&q=
- *   5. Fallback                   → /homes-for-sale?q=
- */
-function routeSearch(raw: string): string {
-  const v = raw.trim().toLowerCase();
-  if (!v) return "/communities";
-  const townHit = KNOWN_TOWNS.find((t) => t.aliases.some((a) => v === a || v.startsWith(a + " ")));
-  if (townHit) {
-    if (BIZ_KEYWORDS.test(v)) return `/local?q=${encodeURIComponent(raw)}&town=${townHit.slug}`;
-    return `/living-in/${townHit.slug}`;
-  }
-  if (BIZ_KEYWORDS.test(v))        return `/local?q=${encodeURIComponent(raw)}`;
-  if (INVESTMENT_KEYWORDS.test(v)) return `/analyze?q=${encodeURIComponent(raw)}`;
-  if (LAND_KEYWORDS.test(v))       return `/homes-for-sale?type=land&q=${encodeURIComponent(raw)}`;
-  return `/homes-for-sale?q=${encodeURIComponent(raw)}`;
-}
-
-const TRENDING_SEARCHES = [
-  { label: "Delmar homes",             to: "/living-in/delmar" },
-  { label: "Saratoga restaurants",     to: "/local?q=restaurant&town=saratoga-springs" },
-  { label: "Clifton Park contractors", to: "/local?q=contractor&town=clifton-park" },
-  { label: "Albany investment",        to: "/analyze?q=albany+investment" },
-  { label: "Troy cafés",               to: "/local?q=cafe&town=troy" },
-];
-
 /* ========== Section 1 — CINEMATIC HERO ========== */
 function CinematicHero() {
-  const navigate = useNavigate();
-  const [q, setQ] = useState("");
-  const [phIdx, setPhIdx] = useState(0);
-  const [hlIdx, setHlIdx] = useState(0);
-
-  useEffect(() => {
-    const a = setInterval(() => setPhIdx((i) => (i + 1) % ROTATING_PLACEHOLDERS.length), 2800);
-    const b = setInterval(() => setHlIdx((i) => (i + 1) % ROTATING_HEADLINES.length), 5200);
-    return () => { clearInterval(a); clearInterval(b); };
-  }, []);
-
-  const onSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate(routeSearch(q));
-  };
-
   return (
+
     <section className="relative w-full overflow-hidden bg-black">
       <div className="relative w-full min-h-[100vh] flex items-center">
         <img
