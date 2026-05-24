@@ -353,6 +353,56 @@ const FilterChip = ({ active, onClick, children }: { active: boolean; onClick: (
 const useMonogram = (name: string) =>
   name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
 
+const maskPhone = (p?: string) => {
+  if (!p) return "(•••) ••• ••••";
+  const digits = p.replace(/\D/g, "");
+  const area = digits.slice(0, 3) || "•••";
+  return `(${area}) ••• ••••`;
+};
+const maskWebsite = (w?: string) => {
+  if (!w) return "website••••.com";
+  try {
+    const host = new URL(w).hostname.replace(/^www\./, "");
+    const [name, ...rest] = host.split(".");
+    const head = name.slice(0, Math.min(6, Math.max(3, name.length - 3)));
+    return `${head}••••.${rest.join(".") || "com"}`;
+  } catch {
+    return "website••••.com";
+  }
+};
+
+const ContactPreview = ({ b, claimed }: { b: Business; claimed: boolean }) => (
+  <div className="mt-4 group/contact relative">
+    <div
+      className={`rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-md px-3 py-2.5 flex flex-col gap-1.5 transition ${
+        claimed ? "" : "select-none"
+      } group-hover/contact:border-[#5eead4]/25`}
+    >
+      <span className={`inline-flex items-center gap-2 text-[11px] ${claimed ? "text-white/75" : "text-white/45 blur-[1.5px]"}`}>
+        <Phone className="w-3 h-3 text-[#5eead4]/80 shrink-0" />
+        {claimed && b.phone ? b.phone : maskPhone(b.phone)}
+      </span>
+      <span className={`inline-flex items-center gap-2 text-[11px] ${claimed ? "text-white/75" : "text-white/45 blur-[1.5px]"}`}>
+        <Globe className="w-3 h-3 text-[#5eead4]/80 shrink-0" />
+        {claimed && b.website
+          ? b.website.replace(/^https?:\/\/(www\.)?/, "")
+          : maskWebsite(b.website)}
+      </span>
+      {(b.townLabel || b.address) && (
+        <span className="inline-flex items-center gap-2 text-[11px] text-white/55">
+          <MapPin className="w-3 h-3 text-[#5eead4]/80 shrink-0" />
+          {b.townLabel ?? "Capital District"}
+        </span>
+      )}
+    </div>
+    {!claimed && (
+      <p className="mt-1.5 text-[10px] text-white/35 opacity-0 group-hover/contact:opacity-100 transition-opacity tracking-wide">
+        Business owners can personalize this profile.
+      </p>
+    )}
+  </div>
+);
+
 const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
   <button
     onClick={onOpen}
@@ -376,6 +426,53 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
       <p className="text-[10px] uppercase tracking-[0.18em] text-white/50 font-semibold">{b.category}</p>
       <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-white">{b.name}</h3>
       <p className="mt-3 text-sm text-white/65 font-light leading-relaxed line-clamp-2">{b.tagline}</p>
+
+      {/* Premium visible contact row */}
+      <div className="mt-5 flex flex-wrap gap-1.5">
+        {b.phone && (
+          <a
+            href={`tel:${b.phone.replace(/[^\d+]/g, "")}`}
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/10 border border-[#5eead4]/25 text-[11px] text-[#5eead4] hover:bg-[#5eead4]/20 transition"
+          >
+            <Phone className="w-3 h-3" /> Call
+          </a>
+        )}
+        {b.website && (
+          <a
+            href={b.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
+          >
+            <Globe className="w-3 h-3" /> Website
+          </a>
+        )}
+        {b.address && (
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.address)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
+          >
+            <Navigation className="w-3 h-3" /> Directions
+          </a>
+        )}
+        {b.socials?.instagram && (
+          <a
+            href={b.socials.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
+          >
+            <Instagram className="w-3 h-3" /> Instagram
+          </a>
+        )}
+      </div>
+
       <span className="mt-5 inline-flex items-center gap-1 text-sm text-[#5eead4]">
         View profile <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </span>
@@ -448,20 +545,10 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
           </div>
         )}
 
-        {claimed ? (
-          <div className="mt-4 flex items-center gap-3 text-xs text-white/50">
-            {b.phone && <span className="inline-flex items-center gap-1"><Phone className="w-3 h-3" /> Phone</span>}
-            {b.website && <span className="inline-flex items-center gap-1"><Globe className="w-3 h-3" /> Web</span>}
-            {b.address && <span className="inline-flex items-center gap-1"><MapPin className="w-3 h-3" /> Address</span>}
-          </div>
-        ) : (
-          <div className="mt-4 px-3 py-2 rounded-lg bg-white/[0.04] text-[11px] text-white/55 border border-white/[0.06]">
-            Contact info available after claim
-          </div>
-        )}
+        <ContactPreview b={b} claimed={claimed} />
 
         <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4]">
-          {claimed ? "View profile" : "View & claim"}
+          {claimed ? "View profile" : "Claim this profile"}
           <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </span>
       </div>
