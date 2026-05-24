@@ -70,6 +70,18 @@ const isClaimed = (b: Business) => Boolean(b.claimed ?? b.verified);
 
 type TierFilter = "all" | "featured" | "claimed" | "unclaimed";
 
+const expandBusinessSearch = (value: string) => {
+  const needle = value.trim().toLowerCase();
+  const aliases: Record<string, string[]> = {
+    finance: ["finance", "financial", "financial advisor", "bank", "credit union", "mortgage", "lender", "accountant"],
+    cafe: ["cafe", "cafes", "café", "cafés", "coffee"],
+    cafes: ["cafe", "cafes", "café", "cafés", "coffee"],
+    attorney: ["attorney", "lawyer", "legal", "real estate attorney"],
+    contractor: ["contractor", "home service", "roofer", "plumber", "electrician", "hvac", "handyman"],
+  };
+  return aliases[needle] ?? [needle];
+};
+
 const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [q, setQ] = useState(() => searchParams.get("search") ?? searchParams.get("q") ?? searchParams.get("category") ?? "");
@@ -90,6 +102,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
 
   const results = useMemo(() => {
     const needle = q.trim().toLowerCase();
+    const searchTerms = expandBusinessSearch(q);
     return ALL.filter((b) => {
       if (townSlug && b.town !== townSlug && b.town !== "capital-district")
         return false;
@@ -106,7 +119,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         b.name, b.category, b.subcategory, b.tagline, b.about, b.townLabel,
         ...(b.services ?? []), ...(b.knownFor ?? []),
       ].filter(Boolean).join(" ").toLowerCase();
-      return hay.includes(needle);
+      return searchTerms.some((term) => hay.includes(term));
     });
   }, [q, town, category, tier, hasWebsite, hasPhone, townSlug]);
 
