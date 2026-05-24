@@ -780,13 +780,16 @@ export const BusinessDetailModal = ({
               </div>
 
               {biz.socials && (
-                <div className="mt-6 flex items-center gap-2">
+                <div className="mt-6 flex items-center gap-2 flex-wrap">
                   {biz.socials.instagram && <SocialBtn href={biz.socials.instagram} Icon={Instagram} />}
                   {biz.socials.facebook && <SocialBtn href={biz.socials.facebook} Icon={Facebook} />}
                   {biz.socials.linkedin && <SocialBtn href={biz.socials.linkedin} Icon={Linkedin} />}
                   {biz.socials.twitter && <SocialBtn href={biz.socials.twitter} Icon={XIcon} />}
+                  {biz.socials.tiktok && <SocialBtn href={biz.socials.tiktok} Icon={TikTokIcon} />}
+                  {biz.socials.youtube && <SocialBtn href={biz.socials.youtube} Icon={Youtube} />}
                 </div>
               )}
+
             </Section>
           )}
 
