@@ -116,6 +116,8 @@ export interface TownOverride {
   financeLinks?: TownFinanceLink[];
   /** Hyper-local partner seeds for the Trusted Local Partners section */
   partners?: TownPartnerSeed[];
+  /** "Discover [Town]" modular bento cards */
+  discoverCards?: TownDiscoverCard[];
 }
 
 const DEFAULT_HERO =
