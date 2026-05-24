@@ -113,15 +113,15 @@ const TownPageTemplate = ({ town }: Props) => {
               className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-8"
               style={{ color: TEAL_DARK }}
             >
-              Living in {town.townName}
+              Discover {town.townName}
             </p>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
-              {o.heroHeadline ?? `Living in ${town.townName}.`}
+              {o.heroHeadline ?? `Discover ${town.townName}.`}
             </h1>
 
             <p className="mt-8 text-lg md:text-xl font-light text-white/70 max-w-2xl leading-relaxed">
-              {o.heroSub ?? town.seoIntro}
+              {o.heroSub ?? `Explore neighborhoods, local businesses, events, schools, and the rhythm of daily life in ${town.townName}.`}
             </p>
 
             {/* Inline universal search */}
