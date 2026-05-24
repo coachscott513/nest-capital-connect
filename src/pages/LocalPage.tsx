@@ -6,10 +6,10 @@ import BusinessDirectory from "@/components/local/BusinessDirectory";
 const LocalPage = () => (
   <div className="min-h-screen bg-background text-foreground">
     <Helmet>
-      <title>Capital District Business Directory | Capital District Nest</title>
+      <title>Capital District Local Businesses | Capital District Nest</title>
       <meta
         name="description"
-        content="Search trusted local businesses across the Capital District — restaurants, lenders, attorneys, contractors, home services, and more — by town and category."
+        content="Curated profiles of cafés, lenders, attorneys, contractors and home services across the Capital District — cinematic, hand-picked, by town."
       />
       <link rel="canonical" href="https://www.capitaldistrictnest.com/local" />
     </Helmet>
