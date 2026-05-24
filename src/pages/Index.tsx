@@ -331,8 +331,8 @@ function HomeSearchPreview() {
     navigate(`/homes-for-sale${qs ? `?${qs}` : ""}`);
   };
 
-  const fieldClass =
-    "w-full bg-transparent text-[15px] text-[#1d1d1f] placeholder:text-[#1d1d1f]/45 focus:outline-none appearance-none cursor-pointer";
+
+
 
   const fieldClassDark =
     "w-full bg-transparent text-[15px] text-white placeholder:text-white/45 focus:outline-none appearance-none cursor-pointer";
