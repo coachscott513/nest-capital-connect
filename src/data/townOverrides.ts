@@ -121,7 +121,7 @@ export const townOverrides: Record<string, TownOverride> = {
     heroHeadline:
       "Tree-lined streets, top schools, and a slower pace — minutes from Albany.",
     heroSub:
-      "Explore coffee shops, neighborhoods, local businesses, homes, and what makes Delmar one of the Capital Region's most sought-after communities.",
+      "Discover Delmar through its cafés, neighborhoods, local businesses, markets, schools, sports, and everyday rhythm.",
     callouts: [
       { title: "Bethlehem Central Schools", body: "Top-rated K–12 district." },
       { title: "10 Minutes to Albany", body: "Easy commute to downtown." },
