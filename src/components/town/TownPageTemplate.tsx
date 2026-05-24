@@ -469,11 +469,14 @@ const TownPageTemplate = ({ town }: Props) => {
                   className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
                   style={{ color: TEAL_DARK }}
                 >
-                  Local Sports Pulse
+                  Local Sports & Community
                 </p>
                 <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                  Scores from around {town.townName}.
+                  Sports & activity around {town.townName}.
                 </h2>
+                <p className="mt-5 text-lg font-light text-white/65">
+                  Games, youth sports, college athletics, recreation, and community activity from across the Capital Region.
+                </p>
               </div>
               <Trophy className="hidden md:block w-6 h-6 shrink-0" style={{ color: TEAL_DARK }} />
             </div>
@@ -504,6 +507,24 @@ const TownPageTemplate = ({ town }: Props) => {
                 </div>
               ))}
             </div>
+
+            {/* Community submission CTA row */}
+            <div className="mt-10 flex flex-wrap items-center gap-2.5">
+              {[
+                { label: "Submit a Local Event", href: "/contact?topic=event" },
+                { label: "Submit a Score", href: "/contact?topic=score" },
+                { label: "Promote Your Team", href: "/contact?topic=team" },
+                { label: "Community Calendar", href: "#weekly-feed" },
+              ].map((c) => (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white/80 bg-white/[0.04] border border-white/10 hover:text-white hover:bg-white/[0.07] hover:border-white/20 hover:shadow-[0_0_24px_-4px_rgba(94,234,212,0.35)] transition"
+                >
+                  {c.label}
+                </a>
+              ))}
+            </div>
           </div>
         </section>
       )}
@@ -517,13 +538,13 @@ const TownPageTemplate = ({ town }: Props) => {
                 className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
                 style={{ color: TEAL_DARK }}
               >
-                Buyer & Investor Tools
+                Local Resources
               </p>
               <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                Make the numbers work.
+                Local resources for {town.townName}.
               </h2>
               <p className="mt-5 text-lg font-light text-white/65">
-                First-time buyers, families, and investors — purpose-built tools for {town.townName}.
+                Housing, taxes, schools, grants, local services, and tools for navigating {town.townName}.
               </p>
             </div>
 
