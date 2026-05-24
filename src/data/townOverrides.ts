@@ -120,10 +120,13 @@ export interface TownOverride {
   discoverCards?: TownDiscoverCard[];
 }
 
+// Editorial Upstate New York scenic fallbacks — rolling hills, Hudson Valley,
+// historic small-town residential. NEVER corporate skyscrapers or out-of-state
+// stock with foreign signage (e.g. Annapolis, Toronto, NYC).
 const DEFAULT_HERO =
-  "https://images.unsplash.com/photo-1605146768851-eda79da39897?auto=format&fit=crop&w=2400&q=80";
+  "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2400&q=80";
 const DEFAULT_WHY =
-  "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1800&q=80";
+  "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1800&q=80";
 
 export const townOverrides: Record<string, TownOverride> = {
   delmar: {
