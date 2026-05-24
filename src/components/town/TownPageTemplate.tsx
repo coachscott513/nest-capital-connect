@@ -65,7 +65,6 @@ const TownPageTemplate = ({ town }: Props) => {
   // ── Neighborhoods fallback ──────────────────────────────────────────
   const neighborhoods = o.neighborhoods ?? [];
 
-  const neighborhoods = o.neighborhoods ?? [];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
