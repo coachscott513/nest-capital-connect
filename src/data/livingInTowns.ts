@@ -786,7 +786,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
   },
 };
 
-const makeTownPlaceholder = (
+export const makeTownPlaceholder = (
   townName: string,
   slug: string,
   county: string,
