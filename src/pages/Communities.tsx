@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ChevronRight, ChevronDown, MapPin } from "lucide-react";
 import MainLayout from "@/components/MainLayout";
 import SEOHead from "@/components/SEOHead";
-import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
+import { CAPITAL_DISTRICT_COUNTIES, type CDCounty as County, type CDTown as Town } from "@/data/capitalDistrictCounties";
 
 const COUNTIES = CAPITAL_DISTRICT_COUNTIES;
 
