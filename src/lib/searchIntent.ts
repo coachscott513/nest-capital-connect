@@ -29,6 +29,8 @@ const TOWNS = CAPITAL_DISTRICT_COUNTIES.flatMap((county) => county.towns)
 
 const normalize = (value: string) => value.trim().replace(/\s+/g, " ");
 const squish = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+const normalizeSearchParam = (value: string) =>
+  normalize(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 const findTown = (query: string) => {
   const normalized = squish(query);
@@ -50,7 +52,7 @@ const stripTown = (query: string, town?: { name: string; slug: string }) => {
 
 const buildLocalRoute = (search: string, town?: { name: string; slug: string }) => {
   const params = new URLSearchParams();
-  if (search) params.set("search", search);
+  if (search) params.set("search", normalizeSearchParam(search));
   if (town) params.set("town", town.name);
   return `/local?${params.toString()}`;
 };
