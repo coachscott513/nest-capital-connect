@@ -632,7 +632,7 @@ export const townOverrides: Record<string, TownOverride> = {
       { label: "Event",    tone: "event",    text: "Troy Waterfront Farmers Market Saturday at Monument Square" },
       { label: "Business", tone: "business", text: "New wine bar opens on Broadway this month" },
       { label: "Sports",   tone: "sports",   text: "RPI Engineers hockey playoff game tonight" },
-      { label: "Market",   tone: "market',   text: "South Troy two-family sells $25K over asking" },
+      { label: "Market",   tone: "market",   text: "South Troy two-family sells $25K over asking" },
       { label: "Civic",    tone: "civic",    text: "Troy approves waterfront mixed-use proposal" },
       { label: "Nightlife",tone: "event",    text: "Live music tonight at Bradley's Tavern" },
     ],
