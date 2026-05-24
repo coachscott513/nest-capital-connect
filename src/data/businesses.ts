@@ -121,6 +121,27 @@ export interface Business {
   logo?: string;
   image?: string;
   socials?: BusinessSocials;
+  /** Optional cinematic hero video. */
+  heroVideo?: string;
+  /** Editorial "Known For" / "Why locals go here" bullets. */
+  knownFor?: string[];
+  /** Atmosphere / vibe one-liner. */
+  atmosphere?: string;
+  /** Premium full-bleed gallery images. */
+  gallery?: string[];
+  /** Recurring specials, events, promotions. */
+  specials?: Array<{
+    title: string;
+    when?: string;
+    tag?: string;
+    cta?: { label: string; href: string };
+  }>;
+  /** Community signal pills, e.g. "Locally loved". */
+  signals?: string[];
+  /** Booking link (reservations, appointments). */
+  bookingUrl?: string;
+  /** Nearby connected entities. */
+  nearby?: Array<{ label: string; kind?: "business" | "landmark" | "neighborhood" | "event"; href?: string }>;
 }
 
 const STOCK = (id: string) =>
