@@ -225,17 +225,24 @@ const TownPageTemplate = ({ town }: Props) => {
         </div>
       )}
 
-      {/* ───────── 2. THIS WEEKEND IN [TOWN] ───────── */}
+      {/* ───────── 2. THIS WEEK IN [TOWN] (habit-forming pulse) ───────── */}
+      <div id="pulse">
+        <WeeklyFeed
+          scope={town.slug}
+          eyebrow={`This Week in ${town.townName}`}
+          title={`This week in ${town.townName}.`}
+          sub="Listings, local activity, businesses, and community updates."
+          limit={4}
+          compact
+        />
+      </div>
+
+      {/* ───────── 2b. THIS WEEKEND IN [TOWN] ───────── */}
       {o.thisWeekend && o.thisWeekend.length > 0 && (
         <div id="weekend">
           <ThisWeekendIn townName={town.townName} items={o.thisWeekend} />
         </div>
       )}
-
-      {/* ───────── 2b. THE [TOWN] PULSE ───────── */}
-      <div id="pulse" className="pt-16 md:pt-20">
-        <MorningPulse townName={town.townName} />
-      </div>
 
       {/* ───────── 2c. WHAT CHANGED THIS WEEK ───────── */}
       {o.changedThisWeek && o.changedThisWeek.length > 0 && (
@@ -290,87 +297,18 @@ const TownPageTemplate = ({ town }: Props) => {
         </div>
       </section>
 
-      {/* ───────── 4. HOMES IN [TOWN] ───────── */}
-      <section id="homes" className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-[1fr_auto] gap-8 items-end mb-14">
-            <div className="max-w-2xl">
-              <p
-                className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
-                style={{ color: TEAL_DARK }}
-              >
-                Homes in {town.townName}
-              </p>
-              <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                A market with consistent long-term demand.
-              </h2>
-              <p className="mt-5 text-lg font-light text-white/65">
-                {o.whyCopy}
-              </p>
-            </div>
-            <a
-              href={listingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-semibold transition hover:opacity-90 shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)] shrink-0"
-              style={{ backgroundColor: TEAL }}
-            >
-              View Homes <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
-
-          {/* Filter pills */}
-          <div className="flex flex-wrap items-center gap-2 mb-10">
-            {[
-              { label: "All Homes", href: listingUrl },
-              { label: "New Listings", href: listingUrl },
-              { label: "Investment Deals", href: "/analyze" },
-              { label: "Rentals", href: "/rentals" },
-            ].map((p, i) => (
-              <a
-                key={p.label}
-                href={p.href}
-                target={p.href.startsWith("http") ? "_blank" : undefined}
-                rel={p.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium border transition ${
-                  i === 0
-                    ? "bg-white text-black border-white"
-                    : "bg-white/[0.04] text-white/75 border-white/10 hover:bg-white/[0.08] hover:text-white hover:border-white/20"
-                }`}
-              >
-                {p.label}
-              </a>
-            ))}
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-px bg-white/[0.06] rounded-3xl overflow-hidden border border-white/[0.08]">
-
-            {[
-              { label: "Median Price", value: o.stats.medianPrice, note: o.stats.medianNote },
-              { label: "Active Listings", value: o.stats.activeListings, note: o.stats.activeNote },
-              { label: "Avg. Days on Market", value: o.stats.avgDom, note: o.stats.domNote },
-            ].map((s) => (
-              <div
-                key={s.label}
-                className="bg-card/40 backdrop-blur-sm p-9 md:p-10 hover:bg-card/60 transition"
-              >
-                <p
-                  className="text-[11px] font-semibold tracking-[0.22em] uppercase"
-                  style={{ color: TEAL_DARK }}
-                >
-                  {s.label}
-                </p>
-                <p className="mt-6 text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-white">
-                  {s.value}
-                </p>
-                {s.note && (
-                  <p className="mt-3 text-sm text-white/55 font-light">{s.note}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ───────── 4. LOCAL BUSINESSES WE LOVE (curated, no directory dump) ───────── */}
+      <div id="businesses">
+        <TrustedLocalPartners
+          townName={town.townName}
+          variant="dark"
+          eyebrow={`Featured in ${town.townName}`}
+          headline={`Local businesses we love in ${town.townName}.`}
+          sub={`Cafés, restaurants, boutiques, services, and the people behind them.`}
+          partners={o.partners as any}
+          showClaimCard
+        />
+      </div>
 
       {/* ───────── 5. SCHOOLS & COMMUNITY ───────── */}
       <section id="schools" className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
@@ -415,68 +353,89 @@ const TownPageTemplate = ({ town }: Props) => {
         </div>
       </section>
 
-      {/* ───────── 6. NEIGHBORHOOD EXPLORER ───────── */}
-      {neighborhoods.length > 0 && (
-        <section className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
-          <div className="max-w-5xl mx-auto text-center">
-            <p
-              className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
-              style={{ color: TEAL_DARK }}
-            >
-              Neighborhoods
-            </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-              Explore {town.townName} by neighborhood.
-            </h2>
-            <p className="mt-5 text-lg font-light text-white/60 max-w-xl mx-auto">
-              From the village center to the quieter edges — every pocket of {town.townName} has its own character.
-            </p>
-
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
-              {neighborhoods.map((n) => (
-                <span
-                  key={n}
-                  className="inline-flex items-center px-5 py-2.5 rounded-full bg-white/[0.04] border border-white/10 text-white/80 text-sm font-medium hover:bg-white/[0.08] hover:border-white/20 transition cursor-default"
-                >
-                  {n}
-                </span>
-              ))}
+      {/* ───────── 6. HOMES IN [TOWN] ───────── */}
+      <section id="homes" className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-[1fr_auto] gap-8 items-end mb-14">
+            <div className="max-w-2xl">
+              <p
+                className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
+                style={{ color: TEAL_DARK }}
+              >
+                Homes in {town.townName}
+              </p>
+              <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
+                A market with consistent long-term demand.
+              </h2>
+              <p className="mt-5 text-lg font-light text-white/65">
+                {o.whyCopy}
+              </p>
             </div>
+            <a
+              href={listingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-semibold transition hover:opacity-90 shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)] shrink-0"
+              style={{ backgroundColor: TEAL }}
+            >
+              View Homes <ArrowRight className="w-4 h-4" />
+            </a>
           </div>
-        </section>
-      )}
 
-      {/* ───────── 7. TRUSTED LOCAL BUSINESSES ───────── */}
-      <div id="businesses">
-        <TrustedLocalPartners
-          townName={town.townName}
-          variant="dark"
-          eyebrow={`Featured in ${town.townName}`}
-          headline={`Local businesses we love in ${town.townName}.`}
-          sub={`Cafés, restaurants, boutiques, services, and the people behind them.`}
-          partners={o.partners as any}
-          showClaimCard
-        />
-      </div>
+          {/* Editorial filter pills (curated, not portal) */}
+          <div className="flex flex-wrap items-center gap-2 mb-10">
+            {[
+              { label: "New This Week", href: listingUrl },
+              { label: `Near ${neighborhoods[0] ?? "Town Center"}`, href: listingUrl },
+              { label: "Under $600K", href: listingUrl },
+              { label: "Larger Lots", href: listingUrl },
+              { label: "Investment Potential", href: "/analyze" },
+              { label: "Rentals", href: "/rentals" },
+            ].map((p, i) => (
+              <a
+                key={p.label}
+                href={p.href}
+                target={p.href.startsWith("http") ? "_blank" : undefined}
+                rel={p.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium border transition ${
+                  i === 0
+                    ? "bg-white text-black border-white"
+                    : "bg-white/[0.04] text-white/75 border-white/10 hover:bg-white/[0.08] hover:text-white hover:border-white/20"
+                }`}
+              >
+                {p.label}
+              </a>
+            ))}
+          </div>
 
-      {/* ───────── 8. FULL DIRECTORY ───────── */}
-      <LocalBusinessesDirectory townName={town.townName} />
+          <div className="grid md:grid-cols-3 gap-px bg-white/[0.06] rounded-3xl overflow-hidden border border-white/[0.08]">
+            {[
+              { label: "Median Price", value: o.stats.medianPrice, note: o.stats.medianNote },
+              { label: "Active Listings", value: o.stats.activeListings, note: o.stats.activeNote },
+              { label: "Avg. Days on Market", value: o.stats.avgDom, note: o.stats.domNote },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="bg-card/40 backdrop-blur-sm p-9 md:p-10 hover:bg-card/60 transition"
+              >
+                <p
+                  className="text-[11px] font-semibold tracking-[0.22em] uppercase"
+                  style={{ color: TEAL_DARK }}
+                >
+                  {s.label}
+                </p>
+                <p className="mt-6 text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-white">
+                  {s.value}
+                </p>
+                {s.note && (
+                  <p className="mt-3 text-sm text-white/55 font-light">{s.note}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* ───────── 9. PROJECTS + HEROES ───────── */}
-      <TownProjects townName={town.townName} />
-      <LocalHeroes townName={town.townName} />
-
-      {/* ───────── 10. THIS WEEK ───────── */}
-      <div id="weekly">
-        <WeeklyFeed
-          scope={town.slug}
-          eyebrow={`This Week in ${town.townName}`}
-          title={`This week in ${town.townName}.`}
-          sub="Listings, local activity, businesses, and community updates."
-          limit={4}
-          compact
-        />
-      </div>
 
       {/* ───────── 10b. LOCAL SPORTS PULSE ───────── */}
       {o.sports && o.sports.length > 0 && (
