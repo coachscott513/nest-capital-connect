@@ -532,47 +532,9 @@ const Index = () => {
       {/* 5 — WHAT'S HAPPENING · weekly editorial pulse */}
       <WeeklyFeed scope="region" />
 
-      {/* 6 — START HERE · onramps */}
-      <section className="bg-[#0B0F19] py-20 md:py-28 px-6 md:px-10 border-t border-[#2D3748]">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-12 text-center">
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#5eead4]">
-              Start Here
-            </p>
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] text-white leading-[1.05]">
-              New to the Capital District?
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-            <Link
-              to="/rentals"
-              className="group block rounded-3xl bg-[#1E2230] p-9 md:p-10 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-24px_rgba(13,110,102,0.4)]"
-            >
-              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#5eead4] mb-3">Renting</p>
-              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-white">Find a place to rent.</h3>
-              <p className="mt-3 text-[15px] text-white/60 font-light leading-relaxed">
-                Apartments, pricing, and move-in help across the region.
-              </p>
-              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4]">
-                Start Renting <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
-            </Link>
-            <Link
-              to="/first-time-homebuyers"
-              className="group block rounded-3xl bg-[#1E2230] p-9 md:p-10 border border-[#2D3748] hover:border-[#0d6e66]/60 transition-all hover:-translate-y-0.5 hover:shadow-[0_24px_60px_-24px_rgba(13,110,102,0.4)]"
-            >
-              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#5eead4] mb-3">Buying</p>
-              <h3 className="text-2xl md:text-3xl font-semibold tracking-tight text-white">Buy your first home.</h3>
-              <p className="mt-3 text-[15px] text-white/60 font-light leading-relaxed">
-                What you can afford, programs, and the next step.
-              </p>
-              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4]">
-                Start Buying <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* 6 — CAPITAL DISTRICT INTELLIGENCE · single consolidated tabbed onramp */}
+      <CapitalDistrictIntelligence />
+
 
       {/* 7 — REAL ESTATE · lowered, lifestyle-integrated */}
       <HomeSearchPreview />
