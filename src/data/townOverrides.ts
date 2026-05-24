@@ -55,6 +55,28 @@ export interface TownPartnerSeed {
   image?: string;
 }
 
+export interface TownLiveNowItem {
+  label: string;
+  text: string;
+  tone?: "event" | "market" | "business" | "sports" | "civic";
+}
+
+export interface TownWeeklyChangeItem {
+  icon?: "up" | "down" | "new" | "permit" | "school" | "park" | "spark";
+  label: string;
+  detail?: string;
+}
+
+export interface TownWeekendItem {
+  day: string;
+  time?: string;
+  category: string;
+  title: string;
+  location?: string;
+  image?: string;
+  href?: string;
+}
+
 export interface TownOverride {
   heroImage: string;
   whyImage: string;
@@ -70,6 +92,14 @@ export interface TownOverride {
   accentGlow?: string;
   /** Glassmorphic micro-intelligence ribbon under the hero */
   ribbon?: TownRibbonStat[];
+  /** Rotating "right now" pulses inside the hero */
+  heroPulses?: string[];
+  /** Bloomberg-style live ticker under the ribbon */
+  liveNow?: TownLiveNowItem[];
+  /** "What Changed This Week" intelligence feed */
+  changedThisWeek?: TownWeeklyChangeItem[];
+  /** "This Weekend in [Town]" — exactly 5 curated items */
+  thisWeekend?: TownWeekendItem[];
   /** Minimal local sports scorecards */
   sports?: TownScore[];
   /** Buyer / investor utility links */
