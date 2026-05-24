@@ -581,8 +581,7 @@ export const townOverrides: Record<string, TownOverride> = {
     ],
   },
   troy: {
-    heroImage:
-      "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=2400&q=80",
+    heroImage: "/assets/towns/troy-hero.jpg",
     whyImage:
       "https://images.unsplash.com/photo-1494522358652-f30e61a60313?auto=format&fit=crop&w=1800&q=80",
     heroHeadline: "Discover Troy.",
