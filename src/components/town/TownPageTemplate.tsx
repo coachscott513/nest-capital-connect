@@ -78,6 +78,29 @@ const TownPageTemplate = ({ town }: Props) => {
   // ── Neighborhoods fallback ──────────────────────────────────────────
   const neighborhoods = o.neighborhoods ?? [];
 
+  // ── Local business backfill (small-town hub fallback) ───────────────
+  const localPartners = o.partners ?? [];
+  const dir = findTownInDirectory(town.slug);
+  const hubSlug = dir ? COUNTY_HUB_SLUG[dir.county] : undefined;
+  const hubName =
+    hubSlug && dir
+      ? CAPITAL_DISTRICT_HUB_NAME[hubSlug] ?? hubSlug
+      : undefined;
+  const hubPartners =
+    hubSlug && hubSlug !== town.slug ? townOverrides[hubSlug]?.partners ?? [] : [];
+  const needsRegionalBackfill = localPartners.length < 5;
+  const partnersForDisplay = needsRegionalBackfill
+    ? [...localPartners, ...hubPartners].slice(0, 6)
+    : localPartners;
+  const partnersHeadline = needsRegionalBackfill
+    ? `Local Favorites in & around ${town.townName}.`
+    : `Local businesses we love in ${town.townName}.`;
+  const partnersSub = needsRegionalBackfill && hubName
+    ? `Hand-picked cafés, restaurants, boutiques, and services across ${town.townName} and nearby ${hubName}.`
+    : `Cafés, restaurants, boutiques, services, and the people behind them.`;
+
+
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
