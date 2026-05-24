@@ -403,6 +403,18 @@ const ContactPreview = ({ b, claimed }: { b: Business; claimed: boolean }) => (
   </div>
 );
 
+const GhostPill = ({ icon, label }: { icon: React.ReactNode; label: string }) => (
+  <span
+    title="Business owners can personalize this profile."
+    aria-label={`${label} — claim to activate`}
+    className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.03] border border-white/10 text-[11px] text-white/35 backdrop-blur-md cursor-default select-none"
+    style={{ filter: "blur(0.4px)" }}
+  >
+    <span className="opacity-70">{icon}</span>
+    <span className="tracking-wide">{label}</span>
+  </span>
+);
+
 const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
   <button
     onClick={onOpen}
