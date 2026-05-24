@@ -11,6 +11,7 @@ import {
   Instagram,
   Facebook,
   Linkedin,
+  Youtube,
   X as XIcon,
   Filter,
   Calendar,
@@ -22,6 +23,7 @@ import {
   Megaphone,
   Building2,
 } from "lucide-react";
+
 import {
   Dialog,
   DialogContent,
