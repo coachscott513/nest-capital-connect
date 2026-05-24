@@ -37,8 +37,7 @@ const SocialIcon = ({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={label}
-        className={`${base} border-[#0d6e66]/20 text-[${TEAL}] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66]`}
-        style={{ color: TEAL }}
+        className={`${base} border-[#5eead4]/30 text-[#5eead4] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66]`}
       >
         <Icon className="w-4 h-4" />
       </a>
@@ -48,7 +47,7 @@ const SocialIcon = ({
     <span
       aria-label={`${label} (locked)`}
       title="Claim this profile to activate social links."
-      className={`${base} border-foreground/10 text-foreground/25 cursor-not-allowed bg-foreground/[0.02]`}
+      className={`${base} border-white/10 text-white/25 cursor-not-allowed bg-white/[0.02]`}
     >
       <Icon className="w-4 h-4" />
     </span>
