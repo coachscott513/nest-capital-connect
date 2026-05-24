@@ -24,6 +24,24 @@ export interface TownFeel {
   commute: string;
 }
 
+export interface TownRibbonStat {
+  label: string;
+  value: string;
+}
+
+export interface TownScore {
+  team: string;
+  league: string;
+  status: string;
+  detail?: string;
+}
+
+export interface TownFinanceLink {
+  title: string;
+  body: string;
+  href: string;
+}
+
 export interface TownOverride {
   heroImage: string;
   whyImage: string;
@@ -32,15 +50,17 @@ export interface TownOverride {
   whyHeadline?: string;
   whyCopy: string;
   whyBullets: string[];
-  /** Cinematic hero copy overrides */
   heroHeadline?: string;
   heroSub?: string;
-  /** Editorial "Feel of [Town]" section */
   feel?: TownFeel;
-  /** Sub-neighborhood chips for the explorer */
   neighborhoods?: string[];
-  /** Subtle signature accent glow color */
   accentGlow?: string;
+  /** Glassmorphic micro-intelligence ribbon under the hero */
+  ribbon?: TownRibbonStat[];
+  /** Minimal local sports scorecards */
+  sports?: TownScore[];
+  /** Buyer / investor utility links */
+  financeLinks?: TownFinanceLink[];
 }
 
 const DEFAULT_HERO =
