@@ -255,7 +255,7 @@ const CleanHeader = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 bg-white z-[1999] pt-24 px-6 pb-8 overflow-y-auto transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed inset-0 bg-[#0B0F19] text-foreground z-[1999] pt-24 px-6 pb-8 overflow-y-auto transition-transform duration-300 ease-out lg:hidden ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
