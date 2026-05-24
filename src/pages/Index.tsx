@@ -172,21 +172,10 @@ function CinematicHero() {
                   type="text"
                   value={q}
                   onChange={(e) => setQ(e.target.value.slice(0, 120))}
-                  className="w-full bg-transparent text-[15px] md:text-base text-white placeholder:text-transparent focus:outline-none py-2.5"
+                  placeholder="Search anything local… (e.g., Delmar homes, Troy cafés, corporate events)"
+                  className="w-full bg-transparent text-[15px] md:text-base text-white placeholder:text-white/55 focus:outline-none py-2.5 truncate"
                   aria-label="Search the Capital District"
                 />
-                {!q && (
-                  <span className="pointer-events-none absolute inset-0 flex items-center text-[15px] md:text-base text-white/55 overflow-hidden">
-                    <motion.span
-                      key={phIdx}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      {ROTATING_PLACEHOLDERS[phIdx]}
-                    </motion.span>
-                  </span>
-                )}
               </div>
               <button
                 type="submit"
@@ -444,7 +433,7 @@ const INTEL_TABS: IntelTab[] = [
     icon: Calendar,
     headline: "What's happening this week, this weekend, this season.",
     ctaVerb: "Browse",
-    inlineAction: { label: "+ Submit an Event", to: "/contact?intent=add-event" },
+    inlineAction: { label: "+ Submit Regional Event", to: "/contact?intent=add-event" },
     items: [
       { title: "This week's pulse",       sub: "Festivals, concerts, openings, markets.", to: "/#weekly-feed" },
       { title: "Explore towns & culture", sub: "Town-by-town happenings across the region.",   to: "/communities" },
@@ -458,6 +447,7 @@ const INTEL_TABS: IntelTab[] = [
     icon: HomeIcon,
     headline: "Homes, rentals, land, and the next move — all in one place.",
     ctaVerb: "Explore",
+    inlineAction: { label: "Mortgage & Financing Options", to: "/financing" },
     items: [
       { title: "Homes for sale",            sub: "Fresh listings across the Capital District.",    to: "/homes-for-sale" },
       { title: "Rentals",                   sub: "Apartments, houses, and move-in help.",          to: "/rentals" },
@@ -501,6 +491,7 @@ const INTEL_TABS: IntelTab[] = [
       { title: "Investment properties",        sub: "Active deals scored by cash flow and yield.",             to: "/investment-properties" },
       { title: "Best cash-flow neighborhoods", sub: "Where rent-to-price still works.",                        to: "/best-neighborhoods-cash-flow" },
       { title: "View Cash Flow Metrics",       sub: "Sample reports + deal-by-deal breakdowns.",               to: "/cash-flow-report" },
+      { title: "Calculate Local ROI & Taxes",  sub: "Effective tax rates + ROI by town, instantly.",           to: "/analyze?metric=roi-taxes" },
     ],
   },
   {
