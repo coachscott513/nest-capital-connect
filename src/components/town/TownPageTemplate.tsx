@@ -34,6 +34,13 @@ const COUNTY_HUB_SLUG: Record<string, string> = {
   "Montgomery County": "schenectady",
 };
 
+const CAPITAL_DISTRICT_HUB_NAME: Record<string, string> = {
+  albany: "Albany",
+  "saratoga-springs": "Saratoga Springs",
+  troy: "Troy",
+  schenectady: "Schenectady",
+};
+
 interface Props {
   town: LivingInTown;
 }
