@@ -42,6 +42,19 @@ export interface TownFinanceLink {
   href: string;
 }
 
+export interface TownPartnerSeed {
+  id: string;
+  name: string;
+  category: string;
+  tagline: string;
+  about?: string;
+  phone?: string;
+  website?: string;
+  address?: string;
+  hours?: string;
+  image?: string;
+}
+
 export interface TownOverride {
   heroImage: string;
   whyImage: string;
