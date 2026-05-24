@@ -36,7 +36,7 @@ export default function LiveNowTicker({ townName, items }: Props) {
   return (
     <section
       aria-label={`Live now in ${townName}`}
-      className="relative w-full bg-[#0B0F19] border-y border-white/[0.06]"
+      className="relative w-full overflow-visible bg-[#0B0F19] border-y border-white/[0.06] select-none"
     >
       <div
         className="absolute inset-0 pointer-events-none opacity-60"
@@ -45,7 +45,7 @@ export default function LiveNowTicker({ townName, items }: Props) {
             "radial-gradient(60% 100% at 50% 50%, rgba(94,234,212,0.05), transparent 70%)",
         }}
       />
-      <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 py-3 flex items-center gap-4 md:gap-6">
+      <div className="relative w-full mx-auto px-4 md:px-8 py-3 flex flex-nowrap items-center gap-3 md:gap-6 overflow-visible">
         <div className="flex items-center gap-2 shrink-0">
           <span className="relative flex h-2 w-2">
             <span className="absolute inset-0 rounded-full bg-[#5eead4] opacity-60 animate-ping" />
@@ -70,7 +70,7 @@ export default function LiveNowTicker({ townName, items }: Props) {
           }}
         >
           <div
-            className="flex items-center"
+            className="flex flex-nowrap items-center whitespace-nowrap"
             style={{
               animation: "liveNowDrift 80s linear infinite",
               animationPlayState: paused ? "paused" : "running",

@@ -19,7 +19,27 @@ import HeroMetadataPulse from "@/components/town/HeroMetadataPulse";
 import WhatChangedThisWeek from "@/components/town/WhatChangedThisWeek";
 import ThisWeekendIn from "@/components/town/ThisWeekendIn";
 import type { LivingInTown } from "@/data/livingInTowns";
-import { getTownOverride } from "@/data/townOverrides";
+import { getTownOverride, townOverrides } from "@/data/townOverrides";
+import { findTownInDirectory } from "@/data/capitalDistrictCounties";
+
+// County → regional hub slug used to backfill local partners
+// when a small town has fewer than 5 verified businesses.
+const COUNTY_HUB_SLUG: Record<string, string> = {
+  "Albany County": "albany",
+  "Saratoga County": "saratoga-springs",
+  "Rensselaer County": "troy",
+  "Schenectady County": "schenectady",
+  "Schoharie County": "schenectady",
+  "Fulton County": "saratoga-springs",
+  "Montgomery County": "schenectady",
+};
+
+const CAPITAL_DISTRICT_HUB_NAME: Record<string, string> = {
+  albany: "Albany",
+  "saratoga-springs": "Saratoga Springs",
+  troy: "Troy",
+  schenectady: "Schenectady",
+};
 
 interface Props {
   town: LivingInTown;
@@ -64,6 +84,29 @@ const TownPageTemplate = ({ town }: Props) => {
 
   // ── Neighborhoods fallback ──────────────────────────────────────────
   const neighborhoods = o.neighborhoods ?? [];
+
+  // ── Local business backfill (small-town hub fallback) ───────────────
+  const localPartners = o.partners ?? [];
+  const dir = findTownInDirectory(town.slug);
+  const hubSlug = dir ? COUNTY_HUB_SLUG[dir.county] : undefined;
+  const hubName =
+    hubSlug && dir
+      ? CAPITAL_DISTRICT_HUB_NAME[hubSlug] ?? hubSlug
+      : undefined;
+  const hubPartners =
+    hubSlug && hubSlug !== town.slug ? townOverrides[hubSlug]?.partners ?? [] : [];
+  const needsRegionalBackfill = localPartners.length < 5;
+  const partnersForDisplay = needsRegionalBackfill
+    ? [...localPartners, ...hubPartners].slice(0, 6)
+    : localPartners;
+  const partnersHeadline = needsRegionalBackfill
+    ? `Local Favorites in & around ${town.townName}.`
+    : `Local businesses we love in ${town.townName}.`;
+  const partnersSub = needsRegionalBackfill && hubName
+    ? `Hand-picked cafés, restaurants, boutiques, and services across ${town.townName} and nearby ${hubName}.`
+    : `Cafés, restaurants, boutiques, services, and the people behind them.`;
+
+
 
 
   return (
@@ -328,10 +371,10 @@ const TownPageTemplate = ({ town }: Props) => {
         <TrustedLocalPartners
           townName={town.townName}
           variant="dark"
-          eyebrow={`Featured in ${town.townName}`}
-          headline={`Local businesses we love in ${town.townName}.`}
-          sub={`Cafés, restaurants, boutiques, services, and the people behind them.`}
-          partners={o.partners as any}
+          eyebrow={needsRegionalBackfill ? `In & around ${town.townName}` : `Featured in ${town.townName}`}
+          headline={partnersHeadline}
+          sub={partnersSub}
+          partners={partnersForDisplay as any}
           showClaimCard
         />
       </div>
