@@ -479,7 +479,7 @@ const TownPageTemplate = ({ town }: Props) => {
                   Sports & activity around {town.townName}.
                 </h2>
                 <p className="mt-5 text-lg font-light text-white/65">
-                  Games, youth sports, college athletics, recreation, and community activity from across the Capital Region.
+                  Youth programs, recreation, local athletics, gyms, and community activity across the region.
                 </p>
               </div>
               <Trophy className="hidden md:block w-6 h-6 shrink-0" style={{ color: TEAL_DARK }} />
@@ -491,22 +491,14 @@ const TownPageTemplate = ({ town }: Props) => {
                   key={s.team}
                   className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-5 hover:bg-white/[0.06] hover:border-white/15 transition"
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/45 mb-1.5">
-                        {s.league}
-                      </p>
-                      <p className="text-base font-semibold text-white truncate">{s.team}</p>
-                      {s.detail && (
-                        <p className="mt-1 text-xs text-white/55 font-light">{s.detail}</p>
-                      )}
-                    </div>
-                    <span
-                      className="shrink-0 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border border-white/10 bg-white/[0.04]"
-                      style={{ color: TEAL_DARK }}
-                    >
-                      {s.status}
-                    </span>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-1.5" style={{ color: TEAL_DARK }}>
+                      {s.league}
+                    </p>
+                    <p className="text-base font-semibold text-white">{s.team}</p>
+                    {s.detail && (
+                      <p className="mt-1.5 text-sm text-white/60 font-light leading-relaxed">{s.detail}</p>
+                    )}
                   </div>
                 </div>
               ))}
