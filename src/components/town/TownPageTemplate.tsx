@@ -557,7 +557,7 @@ const TownPageTemplate = ({ town }: Props) => {
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)]"
               style={{ backgroundColor: TEAL }}
             >
-              <Calendar className="w-4 h-4" /> Schedule a Showing
+              <ArrowRight className="w-4 h-4" /> Connect with a {town.townName} Specialist
             </a>
             <a
               href="tel:+15185227265"
