@@ -63,6 +63,8 @@ const TOWN_LIST = [
 const ALL_CATEGORIES: BusinessCategory[] = Object.values(
   CATEGORY_GROUPS,
 ).flat() as BusinessCategory[];
+const isKnownCategory = (value: string | null): value is BusinessCategory =>
+  Boolean(value && ALL_CATEGORIES.some((category) => category.toLowerCase() === value.toLowerCase()));
 
 const isClaimed = (b: Business) => Boolean(b.claimed ?? b.verified);
 
@@ -70,9 +72,9 @@ type TierFilter = "all" | "featured" | "claimed" | "unclaimed";
 
 const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [q, setQ] = useState(() => searchParams.get("search") ?? searchParams.get("q") ?? "");
+  const [q, setQ] = useState(() => searchParams.get("search") ?? searchParams.get("q") ?? searchParams.get("category") ?? "");
   const [town, setTown] = useState(() => townSlug ?? searchParams.get("town") ?? "");
-  const [category, setCategory] = useState<string>(() => searchParams.get("category") ?? "");
+  const [category, setCategory] = useState<string>(() => isKnownCategory(searchParams.get("category")) ? searchParams.get("category")! : "");
   const [tier, setTier] = useState<TierFilter>("all");
   const [hasWebsite, setHasWebsite] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
@@ -214,7 +216,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 >
                   <option value="">All towns</option>
                   {TOWN_LIST.map((t) => (
-                    <option key={t.slug} value={t.slug}>{t.name}</option>
+                    <option key={t.slug} value={t.name}>{t.name}</option>
                   ))}
                 </select>
               </label>
