@@ -176,8 +176,33 @@ const TownPageTemplate = ({ town }: Props) => {
         </div>
       </section>
 
+      {/* ───────── 1b. MICRO-INTELLIGENCE RIBBON ───────── */}
+      {o.ribbon && o.ribbon.length > 0 && (
+        <section className="relative bg-background border-t border-white/[0.06]">
+          <div className="max-w-6xl mx-auto px-6 md:px-10 -mt-10 md:-mt-14 relative z-20">
+            <div className="rounded-2xl bg-white/[0.04] backdrop-blur-2xl border border-white/10 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] overflow-hidden">
+              <div className="grid grid-cols-2 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-white/10">
+                {o.ribbon.map((r) => (
+                  <div key={r.label} className="px-5 py-5 md:py-6">
+                    <p
+                      className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-2"
+                      style={{ color: TEAL_DARK }}
+                    >
+                      {r.label}
+                    </p>
+                    <p className="text-lg md:text-xl font-semibold text-white tracking-[-0.01em]">
+                      {r.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ───────── 2. THE [TOWN] PULSE ───────── */}
-      <div id="pulse">
+      <div id="pulse" className="pt-20 md:pt-28">
         <MorningPulse townName={town.townName} />
       </div>
 
