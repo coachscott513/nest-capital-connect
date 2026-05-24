@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   Search,
   Phone,
@@ -13,6 +13,14 @@ import {
   Linkedin,
   X as XIcon,
   Filter,
+  Calendar,
+  CalendarPlus,
+  MessageSquare,
+  Navigation,
+  Heart,
+  Star,
+  Megaphone,
+  Building2,
 } from "lucide-react";
 import {
   Dialog,
@@ -28,14 +36,12 @@ import {
   type CategoryGroup,
 } from "@/data/businesses";
 
-const TEAL = "#0d6e66";
+const TEAL = "#5eead4";
+const TEAL_DEEP = "#0d6e66";
 
 interface Props {
-  /** Limit to a specific town slug (e.g. on town pages). */
   townSlug?: string;
-  /** Title at the top of directory. */
   title?: string;
-  /** Hide the hero block (for embedding inside a town page). */
   embedded?: boolean;
 }
 
@@ -82,17 +88,9 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       if (hasPhone && !b.phone) return false;
       if (!needle) return true;
       const hay = [
-        b.name,
-        b.category,
-        b.subcategory,
-        b.tagline,
-        b.about,
-        b.townLabel,
-        ...(b.services ?? []),
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
+        b.name, b.category, b.subcategory, b.tagline, b.about, b.townLabel,
+        ...(b.services ?? []), ...(b.knownFor ?? []),
+      ].filter(Boolean).join(" ").toLowerCase();
       return hay.includes(needle);
     });
   }, [q, town, category, tier, hasWebsite, hasPhone, townSlug]);
@@ -106,8 +104,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     const map = new Map<CategoryGroup, Business[]>();
     for (const b of results) {
       const group = (Object.entries(CATEGORY_GROUPS) as [
-        CategoryGroup,
-        BusinessCategory[],
+        CategoryGroup, BusinessCategory[],
       ][]).find(([, cats]) => cats.includes(b.category))?.[0];
       if (!group) continue;
       if (!map.has(group)) map.set(group, []);
@@ -117,34 +114,49 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   }, [results]);
 
   return (
-    <div className="bg-white">
+    <div className="bg-[#0B0F19] text-white">
       {/* HERO */}
       {!embedded && (
-        <section className="bg-white pt-24 md:pt-32 pb-12 px-6 md:px-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#0d6e66]">
+        <section className="pt-28 md:pt-36 pb-14 px-6 md:px-10 relative overflow-hidden">
+          <div
+            className="absolute inset-0 opacity-[0.35] pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(60% 50% at 50% 0%, rgba(94,234,212,0.18) 0%, rgba(11,15,25,0) 70%)",
+            }}
+          />
+          <div className="max-w-4xl mx-auto text-center relative">
+            <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-5 text-[#5eead4]">
               Local Businesses
             </p>
-            <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-[#1d1d1f] leading-[1.02]">
-              {title ?? "The Capital District business directory."}
+            <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
+              {title ?? "The Capital District, curated."}
             </h1>
-            <p className="mt-6 text-lg text-[#1d1d1f]/65 font-light">
-              Discover trusted local businesses — restaurants, lenders, attorneys, contractors,
-              home services, and more — by town and category.
+            <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
+              Cinematic profiles of the cafés, lenders, attorneys, makers, and home services
+              quietly powering our towns. Curated by town, not crowdsourced.
             </p>
-            <a
-              href="/claim-business"
-              className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.55)]"
-            >
-              <Sparkles className="w-4 h-4" /> Claim Your Business
-            </a>
+            <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
+              <a
+                href="/claim-business"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
+              >
+                <Sparkles className="w-4 h-4" /> Claim Your Business
+              </a>
+              <a
+                href="/claim-business?intent=promote"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition"
+              >
+                <Megaphone className="w-4 h-4 text-[#5eead4]" /> Promote a Special
+              </a>
+            </div>
           </div>
         </section>
       )}
 
       {/* FEATURED PARTNERS */}
       {!embedded && featured.length > 0 && (
-        <section className="bg-[#0e0f12] text-white py-16 md:py-20 px-6 md:px-10">
+        <section className="py-16 md:py-20 px-6 md:px-10 border-y border-white/[0.06] bg-[#10141F]">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
               <div>
@@ -158,25 +170,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             </div>
             <div className="grid md:grid-cols-3 gap-5">
               {featured.map((b) => (
-                <button
-                  key={b.slug}
-                  onClick={() => setOpenBiz(b)}
-                  className="text-left rounded-2xl bg-white/[0.04] border border-white/10 p-7 hover:bg-white/[0.07] hover:-translate-y-0.5 transition-all"
-                >
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/15 text-[#5eead4] text-[10px] font-semibold uppercase tracking-wider mb-4">
-                    <Sparkles className="w-3 h-3" /> Featured
-                  </span>
-                  <h3 className="text-xl font-semibold tracking-tight">{b.name}</h3>
-                  <p className="mt-1 text-xs uppercase tracking-[0.16em] text-white/50">
-                    {b.category}
-                  </p>
-                  <p className="mt-4 text-sm text-white/65 font-light leading-relaxed">
-                    {b.tagline}
-                  </p>
-                  <span className="mt-5 inline-flex items-center gap-1 text-sm text-[#5eead4]">
-                    View details <ArrowUpRight className="w-3.5 h-3.5" />
-                  </span>
-                </button>
+                <FeaturedTile key={b.slug} b={b} onOpen={() => setOpenBiz(b)} />
               ))}
             </div>
           </div>
@@ -184,62 +178,50 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       )}
 
       {/* SEARCH BAR */}
-      <section className={embedded ? "px-0" : "bg-white pt-16 px-6 md:px-10"}>
+      <section className={embedded ? "px-0" : "pt-16 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
-          <div className="rounded-2xl bg-white border border-[#1d1d1f]/[0.08] shadow-[0_18px_48px_-24px_rgba(0,0,0,0.18)] p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2">
-            <label className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-[#1d1d1f]/[0.03]">
-              <Search className="w-4 h-4 text-[#0d6e66]" />
+          <div className="rounded-2xl bg-[#1E2230] border border-white/[0.08] p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2">
+            <label className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-white/[0.04]">
+              <Search className="w-4 h-4 text-[#5eead4]" />
               <input
                 type="text"
                 value={q}
                 onChange={(e) => setQ(e.target.value.slice(0, 120))}
                 placeholder="Search by name, service, keyword…"
-                className="w-full bg-transparent text-[15px] text-[#1d1d1f] placeholder:text-[#1d1d1f]/45 focus:outline-none"
+                className="w-full bg-transparent text-[15px] text-white placeholder:text-white/40 focus:outline-none"
               />
             </label>
             {!townSlug && (
-              <label className="flex flex-col gap-1 px-4 py-2.5 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
-                <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
-                  Town
-                </span>
+              <label className="flex flex-col gap-0.5 px-4 py-2 rounded-xl hover:bg-white/[0.04] transition md:border-l border-white/[0.06]">
+                <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">Town</span>
                 <select
                   value={town}
                   onChange={(e) => setTown(e.target.value)}
-                  className="w-full bg-transparent text-[15px] text-[#1d1d1f] focus:outline-none cursor-pointer"
+                  className="w-full bg-transparent text-[14px] text-white focus:outline-none cursor-pointer [&>option]:text-black"
                 >
                   <option value="">All towns</option>
                   {TOWN_LIST.map((t) => (
-                    <option key={t.slug} value={t.slug}>
-                      {t.name}
-                    </option>
+                    <option key={t.slug} value={t.slug}>{t.name}</option>
                   ))}
                 </select>
               </label>
             )}
-            <label className="flex flex-col gap-1 px-4 py-2.5 rounded-xl hover:bg-[#1d1d1f]/[0.03] transition border-t md:border-t-0 md:border-l border-[#1d1d1f]/[0.06]">
-              <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
-                Category
-              </span>
+            <label className="flex flex-col gap-0.5 px-4 py-2 rounded-xl hover:bg-white/[0.04] transition md:border-l border-white/[0.06]">
+              <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">Category</span>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-transparent text-[15px] text-[#1d1d1f] focus:outline-none cursor-pointer"
+                className="w-full bg-transparent text-[14px] text-white focus:outline-none cursor-pointer [&>option]:text-black"
               >
                 <option value="">All categories</option>
                 {ALL_CATEGORIES.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
+                  <option key={c} value={c}>{c}</option>
                 ))}
               </select>
             </label>
             <button
               type="button"
-              onClick={() => {
-                /* form is already reactive */
-              }}
-              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-white text-sm font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.55)]"
-              style={{ backgroundColor: TEAL }}
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
             >
               <Search className="w-4 h-4" /> Search
             </button>
@@ -247,7 +229,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
 
           {/* Filter chips */}
           <div className="mt-5 flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-semibold text-[#1d1d1f]/55">
+            <span className="inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-semibold text-white/55">
               <Filter className="w-3.5 h-3.5" /> Filters
             </span>
             {(["all", "featured", "claimed", "unclaimed"] as TierFilter[]).map((t) => (
@@ -255,29 +237,21 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 {t === "all" ? "All" : t.charAt(0).toUpperCase() + t.slice(1)}
               </FilterChip>
             ))}
-            <FilterChip active={hasWebsite} onClick={() => setHasWebsite((v) => !v)}>
-              Has website
-            </FilterChip>
-            <FilterChip active={hasPhone} onClick={() => setHasPhone((v) => !v)}>
-              Has phone
-            </FilterChip>
+            <FilterChip active={hasWebsite} onClick={() => setHasWebsite((v) => !v)}>Has website</FilterChip>
+            <FilterChip active={hasPhone} onClick={() => setHasPhone((v) => !v)}>Has phone</FilterChip>
             {(q || town || category || tier !== "all" || hasWebsite || hasPhone) && (
               <button
                 type="button"
                 onClick={() => {
-                  setQ("");
-                  if (!townSlug) setTown("");
-                  setCategory("");
-                  setTier("all");
-                  setHasWebsite(false);
-                  setHasPhone(false);
+                  setQ(""); if (!townSlug) setTown(""); setCategory("");
+                  setTier("all"); setHasWebsite(false); setHasPhone(false);
                 }}
-                className="ml-1 text-xs text-[#0d6e66] hover:underline font-semibold"
+                className="ml-1 text-xs text-[#5eead4] hover:underline font-semibold"
               >
                 Clear all
               </button>
             )}
-            <span className="ml-auto text-xs text-[#1d1d1f]/55">
+            <span className="ml-auto text-xs text-white/55">
               {results.length} result{results.length === 1 ? "" : "s"}
             </span>
           </div>
@@ -285,71 +259,67 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       </section>
 
       {/* RESULTS */}
-      <section className={embedded ? "py-10" : "bg-white py-20 px-6 md:px-10"}>
+      <section className={embedded ? "py-10" : "py-20 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
           {results.length === 0 ? (
-            <div className="text-center py-20 border border-dashed border-[#1d1d1f]/15 rounded-2xl">
-              <p className="text-lg font-semibold text-[#1d1d1f]">
-                No businesses found yet.
-              </p>
-              <p className="mt-2 text-sm text-[#1d1d1f]/60">
+            <div className="text-center py-20 border border-dashed border-white/15 rounded-2xl bg-white/[0.02]">
+              <p className="text-lg font-semibold text-white">No businesses found yet.</p>
+              <p className="mt-2 text-sm text-white/60">
                 Try another search, or help us grow the directory.
               </p>
               <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-                <a
-                  href="/claim-business"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
-                >
+                <a href="/claim-business" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
                   Suggest a business
                 </a>
-                <a
-                  href="/claim-business"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
-                >
+                <a href="/claim-business" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/50 transition">
                   Claim your business
                 </a>
               </div>
             </div>
           ) : (
-            [...grouped.entries()].map(([group, list]) => (
-              <div key={group} className="mb-14 last:mb-0">
-                <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-[#1d1d1f] mb-6">
-                  {group}
-                </h2>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {list.map((b) => (
-                    <BusinessCard key={b.slug} b={b} onOpen={() => setOpenBiz(b)} />
-                  ))}
+            <>
+              {[...grouped.entries()].map(([group, list], gi) => (
+                <div key={group} className="mb-14 last:mb-0">
+                  <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white mb-6">
+                    {group}
+                  </h2>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {list.map((b) => (
+                      <BusinessCard key={b.slug} b={b} onOpen={() => setOpenBiz(b)} />
+                    ))}
+                    {gi === 0 && <ClaimCtaCard />}
+                    {gi === 1 && <PromoteCtaCard />}
+                  </div>
                 </div>
-              </div>
-            ))
+              ))}
+              {grouped.size <= 1 && (
+                <div className="grid sm:grid-cols-2 gap-5 mt-4">
+                  <ClaimCtaCard />
+                  <PromoteCtaCard />
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
 
-      {/* CLAIM CTA */}
+      {/* CLAIM CTA STRIP */}
       {!embedded && (
-        <section className="bg-[#0e0f12] text-white py-24 md:py-28 px-6 md:px-10">
+        <section className="py-24 md:py-28 px-6 md:px-10 border-t border-white/[0.06]">
           <div className="max-w-3xl mx-auto text-center">
             <Sparkles className="w-6 h-6 mx-auto mb-5 text-[#5eead4]" />
             <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05]">
               Own a Capital District business?
             </h2>
             <p className="mt-5 text-lg font-light text-white/65">
-              Get listed on Capital District Nest and reach local buyers, sellers, renters, and
-              homeowners.
+              Claim your profile, post events and specials, and become part of the digital
+              front door of the region.
             </p>
             <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href="/claim-business"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)]"
-              >
+              <a href="/claim-business" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition">
                 Claim Your Business
               </a>
-              <a
-                href="/claim-business?tier=featured"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-white/20 bg-white/5 text-white hover:bg-white/10 transition"
-              >
+              <a href="/claim-business?tier=featured" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-[#5eead4]/40 transition">
                 Become a Featured Partner
               </a>
             </div>
@@ -357,80 +327,97 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         </section>
       )}
 
-      {/* DETAIL MODAL */}
-      <BusinessDetailModal biz={openBiz} onClose={() => setOpenBiz(null)} />
+      <BusinessDetailModal biz={openBiz} onClose={() => setOpenBiz(null)} all={ALL} />
     </div>
   );
 };
 
-const FilterChip = ({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) => (
+/* ─────────────────────────  CARDS  ───────────────────────── */
+
+const FilterChip = ({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) => (
   <button
     type="button"
     onClick={onClick}
     className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition border ${
       active
-        ? "bg-[#0d6e66] text-white border-[#0d6e66]"
-        : "bg-white text-[#1d1d1f] border-[#1d1d1f]/15 hover:border-[#0d6e66]/40 hover:text-[#0d6e66]"
+        ? "bg-[#5eead4] text-[#0B0F19] border-[#5eead4]"
+        : "bg-white/[0.04] text-white/80 border-white/15 hover:border-[#5eead4]/40 hover:text-[#5eead4]"
     }`}
   >
     {children}
   </button>
 );
 
+const useMonogram = (name: string) =>
+  name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+
+const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
+  <button
+    onClick={onOpen}
+    className="group relative text-left rounded-2xl overflow-hidden border border-white/10 bg-white/[0.04] hover:border-[#5eead4]/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_60px_-20px_rgba(94,234,212,0.25)]"
+  >
+    <div className="h-40 w-full overflow-hidden relative">
+      <div
+        className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-110"
+        style={
+          b.image
+            ? { backgroundImage: `url(${b.image})` }
+            : { background: "linear-gradient(135deg, #0d6e66 0%, #0B0F19 100%)" }
+        }
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />
+      <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/15 backdrop-blur text-[#5eead4] text-[10px] font-semibold uppercase tracking-wider border border-[#5eead4]/30">
+        <Sparkles className="w-3 h-3" /> Featured
+      </span>
+    </div>
+    <div className="p-6">
+      <p className="text-[10px] uppercase tracking-[0.18em] text-white/50 font-semibold">{b.category}</p>
+      <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-white">{b.name}</h3>
+      <p className="mt-3 text-sm text-white/65 font-light leading-relaxed line-clamp-2">{b.tagline}</p>
+      <span className="mt-5 inline-flex items-center gap-1 text-sm text-[#5eead4]">
+        View profile <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      </span>
+    </div>
+  </button>
+);
+
 const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
   const claimed = isClaimed(b);
-  // Stable placeholder gradient based on business name
   const seed = b.name.charCodeAt(0) + b.name.charCodeAt(b.name.length - 1);
   const hueA = (seed * 7) % 360;
   const hueB = (hueA + 35) % 360;
-  const monogram = b.name
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
+  const monogram = useMonogram(b.name);
 
   return (
     <button
       onClick={onOpen}
-      className={`text-left rounded-[22px] bg-white border overflow-hidden hover:-translate-y-1 transition-all duration-300 flex flex-col ${
+      className={`group relative text-left rounded-[22px] bg-[#1E2230] border overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col ${
         b.featured
-          ? "border-[#0d6e66]/30 shadow-[0_18px_48px_-18px_rgba(13,110,102,0.18)] hover:shadow-[0_28px_64px_-20px_rgba(13,110,102,0.32)]"
-          : "border-[#1d1d1f]/[0.08] hover:border-[#0d6e66]/30 hover:shadow-[0_24px_56px_-22px_rgba(13,110,102,0.22)]"
+          ? "border-[#5eead4]/30 hover:border-[#5eead4]/60 hover:shadow-[0_28px_64px_-20px_rgba(94,234,212,0.30)]"
+          : "border-white/[0.07] hover:border-[#5eead4]/30 hover:shadow-[0_24px_56px_-22px_rgba(94,234,212,0.18)]"
       }`}
     >
-      {/* Cinematic header strip */}
-      <div
-        className="relative h-28 w-full overflow-hidden"
-        style={
-          b.image
-            ? { backgroundImage: `url(${b.image})`, backgroundSize: "cover", backgroundPosition: "center" }
-            : {
-                background: `linear-gradient(135deg, hsl(${hueA} 55% 28%) 0%, hsl(${hueB} 60% 18%) 100%)`,
-              }
-        }
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
-        {/* Logo monogram */}
-        <div className="absolute -bottom-6 left-6 w-14 h-14 rounded-2xl bg-white shadow-[0_10px_24px_-10px_rgba(0,0,0,0.35)] flex items-center justify-center text-[#0d6e66] font-semibold text-lg tracking-tight border border-white">
+      {/* Cinematic header */}
+      <div className="relative h-32 w-full overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-[1.08]"
+          style={
+            b.image
+              ? { backgroundImage: `url(${b.image})` }
+              : { background: `linear-gradient(135deg, hsl(${hueA} 45% 22%) 0%, hsl(${hueB} 55% 14%) 100%)` }
+          }
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
+        <div className="absolute -bottom-6 left-6 w-14 h-14 rounded-2xl bg-[#0B0F19] shadow-[0_10px_24px_-10px_rgba(0,0,0,0.6)] flex items-center justify-center text-[#5eead4] font-semibold text-lg tracking-tight border border-[#5eead4]/30">
           {monogram}
         </div>
-        {/* Top-right badge */}
         <div className="absolute top-3 right-3">
           {b.featured ? (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#5eead4] text-[#0B0F19] text-[10px] font-semibold uppercase tracking-wider">
               <Sparkles className="w-3 h-3" /> Featured
             </span>
           ) : claimed ? (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/90 text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/10 backdrop-blur text-white text-[10px] font-semibold uppercase tracking-wider border border-white/20">
               Claimed
             </span>
           ) : null}
@@ -438,248 +425,452 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
       </div>
 
       <div className="px-6 pt-9 pb-6 flex flex-col flex-1">
-        <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
+        <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">
           {b.category}
-          {b.townLabel && <span className="text-[#1d1d1f]/40"> · {b.townLabel}</span>}
+          {b.townLabel && <span className="text-white/35"> · {b.townLabel}</span>}
         </p>
-        <h3 className="mt-1.5 text-lg font-semibold tracking-tight text-[#1d1d1f] leading-snug">
+        <h3 className="mt-1.5 text-lg font-semibold tracking-tight text-white leading-snug">
           {b.name}
         </h3>
-        <p className="mt-2.5 text-sm text-[#1d1d1f]/65 font-light leading-relaxed line-clamp-3">
+        <p className="mt-2.5 text-sm text-white/65 font-light leading-relaxed line-clamp-3">
           {b.tagline}
         </p>
 
+        {b.signals && b.signals.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {b.signals.slice(0, 2).map((s) => (
+              <span key={s} className="text-[10px] px-2 py-0.5 rounded-full bg-[#5eead4]/10 text-[#5eead4] border border-[#5eead4]/20">
+                {s}
+              </span>
+            ))}
+          </div>
+        )}
+
         {claimed ? (
-          <div className="mt-4 flex items-center gap-3 text-xs text-[#1d1d1f]/55">
-            {b.phone && (
-              <span className="inline-flex items-center gap-1">
-                <Phone className="w-3 h-3" /> Phone
-              </span>
-            )}
-            {b.website && (
-              <span className="inline-flex items-center gap-1">
-                <Globe className="w-3 h-3" /> Web
-              </span>
-            )}
-            {b.address && (
-              <span className="inline-flex items-center gap-1">
-                <MapPin className="w-3 h-3" /> Address
-              </span>
-            )}
+          <div className="mt-4 flex items-center gap-3 text-xs text-white/50">
+            {b.phone && <span className="inline-flex items-center gap-1"><Phone className="w-3 h-3" /> Phone</span>}
+            {b.website && <span className="inline-flex items-center gap-1"><Globe className="w-3 h-3" /> Web</span>}
+            {b.address && <span className="inline-flex items-center gap-1"><MapPin className="w-3 h-3" /> Address</span>}
           </div>
         ) : (
-          <div className="mt-4 px-3 py-2 rounded-lg bg-[#1d1d1f]/[0.04] text-[11px] text-[#1d1d1f]/60">
+          <div className="mt-4 px-3 py-2 rounded-lg bg-white/[0.04] text-[11px] text-white/55 border border-white/[0.06]">
             Contact info available after claim
           </div>
         )}
 
-        <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#0d6e66]">
-          {claimed ? "View Details" : "View & Claim"}
-          <ArrowUpRight className="w-3.5 h-3.5" />
+        <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4]">
+          {claimed ? "View profile" : "View & claim"}
+          <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </span>
       </div>
     </button>
   );
 };
 
+const ClaimCtaCard = () => (
+  <a
+    href="/claim-business"
+    className="group relative rounded-[22px] overflow-hidden p-7 flex flex-col justify-between border border-[#5eead4]/25 bg-gradient-to-br from-[#0d6e66]/15 via-[#1E2230] to-[#1E2230] hover:border-[#5eead4]/60 hover:shadow-[0_30px_70px_-20px_rgba(94,234,212,0.35)] transition-all duration-300 hover:-translate-y-1 min-h-[280px]"
+  >
+    <div
+      className="absolute -top-20 -right-20 w-60 h-60 rounded-full opacity-50 blur-3xl transition-opacity duration-500 group-hover:opacity-80"
+      style={{ background: "radial-gradient(circle, rgba(94,234,212,0.35) 0%, transparent 70%)" }}
+    />
+    <div className="relative">
+      <div className="w-12 h-12 rounded-2xl border border-[#5eead4]/40 bg-[#5eead4]/10 flex items-center justify-center">
+        <Building2 className="w-5 h-5 text-[#5eead4]" />
+      </div>
+      <p className="mt-5 text-[10px] uppercase tracking-[0.22em] text-[#5eead4] font-semibold">Business Owners</p>
+      <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white leading-tight">
+        Own this business?
+      </h3>
+      <p className="mt-3 text-sm text-white/65 font-light leading-relaxed">
+        Claim your profile, add events, specials, social links, and unlock premium placement
+        across town pages.
+      </p>
+    </div>
+    <div className="relative mt-6 flex flex-wrap gap-2">
+      <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-black text-xs font-semibold">
+        Claim Business <ArrowUpRight className="w-3.5 h-3.5" />
+      </span>
+      <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-white/20 text-white text-xs font-semibold">
+        Learn more
+      </span>
+    </div>
+  </a>
+);
+
+const PromoteCtaCard = () => (
+  <a
+    href="/claim-business?intent=promote"
+    className="group relative rounded-[22px] overflow-hidden p-7 flex flex-col justify-between border border-white/[0.08] bg-[#1E2230] hover:border-[#5eead4]/50 hover:shadow-[0_30px_70px_-20px_rgba(94,234,212,0.25)] transition-all duration-300 hover:-translate-y-1 min-h-[280px]"
+  >
+    <div className="relative">
+      <div className="w-12 h-12 rounded-2xl border border-white/15 bg-white/[0.04] flex items-center justify-center">
+        <Megaphone className="w-5 h-5 text-[#5eead4]" />
+      </div>
+      <p className="mt-5 text-[10px] uppercase tracking-[0.22em] text-[#5eead4] font-semibold">Promote</p>
+      <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white leading-tight">
+        Promote a special or event
+      </h3>
+      <p className="mt-3 text-sm text-white/65 font-light leading-relaxed">
+        Happy hours, grand openings, networking events, live music, seasonal promotions —
+        surfaced across the weekly feed.
+      </p>
+    </div>
+    <div className="relative mt-6">
+      <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[#5eead4] text-xs font-semibold">
+        Add Promotion <ArrowUpRight className="w-3.5 h-3.5" />
+      </span>
+    </div>
+  </a>
+);
+
+/* ─────────────────────────  MODAL  ───────────────────────── */
+
 const BusinessDetailModal = ({
   biz,
   onClose,
+  all,
 }: {
   biz: Business | null;
   onClose: () => void;
-}) => (
-  <Dialog open={!!biz} onOpenChange={(o) => !o && onClose()}>
-    <DialogContent className="max-w-2xl p-0 overflow-hidden">
-      {biz && (
-        <>
-          <DialogTitle className="sr-only">{biz.name}</DialogTitle>
-          <DialogDescription className="sr-only">{biz.tagline}</DialogDescription>
-          {biz.image && (
+  all: Business[];
+}) => {
+  const [lightbox, setLightbox] = useState<string | null>(null);
+
+  useEffect(() => { setLightbox(null); }, [biz?.slug]);
+
+  if (!biz) {
+    return (
+      <Dialog open={false} onOpenChange={(o) => !o && onClose()}>
+        <DialogContent />
+      </Dialog>
+    );
+  }
+
+  const claimed = isClaimed(biz);
+  const telHref = biz.phone ? `tel:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
+  const smsHref = biz.phone ? `sms:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
+  const dirHref = biz.address
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(biz.address)}`
+    : undefined;
+
+  const nearbyAuto =
+    biz.nearby ??
+    all
+      .filter((x) => x.slug !== biz.slug && x.town === biz.town && x.town !== "capital-district")
+      .slice(0, 4)
+      .map((x) => ({ label: x.name, kind: "business" as const }));
+
+  return (
+    <Dialog open={!!biz} onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="max-w-4xl p-0 overflow-hidden bg-[#0B0F19] border border-white/10 text-white max-h-[92vh] overflow-y-auto">
+        <DialogTitle className="sr-only">{biz.name}</DialogTitle>
+        <DialogDescription className="sr-only">{biz.tagline}</DialogDescription>
+
+        {/* SECTION A — HERO */}
+        <div className="relative h-[280px] md:h-[380px] w-full overflow-hidden">
+          {biz.heroVideo ? (
+            <video
+              src={biz.heroVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
             <div
-              className="h-44 w-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${biz.image})` }}
+              className="absolute inset-0 bg-cover bg-center"
+              style={
+                biz.image
+                  ? { backgroundImage: `url(${biz.image})` }
+                  : { background: "linear-gradient(135deg, #0d6e66 0%, #0B0F19 100%)" }
+              }
             />
           )}
-          <div className="p-7 md:p-9">
-            <div className="flex items-center gap-2 mb-2">
-              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66]">
-                {biz.category}
-                {biz.townLabel && ` · ${biz.townLabel}`}
-              </p>
-              {biz.featured ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66] text-white text-[10px] font-semibold uppercase tracking-wider">
-                  <Sparkles className="w-3 h-3" /> Featured Partner
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/55 to-[#0B0F19]/10" />
+
+          <div className="absolute bottom-0 left-0 right-0 p-7 md:p-10">
+            <div className="flex items-center gap-2 mb-3 flex-wrap">
+              <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
+                {biz.category}{biz.townLabel && ` · ${biz.townLabel}`}
+              </span>
+              {biz.featured && (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-[10px] font-semibold uppercase tracking-wider">
+                  <Sparkles className="w-3 h-3" /> Featured
                 </span>
-              ) : isClaimed(biz) ? (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0d6e66]/10 text-[#0d6e66] text-[10px] font-semibold uppercase tracking-wider">
+              )}
+              {!biz.featured && claimed && (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 backdrop-blur text-white text-[10px] font-semibold uppercase tracking-wider border border-white/20">
                   Claimed
                 </span>
-              ) : null}
+              )}
             </div>
-            <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-[#1d1d1f]">
+            <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05]">
               {biz.name}
             </h2>
-            <p className="mt-3 text-base text-[#1d1d1f]/70 font-light leading-relaxed">
-              {biz.about ?? biz.tagline}
-            </p>
-
-            {isClaimed(biz) ? (
-              <>
-                {biz.services && biz.services.length > 0 && (
-                  <div className="mt-5 flex flex-wrap gap-1.5">
-                    {biz.services.map((s) => (
-                      <span
-                        key={s}
-                        className="text-xs px-2.5 py-1 rounded-full bg-[#1d1d1f]/[0.05] text-[#1d1d1f]/75"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                <div className="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
-                  {biz.phone && (
-                    <Info icon={<Phone className="w-4 h-4" />} label="Phone" value={biz.phone} />
-                  )}
-                  {biz.email && (
-                    <Info icon={<Mail className="w-4 h-4" />} label="Email" value={biz.email} />
-                  )}
-                  {biz.website && (
-                    <Info
-                      icon={<Globe className="w-4 h-4" />}
-                      label="Website"
-                      value={biz.website.replace(/^https?:\/\//, "")}
-                    />
-                  )}
-                  {biz.address && (
-                    <Info icon={<MapPin className="w-4 h-4" />} label="Address" value={biz.address} />
-                  )}
-                  {biz.hours && (
-                    <Info icon={<Clock className="w-4 h-4" />} label="Hours" value={biz.hours} />
-                  )}
-                </div>
-
-                {biz.socials && (
-                  <div className="mt-6 flex items-center gap-2">
-                    {biz.socials.instagram && (
-                      <SocialBtn href={biz.socials.instagram} Icon={Instagram} />
-                    )}
-                    {biz.socials.facebook && (
-                      <SocialBtn href={biz.socials.facebook} Icon={Facebook} />
-                    )}
-                    {biz.socials.linkedin && (
-                      <SocialBtn href={biz.socials.linkedin} Icon={Linkedin} />
-                    )}
-                    {biz.socials.twitter && <SocialBtn href={biz.socials.twitter} Icon={XIcon} />}
-                  </div>
-                )}
-
-                <div className="mt-7 flex flex-wrap gap-2">
-                  {biz.phone && (
-                    <a
-                      href={`tel:${biz.phone.replace(/[^\d+]/g, "")}`}
-                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#DC1C2E] text-white text-sm font-semibold hover:opacity-90 transition"
-                    >
-                      <Phone className="w-4 h-4" /> Call
-                    </a>
-                  )}
-                  {biz.email && (
-                    <a
-                      href={`mailto:${biz.email}`}
-                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
-                    >
-                      <Mail className="w-4 h-4" /> Email
-                    </a>
-                  )}
-                  {biz.website && (
-                    <a
-                      href={biz.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
-                    >
-                      <Globe className="w-4 h-4" /> Website
-                    </a>
-                  )}
-                  {biz.address && (
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(biz.address)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
-                    >
-                      <MapPin className="w-4 h-4" /> Directions
-                    </a>
-                  )}
-                </div>
-              </>
-            ) : (
-              <div className="mt-7 rounded-2xl border border-dashed border-[#1d1d1f]/15 bg-[#1d1d1f]/[0.025] p-6">
-                <p className="text-sm font-semibold text-[#1d1d1f]">
-                  Is this your business?
-                </p>
-                <p className="mt-1.5 text-sm text-[#1d1d1f]/65 font-light">
-                  Claim your profile to add phone, website, hours, photos, and social links —
-                  free. Upgrade to Featured Partner for top placement across the directory and
-                  town pages.
-                </p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  <a
-                    href={`/claim-business?biz=${biz.slug}`}
-                    className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
-                  >
-                    <Sparkles className="w-4 h-4" /> Claim this business
-                  </a>
-                  <a
-                    href={`/claim-business?biz=${biz.slug}&tier=featured`}
-                    className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-sm font-semibold text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66] transition"
-                  >
-                    Upgrade to Featured Partner
-                  </a>
-                </div>
-              </div>
+            {biz.atmosphere && (
+              <p className="mt-3 text-white/70 font-light max-w-2xl text-sm md:text-base">
+                {biz.atmosphere}
+              </p>
             )}
           </div>
-        </>
-      )}
-    </DialogContent>
-  </Dialog>
+        </div>
+
+        <div className="p-7 md:p-10 space-y-10">
+          {/* Action buttons */}
+          {claimed && (
+            <div className="flex flex-wrap gap-2">
+              {telHref && (
+                <a href={telHref} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
+                  <Phone className="w-4 h-4" /> Call
+                </a>
+              )}
+              {biz.website && (
+                <a href={biz.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
+                  <Globe className="w-4 h-4" /> Website
+                </a>
+              )}
+              {dirHref && (
+                <a href={dirHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
+                  <Navigation className="w-4 h-4" /> Directions
+                </a>
+              )}
+              {smsHref && (
+                <a href={smsHref} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
+                  <MessageSquare className="w-4 h-4" /> Text
+                </a>
+              )}
+              {biz.bookingUrl && (
+                <a href={biz.bookingUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[#5eead4] text-sm font-semibold hover:bg-[#5eead4]/20 transition">
+                  <CalendarPlus className="w-4 h-4" /> Book
+                </a>
+              )}
+              {biz.socials?.instagram && (
+                <a href={biz.socials.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
+                  <Instagram className="w-4 h-4" /> Instagram
+                </a>
+              )}
+            </div>
+          )}
+
+          {/* SECTION B — STORY */}
+          <Section eyebrow="The story" title="Why locals come here">
+            <p className="text-white/75 font-light leading-relaxed text-[15px] md:text-base">
+              {biz.about ?? biz.tagline}
+            </p>
+            {biz.knownFor && biz.knownFor.length > 0 && (
+              <div className="mt-6">
+                <p className="text-[10px] uppercase tracking-[0.22em] text-[#5eead4] font-semibold mb-3">
+                  Known for
+                </p>
+                <ul className="grid sm:grid-cols-2 gap-2.5">
+                  {biz.knownFor.map((k) => (
+                    <li key={k} className="flex items-start gap-2.5 text-sm text-white/80">
+                      <Heart className="w-3.5 h-3.5 text-[#5eead4] mt-1 shrink-0" />
+                      <span>{k}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {biz.signals && biz.signals.length > 0 && (
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {biz.signals.map((s) => (
+                  <span key={s} className="text-xs px-2.5 py-1 rounded-full bg-[#5eead4]/10 text-[#5eead4] border border-[#5eead4]/25">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            )}
+            {biz.services && biz.services.length > 0 && (
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {biz.services.map((s) => (
+                  <span key={s} className="text-xs px-2.5 py-1 rounded-full bg-white/[0.05] text-white/75 border border-white/[0.08]">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            )}
+          </Section>
+
+          {/* SECTION C — SPECIALS / EVENTS */}
+          {biz.specials && biz.specials.length > 0 && (
+            <Section eyebrow="What's on" title="Specials & events">
+              <div className="grid sm:grid-cols-2 gap-3">
+                {biz.specials.map((s) => (
+                  <div key={s.title} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 hover:border-[#5eead4]/30 transition">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        {s.tag && (
+                          <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.18em] text-[#5eead4] font-semibold mb-1.5">
+                            <Star className="w-3 h-3" /> {s.tag}
+                          </span>
+                        )}
+                        <h4 className="text-base font-semibold text-white">{s.title}</h4>
+                      </div>
+                      {s.when && (
+                        <span className="inline-flex items-center gap-1 text-xs text-white/55 shrink-0">
+                          <Calendar className="w-3 h-3" /> {s.when}
+                        </span>
+                      )}
+                    </div>
+                    {s.cta && (
+                      <a href={s.cta.href} className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[#5eead4] hover:underline">
+                        {s.cta.label} <ArrowUpRight className="w-3 h-3" />
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Section>
+          )}
+
+          {/* SECTION D — GALLERY */}
+          {biz.gallery && biz.gallery.length > 0 && (
+            <Section eyebrow="Inside" title="Gallery">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5">
+                {biz.gallery.map((src, i) => (
+                  <button
+                    key={src + i}
+                    onClick={() => setLightbox(src)}
+                    className={`group relative overflow-hidden rounded-2xl ${
+                      i === 0 ? "col-span-2 row-span-2 aspect-square md:aspect-[4/3]" : "aspect-square"
+                    }`}
+                  >
+                    <img
+                      src={src}
+                      alt=""
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[700ms] group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-[#0B0F19]/0 group-hover:bg-[#0B0F19]/30 transition-colors" />
+                  </button>
+                ))}
+              </div>
+            </Section>
+          )}
+
+          {/* Contact info grid */}
+          {claimed && (
+            <Section eyebrow="Visit" title="Contact & hours">
+              <div className="grid sm:grid-cols-2 gap-3">
+                {biz.phone && <Info icon={<Phone className="w-4 h-4" />} label="Phone" value={biz.phone} />}
+                {biz.email && <Info icon={<Mail className="w-4 h-4" />} label="Email" value={biz.email} />}
+                {biz.website && (
+                  <Info icon={<Globe className="w-4 h-4" />} label="Website" value={biz.website.replace(/^https?:\/\//, "")} />
+                )}
+                {biz.address && <Info icon={<MapPin className="w-4 h-4" />} label="Address" value={biz.address} />}
+                {biz.hours && <Info icon={<Clock className="w-4 h-4" />} label="Hours" value={biz.hours} />}
+              </div>
+
+              {biz.socials && (
+                <div className="mt-6 flex items-center gap-2">
+                  {biz.socials.instagram && <SocialBtn href={biz.socials.instagram} Icon={Instagram} />}
+                  {biz.socials.facebook && <SocialBtn href={biz.socials.facebook} Icon={Facebook} />}
+                  {biz.socials.linkedin && <SocialBtn href={biz.socials.linkedin} Icon={Linkedin} />}
+                  {biz.socials.twitter && <SocialBtn href={biz.socials.twitter} Icon={XIcon} />}
+                </div>
+              )}
+            </Section>
+          )}
+
+          {/* SECTION E — NEARBY */}
+          {nearbyAuto.length > 0 && (
+            <Section eyebrow="Neighborhood" title="Connected to">
+              <div className="grid sm:grid-cols-2 gap-2.5">
+                {nearbyAuto.map((n) => (
+                  <a
+                    key={n.label}
+                    href={n.href ?? "#"}
+                    className="flex items-center justify-between gap-3 p-4 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:border-[#5eead4]/30 hover:bg-white/[0.06] transition"
+                  >
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-[#5eead4] font-semibold">
+                        {n.kind ?? "Nearby"}
+                      </p>
+                      <p className="mt-1 text-sm font-semibold text-white">{n.label}</p>
+                    </div>
+                    <ArrowUpRight className="w-4 h-4 text-white/40" />
+                  </a>
+                ))}
+              </div>
+            </Section>
+          )}
+
+          {/* Unclaimed CTA */}
+          {!claimed && (
+            <div className="rounded-2xl border border-dashed border-[#5eead4]/30 bg-[#5eead4]/[0.04] p-7">
+              <p className="text-sm font-semibold text-white">Is this your business?</p>
+              <p className="mt-1.5 text-sm text-white/65 font-light">
+                Claim your profile to unlock contact info, photos, social links, events,
+                and specials — free. Upgrade to Featured for top placement.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                <a href={`/claim-business?biz=${biz.slug}`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
+                  <Sparkles className="w-4 h-4" /> Claim this business
+                </a>
+                <a href={`/claim-business?biz=${biz.slug}&tier=featured`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/40 transition">
+                  Become a Featured Partner
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Lightbox */}
+        {lightbox && (
+          <button
+            type="button"
+            onClick={() => setLightbox(null)}
+            className="fixed inset-0 z-[80] bg-[#0B0F19]/95 flex items-center justify-center p-6 animate-in fade-in"
+          >
+            <img src={lightbox} alt="" className="max-w-full max-h-full rounded-2xl shadow-2xl" />
+          </button>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const Section = ({
+  eyebrow,
+  title,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  children: React.ReactNode;
+}) => (
+  <section>
+    <p className="text-[10px] uppercase tracking-[0.22em] text-[#5eead4] font-semibold mb-2">
+      {eyebrow}
+    </p>
+    <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.015em] text-white mb-5">
+      {title}
+    </h3>
+    {children}
+  </section>
 );
 
-const Info = ({
-  icon,
-  label,
-  value,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-}) => (
-  <div className="flex items-start gap-2.5">
-    <span className="mt-0.5 text-[#0d6e66]">{icon}</span>
+const Info = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
+  <div className="flex items-start gap-2.5 p-3.5 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+    <span className="mt-0.5 text-[#5eead4]">{icon}</span>
     <div>
-      <p className="text-[10px] uppercase tracking-[0.18em] font-semibold text-[#1d1d1f]/55">
-        {label}
-      </p>
-      <p className="text-sm text-[#1d1d1f]">{value}</p>
+      <p className="text-[10px] uppercase tracking-[0.18em] font-semibold text-white/55">{label}</p>
+      <p className="text-sm text-white">{value}</p>
     </div>
   </div>
 );
 
-const SocialBtn = ({
-  href,
-  Icon,
-}: {
-  href: string;
-  Icon: React.ComponentType<{ className?: string }>;
-}) => (
+const SocialBtn = ({ href, Icon }: { href: string; Icon: React.ComponentType<{ className?: string }> }) => (
   <a
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className="w-9 h-9 inline-flex items-center justify-center rounded-full border border-[#1d1d1f]/15 text-[#1d1d1f] hover:border-[#0d6e66]/40 hover:text-[#0d6e66] transition"
+    className="w-10 h-10 inline-flex items-center justify-center rounded-full border border-white/15 text-white hover:border-[#5eead4]/50 hover:text-[#5eead4] transition"
   >
     <Icon className="w-4 h-4" />
   </a>
