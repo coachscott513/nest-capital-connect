@@ -374,10 +374,8 @@ export const townOverrides: Record<string, TownOverride> = {
     ],
   },
   albany: {
-    heroImage:
-      "https://images.unsplash.com/photo-1572276596237-5db2c3e16c5d?auto=format&fit=crop&w=2400&q=80",
-    whyImage:
-      "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1800&q=80",
+    heroImage: "/assets/towns/albany-hero.jpg",
+    whyImage: "/assets/towns/albany-why.jpg",
     heroHeadline: "Discover Albany.",
     heroSub:
       "The capital city — Washington Park, Lark Street, Empire State Plaza, and the urban rhythm of New York's seat of government.",
