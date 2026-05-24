@@ -106,10 +106,20 @@ const TownPageTemplate = ({ town }: Props) => {
         {/* Onyx wash + signature glow */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/75 to-background" />
         <div
-          className="absolute -top-32 left-1/3 w-[680px] h-[680px] rounded-full blur-[140px] pointer-events-none"
+          className="absolute -top-32 left-1/3 w-[680px] h-[680px] rounded-full blur-[140px] pointer-events-none animate-[townGlowDrift_18s_ease-in-out_infinite]"
           style={{ backgroundColor: accent }}
         />
-        <div className="absolute bottom-0 right-1/4 w-[420px] h-[420px] rounded-full blur-[120px] pointer-events-none bg-[rgba(13,110,102,0.18)]" />
+        <div className="absolute bottom-0 right-1/4 w-[420px] h-[420px] rounded-full blur-[120px] pointer-events-none bg-[rgba(13,110,102,0.18)] animate-[townGlowDriftAlt_22s_ease-in-out_infinite]" />
+        <style>{`
+          @keyframes townGlowDrift {
+            0%,100% { transform: translate(0,0) scale(1); opacity: 0.85; }
+            50%     { transform: translate(40px,30px) scale(1.08); opacity: 1; }
+          }
+          @keyframes townGlowDriftAlt {
+            0%,100% { transform: translate(0,0) scale(1); opacity: 0.7; }
+            50%     { transform: translate(-50px,-20px) scale(1.12); opacity: 0.95; }
+          }
+        `}</style>
 
         <div className={`relative max-w-6xl mx-auto ${SECTION_PAD}`}>
           <div className="max-w-3xl">
