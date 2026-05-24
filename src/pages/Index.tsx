@@ -443,51 +443,47 @@ const Index = () => {
         </div>
       </section>
 
-      {/* 3 — TOWNS · the lead section */}
+      {/* 3 — TOWNS · centered editorial grid */}
       <section className="bg-[#0B0F19] w-full">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-[72px] md:py-[120px]">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:col-span-5 lg:sticky lg:top-28"
-            >
-              <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#5eead4]">
-                Explore Towns
-              </p>
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
-                Discover the<br />neighborhoods.
-              </h2>
-              <p className="mt-8 text-lg md:text-xl text-white/60 max-w-md font-light leading-relaxed">
-                The streets, schools, cafés, and character that shape the Capital District —
-                town by town.
-              </p>
-              <div className="cta-anchor mt-8">
-                <Link
-                  to="/communities"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
-                >
-                  Browse all towns <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </motion.div>
+        <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-[88px] md:py-[140px]">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-3xl mx-auto text-center mb-16 md:mb-24"
+          >
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#5eead4]">
+              Explore Towns
+            </p>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
+              Discover the neighborhoods.
+            </h2>
+            <p className="mt-7 text-lg md:text-xl text-white/60 font-light leading-relaxed max-w-2xl mx-auto">
+              The streets, schools, cafés, and character that shape the Capital District —
+              town by town.
+            </p>
+            <div className="cta-anchor mt-9 flex justify-center">
+              <Link
+                to="/communities"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
+              >
+                Browse all towns <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:col-span-7"
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-7 md:gap-8">
-                {TOWN_TILES.map((t) => (
-                  <TownTile key={t.name} {...t} />
-                ))}
-              </div>
-            </motion.div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8"
+          >
+            {TOWN_TILES.map((t) => (
+              <TownTile key={t.name} {...t} />
+            ))}
+          </motion.div>
         </div>
       </section>
 

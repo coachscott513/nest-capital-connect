@@ -9,12 +9,9 @@ const townDirectory = {
     { name: "Cohoes", slug: "cohoes" },
     { name: "Colonie", slug: "colonie" },
     { name: "Delmar", slug: "delmar" },
-    { name: "Green Island", slug: "green-island" },
     { name: "Guilderland", slug: "guilderland" },
     { name: "Latham", slug: "latham" },
     { name: "Loudonville", slug: "loudonville" },
-    { name: "Menands", slug: "menands" },
-    { name: "Ravena", slug: "ravena" },
     { name: "Voorheesville", slug: "voorheesville" },
     { name: "Watervliet", slug: "watervliet" },
   ],
@@ -25,13 +22,9 @@ const townDirectory = {
   ],
   "Rensselaer County": [
     { name: "Averill Park", slug: "averill-park" },
-    { name: "Brunswick", slug: "brunswick" },
     { name: "East Greenbush", slug: "east-greenbush" },
-    { name: "North Greenbush", slug: "north-greenbush" },
     { name: "Rensselaer", slug: "rensselaer" },
-    { name: "Schaghticoke", slug: "schaghticoke" },
     { name: "Troy", slug: "troy" },
-    { name: "Wynantskill", slug: "wynantskill" },
   ],
   "Saratoga County": [
     { name: "Ballston Spa", slug: "ballston-spa" },
@@ -40,8 +33,6 @@ const townDirectory = {
     { name: "Malta", slug: "malta" },
     { name: "Mechanicville", slug: "mechanicville" },
     { name: "Saratoga Springs", slug: "saratoga-springs" },
-    { name: "Stillwater", slug: "stillwater" },
-    { name: "Waterford", slug: "waterford" },
     { name: "Wilton", slug: "wilton" },
   ],
   "Warren County": [
@@ -49,112 +40,129 @@ const townDirectory = {
     { name: "Lake George", slug: "lake-george" },
     { name: "Queensbury", slug: "queensbury" },
   ],
-  "Washington County": [
-    { name: "Cambridge", slug: "cambridge" },
-    { name: "Greenwich", slug: "greenwich" },
-    { name: "Hudson Falls", slug: "hudson-falls" },
-  ],
-  "Fulton County": [
-    { name: "Gloversville", slug: "gloversville" },
-    { name: "Johnstown", slug: "johnstown" },
-    { name: "Northville", slug: "northville" },
-  ],
-  "Montgomery County": [
-    { name: "Amsterdam", slug: "amsterdam" },
-    { name: "Canajoharie", slug: "canajoharie" },
-    { name: "Fonda", slug: "fonda" },
-  ],
-  "Greene County": [
-    { name: "Athens", slug: "athens" },
-    { name: "Catskill", slug: "catskill" },
-    { name: "Coxsackie", slug: "coxsackie" },
-    { name: "Hunter", slug: "hunter" },
-    { name: "Windham", slug: "windham" },
-  ],
-  "Schoharie County": [
-    { name: "Cobleskill", slug: "cobleskill" },
-    { name: "Middleburgh", slug: "middleburgh" },
-    { name: "Schoharie", slug: "schoharie" },
-    { name: "Sharon Springs", slug: "sharon-springs" },
-  ],
-};
+} as const;
+
+const linkBase =
+  "text-[13px] text-white/70 hover:text-[#5eead4] transition-colors duration-200";
+const headerBase =
+  "text-[11px] font-semibold text-white/95 mb-4 uppercase tracking-[0.18em]";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary/60 text-foreground">
-      {/* Town Directory */}
-      <div className="max-w-7xl mx-auto px-6 py-14 border-b border-border">
-        <h3 className="text-xs font-medium text-muted-foreground mb-8 uppercase tracking-[0.15em]">
-          Real Estate by County
-        </h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-          {Object.entries(townDirectory).map(([county, towns]) => (
-            <div key={county}>
-              <h4 className="text-[11px] font-medium text-muted-foreground/70 mb-2.5 uppercase tracking-wider">{county}</h4>
-              <ul className="space-y-1.5">
-                {towns.map((town) => (
-                  <li key={town.slug}>
-                    <Link to={`/living-in/${town.slug}`} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                      {town.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid md:grid-cols-4 gap-10">
-          <div>
-            <h3 className="text-base font-semibold text-foreground mb-2">Capital District Nest</h3>
-            <p className="text-sm text-muted-foreground font-light">Property intelligence for the Capital District.</p>
-          </div>
-
-          <div>
-            <h4 className="text-xs font-medium text-muted-foreground mb-4 uppercase tracking-[0.15em]">Contact</h4>
-            <div className="space-y-3">
-              <a href="tel:+15185227265" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+    <footer className="bg-[#05080F] text-white border-t border-white/[0.06]">
+      {/* Main columns */}
+      <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-16 md:py-20">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 md:gap-12">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-3 lg:col-span-1">
+            <h3 className="text-lg font-semibold tracking-tight text-white mb-3">
+              Capital District Nest
+            </h3>
+            <p className="text-[13px] text-white/55 font-light leading-relaxed max-w-xs">
+              The digital front door of the Capital District — homes, towns, and local life.
+            </p>
+            <div className="mt-6 space-y-2.5">
+              <a href="tel:+15185227265" className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
                 <Phone className="h-3.5 w-3.5" /> (518) 522-7265
               </a>
-              <a href="mailto:scott@capitaldistrictnest.com" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <a href="mailto:scott@capitaldistrictnest.com" className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
                 <Mail className="h-3.5 w-3.5" /> scott@capitaldistrictnest.com
               </a>
             </div>
           </div>
 
+          {/* Towns */}
           <div>
-            <h4 className="text-xs font-medium text-muted-foreground mb-4 uppercase tracking-[0.15em]">Resources</h4>
+            <h4 className={headerBase}>Towns</h4>
             <ul className="space-y-2.5">
-              <li><Link to="/intel/1999-ridge-road-queensbury-ny" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Sample Report</Link></li>
-              <li><Link to="/investor/nyc-to-albany-roi" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Investor Guides</Link></li>
-              <li><Link to="/first-time-homebuyers" className="text-sm text-muted-foreground hover:text-foreground transition-colors">First-Time Buyers</Link></li>
-              <li><Link to="/dealdesk" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Request Report</Link></li>
-              <li><Link to="/site-index" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Site Index</Link></li>
+              <li><Link to="/living-in/delmar" className={linkBase}>Delmar</Link></li>
+              <li><Link to="/living-in/albany" className={linkBase}>Albany</Link></li>
+              <li><Link to="/living-in/saratoga-springs" className={linkBase}>Saratoga Springs</Link></li>
+              <li><Link to="/living-in/troy" className={linkBase}>Troy</Link></li>
+              <li><Link to="/living-in/schenectady" className={linkBase}>Schenectady</Link></li>
+              <li><Link to="/living-in/clifton-park" className={linkBase}>Clifton Park</Link></li>
+              <li><Link to="/communities" className="text-[13px] text-[#5eead4] hover:opacity-80 transition-opacity">All towns →</Link></li>
             </ul>
           </div>
 
+          {/* Homes */}
           <div>
-            <h4 className="text-xs font-medium text-muted-foreground mb-4 uppercase tracking-[0.15em]">Partner</h4>
+            <h4 className={headerBase}>Homes</h4>
             <ul className="space-y-2.5">
-              <li><Link to="/partner-auth" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Business Login</Link></li>
-              <li><Link to="/claim-business" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Claim Your Story</Link></li>
+              <li><Link to="/homes-for-sale" className={linkBase}>Search Homes</Link></li>
+              <li><Link to="/investment-properties" className={linkBase}>Investment Properties</Link></li>
+              <li><Link to="/first-time-homebuyers" className={linkBase}>First-Time Buyers</Link></li>
+              <li><Link to="/analyze" className={linkBase}>Analyze Deals</Link></li>
+              <li><Link to="/rentals" className={linkBase}>Rentals</Link></li>
+              <li><Link to="/dealdesk" className={linkBase}>Request Report</Link></li>
             </ul>
-            <h4 className="text-xs font-medium text-muted-foreground mb-3 mt-8 uppercase tracking-[0.15em]">Legal</h4>
+          </div>
+
+          {/* Local */}
+          <div>
+            <h4 className={headerBase}>Local</h4>
             <ul className="space-y-2.5">
-              <li><a href="https://dos.ny.gov/system/files/documents/2021/08/fairhousingnotice.pdf" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">NY Fair Housing</a></li>
-              <li><Link to="/privacy-policy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/local?q=restaurant" className={linkBase}>Restaurants</Link></li>
+              <li><Link to="/local?q=contractor" className={linkBase}>Contractors</Link></li>
+              <li><Link to="/local?q=attorney" className={linkBase}>Attorneys</Link></li>
+              <li><Link to="/local?q=mortgage" className={linkBase}>Mortgage Lenders</Link></li>
+              <li><Link to="/local" className="text-[13px] text-[#5eead4] hover:opacity-80 transition-opacity">All businesses →</Link></li>
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <h4 className={headerBase}>Company</h4>
+            <ul className="space-y-2.5">
+              <li><Link to="/contact" className={linkBase}>Contact</Link></li>
+              <li><Link to="/claim-business" className={linkBase}>Claim Your Business</Link></li>
+              <li><Link to="/partner-auth" className={linkBase}>Business Login</Link></li>
+              <li><Link to="/site-index" className={linkBase}>Site Index</Link></li>
+              <li><Link to="/privacy-policy" className={linkBase}>Privacy</Link></li>
+              <li>
+                <a
+                  href="https://dos.ny.gov/system/files/documents/2021/08/fairhousingnotice.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={linkBase}
+                >
+                  NY Fair Housing
+                </a>
+              </li>
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Bottom */}
-      <div className="border-t border-border">
-        <div className="max-w-7xl mx-auto px-6 py-5">
-          <p className="text-[11px] text-muted-foreground/60 text-center leading-relaxed">
+      {/* Town directory by county */}
+      <div className="border-t border-white/[0.06]">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-12">
+          <h3 className="text-[11px] font-semibold text-white/95 mb-8 uppercase tracking-[0.18em]">
+            Real Estate by County
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+            {Object.entries(townDirectory).map(([county, towns]) => (
+              <div key={county}>
+                <h4 className="text-[10px] font-semibold text-white/55 mb-3 uppercase tracking-[0.16em]">{county}</h4>
+                <ul className="space-y-1.5">
+                  {towns.map((town) => (
+                    <li key={town.slug}>
+                      <Link to={`/living-in/${town.slug}`} className="text-[12px] text-white/60 hover:text-[#5eead4] transition-colors">
+                        {town.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Legal strip */}
+      <div className="border-t border-white/[0.06]">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-6">
+          <p className="text-[11px] text-white/45 text-center leading-relaxed">
             © {new Date().getFullYear()} Capital District Nest. Scott Alvarez, Licensed Real Estate Salesperson.
             Each RE/MAX® Office is Independently Owned and Operated. Equal Housing Opportunity.
           </p>
