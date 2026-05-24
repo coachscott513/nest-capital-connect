@@ -433,7 +433,7 @@ const INTEL_TABS: IntelTab[] = [
     icon: Calendar,
     headline: "What's happening this week, this weekend, this season.",
     ctaVerb: "Browse",
-    inlineAction: { label: "+ Submit an Event", to: "/contact?intent=add-event" },
+    inlineAction: { label: "+ Submit Regional Event", to: "/contact?intent=add-event" },
     items: [
       { title: "This week's pulse",       sub: "Festivals, concerts, openings, markets.", to: "/#weekly-feed" },
       { title: "Explore towns & culture", sub: "Town-by-town happenings across the region.",   to: "/communities" },
