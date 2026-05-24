@@ -113,15 +113,15 @@ const TownPageTemplate = ({ town }: Props) => {
               className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-8"
               style={{ color: TEAL_DARK }}
             >
-              Living in {town.townName}
+              Discover {town.townName}
             </p>
 
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
-              {o.heroHeadline ?? `Living in ${town.townName}.`}
+              {o.heroHeadline ?? `Discover ${town.townName}.`}
             </h1>
 
             <p className="mt-8 text-lg md:text-xl font-light text-white/70 max-w-2xl leading-relaxed">
-              {o.heroSub ?? town.seoIntro}
+              {o.heroSub ?? `Explore neighborhoods, local businesses, events, schools, and the rhythm of daily life in ${town.townName}.`}
             </p>
 
             {/* Inline universal search */}
@@ -150,7 +150,7 @@ const TownPageTemplate = ({ town }: Props) => {
             {/* Premium action chips — glass pills, teal hover glow */}
             <div className="mt-8 flex flex-wrap gap-2">
               {[
-                { label: "Discover Delmar", href: "#discover" },
+                { label: `Discover ${town.townName}`, href: "#discover" },
                 { label: "Local Businesses", href: "#businesses" },
                 { label: "This Week", href: "#changed" },
                 { label: "Homes", href: "#homes" },
@@ -479,7 +479,7 @@ const TownPageTemplate = ({ town }: Props) => {
                   Sports & activity around {town.townName}.
                 </h2>
                 <p className="mt-5 text-lg font-light text-white/65">
-                  Games, youth sports, college athletics, recreation, and community activity from across the Capital Region.
+                  Youth programs, recreation, local athletics, gyms, and community activity across the region.
                 </p>
               </div>
               <Trophy className="hidden md:block w-6 h-6 shrink-0" style={{ color: TEAL_DARK }} />
@@ -491,22 +491,14 @@ const TownPageTemplate = ({ town }: Props) => {
                   key={s.team}
                   className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-5 hover:bg-white/[0.06] hover:border-white/15 transition"
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-white/45 mb-1.5">
-                        {s.league}
-                      </p>
-                      <p className="text-base font-semibold text-white truncate">{s.team}</p>
-                      {s.detail && (
-                        <p className="mt-1 text-xs text-white/55 font-light">{s.detail}</p>
-                      )}
-                    </div>
-                    <span
-                      className="shrink-0 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border border-white/10 bg-white/[0.04]"
-                      style={{ color: TEAL_DARK }}
-                    >
-                      {s.status}
-                    </span>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-1.5" style={{ color: TEAL_DARK }}>
+                      {s.league}
+                    </p>
+                    <p className="text-base font-semibold text-white">{s.team}</p>
+                    {s.detail && (
+                      <p className="mt-1.5 text-sm text-white/60 font-light leading-relaxed">{s.detail}</p>
+                    )}
                   </div>
                 </div>
               ))}
@@ -515,10 +507,9 @@ const TownPageTemplate = ({ town }: Props) => {
             {/* Community submission CTA row */}
             <div className="mt-10 flex flex-wrap items-center gap-2.5">
               {[
+                { label: "Submit Your Team or Program", href: "/contact?topic=team" },
                 { label: "Submit a Local Event", href: "/contact?topic=event" },
-                { label: "Submit a Score", href: "/contact?topic=score" },
-                { label: "Promote Your Team", href: "/contact?topic=team" },
-                { label: "Community Calendar", href: "#weekly-feed" },
+                { label: "Community Calendar", href: "#pulse" },
               ].map((c) => (
                 <a
                   key={c.label}
@@ -542,13 +533,13 @@ const TownPageTemplate = ({ town }: Props) => {
                 className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
                 style={{ color: TEAL_DARK }}
               >
-                Local Resources
+                Local Buyer Resources
               </p>
               <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                Local resources for {town.townName}.
+                Local buyer resources for {town.townName}.
               </h2>
               <p className="mt-5 text-lg font-light text-white/65">
-                Housing, taxes, schools, grants, local services, and tools for navigating {town.townName}.
+                Explore local grants, affordability tools, taxes, financing, insurance, and homeownership resources.
               </p>
             </div>
 
