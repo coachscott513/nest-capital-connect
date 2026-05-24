@@ -447,6 +447,7 @@ const INTEL_TABS: IntelTab[] = [
     icon: HomeIcon,
     headline: "Homes, rentals, land, and the next move — all in one place.",
     ctaVerb: "Explore",
+    inlineAction: { label: "Mortgage & Financing Options", to: "/financing" },
     items: [
       { title: "Homes for sale",            sub: "Fresh listings across the Capital District.",    to: "/homes-for-sale" },
       { title: "Rentals",                   sub: "Apartments, houses, and move-in help.",          to: "/rentals" },
