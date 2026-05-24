@@ -45,7 +45,7 @@ export default function LiveNowTicker({ townName, items }: Props) {
             "radial-gradient(60% 100% at 50% 50%, rgba(94,234,212,0.05), transparent 70%)",
         }}
       />
-      <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 py-3 flex items-center gap-4 md:gap-6">
+      <div className="relative w-full mx-auto px-4 md:px-8 py-3 flex flex-nowrap items-center gap-3 md:gap-6 overflow-visible">
         <div className="flex items-center gap-2 shrink-0">
           <span className="relative flex h-2 w-2">
             <span className="absolute inset-0 rounded-full bg-[#5eead4] opacity-60 animate-ping" />
