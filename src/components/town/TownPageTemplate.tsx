@@ -222,10 +222,35 @@ const TownPageTemplate = ({ town }: Props) => {
         </section>
       )}
 
-      {/* ───────── 2. THE [TOWN] PULSE ───────── */}
-      <div id="pulse" className="pt-20 md:pt-28">
+      {/* ───────── 1c. LIVE NOW TICKER (Bloomberg × Apple) ───────── */}
+      {o.liveNow && o.liveNow.length > 0 && (
+        <div className="mt-12 md:mt-16">
+          <LiveNowTicker townName={town.townName} items={o.liveNow} />
+        </div>
+      )}
+
+      {/* ───────── 2. THIS WEEKEND IN [TOWN] ───────── */}
+      {o.thisWeekend && o.thisWeekend.length > 0 && (
+        <div id="weekend">
+          <ThisWeekendIn townName={town.townName} items={o.thisWeekend} />
+        </div>
+      )}
+
+      {/* ───────── 2b. THE [TOWN] PULSE ───────── */}
+      <div id="pulse" className="pt-16 md:pt-20">
         <MorningPulse townName={town.townName} />
       </div>
+
+      {/* ───────── 2c. WHAT CHANGED THIS WEEK ───────── */}
+      {o.changedThisWeek && o.changedThisWeek.length > 0 && (
+        <div id="changed">
+          <WhatChangedThisWeek
+            townName={town.townName}
+            items={o.changedThisWeek}
+            updatedLabel="Updated 2 hours ago"
+          />
+        </div>
+      )}
 
       {/* ───────── 3. THE FEEL OF [TOWN] ───────── */}
       <section id="feel" className={`bg-background ${SECTION_PAD}`}>
