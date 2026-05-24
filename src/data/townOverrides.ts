@@ -17,6 +17,13 @@ export interface TownMarketStats {
   domNote?: string;
 }
 
+export interface TownFeel {
+  morning: string;
+  families: string;
+  weekends: string;
+  commute: string;
+}
+
 export interface TownOverride {
   heroImage: string;
   whyImage: string;
@@ -25,6 +32,15 @@ export interface TownOverride {
   whyHeadline?: string;
   whyCopy: string;
   whyBullets: string[];
+  /** Cinematic hero copy overrides */
+  heroHeadline?: string;
+  heroSub?: string;
+  /** Editorial "Feel of [Town]" section */
+  feel?: TownFeel;
+  /** Sub-neighborhood chips for the explorer */
+  neighborhoods?: string[];
+  /** Subtle signature accent glow color */
+  accentGlow?: string;
 }
 
 const DEFAULT_HERO =
@@ -34,8 +50,13 @@ const DEFAULT_WHY =
 
 export const townOverrides: Record<string, TownOverride> = {
   delmar: {
-    heroImage: DEFAULT_HERO,
+    heroImage:
+      "https://images.unsplash.com/photo-1502175353174-a7a05e4bebb4?auto=format&fit=crop&w=2400&q=80",
     whyImage: DEFAULT_WHY,
+    heroHeadline:
+      "Tree-lined streets, top schools, and a slower pace — minutes from Albany.",
+    heroSub:
+      "Explore coffee shops, neighborhoods, local businesses, homes, and what makes Delmar one of the Capital Region's most sought-after communities.",
     callouts: [
       { title: "Bethlehem Central Schools", body: "Top-rated K–12 district." },
       { title: "10 Minutes to Albany", body: "Easy commute to downtown." },
@@ -57,6 +78,24 @@ export const townOverrides: Record<string, TownOverride> = {
       "Local dining at Four Corners",
       "10-minute Albany commute",
     ],
+    feel: {
+      morning:
+        "Coffee at Four Corners, a walk past quiet front porches, school buses on Delaware Avenue.",
+      families:
+        "Bethlehem Central schools, weekend soccer at Elm Avenue Park, story time at the library.",
+      weekends:
+        "Saturday farmers market, brunch on Delaware Ave, ice cream at the Snowman after dinner.",
+      commute:
+        "10 minutes to downtown Albany. Quick to I-87, the airport, and the Thruway.",
+    },
+    neighborhoods: [
+      "Four Corners",
+      "Elsmere",
+      "Slingerlands",
+      "Delaware Avenue",
+      "Glenmont",
+    ],
+    accentGlow: "rgba(13,110,102,0.35)",
   },
   albany: {
     heroImage:
