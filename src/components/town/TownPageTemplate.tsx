@@ -356,13 +356,13 @@ const TownPageTemplate = ({ town }: Props) => {
                 className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
                 style={{ color: TEAL_DARK }}
               >
-                Schools & Community
+                Why People Move Here
               </p>
               <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                Why families plant roots here.
+                Why people move to {town.townName}.
               </h2>
               <p className="mt-6 text-lg font-light text-white/65 leading-relaxed">
-                {town.schoolDistrict} anchors {town.townName} — alongside neighborhood parks, the local library, and a youth-sports culture that brings families together every weekend.
+                The reasons families, professionals, and long-term buyers keep choosing {town.townName}.
               </p>
 
               <ul className="mt-8 space-y-4">
