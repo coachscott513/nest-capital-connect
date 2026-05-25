@@ -55,20 +55,42 @@ const slugify = (s: string) =>
 const titleCase = (s: string) =>
   s.replace(/\b\w/g, (c) => c.toUpperCase()).replace(/-/g, " ");
 
-export const useDbBusinesses = () => {
+export const useDbBusinesses = (townSlug?: string) => {
   const [rows, setRows] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const { data, error } = await supabase
-        .from("businesses")
-        .select(
-          "id,name,slug,town_slug,town_name,city,category,subcategory,tags,phone,website,email,address,rating,review_count,photos,hero_image_url,google_maps_url,latitude,longitude,is_featured,is_claimed,is_verified",
-        )
-        .eq("is_active", true)
-        .limit(2000);
+      const pageSize = 1000;
+      let from = 0;
+      let data: any[] = [];
+      let error: unknown = null;
+
+      while (!cancelled) {
+        let query = supabase
+          .from("businesses")
+          .select(
+            "id,name,slug,town_slug,town_name,city,category,subcategory,tags,phone,website,email,address,rating,review_count,photos,hero_image_url,google_maps_url,latitude,longitude,is_featured,is_claimed,is_verified",
+          )
+          .eq("is_active", true);
+
+        if (townSlug) query = query.eq("town_slug", townSlug);
+
+        const { data: page, error: pageError } = await query
+          .order("town_slug", { ascending: true })
+          .order("name", { ascending: true })
+          .range(from, from + pageSize - 1);
+
+        if (pageError) {
+          error = pageError;
+          break;
+        }
+
+        data = data.concat(page ?? []);
+        if (!page || page.length < pageSize) break;
+        from += pageSize;
+      }
 
       if (cancelled) return;
       if (error || !data) {
@@ -114,7 +136,7 @@ export const useDbBusinesses = () => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [townSlug]);
 
   return { rows, loading };
 };

@@ -3,62 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Building2, GraduationCap, Users, X, Loader2, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 
-// Static town data for instant search
-const TOWNS = [
-  { name: "Albany", slug: "albany", county: "Albany" },
-  { name: "Altamont", slug: "altamont", county: "Albany" },
-  { name: "Amsterdam", slug: "amsterdam", county: "Montgomery" },
-  { name: "Athens", slug: "athens", county: "Greene" },
-  { name: "Averill Park", slug: "averill-park", county: "Rensselaer" },
-  { name: "Ballston Spa", slug: "ballston-spa", county: "Saratoga" },
-  { name: "Brunswick", slug: "brunswick", county: "Rensselaer" },
-  { name: "Cambridge", slug: "cambridge", county: "Washington" },
-  { name: "Canajoharie", slug: "canajoharie", county: "Montgomery" },
-  { name: "Catskill", slug: "catskill", county: "Greene" },
-  { name: "Clifton Park", slug: "clifton-park", county: "Saratoga" },
-  { name: "Cobleskill", slug: "cobleskill", county: "Schoharie" },
-  { name: "Cohoes", slug: "cohoes", county: "Albany" },
-  { name: "Colonie", slug: "colonie", county: "Albany" },
-  { name: "Coxsackie", slug: "coxsackie", county: "Greene" },
-  { name: "Delmar", slug: "delmar", county: "Albany" },
-  { name: "East Greenbush", slug: "east-greenbush", county: "Rensselaer" },
-  { name: "Fonda", slug: "fonda", county: "Montgomery" },
-  { name: "Glens Falls", slug: "glens-falls", county: "Warren" },
-  { name: "Gloversville", slug: "gloversville", county: "Fulton" },
-  { name: "Green Island", slug: "green-island", county: "Albany" },
-  { name: "Greenwich", slug: "greenwich", county: "Washington" },
-  { name: "Guilderland", slug: "guilderland", county: "Albany" },
-  { name: "Hudson Falls", slug: "hudson-falls", county: "Washington" },
-  { name: "Hunter", slug: "hunter", county: "Greene" },
-  { name: "Johnstown", slug: "johnstown", county: "Fulton" },
-  { name: "Lake George", slug: "lake-george", county: "Warren" },
-  { name: "Latham", slug: "latham", county: "Albany" },
-  { name: "Loudonville", slug: "loudonville", county: "Albany" },
-  { name: "Malta", slug: "malta", county: "Saratoga" },
-  { name: "Mechanicville", slug: "mechanicville", county: "Saratoga" },
-  { name: "Menands", slug: "menands", county: "Albany" },
-  { name: "Middleburgh", slug: "middleburgh", county: "Schoharie" },
-  { name: "Niskayuna", slug: "niskayuna", county: "Schenectady" },
-  { name: "North Greenbush", slug: "north-greenbush", county: "Rensselaer" },
-  { name: "Northville", slug: "northville", county: "Fulton" },
-  { name: "Queensbury", slug: "queensbury", county: "Warren" },
-  { name: "Ravena", slug: "ravena", county: "Albany" },
-  { name: "Rensselaer", slug: "rensselaer", county: "Rensselaer" },
-  { name: "Rotterdam", slug: "rotterdam", county: "Schenectady" },
-  { name: "Saratoga Springs", slug: "saratoga-springs", county: "Saratoga" },
-  { name: "Schaghticoke", slug: "schaghticoke", county: "Rensselaer" },
-  { name: "Schenectady", slug: "schenectady", county: "Schenectady" },
-  { name: "Schoharie", slug: "schoharie", county: "Schoharie" },
-  { name: "Sharon Springs", slug: "sharon-springs", county: "Schoharie" },
-  { name: "Stillwater", slug: "stillwater", county: "Saratoga" },
-  { name: "Troy", slug: "troy", county: "Rensselaer" },
-  { name: "Voorheesville", slug: "voorheesville", county: "Albany" },
-  { name: "Waterford", slug: "waterford", county: "Saratoga" },
-  { name: "Watervliet", slug: "watervliet", county: "Albany" },
-  { name: "Windham", slug: "windham", county: "Greene" },
-  { name: "Wynantskill", slug: "wynantskill", county: "Rensselaer" },
-];
+// Shared town data for instant search.
+const BASE_TOWNS = CAPITAL_DISTRICT_COUNTIES.flatMap((county) =>
+  county.towns.map((town) => ({ ...town, county: county.name.replace(/ County$/, "") })),
+).sort((a, b) => a.name.localeCompare(b.name));
 
 // School districts for search
 const SCHOOL_DISTRICTS = [
@@ -87,6 +37,9 @@ interface SearchResult {
   icon: React.ReactNode;
 }
 
+type SearchTown = { name: string; slug: string; county: string };
+type SearchBusiness = { id: string; name: string; town_slug: string; town_name: string | null; is_verified: boolean | null };
+
 interface GlobalSearchCommandProps {
   isOpen: boolean;
   onClose: () => void;
@@ -95,7 +48,8 @@ interface GlobalSearchCommandProps {
 const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
-  const [businesses, setBusinesses] = useState<any[]>([]);
+  const [businesses, setBusinesses] = useState<SearchBusiness[]>([]);
+  const [dbTowns, setDbTowns] = useState<SearchTown[]>([]);
   const [isLoadingBusinesses, setIsLoadingBusinesses] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -105,14 +59,42 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
   useEffect(() => {
     const fetchBusinesses = async () => {
       setIsLoadingBusinesses(true);
-      const { data } = await supabase
-        .from("local_voices")
-        .select("id, business_name, town_slug, is_verified")
-        .order("display_order");
+      const [voices, directory] = await Promise.all([
+        supabase
+          .from("local_voices")
+          .select("id, business_name, town_slug, is_verified")
+          .order("display_order"),
+        supabase
+          .from("businesses")
+          .select("id,name,town_slug,town_name,is_verified")
+          .eq("is_active", true)
+          .order("name", { ascending: true })
+          .limit(2000),
+      ]);
       
-      if (data) {
-        setBusinesses(data);
+      const voiceRows: SearchBusiness[] = (voices.data ?? []).map((biz) => ({
+        id: biz.id,
+        name: biz.business_name,
+        town_slug: biz.town_slug,
+        town_name: null,
+        is_verified: biz.is_verified,
+      }));
+      const directoryRows: SearchBusiness[] = (directory.data ?? []).map((biz) => ({
+        id: biz.id,
+        name: biz.name,
+        town_slug: biz.town_slug,
+        town_name: biz.town_name,
+        is_verified: biz.is_verified,
+      }));
+      setBusinesses([...voiceRows, ...directoryRows]);
+
+      const townMap = new Map<string, SearchTown>();
+      for (const biz of directoryRows) {
+        if (!biz.town_slug || biz.town_slug === "unknown") continue;
+        const name = biz.town_name || biz.town_slug.split("-").map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+        townMap.set(biz.town_slug, { name, slug: biz.town_slug, county: "Capital District" });
       }
+      setDbTowns([...townMap.values()]);
       setIsLoadingBusinesses(false);
     };
 
@@ -132,9 +114,13 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
 
     const lowerQuery = query.toLowerCase();
     const searchResults: SearchResult[] = [];
+    const towns = [
+      ...BASE_TOWNS,
+      ...dbTowns.filter((town) => !BASE_TOWNS.some((base) => base.slug === town.slug)),
+    ];
 
     // Search towns
-    TOWNS.forEach((town) => {
+    towns.forEach((town) => {
       if (
         town.name.toLowerCase().includes(lowerQuery) ||
         town.county.toLowerCase().includes(lowerQuery)
@@ -164,11 +150,11 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
 
     // Search businesses
     businesses.forEach((biz) => {
-      if (biz.business_name.toLowerCase().includes(lowerQuery)) {
-        const town = TOWNS.find((t) => t.slug === biz.town_slug);
+      if (biz.name.toLowerCase().includes(lowerQuery)) {
+        const town = towns.find((t) => t.slug === biz.town_slug);
         searchResults.push({
           type: "business",
-          name: biz.business_name,
+          name: biz.name,
           subtitle: town ? `${town.name}${biz.is_verified ? " • Verified" : ""}` : biz.town_slug,
           slug: biz.town_slug,
           icon: biz.is_verified ? (
@@ -183,7 +169,7 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
     // Limit results
     setResults(searchResults.slice(0, 12));
     setSelectedIndex(0);
-  }, [query, businesses]);
+  }, [query, businesses, dbTowns]);
 
   // Keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -205,6 +191,11 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
     setQuery("");
     onClose();
   };
+
+  const allTowns = [
+    ...BASE_TOWNS,
+    ...dbTowns.filter((town) => !BASE_TOWNS.some((base) => base.slug === town.slug)),
+  ];
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -250,7 +241,7 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
               <p className="text-xs uppercase tracking-widest text-primary font-medium">Quick Access</p>
               <div className="grid grid-cols-2 gap-2">
                 {["Albany", "Troy", "Schenectady", "Saratoga Springs", "Catskill", "Cobleskill"].map((town) => {
-                  const t = TOWNS.find((x) => x.name === town);
+                  const t = allTowns.find((x) => x.name === town);
                   return t ? (
                     <button
                       key={t.slug}

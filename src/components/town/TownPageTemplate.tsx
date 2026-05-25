@@ -15,6 +15,7 @@ import AnalystCard from "@/components/AnalystCard";
 import Footer from "@/components/Footer";
 import WeeklyFeed from "@/components/WeeklyFeed";
 import TrustedLocalPartners from "@/components/town/TrustedLocalPartners";
+import BusinessDirectory from "@/components/local/BusinessDirectory";
 import LiveNowTicker from "@/components/town/LiveNowTicker";
 import HeroMetadataPulse from "@/components/town/HeroMetadataPulse";
 import WhatChangedThisWeek from "@/components/town/WhatChangedThisWeek";
@@ -388,6 +389,7 @@ const TownPageTemplate = ({ town }: Props) => {
           partners={partnersForDisplay as any}
           showClaimCard
         />
+        <BusinessDirectory townSlug={town.slug} title={`${town.townName} local businesses`} embedded />
       </div>
 
       {/* ───────── 5. SCHOOLS & COMMUNITY ───────── */}
