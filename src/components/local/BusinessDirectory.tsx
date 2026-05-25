@@ -177,8 +177,12 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     const needleRaw = normalizeText(q);
     // Tokenize: "delmar restaurants" -> ["delmar", "restaurants"]
     const tokens = needleRaw.split(/\s+/).filter(Boolean);
-    // Expand each token with aliases so "finance" pulls bank/mortgage etc.
-    const expandedPerToken = tokens.map((t) => expandBusinessSearch(t));
+    // Expand each token via the official category alias map so "lender" hits
+    // Banking and Finance, "restaurant" hits Restaurant, etc.
+    const expandedPerToken = tokens.map((t) => {
+      if (GENERIC_TOKENS.has(t)) return ["*"];
+      return expandSearchTerm(t);
+    });
 
     // Extract town/county phrases so they filter geographically instead of by name.
     const townFromQuery = [...TOWN_LIST, ...COUNTY_LIST]
@@ -200,7 +204,15 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       if (townSlug && !townMatches(b, townSlug) && b.town !== "capital-district")
         return false;
       if (!ignoreTown && effectiveTown && !townMatches(b, effectiveTown)) return false;
-      if (category && b.category.toLowerCase() !== category.toLowerCase()) return false;
+      // Category dropdown filter — alias-aware substring match against
+      // category / subcategory / tags / name so "Real Estate" picks up
+      // "Real estate agent" rows from the imported directory.
+      if (category && isOfficialCategory(category)) {
+        if (!matchesOfficialCategory({
+          category: b.category, subcategory: b.subcategory,
+          tags: b.tags, name: b.name, description: b.about,
+        } as never, category as OfficialCategory)) return false;
+      }
       if (tier === "featured" && !b.featured) return false;
       if (tier === "claimed" && !isClaimed(b)) return false;
       if (tier === "unclaimed" && isClaimed(b)) return false;
