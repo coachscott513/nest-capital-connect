@@ -59,14 +59,42 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
   useEffect(() => {
     const fetchBusinesses = async () => {
       setIsLoadingBusinesses(true);
-      const { data } = await supabase
-        .from("local_voices")
-        .select("id, business_name, town_slug, is_verified")
-        .order("display_order");
+      const [voices, directory] = await Promise.all([
+        supabase
+          .from("local_voices")
+          .select("id, business_name, town_slug, is_verified")
+          .order("display_order"),
+        supabase
+          .from("businesses")
+          .select("id,name,town_slug,town_name,is_verified")
+          .eq("is_active", true)
+          .order("name", { ascending: true })
+          .limit(2000),
+      ]);
       
-      if (data) {
-        setBusinesses(data);
+      const voiceRows: SearchBusiness[] = (voices.data ?? []).map((biz) => ({
+        id: biz.id,
+        name: biz.business_name,
+        town_slug: biz.town_slug,
+        town_name: null,
+        is_verified: biz.is_verified,
+      }));
+      const directoryRows: SearchBusiness[] = (directory.data ?? []).map((biz) => ({
+        id: biz.id,
+        name: biz.name,
+        town_slug: biz.town_slug,
+        town_name: biz.town_name,
+        is_verified: biz.is_verified,
+      }));
+      setBusinesses([...voiceRows, ...directoryRows]);
+
+      const townMap = new Map<string, SearchTown>();
+      for (const biz of directoryRows) {
+        if (!biz.town_slug || biz.town_slug === "unknown") continue;
+        const name = biz.town_name || biz.town_slug.split("-").map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(" ");
+        townMap.set(biz.town_slug, { name, slug: biz.town_slug, county: "Capital District" });
       }
+      setDbTowns([...townMap.values()]);
       setIsLoadingBusinesses(false);
     };
 
@@ -86,9 +114,13 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
 
     const lowerQuery = query.toLowerCase();
     const searchResults: SearchResult[] = [];
+    const towns = [
+      ...BASE_TOWNS,
+      ...dbTowns.filter((town) => !BASE_TOWNS.some((base) => base.slug === town.slug)),
+    ];
 
     // Search towns
-    TOWNS.forEach((town) => {
+    towns.forEach((town) => {
       if (
         town.name.toLowerCase().includes(lowerQuery) ||
         town.county.toLowerCase().includes(lowerQuery)
@@ -118,11 +150,11 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
 
     // Search businesses
     businesses.forEach((biz) => {
-      if (biz.business_name.toLowerCase().includes(lowerQuery)) {
-        const town = TOWNS.find((t) => t.slug === biz.town_slug);
+      if (biz.name.toLowerCase().includes(lowerQuery)) {
+        const town = towns.find((t) => t.slug === biz.town_slug);
         searchResults.push({
           type: "business",
-          name: biz.business_name,
+          name: biz.name,
           subtitle: town ? `${town.name}${biz.is_verified ? " • Verified" : ""}` : biz.town_slug,
           slug: biz.town_slug,
           icon: biz.is_verified ? (
@@ -137,7 +169,7 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
     // Limit results
     setResults(searchResults.slice(0, 12));
     setSelectedIndex(0);
-  }, [query, businesses]);
+  }, [query, businesses, dbTowns]);
 
   // Keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
