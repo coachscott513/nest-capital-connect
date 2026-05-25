@@ -6,7 +6,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 
 // Shared town data for instant search.
-const TOWNS = CAPITAL_DISTRICT_COUNTIES.flatMap((county) =>
+const BASE_TOWNS = CAPITAL_DISTRICT_COUNTIES.flatMap((county) =>
   county.towns.map((town) => ({ ...town, county: county.name.replace(/ County$/, "") })),
 ).sort((a, b) => a.name.localeCompare(b.name));
 
@@ -37,6 +37,9 @@ interface SearchResult {
   icon: React.ReactNode;
 }
 
+type SearchTown = { name: string; slug: string; county: string };
+type SearchBusiness = { id: string; name: string; town_slug: string; town_name: string | null; is_verified: boolean | null };
+
 interface GlobalSearchCommandProps {
   isOpen: boolean;
   onClose: () => void;
@@ -45,7 +48,8 @@ interface GlobalSearchCommandProps {
 const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
-  const [businesses, setBusinesses] = useState<any[]>([]);
+  const [businesses, setBusinesses] = useState<SearchBusiness[]>([]);
+  const [dbTowns, setDbTowns] = useState<SearchTown[]>([]);
   const [isLoadingBusinesses, setIsLoadingBusinesses] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
