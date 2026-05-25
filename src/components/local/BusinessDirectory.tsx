@@ -37,6 +37,12 @@ import {
   type BusinessCategory,
   type CategoryGroup,
 } from "@/data/businesses";
+import {
+  OFFICIAL_CATEGORIES,
+  type OfficialCategory,
+  matchesOfficialCategory,
+  expandSearchTerm,
+} from "@/data/officialCategories";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import { townMatches, useDbBusinesses } from "@/hooks/useDbBusinesses";
 
@@ -57,11 +63,8 @@ const COUNTY_LIST = CAPITAL_DISTRICT_COUNTIES.map((county) => ({
   slug: county.name.toLowerCase().replace(/ county$/, "").replace(/\s+/g, "-"),
 }));
 
-const ALL_CATEGORIES: BusinessCategory[] = Object.values(
-  CATEGORY_GROUPS,
-).flat() as BusinessCategory[];
-const isKnownCategory = (value: string | null): value is BusinessCategory =>
-  Boolean(value && ALL_CATEGORIES.some((category) => category.toLowerCase() === value.toLowerCase()));
+const isOfficialCategory = (value: string | null): value is OfficialCategory =>
+  Boolean(value && OFFICIAL_CATEGORIES.some((c) => c.toLowerCase() === value.toLowerCase()));
 
 const isClaimed = (b: Business) => Boolean(b.claimed ?? b.verified);
 
