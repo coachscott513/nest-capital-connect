@@ -37,6 +37,12 @@ import {
   type BusinessCategory,
   type CategoryGroup,
 } from "@/data/businesses";
+import {
+  OFFICIAL_CATEGORIES,
+  type OfficialCategory,
+  matchesOfficialCategory,
+  expandSearchTerm,
+} from "@/data/officialCategories";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import { townMatches, useDbBusinesses } from "@/hooks/useDbBusinesses";
 
@@ -57,11 +63,8 @@ const COUNTY_LIST = CAPITAL_DISTRICT_COUNTIES.map((county) => ({
   slug: county.name.toLowerCase().replace(/ county$/, "").replace(/\s+/g, "-"),
 }));
 
-const ALL_CATEGORIES: BusinessCategory[] = Object.values(
-  CATEGORY_GROUPS,
-).flat() as BusinessCategory[];
-const isKnownCategory = (value: string | null): value is BusinessCategory =>
-  Boolean(value && ALL_CATEGORIES.some((category) => category.toLowerCase() === value.toLowerCase()));
+const isOfficialCategory = (value: string | null): value is OfficialCategory =>
+  Boolean(value && OFFICIAL_CATEGORIES.some((c) => c.toLowerCase() === value.toLowerCase()));
 
 const isClaimed = (b: Business) => Boolean(b.claimed ?? b.verified);
 
@@ -141,7 +144,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [q, setQ] = useState(() => searchParams.get("search") ?? searchParams.get("q") ?? searchParams.get("category") ?? "");
   const [town, setTown] = useState(() => townSlug ?? searchParams.get("town") ?? "");
-  const [category, setCategory] = useState<string>(() => isKnownCategory(searchParams.get("category")) ? searchParams.get("category")! : "");
+  const [category, setCategory] = useState<string>(() => isOfficialCategory(searchParams.get("category")) ? searchParams.get("category")! : "");
   const [tier, setTier] = useState<TierFilter>("all");
   const [hasWebsite, setHasWebsite] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
@@ -174,8 +177,12 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     const needleRaw = normalizeText(q);
     // Tokenize: "delmar restaurants" -> ["delmar", "restaurants"]
     const tokens = needleRaw.split(/\s+/).filter(Boolean);
-    // Expand each token with aliases so "finance" pulls bank/mortgage etc.
-    const expandedPerToken = tokens.map((t) => expandBusinessSearch(t));
+    // Expand each token via the official category alias map so "lender" hits
+    // Banking and Finance, "restaurant" hits Restaurant, etc.
+    const expandedPerToken = tokens.map((t) => {
+      if (GENERIC_TOKENS.has(t)) return ["*"];
+      return expandSearchTerm(t);
+    });
 
     // Extract town/county phrases so they filter geographically instead of by name.
     const townFromQuery = [...TOWN_LIST, ...COUNTY_LIST]
@@ -197,7 +204,15 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       if (townSlug && !townMatches(b, townSlug) && b.town !== "capital-district")
         return false;
       if (!ignoreTown && effectiveTown && !townMatches(b, effectiveTown)) return false;
-      if (category && b.category.toLowerCase() !== category.toLowerCase()) return false;
+      // Category dropdown filter — alias-aware substring match against
+      // category / subcategory / tags / name so "Real Estate" picks up
+      // "Real estate agent" rows from the imported directory.
+      if (category && isOfficialCategory(category)) {
+        if (!matchesOfficialCategory({
+          category: b.category, subcategory: b.subcategory,
+          tags: b.tags, name: b.name, description: b.about,
+        } as never, category as OfficialCategory)) return false;
+      }
       if (tier === "featured" && !b.featured) return false;
       if (tier === "claimed" && !isClaimed(b)) return false;
       if (tier === "unclaimed" && isClaimed(b)) return false;
@@ -341,7 +356,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 className="w-full bg-transparent text-[14px] text-white focus:outline-none cursor-pointer [&>option]:text-black"
               >
                 <option value="">All categories</option>
-                {ALL_CATEGORIES.map((c) => (
+                {OFFICIAL_CATEGORIES.map((c) => (
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
