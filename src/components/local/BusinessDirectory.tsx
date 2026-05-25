@@ -130,7 +130,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [hasPhone, setHasPhone] = useState(false);
   const [openBiz, setOpenBiz] = useState<Business | null>(null);
 
-  const { rows: dbBusinesses } = useDbBusinesses();
+  const { rows: dbBusinesses } = useDbBusinesses(townSlug);
 
   // Merge static seed + imported DB rows. DB rows always render
   // regardless of claim/verification status.
