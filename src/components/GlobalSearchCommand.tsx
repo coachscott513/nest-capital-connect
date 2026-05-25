@@ -192,6 +192,11 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
     onClose();
   };
 
+  const allTowns = [
+    ...BASE_TOWNS,
+    ...dbTowns.filter((town) => !BASE_TOWNS.some((base) => base.slug === town.slug)),
+  ];
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
@@ -236,7 +241,7 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
               <p className="text-xs uppercase tracking-widest text-primary font-medium">Quick Access</p>
               <div className="grid grid-cols-2 gap-2">
                 {["Albany", "Troy", "Schenectady", "Saratoga Springs", "Catskill", "Cobleskill"].map((town) => {
-                  const t = TOWNS.find((x) => x.name === town);
+                  const t = allTowns.find((x) => x.name === town);
                   return t ? (
                     <button
                       key={t.slug}
