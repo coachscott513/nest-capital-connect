@@ -344,7 +344,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 className="w-full bg-transparent text-[14px] text-white focus:outline-none cursor-pointer [&>option]:text-black"
               >
                 <option value="">All categories</option>
-                {ALL_CATEGORIES.map((c) => (
+                {OFFICIAL_CATEGORIES.map((c) => (
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
