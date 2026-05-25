@@ -38,7 +38,7 @@ interface SearchResult {
 }
 
 type SearchTown = { name: string; slug: string; county: string };
-type SearchBusiness = { id: string; name: string; town_slug: string; town_name: string | null; is_verified: boolean | null };
+type SearchBusiness = { id: string; name: string; town_slug: string; town_name: string | null; city?: string | null; county?: string | null; category?: string | null; subcategory?: string | null; tags?: string[] | null; description?: string | null; address?: string | null; is_verified: boolean | null };
 
 interface GlobalSearchCommandProps {
   isOpen: boolean;
@@ -59,17 +59,27 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
   useEffect(() => {
     const fetchBusinesses = async () => {
       setIsLoadingBusinesses(true);
-      const [voices, directory] = await Promise.all([
+      const [voices, directoryPages] = await Promise.all([
         supabase
           .from("local_voices")
           .select("id, business_name, town_slug, is_verified")
           .order("display_order"),
-        supabase
-          .from("businesses")
-          .select("id,name,town_slug,town_name,is_verified")
-          .eq("is_active", true)
-          .order("name", { ascending: true })
-          .limit(2000),
+        (async () => {
+          const pages = [] as any[];
+          const pageSize = 1000;
+          for (let from = 0; ; from += pageSize) {
+            const { data, error } = await supabase
+              .from("businesses")
+              .select("id,name,town_slug,town_name,city,county,category,subcategory,tags,description,address,is_verified")
+              .eq("is_active", true)
+              .order("name", { ascending: true })
+              .range(from, from + pageSize - 1);
+            if (error || !data?.length) break;
+            pages.push(...data);
+            if (data.length < pageSize) break;
+          }
+          return pages;
+        })(),
       ]);
       
       const voiceRows: SearchBusiness[] = (voices.data ?? []).map((biz) => ({
@@ -79,11 +89,18 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
         town_name: null,
         is_verified: biz.is_verified,
       }));
-      const directoryRows: SearchBusiness[] = (directory.data ?? []).map((biz) => ({
+      const directoryRows: SearchBusiness[] = directoryPages.map((biz) => ({
         id: biz.id,
         name: biz.name,
         town_slug: biz.town_slug,
         town_name: biz.town_name,
+        city: biz.city,
+        county: biz.county,
+        category: biz.category,
+        subcategory: biz.subcategory,
+        tags: biz.tags,
+        description: biz.description,
+        address: biz.address,
         is_verified: biz.is_verified,
       }));
       setBusinesses([...voiceRows, ...directoryRows]);
@@ -150,7 +167,11 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
 
     // Search businesses
     businesses.forEach((biz) => {
-      if (biz.name.toLowerCase().includes(lowerQuery)) {
+      const hay = [biz.name, biz.category, biz.subcategory, biz.town_name, biz.city, biz.county, biz.address, biz.description, ...(biz.tags ?? [])]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      if (hay.includes(lowerQuery)) {
         const town = towns.find((t) => t.slug === biz.town_slug);
         searchResults.push({
           type: "business",

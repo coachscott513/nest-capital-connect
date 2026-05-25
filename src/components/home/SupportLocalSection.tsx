@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, ArrowUpRight, Search, MapPin, Sparkles, Building2 } from "lucide-react";
 import { motion } from "framer-motion";
 import {
-  businesses as ALL,
   CATEGORY_GROUPS,
   type Business,
   type BusinessCategory,
 } from "@/data/businesses";
 import { BusinessDetailModal } from "@/components/local/BusinessDirectory";
+import { useDbBusinesses } from "@/hooks/useDbBusinesses";
 
 const TOWN_CHIPS = [
   { name: "Delmar", slug: "delmar" },
@@ -38,14 +38,15 @@ const SupportLocalSection = () => {
   const [town, setTown] = useState("");
   const [category, setCategory] = useState("");
   const [openBiz, setOpenBiz] = useState<Business | null>(null);
+  const { rows: liveBusinesses } = useDbBusinesses();
   const placeholder = useMemo(
     () => PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)],
     [],
   );
 
   const featured = useMemo(() => {
-    const promoted = ALL.filter((b) => b.featured);
-    const filler = ALL.filter(
+    const promoted = liveBusinesses.filter((b) => b.featured);
+    const filler = liveBusinesses.filter(
       (b) =>
         !b.featured &&
         (b.about || b.tagline) &&
@@ -55,7 +56,7 @@ const SupportLocalSection = () => {
           b.category === "Roofer"),
     );
     return [...promoted, ...filler].slice(0, 6);
-  }, []);
+  }, [liveBusinesses]);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -289,7 +290,7 @@ const SupportLocalSection = () => {
         </div>
       </div>
 
-      <BusinessDetailModal biz={openBiz} onClose={() => setOpenBiz(null)} all={ALL} />
+      <BusinessDetailModal biz={openBiz} onClose={() => setOpenBiz(null)} all={liveBusinesses} />
     </section>
   );
 };

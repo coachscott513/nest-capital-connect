@@ -55,7 +55,31 @@ const slugify = (s: string) =>
 const titleCase = (s: string) =>
   s.replace(/\b\w/g, (c) => c.toUpperCase()).replace(/-/g, " ");
 
-export const useDbBusinesses = (townSlug?: string) => {
+const normalize = (value: string | null | undefined) =>
+  (value ?? "").trim().toLowerCase();
+
+const normalizeSlug = (value: string | null | undefined) =>
+  normalize(value).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+const townMatches = (row: any, requestedTown: string) => {
+  if (!requestedTown) return true;
+  const town = normalizeSlug(requestedTown.replace(/\bny\b|\bcounty\b/g, ""));
+  if (!town || town === "capital-district") return true;
+  const label = town.replace(/-/g, " ");
+  const isCountyQuery = /county/i.test(requestedTown);
+  const county = label.replace(/ county$/, "");
+  const rowTown = row.town_slug ?? row.town;
+  const rowTownName = row.town_name ?? row.townLabel;
+  return (
+    normalizeSlug(rowTown) === town ||
+    normalizeSlug(rowTownName) === town ||
+    normalizeSlug(row.city) === town ||
+    normalize(row.address).includes(label) ||
+    (isCountyQuery && normalize(row.county).replace(/ county$/, "") === county)
+  );
+};
+
+export const useDbBusinesses = () => {
   const [rows, setRows] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -71,11 +95,9 @@ export const useDbBusinesses = (townSlug?: string) => {
         let query = supabase
           .from("businesses")
           .select(
-            "id,name,slug,town_slug,town_name,city,category,subcategory,tags,phone,website,email,address,rating,review_count,photos,hero_image_url,google_maps_url,latitude,longitude,is_featured,is_claimed,is_verified",
+            "id,name,slug,town_slug,town_name,city,county,category,subcategory,description,tagline,tags,phone,website,email,address,rating,review_count,photos,hero_image_url,google_maps_url,latitude,longitude,is_featured,is_claimed,is_verified",
           )
           .eq("is_active", true);
-
-        if (townSlug) query = query.eq("town_slug", townSlug);
 
         const { data: page, error: pageError } = await query
           .order("town_slug", { ascending: true })
@@ -112,10 +134,13 @@ export const useDbBusinesses = (townSlug?: string) => {
           slug: r.slug || slugify(`${r.name}-${r.id}`),
           name: r.name,
           town: townSlug,
+          city: r.city ?? undefined,
+          county: r.county ?? undefined,
           townLabel,
           category: mapCategory(r.category, tagsArr),
           subcategory: r.subcategory ?? r.category ?? undefined,
-          tagline: r.category || "Local business",
+          tagline: r.tagline || r.category || "Local business",
+          about: r.description ?? undefined,
           phone: r.phone ?? undefined,
           email: r.email ?? undefined,
           website: r.website ?? undefined,
@@ -136,7 +161,9 @@ export const useDbBusinesses = (townSlug?: string) => {
     return () => {
       cancelled = true;
     };
-  }, [townSlug]);
+  }, []);
 
   return { rows, loading };
 };
+
+export { townMatches };
