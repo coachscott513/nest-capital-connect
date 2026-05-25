@@ -144,7 +144,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [q, setQ] = useState(() => searchParams.get("search") ?? searchParams.get("q") ?? searchParams.get("category") ?? "");
   const [town, setTown] = useState(() => townSlug ?? searchParams.get("town") ?? "");
-  const [category, setCategory] = useState<string>(() => isKnownCategory(searchParams.get("category")) ? searchParams.get("category")! : "");
+  const [category, setCategory] = useState<string>(() => isOfficialCategory(searchParams.get("category")) ? searchParams.get("category")! : "");
   const [tier, setTier] = useState<TierFilter>("all");
   const [hasWebsite, setHasWebsite] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
