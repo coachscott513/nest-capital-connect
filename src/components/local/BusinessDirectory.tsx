@@ -205,7 +205,10 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         ...(b.services ?? []), ...(b.knownFor ?? []),
       ].filter(Boolean).join(" ").toLowerCase();
       // Every keyword token must match at least one of its aliases.
-      return keywordTokens.every((aliases) => aliases.some((a) => hay.includes(a)));
+      // "*" sentinel means "generic — match anything" (used by tokens like "businesses").
+      return keywordTokens.every((aliases) =>
+        aliases.some((a) => a === "*" || hay.includes(a)),
+      );
     });
   }, [q, town, category, tier, hasWebsite, hasPhone, townSlug, ALL]);
 
