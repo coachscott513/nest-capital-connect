@@ -32,14 +32,13 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import {
-  businesses as STATIC_BUSINESSES,
   CATEGORY_GROUPS,
   type Business,
   type BusinessCategory,
   type CategoryGroup,
 } from "@/data/businesses";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
-import { useDbBusinesses } from "@/hooks/useDbBusinesses";
+import { townMatches, useDbBusinesses } from "@/hooks/useDbBusinesses";
 
 const TEAL = "#5eead4";
 const TEAL_DEEP = "#0d6e66";
@@ -52,6 +51,11 @@ interface Props {
 
 const TOWN_LIST = CAPITAL_DISTRICT_COUNTIES.flatMap((county) => county.towns)
   .sort((a, b) => a.name.localeCompare(b.name));
+
+const COUNTY_LIST = CAPITAL_DISTRICT_COUNTIES.map((county) => ({
+  name: county.name,
+  slug: county.name.toLowerCase().replace(/ county$/, "").replace(/\s+/g, "-"),
+}));
 
 const ALL_CATEGORIES: BusinessCategory[] = Object.values(
   CATEGORY_GROUPS,
@@ -68,7 +72,7 @@ type TierFilter = "all" | "featured" | "claimed" | "unclaimed";
 // fall through to the town filter alone).
 const GENERIC_TOKENS = new Set([
   "business", "businesses", "shop", "shops", "store", "stores",
-  "place", "places", "company", "companies", "local", "directory",
+  "place", "places", "company", "companies", "local", "directory", "county", "ny",
 ]);
 
 const expandBusinessSearch = (value: string) => {
@@ -77,12 +81,16 @@ const expandBusinessSearch = (value: string) => {
   const aliases: Record<string, string[]> = {
     finance: ["finance", "financial", "bank", "credit union", "mortgage", "lender", "accountant"],
     financial: ["finance", "financial", "bank", "credit union", "mortgage", "lender", "accountant"],
+    lender: ["lender", "mortgage", "finance", "financial"],
+    mortgage: ["mortgage", "lender", "loan", "finance", "financial"],
     cafe: ["cafe", "café", "coffee"],
     cafes: ["cafe", "café", "coffee"],
     coffee: ["coffee", "cafe", "café", "espresso"],
-    restaurant: ["restaurant", "dining", "eatery", "food", "diner", "grill", "bistro"],
-    restaurants: ["restaurant", "dining", "eatery", "food", "diner", "grill", "bistro"],
-    dining: ["restaurant", "dining", "eatery"],
+    food: ["restaurant", "dining", "eatery", "food", "diner", "grill", "bistro", "pizza", "cafe", "bakery"],
+    drink: ["restaurant", "dining", "bar", "pub", "tavern", "brewery", "coffee", "cafe", "café"],
+    restaurant: ["restaurant", "restaurants", "dining", "eatery", "food", "diner", "grill", "bistro", "pizza"],
+    restaurants: ["restaurant", "restaurants", "dining", "eatery", "food", "diner", "grill", "bistro", "pizza"],
+    dining: ["restaurant", "restaurants", "dining", "eatery", "food"],
     bar: ["bar", "pub", "tavern", "brewery"],
     bars: ["bar", "pub", "tavern", "brewery"],
     bakery: ["bakery", "bagel", "donut", "patisserie"],
@@ -92,8 +100,11 @@ const expandBusinessSearch = (value: string) => {
     attorneys: ["attorney", "lawyer", "legal", "law"],
     lawyer: ["attorney", "lawyer", "legal", "law"],
     lawyers: ["attorney", "lawyer", "legal", "law"],
-    contractor: ["contractor", "construction", "remodel", "builder", "handyman"],
-    contractors: ["contractor", "construction", "remodel", "builder", "handyman"],
+    contractor: ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services"],
+    contractors: ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services"],
+    "home-service": ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services", "hvac", "plumb", "electric"],
+    "home-services": ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services", "hvac", "plumb", "electric"],
+    hvac: ["hvac", "heating", "cooling", "furnace", "air conditioning"],
     plumber: ["plumb"],
     plumbers: ["plumb"],
     electrician: ["electric"],
@@ -120,6 +131,12 @@ const expandBusinessSearch = (value: string) => {
   return [needle];
 };
 
+const normalizeText = (value: string) =>
+  value.trim().toLowerCase().replace(/[+,&/]+/g, " ").replace(/\bny\b/g, "").replace(/\s+/g, " ").trim();
+
+const slugText = (value: string) =>
+  normalizeText(value).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
 const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [q, setQ] = useState(() => searchParams.get("search") ?? searchParams.get("q") ?? searchParams.get("category") ?? "");
@@ -130,14 +147,13 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [hasPhone, setHasPhone] = useState(false);
   const [openBiz, setOpenBiz] = useState<Business | null>(null);
 
-  const { rows: dbBusinesses } = useDbBusinesses(townSlug);
+  const { rows: dbBusinesses, loading } = useDbBusinesses();
 
-  // Merge static seed + imported DB rows. DB rows always render
-  // regardless of claim/verification status.
+  // /local uses the live imported directory table as the source of truth.
   const ALL = useMemo<Business[]>(() => {
     const seen = new Set<string>();
     const out: Business[] = [];
-    for (const b of [...STATIC_BUSINESSES, ...dbBusinesses]) {
+    for (const b of dbBusinesses) {
       const key = b.slug;
       if (seen.has(key)) continue;
       seen.add(key);
@@ -155,34 +171,32 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   }, [q, town, category, townSlug, setSearchParams]);
 
   const results = useMemo(() => {
-    const needleRaw = q.trim().toLowerCase();
+    const needleRaw = normalizeText(q);
     // Tokenize: "delmar restaurants" -> ["delmar", "restaurants"]
     const tokens = needleRaw.split(/\s+/).filter(Boolean);
     // Expand each token with aliases so "finance" pulls bank/mortgage etc.
     const expandedPerToken = tokens.map((t) => expandBusinessSearch(t));
 
-    // Extract any town token so it filters by town instead of by name.
-    const townFromQuery = tokens.find((t) =>
-      TOWN_LIST.some((tl) => tl.slug === t || tl.name.toLowerCase() === t),
-    );
+    // Extract town/county phrases so they filter geographically instead of by name.
+    const townFromQuery = [...TOWN_LIST, ...COUNTY_LIST]
+      .sort((a, b) => b.name.length - a.name.length)
+      .find((place) => {
+        const placeName = normalizeText(place.name);
+        const placeSlug = place.slug.replace(/-/g, " ");
+        return needleRaw.includes(placeName) || needleRaw.includes(placeSlug);
+      })?.slug;
     const effectiveTown = town || townFromQuery || "";
-    const normalizedTown = effectiveTown.toLowerCase().replace(/\s+/g, "-");
 
     // Tokens still used for keyword matching (drop the town token).
+    const townWords = new Set(effectiveTown ? effectiveTown.replace(/-/g, " ").split(/\s+/) : []);
     const keywordTokens = expandedPerToken.filter(
-      (_aliases, i) => tokens[i] !== townFromQuery,
+      (_aliases, i) => !townWords.has(slugText(tokens[i])) && tokens[i] !== "county" && tokens[i] !== "ny",
     );
 
-    return ALL.filter((b) => {
-      if (townSlug && b.town !== townSlug && b.town !== "capital-district")
+    const matches = (ignoreTown = false) => ALL.filter((b) => {
+      if (townSlug && !townMatches(b, townSlug) && b.town !== "capital-district")
         return false;
-      if (effectiveTown) {
-        const matchTown =
-          b.town === effectiveTown ||
-          b.town === normalizedTown ||
-          b.townLabel?.toLowerCase() === effectiveTown.toLowerCase();
-        if (!matchTown) return false;
-      }
+      if (!ignoreTown && effectiveTown && !townMatches(b, effectiveTown)) return false;
       if (category && b.category.toLowerCase() !== category.toLowerCase()) return false;
       if (tier === "featured" && !b.featured) return false;
       if (tier === "claimed" && !isClaimed(b)) return false;
@@ -193,15 +207,19 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       if (keywordTokens.length === 0) return true;
       const hay = [
         b.name, b.category, b.subcategory, b.tagline, b.about, b.townLabel,
+        b.town, b.city, b.county, b.address,
         ...(b.tags ?? []),
         ...(b.services ?? []), ...(b.knownFor ?? []),
-      ].filter(Boolean).join(" ").toLowerCase();
+      ].filter(Boolean).join(" ").toLowerCase().replace(/[,&]+/g, " ");
       // Every keyword token must match at least one of its aliases.
       // "*" sentinel means "generic — match anything" (used by tokens like "businesses").
       return keywordTokens.every((aliases) =>
         aliases.some((a) => a === "*" || hay.includes(a)),
       );
     });
+
+    const exactMatches = matches(false);
+    return exactMatches.length > 0 || !effectiveTown ? exactMatches : matches(true).slice(0, 100);
   }, [q, town, category, tier, hasWebsite, hasPhone, townSlug, ALL]);
 
   const featured = useMemo(
@@ -310,7 +328,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 >
                   <option value="">All towns</option>
                   {TOWN_LIST.map((t) => (
-                    <option key={t.slug} value={t.name}>{t.name}</option>
+                    <option key={t.slug} value={t.slug}>{t.name}</option>
                   ))}
                 </select>
               </label>
@@ -361,7 +379,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
               </button>
             )}
             <span className="ml-auto text-xs text-white/55">
-              {results.length} result{results.length === 1 ? "" : "s"}
+              {loading ? "Loading live directory…" : `${results.length} matching / ${ALL.length} live businesses`}
             </span>
           </div>
         </div>

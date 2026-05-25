@@ -98,6 +98,7 @@ export interface Business {
   town: string;
   /** Display label for the town. */
   townLabel?: string;
+  city?: string;
   county?: string;
   category: BusinessCategory;
   subcategory?: string;

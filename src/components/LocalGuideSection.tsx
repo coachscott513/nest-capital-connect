@@ -18,6 +18,8 @@ import {
   CheckCircle
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useMemo } from "react";
+import { townMatches, useDbBusinesses } from "@/hooks/useDbBusinesses";
 
 interface LocalBusiness {
   name: string;
@@ -45,62 +47,12 @@ interface LocalGuideSectionProps {
   categories?: LocalGuideCategory[];
 }
 
-// Default placeholder data for any town
-const getDefaultCategories = (townName: string): LocalGuideCategory[] => [
-  {
-    id: "coffee",
-    label: "Coffee",
-    icon: <Coffee className="w-5 h-5" />,
-    businesses: [
-      { name: "Local Coffee Shop", description: `Popular morning spot in ${townName}` },
-      { name: "Café & Bakery", description: "Fresh pastries and espresso drinks" }
-    ]
-  },
-  {
-    id: "restaurants",
-    label: "Restaurants",
-    icon: <UtensilsCrossed className="w-5 h-5" />,
-    businesses: [
-      { name: "Local Eatery", description: `${townName}'s neighborhood favorite` },
-      { name: "Fine Dining", description: "Upscale American cuisine" }
-    ]
-  },
-  {
-    id: "fitness",
-    label: "Fitness",
-    icon: <Dumbbell className="w-5 h-5" />,
-    businesses: [
-      { name: "Local Gym", description: "Full-service fitness center" },
-      { name: "Yoga Studio", description: "Classes for all levels" }
-    ]
-  },
-  {
-    id: "family",
-    label: "Family & Kids",
-    icon: <Users className="w-5 h-5" />,
-    businesses: [
-      { name: "Community Center", description: "Programs for all ages" },
-      { name: "Kids Activities", description: "Classes and camps" }
-    ]
-  },
-  {
-    id: "home-services",
-    label: "Home Services",
-    icon: <Wrench className="w-5 h-5" />,
-    businesses: [
-      { name: "Local Plumber", description: "Trusted residential plumbing" },
-      { name: "HVAC Services", description: "Heating & cooling experts" }
-    ]
-  },
-  {
-    id: "local-pros",
-    label: "Local Pros",
-    icon: <Briefcase className="w-5 h-5" />,
-    businesses: [
-      { name: "Preferred Lender", description: "Competitive mortgage rates" },
-      { name: "Insurance Agent", description: "Home & auto coverage" }
-    ]
-  }
+const CATEGORY_META = [
+  { id: "coffee", label: "Coffee", icon: <Coffee className="w-5 h-5" />, match: ["Coffee", "Bakery"] },
+  { id: "restaurants", label: "Restaurants", icon: <UtensilsCrossed className="w-5 h-5" />, match: ["Restaurant"] },
+  { id: "fitness", label: "Fitness", icon: <Dumbbell className="w-5 h-5" />, match: ["Gym", "Wellness", "Salon"] },
+  { id: "home-services", label: "Home Services", icon: <Wrench className="w-5 h-5" />, match: ["Home Service", "Contractor", "Roofer", "Plumber", "Electrician", "HVAC", "Landscaper", "Handyman", "Cleaner"] },
+  { id: "local-pros", label: "Local Pros", icon: <Briefcase className="w-5 h-5" />, match: ["Mortgage Lender", "Bank/Credit Union", "Insurance", "Attorney", "Real Estate Attorney", "Accountant", "Financial Advisor", "Marketing"] },
 ];
 
 // Business Card Component - Standard vs Partner
@@ -302,7 +254,28 @@ const BusinessCard = ({
 };
 
 const LocalGuideSection = ({ townName, townSlug, categories }: LocalGuideSectionProps) => {
-  const displayCategories = categories || getDefaultCategories(townName);
+  const { rows } = useDbBusinesses();
+  const liveCategories = useMemo<LocalGuideCategory[]>(() => {
+    const townRows = rows.filter((business) => townMatches(business, townSlug));
+    return CATEGORY_META.map((meta) => ({
+      id: meta.id,
+      label: meta.label,
+      icon: meta.icon,
+      businesses: townRows
+        .filter((business) => meta.match.includes(business.category))
+        .slice(0, 4)
+        .map((business) => ({
+          name: business.name,
+          description: business.subcategory || business.tagline || `${business.category} in ${townName}`,
+          website: business.website,
+          phone: business.phone,
+          email: business.email,
+          googleMaps: business.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(business.address)}` : undefined,
+          isPartner: Boolean(business.featured || business.verified || business.claimed),
+        })),
+    })).filter((category) => category.businesses.length > 0);
+  }, [rows, townName, townSlug]);
+  const displayCategories = categories || liveCategories;
 
   return (
     <section className="px-[5%] py-16 md:py-20 bg-background border-t border-border">
