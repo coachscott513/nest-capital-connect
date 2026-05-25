@@ -38,6 +38,7 @@ import {
   type BusinessCategory,
   type CategoryGroup,
 } from "@/data/businesses";
+import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import { useDbBusinesses } from "@/hooks/useDbBusinesses";
 
 const TEAL = "#5eead4";
@@ -49,17 +50,8 @@ interface Props {
   embedded?: boolean;
 }
 
-const TOWN_LIST = [
-  { slug: "delmar", name: "Delmar" },
-  { slug: "albany", name: "Albany" },
-  { slug: "saratoga-springs", name: "Saratoga Springs" },
-  { slug: "troy", name: "Troy" },
-  { slug: "schenectady", name: "Schenectady" },
-  { slug: "clifton-park", name: "Clifton Park" },
-  { slug: "niskayuna", name: "Niskayuna" },
-  { slug: "colonie", name: "Colonie" },
-  { slug: "guilderland", name: "Guilderland" },
-];
+const TOWN_LIST = CAPITAL_DISTRICT_COUNTIES.flatMap((county) => county.towns)
+  .sort((a, b) => a.name.localeCompare(b.name));
 
 const ALL_CATEGORIES: BusinessCategory[] = Object.values(
   CATEGORY_GROUPS,
