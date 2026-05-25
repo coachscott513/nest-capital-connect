@@ -66,6 +66,7 @@ const townMatches = (row: any, requestedTown: string) => {
   const town = normalizeSlug(requestedTown.replace(/\bny\b|\bcounty\b/g, ""));
   if (!town || town === "capital-district") return true;
   const label = town.replace(/-/g, " ");
+  const isCountyQuery = /county/i.test(requestedTown);
   const county = label.replace(/ county$/, "");
   const rowTown = row.town_slug ?? row.town;
   const rowTownName = row.town_name ?? row.townLabel;
@@ -74,7 +75,7 @@ const townMatches = (row: any, requestedTown: string) => {
     normalizeSlug(rowTownName) === town ||
     normalizeSlug(row.city) === town ||
     normalize(row.address).includes(label) ||
-    normalize(row.county).replace(/ county$/, "") === county
+    (isCountyQuery && normalize(row.county).replace(/ county$/, "") === county)
   );
 };
 
