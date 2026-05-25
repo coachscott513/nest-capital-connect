@@ -71,16 +71,61 @@ const isClaimed = (b: Business) => Boolean(b.claimed ?? b.verified);
 
 type TierFilter = "all" | "featured" | "claimed" | "unclaimed";
 
+// Generic "show me everything" tokens — when the only keyword is one of these,
+// it should not narrow results (lets "albany businesses" / "schenectady shops"
+// fall through to the town filter alone).
+const GENERIC_TOKENS = new Set([
+  "business", "businesses", "shop", "shops", "store", "stores",
+  "place", "places", "company", "companies", "local", "directory",
+]);
+
 const expandBusinessSearch = (value: string) => {
   const needle = value.trim().toLowerCase();
+  if (GENERIC_TOKENS.has(needle)) return ["*"]; // sentinel = match anything
   const aliases: Record<string, string[]> = {
-    finance: ["finance", "financial", "financial advisor", "bank", "credit union", "mortgage", "lender", "accountant"],
-    cafe: ["cafe", "cafes", "café", "cafés", "coffee"],
-    cafes: ["cafe", "cafes", "café", "cafés", "coffee"],
-    attorney: ["attorney", "lawyer", "legal", "real estate attorney"],
-    contractor: ["contractor", "home service", "roofer", "plumber", "electrician", "hvac", "handyman"],
+    finance: ["finance", "financial", "bank", "credit union", "mortgage", "lender", "accountant"],
+    financial: ["finance", "financial", "bank", "credit union", "mortgage", "lender", "accountant"],
+    cafe: ["cafe", "café", "coffee"],
+    cafes: ["cafe", "café", "coffee"],
+    coffee: ["coffee", "cafe", "café", "espresso"],
+    restaurant: ["restaurant", "dining", "eatery", "food", "diner", "grill", "bistro"],
+    restaurants: ["restaurant", "dining", "eatery", "food", "diner", "grill", "bistro"],
+    dining: ["restaurant", "dining", "eatery"],
+    bar: ["bar", "pub", "tavern", "brewery"],
+    bars: ["bar", "pub", "tavern", "brewery"],
+    bakery: ["bakery", "bagel", "donut", "patisserie"],
+    bakeries: ["bakery", "bagel", "donut", "patisserie"],
+    pizza: ["pizza", "pizzeria", "italian"],
+    attorney: ["attorney", "lawyer", "legal", "law"],
+    attorneys: ["attorney", "lawyer", "legal", "law"],
+    lawyer: ["attorney", "lawyer", "legal", "law"],
+    lawyers: ["attorney", "lawyer", "legal", "law"],
+    contractor: ["contractor", "construction", "remodel", "builder", "handyman"],
+    contractors: ["contractor", "construction", "remodel", "builder", "handyman"],
+    plumber: ["plumb"],
+    plumbers: ["plumb"],
+    electrician: ["electric"],
+    electricians: ["electric"],
+    roofer: ["roof"],
+    roofers: ["roof"],
+    gym: ["gym", "fitness", "yoga", "pilates", "crossfit"],
+    gyms: ["gym", "fitness", "yoga", "pilates", "crossfit"],
+    salon: ["salon", "barber", "hair", "nail", "spa"],
+    salons: ["salon", "barber", "hair", "nail", "spa"],
+    insurance: ["insurance"],
+    accountant: ["accountant", "cpa", "tax", "bookkeep"],
+    accountants: ["accountant", "cpa", "tax", "bookkeep"],
+    dentist: ["dentist", "dental"],
+    dentists: ["dentist", "dental"],
+    doctor: ["doctor", "physician", "medical", "clinic"],
+    doctors: ["doctor", "physician", "medical", "clinic"],
+    shops: ["shop", "store", "boutique", "retail"],
+    stores: ["shop", "store", "boutique", "retail"],
   };
-  return aliases[needle] ?? [needle];
+  if (aliases[needle]) return aliases[needle];
+  // Strip trailing 's' so plurals fall back to singular substring matches.
+  if (needle.endsWith("s") && needle.length > 3) return [needle, needle.slice(0, -1)];
+  return [needle];
 };
 
 const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
@@ -160,7 +205,10 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         ...(b.services ?? []), ...(b.knownFor ?? []),
       ].filter(Boolean).join(" ").toLowerCase();
       // Every keyword token must match at least one of its aliases.
-      return keywordTokens.every((aliases) => aliases.some((a) => hay.includes(a)));
+      // "*" sentinel means "generic — match anything" (used by tokens like "businesses").
+      return keywordTokens.every((aliases) =>
+        aliases.some((a) => a === "*" || hay.includes(a)),
+      );
     });
   }, [q, town, category, tier, hasWebsite, hasPhone, townSlug, ALL]);
 
