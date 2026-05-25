@@ -3,62 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Building2, GraduationCap, Users, X, Loader2, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 
-// Static town data for instant search
-const TOWNS = [
-  { name: "Albany", slug: "albany", county: "Albany" },
-  { name: "Altamont", slug: "altamont", county: "Albany" },
-  { name: "Amsterdam", slug: "amsterdam", county: "Montgomery" },
-  { name: "Athens", slug: "athens", county: "Greene" },
-  { name: "Averill Park", slug: "averill-park", county: "Rensselaer" },
-  { name: "Ballston Spa", slug: "ballston-spa", county: "Saratoga" },
-  { name: "Brunswick", slug: "brunswick", county: "Rensselaer" },
-  { name: "Cambridge", slug: "cambridge", county: "Washington" },
-  { name: "Canajoharie", slug: "canajoharie", county: "Montgomery" },
-  { name: "Catskill", slug: "catskill", county: "Greene" },
-  { name: "Clifton Park", slug: "clifton-park", county: "Saratoga" },
-  { name: "Cobleskill", slug: "cobleskill", county: "Schoharie" },
-  { name: "Cohoes", slug: "cohoes", county: "Albany" },
-  { name: "Colonie", slug: "colonie", county: "Albany" },
-  { name: "Coxsackie", slug: "coxsackie", county: "Greene" },
-  { name: "Delmar", slug: "delmar", county: "Albany" },
-  { name: "East Greenbush", slug: "east-greenbush", county: "Rensselaer" },
-  { name: "Fonda", slug: "fonda", county: "Montgomery" },
-  { name: "Glens Falls", slug: "glens-falls", county: "Warren" },
-  { name: "Gloversville", slug: "gloversville", county: "Fulton" },
-  { name: "Green Island", slug: "green-island", county: "Albany" },
-  { name: "Greenwich", slug: "greenwich", county: "Washington" },
-  { name: "Guilderland", slug: "guilderland", county: "Albany" },
-  { name: "Hudson Falls", slug: "hudson-falls", county: "Washington" },
-  { name: "Hunter", slug: "hunter", county: "Greene" },
-  { name: "Johnstown", slug: "johnstown", county: "Fulton" },
-  { name: "Lake George", slug: "lake-george", county: "Warren" },
-  { name: "Latham", slug: "latham", county: "Albany" },
-  { name: "Loudonville", slug: "loudonville", county: "Albany" },
-  { name: "Malta", slug: "malta", county: "Saratoga" },
-  { name: "Mechanicville", slug: "mechanicville", county: "Saratoga" },
-  { name: "Menands", slug: "menands", county: "Albany" },
-  { name: "Middleburgh", slug: "middleburgh", county: "Schoharie" },
-  { name: "Niskayuna", slug: "niskayuna", county: "Schenectady" },
-  { name: "North Greenbush", slug: "north-greenbush", county: "Rensselaer" },
-  { name: "Northville", slug: "northville", county: "Fulton" },
-  { name: "Queensbury", slug: "queensbury", county: "Warren" },
-  { name: "Ravena", slug: "ravena", county: "Albany" },
-  { name: "Rensselaer", slug: "rensselaer", county: "Rensselaer" },
-  { name: "Rotterdam", slug: "rotterdam", county: "Schenectady" },
-  { name: "Saratoga Springs", slug: "saratoga-springs", county: "Saratoga" },
-  { name: "Schaghticoke", slug: "schaghticoke", county: "Rensselaer" },
-  { name: "Schenectady", slug: "schenectady", county: "Schenectady" },
-  { name: "Schoharie", slug: "schoharie", county: "Schoharie" },
-  { name: "Sharon Springs", slug: "sharon-springs", county: "Schoharie" },
-  { name: "Stillwater", slug: "stillwater", county: "Saratoga" },
-  { name: "Troy", slug: "troy", county: "Rensselaer" },
-  { name: "Voorheesville", slug: "voorheesville", county: "Albany" },
-  { name: "Waterford", slug: "waterford", county: "Saratoga" },
-  { name: "Watervliet", slug: "watervliet", county: "Albany" },
-  { name: "Windham", slug: "windham", county: "Greene" },
-  { name: "Wynantskill", slug: "wynantskill", county: "Rensselaer" },
-];
+// Shared town data for instant search.
+const TOWNS = CAPITAL_DISTRICT_COUNTIES.flatMap((county) =>
+  county.towns.map((town) => ({ ...town, county: county.name.replace(/ County$/, "") })),
+).sort((a, b) => a.name.localeCompare(b.name));
 
 // School districts for search
 const SCHOOL_DISTRICTS = [
