@@ -45,19 +45,13 @@ const SupportLocalSection = () => {
     [],
   );
 
-  const featured = useMemo(() => {
-    const promoted = liveBusinesses.filter((b) => b.featured);
-    const filler = liveBusinesses.filter(
-      (b) =>
-        !b.featured &&
-        (b.about || b.tagline) &&
-        (b.category === "Coffee" ||
-          b.category === "Restaurant" ||
-          b.category === "Bakery" ||
-          b.category === "Roofer"),
-    );
-    return [...promoted, ...filler].slice(0, 6);
-  }, [liveBusinesses]);
+  // STRICT: only render businesses explicitly flagged as featured in the
+  // database. Never backfill with standard free rows — a "Featured Local
+  // Spotlight" must always reflect a paid/curated placement.
+  const featured = useMemo(
+    () => liveBusinesses.filter((b) => b.featured).slice(0, 6),
+    [liveBusinesses],
+  );
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -192,15 +186,36 @@ const SupportLocalSection = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch">
-            {featured.map((b) => (
-              <PremiumFeaturedBusinessCard
-                key={b.slug}
-                business={b}
-                onOpen={setOpenBiz}
-              />
-            ))}
-          </div>
+          {featured.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch">
+              {featured.map((b) => (
+                <PremiumFeaturedBusinessCard
+                  key={b.slug}
+                  business={b}
+                  onOpen={setOpenBiz}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-10 md:p-14 text-center">
+              <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4] mb-3">
+                Featured Spotlights
+              </p>
+              <p className="text-lg md:text-xl font-medium text-white mb-2">
+                No featured partners are live yet.
+              </p>
+              <p className="text-sm text-white/55 mb-6 max-w-md mx-auto">
+                Own a Capital District business? Claim your profile to be
+                considered for a featured spotlight placement.
+              </p>
+              <Link
+                to="/claim-business"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+              >
+                Claim Your Business <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          )}
 
 
           {/* Large centered directory CTA below cards */}

@@ -291,6 +291,13 @@ const TownPulse = () => {
     [businesses],
   );
 
+  // Featured partners = ONLY paid/curated placements (is_featured flag).
+  // Never backfill from the standard free directory.
+  const featuredPartners = useMemo(
+    () => businesses.filter((b) => b.is_featured === true),
+    [businesses],
+  );
+
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
     document.getElementById("businesses")?.scrollIntoView({ behavior: "smooth" });
@@ -520,6 +527,98 @@ const TownPulse = () => {
                   </div>
                 </article>
               ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── 3b. FEATURED LOCAL PARTNERS ──────────────────────── */}
+      <section
+        id="featured-partners"
+        className="relative bg-background border-t border-white/[0.06] py-20 md:py-24 px-6 md:px-10"
+      >
+        <div className="max-w-6xl mx-auto">
+          <SectionHeader
+            eyebrow="Featured Local Partners"
+            title={`Premium partners in ${townName}.`}
+            sub="Curated, claimed, and verified — businesses investing in their local presence."
+          />
+          {featuredPartners.length === 0 ? (
+            <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-10 md:p-14 text-center">
+              <p className="text-[10px] font-semibold tracking-[0.24em] uppercase mb-3" style={{ color: TEAL_LIGHT }}>
+                Featured Spots Available
+              </p>
+              <p className="text-lg md:text-xl font-medium text-white mb-2">
+                No featured partners in {townName} yet.
+              </p>
+              <p className="text-sm text-white/55 mb-6 max-w-md mx-auto">
+                Own a business in {townName}? Claim your profile to be featured here with priority placement, photo galleries, and promotional tools.
+              </p>
+              <Link
+                to={`/claim-business?town=${encodeURIComponent(townName)}`}
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-white text-sm font-semibold transition hover:opacity-90"
+                style={{ backgroundColor: TEAL }}
+              >
+                Become a Featured Partner <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {featuredPartners.slice(0, 6).map((b) => {
+                const dirUrl = b.address
+                  ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${b.address}, ${b.city ?? townName}, NY`)}`
+                  : null;
+                const heroImg = b.hero_image_url || (b.photos && b.photos[0]) || null;
+                return (
+                  <article
+                    key={b.id}
+                    className="group relative rounded-3xl overflow-hidden border bg-white/[0.03] backdrop-blur-xl transition hover:-translate-y-0.5"
+                    style={{
+                      borderColor: "rgba(201,164,73,0.35)",
+                      boxShadow: "0 20px 60px -30px rgba(201,164,73,0.35)",
+                    }}
+                  >
+                    {heroImg && (
+                      <div className="relative w-full h-40 overflow-hidden">
+                        <img src={heroImg} alt={b.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-transparent to-transparent" />
+                      </div>
+                    )}
+                    <div className="p-6">
+                      <span
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-[0.16em] uppercase mb-3"
+                        style={{ color: "#c9a449", background: "rgba(201,164,73,0.10)", border: "1px solid rgba(201,164,73,0.35)" }}
+                      >
+                        <Sparkles className="w-3 h-3" /> Featured Partner
+                      </span>
+                      <h3 className="text-lg font-semibold text-white tracking-[-0.01em]">{b.name}</h3>
+                      <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-white/45">
+                        {b.subcategory || b.category}
+                      </p>
+                      {b.description && (
+                        <p className="mt-3 text-sm text-white/65 leading-relaxed line-clamp-2">{b.description}</p>
+                      )}
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        {b.website && (
+                          <a href={b.website.startsWith("http") ? b.website : `https://${b.website}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-white text-xs font-semibold transition hover:opacity-90" style={{ backgroundColor: TEAL }}>
+                            <Globe className="w-3.5 h-3.5" /> Website
+                          </a>
+                        )}
+                        {b.phone && (
+                          <a href={`tel:${b.phone}`} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-xs font-semibold hover:border-white/30 transition">
+                            <Phone className="w-3.5 h-3.5" /> Call
+                          </a>
+                        )}
+                        {dirUrl && (
+                          <a href={dirUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-xs font-semibold hover:border-white/30 transition">
+                            <NavIcon className="w-3.5 h-3.5" /> Directions
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           )}
         </div>
