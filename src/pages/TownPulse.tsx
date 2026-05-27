@@ -291,6 +291,13 @@ const TownPulse = () => {
     [businesses],
   );
 
+  // Featured partners = ONLY paid/curated placements (is_featured flag).
+  // Never backfill from the standard free directory.
+  const featuredPartners = useMemo(
+    () => businesses.filter((b) => b.is_featured === true),
+    [businesses],
+  );
+
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
     document.getElementById("businesses")?.scrollIntoView({ behavior: "smooth" });
