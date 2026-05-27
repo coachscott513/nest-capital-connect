@@ -1,4 +1,4 @@
-import { ArrowUpRight, Phone, Globe, MapPin } from "lucide-react";
+import { ArrowUpRight, Phone, MapPin } from "lucide-react";
 import type { Business } from "@/data/businesses";
 
 /* =============================================================
@@ -51,11 +51,33 @@ const buildMeta = (b: Business): string => {
   return `${town} · ${b.category} · Featured local business`;
 };
 
+const safeUrl = (value?: string | null) => {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+};
+
+const cleanTelHref = (phone?: string | null) => {
+  const digits = phone?.replace(/[^\d+]/g, "");
+  return digits ? `tel:${digits}` : null;
+};
+
+const getCta = (business: Business) => {
+  const menuUrl = safeUrl(business.menu_url ?? business.menuUrl);
+  const websiteUrl = safeUrl(
+    business.website_url ?? business.websiteUrl ?? business.website,
+  );
+
+  if (menuUrl) return { label: "View Menu", href: menuUrl, external: true };
+  if (websiteUrl) return { label: "Visit Website", href: websiteUrl, external: true };
+  return { label: "View Profile", href: null, external: false };
+};
+
 const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
   const image = resolveImage(business);
-  const phoneHref = business.phone
-    ? `tel:${business.phone.replace(/[^\d+]/g, "")}`
-    : null;
+  const phoneHref = cleanTelHref(business.phone);
+  const cta = getCta(business);
+  const handleProfileOpen = () => onOpen(business);
 
   return (
     <article
@@ -74,7 +96,7 @@ const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
       {/* Image header */}
       <button
         type="button"
-        onClick={() => onOpen(business)}
+        onClick={handleProfileOpen}
         className="relative block w-full h-44 sm:h-48 md:h-56 overflow-hidden"
         aria-label={`View ${business.name}`}
       >
@@ -123,13 +145,24 @@ const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
 
         {/* Actions */}
         <div className="mt-auto pt-6 flex items-center gap-2.5">
-          <button
-            type="button"
-            onClick={() => onOpen(business)}
-            className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-full bg-white/[0.92] backdrop-blur-xl text-[#0B0F19] text-[13px] font-semibold hover:bg-white transition-all shadow-[0_8px_24px_-8px_rgba(255,255,255,0.25)]"
-          >
-            View Profile <ArrowUpRight className="w-3.5 h-3.5" />
-          </button>
+          {cta.href ? (
+            <a
+              href={cta.href}
+              target={cta.external ? "_blank" : undefined}
+              rel={cta.external ? "noreferrer" : undefined}
+              className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-full bg-white/[0.92] backdrop-blur-xl text-[#0B0F19] text-[13px] font-semibold hover:bg-white transition-all shadow-[0_8px_24px_-8px_rgba(255,255,255,0.25)]"
+            >
+              {cta.label} <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={handleProfileOpen}
+              className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-full bg-white/[0.92] backdrop-blur-xl text-[#0B0F19] text-[13px] font-semibold hover:bg-white transition-all shadow-[0_8px_24px_-8px_rgba(255,255,255,0.25)]"
+            >
+              {cta.label} <ArrowUpRight className="w-3.5 h-3.5" />
+            </button>
+          )}
 
           {phoneHref && (
             <a
@@ -141,17 +174,6 @@ const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
             </a>
           )}
 
-          {!phoneHref && business.website && (
-            <a
-              href={business.website}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`Visit ${business.name} website`}
-              className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full border border-white/15 bg-white/[0.04] text-white/85 hover:border-[#5eead4]/55 hover:text-[#5eead4] hover:bg-white/[0.08] transition"
-            >
-              <Globe className="w-4 h-4" />
-            </a>
-          )}
         </div>
       </div>
     </article>
