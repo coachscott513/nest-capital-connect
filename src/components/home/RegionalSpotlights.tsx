@@ -13,6 +13,8 @@ import {
   Phone,
   Sparkles,
 } from "lucide-react";
+import { BusinessDetailModal } from "@/components/local/BusinessDirectory";
+import type { Business } from "@/data/businesses";
 
 /* =============================================================
    REGIONAL SPOTLIGHTS — Member Local Legends
@@ -156,8 +158,25 @@ const getSpotlightCta = (s: Spotlight) => {
     return { label: "Call Now", href: phoneHref, external: false };
   }
   if (websiteUrl) return { label: "Visit Website", href: websiteUrl, external: true };
-  return { label: "View Profile", href: `/business/${s.slug}`, external: false };
+  return { label: "View Profile", href: null, external: false };
 };
+
+const toBusiness = (s: Spotlight): Business => ({
+  slug: s.slug,
+  name: s.name,
+  town: s.town.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+  townLabel: s.town,
+  category: s.category.toLowerCase().includes("café") || s.category.toLowerCase().includes("coffee") ? "Coffee" : s.category.toLowerCase().includes("butcher") ? "Retail" : "Restaurant",
+  tagline: s.tagline,
+  phone: s.phone,
+  website: s.website,
+  address: s.address,
+  hours: s.hours,
+  image: s.gallery[0],
+  gallery: s.gallery,
+  socials: s.socials,
+  featured: true,
+});
 
 const StatusDot = ({ status }: { status: Spotlight["status"] }) => {
   const color =
@@ -189,7 +208,7 @@ const StatusDot = ({ status }: { status: Spotlight["status"] }) => {
   );
 };
 
-const SpotlightCard = ({ s }: { s: Spotlight }) => {
+const SpotlightCard = ({ s, onOpen }: { s: Spotlight; onOpen: (s: Spotlight) => void }) => {
   const [idx, setIdx] = useState(0);
   const accent = s.accent === "gold" ? "#c9a449" : "#5eead4";
   const accentSoft =
@@ -350,16 +369,28 @@ const SpotlightCard = ({ s }: { s: Spotlight }) => {
           <span className="inline-flex items-center gap-1.5 text-[11px] text-white/55">
             <Calendar className="w-3 h-3" /> {s.hours}
           </span>
-          <a
-            href={cta.href}
-            target={cta.external ? "_blank" : undefined}
-            rel={cta.external ? "noopener noreferrer" : undefined}
-            className="inline-flex items-center gap-1 text-sm font-semibold transition"
-            style={{ color: accent }}
-          >
-            {cta.label}{" "}
-            <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
+          {cta.href ? (
+            <a
+              href={cta.href}
+              target={cta.external ? "_blank" : undefined}
+              rel={cta.external ? "noopener noreferrer" : undefined}
+              className="inline-flex items-center gap-1 text-sm font-semibold transition"
+              style={{ color: accent }}
+            >
+              {cta.label}{" "}
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => onOpen(s)}
+              className="inline-flex items-center gap-1 text-sm font-semibold transition"
+              style={{ color: accent }}
+            >
+              {cta.label}{" "}
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+          )}
         </div>
       </div>
     </article>
