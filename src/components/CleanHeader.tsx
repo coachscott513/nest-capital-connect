@@ -66,11 +66,22 @@ const Dropdown = ({ isOpen, onClose, children, align = "left" }: DropdownProps) 
 
 const CleanHeader = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [townSearch, setTownSearch] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const focusOmniSearch = () => {
+    const dispatch = () => window.dispatchEvent(new CustomEvent("omni-search:focus"));
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(dispatch, 400);
+    } else {
+      dispatch();
+    }
+  };
 
   useEffect(() => {
     setActiveDropdown(null);
