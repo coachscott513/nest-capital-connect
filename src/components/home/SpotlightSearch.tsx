@@ -117,6 +117,19 @@ export default function SpotlightSearch({ eyebrow }: Props) {
     };
   }, [open]);
 
+  // Listen for "focus the omni-search" requests from anywhere (e.g. header search icon)
+  useEffect(() => {
+    const onFocusRequest = () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => {
+        inputRef.current?.focus();
+        setOpen(true);
+      }, 350);
+    };
+    window.addEventListener("omni-search:focus", onFocusRequest);
+    return () => window.removeEventListener("omni-search:focus", onFocusRequest);
+  }, []);
+
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     setOpen(false);
