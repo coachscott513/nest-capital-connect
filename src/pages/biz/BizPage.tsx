@@ -716,12 +716,99 @@ const BizPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Helmet>
-        <title>{biz.name} | {biz.town_name || "Capital District"} — Capital District Nest</title>
-        <meta name="description"
-          content={biz.tagline || biz.description?.slice(0, 155) || `${biz.name} — ${biz.category} in ${biz.town_name || "the Capital District"}.`} />
-        <link rel="canonical" href={`https://www.capitaldistrictnest.com/biz/${biz.slug}`} />
-      </Helmet>
+      {(() => {
+        const town = biz.town_name || biz.city || "Capital District";
+        const url = `https://www.capitaldistrictnest.com/biz/${biz.slug}`;
+        const desc =
+          biz.tagline ||
+          biz.description?.slice(0, 155) ||
+          `${biz.name} — ${biz.category || "Local business"} in ${town}, NY. Contact info, hours, specials & updates on Capital District Nest.`;
+        const title = `${biz.name} in ${town}, NY | Contact, Hours & Specials | Capital District Nest`;
+        const image = biz.hero_image_url || biz.photos?.[0] || biz.logo_url || undefined;
+        const ldBusiness: Record<string, unknown> = {
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: biz.name,
+          url,
+          ...(image && { image }),
+          ...(biz.description && { description: biz.description }),
+          ...(biz.phone && { telephone: biz.phone }),
+          ...(biz.email && { email: biz.email }),
+          ...(biz.website && { sameAs: [biz.website, biz.facebook, biz.instagram, biz.linkedin].filter(Boolean) }),
+          address: {
+            "@type": "PostalAddress",
+            ...(biz.address && { streetAddress: biz.address }),
+            addressLocality: biz.city || biz.town_name || undefined,
+            addressRegion: biz.state || "NY",
+            addressCountry: "US",
+          },
+          ...(biz.latitude && biz.longitude && {
+            geo: { "@type": "GeoCoordinates", latitude: biz.latitude, longitude: biz.longitude },
+          }),
+          ...(biz.rating && biz.review_count && {
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: biz.rating,
+              reviewCount: biz.review_count,
+            },
+          }),
+          ...(biz.category && { "@type": "LocalBusiness", additionalType: biz.category }),
+        };
+        const ldBreadcrumb = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://www.capitaldistrictnest.com/" },
+            { "@type": "ListItem", position: 2, name: "Local Businesses", item: "https://www.capitaldistrictnest.com/local" },
+            ...(biz.town_slug
+              ? [{ "@type": "ListItem", position: 3, name: town, item: `https://www.capitaldistrictnest.com/towns/${biz.town_slug}` }]
+              : []),
+            { "@type": "ListItem", position: biz.town_slug ? 4 : 3, name: biz.name, item: url },
+          ],
+        };
+        const ldEvents = specials.length
+          ? specials.slice(0, 5).map((s) => ({
+              "@context": "https://schema.org",
+              "@type": "Event",
+              name: s.headline,
+              ...(s.description && { description: s.description }),
+              ...(s.image_url && { image: s.image_url }),
+              ...(s.start_date && { startDate: s.start_date }),
+              ...(s.end_date && { endDate: s.end_date }),
+              eventStatus: "https://schema.org/EventScheduled",
+              location: {
+                "@type": "Place",
+                name: biz.name,
+                address: {
+                  "@type": "PostalAddress",
+                  ...(biz.address && { streetAddress: biz.address }),
+                  addressLocality: biz.city || biz.town_name || undefined,
+                  addressRegion: biz.state || "NY",
+                  addressCountry: "US",
+                },
+              },
+              organizer: { "@type": "Organization", name: biz.name, url },
+            }))
+          : [];
+        return (
+          <Helmet>
+            <title>{title}</title>
+            <meta name="description" content={desc} />
+            <link rel="canonical" href={url} />
+            <meta property="og:type" content="business.business" />
+            <meta property="og:title" content={title} />
+            <meta property="og:description" content={desc} />
+            <meta property="og:url" content={url} />
+            {image && <meta property="og:image" content={image} />}
+            <meta name="twitter:card" content="summary_large_image" />
+            <script type="application/ld+json">{JSON.stringify(ldBusiness)}</script>
+            <script type="application/ld+json">{JSON.stringify(ldBreadcrumb)}</script>
+            {ldEvents.map((e, i) => (
+              <script key={i} type="application/ld+json">{JSON.stringify(e)}</script>
+            ))}
+          </Helmet>
+        );
+      })()}
 
       <CleanHeader />
 

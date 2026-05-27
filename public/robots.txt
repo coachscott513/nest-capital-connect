@@ -4,8 +4,14 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /auth
 Disallow: /partner-dashboard
 Disallow: /partner-auth
+Disallow: /seo-audit
+Disallow: /reports/
+Disallow: /dealdesk-thanks
+Disallow: /market-report-thanks
+Disallow: /partner-success
 
 # ───────────────────────────────────────────────
 # AI crawlers — explicitly allowed
