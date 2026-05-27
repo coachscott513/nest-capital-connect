@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, Search, MapPin, Sparkles, Building2 } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Search, Building2 } from "lucide-react";
+import PremiumFeaturedBusinessCard from "@/components/home/PremiumFeaturedBusinessCard";
 import { motion } from "framer-motion";
 import {
   CATEGORY_GROUPS,
@@ -179,6 +180,9 @@ const SupportLocalSection = () => {
               <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white">
                 Featured Local Spotlights
               </h3>
+              <p className="mt-2 text-sm md:text-base text-white/55 font-light max-w-xl">
+                Curated businesses, restaurants, and local partners across the Capital District.
+              </p>
             </div>
             <Link
               to="/local"
@@ -188,56 +192,16 @@ const SupportLocalSection = () => {
             </Link>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch">
             {featured.map((b) => (
-              <button
+              <PremiumFeaturedBusinessCard
                 key={b.slug}
-                type="button"
-                onClick={() => setOpenBiz(b)}
-                className={`group relative text-left rounded-2xl overflow-hidden bg-[#1E2230] border-0 ring-1 ring-transparent transition-all duration-300 hover:-translate-y-1 flex flex-col ${
-                  b.featured
-                    ? "shadow-[0_22px_56px_-22px_rgba(201,164,73,0.18)] hover:ring-[#c9a449]/70 hover:shadow-[0_28px_64px_-20px_rgba(201,164,73,0.35)]"
-                    : "hover:ring-[#5eead4]/60 hover:shadow-[0_22px_56px_-22px_rgba(94,234,212,0.30)]"
-                }`}
-              >
-                <div className="relative h-40 w-full overflow-hidden">
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-110"
-                    style={
-                      b.image
-                        ? { backgroundImage: `url(${b.image})` }
-                        : { background: "linear-gradient(135deg, #0d6e66 0%, #0B0F19 100%)" }
-                    }
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
-                  {b.featured && (
-                    <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/15 backdrop-blur text-[#5eead4] text-[10px] font-semibold uppercase tracking-wider border border-[#5eead4]/30">
-                      <Sparkles className="w-3 h-3" /> Featured
-                    </span>
-                  )}
-                </div>
-                <div className="p-6 flex flex-col flex-1">
-                  <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">
-                    {b.category}
-                  </p>
-                  <h4 className="mt-1.5 text-lg font-semibold tracking-tight text-white leading-snug">
-                    {b.name}
-                  </h4>
-                  {b.townLabel && (
-                    <p className="mt-1 text-xs text-white/50 inline-flex items-center gap-1">
-                      <MapPin className="w-3 h-3" /> {b.townLabel}
-                    </p>
-                  )}
-                  <p className="mt-3 text-sm text-white/60 font-light leading-relaxed line-clamp-2">
-                    {b.tagline}
-                  </p>
-                  <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4]">
-                    View profile <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </span>
-                </div>
-              </button>
+                business={b}
+                onOpen={setOpenBiz}
+              />
             ))}
           </div>
+
 
           {/* Large centered directory CTA below cards */}
           <div className="mt-14 md:mt-16 flex flex-col items-center text-center gap-5">
