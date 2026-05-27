@@ -39,22 +39,20 @@ import { getSearchRoute } from "@/lib/searchIntent";
    ============================================================= */
 
 const ROTATING_PLACEHOLDERS = [
-  "Search businesses, events, homes, sports...",
-  "Search restaurants, contractors, towns...",
-  "Search rentals, lenders, salons, schools...",
-  "Search anything local in the Capital District...",
+  "Search Delmar restaurants, Albany homes, Troy contractors, Saratoga events…",
+  "Search Delmar restaurants, Albany homes, Troy contractors, Saratoga events…",
 ];
 
 // Curated prompt pills — each fires the omni-search using its label as the query
 const PROMPT_PILLS: { label: string; query: string }[] = [
-  { label: "Delmar homes",                  query: "Delmar homes" },
-  { label: "Troy restaurants",              query: "Troy restaurants" },
-  { label: "Albany investment properties",  query: "Albany investment properties" },
-  { label: "Saratoga events",               query: "Saratoga events" },
-  { label: "Plumbers near me",              query: "plumbers" },
-  { label: "Cafes in Bethlehem",            query: "cafes Bethlehem" },
-  { label: "55+ communities",               query: "55+ communities" },
-  { label: "Local contractors",             query: "contractors" },
+  { label: "Delmar homes",             query: "Delmar homes" },
+  { label: "Albany restaurants",       query: "Albany restaurants" },
+  { label: "Troy contractors",         query: "Troy contractors" },
+  { label: "Saratoga events",          query: "Saratoga events" },
+  { label: "Investment properties",    query: "investment properties" },
+  { label: "Mortgage lenders",         query: "mortgage lenders" },
+  { label: "Plumbers near me",         query: "plumbers" },
+  { label: "55+ communities",          query: "55+ communities" },
 ];
 
 
@@ -119,6 +117,19 @@ export default function SpotlightSearch({ eyebrow }: Props) {
     };
   }, [open]);
 
+  // Listen for "focus the omni-search" requests from anywhere (e.g. header search icon)
+  useEffect(() => {
+    const onFocusRequest = () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => {
+        inputRef.current?.focus();
+        setOpen(true);
+      }, 350);
+    };
+    window.addEventListener("omni-search:focus", onFocusRequest);
+    return () => window.removeEventListener("omni-search:focus", onFocusRequest);
+  }, []);
+
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     setOpen(false);
@@ -175,23 +186,23 @@ export default function SpotlightSearch({ eyebrow }: Props) {
               : "0 40px 100px -40px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.12)",
           }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex items-center gap-3 rounded-[32px] bg-white/[0.08] backdrop-blur-2xl border border-white/15 pl-5 md:pl-8 pr-2 md:pr-3 py-3 md:py-4"
+          className="relative flex items-center gap-2 sm:gap-3 rounded-[36px] bg-white/[0.12] backdrop-blur-2xl border border-white/20 pl-4 sm:pl-6 md:pl-8 pr-1.5 sm:pr-2 md:pr-3 py-2 sm:py-2.5 md:py-3"
           style={{
             backgroundImage:
-              "linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03))",
+              "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05))",
           }}
         >
           {/* Teal glow halo */}
           <div
-            className="pointer-events-none absolute -inset-px rounded-[28px] opacity-60"
+            className="pointer-events-none absolute -inset-px rounded-[32px] opacity-60"
             style={{
               background:
-                "radial-gradient(120% 100% at 50% 50%, rgba(94,234,212,0.10), transparent 60%)",
+                "radial-gradient(120% 100% at 50% 50%, rgba(94,234,212,0.12), transparent 60%)",
             }}
             aria-hidden
           />
 
-          <Search className="relative w-5 h-5 md:w-6 md:h-6 text-white/65 shrink-0" />
+          <Search className="relative w-5 h-5 md:w-6 md:h-6 text-white/70 shrink-0" />
 
           <div className="relative flex-1 min-w-0">
             <input
@@ -202,8 +213,8 @@ export default function SpotlightSearch({ eyebrow }: Props) {
               onFocus={() => setOpen(true)}
               onKeyDown={onKeyDownInput}
               placeholder=""
-              className="w-full min-w-0 bg-transparent text-[16px] md:text-[20px] text-white placeholder:text-transparent focus:outline-none py-2.5 md:py-3 tracking-[-0.005em]"
-              aria-label="Explore the Capital District"
+              className="w-full min-w-0 bg-transparent text-[17px] md:text-[22px] text-white placeholder:text-transparent focus:outline-none py-3.5 md:py-4 tracking-[-0.005em]"
+              aria-label="Search the Capital District"
             />
             {/* Animated rotating placeholder layer (only when empty) */}
             {!q && (
@@ -215,7 +226,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -12, opacity: 0 }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="block text-[13px] sm:text-[15px] md:text-[19px] text-white/55 font-light tracking-[-0.005em] whitespace-nowrap"
+                    className="block text-[13px] sm:text-[15px] md:text-[18px] text-white/55 font-light tracking-[-0.005em] whitespace-nowrap overflow-hidden text-ellipsis max-w-full"
                   >
                     {placeholder}
                   </motion.span>
@@ -226,9 +237,12 @@ export default function SpotlightSearch({ eyebrow }: Props) {
 
           <button
             type="submit"
-            className="relative shrink-0 inline-flex items-center gap-1.5 px-5 md:px-7 py-3 md:py-3.5 rounded-full bg-white text-[#0e0f12] text-[13px] md:text-sm font-semibold hover:opacity-90 transition"
+            aria-label="Search"
+            className="relative shrink-0 inline-flex items-center justify-center gap-1.5 h-11 sm:h-12 md:h-14 px-4 sm:px-6 md:px-8 rounded-full bg-white text-[#0e0f12] text-[13px] md:text-[15px] font-semibold hover:opacity-90 transition shadow-[0_8px_24px_-8px_rgba(255,255,255,0.4)]"
           >
-            Search <ArrowRight className="w-4 h-4" />
+            <Search className="w-4 h-4 sm:hidden" />
+            <span className="hidden sm:inline">Search</span>
+            <ArrowRight className="w-4 h-4 hidden sm:inline-block" />
           </button>
 
         </motion.form>

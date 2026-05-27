@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ChevronDown, Search, X, Menu, Globe, Phone } from "lucide-react";
 import GlobalSearchCommand from "@/components/GlobalSearchCommand";
 import AnalystCard from "@/components/AnalystCard";
@@ -66,11 +66,22 @@ const Dropdown = ({ isOpen, onClose, children, align = "left" }: DropdownProps) 
 
 const CleanHeader = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [townSearch, setTownSearch] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const focusOmniSearch = () => {
+    const dispatch = () => window.dispatchEvent(new CustomEvent("omni-search:focus"));
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(dispatch, 400);
+    } else {
+      dispatch();
+    }
+  };
 
   useEffect(() => {
     setActiveDropdown(null);
@@ -197,10 +208,10 @@ const CleanHeader = () => {
 
             {/* Right cluster */}
             <div className="hidden lg:flex items-center gap-2 shrink-0 whitespace-nowrap">
-              {/* Search icon */}
+              {/* Search icon — focuses the homepage Omni-Search */}
               <button
-                onClick={() => setSearchOpen(true)}
-                aria-label="Search"
+                onClick={focusOmniSearch}
+                aria-label="Open search"
                 className="flex items-center justify-center w-9 h-9 rounded-full text-foreground/70 hover:text-foreground hover:bg-secondary/60 transition"
               >
                 <Search className="h-4 w-4" />
@@ -215,10 +226,10 @@ const CleanHeader = () => {
                 Claim Business
               </Link>
 
-              {/* Talk to an Expert — primary pill */}
+              {/* Get Started — primary pill */}
               <AnalystCard>
                 <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-white bg-foreground hover:bg-foreground/90">
-                  Sign In
+                  Get Started
                 </button>
               </AnalystCard>
             </div>
@@ -226,8 +237,8 @@ const CleanHeader = () => {
             {/* Mobile cluster */}
             <div className="flex items-center gap-2 lg:hidden">
               <button
-                onClick={() => setSearchOpen(true)}
-                aria-label="Search"
+                onClick={focusOmniSearch}
+                aria-label="Open search"
                 className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-secondary transition-colors"
               >
                 <Search className="h-4 w-4 text-foreground" />
