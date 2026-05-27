@@ -168,11 +168,9 @@ const PrerenderReadySignal = () => {
   return null;
 };
 
-// Canonicalize all /towns/:slug → /living-in/:slug (master town template)
-const TownsRedirect = () => {
-  const { slug } = useParams();
-  return <Navigate to={`/living-in/${slug}`} replace />;
-};
+// /towns/:slug is now the dedicated Town Pulse local-engagement dashboard
+// (real estate lives at /living-in/:slug and global /homes routes).
+import TownPulse from "./pages/TownPulse";
 
 const NotFoundOrLegacyTown = () => {
   const { pathname } = useLocation();
@@ -288,7 +286,7 @@ const App = () => {
           {/* Town pages — UNIFIED. /living-in/:townSlug renders the master template or a coming-soon fallback. */}
           <Route path="/living-in/:townSlug" element={<LivingInTown />} />
           <Route path="/app/living-in/:townSlug" element={<LivingInTown />} />
-          <Route path="/towns/:slug" element={<TownsRedirect />} />
+          <Route path="/towns/:slug" element={<TownPulse />} />
           {/* Simplified canonical destinations from main nav */}
           <Route path="/homes" element={<HomesPage />} />
           <Route path="/local" element={<LocalPage />} />
