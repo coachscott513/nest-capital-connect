@@ -520,21 +520,19 @@ const maskWebsite = (w?: string) => {
 
 const ContactPreview = ({ b, claimed }: { b: Business; claimed: boolean }) => (
   <div className="mt-4 group/contact relative">
-    <div
-      className={`rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-md px-3 py-2.5 flex flex-col gap-1.5 transition ${
-        claimed ? "" : "select-none"
-      } group-hover/contact:border-[#5eead4]/25`}
-    >
-      <span className={`inline-flex items-center gap-2 text-[11px] ${claimed ? "text-white/75" : "text-white/45 blur-[1.5px]"}`}>
-        <Phone className="w-3 h-3 text-[#5eead4]/80 shrink-0" />
-        {claimed && b.phone ? b.phone : maskPhone(b.phone)}
-      </span>
-      <span className={`inline-flex items-center gap-2 text-[11px] ${claimed ? "text-white/75" : "text-white/45 blur-[1.5px]"}`}>
-        <Globe className="w-3 h-3 text-[#5eead4]/80 shrink-0" />
-        {claimed && b.website
-          ? b.website.replace(/^https?:\/\/(www\.)?/, "")
-          : maskWebsite(b.website)}
-      </span>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-md px-3 py-2.5 flex flex-col gap-1.5 transition group-hover/contact:border-[#5eead4]/25">
+      {b.phone && (
+        <span className="inline-flex items-center gap-2 text-[11px] text-white/75">
+          <Phone className="w-3 h-3 text-[#5eead4]/80 shrink-0" />
+          {b.phone}
+        </span>
+      )}
+      {b.website && (
+        <span className="inline-flex items-center gap-2 text-[11px] text-white/75 truncate">
+          <Globe className="w-3 h-3 text-[#5eead4]/80 shrink-0" />
+          <span className="truncate">{b.website.replace(/^https?:\/\/(www\.)?/, "")}</span>
+        </span>
+      )}
       {(b.townLabel || b.address) && (
         <span className="inline-flex items-center gap-2 text-[11px] text-white/55">
           <MapPin className="w-3 h-3 text-[#5eead4]/80 shrink-0" />
@@ -542,11 +540,6 @@ const ContactPreview = ({ b, claimed }: { b: Business; claimed: boolean }) => (
         </span>
       )}
     </div>
-    {!claimed && (
-      <p className="mt-1.5 text-[10px] text-white/35 opacity-0 group-hover/contact:opacity-100 transition-opacity tracking-wide">
-        Business owners can personalize this profile.
-      </p>
-    )}
   </div>
 );
 
