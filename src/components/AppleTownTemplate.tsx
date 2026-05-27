@@ -365,10 +365,44 @@ const AppleTownTemplate = ({
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={`${townName}, NY Real Estate & Investment Properties | Capital District Nest`}
+        title={`Search Anything ${townName}, NY | Homes, Local Businesses, Events & Specials | Capital District Nest`}
         description={seoContent.metaDescription}
         keywords={[...seoContent.focusKeywords, ...seoContent.civicKeywords, ...seoContent.lifestyleKeywords].join(', ')}
-        canonical={`https://www.capitaldistrictnest.com/living-in/${townSlug}`}
+        canonical={`https://www.capitaldistrictnest.com/towns/${townSlug}`}
+        structuredData={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Place",
+            name: `${townName}, NY`,
+            url: `https://www.capitaldistrictnest.com/towns/${townSlug}`,
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: townName,
+              addressRegion: "NY",
+              addressCountry: "US",
+            },
+            ...(townMarketData?.map_center_lat && townMarketData?.map_center_lng && {
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: townMarketData.map_center_lat,
+                longitude: townMarketData.map_center_lng,
+              },
+            }),
+            containedInPlace: countyInfo?.name ? { "@type": "AdministrativeArea", name: countyInfo.name } : undefined,
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: `${townName} Local Businesses, Homes & Community Hub`,
+            url: `https://www.capitaldistrictnest.com/towns/${townSlug}`,
+            about: `${townName}, NY real estate, local businesses, events, and community insights`,
+            isPartOf: {
+              "@type": "WebSite",
+              name: "Capital District Nest",
+              url: "https://www.capitaldistrictnest.com",
+            },
+          },
+        ]}
       />
 
       <CleanHeader />
