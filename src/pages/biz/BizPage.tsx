@@ -865,9 +865,17 @@ const BizPage = () => {
 
       <section className="border-t border-white/[0.06] px-6 md:px-10 py-16 text-center">
         <p className="text-xs text-white/45">
-          Own a business in the Capital District?{" "}
+          Own this business?{" "}
+          <Link to={`/claim-business?slug=${biz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
+            Claim this profile
+          </Link>
+          {" · "}
+          <Link to={`/partner-auth?slug=${biz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
+            Owner login
+          </Link>
+          {" · "}
           <Link to="/pricing" className="text-white hover:opacity-70 transition underline underline-offset-4">
-            See how Featured, Spotlight & Anchor work →
+            See plans
           </Link>
         </p>
       </section>
