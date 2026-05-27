@@ -353,8 +353,8 @@ const RegionalSpotlights = () => {
           className="flex items-end justify-between gap-6 mb-9 md:mb-12 flex-wrap"
         >
           <div className="max-w-2xl">
-            <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.24em] uppercase text-[#c9a449] mb-3">
-              <Sparkles className="w-3.5 h-3.5" /> Verified Local Legends
+            <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.24em] uppercase text-[#5eead4] mb-3">
+              <Sparkles className="w-3.5 h-3.5" /> Featured Local Spotlights
             </p>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-[-0.02em] leading-[1.05] text-white">
               The Local Pulse
