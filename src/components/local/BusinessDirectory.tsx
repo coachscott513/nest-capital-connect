@@ -686,14 +686,32 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
         </div>
         <div className="absolute top-3 right-3">
           {b.featured ? (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#5eead4] text-[#0B0F19] text-[10px] font-semibold uppercase tracking-wider">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#c9a449] text-[#0B0F19] text-[10px] font-semibold uppercase tracking-wider shadow-[0_4px_14px_-2px_rgba(201,164,73,0.5)]">
               <Sparkles className="w-3 h-3" /> Featured
             </span>
           ) : claimed ? (
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/10 backdrop-blur text-white text-[10px] font-semibold uppercase tracking-wider border border-white/20">
-              Claimed
+              Verified
             </span>
-          ) : null}
+          ) : (
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={(e) => {
+                e.stopPropagation();
+                window.location.href = `/claim-business?biz=${encodeURIComponent(b.name)}${b.town ? `&town=${b.town}` : ""}`;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.stopPropagation();
+                  window.location.href = `/claim-business?biz=${encodeURIComponent(b.name)}${b.town ? `&town=${b.town}` : ""}`;
+                }
+              }}
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/[0.08] backdrop-blur-xl text-white/90 text-[10px] font-semibold uppercase tracking-wider border border-white/20 hover:bg-[#5eead4]/15 hover:border-[#5eead4]/50 hover:text-[#5eead4] transition cursor-pointer"
+            >
+              Claim This Profile
+            </span>
+          )}
         </div>
       </div>
 
