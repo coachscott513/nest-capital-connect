@@ -114,6 +114,7 @@ const Footer = () => {
           <div>
             <h4 className={headerBase}>Company</h4>
             <ul className="space-y-2.5">
+              <li><Link to="/contact" className={linkBase}>About Capital District Nest</Link></li>
               <li><Link to="/contact" className={linkBase}>Contact</Link></li>
               <li><Link to="/claim-business" className={linkBase}>Claim Your Business</Link></li>
               <li><Link to="/partner-auth" className={linkBase}>Business Login</Link></li>
