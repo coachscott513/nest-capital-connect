@@ -383,6 +383,7 @@ const App = () => {
           {/* Concierge inquiry form for Featured / Spotlight upgrades (pilot mode) */}
           <Route path="/claim-business" element={<ClaimBusiness />} />
           <Route path="/get-listed" element={<ClaimBusiness />} />
+          <Route path="/biz/:slug" element={<BizPage />} />
           
           {/* Partner Dashboard */}
           <Route path="/partner-auth" element={<PartnerAuth />} />
