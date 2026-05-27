@@ -493,6 +493,9 @@ const Index = () => {
       {/* 1 — CINEMATIC HERO */}
       <CinematicHero />
 
+      {/* 1.25 — REGIONAL SPOTLIGHTS · Verified Local Legends (paid-tier showcase) */}
+      <RegionalSpotlights />
+
       {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip */}
       <LiveLocalPulse />
 
