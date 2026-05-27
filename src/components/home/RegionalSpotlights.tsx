@@ -205,7 +205,6 @@ const SpotlightCard = ({ s, onOpen }: { s: Spotlight; onOpen: (s: Spotlight) => 
   const accentSoft =
     s.accent === "gold" ? "rgba(201,164,73,0.35)" : "rgba(94,234,212,0.35)";
   const phoneHref = cleanTelHref(s.phone);
-  const phoneHref = cleanTelHref(s.phone);
 
   useEffect(() => {
     const id = setInterval(
