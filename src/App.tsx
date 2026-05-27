@@ -286,7 +286,7 @@ const App = () => {
           {/* Town pages — UNIFIED. /living-in/:townSlug renders the master template or a coming-soon fallback. */}
           <Route path="/living-in/:townSlug" element={<LivingInTown />} />
           <Route path="/app/living-in/:townSlug" element={<LivingInTown />} />
-          <Route path="/towns/:slug" element={<TownsRedirect />} />
+          <Route path="/towns/:slug" element={<TownPulse />} />
           {/* Simplified canonical destinations from main nav */}
           <Route path="/homes" element={<HomesPage />} />
           <Route path="/local" element={<LocalPage />} />
