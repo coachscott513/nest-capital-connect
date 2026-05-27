@@ -1045,59 +1045,31 @@ export const BusinessDetailModal = ({
         )}
 
         <div className="p-7 md:p-10 space-y-10">
-          {/* Primary contact actions — always visible when data exists,
-              regardless of claim status, so every business profile has
-              a usable phone / website / directions row. */}
-          {(telHref || biz.website || dirHref) && (
-            <div className="flex flex-wrap gap-2">
-              {telHref && (
-                <a href={telHref} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
-                  <Phone className="w-4 h-4" /> Call
-                </a>
-              )}
-              {biz.website && (
-                <a href={biz.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
-                  <Globe className="w-4 h-4" /> Website
-                </a>
-              )}
-              {dirHref && (
-                <a href={dirHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
-                  <Navigation className="w-4 h-4" /> Directions
-                </a>
-              )}
-            </div>
-          )}
+          {/* Primary actions — Action Hub opens a popover with every available
+              channel (call/text/email/website/order/directions). */}
+          <div className="flex flex-wrap gap-2">
+            <BusinessActionHub biz={biz} />
+            {biz.website && (
+              <a href={biz.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
+                <Globe className="w-4 h-4" /> Website
+              </a>
+            )}
+            {dirHref && (
+              <a href={dirHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
+                <Navigation className="w-4 h-4" /> Directions
+              </a>
+            )}
+            {!claimed && (
+              <a
+                href={`/claim-business?slug=${biz.slug}`}
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[#5eead4] text-sm font-semibold hover:bg-[#5eead4]/20 transition"
+              >
+                <Sparkles className="w-4 h-4" /> Claim This Profile
+              </a>
+            )}
+          </div>
 
-          {/* Additional member-only actions */}
-          {claimed && (
-            <div className="flex flex-wrap gap-2">
-              {smsHref && (
-                <a href={smsHref} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
-                  <MessageSquare className="w-4 h-4" /> Text
-                </a>
-              )}
-              {biz.bookingUrl && (
-                <a href={biz.bookingUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[#5eead4] text-sm font-semibold hover:bg-[#5eead4]/20 transition">
-                  <CalendarPlus className="w-4 h-4" /> Book
-                </a>
-              )}
-              {biz.socials?.facebook && (
-                <a href={biz.socials.facebook} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 hover:text-[#5eead4] transition">
-                  <Facebook className="w-4 h-4" /> Facebook
-                </a>
-              )}
-              {biz.socials?.instagram && (
-                <a href={biz.socials.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 hover:text-[#5eead4] transition">
-                  <Instagram className="w-4 h-4" /> Instagram
-                </a>
-              )}
-              {biz.socials?.linkedin && (
-                <a href={biz.socials.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 hover:text-[#5eead4] transition">
-                  <Linkedin className="w-4 h-4" /> LinkedIn
-                </a>
-              )}
-            </div>
-          )}
+
 
 
           {/* SECTION B — STORY */}
