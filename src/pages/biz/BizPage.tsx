@@ -73,8 +73,18 @@ type Special = {
   end_date?: string | null;
 };
 
-const PREMIUM_TIERS = new Set(["spotlight", "anchor"]);
+// Routing tiers. DB stores `free_claimed | featured | spotlight | premium_partner`.
+// We accept the shorter aliases (`free`, `anchor`) for forward-compat.
+const PREMIUM_TIERS = new Set(["spotlight", "anchor", "premium_partner"]);
 const FEATURED_TIERS = new Set(["featured"]);
+const normalizeTier = (t?: string | null) => {
+  const v = (t || "free_claimed").toLowerCase();
+  if (v === "free" || v === "free_claimed" || v === "unclaimed") return "free_claimed";
+  if (v === "anchor" || v === "premium_partner") return "anchor";
+  if (v === "spotlight") return "spotlight";
+  if (v === "featured") return "featured";
+  return "free_claimed";
+};
 
 const leadSchema = z.object({
   name: z.string().trim().min(1, "Name required").max(100),
@@ -678,7 +688,8 @@ const BizPage = () => {
       const { data, error } = await supabase
         .from("businesses").select("*").eq("slug", slug).eq("is_active", true).maybeSingle();
       if (error || !data) { setNotFound(true); setLoading(false); return; }
-      const b = data as unknown as Business;
+      const raw = data as unknown as Business;
+      const b: Business = { ...raw, plan_tier: normalizeTier(raw.plan_tier) };
       setBiz(b);
       if (PREMIUM_TIERS.has(b.plan_tier)) {
         const { data: sp } = await supabase
@@ -695,6 +706,8 @@ const BizPage = () => {
   if (loading) {
     return <div className="min-h-screen bg-background flex items-center justify-center text-white/60 text-sm">Loading…</div>;
   }
+  // Only redirect when the slug truly doesn't resolve to an active business.
+  // Free + Featured tiers must render their own pages, never bounce to /local.
   if (notFound || !biz) return <Navigate to="/local" replace />;
 
   const tier = biz.plan_tier;
