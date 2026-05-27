@@ -1422,12 +1422,13 @@ const SocialFootprint = ({ biz, claimed }: { biz: Business; claimed: boolean }) 
     { href: s.instagram, Icon: Instagram, label: "Instagram" },
     { href: s.tiktok, Icon: TikTokIcon, label: "TikTok" },
     { href: s.linkedin, Icon: Linkedin, label: "LinkedIn" },
+    { href: s.youtube, Icon: Youtube, label: "YouTube" },
     { href: s.twitter, Icon: XIcon, label: "X" },
   ];
   const hasAny = items.some((i) => !!i.href);
 
   return (
-    <Section eyebrow="Updates" title="Social Media & Updates">
+    <Section eyebrow="Connect" title="Digital Channels">
       {hasAny ? (
         <div className="flex items-center gap-2.5 flex-wrap">
           {items.map(({ href, Icon, label }) =>
