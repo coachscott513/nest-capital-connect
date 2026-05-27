@@ -166,45 +166,87 @@ const ActionChips = ({
   biz: Business;
   directionsHref: string | null;
   onShare: () => void;
-}) => (
-  <div className="mt-7 flex flex-wrap gap-2.5">
-    {biz.phone && (
-      <a
-        href={`tel:${biz.phone.replace(/[^\d+]/g, "")}`}
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
-      >
-        <Phone className="w-4 h-4" /> Call
-      </a>
-    )}
-    {directionsHref && (
-      <a
-        href={directionsHref}
-        target="_blank"
-        rel="noreferrer"
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
-      >
-        <MapPin className="w-4 h-4" /> Directions
-      </a>
-    )}
-    {biz.website && (
-      <a
-        href={biz.website}
-        target="_blank"
-        rel="noreferrer"
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
-      >
-        <Globe className="w-4 h-4" /> Website
-      </a>
-    )}
-    <button
-      type="button"
-      onClick={onShare}
-      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
-    >
-      <Share2 className="w-4 h-4" /> Share
-    </button>
-  </div>
-);
+}) => {
+  const telHref = biz.phone ? `tel:${biz.phone.replace(/[^\d+]/g, "")}` : null;
+  const smsHref = biz.phone ? `sms:${biz.phone.replace(/[^\d+]/g, "")}` : null;
+  return (
+    <div className="mt-7 flex flex-wrap gap-2.5">
+      {telHref && (
+        <a href={telHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
+          <Phone className="w-4 h-4" /> Call
+        </a>
+      )}
+      {smsHref && (
+        <a href={smsHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+          <MessageSquare className="w-4 h-4" /> Text
+        </a>
+      )}
+      {biz.email && (
+        <a href={`mailto:${biz.email}`} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+          <Mail className="w-4 h-4" /> Email
+        </a>
+      )}
+      {directionsHref && (
+        <a href={directionsHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+          <MapPin className="w-4 h-4" /> Directions
+        </a>
+      )}
+      {biz.website && (
+        <a href={biz.website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+          <Globe className="w-4 h-4" /> Website
+        </a>
+      )}
+      {biz.menu_url && (
+        <a href={biz.menu_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+          <ArrowRight className="w-4 h-4" /> Menu
+        </a>
+      )}
+      <button type="button" onClick={onShare} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+        <Share2 className="w-4 h-4" /> Share
+      </button>
+    </div>
+  );
+};
+
+// Always-rendered Digital Channels block. Shows active icons when present,
+// or a tasteful claim prompt when missing — never an empty section.
+const DigitalChannels = ({ biz }: { biz: Business }) => {
+  const channels = [
+    { url: biz.instagram, Icon: Instagram, label: "Instagram" },
+    { url: biz.facebook, Icon: Facebook, label: "Facebook" },
+    { url: biz.linkedin, Icon: Linkedin, label: "LinkedIn" },
+    { url: biz.tiktok, Icon: MessageSquare, label: "TikTok" },
+    { url: biz.x_url, Icon: MessageSquare, label: "X" },
+    { url: biz.video_url, Icon: Youtube, label: "YouTube" },
+  ].filter((c) => c.url);
+
+  return (
+    <article>
+      <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-4" style={{ color: TEAL }}>
+        Digital Channels
+      </p>
+      {channels.length > 0 ? (
+        <div className="flex flex-wrap items-center gap-2">
+          {channels.map(({ url, Icon, label }) => (
+            <a key={label} href={url as string} target="_blank" rel="noreferrer" aria-label={label}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.04] text-white/80 hover:text-white hover:border-white/25 transition text-sm">
+              <Icon className="w-4 h-4" /> {label}
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-5 text-sm text-white/65 font-light leading-relaxed">
+          Social links pending.{" "}
+          <Link to={`/claim-business?slug=${biz.slug}`} className="text-white font-semibold hover:opacity-70 underline underline-offset-4">
+            Claim this profile
+          </Link>{" "}
+          to add active channels.
+        </div>
+      )}
+    </article>
+  );
+};
+
 
 const HoursBlock = ({ hours }: { hours: Record<string, string> }) => (
   <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
