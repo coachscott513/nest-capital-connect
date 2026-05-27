@@ -220,6 +220,7 @@ export type Database = {
       businesses: {
         Row: {
           address: string | null
+          business_status: string
           category: string
           category_group: string | null
           city: string | null
@@ -227,6 +228,7 @@ export type Database = {
           claimed_by_user_id: string | null
           county: string | null
           created_at: string
+          data_status: string
           description: string | null
           editorial_note: string | null
           email: string | null
@@ -234,6 +236,7 @@ export type Database = {
           facebook: string | null
           featured_order: number | null
           google_maps_url: string | null
+          google_place_id: string | null
           hero_image_url: string | null
           hours: Json | null
           id: string
@@ -246,16 +249,21 @@ export type Database = {
           is_hidden_gem: boolean | null
           is_trending: boolean | null
           is_verified: boolean | null
+          last_synced_at: string | null
+          last_verified_at: string | null
           latitude: number | null
           logo_url: string | null
           longitude: number | null
           name: string
+          needs_review: boolean
           phone: string | null
           photos: string[] | null
           rating: number | null
+          region: string
           review_count: number | null
           slug: string
           source: string | null
+          source_url: string | null
           state: string | null
           subcategory: string | null
           tagline: string | null
@@ -264,10 +272,12 @@ export type Database = {
           town_slug: string
           updated_at: string
           website: string | null
+          website_status: string | null
           zipcode: string | null
         }
         Insert: {
           address?: string | null
+          business_status?: string
           category: string
           category_group?: string | null
           city?: string | null
@@ -275,6 +285,7 @@ export type Database = {
           claimed_by_user_id?: string | null
           county?: string | null
           created_at?: string
+          data_status?: string
           description?: string | null
           editorial_note?: string | null
           email?: string | null
@@ -282,6 +293,7 @@ export type Database = {
           facebook?: string | null
           featured_order?: number | null
           google_maps_url?: string | null
+          google_place_id?: string | null
           hero_image_url?: string | null
           hours?: Json | null
           id?: string
@@ -294,16 +306,21 @@ export type Database = {
           is_hidden_gem?: boolean | null
           is_trending?: boolean | null
           is_verified?: boolean | null
+          last_synced_at?: string | null
+          last_verified_at?: string | null
           latitude?: number | null
           logo_url?: string | null
           longitude?: number | null
           name: string
+          needs_review?: boolean
           phone?: string | null
           photos?: string[] | null
           rating?: number | null
+          region?: string
           review_count?: number | null
           slug: string
           source?: string | null
+          source_url?: string | null
           state?: string | null
           subcategory?: string | null
           tagline?: string | null
@@ -312,10 +329,12 @@ export type Database = {
           town_slug: string
           updated_at?: string
           website?: string | null
+          website_status?: string | null
           zipcode?: string | null
         }
         Update: {
           address?: string | null
+          business_status?: string
           category?: string
           category_group?: string | null
           city?: string | null
@@ -323,6 +342,7 @@ export type Database = {
           claimed_by_user_id?: string | null
           county?: string | null
           created_at?: string
+          data_status?: string
           description?: string | null
           editorial_note?: string | null
           email?: string | null
@@ -330,6 +350,7 @@ export type Database = {
           facebook?: string | null
           featured_order?: number | null
           google_maps_url?: string | null
+          google_place_id?: string | null
           hero_image_url?: string | null
           hours?: Json | null
           id?: string
@@ -342,16 +363,21 @@ export type Database = {
           is_hidden_gem?: boolean | null
           is_trending?: boolean | null
           is_verified?: boolean | null
+          last_synced_at?: string | null
+          last_verified_at?: string | null
           latitude?: number | null
           logo_url?: string | null
           longitude?: number | null
           name?: string
+          needs_review?: boolean
           phone?: string | null
           photos?: string[] | null
           rating?: number | null
+          region?: string
           review_count?: number | null
           slug?: string
           source?: string | null
+          source_url?: string | null
           state?: string | null
           subcategory?: string | null
           tagline?: string | null
@@ -360,6 +386,7 @@ export type Database = {
           town_slug?: string
           updated_at?: string
           website?: string | null
+          website_status?: string | null
           zipcode?: string | null
         }
         Relationships: []
