@@ -12,7 +12,7 @@ import LiveLocalPulse from "@/components/home/LiveLocalPulse";
 import SpotlightSearch from "@/components/home/SpotlightSearch";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
-import heroCapital from "@/assets/hero-capital-district.jpg";
+
 import townDelmar from "@/assets/town-delmar.jpg";
 import townAlbany from "@/assets/town-albany.jpg";
 import townSaratoga from "@/assets/town-saratoga.jpg";
