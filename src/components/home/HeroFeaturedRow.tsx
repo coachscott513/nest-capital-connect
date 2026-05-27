@@ -93,7 +93,7 @@ const HeroCard = ({ business }: { business: HeroSpotlight }) => {
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
-        <VerifiedBadge />
+        <FeaturedBadge />
       </Link>
 
       <div className="relative p-4 sm:p-5 flex flex-col gap-2.5">
