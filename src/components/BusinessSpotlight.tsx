@@ -372,7 +372,7 @@ const BusinessSpotlight = () => {
                       ? "bg-primary text-primary-foreground shadow-[0_0_15px_hsl(var(--primary)/0.5)]" 
                       : "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-pulse"
                   }`}>
-                    {business.isMember ? "Member" : "Claim"}
+                    {business.isMember ? "Featured" : "Standard"}
                   </div>
                 </div>
                 
@@ -421,7 +421,7 @@ const BusinessSpotlight = () => {
                       ? "bg-primary text-primary-foreground shadow-[0_0_15px_hsl(var(--primary)/0.5)]" 
                       : "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-pulse"
                   }`}>
-                    {business.isMember ? "Member" : "Claim"}
+                    {business.isMember ? "Featured" : "Standard"}
                   </div>
                 </div>
                 
@@ -462,7 +462,7 @@ const BusinessSpotlight = () => {
                   <div className="bg-background/50 backdrop-blur-[25px] px-5 py-4 rounded-2xl text-center border border-border shadow-lg">
                     <Lock className="w-5 h-5 text-primary mx-auto mb-2" />
                     <p className="text-sm font-medium text-foreground">Photo Protected</p>
-                    <p className="text-xs text-muted-foreground mt-1">Verify to unlock founder details</p>
+                    <p className="text-xs text-muted-foreground mt-1">Featured tier unlocks founder details</p>
                   </div>
                 </div>
               </div>
@@ -617,7 +617,7 @@ const BusinessSpotlight = () => {
                   <div className="h-full w-1/5 bg-gradient-to-r from-emerald-500 to-primary rounded-full" />
                 </div>
                 <p className="text-[10px] text-muted-foreground mt-2">
-                  Verify to unlock: Social Links • Contact Info • Map • Weekly Specials
+                  Featured unlocks: Social Links • Contact Info • Map • Weekly Specials
                 </p>
               </div>
 
@@ -673,7 +673,7 @@ const BusinessSpotlight = () => {
           
           <p className="text-muted-foreground text-sm mb-4">
             This listing is currently in <span className="text-primary font-medium">Community View</span>. 
-            Are you the owner or manager? Verify to activate direct links and premium features.
+            Are you the owner or manager? Upgrade to Featured to activate direct links and premium tools.
           </p>
 
           <form onSubmit={handleVerifySubmit} className="space-y-4">

@@ -367,7 +367,7 @@ const TrustedLocalPartners = ({
                   Operating in {townName}?
                 </h3>
                 <p className="mt-3 text-[15px] md:text-base font-light text-white/70 max-w-md">
-                  Claim your free digital profile and appear alongside the town's most-loved local businesses.
+                  Become a Featured partner and appear alongside the town's most-loved local businesses.
                 </p>
               </div>
               <span

@@ -46,7 +46,7 @@ const SocialIcon = ({
   return (
     <span
       aria-label={`${label} (locked)`}
-      title="Claim this profile to activate social links."
+      title="Upgrade to Featured to spotlight social links."
       className={`${base} border-white/10 text-white/25 cursor-not-allowed bg-white/[0.02]`}
     >
       <Icon className="w-4 h-4" />
@@ -152,7 +152,7 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
             {!verified && (
               <>
                 <p className="mt-3 text-xs text-white/45 leading-relaxed">
-                  Business owner? Claim this profile to activate social links.
+                  Business owner? Upgrade to Featured to spotlight social links.
                 </p>
                 <a
                   href={`/pricing)}`}
