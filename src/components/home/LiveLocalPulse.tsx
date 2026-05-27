@@ -145,7 +145,7 @@ export default function LiveLocalPulse() {
           category: "Business",
           title: label,
           location: b.town_name ?? townLabel(b.town_slug),
-          url: b.slug ? `/local/${b.slug}` : "/local",
+          url: b.town_slug ? `/towns/${b.town_slug}` : "/local",
           priority: 2,
           date: b.created_at ? new Date(b.created_at).getTime() : now,
         });
