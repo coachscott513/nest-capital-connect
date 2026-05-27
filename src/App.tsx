@@ -121,6 +121,7 @@ import Ask from "./pages/Ask";
 import SiteIndex from "./pages/SiteIndex";
 import Pricing from "./pages/Pricing";
 import ClaimBusiness from "./pages/ClaimBusiness";
+import BizPage from "./pages/biz/BizPage";
 import PartnerAuth from "./pages/PartnerAuth";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import PartnerSuccess from "./pages/PartnerSuccess";
