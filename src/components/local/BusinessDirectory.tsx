@@ -720,11 +720,7 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
         ) : (
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-[1.08]"
-            style={
-              b.image
-                ? { backgroundImage: `url(${b.image})` }
-                : { background: `linear-gradient(135deg, hsl(${hueA} 45% 22%) 0%, hsl(${hueB} 55% 14%) 100%)` }
-            }
+            style={{ backgroundImage: `url(${resolveBusinessImage(b)})` }}
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
