@@ -16,6 +16,10 @@ import {
   Facebook,
   Linkedin,
   Building2,
+  Mail,
+  MessageSquare,
+  Youtube,
+  LogIn,
 } from "lucide-react";
 import { z } from "zod";
 import CleanHeader from "@/components/CleanHeader";
@@ -60,6 +64,8 @@ type Business = {
   facebook?: string | null;
   instagram?: string | null;
   linkedin?: string | null;
+  tiktok?: string | null;
+  x_url?: string | null;
 };
 
 type Special = {
@@ -159,45 +165,87 @@ const ActionChips = ({
   biz: Business;
   directionsHref: string | null;
   onShare: () => void;
-}) => (
-  <div className="mt-7 flex flex-wrap gap-2.5">
-    {biz.phone && (
-      <a
-        href={`tel:${biz.phone.replace(/[^\d+]/g, "")}`}
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
-      >
-        <Phone className="w-4 h-4" /> Call
-      </a>
-    )}
-    {directionsHref && (
-      <a
-        href={directionsHref}
-        target="_blank"
-        rel="noreferrer"
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
-      >
-        <MapPin className="w-4 h-4" /> Directions
-      </a>
-    )}
-    {biz.website && (
-      <a
-        href={biz.website}
-        target="_blank"
-        rel="noreferrer"
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
-      >
-        <Globe className="w-4 h-4" /> Website
-      </a>
-    )}
-    <button
-      type="button"
-      onClick={onShare}
-      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
-    >
-      <Share2 className="w-4 h-4" /> Share
-    </button>
-  </div>
-);
+}) => {
+  const telHref = biz.phone ? `tel:${biz.phone.replace(/[^\d+]/g, "")}` : null;
+  const smsHref = biz.phone ? `sms:${biz.phone.replace(/[^\d+]/g, "")}` : null;
+  return (
+    <div className="mt-7 flex flex-wrap gap-2.5">
+      {telHref && (
+        <a href={telHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
+          <Phone className="w-4 h-4" /> Call
+        </a>
+      )}
+      {smsHref && (
+        <a href={smsHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+          <MessageSquare className="w-4 h-4" /> Text
+        </a>
+      )}
+      {biz.email && (
+        <a href={`mailto:${biz.email}`} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+          <Mail className="w-4 h-4" /> Email
+        </a>
+      )}
+      {directionsHref && (
+        <a href={directionsHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+          <MapPin className="w-4 h-4" /> Directions
+        </a>
+      )}
+      {biz.website && (
+        <a href={biz.website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+          <Globe className="w-4 h-4" /> Website
+        </a>
+      )}
+      {biz.menu_url && (
+        <a href={biz.menu_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+          <ArrowRight className="w-4 h-4" /> Menu
+        </a>
+      )}
+      <button type="button" onClick={onShare} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+        <Share2 className="w-4 h-4" /> Share
+      </button>
+    </div>
+  );
+};
+
+// Always-rendered Digital Channels block. Shows active icons when present,
+// or a tasteful claim prompt when missing — never an empty section.
+const DigitalChannels = ({ biz }: { biz: Business }) => {
+  const channels = [
+    { url: biz.instagram, Icon: Instagram, label: "Instagram" },
+    { url: biz.facebook, Icon: Facebook, label: "Facebook" },
+    { url: biz.linkedin, Icon: Linkedin, label: "LinkedIn" },
+    { url: biz.tiktok, Icon: MessageSquare, label: "TikTok" },
+    { url: biz.x_url, Icon: MessageSquare, label: "X" },
+    { url: biz.video_url, Icon: Youtube, label: "YouTube" },
+  ].filter((c) => c.url);
+
+  return (
+    <article>
+      <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-4" style={{ color: TEAL }}>
+        Digital Channels
+      </p>
+      {channels.length > 0 ? (
+        <div className="flex flex-wrap items-center gap-2">
+          {channels.map(({ url, Icon, label }) => (
+            <a key={label} href={url as string} target="_blank" rel="noreferrer" aria-label={label}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.04] text-white/80 hover:text-white hover:border-white/25 transition text-sm">
+              <Icon className="w-4 h-4" /> {label}
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-5 text-sm text-white/65 font-light leading-relaxed">
+          Social links pending.{" "}
+          <Link to={`/claim-business?slug=${biz.slug}`} className="text-white font-semibold hover:opacity-70 underline underline-offset-4">
+            Claim this profile
+          </Link>{" "}
+          to add active channels.
+        </div>
+      )}
+    </article>
+  );
+};
+
 
 const HoursBlock = ({ hours }: { hours: Record<string, string> }) => (
   <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
@@ -234,6 +282,12 @@ const ClaimCard = ({ biz }: { biz: Business }) => (
       className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition w-full"
     >
       Claim This Business <ArrowRight className="w-4 h-4" />
+    </Link>
+    <Link
+      to={`/partner-auth?slug=${biz.slug}`}
+      className="mt-2.5 inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition w-full"
+    >
+      <LogIn className="w-4 h-4" /> Owner Login
     </Link>
     <Link
       to="/pricing"
@@ -324,12 +378,21 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
               )}
             </div>
 
-            {biz.description && (
+            {biz.description ? (
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>About</p>
                 <p className="text-[15px] text-white/75 font-light leading-relaxed">{biz.description}</p>
               </div>
+            ) : (
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
+                <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>About</p>
+                <p className="text-[15px] text-white/65 font-light leading-relaxed">
+                  This profile is available to claim and customize. The owner can add a story, photos, specials, and social links to complete the listing.
+                </p>
+              </div>
             )}
+
+            <DigitalChannels biz={biz} />
           </div>
 
           <aside className="space-y-5">
@@ -356,11 +419,6 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
     if (navigator.share) { try { await navigator.share({ title: biz.name, url }); } catch {} }
     else { await navigator.clipboard.writeText(url); toast.success("Link copied"); }
   };
-  const socials = [
-    { url: biz.instagram, Icon: Instagram, label: "Instagram" },
-    { url: biz.facebook, Icon: Facebook, label: "Facebook" },
-    { url: biz.linkedin, Icon: Linkedin, label: "LinkedIn" },
-  ].filter((s) => s.url);
 
   return (
     <>
@@ -422,19 +480,7 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
               </article>
             )}
 
-            {socials.length > 0 && (
-              <article>
-                <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-4" style={{ color: TEAL }}>Follow</p>
-                <div className="flex items-center gap-2">
-                  {socials.map(({ url, Icon, label }) => (
-                    <a key={label} href={url as string} target="_blank" rel="noreferrer" aria-label={label}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.04] text-white/80 hover:text-white hover:border-white/25 transition text-sm">
-                      <Icon className="w-4 h-4" /> {label}
-                    </a>
-                  ))}
-                </div>
-              </article>
-            )}
+            <DigitalChannels biz={biz} />
           </div>
 
           <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
@@ -499,11 +545,6 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
     toast.success("Message sent — we'll be in touch.");
   };
 
-  const socials = [
-    { url: biz.instagram, Icon: Instagram, label: "Instagram" },
-    { url: biz.facebook, Icon: Facebook, label: "Facebook" },
-    { url: biz.linkedin, Icon: Linkedin, label: "LinkedIn" },
-  ].filter((s) => s.url);
 
   return (
     <>
@@ -654,16 +695,7 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
               </div>
             )}
 
-            {socials.length > 0 && (
-              <div className="flex items-center gap-2">
-                {socials.map(({ url, Icon, label }) => (
-                  <a key={label} href={url as string} target="_blank" rel="noreferrer" aria-label={label}
-                    className="w-10 h-10 inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 hover:text-white hover:border-white/25 transition">
-                    <Icon className="w-4 h-4" />
-                  </a>
-                ))}
-              </div>
-            )}
+            <DigitalChannels biz={biz} />
           </aside>
         </div>
       </section>
@@ -822,9 +854,17 @@ const BizPage = () => {
 
       <section className="border-t border-white/[0.06] px-6 md:px-10 py-16 text-center">
         <p className="text-xs text-white/45">
-          Own a business in the Capital District?{" "}
+          Own this business?{" "}
+          <Link to={`/claim-business?slug=${biz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
+            Claim this profile
+          </Link>
+          {" · "}
+          <Link to={`/partner-auth?slug=${biz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
+            Owner login
+          </Link>
+          {" · "}
           <Link to="/pricing" className="text-white hover:opacity-70 transition underline underline-offset-4">
-            See how Featured, Spotlight & Anchor work →
+            See plans
           </Link>
         </p>
       </section>
