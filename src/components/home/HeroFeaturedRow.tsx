@@ -63,11 +63,6 @@ const HERO_SPOTLIGHTS: HeroSpotlight[] = [
   },
 ];
 
-const safeUrl = (value?: string | null) => {
-  const trimmed = value?.trim();
-  if (!trimmed) return null;
-  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
-};
 
 const cleanTelHref = (phone?: string | null) => {
   const digits = phone?.replace(/[^\d+]/g, "");
