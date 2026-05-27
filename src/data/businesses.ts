@@ -109,6 +109,10 @@ export interface Business {
   phone?: string;
   email?: string;
   website?: string;
+  website_url?: string;
+  websiteUrl?: string;
+  menu_url?: string;
+  menuUrl?: string;
   address?: string;
   hours?: string;
   lat?: number;
