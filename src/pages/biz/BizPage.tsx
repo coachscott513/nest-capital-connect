@@ -16,6 +16,11 @@ import {
   Facebook,
   Linkedin,
   Building2,
+  Mail,
+  MessageSquare,
+  Youtube,
+  LogIn,
+  Lock,
 } from "lucide-react";
 import { z } from "zod";
 import CleanHeader from "@/components/CleanHeader";
@@ -60,6 +65,8 @@ type Business = {
   facebook?: string | null;
   instagram?: string | null;
   linkedin?: string | null;
+  tiktok?: string | null;
+  x_url?: string | null;
 };
 
 type Special = {
