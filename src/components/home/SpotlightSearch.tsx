@@ -196,7 +196,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
             aria-hidden
           />
 
-          <Search className="relative w-5 h-5 text-white/65 shrink-0" />
+          <Search className="relative w-5 h-5 md:w-6 md:h-6 text-white/65 shrink-0" />
 
           <div className="relative flex-1 min-w-0">
             <input
