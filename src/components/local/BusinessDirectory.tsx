@@ -936,51 +936,113 @@ export const BusinessDetailModal = ({
         <DialogTitle className="sr-only">{biz.name}</DialogTitle>
         <DialogDescription className="sr-only">{biz.tagline}</DialogDescription>
 
-        {/* SECTION A — HERO */}
-        <div className="relative h-[280px] md:h-[380px] w-full overflow-hidden">
-          {biz.heroVideo ? (
-            <video
-              src={biz.heroVideo}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          ) : (
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${resolveBusinessImage(biz)})` }}
-            />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/55 to-[#0B0F19]/10" />
+        {/* SECTION A — HERO
+            Cinematic media banner ONLY when business has uploaded real media.
+            Otherwise we render a premium dark-onyx editorial header so free /
+            unclaimed listings still feel intentional — never fake stock photos. */}
+        {hasRealBusinessMedia(biz) ? (
+          <div className="relative h-[280px] md:h-[380px] w-full overflow-hidden">
+            {biz.heroVideo ? (
+              <video
+                src={biz.heroVideo}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${biz.image ?? biz.gallery?.[0]})` }}
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/55 to-[#0B0F19]/10" />
 
-          <div className="absolute bottom-0 left-0 right-0 p-7 md:p-10">
-            <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <div className="absolute bottom-0 left-0 right-0 p-7 md:p-10">
+              <div className="flex items-center gap-2 mb-3 flex-wrap">
+                <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
+                  {biz.category}{biz.townLabel && ` · ${biz.townLabel}`}
+                </span>
+                {biz.featured && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-[10px] font-semibold uppercase tracking-wider">
+                    <Sparkles className="w-3 h-3" /> Featured
+                  </span>
+                )}
+                {!biz.featured && claimed && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 backdrop-blur text-white text-[10px] font-semibold uppercase tracking-wider border border-white/20">
+                    Member
+                  </span>
+                )}
+              </div>
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05]">
+                {biz.name}
+              </h2>
+              {biz.atmosphere && (
+                <p className="mt-3 text-white/70 font-light max-w-2xl text-sm md:text-base">
+                  {biz.atmosphere}
+                </p>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div
+            className="relative px-7 md:px-10 pt-10 md:pt-14 pb-8 md:pb-10 overflow-hidden"
+            style={{
+              background:
+                "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.10) 0%, transparent 55%), linear-gradient(180deg, #0B0F19 0%, #0B0F19 100%)",
+            }}
+          >
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -bottom-px left-0 right-0 h-px"
+              style={{ background: "linear-gradient(90deg, transparent, rgba(94,234,212,0.35), transparent)" }}
+            />
+            <div className="flex items-center gap-2 mb-4 flex-wrap">
               <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
                 {biz.category}{biz.townLabel && ` · ${biz.townLabel}`}
               </span>
-              {biz.featured && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-[10px] font-semibold uppercase tracking-wider">
+              {biz.featured ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#c9a449] text-[#0B0F19] text-[10px] font-semibold uppercase tracking-wider">
                   <Sparkles className="w-3 h-3" /> Featured
                 </span>
-              )}
-              {!biz.featured && claimed && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 backdrop-blur text-white text-[10px] font-semibold uppercase tracking-wider border border-white/20">
+              ) : claimed ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#5eead4]/15 text-[#5eead4] border border-[#5eead4]/30 text-[10px] font-semibold uppercase tracking-wider">
                   Member
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/[0.04] text-white/55 border border-white/10 text-[10px] font-semibold uppercase tracking-wider">
+                  Unclaimed
                 </span>
               )}
             </div>
-            <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05]">
+            <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
               {biz.name}
             </h2>
-            {biz.atmosphere && (
-              <p className="mt-3 text-white/70 font-light max-w-2xl text-sm md:text-base">
-                {biz.atmosphere}
+            {biz.tagline && (
+              <p className="mt-4 text-white/70 font-light max-w-2xl text-base md:text-lg leading-relaxed">
+                {biz.tagline}
               </p>
             )}
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] text-white/55">
+              {biz.address && (
+                <span className="inline-flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#5eead4]" /> {biz.address}
+                </span>
+              )}
+              {biz.phone && (
+                <span className="inline-flex items-center gap-1.5">
+                  <Phone className="w-3.5 h-3.5 text-[#5eead4]" /> {biz.phone}
+                </span>
+              )}
+              {biz.website && (
+                <span className="inline-flex items-center gap-1.5">
+                  <Globe className="w-3.5 h-3.5 text-[#5eead4]" /> Website
+                </span>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="p-7 md:p-10 space-y-10">
           {/* Primary contact actions — always visible when data exists,
