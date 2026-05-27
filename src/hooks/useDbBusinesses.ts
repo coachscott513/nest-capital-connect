@@ -138,7 +138,7 @@ export const useDbBusinesses = () => {
         const townLabel = r.town_name || (r.city ? titleCase(r.city) : "Capital District");
         const tagsArr: string[] = Array.isArray(r.tags) ? r.tags : [];
         return {
-          slug: r.slug || slugify(`${r.name}-${r.id}`),
+          slug: slugify(r.slug || r.name || r.id),
           name: r.name,
           town: townSlug,
           city: r.city ?? undefined,
