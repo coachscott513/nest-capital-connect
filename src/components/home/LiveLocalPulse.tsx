@@ -1,82 +1,61 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Trophy } from "lucide-react";
+import { Calendar, Store, Home, Megaphone, TrendingUp, MapPin } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 /* =============================================================
-   LIVE LOCAL PULSE
-   Subtle ambient strip beneath the hero search. Bloomberg × Apple.
-   - dark glass, teal accents
-   - very slow horizontal drift
-   - hover pauses
-   - category pills filter
-   - paired with a compact LIVE SCORES module on desktop
+   CAPITAL DISTRICT PULSE — Live Local Pulse
+   Bloomberg × Apple ambient strip beneath the hero search.
+   Pulls fresh, dated content from the database (no mock data):
+     P1  Events in the next 7 days (town_events)
+     P2  Recently added / featured businesses (businesses)
+     P3  Recent listings (listings)
+     P4  Active business specials (business_specials)
+     P5  Curated town highlights (town_ledger is_featured)
+   Falls back to a single evergreen message if no fresh items.
    ============================================================= */
 
-type PulseCategory =
-  | "Events"
-  | "Businesses"
-  | "Homes"
-  | "Investing"
-  | "Lifestyle"
-  | "Development"
-  | "Sports";
+type PulseCategory = "Event" | "Business" | "Homes" | "Special" | "Town";
 
 interface PulseItem {
   category: PulseCategory;
   title: string;
   location?: string;
-  date?: string;
   url: string;
-  featured?: boolean;
-  type?: "headline" | "score" | "event";
+  priority: number;
+  date: number; // ms — for sorting
 }
 
-const PULSE_ITEMS: PulseItem[] = [
-  { category: "Events",      title: "Jazz Festival returns to SPAC this weekend",        location: "Saratoga",       url: "/#weekly-feed", type: "event" },
-  { category: "Businesses",  title: "New café opening on Lark Street",                    location: "Albany",         url: "/local?town=albany", type: "headline" },
-  { category: "Sports",      title: "Siena tips off MAAC opener Friday at MVP Arena",     location: "Albany",         url: "/#weekly-feed", type: "event" },
-  { category: "Investing",   title: "Albany multifamily inventory tightening",            location: "Capital Region", url: "/analyze?q=albany+multifamily", type: "headline" },
-  { category: "Homes",       title: "14 new Delmar listings this week",                   location: "Delmar",         url: "/living-in/delmar", type: "headline" },
-  { category: "Sports",      title: "UAlbany lacrosse cracks national top 20",            location: "Albany",         url: "/#weekly-feed", type: "headline" },
-  { category: "Events",      title: "Live music tonight in downtown Troy",                location: "Troy",           url: "/#weekly-feed", type: "event" },
-  { category: "Sports",      title: "RPI hockey hosts Union Friday — Mayor's Cup energy", location: "Troy",           url: "/#weekly-feed", type: "event" },
-  { category: "Homes",       title: "Delmar home values up 6% year-over-year",            location: "Delmar",         url: "/intelligence", type: "headline" },
-  { category: "Sports",      title: "Skidmore advances to Liberty League final",          location: "Saratoga",       url: "/#weekly-feed", type: "score" },
-  { category: "Development", title: "New mixed-use proposal near Mohawk Harbor",          location: "Schenectady",    url: "/intelligence", type: "headline" },
-  { category: "Lifestyle",   title: "Clifton Park restaurant week announced",             location: "Clifton Park",   url: "/local?town=clifton-park", type: "event" },
-  { category: "Sports",      title: "Section II playoff scores updated nightly",          location: "Capital Region", url: "/#weekly-feed", type: "score" },
-  { category: "Homes",       title: "Open houses this weekend across the Capital Region", location: "Region",         url: "/homes-for-sale", type: "event" },
-  { category: "Businesses",  title: "Saratoga boutique expands to second location",       location: "Saratoga",       url: "/local?town=saratoga-springs", type: "headline" },
-  { category: "Sports",      title: "Albany Patroons return home Saturday night",         location: "Albany",         url: "/#weekly-feed", type: "event" },
-  { category: "Investing",   title: "Schenectady duplex cash-flow yields trending up",    location: "Schenectady",    url: "/analyze?q=schenectady+duplex", type: "headline" },
-  { category: "Events",      title: "Farmers market season opens in Delmar",              location: "Delmar",         url: "/#weekly-feed", type: "event" },
-];
+const TEAL = "#5eead4";
 
-const CATEGORIES: ("All" | PulseCategory)[] = ["All", "Events", "Businesses", "Homes", "Investing", "Sports"];
+const toneFor = (c: PulseCategory) => {
+  switch (c) {
+    case "Event": return { color: "#5eead4", Icon: Calendar };
+    case "Business": return { color: "#a78bfa", Icon: Store };
+    case "Homes": return { color: "#fbbf24", Icon: Home };
+    case "Special": return { color: "#f97316", Icon: Megaphone };
+    case "Town": return { color: "#60a5fa", Icon: MapPin };
+    default: return { color: TEAL, Icon: TrendingUp };
+  }
+};
 
-/* Local "live scores" — hand-curated, structured for future API swap-in */
-interface ScoreItem {
-  league: string;
-  homeTeam: string;
-  awayTeam: string;
-  homeScore: number | null;
-  awayScore: number | null;
-  status: "FINAL" | "LIVE" | "UPCOMING";
-  note?: string;
-}
+const townLabel = (slug?: string | null) =>
+  slug
+    ? slug
+        .split("-")
+        .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+        .join(" ")
+    : undefined;
 
-const LIVE_SCORES: ScoreItem[] = [
-  { league: "MAAC",          homeTeam: "Siena",    awayTeam: "Marist",  homeScore: 74, awayScore: 68, status: "FINAL" },
-  { league: "ECAC Hockey",   homeTeam: "Union",    awayTeam: "RPI",     homeScore: 3,  awayScore: 2,  status: "FINAL", note: "OT" },
-  { league: "Liberty League", homeTeam: "Skidmore", awayTeam: "RIT",    homeScore: 81, awayScore: 70, status: "FINAL" },
-  { league: "America East",  homeTeam: "UAlbany",  awayTeam: "Vermont", homeScore: null, awayScore: null, status: "UPCOMING", note: "Sat 7:00" },
-];
-
-function CategoryPill({ label }: { label: PulseCategory }) {
+function CategoryPill({ category }: { category: PulseCategory }) {
+  const { color, Icon } = toneFor(category);
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-[3px] rounded-full bg-[#5eead4]/10 border border-[#5eead4]/25 text-[#5eead4] text-[10px] font-semibold tracking-[0.12em] uppercase">
-      {label === "Sports" && <Trophy className="w-2.5 h-2.5" strokeWidth={2.25} />}
-      {label}
+    <span
+      className="inline-flex items-center gap-1 px-2 py-[3px] rounded-full text-[10px] font-semibold tracking-[0.12em] uppercase border"
+      style={{ color, borderColor: `${color}40`, background: `${color}14` }}
+    >
+      <Icon className="w-2.5 h-2.5" strokeWidth={2.25} />
+      {category}
     </span>
   );
 }
@@ -84,7 +63,7 @@ function CategoryPill({ label }: { label: PulseCategory }) {
 function PulseRow({ item }: { item: PulseItem }) {
   return (
     <Link to={item.url} className="group inline-flex items-center gap-3 px-5 py-1 whitespace-nowrap">
-      <CategoryPill label={item.category} />
+      <CategoryPill category={item.category} />
       <span className="text-[13px] text-white/80 group-hover:text-white transition-colors font-light tracking-[-0.005em]">
         {item.title}
       </span>
@@ -96,51 +75,158 @@ function PulseRow({ item }: { item: PulseItem }) {
   );
 }
 
-function LiveScoresModule() {
-  return (
-    <aside
-      aria-label="Live local scores"
-      className="hidden xl:flex shrink-0 items-center gap-4 pl-5 ml-2 border-l border-white/10"
-    >
-      <div className="flex items-center gap-1.5 shrink-0">
-        <Trophy className="w-3 h-3 text-[#5eead4]" strokeWidth={2.25} />
-        <span className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/70">
-          Live Scores
-        </span>
-      </div>
-      <div className="flex items-center gap-4">
-        {LIVE_SCORES.slice(0, 3).map((s, i) => {
-          const isFinal = s.status === "FINAL";
-          const homeWin = isFinal && s.homeScore != null && s.awayScore != null && s.homeScore > s.awayScore;
-          return (
-            <div key={i} className="flex items-center gap-2 whitespace-nowrap">
-              <span className="text-[10px] tracking-[0.18em] uppercase text-white/35 font-medium">
-                {isFinal ? (s.note ? `F/${s.note}` : "Final") : s.note ?? s.status}
-              </span>
-              <span className={`text-[12px] font-medium ${homeWin ? "text-white" : "text-white/70"}`}>
-                {s.homeTeam} {s.homeScore ?? "—"}
-              </span>
-              <span className="text-white/25 text-[10px]">·</span>
-              <span className={`text-[12px] font-medium ${!homeWin && isFinal ? "text-white" : "text-white/70"}`}>
-                {s.awayTeam} {s.awayScore ?? "—"}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    </aside>
-  );
-}
-
 export default function LiveLocalPulse() {
-  const [filter, setFilter] = useState<"All" | PulseCategory>("All");
   const [paused, setPaused] = useState(false);
+  const [items, setItems] = useState<PulseItem[] | null>(null);
 
-  const filtered = filter === "All" ? PULSE_ITEMS : PULSE_ITEMS.filter((i) => i.category === filter);
-  const loop = [...filtered, ...filtered];
+  useEffect(() => {
+    let cancelled = false;
+    const now = Date.now();
+    const in7d = new Date(now + 7 * 24 * 60 * 60 * 1000).toISOString();
+    const last30dIso = new Date(now - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+    (async () => {
+      const [eventsRes, bizRes, listingsRes, specialsRes, ledgerRes] = await Promise.all([
+        supabase
+          .from("town_events")
+          .select("title,town_slug,town_name,starts_at,cta_url")
+          .eq("is_active", true)
+          .gte("starts_at", new Date(now).toISOString())
+          .lte("starts_at", in7d)
+          .order("starts_at", { ascending: true })
+          .limit(8),
+        supabase
+          .from("businesses")
+          .select("name,town_slug,town_name,slug,created_at,is_featured")
+          .eq("is_active", true)
+          .or(`is_featured.eq.true,created_at.gte.${last30dIso}`)
+          .order("created_at", { ascending: false })
+          .limit(8),
+        supabase
+          .from("listings")
+          .select("street_name,street_number,city,list_price,created_at")
+          .eq("status", "A")
+          .order("created_at", { ascending: false })
+          .limit(5),
+        supabase
+          .from("business_specials")
+          .select("headline,town_slug,town_name,cta_url,start_date,end_date")
+          .eq("is_active", true)
+          .lte("start_date", new Date(now).toISOString().slice(0, 10))
+          .or(`end_date.is.null,end_date.gte.${new Date(now).toISOString().slice(0, 10)}`)
+          .order("start_date", { ascending: false })
+          .limit(6),
+        supabase
+          .from("town_ledger")
+          .select("title,town_slug,category,source_url,published_at")
+          .eq("is_featured", true)
+          .order("published_at", { ascending: false })
+          .limit(6),
+      ]);
+
+      if (cancelled) return;
+
+      const collected: PulseItem[] = [];
+
+      (eventsRes.data ?? []).forEach((e: any) => {
+        collected.push({
+          category: "Event",
+          title: e.title,
+          location: e.town_name ?? townLabel(e.town_slug),
+          url: e.cta_url || (e.town_slug ? `/towns/${e.town_slug}` : "/local"),
+          priority: 1,
+          date: e.starts_at ? new Date(e.starts_at).getTime() : now,
+        });
+      });
+
+      (bizRes.data ?? []).forEach((b: any) => {
+        const label = b.is_featured ? `Featured: ${b.name}` : `New on Nest: ${b.name}`;
+        collected.push({
+          category: "Business",
+          title: label,
+          location: b.town_name ?? townLabel(b.town_slug),
+          url: b.slug ? `/local/${b.slug}` : "/local",
+          priority: 2,
+          date: b.created_at ? new Date(b.created_at).getTime() : now,
+        });
+      });
+
+      (listingsRes.data ?? []).forEach((l: any) => {
+        const addr = [l.street_number, l.street_name].filter(Boolean).join(" ").trim();
+        const price = l.list_price ? `$${Math.round(Number(l.list_price)).toLocaleString()}` : null;
+        const title = [
+          "New listing",
+          addr || null,
+          l.city ? `in ${l.city}` : null,
+          price ? `· ${price}` : null,
+        ]
+          .filter(Boolean)
+          .join(" ");
+        collected.push({
+          category: "Homes",
+          title,
+          location: l.city,
+          url: "/homes-for-sale",
+          priority: 3,
+          date: l.created_at ? new Date(l.created_at).getTime() : now,
+        });
+      });
+
+      (specialsRes.data ?? []).forEach((s: any) => {
+        collected.push({
+          category: "Special",
+          title: s.headline,
+          location: s.town_name ?? townLabel(s.town_slug),
+          url: s.cta_url || (s.town_slug ? `/towns/${s.town_slug}` : "/local"),
+          priority: 4,
+          date: s.start_date ? new Date(s.start_date).getTime() : now,
+        });
+      });
+
+      (ledgerRes.data ?? []).forEach((t: any) => {
+        collected.push({
+          category: "Town",
+          title: t.title,
+          location: townLabel(t.town_slug),
+          url: t.source_url || (t.town_slug ? `/towns/${t.town_slug}` : "/"),
+          priority: 5,
+          date: t.published_at ? new Date(t.published_at).getTime() : now,
+        });
+      });
+
+      collected.sort((a, b) => a.priority - b.priority || b.date - a.date);
+
+      setItems(collected.slice(0, 18));
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Evergreen fallback (single calm message — never fake "live" data)
+  const evergreen: PulseItem = useMemo(
+    () => ({
+      category: "Town",
+      title: "Explore homes, businesses, events, and local updates across the Capital District.",
+      url: "/local",
+      priority: 99,
+      date: 0,
+    }),
+    []
+  );
+
+  // While loading, render nothing (avoid layout flash with fake data)
+  if (items === null) return null;
+
+  const visible = items.length > 0 ? items : [evergreen];
+  const loop = [...visible, ...visible];
 
   return (
-    <section aria-label="Live Local Pulse" className="relative w-full overflow-visible bg-[#0B0F19] border-b border-[#2D3748] select-none">
+    <section
+      aria-label="Capital District Pulse"
+      className="relative w-full overflow-visible bg-[#0B0F19] border-b border-[#2D3748] select-none"
+    >
       <div
         className="absolute inset-0 pointer-events-none opacity-70"
         style={{
@@ -150,15 +236,14 @@ export default function LiveLocalPulse() {
       />
 
       <div className="relative w-full mx-auto px-4 md:px-8 py-3 md:py-3.5 flex flex-nowrap items-center gap-3 md:gap-6 overflow-visible">
-
         {/* LEFT: live indicator */}
         <div className="flex items-center gap-2 shrink-0">
           <span className="relative flex h-2 w-2">
             <span className="absolute inset-0 rounded-full bg-[#5eead4] opacity-60 animate-ping" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-[#5eead4] shadow-[0_0_10px_rgba(94,234,212,0.7)]" />
           </span>
-          <span className="text-[10px] md:text-[11px] font-semibold tracking-[0.28em] uppercase text-white/70">
-            Live Local Pulse
+          <span className="text-[10px] md:text-[11px] font-semibold tracking-[0.28em] uppercase text-white/70 whitespace-nowrap">
+            Capital District Pulse
           </span>
         </div>
 
@@ -188,31 +273,6 @@ export default function LiveLocalPulse() {
               <PulseRow key={`${item.title}-${i}`} item={item} />
             ))}
           </div>
-        </div>
-
-        {/* RIGHT: live scores micro module (xl+) */}
-        <LiveScoresModule />
-
-        {/* RIGHT: category filters (desktop) */}
-        <div className="hidden lg:flex items-center gap-1.5 shrink-0">
-          {CATEGORIES.map((c) => {
-            const active = filter === c;
-            return (
-              <button
-                key={c}
-                onClick={() => setFilter(c)}
-                className={[
-                  "px-3 py-1 rounded-full text-[11px] font-medium tracking-wide transition-all border inline-flex items-center gap-1",
-                  active
-                    ? "bg-[#5eead4]/15 text-[#5eead4] border-[#5eead4]/40"
-                    : "bg-white/[0.03] text-white/55 border-white/10 hover:text-white/85 hover:border-white/20",
-                ].join(" ")}
-              >
-                {c === "Sports" && <Trophy className="w-3 h-3" strokeWidth={2.25} />}
-                {c}
-              </button>
-            );
-          })}
         </div>
       </div>
 
