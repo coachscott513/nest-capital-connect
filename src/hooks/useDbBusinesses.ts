@@ -50,7 +50,14 @@ const mapCategory = (raw: string | null, tags: string[] = []): BusinessCategory 
 };
 
 const slugify = (s: string) =>
-  s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 80);
+  s
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[’']/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 80);
 
 const titleCase = (s: string) =>
   s.replace(/\b\w/g, (c) => c.toUpperCase()).replace(/-/g, " ");
