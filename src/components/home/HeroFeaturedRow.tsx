@@ -12,10 +12,12 @@ type HeroSpotlight = {
   category: string;
   town: string;
   hoursToday: string;
-  phone: string;
+  phone?: string;
+  website?: string;
+  menu_url?: string;
   image_url: string;
-  to: string;
-  ctaLabel: string;
+  slug: string;
+  ctaIntent?: "connect";
 };
 
 const PLACEHOLDER_SCENIC =
@@ -28,10 +30,10 @@ const HERO_SPOTLIGHTS: HeroSpotlight[] = [
     town: "Delmar, NY",
     hoursToday: "6:30 AM – 5:00 PM",
     phone: "(518) 439-0001",
+    website: "https://theperfectblendcafe.com",
     image_url:
       "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=1400&q=80",
-    to: "/local?search=Perfect+Blend",
-    ctaLabel: "View Café Menu",
+    slug: "the-perfect-blend-cafe",
   },
   {
     name: "McCarroll's The Village Butcher",
@@ -39,10 +41,11 @@ const HERO_SPOTLIGHTS: HeroSpotlight[] = [
     town: "Slingerlands, NY",
     hoursToday: "9:00 AM – 6:00 PM",
     phone: "(518) 439-9000",
+    website: "https://mccarrollsbutcher.com",
     image_url:
       "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1400&q=80",
-    to: "/local?search=McCarroll",
-    ctaLabel: "Connect Instantly",
+    slug: "mccarrolls-the-village-butcher",
+    ctaIntent: "connect",
   },
   {
     name: "Roux",
@@ -50,12 +53,36 @@ const HERO_SPOTLIGHTS: HeroSpotlight[] = [
     town: "Albany, NY",
     hoursToday: "5:00 PM – 10:00 PM",
     phone: "(518) 689-3434",
+    website: "https://rouxalbany.com",
     image_url:
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80",
-    to: "/local?search=Roux",
-    ctaLabel: "View Dinner Menu",
+    slug: "roux",
   },
 ];
+
+const safeUrl = (value?: string | null) => {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+};
+
+const cleanTelHref = (phone?: string | null) => {
+  const digits = phone?.replace(/[^\d+]/g, "");
+  return digits ? `tel:${digits}` : null;
+};
+
+const getHeroCta = (business: HeroSpotlight) => {
+  const menuUrl = safeUrl(business.menu_url);
+  const websiteUrl = safeUrl(business.website);
+  const phoneHref = cleanTelHref(business.phone);
+
+  if (menuUrl) return { label: "View Menu", href: menuUrl, external: true };
+  if (business.ctaIntent === "connect" && phoneHref) {
+    return { label: "Call Now", href: phoneHref, external: false };
+  }
+  if (websiteUrl) return { label: "Visit Website", href: websiteUrl, external: true };
+  return { label: "View Profile", href: `/business/${business.slug}`, external: false };
+};
 
 const FeaturedBadge = () => (
   <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/45 backdrop-blur-md border border-white/20 text-[10px] font-semibold tracking-[0.16em] uppercase text-white/90">
@@ -66,6 +93,8 @@ const FeaturedBadge = () => (
 
 const HeroCard = ({ business }: { business: HeroSpotlight }) => {
   const src = business.image_url || PLACEHOLDER_SCENIC;
+  const cta = getHeroCta(business);
+  const phoneHref = cleanTelHref(business.phone);
 
   return (
     <article
@@ -77,8 +106,10 @@ const HeroCard = ({ business }: { business: HeroSpotlight }) => {
         boxShadow: "0 24px 60px -28px rgba(0,0,0,0.75)",
       }}
     >
-      <Link
-        to={business.to}
+      <a
+        href={cta.href}
+        target={cta.external ? "_blank" : undefined}
+        rel={cta.external ? "noopener noreferrer" : undefined}
         className="block relative w-full h-36 sm:h-40 overflow-hidden"
       >
         <div className="absolute inset-0">
@@ -94,7 +125,7 @@ const HeroCard = ({ business }: { business: HeroSpotlight }) => {
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
         <FeaturedBadge />
-      </Link>
+      </a>
 
       <div className="relative p-4 sm:p-5 flex flex-col gap-2.5">
         <div>
@@ -118,20 +149,24 @@ const HeroCard = ({ business }: { business: HeroSpotlight }) => {
         </div>
 
         <div className="mt-2 flex items-center gap-2">
-          <Link
-            to={business.to}
+          <a
+            href={cta.href}
+            target={cta.external ? "_blank" : undefined}
+            rel={cta.external ? "noopener noreferrer" : undefined}
             className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white text-[#0B0F19] text-[12.5px] font-semibold hover:opacity-90 transition"
           >
-            <span>{business.ctaLabel}</span>
+            <span>{cta.label}</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
-          <a
-            href={`tel:${business.phone.replace(/[^\d+]/g, "")}`}
-            aria-label={`Call ${business.name}`}
-            className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/15 text-white/85 hover:border-[#5eead4]/55 hover:text-[#5eead4] transition"
-          >
-            <Phone className="w-3.5 h-3.5" />
           </a>
+          {phoneHref && (
+            <a
+              href={phoneHref}
+              aria-label={`Call ${business.name}`}
+              className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/15 text-white/85 hover:border-[#5eead4]/55 hover:text-[#5eead4] transition"
+            >
+              <Phone className="w-3.5 h-3.5" />
+            </a>
+          )}
         </div>
       </div>
     </article>
