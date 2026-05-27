@@ -197,23 +197,31 @@ const SupportLocalSection = () => {
               ))}
             </div>
           ) : (
-            <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-10 md:p-14 text-center">
+            <div className="rounded-3xl border border-[#5eead4]/25 bg-gradient-to-br from-[#0d6e66]/15 via-white/[0.02] to-white/[0.02] backdrop-blur-xl p-10 md:p-14 text-center">
               <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4] mb-3">
-                Featured Spotlights
+                Available Spotlight Placements
               </p>
-              <p className="text-lg md:text-xl font-medium text-white mb-2">
-                No featured partners are live yet.
+              <p className="text-2xl md:text-3xl font-semibold tracking-[-0.015em] text-white mb-3">
+                Featured partner placements are opening.
               </p>
-              <p className="text-sm text-white/55 mb-6 max-w-md mx-auto">
-                Own a Capital District business? Claim your free profile and request
-                consideration for a featured spotlight placement.
+              <p className="text-sm md:text-base text-white/60 mb-7 max-w-lg mx-auto font-light leading-relaxed">
+                Claim your profile and request one of the first local spotlight positions
+                during our 25-business pilot.
               </p>
-              <Link
-                to="/claim-business"
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
-              >
-                For Local Businesses <ArrowRight className="w-4 h-4" />
-              </Link>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  to="/claim-business"
+                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+                >
+                  Claim Your Profile <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  to="/pricing"
+                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[#5eead4] text-sm font-semibold hover:bg-[#5eead4]/20 transition"
+                >
+                  Request a Featured Placement
+                </Link>
+              </div>
             </div>
           )}
 
