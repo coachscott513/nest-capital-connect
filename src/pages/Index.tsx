@@ -10,6 +10,7 @@ import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 import SupportLocalSection from "@/components/home/SupportLocalSection";
 import LiveLocalPulse from "@/components/home/LiveLocalPulse";
 import SpotlightSearch from "@/components/home/SpotlightSearch";
+import RegionalSpotlights from "@/components/home/RegionalSpotlights";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
 
@@ -491,6 +492,9 @@ const Index = () => {
 
       {/* 1 — CINEMATIC HERO */}
       <CinematicHero />
+
+      {/* 1.25 — REGIONAL SPOTLIGHTS · Verified Local Legends (paid-tier showcase) */}
+      <RegionalSpotlights />
 
       {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip */}
       <LiveLocalPulse />

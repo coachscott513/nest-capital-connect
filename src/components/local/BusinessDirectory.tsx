@@ -234,7 +234,14 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     });
 
     const exactMatches = matches(false);
-    return exactMatches.length > 0 || !effectiveTown ? exactMatches : matches(true).slice(0, 100);
+    const pool = exactMatches.length > 0 || !effectiveTown ? exactMatches : matches(true).slice(0, 100);
+    // Prioritize Model Profiles at the top of every results grid:
+    // featured first, then claimed/verified, then everything else.
+    // Stable sort preserves original alphabetical-ish order within each tier.
+    return [...pool].sort((a, b) => {
+      const rank = (x: Business) => (x.featured ? 0 : isClaimed(x) ? 1 : 2);
+      return rank(a) - rank(b);
+    });
   }, [q, town, category, tier, hasWebsite, hasPhone, townSlug, ALL]);
 
   const featured = useMemo(
@@ -656,62 +663,113 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
 
 const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
   const claimed = isClaimed(b);
+  const elevated = Boolean(b.featured || claimed);
+  const accent = b.featured ? "#c9a449" : "#5eead4";
   const seed = b.name.charCodeAt(0) + b.name.charCodeAt(b.name.length - 1);
   const hueA = (seed * 7) % 360;
   const hueB = (hueA + 35) % 360;
   const monogram = useMonogram(b.name);
+
+  // Slideable gallery overlay for featured/claimed cards
+  const galleryImages = (b.gallery && b.gallery.length > 0)
+    ? b.gallery
+    : (b.image ? [b.image] : []);
+  const [galleryIdx, setGalleryIdx] = useState(0);
+  useEffect(() => {
+    if (!elevated || galleryImages.length < 2) return;
+    const id = setInterval(
+      () => setGalleryIdx((i) => (i + 1) % galleryImages.length),
+      5200,
+    );
+    return () => clearInterval(id);
+  }, [elevated, galleryImages.length]);
 
   return (
     <button
       onClick={onOpen}
       className={`group relative text-left rounded-[22px] bg-[#1E2230] border overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col ${
         b.featured
-          ? "border-[#5eead4]/30 hover:border-[#5eead4]/60 hover:shadow-[0_28px_64px_-20px_rgba(94,234,212,0.30)]"
+          ? "border-[#c9a449]/35 hover:border-[#c9a449]/70 hover:shadow-[0_28px_64px_-20px_rgba(201,164,73,0.30)]"
+          : claimed
+          ? "border-[#5eead4]/25 hover:border-[#5eead4]/55 hover:shadow-[0_24px_56px_-22px_rgba(94,234,212,0.22)]"
           : "border-white/[0.07] hover:border-[#5eead4]/30 hover:shadow-[0_24px_56px_-22px_rgba(94,234,212,0.18)]"
       }`}
     >
+      {/* Razor-thin animated accent border for elevated profiles */}
+      {elevated && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-[22px] opacity-80"
+          style={{
+            padding: 1,
+            background: `linear-gradient(135deg, ${accent}66, transparent 35%, transparent 65%, ${accent}66)`,
+            WebkitMask:
+              "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+            WebkitMaskComposite: "xor",
+            maskComposite: "exclude",
+          }}
+        />
+      )}
+
       {/* Cinematic header */}
       <div className="relative h-32 w-full overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-[1.08]"
-          style={
-            b.image
-              ? { backgroundImage: `url(${b.image})` }
-              : { background: `linear-gradient(135deg, hsl(${hueA} 45% 22%) 0%, hsl(${hueB} 55% 14%) 100%)` }
-          }
-        />
+        {elevated && galleryImages.length > 0 ? (
+          galleryImages.map((src, i) => (
+            <div
+              key={src}
+              className="absolute inset-0 bg-cover bg-center transition-opacity duration-[1100ms]"
+              style={{
+                backgroundImage: `url(${src})`,
+                opacity: i === galleryIdx ? 1 : 0,
+                transform: i === galleryIdx ? "scale(1.06)" : "scale(1)",
+                transition:
+                  "opacity 1100ms ease-out, transform 6500ms ease-out",
+              }}
+            />
+          ))
+        ) : (
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-[1.08]"
+            style={
+              b.image
+                ? { backgroundImage: `url(${b.image})` }
+                : { background: `linear-gradient(135deg, hsl(${hueA} 45% 22%) 0%, hsl(${hueB} 55% 14%) 100%)` }
+            }
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
         <div className="absolute -bottom-6 left-6 w-14 h-14 rounded-2xl bg-[#0B0F19] shadow-[0_10px_24px_-10px_rgba(0,0,0,0.6)] flex items-center justify-center text-[#5eead4] font-semibold text-lg tracking-tight border border-[#5eead4]/30">
           {monogram}
         </div>
+
+        {/* Live status pill — top left for elevated profiles */}
+        {elevated && (
+          <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/45 backdrop-blur-md border border-white/15 text-[10px] font-semibold text-white">
+            <span className="relative flex w-1.5 h-1.5">
+              <span className="absolute inset-0 rounded-full animate-ping opacity-60 bg-[#22c55e]" />
+              <span className="relative rounded-full w-1.5 h-1.5 bg-[#22c55e]" />
+            </span>
+            Open Now
+          </span>
+        )}
+
         <div className="absolute top-3 right-3">
           {b.featured ? (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#c9a449] text-[#0B0F19] text-[10px] font-semibold uppercase tracking-wider shadow-[0_4px_14px_-2px_rgba(201,164,73,0.5)]">
+            <span
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.14em]"
+              style={{
+                background: "#c9a449",
+                color: "#0B0F19",
+                boxShadow: "0 4px 14px -2px rgba(201,164,73,0.55)",
+              }}
+            >
               <Sparkles className="w-3 h-3" /> Featured
             </span>
           ) : claimed ? (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/10 backdrop-blur text-white text-[10px] font-semibold uppercase tracking-wider border border-white/20">
-              Verified
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#5eead4] text-[#0B0F19] text-[10px] font-bold uppercase tracking-[0.14em] shadow-[0_4px_14px_-2px_rgba(94,234,212,0.5)]">
+              <Star className="w-3 h-3" /> Verified
             </span>
-          ) : (
-            <span
-              role="button"
-              tabIndex={0}
-              onClick={(e) => {
-                e.stopPropagation();
-                window.location.href = `/claim-business?biz=${encodeURIComponent(b.name)}${b.town ? `&town=${b.town}` : ""}`;
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.stopPropagation();
-                  window.location.href = `/claim-business?biz=${encodeURIComponent(b.name)}${b.town ? `&town=${b.town}` : ""}`;
-                }
-              }}
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/[0.08] backdrop-blur-xl text-white/90 text-[10px] font-semibold uppercase tracking-wider border border-white/20 hover:bg-[#5eead4]/15 hover:border-[#5eead4]/50 hover:text-[#5eead4] transition cursor-pointer"
-            >
-              Claim This Profile
-            </span>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -739,10 +797,30 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
 
         <ContactPreview b={b} claimed={claimed} />
 
-        <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4]">
-          {claimed ? "View profile" : "Claim this profile"}
-          <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-        </span>
+        {claimed ? (
+          <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4]">
+            View profile
+            <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </span>
+        ) : (
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={(e) => {
+              e.stopPropagation();
+              window.location.href = `/claim-business?biz=${encodeURIComponent(b.name)}${b.town ? `&town=${b.town}` : ""}`;
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.stopPropagation();
+                window.location.href = `/claim-business?biz=${encodeURIComponent(b.name)}${b.town ? `&town=${b.town}` : ""}`;
+              }
+            }}
+            className="mt-auto mt-5 w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white text-[#0B0F19] text-[13px] font-bold hover:bg-[#5eead4] transition cursor-pointer"
+          >
+            Claim Free Profile <ArrowUpRight className="w-3.5 h-3.5" />
+          </span>
+        )}
       </div>
     </button>
   );
