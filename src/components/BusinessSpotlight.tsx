@@ -552,7 +552,7 @@ const BusinessSpotlight = () => {
                       rel="noopener noreferrer"
                       className="text-sm text-primary hover:text-primary/80 transition-colors underline underline-offset-2"
                     >
-                      {selectedBusiness.website.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
+                      Visit website
                     </a>
                   </div>
                 </div>
