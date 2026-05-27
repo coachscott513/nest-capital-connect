@@ -399,6 +399,8 @@ const SpotlightCard = ({ s, onOpen }: { s: Spotlight; onOpen: (s: Spotlight) => 
 
 const RegionalSpotlights = () => {
   const trackRef = useRef<HTMLDivElement>(null);
+  const [openBusiness, setOpenBusiness] = useState<Business | null>(null);
+  const modalBusinesses = SPOTLIGHTS.map(toBusiness);
 
   const scroll = (dir: 1 | -1) => {
     const el = trackRef.current;
@@ -451,7 +453,7 @@ const RegionalSpotlights = () => {
           className="-mx-5 sm:-mx-6 md:-mx-10 px-5 sm:px-6 md:px-10 flex gap-5 md:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-3"
         >
           {SPOTLIGHTS.map((s) => (
-            <SpotlightCard key={s.name} s={s} />
+            <SpotlightCard key={s.name} s={s} onOpen={(spotlight) => setOpenBusiness(toBusiness(spotlight))} />
           ))}
         </div>
 
@@ -467,6 +469,7 @@ const RegionalSpotlights = () => {
             Become a Featured Partner <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
+        <BusinessDetailModal biz={openBusiness} onClose={() => setOpenBusiness(null)} all={modalBusinesses} />
       </div>
     </section>
   );
