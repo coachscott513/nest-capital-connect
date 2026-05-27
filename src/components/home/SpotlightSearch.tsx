@@ -50,28 +50,18 @@ const ROTATING_PLACEHOLDERS = [
   "Lake George waterfront homes",
 ];
 
-type ChipKey =
-  | "homes"
-  | "towns"
-  | "businesses"
-  | "investment"
-  | "restaurants"
-  | "schools"
-  | "openhouses"
-  | "rentals"
-  | "events";
-
-const CHIPS: { key: ChipKey; label: string; icon: any; to: string; query?: string }[] = [
-  { key: "homes",       label: "Homes",            icon: HomeIcon,      to: "/homes-for-sale" },
-  { key: "towns",       label: "Towns",            icon: MapPin,        to: "/communities" },
-  { key: "businesses",  label: "Businesses",       icon: Building2,     to: "/local" },
-  { key: "investment",  label: "Investment Deals", icon: TrendingUp,    to: "/analyze" },
-  { key: "restaurants", label: "Restaurants",      icon: Coffee,        to: "/local?q=restaurant" },
-  { key: "schools",     label: "Schools",          icon: GraduationCap, to: "/intelligence" },
-  { key: "openhouses",  label: "Open Houses",      icon: DoorOpen,      to: "/homes-for-sale?status=open-house" },
-  { key: "rentals",     label: "Rentals",          icon: Key,           to: "/rentals" },
-  { key: "events",      label: "Weekend Events",   icon: CalendarDays,  to: "/#weekly-feed" },
+// Curated prompt pills — each fires the omni-search using its label as the query
+const PROMPT_PILLS: { label: string; query: string }[] = [
+  { label: "Delmar homes",                  query: "Delmar homes" },
+  { label: "Troy restaurants",              query: "Troy restaurants" },
+  { label: "Albany investment properties",  query: "Albany investment properties" },
+  { label: "Saratoga events",               query: "Saratoga events" },
+  { label: "Plumbers near me",              query: "plumbers" },
+  { label: "Cafes in Bethlehem",            query: "cafes Bethlehem" },
+  { label: "55+ communities",               query: "55+ communities" },
+  { label: "Local contractors",             query: "contractors" },
 ];
+
 
 const FEATURED_TOWNS = [
   { name: "Delmar",           median: "$470K", to: "/living-in/delmar" },
