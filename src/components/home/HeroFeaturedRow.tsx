@@ -110,8 +110,8 @@ const FeaturedBadge = () => (
 
 const HeroCard = ({ business, onOpen }: { business: HeroSpotlight; onOpen: (business: HeroSpotlight) => void }) => {
   const src = business.image_url || PLACEHOLDER_SCENIC;
-  const cta = getHeroCta(business);
   const phoneHref = cleanTelHref(business.phone);
+  const open = () => onOpen(business);
 
   return (
     <article
@@ -123,48 +123,26 @@ const HeroCard = ({ business, onOpen }: { business: HeroSpotlight; onOpen: (busi
         boxShadow: "0 24px 60px -28px rgba(0,0,0,0.75)",
       }}
     >
-      {cta.href ? (
-        <a
-          href={cta.href}
-          target={cta.external ? "_blank" : undefined}
-          rel={cta.external ? "noopener noreferrer" : undefined}
-          className="block relative w-full h-36 sm:h-40 overflow-hidden"
-        >
-          <div className="absolute inset-0">
-            <img
-              src={src}
-              alt={business.name}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src = PLACEHOLDER_SCENIC;
-              }}
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
-          <FeaturedBadge />
-        </a>
-      ) : (
-        <button
-          type="button"
-          onClick={() => onOpen(business)}
-          className="block relative w-full h-36 sm:h-40 overflow-hidden"
-        >
-          <div className="absolute inset-0">
-            <img
-              src={src}
-              alt={business.name}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src = PLACEHOLDER_SCENIC;
-              }}
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
-          <FeaturedBadge />
-        </button>
-      )}
+      <button
+        type="button"
+        onClick={open}
+        aria-label={`View ${business.name}`}
+        className="block relative w-full h-36 sm:h-40 overflow-hidden"
+      >
+        <div className="absolute inset-0">
+          <img
+            src={src}
+            alt={business.name}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = PLACEHOLDER_SCENIC;
+            }}
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
+        <FeaturedBadge />
+      </button>
 
       <div className="relative p-4 sm:p-5 flex flex-col gap-2.5">
         <div>
@@ -188,29 +166,18 @@ const HeroCard = ({ business, onOpen }: { business: HeroSpotlight; onOpen: (busi
         </div>
 
         <div className="mt-2 flex items-center gap-2">
-          {cta.href ? (
-            <a
-              href={cta.href}
-              target={cta.external ? "_blank" : undefined}
-              rel={cta.external ? "noopener noreferrer" : undefined}
-              className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white text-[#0B0F19] text-[12.5px] font-semibold hover:opacity-90 transition"
-            >
-              <span>{cta.label}</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
-          ) : (
-            <button
-              type="button"
-              onClick={() => onOpen(business)}
-              className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white text-[#0B0F19] text-[12.5px] font-semibold hover:opacity-90 transition"
-            >
-              <span>{cta.label}</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={open}
+            className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white text-[#0B0F19] text-[12.5px] font-semibold hover:opacity-90 transition"
+          >
+            <span>View Profile</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </button>
           {phoneHref && (
             <a
               href={phoneHref}
+              onClick={(e) => e.stopPropagation()}
               aria-label={`Call ${business.name}`}
               className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/15 text-white/85 hover:border-[#5eead4]/55 hover:text-[#5eead4] transition"
             >
