@@ -11,6 +11,7 @@ import SupportLocalSection from "@/components/home/SupportLocalSection";
 import LiveLocalPulse from "@/components/home/LiveLocalPulse";
 import SpotlightSearch from "@/components/home/SpotlightSearch";
 import RegionalSpotlights from "@/components/home/RegionalSpotlights";
+import FloatingOmniSearch from "@/components/home/FloatingOmniSearch";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
 
@@ -117,7 +118,7 @@ function TownTile({
   return (
     <Link
       to={to}
-      className="group relative block overflow-hidden rounded-[28px] aspect-[16/11] sm:aspect-[4/5] md:aspect-[3/4] shadow-[0_20px_60px_-30px_rgba(0,0,0,0.45)] hover:shadow-[0_28px_72px_-28px_rgba(0,0,0,0.55)] transition-shadow duration-500"
+      className="group relative block overflow-hidden rounded-[28px] aspect-[16/11] sm:aspect-[4/5] md:aspect-[3/4] bg-[#1E2230] ring-1 ring-transparent shadow-[0_20px_60px_-30px_rgba(0,0,0,0.45)] hover:ring-[#5eead4]/60 hover:shadow-[0_28px_72px_-22px_rgba(94,234,212,0.35)] transition-all duration-500"
     >
       <img
         src={img}
@@ -489,6 +490,7 @@ const Index = () => {
         structuredData={localBusinessSchema}
       />
       <CleanHeader />
+      <FloatingOmniSearch />
 
       {/* 1 — CINEMATIC HERO */}
       <CinematicHero />

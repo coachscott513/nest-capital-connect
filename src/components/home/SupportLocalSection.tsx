@@ -171,13 +171,16 @@ const SupportLocalSection = () => {
 
         {/* Featured row */}
         <div className="mt-14 md:mt-16">
+          <p className="text-[10.5px] font-semibold tracking-[0.32em] uppercase text-white/35 mb-3">
+            Trending Database Indexes
+          </p>
           <div className="flex items-end justify-between mb-7 flex-wrap gap-4">
             <div>
               <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-2 text-[#5eead4]">
                 Featured Community Partners
               </p>
-              <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white">
-                Trusted across the Capital District.
+              <h3 className="text-2xl md:text-3xl font-mono font-semibold tracking-[-0.01em] text-white">
+                QUERY: <span className="text-[#5eead4]">"Delmar Dining &amp; Trusted Trades"</span>
               </h3>
             </div>
             <Link
@@ -194,10 +197,10 @@ const SupportLocalSection = () => {
                 key={b.slug}
                 type="button"
                 onClick={() => setOpenBiz(b)}
-                className={`group relative text-left rounded-2xl overflow-hidden bg-[#1E2230] border transition-all duration-300 hover:-translate-y-1 flex flex-col ${
+                className={`group relative text-left rounded-2xl overflow-hidden bg-[#1E2230] border-0 ring-1 ring-transparent transition-all duration-300 hover:-translate-y-1 flex flex-col ${
                   b.featured
-                    ? "border-[#5eead4]/30 hover:border-[#5eead4]/60 hover:shadow-[0_28px_64px_-20px_rgba(94,234,212,0.30)]"
-                    : "border-[#2D3748] hover:border-[#5eead4]/40 hover:shadow-[0_22px_56px_-22px_rgba(94,234,212,0.18)]"
+                    ? "shadow-[0_22px_56px_-22px_rgba(201,164,73,0.18)] hover:ring-[#c9a449]/70 hover:shadow-[0_28px_64px_-20px_rgba(201,164,73,0.35)]"
+                    : "hover:ring-[#5eead4]/60 hover:shadow-[0_22px_56px_-22px_rgba(94,234,212,0.30)]"
                 }`}
               >
                 <div className="relative h-40 w-full overflow-hidden">
