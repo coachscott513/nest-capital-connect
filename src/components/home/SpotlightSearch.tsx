@@ -50,28 +50,18 @@ const ROTATING_PLACEHOLDERS = [
   "Lake George waterfront homes",
 ];
 
-type ChipKey =
-  | "homes"
-  | "towns"
-  | "businesses"
-  | "investment"
-  | "restaurants"
-  | "schools"
-  | "openhouses"
-  | "rentals"
-  | "events";
-
-const CHIPS: { key: ChipKey; label: string; icon: any; to: string; query?: string }[] = [
-  { key: "homes",       label: "Homes",            icon: HomeIcon,      to: "/homes-for-sale" },
-  { key: "towns",       label: "Towns",            icon: MapPin,        to: "/communities" },
-  { key: "businesses",  label: "Businesses",       icon: Building2,     to: "/local" },
-  { key: "investment",  label: "Investment Deals", icon: TrendingUp,    to: "/analyze" },
-  { key: "restaurants", label: "Restaurants",      icon: Coffee,        to: "/local?q=restaurant" },
-  { key: "schools",     label: "Schools",          icon: GraduationCap, to: "/intelligence" },
-  { key: "openhouses",  label: "Open Houses",      icon: DoorOpen,      to: "/homes-for-sale?status=open-house" },
-  { key: "rentals",     label: "Rentals",          icon: Key,           to: "/rentals" },
-  { key: "events",      label: "Weekend Events",   icon: CalendarDays,  to: "/#weekly-feed" },
+// Curated prompt pills — each fires the omni-search using its label as the query
+const PROMPT_PILLS: { label: string; query: string }[] = [
+  { label: "Delmar homes",                  query: "Delmar homes" },
+  { label: "Troy restaurants",              query: "Troy restaurants" },
+  { label: "Albany investment properties",  query: "Albany investment properties" },
+  { label: "Saratoga events",               query: "Saratoga events" },
+  { label: "Plumbers near me",              query: "plumbers" },
+  { label: "Cafes in Bethlehem",            query: "cafes Bethlehem" },
+  { label: "55+ communities",               query: "55+ communities" },
+  { label: "Local contractors",             query: "contractors" },
 ];
+
 
 const FEATURED_TOWNS = [
   { name: "Delmar",           median: "$470K", to: "/living-in/delmar" },
@@ -169,7 +159,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
         )}
       </AnimatePresence>
 
-      <div ref={wrapRef} className="relative z-50 mx-auto w-full max-w-3xl">
+      <div ref={wrapRef} className="relative z-50 mx-auto w-full max-w-4xl">
         {eyebrow && (
           <p className="mb-4 text-center text-[11px] md:text-xs font-semibold tracking-[0.32em] uppercase text-white/65">
             <span className="inline-flex items-center gap-2">
@@ -190,7 +180,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
               : "0 40px 100px -40px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.12)",
           }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex items-center gap-3 rounded-[28px] bg-white/[0.08] backdrop-blur-2xl border border-white/15 pl-5 md:pl-7 pr-2 py-2.5 md:py-3"
+          className="relative flex items-center gap-3 rounded-[32px] bg-white/[0.08] backdrop-blur-2xl border border-white/15 pl-5 md:pl-8 pr-2 md:pr-3 py-3 md:py-4"
           style={{
             backgroundImage:
               "linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03))",
@@ -206,7 +196,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
             aria-hidden
           />
 
-          <Search className="relative w-5 h-5 text-white/65 shrink-0" />
+          <Search className="relative w-5 h-5 md:w-6 md:h-6 text-white/65 shrink-0" />
 
           <div className="relative flex-1 min-w-0">
             <input
@@ -217,7 +207,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
               onFocus={() => setOpen(true)}
               onKeyDown={onKeyDownInput}
               placeholder=""
-              className="w-full bg-transparent text-[16px] md:text-[19px] text-white placeholder:text-transparent focus:outline-none py-2 md:py-2.5 tracking-[-0.005em]"
+              className="w-full min-w-0 bg-transparent text-[16px] md:text-[20px] text-white placeholder:text-transparent focus:outline-none py-2.5 md:py-3 tracking-[-0.005em]"
               aria-label="Explore the Capital District"
             />
             {/* Animated rotating placeholder layer (only when empty) */}
@@ -230,7 +220,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -12, opacity: 0 }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="block text-[16px] md:text-[19px] text-white/55 font-light tracking-[-0.005em] truncate"
+                    className="block text-[16px] md:text-[20px] text-white/55 font-light tracking-[-0.005em] truncate"
                   >
                     {placeholder}
                   </motion.span>
@@ -241,28 +231,32 @@ export default function SpotlightSearch({ eyebrow }: Props) {
 
           <button
             type="submit"
-            className="relative shrink-0 inline-flex items-center gap-1.5 px-5 md:px-6 py-2.5 md:py-3 rounded-full bg-white text-[#0e0f12] text-[13px] md:text-sm font-semibold hover:opacity-90 transition"
+            className="relative shrink-0 inline-flex items-center gap-1.5 px-5 md:px-7 py-3 md:py-3.5 rounded-full bg-white text-[#0e0f12] text-[13px] md:text-sm font-semibold hover:opacity-90 transition"
           >
-            Explore <ArrowRight className="w-4 h-4" />
+            Search <ArrowRight className="w-4 h-4" />
           </button>
+
         </motion.form>
 
-        {/* Quick Explore chips */}
-        <div className="relative mt-5 flex flex-wrap items-center justify-center gap-2">
-          {CHIPS.map((c) => {
-            const Icon = c.icon;
-            return (
-              <Link
-                key={c.key}
-                to={c.to}
-                className="group inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 hover:border-[#5eead4]/45 text-white/80 hover:text-white text-[12.5px] font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-12px_rgba(94,234,212,0.45)]"
-              >
-                <Icon className="w-3.5 h-3.5 text-white/55 group-hover:text-[#5eead4] transition-colors" />
-                {c.label}
-              </Link>
-            );
-          })}
+        {/* Curated search prompts — populate the input + fire the search */}
+        <div className="relative mt-6 flex flex-wrap items-center justify-center gap-2">
+          {PROMPT_PILLS.map((p) => (
+            <button
+              key={p.label}
+              type="button"
+              onClick={() => {
+                setQ(p.query);
+                setOpen(false);
+                navigate(getSearchRoute(p.query));
+              }}
+              className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 hover:border-[#5eead4]/45 text-white/85 hover:text-white text-[12.5px] font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-12px_rgba(94,234,212,0.45)]"
+            >
+              <Search className="w-3 h-3 text-white/45 group-hover:text-[#5eead4] transition-colors" />
+              {p.label}
+            </button>
+          ))}
         </div>
+
 
         {/* Expanded spotlight panel */}
         <AnimatePresence>
