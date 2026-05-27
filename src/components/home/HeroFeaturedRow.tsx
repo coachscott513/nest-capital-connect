@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BadgeCheck, Phone, ArrowUpRight, Clock, MapPin } from "lucide-react";
+import { BusinessDetailModal } from "@/components/local/BusinessDirectory";
+import type { Business } from "@/data/businesses";
 
 /* =============================================================
    HERO FEATURED ROW — premium "Member Local Legend" cards
@@ -81,8 +84,22 @@ const getHeroCta = (business: HeroSpotlight) => {
     return { label: "Call Now", href: phoneHref, external: false };
   }
   if (websiteUrl) return { label: "Visit Website", href: websiteUrl, external: true };
-  return { label: "View Profile", href: `/business/${business.slug}`, external: false };
+  return { label: "View Profile", href: null, external: false };
 };
+
+const toBusiness = (business: HeroSpotlight): Business => ({
+  slug: business.slug,
+  name: business.name,
+  town: business.town.toLowerCase().replace(/,?\s*ny$/, "").replace(/[^a-z0-9]+/g, "-"),
+  townLabel: business.town.replace(/,?\s*NY$/, ""),
+  category: business.category.toLowerCase().includes("café") ? "Coffee" : business.category.toLowerCase().includes("butcher") ? "Retail" : "Restaurant",
+  tagline: `${business.category} in ${business.town}`,
+  phone: business.phone,
+  website: business.website,
+  hours: business.hoursToday,
+  image: business.image_url,
+  featured: true,
+});
 
 const FeaturedBadge = () => (
   <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/45 backdrop-blur-md border border-white/20 text-[10px] font-semibold tracking-[0.16em] uppercase text-white/90">
@@ -91,7 +108,7 @@ const FeaturedBadge = () => (
   </div>
 );
 
-const HeroCard = ({ business }: { business: HeroSpotlight }) => {
+const HeroCard = ({ business, onOpen }: { business: HeroSpotlight; onOpen: (business: HeroSpotlight) => void }) => {
   const src = business.image_url || PLACEHOLDER_SCENIC;
   const cta = getHeroCta(business);
   const phoneHref = cleanTelHref(business.phone);
@@ -106,12 +123,12 @@ const HeroCard = ({ business }: { business: HeroSpotlight }) => {
         boxShadow: "0 24px 60px -28px rgba(0,0,0,0.75)",
       }}
     >
-      <a
+      {cta.href ? <a
         href={cta.href}
         target={cta.external ? "_blank" : undefined}
         rel={cta.external ? "noopener noreferrer" : undefined}
         className="block relative w-full h-36 sm:h-40 overflow-hidden"
-      >
+      > : <button type="button" onClick={() => onOpen(business)} className="block relative w-full h-36 sm:h-40 overflow-hidden">}
         <div className="absolute inset-0">
           <img
             src={src}
@@ -125,7 +142,7 @@ const HeroCard = ({ business }: { business: HeroSpotlight }) => {
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
         <FeaturedBadge />
-      </a>
+      {cta.href ? </a> : </button>}
 
       <div className="relative p-4 sm:p-5 flex flex-col gap-2.5">
         <div>
@@ -149,15 +166,26 @@ const HeroCard = ({ business }: { business: HeroSpotlight }) => {
         </div>
 
         <div className="mt-2 flex items-center gap-2">
-          <a
-            href={cta.href}
-            target={cta.external ? "_blank" : undefined}
-            rel={cta.external ? "noopener noreferrer" : undefined}
-            className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white text-[#0B0F19] text-[12.5px] font-semibold hover:opacity-90 transition"
-          >
-            <span>{cta.label}</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </a>
+          {cta.href ? (
+            <a
+              href={cta.href}
+              target={cta.external ? "_blank" : undefined}
+              rel={cta.external ? "noopener noreferrer" : undefined}
+              className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white text-[#0B0F19] text-[12.5px] font-semibold hover:opacity-90 transition"
+            >
+              <span>{cta.label}</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => onOpen(business)}
+              className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white text-[#0B0F19] text-[12.5px] font-semibold hover:opacity-90 transition"
+            >
+              <span>{cta.label}</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </button>
+          )}
           {phoneHref && (
             <a
               href={phoneHref}
@@ -174,6 +202,9 @@ const HeroCard = ({ business }: { business: HeroSpotlight }) => {
 };
 
 const HeroFeaturedRow = () => {
+  const [openBusiness, setOpenBusiness] = useState<Business | null>(null);
+  const modalBusinesses = HERO_SPOTLIGHTS.map(toBusiness);
+
   return (
     <div className="relative mx-auto w-full max-w-5xl">
       <div className="flex items-center justify-between mb-3 px-1">
@@ -190,9 +221,10 @@ const HeroFeaturedRow = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         {HERO_SPOTLIGHTS.map((business) => (
-          <HeroCard key={business.name} business={business} />
+          <HeroCard key={business.name} business={business} onOpen={(b) => setOpenBusiness(toBusiness(b))} />
         ))}
       </div>
+      <BusinessDetailModal biz={openBusiness} onClose={() => setOpenBusiness(null)} all={modalBusinesses} />
     </div>
   );
 };
