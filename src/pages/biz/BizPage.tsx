@@ -420,11 +420,6 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
     if (navigator.share) { try { await navigator.share({ title: biz.name, url }); } catch {} }
     else { await navigator.clipboard.writeText(url); toast.success("Link copied"); }
   };
-  const socials = [
-    { url: biz.instagram, Icon: Instagram, label: "Instagram" },
-    { url: biz.facebook, Icon: Facebook, label: "Facebook" },
-    { url: biz.linkedin, Icon: Linkedin, label: "LinkedIn" },
-  ].filter((s) => s.url);
 
   return (
     <>
@@ -551,11 +546,6 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
     toast.success("Message sent — we'll be in touch.");
   };
 
-  const socials = [
-    { url: biz.instagram, Icon: Instagram, label: "Instagram" },
-    { url: biz.facebook, Icon: Facebook, label: "Facebook" },
-    { url: biz.linkedin, Icon: Linkedin, label: "LinkedIn" },
-  ].filter((s) => s.url);
 
   return (
     <>
