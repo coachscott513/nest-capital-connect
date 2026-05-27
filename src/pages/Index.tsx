@@ -10,7 +10,7 @@ import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 import SupportLocalSection from "@/components/home/SupportLocalSection";
 import LiveLocalPulse from "@/components/home/LiveLocalPulse";
 import SpotlightSearch from "@/components/home/SpotlightSearch";
-import RegionalSpotlights from "@/components/home/RegionalSpotlights";
+import HeroFeaturedRow from "@/components/home/HeroFeaturedRow";
 import FloatingOmniSearch from "@/components/home/FloatingOmniSearch";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
@@ -88,6 +88,16 @@ function CinematicHero() {
               className="mt-10 md:mt-14"
             >
               <SpotlightSearch />
+            </motion.div>
+
+            {/* HERO-LEVEL FEATURED · Verified Local Legend cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-12 md:mt-16"
+            >
+              <HeroFeaturedRow />
             </motion.div>
           </motion.div>
         </div>
@@ -494,9 +504,6 @@ const Index = () => {
 
       {/* 1 — CINEMATIC HERO */}
       <CinematicHero />
-
-      {/* 1.25 — REGIONAL SPOTLIGHTS · Verified Local Legends (paid-tier showcase) */}
-      <RegionalSpotlights />
 
       {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip */}
       <LiveLocalPulse />
