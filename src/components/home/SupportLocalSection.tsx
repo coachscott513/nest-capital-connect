@@ -209,7 +209,7 @@ const SupportLocalSection = () => {
                 considered for a featured spotlight placement.
               </p>
               <Link
-                to="/claim-business"
+                to="/pricing"
                 className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
               >
                 Claim Your Business <ArrowRight className="w-4 h-4" />
@@ -255,7 +255,7 @@ const SupportLocalSection = () => {
             </div>
           </div>
           <Link
-            to="/claim-business"
+            to="/pricing"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition shrink-0 self-start md:self-auto"
           >
             Claim Your Business <ArrowUpRight className="w-4 h-4" />

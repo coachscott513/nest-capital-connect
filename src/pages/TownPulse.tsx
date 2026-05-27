@@ -158,7 +158,7 @@ const EmptyState = ({
     <p className="text-lg md:text-xl font-medium text-white mb-2">{title}</p>
     <p className="text-sm text-white/55 mb-6">{sub}</p>
     <Link
-      to={`/claim-business?town=${encodeURIComponent(townName)}`}
+      to={`/pricing)}`}
       className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-white text-sm font-semibold transition hover:opacity-90"
       style={{ backgroundColor: TEAL }}
     >
@@ -555,7 +555,7 @@ const TownPulse = () => {
                 Own a business in {townName}? Claim your profile to be featured here with priority placement, photo galleries, and promotional tools.
               </p>
               <Link
-                to={`/claim-business?town=${encodeURIComponent(townName)}`}
+                to={`/pricing)}`}
                 className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-white text-sm font-semibold transition hover:opacity-90"
                 style={{ backgroundColor: TEAL }}
               >
@@ -828,7 +828,7 @@ const TownPulse = () => {
             featured town sections.
           </p>
           <Link
-            to={`/claim-business?town=${encodeURIComponent(townName)}`}
+            to={`/pricing)}`}
             className="mt-10 inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-white text-base font-semibold transition hover:opacity-90"
             style={{ backgroundColor: TEAL }}
           >

@@ -349,7 +349,7 @@ const TrustedLocalPartners = ({
 
           {showClaimCard && (
             <a
-              href="/claim-business"
+              href="/pricing"
               className="group relative text-left overflow-hidden rounded-[28px] aspect-[4/5] md:aspect-[5/6] bg-[#0e0f12] border border-[#0d6e66]/40 hover:border-[#5eead4]/60 transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_30px_80px_-30px_rgba(13,110,102,0.55)] focus:outline-none focus:ring-2 focus:ring-[#0d6e66]/40 flex flex-col justify-between p-7 md:p-9"
             >
               <div
@@ -385,7 +385,7 @@ const TrustedLocalPartners = ({
         >
           Curated by Capital District Nest. Want to be considered?{" "}
           <a
-            href="/claim-business"
+            href="/pricing"
             className={isDark ? "text-[#5eead4] underline" : "text-[#0d6e66] underline"}
           >
             Apply here

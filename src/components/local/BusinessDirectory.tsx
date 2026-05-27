@@ -287,13 +287,13 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             </p>
             <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
               <a
-                href="/claim-business"
+                href="/pricing"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
               >
                 <Sparkles className="w-4 h-4" /> Claim Your Business
               </a>
               <a
-                href="/claim-business?intent=promote"
+                href="/pricing"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition"
               >
                 <Megaphone className="w-4 h-4 text-[#5eead4]" /> Promote a Special
@@ -417,10 +417,10 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 Try another search, or help us grow the directory.
               </p>
               <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-                <a href="/claim-business" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
+                <a href="/pricing" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
                   Suggest a business
                 </a>
-                <a href="/claim-business" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/50 transition">
+                <a href="/pricing" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/50 transition">
                   Claim your business
                 </a>
               </div>
@@ -465,10 +465,10 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
               front door of the region.
             </p>
             <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a href="/claim-business" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition">
+              <a href="/pricing" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition">
                 Claim Your Business
               </a>
-              <a href="/claim-business?tier=featured" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-[#5eead4]/40 transition">
+              <a href="/pricing" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-[#5eead4]/40 transition">
                 Become a Featured Partner
               </a>
             </div>
@@ -808,12 +808,12 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             tabIndex={0}
             onClick={(e) => {
               e.stopPropagation();
-              window.location.href = `/claim-business?biz=${encodeURIComponent(b.name)}${b.town ? `&town=${b.town}` : ""}`;
+              window.location.href = `/pricing)}${b.town ? `&town=${b.town}` : ""}`;
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.stopPropagation();
-                window.location.href = `/claim-business?biz=${encodeURIComponent(b.name)}${b.town ? `&town=${b.town}` : ""}`;
+                window.location.href = `/pricing)}${b.town ? `&town=${b.town}` : ""}`;
               }
             }}
             className="mt-auto mt-5 w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white text-[#0B0F19] text-[13px] font-bold hover:bg-[#5eead4] transition cursor-pointer"
@@ -828,7 +828,7 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
 
 const ClaimCtaCard = () => (
   <a
-    href="/claim-business"
+    href="/pricing"
     className="group relative rounded-[22px] overflow-hidden p-7 flex flex-col justify-between border border-[#5eead4]/25 bg-gradient-to-br from-[#0d6e66]/15 via-[#1E2230] to-[#1E2230] hover:border-[#5eead4]/60 hover:shadow-[0_30px_70px_-20px_rgba(94,234,212,0.35)] transition-all duration-300 hover:-translate-y-1 min-h-[280px]"
   >
     <div
@@ -861,7 +861,7 @@ const ClaimCtaCard = () => (
 
 const PromoteCtaCard = () => (
   <a
-    href="/claim-business?intent=promote"
+    href="/pricing"
     className="group relative rounded-[22px] overflow-hidden p-7 flex flex-col justify-between border border-white/[0.08] bg-[#1E2230] hover:border-[#5eead4]/50 hover:shadow-[0_30px_70px_-20px_rgba(94,234,212,0.25)] transition-all duration-300 hover:-translate-y-1 min-h-[280px]"
   >
     <div className="relative">
@@ -1193,10 +1193,10 @@ export const BusinessDetailModal = ({
                 and specials — free. Upgrade to Featured for top placement.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
-                <a href={`/claim-business?biz=${biz.slug}`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
+                <a href={`/pricing`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
                   <Sparkles className="w-4 h-4" /> Claim this business
                 </a>
-                <a href={`/claim-business?biz=${biz.slug}&tier=featured`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/40 transition">
+                <a href={`/pricing`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/40 transition">
                   Become a Featured Partner
                 </a>
               </div>

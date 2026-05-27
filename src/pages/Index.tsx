@@ -329,7 +329,7 @@ const INTEL_TABS: IntelTab[] = [
       title: "Claim Your Free Digital Profile",
       body: "Get on the Capital District's pulse — verified listing, photos, hours, and direct leads. Free for local owners.",
       ctaLabel: "Claim Your Profile",
-      ctaTo: "/claim-business",
+      ctaTo: "/pricing",
     },
     items: [
       { title: "Browse the directory",    sub: "Curated by town, not crowdsourced.",              to: "/local" },
@@ -530,7 +530,7 @@ const Index = () => {
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Link
-              to="/claim-business"
+              to="/pricing"
               className="inline-flex items-center gap-2 bg-[#0d6e66] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(13,110,102,0.6)] transition"
             >
               Claim Your Profile <ArrowRight className="w-4 h-4" />

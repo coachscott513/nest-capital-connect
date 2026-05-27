@@ -155,7 +155,7 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
                   Business owner? Claim this profile to activate social links.
                 </p>
                 <a
-                  href={`/claim-business?name=${encodeURIComponent(b.name)}`}
+                  href={`/pricing)}`}
                   className="mt-4 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-[#5eead4]/30 text-[#5eead4] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66] transition-all"
                 >
                   Claim this listing

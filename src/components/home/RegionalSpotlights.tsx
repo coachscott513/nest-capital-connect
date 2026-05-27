@@ -397,7 +397,7 @@ const RegionalSpotlights = () => {
             <span className="text-white/80">Featured & Spotlight tiers unlock it.</span>
           </p>
           <Link
-            to="/claim-business?tier=featured"
+            to="/pricing"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#c9a449] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
           >
             Become a Featured Partner <ArrowRight className="w-4 h-4" />
