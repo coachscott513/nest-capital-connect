@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Lock, Sparkles, ArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight } from "lucide-react";
 
 /**
  * PremiumFeatureGate — wraps premium business-owner features (specials,
@@ -62,14 +62,11 @@ const PremiumFeatureGate = ({
       />
 
       <div className="relative px-8 py-12 md:px-12 md:py-16 text-center flex flex-col items-center">
-        <div className="w-14 h-14 rounded-2xl border border-[#5eead4]/40 bg-[#5eead4]/10 flex items-center justify-center mb-5">
-          <Lock className="w-6 h-6 text-[#5eead4]" />
-        </div>
         <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-[#5eead4]">
           {featureName}
         </p>
         <h3 className="mt-3 text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white">
-          Featured Tier Required
+          Premium Showcase
         </h3>
         <p className="mt-4 max-w-xl text-sm md:text-base text-white/65 font-light leading-relaxed">
           {subtext}
@@ -79,7 +76,7 @@ const PremiumFeatureGate = ({
           className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
         >
           <Sparkles className="w-4 h-4" />
-          Upgrade to Featured
+          Unlock Premium Showcase Features
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>

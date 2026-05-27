@@ -116,7 +116,7 @@ const Footer = () => {
             <ul className="space-y-2.5">
               <li><Link to="/contact" className={linkBase}>About Capital District Nest</Link></li>
               <li><Link to="/contact" className={linkBase}>Contact</Link></li>
-              <li><Link to="/pricing" className={linkBase}>For Businesses</Link></li>
+              <li><Link to="/pricing" className={linkBase}>For Local Businesses</Link></li>
               <li><Link to="/partner-auth" className={linkBase}>Business Login</Link></li>
               <li><Link to="/site-index" className={linkBase}>Site Index</Link></li>
               <li><Link to="/privacy-policy" className={linkBase}>Privacy</Link></li>

@@ -466,7 +466,7 @@ const TownPulse = () => {
           {events.length === 0 ? (
             <EmptyState
               title="No upcoming events are listed yet."
-              sub="Local businesses can claim their profile to submit events."
+              sub="Local businesses can upgrade to Featured to submit events."
               townName={townName}
             />
           ) : (
@@ -541,7 +541,7 @@ const TownPulse = () => {
           <SectionHeader
             eyebrow="Featured Local Partners"
             title={`Premium partners in ${townName}.`}
-            sub="Curated, claimed, and verified — businesses investing in their local presence."
+            sub="Curated Featured Merchants investing in their local presence."
           />
           {featuredPartners.length === 0 ? (
             <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-10 md:p-14 text-center">
@@ -647,7 +647,7 @@ const TownPulse = () => {
                   ? `No matches for "${search}" in ${townName}.`
                   : `No businesses listed in ${townName} yet.`
               }
-              sub="Be the first — claim your profile to appear here."
+              sub="Be the first — upgrade to Featured to appear here."
               townName={townName}
             />
           ) : (
