@@ -35,72 +35,65 @@ const TOWN_TILES = [
   { name: "Clifton Park",     descriptor: "Family suburb · Shen schools",     meta: "Top-rated schools",   median: "$485K", businesses: 16, img: townCliftonPark, to: "/living-in/clifton-park" },
 ];
 
-/* ========== Section 1 — CINEMATIC HERO ========== */
+/* ========== Section 1 — OMNI-SEARCH HERO ========== */
 function CinematicHero() {
   return (
+    <section className="relative w-full overflow-hidden bg-[#0B0F19]">
+      {/* Subtle premium glass glow — no photo, pure onyx */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(60% 55% at 50% 35%, rgba(94,234,212,0.10), transparent 65%), radial-gradient(45% 60% at 15% 85%, rgba(13,110,102,0.18), transparent 70%), radial-gradient(40% 50% at 85% 15%, rgba(94,234,212,0.06), transparent 70%)",
+        }}
+        aria-hidden
+      />
+      <div
+        className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px)",
+          backgroundSize: "3px 3px",
+        }}
+        aria-hidden
+      />
 
-    <section className="relative w-full overflow-hidden bg-black">
-      <div className="relative w-full min-h-[100vh] flex items-center">
-        <img
-          src={heroCapital}
-          alt="Capital District, New York — towns, neighborhoods, and local life"
-          className="absolute inset-0 w-full h-full object-cover scale-[1.03]"
-          style={{ filter: "grayscale(100%) contrast(1.08) brightness(0.95)" }}
-          width={1920}
-          height={1080}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/85" />
-
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 py-28 md:py-40">
+      <div className="relative w-full min-h-[100svh] flex items-center">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-28 md:py-40">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-5xl mx-auto text-center"
           >
-            <h1 className="relative text-[2.75rem] sm:text-6xl md:text-[5.5rem] lg:text-[6.75rem] font-semibold tracking-[-0.045em] leading-[0.98] text-white">
-              <span className="block">Explore the</span>
-              <span className="block bg-gradient-to-r from-white via-white to-[#5eead4] bg-clip-text text-transparent">
-                Capital District.
+            <h1 className="text-[2.5rem] sm:text-6xl md:text-[5.25rem] lg:text-[6.25rem] font-semibold tracking-[-0.045em] leading-[0.98] text-white">
+              Search anything{" "}
+              <span className="bg-gradient-to-r from-white via-white to-[#5eead4] bg-clip-text text-transparent">
+                local.
               </span>
             </h1>
 
-            <p className="mt-7 text-base md:text-xl text-white/75 max-w-2xl mx-auto font-light leading-relaxed">
-              Search towns, homes, neighborhoods, local businesses, investment
-              opportunities, and community updates — all in one place.
+            <p className="mt-6 md:mt-8 text-base md:text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
+              Homes, businesses, towns, services, restaurants, events, and local
+              insight across the Capital District.
             </p>
 
-            {/* CINEMATIC SPOTLIGHT SEARCH — the operating system of the page */}
+            {/* THE OMNI-SEARCH — dominant product surface */}
             <motion.div
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-12 md:mt-14"
+              className="mt-10 md:mt-14"
             >
-              <SpotlightSearch eyebrow="The Digital Front Door of the Capital District" />
+              <SpotlightSearch />
             </motion.div>
-
-            {/* Quieter secondary nav */}
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12.5px] text-white/55">
-              <Link to="/communities" className="hover:text-white transition inline-flex items-center gap-1">
-                Browse all towns <ArrowRight className="w-3 h-3" />
-              </Link>
-              <span className="w-1 h-1 rounded-full bg-white/25" />
-              <Link to="/analyze" className="hover:text-white transition">
-                Run the numbers
-              </Link>
-              <span className="w-1 h-1 rounded-full bg-white/25" />
-              <Link to="/claim-business" className="hover:text-white transition">
-                Claim your business
-              </Link>
-            </div>
-
           </motion.div>
         </div>
       </div>
     </section>
   );
 }
+
 
 /* ========== Cinematic town tile ========== */
 function TownTile({
