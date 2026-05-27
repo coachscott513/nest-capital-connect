@@ -325,7 +325,9 @@ export type Database = {
           latitude: number | null
           linkedin: string | null
           logo_url: string | null
+          long_description: string | null
           longitude: number | null
+          menu_url: string | null
           name: string
           needs_review: boolean
           phone: string | null
@@ -334,6 +336,7 @@ export type Database = {
           rating: number | null
           region: string
           review_count: number | null
+          services: Json | null
           slug: string
           source: string | null
           source_url: string | null
@@ -349,6 +352,7 @@ export type Database = {
           town_name: string | null
           town_slug: string
           updated_at: string
+          video_url: string | null
           website: string | null
           website_status: string | null
           x_url: string | null
@@ -390,7 +394,9 @@ export type Database = {
           latitude?: number | null
           linkedin?: string | null
           logo_url?: string | null
+          long_description?: string | null
           longitude?: number | null
+          menu_url?: string | null
           name: string
           needs_review?: boolean
           phone?: string | null
@@ -399,6 +405,7 @@ export type Database = {
           rating?: number | null
           region?: string
           review_count?: number | null
+          services?: Json | null
           slug: string
           source?: string | null
           source_url?: string | null
@@ -414,6 +421,7 @@ export type Database = {
           town_name?: string | null
           town_slug: string
           updated_at?: string
+          video_url?: string | null
           website?: string | null
           website_status?: string | null
           x_url?: string | null
@@ -455,7 +463,9 @@ export type Database = {
           latitude?: number | null
           linkedin?: string | null
           logo_url?: string | null
+          long_description?: string | null
           longitude?: number | null
+          menu_url?: string | null
           name?: string
           needs_review?: boolean
           phone?: string | null
@@ -464,6 +474,7 @@ export type Database = {
           rating?: number | null
           region?: string
           review_count?: number | null
+          services?: Json | null
           slug?: string
           source?: string | null
           source_url?: string | null
@@ -479,6 +490,7 @@ export type Database = {
           town_name?: string | null
           town_slug?: string
           updated_at?: string
+          video_url?: string | null
           website?: string | null
           website_status?: string | null
           x_url?: string | null
