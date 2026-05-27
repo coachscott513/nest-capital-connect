@@ -248,7 +248,7 @@ const AlbanyMultiUnit = () => {
               {[
                 {
                   icon: Percent,
-                  title: "10–14% Cap Rates (Verified, Not Listing Fluff)",
+                  title: "10–14% Cap Rates (Member, Not Listing Fluff)",
                   description: "Double-digit cap rates are still achievable here — rare in major metros where returns are compressed."
                 },
                 {
@@ -536,7 +536,7 @@ const AlbanyMultiUnit = () => {
               <ul className="text-left max-w-md mx-auto mb-8 space-y-3">
                 {[
                   "Off-market and pre-market multi-unit listings",
-                  "Verified rent, taxes, and utilities",
+                  "Member rent, taxes, and utilities",
                   "Full P&L and cash flow modeling",
                   "Neighborhood risk and ROI scoring",
                   "Clear projections for 1, 3, and 5 years"

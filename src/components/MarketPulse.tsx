@@ -12,7 +12,7 @@ const MarketPulse = () => {
     },
     {
       icon: CheckCircle,
-      label: "Nest Verified Opportunities",
+      label: "Nest Member Opportunities",
       value: "47",
       suffix: "",
       subtext: "Active this week",
@@ -116,7 +116,7 @@ const MarketPulse = () => {
               { label: "Days on Market", value: "28", trend: "↓ 12%" },
               { label: "Active Towns", value: "43", trend: "Coverage" },
               { label: "Monthly Views", value: "12K+", trend: "Growing" },
-              { label: "Data Sources", value: "7", trend: "Verified" },
+              { label: "Data Sources", value: "7", trend: "Member" },
             ].map((stat) => (
               <div key={stat.label} className="text-center p-6 glass rounded-2xl">
                 <p className="text-3xl lg:text-4xl font-light text-primary mb-2 tracking-tight">{stat.value}</p>

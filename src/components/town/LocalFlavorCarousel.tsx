@@ -15,7 +15,7 @@ interface LocalFlavorCarouselProps {
   townSlug: string;
 }
 
-// Town-specific "Nest Verified" local businesses
+// Town-specific "Nest Member" local businesses
 const TOWN_FLAVOR: Record<string, LocalBusiness[]> = {
   delmar: [
     { id: "1", name: "The Perfect Blend", category: "Coffee & Café", image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&q=80", distance: "0.2 mi", verified: true },
@@ -85,10 +85,10 @@ const LocalFlavorCarousel = ({ townName, townSlug }: LocalFlavorCarouselProps) =
             {/* Dark gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-            {/* Verified badge */}
+            {/* Member badge */}
             {biz.verified && (
               <div className="absolute top-2 right-2 bg-primary text-primary-foreground text-[9px] font-bold px-2 py-0.5 rounded-full">
-                Verified
+                Member
               </div>
             )}
 

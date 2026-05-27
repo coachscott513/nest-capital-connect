@@ -90,7 +90,7 @@ function CinematicHero() {
               <SpotlightSearch />
             </motion.div>
 
-            {/* HERO-LEVEL FEATURED · Verified Local Legend cards */}
+            {/* HERO-LEVEL FEATURED · Member Local Legend cards */}
             <motion.div
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
@@ -326,10 +326,10 @@ const INTEL_TABS: IntelTab[] = [
     ctaVerb: "Browse",
     focusBanner: {
       eyebrow: "For business owners",
-      title: "Claim Your Free Digital Profile",
+      title: "Become a Featured Partner",
       body: "Get on the Capital District's pulse — verified listing, photos, hours, and direct leads. Free for local owners.",
-      ctaLabel: "Claim Your Profile",
-      ctaTo: "/claim-business",
+      ctaLabel: "For Businesses",
+      ctaTo: "/pricing",
     },
     items: [
       { title: "Browse the directory",    sub: "Curated by town, not crowdsourced.",              to: "/local" },
@@ -436,7 +436,7 @@ function CapitalDistrictIntelligence() {
           </div>
 
           <div className="lg:col-span-8 space-y-5 md:space-y-6">
-            {/* Asymmetrical focus banner (e.g. Claim Your Profile) */}
+            {/* Asymmetrical focus banner (e.g. For Businesses) */}
             {tab.focusBanner && (
               <div className="relative overflow-hidden rounded-2xl border border-[#0d6e66]/40 bg-gradient-to-br from-[#0d6e66]/15 via-[#0B0F19] to-[#0B0F19] p-6 md:p-8">
                 <div className="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-[#0d6e66]/20 blur-3xl pointer-events-none" />
@@ -508,7 +508,7 @@ const Index = () => {
       {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip */}
       <LiveLocalPulse />
 
-      {/* 2 — B2B CONVERSION · Claim Your Business (flywheel CTA, directly under hero) */}
+      {/* 2 — B2B CONVERSION · Local Business Solutions (flywheel CTA, directly under hero) */}
       <section className="relative bg-[#0B0F19] overflow-hidden border-b border-[#2D3748]">
         <div
           className="absolute inset-0 opacity-60 pointer-events-none"
@@ -525,15 +525,15 @@ const Index = () => {
             Own a local business?
           </h2>
           <p className="mt-7 text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
-            Claim your free business profile and join the Capital District's fastest-growing
+            Get your business in front of the Capital District's fastest-growing
             local discovery platform.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Link
-              to="/claim-business"
+              to="/pricing"
               className="inline-flex items-center gap-2 bg-[#0d6e66] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(13,110,102,0.6)] transition"
             >
-              Claim Your Profile <ArrowRight className="w-4 h-4" />
+              For Businesses <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/local"

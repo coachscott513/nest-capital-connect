@@ -247,16 +247,16 @@ const ClaimBusiness = () => {
             </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
-            {/* Claimed */}
+            {/* Member */}
             <div className="rounded-3xl p-7 bg-white/[0.04] backdrop-blur-xl border border-white/10 hover:border-white/25 transition flex flex-col">
-              <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/55">Claimed</p>
+              <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/55">Member</p>
               <p className="mt-3 text-4xl font-semibold tracking-tight">$10<span className="text-base text-white/55 font-light">/mo</span></p>
               <ul className="mt-5 space-y-2.5 text-sm text-white/70 font-light flex-1">
                 <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Full image uploads</li>
                 <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Business description</li>
                 <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Social media links</li>
                 <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Store hours</li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> "Verified" badge</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> "Member" badge</li>
               </ul>
             </div>
             {/* Featured */}
@@ -264,7 +264,7 @@ const ClaimBusiness = () => {
               <p className="text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: "#c9a449" }}>Featured · Most Popular</p>
               <p className="mt-3 text-4xl font-semibold tracking-tight">$15<span className="text-base text-white/55 font-light">/mo</span></p>
               <ul className="mt-5 space-y-2.5 text-sm text-white/75 font-light flex-1">
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Everything in Claimed</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Everything in Member</li>
                 <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Priority category indexing</li>
                 <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Custom gold badging</li>
                 <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Live Pulse ticker integration</li>

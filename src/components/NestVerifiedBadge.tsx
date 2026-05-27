@@ -1,22 +1,22 @@
 import { motion } from "framer-motion";
 
-interface NestVerifiedBadgeProps {
+interface NestMemberBadgeProps {
   size?: "sm" | "md" | "lg";
   showText?: boolean;
   className?: string;
 }
 
 /**
- * Capital District Nest Verified Badge
+ * Capital District Nest Member Badge
  * 
  * Apple-style minimalist badge for exclusive partners.
  * Creates scarcity and premium positioning for the Preferred Partner network.
  */
-const NestVerifiedBadge = ({ 
+const NestMemberBadge = ({ 
   size = "md", 
   showText = true,
   className = ""
-}: NestVerifiedBadgeProps) => {
+}: NestMemberBadgeProps) => {
   const sizeClasses = {
     sm: "w-4 h-4",
     md: "w-6 h-6",
@@ -66,11 +66,11 @@ const NestVerifiedBadge = ({
       
       {showText && (
         <span className={`${textSizeClasses[size]} font-semibold tracking-tight text-foreground`}>
-          Nest Verified
+          Nest Member
         </span>
       )}
     </motion.div>
   );
 };
 
-export default NestVerifiedBadge;
+export default NestMemberBadge;

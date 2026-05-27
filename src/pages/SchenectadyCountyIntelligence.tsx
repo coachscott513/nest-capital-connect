@@ -663,7 +663,7 @@ const SchenectadyCountyIntelligence = () => {
             <div className="grid sm:grid-cols-2 gap-4 mb-12">
               {[
                 "Local data, not national averages",
-                "Verified rent rolls & expenses",
+                "Member rent rolls & expenses",
                 "Clear P&L, cap rate, and cash flow math",
                 "Designed for confident offers"
               ].map((item, index) => (

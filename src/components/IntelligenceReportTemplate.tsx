@@ -223,7 +223,7 @@ const IntelligenceReportTemplate = ({
         <title>{pageTitle} | Capital District Nest</title>
         <meta
           name="description"
-          content={metaDescription || `Intelligence report for ${propertyData.address}. Verified public record data, tax analysis, and buyer insights.`}
+          content={metaDescription || `Intelligence report for ${propertyData.address}. Member public record data, tax analysis, and buyer insights.`}
         />
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
       </Helmet>
@@ -244,7 +244,7 @@ const IntelligenceReportTemplate = ({
               <div className="flex flex-wrap justify-center gap-3">
                 <span className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
                   <FileCheck className="w-4 h-4" />
-                  Verified Public Record
+                  Member Public Record
                 </span>
                 <span className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
                   <MapPin className="w-4 h-4" />

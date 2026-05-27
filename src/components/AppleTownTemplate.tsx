@@ -957,7 +957,7 @@ const AppleTownTemplate = ({
 
       <Footer />
 
-      {/* Local Voice Interview Side Panel with Blurred Narrative for Unverified */}
+      {/* Local Voice Interview Side Panel with Blurred Narrative for Standard */}
       <Sheet open={!!selectedVoice} onOpenChange={() => setSelectedVoice(null)}>
         <SheetContent className="w-full sm:max-w-lg bg-card border-l border-border overflow-y-auto">
           {selectedVoice && (
@@ -966,7 +966,7 @@ const AppleTownTemplate = ({
                 <div className="flex items-center gap-2">
                   {selectedVoice.is_verified ? (
                     <span className="bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">
-                      Nest Verified
+                      Nest Member
                     </span>
                   ) : (
                     <span className="bg-muted text-muted-foreground text-xs font-bold px-2 py-1 rounded-full">
@@ -1051,7 +1051,7 @@ const AppleTownTemplate = ({
                       className="flex flex-col items-center gap-3 p-6 glass-strong rounded-2xl border border-primary/30 hover:border-primary/60 transition-colors group"
                     >
                       <Lock className="w-8 h-8 text-primary" />
-                      <span className="text-lg font-semibold text-foreground">Owner: Claim Your Story</span>
+                      <span className="text-lg font-semibold text-foreground">Owner: Upgrade to Featured</span>
                       <span className="text-sm text-muted-foreground text-center max-w-xs">
                         This listing is in Community Preview mode. Join our community to publish your story.
                       </span>

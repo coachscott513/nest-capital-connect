@@ -32,7 +32,7 @@ interface Vendor {
   website?: string;
   linkedin?: string;
   location: string;
-  isVerified: boolean;
+  isMember: boolean;
   hasDirectExperience?: boolean;
   badge?: string;
   yearsInBusiness?: number;
@@ -71,7 +71,7 @@ const featuredVendors: VendorCategory[] = [
         website: "https://example.com",
         linkedin: "https://linkedin.com/in/example",
         location: "Clifton Park, NY",
-        isVerified: true,
+        isMember: true,
         hasDirectExperience: true,
         badge: "Nest Preferred",
         yearsInBusiness: 12,
@@ -99,7 +99,7 @@ const featuredVendors: VendorCategory[] = [
         website: "https://example.com",
         linkedin: "https://linkedin.com/in/example",
         location: "Troy, NY",
-        isVerified: true,
+        isMember: true,
         hasDirectExperience: true,
         badge: "Fast Closer",
         yearsInBusiness: 15,
@@ -126,7 +126,7 @@ const featuredVendors: VendorCategory[] = [
         email: "tgrant@landlordshield.com",
         website: "https://example.com",
         location: "Schenectady, NY",
-        isVerified: true,
+        isMember: true,
         hasDirectExperience: true,
         badge: "Top Rated",
         yearsInBusiness: 18,
@@ -154,7 +154,7 @@ const featuredVendors: VendorCategory[] = [
         website: "https://example.com",
         linkedin: "https://linkedin.com/in/example",
         location: "Troy, NY",
-        isVerified: true,
+        isMember: true,
         hasDirectExperience: true,
         badge: "Investor Favorite",
         yearsInBusiness: 14,

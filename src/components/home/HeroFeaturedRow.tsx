@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { BadgeCheck, Phone, ArrowUpRight, Clock, MapPin } from "lucide-react";
 
 /* =============================================================
-   HERO FEATURED ROW — premium "Verified Local Legend" cards
+   HERO FEATURED ROW — premium "Member Local Legend" cards
    embedded directly inside the hero glass surface, below the
    Omni-Search and trending pills. Stable single-image variant.
    ============================================================= */

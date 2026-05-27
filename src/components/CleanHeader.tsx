@@ -23,7 +23,7 @@ const navModes: NavMode[] = [
   { label: "Towns", mobileLabel: "Explore Towns", href: "/communities", matchPaths: ["/communities", "/living-in"] },
   { label: "Events", mobileLabel: "Local Events", href: "/#weekly-feed", matchPaths: [] },
   { label: "Invest", mobileLabel: "Investment Properties", href: "/analyze", matchPaths: ["/analyze", "/invest"] },
-  { label: "Claim Business", mobileLabel: "Claim Your Business", href: "/claim-business", matchPaths: ["/claim-business"] },
+  { label: "For Businesses", mobileLabel: "Local Business Solutions", href: "/pricing", matchPaths: ["/pricing"] },
 ];
 
 const CleanHeader = () => {
@@ -119,7 +119,7 @@ const CleanHeader = () => {
             <div className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
               {navModes.map((mode) => {
                 const active = isActive(mode);
-                const isClaim = mode.label === "Claim Business";
+                const isClaim = mode.label === "For Businesses";
                 const baseCls =
                   "relative px-3 py-2 text-[13.5px] font-medium rounded-full transition-colors whitespace-nowrap";
                 const stateCls = active
@@ -229,7 +229,7 @@ const CleanHeader = () => {
         </p>
         <div className="space-y-1">
           {navModes.map((mode) => {
-            const isClaim = mode.label === "Claim Business";
+            const isClaim = mode.label === "For Businesses";
             const cls = `block w-full text-left py-3.5 px-1 text-[17px] font-medium border-b border-white/[0.06] transition-colors ${
               isClaim ? "text-[#5eead4]" : "text-white/90 hover:text-white"
             }`;

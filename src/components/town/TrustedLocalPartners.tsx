@@ -349,7 +349,7 @@ const TrustedLocalPartners = ({
 
           {showClaimCard && (
             <a
-              href="/claim-business"
+              href="/pricing"
               className="group relative text-left overflow-hidden rounded-[28px] aspect-[4/5] md:aspect-[5/6] bg-[#0e0f12] border border-[#0d6e66]/40 hover:border-[#5eead4]/60 transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_30px_80px_-30px_rgba(13,110,102,0.55)] focus:outline-none focus:ring-2 focus:ring-[#0d6e66]/40 flex flex-col justify-between p-7 md:p-9"
             >
               <div
@@ -367,14 +367,14 @@ const TrustedLocalPartners = ({
                   Operating in {townName}?
                 </h3>
                 <p className="mt-3 text-[15px] md:text-base font-light text-white/70 max-w-md">
-                  Claim your free digital profile and appear alongside the town's most-loved local businesses.
+                  Become a Featured partner and appear alongside the town's most-loved local businesses.
                 </p>
               </div>
               <span
                 className="relative mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white transition w-fit shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)]"
                 style={{ backgroundColor: TEAL }}
               >
-                Claim Your Free Digital Profile <ArrowUpRight className="w-4 h-4" />
+                Become a Featured Partner <ArrowUpRight className="w-4 h-4" />
               </span>
             </a>
           )}
@@ -385,7 +385,7 @@ const TrustedLocalPartners = ({
         >
           Curated by Capital District Nest. Want to be considered?{" "}
           <a
-            href="/claim-business"
+            href="/pricing"
             className={isDark ? "text-[#5eead4] underline" : "text-[#0d6e66] underline"}
           >
             Apply here

@@ -34,17 +34,11 @@ const PremiumFeatureGate = ({
 }: PremiumFeatureGateProps) => {
   if (unlocked) return <>{children}</>;
 
-  const params = new URLSearchParams();
-  if (businessId) params.set("business_id", businessId);
-  if (businessName) params.set("business_name", businessName);
-  if (town) params.set("town", town);
-  const claimHref = `/claim-business${params.toString() ? `?${params.toString()}` : ""}`;
-
   const subtext =
     description ??
     (businessName
-      ? `Are you the owner of ${businessName}? Claim your profile to unlock specials, events, featured placement, photo galleries, and local promotional tools.`
-      : "Claim your business profile to unlock specials, events, featured placement, photo galleries, and local promotional tools.");
+      ? `Unlock priority placement, photo galleries, specials, events, and social media tools for ${businessName}.`
+      : "Unlock priority placement, photo galleries, specials, events, and social media tools.");
 
   return (
     <div className="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl">
@@ -75,17 +69,17 @@ const PremiumFeatureGate = ({
           {featureName}
         </p>
         <h3 className="mt-3 text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white">
-          Premium Feature
+          Featured Tier Required
         </h3>
         <p className="mt-4 max-w-xl text-sm md:text-base text-white/65 font-light leading-relaxed">
           {subtext}
         </p>
         <Link
-          to={claimHref}
+          to="/pricing"
           className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
         >
           <Sparkles className="w-4 h-4" />
-          Claim Your Business
+          Upgrade to Featured
           <ArrowRight className="w-4 h-4" />
         </Link>
       </div>

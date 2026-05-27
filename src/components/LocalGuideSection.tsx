@@ -118,11 +118,11 @@ const BusinessCard = ({
             {/* Verification CTA for listings */}
             <div className="mt-3 pt-3 border-t border-border">
               <Link 
-                to={`/claim-business?town=${townSlug}&category=${categoryId}&name=${encodeURIComponent(business.name)}`}
+                to={`/pricing)}`}
                 className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
               >
                 <CheckCircle className="w-3 h-3" />
-                Verify or Edit Details
+                Manage Listing
               </Link>
             </div>
           </>
@@ -240,7 +240,7 @@ const BusinessCard = ({
             {/* Claim/Edit Link for Partners */}
             <div className="mt-3 pt-3 border-t border-[#00F5FF]/20">
               <Link 
-                to={`/claim-business?town=${townSlug}&category=${categoryId}&name=${encodeURIComponent(business.name)}`}
+                to={`/pricing)}`}
                 className="text-xs text-muted-foreground hover:text-[#00F5FF] transition-colors"
               >
                 Manage Listing
@@ -332,7 +332,7 @@ const LocalGuideSection = ({ townName, townSlug, categories }: LocalGuideSection
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button variant="outline" asChild>
-              <Link to={`/claim-business?town=${townSlug}`}>
+              <Link to={`/pricing`}>
                 <CheckCircle className="w-4 h-4 mr-2" />
                 Join Our Community
               </Link>

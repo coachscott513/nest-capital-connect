@@ -176,7 +176,7 @@ const GlobalSearchCommand = ({ isOpen, onClose }: GlobalSearchCommandProps) => {
         searchResults.push({
           type: "business",
           name: biz.name,
-          subtitle: town ? `${town.name}${biz.is_verified ? " • Verified" : ""}` : biz.town_slug,
+          subtitle: town ? `${town.name}${biz.is_verified ? " • Member" : ""}` : biz.town_slug,
           slug: biz.town_slug,
           icon: biz.is_verified ? (
             <Sparkles className="w-4 h-4 text-primary" />
