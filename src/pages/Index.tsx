@@ -531,26 +531,8 @@ const Index = () => {
         </div>
       </section>
 
-
-
-      {/* 2 — MICRO-PROOF STRIP */}
-      <section className="bg-[#0B0F19] border-b border-[#2D3748]">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 py-5 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-8 text-center sm:text-left">
-          {[
-            "52 towns · curated weekly",
-            "Local businesses, neighborhoods & culture",
-            "Homes, rentals & investment intelligence",
-          ].map((t) => (
-            <p key={t} className="text-xs sm:text-[13px] font-medium text-white/60 inline-flex items-center justify-center sm:justify-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#5eead4]" />
-              {t}
-            </p>
-          ))}
-        </div>
-      </section>
-
-      {/* 3 — TOWNS · centered editorial grid */}
-      <section className="bg-[#0B0F19] w-full">
+      {/* 3 — TOWNS · Browse Local Search Indexes */}
+      <section className="bg-[#0B0F19] w-full border-t border-[#2D3748]">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-[88px] md:py-[140px]">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -560,14 +542,14 @@ const Index = () => {
             className="max-w-3xl mx-auto text-center mb-16 md:mb-24"
           >
             <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#5eead4]">
-              Explore Towns
+              Browse Local Search Indexes
             </p>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
-              Discover the neighborhoods.
+              Every town, indexed.
             </h2>
             <p className="mt-7 text-lg md:text-xl text-white/60 font-light leading-relaxed max-w-2xl mx-auto">
-              The streets, schools, cafés, and character that shape the Capital District —
-              town by town.
+              Tap a town to open its dedicated search index — homes, businesses,
+              schools, events, and neighborhood intelligence in one place.
             </p>
             <div className="cta-anchor mt-9 flex justify-center">
               <Link
@@ -578,6 +560,7 @@ const Index = () => {
               </Link>
             </div>
           </motion.div>
+
 
           <motion.div
             initial={{ opacity: 0, y: 24 }}
