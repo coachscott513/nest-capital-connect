@@ -1130,7 +1130,18 @@ export const BusinessDetailModal = ({
                 {biz.phone && <Info icon={<Phone className="w-4 h-4" />} label="Phone" value={biz.phone} />}
                 {biz.email && <Info icon={<Mail className="w-4 h-4" />} label="Email" value={biz.email} />}
                 {biz.website && (
-                  <Info icon={<Globe className="w-4 h-4" />} label="Website" value={biz.website.replace(/^https?:\/\//, "")} />
+                  <a
+                    href={biz.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-4 rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:border-[#5eead4]/40 hover:bg-white/[0.06] transition"
+                  >
+                    <Globe className="w-4 h-4 text-white/45 shrink-0" />
+                    <div className="min-w-0">
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-white/50 font-semibold">Website</p>
+                      <p className="text-sm font-medium text-white">Visit site</p>
+                    </div>
+                  </a>
                 )}
                 {biz.address && <Info icon={<MapPin className="w-4 h-4" />} label="Address" value={biz.address} />}
                 {biz.hours && <Info icon={<Clock className="w-4 h-4" />} label="Hours" value={biz.hours} />}

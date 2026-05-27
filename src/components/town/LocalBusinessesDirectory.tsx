@@ -332,7 +332,7 @@ const LocalBusinessesDirectory = ({
                 </div>
                 <div className="flex items-center gap-3 text-foreground">
                   <Globe className="w-4 h-4 text-primary" />
-                  <span className="font-medium">{active.website}</span>
+                  <span className="font-medium">Website available</span>
                 </div>
                 <div className="flex items-start gap-3 text-foreground">
                   <MapPin className="w-4 h-4 text-primary mt-1" />

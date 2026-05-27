@@ -258,6 +258,7 @@ export type Database = {
           needs_review: boolean
           phone: string | null
           photos: string[] | null
+          plan_tier: string
           rating: number | null
           region: string
           review_count: number | null
@@ -265,7 +266,11 @@ export type Database = {
           source: string | null
           source_url: string | null
           state: string | null
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
           subcategory: string | null
+          subscription_current_period_end: string | null
+          subscription_status: string | null
           tagline: string | null
           tags: string[] | null
           town_name: string | null
@@ -315,6 +320,7 @@ export type Database = {
           needs_review?: boolean
           phone?: string | null
           photos?: string[] | null
+          plan_tier?: string
           rating?: number | null
           region?: string
           review_count?: number | null
@@ -322,7 +328,11 @@ export type Database = {
           source?: string | null
           source_url?: string | null
           state?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
           subcategory?: string | null
+          subscription_current_period_end?: string | null
+          subscription_status?: string | null
           tagline?: string | null
           tags?: string[] | null
           town_name?: string | null
@@ -372,6 +382,7 @@ export type Database = {
           needs_review?: boolean
           phone?: string | null
           photos?: string[] | null
+          plan_tier?: string
           rating?: number | null
           region?: string
           review_count?: number | null
@@ -379,7 +390,11 @@ export type Database = {
           source?: string | null
           source_url?: string | null
           state?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
           subcategory?: string | null
+          subscription_current_period_end?: string | null
+          subscription_status?: string | null
           tagline?: string | null
           tags?: string[] | null
           town_name?: string | null
