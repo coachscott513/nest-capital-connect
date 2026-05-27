@@ -45,6 +45,7 @@ import {
 } from "@/data/officialCategories";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import { townMatches, useDbBusinesses } from "@/hooks/useDbBusinesses";
+import { resolveBusinessImage } from "@/lib/businessImages";
 
 const TEAL = "#5eead4";
 const TEAL_DEEP = "#0d6e66";
