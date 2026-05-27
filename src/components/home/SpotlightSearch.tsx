@@ -237,22 +237,25 @@ export default function SpotlightSearch({ eyebrow }: Props) {
           </button>
         </motion.form>
 
-        {/* Quick Explore chips */}
-        <div className="relative mt-5 flex flex-wrap items-center justify-center gap-2">
-          {CHIPS.map((c) => {
-            const Icon = c.icon;
-            return (
-              <Link
-                key={c.key}
-                to={c.to}
-                className="group inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 hover:border-[#5eead4]/45 text-white/80 hover:text-white text-[12.5px] font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-12px_rgba(94,234,212,0.45)]"
-              >
-                <Icon className="w-3.5 h-3.5 text-white/55 group-hover:text-[#5eead4] transition-colors" />
-                {c.label}
-              </Link>
-            );
-          })}
+        {/* Curated search prompts — populate the input + fire the search */}
+        <div className="relative mt-6 flex flex-wrap items-center justify-center gap-2">
+          {PROMPT_PILLS.map((p) => (
+            <button
+              key={p.label}
+              type="button"
+              onClick={() => {
+                setQ(p.query);
+                setOpen(false);
+                navigate(getSearchRoute(p.query));
+              }}
+              className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 hover:border-[#5eead4]/45 text-white/85 hover:text-white text-[12.5px] font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-12px_rgba(94,234,212,0.45)]"
+            >
+              <Search className="w-3 h-3 text-white/45 group-hover:text-[#5eead4] transition-colors" />
+              {p.label}
+            </button>
+          ))}
         </div>
+
 
         {/* Expanded spotlight panel */}
         <AnimatePresence>
