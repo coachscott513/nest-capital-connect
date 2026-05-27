@@ -564,11 +564,7 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
     <div className="h-40 w-full overflow-hidden relative">
       <div
         className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-110"
-        style={
-          b.image
-            ? { backgroundImage: `url(${b.image})` }
-            : { background: "linear-gradient(135deg, #0d6e66 0%, #0B0F19 100%)" }
-        }
+        style={{ backgroundImage: `url(${resolveBusinessImage(b)})` }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />
       <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/15 backdrop-blur text-[#5eead4] text-[10px] font-semibold uppercase tracking-wider border border-[#5eead4]/30">
