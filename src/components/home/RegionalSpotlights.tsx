@@ -353,11 +353,14 @@ const RegionalSpotlights = () => {
           className="flex items-end justify-between gap-6 mb-9 md:mb-12 flex-wrap"
         >
           <div className="max-w-2xl">
+            <p className="text-[10.5px] font-semibold tracking-[0.32em] uppercase text-white/35 mb-3">
+              Trending Database Indexes
+            </p>
             <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.24em] uppercase text-[#c9a449]">
               <Sparkles className="w-3.5 h-3.5" /> Verified Local Legends
             </p>
-            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
-              Regional Spotlights.
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-mono font-semibold tracking-[-0.01em] leading-[1.1] text-white">
+              QUERY: <span className="text-[#5eead4]">"Verified Regional Trades"</span>
             </h2>
             <p className="mt-4 text-base md:text-lg text-white/60 font-light leading-relaxed">
               Hand-picked, fully-loaded profiles from the businesses defining the
