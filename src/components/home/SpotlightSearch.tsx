@@ -180,7 +180,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
               : "0 40px 100px -40px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.12)",
           }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex items-center gap-3 rounded-[28px] bg-white/[0.08] backdrop-blur-2xl border border-white/15 pl-5 md:pl-7 pr-2 py-2.5 md:py-3"
+          className="relative flex items-center gap-3 rounded-[32px] bg-white/[0.08] backdrop-blur-2xl border border-white/15 pl-5 md:pl-8 pr-2 md:pr-3 py-3 md:py-4"
           style={{
             backgroundImage:
               "linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03))",
