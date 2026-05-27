@@ -207,7 +207,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
               onFocus={() => setOpen(true)}
               onKeyDown={onKeyDownInput}
               placeholder=""
-              className="w-full bg-transparent text-[16px] md:text-[19px] text-white placeholder:text-transparent focus:outline-none py-2 md:py-2.5 tracking-[-0.005em]"
+              className="w-full min-w-0 bg-transparent text-[16px] md:text-[20px] text-white placeholder:text-transparent focus:outline-none py-2.5 md:py-3 tracking-[-0.005em]"
               aria-label="Explore the Capital District"
             />
             {/* Animated rotating placeholder layer (only when empty) */}
