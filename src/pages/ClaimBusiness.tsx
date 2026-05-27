@@ -85,10 +85,19 @@ const ClaimBusiness = () => {
   const update = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
     setForm((p) => ({ ...p, [k]: v }));
 
+  // ─────────────────────────────────────────────────────────────
+  // CONCIERGE PILOT MODE
+  // No Stripe / no checkout / no automated billing.
+  // Submissions land in the unified `leads` table; the team
+  // reviews each business manually and (when ready) toggles
+  // `is_claimed`, `is_featured`, and `plan_tier` from the admin.
+  // Payment automation stays inactive until after the 25-business
+  // pilot has validated demand.
+  // ─────────────────────────────────────────────────────────────
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.businessName.trim() || !form.email.trim()) {
-      toast.error("Business name and email are required.");
+    if (!form.businessName.trim() || !form.ownerName.trim() || !form.email.trim() || !form.phone.trim()) {
+      toast.error("Business name, your name, email, and phone are required.");
       return;
     }
     setIsSubmitting(true);
