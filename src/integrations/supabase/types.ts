@@ -217,6 +217,77 @@ export type Database = {
           },
         ]
       }
+      business_specials: {
+        Row: {
+          business_id: string | null
+          business_name: string | null
+          category: string | null
+          created_at: string
+          cta_label: string | null
+          cta_url: string | null
+          description: string | null
+          display_order: number | null
+          end_date: string | null
+          headline: string
+          id: string
+          image_url: string | null
+          is_active: boolean
+          is_featured: boolean
+          start_date: string
+          town_name: string | null
+          town_slug: string
+          updated_at: string
+        }
+        Insert: {
+          business_id?: string | null
+          business_name?: string | null
+          category?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          description?: string | null
+          display_order?: number | null
+          end_date?: string | null
+          headline: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          is_featured?: boolean
+          start_date?: string
+          town_name?: string | null
+          town_slug: string
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string | null
+          business_name?: string | null
+          category?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          description?: string | null
+          display_order?: number | null
+          end_date?: string | null
+          headline?: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          is_featured?: boolean
+          start_date?: string
+          town_name?: string | null
+          town_slug?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_specials_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       businesses: {
         Row: {
           address: string | null
@@ -252,6 +323,7 @@ export type Database = {
           last_synced_at: string | null
           last_verified_at: string | null
           latitude: number | null
+          linkedin: string | null
           logo_url: string | null
           longitude: number | null
           name: string
@@ -273,11 +345,13 @@ export type Database = {
           subscription_status: string | null
           tagline: string | null
           tags: string[] | null
+          tiktok: string | null
           town_name: string | null
           town_slug: string
           updated_at: string
           website: string | null
           website_status: string | null
+          x_url: string | null
           zipcode: string | null
         }
         Insert: {
@@ -314,6 +388,7 @@ export type Database = {
           last_synced_at?: string | null
           last_verified_at?: string | null
           latitude?: number | null
+          linkedin?: string | null
           logo_url?: string | null
           longitude?: number | null
           name: string
@@ -335,11 +410,13 @@ export type Database = {
           subscription_status?: string | null
           tagline?: string | null
           tags?: string[] | null
+          tiktok?: string | null
           town_name?: string | null
           town_slug: string
           updated_at?: string
           website?: string | null
           website_status?: string | null
+          x_url?: string | null
           zipcode?: string | null
         }
         Update: {
@@ -376,6 +453,7 @@ export type Database = {
           last_synced_at?: string | null
           last_verified_at?: string | null
           latitude?: number | null
+          linkedin?: string | null
           logo_url?: string | null
           longitude?: number | null
           name?: string
@@ -397,11 +475,13 @@ export type Database = {
           subscription_status?: string | null
           tagline?: string | null
           tags?: string[] | null
+          tiktok?: string | null
           town_name?: string | null
           town_slug?: string
           updated_at?: string
           website?: string | null
           website_status?: string | null
+          x_url?: string | null
           zipcode?: string | null
         }
         Relationships: []
@@ -1134,6 +1214,80 @@ export type Database = {
           website_url?: string | null
         }
         Relationships: []
+      }
+      town_events: {
+        Row: {
+          address: string | null
+          business_id: string | null
+          category: string | null
+          created_at: string
+          cta_label: string | null
+          cta_url: string | null
+          description: string | null
+          display_order: number | null
+          ends_at: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean
+          is_featured: boolean
+          starts_at: string
+          title: string
+          town_name: string | null
+          town_slug: string
+          updated_at: string
+          venue_name: string | null
+        }
+        Insert: {
+          address?: string | null
+          business_id?: string | null
+          category?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          description?: string | null
+          display_order?: number | null
+          ends_at?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          is_featured?: boolean
+          starts_at: string
+          title: string
+          town_name?: string | null
+          town_slug: string
+          updated_at?: string
+          venue_name?: string | null
+        }
+        Update: {
+          address?: string | null
+          business_id?: string | null
+          category?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          description?: string | null
+          display_order?: number | null
+          ends_at?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          is_featured?: boolean
+          starts_at?: string
+          title?: string
+          town_name?: string | null
+          town_slug?: string
+          updated_at?: string
+          venue_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "town_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       town_landmarks: {
         Row: {
