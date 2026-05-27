@@ -215,7 +215,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -12, opacity: 0 }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="block text-[16px] md:text-[20px] text-white/55 font-light tracking-[-0.005em] truncate"
+                    className="block text-[13px] sm:text-[15px] md:text-[19px] text-white/55 font-light tracking-[-0.005em] whitespace-nowrap"
                   >
                     {placeholder}
                   </motion.span>
