@@ -74,18 +74,9 @@ const cleanTelHref = (phone?: string | null) => {
   return digits ? `tel:${digits}` : null;
 };
 
-const getHeroCta = (business: HeroSpotlight) => {
-  const menuUrl = safeUrl(business.menu_url);
-  const websiteUrl = safeUrl(business.website);
-  const phoneHref = cleanTelHref(business.phone);
-
-  if (menuUrl) return { label: "View Menu", href: menuUrl, external: true };
-  if (business.ctaIntent === "connect" && phoneHref) {
-    return { label: "Call Now", href: phoneHref, external: false };
-  }
-  if (websiteUrl) return { label: "Visit Website", href: websiteUrl, external: true };
-  return { label: "View Profile", href: null, external: false };
-};
+// Card CTA is always "View Profile" → opens the shared BusinessDetailModal.
+// Website / menu / phone live INSIDE the modal so behavior is consistent
+// with search-result cards and town/category cards.
 
 const toBusiness = (business: HeroSpotlight): Business => ({
   slug: business.slug,
