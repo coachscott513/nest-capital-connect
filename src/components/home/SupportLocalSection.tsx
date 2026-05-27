@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, Search, MapPin, Sparkles, Building2 } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Search, Building2 } from "lucide-react";
+import PremiumFeaturedBusinessCard from "@/components/home/PremiumFeaturedBusinessCard";
 import { motion } from "framer-motion";
 import {
   CATEGORY_GROUPS,
