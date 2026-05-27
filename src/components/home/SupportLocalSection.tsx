@@ -80,14 +80,15 @@ const SupportLocalSection = () => {
           className="max-w-3xl"
         >
           <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-5 text-[#5eead4]">
-            Local Businesses
+            Popular Business Searches
           </p>
           <h2 className="text-5xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.035em] leading-[1.0] text-white">
-            Support local.
+            What people search.
           </h2>
           <p className="mt-7 text-lg md:text-xl text-white/60 font-light leading-relaxed">
-            Discover restaurants, lenders, attorneys, coffee shops, contractors, and the
-            independent businesses residents actually use across the Capital District.
+            The most-searched local businesses across the Capital District — restaurants,
+            lenders, attorneys, coffee shops, contractors, and the independents residents actually use.
+
           </p>
         </motion.div>
 
