@@ -158,11 +158,11 @@ const EmptyState = ({
     <p className="text-lg md:text-xl font-medium text-white mb-2">{title}</p>
     <p className="text-sm text-white/55 mb-6">{sub}</p>
     <Link
-      to={`/pricing)}`}
+      to="/claim-business"
       className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-white text-sm font-semibold transition hover:opacity-90"
       style={{ backgroundColor: TEAL }}
     >
-      Upgrade to Featured <ArrowRight className="w-4 h-4" />
+      Claim This Profile <ArrowRight className="w-4 h-4" />
     </Link>
   </div>
 );
@@ -386,7 +386,7 @@ const TownPulse = () => {
           {specials.length === 0 ? (
             <EmptyState
               title={`No featured specials are live in ${townName} yet.`}
-              sub="Own a local business? Upgrade to Featured to post specials."
+              sub="Own a local business? Claim your free profile to post specials."
               townName={townName}
             />
           ) : (
@@ -466,7 +466,7 @@ const TownPulse = () => {
           {events.length === 0 ? (
             <EmptyState
               title="No upcoming events are listed yet."
-              sub="Local businesses can upgrade to Featured to submit events."
+              sub="Local businesses can claim their free profile to submit events."
               townName={townName}
             />
           ) : (
@@ -552,10 +552,11 @@ const TownPulse = () => {
                 No featured partners in {townName} yet.
               </p>
               <p className="text-sm text-white/55 mb-6 max-w-md mx-auto">
-                Own a business in {townName}? Upgrade to Featured to be featured here with priority placement, photo galleries, and promotional tools.
+                Own a business in {townName}? Claim your free profile to appear here with
+                priority placement, photo galleries, and promotional tools.
               </p>
               <Link
-                to={`/pricing)}`}
+                to="/claim-business"
                 className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-white text-sm font-semibold transition hover:opacity-90"
                 style={{ backgroundColor: TEAL }}
               >
@@ -647,7 +648,7 @@ const TownPulse = () => {
                   ? `No matches for "${search}" in ${townName}.`
                   : `No businesses listed in ${townName} yet.`
               }
-              sub="Be the first — upgrade to Featured to appear here."
+              sub="Be the first — claim your free profile to appear here."
               townName={townName}
             />
           ) : (
@@ -823,16 +824,15 @@ const TownPulse = () => {
             Own a business in {townName}?
           </h2>
           <p className="mt-5 text-base md:text-lg text-white/65 max-w-2xl mx-auto leading-relaxed">
-            Upgrade to Featured, update your business
-            information, and request placement in local specials, events, and
-            featured town sections.
+            Claim your free profile, update your business information, and request
+            placement in local specials, events, and featured town sections.
           </p>
           <Link
-            to={`/pricing)}`}
+            to="/claim-business"
             className="mt-10 inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-white text-base font-semibold transition hover:opacity-90"
             style={{ backgroundColor: TEAL }}
           >
-            Local Business Solutions <ArrowRight className="w-4 h-4" />
+            For Local Businesses <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>

@@ -1051,7 +1051,7 @@ const AppleTownTemplate = ({
                       className="flex flex-col items-center gap-3 p-6 glass-strong rounded-2xl border border-primary/30 hover:border-primary/60 transition-colors group"
                     >
                       <Lock className="w-8 h-8 text-primary" />
-                      <span className="text-lg font-semibold text-foreground">Owner: Upgrade to Featured</span>
+                      <span className="text-lg font-semibold text-foreground">Claim This Profile</span>
                       <span className="text-sm text-muted-foreground text-center max-w-xs">
                         This listing is in Community Preview mode. Join our community to publish your story.
                       </span>
