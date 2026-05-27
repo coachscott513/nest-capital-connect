@@ -33,7 +33,7 @@ interface Vendor {
   website?: string;
   linkedin?: string;
   location: string;
-  isVerified: boolean;
+  isMember: boolean;
   hasDirectExperience?: boolean;
   badge?: string;
   yearsInBusiness?: number;
@@ -71,7 +71,7 @@ const vendorCategories: VendorCategory[] = [
         website: "https://example.com",
         linkedin: "https://linkedin.com/in/example",
         location: "Clifton Park, NY",
-        isVerified: true,
+        isMember: true,
         hasDirectExperience: true,
         badge: "Nest Preferred",
         yearsInBusiness: 12,
@@ -87,7 +87,7 @@ const vendorCategories: VendorCategory[] = [
         phone: "(518) 555-0102",
         email: "afoster@crmortgage.com",
         location: "Albany, NY",
-        isVerified: true,
+        isMember: true,
         hasDirectExperience: true,
         yearsInBusiness: 8
       },
@@ -100,7 +100,7 @@ const vendorCategories: VendorCategory[] = [
         description: "Non-QM lending solutions for experienced investors.",
         phone: "(518) 555-0103",
         location: "Saratoga Springs, NY",
-        isVerified: false
+        isMember: false
       }
     ]
   },
@@ -124,7 +124,7 @@ const vendorCategories: VendorCategory[] = [
         website: "https://example.com",
         linkedin: "https://linkedin.com/in/example",
         location: "Troy, NY",
-        isVerified: true,
+        isMember: true,
         hasDirectExperience: true,
         badge: "Fast Closer",
         yearsInBusiness: 15,
@@ -140,7 +140,7 @@ const vendorCategories: VendorCategory[] = [
         phone: "(518) 555-0202",
         email: "mtorres@empirestate.com",
         location: "Clifton Park, NY",
-        isVerified: true,
+        isMember: true,
         yearsInBusiness: 10
       },
       {
@@ -152,7 +152,7 @@ const vendorCategories: VendorCategory[] = [
         description: "Entity structuring for real estate portfolios.",
         phone: "(518) 555-0203",
         location: "Albany, NY",
-        isVerified: false
+        isMember: false
       }
     ]
   },
@@ -175,7 +175,7 @@ const vendorCategories: VendorCategory[] = [
         email: "tgrant@landlordshield.com",
         website: "https://example.com",
         location: "Schenectady, NY",
-        isVerified: true,
+        isMember: true,
         hasDirectExperience: true,
         badge: "Top Rated",
         yearsInBusiness: 18,
@@ -191,7 +191,7 @@ const vendorCategories: VendorCategory[] = [
         phone: "(518) 555-0302",
         email: "lcrawford@empirerisk.com",
         location: "Clifton Park, NY",
-        isVerified: true,
+        isMember: true,
         yearsInBusiness: 7
       },
       {
@@ -203,7 +203,7 @@ const vendorCategories: VendorCategory[] = [
         description: "Coverage for properties under renovation or construction.",
         phone: "(518) 555-0303",
         location: "Saratoga Springs, NY",
-        isVerified: false
+        isMember: false
       }
     ]
   },
@@ -227,7 +227,7 @@ const vendorCategories: VendorCategory[] = [
         website: "https://example.com",
         linkedin: "https://linkedin.com/in/example",
         location: "Troy, NY",
-        isVerified: true,
+        isMember: true,
         hasDirectExperience: true,
         badge: "Investor Favorite",
         yearsInBusiness: 14,
@@ -243,7 +243,7 @@ const vendorCategories: VendorCategory[] = [
         phone: "(518) 555-0402",
         email: "enguyen@upstatepm.com",
         location: "Albany, NY",
-        isVerified: true,
+        isMember: true,
         yearsInBusiness: 6
       },
       {
@@ -255,7 +255,7 @@ const vendorCategories: VendorCategory[] = [
         description: "Fast turnaround for time-sensitive investment projects.",
         phone: "(518) 555-0403",
         location: "Clifton Park, NY",
-        isVerified: false
+        isMember: false
       }
     ]
   }
@@ -272,7 +272,7 @@ const VendorCard = ({
   glowColor: string;
   onSelect: () => void;
 }) => {
-  const isLocked = !vendor.isVerified;
+  const isLocked = !vendor.isMember;
   
   return (
     <div 
@@ -288,8 +288,8 @@ const VendorCard = ({
         }
       `}
     >
-      {/* Verified Badge with Direct Experience */}
-      {vendor.isVerified && (
+      {/* Member Badge with Direct Experience */}
+      {vendor.isMember && (
         <div className="absolute -top-2 -right-2 z-10">
           <div className={`flex items-center gap-1 px-2 py-1 rounded-full border backdrop-blur-sm ${
             vendor.hasDirectExperience 
@@ -298,7 +298,7 @@ const VendorCard = ({
           }`}>
             <BadgeCheck className={`h-3.5 w-3.5 ${vendor.hasDirectExperience ? "text-primary" : "text-emerald-400"}`} />
             <span className={`text-[10px] font-bold uppercase tracking-wider ${vendor.hasDirectExperience ? "text-primary" : "text-emerald-300"}`}>
-              {vendor.hasDirectExperience ? "Direct Experience" : "Verified"}
+              {vendor.hasDirectExperience ? "Direct Experience" : "Member"}
             </span>
           </div>
         </div>
@@ -368,7 +368,7 @@ const VendorCard = ({
             <Lock className="h-5 w-5 text-muted-foreground mx-auto mb-2" />
             <p className="text-xs text-muted-foreground mb-2">Verification Pending</p>
             <Button size="sm" variant="outline" className="text-xs h-8">
-              Request Verification
+              Request Featured Placement
             </Button>
           </div>
         </div>
@@ -408,15 +408,15 @@ const VendorDetailDrawer = ({
           </SheetTitle>
         </SheetHeader>
 
-        {/* Verified Badge Hero */}
-        {vendor.isVerified && vendor.hasDirectExperience && (
+        {/* Member Badge Hero */}
+        {vendor.isMember && vendor.hasDirectExperience && (
           <div className="mb-6 p-4 rounded-2xl bg-primary/10 border border-primary/30 backdrop-blur-sm">
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-full bg-primary/20 shadow-[0_0_20px_hsl(var(--primary)/0.4)]">
                 <BadgeCheck className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-primary">Nest Verified: Direct Experience</p>
+                <p className="text-sm font-semibold text-primary">Nest Member: Direct Experience</p>
                 <p className="text-xs text-muted-foreground">Personally vetted by Capital District Nest</p>
               </div>
             </div>
@@ -599,7 +599,7 @@ const VendorHub = () => {
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-emerald-500" />
-                <span className="text-xs text-muted-foreground">Verified Partner</span>
+                <span className="text-xs text-muted-foreground">Member Partner</span>
               </div>
             </div>
           </div>
@@ -631,7 +631,7 @@ const VendorHub = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <span className="text-xs text-primary font-medium">
-                      {category.vendors.filter(v => v.isVerified).length} verified
+                      {category.vendors.filter(v => v.isMember).length} verified
                     </span>
                     {category.vendors.filter(v => v.hasDirectExperience).length > 0 && (
                       <span className="text-xs text-muted-foreground">
@@ -693,7 +693,7 @@ const VendorHub = () => {
           {/* Become a Partner CTA */}
           <div className="mt-16 text-center">
             <div className="inline-block p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-emerald-500/10 border border-primary/20 backdrop-blur-xl">
-              <h3 className="text-2xl font-bold text-foreground mb-2">Become a Verified Partner</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-2">Become a Member Partner</h3>
               <p className="text-muted-foreground mb-6 max-w-md mx-auto">
                 Get featured in the Capital District's premier investor network. 
                 Connect with high-intent buyers and investors.

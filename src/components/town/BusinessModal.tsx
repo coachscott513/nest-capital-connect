@@ -139,7 +139,7 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
               </p>
               {!verified && (
                 <span className="inline-flex items-center gap-1 text-[11px] text-white/45">
-                  <Lock className="w-3 h-3" /> Claim to activate
+                  <Lock className="w-3 h-3" /> Featured
                 </span>
               )}
             </div>
@@ -158,7 +158,7 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
                   href={`/pricing)}`}
                   className="mt-4 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-[#5eead4]/30 text-[#5eead4] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66] transition-all"
                 >
-                  Claim this listing
+                  Upgrade to Featured
                 </a>
                 <p className="mt-2 text-[11px] text-white/45 text-center">
                   Free · No payment required

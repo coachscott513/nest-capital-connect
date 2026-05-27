@@ -66,7 +66,7 @@ const RentalsSearchHub = () => {
             </h1>
             
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-light">
-              Verified rental listings across the Capital District
+              Member rental listings across the Capital District
             </p>
           </div>
 

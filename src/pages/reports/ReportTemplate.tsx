@@ -87,7 +87,7 @@ const ReportTemplate = () => {
         pageTitle={`${propertyData.address} — Intelligence Report`}
         pageSubtitle="Investor-style facts + verified public record. Fast. Clear. Local."
         propertyData={propertyData}
-        metaDescription={`Comprehensive property intelligence report for ${propertyData.address}. Verified public record, tax analysis, and buyer insights.`}
+        metaDescription={`Comprehensive property intelligence report for ${propertyData.address}. Member public record, tax analysis, and buyer insights.`}
         canonicalUrl={`https://www.capitaldistrictnest.com/reports/${REPORT_SLUG}`}
       />
     </ReportPasswordGate>

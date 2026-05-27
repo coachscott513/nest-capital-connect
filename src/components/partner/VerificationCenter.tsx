@@ -129,7 +129,7 @@ const VerificationCenter = ({ localVoice, partnerId, onUpdate }: VerificationCen
               {localVoice.is_verified ? (
                 <>
                   <CheckCircle className="w-3 h-3 mr-1" />
-                  Verified
+                  Member
                 </>
               ) : (
                 <>

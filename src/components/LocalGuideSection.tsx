@@ -122,7 +122,7 @@ const BusinessCard = ({
                 className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
               >
                 <CheckCircle className="w-3 h-3" />
-                Verify or Edit Details
+                Manage Listing
               </Link>
             </div>
           </>

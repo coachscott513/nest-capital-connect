@@ -90,7 +90,7 @@ function CinematicHero() {
               <SpotlightSearch />
             </motion.div>
 
-            {/* HERO-LEVEL FEATURED · Verified Local Legend cards */}
+            {/* HERO-LEVEL FEATURED · Member Local Legend cards */}
             <motion.div
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
@@ -326,7 +326,7 @@ const INTEL_TABS: IntelTab[] = [
     ctaVerb: "Browse",
     focusBanner: {
       eyebrow: "For business owners",
-      title: "Claim Your Free Digital Profile",
+      title: "Become a Featured Partner",
       body: "Get on the Capital District's pulse — verified listing, photos, hours, and direct leads. Free for local owners.",
       ctaLabel: "Claim Your Profile",
       ctaTo: "/pricing",
@@ -508,7 +508,7 @@ const Index = () => {
       {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip */}
       <LiveLocalPulse />
 
-      {/* 2 — B2B CONVERSION · Claim Your Business (flywheel CTA, directly under hero) */}
+      {/* 2 — B2B CONVERSION · Local Business Solutions (flywheel CTA, directly under hero) */}
       <section className="relative bg-[#0B0F19] overflow-hidden border-b border-[#2D3748]">
         <div
           className="absolute inset-0 opacity-60 pointer-events-none"

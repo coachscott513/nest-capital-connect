@@ -53,7 +53,7 @@ const RidgeRoadIntelligenceReport = () => {
         pageTitle="1999 Ridge Rd, Queensbury, NY — Intelligence Report"
         pageSubtitle="Investor-style facts + verified public record. Fast. Clear. Local."
         propertyData={propertyData}
-        metaDescription="Comprehensive property intelligence report for 1999 Ridge Road, Queensbury NY. Verified public record, tax analysis, and buyer insights."
+        metaDescription="Comprehensive property intelligence report for 1999 Ridge Road, Queensbury NY. Member public record, tax analysis, and buyer insights."
         canonicalUrl="https://www.capitaldistrictnest.com/reports/1999-ridge-road-queensbury-ny"
       />
     </ReportPasswordGate>

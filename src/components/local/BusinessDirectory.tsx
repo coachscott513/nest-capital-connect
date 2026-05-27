@@ -66,9 +66,9 @@ const COUNTY_LIST = CAPITAL_DISTRICT_COUNTIES.map((county) => ({
 const isOfficialCategory = (value: string | null): value is OfficialCategory =>
   Boolean(value && OFFICIAL_CATEGORIES.some((c) => c.toLowerCase() === value.toLowerCase()));
 
-const isClaimed = (b: Business) => Boolean(b.claimed ?? b.verified);
+const isMember = (b: Business) => Boolean(b.claimed ?? b.verified);
 
-type TierFilter = "all" | "featured" | "claimed" | "unclaimed";
+type TierFilter = "all" | "featured" | "claimed" | "standard";
 
 // Generic "show me everything" tokens — when the only keyword is one of these,
 // it should not narrow results (lets "albany businesses" / "schenectady shops"
@@ -214,8 +214,8 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         } as never, category as OfficialCategory)) return false;
       }
       if (tier === "featured" && !b.featured) return false;
-      if (tier === "claimed" && !isClaimed(b)) return false;
-      if (tier === "unclaimed" && isClaimed(b)) return false;
+      if (tier === "claimed" && !isMember(b)) return false;
+      if (tier === "standard" && isMember(b)) return false;
       if (hasWebsite && !b.website) return false;
       if (hasPhone && !b.phone) return false;
 
@@ -239,7 +239,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     // featured first, then claimed/verified, then everything else.
     // Stable sort preserves original alphabetical-ish order within each tier.
     return [...pool].sort((a, b) => {
-      const rank = (x: Business) => (x.featured ? 0 : isClaimed(x) ? 1 : 2);
+      const rank = (x: Business) => (x.featured ? 0 : isMember(x) ? 1 : 2);
       return rank(a) - rank(b);
     });
   }, [q, town, category, tier, hasWebsite, hasPhone, townSlug, ALL]);
@@ -290,7 +290,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 href="/pricing"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
               >
-                <Sparkles className="w-4 h-4" /> Claim Your Business
+                <Sparkles className="w-4 h-4" /> Local Business Solutions
               </a>
               <a
                 href="/pricing"
@@ -381,7 +381,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             <span className="inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-semibold text-white/55">
               <Filter className="w-3.5 h-3.5" /> Filters
             </span>
-            {(["all", "featured", "claimed", "unclaimed"] as TierFilter[]).map((t) => (
+            {(["all", "featured", "claimed", "standard"] as TierFilter[]).map((t) => (
               <FilterChip key={t} active={tier === t} onClick={() => setTier(t)}>
                 {t === "all" ? "All" : t.charAt(0).toUpperCase() + t.slice(1)}
               </FilterChip>
@@ -421,7 +421,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                   Suggest a business
                 </a>
                 <a href="/pricing" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/50 transition">
-                  Claim your business
+                  Upgrade to Featured
                 </a>
               </div>
             </div>
@@ -461,12 +461,12 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
               Own a Capital District business?
             </h2>
             <p className="mt-5 text-lg font-light text-white/65">
-              Claim your profile, post events and specials, and become part of the digital
+              Upgrade to Featured, post events and specials, and become part of the digital
               front door of the region.
             </p>
             <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a href="/pricing" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition">
-                Claim Your Business
+                Local Business Solutions
               </a>
               <a href="/pricing" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-[#5eead4]/40 transition">
                 Become a Featured Partner
@@ -662,7 +662,7 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
 );
 
 const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
-  const claimed = isClaimed(b);
+  const claimed = isMember(b);
   const elevated = Boolean(b.featured || claimed);
   const accent = b.featured ? "#c9a449" : "#5eead4";
   const seed = b.name.charCodeAt(0) + b.name.charCodeAt(b.name.length - 1);
@@ -767,7 +767,7 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             </span>
           ) : claimed ? (
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#5eead4] text-[#0B0F19] text-[10px] font-bold uppercase tracking-[0.14em] shadow-[0_4px_14px_-2px_rgba(94,234,212,0.5)]">
-              <Star className="w-3 h-3" /> Verified
+              <Star className="w-3 h-3" /> Member
             </span>
           ) : null}
         </div>
@@ -818,7 +818,7 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             }}
             className="mt-auto mt-5 w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white text-[#0B0F19] text-[13px] font-bold hover:bg-[#5eead4] transition cursor-pointer"
           >
-            Claim Free Profile <ArrowUpRight className="w-3.5 h-3.5" />
+            Upgrade to Featured <ArrowUpRight className="w-3.5 h-3.5" />
           </span>
         )}
       </div>
@@ -844,13 +844,13 @@ const ClaimCtaCard = () => (
         Own this business?
       </h3>
       <p className="mt-3 text-sm text-white/65 font-light leading-relaxed">
-        Claim your profile, add events, specials, social links, and unlock premium placement
+        Upgrade to Featured, add events, specials, social links, and unlock premium placement
         across town pages.
       </p>
     </div>
     <div className="relative mt-6 flex flex-wrap gap-2">
       <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-black text-xs font-semibold">
-        Claim Business <ArrowUpRight className="w-3.5 h-3.5" />
+        For Businesses <ArrowUpRight className="w-3.5 h-3.5" />
       </span>
       <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-white/20 text-white text-xs font-semibold">
         Learn more
@@ -908,7 +908,7 @@ export const BusinessDetailModal = ({
     );
   }
 
-  const claimed = isClaimed(biz);
+  const claimed = isMember(biz);
   const telHref = biz.phone ? `tel:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
   const smsHref = biz.phone ? `sms:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
   const dirHref = biz.address
@@ -963,7 +963,7 @@ export const BusinessDetailModal = ({
               )}
               {!biz.featured && claimed && (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 backdrop-blur text-white text-[10px] font-semibold uppercase tracking-wider border border-white/20">
-                  Claimed
+                  Member
                 </span>
               )}
             </div>
@@ -1184,17 +1184,17 @@ export const BusinessDetailModal = ({
             </Section>
           )}
 
-          {/* Unclaimed CTA */}
+          {/* Standard CTA */}
           {!claimed && (
             <div className="rounded-2xl border border-dashed border-[#5eead4]/30 bg-[#5eead4]/[0.04] p-7">
               <p className="text-sm font-semibold text-white">Is this your business?</p>
               <p className="mt-1.5 text-sm text-white/65 font-light">
-                Claim your profile to unlock contact info, photos, social links, events,
+                Upgrade to Featured to unlock contact info, photos, social links, events,
                 and specials — free. Upgrade to Featured for top placement.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 <a href={`/pricing`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
-                  <Sparkles className="w-4 h-4" /> Claim this business
+                  <Sparkles className="w-4 h-4" /> Upgrade to Featured
                 </a>
                 <a href={`/pricing`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/40 transition">
                   Become a Featured Partner

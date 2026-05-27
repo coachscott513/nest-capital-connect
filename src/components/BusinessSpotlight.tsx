@@ -25,7 +25,7 @@ interface Business {
   offering: string;
   town: string;
   website?: string;
-  isVerified?: boolean; // SaaS Teaser - all start unverified
+  isMember?: boolean; // SaaS Teaser - all start unverified
 }
 
 const featuredBusinesses: Business[] = [
@@ -273,7 +273,7 @@ const BusinessSpotlight = () => {
 
   // Social icons component - visible but locked (grayscale teaser) until verified
   const SocialStack = ({ business }: { business: Business }) => {
-    const isVerified = business.isVerified ?? false;
+    const isMember = business.isMember ?? false;
     
     return (
       <div className="flex items-center justify-center gap-1.5 mt-2 relative group/social">
@@ -286,20 +286,20 @@ const BusinessSpotlight = () => {
           <button
             key={label}
             onClick={(e) => {
-              if (!isVerified) {
+              if (!isMember) {
                 handleSocialClick(e, business);
               }
             }}
             className={`relative p-1.5 rounded-full transition-all duration-300 group/icon ${
-              isVerified 
+              isMember 
                 ? `${activeColor} hover:scale-110` 
                 : "text-muted-foreground/50 grayscale hover:grayscale-0 hover:text-muted-foreground cursor-pointer"
             }`}
-            title={isVerified ? label : `Business Unverified. Claim to activate ${label}.`}
+            title={isMember ? label : `Business Standard. Featured ${label}.`}
           >
             <Icon className="w-4 h-4" />
             {/* Lock overlay for unverified */}
-            {!isVerified && (
+            {!isMember && (
               <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-background/90 rounded-full flex items-center justify-center border border-border shadow-sm opacity-60 group-hover/icon:opacity-100 group-hover/icon:scale-110 transition-all">
                 <Lock className="w-1.5 h-1.5 text-muted-foreground" />
               </div>
@@ -308,10 +308,10 @@ const BusinessSpotlight = () => {
         ))}
         
         {/* Hover tooltip for unverified */}
-        {!isVerified && (
+        {!isMember && (
           <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/social:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
             <span className="text-[10px] font-medium text-primary bg-background/95 backdrop-blur-sm px-2 py-1 rounded-full border border-primary/30 whitespace-nowrap shadow-lg">
-              Claim to unlock
+              Featured
             </span>
           </div>
         )}
@@ -366,13 +366,13 @@ const BusinessSpotlight = () => {
                       />
                     </div>
                   </div>
-                  {/* Status Badge - Verified or Claim CTA */}
+                  {/* Status Badge - Member or Claim CTA */}
                   <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap filter-none backdrop-blur-none ${
-                    business.isVerified 
+                    business.isMember 
                       ? "bg-primary text-primary-foreground shadow-[0_0_15px_hsl(var(--primary)/0.5)]" 
                       : "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-pulse"
                   }`}>
-                    {business.isVerified ? "Verified" : "Claim"}
+                    {business.isMember ? "Member" : "Claim"}
                   </div>
                 </div>
                 
@@ -415,13 +415,13 @@ const BusinessSpotlight = () => {
                       />
                     </div>
                   </div>
-                  {/* Status Badge - Verified or Claim CTA */}
+                  {/* Status Badge - Member or Claim CTA */}
                   <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap filter-none backdrop-blur-none ${
-                    business.isVerified 
+                    business.isMember 
                       ? "bg-primary text-primary-foreground shadow-[0_0_15px_hsl(var(--primary)/0.5)]" 
                       : "bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-pulse"
                   }`}>
-                    {business.isVerified ? "Verified" : "Claim"}
+                    {business.isMember ? "Member" : "Claim"}
                   </div>
                 </div>
                 
@@ -469,7 +469,7 @@ const BusinessSpotlight = () => {
 
               {/* Owner Name & Town */}
               <div className="flex items-center justify-between mb-6">
-                <div className={`${!(selectedBusiness.isVerified ?? false) ? "blur-[5px] select-none" : ""}`}>
+                <div className={`${!(selectedBusiness.isMember ?? false) ? "blur-[5px] select-none" : ""}`}>
                   <h3 className="text-lg font-semibold text-foreground">{selectedBusiness.ownerName}</h3>
                   <p className="text-sm text-muted-foreground">Owner & Founder</p>
                 </div>
@@ -507,7 +507,7 @@ const BusinessSpotlight = () => {
                         className="rounded-full text-xs"
                         onClick={(e) => handleOpenVerifyModal(e, selectedBusiness)}
                       >
-                        Owner: Verify to Unlock Narrative
+                        Owner: Upgrade to Featured
                       </Button>
                     </div>
                   </div>
@@ -587,7 +587,7 @@ const BusinessSpotlight = () => {
                       className="rounded-full text-[10px] px-3 py-1 h-auto border-primary/30 text-primary hover:bg-primary/10"
                       onClick={(e) => handleOpenVerifyModal(e, selectedBusiness)}
                     >
-                      Verify to Unlock Elite Features
+                      Upgrade to Featured
                     </Button>
                   </div>
                 </div>
@@ -628,7 +628,7 @@ const BusinessSpotlight = () => {
                   onClick={(e) => handleOpenVerifyModal(e, selectedBusiness)}
                   className="w-full rounded-full text-sm py-6 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.5)] animate-pulse border border-emerald-400/50"
                 >
-                  Verify This Business
+                  Upgrade to Featured
                 </Button>
               </div>
 
@@ -649,7 +649,7 @@ const BusinessSpotlight = () => {
                   className="absolute inset-0 flex items-center justify-center group cursor-pointer"
                 >
                   <span className="text-xs font-medium text-primary bg-background/90 px-3 py-1.5 rounded-full border border-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    Verify to activate links
+                    Upgrade to Featured
                   </span>
                 </button>
               </div>
@@ -667,7 +667,7 @@ const BusinessSpotlight = () => {
         <DialogContent className="sm:max-w-md bg-card border-border">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-foreground">
-              Verify This Listing
+              Featured Inquiry
             </DialogTitle>
           </DialogHeader>
           
@@ -720,7 +720,7 @@ const BusinessSpotlight = () => {
               className="w-full rounded-full" 
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Request Verification"}
+              {isSubmitting ? "Submitting..." : "Request Featured Placement"}
             </Button>
 
             <p className="text-xs text-muted-foreground text-center">

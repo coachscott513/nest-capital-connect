@@ -304,7 +304,7 @@ const LocalBusinessesDirectory = ({
             href="/pricing"
             className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors shadow-[0_8px_24px_rgba(13,110,102,0.3)]"
           >
-            Claim Your Business — FREE
+            Local Business Solutions — FREE
           </a>
         </div>
       </div>

@@ -16,7 +16,7 @@ import {
   FileCheck,
   Calendar
 } from "lucide-react";
-import NestVerifiedBadge from "./NestVerifiedBadge";
+import NestMemberBadge from "./NestMemberBadge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -312,7 +312,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
         {/* Section Header - Apple Style */}
         <div className="text-center mb-10 md:mb-14">
           <div className="inline-flex items-center gap-2 mb-6">
-            <NestVerifiedBadge size="lg" />
+            <NestMemberBadge size="lg" />
           </div>
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-foreground tracking-tight mb-3">
@@ -702,11 +702,11 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
             {/* Premium Badge Banner - EXCLUSIVE */}
             <div className="bg-gradient-to-r from-cyan-500/15 via-cyan-400/5 to-cyan-500/15 px-6 py-3 border-b border-cyan-400/20">
               <div className="flex items-center justify-center gap-4">
-                <NestVerifiedBadge size="sm" showText={false} />
+                <NestMemberBadge size="sm" showText={false} />
                 <span className="text-sm font-semibold text-cyan-400 tracking-wider uppercase">
                   Exclusive Inspection Partner
                 </span>
-                <NestVerifiedBadge size="sm" showText={false} />
+                <NestMemberBadge size="sm" showText={false} />
               </div>
             </div>
 
@@ -757,7 +757,7 @@ const RealEstateVendorDirectory = ({ townSlug }: RealEstateVendorDirectoryProps)
                       <h3 className="text-2xl md:text-3xl font-semibold text-foreground">
                         {featuredInspectorPartner.name}
                       </h3>
-                      <NestVerifiedBadge size="md" />
+                      <NestMemberBadge size="md" />
                     </div>
                     <p className="text-cyan-400 font-medium">
                       {featuredInspectorPartner.title}

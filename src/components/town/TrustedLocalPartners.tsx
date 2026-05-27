@@ -374,7 +374,7 @@ const TrustedLocalPartners = ({
                 className="relative mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white transition w-fit shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)]"
                 style={{ backgroundColor: TEAL }}
               >
-                Claim Your Free Digital Profile <ArrowUpRight className="w-4 h-4" />
+                Become a Featured Partner <ArrowUpRight className="w-4 h-4" />
               </span>
             </a>
           )}

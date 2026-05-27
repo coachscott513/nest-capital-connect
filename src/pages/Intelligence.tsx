@@ -57,7 +57,7 @@ const Intelligence = () => {
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                   <FileText className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-bold text-foreground">Property Facts (Verified)</h3>
+                <h3 className="font-bold text-foreground">Property Facts (Member)</h3>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 Lot size, structure details, utilities, zoning — pulled directly from public records, not MLS descriptions.

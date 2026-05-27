@@ -205,14 +205,14 @@ const SupportLocalSection = () => {
                 No featured partners are live yet.
               </p>
               <p className="text-sm text-white/55 mb-6 max-w-md mx-auto">
-                Own a Capital District business? Claim your profile to be
+                Own a Capital District business? Upgrade to Featured to be
                 considered for a featured spotlight placement.
               </p>
               <Link
                 to="/pricing"
                 className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
               >
-                Claim Your Business <ArrowRight className="w-4 h-4" />
+                Local Business Solutions <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           )}
@@ -250,7 +250,7 @@ const SupportLocalSection = () => {
                 Own a local business?
               </h4>
               <p className="mt-2 text-sm md:text-[15px] text-white/65 font-light leading-relaxed">
-                Claim your free profile and add photos, specials, events, and social links.
+                Upgrade to Featured and add photos, specials, events, and social links.
               </p>
             </div>
           </div>
@@ -258,7 +258,7 @@ const SupportLocalSection = () => {
             to="/pricing"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition shrink-0 self-start md:self-auto"
           >
-            Claim Your Business <ArrowUpRight className="w-4 h-4" />
+            Local Business Solutions <ArrowUpRight className="w-4 h-4" />
           </Link>
         </div>
 
