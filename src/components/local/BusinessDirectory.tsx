@@ -994,21 +994,6 @@ export const BusinessDetailModal = ({
           {/* Additional member-only actions */}
           {claimed && (
             <div className="flex flex-wrap gap-2">
-              {telHref && (
-                <a href={telHref} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
-                  <Phone className="w-4 h-4" /> Call
-                </a>
-              )}
-              {biz.website && (
-                <a href={biz.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
-                  <Globe className="w-4 h-4" /> Website
-                </a>
-              )}
-              {dirHref && (
-                <a href={dirHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
-                  <Navigation className="w-4 h-4" /> Directions
-                </a>
-              )}
               {smsHref && (
                 <a href={smsHref} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
                   <MessageSquare className="w-4 h-4" /> Text
