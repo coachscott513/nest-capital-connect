@@ -379,12 +379,21 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
               )}
             </div>
 
-            {biz.description && (
+            {biz.description ? (
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>About</p>
                 <p className="text-[15px] text-white/75 font-light leading-relaxed">{biz.description}</p>
               </div>
+            ) : (
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
+                <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>About</p>
+                <p className="text-[15px] text-white/65 font-light leading-relaxed">
+                  This profile is available to claim and customize. The owner can add a story, photos, specials, and social links to complete the listing.
+                </p>
+              </div>
             )}
+
+            <DigitalChannels biz={biz} />
           </div>
 
           <aside className="space-y-5">
@@ -477,19 +486,7 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
               </article>
             )}
 
-            {socials.length > 0 && (
-              <article>
-                <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-4" style={{ color: TEAL }}>Follow</p>
-                <div className="flex items-center gap-2">
-                  {socials.map(({ url, Icon, label }) => (
-                    <a key={label} href={url as string} target="_blank" rel="noreferrer" aria-label={label}
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.04] text-white/80 hover:text-white hover:border-white/25 transition text-sm">
-                      <Icon className="w-4 h-4" /> {label}
-                    </a>
-                  ))}
-                </div>
-              </article>
-            )}
+            <DigitalChannels biz={biz} />
           </div>
 
           <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
@@ -709,16 +706,7 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
               </div>
             )}
 
-            {socials.length > 0 && (
-              <div className="flex items-center gap-2">
-                {socials.map(({ url, Icon, label }) => (
-                  <a key={label} href={url as string} target="_blank" rel="noreferrer" aria-label={label}
-                    className="w-10 h-10 inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 hover:text-white hover:border-white/25 transition">
-                    <Icon className="w-4 h-4" />
-                  </a>
-                ))}
-              </div>
-            )}
+            <DigitalChannels biz={biz} />
           </aside>
         </div>
       </section>
