@@ -1049,7 +1049,7 @@ export const BusinessDetailModal = ({
           {/* Primary actions — Action Hub opens a popover with every available
               channel (call/text/email/website/order/directions). */}
           <div className="flex flex-wrap gap-2">
-            <BusinessActionHub biz={biz} />
+            <BusinessActionHub biz={biz} claimed={claimed} />
             {biz.website && (
               <a href={biz.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
                 <Globe className="w-4 h-4" /> Website
