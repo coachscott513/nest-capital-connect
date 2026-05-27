@@ -20,7 +20,6 @@ import {
   MessageSquare,
   Youtube,
   LogIn,
-  Lock,
 } from "lucide-react";
 import { z } from "zod";
 import CleanHeader from "@/components/CleanHeader";
