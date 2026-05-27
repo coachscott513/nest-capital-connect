@@ -1,75 +1,35 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ChevronDown, Search, X, Menu, Globe, Phone } from "lucide-react";
+import { Search, X, Menu, Phone } from "lucide-react";
 import GlobalSearchCommand from "@/components/GlobalSearchCommand";
 import AnalystCard from "@/components/AnalystCard";
 
-// Featured towns shown in the main nav. Keep tight + canonical.
-const towns = [
-  { name: "Delmar", slug: "delmar" },
-  { name: "Albany", slug: "albany" },
-  { name: "Saratoga Springs", slug: "saratoga-springs" },
-  { name: "Troy", slug: "troy" },
-  { name: "Schenectady", slug: "schenectady" },
-  { name: "Clifton Park", slug: "clifton-park" },
-  { name: "Niskayuna", slug: "niskayuna" },
-  { name: "Colonie", slug: "colonie" },
-  { name: "Guilderland", slug: "guilderland" },
-  { name: "Bethlehem", slug: "bethlehem" },
-];
-
-const navItems: { label: string; href?: string; dropdown?: string }[] = [
-  { label: "Discover", href: "/" },
-  { label: "Towns", dropdown: "towns" },
-  { label: "Local Business", href: "/local" },
-  { label: "Real Estate", href: "/homes" },
-  { label: "Investment", href: "/analyze" },
-  { label: "About", href: "/contact" },
-];
-
 const TEAL = "#0d6e66";
-const REMAX_RED = "#DC1C2E";
 
-interface DropdownProps {
-  isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-  align?: "left" | "right";
-}
-
-const Dropdown = ({ isOpen, onClose, children, align = "left" }: DropdownProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
-    if (isOpen) document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
-
-  return (
-    <div
-      ref={ref}
-      className={`absolute top-full mt-3 p-5 min-w-72 z-[9999] dropdown-panel ${
-        align === "right" ? "right-0" : "left-0"
-      }`}
-    >
-      {children}
-    </div>
-  );
+type NavMode = {
+  label: string;
+  mobileLabel: string;
+  href?: string;
+  action?: "focus-search";
+  matchPaths?: string[];
 };
+
+// Top nav reads as search modes inside a local operating system,
+// not a list of marketing pages.
+const navModes: NavMode[] = [
+  { label: "Search", mobileLabel: "Search Anything Local", action: "focus-search" },
+  { label: "Homes", mobileLabel: "Search Homes", href: "/homes", matchPaths: ["/homes"] },
+  { label: "Businesses", mobileLabel: "Search Businesses", href: "/local", matchPaths: ["/local"] },
+  { label: "Towns", mobileLabel: "Explore Towns", href: "/communities", matchPaths: ["/communities", "/living-in"] },
+  { label: "Events", mobileLabel: "Local Events", href: "/#weekly-feed", matchPaths: [] },
+  { label: "Invest", mobileLabel: "Investment Properties", href: "/analyze", matchPaths: ["/analyze", "/invest"] },
+  { label: "Claim Business", mobileLabel: "Claim Your Business", href: "/claim-business", matchPaths: ["/claim-business"] },
+];
 
 const CleanHeader = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [townSearch, setTownSearch] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -83,10 +43,21 @@ const CleanHeader = () => {
     }
   };
 
+  const goToEvents = () => {
+    if (location.pathname !== "/") {
+      navigate("/#weekly-feed");
+      setTimeout(() => {
+        const el = document.getElementById("weekly-feed");
+        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 400);
+    } else {
+      const el = document.getElementById("weekly-feed");
+      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   useEffect(() => {
-    setActiveDropdown(null);
     setMobileMenuOpen(false);
-    setTownSearch("");
   }, [location.pathname]);
 
   useEffect(() => {
@@ -107,34 +78,32 @@ const CleanHeader = () => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const filteredTowns = towns.filter((town) =>
-    town.name.toLowerCase().includes(townSearch.toLowerCase())
-  );
-
-  const toggleDropdown = (dropdown: string) => {
-    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+  const isActive = (mode: NavMode) => {
+    if (!mode.matchPaths || mode.matchPaths.length === 0) return false;
+    return mode.matchPaths.some((p) => location.pathname === p || location.pathname.startsWith(p + "/"));
   };
 
-  const closeDropdowns = () => {
-    setActiveDropdown(null);
-    setTownSearch("");
+  const handleModeClick = (mode: NavMode, e: React.MouseEvent) => {
+    if (mode.action === "focus-search") {
+      e.preventDefault();
+      focusOmniSearch();
+      return;
+    }
+    if (mode.label === "Events") {
+      e.preventDefault();
+      goToEvents();
+    }
   };
 
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
-    setTownSearch("");
-  };
-
-  // Frosted on scroll, when a dropdown is open, or when mobile menu is open.
-  const isFrosted = scrolled || activeDropdown !== null || mobileMenuOpen;
+  const isFrosted = scrolled || mobileMenuOpen;
 
   return (
     <>
       <header className={`sticky top-0 z-[2000] nav-shell ${isFrosted ? "nav-frost" : "nav-transparent"}`}>
         <nav className="w-full max-w-7xl mx-auto px-5 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-[68px]">
-            {/* Logo — circular teal dot + wordmark */}
-            <Link to="/" className="flex items-center gap-3 shrink-0" onClick={closeDropdowns}>
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-3 shrink-0">
               <span
                 className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm"
                 style={{ backgroundColor: TEAL }}
@@ -146,87 +115,67 @@ const CleanHeader = () => {
               </span>
             </Link>
 
-            {/* Centered nav */}
-            <div className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
-              {navItems.map((item) => (
-                <div key={item.label} className="relative">
-                  {item.href ? (
-                    <Link
-                      to={item.href}
-                      onClick={closeDropdowns}
-                      className="px-3 py-2 text-[14px] font-medium text-foreground/75 hover:text-foreground rounded-lg transition-colors whitespace-nowrap"
-                    >
-                      {item.label}
-                    </Link>
-                  ) : (
-                    <button
-                      onClick={() => toggleDropdown(item.dropdown!)}
-                      className={`flex items-center gap-1 px-3 py-2 text-[14px] font-medium rounded-lg transition-colors whitespace-nowrap ${
-                        activeDropdown === item.dropdown
-                          ? "text-foreground"
-                          : "text-foreground/75 hover:text-foreground"
-                      }`}
-                    >
-                      {item.label}
-                      <ChevronDown
-                        className={`h-3.5 w-3.5 transition-transform ${
-                          activeDropdown === item.dropdown ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                  )}
+            {/* Centered nav — search modes */}
+            <div className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
+              {navModes.map((mode) => {
+                const active = isActive(mode);
+                const isClaim = mode.label === "Claim Business";
+                const baseCls =
+                  "relative px-3 py-2 text-[13.5px] font-medium rounded-full transition-colors whitespace-nowrap";
+                const stateCls = active
+                  ? "text-foreground bg-white/[0.08]"
+                  : "text-foreground/70 hover:text-foreground hover:bg-white/[0.05]";
+                const claimCls = isClaim
+                  ? "ml-1 text-[#5eead4] hover:text-white hover:bg-[#0d6e66]"
+                  : "";
 
-                  {item.dropdown === "towns" && (
-                    <Dropdown isOpen={activeDropdown === "towns"} onClose={closeDropdowns}>
-                      <div className="space-y-3">
-                        <Link
-                          to="/communities"
-                          onClick={closeDropdowns}
-                          className="block text-sm font-semibold hover:underline"
-                          style={{ color: TEAL }}
-                        >
-                          Browse all towns →
-                        </Link>
-                        <div className="grid grid-cols-2 gap-0.5 pt-1">
-                          {filteredTowns.map((town) => (
-                            <Link
-                              key={town.slug}
-                              to={`/living-in/${town.slug}`}
-                              onClick={closeDropdowns}
-                              className="px-2 py-1.5 text-[13px] text-foreground hover:opacity-80 rounded transition-colors"
-                            >
-                              {town.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </Dropdown>
-                  )}
-                </div>
-              ))}
+                const inner = (
+                  <>
+                    {mode.label}
+                    {active && (
+                      <span
+                        className="absolute left-1/2 -translate-x-1/2 -bottom-[6px] w-1 h-1 rounded-full"
+                        style={{ backgroundColor: "#5eead4" }}
+                      />
+                    )}
+                  </>
+                );
+
+                if (mode.action === "focus-search" || mode.label === "Events") {
+                  return (
+                    <button
+                      key={mode.label}
+                      onClick={(e) => handleModeClick(mode, e)}
+                      className={`${baseCls} ${stateCls} ${claimCls}`}
+                    >
+                      {inner}
+                    </button>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={mode.label}
+                    to={mode.href!}
+                    onClick={(e) => handleModeClick(mode, e)}
+                    className={`${baseCls} ${stateCls} ${claimCls}`}
+                  >
+                    {inner}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Right cluster */}
             <div className="hidden lg:flex items-center gap-2 shrink-0 whitespace-nowrap">
-              {/* Search icon — focuses the homepage Omni-Search */}
               <button
                 onClick={focusOmniSearch}
-                aria-label="Open search"
-                className="flex items-center justify-center w-9 h-9 rounded-full text-foreground/70 hover:text-foreground hover:bg-secondary/60 transition"
+                aria-label="Focus the local search bar"
+                className="flex items-center justify-center w-9 h-9 rounded-full text-foreground/70 hover:text-foreground hover:bg-white/[0.06] transition"
               >
                 <Search className="h-4 w-4" />
               </button>
 
-              {/* Claim Business — subtle */}
-              <Link
-                to="/claim-business"
-                onClick={closeDropdowns}
-                className="px-3 py-1.5 text-[13px] font-medium text-foreground/75 hover:text-foreground transition-colors"
-              >
-                Claim Business
-              </Link>
-
-              {/* Get Started — primary pill */}
               <AnalystCard>
                 <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-white bg-foreground hover:bg-foreground/90">
                   Get Started
@@ -238,8 +187,8 @@ const CleanHeader = () => {
             <div className="flex items-center gap-2 lg:hidden">
               <button
                 onClick={focusOmniSearch}
-                aria-label="Open search"
-                className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-secondary transition-colors"
+                aria-label="Focus the local search bar"
+                className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-white/[0.06] transition-colors"
               >
                 <Search className="h-4 w-4 text-foreground" />
               </button>
@@ -253,7 +202,7 @@ const CleanHeader = () => {
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Menu"
-                className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-secondary transition-colors"
+                className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-white/[0.06] transition-colors"
               >
                 {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </button>
@@ -264,59 +213,76 @@ const CleanHeader = () => {
 
       <GlobalSearchCommand isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
-      {/* Mobile Menu */}
+      {/* Mobile menu — premium glass sheet */}
       <div
-        className={`fixed inset-0 bg-[#0B0F19] text-foreground z-[1999] pt-24 px-6 pb-8 overflow-y-auto transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed inset-0 z-[1999] pt-24 px-6 pb-10 overflow-y-auto transition-transform duration-300 ease-out lg:hidden ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
+        style={{
+          background: "rgba(11, 15, 25, 0.96)",
+          backdropFilter: "blur(28px) saturate(140%)",
+          WebkitBackdropFilter: "blur(28px) saturate(140%)",
+        }}
       >
-        <div className="space-y-8">
-          <div className="space-y-1">
-            {navItems
-              .filter((i) => i.href)
-              .map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.href!}
-                  onClick={closeMobileMenu}
-                  className="block py-3 text-foreground font-semibold text-lg border-b border-border/40"
-                >
-                  {item.label}
-                </Link>
-              ))}
-          </div>
+        <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#5eead4] mb-4">
+          Search modes
+        </p>
+        <div className="space-y-1">
+          {navModes.map((mode) => {
+            const isClaim = mode.label === "Claim Business";
+            const cls = `block w-full text-left py-3.5 px-1 text-[17px] font-medium border-b border-white/[0.06] transition-colors ${
+              isClaim ? "text-[#5eead4]" : "text-white/90 hover:text-white"
+            }`;
 
-          <div>
-            <h3 className="text-xs text-muted-foreground font-medium tracking-[0.15em] uppercase mb-4">
-              Explore
-            </h3>
-            <Link
-              to="/communities"
-              onClick={closeMobileMenu}
-              className="block font-semibold mb-2 text-sm"
-              style={{ color: TEAL }}
-            >
-              Browse all →
-            </Link>
-            <div className="grid grid-cols-2 gap-0.5 mb-8">
-              {filteredTowns.map((town) => (
-                <Link
-                  key={town.slug}
-                  to={`/living-in/${town.slug}`}
-                  onClick={closeMobileMenu}
-                  className="px-2 py-1.5 text-sm text-muted-foreground hover:text-foreground"
+            if (mode.action === "focus-search" || mode.label === "Events") {
+              return (
+                <button
+                  key={mode.label}
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    setTimeout(() => handleModeClick(mode, e as unknown as React.MouseEvent), 50);
+                  }}
+                  className={cls}
                 >
-                  {town.name}
-                </Link>
-              ))}
-            </div>
+                  {mode.mobileLabel}
+                </button>
+              );
+            }
 
-            <AnalystCard>
-              <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white bg-foreground">
-                Talk to an Expert
-              </button>
-            </AnalystCard>
-          </div>
+            return (
+              <Link
+                key={mode.label}
+                to={mode.href!}
+                onClick={() => setMobileMenuOpen(false)}
+                className={cls}
+              >
+                {mode.mobileLabel}
+              </Link>
+            );
+          })}
+
+          <Link
+            to="/contact"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block py-3.5 px-1 text-[17px] font-medium text-white/90 hover:text-white border-b border-white/[0.06]"
+          >
+            About Capital District Nest
+          </Link>
+          <Link
+            to="/contact"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block py-3.5 px-1 text-[17px] font-medium text-white/90 hover:text-white border-b border-white/[0.06]"
+          >
+            Contact
+          </Link>
+        </div>
+
+        <div className="mt-8">
+          <AnalystCard>
+            <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white bg-foreground">
+              Talk to an Expert
+            </button>
+          </AnalystCard>
         </div>
       </div>
     </>
