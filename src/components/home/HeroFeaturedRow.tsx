@@ -123,26 +123,48 @@ const HeroCard = ({ business, onOpen }: { business: HeroSpotlight; onOpen: (busi
         boxShadow: "0 24px 60px -28px rgba(0,0,0,0.75)",
       }}
     >
-      {cta.href ? <a
-        href={cta.href}
-        target={cta.external ? "_blank" : undefined}
-        rel={cta.external ? "noopener noreferrer" : undefined}
-        className="block relative w-full h-36 sm:h-40 overflow-hidden"
-      > : <button type="button" onClick={() => onOpen(business)} className="block relative w-full h-36 sm:h-40 overflow-hidden">}
-        <div className="absolute inset-0">
-          <img
-            src={src}
-            alt={business.name}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = PLACEHOLDER_SCENIC;
-            }}
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
-        <FeaturedBadge />
-      {cta.href ? </a> : </button>}
+      {cta.href ? (
+        <a
+          href={cta.href}
+          target={cta.external ? "_blank" : undefined}
+          rel={cta.external ? "noopener noreferrer" : undefined}
+          className="block relative w-full h-36 sm:h-40 overflow-hidden"
+        >
+          <div className="absolute inset-0">
+            <img
+              src={src}
+              alt={business.name}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = PLACEHOLDER_SCENIC;
+              }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
+          <FeaturedBadge />
+        </a>
+      ) : (
+        <button
+          type="button"
+          onClick={() => onOpen(business)}
+          className="block relative w-full h-36 sm:h-40 overflow-hidden"
+        >
+          <div className="absolute inset-0">
+            <img
+              src={src}
+              alt={business.name}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = PLACEHOLDER_SCENIC;
+              }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
+          <FeaturedBadge />
+        </button>
+      )}
 
       <div className="relative p-4 sm:p-5 flex flex-col gap-2.5">
         <div>
