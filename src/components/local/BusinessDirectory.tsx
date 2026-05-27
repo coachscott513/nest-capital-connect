@@ -1319,5 +1319,159 @@ const TikTokIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+/* ─────────────────────────  ACTION HUB  ───────────────────────── */
+
+const BusinessActionHub = ({ biz }: { biz: Business }) => {
+  const tel = biz.phone ? `tel:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
+  const sms = biz.phone ? `sms:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
+  const mail = biz.email ? `mailto:${biz.email}` : undefined;
+  const dir = biz.address
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(biz.address)}`
+    : undefined;
+  const order = (biz as any).orderUrl || (biz as any).menuUrl || biz.bookingUrl;
+  const orderLabel = (biz as any).orderUrl
+    ? "Order Online"
+    : (biz as any).menuUrl
+    ? "View Menu"
+    : biz.bookingUrl
+    ? "Book Now"
+    : "Order / Book";
+
+  const rows: { href: string; icon: React.ReactNode; label: string; sub?: string }[] = [];
+  if (tel) rows.push({ href: tel, icon: <Phone className="w-4 h-4" />, label: "Call Business", sub: biz.phone });
+  if (sms) rows.push({ href: sms, icon: <MessageSquare className="w-4 h-4" />, label: "Text Message", sub: "Send a text" });
+  if (mail) rows.push({ href: mail, icon: <Mail className="w-4 h-4" />, label: "Email Direct", sub: biz.email });
+  if (biz.website) rows.push({ href: biz.website, icon: <Globe className="w-4 h-4" />, label: "Visit Website" });
+  if (order) rows.push({ href: order, icon: <CalendarPlus className="w-4 h-4" />, label: orderLabel });
+  if (dir) rows.push({ href: dir, icon: <Navigation className="w-4 h-4" />, label: "Get Directions", sub: biz.address });
+
+  if (rows.length === 0) {
+    return (
+      <a
+        href={`/claim-business?slug=${biz.slug}`}
+        className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+      >
+        <Sparkles className="w-4 h-4" /> Claim This Profile
+      </a>
+    );
+  }
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+        >
+          <Phone className="w-4 h-4" /> Contact
+        </button>
+      </PopoverTrigger>
+      <PopoverContent
+        align="start"
+        sideOffset={10}
+        className="w-[280px] p-2 rounded-3xl border border-white/10 bg-[#0B0F19]/95 backdrop-blur-xl text-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]"
+      >
+        <p className="px-3 pt-2 pb-1.5 text-[10px] uppercase tracking-[0.22em] font-semibold text-[#5eead4]">
+          Action Hub
+        </p>
+        <div className="flex flex-col">
+          {rows.map((r) => {
+            const external = r.href.startsWith("http");
+            return (
+              <a
+                key={r.label}
+                href={r.href}
+                target={external ? "_blank" : undefined}
+                rel={external ? "noopener noreferrer" : undefined}
+                className="flex items-center gap-3 px-3 py-3 rounded-2xl hover:bg-white/[0.06] transition"
+              >
+                <span className="w-9 h-9 rounded-full bg-[#5eead4]/15 text-[#5eead4] flex items-center justify-center shrink-0">
+                  {r.icon}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-sm font-semibold text-white">{r.label}</span>
+                  {r.sub && (
+                    <span className="block text-xs text-white/55 truncate">{r.sub}</span>
+                  )}
+                </span>
+              </a>
+            );
+          })}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+};
+
+/* ─────────────────────────  SOCIAL FOOTPRINT  ───────────────────────── */
+
+const SocialFootprint = ({ biz, claimed }: { biz: Business; claimed: boolean }) => {
+  const s = biz.socials ?? {};
+  const items: { href?: string; Icon: React.ComponentType<{ className?: string }>; label: string }[] = [
+    { href: s.facebook, Icon: Facebook, label: "Facebook" },
+    { href: s.instagram, Icon: Instagram, label: "Instagram" },
+    { href: s.tiktok, Icon: TikTokIcon, label: "TikTok" },
+    { href: s.linkedin, Icon: Linkedin, label: "LinkedIn" },
+    { href: s.twitter, Icon: XIcon, label: "X" },
+  ];
+  const hasAny = items.some((i) => !!i.href);
+
+  return (
+    <Section eyebrow="Updates" title="Social Media & Updates">
+      {hasAny ? (
+        <div className="flex items-center gap-2.5 flex-wrap">
+          {items.map(({ href, Icon, label }) =>
+            href ? (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="w-11 h-11 inline-flex items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white hover:border-[#5eead4]/60 hover:text-[#5eead4] hover:bg-white/[0.08] transition"
+              >
+                <Icon className="w-4 h-4" />
+              </a>
+            ) : (
+              <span
+                key={label}
+                aria-label={`${label} not added`}
+                className="w-11 h-11 inline-flex items-center justify-center rounded-full border border-white/[0.06] text-white/25 cursor-not-allowed"
+              >
+                <Icon className="w-4 h-4" />
+              </span>
+            ),
+          )}
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-dashed border-[#5eead4]/30 bg-[#5eead4]/[0.04] p-6">
+          <div className="flex items-center gap-2.5 mb-4 opacity-60">
+            {items.map(({ Icon, label }) => (
+              <span
+                key={label}
+                className="w-10 h-10 inline-flex items-center justify-center rounded-full border border-white/10 text-white/35"
+              >
+                <Icon className="w-4 h-4" />
+              </span>
+            ))}
+          </div>
+          <p className="text-sm text-white/75 font-light leading-relaxed">
+            {claimed
+              ? "Add your Instagram, Facebook, TikTok, photos, specials, and updates to this profile."
+              : "Claim this profile to add Instagram, Facebook, TikTok, photos, specials, and updates."}
+          </p>
+          <a
+            href={`/claim-business?slug=${biz.slug}${claimed ? "&intent=login" : ""}`}
+            className="mt-4 inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+          >
+            <Sparkles className="w-4 h-4" /> {claimed ? "Manage Profile" : "Claim This Profile"}
+          </a>
+        </div>
+      )}
+    </Section>
+  );
+};
+
 export default BusinessDirectory;
+
 
