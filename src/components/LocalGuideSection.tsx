@@ -118,7 +118,7 @@ const BusinessCard = ({
             {/* Verification CTA for listings */}
             <div className="mt-3 pt-3 border-t border-border">
               <Link 
-                to={`/pricing)}`}
+                to="/claim-business"
                 className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
               >
                 <CheckCircle className="w-3 h-3" />
@@ -240,7 +240,7 @@ const BusinessCard = ({
             {/* Claim/Edit Link for Partners */}
             <div className="mt-3 pt-3 border-t border-[#00F5FF]/20">
               <Link 
-                to={`/pricing)}`}
+                to="/claim-business"
                 className="text-xs text-muted-foreground hover:text-[#00F5FF] transition-colors"
               >
                 Manage Listing
