@@ -234,7 +234,14 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     });
 
     const exactMatches = matches(false);
-    return exactMatches.length > 0 || !effectiveTown ? exactMatches : matches(true).slice(0, 100);
+    const pool = exactMatches.length > 0 || !effectiveTown ? exactMatches : matches(true).slice(0, 100);
+    // Prioritize Model Profiles at the top of every results grid:
+    // featured first, then claimed/verified, then everything else.
+    // Stable sort preserves original alphabetical-ish order within each tier.
+    return [...pool].sort((a, b) => {
+      const rank = (x: Business) => (x.featured ? 0 : isClaimed(x) ? 1 : 2);
+      return rank(a) - rank(b);
+    });
   }, [q, town, category, tier, hasWebsite, hasPhone, townSlug, ALL]);
 
   const featured = useMemo(
