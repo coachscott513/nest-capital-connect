@@ -39,22 +39,20 @@ import { getSearchRoute } from "@/lib/searchIntent";
    ============================================================= */
 
 const ROTATING_PLACEHOLDERS = [
-  "Search businesses, events, homes, sports...",
-  "Search restaurants, contractors, towns...",
-  "Search rentals, lenders, salons, schools...",
-  "Search anything local in the Capital District...",
+  "Search Delmar restaurants, Albany homes, Troy contractors, Saratoga events…",
+  "Search Delmar restaurants, Albany homes, Troy contractors, Saratoga events…",
 ];
 
 // Curated prompt pills — each fires the omni-search using its label as the query
 const PROMPT_PILLS: { label: string; query: string }[] = [
-  { label: "Delmar homes",                  query: "Delmar homes" },
-  { label: "Troy restaurants",              query: "Troy restaurants" },
-  { label: "Albany investment properties",  query: "Albany investment properties" },
-  { label: "Saratoga events",               query: "Saratoga events" },
-  { label: "Plumbers near me",              query: "plumbers" },
-  { label: "Cafes in Bethlehem",            query: "cafes Bethlehem" },
-  { label: "55+ communities",               query: "55+ communities" },
-  { label: "Local contractors",             query: "contractors" },
+  { label: "Delmar homes",             query: "Delmar homes" },
+  { label: "Albany restaurants",       query: "Albany restaurants" },
+  { label: "Troy contractors",         query: "Troy contractors" },
+  { label: "Saratoga events",          query: "Saratoga events" },
+  { label: "Investment properties",    query: "investment properties" },
+  { label: "Mortgage lenders",         query: "mortgage lenders" },
+  { label: "Plumbers near me",         query: "plumbers" },
+  { label: "55+ communities",          query: "55+ communities" },
 ];
 
 
