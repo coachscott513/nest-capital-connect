@@ -16,7 +16,7 @@ import {
   FileCheck,
   Calendar
 } from "lucide-react";
-import NestMemberBadge from "./NestMemberBadge";
+import NestMemberBadge from "./NestVerifiedBadge";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
