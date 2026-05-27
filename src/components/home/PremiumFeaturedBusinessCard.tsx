@@ -75,34 +75,43 @@ const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
       <button
         type="button"
         onClick={() => onOpen(business)}
-        className="relative block w-full h-48 md:h-56 overflow-hidden"
+        className="relative block w-full h-44 sm:h-48 md:h-56 overflow-hidden"
         aria-label={`View ${business.name}`}
       >
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
-          style={{ backgroundImage: `url(${image})` }}
+        <img
+          src={image}
+          alt={`${business.name} — ${business.category}`}
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+          width={800}
+          height={448}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = DEFAULT_FALLBACK;
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/40 to-transparent" />
 
         {/* Featured badge */}
-        <span className="absolute top-4 right-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/45 backdrop-blur-md border border-white/15 text-[10px] font-semibold tracking-[0.18em] uppercase text-white/90">
+        <span className="absolute top-3 right-3 sm:top-4 sm:right-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/45 backdrop-blur-md border border-white/15 text-[10px] font-semibold tracking-[0.18em] uppercase text-white/90">
           <span className="w-1.5 h-1.5 rounded-full bg-[#5eead4] shadow-[0_0_8px_rgba(94,234,212,0.8)]" />
           Featured
         </span>
       </button>
 
       {/* Body */}
-      <div className="flex flex-1 flex-col p-6 md:p-7">
+      <div className="flex flex-1 flex-col p-5 sm:p-6 md:p-7">
         <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
           {business.category}
         </p>
-        <h3 className="mt-2 text-[19px] md:text-[21px] font-semibold tracking-[-0.01em] text-white leading-snug">
+        <h3 className="mt-2 text-[17px] sm:text-[19px] md:text-[21px] font-semibold tracking-[-0.01em] text-white leading-snug">
           {business.name}
         </h3>
 
-        <p className="mt-2 text-[12px] text-white/55 inline-flex items-center gap-1.5 font-light">
-          <MapPin className="w-3.5 h-3.5 text-white/40" />
-          <span>{buildMeta(business)}</span>
+        <p className="mt-2 text-[12px] text-white/55 flex items-start gap-1.5 font-light">
+          <MapPin className="w-3.5 h-3.5 text-white/40 shrink-0 mt-[2px]" />
+          <span className="leading-snug">{buildMeta(business)}</span>
         </p>
 
         {business.tagline && (
@@ -110,6 +119,7 @@ const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
             {business.tagline}
           </p>
         )}
+
 
         {/* Actions */}
         <div className="mt-auto pt-6 flex items-center gap-2.5">
