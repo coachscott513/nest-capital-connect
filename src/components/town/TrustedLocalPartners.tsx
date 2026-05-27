@@ -192,17 +192,7 @@ const PartnerModal = ({
                 <Phone className="w-4 h-4 text-white/45" /> {p.phone}
               </a>
             )}
-            {p.website && p.website !== "#" && (
-              <a
-                href={p.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-[15px] text-white/85 hover:text-white truncate"
-              >
-                <Globe className="w-4 h-4 text-white/45 shrink-0" />
-                <span className="truncate">{p.website.replace(/^https?:\/\//, "")}</span>
-              </a>
-            )}
+            {/* Website link removed from contact list — kept as a clean action button below */}
             {p.email && (
               <a href={mailto} className="flex items-center gap-3 text-[15px] text-white/85 hover:text-white">
                 <Mail className="w-4 h-4 text-white/45" /> {p.email}
