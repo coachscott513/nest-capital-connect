@@ -379,8 +379,9 @@ const App = () => {
           
           {/* Local Business Solutions — pricing & upgrade */}
           <Route path="/pricing" element={<Pricing />} />
-          {/* Legacy: redirect old claim flow to the new pricing page */}
-          <Route path="/claim-business" element={<Navigate to="/pricing" replace />} />
+          {/* Concierge inquiry form for Featured / Spotlight upgrades (pilot mode) */}
+          <Route path="/claim-business" element={<ClaimBusiness />} />
+          <Route path="/get-listed" element={<ClaimBusiness />} />
           
           {/* Partner Dashboard */}
           <Route path="/partner-auth" element={<PartnerAuth />} />
