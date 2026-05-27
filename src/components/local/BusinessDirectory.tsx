@@ -931,11 +931,7 @@ export const BusinessDetailModal = ({
           ) : (
             <div
               className="absolute inset-0 bg-cover bg-center"
-              style={
-                biz.image
-                  ? { backgroundImage: `url(${biz.image})` }
-                  : { background: "linear-gradient(135deg, #0d6e66 0%, #0B0F19 100%)" }
-              }
+              style={{ backgroundImage: `url(${resolveBusinessImage(biz)})` }}
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/55 to-[#0B0F19]/10" />
