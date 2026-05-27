@@ -39,15 +39,10 @@ import { getSearchRoute } from "@/lib/searchIntent";
    ============================================================= */
 
 const ROTATING_PLACEHOLDERS = [
-  "Search Saratoga homes",
-  "Investment properties in Troy",
-  "Coffee shops in Delmar",
-  "Homes near Shen schools",
-  "Clifton Park neighborhoods",
-  "Restaurants in Saratoga",
-  "Multi-family under $500k",
-  "Weekend events in Albany",
-  "Lake George waterfront homes",
+  "Search businesses, events, homes, sports...",
+  "Search restaurants, contractors, towns...",
+  "Search rentals, lenders, salons, schools...",
+  "Search anything local in the Capital District...",
 ];
 
 // Curated prompt pills — each fires the omni-search using its label as the query
@@ -220,7 +215,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -12, opacity: 0 }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="block text-[16px] md:text-[20px] text-white/55 font-light tracking-[-0.005em] truncate"
+                    className="block text-[13px] sm:text-[15px] md:text-[19px] text-white/55 font-light tracking-[-0.005em] whitespace-nowrap"
                   >
                     {placeholder}
                   </motion.span>

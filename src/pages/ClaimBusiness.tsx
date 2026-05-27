@@ -226,6 +226,59 @@ const ClaimBusiness = () => {
         </div>
       </section>
 
+      {/* PRICING TIERS */}
+      <section className="pb-16 px-6 md:px-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-3" style={{ color: TEAL }}>
+              Directory Tiers
+            </p>
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em]">
+              Three ways to own your spot on the Capital District's discovery hub.
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-5">
+            {/* Claimed */}
+            <div className="rounded-3xl p-7 bg-white/[0.04] backdrop-blur-xl border border-white/10 hover:border-white/25 transition flex flex-col">
+              <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/55">Claimed</p>
+              <p className="mt-3 text-4xl font-semibold tracking-tight">$10<span className="text-base text-white/55 font-light">/mo</span></p>
+              <ul className="mt-5 space-y-2.5 text-sm text-white/70 font-light flex-1">
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Full image uploads</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Business description</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Social media links</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Store hours</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> "Verified" badge</li>
+              </ul>
+            </div>
+            {/* Featured */}
+            <div className="rounded-3xl p-7 bg-gradient-to-br from-[#c9a449]/15 via-[#1E2230] to-[#1E2230] border border-[#c9a449]/40 hover:border-[#c9a449]/70 transition flex flex-col shadow-[0_30px_70px_-30px_rgba(201,164,73,0.4)]">
+              <p className="text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: "#c9a449" }}>Featured · Most Popular</p>
+              <p className="mt-3 text-4xl font-semibold tracking-tight">$15<span className="text-base text-white/55 font-light">/mo</span></p>
+              <ul className="mt-5 space-y-2.5 text-sm text-white/75 font-light flex-1">
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Everything in Claimed</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Priority category indexing</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Custom gold badging</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Live Pulse ticker integration</li>
+              </ul>
+            </div>
+            {/* Spotlight */}
+            <div className="rounded-3xl p-7 bg-gradient-to-br from-[#0d6e66]/20 via-[#1E2230] to-[#1E2230] border border-[#5eead4]/40 hover:border-[#5eead4]/70 transition flex flex-col shadow-[0_30px_70px_-30px_rgba(94,234,212,0.45)]">
+              <p className="text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: TEAL }}>Spotlight</p>
+              <p className="mt-3 text-4xl font-semibold tracking-tight">$20<span className="text-base text-white/55 font-light">/mo</span></p>
+              <ul className="mt-5 space-y-2.5 text-sm text-white/75 font-light flex-1">
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Everything in Featured</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Premier card sizing</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Newsletter spotlight</li>
+                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Weekly event matrix feature</li>
+              </ul>
+            </div>
+          </div>
+          <p className="mt-6 text-center text-xs text-white/45">
+            Pick a tier in the form below — or leave it blank and our concierge team will recommend one.
+          </p>
+        </div>
+      </section>
+
       {/* FORM */}
       <section className="pb-28 px-6 md:px-10">
         <form
