@@ -57,14 +57,10 @@ const HERO_SPOTLIGHTS: HeroSpotlight[] = [
   },
 ];
 
-const VerifiedBadge = () => (
-  <div className="absolute top-2.5 left-2.5 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/55 backdrop-blur-md border border-[#5eead4]/40 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#5eead4]">
-    <span className="relative flex w-1.5 h-1.5">
-      <span className="absolute inset-0 rounded-full bg-[#5eead4] animate-ping opacity-70" />
-      <span className="relative rounded-full w-1.5 h-1.5 bg-[#5eead4]" />
-    </span>
-    <span>Verified Local Legend</span>
+const FeaturedBadge = () => (
+  <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/45 backdrop-blur-md border border-white/20 text-[10px] font-semibold tracking-[0.16em] uppercase text-white/90">
     <BadgeCheck className="w-3 h-3 text-[#5eead4]" />
+    <span>Featured</span>
   </div>
 );
 
