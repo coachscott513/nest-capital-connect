@@ -231,10 +231,11 @@ export default function SpotlightSearch({ eyebrow }: Props) {
 
           <button
             type="submit"
-            className="relative shrink-0 inline-flex items-center gap-1.5 px-5 md:px-6 py-2.5 md:py-3 rounded-full bg-white text-[#0e0f12] text-[13px] md:text-sm font-semibold hover:opacity-90 transition"
+            className="relative shrink-0 inline-flex items-center gap-1.5 px-5 md:px-7 py-3 md:py-3.5 rounded-full bg-white text-[#0e0f12] text-[13px] md:text-sm font-semibold hover:opacity-90 transition"
           >
-            Explore <ArrowRight className="w-4 h-4" />
+            Search <ArrowRight className="w-4 h-4" />
           </button>
+
         </motion.form>
 
         {/* Curated search prompts — populate the input + fire the search */}
