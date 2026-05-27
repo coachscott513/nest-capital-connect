@@ -36,7 +36,6 @@ const cleanTelHref = (phone?: string | null) => {
 const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
   const image = resolveImage(business);
   const phoneHref = cleanTelHref(business.phone);
-  const cta = getCta(business);
   const handleProfileOpen = () => onOpen(business);
 
   return (
