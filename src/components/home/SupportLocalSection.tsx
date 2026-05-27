@@ -60,7 +60,7 @@ const SupportLocalSection = () => {
       (b.website ? 1 : 0) +
       (b.address ? 1 : 0) +
       (b.image ? 1 : 0) +
-      (b.rating ? Math.min(1, b.rating / 5) : 0);
+      ((b as any).rating ? Math.min(1, (b as any).rating / 5) : 0);
 
     const fill = liveBusinesses
       .filter((b) => !usedSlugs.has(b.slug) && !b.featured)
