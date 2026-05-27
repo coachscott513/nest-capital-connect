@@ -367,10 +367,11 @@ function CapitalDistrictIntelligence() {
       <div className="max-w-6xl mx-auto">
         <div className="max-w-3xl mb-12 md:mb-16">
           <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-5 text-[#5eead4]">
-            Capital District Intelligence
+            Live Regional Discovery
           </p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.03em] text-white leading-[1.04]">
-            Explore the region.
+            Discover the region.
+
           </h2>
           <p className="mt-6 text-lg md:text-xl text-white/60 font-light leading-relaxed">
             One front door. Every way in — events, real estate, local businesses, investing,
