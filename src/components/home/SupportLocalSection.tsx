@@ -45,19 +45,13 @@ const SupportLocalSection = () => {
     [],
   );
 
-  const featured = useMemo(() => {
-    const promoted = liveBusinesses.filter((b) => b.featured);
-    const filler = liveBusinesses.filter(
-      (b) =>
-        !b.featured &&
-        (b.about || b.tagline) &&
-        (b.category === "Coffee" ||
-          b.category === "Restaurant" ||
-          b.category === "Bakery" ||
-          b.category === "Roofer"),
-    );
-    return [...promoted, ...filler].slice(0, 6);
-  }, [liveBusinesses]);
+  // STRICT: only render businesses explicitly flagged as featured in the
+  // database. Never backfill with standard free rows — a "Featured Local
+  // Spotlight" must always reflect a paid/curated placement.
+  const featured = useMemo(
+    () => liveBusinesses.filter((b) => b.featured).slice(0, 6),
+    [liveBusinesses],
+  );
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
