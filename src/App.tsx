@@ -119,7 +119,8 @@ import IntelligenceHub from "./pages/IntelligenceHub";
 import MarketReportThanks from "./pages/MarketReportThanks";
 import Ask from "./pages/Ask";
 import SiteIndex from "./pages/SiteIndex";
-import ClaimBusiness from "./pages/ClaimBusiness";
+import Pricing from "./pages/Pricing";
+import { Navigate } from "react-router-dom";
 import PartnerAuth from "./pages/PartnerAuth";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import PartnerSuccess from "./pages/PartnerSuccess";
@@ -376,8 +377,10 @@ const App = () => {
           {/* Site Index */}
           <Route path="/site-index" element={<SiteIndex />} />
           
-          {/* Business Claim/Edit Form */}
-          <Route path="/claim-business" element={<ClaimBusiness />} />
+          {/* Local Business Solutions — pricing & upgrade */}
+          <Route path="/pricing" element={<Pricing />} />
+          {/* Legacy: redirect old claim flow to the new pricing page */}
+          <Route path="/claim-business" element={<Navigate to="/pricing" replace />} />
           
           {/* Partner Dashboard */}
           <Route path="/partner-auth" element={<PartnerAuth />} />
