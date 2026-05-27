@@ -10,6 +10,7 @@ import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
 import SupportLocalSection from "@/components/home/SupportLocalSection";
 import LiveLocalPulse from "@/components/home/LiveLocalPulse";
 import SpotlightSearch from "@/components/home/SpotlightSearch";
+import RegionalSpotlights from "@/components/home/RegionalSpotlights";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
 
