@@ -45,6 +45,7 @@ import {
 } from "@/data/officialCategories";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import { townMatches, useDbBusinesses } from "@/hooks/useDbBusinesses";
+import { resolveBusinessImage } from "@/lib/businessImages";
 
 const TEAL = "#5eead4";
 const TEAL_DEEP = "#0d6e66";
@@ -563,11 +564,7 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
     <div className="h-40 w-full overflow-hidden relative">
       <div
         className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-110"
-        style={
-          b.image
-            ? { backgroundImage: `url(${b.image})` }
-            : { background: "linear-gradient(135deg, #0d6e66 0%, #0B0F19 100%)" }
-        }
+        style={{ backgroundImage: `url(${resolveBusinessImage(b)})` }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />
       <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/15 backdrop-blur text-[#5eead4] text-[10px] font-semibold uppercase tracking-wider border border-[#5eead4]/30">
@@ -723,11 +720,7 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
         ) : (
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-[1.08]"
-            style={
-              b.image
-                ? { backgroundImage: `url(${b.image})` }
-                : { background: `linear-gradient(135deg, hsl(${hueA} 45% 22%) 0%, hsl(${hueB} 55% 14%) 100%)` }
-            }
+            style={{ backgroundImage: `url(${resolveBusinessImage(b)})` }}
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
@@ -931,11 +924,7 @@ export const BusinessDetailModal = ({
           ) : (
             <div
               className="absolute inset-0 bg-cover bg-center"
-              style={
-                biz.image
-                  ? { backgroundImage: `url(${biz.image})` }
-                  : { background: "linear-gradient(135deg, #0d6e66 0%, #0B0F19 100%)" }
-              }
+              style={{ backgroundImage: `url(${resolveBusinessImage(biz)})` }}
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/55 to-[#0B0F19]/10" />
@@ -968,8 +957,10 @@ export const BusinessDetailModal = ({
         </div>
 
         <div className="p-7 md:p-10 space-y-10">
-          {/* Action buttons */}
-          {claimed && (
+          {/* Primary contact actions — always visible when data exists,
+              regardless of claim status, so every business profile has
+              a usable phone / website / directions row. */}
+          {(telHref || biz.website || dirHref) && (
             <div className="flex flex-wrap gap-2">
               {telHref && (
                 <a href={telHref} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
@@ -986,6 +977,12 @@ export const BusinessDetailModal = ({
                   <Navigation className="w-4 h-4" /> Directions
                 </a>
               )}
+            </div>
+          )}
+
+          {/* Additional member-only actions */}
+          {claimed && (
+            <div className="flex flex-wrap gap-2">
               {smsHref && (
                 <a href={smsHref} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
                   <MessageSquare className="w-4 h-4" /> Text

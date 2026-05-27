@@ -148,18 +148,9 @@ const cleanTelHref = (phone?: string | null) => {
   return digits ? `tel:${digits}` : null;
 };
 
-const getSpotlightCta = (s: Spotlight) => {
-  const menuUrl = safeUrl(s.menu_url);
-  const websiteUrl = safeUrl(s.website);
-  const phoneHref = cleanTelHref(s.phone);
-
-  if (menuUrl) return { label: "View Menu", href: menuUrl, external: true };
-  if (s.ctaIntent === "connect" && phoneHref) {
-    return { label: "Call Now", href: phoneHref, external: false };
-  }
-  if (websiteUrl) return { label: "Visit Website", href: websiteUrl, external: true };
-  return { label: "View Profile", href: null, external: false };
-};
+// Card CTA is always "View Profile" → opens the shared BusinessDetailModal.
+// Website / menu / directions live INSIDE the modal so behavior is consistent
+// across homepage, search results, town pages, and category pages.
 
 const toBusiness = (s: Spotlight): Business => ({
   slug: s.slug,
@@ -214,7 +205,6 @@ const SpotlightCard = ({ s, onOpen }: { s: Spotlight; onOpen: (s: Spotlight) => 
   const accentSoft =
     s.accent === "gold" ? "rgba(201,164,73,0.35)" : "rgba(94,234,212,0.35)";
   const phoneHref = cleanTelHref(s.phone);
-  const cta = getSpotlightCta(s);
 
   useEffect(() => {
     const id = setInterval(
@@ -369,28 +359,15 @@ const SpotlightCard = ({ s, onOpen }: { s: Spotlight; onOpen: (s: Spotlight) => 
           <span className="inline-flex items-center gap-1.5 text-[11px] text-white/55">
             <Calendar className="w-3 h-3" /> {s.hours}
           </span>
-          {cta.href ? (
-            <a
-              href={cta.href}
-              target={cta.external ? "_blank" : undefined}
-              rel={cta.external ? "noopener noreferrer" : undefined}
-              className="inline-flex items-center gap-1 text-sm font-semibold transition"
-              style={{ color: accent }}
-            >
-              {cta.label}{" "}
-              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-          ) : (
-            <button
-              type="button"
-              onClick={() => onOpen(s)}
-              className="inline-flex items-center gap-1 text-sm font-semibold transition"
-              style={{ color: accent }}
-            >
-              {cta.label}{" "}
-              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => onOpen(s)}
+            className="inline-flex items-center gap-1 text-sm font-semibold transition"
+            style={{ color: accent }}
+          >
+            View Profile{" "}
+            <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </button>
         </div>
       </div>
     </article>
