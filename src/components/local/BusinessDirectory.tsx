@@ -1321,7 +1321,7 @@ const TikTokIcon = ({ className }: { className?: string }) => (
 
 /* ─────────────────────────  ACTION HUB  ───────────────────────── */
 
-const BusinessActionHub = ({ biz }: { biz: Business }) => {
+const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: boolean }) => {
   const tel = biz.phone ? `tel:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
   const sms = biz.phone ? `sms:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
   const mail = biz.email ? `mailto:${biz.email}` : undefined;
@@ -1337,13 +1337,22 @@ const BusinessActionHub = ({ biz }: { biz: Business }) => {
     ? "Book Now"
     : "Order / Book";
 
-  const rows: { href: string; icon: React.ReactNode; label: string; sub?: string }[] = [];
+  const rows: { href: string; icon: React.ReactNode; label: string; sub?: string; accent?: boolean }[] = [];
   if (tel) rows.push({ href: tel, icon: <Phone className="w-4 h-4" />, label: "Call Business", sub: biz.phone });
   if (sms) rows.push({ href: sms, icon: <MessageSquare className="w-4 h-4" />, label: "Text Message", sub: "Send a text" });
   if (mail) rows.push({ href: mail, icon: <Mail className="w-4 h-4" />, label: "Email Direct", sub: biz.email });
   if (biz.website) rows.push({ href: biz.website, icon: <Globe className="w-4 h-4" />, label: "Visit Website" });
   if (order) rows.push({ href: order, icon: <CalendarPlus className="w-4 h-4" />, label: orderLabel });
   if (dir) rows.push({ href: dir, icon: <Navigation className="w-4 h-4" />, label: "Get Directions", sub: biz.address });
+  if (!claimed) {
+    rows.push({
+      href: `/claim-business?slug=${biz.slug}`,
+      icon: <Sparkles className="w-4 h-4" />,
+      label: "Owner: Request Profile Edits",
+      sub: "Claim & customize this listing",
+      accent: true,
+    });
+  }
 
   if (rows.length === 0) {
     return (
@@ -1355,6 +1364,7 @@ const BusinessActionHub = ({ biz }: { biz: Business }) => {
       </a>
     );
   }
+
 
   return (
     <Popover>
