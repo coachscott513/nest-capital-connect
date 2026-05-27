@@ -45,13 +45,32 @@ const SupportLocalSection = () => {
     [],
   );
 
-  // STRICT: only render businesses explicitly flagged as featured in the
-  // database. Never backfill with standard free rows — a "Featured Local
-  // Spotlight" must always reflect a paid/curated placement.
-  const featured = useMemo(
-    () => liveBusinesses.filter((b) => b.featured).slice(0, 6),
-    [liveBusinesses],
-  );
+  // Always show a populated row. Start with explicitly featured businesses,
+  // then backfill the remaining slots (up to 6) with the strongest curated
+  // pilot-ready listings (claimed first, then those with phone+website+address).
+  const featured = useMemo(() => {
+    const TARGET = 6;
+    const paid = liveBusinesses.filter((b) => b.featured);
+    if (paid.length >= TARGET) return paid.slice(0, TARGET);
+
+    const usedSlugs = new Set(paid.map((b) => b.slug));
+    const score = (b: Business) =>
+      (b.claimed ? 4 : 0) +
+      (b.phone ? 1 : 0) +
+      (b.website ? 1 : 0) +
+      (b.address ? 1 : 0) +
+      (b.image ? 1 : 0) +
+      ((b as any).rating ? Math.min(1, (b as any).rating / 5) : 0);
+
+    const fill = liveBusinesses
+      .filter((b) => !usedSlugs.has(b.slug) && !b.featured)
+      .filter((b) => b.phone || b.website)
+      .sort((a, b) => score(b) - score(a))
+      .slice(0, TARGET - paid.length);
+
+    return [...paid, ...fill];
+  }, [liveBusinesses]);
+
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
