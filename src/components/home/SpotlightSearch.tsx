@@ -39,15 +39,10 @@ import { getSearchRoute } from "@/lib/searchIntent";
    ============================================================= */
 
 const ROTATING_PLACEHOLDERS = [
-  "Search Saratoga homes",
-  "Investment properties in Troy",
-  "Coffee shops in Delmar",
-  "Homes near Shen schools",
-  "Clifton Park neighborhoods",
-  "Restaurants in Saratoga",
-  "Multi-family under $500k",
-  "Weekend events in Albany",
-  "Lake George waterfront homes",
+  "Search businesses, events, homes, sports...",
+  "Search restaurants, contractors, towns...",
+  "Search rentals, lenders, salons, schools...",
+  "Search anything local in the Capital District...",
 ];
 
 // Curated prompt pills — each fires the omni-search using its label as the query

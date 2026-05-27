@@ -16,9 +16,9 @@ interface SEOHeadProps {
 const BASE_URL = "https://www.capitaldistrictnest.com";
 
 const SEOHead = ({ 
-  title = "Capital District Nest | Albany NY Real Estate Investment Intelligence",
-  description = "Albany's hyperlocal real estate platform. Search homes, analyze any property, and track market trends across the Capital District. Updated daily.",
-  keywords = "Capital District real estate, Albany homes for sale, property analysis Albany NY, real estate investment Capital District, Troy real estate, Schenectady homes, Saratoga Springs real estate",
+  title = "Capital District Nest | The Capital District's Premier Local Media & Discovery Hub",
+  description = "The Capital District's Premier Local Media & Discovery Hub. Search homes, businesses, events, towns, and services across Albany, Saratoga, Troy, Schenectady, and every Capital District community.",
+  keywords = "Capital District, local businesses Albany NY, Capital District homes, Saratoga, Troy NY, Schenectady, Capital District events, Capital District discovery, local media Albany",
   canonical,
   structuredData,
   ogImage = `${BASE_URL}/og-image-capital-district.jpg`,
