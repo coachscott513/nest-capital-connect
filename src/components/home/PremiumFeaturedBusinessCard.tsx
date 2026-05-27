@@ -1,11 +1,17 @@
 import { ArrowUpRight, Phone, MapPin } from "lucide-react";
 import type { Business } from "@/data/businesses";
+import { resolveBusinessImage, DEFAULT_BUSINESS_IMAGE } from "@/lib/businessImages";
 
 /* =============================================================
    PremiumFeaturedBusinessCard
    Editorial luxury card used ONLY in the homepage
    "Featured Local Spotlights" row. Do not reuse for the
    standard business directory.
+
+   Click behavior (LOCKED): primary CTA = "View Profile" which
+   opens the shared BusinessDetailModal. Website / menu / phone
+   live INSIDE the modal — never on the card itself, so every
+   business card on the site behaves consistently.
    ============================================================= */
 
 type Props = {
@@ -13,64 +19,18 @@ type Props = {
   onOpen: (b: Business) => void;
 };
 
-const CATEGORY_FALLBACKS: Record<string, string> = {
-  Restaurant:
-    "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80",
-  Coffee:
-    "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80",
-  Cafe:
-    "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=1600&q=80",
-  Bakery:
-    "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1600&q=80",
-  Butcher:
-    "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1600&q=80",
-  Roofer:
-    "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?auto=format&fit=crop&w=1600&q=80",
-  Contractor:
-    "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=80",
-  "Real Estate":
-    "https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=1600&q=80",
-  "Real Estate Attorney":
-    "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80",
-  "Mortgage Lender":
-    "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1600&q=80",
-  "Bank/Credit Union":
-    "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1600&q=80",
-};
+const DEFAULT_FALLBACK = DEFAULT_BUSINESS_IMAGE;
 
-const DEFAULT_FALLBACK =
-  "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=80";
-
-const resolveImage = (b: Business): string => {
-  if (b.image) return b.image;
-  return CATEGORY_FALLBACKS[b.category] || DEFAULT_FALLBACK;
-};
+const resolveImage = (b: Business): string => resolveBusinessImage(b);
 
 const buildMeta = (b: Business): string => {
   const town = b.townLabel || "Capital District";
   return `${town} · ${b.category} · Featured local business`;
 };
 
-const safeUrl = (value?: string | null) => {
-  const trimmed = value?.trim();
-  if (!trimmed) return null;
-  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
-};
-
 const cleanTelHref = (phone?: string | null) => {
   const digits = phone?.replace(/[^\d+]/g, "");
   return digits ? `tel:${digits}` : null;
-};
-
-const getCta = (business: Business) => {
-  const menuUrl = safeUrl(business.menu_url ?? business.menuUrl);
-  const websiteUrl = safeUrl(
-    business.website_url ?? business.websiteUrl ?? business.website,
-  );
-
-  if (menuUrl) return { label: "View Menu", href: menuUrl, external: true };
-  if (websiteUrl) return { label: "Visit Website", href: websiteUrl, external: true };
-  return { label: "View Profile", href: null, external: false };
 };
 
 const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
