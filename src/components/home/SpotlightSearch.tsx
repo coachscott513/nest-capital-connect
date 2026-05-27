@@ -159,7 +159,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
         )}
       </AnimatePresence>
 
-      <div ref={wrapRef} className="relative z-50 mx-auto w-full max-w-3xl">
+      <div ref={wrapRef} className="relative z-50 mx-auto w-full max-w-4xl">
         {eyebrow && (
           <p className="mb-4 text-center text-[11px] md:text-xs font-semibold tracking-[0.32em] uppercase text-white/65">
             <span className="inline-flex items-center gap-2">
