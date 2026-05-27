@@ -1235,9 +1235,15 @@ export const BusinessDetailModal = ({
             </Section>
           )}
 
-          {/* SECTION E — NEARBY */}
+          {/* SECTION D2 — SOCIAL MEDIA & UPDATES (always visible) */}
+          <SocialFootprint biz={biz} claimed={claimed} />
+
+          {/* SECTION E — NEARBY / SIMILAR */}
           {nearbyAuto.length > 0 && (
-            <Section eyebrow="Neighborhood" title="Connected to">
+            <Section
+              eyebrow="Discover"
+              title={biz.town && biz.town !== "capital-district" ? "Similar Local Businesses" : "Nearby Businesses"}
+            >
               <div className="grid sm:grid-cols-2 gap-2.5">
                 {nearbyAuto.map((n) => (
                   <a
