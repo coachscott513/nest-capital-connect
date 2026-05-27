@@ -13,6 +13,8 @@ import {
   Phone,
   Sparkles,
 } from "lucide-react";
+import { BusinessDetailModal } from "@/components/local/BusinessDirectory";
+import type { Business } from "@/data/businesses";
 
 /* =============================================================
    REGIONAL SPOTLIGHTS — Member Local Legends
@@ -33,7 +35,9 @@ type Spotlight = {
   status: "open" | "closing-soon" | "closed";
   gallery: string[];
   socials: { facebook?: string; instagram?: string };
-  to: string;
+  slug: string;
+  menu_url?: string;
+  ctaIntent?: "connect";
   accent: "gold" | "emerald";
 };
 
@@ -58,7 +62,7 @@ const SPOTLIGHTS: Spotlight[] = [
       instagram: "https://instagram.com",
       facebook: "https://facebook.com",
     },
-    to: "/local?search=Perfect+Blend",
+    slug: "the-perfect-blend-cafe",
     accent: "emerald",
   },
   {
@@ -81,7 +85,8 @@ const SPOTLIGHTS: Spotlight[] = [
       instagram: "https://instagram.com",
       facebook: "https://facebook.com",
     },
-    to: "/local?search=McCarroll",
+    slug: "mccarrolls-the-village-butcher",
+    ctaIntent: "connect",
     accent: "gold",
   },
   {
@@ -104,7 +109,7 @@ const SPOTLIGHTS: Spotlight[] = [
       instagram: "https://instagram.com",
       facebook: "https://facebook.com",
     },
-    to: "/local?search=Roux",
+    slug: "roux",
     accent: "gold",
   },
   {
@@ -127,10 +132,51 @@ const SPOTLIGHTS: Spotlight[] = [
       instagram: "https://instagram.com",
       facebook: "https://facebook.com",
     },
-    to: "/local?search=Stewarts",
+    slug: "stewarts-shops-roastery",
     accent: "emerald",
   },
 ];
+
+const safeUrl = (value?: string | null) => {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+};
+
+const cleanTelHref = (phone?: string | null) => {
+  const digits = phone?.replace(/[^\d+]/g, "");
+  return digits ? `tel:${digits}` : null;
+};
+
+const getSpotlightCta = (s: Spotlight) => {
+  const menuUrl = safeUrl(s.menu_url);
+  const websiteUrl = safeUrl(s.website);
+  const phoneHref = cleanTelHref(s.phone);
+
+  if (menuUrl) return { label: "View Menu", href: menuUrl, external: true };
+  if (s.ctaIntent === "connect" && phoneHref) {
+    return { label: "Call Now", href: phoneHref, external: false };
+  }
+  if (websiteUrl) return { label: "Visit Website", href: websiteUrl, external: true };
+  return { label: "View Profile", href: null, external: false };
+};
+
+const toBusiness = (s: Spotlight): Business => ({
+  slug: s.slug,
+  name: s.name,
+  town: s.town.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+  townLabel: s.town,
+  category: s.category.toLowerCase().includes("café") || s.category.toLowerCase().includes("coffee") ? "Coffee" : s.category.toLowerCase().includes("butcher") ? "Retail" : "Restaurant",
+  tagline: s.tagline,
+  phone: s.phone,
+  website: s.website,
+  address: s.address,
+  hours: s.hours,
+  image: s.gallery[0],
+  gallery: s.gallery,
+  socials: s.socials,
+  featured: true,
+});
 
 const StatusDot = ({ status }: { status: Spotlight["status"] }) => {
   const color =
@@ -162,11 +208,13 @@ const StatusDot = ({ status }: { status: Spotlight["status"] }) => {
   );
 };
 
-const SpotlightCard = ({ s }: { s: Spotlight }) => {
+const SpotlightCard = ({ s, onOpen }: { s: Spotlight; onOpen: (s: Spotlight) => void }) => {
   const [idx, setIdx] = useState(0);
   const accent = s.accent === "gold" ? "#c9a449" : "#5eead4";
   const accentSoft =
     s.accent === "gold" ? "rgba(201,164,73,0.35)" : "rgba(94,234,212,0.35)";
+  const phoneHref = cleanTelHref(s.phone);
+  const cta = getSpotlightCta(s);
 
   useEffect(() => {
     const id = setInterval(
@@ -266,17 +314,19 @@ const SpotlightCard = ({ s }: { s: Spotlight }) => {
 
         {/* Contact pills */}
         <div className="mt-5 flex flex-wrap gap-1.5">
-          <a
-            href={`tel:${s.phone.replace(/[^\d+]/g, "")}`}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition"
-            style={{
-              background: "rgba(94,234,212,0.10)",
-              border: "1px solid rgba(94,234,212,0.30)",
-              color: "#5eead4",
-            }}
-          >
-            <Phone className="w-3 h-3" /> Call
-          </a>
+          {phoneHref && (
+            <a
+              href={phoneHref}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition"
+              style={{
+                background: "rgba(94,234,212,0.10)",
+                border: "1px solid rgba(94,234,212,0.30)",
+                color: "#5eead4",
+              }}
+            >
+              <Phone className="w-3 h-3" /> Call
+            </a>
+          )}
           <a
             href={s.website}
             target="_blank"
@@ -319,14 +369,28 @@ const SpotlightCard = ({ s }: { s: Spotlight }) => {
           <span className="inline-flex items-center gap-1.5 text-[11px] text-white/55">
             <Calendar className="w-3 h-3" /> {s.hours}
           </span>
-          <Link
-            to={s.to}
-            className="inline-flex items-center gap-1 text-sm font-semibold transition"
-            style={{ color: accent }}
-          >
-            View profile{" "}
-            <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
+          {cta.href ? (
+            <a
+              href={cta.href}
+              target={cta.external ? "_blank" : undefined}
+              rel={cta.external ? "noopener noreferrer" : undefined}
+              className="inline-flex items-center gap-1 text-sm font-semibold transition"
+              style={{ color: accent }}
+            >
+              {cta.label}{" "}
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => onOpen(s)}
+              className="inline-flex items-center gap-1 text-sm font-semibold transition"
+              style={{ color: accent }}
+            >
+              {cta.label}{" "}
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+          )}
         </div>
       </div>
     </article>
@@ -335,6 +399,8 @@ const SpotlightCard = ({ s }: { s: Spotlight }) => {
 
 const RegionalSpotlights = () => {
   const trackRef = useRef<HTMLDivElement>(null);
+  const [openBusiness, setOpenBusiness] = useState<Business | null>(null);
+  const modalBusinesses = SPOTLIGHTS.map(toBusiness);
 
   const scroll = (dir: 1 | -1) => {
     const el = trackRef.current;
@@ -387,7 +453,7 @@ const RegionalSpotlights = () => {
           className="-mx-5 sm:-mx-6 md:-mx-10 px-5 sm:px-6 md:px-10 flex gap-5 md:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-3"
         >
           {SPOTLIGHTS.map((s) => (
-            <SpotlightCard key={s.name} s={s} />
+            <SpotlightCard key={s.name} s={s} onOpen={(spotlight) => setOpenBusiness(toBusiness(spotlight))} />
           ))}
         </div>
 
@@ -403,6 +469,7 @@ const RegionalSpotlights = () => {
             Become a Featured Partner <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
+        <BusinessDetailModal biz={openBusiness} onClose={() => setOpenBusiness(null)} all={modalBusinesses} />
       </div>
     </section>
   );

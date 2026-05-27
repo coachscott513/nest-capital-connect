@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BadgeCheck, Phone, ArrowUpRight, Clock, MapPin } from "lucide-react";
+import { BusinessDetailModal } from "@/components/local/BusinessDirectory";
+import type { Business } from "@/data/businesses";
 
 /* =============================================================
    HERO FEATURED ROW — premium "Member Local Legend" cards
@@ -12,10 +15,12 @@ type HeroSpotlight = {
   category: string;
   town: string;
   hoursToday: string;
-  phone: string;
+  phone?: string;
+  website?: string;
+  menu_url?: string;
   image_url: string;
-  to: string;
-  ctaLabel: string;
+  slug: string;
+  ctaIntent?: "connect";
 };
 
 const PLACEHOLDER_SCENIC =
@@ -28,10 +33,10 @@ const HERO_SPOTLIGHTS: HeroSpotlight[] = [
     town: "Delmar, NY",
     hoursToday: "6:30 AM – 5:00 PM",
     phone: "(518) 439-0001",
+    website: "https://theperfectblendcafe.com",
     image_url:
       "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=1400&q=80",
-    to: "/local?search=Perfect+Blend",
-    ctaLabel: "View Café Menu",
+    slug: "the-perfect-blend-cafe",
   },
   {
     name: "McCarroll's The Village Butcher",
@@ -39,10 +44,11 @@ const HERO_SPOTLIGHTS: HeroSpotlight[] = [
     town: "Slingerlands, NY",
     hoursToday: "9:00 AM – 6:00 PM",
     phone: "(518) 439-9000",
+    website: "https://mccarrollsbutcher.com",
     image_url:
       "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1400&q=80",
-    to: "/local?search=McCarroll",
-    ctaLabel: "Connect Instantly",
+    slug: "mccarrolls-the-village-butcher",
+    ctaIntent: "connect",
   },
   {
     name: "Roux",
@@ -50,12 +56,50 @@ const HERO_SPOTLIGHTS: HeroSpotlight[] = [
     town: "Albany, NY",
     hoursToday: "5:00 PM – 10:00 PM",
     phone: "(518) 689-3434",
+    website: "https://rouxalbany.com",
     image_url:
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80",
-    to: "/local?search=Roux",
-    ctaLabel: "View Dinner Menu",
+    slug: "roux",
   },
 ];
+
+const safeUrl = (value?: string | null) => {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+};
+
+const cleanTelHref = (phone?: string | null) => {
+  const digits = phone?.replace(/[^\d+]/g, "");
+  return digits ? `tel:${digits}` : null;
+};
+
+const getHeroCta = (business: HeroSpotlight) => {
+  const menuUrl = safeUrl(business.menu_url);
+  const websiteUrl = safeUrl(business.website);
+  const phoneHref = cleanTelHref(business.phone);
+
+  if (menuUrl) return { label: "View Menu", href: menuUrl, external: true };
+  if (business.ctaIntent === "connect" && phoneHref) {
+    return { label: "Call Now", href: phoneHref, external: false };
+  }
+  if (websiteUrl) return { label: "Visit Website", href: websiteUrl, external: true };
+  return { label: "View Profile", href: null, external: false };
+};
+
+const toBusiness = (business: HeroSpotlight): Business => ({
+  slug: business.slug,
+  name: business.name,
+  town: business.town.toLowerCase().replace(/,?\s*ny$/, "").replace(/[^a-z0-9]+/g, "-"),
+  townLabel: business.town.replace(/,?\s*NY$/, ""),
+  category: business.category.toLowerCase().includes("café") ? "Coffee" : business.category.toLowerCase().includes("butcher") ? "Retail" : "Restaurant",
+  tagline: `${business.category} in ${business.town}`,
+  phone: business.phone,
+  website: business.website,
+  hours: business.hoursToday,
+  image: business.image_url,
+  featured: true,
+});
 
 const FeaturedBadge = () => (
   <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/45 backdrop-blur-md border border-white/20 text-[10px] font-semibold tracking-[0.16em] uppercase text-white/90">
@@ -64,8 +108,10 @@ const FeaturedBadge = () => (
   </div>
 );
 
-const HeroCard = ({ business }: { business: HeroSpotlight }) => {
+const HeroCard = ({ business, onOpen }: { business: HeroSpotlight; onOpen: (business: HeroSpotlight) => void }) => {
   const src = business.image_url || PLACEHOLDER_SCENIC;
+  const cta = getHeroCta(business);
+  const phoneHref = cleanTelHref(business.phone);
 
   return (
     <article
@@ -77,24 +123,48 @@ const HeroCard = ({ business }: { business: HeroSpotlight }) => {
         boxShadow: "0 24px 60px -28px rgba(0,0,0,0.75)",
       }}
     >
-      <Link
-        to={business.to}
-        className="block relative w-full h-36 sm:h-40 overflow-hidden"
-      >
-        <div className="absolute inset-0">
-          <img
-            src={src}
-            alt={business.name}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = PLACEHOLDER_SCENIC;
-            }}
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
-        <FeaturedBadge />
-      </Link>
+      {cta.href ? (
+        <a
+          href={cta.href}
+          target={cta.external ? "_blank" : undefined}
+          rel={cta.external ? "noopener noreferrer" : undefined}
+          className="block relative w-full h-36 sm:h-40 overflow-hidden"
+        >
+          <div className="absolute inset-0">
+            <img
+              src={src}
+              alt={business.name}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = PLACEHOLDER_SCENIC;
+              }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
+          <FeaturedBadge />
+        </a>
+      ) : (
+        <button
+          type="button"
+          onClick={() => onOpen(business)}
+          className="block relative w-full h-36 sm:h-40 overflow-hidden"
+        >
+          <div className="absolute inset-0">
+            <img
+              src={src}
+              alt={business.name}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = PLACEHOLDER_SCENIC;
+              }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
+          <FeaturedBadge />
+        </button>
+      )}
 
       <div className="relative p-4 sm:p-5 flex flex-col gap-2.5">
         <div>
@@ -118,20 +188,35 @@ const HeroCard = ({ business }: { business: HeroSpotlight }) => {
         </div>
 
         <div className="mt-2 flex items-center gap-2">
-          <Link
-            to={business.to}
-            className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white text-[#0B0F19] text-[12.5px] font-semibold hover:opacity-90 transition"
-          >
-            <span>{business.ctaLabel}</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
-          <a
-            href={`tel:${business.phone.replace(/[^\d+]/g, "")}`}
-            aria-label={`Call ${business.name}`}
-            className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/15 text-white/85 hover:border-[#5eead4]/55 hover:text-[#5eead4] transition"
-          >
-            <Phone className="w-3.5 h-3.5" />
-          </a>
+          {cta.href ? (
+            <a
+              href={cta.href}
+              target={cta.external ? "_blank" : undefined}
+              rel={cta.external ? "noopener noreferrer" : undefined}
+              className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white text-[#0B0F19] text-[12.5px] font-semibold hover:opacity-90 transition"
+            >
+              <span>{cta.label}</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => onOpen(business)}
+              className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full bg-white text-[#0B0F19] text-[12.5px] font-semibold hover:opacity-90 transition"
+            >
+              <span>{cta.label}</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+          {phoneHref && (
+            <a
+              href={phoneHref}
+              aria-label={`Call ${business.name}`}
+              className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/15 text-white/85 hover:border-[#5eead4]/55 hover:text-[#5eead4] transition"
+            >
+              <Phone className="w-3.5 h-3.5" />
+            </a>
+          )}
         </div>
       </div>
     </article>
@@ -139,6 +224,9 @@ const HeroCard = ({ business }: { business: HeroSpotlight }) => {
 };
 
 const HeroFeaturedRow = () => {
+  const [openBusiness, setOpenBusiness] = useState<Business | null>(null);
+  const modalBusinesses = HERO_SPOTLIGHTS.map(toBusiness);
+
   return (
     <div className="relative mx-auto w-full max-w-5xl">
       <div className="flex items-center justify-between mb-3 px-1">
@@ -155,9 +243,10 @@ const HeroFeaturedRow = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         {HERO_SPOTLIGHTS.map((business) => (
-          <HeroCard key={business.name} business={business} />
+          <HeroCard key={business.name} business={business} onOpen={(b) => setOpenBusiness(toBusiness(b))} />
         ))}
       </div>
+      <BusinessDetailModal biz={openBusiness} onClose={() => setOpenBusiness(null)} all={modalBusinesses} />
     </div>
   );
 };
