@@ -369,28 +369,15 @@ const SpotlightCard = ({ s, onOpen }: { s: Spotlight; onOpen: (s: Spotlight) => 
           <span className="inline-flex items-center gap-1.5 text-[11px] text-white/55">
             <Calendar className="w-3 h-3" /> {s.hours}
           </span>
-          {cta.href ? (
-            <a
-              href={cta.href}
-              target={cta.external ? "_blank" : undefined}
-              rel={cta.external ? "noopener noreferrer" : undefined}
-              className="inline-flex items-center gap-1 text-sm font-semibold transition"
-              style={{ color: accent }}
-            >
-              {cta.label}{" "}
-              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-          ) : (
-            <button
-              type="button"
-              onClick={() => onOpen(s)}
-              className="inline-flex items-center gap-1 text-sm font-semibold transition"
-              style={{ color: accent }}
-            >
-              {cta.label}{" "}
-              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => onOpen(s)}
+            className="inline-flex items-center gap-1 text-sm font-semibold transition"
+            style={{ color: accent }}
+          >
+            View Profile{" "}
+            <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </button>
         </div>
       </div>
     </article>
