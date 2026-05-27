@@ -45,7 +45,7 @@ import {
 } from "@/data/officialCategories";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import { townMatches, useDbBusinesses } from "@/hooks/useDbBusinesses";
-import { resolveBusinessImage } from "@/lib/businessImages";
+import { resolveBusinessImage, hasRealBusinessMedia } from "@/lib/businessImages";
 
 const TEAL = "#5eead4";
 const TEAL_DEEP = "#0d6e66";
@@ -655,24 +655,22 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
   const claimed = isMember(b);
   const elevated = Boolean(b.featured || claimed);
   const accent = b.featured ? "#c9a449" : "#5eead4";
-  const seed = b.name.charCodeAt(0) + b.name.charCodeAt(b.name.length - 1);
-  const hueA = (seed * 7) % 360;
-  const hueB = (hueA + 35) % 360;
-  const monogram = useMonogram(b.name);
+  const hasMedia = hasRealBusinessMedia(b);
+  const showImageHeader = elevated && hasMedia;
 
-  // Slideable gallery overlay for featured/claimed cards
+  // Slideable gallery overlay for elevated cards that actually have media.
   const galleryImages = (b.gallery && b.gallery.length > 0)
     ? b.gallery
     : (b.image ? [b.image] : []);
   const [galleryIdx, setGalleryIdx] = useState(0);
   useEffect(() => {
-    if (!elevated || galleryImages.length < 2) return;
+    if (!showImageHeader || galleryImages.length < 2) return;
     const id = setInterval(
       () => setGalleryIdx((i) => (i + 1) % galleryImages.length),
       5200,
     );
     return () => clearInterval(id);
-  }, [elevated, galleryImages.length]);
+  }, [showImageHeader, galleryImages.length]);
 
   return (
     <button
@@ -701,10 +699,10 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
         />
       )}
 
-      {/* Cinematic header */}
-      <div className="relative h-32 w-full overflow-hidden">
-        {elevated && galleryImages.length > 0 ? (
-          galleryImages.map((src, i) => (
+      {showImageHeader ? (
+        /* Cinematic image header — only when business has uploaded media */
+        <div className="relative h-32 w-full overflow-hidden">
+          {galleryImages.map((src, i) => (
             <div
               key={src}
               className="absolute inset-0 bg-cover bg-center transition-opacity duration-[1100ms]"
@@ -716,20 +714,9 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
                   "opacity 1100ms ease-out, transform 6500ms ease-out",
               }}
             />
-          ))
-        ) : (
-          <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-[1.08]"
-            style={{ backgroundImage: `url(${resolveBusinessImage(b)})` }}
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
-        <div className="absolute -bottom-6 left-6 w-14 h-14 rounded-2xl bg-[#0B0F19] shadow-[0_10px_24px_-10px_rgba(0,0,0,0.6)] flex items-center justify-center text-[#5eead4] font-semibold text-lg tracking-tight border border-[#5eead4]/30">
-          {monogram}
-        </div>
+          ))}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
 
-        {/* Live status pill — top left for elevated profiles */}
-        {elevated && (
           <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/45 backdrop-blur-md border border-white/15 text-[10px] font-semibold text-white">
             <span className="relative flex w-1.5 h-1.5">
               <span className="absolute inset-0 rounded-full animate-ping opacity-60 bg-[#22c55e]" />
@@ -737,39 +724,78 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             </span>
             Open Now
           </span>
-        )}
 
-        <div className="absolute top-3 right-3">
-          {b.featured ? (
-            <span
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.14em]"
-              style={{
-                background: "#c9a449",
-                color: "#0B0F19",
-                boxShadow: "0 4px 14px -2px rgba(201,164,73,0.55)",
-              }}
-            >
-              <Sparkles className="w-3 h-3" /> Featured
-            </span>
-          ) : claimed ? (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#5eead4] text-[#0B0F19] text-[10px] font-bold uppercase tracking-[0.14em] shadow-[0_4px_14px_-2px_rgba(94,234,212,0.5)]">
-              <Star className="w-3 h-3" /> Member
-            </span>
-          ) : null}
+          <div className="absolute top-3 right-3">
+            {b.featured ? (
+              <span
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.14em]"
+                style={{
+                  background: "#c9a449",
+                  color: "#0B0F19",
+                  boxShadow: "0 4px 14px -2px rgba(201,164,73,0.55)",
+                }}
+              >
+                <Sparkles className="w-3 h-3" /> Featured
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#5eead4] text-[#0B0F19] text-[10px] font-bold uppercase tracking-[0.14em] shadow-[0_4px_14px_-2px_rgba(94,234,212,0.5)]">
+                <Star className="w-3 h-3" /> Member
+              </span>
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        /* Text-first editorial header — for free/unclaimed AND elevated-without-media.
+           No fake stock photo, no clipped acronym badge. Typography carries the card. */
+        <div className="relative px-6 pt-6">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
+              {b.category}
+            </span>
+            {b.featured ? (
+              <span
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.14em]"
+                style={{
+                  background: "#c9a449",
+                  color: "#0B0F19",
+                  boxShadow: "0 4px 14px -2px rgba(201,164,73,0.55)",
+                }}
+              >
+                <Sparkles className="w-3 h-3" /> Featured
+              </span>
+            ) : claimed ? (
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#5eead4]/15 border border-[#5eead4]/30 text-[#5eead4] text-[10px] font-semibold uppercase tracking-[0.14em]">
+                <Star className="w-3 h-3" /> Member
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/[0.04] border border-white/10 text-white/55 text-[10px] font-medium uppercase tracking-[0.14em]">
+                Unclaimed
+              </span>
+            )}
+          </div>
+        </div>
+      )}
 
-      <div className="px-6 pt-9 pb-6 flex flex-col flex-1">
-        <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">
-          {b.category}
-          {b.townLabel && <span className="text-white/35"> · {b.townLabel}</span>}
-        </p>
-        <h3 className="mt-1.5 text-lg font-semibold tracking-tight text-white leading-snug">
+      <div className={`px-6 ${showImageHeader ? "pt-5" : "pt-3"} pb-6 flex flex-col flex-1`}>
+        {showImageHeader && (
+          <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">
+            {b.category}
+            {b.townLabel && <span className="text-white/35"> · {b.townLabel}</span>}
+          </p>
+        )}
+        <h3 className={`${showImageHeader ? "mt-1.5" : "mt-2"} text-lg font-semibold tracking-tight text-white leading-snug`}>
           {b.name}
         </h3>
-        <p className="mt-2.5 text-sm text-white/65 font-light leading-relaxed line-clamp-3">
-          {b.tagline}
-        </p>
+        {!showImageHeader && b.townLabel && (
+          <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-white/45 font-medium">
+            {b.townLabel}
+          </p>
+        )}
+        {b.tagline && (
+          <p className="mt-2.5 text-sm text-white/65 font-light leading-relaxed line-clamp-3">
+            {b.tagline}
+          </p>
+        )}
 
         {b.signals && b.signals.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1.5">
@@ -910,51 +936,113 @@ export const BusinessDetailModal = ({
         <DialogTitle className="sr-only">{biz.name}</DialogTitle>
         <DialogDescription className="sr-only">{biz.tagline}</DialogDescription>
 
-        {/* SECTION A — HERO */}
-        <div className="relative h-[280px] md:h-[380px] w-full overflow-hidden">
-          {biz.heroVideo ? (
-            <video
-              src={biz.heroVideo}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          ) : (
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${resolveBusinessImage(biz)})` }}
-            />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/55 to-[#0B0F19]/10" />
+        {/* SECTION A — HERO
+            Cinematic media banner ONLY when business has uploaded real media.
+            Otherwise we render a premium dark-onyx editorial header so free /
+            unclaimed listings still feel intentional — never fake stock photos. */}
+        {hasRealBusinessMedia(biz) ? (
+          <div className="relative h-[280px] md:h-[380px] w-full overflow-hidden">
+            {biz.heroVideo ? (
+              <video
+                src={biz.heroVideo}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${biz.image ?? biz.gallery?.[0]})` }}
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/55 to-[#0B0F19]/10" />
 
-          <div className="absolute bottom-0 left-0 right-0 p-7 md:p-10">
-            <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <div className="absolute bottom-0 left-0 right-0 p-7 md:p-10">
+              <div className="flex items-center gap-2 mb-3 flex-wrap">
+                <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
+                  {biz.category}{biz.townLabel && ` · ${biz.townLabel}`}
+                </span>
+                {biz.featured && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-[10px] font-semibold uppercase tracking-wider">
+                    <Sparkles className="w-3 h-3" /> Featured
+                  </span>
+                )}
+                {!biz.featured && claimed && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 backdrop-blur text-white text-[10px] font-semibold uppercase tracking-wider border border-white/20">
+                    Member
+                  </span>
+                )}
+              </div>
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05]">
+                {biz.name}
+              </h2>
+              {biz.atmosphere && (
+                <p className="mt-3 text-white/70 font-light max-w-2xl text-sm md:text-base">
+                  {biz.atmosphere}
+                </p>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div
+            className="relative px-7 md:px-10 pt-10 md:pt-14 pb-8 md:pb-10 overflow-hidden"
+            style={{
+              background:
+                "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.10) 0%, transparent 55%), linear-gradient(180deg, #0B0F19 0%, #0B0F19 100%)",
+            }}
+          >
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -bottom-px left-0 right-0 h-px"
+              style={{ background: "linear-gradient(90deg, transparent, rgba(94,234,212,0.35), transparent)" }}
+            />
+            <div className="flex items-center gap-2 mb-4 flex-wrap">
               <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
                 {biz.category}{biz.townLabel && ` · ${biz.townLabel}`}
               </span>
-              {biz.featured && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-[10px] font-semibold uppercase tracking-wider">
+              {biz.featured ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#c9a449] text-[#0B0F19] text-[10px] font-semibold uppercase tracking-wider">
                   <Sparkles className="w-3 h-3" /> Featured
                 </span>
-              )}
-              {!biz.featured && claimed && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 backdrop-blur text-white text-[10px] font-semibold uppercase tracking-wider border border-white/20">
+              ) : claimed ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#5eead4]/15 text-[#5eead4] border border-[#5eead4]/30 text-[10px] font-semibold uppercase tracking-wider">
                   Member
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/[0.04] text-white/55 border border-white/10 text-[10px] font-semibold uppercase tracking-wider">
+                  Unclaimed
                 </span>
               )}
             </div>
-            <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05]">
+            <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
               {biz.name}
             </h2>
-            {biz.atmosphere && (
-              <p className="mt-3 text-white/70 font-light max-w-2xl text-sm md:text-base">
-                {biz.atmosphere}
+            {biz.tagline && (
+              <p className="mt-4 text-white/70 font-light max-w-2xl text-base md:text-lg leading-relaxed">
+                {biz.tagline}
               </p>
             )}
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] text-white/55">
+              {biz.address && (
+                <span className="inline-flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#5eead4]" /> {biz.address}
+                </span>
+              )}
+              {biz.phone && (
+                <span className="inline-flex items-center gap-1.5">
+                  <Phone className="w-3.5 h-3.5 text-[#5eead4]" /> {biz.phone}
+                </span>
+              )}
+              {biz.website && (
+                <span className="inline-flex items-center gap-1.5">
+                  <Globe className="w-3.5 h-3.5 text-[#5eead4]" /> Website
+                </span>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="p-7 md:p-10 space-y-10">
           {/* Primary contact actions — always visible when data exists,

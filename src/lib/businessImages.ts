@@ -89,4 +89,21 @@ export const resolveBusinessImage = (b: Partial<Business> | null | undefined): s
   return fallbackImageForCategory(b.category, b.subcategory, b.tagline);
 };
 
+/**
+ * Returns true ONLY if the business has uploaded real media
+ * (hero image, gallery, or hero video). Used to decide whether
+ * to render an image-based card / cinematic modal hero vs. the
+ * text-first editorial layout. Category stock fallbacks DO NOT
+ * count as "real media" — we never want to fake business photos.
+ */
+export const hasRealBusinessMedia = (
+  b: Partial<Business> | null | undefined,
+): boolean => {
+  if (!b) return false;
+  if (b.heroVideo) return true;
+  if (b.image) return true;
+  if (Array.isArray(b.gallery) && b.gallery.length > 0) return true;
+  return false;
+};
+
 export const DEFAULT_BUSINESS_IMAGE = DEFAULT_FALLBACK;
