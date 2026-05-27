@@ -171,16 +171,13 @@ const SupportLocalSection = () => {
 
         {/* Featured row */}
         <div className="mt-14 md:mt-16">
-          <p className="text-[10.5px] font-semibold tracking-[0.32em] uppercase text-white/35 mb-3">
-            Trending Database Indexes
-          </p>
           <div className="flex items-end justify-between mb-7 flex-wrap gap-4">
             <div>
               <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-2 text-[#5eead4]">
                 Featured Community Partners
               </p>
-              <h3 className="text-2xl md:text-3xl font-mono font-semibold tracking-[-0.01em] text-white">
-                QUERY: <span className="text-[#5eead4]">"Delmar Dining &amp; Trusted Trades"</span>
+              <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white">
+                Featured Local Spotlights
               </h3>
             </div>
             <Link
