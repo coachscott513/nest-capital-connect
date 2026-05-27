@@ -46,7 +46,7 @@ const SocialIcon = ({
   return (
     <span
       aria-label={`${label} (locked)`}
-      title="Upgrade to Featured to spotlight social links."
+      title="Claim this profile to spotlight social links."
       className={`${base} border-white/10 text-white/25 cursor-not-allowed bg-white/[0.02]`}
     >
       <Icon className="w-4 h-4" />
@@ -152,17 +152,20 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
             {!verified && (
               <>
                 <p className="mt-3 text-xs text-white/45 leading-relaxed">
-                  Business owner? Upgrade to Featured to spotlight social links.
+                  Are you the owner? Claim this profile to spotlight social links and unlock premium features.
                 </p>
                 <a
-                  href={`/pricing)}`}
+                  href={`/claim-business?slug=${b.slug}`}
                   className="mt-4 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-[#5eead4]/30 text-[#5eead4] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66] transition-all"
                 >
-                  Upgrade to Featured
+                  Claim This Profile
                 </a>
-                <p className="mt-2 text-[11px] text-white/45 text-center">
-                  Free · No payment required
-                </p>
+                <a
+                  href={`/claim-business?slug=${b.slug}&intent=login`}
+                  className="mt-2 w-full inline-flex items-center justify-center text-xs font-semibold uppercase tracking-[0.18em] text-white/55 hover:text-white transition"
+                >
+                  Owner Login →
+                </a>
               </>
             )}
           </div>

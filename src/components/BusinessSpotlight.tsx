@@ -507,7 +507,7 @@ const BusinessSpotlight = () => {
                         className="rounded-full text-xs"
                         onClick={(e) => handleOpenVerifyModal(e, selectedBusiness)}
                       >
-                        Owner: Upgrade to Featured
+                        Claim This Profile
                       </Button>
                     </div>
                   </div>
@@ -587,7 +587,7 @@ const BusinessSpotlight = () => {
                       className="rounded-full text-[10px] px-3 py-1 h-auto border-primary/30 text-primary hover:bg-primary/10"
                       onClick={(e) => handleOpenVerifyModal(e, selectedBusiness)}
                     >
-                      Upgrade to Featured
+                      Claim This Profile
                     </Button>
                   </div>
                 </div>
@@ -628,7 +628,7 @@ const BusinessSpotlight = () => {
                   onClick={(e) => handleOpenVerifyModal(e, selectedBusiness)}
                   className="w-full rounded-full text-sm py-6 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.5)] animate-pulse border border-emerald-400/50"
                 >
-                  Upgrade to Featured
+                  Claim This Profile
                 </Button>
               </div>
 
@@ -649,7 +649,7 @@ const BusinessSpotlight = () => {
                   className="absolute inset-0 flex items-center justify-center group cursor-pointer"
                 >
                   <span className="text-xs font-medium text-primary bg-background/90 px-3 py-1.5 rounded-full border border-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    Upgrade to Featured
+                    Owner Login
                   </span>
                 </button>
               </div>
@@ -673,7 +673,7 @@ const BusinessSpotlight = () => {
           
           <p className="text-muted-foreground text-sm mb-4">
             This listing is currently in <span className="text-primary font-medium">Community View</span>. 
-            Are you the owner or manager? Upgrade to Featured to activate direct links and premium tools.
+            Are you the owner or manager? Claim this profile to activate direct links and premium tools.
           </p>
 
           <form onSubmit={handleVerifySubmit} className="space-y-4">

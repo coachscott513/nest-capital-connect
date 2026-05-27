@@ -417,11 +417,11 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 Try another search, or help us grow the directory.
               </p>
               <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-                <a href="/pricing" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
+                <a href="/claim-business" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
                   Suggest a business
                 </a>
-                <a href="/pricing" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/50 transition">
-                  Upgrade to Featured
+                <a href="/claim-business" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/50 transition">
+                  Owner Login
                 </a>
               </div>
             </div>
@@ -461,8 +461,8 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
               Own a Capital District business?
             </h2>
             <p className="mt-5 text-lg font-light text-white/65">
-              Upgrade to Featured, post events and specials, and become part of the digital
-              front door of the region.
+              Claim your free profile, then unlock events, specials, and premium placement
+              across the digital front door of the region.
             </p>
             <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a href="/pricing" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition">
@@ -796,23 +796,19 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </span>
         ) : (
-          <span
-            role="button"
-            tabIndex={0}
-            onClick={(e) => {
-              e.stopPropagation();
-              window.location.href = `/pricing)}${b.town ? `&town=${b.town}` : ""}`;
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.stopPropagation();
-                window.location.href = `/pricing)}${b.town ? `&town=${b.town}` : ""}`;
-              }
-            }}
-            className="mt-auto mt-5 w-full inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white text-[#0B0F19] text-[13px] font-bold hover:bg-[#5eead4] transition cursor-pointer"
-          >
-            Upgrade to Featured <ArrowUpRight className="w-3.5 h-3.5" />
-          </span>
+          <div className="mt-auto pt-5 flex items-center gap-2">
+            <span className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white text-[#0B0F19] text-[13px] font-semibold transition group-hover:bg-[#5eead4]">
+              View Profile <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
+            <a
+              href={`/claim-business?slug=${b.slug}${b.town ? `&town=${b.town}` : ""}`}
+              onClick={(e) => e.stopPropagation()}
+              className="shrink-0 inline-flex items-center justify-center px-3 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white/85 text-[11px] font-semibold tracking-[0.1em] uppercase hover:border-[#5eead4]/55 hover:text-[#5eead4] hover:bg-white/[0.08] transition"
+              aria-label="Claim this profile"
+            >
+              Claim
+            </a>
+          </div>
         )}
       </div>
     </button>
@@ -837,8 +833,8 @@ const ClaimCtaCard = () => (
         Own this business?
       </h3>
       <p className="mt-3 text-sm text-white/65 font-light leading-relaxed">
-        Upgrade to Featured, add events, specials, social links, and unlock premium placement
-        across town pages.
+        Claim your free profile, then add events, specials, and social links — and unlock
+        premium placement across town pages.
       </p>
     </div>
     <div className="relative mt-6 flex flex-wrap gap-2">
@@ -1182,15 +1178,15 @@ export const BusinessDetailModal = ({
             <div className="rounded-2xl border border-dashed border-[#5eead4]/30 bg-[#5eead4]/[0.04] p-7">
               <p className="text-sm font-semibold text-white">Is this your business?</p>
               <p className="mt-1.5 text-sm text-white/65 font-light">
-                Upgrade to Featured to unlock contact info, photos, social links, events,
-                and specials — free. Upgrade to Featured for top placement.
+                Claim this profile to control photos, hours, contact info, social links,
+                events, and specials. Free during the pilot — concierge onboarding included.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
-                <a href={`/pricing`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
-                  <Sparkles className="w-4 h-4" /> Upgrade to Featured
+                <a href={`/claim-business?slug=${biz.slug}`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
+                  <Sparkles className="w-4 h-4" /> Claim This Profile
                 </a>
-                <a href={`/pricing`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/40 transition">
-                  Become a Featured Partner
+                <a href={`/claim-business?slug=${biz.slug}&intent=login`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/40 transition">
+                  Owner Login
                 </a>
               </div>
             </div>

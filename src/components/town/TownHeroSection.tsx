@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Search, MapPin, ArrowRight } from "lucide-react";
+import { Search, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import SpotlightSearch from "@/components/home/SpotlightSearch";
 
 
 interface TownHeroSectionProps {
@@ -35,59 +36,60 @@ const TownHeroSection = ({
 }: TownHeroSectionProps) => {
   return (
     <section className="relative bg-background overflow-hidden">
-      {/* Subtle ambient glow — matches homepage */}
+      {/* Ambient glow — matches homepage */}
       <div className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-accent/[0.04] rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-primary/[0.03] rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="relative z-10 w-full px-8 md:px-12 lg:px-16 pt-28 pb-0 md:pt-40 md:pb-0 lg:pt-48 lg:pb-0">
-        <div className="w-full max-w-2xl">
+      <div className="relative z-10 w-full px-6 md:px-10 lg:px-16 pt-28 pb-12 md:pt-36 md:pb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-5xl mx-auto text-center"
+        >
+          <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-[#5eead4] mb-6">
+            {schoolDistrict || `${townName} · Capital District`}
+          </p>
 
-          {/* LEFT — Narrative */}
+          <h1 className="text-[2.5rem] sm:text-5xl md:text-[4.5rem] lg:text-[5.25rem] font-semibold tracking-[-0.04em] leading-[0.98] text-foreground">
+            Search anything{" "}
+            <span className="bg-gradient-to-r from-foreground via-foreground to-[#5eead4] bg-clip-text text-transparent">
+              {townName}.
+            </span>
+          </h1>
+
+          <p className="mt-6 md:mt-8 text-base md:text-lg text-foreground/65 max-w-2xl mx-auto font-light leading-relaxed">
+            {leadParagraph.substring(0, 180)}…
+          </p>
+
+          {/* Omni search + pills (same surface as the homepage) */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-8 lg:space-y-10"
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-10 md:mt-12"
           >
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase text-muted-foreground">
-              {schoolDistrict || `${townName} Intelligence`}
-            </p>
+            <SpotlightSearch />
+          </motion.div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-bold text-foreground tracking-[-0.035em] leading-[1.02]">
-              {townName}
-            </h1>
-
-            <p className="text-lg md:text-xl text-foreground/60 leading-relaxed max-w-lg font-light">
-              {leadParagraph.substring(0, 180)}...
-            </p>
-
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm">
+            <button
+              onClick={onSearchClick}
+              className="inline-flex items-center justify-center gap-2 bg-foreground text-background px-6 py-3 rounded-full font-semibold hover:bg-foreground/85 transition-colors"
+            >
+              <Search className="w-4 h-4" />
+              Search {townName} Homes
+            </button>
             {countyInfo && (
               <Link
                 to={countyInfo.path}
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground px-2 py-3 font-medium transition-colors"
               >
-                See all {countyInfo.name} Spotlights <ArrowRight className="w-4 h-4" />
+                All {countyInfo.name} Spotlights <ArrowRight className="w-4 h-4" />
               </Link>
             )}
-
-            <div className="flex flex-col sm:flex-row items-start gap-4 pt-4">
-              <button
-                onClick={onSearchClick}
-                className="inline-flex items-center justify-center gap-2.5 bg-foreground text-background px-8 py-4 rounded-full font-semibold text-base hover:bg-foreground/85 transition-colors"
-              >
-                <Search className="w-4 h-4" />
-                Search {townName} Homes
-              </button>
-              <Link
-                to="/dealdesk"
-                className="inline-flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground px-2 py-4 font-medium text-base transition-colors"
-              >
-                Request Property Intel →
-              </Link>
-            </div>
-          </motion.div>
-
-        </div>
+          </div>
+        </motion.div>
 
         {/* At-a-Glance Stats — clean borderless tiles */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px mt-16 border-t border-border">
