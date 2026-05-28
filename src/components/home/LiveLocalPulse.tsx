@@ -131,29 +131,47 @@ export default function LiveLocalPulse() {
 
       const collected: PulseItem[] = [];
 
-      (eventsRes.data ?? []).forEach((e: any) => {
+      // P1 — Live specials & promos (highest priority)
+      (specialsRes.data ?? []).forEach((s: any) => {
+        const town = (s.town_name ?? townLabel(s.town_slug) ?? "Regional").toString().toUpperCase();
+        const biz = s.business_name ? ` at ${s.business_name}` : "";
         collected.push({
-          category: "Event",
-          title: e.title,
-          location: e.town_name ?? townLabel(e.town_slug),
-          url: e.cta_url || (e.town_slug ? `/towns/${e.town_slug}` : "/local"),
+          category: "Special",
+          title: `${town} PULSE: ${s.headline}${biz} — View Deal`,
+          location: s.town_name ?? townLabel(s.town_slug),
+          url: s.cta_url || (s.town_slug ? `/towns/${s.town_slug}` : "/local"),
           priority: 1,
-          date: e.starts_at ? new Date(e.starts_at).getTime() : now,
+          date: s.start_date ? new Date(s.start_date).getTime() : now,
         });
       });
 
+      // P2 — Premium-tier member updates
       (bizRes.data ?? []).forEach((b: any) => {
-        const label = b.is_featured ? `Featured: ${b.name}` : `New on Nest: ${b.name}`;
+        const town = b.town_name ?? townLabel(b.town_slug) ?? "Capital District";
         collected.push({
           category: "Business",
-          title: label,
-          location: b.town_name ?? townLabel(b.town_slug),
-          url: b.town_slug ? `/towns/${b.town_slug}` : "/local",
+          title: `MEMBER UPDATE: ${b.name} (${town}) has locked in premium spotlight placement`,
+          location: town,
+          url: b.slug ? `/biz/${b.slug}` : b.town_slug ? `/towns/${b.town_slug}` : "/local",
           priority: 2,
           date: b.created_at ? new Date(b.created_at).getTime() : now,
         });
       });
 
+      // P3 — Upcoming community events
+      (eventsRes.data ?? []).forEach((e: any) => {
+        const town = e.town_name ?? townLabel(e.town_slug) ?? "Capital District";
+        collected.push({
+          category: "Event",
+          title: `UPCOMING: ${e.title} is active this week in ${town} — See Schedule`,
+          location: town,
+          url: e.cta_url || (e.town_slug ? `/towns/${e.town_slug}` : "/local"),
+          priority: 3,
+          date: e.starts_at ? new Date(e.starts_at).getTime() : now,
+        });
+      });
+
+      // P4 — New listings
       (listingsRes.data ?? []).forEach((l: any) => {
         const addr = [l.street_number, l.street_name].filter(Boolean).join(" ").trim();
         const price = l.list_price ? `$${Math.round(Number(l.list_price)).toLocaleString()}` : null;
@@ -170,22 +188,12 @@ export default function LiveLocalPulse() {
           title,
           location: l.city,
           url: "/homes-for-sale",
-          priority: 3,
+          priority: 4,
           date: l.created_at ? new Date(l.created_at).getTime() : now,
         });
       });
 
-      (specialsRes.data ?? []).forEach((s: any) => {
-        collected.push({
-          category: "Special",
-          title: s.headline,
-          location: s.town_name ?? townLabel(s.town_slug),
-          url: s.cta_url || (s.town_slug ? `/towns/${s.town_slug}` : "/local"),
-          priority: 4,
-          date: s.start_date ? new Date(s.start_date).getTime() : now,
-        });
-      });
-
+      // P5 — Curated town highlights
       (ledgerRes.data ?? []).forEach((t: any) => {
         collected.push({
           category: "Town",
@@ -199,7 +207,7 @@ export default function LiveLocalPulse() {
 
       collected.sort((a, b) => a.priority - b.priority || b.date - a.date);
 
-      setItems(collected.slice(0, 18));
+      setItems(collected.slice(0, 20));
     })();
 
     return () => {
@@ -207,22 +215,36 @@ export default function LiveLocalPulse() {
     };
   }, []);
 
-  // Evergreen fallback (single calm message — never fake "live" data)
-  const evergreen: PulseItem = useMemo(
-    () => ({
-      category: "Town",
-      title: "Explore homes, businesses, events, and local updates across the Capital District.",
-      url: "/local",
-      priority: 99,
-      date: 0,
-    }),
+  // Automated platform-pulse fallback (loading state or empty data)
+  const platformFallback: PulseItem[] = useMemo(
+    () => [
+      {
+        category: "Town",
+        title: "PLATFORM PULSE: 4,000+ local merchants mapped across the Capital District",
+        url: "/local",
+        priority: 99,
+        date: 0,
+      },
+      {
+        category: "Town",
+        title: "PLATFORM PULSE: Premium real estate intelligence live for Albany, Troy, Saratoga, Schenectady & Delmar",
+        url: "/intelligence",
+        priority: 99,
+        date: 0,
+      },
+      {
+        category: "Special",
+        title: "REGIONAL PULSE: Complimentary property valuation reports live via the Capital District Nest DealDesk — Request Report",
+        url: "/dealdesk",
+        priority: 99,
+        date: 0,
+      },
+    ],
     []
   );
 
-  // While loading, render nothing (avoid layout flash with fake data)
-  if (items === null) return null;
-
-  const visible = items.length > 0 ? items : [evergreen];
+  // While loading, stream the platform fallback so the bar is never empty
+  const visible = items === null || items.length === 0 ? platformFallback : items;
   const loop = [...visible, ...visible];
 
   return (
