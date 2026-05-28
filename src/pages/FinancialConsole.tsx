@@ -35,16 +35,25 @@ type Product = {
 };
 
 const products: Product[] = [
-  { icon: Banknote, title: "Mortgage Pre-Approval", blurb: "Compare payments, down-payment paths, and approval timelines with a local lender.", cta: "Get pre-approved", leadType: "mortgage" },
-  { icon: Landmark, title: "Banks & Credit Unions", blurb: "Local banking, lending, deposits, and business-account relationships.", cta: "Meet a banker", leadType: "banking" },
-  { icon: TrendingUp, title: "Financial Advisors", blurb: "Wealth planning, investment strategy, retirement design, and insurance planning.", cta: "Meet an advisor", leadType: "financial_advisor" },
-  { icon: Receipt, title: "Accountants & CPAs", blurb: "Tax strategy, entity structuring, and investor accounting that scales with your portfolio.", cta: "Talk to a CPA", leadType: "accounting" },
-  { icon: Building2, title: "Investment Property Loans", blurb: "Underwrite rental income, debt service, cap rate, and cash flow before you offer.", cta: "Analyze a rental", leadType: "investment_property" },
-  { icon: LineChart, title: "DSCR / Rental Financing", blurb: "Qualify on the property's income — no W-2s. Built for investors scaling a portfolio.", cta: "Explore DSCR", leadType: "dscr" },
-  { icon: Briefcase, title: "Commercial Lending", blurb: "Multifamily, mixed-use, small commercial, and owner-occupied business property financing.", cta: "Talk commercial", leadType: "commercial_lending" },
-  { icon: ShieldCheck, title: "Insurance & Risk Planning", blurb: "Life, business, property, landlord, and umbrella coverage from local pros.", cta: "Plan coverage", leadType: "insurance" },
-  { icon: PiggyBank, title: "Business Owner Capital", blurb: "Expansion, acquisition, equipment financing, and working capital for operators.", cta: "Explore capital", leadType: "business_capital" },
-  { icon: RefreshCw, title: "Refinance Strategy", blurb: "Rate-and-term, cash-out, and portfolio refi modeling for owners and investors.", cta: "Run refi numbers", leadType: "refinance" },
+  { icon: Banknote, title: "Mortgage Pre-Approval", blurb: "Compare payments, down-payment paths, and approval timelines with a local lender.", cta: "Request Introduction", leadType: "mortgage" },
+  { icon: Landmark, title: "Banks & Credit Unions", blurb: "Local banking, lending, deposits, and business-account relationships.", cta: "Request Introduction", leadType: "banking" },
+  { icon: TrendingUp, title: "Financial Advisors", blurb: "Wealth planning, investment strategy, retirement design, and insurance planning.", cta: "Request Introduction", leadType: "financial_advisor" },
+  { icon: Receipt, title: "Accountants & CPAs", blurb: "Tax strategy, entity structuring, and accounting that scales with your goals.", cta: "Request Introduction", leadType: "accounting" },
+  { icon: ShieldCheck, title: "Insurance & Risk Planning", blurb: "Life, business, property, landlord, and umbrella coverage from local pros.", cta: "Request Introduction", leadType: "insurance" },
+  { icon: Building2, title: "Investment Property Analysis", blurb: "Underwrite rental income, debt service, cap rate, and cash flow before you offer.", cta: "Request Introduction", leadType: "investment_property" },
+  { icon: LineChart, title: "DSCR / Rental Financing", blurb: "Qualify on the property's income — no W-2s. Built for investors scaling a portfolio.", cta: "Request Introduction", leadType: "dscr" },
+  { icon: Briefcase, title: "Commercial Lending", blurb: "Multifamily, mixed-use, small commercial, and owner-occupied business property financing.", cta: "Request Introduction", leadType: "commercial_lending" },
+  { icon: PiggyBank, title: "Business Owner Capital", blurb: "Expansion, acquisition, equipment financing, and working capital for operators.", cta: "Request Introduction", leadType: "business_capital" },
+  { icon: RefreshCw, title: "Refinance Strategy", blurb: "Rate-and-term, cash-out, and portfolio refi modeling for owners and investors.", cta: "Request Introduction", leadType: "refinance" },
+  { icon: Calculator, title: "Tax Strategy", blurb: "Proactive tax planning for W-2 earners, investors, and small business owners.", cta: "Request Introduction", leadType: "tax_strategy" },
+  { icon: Sparkles, title: "Wealth & Retirement Planning", blurb: "Long-horizon planning for retirement, education, and generational wealth.", cta: "Request Introduction", leadType: "wealth_planning" },
+];
+
+const pulseCards = [
+  { icon: Banknote, title: "Mortgage & lending activity", blurb: "Local buyers, investors, and business owners comparing financing options." },
+  { icon: Landmark, title: "Business banking & capital", blurb: "Banks, credit unions, and commercial lenders supporting local growth." },
+  { icon: TrendingUp, title: "Financial planning & tax strategy", blurb: "Advisors, accountants, and insurance professionals helping residents and business owners plan ahead." },
+  { icon: Building2, title: "Investment property analysis", blurb: "Cash flow, DSCR, cap rate, and financing review for local property opportunities." },
 ];
 
 const partners = [
@@ -58,16 +67,18 @@ const partners = [
 ];
 
 const objectiveOptions: { value: string; label: string }[] = [
-  { value: "mortgage", label: "Get mortgage pre-approved" },
+  { value: "mortgage", label: "Mortgage pre-approval" },
   { value: "banking", label: "Connect with a bank or credit union" },
   { value: "financial_advisor", label: "Connect with a financial advisor" },
   { value: "accounting", label: "Connect with an accountant / CPA" },
-  { value: "dscr", label: "Explore DSCR financing" },
+  { value: "insurance", label: "Insurance or risk planning" },
   { value: "investment_property", label: "Analyze an investment property" },
-  { value: "commercial_lending", label: "Review a commercial property" },
-  { value: "refinance", label: "Refinance strategy" },
-  { value: "insurance", label: "Insurance / risk planning" },
+  { value: "dscr", label: "DSCR / rental property financing" },
+  { value: "commercial_lending", label: "Commercial lending" },
   { value: "business_capital", label: "Business-owner capital" },
+  { value: "refinance", label: "Refinance strategy" },
+  { value: "tax_strategy", label: "Tax strategy" },
+  { value: "wealth_planning", label: "Wealth / retirement planning" },
 ];
 
 const money = (n: number) =>
@@ -225,6 +236,34 @@ const RefinanceCalc = () => {
   );
 };
 
+const BusinessCapitalCalc = () => {
+  const [amount, setAmount] = useState(150000);
+  const [rate, setRate] = useState(9.5);
+  const [term, setTerm] = useState(7);
+  const [revenue, setRevenue] = useState(45000);
+
+  const monthly = pmt(amount, rate, term);
+  const dscr = (revenue * 0.15) / monthly;
+
+  return (
+    <CalcShell
+      inputs={
+        <>
+          <NumField label="Capital needed" value={amount} onChange={setAmount} prefix="$" />
+          <NumField label="Rate" value={rate} onChange={setRate} suffix="%" step={0.125} />
+          <NumField label="Term (years)" value={term} onChange={setTerm} />
+          <NumField label="Monthly revenue" value={revenue} onChange={setRevenue} prefix="$" />
+        </>
+      }
+      results={[
+        { label: "Monthly payment", value: money(monthly) + " / mo", highlight: true },
+        { label: "Est. coverage ratio", value: dscr.toFixed(2) },
+        { label: "Lender guidance", value: dscr >= 1.25 ? "Strong coverage" : "Talk to a local banker" },
+      ]}
+    />
+  );
+};
+
 // ──────────────────────── Calc primitives ────────────────────────
 
 const NumField = ({
@@ -303,7 +342,7 @@ const DealDeskForm = ({ defaultObjective }: { defaultObjective?: string }) => {
       purchase_price: form.purchase_price ? Number(form.purchase_price) : null,
       estimated_rent: form.estimated_rent ? Number(form.estimated_rent) : null,
       notes: form.notes || null,
-      source_page: "/analyze",
+      source_page: "/finances",
     });
     setSubmitting(false);
     if (error) {
@@ -388,7 +427,7 @@ const FinancialConsole = () => {
       name: "Capital District Financial Console",
       description:
         "Mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance, and business capital across the Capital District.",
-      url: "https://www.capitaldistrictnest.com/analyze",
+      url: "https://www.capitaldistrictnest.com/finances",
       areaServed: "Capital District, New York",
       provider: {
         "@type": "RealEstateAgent",
@@ -413,13 +452,13 @@ const FinancialConsole = () => {
           name="description"
           content="Mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance strategy, and business capital across the Capital District."
         />
-        <link rel="canonical" href="https://www.capitaldistrictnest.com/analyze" />
+        <link rel="canonical" href="https://www.capitaldistrictnest.com/finances" />
         <meta property="og:title" content="Capital District Financial Console" />
         <meta
           property="og:description"
           content="The financial vertical of Capital District Nest — mortgages, banking, advisors, accountants, insurance, and investment analysis."
         />
-        <meta property="og:url" content="https://www.capitaldistrictnest.com/analyze" />
+        <meta property="og:url" content="https://www.capitaldistrictnest.com/finances" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
@@ -435,8 +474,8 @@ const FinancialConsole = () => {
               Capital District Financial Console
             </div>
             <h1 className="text-4xl md:text-6xl font-semibold tracking-tight max-w-3xl leading-[1.05]">
-              The financial wing of
-              <span className="text-primary"> Capital District Nest.</span>
+              Capital District
+              <span className="text-primary"> Financial Console.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-white/70 text-lg md:text-xl">
               Mortgages, banking, advisors, accountants, insurance, investment property analysis,
@@ -448,7 +487,7 @@ const FinancialConsole = () => {
                 onClick={scrollTo("calculator")}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
               >
-                Analyze a Scenario <ArrowRight className="w-4 h-4" />
+                Analyze a Financial Scenario <ArrowRight className="w-4 h-4" />
               </a>
               <a
                 href="#financial-intro"
@@ -457,6 +496,33 @@ const FinancialConsole = () => {
               >
                 Request Financial Introduction
               </a>
+            </div>
+          </div>
+        </section>
+
+        {/* FINANCIAL PULSE */}
+        <section className="px-[5%] py-16 md:py-20 border-b border-border/60 bg-card/30">
+          <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-start">
+            <div>
+              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-3">Financial Pulse</p>
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-tight leading-[1.08] mb-5">
+                Where local growth meets <span className="text-primary">financial opportunity.</span>
+              </h2>
+              <p className="text-white/70 text-lg max-w-xl">
+                Track mortgages, banking, business capital, investment property trends, commercial
+                lending, insurance, accounting, and financial planning across the Capital District.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {pulseCards.map((c) => (
+                <div key={c.title} className="rounded-2xl p-5 border border-border bg-card/70 backdrop-blur-md">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4">
+                    <c.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-2 text-[15px]">{c.title}</h3>
+                  <p className="text-sm text-white/65 leading-relaxed">{c.blurb}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -496,22 +562,24 @@ const FinancialConsole = () => {
         <section id="calculator" className="px-[5%] py-16 md:py-20 border-y border-border/60 bg-card/30">
           <div className="max-w-6xl mx-auto">
             <div className="mb-8 max-w-2xl">
-              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Underwriting Console</p>
-              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Run the numbers before you commit.</h2>
-              <p className="text-white/65">Mortgage, investment property, DSCR, and refinance models — built on the same math local lenders use.</p>
+              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Financial Scenario Calculator</p>
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Review your numbers before you commit.</h2>
+              <p className="text-white/65">Mortgage, investment property, DSCR, refinance, and business capital models — built on the same math local lenders use.</p>
             </div>
 
             <Tabs defaultValue="mortgage" className="w-full">
               <TabsList className="bg-card/60 border border-border rounded-full p-1 flex flex-wrap h-auto gap-1">
-                <TabsTrigger value="mortgage" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Mortgage</TabsTrigger>
+                <TabsTrigger value="mortgage" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Mortgage Payment</TabsTrigger>
                 <TabsTrigger value="investment" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Investment Property</TabsTrigger>
                 <TabsTrigger value="dscr" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">DSCR / Cash Flow</TabsTrigger>
                 <TabsTrigger value="refi" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Refinance</TabsTrigger>
+                <TabsTrigger value="business" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Business Capital</TabsTrigger>
               </TabsList>
               <TabsContent value="mortgage" className="mt-6"><MortgageCalc /></TabsContent>
               <TabsContent value="investment" className="mt-6"><InvestmentCalc /></TabsContent>
               <TabsContent value="dscr" className="mt-6"><DscrCalc /></TabsContent>
               <TabsContent value="refi" className="mt-6"><RefinanceCalc /></TabsContent>
+              <TabsContent value="business" className="mt-6"><BusinessCapitalCalc /></TabsContent>
             </Tabs>
           </div>
         </section>
@@ -572,8 +640,8 @@ const FinancialConsole = () => {
               <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Capital District Financial Console</p>
               <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Submit your financial scenario.</h2>
               <p className="text-white/65 max-w-xl mx-auto">
-                Tell us what you're working on, and we'll route you to the right local mortgage,
-                banking, accounting, insurance, investment, or commercial lending partner.
+                Tell us what you're working on, and we'll help route you to the right local
+                mortgage, banking, accounting, insurance, financial planning, or lending partner.
               </p>
             </div>
             <DealDeskForm />

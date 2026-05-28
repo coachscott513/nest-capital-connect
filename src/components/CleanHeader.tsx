@@ -22,7 +22,7 @@ const navModes: NavMode[] = [
   { label: "Businesses", mobileLabel: "Search Businesses", href: "/local", matchPaths: ["/local"] },
   { label: "Towns", mobileLabel: "Explore Towns", href: "/communities", matchPaths: ["/communities", "/living-in"] },
   { label: "Events", mobileLabel: "Local Events", href: "/#weekly-feed", matchPaths: [] },
-  { label: "Invest", mobileLabel: "Investment Properties", href: "/analyze", matchPaths: ["/analyze", "/invest"] },
+  { label: "Finances", mobileLabel: "Finances Hub", href: "/finances", matchPaths: ["/finances", "/analyze", "/invest", "/financial-console"] },
   { label: "For Local Businesses", mobileLabel: "Advertise With Us", href: "/pricing", matchPaths: ["/pricing"] },
 ];
 
@@ -177,7 +177,7 @@ const CleanHeader = () => {
               </button>
 
               <AnalystCard>
-                <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-white bg-foreground hover:bg-foreground/90">
+                <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold bg-white text-[#0B0F19] hover:bg-white/90 shadow-sm">
                   Get Started
                 </button>
               </AnalystCard>
@@ -279,7 +279,7 @@ const CleanHeader = () => {
 
         <div className="mt-8">
           <AnalystCard>
-            <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white bg-foreground">
+            <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold bg-white text-[#0B0F19]">
               Talk to an Expert
             </button>
           </AnalystCard>
