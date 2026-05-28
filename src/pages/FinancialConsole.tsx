@@ -362,7 +362,7 @@ const DealDeskForm = ({ defaultObjective }: { defaultObjective?: string }) => {
         disabled={submitting}
         className="w-full rounded-full bg-primary text-primary-foreground font-medium py-3.5 hover:opacity-90 transition disabled:opacity-50"
       >
-        {submitting ? "Submitting…" : "Submit to DealDesk"}
+        {submitting ? "Submitting…" : "Request Financial Introduction"}
       </button>
       <p className="text-xs text-white/45 text-center">
         Routed to Scott Alvarez · RE/MAX Solutions · (518) 522-7265 · scott@capitaldistrictnest.com
