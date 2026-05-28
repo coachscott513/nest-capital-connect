@@ -32,13 +32,15 @@ const DealDesk = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
 
+  const initialStrategy = new URLSearchParams(location.search).get("intent") || "";
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
       email: "",
       propertyAddress: "",
-      strategy: "",
+      strategy: initialStrategy,
       notes: "",
       agreedToUpdates: false,
     },
