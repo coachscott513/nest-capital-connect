@@ -203,6 +203,8 @@ const App = () => {
             <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/investor-tools" element={<InvestorTools />} />
+          <Route path="/financial-console" element={<FinancialConsole />} />
+          <Route path="/invest" element={<FinancialConsole />} />
           <Route path="/rentals" element={<RentalsHub />} />
           <Route path="/rentals/:city" element={<CityRentalPage />} />
           <Route path="/old-rentals" element={<Rentals />} />
