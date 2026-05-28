@@ -26,8 +26,9 @@
     --secondary: 225 22% 16%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 225 18% 20%;
-    --muted-foreground: 0 0% 65%;      /* white/65 muted body */
+    --muted: 225 18% 22%;
+    --muted-foreground: 0 0% 75%;      /* lifted body contrast (was 65%) */
+
 
     --accent: 166 76% 65%;             /* on-dark teal #5eead4 */
     --accent-foreground: 222 40% 7%;
@@ -700,3 +701,30 @@
 
 /* Prevent any rogue horizontal scroll on mobile */
 html, body { overflow-x: hidden; }
+
+/* =============================================================
+   MOBILE READABILITY PASS — dark premium, but breathable
+   Lifts body/muted contrast, brightens card surfaces a notch,
+   and trims oversized vertical paddings on phones so the page
+   doesn't feel like stacked black-on-black slabs.
+   ============================================================= */
+@media (max-width: 640px) {
+  /* Brighten muted/secondary text so body copy doesn't disappear */
+  .text-white\/55 { color: rgb(255 255 255 / 0.72) !important; }
+  .text-white\/60 { color: rgb(255 255 255 / 0.75) !important; }
+  .text-white\/65 { color: rgb(255 255 255 / 0.78) !important; }
+  .text-white\/70 { color: rgb(255 255 255 / 0.82) !important; }
+
+  /* Lighten the onyx card surface a touch to break up black-on-black */
+  .bg-\[\#1E2230\] { background-color: #232838 !important; }
+  .bg-\[\#0B0F19\] .bg-white\/\[0\.04\] { background-color: rgb(255 255 255 / 0.07) !important; }
+  .bg-\[\#0B0F19\] .bg-white\/\[0\.06\] { background-color: rgb(255 255 255 / 0.09) !important; }
+
+  /* Tighter vertical rhythm on phones — reduce repeated dark empty space */
+  section.py-24, section.py-28, section.py-32 { padding-top: 56px !important; padding-bottom: 56px !important; }
+  .py-\[88px\], .py-\[140px\] { padding-top: 56px !important; padding-bottom: 56px !important; }
+
+  /* Section dividers slightly more visible on mobile */
+  .border-\[\#2D3748\] { border-color: #36405a !important; }
+}
+
