@@ -72,71 +72,7 @@ const isOfficialCategory = (value: string | null): value is OfficialCategory =>
 
 const isMember = (b: Business) => Boolean(b.claimed ?? b.verified);
 
-type TierFilter = "all" | "featured" | "claimed" | "standard";
-
-// Generic "show me everything" tokens — when the only keyword is one of these,
-// it should not narrow results (lets "albany businesses" / "schenectady shops"
-// fall through to the town filter alone).
-const GENERIC_TOKENS = new Set([
-  "business", "businesses", "shop", "shops", "store", "stores",
-  "place", "places", "company", "companies", "local", "directory", "county", "ny",
-]);
-
-const expandBusinessSearch = (value: string) => {
-  const needle = value.trim().toLowerCase();
-  if (GENERIC_TOKENS.has(needle)) return ["*"]; // sentinel = match anything
-  const aliases: Record<string, string[]> = {
-    finance: ["finance", "financial", "bank", "credit union", "mortgage", "lender", "accountant"],
-    financial: ["finance", "financial", "bank", "credit union", "mortgage", "lender", "accountant"],
-    lender: ["lender", "mortgage", "finance", "financial"],
-    mortgage: ["mortgage", "lender", "loan", "finance", "financial"],
-    cafe: ["cafe", "café", "coffee"],
-    cafes: ["cafe", "café", "coffee"],
-    coffee: ["coffee", "cafe", "café", "espresso"],
-    food: ["restaurant", "dining", "eatery", "food", "diner", "grill", "bistro", "pizza", "cafe", "bakery"],
-    drink: ["restaurant", "dining", "bar", "pub", "tavern", "brewery", "coffee", "cafe", "café"],
-    restaurant: ["restaurant", "restaurants", "dining", "eatery", "food", "diner", "grill", "bistro", "pizza"],
-    restaurants: ["restaurant", "restaurants", "dining", "eatery", "food", "diner", "grill", "bistro", "pizza"],
-    dining: ["restaurant", "restaurants", "dining", "eatery", "food"],
-    bar: ["bar", "pub", "tavern", "brewery"],
-    bars: ["bar", "pub", "tavern", "brewery"],
-    bakery: ["bakery", "bagel", "donut", "patisserie"],
-    bakeries: ["bakery", "bagel", "donut", "patisserie"],
-    pizza: ["pizza", "pizzeria", "italian"],
-    attorney: ["attorney", "lawyer", "legal", "law"],
-    attorneys: ["attorney", "lawyer", "legal", "law"],
-    lawyer: ["attorney", "lawyer", "legal", "law"],
-    lawyers: ["attorney", "lawyer", "legal", "law"],
-    contractor: ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services"],
-    contractors: ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services"],
-    "home-service": ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services", "hvac", "plumb", "electric"],
-    "home-services": ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services", "hvac", "plumb", "electric"],
-    hvac: ["hvac", "heating", "cooling", "furnace", "air conditioning"],
-    plumber: ["plumb"],
-    plumbers: ["plumb"],
-    electrician: ["electric"],
-    electricians: ["electric"],
-    roofer: ["roof"],
-    roofers: ["roof"],
-    gym: ["gym", "fitness", "yoga", "pilates", "crossfit"],
-    gyms: ["gym", "fitness", "yoga", "pilates", "crossfit"],
-    salon: ["salon", "barber", "hair", "nail", "spa"],
-    salons: ["salon", "barber", "hair", "nail", "spa"],
-    insurance: ["insurance"],
-    accountant: ["accountant", "cpa", "tax", "bookkeep"],
-    accountants: ["accountant", "cpa", "tax", "bookkeep"],
-    dentist: ["dentist", "dental"],
-    dentists: ["dentist", "dental"],
-    doctor: ["doctor", "physician", "medical", "clinic"],
-    doctors: ["doctor", "physician", "medical", "clinic"],
-    shops: ["shop", "store", "boutique", "retail"],
-    stores: ["shop", "store", "boutique", "retail"],
-  };
-  if (aliases[needle]) return aliases[needle];
-  // Strip trailing 's' so plurals fall back to singular substring matches.
-  if (needle.endsWith("s") && needle.length > 3) return [needle, needle.slice(0, -1)];
-  return [needle];
-};
+// Tier filter type now lives in usePaginatedBusinesses.
 
 const normalizeText = (value: string) =>
   value.trim().toLowerCase().replace(/[+,&/]+/g, " ").replace(/\bny\b/g, "").replace(/\s+/g, " ").trim();
