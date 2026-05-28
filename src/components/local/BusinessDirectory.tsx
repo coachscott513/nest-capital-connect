@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   Search,
@@ -41,11 +41,13 @@ import {
 import {
   OFFICIAL_CATEGORIES,
   type OfficialCategory,
-  matchesOfficialCategory,
-  expandSearchTerm,
 } from "@/data/officialCategories";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
-import { townMatches, useDbBusinesses } from "@/hooks/useDbBusinesses";
+import {
+  usePaginatedBusinesses,
+  useFeaturedBusinesses,
+  type TierFilter,
+} from "@/hooks/usePaginatedBusinesses";
 import { resolveBusinessImage, hasRealBusinessMedia } from "@/lib/businessImages";
 
 const TEAL = "#5eead4";
@@ -70,71 +72,7 @@ const isOfficialCategory = (value: string | null): value is OfficialCategory =>
 
 const isMember = (b: Business) => Boolean(b.claimed ?? b.verified);
 
-type TierFilter = "all" | "featured" | "claimed" | "standard";
-
-// Generic "show me everything" tokens — when the only keyword is one of these,
-// it should not narrow results (lets "albany businesses" / "schenectady shops"
-// fall through to the town filter alone).
-const GENERIC_TOKENS = new Set([
-  "business", "businesses", "shop", "shops", "store", "stores",
-  "place", "places", "company", "companies", "local", "directory", "county", "ny",
-]);
-
-const expandBusinessSearch = (value: string) => {
-  const needle = value.trim().toLowerCase();
-  if (GENERIC_TOKENS.has(needle)) return ["*"]; // sentinel = match anything
-  const aliases: Record<string, string[]> = {
-    finance: ["finance", "financial", "bank", "credit union", "mortgage", "lender", "accountant"],
-    financial: ["finance", "financial", "bank", "credit union", "mortgage", "lender", "accountant"],
-    lender: ["lender", "mortgage", "finance", "financial"],
-    mortgage: ["mortgage", "lender", "loan", "finance", "financial"],
-    cafe: ["cafe", "café", "coffee"],
-    cafes: ["cafe", "café", "coffee"],
-    coffee: ["coffee", "cafe", "café", "espresso"],
-    food: ["restaurant", "dining", "eatery", "food", "diner", "grill", "bistro", "pizza", "cafe", "bakery"],
-    drink: ["restaurant", "dining", "bar", "pub", "tavern", "brewery", "coffee", "cafe", "café"],
-    restaurant: ["restaurant", "restaurants", "dining", "eatery", "food", "diner", "grill", "bistro", "pizza"],
-    restaurants: ["restaurant", "restaurants", "dining", "eatery", "food", "diner", "grill", "bistro", "pizza"],
-    dining: ["restaurant", "restaurants", "dining", "eatery", "food"],
-    bar: ["bar", "pub", "tavern", "brewery"],
-    bars: ["bar", "pub", "tavern", "brewery"],
-    bakery: ["bakery", "bagel", "donut", "patisserie"],
-    bakeries: ["bakery", "bagel", "donut", "patisserie"],
-    pizza: ["pizza", "pizzeria", "italian"],
-    attorney: ["attorney", "lawyer", "legal", "law"],
-    attorneys: ["attorney", "lawyer", "legal", "law"],
-    lawyer: ["attorney", "lawyer", "legal", "law"],
-    lawyers: ["attorney", "lawyer", "legal", "law"],
-    contractor: ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services"],
-    contractors: ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services"],
-    "home-service": ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services", "hvac", "plumb", "electric"],
-    "home-services": ["contractor", "construction", "remodel", "builder", "handyman", "home service", "home services", "hvac", "plumb", "electric"],
-    hvac: ["hvac", "heating", "cooling", "furnace", "air conditioning"],
-    plumber: ["plumb"],
-    plumbers: ["plumb"],
-    electrician: ["electric"],
-    electricians: ["electric"],
-    roofer: ["roof"],
-    roofers: ["roof"],
-    gym: ["gym", "fitness", "yoga", "pilates", "crossfit"],
-    gyms: ["gym", "fitness", "yoga", "pilates", "crossfit"],
-    salon: ["salon", "barber", "hair", "nail", "spa"],
-    salons: ["salon", "barber", "hair", "nail", "spa"],
-    insurance: ["insurance"],
-    accountant: ["accountant", "cpa", "tax", "bookkeep"],
-    accountants: ["accountant", "cpa", "tax", "bookkeep"],
-    dentist: ["dentist", "dental"],
-    dentists: ["dentist", "dental"],
-    doctor: ["doctor", "physician", "medical", "clinic"],
-    doctors: ["doctor", "physician", "medical", "clinic"],
-    shops: ["shop", "store", "boutique", "retail"],
-    stores: ["shop", "store", "boutique", "retail"],
-  };
-  if (aliases[needle]) return aliases[needle];
-  // Strip trailing 's' so plurals fall back to singular substring matches.
-  if (needle.endsWith("s") && needle.length > 3) return [needle, needle.slice(0, -1)];
-  return [needle];
-};
+// Tier filter type now lives in usePaginatedBusinesses.
 
 const normalizeText = (value: string) =>
   value.trim().toLowerCase().replace(/[+,&/]+/g, " ").replace(/\bny\b/g, "").replace(/\s+/g, " ").trim();
@@ -152,21 +90,14 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [hasPhone, setHasPhone] = useState(false);
   const [openBiz, setOpenBiz] = useState<Business | null>(null);
 
-  const { rows: dbBusinesses, loading } = useDbBusinesses();
+  // Debounce the typed search so we don't hit the DB on every keystroke.
+  const [debouncedQ, setDebouncedQ] = useState(q);
+  useEffect(() => {
+    const id = window.setTimeout(() => setDebouncedQ(q), 300);
+    return () => window.clearTimeout(id);
+  }, [q]);
 
-  // /local uses the live imported directory table as the source of truth.
-  const ALL = useMemo<Business[]>(() => {
-    const seen = new Set<string>();
-    const out: Business[] = [];
-    for (const b of dbBusinesses) {
-      const key = b.slug;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      out.push(b);
-    }
-    return out;
-  }, [dbBusinesses]);
-
+  // Sync URL params (instant — based on the typed value, not the debounced one).
   useEffect(() => {
     const next = new URLSearchParams();
     if (q.trim()) next.set("search", q.trim());
@@ -175,82 +106,27 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     setSearchParams(next, { replace: true });
   }, [q, town, category, townSlug, setSearchParams]);
 
-  const results = useMemo(() => {
-    const needleRaw = normalizeText(q);
-    // Tokenize: "delmar restaurants" -> ["delmar", "restaurants"]
-    const tokens = needleRaw.split(/\s+/).filter(Boolean);
-    // Expand each token via the official category alias map so "lender" hits
-    // Banking and Finance, "restaurant" hits Restaurant, etc.
-    const expandedPerToken = tokens.map((t) => {
-      if (GENERIC_TOKENS.has(t)) return ["*"];
-      return expandSearchTerm(t);
+  // Paginated, server-filtered data layer.
+  const effectiveTown = townSlug || town || undefined;
+  const { rows: results, loading, loadingMore, hasMore, loadMore, total } =
+    usePaginatedBusinesses({
+      townSlug: effectiveTown,
+      search: debouncedQ.trim() || undefined,
+      category: category || undefined,
+      tier,
+      hasPhone,
+      hasWebsite,
+      pageSize: 24,
     });
 
-    // Extract town/county phrases so they filter geographically instead of by name.
-    const townFromQuery = [...TOWN_LIST, ...COUNTY_LIST]
-      .sort((a, b) => b.name.length - a.name.length)
-      .find((place) => {
-        const placeName = normalizeText(place.name);
-        const placeSlug = place.slug.replace(/-/g, " ");
-        return needleRaw.includes(placeName) || needleRaw.includes(placeSlug);
-      })?.slug;
-    const effectiveTown = town || townFromQuery || "";
-
-    // Tokens still used for keyword matching (drop the town token).
-    const townWords = new Set(effectiveTown ? effectiveTown.replace(/-/g, " ").split(/\s+/) : []);
-    const keywordTokens = expandedPerToken.filter(
-      (_aliases, i) => !townWords.has(slugText(tokens[i])) && tokens[i] !== "county" && tokens[i] !== "ny",
-    );
-
-    const matches = (ignoreTown = false) => ALL.filter((b) => {
-      if (townSlug && !townMatches(b, townSlug) && b.town !== "capital-district")
-        return false;
-      if (!ignoreTown && effectiveTown && !townMatches(b, effectiveTown)) return false;
-      // Category dropdown filter — alias-aware substring match against
-      // category / subcategory / tags / name so "Real Estate" picks up
-      // "Real estate agent" rows from the imported directory.
-      if (category && isOfficialCategory(category)) {
-        if (!matchesOfficialCategory({
-          category: b.category, subcategory: b.subcategory,
-          tags: b.tags, name: b.name, description: b.about,
-        } as never, category as OfficialCategory)) return false;
-      }
-      if (tier === "featured" && !b.featured) return false;
-      if (tier === "claimed" && !isMember(b)) return false;
-      if (tier === "standard" && isMember(b)) return false;
-      if (hasWebsite && !b.website) return false;
-      if (hasPhone && !b.phone) return false;
-
-      if (keywordTokens.length === 0) return true;
-      const hay = [
-        b.name, b.category, b.subcategory, b.tagline, b.about, b.townLabel,
-        b.town, b.city, b.county, b.address,
-        ...(b.tags ?? []),
-        ...(b.services ?? []), ...(b.knownFor ?? []),
-      ].filter(Boolean).join(" ").toLowerCase().replace(/[,&]+/g, " ");
-      // Every keyword token must match at least one of its aliases.
-      // "*" sentinel means "generic — match anything" (used by tokens like "businesses").
-      return keywordTokens.every((aliases) =>
-        aliases.some((a) => a === "*" || hay.includes(a)),
-      );
-    });
-
-    const exactMatches = matches(false);
-    const pool = exactMatches.length > 0 || !effectiveTown ? exactMatches : matches(true).slice(0, 100);
-    // Prioritize Model Profiles at the top of every results grid:
-    // featured first, then claimed/verified, then everything else.
-    // Stable sort preserves original alphabetical-ish order within each tier.
-    return [...pool].sort((a, b) => {
-      const rank = (x: Business) => (x.featured ? 0 : isMember(x) ? 1 : 2);
-      return rank(a) - rank(b);
-    });
-  }, [q, town, category, tier, hasWebsite, hasPhone, townSlug, ALL]);
-
+  // Featured strip is its own tiny fetch (max 6 rows) — independent of pagination.
+  const featuredAll = useFeaturedBusinesses(6);
   const featured = useMemo(
-    () => ALL.filter((b) => b.featured && (!townSlug || b.town === "capital-district")),
-    [townSlug, ALL],
+    () => featuredAll.filter((b) => !townSlug || b.town === townSlug || b.town === "capital-district"),
+    [featuredAll, townSlug],
   );
 
+  // Optional client-side grouping for visual sectioning on the loaded page.
   const grouped = useMemo(() => {
     const map = new Map<CategoryGroup, Business[]>();
     for (const b of results) {
@@ -263,6 +139,22 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     }
     return map;
   }, [results]);
+
+  // Infinite-scroll sentinel: load more when the bottom marker enters view.
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el || !hasMore || loading) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) loadMore();
+      },
+      { rootMargin: "400px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hasMore, loading, loadMore, results.length]);
+
 
   return (
     <div className="bg-[#0B0F19] text-white">
@@ -403,7 +295,11 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
               </button>
             )}
             <span className="ml-auto text-xs text-white/55">
-              {loading ? "Loading live directory…" : `${results.length} matching / ${ALL.length} live businesses`}
+              {loading
+                ? "Loading live directory…"
+                : total != null
+                  ? `${results.length} of ${total.toLocaleString()} live businesses`
+                  : `${results.length} live businesses`}
             </span>
           </div>
         </div>
@@ -412,7 +308,13 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       {/* RESULTS */}
       <section className={embedded ? "py-10" : "py-20 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
-          {results.length === 0 ? (
+          {loading ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {Array.from({ length: 9 }).map((_, i) => (
+                <BusinessCardSkeleton key={i} />
+              ))}
+            </div>
+          ) : results.length === 0 ? (
             <div className="text-center py-20 border border-dashed border-white/15 rounded-2xl bg-white/[0.02]">
               <p className="text-lg font-semibold text-white">No businesses found yet.</p>
               <p className="mt-2 text-sm text-white/60">
@@ -429,25 +331,36 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             </div>
           ) : (
             <>
-              {[...grouped.entries()].map(([group, list], gi) => (
-                <div key={group} className="mb-14 last:mb-0">
-                  <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white mb-6">
-                    {group}
-                  </h2>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {list.map((b) => (
-                      <BusinessCard key={b.slug} b={b} onOpen={() => setOpenBiz(b)} />
-                    ))}
-                    {gi === 0 && <ClaimCtaCard />}
-                    {gi === 1 && <PromoteCtaCard />}
-                  </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {results.map((b, i) => (
+                  <React.Fragment key={b.slug}>
+                    <BusinessCard b={b} onOpen={() => setOpenBiz(b)} />
+                    {i === 5 && <ClaimCtaCard />}
+                    {i === 11 && <PromoteCtaCard />}
+                  </React.Fragment>
+                ))}
+                {loadingMore && Array.from({ length: 6 }).map((_, i) => (
+                  <BusinessCardSkeleton key={`more-${i}`} />
+                ))}
+              </div>
+
+              {/* Infinite-scroll sentinel + manual Load More */}
+              {hasMore && (
+                <div ref={sentinelRef} className="mt-12 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={loadMore}
+                    disabled={loadingMore}
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-[#5eead4] transition disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {loadingMore ? "Loading…" : "Load more businesses"}
+                  </button>
                 </div>
-              ))}
-              {grouped.size <= 1 && (
-                <div className="grid sm:grid-cols-2 gap-5 mt-4">
-                  <ClaimCtaCard />
-                  <PromoteCtaCard />
-                </div>
+              )}
+              {!hasMore && results.length > 0 && (
+                <p className="mt-12 text-center text-xs uppercase tracking-[0.22em] text-white/40">
+                  End of results · {total?.toLocaleString() ?? results.length} businesses
+                </p>
               )}
             </>
           )}
@@ -478,12 +391,25 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         </section>
       )}
 
-      <BusinessDetailModal biz={openBiz} onClose={() => setOpenBiz(null)} all={ALL} />
+      <BusinessDetailModal biz={openBiz} onClose={() => setOpenBiz(null)} all={results} />
     </div>
   );
 };
 
 /* ─────────────────────────  CARDS  ───────────────────────── */
+
+const BusinessCardSkeleton = () => (
+  <div className="rounded-[22px] bg-[#1E2230] border border-white/[0.06] overflow-hidden animate-pulse min-h-[280px]">
+    <div className="h-32 w-full bg-white/[0.04]" />
+    <div className="p-6 space-y-3">
+      <div className="h-3 w-20 bg-white/10 rounded" />
+      <div className="h-4 w-3/4 bg-white/10 rounded" />
+      <div className="h-3 w-1/2 bg-white/[0.07] rounded" />
+      <div className="h-16 w-full bg-white/[0.04] rounded-xl mt-4" />
+    </div>
+  </div>
+);
+
 
 const FilterChip = ({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) => (
   <button
