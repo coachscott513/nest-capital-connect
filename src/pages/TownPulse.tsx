@@ -167,12 +167,19 @@ const EmptyState = ({
   </div>
 );
 
-const LoadingIndexBlock = () => (
+const LoadingIndexBlock = ({ label }: { label: string }) => (
   <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-10">
-    <p className="text-sm font-medium text-white/80">Loading community partner profile index...</p>
+    <p className="text-sm font-medium text-white/80">
+      Accessing verified Capital District directory record index for {label}...
+    </p>
     <p className="mt-2 text-sm text-white/55 leading-relaxed">
       Capital District Nest is preparing the town business, events, specials, and local discovery index.
     </p>
+    <div className="mt-6 space-y-3" aria-hidden="true">
+      <div className="h-3 w-2/3 rounded-full bg-white/10" />
+      <div className="h-3 w-1/2 rounded-full bg-white/10" />
+      <div className="h-3 w-5/6 rounded-full bg-white/10" />
+    </div>
   </div>
 );
 
@@ -210,7 +217,10 @@ const XGlyph = (props: any) => (
 // ── page ───────────────────────────────────────────────────────────────────
 const TownPulse = () => {
   const { slug = "" } = useParams<{ slug: string }>();
-  const townSlug = slug.toLowerCase();
+  const pathSlug = typeof window !== "undefined"
+    ? decodeURIComponent(window.location.pathname.match(/^\/towns\/([^/?#]+)/i)?.[1] || "")
+    : "";
+  const townSlug = (slug || pathSlug).toLowerCase();
   const navigate = useNavigate();
 
   const dir = findTownInDirectory(townSlug);
@@ -313,7 +323,7 @@ const TownPulse = () => {
   };
 
   const url = `https://www.capitaldistrictnest.com/towns/${townSlug}`;
-  const seoTitle = `${townName}, NY — Local Pulse · Capital District Nest`;
+  const seoTitle = `${townName}, NY Local Profile & Information | Capital District Nest`;
   const seoDesc = `Search businesses, restaurants, events, services, and local updates in ${townName}, NY.`;
 
   return (
