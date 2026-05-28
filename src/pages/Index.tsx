@@ -11,6 +11,7 @@ import SupportLocalSection from "@/components/home/SupportLocalSection";
 import LiveLocalPulse from "@/components/home/LiveLocalPulse";
 import SpotlightSearch from "@/components/home/SpotlightSearch";
 import HeroFeaturedRow from "@/components/home/HeroFeaturedRow";
+import DiscoveryConsole from "@/components/home/DiscoveryConsole";
 import FloatingOmniSearch from "@/components/home/FloatingOmniSearch";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
