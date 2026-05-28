@@ -474,8 +474,8 @@ const FinancialConsole = () => {
               Capital District Financial Console
             </div>
             <h1 className="text-4xl md:text-6xl font-semibold tracking-tight max-w-3xl leading-[1.05]">
-              The financial wing of
-              <span className="text-primary"> Capital District Nest.</span>
+              Capital District
+              <span className="text-primary"> Financial Console.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-white/70 text-lg md:text-xl">
               Mortgages, banking, advisors, accountants, insurance, investment property analysis,
