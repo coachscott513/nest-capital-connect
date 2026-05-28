@@ -167,6 +167,15 @@ const EmptyState = ({
   </div>
 );
 
+const LoadingIndexBlock = () => (
+  <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-10">
+    <p className="text-sm font-medium text-white/80">Loading community partner profile index...</p>
+    <p className="mt-2 text-sm text-white/55 leading-relaxed">
+      Capital District Nest is preparing the town business, events, specials, and local discovery index.
+    </p>
+  </div>
+);
+
 const SocialChip = ({
   href,
   Icon,
@@ -312,6 +321,7 @@ const TownPulse = () => {
       <Helmet>
         <title>{seoTitle}</title>
         <meta name="description" content={seoDesc} />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href={url} />
         <meta property="og:title" content={seoTitle} />
         <meta property="og:description" content={seoDesc} />
