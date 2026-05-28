@@ -156,6 +156,4 @@ export const trackGAEvent = {
   },
 };
 
-};
-
 export default GARouteTracker;
