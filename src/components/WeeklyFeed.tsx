@@ -96,6 +96,10 @@ const WeeklyFeed = ({
 }: Props) => {
   const isRegion = scope === "region";
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [activeVideo, setActiveVideo] = useState<WeeklyFeedItem | null>(null);
+
+  const hasPlayableVideo = (i: WeeklyFeedItem) =>
+    !!(i.has_video && i.video_embed_url && isTrustedEmbedUrl(i.video_embed_url));
 
   // Today at local midnight, for freshness filtering.
   const today = useMemo(() => {
