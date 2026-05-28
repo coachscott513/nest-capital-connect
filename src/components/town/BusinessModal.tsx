@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Phone, Globe, MapPin, Facebook, Instagram, Linkedin, Star, Lock } from "lucide-react";
 import type { Business } from "@/data/businesses";
+import { trackGAEvent } from "@/components/GARouteTracker";
 
 interface Props {
   business: Business | null;
@@ -10,7 +12,6 @@ interface Props {
 
 const TEAL = "#0d6e66";
 
-// TikTok icon (lucide doesn't ship one)
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.84a8.16 8.16 0 0 0 4.77 1.52V6.91a4.85 4.85 0 0 1-1.84-.22Z"/>
@@ -28,8 +29,7 @@ const SocialIcon = ({
   Icon: React.ComponentType<{ className?: string }>;
   label: string;
 }) => {
-  const base =
-    "flex items-center justify-center w-11 h-11 rounded-full border transition-all";
+  const base = "flex items-center justify-center w-11 h-11 rounded-full border transition-all";
   if (enabled && href) {
     return (
       <a
@@ -55,23 +55,44 @@ const SocialIcon = ({
 };
 
 const BusinessModal = ({ business, open, onOpenChange }: Props) => {
+  const slug = business?.slug;
+  useEffect(() => {
+    if (open && business) {
+      trackGAEvent.businessContactOpen({
+        business_id: (business as any).id,
+        business_slug: business.slug,
+        business_name: business.name,
+        category: business.category,
+        town: business.townLabel || business.town,
+        tier: business.featured ? "featured" : (business.claimed || business.verified) ? "claimed" : "standard",
+        source_location: "town_business_modal",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, slug]);
+
   if (!business) return null;
   const b = business;
   const verified = !!b.verified;
   const telHref = b.phone ? `tel:${b.phone.replace(/[^\d+]/g, "")}` : undefined;
   const socials = b.socials ?? {};
+  const bizPayload = {
+    business_id: (b as any).id,
+    business_slug: b.slug,
+    business_name: b.name,
+    category: b.category,
+    town: b.townLabel || b.town,
+    tier: b.featured ? "featured" : (b.claimed || b.verified) ? "claimed" : "standard",
+    source_location: "town_business_modal",
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg p-0 gap-0 rounded-3xl overflow-hidden border border-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] bg-[#0B0F19] text-white">
         <div className="p-7 md:p-8 bg-[#0B0F19]">
-          {/* Header */}
           <div className="flex items-start justify-between gap-4 mb-2">
             <div className="min-w-0">
-              <p
-                className="text-[11px] font-semibold tracking-[0.18em] uppercase mb-2"
-                style={{ color: "#5eead4" }}
-              >
+              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase mb-2" style={{ color: "#5eead4" }}>
                 {b.category}
               </p>
               <DialogTitle className="text-2xl md:text-[28px] font-semibold tracking-tight text-white leading-tight">
@@ -92,11 +113,11 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
             {b.about}
           </DialogDescription>
 
-          {/* Contact rows */}
           <div className="mt-6 space-y-2.5">
             {b.phone && (
               <a
                 href={telHref}
+                onClick={() => trackGAEvent.callClick(bizPayload)}
                 className="flex items-center gap-3 text-[15px] text-white/85 hover:text-white transition"
               >
                 <Phone className="w-4 h-4 text-white/45" />
@@ -120,10 +141,10 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
             </div>
           </div>
 
-          {/* CTA */}
           {telHref && (
             <a
               href={telHref}
+              onClick={() => trackGAEvent.callClick(bizPayload)}
               className="mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white transition-all hover:opacity-90"
               style={{ backgroundColor: TEAL }}
             >
@@ -131,12 +152,9 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
             </a>
           )}
 
-          {/* Socials — Facebook first */}
           <div className="mt-7 pt-6 border-t border-white/10">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-white/55">
-                Social
-              </p>
+              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-white/55">Social</p>
               {!verified && (
                 <span className="inline-flex items-center gap-1 text-[11px] text-white/45">
                   <Lock className="w-3 h-3" /> Featured
@@ -156,12 +174,14 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
                 </p>
                 <a
                   href={`/claim-business?slug=${b.slug}`}
+                  onClick={() => trackGAEvent.claimProfileClick(bizPayload)}
                   className="mt-4 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-[#5eead4]/30 text-[#5eead4] hover:bg-[#0d6e66] hover:text-white hover:border-[#0d6e66] transition-all"
                 >
                   Claim This Profile
                 </a>
                 <a
                   href={`/claim-business?slug=${b.slug}&intent=login`}
+                  onClick={() => trackGAEvent.claimProfileClick({ ...bizPayload, source_location: "town_business_modal_owner_login" })}
                   className="mt-2 w-full inline-flex items-center justify-center text-xs font-semibold uppercase tracking-[0.18em] text-white/55 hover:text-white transition"
                 >
                   Owner Login →
@@ -171,7 +191,6 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
           </div>
         </div>
       </DialogContent>
-
     </Dialog>
   );
 };

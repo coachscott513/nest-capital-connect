@@ -3,11 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, ArrowRight } from "lucide-react";
 import { getSearchRoute } from "@/lib/searchIntent";
+import { trackGAEvent } from "@/components/GARouteTracker";
 
 /* =============================================================
    FLOATING OMNI-SEARCH CONSOLE
-   Compact, frosted-glass version of the hero Omni-Search that
-   slides in from the top once the user scrolls past the hero.
    ============================================================= */
 
 const FloatingOmniSearch = () => {
@@ -17,7 +16,6 @@ const FloatingOmniSearch = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      // Show after scrolling ~70% of the first viewport
       const threshold = Math.max(window.innerHeight * 0.7, 480);
       setVisible(window.scrollY > threshold);
     };
@@ -28,6 +26,7 @@ const FloatingOmniSearch = () => {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
+    trackGAEvent.searchSubmit({ query: q, source_location: "floating_omni" });
     navigate(getSearchRoute(q));
   };
 

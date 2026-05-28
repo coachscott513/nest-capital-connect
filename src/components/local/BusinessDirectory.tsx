@@ -61,6 +61,19 @@ const bizPayload = (b: Business, source: string) => ({
   source_location: source,
 });
 
+type BizActionType = "call" | "text" | "email" | "website" | "directions" | "claim";
+const fireBizAction = (action: BizActionType, b: Business, source: string) => {
+  const p = bizPayload(b, source);
+  switch (action) {
+    case "call":       trackGAEvent.callClick(p); break;
+    case "text":       trackGAEvent.textClick(p); break;
+    case "email":      trackGAEvent.emailClick(p); break;
+    case "website":    trackGAEvent.websiteClick(p); break;
+    case "directions": trackGAEvent.directionsClick(p); break;
+    case "claim":      trackGAEvent.claimProfileClick(p); break;
+  }
+};
+
 const TEAL = "#5eead4";
 const TEAL_DEEP = "#0d6e66";
 
@@ -193,12 +206,14 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href="/pricing"
+                onClick={() => trackGAEvent.pricingClick({ source_location: "directory_hero" })}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
               >
                 <Sparkles className="w-4 h-4" /> Local Business Solutions
               </a>
               <a
                 href="/pricing"
+                onClick={() => trackGAEvent.pricingClick({ source_location: "directory_hero_promote" })}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition"
               >
                 <Megaphone className="w-4 h-4 text-[#5eead4]" /> Promote a Special
@@ -334,10 +349,10 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 Try another search, or help us grow the directory.
               </p>
               <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-                <a href="/claim-business" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
+                <a href="/claim-business" onClick={() => trackGAEvent.claimProfileClick({ source_location: "directory_empty_suggest" })} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
                   Suggest a business
                 </a>
-                <a href="/claim-business" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/50 transition">
+                <a href="/claim-business" onClick={() => trackGAEvent.claimProfileClick({ source_location: "directory_empty_login" })} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/50 transition">
                   Owner Login
                 </a>
               </div>
@@ -394,10 +409,10 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
               across the digital front door of the region.
             </p>
             <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a href="/pricing" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition">
+              <a href="/pricing" onClick={() => trackGAEvent.pricingClick({ source_location: "directory_claim_strip" })} className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition">
                 Local Business Solutions
               </a>
-              <a href="/pricing" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-[#5eead4]/40 transition">
+              <a href="/pricing" onClick={() => trackGAEvent.pricingClick({ source_location: "directory_claim_strip_featured" })} className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-[#5eead4]/40 transition">
                 Become a Featured Partner
               </a>
             </div>
@@ -547,7 +562,7 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
         {b.phone ? (
           <a
             href={`tel:${b.phone.replace(/[^\d+]/g, "")}`}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); fireBizAction("call", b, "directory_featured_tile"); }}
             className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/10 border border-[#5eead4]/25 text-[11px] text-[#5eead4] hover:bg-[#5eead4]/20 transition"
           >
             <Phone className="w-3 h-3" /> Call
@@ -560,7 +575,7 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             href={b.website}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); fireBizAction("website", b, "directory_featured_tile"); }}
             className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
           >
             <Globe className="w-3 h-3" /> Website
@@ -573,7 +588,7 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.address)}`}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); fireBizAction("directions", b, "directory_featured_tile"); }}
             className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
           >
             <Navigation className="w-3 h-3" /> Directions
@@ -774,8 +789,6 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
           </div>
         )}
 
-        <ContactPreview b={b} claimed={claimed} />
-
         {claimed ? (
           <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4]">
             View profile
@@ -788,7 +801,7 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             </span>
             <a
               href={`/claim-business?slug=${b.slug}${b.town ? `&town=${b.town}` : ""}`}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => { e.stopPropagation(); fireBizAction("claim", b, "directory_card"); }}
               className="shrink-0 inline-flex items-center justify-center px-3 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white/85 text-[11px] font-semibold tracking-[0.1em] uppercase hover:border-[#5eead4]/55 hover:text-[#5eead4] hover:bg-white/[0.08] transition"
               aria-label="Claim this profile"
             >
@@ -804,6 +817,7 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
 const ClaimCtaCard = () => (
   <a
     href="/pricing"
+    onClick={() => trackGAEvent.pricingClick({ source_location: "directory_inline_claim_card" })}
     className="group relative rounded-[22px] overflow-hidden p-7 flex flex-col justify-between border border-[#5eead4]/25 bg-gradient-to-br from-[#0d6e66]/15 via-[#1E2230] to-[#1E2230] hover:border-[#5eead4]/60 hover:shadow-[0_30px_70px_-20px_rgba(94,234,212,0.35)] transition-all duration-300 hover:-translate-y-1 min-h-[280px]"
   >
     <div
@@ -837,6 +851,7 @@ const ClaimCtaCard = () => (
 const PromoteCtaCard = () => (
   <a
     href="/pricing"
+    onClick={() => trackGAEvent.pricingClick({ source_location: "directory_inline_promote_card" })}
     className="group relative rounded-[22px] overflow-hidden p-7 flex flex-col justify-between border border-white/[0.08] bg-[#1E2230] hover:border-[#5eead4]/50 hover:shadow-[0_30px_70px_-20px_rgba(94,234,212,0.25)] transition-all duration-300 hover:-translate-y-1 min-h-[280px]"
   >
     <div className="relative">
@@ -1017,18 +1032,31 @@ export const BusinessDetailModal = ({
           <div className="flex flex-wrap gap-2">
             <BusinessActionHub biz={biz} claimed={claimed} />
             {biz.website && (
-              <a href={biz.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
+              <a
+                href={biz.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => fireBizAction("website", biz, "business_modal")}
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
+              >
                 <Globe className="w-4 h-4" /> Website
               </a>
             )}
             {dirHref && (
-              <a href={dirHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
+              <a
+                href={dirHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => fireBizAction("directions", biz, "business_modal")}
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition"
+              >
                 <Navigation className="w-4 h-4" /> Directions
               </a>
             )}
             {!claimed && (
               <a
                 href={`/claim-business?slug=${biz.slug}`}
+                onClick={() => fireBizAction("claim", biz, "business_modal")}
                 className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[#5eead4] text-sm font-semibold hover:bg-[#5eead4]/20 transition"
               >
                 <Sparkles className="w-4 h-4" /> Claim This Profile
@@ -1212,10 +1240,10 @@ export const BusinessDetailModal = ({
                 events, and specials. Free during the pilot — concierge onboarding included.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
-                <a href={`/claim-business?slug=${biz.slug}`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
+                <a href={`/claim-business?slug=${biz.slug}`} onClick={() => fireBizAction("claim", biz, "business_modal_claim_strip")} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
                   <Sparkles className="w-4 h-4" /> Claim This Profile
                 </a>
-                <a href={`/claim-business?slug=${biz.slug}&intent=login`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/40 transition">
+                <a href={`/claim-business?slug=${biz.slug}&intent=login`} onClick={() => fireBizAction("claim", biz, "business_modal_owner_login")} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/40 transition">
                   Owner Login
                 </a>
               </div>
@@ -1303,13 +1331,13 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
     ? "Book Now"
     : "Order / Book";
 
-  const rows: { href: string; icon: React.ReactNode; label: string; sub?: string; accent?: boolean }[] = [];
-  if (tel) rows.push({ href: tel, icon: <Phone className="w-4 h-4" />, label: "Call Business", sub: biz.phone });
-  if (sms) rows.push({ href: sms, icon: <MessageSquare className="w-4 h-4" />, label: "Text Message", sub: "Send a text" });
-  if (mail) rows.push({ href: mail, icon: <Mail className="w-4 h-4" />, label: "Email Direct", sub: biz.email });
-  if (biz.website) rows.push({ href: biz.website, icon: <Globe className="w-4 h-4" />, label: "Visit Website" });
-  if (order) rows.push({ href: order, icon: <CalendarPlus className="w-4 h-4" />, label: orderLabel });
-  if (dir) rows.push({ href: dir, icon: <Navigation className="w-4 h-4" />, label: "Get Directions", sub: biz.address });
+  const rows: { href: string; icon: React.ReactNode; label: string; sub?: string; accent?: boolean; action: BizActionType }[] = [];
+  if (tel) rows.push({ href: tel, icon: <Phone className="w-4 h-4" />, label: "Call Business", sub: biz.phone, action: "call" });
+  if (sms) rows.push({ href: sms, icon: <MessageSquare className="w-4 h-4" />, label: "Text Message", sub: "Send a text", action: "text" });
+  if (mail) rows.push({ href: mail, icon: <Mail className="w-4 h-4" />, label: "Email Direct", sub: biz.email, action: "email" });
+  if (biz.website) rows.push({ href: biz.website, icon: <Globe className="w-4 h-4" />, label: "Visit Website", action: "website" });
+  if (order) rows.push({ href: order, icon: <CalendarPlus className="w-4 h-4" />, label: orderLabel, action: "website" });
+  if (dir) rows.push({ href: dir, icon: <Navigation className="w-4 h-4" />, label: "Get Directions", sub: biz.address, action: "directions" });
   if (!claimed) {
     rows.push({
       href: `/claim-business?slug=${biz.slug}`,
@@ -1317,6 +1345,7 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
       label: "Owner: Request Profile Edits",
       sub: "Claim & customize this listing",
       accent: true,
+      action: "claim",
     });
   }
 
@@ -1324,6 +1353,7 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
     return (
       <a
         href={`/claim-business?slug=${biz.slug}`}
+        onClick={() => fireBizAction("claim", biz, "business_action_hub_empty")}
         className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
       >
         <Sparkles className="w-4 h-4" /> Claim This Profile
@@ -1337,6 +1367,7 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
       <PopoverTrigger asChild>
         <button
           type="button"
+          onClick={() => trackGAEvent.businessContactOpen(bizPayload(biz, "business_action_hub"))}
           className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
         >
           <Phone className="w-4 h-4" /> Contact
@@ -1359,6 +1390,7 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
                 href={r.href}
                 target={external ? "_blank" : undefined}
                 rel={external ? "noopener noreferrer" : undefined}
+                onClick={() => fireBizAction(r.action, biz, "business_action_hub")}
                 className="flex items-center gap-3 px-3 py-3 rounded-2xl hover:bg-white/[0.06] transition"
               >
                 <span className="w-9 h-9 rounded-full bg-[#5eead4]/15 text-[#5eead4] flex items-center justify-center shrink-0">

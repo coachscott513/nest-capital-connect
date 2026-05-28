@@ -561,34 +561,53 @@ const WeeklyFeed = ({
 
 export default WeeklyFeed;
 
-export const WeeklyNewsletterCTA = () => (
-  <section id="weekly-newsletter" className="py-24 md:py-32 px-6 md:px-10 bg-[#0e0f12]">
-    <div className="max-w-2xl mx-auto text-center">
-      <p className="eyebrow-apple text-[#5eead4] mb-4">Weekly Newsletter</p>
-      <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.02em] text-white leading-[1.08]">
-        Get the Capital District Weekly.
-      </h2>
-      <p className="mt-5 text-lg text-white/65 font-light">
-        Listings. Market shifts. Local updates. Delivered every Sunday.
-      </p>
-      <form
-        className="mt-10 flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <input
-          type="email"
-          required
-          placeholder="you@email.com"
-          className="flex-1 px-5 py-3.5 rounded-full bg-white/10 border border-white/15 text-white placeholder-white/40 text-sm focus:outline-none focus:border-[#5eead4] focus:bg-white/15 transition"
-        />
-        <button
-          type="submit"
-          className="lift-hover inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-full bg-white text-[#0e0f12] text-sm font-semibold hover:bg-white/95 transition"
+export const WeeklyNewsletterCTA = () => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const emailInput = form.elements.namedItem("email") as HTMLInputElement | null;
+    const email = emailInput?.value?.trim() ?? "";
+    if (!email || !email.includes("@")) return;
+    const emailDomain = email.split("@")[1] || undefined;
+    trackGAEvent.newsletterSignup({
+      source_location: "weekly_newsletter_cta",
+      // @ts-expect-error allow extra context
+      email_domain: emailDomain,
+      // @ts-expect-error allow extra context
+      page_path: typeof window !== "undefined" ? window.location.pathname : undefined,
+    });
+    form.reset();
+  };
+  return (
+    <section id="weekly-newsletter" className="py-24 md:py-32 px-6 md:px-10 bg-[#0e0f12]">
+      <div className="max-w-2xl mx-auto text-center">
+        <p className="eyebrow-apple text-[#5eead4] mb-4">Weekly Newsletter</p>
+        <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.02em] text-white leading-[1.08]">
+          Get the Capital District Weekly.
+        </h2>
+        <p className="mt-5 text-lg text-white/65 font-light">
+          Listings. Market shifts. Local updates. Delivered every Sunday.
+        </p>
+        <form
+          className="mt-10 flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+          onSubmit={onSubmit}
         >
-          Subscribe <ArrowRight className="w-4 h-4" />
-        </button>
-      </form>
-      <p className="mt-4 text-xs text-white/40">No spam. Unsubscribe anytime.</p>
-    </div>
-  </section>
-);
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="you@email.com"
+            className="flex-1 px-5 py-3.5 rounded-full bg-white/10 border border-white/15 text-white placeholder-white/40 text-sm focus:outline-none focus:border-[#5eead4] focus:bg-white/15 transition"
+          />
+          <button
+            type="submit"
+            className="lift-hover inline-flex items-center justify-center gap-1.5 px-6 py-3.5 rounded-full bg-white text-[#0e0f12] text-sm font-semibold hover:bg-white/95 transition"
+          >
+            Subscribe <ArrowRight className="w-4 h-4" />
+          </button>
+        </form>
+        <p className="mt-4 text-xs text-white/40">No spam. Unsubscribe anytime.</p>
+      </div>
+    </section>
+  );
+};
