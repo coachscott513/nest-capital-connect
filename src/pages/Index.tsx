@@ -76,8 +76,9 @@ function CinematicHero() {
             </h1>
 
             <p className="mt-6 md:mt-8 text-base md:text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
-              Homes, businesses, towns, services, restaurants, events, and local
-              insight across the Capital District.
+              The digital front door of the Capital District — search businesses,
+              homes, restaurants, services, events, towns, and local updates in
+              one place.
             </p>
 
             {/* THE OMNI-SEARCH — dominant product surface */}
@@ -494,9 +495,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#0B0F19]">
       <SEOHead
-        title="Capital District Nest | Capital District Real Estate Intelligence"
-        description="Explore homes, towns, and investment opportunities across New York's Capital District. Albany, Delmar, Saratoga, Troy, Schenectady — analyzed honestly."
-        keywords="Capital District real estate, Albany homes, Delmar homes, Saratoga real estate, Troy investment property"
+        title="Capital District Nest | Search Anything Local in the Capital District"
+        description="Capital District Nest is the digital front door of the Capital District. Search local businesses, homes, restaurants, services, events, towns, and community updates in one place."
+        keywords="Capital District, search anything local, local businesses Albany NY, Capital District restaurants, Capital District events, Capital District towns, Capital District homes, Saratoga, Troy NY, Schenectady"
         structuredData={localBusinessSchema}
       />
       <CleanHeader />
