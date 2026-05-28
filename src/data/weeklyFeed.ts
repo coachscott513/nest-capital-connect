@@ -25,7 +25,8 @@ export type WeeklyFeedType =
   | "dining"
   | "development"
   | "family"
-  | "networking";
+  | "networking"
+  | "news";
 
 export interface WeeklyFeedItem {
   title: string;
@@ -43,6 +44,13 @@ export interface WeeklyFeedItem {
   time?: string;
   image?: string;
   cta?: { label: string; href: string };
+  /** Verified news aggregation fields. */
+  source_name?: string;
+  original_url?: string;
+  published_at?: string;
+  summary?: string;
+  /** Optional override for the category badge label (e.g. "FOOD & DRINK // LOCAL NEWS"). */
+  categoryBadgeOverride?: string;
 }
 
 export const weeklyFeed: WeeklyFeedItem[] = [
