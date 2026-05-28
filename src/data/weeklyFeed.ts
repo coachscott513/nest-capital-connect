@@ -46,11 +46,19 @@ export interface WeeklyFeedItem {
   cta?: { label: string; href: string };
   /** Verified news aggregation fields. */
   source_name?: string;
+  source_logo_url?: string;
   original_url?: string;
+  external_article_url?: string;
   published_at?: string;
   summary?: string;
   /** Optional override for the category badge label (e.g. "FOOD & DRINK // LOCAL NEWS"). */
   categoryBadgeOverride?: string;
+  /** Video coverage — always embed the source's official player, never rehost. */
+  has_video?: boolean;
+  video_embed_url?: string;
+  video_provider?: string;
+  video_iframe_html?: string;
+  featured_video?: boolean;
 }
 
 export const weeklyFeed: WeeklyFeedItem[] = [
