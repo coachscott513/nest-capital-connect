@@ -113,36 +113,45 @@ export default function LocalMediaPulse() {
 
         {/* Source cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-14 md:mb-20">
-          {SOURCE_CARDS.map(({ label, description, Icon }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative rounded-2xl border border-[#2D3748] bg-white/[0.03] backdrop-blur-sm p-6 md:p-7 transition-all duration-300 hover:border-[#5eead4]/50 hover:bg-white/[0.05]"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-white/[0.04] text-[#5eead4] group-hover:border-[#5eead4]/40 transition-colors">
-                  <Icon className="w-4 h-4" />
+          {SOURCE_CARDS.map((card, i) => {
+            const { label, description, Icon, accent } = card;
+            return (
+              <motion.button
+                key={label}
+                type="button"
+                onClick={() => setSourceModal(card)}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.55, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative text-left rounded-2xl border border-[#2D3748] bg-white/[0.03] backdrop-blur-sm p-6 md:p-7 transition-all duration-300 hover:border-[#5eead4]/50 hover:bg-white/[0.05] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5eead4]/60"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-white/[0.04] group-hover:border-[#5eead4]/40 transition-colors"
+                    style={{ color: accent }}
+                  >
+                    <Icon className="w-4 h-4" />
+                  </span>
+                  <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/55 group-hover:text-[#5eead4] transition-colors">
+                    Source
+                  </span>
+                </div>
+                <h3 className="text-lg md:text-xl font-semibold text-white tracking-[0.04em] mb-2">
+                  {label}
+                </h3>
+                <p className="text-sm text-white/60 leading-relaxed mb-5">
+                  {description}
+                </p>
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.08em] uppercase text-[#5eead4]/90 group-hover:text-white transition-colors">
+                  View Coverage
+                  <span aria-hidden>→</span>
                 </span>
-                <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/55 group-hover:text-[#5eead4] transition-colors">
-                  Source
-                </span>
-              </div>
-              <h3 className="text-lg md:text-xl font-semibold text-white tracking-[-0.015em] mb-2">
-                {label}
-              </h3>
-              <p className="text-sm text-white/60 leading-relaxed mb-5">
-                {description}
-              </p>
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.08em] uppercase text-[#5eead4]/90 group-hover:text-white transition-colors">
-                View Coverage
-                <span aria-hidden>→</span>
-              </span>
-            </motion.div>
-          ))}
+              </motion.button>
+            );
+          })}
         </div>
+
 
         {/* Curated stories */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
