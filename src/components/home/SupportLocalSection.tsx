@@ -223,18 +223,41 @@ const SupportLocalSection = () => {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch">
-              {featured.map((b) => (
-                <PremiumFeaturedBusinessCard
-                  key={b.slug}
-                  business={b}
-                  onOpen={setOpenBiz}
-                />
-              ))}
-              {Array.from({ length: Math.max(0, 3 - featured.length) }).map((_, i) => (
-                <AvailableSpotlightCard key={`open-${i}`} />
-              ))}
-            </div>
+            <>
+              {/* Mobile: featured + at most 1 placement, then a single consolidated CTA */}
+              <div className="grid grid-cols-1 gap-6 items-stretch md:hidden">
+                {featured.map((b) => (
+                  <PremiumFeaturedBusinessCard
+                    key={b.slug}
+                    business={b}
+                    onOpen={setOpenBiz}
+                  />
+                ))}
+                {featured.length < 3 && <AvailableSpotlightCard />}
+                {featured.length < 2 && (
+                  <Link
+                    to="/pricing"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full border border-[#5eead4]/35 bg-white/[0.04] text-[#5eead4] text-sm font-semibold hover:bg-white/[0.08] transition"
+                  >
+                    View Featured Placement Options <ArrowRight className="w-4 h-4" />
+                  </Link>
+                )}
+              </div>
+
+              {/* Desktop / tablet: up to 3 placement cards as before */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch">
+                {featured.map((b) => (
+                  <PremiumFeaturedBusinessCard
+                    key={b.slug}
+                    business={b}
+                    onOpen={setOpenBiz}
+                  />
+                ))}
+                {Array.from({ length: Math.max(0, 3 - featured.length) }).map((_, i) => (
+                  <AvailableSpotlightCard key={`open-${i}`} />
+                ))}
+              </div>
+            </>
           )}
 
 
