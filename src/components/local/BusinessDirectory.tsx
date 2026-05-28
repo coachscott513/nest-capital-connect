@@ -483,17 +483,42 @@ const GhostPill = ({ icon, label }: { icon: React.ReactNode; label: string }) =>
   </span>
 );
 
-const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => (
+const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
+  const hasMedia = hasRealBusinessMedia(b);
+  return (
   <button
     onClick={onOpen}
     className="group relative text-left rounded-2xl overflow-hidden border border-white/10 bg-white/[0.04] hover:border-[#5eead4]/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_60px_-20px_rgba(94,234,212,0.25)]"
   >
     <div className="h-40 w-full overflow-hidden relative">
-      <div
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-110"
-        style={{ backgroundImage: `url(${resolveBusinessImage(b)})` }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />
+      {hasMedia && b.image ? (
+        <>
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-[700ms] group-hover:scale-110"
+            style={{ backgroundImage: `url(${b.image})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />
+        </>
+      ) : (
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.16) 0%, transparent 55%), linear-gradient(180deg, #10141F 0%, #0B0F19 100%)",
+          }}
+        >
+          <div className="h-full w-full flex items-end p-5">
+            <div>
+              <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
+                {b.category}
+              </p>
+              <p className="mt-1.5 text-xl font-semibold tracking-[-0.015em] text-white leading-tight">
+                {b.name}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
       <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/15 backdrop-blur text-[#5eead4] text-[10px] font-semibold uppercase tracking-wider border border-[#5eead4]/30">
         <Sparkles className="w-3 h-3" /> Featured
       </span>
