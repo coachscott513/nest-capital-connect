@@ -39,12 +39,16 @@ export const useAnalytics = () => {
     }
   };
 
+  // Predefined tracking functions for common conversions
+  const trackLeadFormSubmission = (formType: string, location?: string) => {
+    trackKeyEvent('generate_lead', {
       event_category: 'Lead Generation',
       event_label: formType,
       location: location,
       value: 100, // Estimated lead value
     });
   };
+
 
   const trackPhoneClick = (source: string) => {
     trackKeyEvent('phone_call_intent', {
