@@ -3,6 +3,20 @@ import { X, ExternalLink, PlayCircle, Newspaper } from "lucide-react";
 import { type WeeklyFeedItem } from "@/data/weeklyFeed";
 import LocalVideoModal, { isTrustedEmbedUrl } from "@/components/LocalVideoModal";
 import { useMediaStories } from "@/hooks/useMediaStories";
+import { trackGAEvent } from "@/components/GARouteTracker";
+
+const providerFromUrl = (url?: string | null) => {
+  if (!url) return undefined;
+  try {
+    const h = new URL(url).hostname.toLowerCase();
+    if (h.includes("youtube")) return "youtube";
+    if (h.includes("vimeo")) return "vimeo";
+    return h;
+  } catch {
+    return undefined;
+  }
+};
+
 
 interface Props {
   open: boolean;
