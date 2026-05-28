@@ -49,6 +49,17 @@ import {
   type TierFilter,
 } from "@/hooks/usePaginatedBusinesses";
 import { hasRealBusinessMedia } from "@/lib/businessImages";
+import { trackGAEvent } from "@/components/GARouteTracker";
+
+const bizPayload = (b: Business, source: string) => ({
+  business_id: (b as any).id,
+  business_slug: b.slug,
+  business_name: b.name,
+  category: b.category,
+  town: b.townLabel || b.town,
+  tier: b.featured ? "featured" : (b.claimed || b.verified) ? "claimed" : "standard",
+  source_location: source,
+});
 
 const TEAL = "#5eead4";
 const TEAL_DEEP = "#0d6e66";
