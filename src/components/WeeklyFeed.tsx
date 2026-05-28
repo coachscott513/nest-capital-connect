@@ -354,9 +354,17 @@ const WeeklyFeed = ({
                     </span>
                   )}
                 </div>
-                {featured.original_url ? (
+                {hasPlayableVideo(featured) ? (
+                  <button
+                    type="button"
+                    onClick={() => setActiveVideo(featured)}
+                    className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#5eead4]/50 bg-[#0d6e66]/15 px-4 py-2 text-sm font-semibold text-[#5eead4] hover:bg-[#0d6e66]/30 hover:text-white transition"
+                  >
+                    <PlayCircle className="w-4 h-4" /> Watch Coverage
+                  </button>
+                ) : featured.original_url ? (
                   <a
-                    href={featured.original_url}
+                    href={featured.external_article_url ?? featured.original_url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#2D3748] bg-[#0B0F19] px-4 py-2 text-sm font-semibold text-[#5eead4] hover:border-[#5eead4]/60 hover:text-white transition"
