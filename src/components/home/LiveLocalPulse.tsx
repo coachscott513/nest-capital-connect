@@ -186,7 +186,7 @@ export default function LiveLocalPulse() {
           <div
             className="flex flex-nowrap items-center whitespace-nowrap"
             style={{
-              animation: "pulseDrift 90s linear infinite",
+              animation: "pulseDrift 240s linear infinite",
               animationPlayState: paused ? "paused" : "running",
               width: "max-content",
             }}
