@@ -449,17 +449,29 @@ const WeeklyFeed = ({
             >
               {filtered.map((item, i) => {
                 const Icon = ICONS[item.type];
+                const playable = hasPlayableVideo(item);
                 const isNews = !!item.original_url;
-                const Wrapper: any = isNews ? "a" : "article";
-                const wrapperProps = isNews
-                  ? { href: item.original_url, target: "_blank", rel: "noopener noreferrer" }
+                const Wrapper: any = playable ? "button" : isNews ? "a" : "article";
+                const wrapperProps = playable
+                  ? { type: "button", onClick: () => setActiveVideo(item) }
+                  : isNews
+                  ? {
+                      href: item.external_article_url ?? item.original_url,
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                    }
                   : {};
                 return (
                   <Wrapper
                     key={i}
                     {...wrapperProps}
-                    className="card-lift group relative block bg-[#1E2230] border border-[#2D3748] rounded-2xl p-5 transition-all hover:border-[#0d6e66]/50 hover:bg-[#222637]"
+                    className="card-lift group relative block text-left w-full bg-[#1E2230] border border-[#2D3748] rounded-2xl p-5 transition-all hover:border-[#0d6e66]/50 hover:bg-[#222637]"
                   >
+                    {playable && (
+                      <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-black/70 border border-[#5eead4]/40 px-2 py-0.5 text-[9px] uppercase tracking-[0.16em] font-semibold text-[#5eead4]">
+                        <PlayCircle className="w-3 h-3" /> Video
+                      </span>
+                    )}
                     <div className="flex items-center gap-2 mb-3 flex-wrap">
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0d6e66]/15 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] font-semibold text-[#5eead4]">
                         <Icon className="w-3 h-3" strokeWidth={2} />
@@ -497,9 +509,17 @@ const WeeklyFeed = ({
                         </span>
                       )}
                     </div>
-                    {isNews && (
+                    {(playable || isNews) && (
                       <span className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#5eead4] group-hover:text-white transition">
-                        Read Full Coverage <ExternalLink className="w-3 h-3" />
+                        {playable ? (
+                          <>
+                            <PlayCircle className="w-3.5 h-3.5" /> Watch Coverage
+                          </>
+                        ) : (
+                          <>
+                            Read Full Coverage <ExternalLink className="w-3 h-3" />
+                          </>
+                        )}
                       </span>
                     )}
                   </Wrapper>
