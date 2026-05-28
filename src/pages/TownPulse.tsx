@@ -393,7 +393,9 @@ const TownPulse = () => {
             title={`What's on offer in ${townName}.`}
             sub="Active deals from local businesses — updated regularly."
           />
-          {specials.length === 0 ? (
+          {loading ? (
+            <LoadingIndexBlock />
+          ) : specials.length === 0 ? (
             <EmptyState
               title={`No featured specials are live in ${townName} yet.`}
               sub="Own a local business? Claim your free profile to post specials."
@@ -473,7 +475,9 @@ const TownPulse = () => {
             title={`Happening in ${townName}.`}
             sub="The next 7 days, hand-curated from local hosts and businesses."
           />
-          {events.length === 0 ? (
+          {loading ? (
+            <LoadingIndexBlock />
+          ) : events.length === 0 ? (
             <EmptyState
               title="No upcoming events are listed yet."
               sub="Local businesses can claim their free profile to submit events."
@@ -553,7 +557,9 @@ const TownPulse = () => {
             title={`Premium partners in ${townName}.`}
             sub="Curated Featured Merchants investing in their local presence."
           />
-          {featuredPartners.length === 0 ? (
+          {loading ? (
+            <LoadingIndexBlock />
+          ) : featuredPartners.length === 0 ? (
             <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-10 md:p-14 text-center">
               <p className="text-[10px] font-semibold tracking-[0.24em] uppercase mb-3" style={{ color: TEAL_LIGHT }}>
                 Available Spotlight Placements
