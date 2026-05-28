@@ -27,6 +27,7 @@ export default function MediaSourceModal({
   accentColor = "#5eead4",
 }: Props) {
   const [video, setVideo] = useState<WeeklyFeedItem | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -34,6 +35,9 @@ export default function MediaSourceModal({
     document.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    requestAnimationFrame(() => {
+      if (scrollRef.current) scrollRef.current.scrollTop = 0;
+    });
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
