@@ -36,7 +36,7 @@ const HERO_SPOTLIGHTS: HeroSpotlight[] = [
     website: "https://theperfectblendcafe.com",
     image_url:
       "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=1400&q=80",
-    slug: "the-perfect-blend-cafe",
+    slug: "perfect-blend-cafe-bakery-delmar",
   },
   {
     name: "McCarroll's The Village Butcher",
@@ -47,7 +47,7 @@ const HERO_SPOTLIGHTS: HeroSpotlight[] = [
     website: "https://mccarrollsbutcher.com",
     image_url:
       "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1400&q=80",
-    slug: "mccarrolls-the-village-butcher",
+    slug: "mccarrolls-village-butcher-delmar",
     ctaIntent: "connect",
   },
   {
