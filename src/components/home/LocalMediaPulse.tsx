@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { PlayCircle, ExternalLink, Newspaper, Radio, Tv } from "lucide-react";
 import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
 import LocalVideoModal, { isTrustedEmbedUrl } from "@/components/LocalVideoModal";
+import MediaSourceModal from "@/components/MediaSourceModal";
 
 /**
  * LOCAL MEDIA PULSE — Capital District Nest
@@ -10,37 +11,63 @@ import LocalVideoModal, { isTrustedEmbedUrl } from "@/components/LocalVideoModal
  * links back to the source. Never rehosts video.
  *
  * Editorial rule: only stories that help someone understand what's happening
- * locally — openings, development, events, community. No crime/politics/tragedy.
+ * locally — openings, development, events, community, sports, real estate.
+ * No crime / tragedy / political controversy / weather filler.
  */
 
-const SOURCE_CARDS = [
+interface SourceCard {
+  label: string;
+  shortName: string;
+  sourceName: string; // must match weeklyFeed.source_name
+  description: string;
+  drawerDescription: string;
+  accent: string;
+  Icon: typeof Tv;
+}
+
+const SOURCE_CARDS: SourceCard[] = [
   {
-    label: "News10 / ABC",
+    label: "NEWS10 / ABC",
+    shortName: "News10",
+    sourceName: "News10 WTEN",
     description:
       "Business openings, community stories, restaurants, events, and regional updates.",
+    drawerDescription:
+      "Curated business, food, development, and community stories from News10 WTEN.",
+    accent: "#5eead4",
     Icon: Tv,
   },
   {
     label: "WNYT / NBC",
+    shortName: "WNYT",
+    sourceName: "WNYT NewsChannel 13",
     description:
-      "Capital Region coverage, development, events, and local community reporting.",
+      "Capital Region coverage, development, local sports, and community reporting.",
+    drawerDescription:
+      "Development, sports, and community coverage curated from WNYT NewsChannel 13.",
+    accent: "#5eead4",
     Icon: Radio,
   },
   {
-    label: "Spectrum News",
+    label: "SPECTRUM NEWS",
+    shortName: "Spectrum",
+    sourceName: "Spectrum News",
     description:
-      "Regional video coverage, interviews, local issues, and neighborhood updates.",
+      "Regional video coverage, interviews, real estate, events, and neighborhood updates.",
+    drawerDescription:
+      "Real estate, events, and neighborhood stories curated from Spectrum News.",
+    accent: "#5eead4",
     Icon: Newspaper,
   },
 ];
 
 function isMediaItem(item: WeeklyFeedItem): boolean {
   if (!item.source_name) return false;
-  // Only include items that have a real outbound source link
   const url = item.external_article_url || item.original_url;
-  if (!url) return false;
+  if (!url && !item.video_embed_url) return false;
   return true;
 }
+
 
 export default function LocalMediaPulse() {
   const [modal, setModal] = useState<WeeklyFeedItem | null>(null);
