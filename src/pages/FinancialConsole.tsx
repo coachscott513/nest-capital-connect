@@ -425,7 +425,7 @@ const FinancialConsole = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">
-        <Header />
+        <CleanHeader />
 
         {/* HERO */}
         <section className="px-[5%] pt-16 pb-12 md:pt-24 md:pb-20 border-b border-border/60">
