@@ -204,7 +204,7 @@ export default function DiscoveryConsole() {
           </h2>
           <p className="mt-3 text-sm md:text-base text-white/65 max-w-2xl mx-auto font-light">
             The digital front door of the Capital District — businesses, towns, events,
-            services, and community discovery in one premium search panel.
+            services, and community discovery in one searchable local platform.
           </p>
         </motion.div>
 
@@ -294,7 +294,7 @@ export default function DiscoveryConsole() {
           </div>
 
           <div className="flex items-center justify-between px-6 md:px-7 py-3.5 border-t border-white/[0.06] bg-white/[0.02] text-[11.5px] text-white/45">
-            <span>Premium local search across the Capital District</span>
+            <span>One searchable local platform · Capital District</span>
             <Link
               to="/local"
               className="text-[#5eead4] hover:text-white transition"

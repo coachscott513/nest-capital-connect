@@ -142,14 +142,14 @@ const AvailableCard = () => (
         <Sparkles className="w-3 h-3" /> Available
       </span>
       <h3 className="mt-4 text-[18px] font-semibold tracking-[-0.015em] text-white leading-tight">
-        Featured spotlight open.
+        Featured placement available.
       </h3>
       <p className="mt-2 text-[12.5px] text-white/60 font-light leading-relaxed">
-        Reserve one of the first hero positions in our Capital District pilot.
+        Become one of the first businesses featured on Capital District Nest during our local pilot.
       </p>
     </div>
     <span className="mt-4 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-[#5eead4]">
-      Request placement <ArrowRight className="w-3.5 h-3.5" />
+      Request Placement <ArrowRight className="w-3.5 h-3.5" />
     </span>
   </Link>
 );

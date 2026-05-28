@@ -190,7 +190,7 @@ function HomeSearchPreview() {
     "w-full bg-transparent text-[15px] text-white placeholder:text-white/45 focus:outline-none appearance-none cursor-pointer";
 
   return (
-    <section className="bg-[#0B0F19] py-24 md:py-32 px-6 md:px-10">
+    <section className="bg-[#0B0F19] py-16 md:py-32 px-6 md:px-10">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10 md:mb-12 max-w-2xl mx-auto">
           <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-4 text-[#5eead4]">
@@ -518,7 +518,7 @@ const Index = () => {
 
       {/* 3 — TOWNS · Browse Local Search Indexes */}
       <section className="bg-[#0B0F19] w-full border-t border-[#2D3748]">
-        <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-[72px] md:py-[140px]">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-14 md:py-[140px]">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -586,7 +586,7 @@ const Index = () => {
               "radial-gradient(60% 80% at 20% 30%, rgba(13,110,102,0.35), transparent 60%), radial-gradient(50% 70% at 80% 70%, rgba(94,234,212,0.12), transparent 60%)",
           }}
         />
-        <div className="relative max-w-5xl mx-auto px-6 md:px-10 py-20 md:py-28 text-center">
+        <div className="relative max-w-5xl mx-auto px-6 md:px-10 py-14 md:py-28 text-center">
           <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-6">
             For Local Business Owners
           </p>
