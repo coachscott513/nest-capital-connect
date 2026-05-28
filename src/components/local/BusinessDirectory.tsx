@@ -48,7 +48,7 @@ import {
   useFeaturedBusinesses,
   type TierFilter,
 } from "@/hooks/usePaginatedBusinesses";
-import { resolveBusinessImage, hasRealBusinessMedia } from "@/lib/businessImages";
+import { hasRealBusinessMedia } from "@/lib/businessImages";
 
 const TEAL = "#5eead4";
 const TEAL_DEEP = "#0d6e66";
