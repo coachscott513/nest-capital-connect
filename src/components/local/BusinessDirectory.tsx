@@ -90,21 +90,14 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [hasPhone, setHasPhone] = useState(false);
   const [openBiz, setOpenBiz] = useState<Business | null>(null);
 
-  const { rows: dbBusinesses, loading } = useDbBusinesses();
+  // Debounce the typed search so we don't hit the DB on every keystroke.
+  const [debouncedQ, setDebouncedQ] = useState(q);
+  useEffect(() => {
+    const id = window.setTimeout(() => setDebouncedQ(q), 300);
+    return () => window.clearTimeout(id);
+  }, [q]);
 
-  // /local uses the live imported directory table as the source of truth.
-  const ALL = useMemo<Business[]>(() => {
-    const seen = new Set<string>();
-    const out: Business[] = [];
-    for (const b of dbBusinesses) {
-      const key = b.slug;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      out.push(b);
-    }
-    return out;
-  }, [dbBusinesses]);
-
+  // Sync URL params (instant — based on the typed value, not the debounced one).
   useEffect(() => {
     const next = new URLSearchParams();
     if (q.trim()) next.set("search", q.trim());
@@ -113,82 +106,27 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     setSearchParams(next, { replace: true });
   }, [q, town, category, townSlug, setSearchParams]);
 
-  const results = useMemo(() => {
-    const needleRaw = normalizeText(q);
-    // Tokenize: "delmar restaurants" -> ["delmar", "restaurants"]
-    const tokens = needleRaw.split(/\s+/).filter(Boolean);
-    // Expand each token via the official category alias map so "lender" hits
-    // Banking and Finance, "restaurant" hits Restaurant, etc.
-    const expandedPerToken = tokens.map((t) => {
-      if (GENERIC_TOKENS.has(t)) return ["*"];
-      return expandSearchTerm(t);
+  // Paginated, server-filtered data layer.
+  const effectiveTown = townSlug || town || undefined;
+  const { rows: results, loading, loadingMore, hasMore, loadMore, total } =
+    usePaginatedBusinesses({
+      townSlug: effectiveTown,
+      search: debouncedQ.trim() || undefined,
+      category: category || undefined,
+      tier,
+      hasPhone,
+      hasWebsite,
+      pageSize: 24,
     });
 
-    // Extract town/county phrases so they filter geographically instead of by name.
-    const townFromQuery = [...TOWN_LIST, ...COUNTY_LIST]
-      .sort((a, b) => b.name.length - a.name.length)
-      .find((place) => {
-        const placeName = normalizeText(place.name);
-        const placeSlug = place.slug.replace(/-/g, " ");
-        return needleRaw.includes(placeName) || needleRaw.includes(placeSlug);
-      })?.slug;
-    const effectiveTown = town || townFromQuery || "";
-
-    // Tokens still used for keyword matching (drop the town token).
-    const townWords = new Set(effectiveTown ? effectiveTown.replace(/-/g, " ").split(/\s+/) : []);
-    const keywordTokens = expandedPerToken.filter(
-      (_aliases, i) => !townWords.has(slugText(tokens[i])) && tokens[i] !== "county" && tokens[i] !== "ny",
-    );
-
-    const matches = (ignoreTown = false) => ALL.filter((b) => {
-      if (townSlug && !townMatches(b, townSlug) && b.town !== "capital-district")
-        return false;
-      if (!ignoreTown && effectiveTown && !townMatches(b, effectiveTown)) return false;
-      // Category dropdown filter — alias-aware substring match against
-      // category / subcategory / tags / name so "Real Estate" picks up
-      // "Real estate agent" rows from the imported directory.
-      if (category && isOfficialCategory(category)) {
-        if (!matchesOfficialCategory({
-          category: b.category, subcategory: b.subcategory,
-          tags: b.tags, name: b.name, description: b.about,
-        } as never, category as OfficialCategory)) return false;
-      }
-      if (tier === "featured" && !b.featured) return false;
-      if (tier === "claimed" && !isMember(b)) return false;
-      if (tier === "standard" && isMember(b)) return false;
-      if (hasWebsite && !b.website) return false;
-      if (hasPhone && !b.phone) return false;
-
-      if (keywordTokens.length === 0) return true;
-      const hay = [
-        b.name, b.category, b.subcategory, b.tagline, b.about, b.townLabel,
-        b.town, b.city, b.county, b.address,
-        ...(b.tags ?? []),
-        ...(b.services ?? []), ...(b.knownFor ?? []),
-      ].filter(Boolean).join(" ").toLowerCase().replace(/[,&]+/g, " ");
-      // Every keyword token must match at least one of its aliases.
-      // "*" sentinel means "generic — match anything" (used by tokens like "businesses").
-      return keywordTokens.every((aliases) =>
-        aliases.some((a) => a === "*" || hay.includes(a)),
-      );
-    });
-
-    const exactMatches = matches(false);
-    const pool = exactMatches.length > 0 || !effectiveTown ? exactMatches : matches(true).slice(0, 100);
-    // Prioritize Model Profiles at the top of every results grid:
-    // featured first, then claimed/verified, then everything else.
-    // Stable sort preserves original alphabetical-ish order within each tier.
-    return [...pool].sort((a, b) => {
-      const rank = (x: Business) => (x.featured ? 0 : isMember(x) ? 1 : 2);
-      return rank(a) - rank(b);
-    });
-  }, [q, town, category, tier, hasWebsite, hasPhone, townSlug, ALL]);
-
+  // Featured strip is its own tiny fetch (max 6 rows) — independent of pagination.
+  const featuredAll = useFeaturedBusinesses(6);
   const featured = useMemo(
-    () => ALL.filter((b) => b.featured && (!townSlug || b.town === "capital-district")),
-    [townSlug, ALL],
+    () => featuredAll.filter((b) => !townSlug || b.town === townSlug || b.town === "capital-district"),
+    [featuredAll, townSlug],
   );
 
+  // Optional client-side grouping for visual sectioning on the loaded page.
   const grouped = useMemo(() => {
     const map = new Map<CategoryGroup, Business[]>();
     for (const b of results) {
@@ -201,6 +139,22 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     }
     return map;
   }, [results]);
+
+  // Infinite-scroll sentinel: load more when the bottom marker enters view.
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el || !hasMore || loading) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) loadMore();
+      },
+      { rootMargin: "400px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hasMore, loading, loadMore, results.length]);
+
 
   return (
     <div className="bg-[#0B0F19] text-white">
