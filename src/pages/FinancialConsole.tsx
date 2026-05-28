@@ -35,16 +35,25 @@ type Product = {
 };
 
 const products: Product[] = [
-  { icon: Banknote, title: "Mortgage Pre-Approval", blurb: "Compare payments, down-payment paths, and approval timelines with a local lender.", cta: "Get pre-approved", leadType: "mortgage" },
-  { icon: Landmark, title: "Banks & Credit Unions", blurb: "Local banking, lending, deposits, and business-account relationships.", cta: "Meet a banker", leadType: "banking" },
-  { icon: TrendingUp, title: "Financial Advisors", blurb: "Wealth planning, investment strategy, retirement design, and insurance planning.", cta: "Meet an advisor", leadType: "financial_advisor" },
-  { icon: Receipt, title: "Accountants & CPAs", blurb: "Tax strategy, entity structuring, and investor accounting that scales with your portfolio.", cta: "Talk to a CPA", leadType: "accounting" },
-  { icon: Building2, title: "Investment Property Loans", blurb: "Underwrite rental income, debt service, cap rate, and cash flow before you offer.", cta: "Analyze a rental", leadType: "investment_property" },
-  { icon: LineChart, title: "DSCR / Rental Financing", blurb: "Qualify on the property's income — no W-2s. Built for investors scaling a portfolio.", cta: "Explore DSCR", leadType: "dscr" },
-  { icon: Briefcase, title: "Commercial Lending", blurb: "Multifamily, mixed-use, small commercial, and owner-occupied business property financing.", cta: "Talk commercial", leadType: "commercial_lending" },
-  { icon: ShieldCheck, title: "Insurance & Risk Planning", blurb: "Life, business, property, landlord, and umbrella coverage from local pros.", cta: "Plan coverage", leadType: "insurance" },
-  { icon: PiggyBank, title: "Business Owner Capital", blurb: "Expansion, acquisition, equipment financing, and working capital for operators.", cta: "Explore capital", leadType: "business_capital" },
-  { icon: RefreshCw, title: "Refinance Strategy", blurb: "Rate-and-term, cash-out, and portfolio refi modeling for owners and investors.", cta: "Run refi numbers", leadType: "refinance" },
+  { icon: Banknote, title: "Mortgage Pre-Approval", blurb: "Compare payments, down-payment paths, and approval timelines with a local lender.", cta: "Request Introduction", leadType: "mortgage" },
+  { icon: Landmark, title: "Banks & Credit Unions", blurb: "Local banking, lending, deposits, and business-account relationships.", cta: "Request Introduction", leadType: "banking" },
+  { icon: TrendingUp, title: "Financial Advisors", blurb: "Wealth planning, investment strategy, retirement design, and insurance planning.", cta: "Request Introduction", leadType: "financial_advisor" },
+  { icon: Receipt, title: "Accountants & CPAs", blurb: "Tax strategy, entity structuring, and accounting that scales with your goals.", cta: "Request Introduction", leadType: "accounting" },
+  { icon: ShieldCheck, title: "Insurance & Risk Planning", blurb: "Life, business, property, landlord, and umbrella coverage from local pros.", cta: "Request Introduction", leadType: "insurance" },
+  { icon: Building2, title: "Investment Property Analysis", blurb: "Underwrite rental income, debt service, cap rate, and cash flow before you offer.", cta: "Request Introduction", leadType: "investment_property" },
+  { icon: LineChart, title: "DSCR / Rental Financing", blurb: "Qualify on the property's income — no W-2s. Built for investors scaling a portfolio.", cta: "Request Introduction", leadType: "dscr" },
+  { icon: Briefcase, title: "Commercial Lending", blurb: "Multifamily, mixed-use, small commercial, and owner-occupied business property financing.", cta: "Request Introduction", leadType: "commercial_lending" },
+  { icon: PiggyBank, title: "Business Owner Capital", blurb: "Expansion, acquisition, equipment financing, and working capital for operators.", cta: "Request Introduction", leadType: "business_capital" },
+  { icon: RefreshCw, title: "Refinance Strategy", blurb: "Rate-and-term, cash-out, and portfolio refi modeling for owners and investors.", cta: "Request Introduction", leadType: "refinance" },
+  { icon: Calculator, title: "Tax Strategy", blurb: "Proactive tax planning for W-2 earners, investors, and small business owners.", cta: "Request Introduction", leadType: "tax_strategy" },
+  { icon: Sparkles, title: "Wealth & Retirement Planning", blurb: "Long-horizon planning for retirement, education, and generational wealth.", cta: "Request Introduction", leadType: "wealth_planning" },
+];
+
+const pulseCards = [
+  { icon: Banknote, title: "Mortgage & lending activity", blurb: "Local buyers, investors, and business owners comparing financing options." },
+  { icon: Landmark, title: "Business banking & capital", blurb: "Banks, credit unions, and commercial lenders supporting local growth." },
+  { icon: TrendingUp, title: "Financial planning & tax strategy", blurb: "Advisors, accountants, and insurance professionals helping residents and business owners plan ahead." },
+  { icon: Building2, title: "Investment property analysis", blurb: "Cash flow, DSCR, cap rate, and financing review for local property opportunities." },
 ];
 
 const partners = [
@@ -58,16 +67,18 @@ const partners = [
 ];
 
 const objectiveOptions: { value: string; label: string }[] = [
-  { value: "mortgage", label: "Get mortgage pre-approved" },
+  { value: "mortgage", label: "Mortgage pre-approval" },
   { value: "banking", label: "Connect with a bank or credit union" },
   { value: "financial_advisor", label: "Connect with a financial advisor" },
   { value: "accounting", label: "Connect with an accountant / CPA" },
-  { value: "dscr", label: "Explore DSCR financing" },
+  { value: "insurance", label: "Insurance or risk planning" },
   { value: "investment_property", label: "Analyze an investment property" },
-  { value: "commercial_lending", label: "Review a commercial property" },
-  { value: "refinance", label: "Refinance strategy" },
-  { value: "insurance", label: "Insurance / risk planning" },
+  { value: "dscr", label: "DSCR / rental property financing" },
+  { value: "commercial_lending", label: "Commercial lending" },
   { value: "business_capital", label: "Business-owner capital" },
+  { value: "refinance", label: "Refinance strategy" },
+  { value: "tax_strategy", label: "Tax strategy" },
+  { value: "wealth_planning", label: "Wealth / retirement planning" },
 ];
 
 const money = (n: number) =>
