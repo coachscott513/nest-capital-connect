@@ -44,6 +44,7 @@ const ICONS: Record<WeeklyFeedType, LucideIcon> = {
   development: Building2,
   family: Users,
   networking: Briefcase,
+  news: Newspaper,
 };
 
 const LABELS: Record<WeeklyFeedType, string> = {
