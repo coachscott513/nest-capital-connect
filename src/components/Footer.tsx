@@ -160,7 +160,7 @@ const Footer = () => {
             {Object.entries(townDirectory).map(([county, towns]) => (
               <div key={county}>
                 <h4 className="text-[10px] font-semibold text-white/55 mb-3 uppercase tracking-[0.16em]">{county}</h4>
-                <ul className="space-y-1.5">
+                <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5 md:block md:space-y-1.5">
                   {towns.map((town) => (
                     <li key={town.slug}>
                       <Link to={`/living-in/${town.slug}`} className="text-[12px] text-white/60 hover:text-[#5eead4] transition-colors">

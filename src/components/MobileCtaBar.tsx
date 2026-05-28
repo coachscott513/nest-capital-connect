@@ -102,7 +102,7 @@ const MobileCtaBar = () => {
               </button>
             </div>
 
-            <ul className="space-y-2">
+            <ul className="space-y-4">
               {items.map((it) => {
                 const Icon = it.icon;
                 const inner = (
