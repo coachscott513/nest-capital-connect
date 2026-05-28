@@ -895,21 +895,21 @@ const BizPage = () => {
       <CleanHeader />
 
       {isPremium ? (
-        <PremiumMicrosite biz={biz} specials={specials} />
+        <PremiumMicrosite biz={activeBiz} specials={specials} />
       ) : isFeatured ? (
-        <FeaturedProfile biz={biz} />
+        <FeaturedProfile biz={activeBiz} />
       ) : (
-        <FreeProfile biz={biz} />
+        <FreeProfile biz={activeBiz} />
       )}
 
       <section className="border-t border-white/[0.06] px-6 md:px-10 py-16 text-center">
         <p className="text-xs text-white/45">
           Own this business?{" "}
-          <Link to={`/claim-business?slug=${biz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
+          <Link to={`/claim-business?slug=${activeBiz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
             Claim this profile
           </Link>
           {" · "}
-          <Link to={`/partner-auth?slug=${biz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
+          <Link to={`/partner-auth?slug=${activeBiz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
             Owner login
           </Link>
           {" · "}
@@ -918,6 +918,7 @@ const BizPage = () => {
           </Link>
         </p>
       </section>
+
 
       <Footer />
     </div>
