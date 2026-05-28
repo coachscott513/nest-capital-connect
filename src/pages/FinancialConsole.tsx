@@ -439,8 +439,8 @@ const FinancialConsole = () => {
               <span className="text-primary"> Capital District Nest.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-white/70 text-lg md:text-xl">
-              Mortgages, banking, financial advisors, accountants, insurance, investment property
-              analysis, commercial lending, and DealDesk support in one local financial hub.
+              Mortgages, banking, advisors, accountants, insurance, investment property analysis,
+              commercial lending, and business capital — all connected through one local financial network.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -448,14 +448,14 @@ const FinancialConsole = () => {
                 onClick={scrollTo("calculator")}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
               >
-                Analyze a Deal <ArrowRight className="w-4 h-4" />
+                Analyze a Scenario <ArrowRight className="w-4 h-4" />
               </a>
               <a
-                href="#dealdesk"
-                onClick={scrollTo("dealdesk")}
+                href="#financial-intro"
+                onClick={scrollTo("financial-intro")}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white hover:border-primary hover:text-primary transition"
               >
-                Request Financial Intro
+                Request Financial Introduction
               </a>
             </div>
           </div>
