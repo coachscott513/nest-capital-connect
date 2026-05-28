@@ -99,9 +99,9 @@ export default function LiveLocalPulse() {
           .limit(8),
         supabase
           .from("businesses")
-          .select("name,town_slug,town_name,slug,created_at,is_featured")
+          .select("name,town_slug,town_name,slug,created_at,is_featured,plan_tier")
           .eq("is_active", true)
-          .or(`is_featured.eq.true,created_at.gte.${last30dIso}`)
+          .in("plan_tier", ["featured", "spotlight", "premium_partner"])
           .order("created_at", { ascending: false })
           .limit(8),
         supabase
@@ -112,12 +112,12 @@ export default function LiveLocalPulse() {
           .limit(5),
         supabase
           .from("business_specials")
-          .select("headline,town_slug,town_name,cta_url,start_date,end_date")
+          .select("headline,business_name,town_slug,town_name,cta_url,start_date,end_date")
           .eq("is_active", true)
           .lte("start_date", new Date(now).toISOString().slice(0, 10))
           .or(`end_date.is.null,end_date.gte.${new Date(now).toISOString().slice(0, 10)}`)
-          .order("start_date", { ascending: false })
-          .limit(6),
+          .order("display_order", { ascending: true })
+          .limit(8),
         supabase
           .from("town_ledger")
           .select("title,town_slug,category,source_url,published_at")
@@ -125,6 +125,7 @@ export default function LiveLocalPulse() {
           .order("published_at", { ascending: false })
           .limit(6),
       ]);
+
 
       if (cancelled) return;
 
