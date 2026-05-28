@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
@@ -11,168 +12,416 @@ import {
   ShieldCheck,
   Banknote,
   LineChart,
+  RefreshCw,
   ArrowRight,
   Sparkles,
+  CheckCircle2,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
-type Hub = {
+type Product = {
   icon: typeof Calculator;
   title: string;
   blurb: string;
   cta: string;
-  to: string;
-  leadType?: string;
+  leadType: string;
 };
 
-const hubs: Hub[] = [
-  {
-    icon: Banknote,
-    title: "Mortgage Pre-Approval",
-    blurb:
-      "Compare payments, down-payment paths, and approval timelines with a local lender who actually answers the phone.",
-    cta: "Get pre-approved",
-    to: "/dealdesk?intent=mortgage",
-    leadType: "mortgage",
-  },
-  {
-    icon: Building2,
-    title: "Investment Property Loans",
-    blurb:
-      "Underwrite rental income, debt service, cap rate, and cash flow before you write the offer.",
-    cta: "Analyze a rental",
-    to: "/dealdesk?intent=investment_property",
-    leadType: "investment_property",
-  },
-  {
-    icon: LineChart,
-    title: "DSCR / Rental Financing",
-    blurb:
-      "Qualify on the property's income — no W-2s required. Built for investors scaling a portfolio.",
-    cta: "Explore DSCR",
-    to: "/dealdesk?intent=dscr",
-    leadType: "dscr",
-  },
-  {
-    icon: Briefcase,
-    title: "Commercial Lending",
-    blurb:
-      "Multifamily, mixed-use, small commercial, and owner-occupied business property financing.",
-    cta: "Talk commercial",
-    to: "/dealdesk?intent=commercial_lending",
-    leadType: "commercial_lending",
-  },
-  {
-    icon: Landmark,
-    title: "Banks & Credit Unions",
-    blurb:
-      "Local banking, lending, deposits, business accounts, and long-term financing relationships.",
-    cta: "Connect with a banker",
-    to: "/dealdesk?intent=banking",
-    leadType: "banking",
-  },
-  {
-    icon: TrendingUp,
-    title: "Financial Advisors",
-    blurb:
-      "Wealth planning, investment strategy, retirement design, and insurance planning — built for the long view.",
-    cta: "Meet an advisor",
-    to: "/dealdesk?intent=financial_advisor",
-    leadType: "financial_advisor",
-  },
-  {
-    icon: Receipt,
-    title: "Accountants & CPAs",
-    blurb:
-      "Tax strategy, entity structuring, investor accounting, and bookkeeping that scales with your portfolio.",
-    cta: "Talk to a CPA",
-    to: "/dealdesk?intent=accounting",
-    leadType: "accounting",
-  },
-  {
-    icon: PiggyBank,
-    title: "Business Owner Capital",
-    blurb:
-      "Expansion, property acquisition, equipment financing, and working capital for Capital District operators.",
-    cta: "Explore capital",
-    to: "/dealdesk?intent=business_capital",
-    leadType: "business_capital",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Insurance & Risk Planning",
-    blurb:
-      "Life, business, property, landlord, and umbrella policies from advisors who know the local market.",
-    cta: "Plan coverage",
-    to: "/dealdesk?intent=insurance",
-    leadType: "insurance",
-  },
-  {
-    icon: Calculator,
-    title: "Analyze a Deal",
-    blurb:
-      "Open the underwriting console — cash flow, cap rate, DSCR, and pro forma in one place.",
-    cta: "Run the numbers",
-    to: "/investor-tools",
-  },
+const products: Product[] = [
+  { icon: Banknote, title: "Mortgage Pre-Approval", blurb: "Compare payments, down-payment paths, and approval timelines with a local lender.", cta: "Get pre-approved", leadType: "mortgage" },
+  { icon: Landmark, title: "Banks & Credit Unions", blurb: "Local banking, lending, deposits, and business-account relationships.", cta: "Meet a banker", leadType: "banking" },
+  { icon: TrendingUp, title: "Financial Advisors", blurb: "Wealth planning, investment strategy, retirement design, and insurance planning.", cta: "Meet an advisor", leadType: "financial_advisor" },
+  { icon: Receipt, title: "Accountants & CPAs", blurb: "Tax strategy, entity structuring, and investor accounting that scales with your portfolio.", cta: "Talk to a CPA", leadType: "accounting" },
+  { icon: Building2, title: "Investment Property Loans", blurb: "Underwrite rental income, debt service, cap rate, and cash flow before you offer.", cta: "Analyze a rental", leadType: "investment_property" },
+  { icon: LineChart, title: "DSCR / Rental Financing", blurb: "Qualify on the property's income — no W-2s. Built for investors scaling a portfolio.", cta: "Explore DSCR", leadType: "dscr" },
+  { icon: Briefcase, title: "Commercial Lending", blurb: "Multifamily, mixed-use, small commercial, and owner-occupied business property financing.", cta: "Talk commercial", leadType: "commercial_lending" },
+  { icon: ShieldCheck, title: "Insurance & Risk Planning", blurb: "Life, business, property, landlord, and umbrella coverage from local pros.", cta: "Plan coverage", leadType: "insurance" },
+  { icon: PiggyBank, title: "Business Owner Capital", blurb: "Expansion, acquisition, equipment financing, and working capital for operators.", cta: "Explore capital", leadType: "business_capital" },
+  { icon: RefreshCw, title: "Refinance Strategy", blurb: "Rate-and-term, cash-out, and portfolio refi modeling for owners and investors.", cta: "Run refi numbers", leadType: "refinance" },
 ];
 
 const partners = [
-  {
-    icon: Banknote,
-    label: "Mortgage",
-    blurb: "Purchase, refinance, FHA, VA, jumbo, and investor loans from local lenders.",
-    leadType: "mortgage",
-  },
-  {
-    icon: Landmark,
-    label: "Banking",
-    blurb: "Community banks and credit unions for personal, business, and lending relationships.",
-    leadType: "banking",
-  },
-  {
-    icon: TrendingUp,
-    label: "Financial Planning",
-    blurb: "Independent advisors and planners for retirement, wealth, and legacy strategy.",
-    leadType: "financial_advisor",
-  },
-  {
-    icon: Receipt,
-    label: "Accounting / Tax",
-    blurb: "CPAs and tax pros for individuals, investors, and Capital District small businesses.",
-    leadType: "accounting",
-  },
-  {
-    icon: ShieldCheck,
-    label: "Insurance",
-    blurb: "Life, business, property, landlord, and risk-planning specialists.",
-    leadType: "insurance",
-  },
-  {
-    icon: Briefcase,
-    label: "Commercial Lending",
-    blurb: "Multifamily, mixed-use, and owner-occupied commercial financing partners.",
-    leadType: "commercial_lending",
-  },
-  {
-    icon: PiggyBank,
-    label: "Business Capital",
-    blurb: "Working capital, SBA, equipment, and growth financing for operators.",
-    leadType: "business_capital",
-  },
+  { icon: Banknote, label: "Mortgage", blurb: "Purchase, refinance, FHA, VA, jumbo, and investor loans from local lenders.", leadType: "mortgage" },
+  { icon: Landmark, label: "Banking", blurb: "Community banks and credit unions for personal, business, and lending.", leadType: "banking" },
+  { icon: TrendingUp, label: "Financial Planning", blurb: "Independent advisors for retirement, wealth, and legacy strategy.", leadType: "financial_advisor" },
+  { icon: Receipt, label: "Accounting / Tax", blurb: "CPAs and tax pros for individuals, investors, and small businesses.", leadType: "accounting" },
+  { icon: ShieldCheck, label: "Insurance", blurb: "Life, business, property, landlord, and risk-planning specialists.", leadType: "insurance" },
+  { icon: Briefcase, label: "Commercial Lending", blurb: "Multifamily, mixed-use, and owner-occupied commercial financing.", leadType: "commercial_lending" },
+  { icon: PiggyBank, label: "Business Capital", blurb: "Working capital, SBA, equipment, and growth financing.", leadType: "business_capital" },
 ];
 
+const objectiveOptions: { value: string; label: string }[] = [
+  { value: "mortgage", label: "Get mortgage pre-approved" },
+  { value: "banking", label: "Connect with a bank or credit union" },
+  { value: "financial_advisor", label: "Connect with a financial advisor" },
+  { value: "accounting", label: "Connect with an accountant / CPA" },
+  { value: "dscr", label: "Explore DSCR financing" },
+  { value: "investment_property", label: "Analyze an investment property" },
+  { value: "commercial_lending", label: "Review a commercial property" },
+  { value: "refinance", label: "Refinance strategy" },
+  { value: "insurance", label: "Insurance / risk planning" },
+  { value: "business_capital", label: "Business-owner capital" },
+];
+
+const money = (n: number) =>
+  isFinite(n) && !isNaN(n)
+    ? n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
+    : "—";
+
+const pct = (n: number) => (isFinite(n) && !isNaN(n) ? `${n.toFixed(2)}%` : "—");
+
+function pmt(principal: number, annualRate: number, years: number) {
+  const r = annualRate / 100 / 12;
+  const n = years * 12;
+  if (r === 0) return principal / n;
+  return (principal * r) / (1 - Math.pow(1 + r, -n));
+}
+
+// ───────────────────────────────── Calculators ─────────────────────────────────
+
+const MortgageCalc = () => {
+  const [price, setPrice] = useState(425000);
+  const [down, setDown] = useState(20);
+  const [rate, setRate] = useState(6.75);
+  const [term, setTerm] = useState(30);
+  const [taxes, setTaxes] = useState(7800);
+  const [insurance, setInsurance] = useState(1800);
+
+  const loan = price * (1 - down / 100);
+  const pi = pmt(loan, rate, term);
+  const total = pi + taxes / 12 + insurance / 12;
+
+  return (
+    <CalcShell
+      inputs={
+        <>
+          <NumField label="Purchase price" value={price} onChange={setPrice} prefix="$" />
+          <NumField label="Down payment %" value={down} onChange={setDown} suffix="%" />
+          <NumField label="Interest rate" value={rate} onChange={setRate} suffix="%" step={0.125} />
+          <NumField label="Term (years)" value={term} onChange={setTerm} />
+          <NumField label="Annual taxes" value={taxes} onChange={setTaxes} prefix="$" />
+          <NumField label="Annual insurance" value={insurance} onChange={setInsurance} prefix="$" />
+        </>
+      }
+      results={[
+        { label: "Loan amount", value: money(loan) },
+        { label: "Principal & interest", value: money(pi) + " / mo" },
+        { label: "Total PITI", value: money(total) + " / mo", highlight: true },
+      ]}
+    />
+  );
+};
+
+const InvestmentCalc = () => {
+  const [price, setPrice] = useState(350000);
+  const [down, setDown] = useState(25);
+  const [rate, setRate] = useState(7.5);
+  const [term, setTerm] = useState(30);
+  const [rent, setRent] = useState(3200);
+  const [expenses, setExpenses] = useState(950);
+
+  const loan = price * (1 - down / 100);
+  const debt = pmt(loan, rate, term);
+  const noi = (rent - expenses) * 12;
+  const cashFlow = rent - expenses - debt;
+  const cap = (noi / price) * 100;
+  const cashIn = price * (down / 100);
+  const coc = ((cashFlow * 12) / cashIn) * 100;
+
+  return (
+    <CalcShell
+      inputs={
+        <>
+          <NumField label="Purchase price" value={price} onChange={setPrice} prefix="$" />
+          <NumField label="Down payment %" value={down} onChange={setDown} suffix="%" />
+          <NumField label="Interest rate" value={rate} onChange={setRate} suffix="%" step={0.125} />
+          <NumField label="Term (years)" value={term} onChange={setTerm} />
+          <NumField label="Gross monthly rent" value={rent} onChange={setRent} prefix="$" />
+          <NumField label="Monthly operating exp." value={expenses} onChange={setExpenses} prefix="$" />
+        </>
+      }
+      results={[
+        { label: "NOI (annual)", value: money(noi) },
+        { label: "Cap rate", value: pct(cap) },
+        { label: "Monthly cash flow", value: money(cashFlow), highlight: true },
+        { label: "Cash-on-cash", value: pct(coc) },
+      ]}
+    />
+  );
+};
+
+const DscrCalc = () => {
+  const [price, setPrice] = useState(425000);
+  const [down, setDown] = useState(25);
+  const [rate, setRate] = useState(8.25);
+  const [term, setTerm] = useState(30);
+  const [rent, setRent] = useState(3800);
+  const [taxIns, setTaxIns] = useState(550);
+
+  const loan = price * (1 - down / 100);
+  const debt = pmt(loan, rate, term) + taxIns;
+  const dscr = rent / debt;
+  const verdict =
+    dscr >= 1.25 ? "Strong — DSCR ≥ 1.25" : dscr >= 1.0 ? "Borderline — most lenders want 1.20+" : "Below 1.0 — negative coverage";
+
+  return (
+    <CalcShell
+      inputs={
+        <>
+          <NumField label="Purchase price" value={price} onChange={setPrice} prefix="$" />
+          <NumField label="Down payment %" value={down} onChange={setDown} suffix="%" />
+          <NumField label="DSCR rate" value={rate} onChange={setRate} suffix="%" step={0.125} />
+          <NumField label="Term (years)" value={term} onChange={setTerm} />
+          <NumField label="Market rent (mo)" value={rent} onChange={setRent} prefix="$" />
+          <NumField label="Taxes + insurance (mo)" value={taxIns} onChange={setTaxIns} prefix="$" />
+        </>
+      }
+      results={[
+        { label: "Total debt service (PITI)", value: money(debt) + " / mo" },
+        { label: "DSCR", value: dscr.toFixed(2), highlight: true },
+        { label: "Lender verdict", value: verdict },
+      ]}
+    />
+  );
+};
+
+const RefinanceCalc = () => {
+  const [balance, setBalance] = useState(280000);
+  const [oldRate, setOldRate] = useState(7.5);
+  const [newRate, setNewRate] = useState(6.0);
+  const [term, setTerm] = useState(30);
+  const [closing, setClosing] = useState(6500);
+
+  const oldPI = pmt(balance, oldRate, term);
+  const newPI = pmt(balance, newRate, term);
+  const monthlySave = oldPI - newPI;
+  const breakeven = closing / monthlySave;
+
+  return (
+    <CalcShell
+      inputs={
+        <>
+          <NumField label="Current loan balance" value={balance} onChange={setBalance} prefix="$" />
+          <NumField label="Current rate" value={oldRate} onChange={setOldRate} suffix="%" step={0.125} />
+          <NumField label="New rate" value={newRate} onChange={setNewRate} suffix="%" step={0.125} />
+          <NumField label="New term (years)" value={term} onChange={setTerm} />
+          <NumField label="Closing costs" value={closing} onChange={setClosing} prefix="$" />
+        </>
+      }
+      results={[
+        { label: "Current P&I", value: money(oldPI) + " / mo" },
+        { label: "New P&I", value: money(newPI) + " / mo" },
+        { label: "Monthly savings", value: money(monthlySave), highlight: true },
+        { label: "Break-even", value: isFinite(breakeven) && breakeven > 0 ? `${breakeven.toFixed(1)} months` : "—" },
+      ]}
+    />
+  );
+};
+
+// ──────────────────────── Calc primitives ────────────────────────
+
+const NumField = ({
+  label, value, onChange, prefix, suffix, step = 1,
+}: { label: string; value: number; onChange: (n: number) => void; prefix?: string; suffix?: string; step?: number }) => (
+  <label className="block">
+    <span className="text-xs uppercase tracking-[0.14em] text-primary/90 font-medium">{label}</span>
+    <div className="mt-1.5 flex items-center rounded-xl border border-border bg-background/60 focus-within:border-primary transition-colors">
+      {prefix && <span className="pl-3 text-white/50">{prefix}</span>}
+      <input
+        type="number"
+        step={step}
+        value={value}
+        onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
+        className="w-full bg-transparent px-3 py-3 text-lg text-foreground outline-none"
+      />
+      {suffix && <span className="pr-3 text-white/50">{suffix}</span>}
+    </div>
+  </label>
+);
+
+const CalcShell = ({
+  inputs, results,
+}: { inputs: React.ReactNode; results: { label: string; value: string; highlight?: boolean }[] }) => (
+  <div className="grid md:grid-cols-[1.1fr_1fr] gap-6">
+    <div className="rounded-2xl border border-border bg-card/60 p-5 md:p-6 space-y-4">{inputs}</div>
+    <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5 md:p-6 space-y-3">
+      {results.map((r) => (
+        <div
+          key={r.label}
+          className={`rounded-xl border ${r.highlight ? "border-primary/50 bg-primary/10" : "border-border bg-background/40"} px-4 py-3 flex items-center justify-between gap-4`}
+        >
+          <span className="text-sm text-white/70">{r.label}</span>
+          <span className={`text-base md:text-lg font-semibold ${r.highlight ? "text-primary" : "text-foreground"}`}>{r.value}</span>
+        </div>
+      ))}
+      <p className="text-xs text-white/45 pt-1">
+        Estimates only. Not a loan commitment. Verify with your lender, CPA, or financial advisor.
+      </p>
+    </div>
+  </div>
+);
+
+// ───────────────────────────────── DealDesk Form ─────────────────────────────────
+
+const DealDeskForm = ({ defaultObjective }: { defaultObjective?: string }) => {
+  const { toast } = useToast();
+  const [submitting, setSubmitting] = useState(false);
+  const [done, setDone] = useState(false);
+  const [form, setForm] = useState({
+    full_name: "",
+    email: "",
+    phone: "",
+    lead_type: defaultObjective || "",
+    property_address: "",
+    purchase_price: "",
+    estimated_rent: "",
+    notes: "",
+  });
+
+  const update = (k: keyof typeof form, v: string) => setForm((f) => ({ ...f, [k]: v }));
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.full_name || !form.email || !form.phone || !form.lead_type) {
+      toast({ title: "Missing info", description: "Name, email, phone, and primary objective are required.", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.from("investment_leads").insert({
+      full_name: form.full_name,
+      email: form.email,
+      phone: form.phone,
+      lead_type: form.lead_type,
+      property_address: form.property_address || null,
+      purchase_price: form.purchase_price ? Number(form.purchase_price) : null,
+      estimated_rent: form.estimated_rent ? Number(form.estimated_rent) : null,
+      notes: form.notes || null,
+      source_page: "/analyze",
+    });
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Submission failed", description: error.message, variant: "destructive" });
+      return;
+    }
+    setDone(true);
+    toast({ title: "Sent to DealDesk", description: "Scott or a Capital District partner will reach out shortly." });
+  };
+
+  if (done) {
+    return (
+      <div className="rounded-2xl border border-primary/40 bg-primary/10 p-8 text-center">
+        <CheckCircle2 className="w-10 h-10 text-primary mx-auto mb-3" />
+        <h3 className="text-xl font-semibold mb-1">Your request is in.</h3>
+        <p className="text-white/70">Capital District DealDesk will reach out within one business day.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={onSubmit} className="rounded-2xl border border-border bg-card/60 p-6 md:p-8 space-y-4">
+      <div className="grid sm:grid-cols-2 gap-4">
+        <Field label="Name *">
+          <Input value={form.full_name} onChange={(e) => update("full_name", e.target.value)} className="bg-background/60 border-border" required />
+        </Field>
+        <Field label="Email *">
+          <Input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} className="bg-background/60 border-border" required />
+        </Field>
+        <Field label="Phone *">
+          <Input type="tel" value={form.phone} onChange={(e) => update("phone", e.target.value)} className="bg-background/60 border-border" required />
+        </Field>
+        <Field label="Primary objective *">
+          <Select value={form.lead_type} onValueChange={(v) => update("lead_type", v)}>
+            <SelectTrigger className="bg-background/60 border-border"><SelectValue placeholder="Select an option" /></SelectTrigger>
+            <SelectContent>
+              {objectiveOptions.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}
+            </SelectContent>
+          </Select>
+        </Field>
+        <Field label="Property address (optional)">
+          <Input value={form.property_address} onChange={(e) => update("property_address", e.target.value)} className="bg-background/60 border-border" />
+        </Field>
+        <Field label="Purchase price (optional)">
+          <Input type="number" value={form.purchase_price} onChange={(e) => update("purchase_price", e.target.value)} className="bg-background/60 border-border" />
+        </Field>
+        <Field label="Estimated rent (optional)">
+          <Input type="number" value={form.estimated_rent} onChange={(e) => update("estimated_rent", e.target.value)} className="bg-background/60 border-border" />
+        </Field>
+      </div>
+      <Field label="Notes (optional)">
+        <Textarea value={form.notes} onChange={(e) => update("notes", e.target.value)} className="bg-background/60 border-border min-h-[100px]" />
+      </Field>
+      <button
+        type="submit"
+        disabled={submitting}
+        className="w-full rounded-full bg-primary text-primary-foreground font-medium py-3.5 hover:opacity-90 transition disabled:opacity-50"
+      >
+        {submitting ? "Submitting…" : "Submit to DealDesk"}
+      </button>
+      <p className="text-xs text-white/45 text-center">
+        Routed to Scott Alvarez · RE/MAX Solutions · (518) 522-7265 · scott@capitaldistrictnest.com
+      </p>
+    </form>
+  );
+};
+
+const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <label className="block">
+    <span className="text-xs uppercase tracking-[0.14em] text-primary/90 font-medium block mb-1.5">{label}</span>
+    {children}
+  </label>
+);
+
+// ───────────────────────────────── Page ─────────────────────────────────
+
 const FinancialConsole = () => {
+  const jsonLd = useMemo(
+    () => ({
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      name: "Capital District Financial Console",
+      description:
+        "Mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance, and DealDesk support in the Capital District.",
+      url: "https://www.capitaldistrictnest.com/analyze",
+      areaServed: "Capital District, New York",
+      provider: {
+        "@type": "RealEstateAgent",
+        name: "Scott Alvarez · RE/MAX Solutions",
+        telephone: "+1-518-522-7265",
+        email: "scott@capitaldistrictnest.com",
+      },
+    }),
+    []
+  );
+
+  const scrollTo = (id: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <>
       <Helmet>
-        <title>Capital District Financial Console | Capital District Nest</title>
+        <title>Capital District Financial Console | Mortgages, Banking, Advisors & Investment Analysis</title>
         <meta
           name="description"
-          content="The local financial hub of the Capital District. Mortgage, banking, financial advisors, accountants, insurance, commercial lending, and investment analysis — all in one console."
+          content="Explore mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance strategy, and DealDesk support across the Capital District."
         />
-        <link rel="canonical" href="https://www.capitaldistrictnest.com/financial-console" />
+        <link rel="canonical" href="https://www.capitaldistrictnest.com/analyze" />
+        <meta property="og:title" content="Capital District Financial Console" />
+        <meta
+          property="og:description"
+          content="The financial vertical of Capital District Nest — mortgages, banking, advisors, accountants, insurance, and investment analysis."
+        />
+        <meta property="og:url" content="https://www.capitaldistrictnest.com/analyze" />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">
@@ -185,106 +434,94 @@ const FinancialConsole = () => {
               <Sparkles className="w-3.5 h-3.5" />
               Capital District Financial Console
             </div>
-            <h1 className="h-hero text-4xl md:text-6xl font-semibold tracking-tight max-w-3xl">
-              The financial engine of the
-              <span className="text-primary"> Capital District.</span>
+            <h1 className="text-4xl md:text-6xl font-semibold tracking-tight max-w-3xl leading-[1.05]">
+              The financial wing of
+              <span className="text-primary"> Capital District Nest.</span>
             </h1>
-            <p className="body-apple mt-5 max-w-2xl text-white/70 text-lg">
-              Mortgages, banking, financial advisors, accountants, insurance, commercial lending, and
-              investment analysis — one console, every local partner.
+            <p className="mt-5 max-w-2xl text-white/70 text-lg md:text-xl">
+              Mortgages, banking, financial advisors, accountants, insurance, investment property
+              analysis, commercial lending, and DealDesk support in one local financial hub.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to="/dealdesk"
-                className="btn-dark-cta inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
+              <a
+                href="#calculator"
+                onClick={scrollTo("calculator")}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
               >
-                Request an Introduction <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/investor-tools"
+                Analyze a Deal <ArrowRight className="w-4 h-4" />
+              </a>
+              <a
+                href="#dealdesk"
+                onClick={scrollTo("dealdesk")}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white hover:border-primary hover:text-primary transition"
               >
-                Run the numbers
-              </Link>
+                Request Financial Intro
+              </a>
             </div>
           </div>
         </section>
 
-        {/* FINANCIAL PRODUCT HUB */}
-        <section className="px-[5%] py-16 md:py-20">
+        {/* PRODUCT GRID */}
+        <section id="products" className="px-[5%] py-16 md:py-20">
           <div className="max-w-6xl mx-auto">
             <div className="mb-10">
-              <p className="eyebrow-apple text-primary text-xs uppercase tracking-[0.18em] mb-2">
-                Financial Product Hub
-              </p>
-              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
-                Pick the path that matches your move.
-              </h2>
+              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Financial Product Hub</p>
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">Pick the path that matches your move.</h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {hubs.map((h) => (
-                <Link
-                  key={h.title}
-                  to={h.to}
-                  className="group relative rounded-2xl p-6 bg-card border border-border hover:border-primary/60 transition-colors lift-hover"
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+              {products.map((p) => (
+                <a
+                  key={p.title}
+                  href="#dealdesk"
+                  onClick={scrollTo("dealdesk")}
+                  data-lead-type={p.leadType}
+                  className="group relative rounded-2xl p-5 bg-card/70 backdrop-blur-md border border-border hover:border-primary/60 transition-colors flex flex-col h-full"
                 >
-                  <div className="w-11 h-11 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition">
-                    <h.icon className="w-5 h-5 text-primary" />
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition">
+                    <p.icon className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="font-semibold text-foreground mb-2">{h.title}</h3>
-                  <p className="text-sm text-white/65 leading-relaxed mb-5">{h.blurb}</p>
+                  <h3 className="font-semibold text-foreground mb-2 text-[15px]">{p.title}</h3>
+                  <p className="text-sm text-white/65 leading-relaxed mb-5 flex-1">{p.blurb}</p>
                   <span className="inline-flex items-center gap-1.5 text-sm text-primary font-medium">
-                    {h.cta} <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                    {p.cta} <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
                   </span>
-                </Link>
+                </a>
               ))}
             </div>
           </div>
         </section>
 
-        {/* CALCULATOR / ANALYZER STRIP */}
-        <section className="px-[5%] py-14 border-y border-border/60 bg-card/40">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-[1.2fr_1fr] gap-8 items-center">
-            <div>
-              <p className="eyebrow-apple text-primary text-xs uppercase tracking-[0.18em] mb-2">
-                Underwriting Console
-              </p>
-              <h2 className="text-2xl md:text-3xl font-semibold tracking-tight mb-3">
-                Cash flow, cap rate, and DSCR — before you offer.
-              </h2>
-              <p className="text-white/65 max-w-xl">
-                Underwrite any Capital District property with investor-grade math. Pro forma rents,
-                expenses, financing scenarios, and a same-day Deal Desk review.
-              </p>
+        {/* CALCULATOR CONSOLE */}
+        <section id="calculator" className="px-[5%] py-16 md:py-20 border-y border-border/60 bg-card/30">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-8 max-w-2xl">
+              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Underwriting Console</p>
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Run the numbers before you commit.</h2>
+              <p className="text-white/65">Mortgage, investment property, DSCR, and refinance models — built on the same math local lenders use.</p>
             </div>
-            <div className="flex flex-wrap gap-3 md:justify-end">
-              <Link
-                to="/investor-tools"
-                className="px-5 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
-              >
-                Open Analyzer
-              </Link>
-              <Link
-                to="/dealdesk"
-                className="px-5 py-3 rounded-full border border-white/20 hover:border-primary hover:text-primary transition"
-              >
-                Deal Desk Review
-              </Link>
-            </div>
+
+            <Tabs defaultValue="mortgage" className="w-full">
+              <TabsList className="bg-card/60 border border-border rounded-full p-1 flex flex-wrap h-auto gap-1">
+                <TabsTrigger value="mortgage" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Mortgage</TabsTrigger>
+                <TabsTrigger value="investment" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Investment Property</TabsTrigger>
+                <TabsTrigger value="dscr" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">DSCR / Cash Flow</TabsTrigger>
+                <TabsTrigger value="refi" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Refinance</TabsTrigger>
+              </TabsList>
+              <TabsContent value="mortgage" className="mt-6"><MortgageCalc /></TabsContent>
+              <TabsContent value="investment" className="mt-6"><InvestmentCalc /></TabsContent>
+              <TabsContent value="dscr" className="mt-6"><DscrCalc /></TabsContent>
+              <TabsContent value="refi" className="mt-6"><RefinanceCalc /></TabsContent>
+            </Tabs>
           </div>
         </section>
 
         {/* PARTNER NETWORK */}
-        <section className="px-[5%] py-16 md:py-20">
+        <section id="financial-partners" className="px-[5%] py-16 md:py-20">
           <div className="max-w-6xl mx-auto">
             <div className="mb-10 max-w-2xl">
-              <p className="eyebrow-apple text-primary text-xs uppercase tracking-[0.18em] mb-2">
-                Capital District Financial Partner Network
-              </p>
-              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">
-                Local lenders, advisors, accountants, and insurance pros.
-              </h2>
+              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Capital District Financial Partner Network</p>
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Local lenders, advisors, accountants, and insurance pros.</h2>
               <p className="text-white/65">
                 Connect with vetted Capital District mortgage lenders, banks, financial advisors,
                 accountants, insurance professionals, and commercial lending partners.
@@ -293,22 +530,19 @@ const FinancialConsole = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {partners.map((p) => (
-                <div
-                  key={p.label}
-                  className="rounded-2xl p-6 border border-border bg-card/80 backdrop-blur-md hover:border-primary/60 transition-colors group"
-                  style={{ background: "rgba(15, 18, 28, 0.7)" }}
-                >
+                <div key={p.label} className="rounded-2xl p-6 border border-border bg-card/70 backdrop-blur-md hover:border-primary/60 transition-colors group">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition">
                     <p.icon className="w-5 h-5 text-primary" />
                   </div>
                   <h3 className="font-semibold text-foreground mb-2">{p.label}</h3>
                   <p className="text-sm text-white/65 leading-relaxed mb-5">{p.blurb}</p>
-                  <Link
-                    to={`/dealdesk?intent=${p.leadType}`}
-                    className="inline-flex items-center gap-1.5 text-sm text-primary font-medium group-hover:translate-x-0.5 transition-transform"
+                  <a
+                    href="#dealdesk"
+                    onClick={scrollTo("dealdesk")}
+                    className="inline-flex items-center gap-1.5 text-sm text-primary font-medium hover:translate-x-0.5 transition-transform"
                   >
                     Request Introduction <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                  </a>
                 </div>
               ))}
             </div>
@@ -323,11 +557,26 @@ const FinancialConsole = () => {
               </div>
               <Link
                 to="/claim-business"
-                className="px-5 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition whitespace-nowrap"
+                className="px-5 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition whitespace-nowrap text-center"
               >
                 Apply to join
               </Link>
             </div>
+          </div>
+        </section>
+
+        {/* DEALDESK LEAD FORM */}
+        <section id="dealdesk" className="px-[5%] py-16 md:py-24 border-t border-border/60 bg-card/30">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-8">
+              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Capital District DealDesk</p>
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Send your numbers to DealDesk.</h2>
+              <p className="text-white/65 max-w-xl mx-auto">
+                Request help reviewing financing, cash flow, debt strategy, or investment options.
+                We route you to the right Capital District partner.
+              </p>
+            </div>
+            <DealDeskForm />
           </div>
         </section>
 
