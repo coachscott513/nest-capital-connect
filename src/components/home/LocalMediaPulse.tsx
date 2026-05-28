@@ -177,16 +177,32 @@ export default function LocalMediaPulse() {
         )}
 
         {/* Curated stories */}
-        {stories.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
             {stories.map((s, i) => {
               const hasVideo = !!(s.has_video && isTrustedEmbedUrl(s.video_embed_url));
               const ctaLabel = hasVideo ? "Watch Coverage" : "Read Full Coverage";
               const href = s.external_article_url || s.original_url || "#";
+              const baseMediaPayload = {
+                story_id: (s as any).id,
+                headline: s.title,
+                category: s.categoryBadgeOverride || "Local News",
+                town: s.town,
+                source_name: s.source_name,
+                has_video: hasVideo,
+              };
+              const handleCta = () => {
+                trackGAEvent.mediaStoryClick(baseMediaPayload);
+                if (hasVideo) {
+                  trackGAEvent.videoCoverageClick({
+                    ...baseMediaPayload,
+                    video_provider: videoProviderFromUrl(s.video_embed_url),
+                  });
+                  setModal(s);
+                }
+              };
               const Tag: any = hasVideo ? "button" : "a";
               const tagProps = hasVideo
-                ? { type: "button", onClick: () => setModal(s) }
-                : { href, target: "_blank", rel: "noopener noreferrer" };
+                ? { type: "button", onClick: handleCta }
+                : { href, target: "_blank", rel: "noopener noreferrer", onClick: handleCta };
 
               return (
                 <motion.article
@@ -238,19 +254,7 @@ export default function LocalMediaPulse() {
                         {...tagProps}
                         className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.06em] text-[#5eead4] hover:text-white transition-colors"
                       >
-                        {ctaLabel}
-                        {hasVideo ? (
-                          <PlayCircle className="w-3.5 h-3.5" />
-                        ) : (
-                          <ExternalLink className="w-3 h-3" />
-                        )}
-                      </Tag>
-                    </div>
-                  </div>
-                </motion.article>
-              );
-            })}
-          </div>
+
         )}
 
         {/* View more — smooth-scrolls to the top of this section so the
