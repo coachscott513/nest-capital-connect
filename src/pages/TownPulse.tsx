@@ -404,7 +404,7 @@ const TownPulse = () => {
             sub="Active deals from local businesses — updated regularly."
           />
           {loading ? (
-            <LoadingIndexBlock />
+            <LoadingIndexBlock label={`${townName} specials and promotions`} />
           ) : specials.length === 0 ? (
             <EmptyState
               title={`No featured specials are live in ${townName} yet.`}
@@ -486,7 +486,7 @@ const TownPulse = () => {
             sub="The next 7 days, hand-curated from local hosts and businesses."
           />
           {loading ? (
-            <LoadingIndexBlock />
+            <LoadingIndexBlock label={`${townName} events and local updates`} />
           ) : events.length === 0 ? (
             <EmptyState
               title="No upcoming events are listed yet."
@@ -568,7 +568,7 @@ const TownPulse = () => {
             sub="Curated Featured Merchants investing in their local presence."
           />
           {loading ? (
-            <LoadingIndexBlock />
+            <LoadingIndexBlock label={`${townName} featured local partners`} />
           ) : featuredPartners.length === 0 ? (
             <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-10 md:p-14 text-center">
               <p className="text-[10px] font-semibold tracking-[0.24em] uppercase mb-3" style={{ color: TEAL_LIGHT }}>
@@ -668,7 +668,7 @@ const TownPulse = () => {
           />
 
           {loading ? (
-            <LoadingIndexBlock />
+            <LoadingIndexBlock label={`${townName} business directory`} />
           ) : filteredBiz.length === 0 ? (
             <EmptyState
               title={
