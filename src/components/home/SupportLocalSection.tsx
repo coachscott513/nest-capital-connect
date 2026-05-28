@@ -90,7 +90,7 @@ const SupportLocalSection = () => {
 
   return (
     <section className="bg-[#0B0F19] w-full border-t border-[#2D3748]">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-[88px] md:py-[140px]">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-[140px]">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
