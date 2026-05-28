@@ -74,7 +74,6 @@ export const CATEGORY_GROUPS: Record<CategoryGroup, BusinessCategory[]> = {
     "Retail",
     "Auto",
     "Pet",
-    "Wellness",
     "Bookstore",
   ],
   "Health & Wellness": [
