@@ -104,10 +104,23 @@ const Footer = () => {
             <h4 className={headerBase}>Local</h4>
             <ul className="space-y-2.5">
               <li><Link to="/local?q=restaurant" className={linkBase}>Restaurants</Link></li>
-              <li><Link to="/local?q=contractor" className={linkBase}>Contractors</Link></li>
-              <li><Link to="/local?q=attorney" className={linkBase}>Attorneys</Link></li>
-              <li><Link to="/local?q=mortgage" className={linkBase}>Mortgage Lenders</Link></li>
+              <li><Link to="/local?q=contractor" className={linkBase}>Home Services</Link></li>
+              <li><Link to="/local?category=Healthcare" className={linkBase}>Healthcare</Link></li>
+              <li><Link to="/local?category=Dental" className={linkBase}>Dental</Link></li>
+              <li><Link to="/local?q=attorney" className={linkBase}>Professional Services</Link></li>
+              <li><Link to="/#weekly-feed" className={linkBase}>Events</Link></li>
               <li><Link to="/local" className="text-[13px] text-[#5eead4] hover:opacity-80 transition-opacity">All businesses →</Link></li>
+            </ul>
+          </div>
+
+          {/* Homes */}
+          <div>
+            <h4 className={headerBase}>Homes</h4>
+            <ul className="space-y-2.5">
+              <li><Link to="/homes-for-sale" className={linkBase}>Search Homes</Link></li>
+              <li><Link to="/investment-properties" className={linkBase}>Investment Properties</Link></li>
+              <li><Link to="/rentals" className={linkBase}>Rentals</Link></li>
+              <li><Link to="/analyze" className={linkBase}>Analyze Deals</Link></li>
             </ul>
           </div>
 
@@ -115,10 +128,11 @@ const Footer = () => {
           <div>
             <h4 className={headerBase}>Company</h4>
             <ul className="space-y-2.5">
-              <li><Link to="/contact" className={linkBase}>About Capital District Nest</Link></li>
+              <li><Link to="/contact" className={linkBase}>About</Link></li>
               <li><Link to="/contact" className={linkBase}>Contact</Link></li>
               <li><Link to="/pricing" className={linkBase}>For Local Businesses</Link></li>
               <li><Link to="/partner-auth" className={linkBase}>Business Login</Link></li>
+              <li><Link to="/claim-business" className={linkBase}>Claim Business</Link></li>
               <li><Link to="/site-index" className={linkBase}>Site Index</Link></li>
               <li><Link to="/privacy-policy" className={linkBase}>Privacy</Link></li>
               <li>
@@ -140,7 +154,7 @@ const Footer = () => {
       <div className="border-t border-white/[0.06]">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-12">
           <h3 className="text-[11px] font-semibold text-white/95 mb-8 uppercase tracking-[0.18em]">
-            Real Estate by County
+            Explore by County
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
             {Object.entries(townDirectory).map(([county, towns]) => (

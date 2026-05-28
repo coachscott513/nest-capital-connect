@@ -510,13 +510,18 @@ const Index = () => {
       {/* 1.25 — CAPITAL DISTRICT DISCOVERY CONSOLE · permanent split-panel search hub */}
       <DiscoveryConsole />
 
-      {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip */}
-      <LiveLocalPulse />
+      {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip (desktop only — keeps mobile lean) */}
+      <div className="hidden md:block">
+        <LiveLocalPulse />
+      </div>
 
-      {/* 2 — POPULAR LOCAL BUSINESSES · let people use the platform immediately */}
+      {/* 2 — POPULAR LOCAL BUSINESSES · Featured Spotlights */}
       <SupportLocalSection />
 
-      {/* 3 — TOWNS · Browse Local Search Indexes */}
+      {/* 3 — WHAT'S HAPPENING · weekly editorial pulse (moved above Towns per mobile flow) */}
+      <WeeklyFeed scope="region" />
+
+      {/* 4 — TOWNS · Browse Local Search Indexes */}
       <section className="bg-[#0B0F19] w-full border-t border-[#2D3748]">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-14 md:py-[140px]">
           <motion.div
@@ -571,13 +576,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* 4 — WHAT'S HAPPENING · weekly editorial pulse */}
-      <WeeklyFeed scope="region" />
-
-      {/* (Removed on mobile cleanup pass) "Discover the region" tabbed block —
-          duplicated Discovery Console + Weekly Pulse navigation. */}
-
-      {/* 6 — B2B CONVERSION · Local Business Solutions */}
+      {/* 5 — B2B CONVERSION · Local Business Solutions */}
       <section className="relative bg-[#0B0F19] overflow-hidden border-y border-[#2D3748]">
         <div
           className="absolute inset-0 opacity-60 pointer-events-none"
