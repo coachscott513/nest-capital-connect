@@ -22,11 +22,13 @@ const mapCategory = (
   if (test(/restaurant|bar|pub|pizz|deli|diner|grill|food|eatery|sandwich/))
     return "Restaurant";
 
-  if (test(/gym|fitness|yoga|pilates|crossfit/)) return "Gym";
-  if (test(/salon|barber|spa|nail|hair|beauty/)) return "Salon";
-  if (test(/dental|dentist|orthodont|endodont|periodont|oral surgeon/)) return "Wellness";
-  if (test(/medical|doctor|clinic|physician|urgent care|pediatric/)) return "Wellness";
-  if (test(/wellness|chiropract|massage|acupunct|therap/)) return "Wellness";
+  // Dental — first-class vertical
+  if (test(/dental|dentist|orthodont|endodont|periodont|oral surgeon|tooth|teeth|braces|invisalign|cosmetic dentistry/)) return "Dental";
+  // Healthcare — medical/clinical providers
+  if (test(/healthcare|health care|medical|doctor|physician|clinic|urgent care|pediatric|pediatrician|dermatolog|family medicine|primary care|chiropract|physical therapy|mental health|counseling|psycholog|psychiatr|optometr|cardiolog|orthopedic/)) return "Healthcare";
+  if (test(/gym|fitness|crossfit/)) return "Gym";
+  if (test(/salon|barber|nail|hair|beauty/)) return "Salon";
+  if (test(/spa|massage|yoga|pilates|acupunct|holistic|meditation|nutrition|wellness coach|recovery|sauna|cryo|wellness/)) return "Wellness";
   if (test(/pet|vet|groom|kennel/)) return "Pet";
   if (test(/auto|mechanic|tire|car wash|oil change/)) return "Auto";
   if (test(/book|library/)) return "Bookstore";
