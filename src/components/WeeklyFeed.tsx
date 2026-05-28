@@ -17,6 +17,8 @@ import {
   MapPin,
   Clock,
   Flame,
+  Newspaper,
+  ExternalLink,
   type LucideIcon,
 } from "lucide-react";
 import { weeklyFeed, type WeeklyFeedType, type WeeklyFeedItem } from "@/data/weeklyFeed";
