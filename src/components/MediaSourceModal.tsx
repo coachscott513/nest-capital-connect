@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { X, ExternalLink, PlayCircle, Newspaper } from "lucide-react";
-import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
+import { type WeeklyFeedItem } from "@/data/weeklyFeed";
 import LocalVideoModal, { isTrustedEmbedUrl } from "@/components/LocalVideoModal";
+import { useMediaStories } from "@/hooks/useMediaStories";
 
 interface Props {
   open: boolean;
