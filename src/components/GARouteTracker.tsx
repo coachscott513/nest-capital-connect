@@ -31,7 +31,11 @@ export const GARouteTracker = () => {
 
 /**
  * Key Event Tracking Functions
- * Use these throughout the app to track important user actions
+ * Use these throughout the app to track important user actions.
+ * All custom events are suppressed for likely-bot sessions so GA4
+ * conversions reflect real human interactions only.
+ */
+
 export const trackGAEvent = {
   // Town page views
   townPageView: (townName: string) => {
