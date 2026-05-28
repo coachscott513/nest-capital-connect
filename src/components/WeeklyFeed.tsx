@@ -435,15 +435,21 @@ const WeeklyFeed = ({
             >
               {filtered.map((item, i) => {
                 const Icon = ICONS[item.type];
+                const isNews = !!item.original_url;
+                const Wrapper: any = isNews ? "a" : "article";
+                const wrapperProps = isNews
+                  ? { href: item.original_url, target: "_blank", rel: "noopener noreferrer" }
+                  : {};
                 return (
-                  <article
+                  <Wrapper
                     key={i}
-                    className="card-lift group relative bg-[#1E2230] border border-[#2D3748] rounded-2xl p-5 transition-all hover:border-[#0d6e66]/50 hover:bg-[#222637]"
+                    {...wrapperProps}
+                    className="card-lift group relative block bg-[#1E2230] border border-[#2D3748] rounded-2xl p-5 transition-all hover:border-[#0d6e66]/50 hover:bg-[#222637]"
                   >
                     <div className="flex items-center gap-2 mb-3 flex-wrap">
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0d6e66]/15 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] font-semibold text-[#5eead4]">
                         <Icon className="w-3 h-3" strokeWidth={2} />
-                        {LABELS[item.type]}
+                        {item.categoryBadgeOverride ?? LABELS[item.type]}
                       </span>
                       {item.town && (
                         <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.14em] font-semibold text-white/55">
@@ -455,7 +461,7 @@ const WeeklyFeed = ({
                       {item.title}
                     </h4>
                     <p className="mt-1.5 text-[13px] text-white/55 font-light leading-relaxed line-clamp-2">
-                      {item.description}
+                      {item.summary ?? item.description}
                     </p>
                     <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-white/45">
                       <span className="inline-flex items-center gap-1">
@@ -471,8 +477,18 @@ const WeeklyFeed = ({
                           · {item.venue}
                         </span>
                       )}
+                      {item.source_name && (
+                        <span className="inline-flex items-center gap-1 text-white/55">
+                          <Newspaper className="w-3 h-3" /> via {item.source_name}
+                        </span>
+                      )}
                     </div>
-                  </article>
+                    {isNews && (
+                      <span className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#5eead4] group-hover:text-white transition">
+                        Read Full Coverage <ExternalLink className="w-3 h-3" />
+                      </span>
+                    )}
+                  </Wrapper>
                 );
               })}
               {filtered.length === 0 && (
