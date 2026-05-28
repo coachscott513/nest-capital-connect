@@ -624,6 +624,48 @@ export type Database = {
         }
         Relationships: []
       }
+      investment_leads: {
+        Row: {
+          created_at: string
+          email: string
+          estimated_rent: number | null
+          full_name: string
+          id: string
+          lead_type: string
+          notes: string | null
+          phone: string
+          property_address: string | null
+          purchase_price: number | null
+          source_page: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          estimated_rent?: number | null
+          full_name: string
+          id?: string
+          lead_type: string
+          notes?: string | null
+          phone: string
+          property_address?: string | null
+          purchase_price?: number | null
+          source_page?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          estimated_rent?: number | null
+          full_name?: string
+          id?: string
+          lead_type?: string
+          notes?: string | null
+          phone?: string
+          property_address?: string | null
+          purchase_price?: number | null
+          source_page?: string | null
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           assigned_agent_id: string | null
