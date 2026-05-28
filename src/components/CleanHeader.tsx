@@ -22,7 +22,7 @@ const navModes: NavMode[] = [
   { label: "Businesses", mobileLabel: "Search Businesses", href: "/local", matchPaths: ["/local"] },
   { label: "Towns", mobileLabel: "Explore Towns", href: "/communities", matchPaths: ["/communities", "/living-in"] },
   { label: "Events", mobileLabel: "Local Events", href: "/#weekly-feed", matchPaths: [] },
-  { label: "Invest", mobileLabel: "Investment Properties", href: "/analyze", matchPaths: ["/analyze", "/invest"] },
+  { label: "Finances", mobileLabel: "Finances Hub", href: "/finances", matchPaths: ["/finances", "/analyze", "/invest", "/financial-console"] },
   { label: "For Local Businesses", mobileLabel: "Advertise With Us", href: "/pricing", matchPaths: ["/pricing"] },
 ];
 
