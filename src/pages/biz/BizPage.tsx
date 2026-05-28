@@ -810,8 +810,7 @@ const BizPage = () => {
 
   // During loading, render the full Free profile shell using a slug-derived
   // placeholder so Googlebot never sees an empty "Loading…" page.
-  const placeholderSlug = canonicalizeRequestedSlug(slug || "business");
-  const activeBiz: Business = biz ?? buildPlaceholderBusiness(placeholderSlug);
+  const activeBiz: Business = biz ?? buildPlaceholderBusiness(slug || "business");
   const tier = activeBiz.plan_tier;
   const isPremium = !loading && PREMIUM_TIERS.has(tier);
   const isFeatured = !loading && FEATURED_TIERS.has(tier);
@@ -827,7 +826,9 @@ const BizPage = () => {
           biz.tagline ||
           biz.description?.slice(0, 155) ||
           fallbackDesc;
-        const title = `${biz.name} | ${town}, NY | Capital District Nest`;
+        const title = loading
+          ? `${biz.name} | Verified Local Profile | Capital District Nest`
+          : `${biz.name} | ${town}, NY | Capital District Nest`;
         const image = biz.hero_image_url || biz.photos?.[0] || biz.logo_url || undefined;
         const ldBusiness: Record<string, unknown> = {
           "@context": "https://schema.org",
