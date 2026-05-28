@@ -117,6 +117,23 @@ export default function MediaSourceModal({
             {stories.map((s, i) => {
               const hasVideo = !!(s.has_video && isTrustedEmbedUrl(s.video_embed_url));
               const href = s.external_article_url || s.original_url || "#";
+              const base = {
+                story_id: (s as any).id,
+                headline: s.title,
+                category: s.categoryBadgeOverride || "Local News",
+                town: s.town,
+                source_name: s.source_name,
+                has_video: hasVideo,
+              };
+              const onWatch = () => {
+                trackGAEvent.mediaStoryClick(base);
+                trackGAEvent.videoCoverageClick({
+                  ...base,
+                  video_provider: providerFromUrl(s.video_embed_url),
+                });
+                setVideo(s);
+              };
+              const onRead = () => trackGAEvent.mediaStoryClick(base);
               return (
                 <article
                   key={`${s.title}-${i}`}
@@ -161,7 +178,7 @@ export default function MediaSourceModal({
                     {hasVideo ? (
                       <button
                         type="button"
-                        onClick={() => setVideo(s)}
+                        onClick={onWatch}
                         className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.06em] hover:text-white transition-colors"
                         style={{ color: accentColor }}
                       >
@@ -172,6 +189,7 @@ export default function MediaSourceModal({
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={onRead}
                         className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.06em] hover:text-white transition-colors"
                         style={{ color: accentColor }}
                       >
@@ -182,6 +200,7 @@ export default function MediaSourceModal({
                 </article>
               );
             })}
+
           </div>
         </div>
       </div>
