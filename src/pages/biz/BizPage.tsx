@@ -785,7 +785,8 @@ const BizPage = () => {
         .from("businesses").select("*").in("slug", requestedSlugs).eq("is_active", true).limit(2);
       if (cancelled) return;
       const row = (data || []).find((item: any) => item.slug === canonicalSlug) || data?.[0];
-      if (error || !row) { setNotFound(true); setLoading(false); return; }
+      if (error) { setNotFound(false); setLoading(false); return; }
+      if (!row) { setNotFound(true); setLoading(false); return; }
       const raw = row as unknown as Business;
       const b: Business = { ...raw, plan_tier: normalizeTier(raw.plan_tier) };
       setBiz(b);
@@ -804,7 +805,7 @@ const BizPage = () => {
   }, [slug]);
 
   // Real 404 once we've confirmed the slug doesn't resolve.
-  if (!loading && (notFound || !biz)) {
+  if (!loading && notFound) {
     return <NotFoundBiz slug={slug || ""} />;
   }
 
