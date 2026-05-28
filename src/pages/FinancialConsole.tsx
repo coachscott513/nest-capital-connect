@@ -17,7 +17,7 @@ import {
   Sparkles,
   CheckCircle2,
 } from "lucide-react";
-import Header from "@/components/Header";
+import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -311,15 +311,15 @@ const DealDeskForm = ({ defaultObjective }: { defaultObjective?: string }) => {
       return;
     }
     setDone(true);
-    toast({ title: "Sent to DealDesk", description: "Scott or a Capital District partner will reach out shortly." });
+    toast({ title: "Scenario received", description: "Scott or a Capital District financial partner will reach out shortly." });
   };
 
   if (done) {
     return (
       <div className="rounded-2xl border border-primary/40 bg-primary/10 p-8 text-center">
         <CheckCircle2 className="w-10 h-10 text-primary mx-auto mb-3" />
-        <h3 className="text-xl font-semibold mb-1">Your request is in.</h3>
-        <p className="text-white/70">Capital District DealDesk will reach out within one business day.</p>
+        <h3 className="text-xl font-semibold mb-1">Your scenario is in.</h3>
+        <p className="text-white/70">The Capital District Financial Console will reach out within one business day.</p>
       </div>
     );
   }
@@ -362,7 +362,7 @@ const DealDeskForm = ({ defaultObjective }: { defaultObjective?: string }) => {
         disabled={submitting}
         className="w-full rounded-full bg-primary text-primary-foreground font-medium py-3.5 hover:opacity-90 transition disabled:opacity-50"
       >
-        {submitting ? "Submitting…" : "Submit to DealDesk"}
+        {submitting ? "Submitting…" : "Request Financial Introduction"}
       </button>
       <p className="text-xs text-white/45 text-center">
         Routed to Scott Alvarez · RE/MAX Solutions · (518) 522-7265 · scott@capitaldistrictnest.com
@@ -387,7 +387,7 @@ const FinancialConsole = () => {
       "@type": "FinancialService",
       name: "Capital District Financial Console",
       description:
-        "Mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance, and DealDesk support in the Capital District.",
+        "Mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance, and business capital across the Capital District.",
       url: "https://www.capitaldistrictnest.com/analyze",
       areaServed: "Capital District, New York",
       provider: {
@@ -411,7 +411,7 @@ const FinancialConsole = () => {
         <title>Capital District Financial Console | Mortgages, Banking, Advisors & Investment Analysis</title>
         <meta
           name="description"
-          content="Explore mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance strategy, and DealDesk support across the Capital District."
+          content="Mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance strategy, and business capital across the Capital District."
         />
         <link rel="canonical" href="https://www.capitaldistrictnest.com/analyze" />
         <meta property="og:title" content="Capital District Financial Console" />
@@ -425,7 +425,7 @@ const FinancialConsole = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">
-        <Header />
+        <CleanHeader />
 
         {/* HERO */}
         <section className="px-[5%] pt-16 pb-12 md:pt-24 md:pb-20 border-b border-border/60">
@@ -439,8 +439,8 @@ const FinancialConsole = () => {
               <span className="text-primary"> Capital District Nest.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-white/70 text-lg md:text-xl">
-              Mortgages, banking, financial advisors, accountants, insurance, investment property
-              analysis, commercial lending, and DealDesk support in one local financial hub.
+              Mortgages, banking, advisors, accountants, insurance, investment property analysis,
+              commercial lending, and business capital — all connected through one local financial network.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -448,14 +448,14 @@ const FinancialConsole = () => {
                 onClick={scrollTo("calculator")}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
               >
-                Analyze a Deal <ArrowRight className="w-4 h-4" />
+                Analyze a Scenario <ArrowRight className="w-4 h-4" />
               </a>
               <a
-                href="#dealdesk"
-                onClick={scrollTo("dealdesk")}
+                href="#financial-intro"
+                onClick={scrollTo("financial-intro")}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white hover:border-primary hover:text-primary transition"
               >
-                Request Financial Intro
+                Request Financial Introduction
               </a>
             </div>
           </div>
@@ -473,8 +473,8 @@ const FinancialConsole = () => {
               {products.map((p) => (
                 <a
                   key={p.title}
-                  href="#dealdesk"
-                  onClick={scrollTo("dealdesk")}
+                  href="#financial-intro"
+                  onClick={scrollTo("financial-intro")}
                   data-lead-type={p.leadType}
                   className="group relative rounded-2xl p-5 bg-card/70 backdrop-blur-md border border-border hover:border-primary/60 transition-colors flex flex-col h-full"
                 >
@@ -537,8 +537,8 @@ const FinancialConsole = () => {
                   <h3 className="font-semibold text-foreground mb-2">{p.label}</h3>
                   <p className="text-sm text-white/65 leading-relaxed mb-5">{p.blurb}</p>
                   <a
-                    href="#dealdesk"
-                    onClick={scrollTo("dealdesk")}
+                    href="#financial-intro"
+                    onClick={scrollTo("financial-intro")}
                     className="inline-flex items-center gap-1.5 text-sm text-primary font-medium hover:translate-x-0.5 transition-transform"
                   >
                     Request Introduction <ArrowRight className="w-3.5 h-3.5" />
@@ -565,15 +565,15 @@ const FinancialConsole = () => {
           </div>
         </section>
 
-        {/* DEALDESK LEAD FORM */}
-        <section id="dealdesk" className="px-[5%] py-16 md:py-24 border-t border-border/60 bg-card/30">
+        {/* FINANCIAL INTRO LEAD FORM */}
+        <section id="financial-intro" className="px-[5%] py-16 md:py-24 border-t border-border/60 bg-card/30">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-8">
-              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Capital District DealDesk</p>
-              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Send your numbers to DealDesk.</h2>
+              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Capital District Financial Console</p>
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Submit your financial scenario.</h2>
               <p className="text-white/65 max-w-xl mx-auto">
-                Request help reviewing financing, cash flow, debt strategy, or investment options.
-                We route you to the right Capital District partner.
+                Tell us what you're working on, and we'll route you to the right local mortgage,
+                banking, accounting, insurance, investment, or commercial lending partner.
               </p>
             </div>
             <DealDeskForm />
