@@ -33,6 +33,7 @@ import SchenectadyRealEstate from "./pages/SchenectadyRealEstate";
 import SchenectadyCountyIntelligence from "./pages/SchenectadyCountyIntelligence";
 import SaratogaRealEstate from "./pages/SaratogaRealEstate";
 import InvestmentLanding from "./pages/InvestmentLanding";
+import FinancialConsole from "./pages/FinancialConsole";
 import InvestmentProperties from "./pages/InvestmentProperties";
 import SEOAudit from "./pages/SEOAudit";
 import Markets from "./pages/Markets";
@@ -202,6 +203,8 @@ const App = () => {
             <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/investor-tools" element={<InvestorTools />} />
+          <Route path="/financial-console" element={<FinancialConsole />} />
+          <Route path="/invest" element={<FinancialConsole />} />
           <Route path="/rentals" element={<RentalsHub />} />
           <Route path="/rentals/:city" element={<CityRentalPage />} />
           <Route path="/old-rentals" element={<Rentals />} />

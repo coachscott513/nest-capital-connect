@@ -17,8 +17,8 @@ import { CheckCircle, FileText, TrendingUp, DollarSign, Shield, Clock, Zap, Map,
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   email: z.string().email("Valid email is required"),
-  propertyAddress: z.string().min(1, "Property address or listing link is required"),
-  strategy: z.string().min(1, "Please select a strategy"),
+  propertyAddress: z.string().optional().default(""),
+  strategy: z.string().min(1, "Please select an option"),
   notes: z.string().optional(),
   agreedToUpdates: z.boolean().refine(val => val === true, "You must agree to receive updates"),
 });
@@ -32,13 +32,15 @@ const DealDesk = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
 
+  const initialStrategy = new URLSearchParams(location.search).get("intent") || "";
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
       email: "",
       propertyAddress: "",
-      strategy: "",
+      strategy: initialStrategy,
       notes: "",
       agreedToUpdates: false,
     },
@@ -59,11 +61,25 @@ const DealDesk = () => {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
+      // Persist lead to Supabase so it shows up in the Financial Console pipeline
+      const { error: insertError } = await supabase
+        .from("deal_desk_requests")
+        .insert({
+          first_name: data.firstName,
+          email: data.email,
+          property_address: data.propertyAddress || "—",
+          strategy: data.strategy,
+          lead_type: data.strategy,
+          notes: data.notes || null,
+          agreed_to_updates: data.agreedToUpdates,
+        });
+      if (insertError) console.error("Lead insert error:", insertError);
+
       const { error: emailError } = await supabase.functions.invoke("send-dealdesk-emails", {
         body: {
           firstName: data.firstName,
           email: data.email,
-          propertyAddress: data.propertyAddress,
+          propertyAddress: data.propertyAddress || "—",
           strategy: data.strategy,
           notes: data.notes || null,
         },
@@ -182,11 +198,11 @@ const DealDesk = () => {
                   name="propertyAddress"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-muted-foreground">Property Address or Listing Link *</FormLabel>
+                      <FormLabel className="text-muted-foreground">Property Address or Listing Link (optional)</FormLabel>
                       <FormControl>
                         <Input 
                           {...field} 
-                          placeholder="123 Main St, Albany NY or Zillow/Redfin URL"
+                          placeholder="123 Main St, Albany NY — or leave blank for advisor/CPA/banking intros"
                           className="bg-[#1a1a1a] border-border text-white placeholder:text-muted-foreground"
                         />
                       </FormControl>
@@ -200,25 +216,35 @@ const DealDesk = () => {
                   name="strategy"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-muted-foreground">Investment Strategy *</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormLabel className="text-muted-foreground">What do you need? *</FormLabel>
+                      <Select onValueChange={field.onChange} value={field.value}>
                         <FormControl>
                           <SelectTrigger className="bg-[#1a1a1a] border-border text-white">
-                            <SelectValue placeholder="Select your strategy" />
+                            <SelectValue placeholder="Select an option" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent className="bg-[#1a1a1a] border-border">
-                          <SelectItem value="cash-flow">Cash Flow</SelectItem>
-                          <SelectItem value="dscr">DSCR</SelectItem>
-                          <SelectItem value="house-hack">House Hack</SelectItem>
-                          <SelectItem value="value-add">Value-Add</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
+                          <SelectItem value="mortgage">Get mortgage pre-approved</SelectItem>
+                          <SelectItem value="investment_property">Analyze an investment property</SelectItem>
+                          <SelectItem value="mortgage_compare">Compare mortgage options</SelectItem>
+                          <SelectItem value="dscr">Explore DSCR financing</SelectItem>
+                          <SelectItem value="commercial_lending">Review a commercial property</SelectItem>
+                          <SelectItem value="financial_advisor">Connect with a financial advisor</SelectItem>
+                          <SelectItem value="accounting">Connect with an accountant / CPA</SelectItem>
+                          <SelectItem value="banking">Connect with a bank or credit union</SelectItem>
+                          <SelectItem value="business_banking">Explore business banking</SelectItem>
+                          <SelectItem value="commercial_lending_intro">Explore commercial lending</SelectItem>
+                          <SelectItem value="insurance">Discuss insurance / risk planning</SelectItem>
+                          <SelectItem value="refinance">Refinance strategy</SelectItem>
+                          <SelectItem value="business_capital">Business-owner capital</SelectItem>
+                          <SelectItem value="general_dealdesk">Something else / general Deal Desk</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+
 
                 <FormField
                   control={form.control}

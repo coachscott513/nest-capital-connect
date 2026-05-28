@@ -1,0 +1,1 @@
+ALTER TABLE public.deal_desk_requests ADD COLUMN IF NOT EXISTS lead_type text;
