@@ -29,6 +29,9 @@ export type BusinessCategory =
   | "Pet"
   | "Wellness"
   | "Bookstore"
+  // Health
+  | "Healthcare"
+  | "Dental"
   // Professional
   | "Accountant"
   | "Financial Advisor"
@@ -40,6 +43,7 @@ export type CategoryGroup =
   | "Real Estate & Home Buying"
   | "Home Services"
   | "Local Lifestyle"
+  | "Health & Wellness"
   | "Professional Services";
 
 export const CATEGORY_GROUPS: Record<CategoryGroup, BusinessCategory[]> = {
