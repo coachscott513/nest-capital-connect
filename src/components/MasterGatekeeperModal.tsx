@@ -8,6 +8,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ArrowRight, Sparkles, Smartphone } from "lucide-react";
 import { z } from "zod";
+import { Honeypot, useHoneypot } from "@/components/Honeypot";
+
 
 // Validation schema
 const leadSchema = z.object({
@@ -57,13 +59,21 @@ const MasterGatekeeperModal = ({
   const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
+  const honeypot = useHoneypot();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
 
+    // Silently swallow bot submissions that filled the hidden field.
+    if (honeypot.isBot()) {
+      onClose();
+      return;
+    }
+
     // Validate inputs
     const result = leadSchema.safeParse({ name, email, phone });
+
     if (!result.success) {
       const fieldErrors: { name?: string; email?: string } = {};
       result.error.errors.forEach((err) => {
@@ -203,7 +213,10 @@ const MasterGatekeeperModal = ({
             <div className="flex-1 h-px bg-border" />
           </div>
 
+          <Honeypot bind={honeypot} />
+
           {/* Name Input */}
+
           <div className="space-y-2">
             <Label htmlFor="gatekeeper-name" className="text-xs text-muted-foreground uppercase tracking-wider">
               Full Name
