@@ -398,6 +398,19 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
 
 /* ─────────────────────────  CARDS  ───────────────────────── */
 
+const BusinessCardSkeleton = () => (
+  <div className="rounded-[22px] bg-[#1E2230] border border-white/[0.06] overflow-hidden animate-pulse min-h-[280px]">
+    <div className="h-32 w-full bg-white/[0.04]" />
+    <div className="p-6 space-y-3">
+      <div className="h-3 w-20 bg-white/10 rounded" />
+      <div className="h-4 w-3/4 bg-white/10 rounded" />
+      <div className="h-3 w-1/2 bg-white/[0.07] rounded" />
+      <div className="h-16 w-full bg-white/[0.04] rounded-xl mt-4" />
+    </div>
+  </div>
+);
+
+
 const FilterChip = ({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) => (
   <button
     type="button"
