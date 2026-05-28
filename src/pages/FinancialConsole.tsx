@@ -236,6 +236,34 @@ const RefinanceCalc = () => {
   );
 };
 
+const BusinessCapitalCalc = () => {
+  const [amount, setAmount] = useState(150000);
+  const [rate, setRate] = useState(9.5);
+  const [term, setTerm] = useState(7);
+  const [revenue, setRevenue] = useState(45000);
+
+  const monthly = pmt(amount, rate, term);
+  const dscr = (revenue * 0.15) / monthly;
+
+  return (
+    <CalcShell
+      inputs={
+        <>
+          <NumField label="Capital needed" value={amount} onChange={setAmount} prefix="$" />
+          <NumField label="Rate" value={rate} onChange={setRate} suffix="%" step={0.125} />
+          <NumField label="Term (years)" value={term} onChange={setTerm} />
+          <NumField label="Monthly revenue" value={revenue} onChange={setRevenue} prefix="$" />
+        </>
+      }
+      results={[
+        { label: "Monthly payment", value: money(monthly) + " / mo", highlight: true },
+        { label: "Est. coverage ratio", value: dscr.toFixed(2) },
+        { label: "Lender guidance", value: dscr >= 1.25 ? "Strong coverage" : "Talk to a local banker" },
+      ]}
+    />
+  );
+};
+
 // ──────────────────────── Calc primitives ────────────────────────
 
 const NumField = ({
