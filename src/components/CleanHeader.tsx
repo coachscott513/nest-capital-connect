@@ -177,8 +177,8 @@ const CleanHeader = () => {
               </button>
 
               <AnalystCard>
-                <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold bg-white text-[#0B0F19] hover:bg-white/90 shadow-sm">
-                  Get Started
+                <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-white border border-white/20 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition-colors">
+                  Request Intro
                 </button>
               </AnalystCard>
             </div>
@@ -279,8 +279,8 @@ const CleanHeader = () => {
 
         <div className="mt-8">
           <AnalystCard>
-            <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold bg-white text-[#0B0F19]">
-              Talk to an Expert
+            <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white border border-white/20 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md">
+              Request Intro
             </button>
           </AnalystCard>
         </div>

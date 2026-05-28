@@ -307,9 +307,9 @@ const CalcShell = ({
   </div>
 );
 
-// ───────────────────────────────── DealDesk Form ─────────────────────────────────
+// ─────────────────────────── Financial Scenario Form ───────────────────────────
 
-const DealDeskForm = ({ defaultObjective }: { defaultObjective?: string }) => {
+const FinancialScenarioForm = ({ defaultObjective }: { defaultObjective?: string }) => {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -644,7 +644,7 @@ const FinancialConsole = () => {
                 mortgage, banking, accounting, insurance, financial planning, or lending partner.
               </p>
             </div>
-            <DealDeskForm />
+            <FinancialScenarioForm />
           </div>
         </section>
 
