@@ -151,7 +151,7 @@ export const useDbBusinesses = () => {
           city: r.city ?? undefined,
           county: r.county ?? undefined,
           townLabel,
-          category: mapCategory(r.category, tagsArr),
+          category: mapCategory(r.category, tagsArr, r.name, r.subcategory),
           subcategory: r.subcategory ?? r.category ?? undefined,
           tagline: r.tagline || r.category || "Local business",
           about: r.description ?? undefined,
