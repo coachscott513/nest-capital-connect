@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { X, ExternalLink, PlayCircle, Newspaper } from "lucide-react";
-import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
+import { type WeeklyFeedItem } from "@/data/weeklyFeed";
 import LocalVideoModal, { isTrustedEmbedUrl } from "@/components/LocalVideoModal";
+import { useMediaStories } from "@/hooks/useMediaStories";
 
 interface Props {
   open: boolean;
@@ -39,13 +40,11 @@ export default function MediaSourceModal({
     };
   }, [open, onClose]);
 
-  const stories = useMemo(() => {
-    return weeklyFeed
-      .filter((s) => s.source_name === sourceName)
-      .filter((s) => s.external_article_url || s.original_url || s.video_embed_url)
-      .sort((a, b) => (b.published_at || "").localeCompare(a.published_at || ""))
-      .slice(0, 6);
-  }, [sourceName]);
+  const allStories = useMediaStories();
+  const stories = useMemo(
+    () => allStories.filter((s) => s.source_name === sourceName).slice(0, 6),
+    [allStories, sourceName],
+  );
 
   if (!open) return null;
 

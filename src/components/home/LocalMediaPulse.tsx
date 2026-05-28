@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { PlayCircle, ExternalLink, Newspaper, Radio, Tv } from "lucide-react";
-import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
+import { type WeeklyFeedItem } from "@/data/weeklyFeed";
 import LocalVideoModal, { isTrustedEmbedUrl } from "@/components/LocalVideoModal";
 import MediaSourceModal from "@/components/MediaSourceModal";
+import { useMediaStories } from "@/hooks/useMediaStories";
 
 /**
  * LOCAL MEDIA PULSE — Capital District Nest
@@ -74,12 +75,8 @@ export default function LocalMediaPulse() {
   const [sourceModal, setSourceModal] = useState<SourceCard | null>(null);
 
 
-  const stories = useMemo(() => {
-    return weeklyFeed
-      .filter(isMediaItem)
-      .sort((a, b) => (b.published_at || "").localeCompare(a.published_at || ""))
-      .slice(0, 6);
-  }, []);
+  const allStories = useMediaStories();
+  const stories = useMemo(() => allStories.slice(0, 6), [allStories]);
 
   // If there are no media stories at all, hide the module cleanly.
   if (stories.length === 0) return null;

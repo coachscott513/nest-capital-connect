@@ -13,6 +13,7 @@ import RouteFade from "@/components/RouteFade";
 import GARouteTracker from "@/components/GARouteTracker";
 import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext";
 import Index from "./pages/Index";
+import AdminMediaStories from "./pages/AdminMediaStories";
 import HomesPage from "./pages/HomesPage";
 import LocalPage from "./pages/LocalPage";
 import ContactPage from "./pages/ContactPage";
@@ -202,6 +203,8 @@ const App = () => {
             <RouteFade>
             <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/admin/media-stories" element={<AdminMediaStories />} />
+
           <Route path="/investor-tools" element={<InvestorTools />} />
           <Route path="/finances" element={<FinancialConsole />} />
           <Route path="/financial-console" element={<FinancialConsole />} />
