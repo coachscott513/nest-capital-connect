@@ -601,7 +601,8 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
       </span>
     </div>
   </button>
-);
+  );
+};
 
 const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
   const claimed = isMember(b);
