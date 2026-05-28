@@ -308,7 +308,13 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       {/* RESULTS */}
       <section className={embedded ? "py-10" : "py-20 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
-          {results.length === 0 ? (
+          {loading ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {Array.from({ length: 9 }).map((_, i) => (
+                <BusinessCardSkeleton key={i} />
+              ))}
+            </div>
+          ) : results.length === 0 ? (
             <div className="text-center py-20 border border-dashed border-white/15 rounded-2xl bg-white/[0.02]">
               <p className="text-lg font-semibold text-white">No businesses found yet.</p>
               <p className="mt-2 text-sm text-white/60">
@@ -325,25 +331,36 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             </div>
           ) : (
             <>
-              {[...grouped.entries()].map(([group, list], gi) => (
-                <div key={group} className="mb-14 last:mb-0">
-                  <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white mb-6">
-                    {group}
-                  </h2>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {list.map((b) => (
-                      <BusinessCard key={b.slug} b={b} onOpen={() => setOpenBiz(b)} />
-                    ))}
-                    {gi === 0 && <ClaimCtaCard />}
-                    {gi === 1 && <PromoteCtaCard />}
-                  </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {results.map((b, i) => (
+                  <>
+                    <BusinessCard key={b.slug} b={b} onOpen={() => setOpenBiz(b)} />
+                    {i === 5 && <ClaimCtaCard key="cta-claim" />}
+                    {i === 11 && <PromoteCtaCard key="cta-promote" />}
+                  </>
+                ))}
+                {loadingMore && Array.from({ length: 6 }).map((_, i) => (
+                  <BusinessCardSkeleton key={`more-${i}`} />
+                ))}
+              </div>
+
+              {/* Infinite-scroll sentinel + manual Load More */}
+              {hasMore && (
+                <div ref={sentinelRef} className="mt-12 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={loadMore}
+                    disabled={loadingMore}
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold text-sm hover:bg-[#5eead4] transition disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {loadingMore ? "Loading…" : "Load more businesses"}
+                  </button>
                 </div>
-              ))}
-              {grouped.size <= 1 && (
-                <div className="grid sm:grid-cols-2 gap-5 mt-4">
-                  <ClaimCtaCard />
-                  <PromoteCtaCard />
-                </div>
+              )}
+              {!hasMore && results.length > 0 && (
+                <p className="mt-12 text-center text-xs uppercase tracking-[0.22em] text-white/40">
+                  End of results · {total?.toLocaleString() ?? results.length} businesses
+                </p>
               )}
             </>
           )}
