@@ -58,9 +58,10 @@ const Footer = () => {
             <h3 className="text-lg font-semibold tracking-tight text-white mb-3">
               Capital District Nest
             </h3>
-            <p className="text-[13px] text-white/55 font-light leading-relaxed max-w-xs">
-              The digital front door of the Capital District — homes, towns, and local life.
+            <p className="text-[13px] text-white/70 font-light leading-relaxed max-w-xs">
+              The digital front door of the Capital District — businesses, towns, events, homes, and local life.
             </p>
+
             <div className="mt-6 space-y-2.5">
               <a href="tel:+15185227265" className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
                 <Phone className="h-3.5 w-3.5" /> (518) 522-7265
