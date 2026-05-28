@@ -565,15 +565,15 @@ const FinancialConsole = () => {
           </div>
         </section>
 
-        {/* DEALDESK LEAD FORM */}
-        <section id="dealdesk" className="px-[5%] py-16 md:py-24 border-t border-border/60 bg-card/30">
+        {/* FINANCIAL INTRO LEAD FORM */}
+        <section id="financial-intro" className="px-[5%] py-16 md:py-24 border-t border-border/60 bg-card/30">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-8">
-              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Capital District DealDesk</p>
-              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Send your numbers to DealDesk.</h2>
+              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Capital District Financial Console</p>
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Submit your financial scenario.</h2>
               <p className="text-white/65 max-w-xl mx-auto">
-                Request help reviewing financing, cash flow, debt strategy, or investment options.
-                We route you to the right Capital District partner.
+                Tell us what you're working on, and we'll route you to the right local mortgage,
+                banking, accounting, insurance, investment, or commercial lending partner.
               </p>
             </div>
             <DealDeskForm />
