@@ -61,11 +61,25 @@ const DealDesk = () => {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
+      // Persist lead to Supabase so it shows up in the Financial Console pipeline
+      const { error: insertError } = await supabase
+        .from("deal_desk_requests")
+        .insert({
+          first_name: data.firstName,
+          email: data.email,
+          property_address: data.propertyAddress || "—",
+          strategy: data.strategy,
+          lead_type: data.strategy,
+          notes: data.notes || null,
+          agreed_to_updates: data.agreedToUpdates,
+        });
+      if (insertError) console.error("Lead insert error:", insertError);
+
       const { error: emailError } = await supabase.functions.invoke("send-dealdesk-emails", {
         body: {
           firstName: data.firstName,
           email: data.email,
-          propertyAddress: data.propertyAddress,
+          propertyAddress: data.propertyAddress || "—",
           strategy: data.strategy,
           notes: data.notes || null,
         },
