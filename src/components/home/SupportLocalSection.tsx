@@ -33,6 +33,29 @@ const PLACEHOLDERS = [
   "Restaurant in Delmar",
 ];
 
+const AvailableSpotlightCard = () => (
+  <Link
+    to="/pricing"
+    className="group relative flex flex-col justify-between overflow-hidden rounded-[28px] border border-dashed border-[#5eead4]/35 bg-gradient-to-br from-[#0d6e66]/10 via-[#1E2230]/60 to-[#1E2230]/60 backdrop-blur-xl p-7 md:p-8 min-h-[300px] hover:border-[#5eead4]/70 transition-all duration-500 hover:-translate-y-1"
+  >
+    <div>
+      <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+        Available Placement
+      </p>
+      <h4 className="mt-3 text-xl md:text-2xl font-semibold tracking-[-0.01em] text-white leading-snug">
+        Featured spotlight open.
+      </h4>
+      <p className="mt-3 text-sm text-white/60 font-light leading-relaxed">
+        One of the first local Featured positions in our pilot — reserved for a
+        Capital District business.
+      </p>
+    </div>
+    <span className="mt-6 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white/[0.06] border border-white/15 text-white text-[12.5px] font-semibold w-fit group-hover:border-[#5eead4]/60 group-hover:text-[#5eead4] transition">
+      Request this placement <ArrowRight className="w-3.5 h-3.5" />
+    </span>
+  </Link>
+);
+
 const SupportLocalSection = () => {
   const navigate = useNavigate();
   const [q, setQ] = useState("");
