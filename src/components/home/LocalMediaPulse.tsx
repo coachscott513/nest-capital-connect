@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { PlayCircle, ExternalLink, Newspaper, Radio, Tv } from "lucide-react";
-import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
+import { type WeeklyFeedItem } from "@/data/weeklyFeed";
 import LocalVideoModal, { isTrustedEmbedUrl } from "@/components/LocalVideoModal";
 import MediaSourceModal from "@/components/MediaSourceModal";
+import { useMediaStories } from "@/hooks/useMediaStories";
 
 /**
  * LOCAL MEDIA PULSE — Capital District Nest
