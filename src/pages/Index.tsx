@@ -507,6 +507,9 @@ const Index = () => {
       {/* 1 — CINEMATIC HERO */}
       <CinematicHero />
 
+      {/* 1.25 — CAPITAL DISTRICT DISCOVERY CONSOLE · permanent split-panel search hub */}
+      <DiscoveryConsole />
+
       {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip */}
       <LiveLocalPulse />
 
