@@ -19,9 +19,11 @@ import {
   Flame,
   Newspaper,
   ExternalLink,
+  PlayCircle,
   type LucideIcon,
 } from "lucide-react";
 import { weeklyFeed, type WeeklyFeedType, type WeeklyFeedItem } from "@/data/weeklyFeed";
+import LocalVideoModal, { isTrustedEmbedUrl } from "./LocalVideoModal";
 
 interface Props {
   /** "region" for homepage, or a town slug like "delmar". */
@@ -94,6 +96,10 @@ const WeeklyFeed = ({
 }: Props) => {
   const isRegion = scope === "region";
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [activeVideo, setActiveVideo] = useState<WeeklyFeedItem | null>(null);
+
+  const hasPlayableVideo = (i: WeeklyFeedItem) =>
+    !!(i.has_video && i.video_embed_url && isTrustedEmbedUrl(i.video_embed_url));
 
   // Today at local midnight, for freshness filtering.
   const today = useMemo(() => {
@@ -348,9 +354,17 @@ const WeeklyFeed = ({
                     </span>
                   )}
                 </div>
-                {featured.original_url ? (
+                {hasPlayableVideo(featured) ? (
+                  <button
+                    type="button"
+                    onClick={() => setActiveVideo(featured)}
+                    className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#5eead4]/50 bg-[#0d6e66]/15 px-4 py-2 text-sm font-semibold text-[#5eead4] hover:bg-[#0d6e66]/30 hover:text-white transition"
+                  >
+                    <PlayCircle className="w-4 h-4" /> Watch Coverage
+                  </button>
+                ) : featured.original_url ? (
                   <a
-                    href={featured.original_url}
+                    href={featured.external_article_url ?? featured.original_url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#2D3748] bg-[#0B0F19] px-4 py-2 text-sm font-semibold text-[#5eead4] hover:border-[#5eead4]/60 hover:text-white transition"
@@ -435,17 +449,29 @@ const WeeklyFeed = ({
             >
               {filtered.map((item, i) => {
                 const Icon = ICONS[item.type];
+                const playable = hasPlayableVideo(item);
                 const isNews = !!item.original_url;
-                const Wrapper: any = isNews ? "a" : "article";
-                const wrapperProps = isNews
-                  ? { href: item.original_url, target: "_blank", rel: "noopener noreferrer" }
+                const Wrapper: any = playable ? "button" : isNews ? "a" : "article";
+                const wrapperProps = playable
+                  ? { type: "button", onClick: () => setActiveVideo(item) }
+                  : isNews
+                  ? {
+                      href: item.external_article_url ?? item.original_url,
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                    }
                   : {};
                 return (
                   <Wrapper
                     key={i}
                     {...wrapperProps}
-                    className="card-lift group relative block bg-[#1E2230] border border-[#2D3748] rounded-2xl p-5 transition-all hover:border-[#0d6e66]/50 hover:bg-[#222637]"
+                    className="card-lift group relative block text-left w-full bg-[#1E2230] border border-[#2D3748] rounded-2xl p-5 transition-all hover:border-[#0d6e66]/50 hover:bg-[#222637]"
                   >
+                    {playable && (
+                      <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-black/70 border border-[#5eead4]/40 px-2 py-0.5 text-[9px] uppercase tracking-[0.16em] font-semibold text-[#5eead4]">
+                        <PlayCircle className="w-3 h-3" /> Video
+                      </span>
+                    )}
                     <div className="flex items-center gap-2 mb-3 flex-wrap">
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0d6e66]/15 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] font-semibold text-[#5eead4]">
                         <Icon className="w-3 h-3" strokeWidth={2} />
@@ -483,9 +509,17 @@ const WeeklyFeed = ({
                         </span>
                       )}
                     </div>
-                    {isNews && (
+                    {(playable || isNews) && (
                       <span className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#5eead4] group-hover:text-white transition">
-                        Read Full Coverage <ExternalLink className="w-3 h-3" />
+                        {playable ? (
+                          <>
+                            <PlayCircle className="w-3.5 h-3.5" /> Watch Coverage
+                          </>
+                        ) : (
+                          <>
+                            Read Full Coverage <ExternalLink className="w-3 h-3" />
+                          </>
+                        )}
                       </span>
                     )}
                   </Wrapper>
@@ -510,6 +544,17 @@ const WeeklyFeed = ({
           </a>
         </div>
       </div>
+
+      <LocalVideoModal
+        open={!!activeVideo}
+        onClose={() => setActiveVideo(null)}
+        title={activeVideo?.title ?? ""}
+        embedUrl={activeVideo?.video_embed_url}
+        sourceName={activeVideo?.source_name}
+        articleUrl={activeVideo?.external_article_url ?? activeVideo?.original_url}
+        town={activeVideo?.town}
+        category={activeVideo?.categoryBadgeOverride ?? (activeVideo ? LABELS[activeVideo.type] : undefined)}
+      />
     </section>
   );
 };

@@ -46,11 +46,19 @@ export interface WeeklyFeedItem {
   cta?: { label: string; href: string };
   /** Verified news aggregation fields. */
   source_name?: string;
+  source_logo_url?: string;
   original_url?: string;
+  external_article_url?: string;
   published_at?: string;
   summary?: string;
   /** Optional override for the category badge label (e.g. "FOOD & DRINK // LOCAL NEWS"). */
   categoryBadgeOverride?: string;
+  /** Video coverage — always embed the source's official player, never rehost. */
+  has_video?: boolean;
+  video_embed_url?: string;
+  video_provider?: string;
+  video_iframe_html?: string;
+  featured_video?: boolean;
 }
 
 export const weeklyFeed: WeeklyFeedItem[] = [
@@ -68,12 +76,18 @@ export const weeklyFeed: WeeklyFeedItem[] = [
     featured: true,
     source_name: "News10 WTEN",
     original_url: "https://www.news10.com/",
+    external_article_url: "https://www.news10.com/",
     published_at: "2026-05-28",
     categoryBadgeOverride: "FOOD & DRINK // LOCAL NEWS",
     startDate: "2026-05-26",
     endDate: "2026-06-26",
+    has_video: true,
+    featured_video: true,
+    video_provider: "news10",
+    video_embed_url:
+      "https://redir1.news10.com/nxs-video/vid-anvato-9070028/embed/?injected_via=embed&post_id=2730910",
     cta: {
-      label: "Read Full Coverage",
+      label: "Watch Coverage",
       href: "https://www.news10.com/",
     },
   },
