@@ -62,7 +62,7 @@ const SPOTLIGHTS: Spotlight[] = [
       instagram: "https://instagram.com",
       facebook: "https://facebook.com",
     },
-    slug: "the-perfect-blend-cafe",
+    slug: "perfect-blend-cafe-bakery-delmar",
     accent: "emerald",
   },
   {
@@ -85,7 +85,7 @@ const SPOTLIGHTS: Spotlight[] = [
       instagram: "https://instagram.com",
       facebook: "https://facebook.com",
     },
-    slug: "mccarrolls-the-village-butcher",
+    slug: "mccarrolls-village-butcher-delmar",
     ctaIntent: "connect",
     accent: "gold",
   },
