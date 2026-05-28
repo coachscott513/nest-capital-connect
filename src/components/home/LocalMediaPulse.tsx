@@ -71,6 +71,8 @@ function isMediaItem(item: WeeklyFeedItem): boolean {
 
 export default function LocalMediaPulse() {
   const [modal, setModal] = useState<WeeklyFeedItem | null>(null);
+  const [sourceModal, setSourceModal] = useState<SourceCard | null>(null);
+
 
   const stories = useMemo(() => {
     return weeklyFeed
