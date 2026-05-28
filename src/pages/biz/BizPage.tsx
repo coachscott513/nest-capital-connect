@@ -928,8 +928,15 @@ const BizPage = () => {
 
       {loading && (
         <section className="px-6 md:px-10 pt-24 pb-0">
-          <div className="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-5 text-sm text-white/65">
-            Loading community partner profile index...
+          <div className="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 text-sm text-white/65">
+            <p className="font-medium text-white/80">
+              Accessing verified Capital District directory record index for {activeBiz.name}...
+            </p>
+            <div className="mt-5 space-y-3" aria-hidden="true">
+              <div className="h-3 w-2/3 rounded-full bg-white/10" />
+              <div className="h-3 w-1/2 rounded-full bg-white/10" />
+              <div className="h-3 w-5/6 rounded-full bg-white/10" />
+            </div>
           </div>
         </section>
       )}
