@@ -623,8 +623,8 @@ const Index = () => {
         eyebrow="Invest in the Capital District"
         headline={<>Where the region's<br />next chapter is being written.</>}
         sub="Major infrastructure, multifamily demand, and small-business growth are reshaping Albany, Schenectady, Troy, and Saratoga. See where the numbers — and the neighborhoods — are heading."
-        ctaLabel="Run the numbers"
-        ctaHref="/analyze"
+        ctaLabel="Open the Financial Console"
+        ctaHref="/financial-console"
         callouts={[
           { title: "Development & growth", body: "NanoTech expansion, Mohawk Harbor, downtown Albany rebuild." },
           { title: "Multifamily demand",   body: "2–4 unit rents up, vacancy near historic lows region-wide." },
