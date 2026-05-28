@@ -509,52 +509,18 @@ const Index = () => {
       {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip */}
       <LiveLocalPulse />
 
-      {/* 2 — B2B CONVERSION · Local Business Solutions (flywheel CTA, directly under hero) */}
-      <section className="relative bg-[#0B0F19] overflow-hidden border-b border-[#2D3748]">
-        <div
-          className="absolute inset-0 opacity-60 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(60% 80% at 20% 30%, rgba(13,110,102,0.35), transparent 60%), radial-gradient(50% 70% at 80% 70%, rgba(94,234,212,0.12), transparent 60%)",
-          }}
-        />
-        <div className="relative max-w-5xl mx-auto px-6 md:px-10 py-20 md:py-28 text-center">
-          <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-6">
-            For Local Business Owners
-          </p>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white max-w-3xl mx-auto">
-            Own a local business?
-          </h2>
-          <p className="mt-7 text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
-            Get your business in front of the Capital District's fastest-growing
-            local discovery platform.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              to="/pricing"
-              className="inline-flex items-center gap-2 bg-[#0d6e66] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(13,110,102,0.6)] transition"
-            >
-              For Businesses <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/local"
-              className="inline-flex items-center gap-2 bg-white/[0.06] backdrop-blur text-white border border-white/20 px-6 py-3.5 rounded-full text-sm font-semibold hover:bg-white/10 transition"
-            >
-              Learn More
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* 2 — POPULAR LOCAL BUSINESSES · let people use the platform immediately */}
+      <SupportLocalSection />
 
       {/* 3 — TOWNS · Browse Local Search Indexes */}
       <section className="bg-[#0B0F19] w-full border-t border-[#2D3748]">
-        <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-[88px] md:py-[140px]">
+        <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-[72px] md:py-[140px]">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-3xl mx-auto text-center mb-16 md:mb-24"
+            className="max-w-3xl mx-auto text-center mb-12 md:mb-24"
           >
             <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#5eead4]">
               Browse Local Search Indexes
@@ -562,7 +528,7 @@ const Index = () => {
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
               Every town, indexed.
             </h2>
-            <p className="mt-7 text-lg md:text-xl text-white/60 font-light leading-relaxed max-w-2xl mx-auto">
+            <p className="mt-7 text-lg md:text-xl text-white/75 font-light leading-relaxed max-w-2xl mx-auto">
               Tap a town to open its dedicated search index — homes, businesses,
               schools, events, and neighborhood intelligence in one place.
             </p>
@@ -601,18 +567,52 @@ const Index = () => {
         </div>
       </section>
 
-      {/* 4 — LOCAL BUSINESSES · core engagement layer */}
-      <SupportLocalSection />
-
-      {/* 5 — WHAT'S HAPPENING · weekly editorial pulse */}
+      {/* 4 — WHAT'S HAPPENING · weekly editorial pulse */}
       <WeeklyFeed scope="region" />
 
-      {/* 6 — CAPITAL DISTRICT INTELLIGENCE · single consolidated tabbed onramp */}
+      {/* 5 — CAPITAL DISTRICT INTELLIGENCE · single consolidated tabbed onramp */}
       <CapitalDistrictIntelligence />
 
+      {/* 6 — B2B CONVERSION · Local Business Solutions */}
+      <section className="relative bg-[#0B0F19] overflow-hidden border-y border-[#2D3748]">
+        <div
+          className="absolute inset-0 opacity-60 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(60% 80% at 20% 30%, rgba(13,110,102,0.35), transparent 60%), radial-gradient(50% 70% at 80% 70%, rgba(94,234,212,0.12), transparent 60%)",
+          }}
+        />
+        <div className="relative max-w-5xl mx-auto px-6 md:px-10 py-20 md:py-28 text-center">
+          <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-6">
+            For Local Business Owners
+          </p>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white max-w-3xl mx-auto">
+            Own a local business?
+          </h2>
+          <p className="mt-7 text-lg md:text-xl text-white/75 font-light max-w-2xl mx-auto leading-relaxed">
+            Get your business in front of the Capital District's fastest-growing
+            local discovery platform.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              to="/pricing"
+              className="inline-flex items-center gap-2 bg-[#0d6e66] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(13,110,102,0.6)] transition"
+            >
+              For Businesses <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/local"
+              className="inline-flex items-center gap-2 bg-white/[0.08] backdrop-blur text-white border border-white/20 px-6 py-3.5 rounded-full text-sm font-semibold hover:bg-white/15 transition"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
+      </section>
 
-      {/* 7 — REAL ESTATE · lowered, lifestyle-integrated */}
+      {/* 7 — REAL ESTATE · vertical inside the platform */}
       <HomeSearchPreview />
+
 
       {/* 8 — INVEST IN THE CAPITAL DISTRICT · emotional, then analytical */}
       <HeroBand
