@@ -17,8 +17,8 @@ import { CheckCircle, FileText, TrendingUp, DollarSign, Shield, Clock, Zap, Map,
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   email: z.string().email("Valid email is required"),
-  propertyAddress: z.string().min(1, "Property address or listing link is required"),
-  strategy: z.string().min(1, "Please select a strategy"),
+  propertyAddress: z.string().optional().default(""),
+  strategy: z.string().min(1, "Please select an option"),
   notes: z.string().optional(),
   agreedToUpdates: z.boolean().refine(val => val === true, "You must agree to receive updates"),
 });
