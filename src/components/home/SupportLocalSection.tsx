@@ -189,7 +189,7 @@ const SupportLocalSection = () => {
             </Link>
           </div>
 
-          {featured.length > 0 ? (
+          {featured.length >= 3 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch">
               {featured.map((b) => (
                 <PremiumFeaturedBusinessCard
@@ -200,31 +200,17 @@ const SupportLocalSection = () => {
               ))}
             </div>
           ) : (
-            <div className="rounded-3xl border border-[#5eead4]/25 bg-gradient-to-br from-[#0d6e66]/15 via-white/[0.02] to-white/[0.02] backdrop-blur-xl p-10 md:p-14 text-center">
-              <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4] mb-3">
-                Available Spotlight Placements
-              </p>
-              <p className="text-2xl md:text-3xl font-semibold tracking-[-0.015em] text-white mb-3">
-                Featured partner placements are opening.
-              </p>
-              <p className="text-sm md:text-base text-white/60 mb-7 max-w-lg mx-auto font-light leading-relaxed">
-                Claim your profile and request one of the first local spotlight positions
-                during our 25-business pilot.
-              </p>
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  to="/claim-business"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
-                >
-                  Claim Your Profile <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  to="/pricing"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[#5eead4] text-sm font-semibold hover:bg-[#5eead4]/20 transition"
-                >
-                  Request a Featured Placement
-                </Link>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch">
+              {featured.map((b) => (
+                <PremiumFeaturedBusinessCard
+                  key={b.slug}
+                  business={b}
+                  onOpen={setOpenBiz}
+                />
+              ))}
+              {Array.from({ length: Math.max(0, 3 - featured.length) }).map((_, i) => (
+                <AvailableSpotlightCard key={`open-${i}`} />
+              ))}
             </div>
           )}
 
