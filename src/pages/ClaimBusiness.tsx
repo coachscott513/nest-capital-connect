@@ -61,7 +61,7 @@ const TownOptions = [
 ];
 
 const CategoryOptions = [
-  "Restaurant", "Coffee", "Bakery", "Retail", "Wellness", "Gym", "Salon", "Pet", "Auto",
+  "Restaurant", "Coffee", "Bakery", "Retail", "Healthcare", "Dental", "Wellness", "Gym", "Salon", "Pet", "Auto",
   "Mortgage Lender", "Bank/Credit Union", "Real Estate Attorney", "Insurance", "Home Inspector",
   "Contractor", "Roofer", "Plumber", "Electrician", "HVAC", "Landscaper", "Handyman", "Cleaner",
   "Accountant", "Financial Advisor", "Attorney", "Marketing", "Other",
