@@ -23,7 +23,9 @@ const mapCategory = (
     return "Restaurant";
 
   if (test(/gym|fitness|yoga|pilates|crossfit/)) return "Gym";
-  if (test(/salon|barber|spa|nail|hair/)) return "Salon";
+  if (test(/salon|barber|spa|nail|hair|beauty/)) return "Salon";
+  if (test(/dental|dentist|orthodont|endodont|periodont|oral surgeon/)) return "Wellness";
+  if (test(/medical|doctor|clinic|physician|urgent care|pediatric/)) return "Wellness";
   if (test(/wellness|chiropract|massage|acupunct|therap/)) return "Wellness";
   if (test(/pet|vet|groom|kennel/)) return "Pet";
   if (test(/auto|mechanic|tire|car wash|oil change/)) return "Auto";
