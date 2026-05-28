@@ -1,0 +1,1 @@
+UPDATE public.business_specials SET is_active = false WHERE is_active = true;
