@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { isLikelyBot } from '@/lib/botDetection';
 
 declare global {
   interface Window {
@@ -15,6 +16,7 @@ interface AnalyticsEvent {
 
 export const useAnalytics = () => {
   const trackEvent = (event: AnalyticsEvent) => {
+    if (isLikelyBot()) return;
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', event.action, {
         event_category: event.category,
@@ -25,6 +27,9 @@ export const useAnalytics = () => {
   };
 
   const trackKeyEvent = (eventName: string, parameters: Record<string, any> = {}) => {
+    // Suppress custom conversion events for obvious bot/headless sessions
+    // so GA4 conversions reflect real human interactions only.
+    if (isLikelyBot()) return;
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', eventName, {
         ...parameters,
@@ -34,9 +39,6 @@ export const useAnalytics = () => {
     }
   };
 
-  // Predefined tracking functions for common conversions
-  const trackLeadFormSubmission = (formType: string, location?: string) => {
-    trackKeyEvent('generate_lead', {
       event_category: 'Lead Generation',
       event_label: formType,
       location: location,
