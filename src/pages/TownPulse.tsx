@@ -657,7 +657,9 @@ const TownPulse = () => {
             }
           />
 
-          {filteredBiz.length === 0 ? (
+          {loading ? (
+            <LoadingIndexBlock />
+          ) : filteredBiz.length === 0 ? (
             <EmptyState
               title={
                 search
