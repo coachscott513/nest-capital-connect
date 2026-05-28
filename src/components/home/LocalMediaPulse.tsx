@@ -4,7 +4,7 @@ import { PlayCircle, ExternalLink, Newspaper, Radio, Tv } from "lucide-react";
 import { type WeeklyFeedItem } from "@/data/weeklyFeed";
 import LocalVideoModal, { isTrustedEmbedUrl } from "@/components/LocalVideoModal";
 import MediaSourceModal from "@/components/MediaSourceModal";
-import { useMediaStories } from "@/hooks/useMediaStories";
+import { useMediaStoriesWithState } from "@/hooks/useMediaStories";
 
 /**
  * LOCAL MEDIA PULSE — Capital District Nest
@@ -74,15 +74,15 @@ export default function LocalMediaPulse() {
   const [modal, setModal] = useState<WeeklyFeedItem | null>(null);
   const [sourceModal, setSourceModal] = useState<SourceCard | null>(null);
 
-
-  const allStories = useMediaStories();
+  const { stories: allStories, loading } = useMediaStoriesWithState();
   const stories = useMemo(() => allStories.slice(0, 6), [allStories]);
 
-  // If there are no media stories at all, hide the module cleanly.
-  if (stories.length === 0) return null;
+  // Hide module cleanly only if loading is done and nothing to show.
+  if (!loading && stories.length === 0) return null;
 
   return (
     <section
+      id="local-media-pulse"
       aria-label="Local Media Pulse"
       className="relative w-full bg-[#0B0F19] border-t border-[#2D3748]"
     >
@@ -150,86 +150,106 @@ export default function LocalMediaPulse() {
         </div>
 
 
+        {/* Loading state */}
+        {loading && stories.length === 0 && (
+          <div className="flex items-center justify-center py-16">
+            <div className="inline-flex items-center gap-3 rounded-full border border-[#2D3748] bg-white/[0.04] backdrop-blur-sm px-5 py-3 text-xs font-semibold tracking-[0.14em] uppercase text-white/70">
+              <span className="w-3 h-3 rounded-full border-2 border-[#5eead4]/40 border-t-[#5eead4] animate-spin" />
+              Loading local coverage…
+            </div>
+          </div>
+        )}
+
         {/* Curated stories */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          {stories.map((s, i) => {
-            const hasVideo = !!(s.has_video && isTrustedEmbedUrl(s.video_embed_url));
-            const ctaLabel = hasVideo ? "Watch Coverage" : "Read Full Coverage";
-            const href = s.external_article_url || s.original_url || "#";
-            const Tag: any = hasVideo ? "button" : "a";
-            const tagProps = hasVideo
-              ? { type: "button", onClick: () => setModal(s) }
-              : { href, target: "_blank", rel: "noopener noreferrer" };
+        {stories.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+            {stories.map((s, i) => {
+              const hasVideo = !!(s.has_video && isTrustedEmbedUrl(s.video_embed_url));
+              const ctaLabel = hasVideo ? "Watch Coverage" : "Read Full Coverage";
+              const href = s.external_article_url || s.original_url || "#";
+              const Tag: any = hasVideo ? "button" : "a";
+              const tagProps = hasVideo
+                ? { type: "button", onClick: () => setModal(s) }
+                : { href, target: "_blank", rel: "noopener noreferrer" };
 
-            return (
-              <motion.article
-                key={`${s.title}-${i}`}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
-                className="group relative flex flex-col rounded-2xl border border-[#2D3748] bg-white/[0.025] overflow-hidden transition-all duration-300 hover:border-[#5eead4]/45 hover:bg-white/[0.04]"
-              >
-                <div className="p-6 md:p-7 flex flex-col h-full">
-                  <div className="flex items-center gap-2 flex-wrap mb-4 text-[10px] font-semibold tracking-[0.18em] uppercase">
-                    <span className="text-[#5eead4]">
-                      {s.categoryBadgeOverride || "Local News"}
-                    </span>
-                    {s.town && (
-                      <>
-                        <span className="text-white/25">·</span>
-                        <span className="text-white/55">{s.town}</span>
-                      </>
-                    )}
-                    {hasVideo && (
-                      <>
-                        <span className="text-white/25">·</span>
-                        <span className="inline-flex items-center gap-1 text-[#5eead4]">
-                          <PlayCircle className="w-3 h-3" /> Video
-                        </span>
-                      </>
-                    )}
-                  </div>
-
-                  <h3 className="text-lg md:text-[1.35rem] font-semibold text-white tracking-[-0.018em] leading-snug mb-3">
-                    {s.title}
-                  </h3>
-
-                  {(s.summary || s.description) && (
-                    <p className="text-sm text-white/60 leading-relaxed mb-5 line-clamp-4">
-                      {s.summary || s.description}
-                    </p>
-                  )}
-
-                  <div className="mt-auto flex items-center justify-between gap-3 pt-4 border-t border-white/[0.06]">
-                    {s.source_name && (
-                      <span className="inline-flex items-center gap-1.5 text-[11px] text-white/50">
-                        <Newspaper className="w-3 h-3" /> via {s.source_name}
+              return (
+                <motion.article
+                  key={`${s.title}-${i}`}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.5, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
+                  className="group relative flex flex-col rounded-2xl border border-[#2D3748] bg-white/[0.025] overflow-hidden transition-all duration-300 hover:border-[#5eead4]/45 hover:bg-white/[0.04]"
+                >
+                  <div className="p-6 md:p-7 flex flex-col h-full">
+                    <div className="flex items-center gap-2 flex-wrap mb-4 text-[10px] font-semibold tracking-[0.18em] uppercase">
+                      <span className="text-[#5eead4]">
+                        {s.categoryBadgeOverride || "Local News"}
                       </span>
-                    )}
-                    <Tag
-                      {...tagProps}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.06em] text-[#5eead4] hover:text-white transition-colors"
-                    >
-                      {ctaLabel}
-                      {hasVideo ? (
-                        <PlayCircle className="w-3.5 h-3.5" />
-                      ) : (
-                        <ExternalLink className="w-3 h-3" />
+                      {s.town && (
+                        <>
+                          <span className="text-white/25">·</span>
+                          <span className="text-white/55">{s.town}</span>
+                        </>
                       )}
-                    </Tag>
-                  </div>
-                </div>
-              </motion.article>
-            );
-          })}
-        </div>
+                      {hasVideo && (
+                        <>
+                          <span className="text-white/25">·</span>
+                          <span className="inline-flex items-center gap-1 text-[#5eead4]">
+                            <PlayCircle className="w-3 h-3" /> Video
+                          </span>
+                        </>
+                      )}
+                    </div>
 
-        {/* View more */}
+                    <h3 className="text-lg md:text-[1.35rem] font-semibold text-white tracking-[-0.018em] leading-snug mb-3">
+                      {s.title}
+                    </h3>
+
+                    {(s.summary || s.description) && (
+                      <p className="text-sm text-white/60 leading-relaxed mb-5 line-clamp-4">
+                        {s.summary || s.description}
+                      </p>
+                    )}
+
+                    <div className="mt-auto flex items-center justify-between gap-3 pt-4 border-t border-white/[0.06]">
+                      {s.source_name && (
+                        <span className="inline-flex items-center gap-1.5 text-[11px] text-white/50">
+                          <Newspaper className="w-3 h-3" /> via {s.source_name}
+                        </span>
+                      )}
+                      <Tag
+                        {...tagProps}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.06em] text-[#5eead4] hover:text-white transition-colors"
+                      >
+                        {ctaLabel}
+                        {hasVideo ? (
+                          <PlayCircle className="w-3.5 h-3.5" />
+                        ) : (
+                          <ExternalLink className="w-3 h-3" />
+                        )}
+                      </Tag>
+                    </div>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
+        )}
+
+        {/* View more — smooth-scrolls to the top of this section so the
+            header is always the first visible element. */}
         <div className="mt-10 md:mt-14 flex justify-center">
           <button
             type="button"
-            onClick={() => setSourceModal(SOURCE_CARDS[0])}
+            onClick={() => {
+              const el = document.getElementById("local-media-pulse");
+              if (el) {
+                el.scrollIntoView({ behavior: "smooth", block: "start" });
+              } else {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
             className="inline-flex items-center gap-2 rounded-full border border-[#2D3748] bg-white/[0.03] px-6 py-3 text-xs font-semibold tracking-[0.16em] uppercase text-white/80 hover:text-white hover:border-[#5eead4]/50 hover:bg-white/[0.06] transition"
           >
             View More Local Coverage

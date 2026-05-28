@@ -50,7 +50,15 @@ function isMediaItem(item: WeeklyFeedItem): boolean {
 }
 
 export function useMediaStories(): WeeklyFeedItem[] {
+  return useMediaStoriesWithState().stories;
+}
+
+export function useMediaStoriesWithState(): {
+  stories: WeeklyFeedItem[];
+  loading: boolean;
+} {
   const [dbItems, setDbItems] = useState<WeeklyFeedItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
@@ -66,6 +74,7 @@ export function useMediaStories(): WeeklyFeedItem[] {
         .limit(60);
       if (cancelled) return;
       setDbItems(((data as DbStory[]) || []).map(dbToFeedItem));
+      setLoading(false);
     })();
     return () => {
       cancelled = true;
@@ -74,11 +83,13 @@ export function useMediaStories(): WeeklyFeedItem[] {
 
   const curated = weeklyFeed.filter(isMediaItem);
   const merged = [...dbItems, ...curated];
-  // Stable sort: featured first, then newest published
-  return merged.sort((a, b) => {
+  const stories = merged.sort((a, b) => {
     const af = a.featured ? 1 : 0;
     const bf = b.featured ? 1 : 0;
     if (af !== bf) return bf - af;
     return (b.published_at || "").localeCompare(a.published_at || "");
   });
+
+  return { stories, loading: loading && dbItems.length === 0 && curated.length === 0 };
 }
+

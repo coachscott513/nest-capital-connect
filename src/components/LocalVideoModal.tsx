@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { X, ExternalLink, Newspaper } from "lucide-react";
 
 /**
@@ -66,12 +66,18 @@ export default function LocalVideoModal({
   town,
   category,
 }: Props) {
+  const panelRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    // Reset modal scroll to top whenever it opens
+    requestAnimationFrame(() => {
+      if (panelRef.current) panelRef.current.scrollTop = 0;
+    });
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
@@ -93,7 +99,8 @@ export default function LocalVideoModal({
       <div className="absolute inset-0 bg-[#05070d]/85 backdrop-blur-md" />
 
       <div
-        className="relative w-full max-w-4xl rounded-2xl border border-white/10 bg-[#0B0F19] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] overflow-hidden"
+        ref={panelRef}
+        className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-2xl border border-white/10 bg-[#0B0F19] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]"
         onClick={(e) => e.stopPropagation()}
       >
         <button
