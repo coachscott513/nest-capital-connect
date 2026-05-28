@@ -144,13 +144,40 @@ export default function AdminMediaStories() {
   }
 
   if (isAdmin === false) {
+    const claimAdmin = async () => {
+      const { data, error } = await (supabase as any).rpc("claim_first_admin");
+      if (error) {
+        toast({
+          title: "Could not grant admin",
+          description: error.message,
+          variant: "destructive",
+        });
+        return;
+      }
+      toast({
+        title: data === "granted" ? "Admin access granted" : "You are already an admin",
+      });
+      setIsAdmin(true);
+    };
+
     return (
       <div className="min-h-screen bg-[#0B0F19] text-white flex flex-col items-center justify-center p-8">
+        <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-[#5eead4] mb-3">
+          Local Media Admin
+        </p>
         <h1 className="text-2xl font-semibold mb-3">Admin access required</h1>
         <p className="text-white/60 text-sm mb-6 max-w-md text-center">
-          Your account is signed in but doesn't have the <code>admin</code> role.
-          Ask Scott to grant access in <code>user_roles</code>.
+          You're signed in but don't have the <code>admin</code> role yet.
+          If you're the project owner, claim admin below. This only works once —
+          after the first admin exists, additional admins must be added manually.
         </p>
+        <button
+          type="button"
+          onClick={claimAdmin}
+          className="inline-flex items-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-6 py-3 text-xs font-semibold tracking-[0.16em] uppercase hover:bg-white transition mb-6"
+        >
+          Claim admin access
+        </button>
         <Link to="/" className="text-[#5eead4] text-sm hover:text-white">
           ← Back to homepage
         </Link>
