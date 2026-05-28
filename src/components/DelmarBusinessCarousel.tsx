@@ -4,10 +4,14 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useDbBusinesses } from "@/hooks/useDbBusinesses";
 
 const DelmarBusinessCarousel = () => {
-  const { rows } = useDbBusinesses();
-const DelmarBusinessCarousel = () => {
   const { rows } = useDbBusinesses({ townSlug: "delmar", limit: 24 });
   const businesses = rows.slice(0, 12);
+
+  return (
+    <section className="py-16 px-6 bg-background">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl font-bold text-foreground mb-4">
 
     <section className="py-16 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
