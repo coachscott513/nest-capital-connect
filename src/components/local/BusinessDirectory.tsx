@@ -213,7 +213,8 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         <section className="py-16 md:py-20 px-6 md:px-10 border-y border-white/[0.06] bg-[#10141F]">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
-              <div>
+                <FeaturedTile key={b.slug} b={b} onOpen={() => { trackGAEvent.businessProfileOpen(bizPayload(b, "directory_featured")); setOpenBiz(b); }} />
+
                 <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-3 text-[#5eead4]">
                   Featured Partners
                 </p>
