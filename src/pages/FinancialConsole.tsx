@@ -342,7 +342,7 @@ const DealDeskForm = ({ defaultObjective }: { defaultObjective?: string }) => {
       purchase_price: form.purchase_price ? Number(form.purchase_price) : null,
       estimated_rent: form.estimated_rent ? Number(form.estimated_rent) : null,
       notes: form.notes || null,
-      source_page: "/analyze",
+      source_page: "/finances",
     });
     setSubmitting(false);
     if (error) {
@@ -427,7 +427,7 @@ const FinancialConsole = () => {
       name: "Capital District Financial Console",
       description:
         "Mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance, and business capital across the Capital District.",
-      url: "https://www.capitaldistrictnest.com/analyze",
+      url: "https://www.capitaldistrictnest.com/finances",
       areaServed: "Capital District, New York",
       provider: {
         "@type": "RealEstateAgent",
@@ -452,13 +452,13 @@ const FinancialConsole = () => {
           name="description"
           content="Mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance strategy, and business capital across the Capital District."
         />
-        <link rel="canonical" href="https://www.capitaldistrictnest.com/analyze" />
+        <link rel="canonical" href="https://www.capitaldistrictnest.com/finances" />
         <meta property="og:title" content="Capital District Financial Console" />
         <meta
           property="og:description"
           content="The financial vertical of Capital District Nest — mortgages, banking, advisors, accountants, insurance, and investment analysis."
         />
-        <meta property="og:url" content="https://www.capitaldistrictnest.com/analyze" />
+        <meta property="og:url" content="https://www.capitaldistrictnest.com/finances" />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
