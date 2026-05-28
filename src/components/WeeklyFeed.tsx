@@ -544,6 +544,17 @@ const WeeklyFeed = ({
           </a>
         </div>
       </div>
+
+      <LocalVideoModal
+        open={!!activeVideo}
+        onClose={() => setActiveVideo(null)}
+        title={activeVideo?.title ?? ""}
+        embedUrl={activeVideo?.video_embed_url}
+        sourceName={activeVideo?.source_name}
+        articleUrl={activeVideo?.external_article_url ?? activeVideo?.original_url}
+        town={activeVideo?.town}
+        category={activeVideo?.categoryBadgeOverride ?? (activeVideo ? LABELS[activeVideo.type] : undefined)}
+      />
     </section>
   );
 };
