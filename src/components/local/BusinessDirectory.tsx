@@ -1364,7 +1364,6 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
 
   return (
     <Popover>
-    <Popover>
       <PopoverTrigger asChild>
         <button
           type="button"
