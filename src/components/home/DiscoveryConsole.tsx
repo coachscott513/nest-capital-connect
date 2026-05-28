@@ -221,14 +221,16 @@ export default function DiscoveryConsole() {
             <div className="p-6 md:p-7 border-b md:border-b-0 md:border-r border-white/[0.06]">
               <SectionLabel icon={MapPin} label="Browse local categories" />
               <ul className="mt-3 space-y-1">
-                {CATEGORIES.map((c) => {
+                {CATEGORIES.map((c, idx) => {
                   const Icon = c.icon;
                   const n = counts[c.key];
+                  // Mobile: cap to top 6 categories. Desktop: show all.
+                  const mobileHidden = idx >= 6 ? "hidden md:flex" : "flex";
                   return (
                     <li key={c.key}>
                       <Link
                         to={c.to}
-                        className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/[0.05] transition group"
+                        className={`${mobileHidden} items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/[0.05] transition group`}
                       >
                         <span className="inline-flex items-center gap-3 min-w-0">
                           <Icon className="w-4 h-4 text-white/55 group-hover:text-[#5eead4] transition" />
@@ -249,6 +251,13 @@ export default function DiscoveryConsole() {
                   );
                 })}
               </ul>
+              {/* Mobile-only: jump to full category index */}
+              <Link
+                to="/local"
+                className="md:hidden mt-3 inline-flex items-center gap-1.5 px-3 py-2 text-[13px] font-semibold text-[#5eead4] hover:text-white transition"
+              >
+                View All Categories <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
 
             {/* RIGHT — Trending + This Week */}
