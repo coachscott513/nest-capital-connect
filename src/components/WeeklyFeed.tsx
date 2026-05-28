@@ -19,9 +19,11 @@ import {
   Flame,
   Newspaper,
   ExternalLink,
+  PlayCircle,
   type LucideIcon,
 } from "lucide-react";
 import { weeklyFeed, type WeeklyFeedType, type WeeklyFeedItem } from "@/data/weeklyFeed";
+import LocalVideoModal, { isTrustedEmbedUrl } from "./LocalVideoModal";
 
 interface Props {
   /** "region" for homepage, or a town slug like "delmar". */
