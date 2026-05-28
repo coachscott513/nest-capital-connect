@@ -203,6 +203,8 @@ const App = () => {
             <RouteFade>
             <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/admin/media-stories" element={<AdminMediaStories />} />
+
           <Route path="/investor-tools" element={<InvestorTools />} />
           <Route path="/finances" element={<FinancialConsole />} />
           <Route path="/financial-console" element={<FinancialConsole />} />
