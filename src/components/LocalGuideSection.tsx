@@ -8,6 +8,8 @@ import {
   Users, 
   Wrench,
   Briefcase,
+  Stethoscope,
+  Bluetooth,
   ExternalLink,
   Phone,
   Mail,
