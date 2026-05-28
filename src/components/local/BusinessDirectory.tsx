@@ -786,6 +786,19 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
                 {s}
               </span>
             ))}
+          </div>
+        )}
+
+        {claimed ? (
+          <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4]">
+            View profile
+            <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </span>
+        ) : (
+          <div className="mt-auto pt-5 flex items-center gap-2">
+            <span className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white text-[#0B0F19] text-[13px] font-semibold transition group-hover:bg-[#5eead4]">
+              View Profile <ArrowUpRight className="w-3.5 h-3.5" />
+            </span>
             <a
               href={`/claim-business?slug=${b.slug}${b.town ? `&town=${b.town}` : ""}`}
               onClick={(e) => { e.stopPropagation(); fireBizAction("claim", b, "directory_card"); }}
@@ -794,13 +807,13 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             >
               Claim
             </a>
-            <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </span>
-        ) : (
-          <div className="mt-auto pt-5 flex items-center gap-2">
-            <span className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white text-[#0B0F19] text-[13px] font-semibold transition group-hover:bg-[#5eead4]">
-              View Profile <ArrowUpRight className="w-3.5 h-3.5" />
-            </span>
+          </div>
+        )}
+      </div>
+    </button>
+  );
+};
+
 const ClaimCtaCard = () => (
   <a
     href="/pricing"
@@ -846,21 +859,6 @@ const PromoteCtaCard = () => (
         <Megaphone className="w-5 h-5 text-[#5eead4]" />
       </div>
       <p className="mt-5 text-[10px] uppercase tracking-[0.22em] text-[#5eead4] font-semibold">Promote</p>
-      <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white leading-tight">
-        Promote a special or event
-      </h3>
-      <p className="mt-3 text-sm text-white/65 font-light leading-relaxed">
-        Happy hours, grand openings, networking events, live music, seasonal promotions —
-        surfaced across the weekly feed.
-      </p>
-    </div>
-    <div className="relative mt-6">
-      <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[#5eead4] text-xs font-semibold">
-        Add Promotion <ArrowUpRight className="w-3.5 h-3.5" />
-      </span>
-    </div>
-  </a>
-);
       <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white leading-tight">
         Promote a special or event
       </h3>
