@@ -41,11 +41,13 @@ import {
 import {
   OFFICIAL_CATEGORIES,
   type OfficialCategory,
-  matchesOfficialCategory,
-  expandSearchTerm,
 } from "@/data/officialCategories";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
-import { townMatches, useDbBusinesses } from "@/hooks/useDbBusinesses";
+import {
+  usePaginatedBusinesses,
+  useFeaturedBusinesses,
+  type TierFilter,
+} from "@/hooks/usePaginatedBusinesses";
 import { resolveBusinessImage, hasRealBusinessMedia } from "@/lib/businessImages";
 
 const TEAL = "#5eead4";
