@@ -8,8 +8,13 @@ import type { Business, BusinessCategory } from "@/data/businesses";
  * grouped directory. Falls back to "Home Service" (catch-all in
  * Home Services group) so nothing imported is silently dropped.
  */
-const mapCategory = (raw: string | null, tags: string[] = []): BusinessCategory => {
-  const hay = `${raw ?? ""} ${tags.join(" ")}`.toLowerCase();
+const mapCategory = (
+  raw: string | null,
+  tags: string[] = [],
+  name = "",
+  subcategory: string | null = null,
+): BusinessCategory => {
+  const hay = `${raw ?? ""} ${subcategory ?? ""} ${name} ${tags.join(" ")}`.toLowerCase();
   const test = (re: RegExp) => re.test(hay);
 
   if (test(/coffee|espresso|cafe|café/)) return "Coffee";
