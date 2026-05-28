@@ -640,8 +640,8 @@ const FinancialConsole = () => {
               <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Capital District Financial Console</p>
               <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Submit your financial scenario.</h2>
               <p className="text-white/65 max-w-xl mx-auto">
-                Tell us what you're working on, and we'll route you to the right local mortgage,
-                banking, accounting, insurance, investment, or commercial lending partner.
+                Tell us what you're working on, and we'll help route you to the right local
+                mortgage, banking, accounting, insurance, financial planning, or lending partner.
               </p>
             </div>
             <DealDeskForm />
