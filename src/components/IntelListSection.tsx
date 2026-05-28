@@ -24,11 +24,10 @@ const IntelListSection = () => {
 
     trackGAEvent.newsletterSignup({
       source_location: "intel_list_section",
-      // @ts-expect-error allow extra context
       email_domain: email.split("@")[1] || undefined,
-      // @ts-expect-error allow extra context
       page_path: typeof window !== "undefined" ? window.location.pathname : undefined,
     });
+
     toast.success("You're on the list! Check your inbox for the Regional Insight Report.");
     setEmail("");
     setIsSubmitting(false);

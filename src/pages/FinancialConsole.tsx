@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { trackGAEvent } from "@/components/GARouteTracker";
+
 import {
   Calculator,
   Building2,
@@ -352,9 +354,9 @@ const FinancialScenarioForm = ({ defaultObjective }: { defaultObjective?: string
     trackGAEvent.financialIntroSubmit({
       product_type: form.lead_type,
       source_location: "financial_console",
-      // @ts-expect-error allow extra context
       page_path: typeof window !== "undefined" ? window.location.pathname : "/finances",
     });
+
     setDone(true);
     toast({ title: "Scenario received", description: "Scott or a Capital District financial partner will reach out shortly." });
   };
