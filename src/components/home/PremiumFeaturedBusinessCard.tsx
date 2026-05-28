@@ -142,17 +142,20 @@ const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
             onClick={handleProfileOpen}
             className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-full bg-white/[0.92] backdrop-blur-xl text-[#0B0F19] text-[13px] font-semibold hover:bg-white transition-all shadow-[0_8px_24px_-8px_rgba(255,255,255,0.25)]"
           >
-            View Profile <ArrowUpRight className="w-3.5 h-3.5" />
-          </button>
-
           {phoneHref && (
             <a
               href={phoneHref}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                trackGAEvent.callClick(bizPayload(business, "homepage_featured_card"));
+              }}
               aria-label={`Call ${business.name}`}
               className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full border border-white/15 bg-white/[0.04] text-white/85 hover:border-[#5eead4]/55 hover:text-[#5eead4] hover:bg-white/[0.08] transition"
             >
               <Phone className="w-4 h-4" />
+            </a>
+          )}
+
             </a>
           )}
         </div>
