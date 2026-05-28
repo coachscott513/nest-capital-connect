@@ -311,15 +311,15 @@ const DealDeskForm = ({ defaultObjective }: { defaultObjective?: string }) => {
       return;
     }
     setDone(true);
-    toast({ title: "Sent to DealDesk", description: "Scott or a Capital District partner will reach out shortly." });
+    toast({ title: "Scenario received", description: "Scott or a Capital District financial partner will reach out shortly." });
   };
 
   if (done) {
     return (
       <div className="rounded-2xl border border-primary/40 bg-primary/10 p-8 text-center">
         <CheckCircle2 className="w-10 h-10 text-primary mx-auto mb-3" />
-        <h3 className="text-xl font-semibold mb-1">Your request is in.</h3>
-        <p className="text-white/70">Capital District DealDesk will reach out within one business day.</p>
+        <h3 className="text-xl font-semibold mb-1">Your scenario is in.</h3>
+        <p className="text-white/70">The Capital District Financial Console will reach out within one business day.</p>
       </div>
     );
   }
