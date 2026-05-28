@@ -52,7 +52,9 @@ interface LocalGuideSectionProps {
 const CATEGORY_META = [
   { id: "coffee", label: "Coffee", icon: <Coffee className="w-5 h-5" />, match: ["Coffee", "Bakery"] },
   { id: "restaurants", label: "Restaurants", icon: <UtensilsCrossed className="w-5 h-5" />, match: ["Restaurant"] },
-  { id: "fitness", label: "Fitness", icon: <Dumbbell className="w-5 h-5" />, match: ["Gym", "Wellness", "Salon"] },
+  { id: "fitness", label: "Fitness & Wellness", icon: <Dumbbell className="w-5 h-5" />, match: ["Gym", "Wellness", "Salon"] },
+  { id: "healthcare", label: "Healthcare", icon: <Stethoscope className="w-5 h-5" />, match: ["Healthcare"] },
+  { id: "dental", label: "Dental", icon: <Smile className="w-5 h-5" />, match: ["Dental"] },
   { id: "home-services", label: "Home Services", icon: <Wrench className="w-5 h-5" />, match: ["Home Service", "Contractor", "Roofer", "Plumber", "Electrician", "HVAC", "Landscaper", "Handyman", "Cleaner"] },
   { id: "local-pros", label: "Local Pros", icon: <Briefcase className="w-5 h-5" />, match: ["Mortgage Lender", "Bank/Credit Union", "Insurance", "Attorney", "Real Estate Attorney", "Accountant", "Financial Advisor", "Marketing"] },
 ];
