@@ -124,3 +124,39 @@ PII required.
 - Consider moving the public Supabase `anon` key behind a
   Cloudflare Worker that enforces per-IP request budgets and
   strips heavy columns — useful if scrapers escalate.
+
+## 7. Anti-scraping pass (2026-05-28)
+
+- **Pagination** — every public list path is server-capped: `/local`
+  uses `usePaginatedBusinesses` (24/page), `useDbBusinesses` is hard
+  capped at 500 with default 200, `useMediaStories` at 60. There is
+  no client path that pulls the full 5,000+ businesses table.
+- **Field hygiene** — list fetches only request card columns
+  (id/name/slug/town/category/phone/website/hero/rating). Heavy or
+  sensitive fields (`long_description`, `photos[]`, claim metadata,
+  scrape source, internal flags, owner email) are not selected
+  until a detail modal is opened, and `claimed_by_user_id`,
+  `import_batch_id`, `external_id`, `source_url`, `last_synced_at`,
+  `subscription_status`, `stripe_*` are never selected in any
+  client query.
+- **Bot analytics gate** — `isLikelyBot()` continues to suppress
+  every custom GA4 event for WebDriver / headless / known-bot UAs.
+  `page_view` stays unfiltered so raw indexing traffic is visible.
+- **Honeypot** — `src/components/Honeypot.tsx` provides a reusable
+  hidden field. Wired into `MasterGatekeeperModal` (highest-traffic
+  lead entry). New lead/contact forms should use it via
+  `useHoneypot()` + `<Honeypot bind={hp} />` and bail when
+  `hp.isBot()` is true.
+- **robots.txt** — extended `Disallow` block to cover `/admin`,
+  `/dashboard`, `/supabase`, `/functions/`, `/rest/`. Public
+  surfaces (`/`, `/local`, `/towns`, `/biz`, `/sitemap.xml`) remain
+  fully open to Googlebot, Bingbot, Applebot, and the allow-listed
+  AI crawlers.
+- **Rate limiting** — intentionally NOT implemented in app code.
+  Lovable Cloud's backend doesn't have first-class rate-limiting
+  primitives yet, and bolting on ad-hoc limits in edge functions
+  would be brittle. The correct place for this is Cloudflare's
+  rate-limiting rules (see §2 above) — apply those at the zone.
+- **Suspicious traffic logging** — handled at the edge by
+  Cloudflare Security Events (§3). No client-side logging endpoint
+  added: it would just be another scrapable surface.
