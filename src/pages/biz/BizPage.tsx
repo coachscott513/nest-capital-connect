@@ -720,6 +720,12 @@ const canonicalizeRequestedSlug = (value?: string) => {
   return SLUG_ALIASES[clean] || clean;
 };
 
+const slugFromBizPath = () => {
+  if (typeof window === "undefined") return "business";
+  const match = window.location.pathname.match(/^\/biz\/([^/?#]+)/i);
+  return match?.[1] ? decodeURIComponent(match[1]).toLowerCase() : "business";
+};
+
 const buildPlaceholderBusiness = (slug: string): Business => ({
   id: `placeholder-${slug}`,
   slug,
@@ -766,21 +772,22 @@ const NotFoundBiz = ({ slug }: { slug: string }) => {
 
 const BizPage = () => {
   const { slug } = useParams<{ slug: string }>();
+  const requestedSlug = (slug || slugFromBizPath()).toLowerCase();
   const [biz, setBiz] = useState<Business | null>(null);
   const [specials, setSpecials] = useState<Special[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    if (!slug) return;
+    if (!requestedSlug) return;
     let cancelled = false;
     (async () => {
       setLoading(true);
       setNotFound(false);
       setBiz(null);
       setSpecials([]);
-      const canonicalSlug = canonicalizeRequestedSlug(slug);
-      const requestedSlugs = Array.from(new Set([slug.toLowerCase(), canonicalSlug].filter(Boolean)));
+      const canonicalSlug = canonicalizeRequestedSlug(requestedSlug);
+      const requestedSlugs = Array.from(new Set([requestedSlug, canonicalSlug].filter(Boolean)));
       const { data, error } = await supabase
         .from("businesses").select("*").in("slug", requestedSlugs).eq("is_active", true).limit(2);
       if (cancelled) return;
@@ -802,16 +809,16 @@ const BizPage = () => {
       setLoading(false);
     })();
     return () => { cancelled = true; };
-  }, [slug]);
+  }, [requestedSlug]);
 
   // Real 404 once we've confirmed the slug doesn't resolve.
   if (!loading && notFound) {
-    return <NotFoundBiz slug={slug || ""} />;
+    return <NotFoundBiz slug={requestedSlug} />;
   }
 
   // During loading, render the full Free profile shell using a slug-derived
   // placeholder so Googlebot never sees an empty "Loading…" page.
-  const activeBiz: Business = biz ?? buildPlaceholderBusiness(slug || "business");
+  const activeBiz: Business = biz ?? buildPlaceholderBusiness(requestedSlug || "business");
   const tier = activeBiz.plan_tier;
   const isPremium = !loading && PREMIUM_TIERS.has(tier);
   const isFeatured = !loading && FEATURED_TIERS.has(tier);
@@ -828,7 +835,7 @@ const BizPage = () => {
           biz.description?.slice(0, 155) ||
           fallbackDesc;
         const title = loading
-          ? `${biz.name} | Verified Local Profile | Capital District Nest`
+          ? `${biz.name} | Local Profile & Information | Capital District Nest`
           : `${biz.name} | ${town}, NY | Capital District Nest`;
         const image = biz.hero_image_url || biz.photos?.[0] || biz.logo_url || undefined;
         const ldBusiness: Record<string, unknown> = {
@@ -921,8 +928,15 @@ const BizPage = () => {
 
       {loading && (
         <section className="px-6 md:px-10 pt-24 pb-0">
-          <div className="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-5 text-sm text-white/65">
-            Loading community partner profile index...
+          <div className="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 text-sm text-white/65">
+            <p className="font-medium text-white/80">
+              Accessing verified Capital District directory record index for {activeBiz.name}...
+            </p>
+            <div className="mt-5 space-y-3" aria-hidden="true">
+              <div className="h-3 w-2/3 rounded-full bg-white/10" />
+              <div className="h-3 w-1/2 rounded-full bg-white/10" />
+              <div className="h-3 w-5/6 rounded-full bg-white/10" />
+            </div>
           </div>
         </section>
       )}
