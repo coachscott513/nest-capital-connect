@@ -17,6 +17,8 @@ import {
   MapPin,
   Clock,
   Flame,
+  Newspaper,
+  ExternalLink,
   type LucideIcon,
 } from "lucide-react";
 import { weeklyFeed, type WeeklyFeedType, type WeeklyFeedItem } from "@/data/weeklyFeed";
@@ -42,6 +44,7 @@ const ICONS: Record<WeeklyFeedType, LucideIcon> = {
   development: Building2,
   family: Users,
   networking: Briefcase,
+  news: Newspaper,
 };
 
 const LABELS: Record<WeeklyFeedType, string> = {
@@ -55,6 +58,7 @@ const LABELS: Record<WeeklyFeedType, string> = {
   development: "Development",
   family: "Family",
   networking: "Networking",
+  news: "Local News",
 };
 
 type FilterKey =
@@ -307,7 +311,7 @@ const WeeklyFeed = ({
                     <FeaturedIcon className="w-4 h-4 text-[#5eead4]" strokeWidth={1.75} />
                   </span>
                   <span className="text-[11px] uppercase tracking-[0.18em] font-semibold text-[#5eead4]">
-                    {LABELS[featured.type]}
+                    {featured.categoryBadgeOverride ?? LABELS[featured.type]}
                   </span>
                   {featured.town && (
                     <>
@@ -321,8 +325,8 @@ const WeeklyFeed = ({
                 <h3 className="text-2xl md:text-3xl font-semibold text-white tracking-[-0.02em] leading-[1.1]">
                   {featured.title}
                 </h3>
-                <p className="mt-4 text-[15px] text-white/65 font-light leading-relaxed">
-                  {featured.description}
+                <p className="mt-4 text-[15px] text-white/70 font-light leading-relaxed">
+                  {featured.summary ?? featured.description}
                 </p>
                 <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/50">
                   <span className="inline-flex items-center gap-1.5">
@@ -338,17 +342,34 @@ const WeeklyFeed = ({
                       <MapPin className="w-3.5 h-3.5" /> {featured.venue}
                     </span>
                   )}
+                  {featured.source_name && (
+                    <span className="inline-flex items-center gap-1.5 text-white/55">
+                      <Newspaper className="w-3.5 h-3.5" /> via {featured.source_name}
+                    </span>
+                  )}
                 </div>
-                {featured.cta && (
+                {featured.original_url ? (
                   <a
-                    href={featured.cta.href}
-                    className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] hover:text-white transition"
+                    href={featured.original_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-[#2D3748] bg-[#0B0F19] px-4 py-2 text-sm font-semibold text-[#5eead4] hover:border-[#5eead4]/60 hover:text-white transition"
                   >
-                    {featured.cta.label} <ArrowRight className="w-4 h-4" />
+                    {featured.cta?.label ?? "Read Full Coverage"} <ExternalLink className="w-3.5 h-3.5" />
                   </a>
+                ) : (
+                  featured.cta && (
+                    <a
+                      href={featured.cta.href}
+                      className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] hover:text-white transition"
+                    >
+                      {featured.cta.label} <ArrowRight className="w-4 h-4" />
+                    </a>
+                  )
                 )}
               </div>
             </article>
+
 
             {/* Premium engagement CTAs (stacked under hero on desktop) */}
             {isRegion && (
@@ -414,15 +435,21 @@ const WeeklyFeed = ({
             >
               {filtered.map((item, i) => {
                 const Icon = ICONS[item.type];
+                const isNews = !!item.original_url;
+                const Wrapper: any = isNews ? "a" : "article";
+                const wrapperProps = isNews
+                  ? { href: item.original_url, target: "_blank", rel: "noopener noreferrer" }
+                  : {};
                 return (
-                  <article
+                  <Wrapper
                     key={i}
-                    className="card-lift group relative bg-[#1E2230] border border-[#2D3748] rounded-2xl p-5 transition-all hover:border-[#0d6e66]/50 hover:bg-[#222637]"
+                    {...wrapperProps}
+                    className="card-lift group relative block bg-[#1E2230] border border-[#2D3748] rounded-2xl p-5 transition-all hover:border-[#0d6e66]/50 hover:bg-[#222637]"
                   >
                     <div className="flex items-center gap-2 mb-3 flex-wrap">
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0d6e66]/15 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] font-semibold text-[#5eead4]">
                         <Icon className="w-3 h-3" strokeWidth={2} />
-                        {LABELS[item.type]}
+                        {item.categoryBadgeOverride ?? LABELS[item.type]}
                       </span>
                       {item.town && (
                         <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.14em] font-semibold text-white/55">
@@ -434,7 +461,7 @@ const WeeklyFeed = ({
                       {item.title}
                     </h4>
                     <p className="mt-1.5 text-[13px] text-white/55 font-light leading-relaxed line-clamp-2">
-                      {item.description}
+                      {item.summary ?? item.description}
                     </p>
                     <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-white/45">
                       <span className="inline-flex items-center gap-1">
@@ -450,8 +477,18 @@ const WeeklyFeed = ({
                           · {item.venue}
                         </span>
                       )}
+                      {item.source_name && (
+                        <span className="inline-flex items-center gap-1 text-white/55">
+                          <Newspaper className="w-3 h-3" /> via {item.source_name}
+                        </span>
+                      )}
                     </div>
-                  </article>
+                    {isNews && (
+                      <span className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#5eead4] group-hover:text-white transition">
+                        Read Full Coverage <ExternalLink className="w-3 h-3" />
+                      </span>
+                    )}
+                  </Wrapper>
                 );
               })}
               {filtered.length === 0 && (
