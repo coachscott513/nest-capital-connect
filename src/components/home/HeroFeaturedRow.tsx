@@ -157,11 +157,10 @@ const AvailableCard = () => (
 const HeroFeaturedRow = () => {
   const [openBusiness, setOpenBusiness] = useState<Business | null>(null);
   const featured = useFeaturedBusinesses(3);
-  const placements = Math.max(0, 3 - featured.length);
+  const desktopPlacements = Math.max(0, 3 - featured.length);
+  // Mobile: never stack more than 1 empty placement card.
+  const mobilePlacements = Math.min(desktopPlacements, 1);
 
-  // Don't render anything in the hero until we know — avoids flashing fake
-  // placeholders. If there are zero featured rows, still show 3 placement
-  // CTAs so the row never looks broken.
   return (
     <div className="relative mx-auto w-full max-w-5xl">
       <div className="flex items-center justify-between mb-3 px-1">
@@ -176,14 +175,26 @@ const HeroFeaturedRow = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+      {/* Mobile: featured + at most 1 placement card */}
+      <div className="grid grid-cols-1 gap-5 mt-6 md:hidden">
         {featured.map((b) => (
           <HeroCard key={b.slug} business={b} onOpen={setOpenBusiness} />
         ))}
-        {Array.from({ length: placements }).map((_, i) => (
-          <AvailableCard key={`open-${i}`} />
+        {Array.from({ length: mobilePlacements }).map((_, i) => (
+          <AvailableCard key={`open-m-${i}`} />
         ))}
       </div>
+
+      {/* Desktop / tablet: up to 3 placement cards */}
+      <div className="hidden md:grid md:grid-cols-3 gap-6 mt-8">
+        {featured.map((b) => (
+          <HeroCard key={b.slug} business={b} onOpen={setOpenBusiness} />
+        ))}
+        {Array.from({ length: desktopPlacements }).map((_, i) => (
+          <AvailableCard key={`open-d-${i}`} />
+        ))}
+      </div>
+
       <BusinessDetailModal
         biz={openBusiness}
         onClose={() => setOpenBusiness(null)}

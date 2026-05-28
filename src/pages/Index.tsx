@@ -574,8 +574,8 @@ const Index = () => {
       {/* 4 — WHAT'S HAPPENING · weekly editorial pulse */}
       <WeeklyFeed scope="region" />
 
-      {/* 5 — CAPITAL DISTRICT INTELLIGENCE · single consolidated tabbed onramp */}
-      <CapitalDistrictIntelligence />
+      {/* (Removed on mobile cleanup pass) "Discover the region" tabbed block —
+          duplicated Discovery Console + Weekly Pulse navigation. */}
 
       {/* 6 — B2B CONVERSION · Local Business Solutions */}
       <section className="relative bg-[#0B0F19] overflow-hidden border-y border-[#2D3748]">
