@@ -43,15 +43,14 @@ const AvailableSpotlightCard = () => (
         Available Placement
       </p>
       <h4 className="mt-3 text-xl md:text-2xl font-semibold tracking-[-0.01em] text-white leading-snug">
-        Featured spotlight open.
+        Featured placement available.
       </h4>
       <p className="mt-3 text-sm text-white/60 font-light leading-relaxed">
-        One of the first local Featured positions in our pilot — reserved for a
-        Capital District business.
+        Become one of the first businesses featured on Capital District Nest during our local pilot.
       </p>
     </div>
     <span className="mt-6 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white/[0.06] border border-white/15 text-white text-[12.5px] font-semibold w-fit group-hover:border-[#5eead4]/60 group-hover:text-[#5eead4] transition">
-      Request this placement <ArrowRight className="w-3.5 h-3.5" />
+      Request Placement <ArrowRight className="w-3.5 h-3.5" />
     </span>
   </Link>
 );
