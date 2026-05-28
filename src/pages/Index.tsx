@@ -7,6 +7,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import HeroBand from "@/components/HeroBand";
 import WeeklyFeed, { WeeklyNewsletterCTA } from "@/components/WeeklyFeed";
+import LocalMediaPulse from "@/components/home/LocalMediaPulse";
 import SupportLocalSection from "@/components/home/SupportLocalSection";
 import LiveLocalPulse from "@/components/home/LiveLocalPulse";
 import SpotlightSearch from "@/components/home/SpotlightSearch";
@@ -520,6 +521,9 @@ const Index = () => {
 
       {/* 3 — WHAT'S HAPPENING · weekly editorial pulse (moved above Towns per mobile flow) */}
       <WeeklyFeed scope="region" />
+
+      {/* 3b — LOCAL MEDIA PULSE · curated regional newsroom coverage */}
+      <LocalMediaPulse />
 
       {/* 4 — TOWNS · Browse Local Search Indexes */}
       <section className="bg-[#0B0F19] w-full border-t border-[#2D3748]">
