@@ -33,6 +33,29 @@ const PLACEHOLDERS = [
   "Restaurant in Delmar",
 ];
 
+const AvailableSpotlightCard = () => (
+  <Link
+    to="/pricing"
+    className="group relative flex flex-col justify-between overflow-hidden rounded-[28px] border border-dashed border-[#5eead4]/35 bg-gradient-to-br from-[#0d6e66]/10 via-[#1E2230]/60 to-[#1E2230]/60 backdrop-blur-xl p-7 md:p-8 min-h-[300px] hover:border-[#5eead4]/70 transition-all duration-500 hover:-translate-y-1"
+  >
+    <div>
+      <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+        Available Placement
+      </p>
+      <h4 className="mt-3 text-xl md:text-2xl font-semibold tracking-[-0.01em] text-white leading-snug">
+        Featured spotlight open.
+      </h4>
+      <p className="mt-3 text-sm text-white/60 font-light leading-relaxed">
+        One of the first local Featured positions in our pilot — reserved for a
+        Capital District business.
+      </p>
+    </div>
+    <span className="mt-6 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white/[0.06] border border-white/15 text-white text-[12.5px] font-semibold w-fit group-hover:border-[#5eead4]/60 group-hover:text-[#5eead4] transition">
+      Request this placement <ArrowRight className="w-3.5 h-3.5" />
+    </span>
+  </Link>
+);
+
 const SupportLocalSection = () => {
   const navigate = useNavigate();
   const [q, setQ] = useState("");
@@ -45,31 +68,15 @@ const SupportLocalSection = () => {
     [],
   );
 
-  // Always show a populated row. Start with explicitly featured businesses,
-  // then backfill the remaining slots (up to 6) with the strongest curated
-  // pilot-ready listings (claimed first, then those with phone+website+address).
-  const featured = useMemo(() => {
-    const TARGET = 6;
-    const paid = liveBusinesses.filter((b) => b.featured);
-    if (paid.length >= TARGET) return paid.slice(0, TARGET);
-
-    const usedSlugs = new Set(paid.map((b) => b.slug));
-    const score = (b: Business) =>
-      (b.claimed ? 4 : 0) +
-      (b.phone ? 1 : 0) +
-      (b.website ? 1 : 0) +
-      (b.address ? 1 : 0) +
-      (b.image ? 1 : 0) +
-      ((b as any).rating ? Math.min(1, (b as any).rating / 5) : 0);
-
-    const fill = liveBusinesses
-      .filter((b) => !usedSlugs.has(b.slug) && !b.featured)
-      .filter((b) => b.phone || b.website)
-      .sort((a, b) => score(b) - score(a))
-      .slice(0, TARGET - paid.length);
-
-    return [...paid, ...fill];
-  }, [liveBusinesses]);
+  // STRICT INTEGRITY RULE: Only truly featured businesses appear here.
+  // No backfill with regular listings — that would mislabel ordinary
+  // free profiles as "Featured" and damage owner/visitor trust.
+  // If fewer than 3 real featured rows exist, we render placement-available
+  // cards alongside them instead of faking the row.
+  const featured = useMemo(
+    () => liveBusinesses.filter((b) => b.featured).slice(0, 6),
+    [liveBusinesses],
+  );
 
 
   const submit = (e: React.FormEvent) => {
@@ -205,7 +212,7 @@ const SupportLocalSection = () => {
             </Link>
           </div>
 
-          {featured.length > 0 ? (
+          {featured.length >= 3 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch">
               {featured.map((b) => (
                 <PremiumFeaturedBusinessCard
@@ -216,31 +223,17 @@ const SupportLocalSection = () => {
               ))}
             </div>
           ) : (
-            <div className="rounded-3xl border border-[#5eead4]/25 bg-gradient-to-br from-[#0d6e66]/15 via-white/[0.02] to-white/[0.02] backdrop-blur-xl p-10 md:p-14 text-center">
-              <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4] mb-3">
-                Available Spotlight Placements
-              </p>
-              <p className="text-2xl md:text-3xl font-semibold tracking-[-0.015em] text-white mb-3">
-                Featured partner placements are opening.
-              </p>
-              <p className="text-sm md:text-base text-white/60 mb-7 max-w-lg mx-auto font-light leading-relaxed">
-                Claim your profile and request one of the first local spotlight positions
-                during our 25-business pilot.
-              </p>
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  to="/claim-business"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
-                >
-                  Claim Your Profile <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  to="/pricing"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[#5eead4] text-sm font-semibold hover:bg-[#5eead4]/20 transition"
-                >
-                  Request a Featured Placement
-                </Link>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch">
+              {featured.map((b) => (
+                <PremiumFeaturedBusinessCard
+                  key={b.slug}
+                  business={b}
+                  onOpen={setOpenBiz}
+                />
+              ))}
+              {Array.from({ length: Math.max(0, 3 - featured.length) }).map((_, i) => (
+                <AvailableSpotlightCard key={`open-${i}`} />
+              ))}
             </div>
           )}
 

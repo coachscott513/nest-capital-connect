@@ -14,14 +14,22 @@ import type { Business, BusinessCategory } from "@/data/businesses";
 const CARD_COLUMNS =
   "id,name,slug,town_slug,town_name,city,county,category,subcategory,tagline,phone,website,email,address,rating,review_count,hero_image_url,latitude,longitude,is_featured,is_claimed,is_verified,tags";
 
-const mapCategory = (raw: string | null, tags: string[] = []): BusinessCategory => {
-  const hay = `${raw ?? ""} ${tags.join(" ")}`.toLowerCase();
+const mapCategory = (
+  raw: string | null,
+  tags: string[] = [],
+  name = "",
+  subcategory: string | null = null,
+): BusinessCategory => {
+  const hay = `${raw ?? ""} ${subcategory ?? ""} ${name} ${tags.join(" ")}`.toLowerCase();
   const test = (re: RegExp) => re.test(hay);
-  if (test(/coffee|espresso|cafe|café/)) return "Coffee";
-  if (test(/bakery|patisserie|donut|bagel/)) return "Bakery";
-  if (test(/restaurant|bar|pub|pizz|deli|diner|grill|food|eatery|sandwich/)) return "Restaurant";
+  if (test(/coffee|espresso|cafe|café|roaster/)) return "Coffee";
+  if (test(/bakery|patisserie|donut|bagel|pastry/)) return "Bakery";
+  if (test(/cater/)) return "Restaurant";
+  if (test(/restaurant|bar|pub|pizz|deli|diner|grill|food|eatery|sandwich|kitchen|bistro/)) return "Restaurant";
   if (test(/gym|fitness|yoga|pilates|crossfit/)) return "Gym";
-  if (test(/salon|barber|spa|nail|hair/)) return "Salon";
+  if (test(/salon|barber|spa|nail|hair|beauty/)) return "Salon";
+  if (test(/dental|dentist|orthodont|endodont|periodont|oral surgeon/)) return "Wellness";
+  if (test(/medical|doctor|clinic|physician|urgent care|pediatric/)) return "Wellness";
   if (test(/wellness|chiropract|massage|acupunct|therap/)) return "Wellness";
   if (test(/pet|vet|groom|kennel/)) return "Pet";
   if (test(/auto|mechanic|tire|car wash|oil change/)) return "Auto";
@@ -68,7 +76,7 @@ const mapRow = (r: any): Business => {
     city: r.city ?? undefined,
     county: r.county ?? undefined,
     townLabel,
-    category: mapCategory(r.category, tagsArr),
+    category: mapCategory(r.category, tagsArr, r.name, r.subcategory),
     subcategory: r.subcategory ?? r.category ?? undefined,
     tagline: r.tagline || r.category || "Local business",
     about: undefined,
