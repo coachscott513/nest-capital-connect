@@ -177,7 +177,7 @@ const CleanHeader = () => {
               </button>
 
               <AnalystCard>
-                <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-white bg-foreground hover:bg-foreground/90">
+                <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold bg-white text-[#0B0F19] hover:bg-white/90 shadow-sm">
                   Get Started
                 </button>
               </AnalystCard>
