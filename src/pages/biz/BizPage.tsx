@@ -386,8 +386,8 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
             ) : (
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>About</p>
-                <p className="text-[15px] text-white/65 font-light leading-relaxed">
-                  This profile is available to claim and customize. The owner can add a story, photos, specials, and social links to complete the listing.
+                <p className="text-[15px] text-white/75 font-light leading-relaxed">
+                  {biz.name} is listed in the Capital District Nest local business index for {biz.town_name || biz.city || "the Capital District"}, NY. This profile includes available contact details, business category information, and local discovery tools. Business owners can claim this profile to add photos, social links, hours, specials, and updates.
                 </p>
               </div>
             )}
