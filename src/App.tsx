@@ -33,6 +33,7 @@ import SchenectadyRealEstate from "./pages/SchenectadyRealEstate";
 import SchenectadyCountyIntelligence from "./pages/SchenectadyCountyIntelligence";
 import SaratogaRealEstate from "./pages/SaratogaRealEstate";
 import InvestmentLanding from "./pages/InvestmentLanding";
+import FinancialConsole from "./pages/FinancialConsole";
 import InvestmentProperties from "./pages/InvestmentProperties";
 import SEOAudit from "./pages/SEOAudit";
 import Markets from "./pages/Markets";
