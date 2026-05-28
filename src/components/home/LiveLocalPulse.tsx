@@ -49,17 +49,18 @@ const townLabel = (slug?: string | null) =>
     : undefined;
 
 function CategoryPill({ category }: { category: PulseCategory }) {
-  const { color, Icon } = toneFor(category);
+  const { color, emoji, label } = toneFor(category);
   return (
     <span
       className="inline-flex items-center gap-1 px-2 py-[3px] rounded-full text-[10px] font-semibold tracking-[0.12em] uppercase border"
       style={{ color, borderColor: `${color}40`, background: `${color}14` }}
     >
-      <Icon className="w-2.5 h-2.5" strokeWidth={2.25} />
-      {category}
+      <span aria-hidden>{emoji}</span>
+      {label}
     </span>
   );
 }
+
 
 function PulseRow({ item }: { item: PulseItem }) {
   return (
