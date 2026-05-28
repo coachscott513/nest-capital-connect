@@ -26,8 +26,9 @@
     --secondary: 225 22% 16%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 225 18% 20%;
-    --muted-foreground: 0 0% 65%;      /* white/65 muted body */
+    --muted: 225 18% 22%;
+    --muted-foreground: 0 0% 75%;      /* lifted body contrast (was 65%) */
+
 
     --accent: 166 76% 65%;             /* on-dark teal #5eead4 */
     --accent-foreground: 222 40% 7%;
