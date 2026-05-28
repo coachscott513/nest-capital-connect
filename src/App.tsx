@@ -250,7 +250,8 @@ const App = () => {
           <Route path="/south-florida" element={<SouthFlorida />} />
           
           {/* Analyzer Hub */}
-          <Route path="/analyze" element={<AnalyzeHub />} />
+          <Route path="/analyze" element={<FinancialConsole />} />
+          <Route path="/analyze-hub-legacy" element={<AnalyzeHub />} />
           <Route path="/analyze-any-deal" element={<AnalyzeAnyDealHome />} />
           <Route path="/analyze/condo" element={<AnalyzeCondo />} />
           <Route path="/analyze/single-family" element={<AnalyzeSingleFamily />} />
