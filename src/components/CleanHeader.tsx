@@ -279,7 +279,7 @@ const CleanHeader = () => {
 
         <div className="mt-8">
           <AnalystCard>
-            <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white bg-foreground">
+            <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold bg-white text-[#0B0F19]">
               Talk to an Expert
             </button>
           </AnalystCard>
