@@ -30,14 +30,15 @@ const TEAL = "#5eead4";
 
 const toneFor = (c: PulseCategory) => {
   switch (c) {
-    case "Event": return { color: "#5eead4", Icon: Calendar };
-    case "Business": return { color: "#a78bfa", Icon: Store };
-    case "Homes": return { color: "#fbbf24", Icon: Home };
-    case "Special": return { color: "#f97316", Icon: Megaphone };
-    case "Town": return { color: "#60a5fa", Icon: MapPin };
-    default: return { color: TEAL, Icon: TrendingUp };
+    case "Special": return { color: "#f97316", Icon: Megaphone, emoji: "🔥", label: "Pulse" };
+    case "Business": return { color: "#a78bfa", Icon: Store, emoji: "🌟", label: "Member" };
+    case "Event": return { color: "#5eead4", Icon: Calendar, emoji: "📅", label: "Upcoming" };
+    case "Homes": return { color: "#fbbf24", Icon: Home, emoji: "🏠", label: "Homes" };
+    case "Town": return { color: "#60a5fa", Icon: MapPin, emoji: "📍", label: "Town" };
+    default: return { color: TEAL, Icon: TrendingUp, emoji: "📈", label: "Platform" };
   }
 };
+
 
 const townLabel = (slug?: string | null) =>
   slug
