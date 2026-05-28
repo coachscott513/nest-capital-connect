@@ -227,6 +227,18 @@ export default function LocalMediaPulse() {
             );
           })}
         </div>
+
+        {/* View more */}
+        <div className="mt-10 md:mt-14 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setSourceModal(SOURCE_CARDS[0])}
+            className="inline-flex items-center gap-2 rounded-full border border-[#2D3748] bg-white/[0.03] px-6 py-3 text-xs font-semibold tracking-[0.16em] uppercase text-white/80 hover:text-white hover:border-[#5eead4]/50 hover:bg-white/[0.06] transition"
+          >
+            View More Local Coverage
+            <span aria-hidden>→</span>
+          </button>
+        </div>
       </div>
 
       <LocalVideoModal
@@ -239,6 +251,16 @@ export default function LocalMediaPulse() {
         town={modal?.town}
         category={modal?.categoryBadgeOverride || "Local News"}
       />
+
+      <MediaSourceModal
+        open={!!sourceModal}
+        onClose={() => setSourceModal(null)}
+        sourceName={sourceModal?.sourceName || ""}
+        sourceShortName={sourceModal?.shortName}
+        sourceDescription={sourceModal?.drawerDescription}
+        accentColor={sourceModal?.accent}
+      />
     </section>
   );
 }
+
