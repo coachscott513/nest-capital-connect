@@ -63,8 +63,9 @@ type SearchPayload = {
   category?: string;
   source_location?: string;
 };
-type SourcePayload = { source_location?: string };
-type FinancePayload = { product_type?: string; source_location?: string };
+type SourcePayload = { source_location?: string; email_domain?: string; page_path?: string };
+type FinancePayload = { product_type?: string; source_location?: string; page_path?: string };
+
 
 const send = (name: string, params: Record<string, unknown>) => {
   if (isLikelyBot()) return;

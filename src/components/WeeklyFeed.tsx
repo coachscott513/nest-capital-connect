@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { trackGAEvent } from "@/components/GARouteTracker";
+
 import {
   Home,
   Coffee,
@@ -571,13 +573,12 @@ export const WeeklyNewsletterCTA = () => {
     const emailDomain = email.split("@")[1] || undefined;
     trackGAEvent.newsletterSignup({
       source_location: "weekly_newsletter_cta",
-      // @ts-expect-error allow extra context
       email_domain: emailDomain,
-      // @ts-expect-error allow extra context
       page_path: typeof window !== "undefined" ? window.location.pathname : undefined,
     });
     form.reset();
   };
+
   return (
     <section id="weekly-newsletter" className="py-24 md:py-32 px-6 md:px-10 bg-[#0e0f12]">
       <div className="max-w-2xl mx-auto text-center">
