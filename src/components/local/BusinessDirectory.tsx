@@ -374,7 +374,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         </section>
       )}
 
-      <BusinessDetailModal biz={openBiz} onClose={() => setOpenBiz(null)} all={ALL} />
+      <BusinessDetailModal biz={openBiz} onClose={() => setOpenBiz(null)} all={results} />
     </div>
   );
 };
