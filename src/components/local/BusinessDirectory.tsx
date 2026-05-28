@@ -555,6 +555,10 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
     <div className="p-6">
       <p className="text-[10px] uppercase tracking-[0.18em] text-white/50 font-semibold">{b.category}</p>
       <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-white">{b.name}</h3>
+      <p className="mt-3 text-sm text-white/65 font-light leading-relaxed line-clamp-2">{b.tagline}</p>
+
+      {/* Premium visible contact row — horizontally scrollable on mobile, snap pills */}
+      <div className="mt-5 -mx-1 px-1 flex gap-1.5 overflow-x-auto snap-x snap-mandatory scrollbar-none flex-nowrap md:flex-wrap">
         {b.phone ? (
           <a
             href={`tel:${b.phone.replace(/[^\d+]/g, "")}`}
@@ -589,9 +593,6 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
           >
             <Navigation className="w-3 h-3" /> Directions
           </a>
-        ) : (
-          <GhostPill icon={<Navigation className="w-3 h-3" />} label="Directions" />
-        )}
         ) : (
           <GhostPill icon={<Navigation className="w-3 h-3" />} label="Directions" />
         )}
