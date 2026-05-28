@@ -411,7 +411,7 @@ const FinancialConsole = () => {
         <title>Capital District Financial Console | Mortgages, Banking, Advisors & Investment Analysis</title>
         <meta
           name="description"
-          content="Explore mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance strategy, and DealDesk support across the Capital District."
+          content="Mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance strategy, and business capital across the Capital District."
         />
         <link rel="canonical" href="https://www.capitaldistrictnest.com/analyze" />
         <meta property="og:title" content="Capital District Financial Console" />
