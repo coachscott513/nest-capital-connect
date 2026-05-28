@@ -61,7 +61,8 @@ const SupportLocalSection = () => {
   const [town, setTown] = useState("");
   const [category, setCategory] = useState("");
   const [openBiz, setOpenBiz] = useState<Business | null>(null);
-  const { rows: liveBusinesses } = useDbBusinesses();
+  const { rows: liveBusinesses } = useDbBusinesses({ featuredOnly: true, limit: 24 });
+
   const placeholder = useMemo(
     () => PLACEHOLDERS[Math.floor(Math.random() * PLACEHOLDERS.length)],
     [],
