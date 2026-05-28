@@ -1374,6 +1374,7 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
           <Phone className="w-4 h-4" /> Contact
         </button>
       </PopoverTrigger>
+      <PopoverContent
         align="start"
         sideOffset={10}
         className="w-[280px] p-2 rounded-3xl border border-white/10 bg-[#0B0F19]/95 backdrop-blur-xl text-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]"
