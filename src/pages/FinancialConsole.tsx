@@ -473,8 +473,8 @@ const FinancialConsole = () => {
               {products.map((p) => (
                 <a
                   key={p.title}
-                  href="#dealdesk"
-                  onClick={scrollTo("dealdesk")}
+                  href="#financial-intro"
+                  onClick={scrollTo("financial-intro")}
                   data-lead-type={p.leadType}
                   className="group relative rounded-2xl p-5 bg-card/70 backdrop-blur-md border border-border hover:border-primary/60 transition-colors flex flex-col h-full"
                 >
@@ -537,8 +537,8 @@ const FinancialConsole = () => {
                   <h3 className="font-semibold text-foreground mb-2">{p.label}</h3>
                   <p className="text-sm text-white/65 leading-relaxed mb-5">{p.blurb}</p>
                   <a
-                    href="#dealdesk"
-                    onClick={scrollTo("dealdesk")}
+                    href="#financial-intro"
+                    onClick={scrollTo("financial-intro")}
                     className="inline-flex items-center gap-1.5 text-sm text-primary font-medium hover:translate-x-0.5 transition-transform"
                   >
                     Request Introduction <ArrowRight className="w-3.5 h-3.5" />
