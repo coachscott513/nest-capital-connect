@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { PlayCircle, ExternalLink, Newspaper, Radio, Tv } from "lucide-react";
 import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
 import LocalVideoModal, { isTrustedEmbedUrl } from "@/components/LocalVideoModal";
+import MediaSourceModal from "@/components/MediaSourceModal";
 
 /**
  * LOCAL MEDIA PULSE — Capital District Nest
@@ -10,40 +11,68 @@ import LocalVideoModal, { isTrustedEmbedUrl } from "@/components/LocalVideoModal
  * links back to the source. Never rehosts video.
  *
  * Editorial rule: only stories that help someone understand what's happening
- * locally — openings, development, events, community. No crime/politics/tragedy.
+ * locally — openings, development, events, community, sports, real estate.
+ * No crime / tragedy / political controversy / weather filler.
  */
 
-const SOURCE_CARDS = [
+interface SourceCard {
+  label: string;
+  shortName: string;
+  sourceName: string; // must match weeklyFeed.source_name
+  description: string;
+  drawerDescription: string;
+  accent: string;
+  Icon: typeof Tv;
+}
+
+const SOURCE_CARDS: SourceCard[] = [
   {
-    label: "News10 / ABC",
+    label: "NEWS10 / ABC",
+    shortName: "News10",
+    sourceName: "News10 WTEN",
     description:
       "Business openings, community stories, restaurants, events, and regional updates.",
+    drawerDescription:
+      "Curated business, food, development, and community stories from News10 WTEN.",
+    accent: "#5eead4",
     Icon: Tv,
   },
   {
     label: "WNYT / NBC",
+    shortName: "WNYT",
+    sourceName: "WNYT NewsChannel 13",
     description:
-      "Capital Region coverage, development, events, and local community reporting.",
+      "Capital Region coverage, development, local sports, and community reporting.",
+    drawerDescription:
+      "Development, sports, and community coverage curated from WNYT NewsChannel 13.",
+    accent: "#5eead4",
     Icon: Radio,
   },
   {
-    label: "Spectrum News",
+    label: "SPECTRUM NEWS",
+    shortName: "Spectrum",
+    sourceName: "Spectrum News",
     description:
-      "Regional video coverage, interviews, local issues, and neighborhood updates.",
+      "Regional video coverage, interviews, real estate, events, and neighborhood updates.",
+    drawerDescription:
+      "Real estate, events, and neighborhood stories curated from Spectrum News.",
+    accent: "#5eead4",
     Icon: Newspaper,
   },
 ];
 
 function isMediaItem(item: WeeklyFeedItem): boolean {
   if (!item.source_name) return false;
-  // Only include items that have a real outbound source link
   const url = item.external_article_url || item.original_url;
-  if (!url) return false;
+  if (!url && !item.video_embed_url) return false;
   return true;
 }
 
+
 export default function LocalMediaPulse() {
   const [modal, setModal] = useState<WeeklyFeedItem | null>(null);
+  const [sourceModal, setSourceModal] = useState<SourceCard | null>(null);
+
 
   const stories = useMemo(() => {
     return weeklyFeed
@@ -84,36 +113,45 @@ export default function LocalMediaPulse() {
 
         {/* Source cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-14 md:mb-20">
-          {SOURCE_CARDS.map(({ label, description, Icon }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative rounded-2xl border border-[#2D3748] bg-white/[0.03] backdrop-blur-sm p-6 md:p-7 transition-all duration-300 hover:border-[#5eead4]/50 hover:bg-white/[0.05]"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-white/[0.04] text-[#5eead4] group-hover:border-[#5eead4]/40 transition-colors">
-                  <Icon className="w-4 h-4" />
+          {SOURCE_CARDS.map((card, i) => {
+            const { label, description, Icon, accent } = card;
+            return (
+              <motion.button
+                key={label}
+                type="button"
+                onClick={() => setSourceModal(card)}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.55, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
+                className="group relative text-left rounded-2xl border border-[#2D3748] bg-white/[0.03] backdrop-blur-sm p-6 md:p-7 transition-all duration-300 hover:border-[#5eead4]/50 hover:bg-white/[0.05] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5eead4]/60"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-white/[0.04] group-hover:border-[#5eead4]/40 transition-colors"
+                    style={{ color: accent }}
+                  >
+                    <Icon className="w-4 h-4" />
+                  </span>
+                  <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/55 group-hover:text-[#5eead4] transition-colors">
+                    Source
+                  </span>
+                </div>
+                <h3 className="text-lg md:text-xl font-semibold text-white tracking-[0.04em] mb-2">
+                  {label}
+                </h3>
+                <p className="text-sm text-white/60 leading-relaxed mb-5">
+                  {description}
+                </p>
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.08em] uppercase text-[#5eead4]/90 group-hover:text-white transition-colors">
+                  View Coverage
+                  <span aria-hidden>→</span>
                 </span>
-                <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/55 group-hover:text-[#5eead4] transition-colors">
-                  Source
-                </span>
-              </div>
-              <h3 className="text-lg md:text-xl font-semibold text-white tracking-[-0.015em] mb-2">
-                {label}
-              </h3>
-              <p className="text-sm text-white/60 leading-relaxed mb-5">
-                {description}
-              </p>
-              <span className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.08em] uppercase text-[#5eead4]/90 group-hover:text-white transition-colors">
-                View Coverage
-                <span aria-hidden>→</span>
-              </span>
-            </motion.div>
-          ))}
+              </motion.button>
+            );
+          })}
         </div>
+
 
         {/* Curated stories */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
@@ -189,6 +227,18 @@ export default function LocalMediaPulse() {
             );
           })}
         </div>
+
+        {/* View more */}
+        <div className="mt-10 md:mt-14 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setSourceModal(SOURCE_CARDS[0])}
+            className="inline-flex items-center gap-2 rounded-full border border-[#2D3748] bg-white/[0.03] px-6 py-3 text-xs font-semibold tracking-[0.16em] uppercase text-white/80 hover:text-white hover:border-[#5eead4]/50 hover:bg-white/[0.06] transition"
+          >
+            View More Local Coverage
+            <span aria-hidden>→</span>
+          </button>
+        </div>
       </div>
 
       <LocalVideoModal
@@ -201,6 +251,16 @@ export default function LocalMediaPulse() {
         town={modal?.town}
         category={modal?.categoryBadgeOverride || "Local News"}
       />
+
+      <MediaSourceModal
+        open={!!sourceModal}
+        onClose={() => setSourceModal(null)}
+        sourceName={sourceModal?.sourceName || ""}
+        sourceShortName={sourceModal?.shortName}
+        sourceDescription={sourceModal?.drawerDescription}
+        accentColor={sourceModal?.accent}
+      />
     </section>
   );
 }
+
