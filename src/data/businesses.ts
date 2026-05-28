@@ -77,6 +77,11 @@ export const CATEGORY_GROUPS: Record<CategoryGroup, BusinessCategory[]> = {
     "Wellness",
     "Bookstore",
   ],
+  "Health & Wellness": [
+    "Healthcare",
+    "Dental",
+    "Wellness",
+  ],
   "Professional Services": [
     "Accountant",
     "Financial Advisor",
