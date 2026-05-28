@@ -1032,18 +1032,31 @@ export const BusinessDetailModal = ({
           <div className="flex flex-wrap gap-2">
             <BusinessActionHub biz={biz} claimed={claimed} />
             {biz.website && (
-              <a href={biz.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
+              <a
+                href={biz.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => fireBizAction("website", biz, "business_modal")}
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
+              >
                 <Globe className="w-4 h-4" /> Website
               </a>
             )}
             {dirHref && (
-              <a href={dirHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition">
+              <a
+                href={dirHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => fireBizAction("directions", biz, "business_modal")}
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition"
+              >
                 <Navigation className="w-4 h-4" /> Directions
               </a>
             )}
             {!claimed && (
               <a
                 href={`/claim-business?slug=${biz.slug}`}
+                onClick={() => fireBizAction("claim", biz, "business_modal")}
                 className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[#5eead4] text-sm font-semibold hover:bg-[#5eead4]/20 transition"
               >
                 <Sparkles className="w-4 h-4" /> Claim This Profile
