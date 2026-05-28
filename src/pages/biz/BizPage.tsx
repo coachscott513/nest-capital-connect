@@ -709,6 +709,17 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
 const titleizeSlug = (s: string) =>
   s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
+const SLUG_ALIASES: Record<string, string> = {
+  "the-perfect-blend-cafe": "perfect-blend-cafe-bakery-delmar",
+  "perfect-blend": "perfect-blend-cafe-bakery-delmar",
+  "mccarrolls-the-village-butcher": "mccarrolls-village-butcher-delmar",
+};
+
+const canonicalizeRequestedSlug = (value?: string) => {
+  const clean = (value || "").trim().toLowerCase();
+  return SLUG_ALIASES[clean] || clean;
+};
+
 const buildPlaceholderBusiness = (slug: string): Business => ({
   id: `placeholder-${slug}`,
   slug,
@@ -762,12 +773,21 @@ const BizPage = () => {
 
   useEffect(() => {
     if (!slug) return;
+    let cancelled = false;
     (async () => {
       setLoading(true);
+      setNotFound(false);
+      setBiz(null);
+      setSpecials([]);
+      const canonicalSlug = canonicalizeRequestedSlug(slug);
+      const requestedSlugs = Array.from(new Set([slug.toLowerCase(), canonicalSlug].filter(Boolean)));
       const { data, error } = await supabase
-        .from("businesses").select("*").eq("slug", slug).eq("is_active", true).maybeSingle();
-      if (error || !data) { setNotFound(true); setLoading(false); return; }
-      const raw = data as unknown as Business;
+        .from("businesses").select("*").in("slug", requestedSlugs).eq("is_active", true).limit(2);
+      if (cancelled) return;
+      const row = (data || []).find((item: any) => item.slug === canonicalSlug) || data?.[0];
+      if (error) { setNotFound(false); setLoading(false); return; }
+      if (!row) { setNotFound(true); setLoading(false); return; }
+      const raw = row as unknown as Business;
       const b: Business = { ...raw, plan_tier: normalizeTier(raw.plan_tier) };
       setBiz(b);
       if (PREMIUM_TIERS.has(b.plan_tier)) {
@@ -776,14 +796,16 @@ const BizPage = () => {
           .select("id, headline, description, image_url, cta_url, cta_label, start_date, end_date")
           .eq("business_id", b.id).eq("is_active", true)
           .order("display_order", { ascending: true });
+        if (cancelled) return;
         setSpecials((sp as Special[]) ?? []);
       }
       setLoading(false);
     })();
+    return () => { cancelled = true; };
   }, [slug]);
 
   // Real 404 once we've confirmed the slug doesn't resolve.
-  if (!loading && (notFound || !biz)) {
+  if (!loading && notFound) {
     return <NotFoundBiz slug={slug || ""} />;
   }
 
@@ -805,7 +827,9 @@ const BizPage = () => {
           biz.tagline ||
           biz.description?.slice(0, 155) ||
           fallbackDesc;
-        const title = `${biz.name} | ${town}, NY | Capital District Nest`;
+        const title = loading
+          ? `${biz.name} | Verified Local Profile | Capital District Nest`
+          : `${biz.name} | ${town}, NY | Capital District Nest`;
         const image = biz.hero_image_url || biz.photos?.[0] || biz.logo_url || undefined;
         const ldBusiness: Record<string, unknown> = {
           "@context": "https://schema.org",
@@ -876,6 +900,7 @@ const BizPage = () => {
           <Helmet>
             <title>{title}</title>
             <meta name="description" content={desc} />
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
             <link rel="canonical" href={url} />
             <meta property="og:type" content="business.business" />
             <meta property="og:title" content={title} />
@@ -893,6 +918,14 @@ const BizPage = () => {
       })()}
 
       <CleanHeader />
+
+      {loading && (
+        <section className="px-6 md:px-10 pt-24 pb-0">
+          <div className="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-5 text-sm text-white/65">
+            Loading community partner profile index...
+          </div>
+        </section>
+      )}
 
       {isPremium ? (
         <PremiumMicrosite biz={activeBiz} specials={specials} />
