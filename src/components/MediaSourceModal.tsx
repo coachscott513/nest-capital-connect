@@ -93,7 +93,7 @@ export default function MediaSourceModal({
           </div>
 
           {/* Stories */}
-          <div className="flex-1 overflow-y-auto px-6 md:px-8 py-6 space-y-3">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto px-6 md:px-8 py-6 space-y-3">
             {stories.length === 0 && (
               <div className="text-center py-12 text-white/55 text-sm">
                 No curated stories from this source yet — check back soon.
