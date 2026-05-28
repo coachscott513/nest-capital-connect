@@ -254,8 +254,21 @@ export default function LocalMediaPulse() {
                         {...tagProps}
                         className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.06em] text-[#5eead4] hover:text-white transition-colors"
                       >
-
+                        {ctaLabel}
+                        {hasVideo ? (
+                          <PlayCircle className="w-3.5 h-3.5" />
+                        ) : (
+                          <ExternalLink className="w-3 h-3" />
+                        )}
+                      </Tag>
+                    </div>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
         )}
+
 
         {/* View more — smooth-scrolls to the top of this section so the
             header is always the first visible element. */}
