@@ -61,6 +61,19 @@ const bizPayload = (b: Business, source: string) => ({
   source_location: source,
 });
 
+type BizActionType = "call" | "text" | "email" | "website" | "directions" | "claim";
+const fireBizAction = (action: BizActionType, b: Business, source: string) => {
+  const p = bizPayload(b, source);
+  switch (action) {
+    case "call":       trackGAEvent.callClick(p); break;
+    case "text":       trackGAEvent.textClick(p); break;
+    case "email":      trackGAEvent.emailClick(p); break;
+    case "website":    trackGAEvent.websiteClick(p); break;
+    case "directions": trackGAEvent.directionsClick(p); break;
+    case "claim":      trackGAEvent.claimProfileClick(p); break;
+  }
+};
+
 const TEAL = "#5eead4";
 const TEAL_DEEP = "#0d6e66";
 
@@ -193,12 +206,14 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href="/pricing"
+                onClick={() => trackGAEvent.pricingClick({ source_location: "directory_hero" })}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
               >
                 <Sparkles className="w-4 h-4" /> Local Business Solutions
               </a>
               <a
                 href="/pricing"
+                onClick={() => trackGAEvent.pricingClick({ source_location: "directory_hero_promote" })}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition"
               >
                 <Megaphone className="w-4 h-4 text-[#5eead4]" /> Promote a Special
@@ -334,10 +349,10 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 Try another search, or help us grow the directory.
               </p>
               <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-                <a href="/claim-business" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
+                <a href="/claim-business" onClick={() => trackGAEvent.claimProfileClick({ source_location: "directory_empty_suggest" })} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition">
                   Suggest a business
                 </a>
-                <a href="/claim-business" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/50 transition">
+                <a href="/claim-business" onClick={() => trackGAEvent.claimProfileClick({ source_location: "directory_empty_login" })} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/50 transition">
                   Owner Login
                 </a>
               </div>
@@ -394,10 +409,10 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
               across the digital front door of the region.
             </p>
             <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a href="/pricing" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition">
+              <a href="/pricing" onClick={() => trackGAEvent.pricingClick({ source_location: "directory_claim_strip" })} className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition">
                 Local Business Solutions
               </a>
-              <a href="/pricing" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-[#5eead4]/40 transition">
+              <a href="/pricing" onClick={() => trackGAEvent.pricingClick({ source_location: "directory_claim_strip_featured" })} className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-white/20 bg-white/5 text-white hover:bg-white/10 hover:border-[#5eead4]/40 transition">
                 Become a Featured Partner
               </a>
             </div>
