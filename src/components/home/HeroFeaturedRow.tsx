@@ -1,91 +1,27 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { BadgeCheck, Phone, ArrowUpRight, Clock, MapPin } from "lucide-react";
+import { BadgeCheck, Phone, ArrowUpRight, MapPin, Sparkles, ArrowRight } from "lucide-react";
 import { BusinessDetailModal } from "@/components/local/BusinessDirectory";
+import { useFeaturedBusinesses } from "@/hooks/usePaginatedBusinesses";
+import { hasRealBusinessMedia } from "@/lib/businessImages";
 import type { Business } from "@/data/businesses";
 
 /* =============================================================
-   HERO FEATURED ROW — premium "Member Local Legend" cards
-   embedded directly inside the hero glass surface, below the
-   Omni-Search and trending pills. Stable single-image variant.
+   HERO FEATURED ROW
+   Premium hero spotlights pulled from REAL featured businesses
+   in the live directory. INTEGRITY RULES:
+   - Never hardcode fake businesses with stock photos.
+   - Only show the cinematic image header when the business has
+     uploaded its own media.
+   - If fewer than 3 truly Featured rows exist, fill remaining
+     slots with "Available Placement" CTAs — never with ordinary
+     listings labeled Featured.
    ============================================================= */
-
-type HeroSpotlight = {
-  name: string;
-  category: string;
-  town: string;
-  hoursToday: string;
-  phone?: string;
-  website?: string;
-  menu_url?: string;
-  image_url: string;
-  slug: string;
-  ctaIntent?: "connect";
-};
-
-const PLACEHOLDER_SCENIC =
-  "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80";
-
-const HERO_SPOTLIGHTS: HeroSpotlight[] = [
-  {
-    name: "The Perfect Blend Café",
-    category: "Café · Roastery",
-    town: "Delmar, NY",
-    hoursToday: "6:30 AM – 5:00 PM",
-    phone: "(518) 439-0001",
-    website: "https://theperfectblendcafe.com",
-    image_url:
-      "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=1400&q=80",
-    slug: "perfect-blend-cafe-bakery-delmar",
-  },
-  {
-    name: "McCarroll's The Village Butcher",
-    category: "Butcher · Local Provisions",
-    town: "Slingerlands, NY",
-    hoursToday: "9:00 AM – 6:00 PM",
-    phone: "(518) 439-9000",
-    website: "https://mccarrollsbutcher.com",
-    image_url:
-      "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1400&q=80",
-    slug: "mccarrolls-village-butcher-delmar",
-    ctaIntent: "connect",
-  },
-  {
-    name: "Roux",
-    category: "Restaurant · Modern Comfort",
-    town: "Albany, NY",
-    hoursToday: "5:00 PM – 10:00 PM",
-    phone: "(518) 689-3434",
-    website: "https://rouxalbany.com",
-    image_url:
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80",
-    slug: "roux",
-  },
-];
-
 
 const cleanTelHref = (phone?: string | null) => {
   const digits = phone?.replace(/[^\d+]/g, "");
   return digits ? `tel:${digits}` : null;
 };
-
-// Card CTA is always "View Profile" → opens the shared BusinessDetailModal.
-// Website / menu / phone live INSIDE the modal so behavior is consistent
-// with search-result cards and town/category cards.
-
-const toBusiness = (business: HeroSpotlight): Business => ({
-  slug: business.slug,
-  name: business.name,
-  town: business.town.toLowerCase().replace(/,?\s*ny$/, "").replace(/[^a-z0-9]+/g, "-"),
-  townLabel: business.town.replace(/,?\s*NY$/, ""),
-  category: business.category.toLowerCase().includes("café") ? "Coffee" : business.category.toLowerCase().includes("butcher") ? "Retail" : "Restaurant",
-  tagline: `${business.category} in ${business.town}`,
-  phone: business.phone,
-  website: business.website,
-  hours: business.hoursToday,
-  image: business.image_url,
-  featured: true,
-});
 
 const FeaturedBadge = () => (
   <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/45 backdrop-blur-md border border-white/20 text-[10px] font-semibold tracking-[0.16em] uppercase text-white/90">
@@ -94,10 +30,10 @@ const FeaturedBadge = () => (
   </div>
 );
 
-const HeroCard = ({ business, onOpen }: { business: HeroSpotlight; onOpen: (business: HeroSpotlight) => void }) => {
-  const src = business.image_url || PLACEHOLDER_SCENIC;
+const HeroCard = ({ business, onOpen }: { business: Business; onOpen: (b: Business) => void }) => {
   const phoneHref = cleanTelHref(business.phone);
   const open = () => onOpen(business);
+  const hasMedia = hasRealBusinessMedia(business);
 
   return (
     <article
@@ -113,20 +49,36 @@ const HeroCard = ({ business, onOpen }: { business: HeroSpotlight; onOpen: (busi
         type="button"
         onClick={open}
         aria-label={`View ${business.name}`}
-        className="block relative w-full h-36 sm:h-40 overflow-hidden"
+        className="block relative w-full h-36 sm:h-40 overflow-hidden text-left"
       >
-        <div className="absolute inset-0">
-          <img
-            src={src}
-            alt={business.name}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = PLACEHOLDER_SCENIC;
+        {hasMedia && business.image ? (
+          <>
+            <img
+              src={business.image}
+              alt={business.name}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
+          </>
+        ) : (
+          <div
+            className="absolute inset-0 flex items-end p-4"
+            style={{
+              background:
+                "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.18) 0%, transparent 55%), linear-gradient(180deg, #10141F 0%, #0B0F19 100%)",
             }}
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
+          >
+            <div>
+              <p className="text-[9.5px] uppercase tracking-[0.22em] font-semibold text-[#5eead4]">
+                {business.category}
+              </p>
+              <p className="mt-1 text-[17px] font-semibold tracking-[-0.015em] text-white leading-tight line-clamp-2">
+                {business.name}
+              </p>
+            </div>
+          </div>
+        )}
         <FeaturedBadge />
       </button>
 
@@ -140,16 +92,14 @@ const HeroCard = ({ business, onOpen }: { business: HeroSpotlight; onOpen: (busi
           </h3>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-white/55 font-light">
-          <span className="inline-flex items-center gap-1">
-            <MapPin className="w-3 h-3 text-white/40" />
-            <span>{business.town}</span>
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <Clock className="w-3 h-3 text-white/40" />
-            <span>{business.hoursToday}</span>
-          </span>
-        </div>
+        {business.townLabel && (
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-white/55 font-light">
+            <span className="inline-flex items-center gap-1">
+              <MapPin className="w-3 h-3 text-white/40" />
+              <span>{business.townLabel}</span>
+            </span>
+          </div>
+        )}
 
         <div className="mt-2 flex items-center gap-2">
           <button
@@ -176,10 +126,42 @@ const HeroCard = ({ business, onOpen }: { business: HeroSpotlight; onOpen: (busi
   );
 };
 
+const AvailableCard = () => (
+  <Link
+    to="/pricing"
+    className="group relative rounded-2xl overflow-hidden ring-1 ring-dashed ring-[#5eead4]/30 hover:ring-[#5eead4]/65 transition-all duration-500 hover:-translate-y-0.5 p-5 flex flex-col justify-between min-h-[260px]"
+    style={{
+      background:
+        "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.10) 0%, transparent 55%), linear-gradient(180deg, rgba(30,34,48,0.7) 0%, rgba(11,15,25,0.7) 100%)",
+      backdropFilter: "blur(12px) saturate(140%)",
+      WebkitBackdropFilter: "blur(12px) saturate(140%)",
+    }}
+  >
+    <div>
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/10 border border-[#5eead4]/30 text-[#5eead4] text-[10px] font-semibold uppercase tracking-[0.18em] w-fit">
+        <Sparkles className="w-3 h-3" /> Available
+      </span>
+      <h3 className="mt-4 text-[18px] font-semibold tracking-[-0.015em] text-white leading-tight">
+        Featured spotlight open.
+      </h3>
+      <p className="mt-2 text-[12.5px] text-white/60 font-light leading-relaxed">
+        Reserve one of the first hero positions in our Capital District pilot.
+      </p>
+    </div>
+    <span className="mt-4 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-[#5eead4]">
+      Request placement <ArrowRight className="w-3.5 h-3.5" />
+    </span>
+  </Link>
+);
+
 const HeroFeaturedRow = () => {
   const [openBusiness, setOpenBusiness] = useState<Business | null>(null);
-  const modalBusinesses = HERO_SPOTLIGHTS.map(toBusiness);
+  const featured = useFeaturedBusinesses(3);
+  const placements = Math.max(0, 3 - featured.length);
 
+  // Don't render anything in the hero until we know — avoids flashing fake
+  // placeholders. If there are zero featured rows, still show 3 placement
+  // CTAs so the row never looks broken.
   return (
     <div className="relative mx-auto w-full max-w-5xl">
       <div className="flex items-center justify-between mb-3 px-1">
@@ -195,11 +177,18 @@ const HeroFeaturedRow = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-        {HERO_SPOTLIGHTS.map((business) => (
-          <HeroCard key={business.name} business={business} onOpen={(b) => setOpenBusiness(toBusiness(b))} />
+        {featured.map((b) => (
+          <HeroCard key={b.slug} business={b} onOpen={setOpenBusiness} />
+        ))}
+        {Array.from({ length: placements }).map((_, i) => (
+          <AvailableCard key={`open-${i}`} />
         ))}
       </div>
-      <BusinessDetailModal biz={openBusiness} onClose={() => setOpenBusiness(null)} all={modalBusinesses} />
+      <BusinessDetailModal
+        biz={openBusiness}
+        onClose={() => setOpenBusiness(null)}
+        all={featured}
+      />
     </div>
   );
 };
