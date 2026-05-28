@@ -555,14 +555,10 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
     <div className="p-6">
       <p className="text-[10px] uppercase tracking-[0.18em] text-white/50 font-semibold">{b.category}</p>
       <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-white">{b.name}</h3>
-      <p className="mt-3 text-sm text-white/65 font-light leading-relaxed line-clamp-2">{b.tagline}</p>
-
-      {/* Premium visible contact row — horizontally scrollable on mobile, snap pills */}
-      <div className="mt-5 -mx-1 px-1 flex gap-1.5 overflow-x-auto snap-x snap-mandatory scrollbar-none flex-nowrap md:flex-wrap">
         {b.phone ? (
           <a
             href={`tel:${b.phone.replace(/[^\d+]/g, "")}`}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); fireBizAction("call", b, "directory_featured_tile"); }}
             className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/10 border border-[#5eead4]/25 text-[11px] text-[#5eead4] hover:bg-[#5eead4]/20 transition"
           >
             <Phone className="w-3 h-3" /> Call
@@ -575,7 +571,7 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             href={b.website}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); fireBizAction("website", b, "directory_featured_tile"); }}
             className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
           >
             <Globe className="w-3 h-3" /> Website
@@ -588,11 +584,14 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.address)}`}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => { e.stopPropagation(); fireBizAction("directions", b, "directory_featured_tile"); }}
             className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/15 text-[11px] text-white/80 hover:border-[#5eead4]/40 hover:text-[#5eead4] transition"
           >
             <Navigation className="w-3 h-3" /> Directions
           </a>
+        ) : (
+          <GhostPill icon={<Navigation className="w-3 h-3" />} label="Directions" />
+        )}
         ) : (
           <GhostPill icon={<Navigation className="w-3 h-3" />} label="Directions" />
         )}
@@ -786,14 +785,14 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
                 {s}
               </span>
             ))}
-          </div>
-        )}
-
-        <ContactPreview b={b} claimed={claimed} />
-
-        {claimed ? (
-          <span className="mt-auto pt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#5eead4]">
-            View profile
+            <a
+              href={`/claim-business?slug=${b.slug}${b.town ? `&town=${b.town}` : ""}`}
+              onClick={(e) => { e.stopPropagation(); fireBizAction("claim", b, "directory_card"); }}
+              className="shrink-0 inline-flex items-center justify-center px-3 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white/85 text-[11px] font-semibold tracking-[0.1em] uppercase hover:border-[#5eead4]/55 hover:text-[#5eead4] hover:bg-white/[0.08] transition"
+              aria-label="Claim this profile"
+            >
+              Claim
+            </a>
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </span>
         ) : (
@@ -801,24 +800,10 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
             <span className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white text-[#0B0F19] text-[13px] font-semibold transition group-hover:bg-[#5eead4]">
               View Profile <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
-            <a
-              href={`/claim-business?slug=${b.slug}${b.town ? `&town=${b.town}` : ""}`}
-              onClick={(e) => e.stopPropagation()}
-              className="shrink-0 inline-flex items-center justify-center px-3 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white/85 text-[11px] font-semibold tracking-[0.1em] uppercase hover:border-[#5eead4]/55 hover:text-[#5eead4] hover:bg-white/[0.08] transition"
-              aria-label="Claim this profile"
-            >
-              Claim
-            </a>
-          </div>
-        )}
-      </div>
-    </button>
-  );
-};
-
 const ClaimCtaCard = () => (
   <a
     href="/pricing"
+    onClick={() => trackGAEvent.pricingClick({ source_location: "directory_inline_claim_card" })}
     className="group relative rounded-[22px] overflow-hidden p-7 flex flex-col justify-between border border-[#5eead4]/25 bg-gradient-to-br from-[#0d6e66]/15 via-[#1E2230] to-[#1E2230] hover:border-[#5eead4]/60 hover:shadow-[0_30px_70px_-20px_rgba(94,234,212,0.35)] transition-all duration-300 hover:-translate-y-1 min-h-[280px]"
   >
     <div
@@ -852,6 +837,7 @@ const ClaimCtaCard = () => (
 const PromoteCtaCard = () => (
   <a
     href="/pricing"
+    onClick={() => trackGAEvent.pricingClick({ source_location: "directory_inline_promote_card" })}
     className="group relative rounded-[22px] overflow-hidden p-7 flex flex-col justify-between border border-white/[0.08] bg-[#1E2230] hover:border-[#5eead4]/50 hover:shadow-[0_30px_70px_-20px_rgba(94,234,212,0.25)] transition-all duration-300 hover:-translate-y-1 min-h-[280px]"
   >
     <div className="relative">
@@ -859,6 +845,21 @@ const PromoteCtaCard = () => (
         <Megaphone className="w-5 h-5 text-[#5eead4]" />
       </div>
       <p className="mt-5 text-[10px] uppercase tracking-[0.22em] text-[#5eead4] font-semibold">Promote</p>
+      <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white leading-tight">
+        Promote a special or event
+      </h3>
+      <p className="mt-3 text-sm text-white/65 font-light leading-relaxed">
+        Happy hours, grand openings, networking events, live music, seasonal promotions —
+        surfaced across the weekly feed.
+      </p>
+    </div>
+    <div className="relative mt-6">
+      <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[#5eead4] text-xs font-semibold">
+        Add Promotion <ArrowUpRight className="w-3.5 h-3.5" />
+      </span>
+    </div>
+  </a>
+);
       <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white leading-tight">
         Promote a special or event
       </h3>
