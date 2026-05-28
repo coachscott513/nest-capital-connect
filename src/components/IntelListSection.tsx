@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import alphaListReport from "@/assets/alpha-list-report.jpg";
+import { trackGAEvent } from "@/components/GARouteTracker";
 
 const IntelListSection = () => {
   const [email, setEmail] = useState("");
@@ -10,17 +11,24 @@ const IntelListSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !email.includes("@")) {
       toast.error("Please enter a valid email address");
       return;
     }
 
     setIsSubmitting(true);
-    
+
     // Simulate submission - replace with actual API call
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
+
+    trackGAEvent.newsletterSignup({
+      source_location: "intel_list_section",
+      // @ts-expect-error allow extra context
+      email_domain: email.split("@")[1] || undefined,
+      // @ts-expect-error allow extra context
+      page_path: typeof window !== "undefined" ? window.location.pathname : undefined,
+    });
     toast.success("You're on the list! Check your inbox for the Regional Insight Report.");
     setEmail("");
     setIsSubmitting(false);

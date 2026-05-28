@@ -10,6 +10,7 @@ import {
 } from "@/data/businesses";
 import { BusinessDetailModal } from "@/components/local/BusinessDirectory";
 import { useDbBusinesses } from "@/hooks/useDbBusinesses";
+import { trackGAEvent } from "@/components/GARouteTracker";
 
 const TOWN_CHIPS = [
   { name: "Delmar", slug: "delmar" },
@@ -36,6 +37,7 @@ const PLACEHOLDERS = [
 const AvailableSpotlightCard = () => (
   <Link
     to="/pricing"
+    onClick={() => trackGAEvent.pricingClick({ source_location: "support_local_available_spotlight" })}
     className="group relative flex flex-col justify-between overflow-hidden rounded-[28px] border border-dashed border-[#5eead4]/35 bg-gradient-to-br from-[#0d6e66]/10 via-[#1E2230]/60 to-[#1E2230]/60 backdrop-blur-xl p-7 md:p-8 min-h-[300px] hover:border-[#5eead4]/70 transition-all duration-500 hover:-translate-y-1"
   >
     <div>
@@ -85,6 +87,7 @@ const SupportLocalSection = () => {
     if (q.trim()) params.set("q", q.trim());
     if (town) params.set("town", town);
     if (category) params.set("category", category);
+    trackGAEvent.searchSubmit({ query: q.trim(), town, category, source_location: "homepage_support_local" });
     const qs = params.toString();
     navigate(qs ? `/local?${qs}` : "/local");
   };
@@ -299,6 +302,7 @@ const SupportLocalSection = () => {
           </div>
           <Link
             to="/claim-business"
+            onClick={() => trackGAEvent.claimProfileClick({ source_location: "support_local_for_businesses" })}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition shrink-0 self-start md:self-auto"
           >
             For Local Businesses <ArrowUpRight className="w-4 h-4" />

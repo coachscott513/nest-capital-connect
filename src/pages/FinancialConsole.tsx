@@ -349,6 +349,12 @@ const FinancialScenarioForm = ({ defaultObjective }: { defaultObjective?: string
       toast({ title: "Submission failed", description: error.message, variant: "destructive" });
       return;
     }
+    trackGAEvent.financialIntroSubmit({
+      product_type: form.lead_type,
+      source_location: "financial_console",
+      // @ts-expect-error allow extra context
+      page_path: typeof window !== "undefined" ? window.location.pathname : "/finances",
+    });
     setDone(true);
     toast({ title: "Scenario received", description: "Scott or a Capital District financial partner will reach out shortly." });
   };
