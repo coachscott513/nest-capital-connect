@@ -1240,10 +1240,10 @@ export const BusinessDetailModal = ({
                 events, and specials. Free during the pilot — concierge onboarding included.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
-                <a href={`/claim-business?slug=${biz.slug}`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
+                <a href={`/claim-business?slug=${biz.slug}`} onClick={() => fireBizAction("claim", biz, "business_modal_claim_strip")} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
                   <Sparkles className="w-4 h-4" /> Claim This Profile
                 </a>
-                <a href={`/claim-business?slug=${biz.slug}&intent=login`} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/40 transition">
+                <a href={`/claim-business?slug=${biz.slug}&intent=login`} onClick={() => fireBizAction("claim", biz, "business_modal_owner_login")} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-white/20 text-sm font-semibold text-white hover:border-[#5eead4]/40 transition">
                   Owner Login
                 </a>
               </div>
@@ -1331,13 +1331,13 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
     ? "Book Now"
     : "Order / Book";
 
-  const rows: { href: string; icon: React.ReactNode; label: string; sub?: string; accent?: boolean }[] = [];
-  if (tel) rows.push({ href: tel, icon: <Phone className="w-4 h-4" />, label: "Call Business", sub: biz.phone });
-  if (sms) rows.push({ href: sms, icon: <MessageSquare className="w-4 h-4" />, label: "Text Message", sub: "Send a text" });
-  if (mail) rows.push({ href: mail, icon: <Mail className="w-4 h-4" />, label: "Email Direct", sub: biz.email });
-  if (biz.website) rows.push({ href: biz.website, icon: <Globe className="w-4 h-4" />, label: "Visit Website" });
-  if (order) rows.push({ href: order, icon: <CalendarPlus className="w-4 h-4" />, label: orderLabel });
-  if (dir) rows.push({ href: dir, icon: <Navigation className="w-4 h-4" />, label: "Get Directions", sub: biz.address });
+  const rows: { href: string; icon: React.ReactNode; label: string; sub?: string; accent?: boolean; action: BizActionType }[] = [];
+  if (tel) rows.push({ href: tel, icon: <Phone className="w-4 h-4" />, label: "Call Business", sub: biz.phone, action: "call" });
+  if (sms) rows.push({ href: sms, icon: <MessageSquare className="w-4 h-4" />, label: "Text Message", sub: "Send a text", action: "text" });
+  if (mail) rows.push({ href: mail, icon: <Mail className="w-4 h-4" />, label: "Email Direct", sub: biz.email, action: "email" });
+  if (biz.website) rows.push({ href: biz.website, icon: <Globe className="w-4 h-4" />, label: "Visit Website", action: "website" });
+  if (order) rows.push({ href: order, icon: <CalendarPlus className="w-4 h-4" />, label: orderLabel, action: "website" });
+  if (dir) rows.push({ href: dir, icon: <Navigation className="w-4 h-4" />, label: "Get Directions", sub: biz.address, action: "directions" });
   if (!claimed) {
     rows.push({
       href: `/claim-business?slug=${biz.slug}`,
@@ -1345,6 +1345,7 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
       label: "Owner: Request Profile Edits",
       sub: "Claim & customize this listing",
       accent: true,
+      action: "claim",
     });
   }
 
@@ -1352,6 +1353,7 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
     return (
       <a
         href={`/claim-business?slug=${biz.slug}`}
+        onClick={() => fireBizAction("claim", biz, "business_action_hub_empty")}
         className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
       >
         <Sparkles className="w-4 h-4" /> Claim This Profile
@@ -1362,15 +1364,16 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
 
   return (
     <Popover>
+    <Popover>
       <PopoverTrigger asChild>
         <button
           type="button"
+          onClick={() => trackGAEvent.businessContactOpen(bizPayload(biz, "business_action_hub"))}
           className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
         >
           <Phone className="w-4 h-4" /> Contact
         </button>
       </PopoverTrigger>
-      <PopoverContent
         align="start"
         sideOffset={10}
         className="w-[280px] p-2 rounded-3xl border border-white/10 bg-[#0B0F19]/95 backdrop-blur-xl text-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]"
@@ -1387,6 +1390,7 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
                 href={r.href}
                 target={external ? "_blank" : undefined}
                 rel={external ? "noopener noreferrer" : undefined}
+                onClick={() => fireBizAction(r.action, biz, "business_action_hub")}
                 className="flex items-center gap-3 px-3 py-3 rounded-2xl hover:bg-white/[0.06] transition"
               >
                 <span className="w-9 h-9 rounded-full bg-[#5eead4]/15 text-[#5eead4] flex items-center justify-center shrink-0">
