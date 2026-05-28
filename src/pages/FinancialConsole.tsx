@@ -387,7 +387,7 @@ const FinancialConsole = () => {
       "@type": "FinancialService",
       name: "Capital District Financial Console",
       description:
-        "Mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance, and DealDesk support in the Capital District.",
+        "Mortgages, banking, financial advisors, accountants, insurance, investment property analysis, commercial lending, DSCR, refinance, and business capital across the Capital District.",
       url: "https://www.capitaldistrictnest.com/analyze",
       areaServed: "Capital District, New York",
       provider: {
