@@ -295,7 +295,11 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
               </button>
             )}
             <span className="ml-auto text-xs text-white/55">
-              {loading ? "Loading live directory…" : `${results.length} matching / ${ALL.length} live businesses`}
+              {loading
+                ? "Loading live directory…"
+                : total != null
+                  ? `${results.length} of ${total.toLocaleString()} live businesses`
+                  : `${results.length} live businesses`}
             </span>
           </div>
         </div>
