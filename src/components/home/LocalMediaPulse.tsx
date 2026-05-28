@@ -177,7 +177,10 @@ export default function LocalMediaPulse() {
         )}
 
         {/* Curated stories */}
+        {stories.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
             {stories.map((s, i) => {
+
               const hasVideo = !!(s.has_video && isTrustedEmbedUrl(s.video_embed_url));
               const ctaLabel = hasVideo ? "Watch Coverage" : "Read Full Coverage";
               const href = s.external_article_url || s.original_url || "#";
