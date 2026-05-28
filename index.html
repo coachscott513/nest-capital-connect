@@ -199,7 +199,23 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N84MXWZD"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div id="root"></div>
+    <div id="root">
+      <!-- Static crawler fallback — visible to bots before JS hydrates -->
+      <div style="max-width:960px;margin:0 auto;padding:64px 24px;font-family:Manrope,system-ui,sans-serif;color:#FFFFFF;">
+        <h1 style="font-size:40px;line-height:1.05;letter-spacing:-0.02em;font-weight:600;margin:0 0 16px;">Search anything local.</h1>
+        <p style="font-size:18px;line-height:1.55;color:rgba(255,255,255,0.75);margin:0 0 32px;max-width:680px;">The digital front door of the Capital District — search businesses, homes, restaurants, services, events, towns, and local updates in one place.</p>
+        <p style="font-size:16px;line-height:1.6;color:rgba(255,255,255,0.65);margin:0 0 24px;max-width:760px;">Capital District Nest helps residents, visitors, business owners, and home seekers search anything local across the Capital District. Explore businesses, homes, restaurants, services, events, towns, and local updates through one searchable regional platform.</p>
+        <nav aria-label="Primary categories" style="display:flex;flex-wrap:wrap;gap:12px;font-size:14px;">
+          <a href="/local" style="color:#5eead4;text-decoration:none;">Search Businesses</a>
+          <a href="/homes-for-sale" style="color:#5eead4;text-decoration:none;">Homes</a>
+          <a href="/communities" style="color:#5eead4;text-decoration:none;">Towns</a>
+          <a href="/local?q=restaurant" style="color:#5eead4;text-decoration:none;">Restaurants</a>
+          <a href="/#weekly-feed" style="color:#5eead4;text-decoration:none;">Events</a>
+          <a href="/analyze" style="color:#5eead4;text-decoration:none;">Invest</a>
+          <a href="/claim-business" style="color:#5eead4;text-decoration:none;">Claim Business</a>
+        </nav>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
