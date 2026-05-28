@@ -5,9 +5,10 @@ import { useDbBusinesses } from "@/hooks/useDbBusinesses";
 
 const DelmarBusinessCarousel = () => {
   const { rows } = useDbBusinesses();
-  const businesses = rows.filter((business) => business.town === "delmar").slice(0, 12);
+const DelmarBusinessCarousel = () => {
+  const { rows } = useDbBusinesses({ townSlug: "delmar", limit: 24 });
+  const businesses = rows.slice(0, 12);
 
-  return (
     <section className="py-16 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10">
