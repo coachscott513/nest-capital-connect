@@ -227,9 +227,8 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 <FeaturedTile key={b.slug} b={b} onOpen={() => { trackGAEvent.businessProfileOpen(bizPayload(b, "directory_featured")); setOpenBiz(b); }} />
               ))}
             </div>
-
-            </div>
           </div>
+
         </section>
       )}
 
