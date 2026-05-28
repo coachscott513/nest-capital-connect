@@ -346,13 +346,13 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             <>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {results.map((b, i) => (
+                  <React.Fragment key={b.slug}>
                     <BusinessCard b={b} onOpen={() => { trackGAEvent.businessProfileOpen(bizPayload(b, "local_directory")); setOpenBiz(b); }} />
-
-                    <BusinessCard b={b} onOpen={() => setOpenBiz(b)} />
                     {i === 5 && <ClaimCtaCard />}
                     {i === 11 && <PromoteCtaCard />}
                   </React.Fragment>
                 ))}
+
                 {loadingMore && Array.from({ length: 6 }).map((_, i) => (
                   <BusinessCardSkeleton key={`more-${i}`} />
                 ))}
