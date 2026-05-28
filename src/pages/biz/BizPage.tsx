@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Navigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   Phone,
@@ -386,8 +386,8 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
             ) : (
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>About</p>
-                <p className="text-[15px] text-white/65 font-light leading-relaxed">
-                  This profile is available to claim and customize. The owner can add a story, photos, specials, and social links to complete the listing.
+                <p className="text-[15px] text-white/75 font-light leading-relaxed">
+                  {biz.name} is listed in the Capital District Nest local business index for {biz.town_name || biz.city || "the Capital District"}, NY. This profile includes available contact details, business category information, and local discovery tools. Business owners can claim this profile to add photos, social links, hours, specials, and updates.
                 </p>
               </div>
             )}
@@ -706,6 +706,53 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
 // ──────────────────────────────────────────────────────────────
 //  ROUTER COMPONENT
 // ──────────────────────────────────────────────────────────────
+const titleizeSlug = (s: string) =>
+  s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
+const buildPlaceholderBusiness = (slug: string): Business => ({
+  id: `placeholder-${slug}`,
+  slug,
+  name: titleizeSlug(slug),
+  description: null,
+  category: "Local Business",
+  town_name: null,
+  state: "NY",
+  plan_tier: "free_claimed",
+  is_active: true,
+});
+
+const NotFoundBiz = ({ slug }: { slug: string }) => {
+  const guess = titleizeSlug(slug);
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <Helmet>
+        <title>Business Not Found | Capital District Nest</title>
+        <meta name="robots" content="noindex, follow" />
+        <link rel="canonical" href={`https://www.capitaldistrictnest.com/biz/${slug}`} />
+      </Helmet>
+      <CleanHeader />
+      <section className="px-6 md:px-10 pt-28 md:pt-32 pb-20 max-w-3xl mx-auto">
+        <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-4 text-white/55">404 · Listing Unavailable</p>
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
+          We couldn't find "{guess}"
+        </h1>
+        <p className="mt-5 text-[15px] text-white/70 font-light leading-relaxed">
+          This profile may have been removed, renamed, or is not yet listed in the Capital District Nest local business index. Browse our active local directory or claim a business profile to get listed across the Capital District.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link to="/local" className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
+            Browse Local Directory <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link to="/claim-business" className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+            Claim or Add a Business
+          </Link>
+        </div>
+      </section>
+      <Footer />
+    </div>
+  );
+};
+
 const BizPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const [biz, setBiz] = useState<Business | null>(null);
@@ -735,27 +782,30 @@ const BizPage = () => {
     })();
   }, [slug]);
 
-  if (loading) {
-    return <div className="min-h-screen bg-background flex items-center justify-center text-white/60 text-sm">Loading…</div>;
+  // Real 404 once we've confirmed the slug doesn't resolve.
+  if (!loading && (notFound || !biz)) {
+    return <NotFoundBiz slug={slug || ""} />;
   }
-  // Only redirect when the slug truly doesn't resolve to an active business.
-  // Free + Featured tiers must render their own pages, never bounce to /local.
-  if (notFound || !biz) return <Navigate to="/local" replace />;
 
-  const tier = biz.plan_tier;
-  const isPremium = PREMIUM_TIERS.has(tier);
-  const isFeatured = FEATURED_TIERS.has(tier);
+  // During loading, render the full Free profile shell using a slug-derived
+  // placeholder so Googlebot never sees an empty "Loading…" page.
+  const activeBiz: Business = biz ?? buildPlaceholderBusiness(slug || "business");
+  const tier = activeBiz.plan_tier;
+  const isPremium = !loading && PREMIUM_TIERS.has(tier);
+  const isFeatured = !loading && FEATURED_TIERS.has(tier);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       {(() => {
+        const biz = activeBiz;
         const town = biz.town_name || biz.city || "Capital District";
         const url = `https://www.capitaldistrictnest.com/biz/${biz.slug}`;
+        const fallbackDesc = `Find ${biz.name} in ${town}, NY on Capital District Nest. View contact details, website, directions, business category, and claim this profile to add photos, social links, specials, and updates.`;
         const desc =
           biz.tagline ||
           biz.description?.slice(0, 155) ||
-          `${biz.name} — ${biz.category || "Local business"} in ${town}, NY. Contact info, hours, specials & updates on Capital District Nest.`;
-        const title = `${biz.name} in ${town}, NY | Contact, Hours & Specials | Capital District Nest`;
+          fallbackDesc;
+        const title = `${biz.name} | ${town}, NY | Capital District Nest`;
         const image = biz.hero_image_url || biz.photos?.[0] || biz.logo_url || undefined;
         const ldBusiness: Record<string, unknown> = {
           "@context": "https://schema.org",
@@ -845,21 +895,21 @@ const BizPage = () => {
       <CleanHeader />
 
       {isPremium ? (
-        <PremiumMicrosite biz={biz} specials={specials} />
+        <PremiumMicrosite biz={activeBiz} specials={specials} />
       ) : isFeatured ? (
-        <FeaturedProfile biz={biz} />
+        <FeaturedProfile biz={activeBiz} />
       ) : (
-        <FreeProfile biz={biz} />
+        <FreeProfile biz={activeBiz} />
       )}
 
       <section className="border-t border-white/[0.06] px-6 md:px-10 py-16 text-center">
         <p className="text-xs text-white/45">
           Own this business?{" "}
-          <Link to={`/claim-business?slug=${biz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
+          <Link to={`/claim-business?slug=${activeBiz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
             Claim this profile
           </Link>
           {" · "}
-          <Link to={`/partner-auth?slug=${biz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
+          <Link to={`/partner-auth?slug=${activeBiz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
             Owner login
           </Link>
           {" · "}
@@ -868,6 +918,7 @@ const BizPage = () => {
           </Link>
         </p>
       </section>
+
 
       <Footer />
     </div>
