@@ -54,6 +54,29 @@ export interface WeeklyFeedItem {
 }
 
 export const weeklyFeed: WeeklyFeedItem[] = [
+  // ===== VERIFIED LOCAL NEWS =====
+  {
+    title: "Capital Region Coffee Chain Opens Fifth Location in Downtown Albany",
+    description:
+      "A popular regional coffee operator has officially scaled its footprint, opening a brand-new, high-end location to anchor the morning foot traffic in the heart of Downtown Albany.",
+    summary:
+      "A popular regional coffee operator has officially scaled its footprint, opening a brand-new, high-end location to anchor the morning foot traffic in the heart of Downtown Albany.",
+    type: "news",
+    date: "This week",
+    town: "Albany",
+    scope: "region",
+    featured: true,
+    source_name: "News10 WTEN",
+    original_url: "https://www.news10.com/",
+    published_at: "2026-05-28",
+    categoryBadgeOverride: "FOOD & DRINK // LOCAL NEWS",
+    startDate: "2026-05-26",
+    endDate: "2026-06-26",
+    cta: {
+      label: "Read Full Coverage",
+      href: "https://www.news10.com/",
+    },
+  },
   // ===== MUSIC =====
   {
     title: "Jazz Festival kicks off at SPAC",
