@@ -500,6 +500,33 @@ const FinancialConsole = () => {
           </div>
         </section>
 
+        {/* FINANCIAL PULSE */}
+        <section className="px-[5%] py-16 md:py-20 border-b border-border/60 bg-card/30">
+          <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-start">
+            <div>
+              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-3">Financial Pulse</p>
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-tight leading-[1.08] mb-5">
+                Where local growth meets <span className="text-primary">financial opportunity.</span>
+              </h2>
+              <p className="text-white/70 text-lg max-w-xl">
+                Track mortgages, banking, business capital, investment property trends, commercial
+                lending, insurance, accounting, and financial planning across the Capital District.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {pulseCards.map((c) => (
+                <div key={c.title} className="rounded-2xl p-5 border border-border bg-card/70 backdrop-blur-md">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4">
+                    <c.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-2 text-[15px]">{c.title}</h3>
+                  <p className="text-sm text-white/65 leading-relaxed">{c.blurb}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* PRODUCT GRID */}
         <section id="products" className="px-[5%] py-16 md:py-20">
           <div className="max-w-6xl mx-auto">
