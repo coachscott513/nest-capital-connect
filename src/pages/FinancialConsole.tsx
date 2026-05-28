@@ -487,7 +487,7 @@ const FinancialConsole = () => {
                 onClick={scrollTo("calculator")}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
               >
-                Analyze a Scenario <ArrowRight className="w-4 h-4" />
+                Analyze a Financial Scenario <ArrowRight className="w-4 h-4" />
               </a>
               <a
                 href="#financial-intro"
