@@ -258,7 +258,8 @@ const BusinessCard = ({
 };
 
 const LocalGuideSection = ({ townName, townSlug, categories }: LocalGuideSectionProps) => {
-  const { rows } = useDbBusinesses();
+  const { rows } = useDbBusinesses({ townSlug, limit: 200 });
+
   const liveCategories = useMemo<LocalGuideCategory[]>(() => {
     const townRows = rows.filter((business) => townMatches(business, townSlug));
     return CATEGORY_META.map((meta) => ({

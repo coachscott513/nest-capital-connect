@@ -95,40 +95,59 @@ const townMatches = (row: any, requestedTown: string) => {
   );
 };
 
-export const useDbBusinesses = () => {
+export interface UseDbBusinessesOptions {
+  /** Restrict server-side to a single town slug (e.g. "delmar"). */
+  townSlug?: string;
+  /** Restrict server-side to is_featured = true. */
+  featuredOnly?: boolean;
+  /** Hard cap on rows returned. Default 200 — never fetch the full table. */
+  limit?: number;
+}
+
+/**
+ * SECURITY / PERFORMANCE NOTE
+ * --------------------------------------------------
+ * This hook used to page through the ENTIRE `businesses` table on every
+ * mount (5,000+ rows). That made it cheap to scrape and bloated GA4 with
+ * heavy initial loads. It now enforces a hard server-side cap (default
+ * 200 rows) and pushes town / featured filters into Supabase so we never
+ * pull the whole directory client-side. For full search/browse, use
+ * `usePaginatedBusinesses` which serves 24 rows per page on demand.
+ */
+export const useDbBusinesses = (options: UseDbBusinessesOptions = {}) => {
+  const { townSlug, featuredOnly, limit = 200 } = options;
   const [rows, setRows] = useState<Business[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Hard ceiling — never let a caller pull more than 500 rows through this hook.
+  const safeLimit = Math.min(Math.max(limit, 1), 500);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const pageSize = 1000;
-      let from = 0;
-      let data: any[] = [];
-      let error: unknown = null;
+      setLoading(true);
+      let query = supabase
+        .from("businesses")
+        .select(
+          // Card-only columns. Heavy fields (long_description, photos[],
+          // social URLs, hours, services) are intentionally excluded —
+          // they belong in the detail modal, not in a list fetch.
+          "id,name,slug,town_slug,town_name,city,county,category,subcategory,tagline,tags,phone,website,email,address,rating,review_count,hero_image_url,latitude,longitude,is_featured,is_claimed,is_verified",
+        )
+        .eq("is_active", true);
 
-      while (!cancelled) {
-        let query = supabase
-          .from("businesses")
-          .select(
-            "id,name,slug,town_slug,town_name,city,county,category,subcategory,description,tagline,tags,phone,website,email,address,rating,review_count,photos,hero_image_url,google_maps_url,latitude,longitude,is_featured,is_claimed,is_verified",
-          )
-          .eq("is_active", true);
-
-        const { data: page, error: pageError } = await query
-          .order("town_slug", { ascending: true })
-          .order("name", { ascending: true })
-          .range(from, from + pageSize - 1);
-
-        if (pageError) {
-          error = pageError;
-          break;
-        }
-
-        data = data.concat(page ?? []);
-        if (!page || page.length < pageSize) break;
-        from += pageSize;
+      if (townSlug && townSlug !== "capital-district") {
+        query = query.eq("town_slug", townSlug);
       }
+      if (featuredOnly) {
+        query = query.eq("is_featured", true);
+      }
+
+      const { data, error } = await query
+        .order("is_featured", { ascending: false })
+        .order("town_slug", { ascending: true })
+        .order("name", { ascending: true })
+        .range(0, safeLimit - 1);
 
       if (cancelled) return;
       if (error || !data) {
@@ -138,7 +157,7 @@ export const useDbBusinesses = () => {
       }
 
       const mapped: Business[] = data.map((r: any) => {
-        const townSlug =
+        const ts =
           r.town_slug && r.town_slug !== "unknown"
             ? r.town_slug
             : r.city
@@ -149,14 +168,14 @@ export const useDbBusinesses = () => {
         return {
           slug: slugify(r.slug || r.name || r.id),
           name: r.name,
-          town: townSlug,
+          town: ts,
           city: r.city ?? undefined,
           county: r.county ?? undefined,
           townLabel,
           category: mapCategory(r.category, tagsArr, r.name, r.subcategory),
           subcategory: r.subcategory ?? r.category ?? undefined,
           tagline: r.tagline || r.category || "Local business",
-          about: r.description ?? undefined,
+          about: undefined,
           phone: r.phone ?? undefined,
           email: r.email ?? undefined,
           website: r.website ?? undefined,
@@ -167,7 +186,7 @@ export const useDbBusinesses = () => {
           verified: Boolean(r.is_verified),
           featured: Boolean(r.is_featured),
           tags: tagsArr,
-          image: r.hero_image_url || (Array.isArray(r.photos) ? r.photos[0] : undefined),
+          image: r.hero_image_url ?? undefined,
         } as Business;
       });
 
@@ -177,9 +196,10 @@ export const useDbBusinesses = () => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [townSlug, featuredOnly, safeLimit]);
 
   return { rows, loading };
 };
+
 
 export { townMatches };
