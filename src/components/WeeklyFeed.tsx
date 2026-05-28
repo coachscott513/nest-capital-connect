@@ -58,6 +58,7 @@ const LABELS: Record<WeeklyFeedType, string> = {
   development: "Development",
   family: "Family",
   networking: "Networking",
+  news: "Local News",
 };
 
 type FilterKey =
