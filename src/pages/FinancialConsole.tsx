@@ -562,22 +562,24 @@ const FinancialConsole = () => {
         <section id="calculator" className="px-[5%] py-16 md:py-20 border-y border-border/60 bg-card/30">
           <div className="max-w-6xl mx-auto">
             <div className="mb-8 max-w-2xl">
-              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Underwriting Console</p>
-              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Run the numbers before you commit.</h2>
-              <p className="text-white/65">Mortgage, investment property, DSCR, and refinance models — built on the same math local lenders use.</p>
+              <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Financial Scenario Calculator</p>
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Review your numbers before you commit.</h2>
+              <p className="text-white/65">Mortgage, investment property, DSCR, refinance, and business capital models — built on the same math local lenders use.</p>
             </div>
 
             <Tabs defaultValue="mortgage" className="w-full">
               <TabsList className="bg-card/60 border border-border rounded-full p-1 flex flex-wrap h-auto gap-1">
-                <TabsTrigger value="mortgage" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Mortgage</TabsTrigger>
+                <TabsTrigger value="mortgage" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Mortgage Payment</TabsTrigger>
                 <TabsTrigger value="investment" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Investment Property</TabsTrigger>
                 <TabsTrigger value="dscr" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">DSCR / Cash Flow</TabsTrigger>
                 <TabsTrigger value="refi" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Refinance</TabsTrigger>
+                <TabsTrigger value="business" className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Business Capital</TabsTrigger>
               </TabsList>
               <TabsContent value="mortgage" className="mt-6"><MortgageCalc /></TabsContent>
               <TabsContent value="investment" className="mt-6"><InvestmentCalc /></TabsContent>
               <TabsContent value="dscr" className="mt-6"><DscrCalc /></TabsContent>
               <TabsContent value="refi" className="mt-6"><RefinanceCalc /></TabsContent>
+              <TabsContent value="business" className="mt-6"><BusinessCapitalCalc /></TabsContent>
             </Tabs>
           </div>
         </section>
