@@ -9,7 +9,7 @@ import {
   Wrench,
   Briefcase,
   Stethoscope,
-  Bluetooth,
+  Smile,
   ExternalLink,
   Phone,
   Mail,
