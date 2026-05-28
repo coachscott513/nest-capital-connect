@@ -1,27 +1,23 @@
-import { ArrowUpRight, Phone, MapPin } from "lucide-react";
+import { ArrowUpRight, Phone, MapPin, Sparkles } from "lucide-react";
 import type { Business } from "@/data/businesses";
-import { resolveBusinessImage, DEFAULT_BUSINESS_IMAGE } from "@/lib/businessImages";
+import { hasRealBusinessMedia } from "@/lib/businessImages";
 
 /* =============================================================
    PremiumFeaturedBusinessCard
    Editorial luxury card used ONLY in the homepage
-   "Featured Local Spotlights" row. Do not reuse for the
-   standard business directory.
+   "Featured Local Spotlights" row.
 
-   Click behavior (LOCKED): primary CTA = "View Profile" which
-   opens the shared BusinessDetailModal. Website / menu / phone
-   live INSIDE the modal — never on the card itself, so every
-   business card on the site behaves consistently.
+   INTEGRITY RULE: Only render the cinematic image header when
+   the business has its OWN uploaded media (hero/gallery/video).
+   No category-stock fallback. If no real media exists we render
+   a premium typographic header so a Featured profile still looks
+   intentional — never fake.
    ============================================================= */
 
 type Props = {
   business: Business;
   onOpen: (b: Business) => void;
 };
-
-const DEFAULT_FALLBACK = DEFAULT_BUSINESS_IMAGE;
-
-const resolveImage = (b: Business): string => resolveBusinessImage(b);
 
 const buildMeta = (b: Business): string => {
   const town = b.townLabel || "Capital District";
@@ -34,9 +30,10 @@ const cleanTelHref = (phone?: string | null) => {
 };
 
 const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
-  const image = resolveImage(business);
   const phoneHref = cleanTelHref(business.phone);
   const handleProfileOpen = () => onOpen(business);
+  const hasMedia = hasRealBusinessMedia(business);
+  const image = business.image ?? business.gallery?.[0];
 
   return (
     <article
@@ -52,34 +49,69 @@ const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
           "0 30px 80px -30px rgba(0,0,0,0.75), 0 2px 10px -2px rgba(0,0,0,0.4)",
       }}
     >
-      {/* Image header */}
-      <button
-        type="button"
-        onClick={handleProfileOpen}
-        className="relative block w-full h-44 sm:h-48 md:h-56 overflow-hidden"
-        aria-label={`View ${business.name}`}
-      >
-        <img
-          src={image}
-          alt={`${business.name} — ${business.category}`}
-          loading="lazy"
-          decoding="async"
-          fetchPriority="low"
-          width={800}
-          height={448}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
-          onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = DEFAULT_FALLBACK;
+      {hasMedia && image ? (
+        /* Cinematic header — real, business-owned media */
+        <button
+          type="button"
+          onClick={handleProfileOpen}
+          className="relative block w-full h-44 sm:h-48 md:h-56 overflow-hidden"
+          aria-label={`View ${business.name}`}
+        >
+          <img
+            src={image}
+            alt={`${business.name} — ${business.category}`}
+            loading="lazy"
+            decoding="async"
+            width={800}
+            height={448}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/40 to-transparent" />
+          <span className="absolute top-3 right-3 sm:top-4 sm:right-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/45 backdrop-blur-md border border-white/15 text-[10px] font-semibold tracking-[0.18em] uppercase text-white/90">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#5eead4] shadow-[0_0_8px_rgba(94,234,212,0.8)]" />
+            Featured
+          </span>
+        </button>
+      ) : (
+        /* Typographic header — premium dark canvas, no fake stock photo */
+        <button
+          type="button"
+          onClick={handleProfileOpen}
+          aria-label={`View ${business.name}`}
+          className="relative w-full h-44 sm:h-48 md:h-56 overflow-hidden text-left"
+          style={{
+            background:
+              "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.18) 0%, transparent 55%), linear-gradient(180deg, #10141F 0%, #0B0F19 100%)",
           }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/40 to-transparent" />
-
-        {/* Featured badge */}
-        <span className="absolute top-3 right-3 sm:top-4 sm:right-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/45 backdrop-blur-md border border-white/15 text-[10px] font-semibold tracking-[0.18em] uppercase text-white/90">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#5eead4] shadow-[0_0_8px_rgba(94,234,212,0.8)]" />
-          Featured
-        </span>
-      </button>
+        >
+          <div
+            aria-hidden
+            className="absolute -bottom-px left-0 right-0 h-px"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, rgba(94,234,212,0.35), transparent)",
+            }}
+          />
+          <div className="relative h-full w-full flex flex-col justify-between p-5 sm:p-6">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#c9a449]/15 border border-[#c9a449]/35 text-[#c9a449] text-[10px] font-semibold uppercase tracking-[0.18em] w-fit">
+              <Sparkles className="w-3 h-3" /> Featured
+            </span>
+            <div>
+              <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
+                {business.category}
+              </p>
+              <p className="mt-2 text-2xl sm:text-[26px] font-semibold tracking-[-0.02em] text-white leading-[1.05]">
+                {business.name}
+              </p>
+              {business.townLabel && (
+                <p className="mt-1.5 text-[12px] uppercase tracking-[0.18em] text-white/45 font-medium">
+                  {business.townLabel}
+                </p>
+              )}
+            </div>
+          </div>
+        </button>
+      )}
 
       {/* Body */}
       <div className="flex flex-1 flex-col p-5 sm:p-6 md:p-7">
@@ -101,8 +133,6 @@ const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
           </p>
         )}
 
-
-        {/* Actions — always open the shared premium modal */}
         <div className="mt-auto pt-6 flex items-center gap-2.5">
           <button
             type="button"
