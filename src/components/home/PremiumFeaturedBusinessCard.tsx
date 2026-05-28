@@ -1,18 +1,7 @@
 import { ArrowUpRight, Phone, MapPin, Sparkles } from "lucide-react";
 import type { Business } from "@/data/businesses";
 import { hasRealBusinessMedia } from "@/lib/businessImages";
-
-/* =============================================================
-   PremiumFeaturedBusinessCard
-   Editorial luxury card used ONLY in the homepage
-   "Featured Local Spotlights" row.
-
-   INTEGRITY RULE: Only render the cinematic image header when
-   the business has its OWN uploaded media (hero/gallery/video).
-   No category-stock fallback. If no real media exists we render
-   a premium typographic header so a Featured profile still looks
-   intentional — never fake.
-   ============================================================= */
+import { trackGAEvent } from "@/components/GARouteTracker";
 
 type Props = {
   business: Business;
@@ -29,11 +18,25 @@ const cleanTelHref = (phone?: string | null) => {
   return digits ? `tel:${digits}` : null;
 };
 
+const bizPayload = (b: Business, source: string) => ({
+  business_id: (b as any).id,
+  business_slug: b.slug,
+  business_name: b.name,
+  category: b.category,
+  town: b.townLabel || b.town,
+  tier: b.featured ? "featured" : (b.claimed || b.verified) ? "claimed" : "standard",
+  source_location: source,
+});
+
 const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
   const phoneHref = cleanTelHref(business.phone);
-  const handleProfileOpen = () => onOpen(business);
+  const handleProfileOpen = () => {
+    trackGAEvent.businessProfileOpen(bizPayload(business, "homepage_featured_card"));
+    onOpen(business);
+  };
   const hasMedia = hasRealBusinessMedia(business);
   const image = business.image ?? business.gallery?.[0];
+
 
   return (
     <article
@@ -145,7 +148,10 @@ const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
           {phoneHref && (
             <a
               href={phoneHref}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                trackGAEvent.callClick(bizPayload(business, "homepage_featured_card"));
+              }}
               aria-label={`Call ${business.name}`}
               className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full border border-white/15 bg-white/[0.04] text-white/85 hover:border-[#5eead4]/55 hover:text-[#5eead4] hover:bg-white/[0.08] transition"
             >
@@ -153,6 +159,7 @@ const PremiumFeaturedBusinessCard = ({ business, onOpen }: Props) => {
             </a>
           )}
         </div>
+
       </div>
     </article>
   );

@@ -5,6 +5,22 @@ import { type WeeklyFeedItem } from "@/data/weeklyFeed";
 import LocalVideoModal, { isTrustedEmbedUrl } from "@/components/LocalVideoModal";
 import MediaSourceModal from "@/components/MediaSourceModal";
 import { useMediaStoriesWithState } from "@/hooks/useMediaStories";
+import { trackGAEvent } from "@/components/GARouteTracker";
+
+const videoProviderFromUrl = (url?: string | null): string | undefined => {
+  if (!url) return undefined;
+  try {
+    const h = new URL(url).hostname.toLowerCase();
+    if (h.includes("youtube")) return "youtube";
+    if (h.includes("vimeo")) return "vimeo";
+    if (h.includes("spectrum")) return "spectrum";
+    if (h.includes("wnyt") || h.includes("cbs6")) return "wnyt";
+    if (h.includes("news10")) return "news10";
+    return h;
+  } catch {
+    return undefined;
+  }
+};
 
 /**
  * LOCAL MEDIA PULSE — Capital District Nest
@@ -164,13 +180,32 @@ export default function LocalMediaPulse() {
         {stories.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
             {stories.map((s, i) => {
+
               const hasVideo = !!(s.has_video && isTrustedEmbedUrl(s.video_embed_url));
               const ctaLabel = hasVideo ? "Watch Coverage" : "Read Full Coverage";
               const href = s.external_article_url || s.original_url || "#";
+              const baseMediaPayload = {
+                story_id: (s as any).id,
+                headline: s.title,
+                category: s.categoryBadgeOverride || "Local News",
+                town: s.town,
+                source_name: s.source_name,
+                has_video: hasVideo,
+              };
+              const handleCta = () => {
+                trackGAEvent.mediaStoryClick(baseMediaPayload);
+                if (hasVideo) {
+                  trackGAEvent.videoCoverageClick({
+                    ...baseMediaPayload,
+                    video_provider: videoProviderFromUrl(s.video_embed_url),
+                  });
+                  setModal(s);
+                }
+              };
               const Tag: any = hasVideo ? "button" : "a";
               const tagProps = hasVideo
-                ? { type: "button", onClick: () => setModal(s) }
-                : { href, target: "_blank", rel: "noopener noreferrer" };
+                ? { type: "button", onClick: handleCta }
+                : { href, target: "_blank", rel: "noopener noreferrer", onClick: handleCta };
 
               return (
                 <motion.article
@@ -236,6 +271,7 @@ export default function LocalMediaPulse() {
             })}
           </div>
         )}
+
 
         {/* View more — smooth-scrolls to the top of this section so the
             header is always the first visible element. */}

@@ -49,6 +49,17 @@ import {
   type TierFilter,
 } from "@/hooks/usePaginatedBusinesses";
 import { hasRealBusinessMedia } from "@/lib/businessImages";
+import { trackGAEvent } from "@/components/GARouteTracker";
+
+const bizPayload = (b: Business, source: string) => ({
+  business_id: (b as any).id,
+  business_slug: b.slug,
+  business_name: b.name,
+  category: b.category,
+  town: b.townLabel || b.town,
+  tier: b.featured ? "featured" : (b.claimed || b.verified) ? "claimed" : "standard",
+  source_location: source,
+});
 
 const TEAL = "#5eead4";
 const TEAL_DEEP = "#0d6e66";
@@ -213,17 +224,19 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             </div>
             <div className="grid md:grid-cols-3 gap-5">
               {featured.map((b) => (
-                <FeaturedTile key={b.slug} b={b} onOpen={() => setOpenBiz(b)} />
+                <FeaturedTile key={b.slug} b={b} onOpen={() => { trackGAEvent.businessProfileOpen(bizPayload(b, "directory_featured")); setOpenBiz(b); }} />
               ))}
             </div>
           </div>
+
         </section>
       )}
 
       {/* SEARCH BAR */}
       <section className={embedded ? "px-0" : "pt-16 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
-          <form onSubmit={(e) => e.preventDefault()} className="rounded-2xl bg-[#1E2230] border border-white/[0.08] p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2">
+          <form onSubmit={(e) => { e.preventDefault(); trackGAEvent.searchSubmit({ query: q, town: effectiveTown, category, source_location: townSlug ? "town_directory" : "local_directory" }); }} className="rounded-2xl bg-[#1E2230] border border-white/[0.08] p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2">
+
             <label className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-white/[0.04]">
               <Search className="w-4 h-4 text-[#5eead4]" />
               <input
@@ -334,11 +347,12 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {results.map((b, i) => (
                   <React.Fragment key={b.slug}>
-                    <BusinessCard b={b} onOpen={() => setOpenBiz(b)} />
+                    <BusinessCard b={b} onOpen={() => { trackGAEvent.businessProfileOpen(bizPayload(b, "local_directory")); setOpenBiz(b); }} />
                     {i === 5 && <ClaimCtaCard />}
                     {i === 11 && <PromoteCtaCard />}
                   </React.Fragment>
                 ))}
+
                 {loadingMore && Array.from({ length: 6 }).map((_, i) => (
                   <BusinessCardSkeleton key={`more-${i}`} />
                 ))}
