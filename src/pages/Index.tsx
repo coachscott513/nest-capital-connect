@@ -13,6 +13,7 @@ import LiveLocalPulse from "@/components/home/LiveLocalPulse";
 import SpotlightSearch from "@/components/home/SpotlightSearch";
 import HeroFeaturedRow from "@/components/home/HeroFeaturedRow";
 import DiscoveryConsole from "@/components/home/DiscoveryConsole";
+import WhatToDoToday from "@/components/home/WhatToDoToday";
 import FloatingOmniSearch from "@/components/home/FloatingOmniSearch";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
@@ -510,6 +511,10 @@ const Index = () => {
 
       {/* 1.25 — CAPITAL DISTRICT DISCOVERY CONSOLE · permanent split-panel search hub */}
       <DiscoveryConsole />
+
+      {/* 1.3 — WHAT DO YOU WANT TO DO TODAY · app-style action cards */}
+      <WhatToDoToday />
+
 
       {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip (desktop only — keeps mobile lean) */}
       <div className="hidden md:block">
