@@ -118,7 +118,7 @@ export default function WhatToDoToday() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.55, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative text-left rounded-3xl bg-[#1E2230] border border-[#2D3748] p-6 md:p-7 min-h-[220px] flex flex-col justify-between transition-all duration-300 hover:border-[#5eead4]/60 hover:-translate-y-1 hover:shadow-[0_24px_48px_-16px_rgba(94,234,212,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5eead4]"
+              className="group relative text-left rounded-3xl surface-elevated surface-elevated-hover p-6 md:p-7 min-h-[220px] flex flex-col justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5eead4]"
             >
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-[#0d6e66]/15 border border-[#5eead4]/20 flex items-center justify-center mb-5 group-hover:bg-[#0d6e66]/25 transition-colors">

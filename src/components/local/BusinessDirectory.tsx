@@ -250,20 +250,20 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       {/* SEARCH BAR */}
       <section className={embedded ? "px-0" : "pt-16 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
-          <form onSubmit={(e) => { e.preventDefault(); trackGAEvent.searchSubmit({ query: q, town: effectiveTown, category, source_location: townSlug ? "town_directory" : "local_directory" }); }} className="rounded-2xl bg-[#1E2230] border border-white/[0.08] p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2">
+          <form onSubmit={(e) => { e.preventDefault(); trackGAEvent.searchSubmit({ query: q, town: effectiveTown, category, source_location: townSlug ? "town_directory" : "local_directory" }); }} className="search-module rounded-2xl p-3 md:p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2.5 md:gap-2">
 
-            <label className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-white/[0.04]">
-              <Search className="w-4 h-4 text-[#5eead4]" />
+            <label className="search-input-surface flex items-center gap-2.5 px-4 py-3.5 rounded-xl">
+              <Search className="w-4 h-4 text-[#5eead4] shrink-0" />
               <input
                 type="text"
                 value={q}
                 onChange={(e) => setQ(e.target.value.slice(0, 120))}
                 placeholder="Search by name, service, keyword…"
-                className="w-full bg-transparent text-[15px] text-white placeholder:text-white/40 focus:outline-none"
+                className="w-full bg-transparent text-[15px] text-white placeholder:text-white/55 focus:outline-none"
               />
             </label>
             {!townSlug && (
-              <label className="flex flex-col gap-0.5 px-4 py-2 rounded-xl hover:bg-white/[0.04] transition md:border-l border-white/[0.06]">
+              <label className="search-input-surface flex flex-col gap-0.5 px-4 py-2.5 rounded-xl">
                 <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">Town</span>
                 <select
                   value={town}
@@ -277,7 +277,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 </select>
               </label>
             )}
-            <label className="flex flex-col gap-0.5 px-4 py-2 rounded-xl hover:bg-white/[0.04] transition md:border-l border-white/[0.06]">
+            <label className="search-input-surface flex flex-col gap-0.5 px-4 py-2.5 rounded-xl">
               <span className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">Category</span>
               <select
                 value={category}
