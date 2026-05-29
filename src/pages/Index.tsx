@@ -512,6 +512,10 @@ const Index = () => {
       {/* 1.25 — CAPITAL DISTRICT DISCOVERY CONSOLE · permanent split-panel search hub */}
       <DiscoveryConsole />
 
+      {/* 1.3 — WHAT DO YOU WANT TO DO TODAY · app-style action cards */}
+      <WhatToDoToday />
+
+
       {/* 1.5 — LIVE LOCAL PULSE · ambient Bloomberg × Apple strip (desktop only — keeps mobile lean) */}
       <div className="hidden md:block">
         <LiveLocalPulse />
