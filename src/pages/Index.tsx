@@ -13,6 +13,7 @@ import LiveLocalPulse from "@/components/home/LiveLocalPulse";
 import SpotlightSearch from "@/components/home/SpotlightSearch";
 import HeroFeaturedRow from "@/components/home/HeroFeaturedRow";
 import DiscoveryConsole from "@/components/home/DiscoveryConsole";
+import WhatToDoToday from "@/components/home/WhatToDoToday";
 import FloatingOmniSearch from "@/components/home/FloatingOmniSearch";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 
