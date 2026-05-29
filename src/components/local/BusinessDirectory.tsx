@@ -299,8 +299,8 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
           </form>
 
           {/* Filter chips */}
-          <div className="mt-5 flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-semibold text-white/55">
+          <div className="mt-6 md:mt-5 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-semibold text-white/70">
               <Filter className="w-3.5 h-3.5" /> Filters
             </span>
             {(["all", "featured", "claimed", "standard"] as TierFilter[]).map((t) => (
@@ -322,7 +322,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
                 Clear all
               </button>
             )}
-            <span className="ml-auto text-xs text-white/55">
+            <span className="ml-auto text-xs text-white/75">
               {loading
                 ? "Loading live directory…"
                 : total != null
