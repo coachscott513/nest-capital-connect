@@ -98,9 +98,9 @@ const SPOTLIGHTS: Spotlight[] = [
     name: "Christie Hoyt Mortgage Team",
     category: "Mortgage · Home Lending · Broadview FCU",
     town: "Capital District",
-    tileLabel: "Christie Hoyt Mortgage Team",
-    heroHeadline: "Local lending help before you make a move.",
-    heroSub: "Connect with a Capital District mortgage expert, apply online, or request home financing guidance.",
+    tileLabel: "Mortgage",
+    heroHeadline: "Make your next move with confidence.",
+    heroSub: "Local mortgage guidance from Christie Hoyt and Broadview Home Lending.",
     tagline:
       "Local-first home lending from a team that closes Capital District deals on time, every time.",
     bio:
@@ -123,7 +123,7 @@ const SPOTLIGHTS: Spotlight[] = [
     primaryActions: [
       {
         key: "mortgageHelp",
-        label: "Connect with Mortgage Expert",
+        label: "Connect with Christie",
         href: "/finances",
         icon: Wallet,
         primary: true,
@@ -153,9 +153,9 @@ const SPOTLIGHTS: Spotlight[] = [
     name: "Roosevelt Room",
     category: "Restaurant · Cocktails · Live Music",
     town: "Albany",
-    tileLabel: "Roosevelt Room",
+    tileLabel: "Live Jazz",
     heroHeadline: "Live jazz. Cocktails. Dinner nights.",
-    heroSub: "Roosevelt Room brings live music, reservations, menus, and event updates into one local spotlight.",
+    heroSub: "Roosevelt Room brings reservations, menus, and live music into one local spotlight.",
     tagline:
       "Velvet booths, craft cocktails, and live jazz nights — Albany's most photogenic dinner-and-music spot.",
     bio:
@@ -188,7 +188,7 @@ const SPOTLIGHTS: Spotlight[] = [
       },
       {
         key: "menu",
-        label: "View Live Jazz Nights",
+        label: "See Jazz Nights",
         href: "https://rooseveltroom.com/",
         icon: Music2,
         external: true,
@@ -226,9 +226,9 @@ const SPOTLIGHTS: Spotlight[] = [
     name: "DeAngelus Group, PLLC",
     category: "Law Firm · Real Estate Law · Corporate Law · Trusts & Estates",
     town: "Clifton Park · Schenectady · Saratoga Springs",
-    tileLabel: "DeAngelus Group, PLLC",
-    heroHeadline: "Legal guidance for business, real estate, and estates.",
-    heroSub: "Connect with a regional legal team for real estate, corporate, title, and estate planning needs.",
+    tileLabel: "Legal",
+    heroHeadline: "Legal guidance for life's important moves.",
+    heroSub: "Real estate, business, title, and estate planning support across the Capital District.",
     tagline:
       "Women-owned and led law firm serving clients across New York and Florida — real estate, corporate, and trusts & estates.",
     bio:
@@ -773,122 +773,96 @@ const RegionalSpotlights = () => {
   const [primary, secondary] = active.primaryActions;
 
   return (
-    <section className="relative bg-[#0B0F19] border-t border-white/[0.05]">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-20 md:py-28">
-        {/* Section header — Apple rhythm */}
+    <section className="relative bg-[#0B0F19] border-t border-white/[0.05] overflow-hidden">
+      {/* Ambient accent wash that shifts with the active partner — no bordered card */}
+      <motion.div
+        key={`wash-${active.slug}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `radial-gradient(60% 50% at 70% 15%, ${accent}1f, transparent 65%), radial-gradient(50% 60% at 15% 95%, ${accentSoft}, transparent 70%)`,
+        }}
+      />
+
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-20 md:pt-28 pb-16 md:pb-20">
+        {/* Section eyebrow only — keep the hero copy itself for the partner */}
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl mb-10 md:mb-14"
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-12 md:mb-16"
         >
-          <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.28em] uppercase text-[#5eead4] mb-4">
+          <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.28em] uppercase text-[#5eead4]">
             <Sparkles className="w-3.5 h-3.5" /> Live Local Spotlights
-          </p>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
-            Local businesses, brought to life.
-          </h2>
-          <p className="mt-5 text-lg md:text-xl text-white/65 font-light leading-relaxed">
-            Menus, events, applications, reservations, contact options, and social links —
-            all inside one premium local profile.
           </p>
         </motion.div>
 
-        {/* Single Apple-style hero stage */}
+        {/* Full-bleed Apple-style hero stage — no border, no card */}
         <AnimatePresence mode="wait">
           <motion.div
             key={active.slug}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="relative overflow-hidden rounded-[32px] border border-white/[0.06] bg-[#13182A]"
-            style={{ boxShadow: `0 40px 90px -40px ${accentSoft}` }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="relative text-center min-h-[440px] md:min-h-[520px] flex flex-col items-center justify-center"
           >
-            {/* Ambient accent wash */}
+            {/* Soft identity halo behind the headline */}
             <div
               aria-hidden
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: `radial-gradient(70% 60% at 80% 10%, ${accent}22, transparent 60%), radial-gradient(60% 80% at 10% 100%, ${accentSoft}, transparent 60%), linear-gradient(160deg, #0E1426 0%, #13182A 60%, #0B0F19 100%)`,
-              }}
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 opacity-[0.08] pointer-events-none"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-                backgroundSize: "36px 36px",
-              }}
-            />
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            >
+              <span
+                className="select-none font-semibold tracking-[-0.06em] leading-none text-[260px] sm:text-[340px] md:text-[440px] lg:text-[520px] opacity-[0.06]"
+                style={{ color: accent }}
+              >
+                {monogram(active.name)}
+              </span>
+            </div>
 
-            <div className="relative grid md:grid-cols-12 gap-8 md:gap-12 p-8 md:p-14 lg:p-20 items-center min-h-[420px] md:min-h-[480px]">
-              {/* Left — emotional copy */}
-              <div className="md:col-span-7">
-                <p
-                  className="text-[11px] font-semibold tracking-[0.24em] uppercase mb-4"
-                  style={{ color: accent }}
-                >
-                  <BadgeCheck className="w-3.5 h-3.5 inline -mt-0.5 mr-1" />
-                  Featured Partner · {active.town}
-                </p>
-                <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-semibold tracking-[-0.03em] leading-[1.05] text-white">
-                  {active.heroHeadline}
-                </h3>
-                <p className="mt-5 md:mt-7 max-w-xl text-base md:text-lg text-white/70 font-light leading-relaxed">
-                  {active.heroSub}
-                </p>
+            <div className="relative z-10 max-w-3xl mx-auto px-2">
+              <h3 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-semibold tracking-[-0.035em] leading-[1.02] text-white">
+                {active.heroHeadline}
+              </h3>
+              <p className="mt-5 md:mt-7 text-base md:text-lg text-white/65 font-light leading-relaxed max-w-2xl mx-auto">
+                {active.heroSub}
+              </p>
 
-                {/* Two simple actions — Apple rhythm */}
-                <div className="mt-8 md:mt-10 flex flex-wrap gap-3">
-                  {primary && (
-                    <ActionButton
-                      action={primary}
-                      accent={accent}
-                      onTrack={(k) => trackAction(active, k)}
-                      variant="primary"
-                    />
-                  )}
-                  {secondary && (
-                    <ActionButton
-                      action={{ ...secondary, primary: false }}
-                      accent={accent}
-                      onTrack={(k) => trackAction(active, k)}
-                    />
-                  )}
-                  <button
-                    onClick={() => setOpen(active)}
-                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-[13px] font-semibold text-white/70 hover:text-white transition"
-                  >
-                    View full profile <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+              {/* Two simple actions — Apple rhythm */}
+              <div className="mt-9 md:mt-11 flex flex-wrap items-center justify-center gap-3">
+                {primary && (
+                  <ActionButton
+                    action={primary}
+                    accent={accent}
+                    onTrack={(k) => trackAction(active, k)}
+                    variant="primary"
+                  />
+                )}
+                {secondary && (
+                  <ActionButton
+                    action={{ ...secondary, primary: false }}
+                    accent={accent}
+                    onTrack={(k) => trackAction(active, k)}
+                  />
+                )}
               </div>
 
-              {/* Right — large monogram identity */}
-              <div className="md:col-span-5 relative h-48 md:h-full min-h-[200px] md:min-h-[360px] flex items-center justify-center">
-                <div
-                  className="absolute inset-0 rounded-3xl"
-                  style={{
-                    background: `radial-gradient(60% 60% at 50% 50%, ${accent}1f, transparent 70%)`,
-                  }}
-                  aria-hidden
-                />
-                <span
-                  className="relative font-semibold tracking-[-0.05em] leading-none text-[140px] md:text-[200px] lg:text-[240px]"
-                  style={{ color: accent, textShadow: `0 20px 60px ${accentSoft}` }}
-                >
-                  {monogram(active.name)}
-                </span>
-              </div>
+              <button
+                onClick={() => setOpen(active)}
+                className="mt-6 inline-flex items-center gap-1.5 text-[13px] font-medium text-white/55 hover:text-white transition"
+              >
+                View full profile <ArrowRight className="w-3.5 h-3.5" />
+              </button>
             </div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Selector tiles — three simple choices */}
-        <div className="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
+        {/* Subtle selector pills — three small choices, do not compete with hero */}
+        <div className="mt-10 md:mt-14 flex flex-wrap items-center justify-center gap-2.5">
           {SPOTLIGHTS.map((s) => {
             const isActive = s.slug === activeSlug;
             const a = accentHex(s.accent);
@@ -896,57 +870,30 @@ const RegionalSpotlights = () => {
               <button
                 key={s.slug}
                 onClick={() => setActiveSlug(s.slug)}
-                className={`group relative text-left rounded-2xl border p-5 md:p-6 transition-all ${
+                className={`group inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
                   isActive
-                    ? "bg-[#1E2230] border-white/20 shadow-[0_20px_50px_-25px_rgba(0,0,0,0.6)]"
-                    : "bg-[#13182A] border-white/[0.06] hover:border-white/15 hover:bg-[#171c30]"
+                    ? "bg-white/[0.08] text-white border border-white/20"
+                    : "bg-transparent text-white/55 border border-white/10 hover:text-white/85 hover:border-white/20"
                 }`}
-                style={isActive ? { boxShadow: `0 18px 48px -22px ${accentSoftRGBA(s.accent)}` } : undefined}
               >
-                <div className="flex items-start gap-4">
-                  <span
-                    className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-[18px] font-semibold tracking-tight"
-                    style={{
-                      background: isActive ? a : "rgba(255,255,255,0.06)",
-                      color: isActive ? "#0B0F19" : a,
-                    }}
-                  >
-                    {monogram(s.name)}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-white/45">
-                      {s.category.split(" · ")[0]}
-                    </p>
-                    <p className="mt-1 text-[15px] md:text-base font-semibold text-white truncate">
-                      {s.tileLabel}
-                    </p>
-                    <p className="mt-0.5 text-xs text-white/55 truncate">{s.town}</p>
-                  </div>
-                </div>
-                {isActive && (
-                  <span
-                    aria-hidden
-                    className="absolute left-5 right-5 bottom-3 h-px"
-                    style={{ background: `linear-gradient(90deg, ${a}, transparent)` }}
-                  />
-                )}
+                <span
+                  className="w-1.5 h-1.5 rounded-full transition"
+                  style={{ background: isActive ? a : "rgba(255,255,255,0.3)" }}
+                />
+                {s.tileLabel}
               </button>
             );
           })}
         </div>
 
-        {/* B2B footer */}
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
-          <p className="text-sm text-white/55 font-light">
+        {/* B2B footer — quieter */}
+        <div className="mt-14 md:mt-20 text-center">
+          <p className="text-sm text-white/45 font-light">
             Want your business featured here?{" "}
-            <span className="text-white/80">This is what a live local placement looks like.</span>
+            <Link to="/pricing" className="text-[#5eead4] hover:text-white transition">
+              Become a Featured Partner →
+            </Link>
           </p>
-          <Link
-            to="/pricing"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#c9a449] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
-          >
-            Become a Featured Partner <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
 
         <PremiumPartnerModal spotlight={open} onClose={() => setOpen(null)} />
