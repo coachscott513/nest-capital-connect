@@ -164,6 +164,8 @@ const SubmitEvent = () => {
         ) : (
           <form
             onSubmit={handleSubmit}
+            onFocusCapture={onFirstInteract}
+            onChange={onFirstInteract}
             className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-10 space-y-5"
           >
             <Field label="Event name *" value={form.eventName} onChange={(v) => update("eventName", v)} />
