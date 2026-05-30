@@ -283,6 +283,13 @@ export type Database = {
             foreignKeyName: "business_specials_business_id_fkey"
             columns: ["business_id"]
             isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_specials_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
             referencedRelation: "businesses"
             referencedColumns: ["id"]
           },
@@ -1401,6 +1408,13 @@ export type Database = {
             foreignKeyName: "town_events_business_id_fkey"
             columns: ["business_id"]
             isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "town_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
             referencedRelation: "businesses"
             referencedColumns: ["id"]
           },
@@ -1651,7 +1665,33 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      business_billing: {
+        Row: {
+          claimed_by_user_id: string | null
+          id: string | null
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          subscription_current_period_end: string | null
+          subscription_status: string | null
+        }
+        Insert: {
+          claimed_by_user_id?: string | null
+          id?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_current_period_end?: string | null
+          subscription_status?: string | null
+        }
+        Update: {
+          claimed_by_user_id?: string | null
+          id?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_current_period_end?: string | null
+          subscription_status?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       claim_first_admin: { Args: never; Returns: string }
