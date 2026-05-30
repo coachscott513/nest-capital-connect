@@ -765,65 +765,178 @@ const PremiumPartnerModal = ({
 };
 
 const RegionalSpotlights = () => {
-  const trackRef = useRef<HTMLDivElement>(null);
+  const [activeSlug, setActiveSlug] = useState(SPOTLIGHTS[0].slug);
   const [open, setOpen] = useState<Spotlight | null>(null);
-
-  const scroll = (dir: 1 | -1) => {
-    const el = trackRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * (el.clientWidth * 0.85), behavior: "smooth" });
-  };
+  const active = SPOTLIGHTS.find((s) => s.slug === activeSlug) ?? SPOTLIGHTS[0];
+  const accent = accentHex(active.accent);
+  const accentSoft = accentSoftRGBA(active.accent);
+  const [primary, secondary] = active.primaryActions;
 
   return (
     <section className="relative bg-[#0B0F19] border-t border-white/[0.05]">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-20 md:py-24">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-20 md:py-28">
+        {/* Section header — Apple rhythm */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="flex items-end justify-between gap-6 mb-9 md:mb-12 flex-wrap"
+          className="max-w-3xl mb-10 md:mb-14"
         >
-          <div className="max-w-2xl">
-            <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.24em] uppercase text-[#5eead4] mb-3">
-              <Sparkles className="w-3.5 h-3.5" /> Live Local Spotlights
-            </p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-[-0.02em] leading-[1.05] text-white">
-              The businesses bringing the Capital District to life
-            </h2>
-            <p className="mt-4 text-base md:text-lg text-white/60 font-light leading-relaxed">
-              Hand-picked premium partners — finance, food, and local services — with live events,
-              reservations, and one-tap contact, all from one local front door.
-            </p>
-          </div>
-          <div className="hidden md:flex items-center gap-2">
-            <button
-              onClick={() => scroll(-1)}
-              aria-label="Previous"
-              className="w-10 h-10 rounded-full border border-white/15 text-white/80 hover:border-[#5eead4]/50 hover:text-[#5eead4] transition flex items-center justify-center"
-            >
-              <ArrowRight className="w-4 h-4 rotate-180" />
-            </button>
-            <button
-              onClick={() => scroll(1)}
-              aria-label="Next"
-              className="w-10 h-10 rounded-full border border-white/15 text-white/80 hover:border-[#5eead4]/50 hover:text-[#5eead4] transition flex items-center justify-center"
-            >
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
+          <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.28em] uppercase text-[#5eead4] mb-4">
+            <Sparkles className="w-3.5 h-3.5" /> Live Local Spotlights
+          </p>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
+            Local businesses, brought to life.
+          </h2>
+          <p className="mt-5 text-lg md:text-xl text-white/65 font-light leading-relaxed">
+            Menus, events, applications, reservations, contact options, and social links —
+            all inside one premium local profile.
+          </p>
         </motion.div>
 
-        <div
-          ref={trackRef}
-          className="-mx-5 sm:-mx-6 md:-mx-10 px-5 sm:px-6 md:px-10 flex gap-5 md:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-3"
-        >
-          {SPOTLIGHTS.map((s) => (
-            <SpotlightCard key={s.slug} s={s} onOpen={setOpen} />
-          ))}
+        {/* Single Apple-style hero stage */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active.slug}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="relative overflow-hidden rounded-[32px] border border-white/[0.06] bg-[#13182A]"
+            style={{ boxShadow: `0 40px 90px -40px ${accentSoft}` }}
+          >
+            {/* Ambient accent wash */}
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: `radial-gradient(70% 60% at 80% 10%, ${accent}22, transparent 60%), radial-gradient(60% 80% at 10% 100%, ${accentSoft}, transparent 60%), linear-gradient(160deg, #0E1426 0%, #13182A 60%, #0B0F19 100%)`,
+              }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-[0.08] pointer-events-none"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+                backgroundSize: "36px 36px",
+              }}
+            />
+
+            <div className="relative grid md:grid-cols-12 gap-8 md:gap-12 p-8 md:p-14 lg:p-20 items-center min-h-[420px] md:min-h-[480px]">
+              {/* Left — emotional copy */}
+              <div className="md:col-span-7">
+                <p
+                  className="text-[11px] font-semibold tracking-[0.24em] uppercase mb-4"
+                  style={{ color: accent }}
+                >
+                  <BadgeCheck className="w-3.5 h-3.5 inline -mt-0.5 mr-1" />
+                  Featured Partner · {active.town}
+                </p>
+                <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-semibold tracking-[-0.03em] leading-[1.05] text-white">
+                  {active.heroHeadline}
+                </h3>
+                <p className="mt-5 md:mt-7 max-w-xl text-base md:text-lg text-white/70 font-light leading-relaxed">
+                  {active.heroSub}
+                </p>
+
+                {/* Two simple actions — Apple rhythm */}
+                <div className="mt-8 md:mt-10 flex flex-wrap gap-3">
+                  {primary && (
+                    <ActionButton
+                      action={primary}
+                      accent={accent}
+                      onTrack={(k) => trackAction(active, k)}
+                      variant="primary"
+                    />
+                  )}
+                  {secondary && (
+                    <ActionButton
+                      action={{ ...secondary, primary: false }}
+                      accent={accent}
+                      onTrack={(k) => trackAction(active, k)}
+                    />
+                  )}
+                  <button
+                    onClick={() => setOpen(active)}
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-[13px] font-semibold text-white/70 hover:text-white transition"
+                  >
+                    View full profile <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Right — large monogram identity */}
+              <div className="md:col-span-5 relative h-48 md:h-full min-h-[200px] md:min-h-[360px] flex items-center justify-center">
+                <div
+                  className="absolute inset-0 rounded-3xl"
+                  style={{
+                    background: `radial-gradient(60% 60% at 50% 50%, ${accent}1f, transparent 70%)`,
+                  }}
+                  aria-hidden
+                />
+                <span
+                  className="relative font-semibold tracking-[-0.05em] leading-none text-[140px] md:text-[200px] lg:text-[240px]"
+                  style={{ color: accent, textShadow: `0 20px 60px ${accentSoft}` }}
+                >
+                  {monogram(active.name)}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Selector tiles — three simple choices */}
+        <div className="mt-6 md:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
+          {SPOTLIGHTS.map((s) => {
+            const isActive = s.slug === activeSlug;
+            const a = accentHex(s.accent);
+            return (
+              <button
+                key={s.slug}
+                onClick={() => setActiveSlug(s.slug)}
+                className={`group relative text-left rounded-2xl border p-5 md:p-6 transition-all ${
+                  isActive
+                    ? "bg-[#1E2230] border-white/20 shadow-[0_20px_50px_-25px_rgba(0,0,0,0.6)]"
+                    : "bg-[#13182A] border-white/[0.06] hover:border-white/15 hover:bg-[#171c30]"
+                }`}
+                style={isActive ? { boxShadow: `0 18px 48px -22px ${accentSoftRGBA(s.accent)}` } : undefined}
+              >
+                <div className="flex items-start gap-4">
+                  <span
+                    className="shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-[18px] font-semibold tracking-tight"
+                    style={{
+                      background: isActive ? a : "rgba(255,255,255,0.06)",
+                      color: isActive ? "#0B0F19" : a,
+                    }}
+                  >
+                    {monogram(s.name)}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-white/45">
+                      {s.category.split(" · ")[0]}
+                    </p>
+                    <p className="mt-1 text-[15px] md:text-base font-semibold text-white truncate">
+                      {s.tileLabel}
+                    </p>
+                    <p className="mt-0.5 text-xs text-white/55 truncate">{s.town}</p>
+                  </div>
+                </div>
+                {isActive && (
+                  <span
+                    aria-hidden
+                    className="absolute left-5 right-5 bottom-3 h-px"
+                    style={{ background: `linear-gradient(90deg, ${a}, transparent)` }}
+                  />
+                )}
+              </button>
+            );
+          })}
         </div>
 
-        <div className="mt-9 flex flex-wrap items-center justify-between gap-4">
+        {/* B2B footer */}
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
           <p className="text-sm text-white/55 font-light">
             Want your business featured here?{" "}
             <span className="text-white/80">This is what a live local placement looks like.</span>
