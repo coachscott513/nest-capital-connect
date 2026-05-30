@@ -183,80 +183,101 @@ export default function SpotlightSearch({ eyebrow }: Props) {
           </p>
         )}
 
-        {/* Floating glass pill */}
-        <motion.form
-          onSubmit={onSubmit}
-          initial={false}
-          animate={{
-            scale: open ? 1.015 : 1,
-            boxShadow: open
-              ? "0 60px 140px -40px rgba(0,0,0,0.85), 0 0 0 1px rgba(94,234,212,0.30), 0 0 80px -20px rgba(94,234,212,0.35)"
-              : "0 40px 100px -40px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.12)",
-          }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex items-center gap-2 sm:gap-3 rounded-[36px] bg-white/[0.12] backdrop-blur-2xl border border-white/20 pl-4 sm:pl-6 md:pl-8 pr-1.5 sm:pr-2 md:pr-3 py-2 sm:py-2.5 md:py-3"
-          style={{
-            backgroundImage:
-              "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05))",
-          }}
-        >
-          {/* Teal glow halo */}
-          <div
-            className="pointer-events-none absolute -inset-px rounded-[32px] opacity-60"
-            style={{
-              background:
-                "radial-gradient(120% 100% at 50% 50%, rgba(94,234,212,0.12), transparent 60%)",
+        {/* Grouped search bar + suggestions panel */}
+        <div className="relative">
+          {/* Floating glass pill */}
+          <motion.form
+            onSubmit={onSubmit}
+            initial={false}
+            animate={{
+              scale: open ? 1.015 : 1,
+              boxShadow: open
+                ? "0 60px 140px -40px rgba(0,0,0,0.85), 0 0 0 1px rgba(94,234,212,0.30), 0 0 80px -20px rgba(94,234,212,0.35)"
+                : "0 40px 100px -40px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.12)",
             }}
-            aria-hidden
-          />
-
-          <Search className="relative w-5 h-5 md:w-6 md:h-6 text-white/70 shrink-0" />
-
-          <div className="relative flex-1 min-w-0">
-            <input
-              ref={inputRef}
-              type="text"
-              value={q}
-              onChange={(e) => setQ(e.target.value.slice(0, 140))}
-              onFocus={() => setOpen(true)}
-              onKeyDown={onKeyDownInput}
-              placeholder=""
-              className="w-full min-w-0 bg-transparent text-[17px] md:text-[22px] text-white placeholder:text-transparent focus:outline-none py-3.5 md:py-4 tracking-[-0.005em]"
-              aria-label="Search the Capital District"
-            />
-            {/* Animated rotating placeholder layer (only when empty) */}
-            {!q && (
-              <div className="pointer-events-none absolute inset-0 flex items-center overflow-hidden">
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={placeholder}
-                    initial={{ y: 12, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -12, opacity: 0 }}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    className="block text-[13px] sm:text-[15px] md:text-[18px] text-white/55 font-light tracking-[-0.005em] whitespace-nowrap overflow-hidden text-ellipsis max-w-full"
-                  >
-                    {placeholder}
-                  </motion.span>
-                </AnimatePresence>
-              </div>
-            )}
-          </div>
-
-          <button
-            type="submit"
-            aria-label="Search"
-            className="relative shrink-0 inline-flex items-center justify-center gap-1.5 h-11 sm:h-12 md:h-14 px-4 sm:px-6 md:px-8 rounded-full bg-white text-[#0e0f12] text-[13px] md:text-[15px] font-semibold hover:opacity-90 transition shadow-[0_8px_24px_-8px_rgba(255,255,255,0.4)]"
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="relative flex items-center gap-2 sm:gap-3 rounded-[36px] bg-white/[0.12] backdrop-blur-2xl border border-white/20 pl-4 sm:pl-6 md:pl-8 pr-1.5 sm:pr-2 md:pr-3 py-2 sm:py-2.5 md:py-3"
+            style={{
+              backgroundImage:
+                "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05))",
+            }}
           >
-            <Search className="w-4 h-4 sm:hidden" />
-            <span className="hidden sm:inline">Search</span>
-            <ArrowRight className="w-4 h-4 hidden sm:inline-block" />
-          </button>
+            {/* Teal glow halo */}
+            <div
+              className="pointer-events-none absolute -inset-px rounded-[32px] opacity-60"
+              style={{
+                background:
+                  "radial-gradient(120% 100% at 50% 50%, rgba(94,234,212,0.12), transparent 60%)",
+              }}
+              aria-hidden
+            />
 
-        </motion.form>
+            <Search className="relative w-5 h-5 md:w-6 md:h-6 text-white/70 shrink-0" />
 
-        {/* Curated search prompts — populate the input + fire the search */}
-        <div className="relative mt-6 flex flex-wrap items-center justify-center gap-2">
+            <div className="relative flex-1 min-w-0">
+              <input
+                ref={inputRef}
+                type="text"
+                value={q}
+                onChange={(e) => setQ(e.target.value.slice(0, 140))}
+                onFocus={() => setOpen(true)}
+                onKeyDown={onKeyDownInput}
+                placeholder=""
+                className="w-full min-w-0 bg-transparent text-[17px] md:text-[22px] text-white placeholder:text-transparent focus:outline-none py-3.5 md:py-4 tracking-[-0.005em]"
+                aria-label="Search the Capital District"
+              />
+              {/* Animated rotating placeholder layer (only when empty) */}
+              {!q && (
+                <div className="pointer-events-none absolute inset-0 flex items-center overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={placeholder}
+                      initial={{ y: 12, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -12, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                      className="block text-[13px] sm:text-[15px] md:text-[18px] text-white/55 font-light tracking-[-0.005em] whitespace-nowrap overflow-hidden text-ellipsis max-w-full"
+                    >
+                      {placeholder}
+                    </motion.span>
+                  </AnimatePresence>
+                </div>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              aria-label="Search"
+              className="relative shrink-0 inline-flex items-center justify-center gap-1.5 h-11 sm:h-12 md:h-14 px-4 sm:px-6 md:px-8 rounded-full bg-white text-[#0e0f12] text-[13px] md:text-[15px] font-semibold hover:opacity-90 transition shadow-[0_8px_24px_-8px_rgba(255,255,255,0.4)]"
+            >
+              <Search className="w-4 h-4 sm:hidden" />
+              <span className="hidden sm:inline">Search</span>
+              <ArrowRight className="w-4 h-4 hidden sm:inline-block" />
+            </button>
+          </motion.form>
+
+          {/* Expanded spotlight panel — anchored directly under the search bar */}
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0, y: 8, scale: 0.99 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 6, scale: 0.99 }}
+                transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute top-full left-0 right-0 mt-3 z-50 rounded-[24px] border border-white/15 bg-[#0B0F19]/98 shadow-[0_50px_120px_-30px_rgba(0,0,0,0.9)] overflow-hidden text-left max-h-[70vh] overflow-y-auto"
+              >
+                <PanelContent setOpen={setOpen} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Curated search prompts — collapse when spotlight is open */}
+        <motion.div
+          animate={{ opacity: open ? 0 : 1, y: open ? -6 : 0, pointerEvents: open ? "none" : "auto" }}
+          transition={{ duration: 0.2 }}
+          className="relative mt-6 flex flex-wrap items-center justify-center gap-2"
+        >
           {PROMPT_PILLS.map((p) => (
             <button
               key={p.label}
@@ -264,7 +285,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
               onClick={() => {
                 setQ(p.query);
                 setOpen(false);
-                navigate(getSearchRoute(p.query));
+                navigate(p.to ?? resolveRoute(p.query));
               }}
               className="group inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/12 hover:border-[#5eead4]/45 text-white/85 hover:text-white text-[12.5px] font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-12px_rgba(94,234,212,0.45)]"
             >
@@ -272,7 +293,8 @@ export default function SpotlightSearch({ eyebrow }: Props) {
               {p.label}
             </button>
           ))}
-        </div>
+        </motion.div>
+
 
 
         {/* Expanded spotlight panel */}
