@@ -79,9 +79,8 @@ function CinematicHero() {
             </h1>
 
             <p className="mt-6 md:mt-8 text-base md:text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
-              The digital front door of the Capital District — search businesses,
-              homes, restaurants, services, events, towns, and local updates in
-              one place.
+              The digital front door of the Capital District — businesses, towns, events,
+              restaurants, services, media, homes, and local updates in one place.
             </p>
 
             {/* THE OMNI-SEARCH — dominant product surface */}
@@ -93,6 +92,28 @@ function CinematicHero() {
             >
               <SpotlightSearch />
             </motion.div>
+
+            {/* Two simple Apple-style CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-7 flex flex-wrap items-center justify-center gap-3"
+            >
+              <Link
+                to="/local"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
+              >
+                Start Searching <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/communities"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.06] backdrop-blur text-white border border-white/20 text-sm font-semibold hover:bg-white/[0.12] transition"
+              >
+                Explore the Region
+              </Link>
+            </motion.div>
+
 
             {/* HERO-LEVEL FEATURED · Member Local Legend cards */}
             <motion.div
@@ -540,24 +561,31 @@ const Index = () => {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-3xl mx-auto text-center mb-12 md:mb-24"
           >
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#5eead4]">
-              Browse Local Search Indexes
+            <p className="text-xs font-semibold tracking-[0.28em] uppercase mb-6 text-[#5eead4]">
+              Every Town, Indexed
             </p>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
-              Every town, indexed.
+              Explore the Capital District by town.
             </h2>
             <p className="mt-7 text-lg md:text-xl text-white/75 font-light leading-relaxed max-w-2xl mx-auto">
-              Tap a town to open its dedicated search index — homes, businesses,
-              schools, events, and neighborhood intelligence in one place.
+              Open a local index for Delmar, Albany, Troy, Saratoga Springs, Clifton Park,
+              Schenectady, and more — homes, businesses, schools, and events in one place.
             </p>
-            <div className="cta-anchor mt-9 flex justify-center">
+            <div className="cta-anchor mt-9 flex flex-wrap justify-center gap-3">
               <Link
                 to="/communities"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
               >
-                Browse all towns <ArrowRight className="w-4 h-4" />
+                Browse Towns <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/local"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.06] text-white border border-white/20 text-sm font-semibold hover:bg-white/[0.12] transition"
+              >
+                Search Near Me
               </Link>
             </div>
+
           </motion.div>
 
 
@@ -599,27 +627,29 @@ const Index = () => {
             For Local Business Owners
           </p>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white max-w-3xl mx-auto">
-            Own a local business?
+            Your business is already searchable.
+            <br className="hidden sm:block" /> Now make it interactive.
           </h2>
           <p className="mt-7 text-lg md:text-xl text-white/75 font-light max-w-2xl mx-auto leading-relaxed">
-            Get your business in front of the Capital District's fastest-growing
-            local discovery platform.
+            Claim your profile, add photos, specials, events, social links, menus, booking
+            options, and one-tap contact actions.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Link
-              to="/pricing"
+              to="/claim-business"
               className="inline-flex items-center gap-2 bg-[#0d6e66] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(13,110,102,0.6)] transition"
             >
-              For Businesses <ArrowRight className="w-4 h-4" />
+              Claim Your Profile <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              to="/local"
+              to="/pricing"
               className="inline-flex items-center gap-2 bg-white/[0.08] backdrop-blur text-white border border-white/20 px-6 py-3.5 rounded-full text-sm font-semibold hover:bg-white/15 transition"
             >
-              Learn More
+              See Premium Options
             </Link>
           </div>
         </div>
+
       </section>
 
       {/* 7 — REAL ESTATE · vertical inside the platform */}
