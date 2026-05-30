@@ -98,6 +98,9 @@ const SPOTLIGHTS: Spotlight[] = [
     name: "Christie Hoyt Mortgage Team",
     category: "Mortgage · Home Lending · Broadview FCU",
     town: "Capital District",
+    tileLabel: "Christie Hoyt Mortgage Team",
+    heroHeadline: "Local lending help before you make a move.",
+    heroSub: "Connect with a Capital District mortgage expert, apply online, or request home financing guidance.",
     tagline:
       "Local-first home lending from a team that closes Capital District deals on time, every time.",
     bio:
