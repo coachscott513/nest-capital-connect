@@ -24,6 +24,19 @@ const SubmitEvent = () => {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [started, setStarted] = useState(false);
+  const onFirstInteract = () => {
+    if (started) return;
+    setStarted(true);
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "form_start", {
+        event_category: "Lead Generation",
+        form_name: "submit_event",
+        source_location: "submit_event_page",
+        page_path: window.location.pathname,
+      });
+    }
+  };
   const [form, setForm] = useState({
     eventName: "",
     organization: "",
