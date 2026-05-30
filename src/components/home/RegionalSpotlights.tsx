@@ -153,9 +153,9 @@ const SPOTLIGHTS: Spotlight[] = [
     name: "Roosevelt Room",
     category: "Restaurant · Cocktails · Live Music",
     town: "Albany",
-    tileLabel: "Roosevelt Room",
+    tileLabel: "Live Jazz",
     heroHeadline: "Live jazz. Cocktails. Dinner nights.",
-    heroSub: "Roosevelt Room brings live music, reservations, menus, and event updates into one local spotlight.",
+    heroSub: "Roosevelt Room brings reservations, menus, and live music into one local spotlight.",
     tagline:
       "Velvet booths, craft cocktails, and live jazz nights — Albany's most photogenic dinner-and-music spot.",
     bio:
