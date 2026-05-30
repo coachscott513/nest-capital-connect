@@ -346,13 +346,19 @@ function FeaturedPartnersSection({ onOpen }: { onOpen: (p: Partner) => void }) {
             A curated set of premium Capital District businesses. Tap any partner to see profile,
             contact, and one-tap actions.
           </p>
+          <p className="mt-4 text-sm text-[#c9a449]/85 font-medium">
+            Founding local partner placements are limited — only a select group of businesses are featured during the pilot.
+          </p>
         </div>
 
         <div className="mt-14 grid md:grid-cols-3 gap-6">
           {PARTNERS.map((p) => (
             <button
               key={p.id}
-              onClick={() => onOpen(p)}
+              onClick={() => {
+                trackGAEvent.businessProfileOpen(partnerAnalyticsPayload(p));
+                onOpen(p);
+              }}
               className="group text-left rounded-3xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#5eead4]/40 transition overflow-hidden flex flex-col"
             >
               <div className="relative h-52 overflow-hidden">
