@@ -4,25 +4,24 @@ import {
   SheetContent,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { Phone, MessageCircle, Mail, Calendar, X } from 'lucide-react';
+import { Phone, MessageCircle, Mail, Calendar } from 'lucide-react';
 
 /**
- * AnalystCard — Live Agent contact modal.
- * Branded for Scott Alvarez · RE/MAX Solutions · Capital District Nest.
- *
- * Props:
- *  - children: optional custom trigger. If omitted, renders a default branded card trigger.
+ * AnalystCard — Capital District Nest live concierge modal.
+ * Dark premium surface, teal accents, red reserved for the Call CTA only.
  */
 
 const PHONE_NUMBER = '5185227265';
 const FORMATTED_PHONE = '(518) 522-7265';
 const EMAIL = 'scott@capitaldistrictnest.com';
 const SMS_BODY = "Hi Scott, I'd like help with a Capital District property.";
-const WA_BODY = "Hi Scott, I'd like help with a Capital District property.";
 
 const RED_CALL = '#DC1C2E';   // strict: call button only
 const TEAL = '#0d6e66';        // primary brand
+const TEAL_BRIGHT = '#5eead4'; // on-dark accent
 const CHARCOAL = '#0e0f12';    // dark surfaces
+const SURFACE = '#1E2230';     // card surface on dark
+const HAIRLINE = '#2D3748';    // hairline border on dark
 
 interface AnalystCardProps {
   title?: string;
@@ -33,8 +32,8 @@ interface AnalystCardProps {
 }
 
 const AnalystCard: React.FC<AnalystCardProps> = ({
-  title = "Talk to a Local Agent",
-  description = "Scott Alvarez · RE/MAX Solutions · Capital District",
+  title = "Talk to the Local Concierge",
+  description = "Scott Alvarez · Capital District Nest",
   children,
 }) => {
   const trigger = children ?? (
@@ -63,11 +62,12 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
 
       <SheetContent
         side="right"
-        className="p-0 w-full sm:max-w-[440px] bg-[#fafafa] border-l border-border"
+        className="p-0 w-full sm:max-w-[440px] border-l-0 text-white"
+        style={{ background: CHARCOAL }}
       >
-        {/* Branded header band — charcoal, not blue */}
+        {/* Branded header band */}
         <div
-          className="relative px-6 pt-8 pb-6 text-white"
+          className="relative px-6 pt-8 pb-6"
           style={{ background: `linear-gradient(135deg, ${CHARCOAL} 0%, #1a1c22 100%)` }}
         >
           <div className="flex items-start gap-4">
@@ -78,11 +78,17 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
               SA
             </div>
             <div className="leading-tight pt-1">
-              <p className="text-xl font-bold tracking-tight">Scott Alvarez</p>
-              <p className="text-sm font-semibold text-white/85">RE/MAX Solutions</p>
-              <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-white/75">
+              <p className="text-xl font-bold tracking-tight text-white">Scott Alvarez</p>
+              <p
+                className="text-[11px] font-semibold uppercase tracking-[0.14em] mt-0.5"
+                style={{ color: TEAL_BRIGHT }}
+              >
+                Capital District Nest
+              </p>
+              <p className="text-sm font-medium text-white/85 mt-1">Live local concierge</p>
+              <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-white/80">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                Live agent · usually replies in minutes
+                Online · usually replies in minutes
               </p>
             </div>
           </div>
@@ -93,84 +99,72 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
           {/* Call — ONLY surface allowed to use red */}
           <a
             href={`tel:+1${PHONE_NUMBER}`}
-            className="flex items-center gap-4 p-4 rounded-2xl text-white shadow-sm transition-transform active:scale-[0.99]"
+            className="flex items-center gap-4 p-4 rounded-2xl text-white shadow-[0_10px_30px_-12px_rgba(220,28,46,0.6)] transition-transform active:scale-[0.99]"
             style={{ backgroundColor: RED_CALL }}
           >
             <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center">
               <Phone className="w-5 h-5" />
             </div>
             <div className="flex-1">
-              <p className="font-semibold">Call now</p>
-              <p className="text-sm text-white/85">{FORMATTED_PHONE}</p>
+              <p className="font-semibold text-white">Call now</p>
+              <p className="text-sm text-white/95">{FORMATTED_PHONE}</p>
             </div>
           </a>
 
-          {/* Text — teal accent (no blue) */}
+          {/* Text */}
           <a
             href={`sms:+1${PHONE_NUMBER}?body=${encodeURIComponent(SMS_BODY)}`}
-            className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-border hover:border-foreground/20 transition"
+            className="flex items-center gap-4 p-4 rounded-2xl transition hover:border-white/25"
+            style={{ backgroundColor: SURFACE, border: `1px solid ${HAIRLINE}` }}
           >
             <div
               className="w-11 h-11 rounded-xl flex items-center justify-center"
-              style={{ backgroundColor: 'rgba(13,110,102,0.10)' }}
+              style={{ backgroundColor: 'rgba(94,234,212,0.12)' }}
             >
-              <MessageCircle className="w-5 h-5" style={{ color: TEAL }} />
+              <MessageCircle className="w-5 h-5" style={{ color: TEAL_BRIGHT }} />
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-foreground">Text</p>
-              <p className="text-sm text-muted-foreground">Quick SMS conversation</p>
-            </div>
-          </a>
-
-          {/* WhatsApp */}
-          <a
-            href={`https://wa.me/1${PHONE_NUMBER}?text=${encodeURIComponent(WA_BODY)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-border hover:border-foreground/20 transition"
-          >
-            <div className="w-11 h-11 rounded-xl bg-green-50 flex items-center justify-center">
-              <svg className="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-              </svg>
-            </div>
-            <div className="flex-1">
-              <p className="font-semibold text-foreground">WhatsApp</p>
-              <p className="text-sm text-muted-foreground">Chat on WhatsApp</p>
+              <p className="font-semibold text-white">Text</p>
+              <p className="text-sm text-white/75">Quick SMS conversation</p>
             </div>
           </a>
 
           {/* Email */}
           <a
             href={`mailto:${EMAIL}?subject=Capital%20District%20Nest%20inquiry`}
-            className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-border hover:border-foreground/20 transition"
+            className="flex items-center gap-4 p-4 rounded-2xl transition hover:border-white/25"
+            style={{ backgroundColor: SURFACE, border: `1px solid ${HAIRLINE}` }}
           >
-            <div className="w-11 h-11 rounded-xl bg-secondary flex items-center justify-center">
-              <Mail className="w-5 h-5 text-foreground" />
+            <div
+              className="w-11 h-11 rounded-xl flex items-center justify-center"
+              style={{ backgroundColor: 'rgba(94,234,212,0.12)' }}
+            >
+              <Mail className="w-5 h-5" style={{ color: TEAL_BRIGHT }} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-foreground">Email</p>
-              <p className="text-sm text-muted-foreground truncate">{EMAIL}</p>
+              <p className="font-semibold text-white">Email</p>
+              <p className="text-sm text-white/75 truncate">{EMAIL}</p>
             </div>
           </a>
 
           {/* Schedule */}
           <a
             href={`mailto:${EMAIL}?subject=Schedule%20a%20consultation`}
-            className="flex items-center gap-4 p-4 rounded-2xl bg-foreground text-white hover:bg-foreground/90 transition"
+            className="flex items-center gap-4 p-4 rounded-2xl text-white transition hover:bg-white/[0.06]"
+            style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: `1px solid ${HAIRLINE}` }}
           >
             <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center">
-              <Calendar className="w-5 h-5" />
+              <Calendar className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1">
-              <p className="font-semibold">Schedule</p>
+              <p className="font-semibold text-white">Schedule</p>
               <p className="text-sm text-white/75">Book a consultation</p>
             </div>
           </a>
         </div>
 
-        <p className="px-6 pb-6 text-xs text-center text-muted-foreground">
-          Capital District Nest · Powered by RE/MAX Solutions
+        <p className="px-6 pb-6 text-xs text-center text-white/55">
+          Capital District Nest
         </p>
       </SheetContent>
     </Sheet>
