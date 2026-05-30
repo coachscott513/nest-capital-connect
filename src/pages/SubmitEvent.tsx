@@ -93,6 +93,16 @@ const SubmitEvent = () => {
       toast({ title: "Submission failed", description: error.message, variant: "destructive" });
       return;
     }
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "form_submit", {
+        event_category: "Lead Generation",
+        form_name: "submit_event",
+        source_location: "submit_event_page",
+        page_path: window.location.pathname,
+        event_category_type: form.category,
+        town: form.town,
+      });
+    }
     setDone(true);
   };
 
