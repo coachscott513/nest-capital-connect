@@ -44,16 +44,24 @@ const ROTATING_PLACEHOLDERS = [
 ];
 
 // Curated prompt pills — each fires the omni-search using its label as the query
-const PROMPT_PILLS: { label: string; query: string }[] = [
+const PROMPT_PILLS: { label: string; query: string; to?: string }[] = [
   { label: "Delmar homes",             query: "Delmar homes" },
   { label: "Albany restaurants",       query: "Albany restaurants" },
   { label: "Troy contractors",         query: "Troy contractors" },
   { label: "Saratoga events",          query: "Saratoga events" },
-  { label: "Investment properties",    query: "investment properties" },
+  { label: "Finances",                  query: "finances", to: "/finances" },
   { label: "Mortgage lenders",         query: "mortgage lenders" },
   { label: "Plumbers near me",         query: "plumbers" },
   { label: "55+ communities",          query: "55+ communities" },
 ];
+
+// Route override for special verticals (finance) before falling back to intent parser
+function resolveRoute(query: string): string {
+  const q = query.trim().toLowerCase();
+  if (/\b(finance|finances|financial)\b/.test(q)) return "/finances";
+  if (/\b(events?|weekly|things to do)\b/.test(q)) return "/weekly";
+  return getSearchRoute(query);
+}
 
 
 const FEATURED_TOWNS = [
