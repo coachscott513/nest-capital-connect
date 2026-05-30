@@ -627,27 +627,29 @@ const Index = () => {
             For Local Business Owners
           </p>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white max-w-3xl mx-auto">
-            Own a local business?
+            Your business is already searchable.
+            <br className="hidden sm:block" /> Now make it interactive.
           </h2>
           <p className="mt-7 text-lg md:text-xl text-white/75 font-light max-w-2xl mx-auto leading-relaxed">
-            Get your business in front of the Capital District's fastest-growing
-            local discovery platform.
+            Claim your profile, add photos, specials, events, social links, menus, booking
+            options, and one-tap contact actions.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Link
-              to="/pricing"
+              to="/claim-business"
               className="inline-flex items-center gap-2 bg-[#0d6e66] text-white px-7 py-3.5 rounded-full text-sm font-semibold hover:-translate-y-0.5 hover:shadow-[0_14px_36px_-14px_rgba(13,110,102,0.6)] transition"
             >
-              For Businesses <ArrowRight className="w-4 h-4" />
+              Claim Your Profile <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
-              to="/local"
+              to="/pricing"
               className="inline-flex items-center gap-2 bg-white/[0.08] backdrop-blur text-white border border-white/20 px-6 py-3.5 rounded-full text-sm font-semibold hover:bg-white/15 transition"
             >
-              Learn More
+              See Premium Options
             </Link>
           </div>
         </div>
+
       </section>
 
       {/* 7 — REAL ESTATE · vertical inside the platform */}
