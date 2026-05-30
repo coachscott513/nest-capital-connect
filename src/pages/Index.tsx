@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { ArrowRight, Sparkles, Newspaper, CalendarDays, Building2, Wallet, Compass, Store, MapPin, X, Phone, Globe, Calendar } from "lucide-react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { ArrowRight, Sparkles, Newspaper, CalendarDays, Building2, Wallet, Compass, Store, MapPin, X, Phone, Globe, Calendar, Music } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
@@ -18,6 +19,9 @@ import heroBusinessWide from "@/assets/hero-business-wide.jpg";
 import heroFinanceWide from "@/assets/hero-finance-wide.jpg";
 import heroOwnersWide from "@/assets/hero-owners-wide.jpg";
 import heroDiscoveryWide from "@/assets/hero-discovery-wide.jpg";
+import partnerChristieImg from "@/assets/partner-christie.jpg";
+import partnerDgLawImg from "@/assets/partner-dglaw.jpg";
+import partnerRooseveltImg from "@/assets/partner-roosevelt.jpg";
 
 /* =============================================================
    CAPITAL DISTRICT NEST — HOMEPAGE
