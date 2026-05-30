@@ -180,7 +180,7 @@ const SPOTLIGHTS: Spotlight[] = [
     primaryActions: [
       {
         key: "reservation",
-        label: "Make Reservation",
+        label: "Reserve a Table",
         href: "https://rooseveltroom.com/",
         icon: Calendar,
         primary: true,
@@ -188,16 +188,16 @@ const SPOTLIGHTS: Spotlight[] = [
       },
       {
         key: "menu",
-        label: "View Menu",
+        label: "View Live Jazz Nights",
         href: "https://rooseveltroom.com/",
-        icon: Utensils,
+        icon: Music2,
         external: true,
       },
       {
         key: "order",
-        label: "Order Online",
+        label: "View Menu",
         href: "https://rooseveltroom.com/",
-        icon: Globe,
+        icon: Utensils,
         external: true,
       },
     ],
