@@ -141,14 +141,14 @@ export default function SpotlightSearch({ eyebrow }: Props) {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     setOpen(false);
-    navigate(getSearchRoute(q));
+    navigate(resolveRoute(q));
   };
 
   const onKeyDownInput = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
       setOpen(false);
-      navigate(getSearchRoute(q));
+      navigate(resolveRoute(q));
     }
   };
 
