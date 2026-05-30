@@ -167,7 +167,7 @@ export default function SpotlightSearch({ eyebrow }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-black/55 backdrop-blur-[6px]"
+            className="fixed inset-0 z-40 bg-black/45 backdrop-blur-[2px]"
             aria-hidden
           />
         )}
