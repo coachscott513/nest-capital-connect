@@ -175,6 +175,8 @@ const PrerenderReadySignal = () => {
 // /towns/:slug is now the dedicated Town Pulse local-engagement dashboard
 // (real estate lives at /living-in/:slug and global /homes routes).
 import TownPulse from "./pages/TownPulse";
+import WeeklyPulse from "./pages/WeeklyPulse";
+import LocalMedia from "./pages/LocalMedia";
 
 const NotFoundOrLegacyTown = () => {
   const { pathname } = useLocation();
@@ -300,6 +302,8 @@ const App = () => {
           {/* Simplified canonical destinations from main nav */}
           <Route path="/homes" element={<HomesPage />} />
           <Route path="/local" element={<LocalPage />} />
+          <Route path="/weekly" element={<WeeklyPulse />} />
+          <Route path="/media" element={<LocalMedia />} />
           <Route path="/contact" element={<ContactPage />} />
 
           
