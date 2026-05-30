@@ -79,7 +79,7 @@ type Spotlight = {
   gallery: string[];
   socials: { facebook?: string; instagram?: string; tiktok?: string; linkedin?: string };
   accent: "gold" | "emerald" | "teal";
-  vertical: "mortgage" | "restaurant" | "dental";
+  vertical: "mortgage" | "restaurant" | "law";
   primaryActions: PartnerAction[];
   secondaryActions: PartnerAction[];
   specials?: string[];
@@ -210,62 +210,73 @@ const SPOTLIGHTS: Spotlight[] = [
     },
   },
   {
-    slug: "delmar-family-dental-demo",
-    name: "Delmar Family Dental",
-    category: "Dentist · Family & Cosmetic Care",
-    town: "Delmar",
+    slug: "deangelus-group-pllc",
+    name: "DeAngelus Group, PLLC",
+    category: "Law Firm · Real Estate Law · Corporate Law · Trusts & Estates",
+    town: "Clifton Park · Schenectady · Saratoga Springs",
     tagline:
-      "Modern family dentistry on Delaware Ave — same-day cleanings, on-time appointments, and a calm Apple-clean office.",
+      "Women-owned and led law firm serving clients across New York and Florida — real estate, corporate, and trusts & estates.",
     bio:
-      "Delmar Family Dental offers preventive, cosmetic, and pediatric dental care for the whole household. Digital X-rays, sedation options, and most major insurance plans accepted. Saturday openings every other week.",
-    phone: "(518) 439-1234",
-    email: "hello@delmarfamilydental.com",
-    website: "https://www.capitaldistrictnest.com/local",
-    address: "Delaware Ave, Delmar NY",
-    hours: "Mon–Thu · 8a – 6p · Fri 8a – 2p",
+      "DeAngelus Group, PLLC is a women-owned and led law firm with offices across the Capital District and Florida. Practice areas include Real Estate, Corporate Law, Trusts & Estates, and title services through Blue Acre Title Services — boutique attention with statewide reach.",
+    phone: "(518) 631-6400",
+    website: "https://www.dglawny.com/",
+    address: "Clifton Park · Schenectady · Saratoga Springs · Florida",
+    hours: "Mon–Fri · 9a – 5p",
     status: "open",
-    gallery: [
-      "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=1400&q=80",
-      "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1400&q=80",
-      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1400&q=80",
-    ],
+    gallery: [],
     socials: {
-      instagram: "https://www.instagram.com/",
+      linkedin: "https://www.linkedin.com/",
       facebook: "https://www.facebook.com/",
+      instagram: "https://www.instagram.com/",
     },
-    accent: "emerald",
-    vertical: "dental",
+    accent: "teal",
+    vertical: "law",
     primaryActions: [
       {
-        key: "bookAppt",
-        label: "Book Appointment",
-        href: "tel:+15184391234",
-        icon: Calendar,
+        key: "website",
+        label: "Connect with Legal Team",
+        href: "https://www.dglawny.com/",
+        icon: Wallet,
         primary: true,
+        external: true,
       },
       {
         key: "website",
-        label: "Visit Website",
-        href: "https://www.capitaldistrictnest.com/local",
-        icon: Globe,
+        label: "Practice Areas",
+        href: "https://www.dglawny.com/",
+        icon: FileText,
         external: true,
       },
     ],
     secondaryActions: [
-      { key: "call", label: "Call", href: "tel:+15184391234", icon: Phone },
-      { key: "email", label: "Email", href: "mailto:hello@delmarfamilydental.com", icon: Mail },
+      { key: "call", label: "Call", href: "tel:+15186316400", icon: Phone },
+      {
+        key: "website",
+        label: "Website",
+        href: "https://www.dglawny.com/",
+        icon: Globe,
+        external: true,
+      },
+      {
+        key: "email",
+        label: "Contact",
+        href: "https://www.dglawny.com/contact",
+        icon: Mail,
+        external: true,
+      },
       {
         key: "directions",
         label: "Directions",
-        href: "https://www.google.com/maps/search/?api=1&query=Delaware+Ave+Delmar+NY",
+        href: "https://www.google.com/maps/search/?api=1&query=DeAngelus+Group+Clifton+Park+NY",
         icon: MapPin,
         external: true,
       },
     ],
     specials: [
-      "New patient cleaning + X-rays · $99",
-      "Free pediatric first visit",
-      "Same-week emergency openings",
+      "Real Estate closings across NY & FL",
+      "Corporate law for small business & startups",
+      "Trusts & Estates planning",
+      "Blue Acre Title Services",
     ],
   },
 ];
