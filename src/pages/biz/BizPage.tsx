@@ -827,16 +827,15 @@ const BizPage = () => {
     <div className="min-h-screen bg-background text-foreground">
       {(() => {
         const biz = activeBiz;
-        const town = biz.town_name || biz.city || "Capital District";
+        const townRaw = biz.town_name || biz.city || "";
+        const town = townRaw || "Capital District";
         const url = `https://www.capitaldistrictnest.com/biz/${biz.slug}`;
-        const fallbackDesc = `Find ${biz.name} in ${town}, NY on Capital District Nest. View contact details, website, directions, business category, and claim this profile to add photos, social links, specials, and updates.`;
-        const desc =
-          biz.tagline ||
-          biz.description?.slice(0, 155) ||
-          fallbackDesc;
-        const title = loading
-          ? `${biz.name} | Local Profile & Information | Capital District Nest`
-          : `${biz.name} | ${town}, NY | Capital District Nest`;
+        const desc = townRaw
+          ? `Get hours, contact info, website, directions, and local profile details for ${biz.name} in ${townRaw}, NY on Capital District Nest.`
+          : `Get hours, contact info, website, directions, and local profile details for ${biz.name} on Capital District Nest.`;
+        const title = townRaw
+          ? `${biz.name} | ${townRaw}, NY | Capital District Nest`
+          : `${biz.name} | Capital District Nest`;
         const image = biz.hero_image_url || biz.photos?.[0] || biz.logo_url || undefined;
         const ldBusiness: Record<string, unknown> = {
           "@context": "https://schema.org",
