@@ -79,9 +79,8 @@ function CinematicHero() {
             </h1>
 
             <p className="mt-6 md:mt-8 text-base md:text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
-              The digital front door of the Capital District — search businesses,
-              homes, restaurants, services, events, towns, and local updates in
-              one place.
+              The digital front door of the Capital District — businesses, towns, events,
+              restaurants, services, media, homes, and local updates in one place.
             </p>
 
             {/* THE OMNI-SEARCH — dominant product surface */}
@@ -93,6 +92,28 @@ function CinematicHero() {
             >
               <SpotlightSearch />
             </motion.div>
+
+            {/* Two simple Apple-style CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-7 flex flex-wrap items-center justify-center gap-3"
+            >
+              <Link
+                to="/local"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
+              >
+                Start Searching <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/communities"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.06] backdrop-blur text-white border border-white/20 text-sm font-semibold hover:bg-white/[0.12] transition"
+              >
+                Explore the Region
+              </Link>
+            </motion.div>
+
 
             {/* HERO-LEVEL FEATURED · Member Local Legend cards */}
             <motion.div
