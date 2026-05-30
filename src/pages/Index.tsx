@@ -509,6 +509,7 @@ function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => v
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [started, setStarted] = useState(false);
   const [form, setForm] = useState({
     name: "", email: "", phone: "", need: FIN_OPTIONS[0], message: "",
   });
@@ -519,8 +520,25 @@ function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => v
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
+  useEffect(() => {
+    if (!open) { setStarted(false); }
+  }, [open]);
 
   if (!open || typeof document === "undefined") return null;
+
+  const onFirstInteract = () => {
+    if (started) return;
+    setStarted(true);
+    trackGAEvent.contactFormSubmit("finance_expert_start", "homepage_finance_modal");
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "form_start", {
+        event_category: "Lead Generation",
+        form_name: "finance_expert",
+        source_location: "homepage_finance_modal",
+        page_path: window.location.pathname,
+      });
+    }
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -542,6 +560,16 @@ function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => v
       toast({ title: "Submission failed", description: error.message, variant: "destructive" });
       return;
     }
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "form_submit", {
+        event_category: "Lead Generation",
+        form_name: "finance_expert",
+        source_location: "homepage_finance_modal",
+        page_path: window.location.pathname,
+        product_type: form.need,
+      });
+    }
+    trackGAEvent.financialIntroSubmit({ product_type: form.need, source_location: "homepage_finance_modal" });
     setDone(true);
   };
 
