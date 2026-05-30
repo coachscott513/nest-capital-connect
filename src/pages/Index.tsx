@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { ArrowRight, Sparkles, Newspaper, CalendarDays, Building2, Wallet, Compass, Store, MapPin, X, Phone, Globe, Calendar, Music } from "lucide-react";
+import { ArrowRight, Sparkles, Newspaper, CalendarDays, Building2, Wallet, Compass, Store, MapPin, X, Phone, Globe, Calendar, Music, Navigation } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
