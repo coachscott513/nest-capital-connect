@@ -11,6 +11,7 @@ import FloatingOmniSearch from "@/components/home/FloatingOmniSearch";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { trackGAEvent } from "@/components/GARouteTracker";
 
 import heroTownsWide from "@/assets/hero-towns-wide.jpg";
 import heroMediaWide from "@/assets/hero-media-wide.jpg";
