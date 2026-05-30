@@ -747,7 +747,7 @@ const Index = () => {
         headline={<>Local businesses, <span className="text-[#5eead4]">brought to life.</span></>}
         sub="Premium profiles with photos, events, menus, reservations, social links, and one-tap contact."
         primary={{ label: "View Featured Partners", onClick: scrollTo("featured-partners") }}
-        secondary={{ label: "Request Featured Placement", to: "/claim-business", onClick: () => trackGAEvent.claimProfileClick({ source_location: "homepage_hero_partners", tier: "featured" } as any) } as any}
+        secondary={{ label: "Request Featured Placement", to: "/claim-business", onClick: () => trackGAEvent.claimProfileClick({ source_location: "homepage_hero_partners" } as any) }}
         bgImage={heroBusinessWide}
         overlay="soft"
       />
