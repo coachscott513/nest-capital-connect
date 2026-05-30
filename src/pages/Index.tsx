@@ -70,7 +70,7 @@ function CTAButton({ cta, variant = "primary" }: { cta: CTA; variant?: "primary"
       {variant === "primary" && <ArrowRight className="w-4 h-4" />}
     </>
   );
-  if (cta.onClick) {
+  if (cta.onClick && !cta.to) {
     return (
       <button type="button" onClick={cta.onClick} className={className}>
         {content}
@@ -78,7 +78,7 @@ function CTAButton({ cta, variant = "primary" }: { cta: CTA; variant?: "primary"
     );
   }
   return (
-    <Link to={cta.to ?? "#"} className={className}>
+    <Link to={cta.to ?? "#"} onClick={cta.onClick} className={className}>
       {content}
     </Link>
   );
