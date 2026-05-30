@@ -226,9 +226,9 @@ const SPOTLIGHTS: Spotlight[] = [
     name: "DeAngelus Group, PLLC",
     category: "Law Firm · Real Estate Law · Corporate Law · Trusts & Estates",
     town: "Clifton Park · Schenectady · Saratoga Springs",
-    tileLabel: "DeAngelus Group, PLLC",
-    heroHeadline: "Legal guidance for business, real estate, and estates.",
-    heroSub: "Connect with a regional legal team for real estate, corporate, title, and estate planning needs.",
+    tileLabel: "Legal",
+    heroHeadline: "Legal guidance for life's important moves.",
+    heroSub: "Real estate, business, title, and estate planning support across the Capital District.",
     tagline:
       "Women-owned and led law firm serving clients across New York and Florida — real estate, corporate, and trusts & estates.",
     bio:
