@@ -249,9 +249,10 @@ type Partner = {
   category: string;
   tagline: string;
   promo?: string;
+  promoHighlight?: boolean;
   website: string;
   phone?: string;
-  initials: string;
+  image: string;
   primary: { label: string; href: string };
   secondary: { label: string; href: string }[];
   accent: string;
@@ -262,9 +263,9 @@ const PARTNERS: Partner[] = [
     id: "christie",
     name: "Christie Hoyt Mortgage Team",
     category: "Mortgage / Home Lending",
-    tagline: "Local mortgage guidance before you make a move.",
+    tagline: "Local mortgage guidance from a trusted Broadview lending team — for first-time buyers, move-ups, and investors.",
     website: "https://www.broadviewfcu.com/personal/home-lending-solutions/meet-the-mortgage-team/christie-hoyt/",
-    initials: "CH",
+    image: partnerChristieImg,
     primary: { label: "Connect with Christie", href: "https://www.broadviewfcu.com/personal/home-lending-solutions/meet-the-mortgage-team/christie-hoyt/" },
     secondary: [
       { label: "Apply Now", href: "https://www.broadviewfcu.com/personal/home-lending-solutions/" },
@@ -276,12 +277,12 @@ const PARTNERS: Partner[] = [
     id: "dglaw",
     name: "D&G Law",
     category: "Legal / Real Estate Attorney",
-    tagline: "Real estate, business, and legal guidance for Capital District clients.",
+    tagline: "Real estate, business, and legal counsel for Capital District clients — closings, contracts, and counsel that holds up.",
     website: "https://www.dglawny.com/",
-    initials: "DG",
-    primary: { label: "Visit Website", href: "https://www.dglawny.com/" },
+    image: partnerDgLawImg,
+    primary: { label: "Contact D&G Law", href: "https://www.dglawny.com/contact" },
     secondary: [
-      { label: "Contact", href: "https://www.dglawny.com/contact" },
+      { label: "Website", href: "https://www.dglawny.com/" },
     ],
     accent: "from-[#1e3a5f] to-[#5eead4]",
   },
@@ -289,14 +290,16 @@ const PARTNERS: Partner[] = [
     id: "roosevelt",
     name: "Roosevelt Room",
     category: "Restaurant / Cocktails / Live Jazz",
-    tagline: "Dinner, cocktails, and live jazz in the heart of the Capital District.",
-    promo: "Live Jazz Friday & Saturday Nights",
+    tagline: "Dinner, craft cocktails, and a live jazz lounge in the heart of the Capital District.",
+    promo: "Live Jazz · Friday & Saturday Nights",
+    promoHighlight: true,
     website: "https://rooseveltroom.com/",
-    initials: "RR",
+    image: partnerRooseveltImg,
     primary: { label: "Reservations", href: "https://rooseveltroom.com/" },
     secondary: [
       { label: "Menu", href: "https://rooseveltroom.com/menu" },
       { label: "Website", href: "https://rooseveltroom.com/" },
+      { label: "Contact", href: "https://rooseveltroom.com/contact" },
     ],
     accent: "from-[#5c2018] to-[#c9a449]",
   },
@@ -334,17 +337,25 @@ function FeaturedPartnersSection({ onOpen }: { onOpen: (p: Partner) => void }) {
               onClick={() => onOpen(p)}
               className="group text-left rounded-3xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#5eead4]/40 transition overflow-hidden flex flex-col"
             >
-              <div className={`relative h-44 bg-gradient-to-br ${p.accent} flex items-center justify-center`}>
-                <span className="text-5xl font-semibold tracking-tight text-white/90 drop-shadow">{p.initials}</span>
+              <div className="relative h-52 overflow-hidden">
+                <img
+                  src={p.image}
+                  alt={p.name}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent`} />
                 {p.promo && (
-                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/40 backdrop-blur text-[10px] font-semibold tracking-wider uppercase text-white border border-white/20">
-                    {p.promo}
+                  <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#c9a449]/95 text-[#0B0F19] text-[10px] font-bold tracking-[0.14em] uppercase shadow-lg">
+                    {p.promoHighlight && <Music className="w-3 h-3" />} {p.promo}
                   </span>
                 )}
+                <div className="absolute bottom-3 left-4 right-4">
+                  <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">{p.category}</p>
+                </div>
               </div>
               <div className="p-6 flex-1 flex flex-col">
-                <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#5eead4]">{p.category}</p>
-                <h3 className="mt-2 text-xl font-semibold text-white">{p.name}</h3>
+                <h3 className="text-xl font-semibold text-white">{p.name}</h3>
                 <p className="mt-3 text-sm text-white/65 flex-1">{p.tagline}</p>
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-[#5eead4] transition">
                   View profile <ArrowRight className="w-4 h-4" />
@@ -364,27 +375,55 @@ function FeaturedPartnersSection({ onOpen }: { onOpen: (p: Partner) => void }) {
   );
 }
 
+/* Lock body scroll while a modal is open */
+function useBodyScrollLock(active: boolean) {
+  useEffect(() => {
+    if (!active) return;
+    const { overflow, paddingRight } = document.body.style;
+    const scrollbarComp = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = "hidden";
+    if (scrollbarComp > 0) document.body.style.paddingRight = `${scrollbarComp}px`;
+    return () => {
+      document.body.style.overflow = overflow;
+      document.body.style.paddingRight = paddingRight;
+    };
+  }, [active]);
+}
+
 function PartnerModal({ partner, onClose }: { partner: Partner | null; onClose: () => void }) {
-  if (!partner) return null;
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" role="dialog" aria-modal="true">
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-2xl rounded-3xl bg-[#0B0F19] border border-white/10 overflow-hidden">
-        <div className={`relative h-44 bg-gradient-to-br ${partner.accent} flex items-center justify-center`}>
-          <span className="text-6xl font-semibold tracking-tight text-white/90 drop-shadow">{partner.initials}</span>
-          <button onClick={onClose} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center text-white">
+  useBodyScrollLock(!!partner);
+  useEffect(() => {
+    if (!partner) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [partner, onClose]);
+
+  if (!partner || typeof document === "undefined") return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true">
+      <div className="fixed inset-0 bg-black/85 backdrop-blur-md" onClick={onClose} />
+      <div className="relative w-full max-w-2xl my-auto rounded-3xl bg-[#0B0F19] border border-white/10 overflow-hidden shadow-[0_40px_120px_-20px_rgba(0,0,0,0.9)] animate-in fade-in zoom-in-95 duration-200">
+        <div className="relative h-56 overflow-hidden">
+          <img src={partner.image} alt={partner.name} className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/55 to-transparent" />
+          <button onClick={onClose} aria-label="Close" className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur flex items-center justify-center text-white border border-white/15">
             <X className="w-4 h-4" />
           </button>
+          <div className="absolute bottom-4 left-6 right-6">
+            <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#5eead4]">{partner.category}</p>
+            <h3 className="mt-1 text-2xl md:text-3xl font-semibold tracking-tight text-white">{partner.name}</h3>
+          </div>
         </div>
-        <div className="p-7 md:p-9">
+        <div className="p-7 md:p-9 max-h-[70vh] overflow-y-auto">
           {partner.promo && (
-            <div className="mb-5 px-4 py-3 rounded-2xl bg-[#c9a449]/[0.12] border border-[#c9a449]/30 text-[#c9a449] text-sm font-semibold flex items-center gap-2">
-              <Calendar className="w-4 h-4" /> {partner.promo}
+            <div className="mb-5 px-4 py-3.5 rounded-2xl bg-gradient-to-r from-[#c9a449]/[0.18] to-[#c9a449]/[0.06] border border-[#c9a449]/40 text-[#c9a449] text-sm font-semibold flex items-center gap-2.5">
+              {partner.promoHighlight ? <Music className="w-4 h-4 shrink-0" /> : <Calendar className="w-4 h-4 shrink-0" />}
+              <span>{partner.promo}</span>
             </div>
           )}
-          <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-[#5eead4]">{partner.category}</p>
-          <h3 className="mt-2 text-2xl md:text-3xl font-semibold tracking-tight text-white">{partner.name}</h3>
-          <p className="mt-4 text-white/70 leading-relaxed">{partner.tagline}</p>
+          <p className="text-white/75 leading-relaxed">{partner.tagline}</p>
 
           <div className="mt-7 flex flex-wrap gap-3">
             <a href={partner.primary.href} target="_blank" rel="noreferrer noopener"
@@ -411,7 +450,8 @@ function PartnerModal({ partner, onClose }: { partner: Partner | null; onClose: 
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
