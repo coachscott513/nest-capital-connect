@@ -438,6 +438,9 @@ function PartnerModal({ partner, onClose }: { partner: Partner | null; onClose: 
           <div className="absolute bottom-4 left-6 right-6">
             <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#5eead4]">{partner.category}</p>
             <h3 className="mt-1 text-2xl md:text-3xl font-semibold tracking-tight text-white">{partner.name}</h3>
+            <p className="mt-1 text-xs text-white/70 inline-flex items-center gap-1.5">
+              <MapPin className="w-3 h-3" /> {partner.address || partner.town}
+            </p>
           </div>
         </div>
         <div className="p-7 md:p-9 max-h-[70vh] overflow-y-auto">
@@ -451,23 +454,40 @@ function PartnerModal({ partner, onClose }: { partner: Partner | null; onClose: 
 
           <div className="mt-7 flex flex-wrap gap-3">
             <a href={partner.primary.href} target="_blank" rel="noreferrer noopener"
+              onClick={() => trackGAEvent.websiteClick(partnerAnalyticsPayload(partner))}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition">
               {partner.primary.label} <ArrowRight className="w-4 h-4" />
             </a>
             {partner.secondary.map((s) => (
               <a key={s.label} href={s.href} target="_blank" rel="noreferrer noopener"
+                onClick={() => trackGAEvent.websiteClick(partnerAnalyticsPayload(partner))}
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.08] border border-white/20 text-white text-sm font-semibold hover:bg-white/[0.16] transition">
                 {s.label}
               </a>
             ))}
+            {(partner.address || partner.mapsQuery) && (
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(partner.address || partner.mapsQuery || "")}`}
+                target="_blank"
+                rel="noreferrer noopener"
+                onClick={() => trackGAEvent.directionsClick(partnerAnalyticsPayload(partner))}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.08] border border-white/20 text-white text-sm font-semibold hover:bg-white/[0.16] transition"
+              >
+                <Navigation className="w-4 h-4" /> Directions
+              </a>
+            )}
           </div>
 
           <div className="mt-7 pt-6 border-t border-white/10 flex flex-wrap gap-4 text-sm text-white/60">
-            <a href={partner.website} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-2 hover:text-white transition">
+            <a href={partner.website} target="_blank" rel="noreferrer noopener"
+              onClick={() => trackGAEvent.websiteClick(partnerAnalyticsPayload(partner))}
+              className="inline-flex items-center gap-2 hover:text-white transition">
               <Globe className="w-4 h-4" /> {new URL(partner.website).hostname.replace("www.", "")}
             </a>
             {partner.phone && (
-              <a href={`tel:${partner.phone}`} className="inline-flex items-center gap-2 hover:text-white transition">
+              <a href={`tel:${partner.phone}`}
+                onClick={() => trackGAEvent.callClick(partnerAnalyticsPayload(partner))}
+                className="inline-flex items-center gap-2 hover:text-white transition">
                 <Phone className="w-4 h-4" /> {partner.phone}
               </a>
             )}
