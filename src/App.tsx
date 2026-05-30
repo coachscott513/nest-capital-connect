@@ -177,6 +177,7 @@ const PrerenderReadySignal = () => {
 import TownPulse from "./pages/TownPulse";
 import WeeklyPulse from "./pages/WeeklyPulse";
 import LocalMedia from "./pages/LocalMedia";
+import SubmitEvent from "./pages/SubmitEvent";
 
 const NotFoundOrLegacyTown = () => {
   const { pathname } = useLocation();
@@ -303,7 +304,10 @@ const App = () => {
           <Route path="/homes" element={<HomesPage />} />
           <Route path="/local" element={<LocalPage />} />
           <Route path="/weekly" element={<WeeklyPulse />} />
+          <Route path="/events" element={<WeeklyPulse />} />
+          <Route path="/this-week" element={<WeeklyPulse />} />
           <Route path="/media" element={<LocalMedia />} />
+          <Route path="/submit-event" element={<SubmitEvent />} />
           <Route path="/contact" element={<ContactPage />} />
 
           
