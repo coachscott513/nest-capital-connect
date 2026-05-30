@@ -561,24 +561,31 @@ const Index = () => {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-3xl mx-auto text-center mb-12 md:mb-24"
           >
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-6 text-[#5eead4]">
-              Browse Local Search Indexes
+            <p className="text-xs font-semibold tracking-[0.28em] uppercase mb-6 text-[#5eead4]">
+              Every Town, Indexed
             </p>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
-              Every town, indexed.
+              Explore the Capital District by town.
             </h2>
             <p className="mt-7 text-lg md:text-xl text-white/75 font-light leading-relaxed max-w-2xl mx-auto">
-              Tap a town to open its dedicated search index — homes, businesses,
-              schools, events, and neighborhood intelligence in one place.
+              Open a local index for Delmar, Albany, Troy, Saratoga Springs, Clifton Park,
+              Schenectady, and more — homes, businesses, schools, and events in one place.
             </p>
-            <div className="cta-anchor mt-9 flex justify-center">
+            <div className="cta-anchor mt-9 flex flex-wrap justify-center gap-3">
               <Link
                 to="/communities"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
               >
-                Browse all towns <ArrowRight className="w-4 h-4" />
+                Browse Towns <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/local"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.06] text-white border border-white/20 text-sm font-semibold hover:bg-white/[0.12] transition"
+              >
+                Search Near Me
               </Link>
             </div>
+
           </motion.div>
 
 
