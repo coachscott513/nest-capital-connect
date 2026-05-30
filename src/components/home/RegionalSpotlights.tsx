@@ -287,13 +287,13 @@ const bizPayload = (s: Spotlight, source: string) => ({
 });
 
 const trackAction = (s: Spotlight, key: ActionKey) => {
-  const p = bizPayload(s, `regional_spotlight_${s.vertical}`);
+  const p = bizPayload(s, `regional_spotlight_${s.vertical}_${key}`);
   if (key === "call") trackGAEvent.callClick(p);
   else if (key === "email") trackGAEvent.emailClick(p);
   else if (key === "website" || key === "apply" || key === "menu" || key === "order")
-    trackGAEvent.websiteClick({ ...p, action_type: key });
+    trackGAEvent.websiteClick(p);
   else if (key === "directions") trackGAEvent.directionsClick(p);
-  else trackGAEvent.businessContactOpen({ ...p, action_type: key });
+  else trackGAEvent.businessContactOpen(p);
 };
 
 const StatusDot = ({ status }: { status: Spotlight["status"] }) => {
