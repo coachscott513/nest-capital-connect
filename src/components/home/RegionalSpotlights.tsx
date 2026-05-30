@@ -123,7 +123,7 @@ const SPOTLIGHTS: Spotlight[] = [
     primaryActions: [
       {
         key: "mortgageHelp",
-        label: "Connect with Mortgage Expert",
+        label: "Connect with Christie",
         href: "/finances",
         icon: Wallet,
         primary: true,
