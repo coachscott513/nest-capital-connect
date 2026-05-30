@@ -79,7 +79,7 @@ type Spotlight = {
   gallery: string[];
   socials: { facebook?: string; instagram?: string; tiktok?: string; linkedin?: string };
   accent: "gold" | "emerald" | "teal";
-  vertical: "mortgage" | "restaurant" | "dental";
+  vertical: "mortgage" | "restaurant" | "law";
   primaryActions: PartnerAction[];
   secondaryActions: PartnerAction[];
   specials?: string[];
