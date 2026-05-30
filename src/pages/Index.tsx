@@ -494,9 +494,9 @@ function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => v
     setDone(true);
   };
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" role="dialog" aria-modal="true">
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true">
+      <div className="fixed inset-0 bg-black/85 backdrop-blur-md" onClick={onClose} />
       <div className="relative w-full max-w-lg rounded-3xl bg-[#0B0F19] border border-white/10 p-7 md:p-9">
         <button onClick={onClose} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/[0.06] hover:bg-white/[0.12] flex items-center justify-center text-white">
           <X className="w-4 h-4" />
