@@ -295,102 +295,94 @@ export default function SpotlightSearch({ eyebrow }: Props) {
           ))}
         </motion.div>
 
+      </div>
+    </>
+  );
+}
 
-
-        {/* Expanded spotlight panel */}
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              initial={{ opacity: 0, y: 14, scale: 0.985 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.99 }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute left-0 right-0 mt-4 rounded-[28px] border border-white/12 bg-[#0B0F19]/95 backdrop-blur-2xl shadow-[0_60px_140px_-40px_rgba(0,0,0,0.85)] overflow-hidden text-left"
-            >
-              <div className="grid md:grid-cols-2 gap-0">
-                {/* Featured Towns */}
-                <div className="p-6 md:p-7 border-b md:border-b-0 md:border-r border-white/[0.06]">
-                  <SectionLabel icon={MapPin} label="Featured towns" />
-                  <ul className="mt-3 space-y-1">
-                    {FEATURED_TOWNS.map((t) => (
-                      <li key={t.name}>
-                        <Link
-                          to={t.to}
-                          onClick={() => setOpen(false)}
-                          className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/[0.05] transition group"
-                        >
-                          <span className="text-[14.5px] text-white/85 group-hover:text-white">
-                            {t.name}
-                          </span>
-                          <span className="text-[12px] text-white/45 group-hover:text-[#5eead4]">
-                            Median {t.median}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Trending + This Week */}
-                <div className="p-6 md:p-7 space-y-6">
-                  <div>
-                    <SectionLabel icon={Flame} label="Trending now" />
-                    <ul className="mt-3 space-y-1">
-                      {TRENDING_NOW.map((t) => (
-                        <li key={t.label}>
-                          <Link
-                            to={t.to}
-                            onClick={() => setOpen(false)}
-                            className="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/[0.05] transition group"
-                          >
-                            <span className="text-[14px] text-white/80 group-hover:text-white">
-                              {t.label}
-                            </span>
-                            <ArrowRight className="w-3.5 h-3.5 text-white/30 group-hover:text-[#5eead4] group-hover:translate-x-0.5 transition" />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <SectionLabel icon={CalendarDays} label="This week in the Capital District" />
-                    <ul className="mt-3 space-y-1">
-                      {THIS_WEEK.map((t) => (
-                        <li key={t.label}>
-                          <Link
-                            to={t.to}
-                            onClick={() => setOpen(false)}
-                            className="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/[0.05] transition group"
-                          >
-                            <span className="text-[14px] text-white/80 group-hover:text-white">
-                              {t.label}
-                            </span>
-                            <ArrowRight className="w-3.5 h-3.5 text-white/30 group-hover:text-[#5eead4] group-hover:translate-x-0.5 transition" />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between px-6 md:px-7 py-3.5 border-t border-white/[0.06] bg-white/[0.02] text-[11.5px] text-white/45">
-                <span className="inline-flex items-center gap-2">
-                  <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.05] text-white/65">↵</kbd>
-                  to explore · <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.05] text-white/65">Esc</kbd> to close
-                </span>
+function PanelContent({ setOpen }: { setOpen: (v: boolean) => void }) {
+  return (
+    <>
+      <div className="grid md:grid-cols-2 gap-0">
+        {/* Featured Towns */}
+        <div className="p-5 md:p-6 border-b md:border-b-0 md:border-r border-white/[0.06]">
+          <SectionLabel icon={MapPin} label="Featured towns" />
+          <ul className="mt-3 space-y-1">
+            {FEATURED_TOWNS.map((t) => (
+              <li key={t.name}>
                 <Link
-                  to="/communities"
+                  to={t.to}
                   onClick={() => setOpen(false)}
-                  className="text-[#5eead4] hover:text-white transition"
+                  className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-white/[0.05] transition group"
                 >
-                  Browse all towns →
+                  <span className="text-[14.5px] text-white/85 group-hover:text-white">
+                    {t.name}
+                  </span>
+                  <span className="text-[12px] text-white/45 group-hover:text-[#5eead4]">
+                    Median {t.median}
+                  </span>
                 </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Trending + This Week */}
+        <div className="p-5 md:p-6 space-y-5">
+          <div>
+            <SectionLabel icon={Flame} label="Trending now" />
+            <ul className="mt-3 space-y-1">
+              {TRENDING_NOW.map((t) => (
+                <li key={t.label}>
+                  <Link
+                    to={t.to}
+                    onClick={() => setOpen(false)}
+                    className="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/[0.05] transition group"
+                  >
+                    <span className="text-[14px] text-white/80 group-hover:text-white">
+                      {t.label}
+                    </span>
+                    <ArrowRight className="w-3.5 h-3.5 text-white/30 group-hover:text-[#5eead4] group-hover:translate-x-0.5 transition" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <SectionLabel icon={CalendarDays} label="This week in the Capital District" />
+            <ul className="mt-3 space-y-1">
+              {THIS_WEEK.map((t) => (
+                <li key={t.label}>
+                  <Link
+                    to={t.to}
+                    onClick={() => setOpen(false)}
+                    className="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-white/[0.05] transition group"
+                  >
+                    <span className="text-[14px] text-white/80 group-hover:text-white">
+                      {t.label}
+                    </span>
+                    <ArrowRight className="w-3.5 h-3.5 text-white/30 group-hover:text-[#5eead4] group-hover:translate-x-0.5 transition" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between px-5 md:px-6 py-3 border-t border-white/[0.06] bg-white/[0.02] text-[11.5px] text-white/45">
+        <span className="inline-flex items-center gap-2">
+          <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.05] text-white/65">↵</kbd>
+          to explore · <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.05] text-white/65">Esc</kbd> to close
+        </span>
+        <Link
+          to="/communities"
+          onClick={() => setOpen(false)}
+          className="text-[#5eead4] hover:text-white transition"
+        >
+          Browse all towns →
+        </Link>
       </div>
     </>
   );
@@ -404,3 +396,4 @@ function SectionLabel({ icon: Icon, label }: { icon: any; label: string }) {
     </p>
   );
 }
+
