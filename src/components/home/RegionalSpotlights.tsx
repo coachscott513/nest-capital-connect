@@ -122,18 +122,18 @@ const SPOTLIGHTS: Spotlight[] = [
     vertical: "mortgage",
     primaryActions: [
       {
-        key: "apply",
-        label: "Apply Now",
-        href: "https://www.broadviewfcu.com/personal/home-lending-solutions/meet-the-mortgage-team/christie-hoyt/",
-        icon: FileText,
-        primary: true,
-        external: true,
-      },
-      {
         key: "mortgageHelp",
         label: "Connect with Mortgage Expert",
         href: "/finances",
         icon: Wallet,
+        primary: true,
+      },
+      {
+        key: "apply",
+        label: "Apply Now",
+        href: "https://www.broadviewfcu.com/personal/home-lending-solutions/meet-the-mortgage-team/christie-hoyt/",
+        icon: FileText,
+        external: true,
       },
     ],
     secondaryActions: [
