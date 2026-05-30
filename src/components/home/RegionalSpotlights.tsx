@@ -69,6 +69,12 @@ type Spotlight = {
   category: string;
   town: string;
   tagline: string;
+  /** Apple-style hero headline shown in the spotlight stage */
+  heroHeadline: string;
+  /** Apple-style hero sub shown under the headline */
+  heroSub: string;
+  /** Short label for the selector tile under the hero */
+  tileLabel: string;
   bio: string;
   phone?: string;
   email?: string;
