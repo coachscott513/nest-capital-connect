@@ -777,8 +777,8 @@ const Index = () => {
           </>
         }
         sub="Claim your profile, add photos, specials, events, social links, menus, booking options, and one-tap contact actions."
-        primary={{ label: "Claim Your Profile", to: "/claim-business" }}
-        secondary={{ label: "See Premium Options", to: "/pricing" }}
+        primary={{ label: "Claim Your Profile", to: "/claim-business", onClick: () => trackGAEvent.claimProfileClick({ source_location: "homepage_hero_owners" } as any) }}
+        secondary={{ label: "Apply as a Featured Partner", to: "/pricing", onClick: () => trackGAEvent.pricingClick({ source_location: "homepage_hero_owners" }) }}
         bgImage={heroOwnersWide}
         overlay="strong"
       />
