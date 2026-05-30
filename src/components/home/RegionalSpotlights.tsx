@@ -188,7 +188,7 @@ const SPOTLIGHTS: Spotlight[] = [
       },
       {
         key: "menu",
-        label: "View Live Jazz Nights",
+        label: "See Jazz Nights",
         href: "https://rooseveltroom.com/",
         icon: Music2,
         external: true,
