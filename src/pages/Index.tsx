@@ -248,6 +248,9 @@ type Partner = {
   id: string;
   name: string;
   category: string;
+  town: string;
+  address?: string;
+  mapsQuery?: string;
   tagline: string;
   promo?: string;
   promoHighlight?: boolean;
@@ -264,6 +267,7 @@ const PARTNERS: Partner[] = [
     id: "christie",
     name: "Christie Hoyt Mortgage Team",
     category: "Mortgage / Home Lending",
+    town: "Capital District",
     tagline: "Local mortgage guidance from a trusted Broadview lending team — for first-time buyers, move-ups, and investors.",
     website: "https://www.broadviewfcu.com/personal/home-lending-solutions/meet-the-mortgage-team/christie-hoyt/",
     image: partnerChristieImg,
@@ -278,6 +282,7 @@ const PARTNERS: Partner[] = [
     id: "dglaw",
     name: "D&G Law",
     category: "Legal / Real Estate Attorney",
+    town: "Capital District",
     tagline: "Real estate, business, and legal counsel for Capital District clients — closings, contracts, and counsel that holds up.",
     website: "https://www.dglawny.com/",
     image: partnerDgLawImg,
@@ -291,20 +296,32 @@ const PARTNERS: Partner[] = [
     id: "roosevelt",
     name: "Roosevelt Room",
     category: "Restaurant / Cocktails / Live Jazz",
-    tagline: "Dinner, craft cocktails, and a live jazz lounge in the heart of the Capital District.",
+    town: "Albany",
+    mapsQuery: "Roosevelt Room Albany NY",
+    tagline: "Dinner, craft cocktails, and a live jazz lounge in the heart of Albany.",
     promo: "Live Jazz · Friday & Saturday Nights",
     promoHighlight: true,
     website: "https://rooseveltroom.com/",
     image: partnerRooseveltImg,
-    primary: { label: "Reservations", href: "https://rooseveltroom.com/" },
+    primary: { label: "View Reservations", href: "https://rooseveltroom.com/" },
     secondary: [
       { label: "Menu", href: "https://rooseveltroom.com/menu" },
       { label: "Website", href: "https://rooseveltroom.com/" },
-      { label: "Contact", href: "https://rooseveltroom.com/contact" },
     ],
     accent: "from-[#5c2018] to-[#c9a449]",
   },
 ];
+
+function partnerAnalyticsPayload(p: Partner) {
+  return {
+    business_name: p.name,
+    category: p.category,
+    town: p.town,
+    tier: "featured",
+    source_location: "homepage_featured",
+    page_path: typeof window !== "undefined" ? window.location.pathname : "/",
+  };
+}
 
 function FeaturedPartnersSection({ onOpen }: { onOpen: (p: Partner) => void }) {
   return (
