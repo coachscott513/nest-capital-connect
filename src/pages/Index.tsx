@@ -589,7 +589,7 @@ function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => v
             </button>
           </div>
         ) : (
-          <form onSubmit={submit} className="space-y-4">
+          <form onSubmit={submit} onFocusCapture={onFirstInteract} onChange={onFirstInteract} className="space-y-4">
             <h3 className="text-2xl font-semibold tracking-tight text-white">What financial help do you need?</h3>
             <p className="text-sm text-white/60">Tell us what you're working on. We'll connect you with the right local expert.</p>
             <ModalField label="Name *" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
