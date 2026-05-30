@@ -595,12 +595,8 @@ const PremiumPartnerModal = ({
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="relative"
             >
-              <div className="relative h-44 md:h-52 overflow-hidden">
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${spotlight.gallery[0]})` }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/60 to-transparent" />
+              <div className="relative overflow-hidden">
+                <TypographicHero s={spotlight} size="modal" />
                 <button
                   onClick={onClose}
                   aria-label="Close"
@@ -617,6 +613,7 @@ const PremiumPartnerModal = ({
                   </span>
                 </div>
               </div>
+
 
               <div className="p-7 md:p-8 max-h-[70vh] overflow-y-auto">
                 <p
