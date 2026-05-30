@@ -552,7 +552,8 @@ function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => v
           </form>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
