@@ -16,8 +16,8 @@ interface SEOHeadProps {
 const BASE_URL = "https://www.capitaldistrictnest.com";
 
 const SEOHead = ({ 
-  title = "Capital District Nest | Search Anything Local in the Capital District",
-  description = "Capital District Nest is the digital front door of the Capital District. Search local businesses, homes, restaurants, services, events, towns, and community updates in one place.",
+  title = "Capital District Nest | Search Anything Local",
+  description = "The digital front door of the Capital District — search businesses, towns, events, restaurants, services, media, homes, and local updates in one place.",
   keywords = "Capital District, search anything local, local businesses Albany NY, Capital District restaurants, Capital District events, Capital District towns, Capital District homes, Saratoga, Troy NY, Schenectady, local search Capital District",
   canonical,
   structuredData,
