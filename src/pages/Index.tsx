@@ -622,7 +622,7 @@ const Index = () => {
       <AppleHero
         eyebrow="Live Local Discovery"
         EyebrowIcon={MapPin}
-        liveBadge="Live local discovery"
+        
         headline={<>Find what's <span className="text-[#5eead4]">near you.</span></>}
         sub="Tap once and discover restaurants, events, services, and businesses around you right now."
         primary={{ label: "Use Near Me", onClick: useNearMe }}
