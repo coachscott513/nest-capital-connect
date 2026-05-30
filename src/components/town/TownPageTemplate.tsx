@@ -123,15 +123,25 @@ const TownPageTemplate = ({ town }: Props) => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Helmet>
-        <title>{town.seoTitle}</title>
-        <meta name="description" content={town.seoDescription} />
-        <link rel="canonical" href={url} />
-        <meta property="og:title" content={town.seoTitle} />
-        <meta property="og:description" content={town.seoDescription} />
-        <meta property="og:url" content={url} />
-        <script type="application/ld+json">{JSON.stringify(placeSchema)}</script>
-      </Helmet>
+      {(() => {
+        const seoTitle = `Living in ${town.townName}, NY | Capital District Nest`;
+        const seoDescription = `Explore local businesses, restaurants, services, events, homes, and community updates in ${town.townName}, NY on Capital District Nest.`;
+        return (
+          <Helmet>
+            <title>{seoTitle}</title>
+            <meta name="description" content={seoDescription} />
+            <link rel="canonical" href={url} />
+            <meta property="og:title" content={seoTitle} />
+            <meta property="og:description" content={seoDescription} />
+            <meta property="og:url" content={url} />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={seoTitle} />
+            <meta name="twitter:description" content={seoDescription} />
+            <script type="application/ld+json">{JSON.stringify(placeSchema)}</script>
+          </Helmet>
+        );
+      })()}
 
       <MainHeader />
 
