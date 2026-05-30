@@ -310,15 +310,69 @@ const StatusDot = ({ status }: { status: Spotlight["status"] }) => {
   );
 };
 
-const SpotlightCard = ({ s, onOpen }: { s: Spotlight; onOpen: (s: Spotlight) => void }) => {
-  const [idx, setIdx] = useState(0);
+const monogram = (name: string) =>
+  name
+    .replace(/[^a-zA-Z ]/g, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+
+const TypographicHero = ({
+  s,
+  size = "card",
+}: {
+  s: Spotlight;
+  size?: "card" | "modal";
+}) => {
   const accent = accentHex(s.accent);
   const accentSoft = accentSoftRGBA(s.accent);
+  const h = size === "card" ? "h-56 md:h-64" : "h-44 md:h-52";
+  const monoSize = size === "card" ? "text-[88px] md:text-[104px]" : "text-[72px] md:text-[88px]";
+  return (
+    <div className={`relative w-full overflow-hidden ${h}`}>
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(120% 80% at 20% 0%, ${accent}26, transparent 55%), radial-gradient(100% 80% at 100% 100%, ${accentSoft}, transparent 60%), linear-gradient(160deg, #0E1426 0%, #13182A 60%, #0B0F19 100%)`,
+        }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-[0.18]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+      />
+      <div className="relative h-full w-full flex items-center justify-between px-7">
+        <span
+          className={`font-semibold tracking-[-0.04em] leading-none ${monoSize}`}
+          style={{ color: accent, textShadow: `0 8px 30px ${accentSoft}` }}
+        >
+          {monogram(s.name)}
+        </span>
+        <div className="text-right max-w-[55%]">
+          <p className="text-[10px] uppercase tracking-[0.22em] font-semibold text-white/55">
+            {s.town}
+          </p>
+          <p className="mt-1.5 text-[13px] text-white/80 font-medium leading-snug">
+            {s.category.split(" · ")[0]}
+          </p>
+        </div>
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#13182A] via-transparent to-transparent" />
+    </div>
+  );
+};
 
-  useEffect(() => {
-    const id = setInterval(() => setIdx((i) => (i + 1) % s.gallery.length), 4500 + Math.random() * 1500);
-    return () => clearInterval(id);
-  }, [s.gallery.length]);
+const SpotlightCard = ({ s, onOpen }: { s: Spotlight; onOpen: (s: Spotlight) => void }) => {
+  const accent = accentHex(s.accent);
+  const accentSoft = accentSoftRGBA(s.accent);
 
   return (
     <article
@@ -338,20 +392,9 @@ const SpotlightCard = ({ s, onOpen }: { s: Spotlight; onOpen: (s: Spotlight) => 
         }}
       />
 
-      <div className="relative h-56 md:h-64 w-full overflow-hidden">
-        {s.gallery.map((src, i) => (
-          <div
-            key={src}
-            className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: `url(${src})`,
-              opacity: i === idx ? 1 : 0,
-              transform: i === idx ? "scale(1.02)" : "scale(1)",
-              transition: "opacity 1200ms ease-out, transform 6000ms ease-out",
-            }}
-          />
-        ))}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#13182A] via-[#13182A]/35 to-transparent" />
+      <div className="relative">
+        <TypographicHero s={s} size="card" />
+
 
         <div className="absolute top-3.5 right-3.5">
           <span
