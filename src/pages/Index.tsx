@@ -468,8 +468,15 @@ function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => v
   const [form, setForm] = useState({
     name: "", email: "", phone: "", need: FIN_OPTIONS[0], message: "",
   });
+  useBodyScrollLock(open);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
 
-  if (!open) return null;
+  if (!open || typeof document === "undefined") return null;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
