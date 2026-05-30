@@ -914,6 +914,9 @@ const BizPage = () => {
             <meta property="og:url" content={url} />
             {image && <meta property="og:image" content={image} />}
             <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={title} />
+            <meta name="twitter:description" content={desc} />
+            {image && <meta name="twitter:image" content={image} />}
             <script type="application/ld+json">{JSON.stringify(ldBusiness)}</script>
             <script type="application/ld+json">{JSON.stringify(ldBreadcrumb)}</script>
             {ldEvents.map((e, i) => (
