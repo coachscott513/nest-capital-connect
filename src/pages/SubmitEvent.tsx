@@ -24,6 +24,19 @@ const SubmitEvent = () => {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [started, setStarted] = useState(false);
+  const onFirstInteract = () => {
+    if (started) return;
+    setStarted(true);
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "form_start", {
+        event_category: "Lead Generation",
+        form_name: "submit_event",
+        source_location: "submit_event_page",
+        page_path: window.location.pathname,
+      });
+    }
+  };
   const [form, setForm] = useState({
     eventName: "",
     organization: "",
@@ -79,6 +92,16 @@ const SubmitEvent = () => {
     if (error) {
       toast({ title: "Submission failed", description: error.message, variant: "destructive" });
       return;
+    }
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "form_submit", {
+        event_category: "Lead Generation",
+        form_name: "submit_event",
+        source_location: "submit_event_page",
+        page_path: window.location.pathname,
+        event_category_type: form.category,
+        town: form.town,
+      });
     }
     setDone(true);
   };
@@ -141,6 +164,8 @@ const SubmitEvent = () => {
         ) : (
           <form
             onSubmit={handleSubmit}
+            onFocusCapture={onFirstInteract}
+            onChange={onFirstInteract}
             className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-10 space-y-5"
           >
             <Field label="Event name *" value={form.eventName} onChange={(v) => update("eventName", v)} />

@@ -221,6 +221,9 @@ const ClaimBusiness = () => {
           <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
             Tell us about your business and our team will reach out to help create your profile.
           </p>
+          <p className="mt-4 text-sm font-medium max-w-2xl mx-auto" style={{ color: "#c9a449" }}>
+            Featured placements are limited by town and category during the launch pilot.
+          </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3 text-xs text-white/55">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04]">
               <Handshake className="w-3.5 h-3.5" style={{ color: TEAL }} /> Concierge onboarding

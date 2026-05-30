@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { ArrowRight, Sparkles, Newspaper, CalendarDays, Building2, Wallet, Compass, Store, MapPin, X, Phone, Globe, Calendar, Music } from "lucide-react";
+import { ArrowRight, Sparkles, Newspaper, CalendarDays, Building2, Wallet, Compass, Store, MapPin, X, Phone, Globe, Calendar, Music, Navigation } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
@@ -11,6 +11,7 @@ import FloatingOmniSearch from "@/components/home/FloatingOmniSearch";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { trackGAEvent } from "@/components/GARouteTracker";
 
 import heroTownsWide from "@/assets/hero-towns-wide.jpg";
 import heroMediaWide from "@/assets/hero-media-wide.jpg";
@@ -69,7 +70,7 @@ function CTAButton({ cta, variant = "primary" }: { cta: CTA; variant?: "primary"
       {variant === "primary" && <ArrowRight className="w-4 h-4" />}
     </>
   );
-  if (cta.onClick) {
+  if (cta.onClick && !cta.to) {
     return (
       <button type="button" onClick={cta.onClick} className={className}>
         {content}
@@ -77,7 +78,7 @@ function CTAButton({ cta, variant = "primary" }: { cta: CTA; variant?: "primary"
     );
   }
   return (
-    <Link to={cta.to ?? "#"} className={className}>
+    <Link to={cta.to ?? "#"} onClick={cta.onClick} className={className}>
       {content}
     </Link>
   );
@@ -247,6 +248,9 @@ type Partner = {
   id: string;
   name: string;
   category: string;
+  town: string;
+  address?: string;
+  mapsQuery?: string;
   tagline: string;
   promo?: string;
   promoHighlight?: boolean;
@@ -263,6 +267,7 @@ const PARTNERS: Partner[] = [
     id: "christie",
     name: "Christie Hoyt Mortgage Team",
     category: "Mortgage / Home Lending",
+    town: "Capital District",
     tagline: "Local mortgage guidance from a trusted Broadview lending team — for first-time buyers, move-ups, and investors.",
     website: "https://www.broadviewfcu.com/personal/home-lending-solutions/meet-the-mortgage-team/christie-hoyt/",
     image: partnerChristieImg,
@@ -277,6 +282,7 @@ const PARTNERS: Partner[] = [
     id: "dglaw",
     name: "D&G Law",
     category: "Legal / Real Estate Attorney",
+    town: "Capital District",
     tagline: "Real estate, business, and legal counsel for Capital District clients — closings, contracts, and counsel that holds up.",
     website: "https://www.dglawny.com/",
     image: partnerDgLawImg,
@@ -290,20 +296,32 @@ const PARTNERS: Partner[] = [
     id: "roosevelt",
     name: "Roosevelt Room",
     category: "Restaurant / Cocktails / Live Jazz",
-    tagline: "Dinner, craft cocktails, and a live jazz lounge in the heart of the Capital District.",
+    town: "Albany",
+    mapsQuery: "Roosevelt Room Albany NY",
+    tagline: "Dinner, craft cocktails, and a live jazz lounge in the heart of Albany.",
     promo: "Live Jazz · Friday & Saturday Nights",
     promoHighlight: true,
     website: "https://rooseveltroom.com/",
     image: partnerRooseveltImg,
-    primary: { label: "Reservations", href: "https://rooseveltroom.com/" },
+    primary: { label: "View Reservations", href: "https://rooseveltroom.com/" },
     secondary: [
       { label: "Menu", href: "https://rooseveltroom.com/menu" },
       { label: "Website", href: "https://rooseveltroom.com/" },
-      { label: "Contact", href: "https://rooseveltroom.com/contact" },
     ],
     accent: "from-[#5c2018] to-[#c9a449]",
   },
 ];
+
+function partnerAnalyticsPayload(p: Partner) {
+  return {
+    business_name: p.name,
+    category: p.category,
+    town: p.town,
+    tier: "featured",
+    source_location: "homepage_featured",
+    page_path: typeof window !== "undefined" ? window.location.pathname : "/",
+  };
+}
 
 function FeaturedPartnersSection({ onOpen }: { onOpen: (p: Partner) => void }) {
   return (
@@ -328,13 +346,19 @@ function FeaturedPartnersSection({ onOpen }: { onOpen: (p: Partner) => void }) {
             A curated set of premium Capital District businesses. Tap any partner to see profile,
             contact, and one-tap actions.
           </p>
+          <p className="mt-4 text-sm text-[#c9a449]/85 font-medium">
+            Founding local partner placements are limited — only a select group of businesses are featured during the pilot.
+          </p>
         </div>
 
         <div className="mt-14 grid md:grid-cols-3 gap-6">
           {PARTNERS.map((p) => (
             <button
               key={p.id}
-              onClick={() => onOpen(p)}
+              onClick={() => {
+                trackGAEvent.businessProfileOpen(partnerAnalyticsPayload(p));
+                onOpen(p);
+              }}
               className="group text-left rounded-3xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#5eead4]/40 transition overflow-hidden flex flex-col"
             >
               <div className="relative h-52 overflow-hidden">
@@ -414,6 +438,9 @@ function PartnerModal({ partner, onClose }: { partner: Partner | null; onClose: 
           <div className="absolute bottom-4 left-6 right-6">
             <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#5eead4]">{partner.category}</p>
             <h3 className="mt-1 text-2xl md:text-3xl font-semibold tracking-tight text-white">{partner.name}</h3>
+            <p className="mt-1 text-xs text-white/70 inline-flex items-center gap-1.5">
+              <MapPin className="w-3 h-3" /> {partner.address || partner.town}
+            </p>
           </div>
         </div>
         <div className="p-7 md:p-9 max-h-[70vh] overflow-y-auto">
@@ -427,23 +454,40 @@ function PartnerModal({ partner, onClose }: { partner: Partner | null; onClose: 
 
           <div className="mt-7 flex flex-wrap gap-3">
             <a href={partner.primary.href} target="_blank" rel="noreferrer noopener"
+              onClick={() => trackGAEvent.websiteClick(partnerAnalyticsPayload(partner))}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition">
               {partner.primary.label} <ArrowRight className="w-4 h-4" />
             </a>
             {partner.secondary.map((s) => (
               <a key={s.label} href={s.href} target="_blank" rel="noreferrer noopener"
+                onClick={() => trackGAEvent.websiteClick(partnerAnalyticsPayload(partner))}
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.08] border border-white/20 text-white text-sm font-semibold hover:bg-white/[0.16] transition">
                 {s.label}
               </a>
             ))}
+            {(partner.address || partner.mapsQuery) && (
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(partner.address || partner.mapsQuery || "")}`}
+                target="_blank"
+                rel="noreferrer noopener"
+                onClick={() => trackGAEvent.directionsClick(partnerAnalyticsPayload(partner))}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.08] border border-white/20 text-white text-sm font-semibold hover:bg-white/[0.16] transition"
+              >
+                <Navigation className="w-4 h-4" /> Directions
+              </a>
+            )}
           </div>
 
           <div className="mt-7 pt-6 border-t border-white/10 flex flex-wrap gap-4 text-sm text-white/60">
-            <a href={partner.website} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-2 hover:text-white transition">
+            <a href={partner.website} target="_blank" rel="noreferrer noopener"
+              onClick={() => trackGAEvent.websiteClick(partnerAnalyticsPayload(partner))}
+              className="inline-flex items-center gap-2 hover:text-white transition">
               <Globe className="w-4 h-4" /> {new URL(partner.website).hostname.replace("www.", "")}
             </a>
             {partner.phone && (
-              <a href={`tel:${partner.phone}`} className="inline-flex items-center gap-2 hover:text-white transition">
+              <a href={`tel:${partner.phone}`}
+                onClick={() => trackGAEvent.callClick(partnerAnalyticsPayload(partner))}
+                className="inline-flex items-center gap-2 hover:text-white transition">
                 <Phone className="w-4 h-4" /> {partner.phone}
               </a>
             )}
@@ -465,6 +509,7 @@ function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => v
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [started, setStarted] = useState(false);
   const [form, setForm] = useState({
     name: "", email: "", phone: "", need: FIN_OPTIONS[0], message: "",
   });
@@ -475,8 +520,25 @@ function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => v
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
+  useEffect(() => {
+    if (!open) { setStarted(false); }
+  }, [open]);
 
   if (!open || typeof document === "undefined") return null;
+
+  const onFirstInteract = () => {
+    if (started) return;
+    setStarted(true);
+    trackGAEvent.contactFormSubmit("finance_expert_start", "homepage_finance_modal");
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "form_start", {
+        event_category: "Lead Generation",
+        form_name: "finance_expert",
+        source_location: "homepage_finance_modal",
+        page_path: window.location.pathname,
+      });
+    }
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -498,6 +560,16 @@ function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => v
       toast({ title: "Submission failed", description: error.message, variant: "destructive" });
       return;
     }
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "form_submit", {
+        event_category: "Lead Generation",
+        form_name: "finance_expert",
+        source_location: "homepage_finance_modal",
+        page_path: window.location.pathname,
+        product_type: form.need,
+      });
+    }
+    trackGAEvent.financialIntroSubmit({ product_type: form.need, source_location: "homepage_finance_modal" });
     setDone(true);
   };
 
@@ -517,7 +589,7 @@ function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => v
             </button>
           </div>
         ) : (
-          <form onSubmit={submit} className="space-y-4">
+          <form onSubmit={submit} onFocusCapture={onFirstInteract} onChange={onFirstInteract} className="space-y-4">
             <h3 className="text-2xl font-semibold tracking-tight text-white">What financial help do you need?</h3>
             <p className="text-sm text-white/60">Tell us what you're working on. We'll connect you with the right local expert.</p>
             <ModalField label="Name *" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
@@ -675,7 +747,7 @@ const Index = () => {
         headline={<>Local businesses, <span className="text-[#5eead4]">brought to life.</span></>}
         sub="Premium profiles with photos, events, menus, reservations, social links, and one-tap contact."
         primary={{ label: "View Featured Partners", onClick: scrollTo("featured-partners") }}
-        secondary={{ label: "For Businesses", to: "/claim-business" }}
+        secondary={{ label: "Request Featured Placement", to: "/claim-business", onClick: () => trackGAEvent.claimProfileClick({ source_location: "homepage_hero_partners" } as any) }}
         bgImage={heroBusinessWide}
         overlay="soft"
       />
@@ -705,8 +777,8 @@ const Index = () => {
           </>
         }
         sub="Claim your profile, add photos, specials, events, social links, menus, booking options, and one-tap contact actions."
-        primary={{ label: "Claim Your Profile", to: "/claim-business" }}
-        secondary={{ label: "See Premium Options", to: "/pricing" }}
+        primary={{ label: "Claim Your Profile", to: "/claim-business", onClick: () => trackGAEvent.claimProfileClick({ source_location: "homepage_hero_owners" } as any) }}
+        secondary={{ label: "Apply as a Featured Partner", to: "/pricing", onClick: () => trackGAEvent.pricingClick({ source_location: "homepage_hero_owners" }) }}
         bgImage={heroOwnersWide}
         overlay="strong"
       />
