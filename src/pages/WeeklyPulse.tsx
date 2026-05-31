@@ -1,11 +1,12 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, MapPin, Clock } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, MapPin, Clock, Plus } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
 
+import heroBg from "@/assets/events-room-hero.jpg";
 import evAlive from "@/assets/event-alive-at-five.jpg";
 import evTroy from "@/assets/event-troy-market.jpg";
 import evSaratoga from "@/assets/event-saratoga-concerts.jpg";
@@ -16,10 +17,9 @@ import evFoodWine from "@/assets/event-food-wine.jpg";
 import evFamily from "@/assets/event-family-weekend.jpg";
 
 /* =============================================================
-   /weekly — Premium Apple-style events discovery page.
-   Cinematic dark hero, filter chips, image-forward cards with
-   prominent date badges. Matches the homepage Endless
-   Entertainment surface so users never drop into a plain list.
+   /weekly — Capital District Events Room.
+   Apple TV-style cinematic hero + featured event + horizontal
+   content rails grouped by topic. Premium streaming feel.
    ============================================================= */
 
 const FALLBACK_IMAGES = [
@@ -30,29 +30,29 @@ const MONTHS = [
   "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
   "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
 ];
-const WEEKDAYS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-type FilterKey =
-  | "all"
+type RailKey =
+  | "featured"
   | "music"
   | "dining"
+  | "markets"
   | "family"
-  | "market"
-  | "festival"
   | "sports"
-  | "nightlife"
-  | "community";
+  | "business"
+  | "upcoming";
+
+type FilterKey = "all" | RailKey;
 
 const FILTERS: { key: FilterKey; label: string }[] = [
-  { key: "all", label: "All" },
-  { key: "music", label: "Live Music" },
-  { key: "dining", label: "Dining" },
-  { key: "family", label: "Family" },
-  { key: "market", label: "Markets" },
-  { key: "festival", label: "Festivals" },
-  { key: "sports", label: "Sports" },
-  { key: "nightlife", label: "Nightlife" },
-  { key: "community", label: "Community" },
+  { key: "all",      label: "All" },
+  { key: "featured", label: "Featured" },
+  { key: "music",    label: "Live Music" },
+  { key: "dining",   label: "Dining" },
+  { key: "markets",  label: "Markets" },
+  { key: "family",   label: "Family" },
+  { key: "sports",   label: "Sports" },
+  { key: "business", label: "Business" },
+  { key: "upcoming", label: "Upcoming" },
 ];
 
 interface EventCard {
@@ -60,7 +60,7 @@ interface EventCard {
   title: string;
   description: string;
   category: string;
-  filterKey: FilterKey;
+  rails: RailKey[];
   town?: string;
   venue?: string;
   time?: string;
@@ -68,79 +68,56 @@ interface EventCard {
   dateBadge: { top: string; bottom: string };
   image: string;
   href: string;
+  isFeatured?: boolean;
 }
 
-function categorize(item: WeeklyFeedItem): { category: string; filter: FilterKey } {
+function classify(item: WeeklyFeedItem): { category: string; rails: RailKey[] } {
   const t = item.type;
-  if (t === "music") return { category: "Live Music", filter: "music" };
-  if (t === "dining") return { category: "Dining", filter: "dining" };
-  if (t === "family") return { category: "Family", filter: "family" };
-  if (t === "sports") return { category: "Sports", filter: "sports" };
-  if (t === "networking") return { category: "Community", filter: "community" };
-  if (t === "event") {
-    const title = (item.title + " " + item.description).toLowerCase();
-    if (title.includes("market") || title.includes("farmers")) {
-      return { category: "Market", filter: "market" };
-    }
-    if (title.includes("festival") || title.includes("broadway") || title.includes("concert")) {
-      return { category: "Festival", filter: "festival" };
-    }
-    if (title.includes("brunch") || title.includes("bar") || title.includes("tavern") || title.includes("party")) {
-      return { category: "Nightlife", filter: "nightlife" };
-    }
-    return { category: "Community", filter: "community" };
+  const text = `${item.title} ${item.description}`.toLowerCase();
+  const rails: RailKey[] = [];
+
+  if (t === "music") {
+    rails.push("music");
+    if (/night|bar|tavern|club/.test(text)) rails.push("music");
+    return { category: "Live Music", rails: ["music"] };
   }
-  return { category: "Community", filter: "community" };
+  if (t === "dining") {
+    rails.push("dining");
+    if (/jazz|live music|wine/.test(text)) rails.push("music");
+    return { category: "Dining", rails };
+  }
+  if (t === "sports") return { category: "Sports", rails: ["sports"] };
+  if (t === "family") return { category: "Family", rails: ["family"] };
+  if (t === "networking") return { category: "Business & Networking", rails: ["business"] };
+  if (t === "event") {
+    if (/market|farmers/.test(text)) return { category: "Market", rails: ["markets"] };
+    if (/festival|broadway|concert|series/.test(text)) return { category: "Festival", rails: ["markets", "music"] };
+    if (/brunch|restaurant|tasting|dinner/.test(text)) return { category: "Dining", rails: ["dining"] };
+    if (/family|kids|children|school|park/.test(text)) return { category: "Family", rails: ["family"] };
+    return { category: "Community", rails: ["family"] };
+  }
+  return { category: "Community", rails: ["family"] };
 }
 
 function dateBadge(item: WeeklyFeedItem): { top: string; bottom: string } {
   if (item.startDate) {
     const d = new Date(item.startDate + "T12:00:00");
     if (!isNaN(d.getTime())) {
-      return {
-        top: MONTHS[d.getMonth()],
-        bottom: String(d.getDate()),
-      };
+      return { top: MONTHS[d.getMonth()], bottom: String(d.getDate()) };
     }
   }
-  // Fallback: try to parse "Jun 4" style label
   const label = item.date || "";
-  return { top: label.split(" ")[0]?.toUpperCase() || "TBD", bottom: label.split(" ")[1] || "" };
+  return {
+    top: label.split(" ")[0]?.toUpperCase() || "TBD",
+    bottom: label.split(" ")[1]?.replace(/[^0-9]/g, "") || "",
+  };
 }
 
-function trackCardClick(ev: EventCard) {
+function gtag(name: string, payload: Record<string, unknown>) {
   try {
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "event_card_click", {
-        event_title: ev.title,
-        event_category: ev.category,
-        event_location: ev.venue || ev.town || "",
-        event_date: ev.dateLabel,
-        source_location: "weekly_events_page",
-        page_path: window.location.pathname,
-      });
-    }
-  } catch { /* noop */ }
-}
-
-function trackAddEventClick(source: string) {
-  try {
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "add_event_click", {
-        source_location: source,
-        page_path: window.location.pathname,
-      });
-    }
-  } catch { /* noop */ }
-}
-
-function trackFilterClick(filter: string) {
-  try {
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "weekly_filter_click", {
-        filter,
-        page_path: window.location.pathname,
-      });
+    const w = window as unknown as { gtag?: (a: string, b: string, c: Record<string, unknown>) => void };
+    if (typeof window !== "undefined" && w.gtag) {
+      w.gtag("event", name, { ...payload, page_path: window.location.pathname });
     }
   } catch { /* noop */ }
 }
@@ -148,6 +125,151 @@ function trackFilterClick(filter: string) {
 const EVENT_TYPES: WeeklyFeedItem["type"][] = [
   "event", "music", "sports", "dining", "family", "networking",
 ];
+
+/* ---------- Horizontal Rail ---------- */
+
+interface RailProps {
+  id: string;
+  title: string;
+  subtitle?: string;
+  events: EventCard[];
+  size?: "lg" | "md";
+}
+
+const Rail = ({ id, title, subtitle, events, size = "lg" }: RailProps) => {
+  const scrollerRef = useRef<HTMLDivElement | null>(null);
+
+  if (!events.length) return null;
+
+  const scrollBy = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const amt = el.clientWidth * 0.85 * dir;
+    el.scrollBy({ left: amt, behavior: "smooth" });
+  };
+
+  const cardW =
+    size === "lg"
+      ? "w-[78vw] sm:w-[58vw] md:w-[420px] lg:w-[460px]"
+      : "w-[70vw] sm:w-[44vw] md:w-[320px] lg:w-[340px]";
+  const aspect = size === "lg" ? "aspect-[16/10]" : "aspect-[16/10]";
+
+  return (
+    <section id={id} className="relative py-8 md:py-10">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+        <div className="flex items-end justify-between gap-6 mb-5 md:mb-6">
+          <div>
+            <h2 className="text-2xl md:text-[28px] font-semibold tracking-[-0.02em] text-white">
+              {title}
+            </h2>
+            {subtitle && (
+              <p className="mt-1 text-sm md:text-[15px] text-white/55 font-light">
+                {subtitle}
+              </p>
+            )}
+          </div>
+          <div className="hidden md:flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => scrollBy(-1)}
+              aria-label={`Scroll ${title} left`}
+              className="w-10 h-10 rounded-full border border-white/15 bg-white/[0.04] text-white/80 hover:bg-white/[0.1] hover:text-white transition flex items-center justify-center"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollBy(1)}
+              aria-label={`Scroll ${title} right`}
+              className="w-10 h-10 rounded-full border border-white/15 bg-white/[0.04] text-white/80 hover:bg-white/[0.1] hover:text-white transition flex items-center justify-center"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        ref={scrollerRef}
+        className="overflow-x-auto snap-x snap-mandatory scroll-pl-6 md:scroll-pl-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        <div className="flex gap-4 md:gap-5 px-6 md:px-10 pb-2">
+          {events.map((ev) => (
+            <Link
+              key={ev.key}
+              to={ev.href}
+              onClick={() =>
+                gtag("event_card_click", {
+                  event_title: ev.title,
+                  event_category: ev.category,
+                  event_date: ev.dateLabel,
+                  event_location: ev.venue || ev.town || "",
+                  source_location: `rail_${id}`,
+                })
+              }
+              className={`group snap-start shrink-0 ${cardW} block`}
+            >
+              <div className={`relative ${aspect} overflow-hidden rounded-xl bg-[#0F1424] border border-white/[0.06] group-hover:border-white/20 transition`}>
+                <img
+                  src={ev.image}
+                  alt={ev.title}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(to top, rgba(11,15,25,0.92) 0%, rgba(11,15,25,0.35) 55%, rgba(11,15,25,0.05) 100%)",
+                  }}
+                  aria-hidden
+                />
+
+                {/* Date badge */}
+                <div className="absolute top-3 left-3 flex flex-col items-center justify-center w-[58px] rounded-lg bg-[#0B0F19]/85 backdrop-blur border border-white/15 py-1.5 shadow-lg">
+                  <span className="text-[10px] font-semibold tracking-[0.18em] text-[#5eead4]">
+                    {ev.dateBadge.top}
+                  </span>
+                  <span className="text-xl font-semibold text-white leading-none mt-0.5">
+                    {ev.dateBadge.bottom || "—"}
+                  </span>
+                </div>
+
+                {/* Category */}
+                <span className="absolute top-3 right-3 inline-flex items-center px-2.5 py-1 rounded-full bg-black/45 backdrop-blur border border-white/15 text-[10px] font-medium tracking-wider uppercase text-white">
+                  {ev.category}
+                </span>
+
+                {/* Bottom title block */}
+                <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                  <h3 className="text-base md:text-lg font-semibold tracking-[-0.01em] text-white leading-snug line-clamp-2">
+                    {ev.title}
+                  </h3>
+                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-white/75">
+                    {(ev.venue || ev.town) && (
+                      <span className="inline-flex items-center gap-1">
+                        <MapPin className="w-3 h-3 text-[#5eead4]" />
+                        {[ev.venue, ev.town].filter(Boolean).join(" · ")}
+                      </span>
+                    )}
+                    {ev.time && (
+                      <span className="inline-flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-[#5eead4]" />
+                        {ev.time}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ---------- Page ---------- */
 
 const WeeklyPulse = () => {
   const [filter, setFilter] = useState<FilterKey>("all");
@@ -163,13 +285,14 @@ const WeeklyPulse = () => {
         return new Date(end + "T23:59:59") >= today;
       })
       .map((i, idx) => {
-        const { category, filter: f } = categorize(i);
+        const { category, rails } = classify(i);
+        const allRails: RailKey[] = i.featured ? ["featured", ...rails] : rails;
         return {
           key: `${i.title}-${idx}`,
           title: i.title,
           description: i.description,
           category,
-          filterKey: f,
+          rails: Array.from(new Set(allRails)),
           town: i.town,
           venue: i.venue,
           time: i.time,
@@ -177,86 +300,201 @@ const WeeklyPulse = () => {
           dateBadge: dateBadge(i),
           image: i.image || FALLBACK_IMAGES[idx % FALLBACK_IMAGES.length],
           href: i.cta?.href || "#",
+          isFeatured: i.featured,
         };
-      })
-      .sort((a, b) => {
-        const am = MONTHS.indexOf(a.dateBadge.top);
-        const bm = MONTHS.indexOf(b.dateBadge.top);
-        if (am !== bm) return am - bm;
-        return parseInt(a.dateBadge.bottom || "0") - parseInt(b.dateBadge.bottom || "0");
       });
   }, []);
 
-  const visible = filter === "all" ? events : events.filter((e) => e.filterKey === filter);
+  // Rails
+  const byRail = (k: RailKey) => events.filter((e) => e.rails.includes(k));
+  const featured = useMemo(() => {
+    const f = events.find((e) => e.isFeatured && e.image) || events[0];
+    return f;
+  }, [events]);
+
+  const upcoming = useMemo(() => {
+    // Beyond next 7 days
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const cutoff = new Date(today);
+    cutoff.setDate(cutoff.getDate() + 7);
+    return events
+      .filter((e) => {
+        // Use badge to approximate; if month/day parseable, compare
+        const m = MONTHS.indexOf(e.dateBadge.top);
+        const d = parseInt(e.dateBadge.bottom || "0");
+        if (m < 0 || !d) return false;
+        const dt = new Date(today.getFullYear(), m, d);
+        return dt >= cutoff;
+      });
+  }, [events]);
+
+  const rails: { key: RailKey; title: string; subtitle: string; events: EventCard[] }[] = [
+    { key: "featured", title: "Featured This Week",       subtitle: "Hand-picked by Capital District Nest.",                       events: byRail("featured") },
+    { key: "music",    title: "Live Music & Nightlife",   subtitle: "Concerts, jazz, comedy, and evening events.",                 events: byRail("music") },
+    { key: "dining",   title: "Food, Drink & Dining",     subtitle: "Restaurant nights, tastings, brunches, and openings.",        events: byRail("dining") },
+    { key: "markets",  title: "Markets & Festivals",      subtitle: "Farmers markets, street fairs, and seasonal celebrations.",   events: byRail("markets") },
+    { key: "family",   title: "Family & Community",       subtitle: "Family-friendly outings and neighborhood happenings.",        events: byRail("family") },
+    { key: "sports",   title: "Sports & Local Competition", subtitle: "Local games, races, and athletic events across the region.", events: byRail("sports") },
+    { key: "business", title: "Business & Networking",    subtitle: "Chambers, meetups, and professional gatherings.",             events: byRail("business") },
+    { key: "upcoming", title: "Upcoming Events",          subtitle: "Coming up beyond this week.",                                 events: upcoming },
+  ];
+
+  const visibleRails =
+    filter === "all" ? rails : rails.filter((r) => r.key === filter);
 
   return (
     <div className="min-h-screen bg-[#0B0F19]">
       <SEOHead
         title="Events Across the Capital District | Capital District Nest"
-        description="Live music, festivals, markets, dining events, family activities, and things to do across the Capital District."
+        description="The Capital District events room — live music, festivals, markets, dining events, family activities, sports, and things to do across the region."
       />
       <CleanHeader />
 
-      <main className="pt-24">
-        {/* HERO */}
-        <section className="relative overflow-hidden border-b border-white/[0.06]">
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(50% 60% at 50% 0%, rgba(94,234,212,0.07), transparent 60%), radial-gradient(40% 60% at 100% 100%, rgba(13,110,102,0.10), transparent 70%)",
-            }}
-            aria-hidden
-          />
-          <div className="relative max-w-5xl mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-14 md:pb-20 text-center">
-            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-5">
+      <main>
+        {/* ===== CINEMATIC HERO ===== */}
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src={heroBg}
+              alt=""
+              className="w-full h-full object-cover"
+              aria-hidden
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(11,15,25,0.45) 0%, rgba(11,15,25,0.7) 55%, #0B0F19 100%)",
+              }}
+              aria-hidden
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(60% 70% at 50% 40%, rgba(94,234,212,0.10), transparent 70%)",
+              }}
+              aria-hidden
+            />
+          </div>
+
+          <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 pt-32 md:pt-44 pb-24 md:pb-36">
+            <p className="text-[11px] font-semibold tracking-[0.32em] uppercase text-[#5eead4] mb-5">
               This Week
             </p>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.04em] text-white leading-[1.02]">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] text-white leading-[1.02] max-w-4xl">
               Events Across the Capital&nbsp;District
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
-              Live music, festivals, markets, dining events, family activities,
-              and things to do across the region.
+            <p className="mt-6 text-lg md:text-xl text-white/75 font-light max-w-2xl leading-relaxed">
+              Live music, festivals, markets, dining events, sports, family
+              activities, nightlife, and local happenings across the region.
             </p>
 
-            <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <div className="mt-10 flex flex-wrap items-center gap-3">
               <a
-                href="#events-grid"
-                className="inline-flex items-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-white transition"
+                href="#rail-featured"
+                className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
               >
                 View This Week <ArrowRight className="w-4 h-4" />
               </a>
               <Link
                 to="/submit-event"
-                onClick={() => trackAddEventClick("weekly_hero")}
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
+                onClick={() => gtag("add_event_click", { source_location: "events_room_hero" })}
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
               >
-                Add Your Event
+                <Plus className="w-4 h-4" /> Add Your Event
               </Link>
             </div>
           </div>
         </section>
 
-        {/* ACTION BAR */}
-        <section className="relative border-b border-white/[0.06]">
-          <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-6 flex flex-wrap items-center justify-between gap-4">
-            <p className="text-white/80 text-sm md:text-base">
-              Browse this week's events across the Capital District.
-            </p>
-            <Link
-              to="/submit-event"
-              onClick={() => trackAddEventClick("weekly_action_bar")}
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-[#5eead4] hover:text-white transition"
-            >
-              Add Your Event <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </section>
+        {/* ===== TOP FEATURED EVENT ===== */}
+        {featured && (
+          <section className="relative -mt-12 md:-mt-20 z-10">
+            <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+              <Link
+                to={featured.href}
+                onClick={() =>
+                  gtag("event_card_click", {
+                    event_title: featured.title,
+                    event_category: featured.category,
+                    event_date: featured.dateLabel,
+                    event_location: featured.venue || featured.town || "",
+                    source_location: "featured_hero",
+                  })
+                }
+                className="group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-white/20 transition"
+              >
+                <div className="grid md:grid-cols-2">
+                  <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[420px] overflow-hidden">
+                    <img
+                      src={featured.image}
+                      alt={featured.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+                    />
+                    <div
+                      className="absolute inset-0 md:hidden"
+                      style={{
+                        background: "linear-gradient(to top, rgba(11,15,25,0.7), transparent 60%)",
+                      }}
+                      aria-hidden
+                    />
+                  </div>
+                  <div className="p-8 md:p-12 flex flex-col justify-center">
+                    <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-4">
+                      Featured · {featured.category}
+                    </p>
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
+                      {featured.title}
+                    </h2>
+                    <p className="mt-5 text-base md:text-lg text-white/70 font-light leading-relaxed">
+                      {featured.description}
+                    </p>
+                    <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/75">
+                      <span className="inline-flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-[#5eead4]" />
+                        {featured.dateLabel}{featured.time ? ` · ${featured.time}` : ""}
+                      </span>
+                      {(featured.venue || featured.town) && (
+                        <span className="inline-flex items-center gap-1.5">
+                          <MapPin className="w-3.5 h-3.5 text-[#5eead4]" />
+                          {[featured.venue, featured.town].filter(Boolean).join(" · ")}
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-8 flex flex-wrap gap-3">
+                      <span className="inline-flex items-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-5 py-2.5 text-sm font-semibold group-hover:bg-white transition">
+                        View Event <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </section>
+        )}
 
-        {/* FILTERS */}
-        <section className="relative">
-          <div className="max-w-[1600px] mx-auto px-6 md:px-10 pt-8 md:pt-10">
+        {/* ===== FILTER CHIPS ===== */}
+        <section className="relative pt-14 md:pt-20">
+          <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+            <div className="flex items-end justify-between gap-6 mb-5">
+              <div>
+                <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-3">
+                  Browse the Room
+                </p>
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.025em] text-white">
+                  Pick a vibe
+                </h2>
+              </div>
+              <Link
+                to="/submit-event"
+                onClick={() => gtag("add_event_click", { source_location: "events_room_filters" })}
+                className="hidden md:inline-flex items-center gap-1.5 text-sm font-medium text-[#5eead4] hover:text-white transition"
+              >
+                <Plus className="w-4 h-4" /> Add Your Event
+              </Link>
+            </div>
             <div className="flex gap-2 md:gap-3 overflow-x-auto pb-2 -mx-2 px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {FILTERS.map((f) => {
                 const active = filter === f.key;
@@ -266,11 +504,11 @@ const WeeklyPulse = () => {
                     type="button"
                     onClick={() => {
                       setFilter(f.key);
-                      trackFilterClick(f.key);
+                      gtag("weekly_filter_click", { filter: f.key });
                     }}
                     className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition border ${
                       active
-                        ? "bg-[#5eead4] text-[#0B0F19] border-[#5eead4]"
+                        ? "bg-white text-[#0B0F19] border-white"
                         : "bg-white/[0.04] text-white/80 border-white/10 hover:border-white/30 hover:text-white"
                     }`}
                   >
@@ -282,112 +520,76 @@ const WeeklyPulse = () => {
           </div>
         </section>
 
-        {/* EVENTS GRID */}
-        <section id="events-grid" className="relative">
-          <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-10 md:py-14">
-            {visible.length === 0 ? (
-              <div className="text-center py-20 text-white/60">
-                No events in this category right now. Check back soon.
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
-                {visible.map((ev) => (
-                  <Link
-                    key={ev.key}
-                    to={ev.href}
-                    onClick={() => trackCardClick(ev)}
-                    className="group relative block overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0F1424] hover:border-white/15 transition-all duration-500 hover:-translate-y-1"
-                  >
-                    {/* Image */}
-                    <div className="relative aspect-[16/10] overflow-hidden">
-                      <img
-                        src={ev.image}
-                        alt={ev.title}
-                        loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
-                      />
-                      <div
-                        className="absolute inset-0"
-                        style={{
-                          background:
-                            "linear-gradient(to top, rgba(11,15,25,0.85) 0%, rgba(11,15,25,0.25) 55%, rgba(11,15,25,0.1) 100%)",
-                        }}
-                        aria-hidden
-                      />
+        {/* ===== RAILS ===== */}
+        <div className="pt-2 md:pt-4 pb-8 md:pb-12">
+          {visibleRails.map((r) => (
+            <Rail
+              key={r.key}
+              id={`rail-${r.key}`}
+              title={r.title}
+              subtitle={r.subtitle}
+              events={r.events}
+              size={r.key === "featured" ? "lg" : "md"}
+            />
+          ))}
 
-                      {/* Date badge */}
-                      <div className="absolute top-4 left-4 flex flex-col items-center justify-center w-[68px] rounded-xl bg-[#0B0F19]/85 backdrop-blur border border-white/15 py-2 shadow-lg">
-                        <span className="text-[11px] font-semibold tracking-[0.18em] text-[#5eead4]">
-                          {ev.dateBadge.top}
-                        </span>
-                        <span className="text-2xl font-semibold text-white leading-none mt-1">
-                          {ev.dateBadge.bottom || "—"}
-                        </span>
-                      </div>
+          {visibleRails.every((r) => r.events.length === 0) && (
+            <div className="max-w-3xl mx-auto px-6 md:px-10 py-20 text-center text-white/60">
+              Nothing in this category right now. Try another filter or check back soon.
+            </div>
+          )}
+        </div>
 
-                      {/* Category badge */}
-                      <span className="absolute top-4 right-4 inline-flex items-center px-3 py-1 rounded-full bg-white/[0.12] backdrop-blur border border-white/15 text-[11px] font-medium tracking-wide uppercase text-white">
-                        {ev.category}
-                      </span>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6 md:p-7">
-                      <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.02em] leading-snug text-white group-hover:text-[#5eead4] transition">
-                        {ev.title}
-                      </h3>
-                      <p className="mt-3 text-sm md:text-[15px] text-white/70 font-light leading-relaxed line-clamp-3">
-                        {ev.description}
-                      </p>
-
-                      <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/70">
-                        {(ev.venue || ev.town) && (
-                          <span className="inline-flex items-center gap-1.5">
-                            <MapPin className="w-3.5 h-3.5 text-[#5eead4]" />
-                            {[ev.venue, ev.town].filter(Boolean).join(" · ")}
-                          </span>
-                        )}
-                        {ev.time && (
-                          <span className="inline-flex items-center gap-1.5">
-                            <Clock className="w-3.5 h-3.5 text-[#5eead4]" />
-                            {ev.time}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-[#5eead4] group-hover:text-white transition">
-                        View Event
-                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
+        {/* ===== MID ADD-EVENT BAND ===== */}
+        <section className="relative border-y border-white/[0.06] bg-[#0F1424]">
+          <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-12 md:py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-2">
+                Contribute
+              </p>
+              <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.02em] text-white">
+                Hosting a concert, market, fundraiser, or restaurant night?
+              </h3>
+              <p className="mt-2 text-white/65 text-sm md:text-base font-light max-w-xl">
+                Submit your event to be considered for the Capital District Events Room.
+              </p>
+            </div>
+            <Link
+              to="/submit-event"
+              onClick={() => gtag("add_event_click", { source_location: "events_room_midband" })}
+              className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition shrink-0"
+            >
+              <Plus className="w-4 h-4" /> Add Your Event
+            </Link>
           </div>
         </section>
 
-        {/* ADD EVENT CTA */}
-        <section className="relative border-t border-white/[0.06]">
+        {/* ===== BOTTOM CTA ===== */}
+        <section className="relative">
           <div className="max-w-4xl mx-auto px-6 md:px-10 py-20 md:py-28 text-center">
             <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-5">
-              Contribute
+              The Events Room
             </p>
             <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-white leading-[1.05]">
-              Hosting something local?
+              Built by neighbors, for neighbors.
             </h2>
             <p className="mt-6 text-base md:text-lg text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
               Restaurants, venues, businesses, schools, nonprofits, and community
-              organizations can submit events to be considered for Capital
-              District Nest.
+              organizations can submit events to Capital District Nest.
             </p>
-            <div className="mt-8">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
                 to="/submit-event"
-                onClick={() => trackAddEventClick("weekly_bottom_cta")}
+                onClick={() => gtag("add_event_click", { source_location: "events_room_bottom" })}
                 className="inline-flex items-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-7 py-3.5 text-sm font-semibold hover:bg-white transition"
               >
-                Add Your Event <ArrowRight className="w-4 h-4" />
+                <Plus className="w-4 h-4" /> Add Your Event
+              </Link>
+              <Link
+                to="/local"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 text-white px-7 py-3.5 text-sm font-semibold hover:bg-white/10 transition"
+              >
+                Explore Local Businesses <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
