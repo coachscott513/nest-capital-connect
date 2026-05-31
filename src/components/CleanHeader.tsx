@@ -233,7 +233,7 @@ const CleanHeader = () => {
               isClaim ? "text-[#5eead4]" : "text-white/90 hover:text-white"
             }`;
 
-            if (mode.action === "focus-search" || mode.label === "Events") {
+            if (mode.action === "focus-search") {
               return (
                 <button
                   key={mode.label}
@@ -247,6 +247,7 @@ const CleanHeader = () => {
                 </button>
               );
             }
+
 
             return (
               <Link
