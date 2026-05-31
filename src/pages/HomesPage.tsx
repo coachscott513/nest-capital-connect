@@ -123,26 +123,31 @@ const HomesPage = () => {
     [town]
   );
 
+  const openRemax = (event: "homes_search_click" | "full_mls_search_click") => {
+    track(event, {
+      source_page: "/homes",
+      selected_town: town || null,
+      selected_price: price || null,
+      selected_type: type || null,
+      destination: "scottalvarez.remax.com",
+    });
+    window.open(REMAX_BASE, "_blank", "noopener,noreferrer");
+  };
+
   const submitSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    track("homes_search_click", { town, price, type, source_page: "/homes" });
-    const url = buildRemaxUrl({ townSlug: town, price, type });
-    window.open(url, "_blank", "noopener,noreferrer");
+    openRemax("homes_search_click");
   };
 
   const handleTownChip = (slug: string) => {
     track("homes_town_selected", { town: slug, source_page: "/homes" });
     setTown(slug);
-    // Stay on /homes — URL params update via the sync effect.
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
-  const handleFullMls = () => {
-    track("full_mls_search_click", { source_page: "/homes" });
-    window.open(REMAX_BASE, "_blank", "noopener,noreferrer");
-  };
+  const handleFullMls = () => openRemax("full_mls_search_click");
 
   const submitLead = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -226,7 +231,7 @@ const HomesPage = () => {
               Search homes across the Capital District.
             </h1>
             <p className="mt-6 text-lg text-[#1d1d1f]/65 font-light">
-              Pick a town, price, and property type — we'll open live MLS results in a new tab.
+              Pick a town, price, and property type — then jump into the full MLS-powered search.
             </p>
           </div>
 
@@ -271,6 +276,9 @@ const HomesPage = () => {
               <Search className="w-4 h-4" /> Search Homes
             </button>
           </form>
+          <p className="mt-3 text-center text-xs text-[#1d1d1f]/55">
+            Search opens our full MLS-powered home search in a new tab.
+          </p>
 
           {/* Selected-search state */}
           {town && (
@@ -355,7 +363,7 @@ const HomesPage = () => {
             >
               Open Full MLS Search <ExternalLink className="w-4 h-4" />
             </button>
-            <p className="mt-3 text-xs text-[#1d1d1f]/55">Live MLS via RE/MAX — opens in a new tab</p>
+            <p className="mt-3 text-xs text-[#1d1d1f]/55">Search opens our MLS-powered home search in a new tab.</p>
           </div>
         </div>
       </section>
@@ -363,9 +371,11 @@ const HomesPage = () => {
       <Dialog open={leadOpen} onOpenChange={setLeadOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Send me matching homes</DialogTitle>
+            <DialogTitle>
+              {currentTownLabel ? `Want homes in ${currentTownLabel} sent to you?` : "Want matching homes sent to you?"}
+            </DialogTitle>
             <DialogDescription>
-              Tell us what you're looking for and our team will follow up with curated listings.
+              Tell us what you're looking for and our team will follow up.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={submitLead} className="space-y-3">
