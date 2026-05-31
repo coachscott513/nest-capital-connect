@@ -363,9 +363,16 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
 
 /* ---------- Page ---------- */
 
+const TOWN_FILTERS = [
+  "All", "Albany", "Troy", "Schenectady", "Saratoga Springs",
+  "Delmar", "Clifton Park", "Cohoes", "Latham",
+];
+
 const WeeklyPulse = () => {
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [townFilter, setTownFilter] = useState<string>("All");
   const [pendingEvent, setPendingEvent] = useState<EventCard | null>(null);
+
 
   const openPending = (ev: EventCard, sourceLocation: string) => {
     setPendingEvent(ev);
@@ -437,16 +444,23 @@ const WeeklyPulse = () => {
       });
   }, [events]);
 
+  const townMatch = (e: EventCard) => {
+    if (townFilter === "All") return true;
+    const hay = `${e.town || ""} ${e.venue || ""}`.toLowerCase();
+    return hay.includes(townFilter.toLowerCase());
+  };
+
   const rails: { key: RailKey; title: string; subtitle: string; events: EventCard[] }[] = [
-    { key: "featured", title: "Featured This Week",       subtitle: "Hand-picked by Capital District Nest.",                       events: byRail("featured") },
-    { key: "music",    title: "Live Music & Nightlife",   subtitle: "Concerts, jazz, comedy, and evening events.",                 events: byRail("music") },
-    { key: "dining",   title: "Food, Drink & Dining",     subtitle: "Restaurant nights, tastings, brunches, and openings.",        events: byRail("dining") },
-    { key: "markets",  title: "Markets & Festivals",      subtitle: "Farmers markets, street fairs, and seasonal celebrations.",   events: byRail("markets") },
-    { key: "family",   title: "Family & Community",       subtitle: "Family-friendly outings and neighborhood happenings.",        events: byRail("family") },
-    { key: "sports",   title: "Sports & Local Competition", subtitle: "Local games, races, and athletic events across the region.", events: byRail("sports") },
-    { key: "business", title: "Business & Networking",    subtitle: "Chambers, meetups, and professional gatherings.",             events: byRail("business") },
-    { key: "upcoming", title: "Upcoming Events",          subtitle: "Coming up beyond this week.",                                 events: upcoming },
+    { key: "featured", title: "Featured This Week",       subtitle: "Hand-picked by Capital District Nest.",                       events: byRail("featured").filter(townMatch) },
+    { key: "music",    title: "Live Music & Nightlife",   subtitle: "Concerts, jazz, comedy, and evening events.",                 events: byRail("music").filter(townMatch) },
+    { key: "dining",   title: "Food, Drink & Dining",     subtitle: "Restaurant nights, tastings, brunches, and openings.",        events: byRail("dining").filter(townMatch) },
+    { key: "markets",  title: "Markets & Festivals",      subtitle: "Farmers markets, street fairs, and seasonal celebrations.",   events: byRail("markets").filter(townMatch) },
+    { key: "family",   title: "Family & Community",       subtitle: "Family-friendly outings and neighborhood happenings.",        events: byRail("family").filter(townMatch) },
+    { key: "sports",   title: "Sports & Local Competition", subtitle: "Local games, races, and athletic events across the region.", events: byRail("sports").filter(townMatch) },
+    { key: "business", title: "Business & Networking",    subtitle: "Chambers, meetups, and professional gatherings.",             events: byRail("business").filter(townMatch) },
+    { key: "upcoming", title: "Upcoming Events",          subtitle: "Coming up beyond this week.",                                 events: upcoming.filter(townMatch) },
   ];
+
 
   const visibleRails =
     filter === "all" ? rails : rails.filter((r) => r.key === filter);
@@ -648,8 +662,33 @@ const WeeklyPulse = () => {
                 );
               })}
             </div>
+
+            {/* Town chips */}
+            <div className="mt-4 flex gap-2 md:gap-3 overflow-x-auto pb-2 -mx-2 px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {TOWN_FILTERS.map((t) => {
+                const active = townFilter === t;
+                return (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => {
+                      setTownFilter(t);
+                      gtag("weekly_town_filter_click", { town: t });
+                    }}
+                    className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition border ${
+                      active
+                        ? "bg-[#5eead4] text-[#0B0F19] border-[#5eead4]"
+                        : "bg-white/[0.04] text-white/80 border-white/10 hover:border-white/30 hover:text-white"
+                    }`}
+                  >
+                    {t}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </section>
+
 
         {/* ===== RAILS ===== */}
         <div className="pt-2 md:pt-4 pb-8 md:pb-12">
@@ -696,7 +735,38 @@ const WeeklyPulse = () => {
           </div>
         </section>
 
+        {/* ===== SEO COPY ===== */}
+        <section className="relative border-t border-white/[0.06]">
+          <div className="max-w-4xl mx-auto px-6 md:px-10 py-16 md:py-20">
+            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-4">
+              Discover the Capital District
+            </p>
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-white leading-[1.1]">
+              Things to do in the Capital District
+            </h2>
+            <div className="mt-6 space-y-4 text-base md:text-[17px] text-white/70 font-light leading-relaxed">
+              <p>
+                From live music in downtown Albany to farmers markets in Troy, summer concerts
+                in Saratoga Springs, family weekends in Delmar, and restaurant nights across
+                Clifton Park and Schenectady — the Capital District is full of things to do
+                every week of the year.
+              </p>
+              <p>
+                Capital District Nest curates local concerts, festivals, dining events,
+                community markets, sports, networking nights, and family activities so you
+                can find what is happening near you. Browse by category or by town, save the
+                ones you love, and share them with friends and neighbors.
+              </p>
+              <p>
+                Hosting an event? Submit a concert, restaurant night, market, fundraiser, or
+                community gathering and we will feature it in the Capital District Events Room.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* ===== BOTTOM CTA ===== */}
+
         <section className="relative">
           <div className="max-w-4xl mx-auto px-6 md:px-10 py-20 md:py-28 text-center">
             <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-5">
