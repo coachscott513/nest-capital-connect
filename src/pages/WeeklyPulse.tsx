@@ -498,10 +498,29 @@ const WeeklyPulse = () => {
         if (!e.startISO) return false;
         const end = e.endISO || e.startISO;
         return iso >= e.startISO && iso <= end;
+      })
+      .sort((a, b) => {
+        // Events that START on this day first, then single-day, then ongoing.
+        const aStarts = a.startISO === iso ? 0 : 1;
+        const bStarts = b.startISO === iso ? 0 : 1;
+        if (aStarts !== bStarts) return aStarts - bStarts;
+        const aSpan = a.endISO && a.startISO ? (a.endISO === a.startISO ? 0 : 1) : 0;
+        const bSpan = b.endISO && b.startISO ? (b.endISO === b.startISO ? 0 : 1) : 0;
+        return aSpan - bSpan;
       });
 
   const selectedDay = sevenDays[selectedDayIdx] || sevenDays[0];
   const selectedDayEvents = eventsForDay(selectedDay.iso);
+  const selectedDayLongLabel = selectedDay.date.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+  const formatRunsThrough = (endISO?: string) => {
+    if (!endISO) return "";
+    const d = new Date(endISO + "T12:00:00");
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  };
 
 
   const rails: { key: RailKey; title: string; subtitle: string; events: EventCard[] }[] = [
