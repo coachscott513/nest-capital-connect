@@ -220,6 +220,11 @@ const ClaimBusiness = () => {
         (form.instagram || form.facebook || form.tiktok || form.linkedin || form.youtube) &&
           `Socials — IG:${form.instagram || "-"} | FB:${form.facebook || "-"} | TT:${form.tiktok || "-"} | LI:${form.linkedin || "-"} | YT:${form.youtube || "-"}`,
         `Interests: ${interests}`,
+        slugParam && `Slug: ${slugParam}`,
+        tierParam && `Requested tier: ${tierParam}`,
+        addonParam && `Add-on: ${addonParam}`,
+        intentParam && `Intent: ${intentParam}`,
+        `Source: ${location.pathname}${location.search}`,
       ].filter(Boolean).join("\n");
 
       const payload = {
@@ -228,22 +233,39 @@ const ClaimBusiness = () => {
         phone: form.phone || null,
         message,
         type: "business_claim",
-        origin_town: form.town || prefillTown || null,
+        origin_town: form.town || prettifyTown(prefillTown) || null,
         lead_type: "business_owner",
       };
       if (import.meta.env.DEV) console.log("[claim] submitting", payload);
       const { error } = await supabase.from("leads").insert(payload);
       if (error) {
         console.error("[claim] supabase error:", error);
+        track("claim_business_form_error", {
+          slug: slugParam || null,
+          tier: tierParam || null,
+          reason: error.message,
+        });
         const detail = import.meta.env.DEV ? ` (${error.message})` : "";
         toast.error(
           `We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.${detail}`
         );
         return;
       }
+      track("claim_business_form_submit", {
+        slug: slugParam || null,
+        tier: tierParam || null,
+        town: form.town || null,
+        category: form.category || null,
+        source_location: location.pathname,
+      });
       setIsSubmitted(true);
     } catch (err: any) {
       console.error("[claim] submit exception:", err);
+      track("claim_business_form_error", {
+        slug: slugParam || null,
+        tier: tierParam || null,
+        reason: err?.message || "exception",
+      });
       toast.error(
         "We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled."
       );
