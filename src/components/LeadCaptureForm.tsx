@@ -191,8 +191,8 @@ const LeadCaptureForm = ({
         }
 
         toast({
-          title: "Success! Check your email",
-          description: "We'll send your first report within 15 minutes. Check your spam folder too!",
+          title: "Thanks — your request was received",
+          description: "Our team will review it and follow up shortly. Check your email (and spam folder) for confirmation.",
         });
 
         // Reset form
@@ -210,9 +210,10 @@ const LeadCaptureForm = ({
       }
 
     } catch (error) {
+      console.error('[lead-capture] submit error:', error);
       toast({
-        title: "Oops! Something went wrong",
-        description: "Please try again or call us at (518) 522-7265",
+        title: "We couldn't submit this right now",
+        description: "Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.",
         variant: "destructive",
       });
     } finally {

@@ -53,7 +53,7 @@ const SouthFlorida = () => {
       toast({ title: "We'll be in touch!", description: "A South Florida specialist will reach out shortly." });
       setFormData({ name: "", email: "", phone: "", timeline: "", interest: "" });
     } catch {
-      toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
+      toast({ title: "We couldn't submit this right now", description: "Please try again.", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }

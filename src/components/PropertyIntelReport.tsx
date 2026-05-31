@@ -85,7 +85,7 @@ const PropertyIntelReport = ({
       console.error("Error unlocking report:", error);
       toast({
         title: "Error",
-        description: "Something went wrong. Please try again.",
+        description: "We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.",
         variant: "destructive",
       });
     } finally {

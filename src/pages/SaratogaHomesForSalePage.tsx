@@ -45,7 +45,7 @@ const SaratogaHomesForSalePage = () => {
       setFormData({ name: "", email: "", phone: "", requirements: "" });
     } catch (error) {
       console.error("Error:", error);
-      toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
+      toast({ title: "We couldn't submit this right now", description: "Please try again.", variant: "destructive" });
     } finally { setIsSubmitting(false); }
   };
 

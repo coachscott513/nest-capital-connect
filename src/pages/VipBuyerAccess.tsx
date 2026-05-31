@@ -113,7 +113,7 @@ const VipBuyerAccess = () => {
       });
     } catch (error) {
       toast({
-        title: "Something went wrong",
+        title: "We couldn't submit this right now",
         description: "Please try again or call us directly.",
         variant: "destructive"
       });

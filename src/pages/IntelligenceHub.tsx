@@ -55,7 +55,7 @@ const IntelligenceHub = () => {
       setSearchAddress("");
     } catch (error) {
       console.error("Error submitting search:", error);
-      toast.error("Something went wrong. Please try again.");
+      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.");
     } finally {
       setIsSubmitting(false);
     }
@@ -86,7 +86,7 @@ const IntelligenceHub = () => {
       setFormData({ fullName: "", email: "", phone: "", propertyAddress: "", notes: "" });
     } catch (error) {
       console.error("Error submitting underwrite request:", error);
-      toast.error("Something went wrong. Please try again.");
+      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.");
     } finally {
       setIsSubmitting(false);
     }

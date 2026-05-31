@@ -92,7 +92,7 @@ const CityRentalPage = () => {
     } catch (error) {
       console.error("Lead capture error:", error);
       toast({
-        title: "Something went wrong",
+        title: "We couldn't submit this right now",
         description: "Please try again.",
         variant: "destructive",
       });

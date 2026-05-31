@@ -46,7 +46,7 @@ const AlbanyMultiUnit = () => {
       setIsSubmitted(true);
       toast.success("Got it! I'll text your custom list shortly.");
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
+      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.");
     } finally {
       setIsSubmitting(false);
     }
