@@ -237,6 +237,47 @@ export const businesses: Business[] = [
       instagram: "https://www.instagram.com/deangelislaw",
     },
   },
+  {
+    slug: "denofio-insurance-agency",
+    name: "Denofio Insurance Agency",
+    town: "schenectady",
+    townLabel: "Schenectady / Capital District",
+    county: "Schenectady",
+    city: "Niskayuna",
+    category: "Insurance",
+    subcategory: "Auto · Home · Business · Flood",
+    tagline: "Insurance guidance for New York's Capital District for over 50 years.",
+    about:
+      "Denofio Insurance Agency has served New York's Capital District for more than 50 years, helping individuals, families, and businesses compare coverage options and protect what matters. Auto, home, business, recreational, and flood insurance — with local service and practical guidance.",
+    why: [
+      "Founding Pilot Featured Partner on Capital District Nest",
+      "Independent, local guidance — not a call center",
+      "50+ years serving Capital District families and businesses",
+    ],
+    services: [
+      "Auto Insurance",
+      "Homeowners Insurance",
+      "Auto + Home Package Policies",
+      "Business Insurance",
+      "Recreational Insurance",
+      "Flood Insurance",
+      "Insurance Reviews",
+      "Quote Assistance",
+      "Local Insurance Guidance",
+    ],
+    phone: "(518) 248-2499",
+    email: "DaveDenofio@gmail.com",
+    website: "https://sites.google.com/site/denofioinsurance",
+    address: "1317 Regent St, Niskayuna, NY",
+    hours: "Mon–Fri · 9:00 AM – 5:00 PM",
+    featured: true,
+    verified: true,
+    claimed: true,
+    image: "/denofio-hero.jpg",
+    signals: ["Pilot Featured Partner", "50+ Years Local"],
+  },
+
+
 
   // ───────── DELMAR ─────────
   {
