@@ -458,6 +458,47 @@ const WeeklyPulse = () => {
     return hay.includes(townFilter.toLowerCase());
   };
 
+  const categoryMatch = (e: EventCard) => {
+    if (filter === "all") return true;
+    if (filter === "featured") return !!e.isFeatured;
+    if (filter === "upcoming") return upcoming.includes(e);
+    return e.rails.includes(filter as RailKey);
+  };
+
+  const sevenDays = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return Array.from({ length: 7 }).map((_, i) => {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      return {
+        index: i,
+        iso: `${yyyy}-${mm}-${dd}`,
+        date: d,
+        label: i === 0 ? "Today" : DAY_NAMES[d.getDay()],
+        monthLabel: MONTH_SHORT[d.getMonth()],
+        dayNum: d.getDate(),
+      };
+    });
+  }, []);
+
+  const eventsForDay = (iso: string) =>
+    events
+      .filter(townMatch)
+      .filter(categoryMatch)
+      .filter((e) => {
+        if (!e.startISO) return false;
+        const end = e.endISO || e.startISO;
+        return iso >= e.startISO && iso <= end;
+      });
+
+  const selectedDay = sevenDays[selectedDayIdx] || sevenDays[0];
+  const selectedDayEvents = eventsForDay(selectedDay.iso);
+
+
   const rails: { key: RailKey; title: string; subtitle: string; events: EventCard[] }[] = [
     { key: "featured", title: "Featured This Week",       subtitle: "Hand-picked by Capital District Nest.",                       events: byRail("featured").filter(townMatch) },
     { key: "music",    title: "Live Music & Nightlife",   subtitle: "Concerts, jazz, comedy, and evening events.",                 events: byRail("music").filter(townMatch) },
