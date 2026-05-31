@@ -790,6 +790,7 @@ const ClaimBusiness = () => {
             </button>
           </div>
         </form>
+        </div>
       </section>
 
       <Footer />
