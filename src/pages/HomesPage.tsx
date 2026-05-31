@@ -231,7 +231,7 @@ const HomesPage = () => {
               Search homes across the Capital District.
             </h1>
             <p className="mt-6 text-lg text-[#1d1d1f]/65 font-light">
-              Pick a town, price, and property type — we'll open live MLS results in a new tab.
+              Pick a town, price, and property type — then jump into the full MLS-powered search.
             </p>
           </div>
 
