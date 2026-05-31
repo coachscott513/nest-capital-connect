@@ -64,7 +64,7 @@ const InvestorJourney = () => {
     } catch (error) {
       console.error("Submission error:", error);
       toast({
-        title: "Something went wrong",
+        title: "We couldn't submit this right now",
         description: "Please try again or contact us directly.",
         variant: "destructive",
       });

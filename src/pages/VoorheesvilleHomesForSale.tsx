@@ -71,7 +71,7 @@ const VoorheesvilleHomesForSale = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
       toast({
-        title: "Something went wrong",
+        title: "We couldn't submit this right now",
         description: "Please try again or call us directly.",
         variant: "destructive",
       });

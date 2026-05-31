@@ -262,7 +262,7 @@ const BusinessSpotlight = () => {
     } catch (error) {
       console.error("Verification error:", error);
       toast({
-        title: "Something went wrong",
+        title: "We couldn't submit this right now",
         description: "Please try again.",
         variant: "destructive",
       });

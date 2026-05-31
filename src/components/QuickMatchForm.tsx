@@ -78,7 +78,7 @@ const QuickMatchForm = ({ townName, className = "", onSuccess }: QuickMatchFormP
     } catch (error) {
       console.error("Quick match form error:", error);
       toast({
-        title: "Oops! Something went wrong",
+        title: "We couldn't submit this right now",
         description: "Please try again or call us at (518) 522-7265",
         variant: "destructive",
       });

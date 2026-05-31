@@ -84,7 +84,7 @@ const InvestmentLanding = () => {
     } catch (error) {
       console.error('Error submitting lead:', error);
       toast({
-        title: "Oops! Something went wrong",
+        title: "We couldn't submit this right now",
         description: "Please try again or call us at (518) 522-7265",
         variant: "destructive",
       });
