@@ -115,7 +115,7 @@ const Pricing = () => {
         <title>Pricing | Local Business Solutions — Capital District Nest</title>
         <meta
           name="description"
-          content="Free directory placement for every Capital District business. Featured ($15/mo), Spotlight ($50/mo), or Anchor ($100–150/mo) for category sponsorship and homepage placement."
+          content="Free directory listing for every Capital District business. Member $10/mo, Featured Local Partner $15/mo, Spotlight $50/mo, Anchor Partner $100–150/mo (application-based)."
         />
         <link rel="canonical" href="https://www.capitaldistrictnest.com/pricing" />
       </Helmet>
