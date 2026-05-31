@@ -8,6 +8,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import SpotlightSearch from "@/components/home/SpotlightSearch";
 import FloatingOmniSearch from "@/components/home/FloatingOmniSearch";
+import CategoryFeatureGrid from "@/components/home/CategoryFeatureGrid";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
