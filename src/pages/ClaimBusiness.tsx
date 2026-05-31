@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSearchParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSearchParams, Link, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
@@ -67,23 +67,121 @@ const CategoryOptions = [
   "Accountant", "Financial Advisor", "Attorney", "Marketing", "Other",
 ];
 
+const track = (event: string, payload: Record<string, any> = {}) => {
+  try {
+    if (typeof window !== "undefined") {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({ event, ...payload });
+      const plausible = (window as any).plausible;
+      if (typeof plausible === "function") plausible(event, { props: payload });
+    }
+  } catch {
+    /* analytics is best-effort */
+  }
+};
+
+const prettifyTown = (raw: string) =>
+  raw
+    ? raw
+        .replace(/-/g, " ")
+        .split(" ")
+        .filter(Boolean)
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ")
+    : "";
+
 const ClaimBusiness = () => {
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const prefillBiz = searchParams.get("biz") || searchParams.get("name") || "";
   const prefillTown = searchParams.get("town") || "";
+  const slugParam = searchParams.get("slug") || "";
+  const tierParam = searchParams.get("tier") || "";
+  const addonParam = searchParams.get("addon") || "";
+  const categoryParam = searchParams.get("category") || "";
+  const intentParam = searchParams.get("intent") || "";
+
+  const [resolvedBiz, setResolvedBiz] = useState<{
+    name: string;
+    town: string;
+    category: string;
+  } | null>(null);
+  const [slugLookupTried, setSlugLookupTried] = useState(false);
 
   const [form, setForm] = useState({
     ...initialState,
     businessName: prefillBiz,
-    town: prefillTown
-      ? prefillTown.charAt(0).toUpperCase() + prefillTown.slice(1).replace(/-/g, " ")
-      : "",
+    category: categoryParam || "",
+    town: prettifyTown(prefillTown),
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const update = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
     setForm((p) => ({ ...p, [k]: v }));
+
+  // Fire page view + attempt slug → business resolution.
+  useEffect(() => {
+    track("claim_business_page_view", {
+      slug: slugParam || null,
+      town: prefillTown || null,
+      tier: tierParam || null,
+      addon: addonParam || null,
+      category: categoryParam || null,
+      intent: intentParam || null,
+      page_path: location.pathname + location.search,
+    });
+
+    let cancelled = false;
+    const resolveSlug = async () => {
+      if (!slugParam) return;
+      try {
+        const { data, error } = await supabase
+          .from("businesses")
+          .select("name, town_name, town_slug, category")
+          .eq("slug", slugParam)
+          .maybeSingle();
+        if (cancelled) return;
+        if (error || !data) {
+          track("claim_business_prefill_error", {
+            slug: slugParam,
+            reason: error?.message || "not_found",
+          });
+        } else {
+          const resolved = {
+            name: data.name || "",
+            town: data.town_name || prettifyTown(data.town_slug || prefillTown),
+            category: data.category || categoryParam || "",
+          };
+          setResolvedBiz(resolved);
+          setForm((p) => ({
+            ...p,
+            businessName: p.businessName || resolved.name,
+            town: p.town || resolved.town,
+            category: p.category || resolved.category,
+          }));
+          track("claim_business_prefill_success", {
+            slug: slugParam,
+            name: resolved.name,
+          });
+        }
+      } catch (err: any) {
+        if (!cancelled) {
+          track("claim_business_prefill_error", {
+            slug: slugParam,
+            reason: err?.message || "exception",
+          });
+        }
+      } finally {
+        if (!cancelled) setSlugLookupTried(true);
+      }
+    };
+    resolveSlug();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slugParam]);
 
   // ─────────────────────────────────────────────────────────────
   // CONCIERGE PILOT MODE
@@ -122,6 +220,11 @@ const ClaimBusiness = () => {
         (form.instagram || form.facebook || form.tiktok || form.linkedin || form.youtube) &&
           `Socials — IG:${form.instagram || "-"} | FB:${form.facebook || "-"} | TT:${form.tiktok || "-"} | LI:${form.linkedin || "-"} | YT:${form.youtube || "-"}`,
         `Interests: ${interests}`,
+        slugParam && `Slug: ${slugParam}`,
+        tierParam && `Requested tier: ${tierParam}`,
+        addonParam && `Add-on: ${addonParam}`,
+        intentParam && `Intent: ${intentParam}`,
+        `Source: ${location.pathname}${location.search}`,
       ].filter(Boolean).join("\n");
 
       const payload = {
@@ -130,22 +233,39 @@ const ClaimBusiness = () => {
         phone: form.phone || null,
         message,
         type: "business_claim",
-        origin_town: form.town || prefillTown || null,
+        origin_town: form.town || prettifyTown(prefillTown) || null,
         lead_type: "business_owner",
       };
       if (import.meta.env.DEV) console.log("[claim] submitting", payload);
       const { error } = await supabase.from("leads").insert(payload);
       if (error) {
         console.error("[claim] supabase error:", error);
+        track("claim_business_form_error", {
+          slug: slugParam || null,
+          tier: tierParam || null,
+          reason: error.message,
+        });
         const detail = import.meta.env.DEV ? ` (${error.message})` : "";
         toast.error(
           `We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.${detail}`
         );
         return;
       }
+      track("claim_business_form_submit", {
+        slug: slugParam || null,
+        tier: tierParam || null,
+        town: form.town || null,
+        category: form.category || null,
+        source_location: location.pathname,
+      });
       setIsSubmitted(true);
     } catch (err: any) {
       console.error("[claim] submit exception:", err);
+      track("claim_business_form_error", {
+        slug: slugParam || null,
+        tier: tierParam || null,
+        reason: err?.message || "exception",
+      });
       toast.error(
         "We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled."
       );
@@ -444,9 +564,43 @@ const ClaimBusiness = () => {
 
       {/* FORM */}
       <section id="claim-form" className="pb-28 px-6 md:px-10 scroll-mt-24">
+        <div className="max-w-3xl mx-auto">
+          {slugParam && (
+            <div
+              className="mb-5 rounded-2xl border px-5 py-4 text-sm flex items-start gap-3"
+              style={{
+                borderColor: resolvedBiz ? `${TEAL}55` : "rgba(255,255,255,0.12)",
+                background: resolvedBiz ? `${TEAL}14` : "rgba(255,255,255,0.04)",
+              }}
+            >
+              <Building2 className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} />
+              <div className="text-white/80 leading-relaxed">
+                {resolvedBiz ? (
+                  <>
+                    Claiming or updating{" "}
+                    <span className="font-semibold text-white">{resolvedBiz.name}</span>
+                    {resolvedBiz.town ? <> in <span className="text-white">{resolvedBiz.town}</span></> : null}.
+                    Confirm the details below and add anything we should know.
+                  </>
+                ) : slugLookupTried ? (
+                  <>
+                    We couldn't find an existing profile for that link, but you can still claim or
+                    update this business — just enter the name below.
+                  </>
+                ) : (
+                  <>Looking up this business…</>
+                )}
+                {tierParam && (
+                  <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.18em] border border-white/15 text-white/70">
+                    Tier: {tierParam}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
         <form
           onSubmit={handleSubmit}
-          className="max-w-3xl mx-auto rounded-3xl bg-[#1E2230] border border-white/[0.08] p-7 md:p-10 space-y-10"
+          className="rounded-3xl bg-[#1E2230] border border-white/[0.08] p-7 md:p-10 space-y-10"
         >
           {/* SECTION: Basic */}
           <SectionBlock
@@ -636,6 +790,7 @@ const ClaimBusiness = () => {
             </button>
           </div>
         </form>
+        </div>
       </section>
 
       <Footer />
