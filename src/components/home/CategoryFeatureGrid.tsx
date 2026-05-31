@@ -94,12 +94,14 @@ export default function CategoryFeatureGrid({
 }: Props) {
   const handleClick = (tile: CategoryTile) => {
     try {
-      trackGAEvent.custom?.("category_tile_click", {
-        category_name: tile.headline,
-        destination_url: tile.to,
-        source_location: sourceLocation,
-        page_path: typeof window !== "undefined" ? window.location.pathname : "/",
-      });
+      if (typeof window !== "undefined" && (window as any).gtag) {
+        (window as any).gtag("event", "category_tile_click", {
+          category_name: tile.headline,
+          destination_url: tile.to,
+          source_location: sourceLocation,
+          page_path: window.location.pathname,
+        });
+      }
     } catch {
       /* analytics is best-effort */
     }
