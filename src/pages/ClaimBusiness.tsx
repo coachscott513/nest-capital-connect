@@ -67,23 +67,121 @@ const CategoryOptions = [
   "Accountant", "Financial Advisor", "Attorney", "Marketing", "Other",
 ];
 
+const track = (event: string, payload: Record<string, any> = {}) => {
+  try {
+    if (typeof window !== "undefined") {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({ event, ...payload });
+      const plausible = (window as any).plausible;
+      if (typeof plausible === "function") plausible(event, { props: payload });
+    }
+  } catch {
+    /* analytics is best-effort */
+  }
+};
+
+const prettifyTown = (raw: string) =>
+  raw
+    ? raw
+        .replace(/-/g, " ")
+        .split(" ")
+        .filter(Boolean)
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ")
+    : "";
+
 const ClaimBusiness = () => {
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const prefillBiz = searchParams.get("biz") || searchParams.get("name") || "";
   const prefillTown = searchParams.get("town") || "";
+  const slugParam = searchParams.get("slug") || "";
+  const tierParam = searchParams.get("tier") || "";
+  const addonParam = searchParams.get("addon") || "";
+  const categoryParam = searchParams.get("category") || "";
+  const intentParam = searchParams.get("intent") || "";
+
+  const [resolvedBiz, setResolvedBiz] = useState<{
+    name: string;
+    town: string;
+    category: string;
+  } | null>(null);
+  const [slugLookupTried, setSlugLookupTried] = useState(false);
 
   const [form, setForm] = useState({
     ...initialState,
     businessName: prefillBiz,
-    town: prefillTown
-      ? prefillTown.charAt(0).toUpperCase() + prefillTown.slice(1).replace(/-/g, " ")
-      : "",
+    category: categoryParam || "",
+    town: prettifyTown(prefillTown),
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const update = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
     setForm((p) => ({ ...p, [k]: v }));
+
+  // Fire page view + attempt slug → business resolution.
+  useEffect(() => {
+    track("claim_business_page_view", {
+      slug: slugParam || null,
+      town: prefillTown || null,
+      tier: tierParam || null,
+      addon: addonParam || null,
+      category: categoryParam || null,
+      intent: intentParam || null,
+      page_path: location.pathname + location.search,
+    });
+
+    let cancelled = false;
+    const resolveSlug = async () => {
+      if (!slugParam) return;
+      try {
+        const { data, error } = await supabase
+          .from("businesses")
+          .select("name, town_name, town_slug, category")
+          .eq("slug", slugParam)
+          .maybeSingle();
+        if (cancelled) return;
+        if (error || !data) {
+          track("claim_business_prefill_error", {
+            slug: slugParam,
+            reason: error?.message || "not_found",
+          });
+        } else {
+          const resolved = {
+            name: data.name || "",
+            town: data.town_name || prettifyTown(data.town_slug || prefillTown),
+            category: data.category || categoryParam || "",
+          };
+          setResolvedBiz(resolved);
+          setForm((p) => ({
+            ...p,
+            businessName: p.businessName || resolved.name,
+            town: p.town || resolved.town,
+            category: p.category || resolved.category,
+          }));
+          track("claim_business_prefill_success", {
+            slug: slugParam,
+            name: resolved.name,
+          });
+        }
+      } catch (err: any) {
+        if (!cancelled) {
+          track("claim_business_prefill_error", {
+            slug: slugParam,
+            reason: err?.message || "exception",
+          });
+        }
+      } finally {
+        if (!cancelled) setSlugLookupTried(true);
+      }
+    };
+    resolveSlug();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slugParam]);
 
   // ─────────────────────────────────────────────────────────────
   // CONCIERGE PILOT MODE
