@@ -113,7 +113,7 @@ const MasterGatekeeperModal = ({
       }, 800);
     } catch (error) {
       console.error("Error saving lead:", error);
-      toast.error("We couldn't submit this right now. Please email scott@capitaldistrictnest.com or call (518) 522-7265 and we'll help get it handled.");
+      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.");
     } finally {
       setIsSubmitting(false);
     }

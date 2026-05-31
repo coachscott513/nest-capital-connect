@@ -213,7 +213,7 @@ const LeadCaptureForm = ({
       console.error('[lead-capture] submit error:', error);
       toast({
         title: "We couldn't submit this right now",
-        description: "Please email scott@capitaldistrictnest.com or call (518) 522-7265 and we'll help get it handled.",
+        description: "Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.",
         variant: "destructive",
       });
     } finally {

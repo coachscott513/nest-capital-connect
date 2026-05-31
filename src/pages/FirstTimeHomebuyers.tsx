@@ -47,7 +47,7 @@ const FirstTimeHomebuyers = () => {
       toast.success("Thanks! We'll be in touch shortly.");
       setFormData({ fullName: "", email: "", phone: "", concern: "" });
     } catch {
-      toast.error("We couldn't submit this right now. Please email scott@capitaldistrictnest.com or call (518) 522-7265 and we'll help get it handled.");
+      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.");
     } finally {
       setIsSubmitting(false);
     }
