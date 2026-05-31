@@ -114,11 +114,24 @@ const ClaimBusiness = () => {
     category: categoryParam || "",
     town: prettifyTown(prefillTown),
   });
+  const [requestedTier, setRequestedTier] = useState<string>(
+    ["free", "featured", "premier", "spotlight", "anchor"].includes(tierParam) ? tierParam : ""
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const update = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
     setForm((p) => ({ ...p, [k]: v }));
+
+  const selectTierAndScroll = (tierId: string) => {
+    setRequestedTier(tierId);
+    track("claim_business_tier_select", { tier: tierId });
+    if (typeof window !== "undefined") {
+      const el = document.getElementById("claim-form");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
 
   // Fire page view + attempt slug → business resolution.
   useEffect(() => {
@@ -221,11 +234,12 @@ const ClaimBusiness = () => {
           `Socials — IG:${form.instagram || "-"} | FB:${form.facebook || "-"} | TT:${form.tiktok || "-"} | LI:${form.linkedin || "-"} | YT:${form.youtube || "-"}`,
         `Interests: ${interests}`,
         slugParam && `Slug: ${slugParam}`,
-        tierParam && `Requested tier: ${tierParam}`,
+        (requestedTier || tierParam) && `Requested tier: ${requestedTier || tierParam}`,
         addonParam && `Add-on: ${addonParam}`,
         intentParam && `Intent: ${intentParam}`,
         `Source: ${location.pathname}${location.search}`,
       ].filter(Boolean).join("\n");
+
 
       const payload = {
         full_name: form.ownerName,
@@ -253,11 +267,12 @@ const ClaimBusiness = () => {
       }
       track("claim_business_form_submit", {
         slug: slugParam || null,
-        tier: tierParam || null,
+        tier: requestedTier || tierParam || null,
         town: form.town || null,
         category: form.category || null,
         source_location: location.pathname,
       });
+
       setIsSubmitted(true);
     } catch (err: any) {
       console.error("[claim] submit exception:", err);
@@ -393,11 +408,11 @@ const ClaimBusiness = () => {
               Local Business Tiers
             </p>
             <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em]">
-              Free gets you listed. $25 gets you a full business page.
+              Free to be listed. $15 to stand out. $25 for a full business page.
             </h2>
             <p className="mt-4 text-sm text-white/60 max-w-2xl mx-auto font-light">
-              One clean ladder across the entire site. Start free, upgrade to a polished Featured
-              Business Page that works like a mini website inside Nest.
+              One clean ladder across the entire site. Pick the tier that fits — our concierge
+              team takes it from there.
             </p>
           </div>
 
@@ -409,7 +424,7 @@ const ClaimBusiness = () => {
                 price: "$0",
                 cadence: "always",
                 setup: null as string | null,
-                tag: "Your basic listing is already live.",
+                tag: "Basic directory presence — already live for every Capital District business.",
                 accent: "rgba(255,255,255,0.55)",
                 items: [
                   "Capital District directory",
@@ -419,26 +434,49 @@ const ClaimBusiness = () => {
                 ],
                 cta: "Review Your Listing",
                 style: "neutral" as const,
+                badge: null as string | null,
               },
               {
                 id: "featured",
-                eyebrow: "Featured Business Page · Most Popular",
+                eyebrow: "Featured Listing",
+                price: "$15",
+                cadence: "/mo",
+                setup: null,
+                tag: "The simple upgrade — better visibility across search and town pages.",
+                accent: TEAL,
+                items: [
+                  "Everything in Free",
+                  "Featured badge",
+                  "Priority placement in category & town search",
+                  "Larger card in search results",
+                  "Basic description",
+                  "Basic photo / logo",
+                ],
+                cta: "Get Featured",
+                style: "neutral" as const,
+                badge: "Easy Yes",
+              },
+              {
+                id: "premier",
+                eyebrow: "Premier Business Page",
                 price: "$25",
                 cadence: "/mo",
                 setup: "+ $25 one-time setup",
-                tag: "A polished local profile that works like a mini website inside Nest.",
+                tag: "A full business page that works like a mini website inside Nest.",
                 accent: TEAL,
                 items: [
+                  "Everything in Featured",
                   "Full business profile page",
                   "Description, services & photos",
                   "Phone, text, email & website buttons",
-                  "Town & category placement",
+                  "Request a Quote / contact button",
                   "Shareable profile link",
                   "Submit events & specials",
                   "Featured Local Partner badge (pilot)",
                 ],
-                cta: "Claim My Profile",
+                cta: "Build My Business Page",
                 style: "teal" as const,
+                badge: "Most Popular",
               },
               {
                 id: "spotlight",
@@ -446,22 +484,26 @@ const ClaimBusiness = () => {
                 price: "$50",
                 cadence: "/mo",
                 setup: null,
-                tag: "Premium visibility for more local attention.",
+                tag: "Premium visibility for businesses that want more local attention.",
                 accent: "#c9a449",
                 items: [
-                  "Everything in Featured",
+                  "Everything in Premier",
                   "Higher category & town placement",
                   "Specials & events promotion",
                   "Unlimited photo gallery",
                   "Newsletter / local pulse spotlight",
+                  "Featured partner card",
                 ],
                 cta: "Request Spotlight",
                 style: "gold" as const,
+                badge: null,
               },
             ];
             return (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {cards.map((c) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                {cards.map((c) => {
+                  const isSelected = requestedTier === c.id;
+                  return (
                   <div
                     key={c.id}
                     className={`relative rounded-3xl p-7 backdrop-blur-xl border flex flex-col transition ${
@@ -470,14 +512,18 @@ const ClaimBusiness = () => {
                         : c.style === "gold"
                         ? "bg-gradient-to-br from-[#c9a449]/15 via-[#1E2230] to-[#1E2230] border-[#c9a449]/40"
                         : "bg-white/[0.04] border-white/10 hover:border-white/25"
-                    }`}
+                    } ${isSelected ? "ring-2 ring-[#5eead4]/70" : ""}`}
                   >
-                    {c.style === "teal" && (
+                    {c.badge && (
                       <span
-                        className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] text-[#0B0F19] whitespace-nowrap"
-                        style={{ background: TEAL }}
+                        className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
+                        style={
+                          c.style === "teal"
+                            ? { background: TEAL, color: "#0B0F19" }
+                            : { background: "rgba(255,255,255,0.92)", color: "#0B0F19" }
+                        }
                       >
-                        <Star className="w-3 h-3 fill-current" /> Most Popular
+                        <Star className="w-3 h-3 fill-current" /> {c.badge}
                       </span>
                     )}
                     <p
@@ -509,8 +555,9 @@ const ClaimBusiness = () => {
                         </li>
                       ))}
                     </ul>
-                    <a
-                      href={`#claim-form`}
+                    <button
+                      type="button"
+                      onClick={() => selectTierAndScroll(c.id)}
                       className={`mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-[13px] font-semibold transition ${
                         c.style === "teal"
                           ? "bg-white text-[#0B0F19] hover:opacity-90"
@@ -520,21 +567,24 @@ const ClaimBusiness = () => {
                       }`}
                       style={c.style === "gold" ? { background: "#c9a449" } : undefined}
                     >
-                      {c.cta} <ArrowUpRight className="w-4 h-4" />
-                    </a>
+                      {isSelected ? "Selected — Continue Below" : c.cta} <ArrowUpRight className="w-4 h-4" />
+                    </button>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             );
           })()}
 
           {/* Anchor application strip */}
-          <div className="mt-6 rounded-3xl border border-white/15 bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-white/[0.02] backdrop-blur-xl p-7 md:p-9 flex flex-col md:flex-row md:items-center gap-6 relative">
+          <div className={`mt-6 rounded-3xl border bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-white/[0.02] backdrop-blur-xl p-7 md:p-9 flex flex-col md:flex-row md:items-center gap-6 relative ${
+            requestedTier === "anchor" ? "ring-2 ring-[#5eead4]/70 border-white/25" : "border-white/15"
+          }`}>
             <span
               className="absolute -top-3 left-7 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
               style={{ background: "#e5e4e2", color: "#0B0F19" }}
             >
-              <Star className="w-3 h-3 fill-current" /> Enterprise · Anchor Partner
+              <Star className="w-3 h-3 fill-current" /> Anchor Partner
             </span>
             <div className="flex-1">
               <div className="flex items-baseline gap-2 flex-wrap">
@@ -542,24 +592,27 @@ const ClaimBusiness = () => {
                 <span className="text-sm text-white/55">/ mo · application-based</span>
               </div>
               <p className="mt-3 text-[14.5px] text-white/75 font-light leading-relaxed max-w-2xl">
-                Own your category or become a major local sponsor. Homepage hero rotation, category
-                & town sponsorship, competitor lockout where available, custom campaigns, concierge setup.
+                Everything in Spotlight, plus homepage rotation, category sponsorship, town
+                sponsorship opportunities, competitor lockout where available, custom campaigns,
+                and concierge setup.
               </p>
             </div>
-            <a
-              href="#claim-form"
+            <button
+              type="button"
+              onClick={() => selectTierAndScroll("anchor")}
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-[13px] font-semibold whitespace-nowrap hover:opacity-90 transition"
               style={{ background: "#e5e4e2", color: "#0B0F19" }}
             >
-              Apply as Anchor Partner <ArrowUpRight className="w-4 h-4" />
-            </a>
+              {requestedTier === "anchor" ? "Selected — Continue Below" : "Apply as Anchor"} <ArrowUpRight className="w-4 h-4" />
+            </button>
           </div>
 
           <p className="mt-6 text-center text-xs text-white/45">
-            Tell us about your business below — our concierge team will help you pick the right tier.
+            Pick a tier or skip ahead — our concierge team will help you land on the right one.
           </p>
         </div>
       </section>
+
 
 
       {/* FORM */}
@@ -590,11 +643,12 @@ const ClaimBusiness = () => {
                 ) : (
                   <>Looking up this business…</>
                 )}
-                {tierParam && (
+                {(requestedTier || tierParam) && (
                   <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.18em] border border-white/15 text-white/70">
-                    Tier: {tierParam}
+                    Tier: {requestedTier || tierParam}
                   </span>
                 )}
+
               </div>
             </div>
           )}
@@ -744,10 +798,32 @@ const ClaimBusiness = () => {
             </p>
           </SectionBlock>
 
-          {/* SECTION: Growth interests */}
+          {/* SECTION: Tier interest */}
           <SectionBlock
             eyebrow="Section 04"
-            title="What are you interested in?"
+            title="Which tier are you interested in?"
+            desc="Pick whichever fits — you can change your mind. Our team confirms before any charges."
+          >
+            <Field label="Interested in">
+              <select
+                value={requestedTier}
+                onChange={(e) => setRequestedTier(e.target.value)}
+                className={inputCls + " cursor-pointer [&>option]:text-black"}
+              >
+                <option value="">Just exploring / not sure yet</option>
+                <option value="free">Free Listing update — $0</option>
+                <option value="featured">Featured Listing — $15/month</option>
+                <option value="premier">Premier Business Page — $25 setup + $25/month</option>
+                <option value="spotlight">Spotlight Partner — $50/month</option>
+                <option value="anchor">Anchor Partner — $100–$150/month</option>
+              </select>
+            </Field>
+          </SectionBlock>
+
+          {/* SECTION: Growth interests */}
+          <SectionBlock
+            eyebrow="Section 05"
+            title="What else are you interested in?"
             desc="Optional. Just check what sounds relevant — we'll bring ideas, not invoices."
           >
             <div className="grid sm:grid-cols-2 gap-3">
@@ -773,6 +849,7 @@ const ClaimBusiness = () => {
               />
             </div>
           </SectionBlock>
+
 
           {/* Submit */}
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/[0.06] pt-7">
