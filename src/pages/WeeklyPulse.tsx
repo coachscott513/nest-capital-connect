@@ -518,70 +518,93 @@ const WeeklyPulse = () => {
         </section>
 
         {/* ===== TOP FEATURED EVENT ===== */}
-        {featured && (
-          <section className="relative -mt-12 md:-mt-20 z-10">
-            <div className="max-w-[1600px] mx-auto px-6 md:px-10">
-              <Link
-                to={featured.href}
-                onClick={() =>
-                  gtag("event_card_click", {
-                    event_title: featured.title,
-                    event_category: featured.category,
-                    event_date: featured.dateLabel,
-                    event_location: featured.venue || featured.town || "",
-                    source_location: "featured_hero",
-                  })
-                }
-                className="group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-white/20 transition"
-              >
-                <div className="grid md:grid-cols-2">
-                  <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[420px] overflow-hidden">
-                    <img
-                      src={featured.image}
-                      alt={featured.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
-                    />
-                    <div
-                      className="absolute inset-0 md:hidden"
-                      style={{
-                        background: "linear-gradient(to top, rgba(11,15,25,0.7), transparent 60%)",
-                      }}
-                      aria-hidden
-                    />
-                  </div>
-                  <div className="p-8 md:p-12 flex flex-col justify-center">
-                    <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-4">
-                      Featured · {featured.category}
-                    </p>
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
-                      {featured.title}
-                    </h2>
-                    <p className="mt-5 text-base md:text-lg text-white/70 font-light leading-relaxed">
-                      {featured.description}
-                    </p>
-                    <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/75">
-                      <span className="inline-flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-[#5eead4]" />
-                        {featured.dateLabel}{featured.time ? ` · ${featured.time}` : ""}
-                      </span>
-                      {(featured.venue || featured.town) && (
-                        <span className="inline-flex items-center gap-1.5">
-                          <MapPin className="w-3.5 h-3.5 text-[#5eead4]" />
-                          {[featured.venue, featured.town].filter(Boolean).join(" · ")}
-                        </span>
-                      )}
-                    </div>
-                    <div className="mt-8 flex flex-wrap gap-3">
-                      <span className="inline-flex items-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-5 py-2.5 text-sm font-semibold group-hover:bg-white transition">
-                        View Event <ArrowRight className="w-4 h-4" />
-                      </span>
-                    </div>
-                  </div>
+        {featured && (() => {
+          const f = featured;
+          const trackFeatured = () => {
+            gtag("event_card_click", {
+              event_title: f.title,
+              event_category: f.category,
+              event_date: f.dateLabel,
+              event_location: f.venue || f.town || "",
+              link_state: f.link.kind,
+              source_location: "featured_hero",
+            });
+            if (f.link.external) {
+              gtag("event_external_link_click", {
+                event_title: f.title,
+                event_category: f.category,
+                event_date: f.dateLabel,
+                event_location: f.venue || f.town || "",
+                link_state: f.link.kind,
+                source_location: "featured_hero",
+              });
+            }
+          };
+          const inner = (
+            <div className="grid md:grid-cols-2">
+              <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[420px] overflow-hidden">
+                <img
+                  src={f.image}
+                  alt={f.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+                />
+                <div
+                  className="absolute inset-0 md:hidden"
+                  style={{ background: "linear-gradient(to top, rgba(11,15,25,0.7), transparent 60%)" }}
+                  aria-hidden
+                />
+              </div>
+              <div className="p-8 md:p-12 flex flex-col justify-center">
+                <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-4">
+                  Featured · {f.category}
+                </p>
+                {f.needsVerification && (
+                  <span className="inline-flex items-center gap-1 mb-3 px-2.5 py-1 rounded-full bg-[#5eead4]/12 border border-[#5eead4]/35 text-[10px] font-medium tracking-[0.14em] uppercase text-[#5eead4] self-start">
+                    <AlertCircle className="w-3 h-3" /> Details being confirmed
+                  </span>
+                )}
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
+                  {f.title}
+                </h2>
+                <p className="mt-5 text-base md:text-lg text-white/70 font-light leading-relaxed">
+                  {f.description}
+                </p>
+                <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/75">
+                  <span className="inline-flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-[#5eead4]" />
+                    {f.dateLabel}{f.time ? ` · ${f.time}` : ""}
+                  </span>
+                  {(f.venue || f.town) && (
+                    <span className="inline-flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-[#5eead4]" />
+                      {[f.venue, f.town].filter(Boolean).join(" · ")}
+                    </span>
+                  )}
                 </div>
-              </Link>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-5 py-2.5 text-sm font-semibold group-hover:bg-white transition">
+                    {f.link.label} <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
+              </div>
             </div>
-          </section>
-        )}
+          );
+          const wrapperCls = "group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-white/20 transition text-left w-full";
+          return (
+            <section className="relative -mt-12 md:-mt-20 z-10">
+              <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+                {f.link.pending ? (
+                  <button type="button" onClick={() => { trackFeatured(); openPending(f, "featured_hero"); }} className={wrapperCls}>{inner}</button>
+                ) : f.link.external ? (
+                  <a href={f.link.href} target="_blank" rel="noopener noreferrer" onClick={trackFeatured} className={wrapperCls}>{inner}</a>
+                ) : (
+                  <Link to={f.link.href} onClick={trackFeatured} className={wrapperCls}>{inner}</Link>
+                )}
+              </div>
+            </section>
+          );
+        })()}
+
 
         {/* ===== FILTER CHIPS ===== */}
         <section className="relative pt-14 md:pt-20">
