@@ -8,10 +8,11 @@ const GOLD = "#c9a449";
 const PLATINUM = "#e5e4e2";
 
 type Tier = {
-  id: "free" | "member" | "featured" | "spotlight";
+  id: "free" | "featured" | "spotlight";
   name: string;
   price: string;
   cadence: string;
+  setup?: string;
   tagline: string;
   features: string[];
   cta: string;
@@ -37,44 +38,27 @@ const tiers: Tier[] = [
     ],
     cta: "Review Your Listing",
     ctaHref: "/claim-business?tier=free",
-    accent: "rgba(255,255,255,0.12)",
-  },
-  {
-    id: "member",
-    name: "Member",
-    price: "$10",
-    cadence: "per month",
-    tagline: "Upgrade your profile with richer business info.",
-    features: [
-      "Everything in Free",
-      "Full image uploads",
-      "Business description",
-      "Social media links",
-      "Store hours",
-      "Member badge",
-      "Submit events & specials for review",
-    ],
-    cta: "Become a Member",
-    ctaHref: "/claim-business?tier=member",
     accent: "rgba(255,255,255,0.55)",
   },
   {
     id: "featured",
-    name: "Featured Local Partner",
-    price: "$15",
+    name: "Featured Business Page",
+    price: "$25",
     cadence: "per month",
-    tagline: "Stand out across search and town pages.",
+    setup: "+ $25 one-time setup",
+    tagline: "A polished local profile that works like a mini website inside Nest.",
     features: [
-      "Everything in Member",
-      "Priority placement in category search",
-      "Featured badge on business cards",
-      "Larger featured profile card",
-      "10-photo gallery",
-      "Enhanced description",
-      "Featured category visibility",
-      "Live Pulse / local update integration",
+      "Full business profile page",
+      "Business description & services list",
+      "Photos & logo",
+      "Phone, text, email & website buttons",
+      "Town & category placement",
+      "Priority search visibility",
+      "Shareable profile link",
+      "Submit events & specials",
+      "Featured Local Partner badge (pilot)",
     ],
-    cta: "Get Featured",
+    cta: "Claim My Profile",
     ctaHref: "/claim-business?tier=featured",
     accent: TEAL,
     badge: "Most Popular",
@@ -88,9 +72,9 @@ const tiers: Tier[] = [
     tagline: "Premium visibility for businesses that want more local attention.",
     features: [
       "Everything in Featured",
-      "Dedicated business page",
+      "Higher category & town placement",
+      "Specials & events promotion",
       "Unlimited photo gallery",
-      "Specials & promotions with images",
       "Newsletter / local pulse spotlight",
       "Weekly event matrix feature",
       "Priority review for homepage placement",
