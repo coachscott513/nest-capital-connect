@@ -826,9 +826,16 @@ export const makeTownPlaceholder = (
   makeTownPlaceholder("Saratoga Springs", "saratoga-springs", "Saratoga County", "12866", "Saratoga Springs City School District"),
   makeTownPlaceholder("Clifton Park", "clifton-park", "Saratoga County", "12065", "Shenendehowa Central School District"),
   makeTownPlaceholder("Ballston Spa", "ballston-spa", "Saratoga County", "12020", "Ballston Spa Central School District"),
+  makeTownPlaceholder("Halfmoon", "halfmoon", "Saratoga County", "12065", "Shenendehowa Central School District"),
+  makeTownPlaceholder("Malta", "malta", "Saratoga County", "12020", "Ballston Spa Central School District"),
   makeTownPlaceholder("Amsterdam", "amsterdam", "Montgomery County", "12010", "Greater Amsterdam School District"),
   makeTownPlaceholder("Catskill", "catskill", "Greene County", "12414", "Catskill Central School District"),
   makeTownPlaceholder("Cobleskill", "cobleskill", "Schoharie County", "12043", "Cobleskill-Richmondville Central School District"),
+  makeTownPlaceholder("Queensbury", "queensbury", "Warren County", "12804", "Queensbury Union Free School District"),
+  makeTownPlaceholder("Lake George", "lake-george", "Warren County", "12845", "Lake George Central School District"),
+  makeTownPlaceholder("Glens Falls", "glens-falls", "Warren County", "12801", "Glens Falls City School District"),
+  makeTownPlaceholder("East Greenbush", "east-greenbush", "Rensselaer County", "12061", "East Greenbush Central School District"),
+  makeTownPlaceholder("Rotterdam", "rotterdam", "Schenectady County", "12306", "Mohonasen Central School District"),
 ].forEach((town) => {
   livingInTowns[town.slug] ??= town;
 });
