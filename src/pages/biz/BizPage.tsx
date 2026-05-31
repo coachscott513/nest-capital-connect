@@ -168,6 +168,21 @@ const ActionChips = ({
 }) => {
   const telHref = biz.phone ? `tel:${biz.phone.replace(/[^\d+]/g, "")}` : null;
   const smsHref = biz.phone ? `sms:${biz.phone.replace(/[^\d+]/g, "")}` : null;
+  const quoteSubject = encodeURIComponent("Quote request from Capital District Nest");
+  const quoteBody = encodeURIComponent(
+    `Hi ${biz.name},\n\nI found your profile on Capital District Nest and would like to request a quote.\n\nDetails:\n- \n\nThanks!`
+  );
+  const quoteHref = biz.email
+    ? `mailto:${biz.email}?subject=${quoteSubject}&body=${quoteBody}`
+    : `/claim-business?slug=${biz.slug}&intent=quote`;
+  const trackQuote = () => {
+    try {
+      // @ts-ignore
+      window.gtag?.("event", "request_quote_click", { slug: biz.slug, has_email: !!biz.email });
+      // @ts-ignore
+      window.plausible?.("request_quote_click", { props: { slug: biz.slug, has_email: !!biz.email } });
+    } catch {}
+  };
   return (
     <div className="mt-7 flex flex-wrap gap-2.5">
       {telHref && (
@@ -185,6 +200,14 @@ const ActionChips = ({
           <Mail className="w-4 h-4" /> Email
         </a>
       )}
+      <a
+        href={quoteHref}
+        onClick={trackQuote}
+        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+        style={{ backgroundColor: TEAL }}
+      >
+        <ArrowRight className="w-4 h-4" /> Request a Quote
+      </a>
       {directionsHref && (
         <a href={directionsHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
           <MapPin className="w-4 h-4" /> Directions
