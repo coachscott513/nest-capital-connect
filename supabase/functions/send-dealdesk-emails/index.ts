@@ -26,6 +26,14 @@ function checkRateLimit(ip: string): boolean {
 
 const ADMIN_EMAIL = "scott@capitaldistrictnest.com";
 
+const esc = (s: unknown) =>
+  String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
 interface DealDeskRequest {
   firstName: string;
   email: string;
@@ -33,6 +41,7 @@ interface DealDeskRequest {
   strategy: string;
   notes?: string;
 }
+
 
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
