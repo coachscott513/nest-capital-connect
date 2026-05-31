@@ -363,9 +363,16 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
 
 /* ---------- Page ---------- */
 
+const TOWN_FILTERS = [
+  "All", "Albany", "Troy", "Schenectady", "Saratoga Springs",
+  "Delmar", "Clifton Park", "Cohoes", "Latham",
+];
+
 const WeeklyPulse = () => {
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [townFilter, setTownFilter] = useState<string>("All");
   const [pendingEvent, setPendingEvent] = useState<EventCard | null>(null);
+
 
   const openPending = (ev: EventCard, sourceLocation: string) => {
     setPendingEvent(ev);
