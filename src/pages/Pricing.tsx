@@ -8,7 +8,7 @@ const GOLD = "#c9a449";
 const PLATINUM = "#e5e4e2";
 
 type Tier = {
-  id: "free" | "featured" | "spotlight" | "anchor";
+  id: "free" | "member" | "featured" | "spotlight";
   name: string;
   price: string;
   cadence: string;
@@ -24,39 +24,57 @@ type Tier = {
 const tiers: Tier[] = [
   {
     id: "free",
-    name: "Free",
+    name: "Free Listing",
     price: "$0",
     cadence: "always",
-    tagline: "Your listing is already live.",
+    tagline: "Your basic listing is already live.",
     features: [
       "Listed in the Capital District directory",
       "Business name, address & category",
       "Phone number with click-to-call",
-      "Direct website link",
-      "Hours of operation",
-      "Google reviews displayed",
+      "Basic website link",
+      "Basic search visibility",
     ],
-    cta: "Your Listing is Live",
+    cta: "Review Your Listing",
     ctaHref: "/claim-business?tier=free",
     accent: "rgba(255,255,255,0.12)",
   },
   {
+    id: "member",
+    name: "Member",
+    price: "$10",
+    cadence: "per month",
+    tagline: "Upgrade your profile with richer business info.",
+    features: [
+      "Everything in Free",
+      "Full image uploads",
+      "Business description",
+      "Social media links",
+      "Store hours",
+      "Member badge",
+      "Submit events & specials for review",
+    ],
+    cta: "Become a Member",
+    ctaHref: "/claim-business?tier=member",
+    accent: "rgba(255,255,255,0.55)",
+  },
+  {
     id: "featured",
-    name: "Featured",
+    name: "Featured Local Partner",
     price: "$15",
     cadence: "per month",
     tagline: "Stand out across search and town pages.",
     features: [
-      "Everything in Free",
-      "Priority placement in search",
-      "“Featured” badge on every card",
+      "Everything in Member",
+      "Priority placement in category search",
+      "Featured badge on business cards",
+      "Larger featured profile card",
       "10-photo gallery",
-      "Business description (500 words)",
-      "Social media link chips",
-      "Specials board access",
-      "Weekly analytics email",
+      "Enhanced description",
+      "Featured category visibility",
+      "Live Pulse / local update integration",
     ],
-    cta: "Upgrade to Featured",
+    cta: "Get Featured",
     ctaHref: "/claim-business?tier=featured",
     accent: TEAL,
     badge: "Most Popular",
@@ -64,43 +82,22 @@ const tiers: Tier[] = [
   },
   {
     id: "spotlight",
-    name: "Spotlight",
+    name: "Spotlight Partner",
     price: "$50",
     cadence: "per month",
-    tagline: "Your own dedicated microsite on Nest.",
+    tagline: "Premium visibility for businesses that want more local attention.",
     features: [
       "Everything in Featured",
-      "Dedicated business page (/biz/slug)",
-      "60-second video showcase",
+      "Dedicated business page",
       "Unlimited photo gallery",
-      "Dynamic specials with images",
-      "Monthly newsletter feature",
-      "Social media shoutout",
-      "Embedded lead capture form",
-      "Event promotion grid",
+      "Specials & promotions with images",
+      "Newsletter / local pulse spotlight",
+      "Weekly event matrix feature",
+      "Priority review for homepage placement",
     ],
-    cta: "Go Spotlight",
+    cta: "Request Spotlight",
     ctaHref: "/claim-business?tier=spotlight",
     accent: GOLD,
-  },
-  {
-    id: "anchor",
-    name: "Anchor",
-    price: "$100–150",
-    cadence: "per month",
-    tagline: "Own your category. Lock out competitors.",
-    features: [
-      "Everything in Spotlight",
-      "Homepage hero placement rotation",
-      "Category sponsorship (“Plumbers sponsored by…”)",
-      "Custom branded microsite view",
-      "Priority concierge support",
-      "Quarterly dedicated newsletter takeover",
-    ],
-    cta: "Apply for Anchor Partnership",
-    ctaHref: "/claim-business?tier=anchor",
-    accent: PLATINUM,
-    badge: "Enterprise",
   },
 ];
 
@@ -118,7 +115,7 @@ const Pricing = () => {
         <title>Pricing | Local Business Solutions — Capital District Nest</title>
         <meta
           name="description"
-          content="Free directory placement for every Capital District business. Featured ($15/mo), Spotlight ($50/mo), or Anchor ($100–150/mo) for category sponsorship and homepage placement."
+          content="Free directory listing for every Capital District business. Member $10/mo, Featured Local Partner $15/mo, Spotlight $50/mo, Anchor Partner $100–150/mo (application-based)."
         />
         <link rel="canonical" href="https://www.capitaldistrictnest.com/pricing" />
       </Helmet>
@@ -140,17 +137,17 @@ const Pricing = () => {
             Local Business Solutions
           </p>
           <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] text-white">
-            Four tiers. One regional media network.
+            Free gets you listed. $15 makes you featured.
           </h1>
           <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
             Every Capital District business is already searchable on Nest, for free. Upgrade when you
-            want priority, your own microsite, or to own your category outright.
+            want richer profile, featured placement, a dedicated page — or to anchor your category.
           </p>
         </div>
       </section>
 
       {/* TIERS */}
-      <section className="px-6 md:px-10 pb-24 md:pb-28">
+      <section className="px-6 md:px-10 pb-16 md:pb-20">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-6">
           {tiers.map((t) => (
             <article
@@ -166,7 +163,7 @@ const Pricing = () => {
                   className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] text-[#0B0F19] whitespace-nowrap"
                   style={{ background: t.accent }}
                 >
-                  {t.id === "anchor" ? <Crown className="w-3 h-3" /> : <Star className="w-3 h-3 fill-current" />} {t.badge}
+                  <Star className="w-3 h-3 fill-current" /> {t.badge}
                 </span>
               )}
 
@@ -206,20 +203,13 @@ const Pricing = () => {
                 className={`mt-8 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-[13px] font-semibold transition ${
                   t.highlighted
                     ? "bg-white text-[#0B0F19] hover:opacity-90"
-                    : t.id === "spotlight" || t.id === "anchor"
+                    : t.id === "spotlight"
                     ? "text-[#0B0F19] hover:opacity-90"
                     : "border border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08]"
                 }`}
-                style={
-                  t.id === "spotlight"
-                    ? { background: GOLD }
-                    : t.id === "anchor"
-                    ? { background: PLATINUM }
-                    : undefined
-                }
+                style={t.id === "spotlight" ? { background: GOLD } : undefined}
               >
                 {t.id === "featured" && <Sparkles className="w-4 h-4" />}
-                {t.id === "anchor" && <Crown className="w-4 h-4" />}
                 {t.cta}
                 <ArrowRight className="w-4 h-4" />
               </a>
@@ -227,10 +217,46 @@ const Pricing = () => {
           ))}
         </div>
 
+        {/* ANCHOR — application strip */}
+        <div className="max-w-7xl mx-auto mt-6">
+          <article
+            className="relative rounded-3xl border border-white/15 bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-white/[0.02] backdrop-blur-xl p-7 md:p-9 flex flex-col md:flex-row md:items-center gap-7"
+          >
+            <span
+              className="absolute -top-3 left-7 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
+              style={{ background: PLATINUM, color: "#0B0F19" }}
+            >
+              <Crown className="w-3 h-3" /> Enterprise · Anchor Partner
+            </span>
+            <div className="flex-1">
+              <div className="flex items-baseline gap-2 flex-wrap">
+                <span className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-white">
+                  $100–$150
+                </span>
+                <span className="text-sm text-white/55">/ month · application-based</span>
+              </div>
+              <p className="mt-3 text-[15px] text-white/75 font-light leading-relaxed max-w-2xl">
+                Own your category or become a major local sponsor. Everything in Spotlight, plus
+                homepage hero rotation, category sponsorship, town sponsorship, competitor lockout
+                where available, custom campaigns, and concierge setup.
+              </p>
+            </div>
+            <a
+              href="/claim-business?tier=anchor"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-[13px] font-semibold whitespace-nowrap hover:opacity-90 transition"
+              style={{ background: PLATINUM, color: "#0B0F19" }}
+            >
+              <Crown className="w-4 h-4" /> Apply as Anchor Partner
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </article>
+        </div>
+
         <p className="mt-12 text-center text-xs text-white/45 max-w-2xl mx-auto">
           Cancel anytime. No setup fees. Pricing locks in for life on your start date — even if rates change later.
         </p>
       </section>
+
 
       {/* ADD-ONS */}
       <section className="border-t border-white/[0.06] px-6 md:px-10 py-20 md:py-24">
