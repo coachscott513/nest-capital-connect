@@ -498,10 +498,29 @@ const WeeklyPulse = () => {
         if (!e.startISO) return false;
         const end = e.endISO || e.startISO;
         return iso >= e.startISO && iso <= end;
+      })
+      .sort((a, b) => {
+        // Events that START on this day first, then single-day, then ongoing.
+        const aStarts = a.startISO === iso ? 0 : 1;
+        const bStarts = b.startISO === iso ? 0 : 1;
+        if (aStarts !== bStarts) return aStarts - bStarts;
+        const aSpan = a.endISO && a.startISO ? (a.endISO === a.startISO ? 0 : 1) : 0;
+        const bSpan = b.endISO && b.startISO ? (b.endISO === b.startISO ? 0 : 1) : 0;
+        return aSpan - bSpan;
       });
 
   const selectedDay = sevenDays[selectedDayIdx] || sevenDays[0];
   const selectedDayEvents = eventsForDay(selectedDay.iso);
+  const selectedDayLongLabel = selectedDay.date.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+  const formatRunsThrough = (endISO?: string) => {
+    if (!endISO) return "";
+    const d = new Date(endISO + "T12:00:00");
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  };
 
 
   const rails: { key: RailKey; title: string; subtitle: string; events: EventCard[] }[] = [
@@ -780,10 +799,12 @@ const WeeklyPulse = () => {
                     onClick={() => {
                       setSelectedDayIdx(d.index);
                       gtag("schedule_day_click", {
-                        selected_day: d.iso,
+                        selected_day: d.label,
+                        selected_date: d.iso,
+                        event_count: eventsForDay(d.iso).length,
                         selected_town: townFilter,
                         selected_category: filter,
-                        source_page: "/weekly",
+                        page_path: "/weekly",
                       });
                     }}
                     className={`shrink-0 w-[96px] md:w-[112px] rounded-2xl px-4 py-4 text-left border transition ${
@@ -808,6 +829,14 @@ const WeeklyPulse = () => {
 
             {/* Day events */}
             <div className="mt-8 md:mt-10">
+              <div className="mb-5 md:mb-6 flex items-baseline justify-between gap-4">
+                <h3 className="text-lg md:text-xl font-semibold tracking-[-0.015em] text-white">
+                  {selectedDayLongLabel}
+                </h3>
+                <span className="text-[12px] md:text-sm font-medium text-white/55">
+                  {selectedDayEvents.length} {selectedDayEvents.length === 1 ? "event" : "events"}
+                </span>
+              </div>
               {selectedDayEvents.length === 0 ? (
                 <div className="rounded-2xl border border-white/[0.08] bg-[#0F1424] p-8 md:p-12 text-center">
                   <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.02em] text-white">
@@ -865,6 +894,16 @@ const WeeklyPulse = () => {
                               <span className="inline-flex items-center gap-1">
                                 <MapPin className="w-3 h-3 text-[#5eead4]" />
                                 {[ev.venue, ev.town].filter(Boolean).join(" · ")}
+                              </span>
+                            )}
+                            {ev.endISO && ev.startISO && ev.endISO !== ev.startISO && ev.endISO !== selectedDay.iso && (
+                              <span className="inline-flex items-center gap-1 text-[#5eead4]/90">
+                                Runs through {formatRunsThrough(ev.endISO)}
+                              </span>
+                            )}
+                            {ev.startISO === selectedDay.iso && ev.endISO === ev.startISO && (
+                              <span className="inline-flex items-center gap-1 text-[#5eead4]/90">
+                                Today only
                               </span>
                             )}
                           </div>
