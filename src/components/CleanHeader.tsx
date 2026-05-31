@@ -139,7 +139,7 @@ const CleanHeader = () => {
                   </>
                 );
 
-                if (mode.action === "focus-search" || mode.label === "Events") {
+                if (mode.action === "focus-search") {
                   return (
                     <button
                       key={mode.label}
@@ -150,6 +150,7 @@ const CleanHeader = () => {
                     </button>
                   );
                 }
+
 
                 return (
                   <Link
