@@ -274,6 +274,7 @@ const HomesPage = () => {
               className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.55)]"
             >
               <Search className="w-4 h-4" /> Search Homes
+            </button>
           </form>
           <p className="mt-3 text-center text-xs text-[#1d1d1f]/55">
             Search opens our full MLS-powered home search in a new tab.
