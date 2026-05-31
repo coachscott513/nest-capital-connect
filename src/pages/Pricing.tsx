@@ -165,6 +165,11 @@ const Pricing = () => {
                   </span>
                   <span className="text-sm text-white/55">/ {t.cadence}</span>
                 </div>
+                {t.setup && (
+                  <p className="mt-1 text-[12px] font-semibold uppercase tracking-[0.18em]" style={{ color: t.accent }}>
+                    {t.setup}
+                  </p>
+                )}
                 <p className="mt-3 text-[14px] text-white/70 font-light leading-relaxed min-h-[42px]">
                   {t.tagline}
                 </p>
