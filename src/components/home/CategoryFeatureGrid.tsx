@@ -29,8 +29,8 @@ export type CategoryTile = {
 const DEFAULT_TILES: CategoryTile[] = [
   {
     key: "restaurants",
-    headline: "Restaurants & Bars",
-    description: "Find the places locals love for dining, drinks, and everyday favorites.",
+    headline: "Restaurants & Taverns",
+    description: "Dining, drinks, cafés, and neighborhood favorites across the Capital District.",
     cta: "Explore Dining",
     to: "/local?category=restaurant",
     image: imgRestaurants,
@@ -60,20 +60,20 @@ const DEFAULT_TILES: CategoryTile[] = [
     image: imgEvents,
   },
   {
-    key: "retail",
-    headline: "Shopping & Retail",
-    description: "Shop local and discover boutiques, retail favorites, specialty stores, and everyday essentials.",
-    cta: "Explore Retail",
-    to: "/local?category=retail",
-    image: imgRetail,
+    key: "health-wellness",
+    headline: "Health & Wellness",
+    description: "Healthcare, dental, fitness, mental health, and wellness providers across the region.",
+    cta: "Explore Wellness",
+    to: "/local?category=health-wellness",
+    image: imgServices,
   },
   {
-    key: "services",
-    headline: "Health, Wellness & Professional Services",
-    description: "Find wellness providers, local experts, healthcare, dental, financial, legal, and professional services.",
-    cta: "Explore Services",
-    to: "/local?category=professional-services",
-    image: imgServices,
+    key: "finance-legal",
+    headline: "Mortgage, Legal & Finance",
+    description: "Local lenders, attorneys, accountants, insurance providers, and financial professionals.",
+    cta: "Explore Finance",
+    to: "/finances",
+    image: imgRetail,
   },
 ];
 
