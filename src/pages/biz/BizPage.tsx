@@ -912,14 +912,19 @@ const BizPage = () => {
             <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
             <link rel="canonical" href={url} />
             <meta property="og:type" content="business.business" />
+            <meta property="og:site_name" content="Capital District Nest" />
             <meta property="og:title" content={title} />
             <meta property="og:description" content={desc} />
             <meta property="og:url" content={url} />
-            {image && <meta property="og:image" content={image} />}
+            <meta property="og:image" content={image} />
+            <meta property="og:image:secure_url" content={image} />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
+            <meta property="og:image:alt" content={`${biz.name} — Capital District Nest`} />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={title} />
             <meta name="twitter:description" content={desc} />
-            {image && <meta name="twitter:image" content={image} />}
+            <meta name="twitter:image" content={image} />
             <script type="application/ld+json">{JSON.stringify(ldBusiness)}</script>
             <script type="application/ld+json">{JSON.stringify(ldBreadcrumb)}</script>
             {ldEvents.map((e, i) => (
