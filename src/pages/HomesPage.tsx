@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, Search, ExternalLink } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
@@ -95,7 +95,7 @@ function buildRemaxUrl(opts: { townSlug?: string; price?: string; type?: string 
 const HomesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
-  const navigate = useNavigate();
+  
 
   const [town, setTown] = useState(searchParams.get("town") || "");
   const [price, setPrice] = useState(searchParams.get("price") || "");
@@ -130,11 +130,13 @@ const HomesPage = () => {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
-  const handleTownChip = (slug: string, name: string) => {
-    track("homes_town_chip_click", { town: slug, source_page: "/homes" });
+  const handleTownChip = (slug: string) => {
+    track("homes_town_selected", { town: slug, source_page: "/homes" });
     setTown(slug);
-    const url = buildRemaxUrl({ townSlug: slug, price, type });
-    window.open(url, "_blank", "noopener,noreferrer");
+    // Stay on /homes — URL params update via the sync effect.
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const handleFullMls = () => {
@@ -270,7 +272,42 @@ const HomesPage = () => {
             </button>
           </form>
 
-          {/* Secondary actions */}
+          {/* Selected-search state */}
+          {town && (
+            <div className="mt-8 rounded-2xl border border-[#0d6e66]/20 bg-[#0d6e66]/[0.04] px-6 py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#0d6e66] mb-1">
+                  Selected search
+                </p>
+                <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">
+                  Homes in {currentTownLabel}
+                  {price ? ` · ${PRICE_LABEL[price]}` : ""}
+                  {type ? ` · ${TYPE_LABEL[type]}` : ""}
+                </h2>
+                <p className="text-sm text-[#1d1d1f]/65 mt-1">
+                  Open full MLS results or have our team send matches that fit.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={submitSearch}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
+                >
+                  <ExternalLink className="w-4 h-4" /> Open Full MLS Search
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLeadOpen(true)}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#0d6e66]/40 text-[#0d6e66] text-sm font-semibold hover:bg-[#0d6e66]/[0.06] transition"
+                >
+                  Send Me Matching Homes
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Secondary action */}
           <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-sm">
             <button
               type="button"
@@ -279,14 +316,6 @@ const HomesPage = () => {
             >
               Want us to send matching homes instead?
             </button>
-            {town && (
-              <Link
-                to={`/living-in/${town}`}
-                className="text-[#1d1d1f]/70 hover:text-[#0d6e66] transition"
-              >
-                · Explore {currentTownLabel}
-              </Link>
-            )}
           </div>
 
           {/* Town shortcuts */}
@@ -295,26 +324,28 @@ const HomesPage = () => {
               Jump to a Town
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2">
-              {TOWNS.map((t) => (
-                <div key={t.slug} className="inline-flex items-center gap-1 rounded-full border border-[#1d1d1f]/10 hover:border-[#0d6e66]/35 transition overflow-hidden">
+              {TOWNS.map((t) => {
+                const active = town === t.slug;
+                return (
                   <button
+                    key={t.slug}
                     type="button"
-                    onClick={() => handleTownChip(t.slug, t.name)}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 text-sm text-[#1d1d1f] hover:text-[#0d6e66] transition"
+                    onClick={() => handleTownChip(t.slug)}
+                    aria-pressed={active}
+                    className={
+                      "inline-flex items-center gap-1.5 px-4 py-2 rounded-full border text-sm transition " +
+                      (active
+                        ? "border-[#0d6e66] bg-[#0d6e66] text-white"
+                        : "border-[#1d1d1f]/10 text-[#1d1d1f] hover:border-[#0d6e66]/35 hover:text-[#0d6e66]")
+                    }
                   >
                     {t.name}
                   </button>
-                  <Link
-                    to={`/living-in/${t.slug}`}
-                    aria-label={`Explore ${t.name}`}
-                    className="pr-3 pl-1 py-2 text-[11px] uppercase tracking-wider text-[#1d1d1f]/50 hover:text-[#0d6e66] border-l border-[#1d1d1f]/10"
-                  >
-                    Explore
-                  </Link>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
+
 
           <div className="mt-10 text-center">
             <button
