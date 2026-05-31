@@ -331,21 +331,26 @@ const Pricing = () => {
             {[
               {
                 q: "Do I have to pay to appear on Capital District Nest?",
-                a: "No. Every legitimate Capital District business is already indexed for free with name, address, phone, website, hours, and category. You only pay when you want to stand out.",
+                a: "No. Every legitimate Capital District business is already indexed for free with name, category, town, phone, and website. You only pay when you want to stand out.",
               },
               {
-                q: "What does Spotlight unlock that Featured doesn't?",
-                a: "Spotlight stacks on top of a Featured Business Page with higher category and town placement, specials and events promotion, an unlimited photo gallery, newsletter spotlights, and priority review for homepage placement. Featured already gives you the full polished profile page — Spotlight is for businesses that want maximum local visibility.",
+                q: "What's the difference between Featured ($15) and Premier ($25 setup + $25/mo)?",
+                a: "Featured is the simple upgrade — featured badge, priority placement in category and town search, a larger search card, basic description, and basic photo or logo. Premier is the full business page: a polished mini-website inside Nest with photo gallery, services list, long-form description, call/text/email/website buttons, a Request a Quote button, shareable link, events and specials submission, and basic ongoing updates. Featured = more visible. Premier = full presence.",
+              },
+              {
+                q: "What does Spotlight unlock that Premier doesn't?",
+                a: "Spotlight stacks on top of a Premier Business Page with higher category and town placement, a featured partner card, a Local Pulse mention, specials and events promotion, and consideration for newsletter and homepage sections. Premier already gives you the full polished page — Spotlight is for businesses that want maximum local visibility.",
               },
               {
                 q: "What is the Anchor tier and why is it limited?",
-                a: "Anchor is a category sponsorship — one business per category, per town. You own the homepage hero rotation, the “Plumbers sponsored by…” banner, and lock your top competitors out of that placement. Apply early; once a category is claimed for your town, it's gone.",
+                a: "Anchor is a category sponsorship — one business per category, per town. You own homepage hero rotation, the “Plumbers sponsored by…” banner, and lock your top competitors out of that placement. Apply early; once a category is claimed for your town, it's gone.",
               },
               {
                 q: "How do I get started?",
-                a: "Email Scott directly at team@capitaldistrictnest.com or call/text 518-207-9348. We'll confirm your listing, collect your assets, and activate within 48 hours.",
+                a: "Email the team at team@capitaldistrictnest.com or call/text 518-207-9348. We'll confirm your listing, collect your assets, and activate within 48 hours.",
               },
             ].map((item) => (
+
               <details
                 key={item.q}
                 className="group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 open:border-white/20 transition"
