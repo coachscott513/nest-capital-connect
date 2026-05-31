@@ -1,0 +1,3 @@
+
+REVOKE EXECUTE ON FUNCTION public.notify_new_lead() FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.notify_new_lead() TO service_role, postgres;
