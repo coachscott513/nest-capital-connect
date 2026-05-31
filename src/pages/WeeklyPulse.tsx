@@ -728,6 +728,78 @@ const WeeklyPulse = () => {
         </section>
       </main>
 
+      {/* ===== PENDING EVENT MODAL ===== */}
+      {pendingEvent && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#0B0F19]/80 backdrop-blur-sm"
+          onClick={() => setPendingEvent(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="pending-event-title"
+        >
+          <div
+            className="relative w-full max-w-lg rounded-2xl border border-white/[0.08] bg-[#0F1424] p-7 md:p-9 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setPendingEvent(null)}
+              aria-label="Close"
+              className="absolute top-4 right-4 w-9 h-9 rounded-full border border-white/15 bg-white/[0.04] text-white/70 hover:text-white hover:bg-white/[0.08] transition flex items-center justify-center"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/12 border border-[#5eead4]/35 text-[10px] font-medium tracking-[0.16em] uppercase text-[#5eead4]">
+              <AlertCircle className="w-3 h-3" /> Pending Verification
+            </span>
+            <h3 id="pending-event-title" className="mt-4 text-2xl md:text-[28px] font-semibold tracking-[-0.025em] text-white leading-tight">
+              Event details being confirmed.
+            </h3>
+            <p className="mt-1.5 text-sm md:text-base text-white/65 font-light">
+              {pendingEvent.title}
+            </p>
+            <p className="mt-5 text-sm md:text-[15px] text-white/70 font-light leading-relaxed">
+              We&rsquo;re currently confirming details for this event. If you are the organizer,
+              venue, or business connected to this event, you can submit the official link,
+              flyer, ticket page, or event details.
+            </p>
+            <div className="mt-7 flex flex-col gap-2.5">
+              <Link
+                to="/submit-event"
+                onClick={() => {
+                  gtag("event_submit_details_click", {
+                    event_title: pendingEvent.title,
+                    event_category: pendingEvent.category,
+                    event_date: pendingEvent.dateLabel,
+                    event_location: pendingEvent.venue || pendingEvent.town || "",
+                    link_state: pendingEvent.link.kind,
+                    source_location: "pending_modal",
+                  });
+                  setPendingEvent(null);
+                }}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-5 py-3 text-sm font-semibold hover:bg-white transition"
+              >
+                Submit Event Details <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/submit-event?intent=update"
+                onClick={() => setPendingEvent(null)}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 text-white px-5 py-3 text-sm font-semibold hover:bg-white/10 transition"
+              >
+                Suggest an Update
+              </Link>
+              <Link
+                to="/weekly"
+                onClick={() => setPendingEvent(null)}
+                className="inline-flex items-center justify-center gap-2 text-sm font-medium text-white/65 hover:text-white px-5 py-2 transition"
+              >
+                View All Events
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );
