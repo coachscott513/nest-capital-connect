@@ -95,7 +95,7 @@ function buildRemaxUrl(opts: { townSlug?: string; price?: string; type?: string 
 const HomesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
-  const navigate = useNavigate();
+  
 
   const [town, setTown] = useState(searchParams.get("town") || "");
   const [price, setPrice] = useState(searchParams.get("price") || "");
