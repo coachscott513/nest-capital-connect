@@ -799,10 +799,12 @@ const WeeklyPulse = () => {
                     onClick={() => {
                       setSelectedDayIdx(d.index);
                       gtag("schedule_day_click", {
-                        selected_day: d.iso,
+                        selected_day: d.label,
+                        selected_date: d.iso,
+                        event_count: eventsForDay(d.iso).length,
                         selected_town: townFilter,
                         selected_category: filter,
-                        source_page: "/weekly",
+                        page_path: "/weekly",
                       });
                     }}
                     className={`shrink-0 w-[96px] md:w-[112px] rounded-2xl px-4 py-4 text-left border transition ${
