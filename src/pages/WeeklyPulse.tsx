@@ -368,10 +368,14 @@ const TOWN_FILTERS = [
   "Delmar", "Clifton Park", "Cohoes", "Latham",
 ];
 
+const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 const WeeklyPulse = () => {
   const [filter, setFilter] = useState<FilterKey>("all");
   const [townFilter, setTownFilter] = useState<string>("All");
   const [pendingEvent, setPendingEvent] = useState<EventCard | null>(null);
+  const [selectedDayIdx, setSelectedDayIdx] = useState<number>(0);
 
 
   const openPending = (ev: EventCard, sourceLocation: string) => {
