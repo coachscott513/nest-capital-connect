@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, X, Menu, Phone } from "lucide-react";
 import GlobalSearchCommand from "@/components/GlobalSearchCommand";
 import AnalystCard from "@/components/AnalystCard";
+import cdnLogo from "@/assets/cdn-logo.jpeg";
 
 const TEAL = "#0d6e66";
 
@@ -104,12 +105,11 @@ const CleanHeader = () => {
           <div className="flex items-center justify-between h-16 md:h-[68px]">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 shrink-0">
-              <span
-                className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm"
-                style={{ backgroundColor: TEAL }}
-              >
-                CD
-              </span>
+              <img
+                src={cdnLogo}
+                alt="Capital District Nest"
+                className="w-9 h-9 rounded-full object-cover shadow-sm"
+              />
               <span className="text-[15px] font-bold text-foreground tracking-tight hidden sm:inline">
                 Capital District Nest
               </span>
