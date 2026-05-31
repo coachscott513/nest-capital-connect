@@ -234,11 +234,12 @@ const ClaimBusiness = () => {
           `Socials — IG:${form.instagram || "-"} | FB:${form.facebook || "-"} | TT:${form.tiktok || "-"} | LI:${form.linkedin || "-"} | YT:${form.youtube || "-"}`,
         `Interests: ${interests}`,
         slugParam && `Slug: ${slugParam}`,
-        tierParam && `Requested tier: ${tierParam}`,
+        (requestedTier || tierParam) && `Requested tier: ${requestedTier || tierParam}`,
         addonParam && `Add-on: ${addonParam}`,
         intentParam && `Intent: ${intentParam}`,
         `Source: ${location.pathname}${location.search}`,
       ].filter(Boolean).join("\n");
+
 
       const payload = {
         full_name: form.ownerName,
