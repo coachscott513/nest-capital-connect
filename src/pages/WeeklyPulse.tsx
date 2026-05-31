@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronLeft, ChevronRight, MapPin, Clock, Plus, AlertCircle, X } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
