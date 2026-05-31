@@ -1,744 +1,1081 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   ArrowRight,
+  ArrowUpRight,
   Phone,
-  Search,
-  GraduationCap,
-  Trophy,
-  Calculator,
+  Globe,
+  MapPin,
+  Utensils,
+  Store,
+  CalendarDays,
+  Wrench,
+  Home as HomeIcon,
+  Stethoscope,
+  Plus,
+  Sparkles,
   ChevronRight,
 } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
-import AnalystCard from "@/components/AnalystCard";
 import Footer from "@/components/Footer";
-import WeeklyFeed from "@/components/WeeklyFeed";
-import TrustedLocalPartners from "@/components/town/TrustedLocalPartners";
-import BusinessDirectory from "@/components/local/BusinessDirectory";
-import LiveNowTicker from "@/components/town/LiveNowTicker";
-import HeroMetadataPulse from "@/components/town/HeroMetadataPulse";
-import WhatChangedThisWeek from "@/components/town/WhatChangedThisWeek";
-import ThisWeekendIn from "@/components/town/ThisWeekendIn";
 import type { LivingInTown } from "@/data/livingInTowns";
-import { getTownOverride, townOverrides } from "@/data/townOverrides";
-import { findTownInDirectory } from "@/data/capitalDistrictCounties";
-import { getSearchRoute } from "@/lib/searchIntent";
+import { getTownOverride } from "@/data/townOverrides";
+import {
+  businesses as ALL_BUSINESSES,
+  CATEGORY_GROUPS,
+  type Business,
+  type BusinessCategory,
+} from "@/data/businesses";
+import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
 
-// County → regional hub slug used to backfill local partners
-// when a small town has fewer than 5 verified businesses.
-const COUNTY_HUB_SLUG: Record<string, string> = {
-  "Albany County": "albany",
-  "Saratoga County": "saratoga-springs",
-  "Rensselaer County": "troy",
-  "Schenectady County": "schenectady",
-  "Schoharie County": "schenectady",
-  "Fulton County": "saratoga-springs",
-  "Montgomery County": "schenectady",
-};
+/* =============================================================
+   MASTER TOWN PAGE — Apple-style local discovery template.
+   Used by /living-in/:slug for every town. Each section reads
+   dynamic town context (town_name, town_slug, county, etc.) so
+   the same template powers Delmar, Albany, Troy, Saratoga, …
 
-const CAPITAL_DISTRICT_HUB_NAME: Record<string, string> = {
-  albany: "Albany",
-  "saratoga-springs": "Saratoga Springs",
-  troy: "Troy",
-  schenectady: "Schenectady",
-};
+   Locked brand: dark onyx canvas, teal accents, no blue.
+   ============================================================= */
+
+const TEAL = "#0d6e66";
+const TEAL_DARK = "#5eead4";
+const REMAX_BASE = "https://scottalvarez.remax.com/";
 
 interface Props {
   town: LivingInTown;
 }
 
-// Locked brand palette
-const TEAL = "#0d6e66";
-const TEAL_DARK = "#5eead4";
+/* ---------- analytics ---------- */
+function trackTown(event: string, payload: Record<string, unknown>) {
+  try {
+    const w = window as unknown as { gtag?: (a: string, b: string, c: Record<string, unknown>) => void };
+    if (typeof window !== "undefined" && w.gtag) {
+      w.gtag("event", event, { ...payload, page_path: window.location.pathname });
+    }
+  } catch { /* noop */ }
+}
 
-// Tighter, more cinematic flow between sections
-const SECTION_PAD = "py-20 md:py-24 px-6 md:px-10";
+/* ---------- category panel definitions ---------- */
+interface CategoryPanel {
+  key: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  cta: string;
+  href: (slug: string) => string;
+  Icon: typeof Utensils;
+  image: string;
+}
 
-/**
- * MASTER TOWN TEMPLATE
- * Single dark onyx canvas. Apple × Bloomberg × Architectural Digest feel.
- * Powers every /living-in/{slug} page. Town-specific copy / imagery / feel
- * lives in src/data/townOverrides.ts.
- */
+const CAT_IMG = {
+  dining: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80",
+  local: "https://images.unsplash.com/photo-1481437156560-3205f6a55735?auto=format&fit=crop&w=1400&q=80",
+  events: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1400&q=80",
+  services: "https://images.unsplash.com/photo-1581094271901-8022df4466f9?auto=format&fit=crop&w=1400&q=80",
+  homes: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1400&q=80",
+  health: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1400&q=80",
+};
+
+const CATEGORY_PANELS: CategoryPanel[] = [
+  {
+    key: "restaurants",
+    eyebrow: "Eat & Drink",
+    title: "Restaurants & Taverns",
+    body: "Dining, cafés, drinks, and neighborhood favorites.",
+    cta: "Explore Dining",
+    href: (s) => `/local?town=${s}&group=Local%20Lifestyle`,
+    Icon: Utensils,
+    image: CAT_IMG.dining,
+  },
+  {
+    key: "businesses",
+    eyebrow: "Discover",
+    title: "Local Businesses",
+    body: "Shops, services, professionals, and local businesses.",
+    cta: "Browse Businesses",
+    href: (s) => `/local?town=${s}`,
+    Icon: Store,
+    image: CAT_IMG.local,
+  },
+  {
+    key: "events",
+    eyebrow: "This Week",
+    title: "Events & Things To Do",
+    body: "Community events, family activities, markets, and local happenings.",
+    cta: "See Events",
+    href: () => `/weekly`,
+    Icon: CalendarDays,
+    image: CAT_IMG.events,
+  },
+  {
+    key: "services",
+    eyebrow: "Home Services",
+    title: "Contractors & Home Services",
+    body: "Home improvement, repairs, maintenance, and trusted local service providers.",
+    cta: "Find Services",
+    href: (s) => `/local?town=${s}&group=Home%20Services`,
+    Icon: Wrench,
+    image: CAT_IMG.services,
+  },
+  {
+    key: "homes",
+    eyebrow: "Homes",
+    title: "Homes & Housing",
+    body: "Explore homes, neighborhoods, housing resources, and local real estate guidance.",
+    cta: "View Homes",
+    href: () => `#homes`,
+    Icon: HomeIcon,
+    image: CAT_IMG.homes,
+  },
+  {
+    key: "health",
+    eyebrow: "Pros",
+    title: "Health & Professional Services",
+    body: "Healthcare, wellness, legal, finance, insurance, and local experts.",
+    cta: "Explore Services",
+    href: (s) => `/local?town=${s}&group=Health%20%26%20Wellness`,
+    Icon: Stethoscope,
+    image: CAT_IMG.health,
+  },
+];
+
+/* ---------- helpers ---------- */
+const matchesTown = (b: Business, slug: string, townName: string) => {
+  if (b.town === slug) return true;
+  if (b.townLabel && b.townLabel.toLowerCase() === townName.toLowerCase()) return true;
+  return false;
+};
+
+const isFoodCategory = (c: BusinessCategory) =>
+  c === "Restaurant" || c === "Coffee" || c === "Bakery";
+
+const isHomeServiceCategory = (c: BusinessCategory) =>
+  CATEGORY_GROUPS["Home Services"].includes(c);
+
+const matchesTownWeekly = (i: WeeklyFeedItem, slug: string, townName: string) => {
+  if (i.scope === slug) return true;
+  if (i.town && i.town.toLowerCase() === townName.toLowerCase()) return true;
+  return false;
+};
+
+const EVENT_TYPES: WeeklyFeedItem["type"][] = [
+  "event", "music", "sports", "dining", "family", "networking",
+];
+
+/* ---------- business card (compact, premium) ---------- */
+const BizCard = ({
+  biz,
+  townSlug,
+  townName,
+  sourceLocation,
+}: {
+  biz: Business;
+  townSlug: string;
+  townName: string;
+  sourceLocation: string;
+}) => {
+  const onClick = () =>
+    trackTown("town_business_card_click", {
+      town_name: townName,
+      town_slug: townSlug,
+      category: biz.category,
+      business_slug: biz.slug,
+      source_location: sourceLocation,
+    });
+  return (
+    <div className="group rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/15 backdrop-blur-sm p-5 transition flex flex-col h-full">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p
+            className="text-[10px] font-semibold tracking-[0.18em] uppercase mb-1.5"
+            style={{ color: TEAL_DARK }}
+          >
+            {biz.category}
+          </p>
+          <Link
+            to={`/biz/${biz.slug}`}
+            onClick={onClick}
+            className="text-base font-semibold text-white tracking-[-0.005em] line-clamp-2 hover:text-[#5eead4] transition"
+          >
+            {biz.name}
+          </Link>
+          {biz.tagline && (
+            <p className="mt-1.5 text-[13px] text-white/60 font-light leading-relaxed line-clamp-2">
+              {biz.tagline}
+            </p>
+          )}
+        </div>
+        {biz.featured && (
+          <span className="shrink-0 inline-flex items-center gap-1 px-2 py-[3px] rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[10px] font-medium tracking-[0.14em] uppercase text-[#5eead4]">
+            <Sparkles className="w-2.5 h-2.5" /> Featured
+          </span>
+        )}
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        {biz.phone && (
+          <a
+            href={`tel:${biz.phone.replace(/[^0-9+]/g, "")}`}
+            onClick={onClick}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-[12px] font-medium text-white hover:bg-white/[0.1] transition"
+          >
+            <Phone className="w-3 h-3 text-[#5eead4]" /> Call
+          </a>
+        )}
+        {(biz.website || biz.website_url || biz.websiteUrl) && (
+          <a
+            href={(biz.website || biz.website_url || biz.websiteUrl) as string}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClick}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-[12px] font-medium text-white hover:bg-white/[0.1] transition"
+          >
+            <Globe className="w-3 h-3 text-[#5eead4]" /> Website
+          </a>
+        )}
+        {biz.address && (
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(biz.address)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClick}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-[12px] font-medium text-white hover:bg-white/[0.1] transition"
+          >
+            <MapPin className="w-3 h-3 text-[#5eead4]" /> Directions
+          </a>
+        )}
+      </div>
+
+      <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center justify-between">
+        <Link
+          to={`/biz/${biz.slug}`}
+          onClick={onClick}
+          className="inline-flex items-center gap-1 text-[12px] font-semibold text-white/80 hover:text-white transition"
+        >
+          View profile <ChevronRight className="w-3.5 h-3.5" />
+        </Link>
+        {!biz.claimed && !biz.verified && (
+          <Link
+            to={`/claim-business?town=${townSlug}&business=${biz.slug}`}
+            onClick={() =>
+              trackTown("town_claim_business_click", {
+                town_name: townName,
+                town_slug: townSlug,
+                category: biz.category,
+                business_slug: biz.slug,
+                source_location: `${sourceLocation}_card_claim`,
+              })
+            }
+            className="text-[11px] font-medium text-white/45 hover:text-[#5eead4] transition"
+          >
+            Claim or update
+          </Link>
+        )}
+      </div>
+    </div>
+  );
+};
+
+/* ---------- empty/recruitment state ---------- */
+const EmptyCTA = ({
+  headline,
+  body,
+  primary,
+  secondary,
+}: {
+  headline: string;
+  body: string;
+  primary: { label: string; href: string; onClick?: () => void };
+  secondary?: { label: string; href: string; onClick?: () => void };
+}) => (
+  <div className="rounded-3xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-sm px-7 md:px-10 py-10 md:py-12 text-center">
+    <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white">
+      {headline}
+    </h3>
+    <p className="mt-3 text-white/65 font-light max-w-xl mx-auto leading-relaxed">{body}</p>
+    <div className="mt-7 flex flex-wrap justify-center gap-2.5">
+      <Link
+        to={primary.href}
+        onClick={primary.onClick}
+        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
+        style={{ backgroundColor: TEAL }}
+      >
+        {primary.label} <ArrowRight className="w-4 h-4" />
+      </Link>
+      {secondary && (
+        <Link
+          to={secondary.href}
+          onClick={secondary.onClick}
+          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] text-white px-5 py-2.5 text-sm font-semibold hover:bg-white/[0.08] transition"
+        >
+          {secondary.label}
+        </Link>
+      )}
+    </div>
+  </div>
+);
+
+/* ---------- the master template ---------- */
 const TownPageTemplate = ({ town }: Props) => {
-  const navigate = useNavigate();
   const o = getTownOverride(town.slug);
-  const url = `https://www.capitaldistrictnest.com/living-in/${town.slug}`;
-  const listingUrl = town.listingSearchUrl;
-  const accent = o.accentGlow ?? "rgba(94,234,212,0.22)";
-  const [townSearch, setTownSearch] = useState("");
+  const slug = town.slug;
+  const name = town.townName;
+  const url = `https://www.capitaldistrictnest.com/living-in/${slug}`;
+  const heroImage = o.heroImage;
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [town.slug]);
+  }, [slug]);
 
-  const handleTownSearch = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const query = townSearch.trim();
-    if (!query) return;
-    navigate(getSearchRoute(`${query} ${town.townName}`));
-  };
+  /* ----- dynamic data ----- */
+  const townBiz = useMemo(
+    () => ALL_BUSINESSES.filter((b) => matchesTown(b, slug, name)),
+    [slug, name]
+  );
 
+  const featuredBiz = useMemo(
+    () => townBiz.filter((b) => b.featured).slice(0, 6),
+    [townBiz]
+  );
+
+  const restaurantBiz = useMemo(
+    () => townBiz.filter((b) => isFoodCategory(b.category)).slice(0, 6),
+    [townBiz]
+  );
+
+  const homeServicesBiz = useMemo(
+    () => townBiz.filter((b) => isHomeServiceCategory(b.category)).slice(0, 6),
+    [townBiz]
+  );
+
+  const townEvents = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return weeklyFeed
+      .filter((i) => EVENT_TYPES.includes(i.type))
+      .filter((i) => matchesTownWeekly(i, slug, name))
+      .filter((i) => {
+        const end = i.endDate || i.startDate;
+        if (!end) return true;
+        return new Date(end + "T23:59:59") >= today;
+      })
+      .slice(0, 6);
+  }, [slug, name]);
+
+  const localUpdates = useMemo(
+    () =>
+      weeklyFeed
+        .filter((i) => i.type === "news" || i.type === "development" || i.type === "business")
+        .filter((i) => matchesTownWeekly(i, slug, name))
+        .slice(0, 4),
+    [slug, name]
+  );
+
+  /* ----- SEO ----- */
+  const seoTitle = `${name}, NY — Local Businesses, Events, Restaurants & Homes | Capital District Nest`;
+  const seoDescription = `Discover ${name}: restaurants, local businesses, events, services, homes, and community life. The premium local discovery page for ${name} on Capital District Nest.`;
   const placeSchema = {
     "@context": "https://schema.org",
     "@type": "Place",
-    name: `${town.townName}, NY`,
+    name: `${name}, NY`,
     description: town.seoIntro,
     address: {
       "@type": "PostalAddress",
-      addressLocality: town.townName,
+      addressLocality: name,
       addressRegion: "NY",
       postalCode: town.zip,
       addressCountry: "US",
     },
   };
 
-  // ── Neighborhoods fallback ──────────────────────────────────────────
-  const neighborhoods = o.neighborhoods ?? [];
-
-  // ── Local business backfill (small-town hub fallback) ───────────────
-  const localPartners = o.partners ?? [];
-  const dir = findTownInDirectory(town.slug);
-  const hubSlug = dir ? COUNTY_HUB_SLUG[dir.county] : undefined;
-  const hubName =
-    hubSlug && dir
-      ? CAPITAL_DISTRICT_HUB_NAME[hubSlug] ?? hubSlug
-      : undefined;
-  const hubPartners =
-    hubSlug && hubSlug !== town.slug ? townOverrides[hubSlug]?.partners ?? [] : [];
-  const needsRegionalBackfill = localPartners.length < 5;
-  const partnersForDisplay = needsRegionalBackfill
-    ? [...localPartners, ...hubPartners].slice(0, 6)
-    : localPartners;
-  const partnersHeadline = needsRegionalBackfill
-    ? `Local Favorites in & around ${town.townName}.`
-    : `Local businesses we love in ${town.townName}.`;
-  const partnersSub = needsRegionalBackfill && hubName
-    ? `Hand-picked cafés, restaurants, boutiques, and services across ${town.townName} and nearby ${hubName}.`
-    : `Cafés, restaurants, boutiques, services, and the people behind them.`;
-
-
-
+  const submitEventHref = `/submit-event?town=${slug}`;
+  const claimHref = `/claim-business?town=${slug}`;
+  const premierHref = `/claim-business?town=${slug}&tier=premier`;
+  const findMineHref = `/local?search=&town=${slug}`;
+  const searchTownHref = `/local?town=${slug}`;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {(() => {
-        const seoTitle = `Living in ${town.townName}, NY | Capital District Nest`;
-        const seoDescription = `Explore local businesses, restaurants, services, events, homes, and community updates in ${town.townName}, NY on Capital District Nest.`;
-        return (
-          <Helmet>
-            <title>{seoTitle}</title>
-            <meta name="description" content={seoDescription} />
-            <link rel="canonical" href={url} />
-            <meta property="og:title" content={seoTitle} />
-            <meta property="og:description" content={seoDescription} />
-            <meta property="og:url" content={url} />
-            <meta property="og:type" content="website" />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={seoTitle} />
-            <meta name="twitter:description" content={seoDescription} />
-            <script type="application/ld+json">{JSON.stringify(placeSchema)}</script>
-          </Helmet>
-        );
-      })()}
+      <Helmet>
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription} />
+        <link rel="canonical" href={url} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDescription} />
+        <meta property="og:url" content={url} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={heroImage} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seoTitle} />
+        <meta name="twitter:description" content={seoDescription} />
+        <script type="application/ld+json">{JSON.stringify(placeSchema)}</script>
+      </Helmet>
 
       <MainHeader />
 
-      {/* ───────── 1. CINEMATIC HERO ───────── */}
-      <section className="relative isolate overflow-hidden bg-background text-foreground">
-        {/* Background image */}
-        <img
-          src={o.heroImage}
-          alt={`${town.townName}, NY`}
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
-          loading="eager"
-        />
-        {/* Onyx wash + signature glow */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/75 to-background" />
-        <div
-          className="absolute -top-32 left-1/3 w-[680px] h-[680px] rounded-full blur-[140px] pointer-events-none animate-[townGlowDrift_18s_ease-in-out_infinite]"
-          style={{ backgroundColor: accent }}
-        />
-        <div className="absolute bottom-0 right-1/4 w-[420px] h-[420px] rounded-full blur-[120px] pointer-events-none bg-[rgba(13,110,102,0.18)] animate-[townGlowDriftAlt_22s_ease-in-out_infinite]" />
-        <style>{`
-          @keyframes townGlowDrift {
-            0%,100% { transform: translate(0,0) scale(1); opacity: 0.85; }
-            50%     { transform: translate(40px,30px) scale(1.08); opacity: 1; }
-          }
-          @keyframes townGlowDriftAlt {
-            0%,100% { transform: translate(0,0) scale(1); opacity: 0.7; }
-            50%     { transform: translate(-50px,-20px) scale(1.12); opacity: 0.95; }
-          }
-        `}</style>
+      <main>
+        {/* ═══════════ 1. CINEMATIC HERO ═══════════ */}
+        <section className="relative isolate overflow-hidden">
+          <img
+            src={heroImage}
+            alt={`${name}, NY`}
+            className="absolute inset-0 w-full h-full object-cover opacity-55"
+            loading="eager"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(11,15,25,0.55) 0%, rgba(11,15,25,0.75) 55%, #0B0F19 100%)",
+            }}
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(60% 70% at 50% 30%, rgba(94,234,212,0.12), transparent 70%)",
+            }}
+            aria-hidden
+          />
 
-        <div className={`relative max-w-6xl mx-auto ${SECTION_PAD}`}>
-          <div className="max-w-3xl">
+          <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 pt-32 md:pt-44 pb-24 md:pb-36">
             <p
-              className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-8"
+              className="text-[11px] font-semibold tracking-[0.32em] uppercase mb-6"
               style={{ color: TEAL_DARK }}
             >
-              Discover {town.townName}
+              {name.toUpperCase()}, NY
             </p>
-
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.035em] leading-[1.02] text-white">
-              {o.heroHeadline ?? `Discover ${town.townName}.`}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] text-white leading-[1.02] max-w-4xl">
+              Discover {name}.
             </h1>
-
-            <p className="mt-8 text-lg md:text-xl font-light text-white/70 max-w-2xl leading-relaxed">
-              {o.heroSub ?? `Explore neighborhoods, local businesses, events, schools, and the rhythm of daily life in ${town.townName}.`}
+            <p className="mt-6 text-lg md:text-xl text-white/75 font-light max-w-2xl leading-relaxed">
+              Restaurants, local businesses, events, services, homes, and community life in one
+              Capital District discovery layer.
             </p>
 
-            {/* Inline universal search */}
-            <form
-              onSubmit={handleTownSearch}
-              className="mt-10 flex items-center gap-2 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-xl px-2 py-2 max-w-xl shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] focus-within:border-white/20 transition"
-            >
-              <Search className="w-4 h-4 ml-3 text-white/40 shrink-0" />
-              <input
-                type="text"
-                name="q"
-                value={townSearch}
-                onChange={(event) => setTownSearch(event.target.value.slice(0, 120))}
-                placeholder={`Search ${town.townName} homes, cafés, parks, schools…`}
-                className="flex-1 bg-transparent text-[15px] text-white placeholder:text-white/40 px-2 py-2.5 focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-white text-sm font-semibold hover:opacity-90 transition shrink-0"
-                style={{ backgroundColor: TEAL }}
+            <div className="mt-10 flex flex-wrap items-center gap-3">
+              <Link
+                to={searchTownHref}
+                onClick={() =>
+                  trackTown("town_search_click", {
+                    town_name: name,
+                    town_slug: slug,
+                    source_location: "town_hero",
+                  })
+                }
+                className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
               >
-                Search
-              </button>
-            </form>
-
-            {/* Premium action chips — glass pills, teal hover glow */}
-            <div className="mt-8 flex flex-wrap gap-2">
-              {[
-                { label: `Discover ${town.townName}`, href: "#discover" },
-                { label: "Local Businesses", href: "#businesses" },
-                { label: "This Week", href: "#changed" },
-                { label: "Homes", href: "#homes" },
-                { label: "Sports", href: "#sports" },
-                { label: "Events", href: "#weekend" },
-              ].map((chip) => (
-                <a
-                  key={chip.label}
-                  href={chip.href}
-                  className="group inline-flex items-center px-4 py-2 rounded-full text-[13px] font-medium text-white/75 bg-white/[0.04] border border-white/10 backdrop-blur-xl transition-all duration-300 hover:text-white hover:bg-white/[0.07] hover:border-[#5eead4]/40 hover:shadow-[0_0_24px_-4px_rgba(94,234,212,0.35)]"
-                >
-                  {chip.label}
-                </a>
-              ))}
-            </div>
-
-            {/* Subtle live status line */}
-            <div className="mt-5 flex items-center gap-2.5 text-[12px] text-white/40 font-light tracking-[-0.005em]">
-              <span className="relative flex h-1.5 w-1.5">
-                <span
-                  className="absolute inset-0 rounded-full opacity-60 animate-ping"
-                  style={{ background: TEAL_DARK }}
-                />
-                <span
-                  className="relative inline-flex h-1.5 w-1.5 rounded-full"
-                  style={{ background: TEAL_DARK, boxShadow: `0 0 8px ${TEAL_DARK}` }}
-                />
-              </span>
-              <span>Updated today with local events, businesses, listings, and community activity.</span>
-            </div>
-
-            {o.heroPulses && o.heroPulses.length > 0 && (
-              <HeroMetadataPulse items={o.heroPulses} />
-            )}
-
-          </div>
-
-          {/* Callout rail */}
-          <div className="mt-20 md:mt-24 grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/10">
-            {o.callouts.map((c) => (
-              <div key={c.title} className="bg-background/60 backdrop-blur-xl p-8">
-                <p
-                  className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-3"
-                  style={{ color: TEAL_DARK }}
-                >
-                  {c.title}
-                </p>
-                <p className="text-white/70 font-light leading-relaxed">{c.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ───────── 1b. MICRO-INTELLIGENCE RIBBON ───────── */}
-      {o.ribbon && o.ribbon.length > 0 && (
-        <section className="relative bg-background border-t border-white/[0.06]">
-          <div className="max-w-6xl mx-auto px-6 md:px-10 -mt-10 md:-mt-14 relative z-20">
-            <div className="rounded-2xl bg-white/[0.04] backdrop-blur-2xl border border-white/10 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] overflow-hidden">
-              <div className="grid grid-cols-2 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-white/10">
-                {o.ribbon.map((r) => (
-                  <div key={r.label} className="px-5 py-5 md:py-6">
-                    <p
-                      className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-2"
-                      style={{ color: TEAL_DARK }}
-                    >
-                      {r.label}
-                    </p>
-                    <p className="text-lg md:text-xl font-semibold text-white tracking-[-0.01em]">
-                      {r.value}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ───────── 1c. LIVE NOW TICKER (Bloomberg × Apple) ───────── */}
-      {o.liveNow && o.liveNow.length > 0 && (
-        <div className="mt-12 md:mt-16">
-          <LiveNowTicker townName={town.townName} items={o.liveNow} />
-        </div>
-      )}
-
-      {/* ───────── 2. THIS WEEK IN [TOWN] (habit-forming pulse) ───────── */}
-      <div id="pulse">
-        <WeeklyFeed
-          scope={town.slug}
-          eyebrow={`This Week in ${town.townName}`}
-          title={`This week in ${town.townName}.`}
-          sub="Listings, local activity, businesses, and community updates."
-          limit={4}
-          compact
-        />
-      </div>
-
-      {/* ───────── 2b. THIS WEEKEND IN [TOWN] ───────── */}
-      {o.thisWeekend && o.thisWeekend.length > 0 && (
-        <div id="weekend">
-          <ThisWeekendIn townName={town.townName} items={o.thisWeekend} />
-        </div>
-      )}
-
-      {/* ───────── 2c. WHAT CHANGED THIS WEEK ───────── */}
-      {o.changedThisWeek && o.changedThisWeek.length > 0 && (
-        <div id="changed">
-          <WhatChangedThisWeek
-            townName={town.townName}
-            items={o.changedThisWeek}
-            updatedLabel="Updated 2 hours ago"
-          />
-        </div>
-      )}
-
-      {/* ───────── 3. DISCOVER [TOWN] (modular bento) ───────── */}
-      {o.discoverCards && o.discoverCards.length > 0 && (
-        <section id="discover" className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
-          <div className="max-w-6xl mx-auto">
-            <div className="max-w-2xl mb-12 md:mb-16">
-              <p
-                className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
-                style={{ color: TEAL_DARK }}
+                Search {name} <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to={claimHref}
+                onClick={() =>
+                  trackTown("town_claim_business_click", {
+                    town_name: name,
+                    town_slug: slug,
+                    source_location: "town_hero",
+                  })
+                }
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
               >
-                Discover {town.townName}
-              </p>
-              <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                Discover {town.townName}.
-              </h2>
-              <p className="mt-5 text-lg font-light text-white/65">
-                Explore the places, businesses, neighborhoods, events, and local rhythm that make {town.townName} one of the Capital Region's most desirable communities.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {o.discoverCards.map((card) => (
-                <a
-                  key={card.title}
-                  href={card.href}
-                  className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-card/40 hover:border-white/20 hover:shadow-[0_0_36px_-8px_rgba(94,234,212,0.35)] transition"
-                >
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img
-                      src={card.image}
-                      alt={card.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent pointer-events-none" />
-                  </div>
-                  <div className="p-6">
-                    <p
-                      className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-2"
-                      style={{ color: TEAL_DARK }}
-                    >
-                      {card.eyebrow}
-                    </p>
-                    <h3 className="text-xl font-semibold text-white tracking-[-0.01em]">{card.title}</h3>
-                    <p className="mt-2 text-sm font-light text-white/65 leading-relaxed">{card.body}</p>
-                    <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-white/85 group-hover:text-white">
-                      {card.cta} <ChevronRight className="w-4 h-4" />
-                    </span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-
-      {/* ───────── 4. LOCAL BUSINESSES WE LOVE (curated, no directory dump) ───────── */}
-      <div id="businesses">
-        <TrustedLocalPartners
-          townName={town.townName}
-          variant="dark"
-          eyebrow={needsRegionalBackfill ? `In & around ${town.townName}` : `Featured in ${town.townName}`}
-          headline={partnersHeadline}
-          sub={partnersSub}
-          partners={partnersForDisplay as any}
-          showClaimCard
-        />
-        <BusinessDirectory townSlug={town.slug} title={`${town.townName} local businesses`} embedded />
-      </div>
-
-      {/* ───────── 5. SCHOOLS & COMMUNITY ───────── */}
-      <section id="schools" className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-14 md:gap-20 items-start">
-            <div>
-              <p
-                className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
-                style={{ color: TEAL_DARK }}
-              >
-                Why People Move Here
-              </p>
-              <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                Why people move to {town.townName}.
-              </h2>
-              <p className="mt-6 text-lg font-light text-white/65 leading-relaxed">
-                The reasons families, professionals, and long-term buyers keep choosing {town.townName}.
-              </p>
-
-              <ul className="mt-8 space-y-4">
-                {o.whyBullets.map((b) => (
-                  <li key={b} className="flex items-start gap-3 text-white/80">
-                    <GraduationCap
-                      className="w-4 h-4 mt-1 shrink-0"
-                      style={{ color: TEAL_DARK }}
-                    />
-                    <span className="font-light">{b}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="rounded-3xl overflow-hidden aspect-[5/6] border border-white/[0.08] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.7)]">
-              <img
-                src={o.whyImage}
-                alt={`${town.townName} lifestyle`}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ───────── 6. HOMES IN [TOWN] ───────── */}
-      <section id="homes" className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-[1fr_auto] gap-8 items-end mb-14">
-            <div className="max-w-2xl">
-              <p
-                className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
-                style={{ color: TEAL_DARK }}
-              >
-                Homes in {town.townName}
-              </p>
-              <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                A market with consistent long-term demand.
-              </h2>
-              <p className="mt-5 text-lg font-light text-white/65">
-                {o.whyCopy}
-              </p>
-            </div>
-            <a
-              href={listingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-semibold transition hover:opacity-90 shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)] shrink-0"
-              style={{ backgroundColor: TEAL }}
-            >
-              View Homes <ArrowRight className="w-4 h-4" />
-            </a>
-          </div>
-
-          {/* Editorial filter pills (curated, not portal) */}
-          <div className="flex flex-wrap items-center gap-2 mb-10">
-            {[
-              { label: "New This Week", href: listingUrl },
-              { label: `Near ${neighborhoods[0] ?? "Town Center"}`, href: listingUrl },
-              { label: "Under $600K", href: listingUrl },
-              { label: "Larger Lots", href: listingUrl },
-              { label: "Investment Potential", href: "/analyze" },
-              { label: "Rentals", href: "/rentals" },
-            ].map((p, i) => (
+                <Plus className="w-4 h-4" /> Add Your Business
+              </Link>
               <a
-                key={p.label}
-                href={p.href}
-                target={p.href.startsWith("http") ? "_blank" : undefined}
-                rel={p.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium border transition ${
-                  i === 0
-                    ? "bg-white text-black border-white"
-                    : "bg-white/[0.04] text-white/75 border-white/10 hover:bg-white/[0.08] hover:text-white hover:border-white/20"
-                }`}
+                href="#homes"
+                onClick={() =>
+                  trackTown("town_homes_click", {
+                    town_name: name,
+                    town_slug: slug,
+                    source_location: "town_hero_link",
+                  })
+                }
+                className="inline-flex items-center gap-1 text-sm font-medium text-white/75 hover:text-white px-2 py-2 transition"
               >
-                {p.label}
+                View Homes in {name} <ChevronRight className="w-4 h-4" />
               </a>
-            ))}
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-px bg-white/[0.06] rounded-3xl overflow-hidden border border-white/[0.08]">
-            {[
-              { label: "Median Price", value: o.stats.medianPrice, note: o.stats.medianNote },
-              { label: "Active Listings", value: o.stats.activeListings, note: o.stats.activeNote },
-              { label: "Avg. Days on Market", value: o.stats.avgDom, note: o.stats.domNote },
-            ].map((s) => (
-              <div
-                key={s.label}
-                className="bg-card/40 backdrop-blur-sm p-9 md:p-10 hover:bg-card/60 transition"
-              >
-                <p
-                  className="text-[11px] font-semibold tracking-[0.22em] uppercase"
-                  style={{ color: TEAL_DARK }}
-                >
-                  {s.label}
-                </p>
-                <p className="mt-6 text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-white">
-                  {s.value}
-                </p>
-                {s.note && (
-                  <p className="mt-3 text-sm text-white/55 font-light">{s.note}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-      {/* ───────── 10b. LOCAL SPORTS PULSE ───────── */}
-      {o.sports && o.sports.length > 0 && (
-        <section className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-end justify-between gap-6 mb-12">
-              <div className="max-w-2xl">
-                <p
-                  className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
-                  style={{ color: TEAL_DARK }}
-                >
-                  Local Sports & Community
-                </p>
-                <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                  Sports & activity around {town.townName}.
-                </h2>
-                <p className="mt-5 text-lg font-light text-white/65">
-                  Youth programs, recreation, local athletics, gyms, and community activity across the region.
-                </p>
-              </div>
-              <Trophy className="hidden md:block w-6 h-6 shrink-0" style={{ color: TEAL_DARK }} />
-            </div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {o.sports.map((s) => (
-                <div
-                  key={s.team}
-                  className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-5 hover:bg-white/[0.06] hover:border-white/15 transition"
-                >
-                  <div className="min-w-0">
-                    <p className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-1.5" style={{ color: TEAL_DARK }}>
-                      {s.league}
-                    </p>
-                    <p className="text-base font-semibold text-white">{s.team}</p>
-                    {s.detail && (
-                      <p className="mt-1.5 text-sm text-white/60 font-light leading-relaxed">{s.detail}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Community submission CTA row */}
-            <div className="mt-10 flex flex-wrap items-center gap-2.5">
-              {[
-                { label: "Submit Your Team or Program", href: "/contact?topic=team" },
-                { label: "Submit a Local Event", href: "/contact?topic=event" },
-                { label: "Community Calendar", href: "#pulse" },
-              ].map((c) => (
-                <a
-                  key={c.label}
-                  href={c.href}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-white/80 bg-white/[0.04] border border-white/10 hover:text-white hover:bg-white/[0.07] hover:border-white/20 hover:shadow-[0_0_24px_-4px_rgba(94,234,212,0.35)] transition"
-                >
-                  {c.label}
-                </a>
-              ))}
             </div>
           </div>
         </section>
-      )}
 
-      {/* ───────── 10c. LOCAL FINANCING + BUYER HELP ───────── */}
-      {o.financeLinks && o.financeLinks.length > 0 && (
-        <section className={`bg-background border-t border-white/[0.06] ${SECTION_PAD}`}>
-          <div className="max-w-6xl mx-auto">
-            <div className="max-w-2xl mb-12">
+        {/* ═══════════ 2. APPLE-STYLE CATEGORY PANELS ═══════════ */}
+        <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-28">
+          <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+            <div className="mb-12 md:mb-16 max-w-3xl">
               <p
-                className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-4"
+                className="text-[11px] font-semibold tracking-[0.3em] uppercase mb-4"
                 style={{ color: TEAL_DARK }}
               >
-                Local Buyer Resources
+                Explore {name}
               </p>
-              <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
-                Local buyer resources for {town.townName}.
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
+                Everything happening in {name}.
               </h2>
-              <p className="mt-5 text-lg font-light text-white/65">
-                Explore local grants, affordability tools, taxes, financing, insurance, and homeownership resources.
+              <p className="mt-5 text-base md:text-lg text-white/65 font-light">
+                Six ways to discover the people, places, and rhythm of {name} — all in one place.
               </p>
             </div>
 
-            {(() => {
-              const grouped = o.financeLinks.reduce<Record<string, typeof o.financeLinks>>((acc, f) => {
-                const key = f.category ?? "Resources";
-                (acc[key] ||= []).push(f);
-                return acc;
-              }, {});
-              const categories = Object.keys(grouped);
-              const hasCategories = categories.some((c) => c !== "Resources");
-
-              if (!hasCategories) {
-                return (
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {o.financeLinks.map((f) => (
-                      <a
-                        key={f.title}
-                        href={f.href}
-                        target={f.href.startsWith("http") ? "_blank" : undefined}
-                        rel={f.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-6 hover:bg-white/[0.06] hover:border-white/15 transition flex items-start gap-4"
-                      >
-                        <div className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-white/[0.04]">
-                          <Calculator className="w-4 h-4" style={{ color: TEAL_DARK }} />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center justify-between gap-2">
-                            <p className="text-base font-semibold text-white">{f.title}</p>
-                            <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition" />
-                          </div>
-                          <p className="mt-1.5 text-sm text-white/60 font-light leading-relaxed">{f.body}</p>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+              {CATEGORY_PANELS.map((p) => {
+                const href = p.href(slug);
+                const isAnchor = href.startsWith("#");
+                const onClick = () =>
+                  trackTown("town_category_tile_click", {
+                    town_name: name,
+                    town_slug: slug,
+                    category: p.key,
+                    source_location: "town_category_panels",
+                  });
+                const inner = (
+                  <>
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:opacity-70 group-hover:scale-[1.04] transition duration-700"
+                    />
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background:
+                          "linear-gradient(160deg, rgba(11,15,25,0.45) 0%, rgba(11,15,25,0.85) 70%, rgba(11,15,25,0.95) 100%)",
+                      }}
+                      aria-hidden
+                    />
+                    <div className="relative h-full p-8 md:p-10 flex flex-col justify-end">
+                      <div className="flex items-center gap-2 mb-3">
+                        <p
+                          className="inline-flex items-center px-2 py-[3px] rounded-full bg-white/[0.06] border border-white/15 text-[10px] font-semibold tracking-[0.18em] uppercase"
+                          style={{ color: TEAL_DARK }}
+                        >
+                          {p.eyebrow}
+                        </p>
+                        <p.Icon className="w-4 h-4 text-white/45" />
+                      </div>
+                      <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white">
+                        {p.title} in {name}.
+                      </h3>
+                      <p className="mt-2 text-sm md:text-[15px] text-white/65 font-light max-w-md leading-relaxed">
+                        {p.body}
+                      </p>
+                      <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] group-hover:text-white transition">
+                        {p.cta} <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </div>
+                  </>
                 );
-              }
+                const cls =
+                  "group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-white/20 transition aspect-[16/10] md:aspect-[16/9]";
+                return isAnchor ? (
+                  <a key={p.key} href={href} onClick={onClick} className={cls}>
+                    {inner}
+                  </a>
+                ) : (
+                  <Link key={p.key} to={href} onClick={onClick} className={cls}>
+                    {inner}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
-              return (
-                <div className="space-y-12">
-                  {categories.map((cat) => (
-                    <div key={cat}>
-                      <p
-                        className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-5"
+        {/* ═══════════ 3. FEATURED LOCAL BUSINESSES ═══════════ */}
+        <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-28">
+          <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+            <div className="max-w-3xl mb-12">
+              <p
+                className="text-[11px] font-semibold tracking-[0.3em] uppercase mb-4"
+                style={{ color: TEAL_DARK }}
+              >
+                Featured in {name}
+              </p>
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
+                Local businesses, brought to life.
+              </h2>
+              <p className="mt-5 text-base md:text-lg text-white/65 font-light">
+                Featured profiles with photos, services, events, contact buttons, and shareable
+                business pages.
+              </p>
+            </div>
+
+            {featuredBiz.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                {featuredBiz.map((b) => (
+                  <BizCard
+                    key={b.slug}
+                    biz={b}
+                    townSlug={slug}
+                    townName={name}
+                    sourceLocation="town_featured_partners"
+                  />
+                ))}
+              </div>
+            ) : (
+              <EmptyCTA
+                headline={`Featured ${name} placements are opening soon.`}
+                body={`Local businesses can request a Premier Business Page or Featured Listing during the launch pilot.`}
+                primary={{
+                  label: "Request Featured Placement",
+                  href: premierHref,
+                  onClick: () =>
+                    trackTown("town_featured_partner_click", {
+                      town_name: name,
+                      town_slug: slug,
+                      source_location: "town_featured_empty_primary",
+                    }),
+                }}
+                secondary={{
+                  label: "Claim or Add Your Business",
+                  href: claimHref,
+                  onClick: () =>
+                    trackTown("town_claim_business_click", {
+                      town_name: name,
+                      town_slug: slug,
+                      source_location: "town_featured_empty_secondary",
+                    }),
+                }}
+              />
+            )}
+          </div>
+        </section>
+
+        {/* ═══════════ 4. EVENTS IN THIS TOWN ═══════════ */}
+        <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-28">
+          <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+            <div className="max-w-3xl mb-12">
+              <p
+                className="text-[11px] font-semibold tracking-[0.3em] uppercase mb-4"
+                style={{ color: TEAL_DARK }}
+              >
+                This Week
+              </p>
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
+                This week in {name}.
+              </h2>
+              <p className="mt-5 text-base md:text-lg text-white/65 font-light">
+                Local events, dining specials, community happenings, family activities, and things
+                to do nearby.
+              </p>
+            </div>
+
+            {townEvents.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                {townEvents.map((ev, i) => (
+                  <a
+                    key={`${ev.title}-${i}`}
+                    href={ev.cta?.href || "/weekly"}
+                    target={ev.cta?.href && /^https?:/.test(ev.cta.href) ? "_blank" : undefined}
+                    rel={ev.cta?.href && /^https?:/.test(ev.cta.href) ? "noopener noreferrer" : undefined}
+                    onClick={() =>
+                      trackTown("town_event_click", {
+                        town_name: name,
+                        town_slug: slug,
+                        category: ev.type,
+                        event_title: ev.title,
+                        source_location: "town_events_grid",
+                      })
+                    }
+                    className="group rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/15 p-6 transition flex flex-col"
+                  >
+                    <div className="flex items-center gap-2 mb-3">
+                      <span
+                        className="inline-flex items-center px-2 py-[3px] rounded-full bg-[#5eead4]/10 border border-[#5eead4]/35 text-[10px] font-semibold tracking-[0.16em] uppercase"
                         style={{ color: TEAL_DARK }}
                       >
-                        {cat}
-                      </p>
-                      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
-                        {grouped[cat].map((f) => (
-                          <a
-                            key={f.title}
-                            href={f.href}
-                            target={f.href.startsWith("http") ? "_blank" : undefined}
-                            rel={f.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                            className="group rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-sm p-5 hover:bg-white/[0.06] hover:border-white/15 transition flex items-start gap-4"
-                          >
-                            <div className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center border border-white/10 bg-white/[0.04]">
-                              <Calculator className="w-4 h-4" style={{ color: TEAL_DARK }} />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="flex items-center justify-between gap-2">
-                                <p className="text-sm font-semibold text-white">{f.title}</p>
-                                <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white transition" />
-                              </div>
-                              <p className="mt-1.5 text-xs text-white/60 font-light leading-relaxed">{f.body}</p>
-                            </div>
-                          </a>
-                        ))}
-                      </div>
+                        {ev.date}
+                      </span>
+                      {ev.time && (
+                        <span className="text-[11px] text-white/55 font-medium tracking-wide">
+                          {ev.time}
+                        </span>
+                      )}
                     </div>
-                  ))}
-                </div>
-              );
-            })()}
+                    <h3 className="text-lg font-semibold text-white tracking-[-0.01em] line-clamp-2">
+                      {ev.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-white/60 font-light leading-relaxed line-clamp-3">
+                      {ev.description}
+                    </p>
+                    {(ev.venue || ev.town) && (
+                      <p className="mt-3 text-[12px] text-white/50 inline-flex items-center gap-1.5">
+                        <MapPin className="w-3 h-3 text-[#5eead4]" />
+                        {[ev.venue, ev.town].filter(Boolean).join(" · ")}
+                      </p>
+                    )}
+                    <span className="mt-5 inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#5eead4] group-hover:text-white transition">
+                      View Event <ArrowUpRight className="w-3.5 h-3.5" />
+                    </span>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <EmptyCTA
+                headline={`Have an event in ${name}?`}
+                body={`Restaurants, venues, schools, nonprofits, and local groups can submit events to be considered for Capital District Nest.`}
+                primary={{
+                  label: "Add Your Event",
+                  href: submitEventHref,
+                  onClick: () =>
+                    trackTown("town_submit_event_click", {
+                      town_name: name,
+                      town_slug: slug,
+                      source_location: "town_events_empty",
+                    }),
+                }}
+              />
+            )}
           </div>
         </section>
-      )}
 
-      {/* ───────── 11. FINAL CTA ───────── */}
-      <section className={`relative isolate overflow-hidden bg-background ${SECTION_PAD}`}>
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[720px] rounded-full blur-[160px] pointer-events-none"
-          style={{ backgroundColor: accent }}
-        />
-        <div className="relative max-w-3xl mx-auto text-center">
-          <p
-            className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-5"
-            style={{ color: TEAL_DARK }}
-          >
-            Ready When You Are
-          </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
-            Making a move to {town.townName}?
-          </h2>
-          <p className="mt-6 text-lg md:text-xl font-light text-white/65">
-            Ready to explore {town.townName} with a real local guide? Homes, neighborhoods, schools, businesses, and local insight — instantly.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <AnalystCard
-              title={`Explore ${town.townName} with a Local Specialist`}
-              description="Homes · Neighborhoods · Schools · Local Insight"
+        {/* ═══════════ 5. RESTAURANTS & TAVERNS ═══════════ */}
+        <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-28">
+          <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+            <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
+              <div className="max-w-2xl">
+                <p
+                  className="text-[11px] font-semibold tracking-[0.3em] uppercase mb-4"
+                  style={{ color: TEAL_DARK }}
+                >
+                  Eat & Drink
+                </p>
+                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
+                  Restaurants & taverns in {name}.
+                </h2>
+              </div>
+              <Link
+                to={`/local?town=${slug}&group=Local%20Lifestyle`}
+                onClick={() =>
+                  trackTown("town_category_tile_click", {
+                    town_name: name,
+                    town_slug: slug,
+                    category: "restaurants",
+                    source_location: "town_restaurants_view_all",
+                  })
+                }
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] hover:text-white transition"
+              >
+                View all dining <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {restaurantBiz.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                {restaurantBiz.map((b) => (
+                  <BizCard
+                    key={b.slug}
+                    biz={b}
+                    townSlug={slug}
+                    townName={name}
+                    sourceLocation="town_restaurants"
+                  />
+                ))}
+              </div>
+            ) : (
+              <EmptyCTA
+                headline={`Restaurants in ${name} are coming online.`}
+                body={`If you run a restaurant, café, or tavern in ${name}, claim or add your listing to be featured here.`}
+                primary={{ label: "Claim or Add Your Restaurant", href: claimHref }}
+                secondary={{ label: "Browse Capital District Dining", href: "/local?group=Local%20Lifestyle" }}
+              />
+            )}
+          </div>
+        </section>
+
+        {/* ═══════════ 6. CONTRACTORS & HOME SERVICES ═══════════ */}
+        <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-28">
+          <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+            <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
+              <div className="max-w-2xl">
+                <p
+                  className="text-[11px] font-semibold tracking-[0.3em] uppercase mb-4"
+                  style={{ color: TEAL_DARK }}
+                >
+                  Home Services
+                </p>
+                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
+                  Contractors & home services near {name}.
+                </h2>
+              </div>
+              <Link
+                to={`/local?town=${slug}&group=Home%20Services`}
+                onClick={() =>
+                  trackTown("town_category_tile_click", {
+                    town_name: name,
+                    town_slug: slug,
+                    category: "home_services",
+                    source_location: "town_services_view_all",
+                  })
+                }
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] hover:text-white transition"
+              >
+                View all services <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {homeServicesBiz.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                {homeServicesBiz.map((b) => (
+                  <BizCard
+                    key={b.slug}
+                    biz={b}
+                    townSlug={slug}
+                    townName={name}
+                    sourceLocation="town_home_services"
+                  />
+                ))}
+              </div>
+            ) : (
+              <EmptyCTA
+                headline={`Trusted home pros in ${name} are being verified.`}
+                body={`Contractors, plumbers, electricians, painters, HVAC, landscapers, and handyman pros — claim or add your business to be listed here.`}
+                primary={{ label: "Claim or Add Your Business", href: claimHref }}
+                secondary={{
+                  label: "Browse Capital District Pros",
+                  href: "/local?group=Home%20Services",
+                }}
+              />
+            )}
+          </div>
+        </section>
+
+        {/* ═══════════ 7. HOMES & HOUSING ═══════════ */}
+        <section
+          id="homes"
+          className="relative bg-background border-t border-white/[0.06] py-20 md:py-28"
+        >
+          <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+            <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+              <div>
+                <p
+                  className="text-[11px] font-semibold tracking-[0.3em] uppercase mb-4"
+                  style={{ color: TEAL_DARK }}
+                >
+                  Homes
+                </p>
+                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
+                  Homes and neighborhoods in {name}.
+                </h2>
+                <p className="mt-5 text-base md:text-lg text-white/65 font-light leading-relaxed">
+                  Search homes, explore local housing resources, and request matching listings.
+                  Real estate is one part of {name} — not the whole story.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <a
+                    href={REMAX_BASE}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackTown("town_homes_click", {
+                        town_name: name,
+                        town_slug: slug,
+                        category: "mls_open",
+                        source_location: "town_homes_section",
+                      })
+                    }
+                    className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
+                  >
+                    Open Full MLS Search <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                  <Link
+                    to={`/homes?town=${slug}&intent=matches`}
+                    onClick={() =>
+                      trackTown("town_homes_click", {
+                        town_name: name,
+                        town_slug: slug,
+                        category: "matches_request",
+                        source_location: "town_homes_section",
+                      })
+                    }
+                    className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
+                  >
+                    Send Me Matching Homes
+                  </Link>
+                </div>
+                <p className="mt-4 text-[12px] text-white/45 font-light">
+                  Opens our MLS-powered home search in a new tab.
+                </p>
+              </div>
+
+              <div className="relative aspect-[5/4] rounded-2xl overflow-hidden border border-white/[0.08]">
+                <img
+                  src={CAT_IMG.homes}
+                  alt={`${name} homes`}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(11,15,25,0.1) 0%, rgba(11,15,25,0.6) 100%)",
+                  }}
+                  aria-hidden
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════ 8. LOCAL MEDIA / TOWN UPDATES ═══════════ */}
+        <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-28">
+          <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+            <div className="max-w-3xl mb-12">
+              <p
+                className="text-[11px] font-semibold tracking-[0.3em] uppercase mb-4"
+                style={{ color: TEAL_DARK }}
+              >
+                Updates
+              </p>
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
+                Local updates near {name}.
+              </h2>
+            </div>
+
+            {localUpdates.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {localUpdates.map((u, i) => (
+                  <a
+                    key={`${u.title}-${i}`}
+                    href={u.external_article_url || u.original_url || "/weekly"}
+                    target={u.external_article_url || u.original_url ? "_blank" : undefined}
+                    rel={u.external_article_url || u.original_url ? "noopener noreferrer" : undefined}
+                    className="group rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/15 p-5 transition flex flex-col"
+                  >
+                    <p
+                      className="text-[10px] font-semibold tracking-[0.18em] uppercase mb-2"
+                      style={{ color: TEAL_DARK }}
+                    >
+                      {u.categoryBadgeOverride || u.type}
+                    </p>
+                    <h3 className="text-base font-semibold text-white tracking-[-0.005em] line-clamp-3">
+                      {u.title}
+                    </h3>
+                    {u.summary && (
+                      <p className="mt-2 text-[13px] text-white/60 font-light leading-relaxed line-clamp-3">
+                        {u.summary}
+                      </p>
+                    )}
+                    <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-medium text-white/65 group-hover:text-white transition">
+                      {u.source_name || "Read more"} <ArrowUpRight className="w-3 h-3" />
+                    </span>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] px-6 py-10 text-center text-white/55 text-sm font-light">
+                Local updates are being added.
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* ═══════════ 9. BUSINESS OWNER CTA ═══════════ */}
+        <section className="relative isolate overflow-hidden bg-background border-t border-white/[0.06] py-20 md:py-28">
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[720px] rounded-full blur-[180px] pointer-events-none"
+            style={{ backgroundColor: "rgba(94,234,212,0.18)" }}
+          />
+          <div className="relative max-w-3xl mx-auto px-6 md:px-10 text-center">
+            <p
+              className="text-[11px] font-semibold tracking-[0.3em] uppercase mb-5"
+              style={{ color: TEAL_DARK }}
             >
-              <button
-                className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.6)] hover:shadow-[0_18px_44px_-10px_rgba(94,234,212,0.55)]"
+              For Business Owners
+            </p>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.035em] leading-[1.05] text-white">
+              Own a business in {name}?
+            </h2>
+            <p className="mt-6 text-base md:text-lg text-white/70 font-light leading-relaxed">
+              Your business may already be listed on Capital District Nest. Claim your profile,
+              update your information, add photos, submit events, or request featured placement.
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
+              <Link
+                to={findMineHref}
+                onClick={() =>
+                  trackTown("town_search_click", {
+                    town_name: name,
+                    town_slug: slug,
+                    source_location: "town_owner_cta_find",
+                  })
+                }
+                className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
+              >
+                Find My Business
+              </Link>
+              <Link
+                to={claimHref}
+                onClick={() =>
+                  trackTown("town_claim_business_click", {
+                    town_name: name,
+                    town_slug: slug,
+                    source_location: "town_owner_cta_claim",
+                  })
+                }
+                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition"
                 style={{ backgroundColor: TEAL }}
               >
-                <ArrowRight className="w-4 h-4" /> Connect with a {town.townName} Specialist
-              </button>
-            </AnalystCard>
-            <AnalystCard
-              title="Talk to Scott"
-              description="Private concierge access · Call · Text · Email · Schedule"
-            >
-              <button
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white bg-white/[0.04] border border-white/15 backdrop-blur-sm hover:bg-white/[0.08] hover:border-white/25 hover:shadow-[0_18px_44px_-10px_rgba(94,234,212,0.45)] transition"
+                Claim or Add Business <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to={premierHref}
+                onClick={() =>
+                  trackTown("town_featured_partner_click", {
+                    town_name: name,
+                    town_slug: slug,
+                    source_location: "town_owner_cta_premier",
+                  })
+                }
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
               >
-                <Phone className="w-4 h-4" style={{ color: TEAL_DARK }} /> Talk to Scott
-              </button>
-            </AnalystCard>
+                <Sparkles className="w-4 h-4 text-[#5eead4]" /> Request Premier Profile
+              </Link>
+            </div>
           </div>
+        </section>
 
-          {/* Live status indicator */}
-          <div className="mt-6 flex items-center justify-center gap-2 text-xs text-white/55 font-light">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inset-0 rounded-full bg-green-400 opacity-60 animate-ping" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.7)]" />
-            </span>
-            Live local support available · usually responds within minutes
+        {/* ═══════════ 10. SEO OVERVIEW ═══════════ */}
+        <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-24">
+          <div className="max-w-3xl mx-auto px-6 md:px-10">
+            <p
+              className="text-[11px] font-semibold tracking-[0.3em] uppercase mb-4"
+              style={{ color: TEAL_DARK }}
+            >
+              About {name}
+            </p>
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.025em] leading-[1.1] text-white">
+              Living in {name}, NY
+            </h2>
+            <p className="mt-5 text-base md:text-lg text-white/70 font-light leading-relaxed">
+              {town.seoIntro ||
+                `${name} is one of the Capital District's most recognized communities, known for local businesses, neighborhood dining, parks, schools, services, housing options, and easy access to the broader Albany region. Capital District Nest helps residents and visitors explore ${name} businesses, events, restaurants, services, homes, and local resources in one place.`}
+            </p>
+            {town.nearbyTowns && town.nearbyTowns.length > 0 && (
+              <div className="mt-10">
+                <p
+                  className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-3 text-white/45"
+                >
+                  Nearby
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {town.nearbyTowns.map((n) => (
+                    <Link
+                      key={n.slug}
+                      to={`/living-in/${n.slug}`}
+                      className="inline-flex items-center px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-[12px] font-medium text-white/75 hover:text-white hover:bg-white/[0.08] hover:border-white/20 transition"
+                    >
+                      {n.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       <Footer />
     </div>
