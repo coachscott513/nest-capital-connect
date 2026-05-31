@@ -314,7 +314,7 @@ const Pricing = () => {
               },
               {
                 q: "What does Spotlight unlock that Featured doesn't?",
-                a: "Spotlight gives you a dedicated microsite at /biz/your-business with a 60-second video, unlimited gallery, rich specials, and an embedded lead capture form. It's the equivalent of a $2,500 custom website — for $50/month.",
+                a: "Spotlight stacks on top of a Featured Business Page with higher category and town placement, specials and events promotion, an unlimited photo gallery, newsletter spotlights, and priority review for homepage placement. Featured already gives you the full polished profile page — Spotlight is for businesses that want maximum local visibility.",
               },
               {
                 q: "What is the Anchor tier and why is it limited?",
