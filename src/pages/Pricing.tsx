@@ -140,14 +140,15 @@ const Pricing = () => {
             Local Business Solutions
           </p>
           <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] text-white">
-            Free gets you listed. $25 gets you a full business page.
+            Free to be listed. $15 to stand out. $25 for a full business page.
           </h1>
           <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
             Every Capital District business is already searchable on Nest, for free. Upgrade to a
-            polished Featured Business Page that works like a mini website inside Nest — or anchor
-            your category.
+            Featured Listing for better visibility, or to a Premier Business Page that works like a
+            mini website inside Nest.
           </p>
         </div>
+
       </section>
 
       {/* TIERS */}
