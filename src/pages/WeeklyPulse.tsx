@@ -661,6 +661,7 @@ const WeeklyPulse = () => {
               subtitle={r.subtitle}
               events={r.events}
               size={r.key === "featured" ? "lg" : "md"}
+              onPending={openPending}
             />
           ))}
 
