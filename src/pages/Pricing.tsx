@@ -243,7 +243,7 @@ const Pricing = () => {
         </div>
 
         <p className="mt-12 text-center text-xs text-white/45 max-w-2xl mx-auto">
-          Cancel anytime. No setup fees. Pricing locks in for life on your start date — even if rates change later.
+          Cancel anytime. One-time $25 setup on Featured covers the manual profile build. Monthly pricing locks in for life on your start date — even if rates change later.
         </p>
       </section>
 
