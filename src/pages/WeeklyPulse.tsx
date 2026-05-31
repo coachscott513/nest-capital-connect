@@ -745,6 +745,171 @@ const WeeklyPulse = () => {
         </section>
 
 
+        {/* ===== 7-DAY SCHEDULE ===== */}
+        <section id="seven-day-schedule" className="relative pt-16 md:pt-24 scroll-mt-24">
+          <div className="max-w-[1600px] mx-auto px-6 md:px-10">
+            <div className="max-w-3xl">
+              <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-4">
+                This Week
+              </p>
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-white leading-[1.05]">
+                Your next seven days in the Capital District.
+              </h2>
+              <p className="mt-5 text-base md:text-lg text-white/65 font-light leading-relaxed">
+                Browse concerts, markets, dining events, community gatherings, sports,
+                nightlife, and things to do by day.
+              </p>
+            </div>
+
+            {/* Day selector */}
+            <div className="mt-10 flex gap-2.5 md:gap-3 overflow-x-auto pb-3 -mx-2 px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {sevenDays.map((d) => {
+                const active = selectedDayIdx === d.index;
+                const count = eventsForDay(d.iso).length;
+                return (
+                  <button
+                    key={d.iso}
+                    type="button"
+                    onClick={() => {
+                      setSelectedDayIdx(d.index);
+                      gtag("schedule_day_click", {
+                        selected_day: d.iso,
+                        selected_town: townFilter,
+                        selected_category: filter,
+                        source_page: "/weekly",
+                      });
+                    }}
+                    className={`shrink-0 w-[96px] md:w-[112px] rounded-2xl px-4 py-4 text-left border transition ${
+                      active
+                        ? "bg-white text-[#0B0F19] border-white shadow-[0_8px_30px_rgba(94,234,212,0.18)]"
+                        : "bg-white/[0.04] text-white border-white/10 hover:border-white/30"
+                    }`}
+                  >
+                    <div className={`text-[10px] font-semibold tracking-[0.22em] uppercase ${active ? "text-[#0B0F19]/70" : "text-[#5eead4]"}`}>
+                      {d.label}
+                    </div>
+                    <div className={`mt-1 text-2xl md:text-[28px] font-semibold tracking-tight ${active ? "text-[#0B0F19]" : "text-white"}`}>
+                      {d.monthLabel} {d.dayNum}
+                    </div>
+                    <div className={`mt-1 text-[11px] font-medium ${active ? "text-[#0B0F19]/60" : "text-white/55"}`}>
+                      {count > 0 ? `${count} event${count === 1 ? "" : "s"}` : "—"}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Day events */}
+            <div className="mt-8 md:mt-10">
+              {selectedDayEvents.length === 0 ? (
+                <div className="rounded-2xl border border-white/[0.08] bg-[#0F1424] p-8 md:p-12 text-center">
+                  <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.02em] text-white">
+                    No featured events listed yet for this day.
+                  </h3>
+                  <p className="mt-3 text-white/65 font-light">
+                    Know about something happening locally? Submit it to Capital District Nest.
+                  </p>
+                  <Link
+                    to="/submit-event"
+                    onClick={() => gtag("add_event_click", { source_location: "seven_day_empty" })}
+                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-5 py-2.5 text-sm font-semibold hover:bg-white transition"
+                  >
+                    <Plus className="w-4 h-4" /> Add Your Event
+                  </Link>
+                </div>
+              ) : (
+                <div className="grid gap-4 md:gap-5 md:grid-cols-2">
+                  {selectedDayEvents.map((ev) => {
+                    const trackOpen = () => {
+                      gtag("schedule_event_click", {
+                        selected_day: selectedDay.iso,
+                        selected_town: townFilter,
+                        selected_category: filter,
+                        event_title: ev.title,
+                        event_date: ev.dateLabel,
+                        link_state: ev.link.kind,
+                        source_page: "/weekly",
+                      });
+                    };
+                    const ctaLabel = ev.link.pending ? "Details Being Confirmed" : ev.link.label;
+                    const inner = (
+                      <div className="flex gap-4 p-4 md:p-5 rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-white/25 transition h-full">
+                        <div className="relative w-[100px] md:w-[140px] shrink-0 aspect-[4/5] md:aspect-[4/5] rounded-xl overflow-hidden">
+                          <img src={ev.image} alt={ev.title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                          <div className="absolute top-2 left-2 flex flex-col items-center justify-center w-[44px] rounded-md bg-[#0B0F19]/85 backdrop-blur border border-white/15 py-1">
+                            <span className="text-[9px] font-semibold tracking-[0.18em] text-[#5eead4]">{ev.dateBadge.top}</span>
+                            <span className="text-base font-semibold text-white leading-none mt-0.5">{ev.dateBadge.bottom || "—"}</span>
+                          </div>
+                        </div>
+                        <div className="flex-1 min-w-0 flex flex-col">
+                          <span className="inline-flex self-start items-center px-2 py-[3px] rounded-full bg-white/[0.06] border border-white/10 text-[10px] font-medium tracking-wider uppercase text-white/80">
+                            {ev.category}
+                          </span>
+                          <h3 className="mt-2 text-base md:text-lg font-semibold tracking-[-0.01em] text-white leading-snug line-clamp-2">
+                            {ev.title}
+                          </h3>
+                          <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-white/65">
+                            {ev.time && (
+                              <span className="inline-flex items-center gap-1">
+                                <Clock className="w-3 h-3 text-[#5eead4]" /> {ev.time}
+                              </span>
+                            )}
+                            {(ev.venue || ev.town) && (
+                              <span className="inline-flex items-center gap-1">
+                                <MapPin className="w-3 h-3 text-[#5eead4]" />
+                                {[ev.venue, ev.town].filter(Boolean).join(" · ")}
+                              </span>
+                            )}
+                          </div>
+                          {ev.description && (
+                            <p className="mt-2 text-[13px] text-white/55 font-light line-clamp-2">
+                              {ev.description}
+                            </p>
+                          )}
+                          <div className="mt-auto pt-3">
+                            <span className={`inline-flex items-center gap-1.5 text-[13px] font-semibold ${ev.link.pending ? "text-white/70" : "text-[#5eead4]"}`}>
+                              {ctaLabel} <ArrowRight className="w-3.5 h-3.5" />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                    if (ev.link.pending) {
+                      return (
+                        <button key={ev.key} type="button" onClick={() => { trackOpen(); openPending(ev, "seven_day_schedule"); }} className="text-left">
+                          {inner}
+                        </button>
+                      );
+                    }
+                    if (ev.link.external) {
+                      return (
+                        <a key={ev.key} href={ev.link.href} target="_blank" rel="noopener noreferrer" onClick={trackOpen} className="block">
+                          {inner}
+                        </a>
+                      );
+                    }
+                    return (
+                      <Link key={ev.key} to={ev.link.href} onClick={trackOpen} className="block">
+                        {inner}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            <div className="mt-8 flex justify-end">
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="text-sm font-medium text-white/55 hover:text-white transition"
+              >
+                ↑ Back to top
+              </button>
+            </div>
+          </div>
+        </section>
+
         {/* ===== RAILS ===== */}
         <div className="pt-2 md:pt-4 pb-8 md:pb-12">
           {visibleRails.map((r) => (
