@@ -8,7 +8,7 @@ const GOLD = "#c9a449";
 const PLATINUM = "#e5e4e2";
 
 type Tier = {
-  id: "free" | "featured" | "spotlight";
+  id: "free" | "featured" | "premier" | "spotlight";
   name: string;
   price: string;
   cadence: string;
@@ -28,12 +28,11 @@ const tiers: Tier[] = [
     name: "Free Listing",
     price: "$0",
     cadence: "always",
-    tagline: "Your basic listing is already live.",
+    tagline: "Basic directory presence — already live for every Capital District business.",
     features: [
-      "Listed in the Capital District directory",
-      "Business name, address & category",
-      "Phone number with click-to-call",
-      "Basic website link",
+      "Business name, category & town",
+      "Phone with click-to-call",
+      "Website link",
       "Basic search visibility",
     ],
     cta: "Review Your Listing",
@@ -42,24 +41,44 @@ const tiers: Tier[] = [
   },
   {
     id: "featured",
-    name: "Featured Business Page",
+    name: "Featured Listing",
+    price: "$15",
+    cadence: "per month",
+    tagline: "The simple upgrade — better visibility across search and town pages.",
+    features: [
+      "Everything in Free",
+      "Featured badge",
+      "Priority placement in category & town search",
+      "Larger card in search results",
+      "Basic description",
+      "Basic photo / logo",
+    ],
+    cta: "Get Featured",
+    ctaHref: "/claim-business?tier=featured",
+    accent: TEAL,
+    badge: "Easy Yes",
+  },
+  {
+    id: "premier",
+    name: "Premier Business Page",
     price: "$25",
     cadence: "per month",
     setup: "+ $25 one-time setup",
-    tagline: "A polished local profile that works like a mini website inside Nest.",
+    tagline: "A full business page that works like a mini website inside Nest.",
     features: [
+      "Everything in Featured",
       "Full business profile page",
-      "Business description & services list",
-      "Photos & logo",
-      "Phone, text, email & website buttons",
-      "Town & category placement",
-      "Priority search visibility",
+      "Photos & logo gallery",
+      "Services list",
+      "Long-form business description",
+      "Call, text, email & website buttons",
+      "Request a Quote / contact button",
       "Shareable profile link",
-      "Submit events & specials",
-      "Featured Local Partner badge (pilot)",
+      "Events & specials submission",
+      "Basic ongoing updates included",
     ],
-    cta: "Claim My Profile",
-    ctaHref: "/claim-business?tier=featured",
+    cta: "Build My Business Page",
+    ctaHref: "/claim-business?tier=premier",
     accent: TEAL,
     badge: "Most Popular",
     highlighted: true,
@@ -71,19 +90,19 @@ const tiers: Tier[] = [
     cadence: "per month",
     tagline: "Premium visibility for businesses that want more local attention.",
     features: [
-      "Everything in Featured",
+      "Everything in Premier",
       "Higher category & town placement",
-      "Specials & events promotion",
-      "Unlimited photo gallery",
-      "Newsletter / local pulse spotlight",
-      "Weekly event matrix feature",
-      "Priority review for homepage placement",
+      "Featured partner card",
+      "Local Pulse mention",
+      "Events & specials promotion",
+      "Newsletter / homepage section consideration",
     ],
     cta: "Request Spotlight",
     ctaHref: "/claim-business?tier=spotlight",
     accent: GOLD,
   },
 ];
+
 
 const addOns = [
   { name: "Premium Video Production", price: "$150", icon: Video, desc: "Cinematic 60-second showcase, edited & delivered." },
@@ -99,8 +118,9 @@ const Pricing = () => {
         <title>Pricing | Local Business Solutions — Capital District Nest</title>
         <meta
           name="description"
-          content="Free directory listing for every Capital District business. Featured Business Page $25 setup + $25/mo, Spotlight $50/mo, Anchor Partner $100–150/mo (application-based)."
+          content="Free directory listing for every Capital District business. Featured Listing $15/mo, Premier Business Page $25 setup + $25/mo, Spotlight $50/mo, Anchor Partner $100–150/mo (application-based)."
         />
+
         <link rel="canonical" href="https://www.capitaldistrictnest.com/pricing" />
       </Helmet>
 
@@ -121,19 +141,20 @@ const Pricing = () => {
             Local Business Solutions
           </p>
           <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] text-white">
-            Free gets you listed. $25 gets you a full business page.
+            Free to be listed. $15 to stand out. $25 for a full business page.
           </h1>
           <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
             Every Capital District business is already searchable on Nest, for free. Upgrade to a
-            polished Featured Business Page that works like a mini website inside Nest — or anchor
-            your category.
+            Featured Listing for better visibility, or to a Premier Business Page that works like a
+            mini website inside Nest.
           </p>
         </div>
+
       </section>
 
       {/* TIERS */}
       <section className="px-6 md:px-10 pb-16 md:pb-20">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
           {tiers.map((t) => (
             <article
               key={t.id}
@@ -199,7 +220,7 @@ const Pricing = () => {
                 }`}
                 style={t.id === "spotlight" ? { background: GOLD } : undefined}
               >
-                {t.id === "featured" && <Sparkles className="w-4 h-4" />}
+                {(t.id === "featured" || t.id === "premier") && <Sparkles className="w-4 h-4" />}
                 {t.cta}
                 <ArrowRight className="w-4 h-4" />
               </a>
@@ -243,8 +264,9 @@ const Pricing = () => {
         </div>
 
         <p className="mt-12 text-center text-xs text-white/45 max-w-2xl mx-auto">
-          Cancel anytime. One-time $25 setup on Featured covers the manual profile build. Monthly pricing locks in for life on your start date — even if rates change later.
+          Cancel anytime. The one-time $25 setup on Premier Business Page covers the manual profile build. Monthly pricing locks in for life on your start date — even if rates change later.
         </p>
+
       </section>
 
 
@@ -310,21 +332,26 @@ const Pricing = () => {
             {[
               {
                 q: "Do I have to pay to appear on Capital District Nest?",
-                a: "No. Every legitimate Capital District business is already indexed for free with name, address, phone, website, hours, and category. You only pay when you want to stand out.",
+                a: "No. Every legitimate Capital District business is already indexed for free with name, category, town, phone, and website. You only pay when you want to stand out.",
               },
               {
-                q: "What does Spotlight unlock that Featured doesn't?",
-                a: "Spotlight stacks on top of a Featured Business Page with higher category and town placement, specials and events promotion, an unlimited photo gallery, newsletter spotlights, and priority review for homepage placement. Featured already gives you the full polished profile page — Spotlight is for businesses that want maximum local visibility.",
+                q: "What's the difference between Featured ($15) and Premier ($25 setup + $25/mo)?",
+                a: "Featured is the simple upgrade — featured badge, priority placement in category and town search, a larger search card, basic description, and basic photo or logo. Premier is the full business page: a polished mini-website inside Nest with photo gallery, services list, long-form description, call/text/email/website buttons, a Request a Quote button, shareable link, events and specials submission, and basic ongoing updates. Featured = more visible. Premier = full presence.",
+              },
+              {
+                q: "What does Spotlight unlock that Premier doesn't?",
+                a: "Spotlight stacks on top of a Premier Business Page with higher category and town placement, a featured partner card, a Local Pulse mention, specials and events promotion, and consideration for newsletter and homepage sections. Premier already gives you the full polished page — Spotlight is for businesses that want maximum local visibility.",
               },
               {
                 q: "What is the Anchor tier and why is it limited?",
-                a: "Anchor is a category sponsorship — one business per category, per town. You own the homepage hero rotation, the “Plumbers sponsored by…” banner, and lock your top competitors out of that placement. Apply early; once a category is claimed for your town, it's gone.",
+                a: "Anchor is a category sponsorship — one business per category, per town. You own homepage hero rotation, the “Plumbers sponsored by…” banner, and lock your top competitors out of that placement. Apply early; once a category is claimed for your town, it's gone.",
               },
               {
                 q: "How do I get started?",
-                a: "Email Scott directly at team@capitaldistrictnest.com or call/text 518-207-9348. We'll confirm your listing, collect your assets, and activate within 48 hours.",
+                a: "Email the team at team@capitaldistrictnest.com or call/text 518-207-9348. We'll confirm your listing, collect your assets, and activate within 48 hours.",
               },
             ].map((item) => (
+
               <details
                 key={item.q}
                 className="group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 open:border-white/20 transition"
@@ -355,26 +382,27 @@ const Pricing = () => {
             Ready to upgrade?
           </h2>
           <p className="mt-5 text-base md:text-lg text-white/65 leading-relaxed">
-            Talk to Scott directly — no forms, no funnels. We'll get you live this week.
+            Talk to the Capital District Nest team — no forms, no funnels. We'll get you live this week.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
-              href="mailto:scott@capitaldistrictnest.com?subject=Local%20Business%20Solutions%20%E2%80%93%20Capital%20District%20Nest"
+              href="mailto:team@capitaldistrictnest.com?subject=Local%20Business%20Solutions%20%E2%80%93%20Capital%20District%20Nest"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
             >
-              Email Scott <ArrowRight className="w-4 h-4" />
+              Email the Team <ArrowRight className="w-4 h-4" />
             </a>
             <a
-              href="tel:+15185227265"
+              href="tel:+15182079348"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
             >
-              Call (518) 522-7265
+              Call 518-207-9348
             </a>
           </div>
         </div>
       </section>
 
       <Footer />
+
     </div>
   );
 };
