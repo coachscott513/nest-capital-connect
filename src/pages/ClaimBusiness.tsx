@@ -114,11 +114,24 @@ const ClaimBusiness = () => {
     category: categoryParam || "",
     town: prettifyTown(prefillTown),
   });
+  const [requestedTier, setRequestedTier] = useState<string>(
+    ["free", "featured", "premier", "spotlight", "anchor"].includes(tierParam) ? tierParam : ""
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const update = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
     setForm((p) => ({ ...p, [k]: v }));
+
+  const selectTierAndScroll = (tierId: string) => {
+    setRequestedTier(tierId);
+    track("claim_business_tier_select", { tier: tierId });
+    if (typeof window !== "undefined") {
+      const el = document.getElementById("claim-form");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
 
   // Fire page view + attempt slug → business resolution.
   useEffect(() => {
