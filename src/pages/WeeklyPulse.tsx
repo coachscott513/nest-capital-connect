@@ -710,6 +710,7 @@ const WeeklyPulse = () => {
                     onClick={() => {
                       setFilter(f.key);
                       gtag("weekly_filter_click", { filter: f.key });
+                      gtag("schedule_filter_click", { selected_category: f.key, selected_town: townFilter, source_page: "/weekly" });
                     }}
                     className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition border ${
                       active
