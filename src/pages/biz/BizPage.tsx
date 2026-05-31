@@ -830,13 +830,16 @@ const BizPage = () => {
         const townRaw = biz.town_name || biz.city || "";
         const town = townRaw || "Capital District";
         const url = `https://www.capitaldistrictnest.com/biz/${biz.slug}`;
-        const desc = townRaw
+        const tagline = (biz.tagline || "").trim();
+        const fallbackDesc = townRaw
           ? `Get hours, contact info, website, directions, and local profile details for ${biz.name} in ${townRaw}, NY on Capital District Nest.`
           : `Get hours, contact info, website, directions, and local profile details for ${biz.name} on Capital District Nest.`;
-        const title = townRaw
-          ? `${biz.name} | ${townRaw}, NY | Capital District Nest`
-          : `${biz.name} | Capital District Nest`;
-        const image = biz.hero_image_url || biz.photos?.[0] || biz.logo_url || undefined;
+        const desc = tagline || (biz.description || "").trim() || fallbackDesc;
+        const title = `${biz.name} | Capital District Nest`;
+        const rawImage = biz.hero_image_url || biz.photos?.[0] || biz.logo_url || "/og-image-capital-district.jpg";
+        const image = rawImage.startsWith("http")
+          ? rawImage
+          : `https://www.capitaldistrictnest.com${rawImage.startsWith("/") ? "" : "/"}${rawImage}`;
         const ldBusiness: Record<string, unknown> = {
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
