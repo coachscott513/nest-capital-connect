@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, Search, ExternalLink } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
