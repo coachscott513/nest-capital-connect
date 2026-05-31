@@ -124,7 +124,7 @@ const ClaimBusiness = () => {
         `Interests: ${interests}`,
       ].filter(Boolean).join("\n");
 
-      const { error } = await supabase.from("leads").insert({
+      const payload = {
         full_name: form.ownerName,
         email: form.email,
         phone: form.phone || null,
@@ -132,12 +132,25 @@ const ClaimBusiness = () => {
         type: "business_claim",
         origin_town: form.town || prefillTown || null,
         lead_type: "business_owner",
-      });
-      if (error) throw error;
+      };
+      if (import.meta.env.DEV) console.log("[claim] submitting", payload);
+      const { error } = await supabase.from("leads").insert(payload);
+      if (error) {
+        console.error("[claim] supabase error:", error);
+        const detail = import.meta.env.DEV
+          ? ` (${error.message})`
+          : "";
+        toast.error(
+          `We couldn't submit your profile right now. Please try again, or email scott@capitaldistrictnest.com.${detail}`
+        );
+        return;
+      }
       setIsSubmitted(true);
-    } catch (err) {
-      console.error("Claim submit error:", err);
-      toast.error("Something went wrong. Please try again.");
+    } catch (err: any) {
+      console.error("[claim] submit exception:", err);
+      toast.error(
+        "We couldn't submit your profile right now. Please try again, or email scott@capitaldistrictnest.com."
+      );
     } finally {
       setIsSubmitting(false);
     }
