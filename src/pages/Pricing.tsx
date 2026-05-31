@@ -8,7 +8,7 @@ const GOLD = "#c9a449";
 const PLATINUM = "#e5e4e2";
 
 type Tier = {
-  id: "free" | "featured" | "spotlight";
+  id: "free" | "featured" | "premier" | "spotlight";
   name: string;
   price: string;
   cadence: string;
@@ -28,12 +28,11 @@ const tiers: Tier[] = [
     name: "Free Listing",
     price: "$0",
     cadence: "always",
-    tagline: "Your basic listing is already live.",
+    tagline: "Basic directory presence — already live for every Capital District business.",
     features: [
-      "Listed in the Capital District directory",
-      "Business name, address & category",
-      "Phone number with click-to-call",
-      "Basic website link",
+      "Business name, category & town",
+      "Phone with click-to-call",
+      "Website link",
       "Basic search visibility",
     ],
     cta: "Review Your Listing",
@@ -42,24 +41,44 @@ const tiers: Tier[] = [
   },
   {
     id: "featured",
-    name: "Featured Business Page",
+    name: "Featured Listing",
+    price: "$15",
+    cadence: "per month",
+    tagline: "The simple upgrade — better visibility across search and town pages.",
+    features: [
+      "Everything in Free",
+      "Featured badge",
+      "Priority placement in category & town search",
+      "Larger card in search results",
+      "Basic description",
+      "Basic photo / logo",
+    ],
+    cta: "Get Featured",
+    ctaHref: "/claim-business?tier=featured",
+    accent: TEAL,
+    badge: "Easy Yes",
+  },
+  {
+    id: "premier",
+    name: "Premier Business Page",
     price: "$25",
     cadence: "per month",
     setup: "+ $25 one-time setup",
-    tagline: "A polished local profile that works like a mini website inside Nest.",
+    tagline: "A full business page that works like a mini website inside Nest.",
     features: [
+      "Everything in Featured",
       "Full business profile page",
-      "Business description & services list",
-      "Photos & logo",
-      "Phone, text, email & website buttons",
-      "Town & category placement",
-      "Priority search visibility",
+      "Photos & logo gallery",
+      "Services list",
+      "Long-form business description",
+      "Call, text, email & website buttons",
+      "Request a Quote / contact button",
       "Shareable profile link",
-      "Submit events & specials",
-      "Featured Local Partner badge (pilot)",
+      "Events & specials submission",
+      "Basic ongoing updates included",
     ],
-    cta: "Claim My Profile",
-    ctaHref: "/claim-business?tier=featured",
+    cta: "Build My Business Page",
+    ctaHref: "/claim-business?tier=premier",
     accent: TEAL,
     badge: "Most Popular",
     highlighted: true,
@@ -71,19 +90,19 @@ const tiers: Tier[] = [
     cadence: "per month",
     tagline: "Premium visibility for businesses that want more local attention.",
     features: [
-      "Everything in Featured",
+      "Everything in Premier",
       "Higher category & town placement",
-      "Specials & events promotion",
-      "Unlimited photo gallery",
-      "Newsletter / local pulse spotlight",
-      "Weekly event matrix feature",
-      "Priority review for homepage placement",
+      "Featured partner card",
+      "Local Pulse mention",
+      "Events & specials promotion",
+      "Newsletter / homepage section consideration",
     ],
     cta: "Request Spotlight",
     ctaHref: "/claim-business?tier=spotlight",
     accent: GOLD,
   },
 ];
+
 
 const addOns = [
   { name: "Premium Video Production", price: "$150", icon: Video, desc: "Cinematic 60-second showcase, edited & delivered." },
