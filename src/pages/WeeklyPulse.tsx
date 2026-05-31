@@ -379,6 +379,11 @@ const WeeklyPulse = () => {
   const [pendingEvent, setPendingEvent] = useState<EventCard | null>(null);
   const [selectedDayIdx, setSelectedDayIdx] = useState<number>(0);
 
+  useEffect(() => {
+    gtag("seven_day_schedule_view", { source_page: "/weekly" });
+  }, []);
+
+
 
   const openPending = (ev: EventCard, sourceLocation: string) => {
     setPendingEvent(ev);
