@@ -86,9 +86,9 @@ const handler = async (req: Request): Promise<Response> => {
           html: `
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
               <h2 style="color: #10b981;">Capital Deal Desk</h2>
-              <p>Hi ${data.firstName},</p>
+              <p>Hi ${esc(data.firstName)},</p>
               <p>Got it — we're preparing your same-day Investor Snapshot for:</p>
-              <p style="background: #f4f4f4; padding: 12px; border-radius: 6px; font-weight: 500;">${data.propertyAddress}</p>
+              <p style="background: #f4f4f4; padding: 12px; border-radius: 6px; font-weight: 500;">${esc(data.propertyAddress)}</p>
               <p>You'll receive it shortly.</p>
               <hr style="border: none; border-top: 1px solid #e5e5e5; margin: 24px 0;" />
               <p style="color: #666; font-size: 14px;">Capital Deal Desk — Wall Street Tools. Main Street Soul.</p>
@@ -103,8 +103,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Build admin email content based on type
     const adminSubject = isProInterest 
-      ? `NEW Pro Interest — ${data.email}`
-      : `NEW Deal Desk Request — ${data.propertyAddress}`;
+      ? `NEW Pro Interest — ${esc(data.email)}`
+      : `NEW Deal Desk Request — ${esc(data.propertyAddress)}`;
 
     const adminHtml = isProInterest
       ? `
@@ -117,11 +117,11 @@ const handler = async (req: Request): Promise<Response> => {
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Name</td>
-              <td style="padding: 10px; border: 1px solid #e5e5e5;">${data.firstName}</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;">${esc(data.firstName)}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Email</td>
-              <td style="padding: 10px; border: 1px solid #e5e5e5;"><a href="mailto:${data.email}">${data.email}</a></td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;"><a href="mailto:${esc(data.email)}">${esc(data.email)}</a></td>
             </tr>
           </table>
           <div style="background: #fff3cd; padding: 16px; border-radius: 8px; border-left: 4px solid #ffc107;">
@@ -142,23 +142,23 @@ const handler = async (req: Request): Promise<Response> => {
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Name</td>
-              <td style="padding: 10px; border: 1px solid #e5e5e5;">${data.firstName}</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;">${esc(data.firstName)}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Email</td>
-              <td style="padding: 10px; border: 1px solid #e5e5e5;"><a href="mailto:${data.email}">${data.email}</a></td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;"><a href="mailto:${esc(data.email)}">${esc(data.email)}</a></td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Address/Link</td>
-              <td style="padding: 10px; border: 1px solid #e5e5e5; word-break: break-all;">${data.propertyAddress}</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5; word-break: break-all;">${esc(data.propertyAddress)}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Strategy</td>
-              <td style="padding: 10px; border: 1px solid #e5e5e5;">${data.strategy}</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;">${esc(data.strategy)}</td>
             </tr>
             <tr>
               <td style="padding: 10px; border: 1px solid #e5e5e5; font-weight: 600; background: #f9f9f9;">Notes</td>
-              <td style="padding: 10px; border: 1px solid #e5e5e5;">${data.notes || "None"}</td>
+              <td style="padding: 10px; border: 1px solid #e5e5e5;">${esc(data.notes || "None")}</td>
             </tr>
           </table>
 
