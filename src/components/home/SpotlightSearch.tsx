@@ -82,7 +82,7 @@ const TRENDING_NOW = [
 ];
 
 const THIS_WEEK = [
-  { label: "Live music in downtown Troy",        to: "/#weekly-feed" },
+  { label: "Live music in downtown Troy",        to: "/weekly" },
   { label: "Restaurant week · Clifton Park",     to: "/local?town=clifton-park" },
   { label: "New listings · Delmar (14 this week)", to: "/living-in/delmar" },
   { label: "Mohawk Harbor development update",   to: "/intelligence" },

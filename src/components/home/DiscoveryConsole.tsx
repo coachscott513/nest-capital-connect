@@ -116,7 +116,7 @@ const CATEGORIES: CategoryRow[] = [
     key: "events",
     label: "Events",
     icon: PartyPopper,
-    to: "/#weekly-feed",
+    to: "/weekly",
     patterns: [], // Events come from the weekly feed, not the directory.
     unit: "this week",
   },
@@ -126,7 +126,7 @@ const TRENDING_NOW: { label: string; to: string }[] = [
   { label: "Delmar coffee shops",          to: "/local?q=coffee&town=delmar" },
   { label: "Troy contractors",             to: "/local?q=contractor&town=troy" },
   { label: "Albany restaurants",           to: "/local?q=restaurant&town=albany" },
-  { label: "Saratoga events",              to: "/#weekly-feed" },
+  { label: "Saratoga events",              to: "/weekly" },
   { label: "Clifton Park dentists",        to: "/local?q=dentist&town=clifton-park" },
   { label: "Schenectady cleaning services",to: "/local?q=cleaning&town=schenectady" },
   { label: "Mortgage lenders",             to: "/local?q=mortgage" },
@@ -134,10 +134,10 @@ const TRENDING_NOW: { label: string; to: string }[] = [
 ];
 
 const THIS_WEEK: { label: string; to: string }[] = [
-  { label: "Live music in downtown Troy",        to: "/#weekly-feed" },
-  { label: "Restaurant week · Clifton Park",     to: "/#weekly-feed" },
-  { label: "New business openings",              to: "/#weekly-feed" },
-  { label: "Weekend events",                     to: "/#weekly-feed" },
+  { label: "Live music in downtown Troy",        to: "/weekly" },
+  { label: "Restaurant week · Clifton Park",     to: "/weekly" },
+  { label: "New business openings",              to: "/weekly" },
+  { label: "Weekend events",                     to: "/weekly" },
   { label: "Featured town updates",              to: "/communities" },
   { label: "Local specials & promotions",        to: "/local" },
 ];
