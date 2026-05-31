@@ -216,14 +216,30 @@ const ClaimBusiness = () => {
             For Local Business Owners
           </p>
           <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
-            Let's build your Capital District profile.
+            Claim Your Business on Capital District Nest
           </h1>
           <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
-            Tell us about your business and our team will reach out to help create your profile.
+            Review your listing, update your profile, add photos, submit events, and request
+            featured placement across the Capital District's local discovery platform.
           </p>
-          <p className="mt-4 text-sm font-medium max-w-2xl mx-auto" style={{ color: "#c9a449" }}>
-            Featured placements are limited by town and category during the launch pilot.
+          <p className="mt-3 text-base text-white/55 font-light max-w-2xl mx-auto">
+            Your business may already be listed. Review it for free, upgrade your profile, or
+            request featured placement.
           </p>
+          <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a
+              href="#claim-form"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+            >
+              Find My Business <ArrowUpRight className="w-4 h-4" />
+            </a>
+            <a
+              href="#tiers"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
+            >
+              Compare Options
+            </a>
+          </div>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3 text-xs text-white/55">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04]">
               <Handshake className="w-3.5 h-3.5" style={{ color: TEAL }} /> Concierge onboarding
@@ -238,58 +254,187 @@ const ClaimBusiness = () => {
         </div>
       </section>
 
-      {/* PRICING TIERS */}
-      <section className="pb-16 px-6 md:px-10">
-        <div className="max-w-5xl mx-auto">
+      {/* PRICING TIERS — unified ladder */}
+      <section id="tiers" className="pb-16 px-6 md:px-10">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-3" style={{ color: TEAL }}>
-              Directory Tiers
+              Local Business Tiers
             </p>
             <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em]">
-              Three ways to own your spot on the Capital District's discovery hub.
+              Free gets you listed. $15 makes you featured.
             </h2>
+            <p className="mt-4 text-sm text-white/60 max-w-2xl mx-auto font-light">
+              One clean ladder across the entire site. Start free, upgrade when you're ready.
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-5">
-            {/* Member */}
-            <div className="rounded-3xl p-7 bg-white/[0.04] backdrop-blur-xl border border-white/10 hover:border-white/25 transition flex flex-col">
-              <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/55">Member</p>
-              <p className="mt-3 text-4xl font-semibold tracking-tight">$10<span className="text-base text-white/55 font-light">/mo</span></p>
-              <ul className="mt-5 space-y-2.5 text-sm text-white/70 font-light flex-1">
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Full image uploads</li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Business description</li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Social media links</li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Store hours</li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> "Member" badge</li>
-              </ul>
+
+          {(() => {
+            const cards = [
+              {
+                id: "free",
+                eyebrow: "Free Listing",
+                price: "$0",
+                cadence: "always",
+                tag: "Your basic listing is already live.",
+                accent: "rgba(255,255,255,0.55)",
+                items: [
+                  "Capital District directory",
+                  "Name, address & category",
+                  "Click-to-call phone",
+                  "Basic website link",
+                ],
+                cta: "Review Your Listing",
+                style: "neutral" as const,
+              },
+              {
+                id: "member",
+                eyebrow: "Member",
+                price: "$10",
+                cadence: "/mo",
+                tag: "Richer profile content.",
+                accent: "#ffffff",
+                items: [
+                  "Everything in Free",
+                  "Photo uploads & description",
+                  "Social links & store hours",
+                  "Submit events & specials",
+                ],
+                cta: "Become a Member",
+                style: "neutral" as const,
+              },
+              {
+                id: "featured",
+                eyebrow: "Featured Local Partner · Most Popular",
+                price: "$15",
+                cadence: "/mo",
+                tag: "Stand out across search and town pages.",
+                accent: TEAL,
+                items: [
+                  "Everything in Member",
+                  "Priority placement in category search",
+                  "Featured badge + larger card",
+                  "10-photo gallery & enhanced description",
+                  "Live Pulse / local update integration",
+                ],
+                cta: "Get Featured",
+                style: "teal" as const,
+              },
+              {
+                id: "spotlight",
+                eyebrow: "Spotlight Partner",
+                price: "$50",
+                cadence: "/mo",
+                tag: "Premium visibility for more local attention.",
+                accent: "#c9a449",
+                items: [
+                  "Everything in Featured",
+                  "Dedicated business page",
+                  "Unlimited photo gallery",
+                  "Specials with images & newsletter spotlight",
+                  "Weekly event matrix feature",
+                ],
+                cta: "Request Spotlight",
+                style: "gold" as const,
+              },
+            ];
+            return (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+                {cards.map((c) => (
+                  <div
+                    key={c.id}
+                    className={`relative rounded-3xl p-7 backdrop-blur-xl border flex flex-col transition ${
+                      c.style === "teal"
+                        ? "bg-gradient-to-br from-[#5eead4]/15 via-[#1E2230] to-[#1E2230] border-[#5eead4]/45 shadow-[0_30px_70px_-30px_rgba(94,234,212,0.45)]"
+                        : c.style === "gold"
+                        ? "bg-gradient-to-br from-[#c9a449]/15 via-[#1E2230] to-[#1E2230] border-[#c9a449]/40"
+                        : "bg-white/[0.04] border-white/10 hover:border-white/25"
+                    }`}
+                  >
+                    {c.style === "teal" && (
+                      <span
+                        className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] text-[#0B0F19] whitespace-nowrap"
+                        style={{ background: TEAL }}
+                      >
+                        <Star className="w-3 h-3 fill-current" /> Most Popular
+                      </span>
+                    )}
+                    <p
+                      className="text-[10px] font-semibold tracking-[0.22em] uppercase"
+                      style={{ color: c.accent }}
+                    >
+                      {c.eyebrow}
+                    </p>
+                    <p className="mt-3 text-4xl font-semibold tracking-tight">
+                      {c.price}
+                      <span className="text-base text-white/55 font-light">{c.cadence === "always" ? " / always" : c.cadence}</span>
+                    </p>
+                    <p className="mt-2 text-[13px] text-white/65 font-light leading-relaxed min-h-[40px]">
+                      {c.tag}
+                    </p>
+                    <ul className="mt-4 space-y-2.5 text-sm text-white/75 font-light flex-1">
+                      {c.items.map((it) => (
+                        <li key={it} className="flex gap-2">
+                          <CheckCircle
+                            className="w-4 h-4 mt-0.5 shrink-0"
+                            style={{ color: c.accent }}
+                          />
+                          {it}
+                        </li>
+                      ))}
+                    </ul>
+                    <a
+                      href={`#claim-form`}
+                      className={`mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-[13px] font-semibold transition ${
+                        c.style === "teal"
+                          ? "bg-white text-[#0B0F19] hover:opacity-90"
+                          : c.style === "gold"
+                          ? "text-[#0B0F19] hover:opacity-90"
+                          : "border border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08]"
+                      }`}
+                      style={c.style === "gold" ? { background: "#c9a449" } : undefined}
+                    >
+                      {c.cta} <ArrowUpRight className="w-4 h-4" />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+
+          {/* Anchor application strip */}
+          <div className="mt-6 rounded-3xl border border-white/15 bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-white/[0.02] backdrop-blur-xl p-7 md:p-9 flex flex-col md:flex-row md:items-center gap-6 relative">
+            <span
+              className="absolute -top-3 left-7 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
+              style={{ background: "#e5e4e2", color: "#0B0F19" }}
+            >
+              <Star className="w-3 h-3 fill-current" /> Enterprise · Anchor Partner
+            </span>
+            <div className="flex-1">
+              <div className="flex items-baseline gap-2 flex-wrap">
+                <span className="text-3xl md:text-4xl font-semibold tracking-tight">$100–$150</span>
+                <span className="text-sm text-white/55">/ mo · application-based</span>
+              </div>
+              <p className="mt-3 text-[14.5px] text-white/75 font-light leading-relaxed max-w-2xl">
+                Own your category or become a major local sponsor. Homepage hero rotation, category
+                & town sponsorship, competitor lockout where available, custom campaigns, concierge setup.
+              </p>
             </div>
-            {/* Featured */}
-            <div className="rounded-3xl p-7 bg-gradient-to-br from-[#c9a449]/15 via-[#1E2230] to-[#1E2230] border border-[#c9a449]/40 hover:border-[#c9a449]/70 transition flex flex-col shadow-[0_30px_70px_-30px_rgba(201,164,73,0.4)]">
-              <p className="text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: "#c9a449" }}>Featured · Most Popular</p>
-              <p className="mt-3 text-4xl font-semibold tracking-tight">$15<span className="text-base text-white/55 font-light">/mo</span></p>
-              <ul className="mt-5 space-y-2.5 text-sm text-white/75 font-light flex-1">
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Everything in Member</li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Priority category indexing</li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Custom gold badging</li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: "#c9a449" }} /> Live Pulse ticker integration</li>
-              </ul>
-            </div>
-            {/* Spotlight */}
-            <div className="rounded-3xl p-7 bg-gradient-to-br from-[#0d6e66]/20 via-[#1E2230] to-[#1E2230] border border-[#5eead4]/40 hover:border-[#5eead4]/70 transition flex flex-col shadow-[0_30px_70px_-30px_rgba(94,234,212,0.45)]">
-              <p className="text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: TEAL }}>Spotlight</p>
-              <p className="mt-3 text-4xl font-semibold tracking-tight">$20<span className="text-base text-white/55 font-light">/mo</span></p>
-              <ul className="mt-5 space-y-2.5 text-sm text-white/75 font-light flex-1">
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Everything in Featured</li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Premier card sizing</li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Newsletter spotlight</li>
-                <li className="flex gap-2"><CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} /> Weekly event matrix feature</li>
-              </ul>
-            </div>
+            <a
+              href="#claim-form"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-[13px] font-semibold whitespace-nowrap hover:opacity-90 transition"
+              style={{ background: "#e5e4e2", color: "#0B0F19" }}
+            >
+              Apply as Anchor Partner <ArrowUpRight className="w-4 h-4" />
+            </a>
           </div>
+
           <p className="mt-6 text-center text-xs text-white/45">
-            Pick a tier in the form below — or leave it blank and our concierge team will recommend one.
+            Tell us about your business below — our concierge team will help you pick the right tier.
           </p>
         </div>
       </section>
+
 
       {/* FORM */}
       <section className="pb-28 px-6 md:px-10">
