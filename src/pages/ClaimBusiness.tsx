@@ -643,11 +643,12 @@ const ClaimBusiness = () => {
                 ) : (
                   <>Looking up this business…</>
                 )}
-                {tierParam && (
+                {(requestedTier || tierParam) && (
                   <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.18em] border border-white/15 text-white/70">
-                    Tier: {tierParam}
+                    Tier: {requestedTier || tierParam}
                   </span>
                 )}
+
               </div>
             </div>
           )}
