@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import BusinessDirectory from "@/components/local/BusinessDirectory";
+import LocalHero from "@/components/local/LocalHero";
 
 const titleize = (s: string) =>
   s
@@ -27,7 +28,7 @@ const LocalPage = () => {
     : "https://www.capitaldistrictnest.com/local";
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[#0B0F19] text-white">
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
@@ -42,7 +43,10 @@ const LocalPage = () => {
       </Helmet>
 
       <CleanHeader />
-      <BusinessDirectory />
+      <LocalHero />
+      <div id="directory">
+        <BusinessDirectory />
+      </div>
       <Footer />
     </div>
   );
