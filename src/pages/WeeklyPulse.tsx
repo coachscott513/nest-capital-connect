@@ -229,21 +229,30 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
         className="overflow-x-auto snap-x snap-mandatory scroll-pl-6 md:scroll-pl-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         <div className="flex gap-4 md:gap-5 px-6 md:px-10 pb-2">
-          {events.map((ev) => (
-            <Link
-              key={ev.key}
-              to={ev.href}
-              onClick={() =>
-                gtag("event_card_click", {
+          {events.map((ev) => {
+            const sourceLocation = `rail_${id}`;
+            const trackCard = () => {
+              gtag("event_card_click", {
+                event_title: ev.title,
+                event_category: ev.category,
+                event_date: ev.dateLabel,
+                event_location: ev.venue || ev.town || "",
+                link_state: ev.link.kind,
+                source_location: sourceLocation,
+              });
+              if (ev.link.external) {
+                gtag("event_external_link_click", {
                   event_title: ev.title,
                   event_category: ev.category,
                   event_date: ev.dateLabel,
                   event_location: ev.venue || ev.town || "",
-                  source_location: `rail_${id}`,
-                })
+                  link_state: ev.link.kind,
+                  source_location: sourceLocation,
+                });
               }
-              className={`group snap-start shrink-0 ${cardW} block`}
-            >
+            };
+
+            const cardInner = (
               <div className={`relative ${aspect} overflow-hidden rounded-xl bg-[#0F1424] border border-white/[0.06] group-hover:border-white/20 transition`}>
                 <img
                   src={ev.image}
@@ -277,6 +286,11 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
 
                 {/* Bottom title block */}
                 <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                  {ev.needsVerification && (
+                    <span className="inline-flex items-center gap-1 mb-2 px-2 py-[3px] rounded-full bg-[#5eead4]/12 border border-[#5eead4]/35 text-[10px] font-medium tracking-[0.14em] uppercase text-[#5eead4]">
+                      <AlertCircle className="w-3 h-3" /> Details being confirmed
+                    </span>
+                  )}
                   <h3 className="text-base md:text-lg font-semibold tracking-[-0.01em] text-white leading-snug line-clamp-2">
                     {ev.title}
                   </h3>
@@ -294,11 +308,54 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
                       </span>
                     )}
                   </div>
+                  <div className="mt-3">
+                    <span className={`inline-flex items-center gap-1.5 text-[12px] font-semibold ${ev.link.pending ? "text-white/70" : "text-[#5eead4]"}`}>
+                      {ev.link.label} <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
                 </div>
               </div>
-            </Link>
-          ))}
+            );
+
+            const className = `group snap-start shrink-0 ${cardW} block text-left`;
+
+            if (ev.link.pending) {
+              return (
+                <button
+                  key={ev.key}
+                  type="button"
+                  onClick={() => {
+                    trackCard();
+                    onPending(ev, sourceLocation);
+                  }}
+                  className={className}
+                >
+                  {cardInner}
+                </button>
+              );
+            }
+            if (ev.link.external) {
+              return (
+                <a
+                  key={ev.key}
+                  href={ev.link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={trackCard}
+                  className={className}
+                >
+                  {cardInner}
+                </a>
+              );
+            }
+            return (
+              <Link key={ev.key} to={ev.link.href} onClick={trackCard} className={className}>
+                {cardInner}
+              </Link>
+            );
+          })}
         </div>
+
       </div>
     </section>
   );
