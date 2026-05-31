@@ -219,7 +219,7 @@ const Pricing = () => {
                 }`}
                 style={t.id === "spotlight" ? { background: GOLD } : undefined}
               >
-                {t.id === "featured" && <Sparkles className="w-4 h-4" />}
+                {(t.id === "featured" || t.id === "premier") && <Sparkles className="w-4 h-4" />}
                 {t.cta}
                 <ArrowRight className="w-4 h-4" />
               </a>
