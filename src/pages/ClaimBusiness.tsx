@@ -275,10 +275,11 @@ const ClaimBusiness = () => {
               Local Business Tiers
             </p>
             <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em]">
-              Free gets you listed. $15 makes you featured.
+              Free gets you listed. $25 gets you a full business page.
             </h2>
             <p className="mt-4 text-sm text-white/60 max-w-2xl mx-auto font-light">
-              One clean ladder across the entire site. Start free, upgrade when you're ready.
+              One clean ladder across the entire site. Start free, upgrade to a polished Featured
+              Business Page that works like a mini website inside Nest.
             </p>
           </div>
 
