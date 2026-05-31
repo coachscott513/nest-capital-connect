@@ -223,12 +223,20 @@ export default function EndlessEntertainment() {
               Live music, festivals, markets, dining events, and things to do across the Capital District.
             </p>
           </div>
-          <Link
-            to="/weekly"
-            className="hidden md:inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-white/80 hover:text-[#5eead4] transition"
-          >
-            View all events <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="hidden md:flex shrink-0 items-center gap-6">
+            <Link
+              to="/weekly"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-white/80 hover:text-[#5eead4] transition"
+            >
+              View all events <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/submit-event"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-white/80 hover:text-[#5eead4] transition"
+            >
+              Add your event <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </div>
 
