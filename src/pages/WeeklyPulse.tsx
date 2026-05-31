@@ -829,6 +829,14 @@ const WeeklyPulse = () => {
 
             {/* Day events */}
             <div className="mt-8 md:mt-10">
+              <div className="mb-5 md:mb-6 flex items-baseline justify-between gap-4">
+                <h3 className="text-lg md:text-xl font-semibold tracking-[-0.015em] text-white">
+                  {selectedDayLongLabel}
+                </h3>
+                <span className="text-[12px] md:text-sm font-medium text-white/55">
+                  {selectedDayEvents.length} {selectedDayEvents.length === 1 ? "event" : "events"}
+                </span>
+              </div>
               {selectedDayEvents.length === 0 ? (
                 <div className="rounded-2xl border border-white/[0.08] bg-[#0F1424] p-8 md:p-12 text-center">
                   <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.02em] text-white">
