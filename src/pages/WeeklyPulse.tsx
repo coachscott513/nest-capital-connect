@@ -444,16 +444,23 @@ const WeeklyPulse = () => {
       });
   }, [events]);
 
+  const townMatch = (e: EventCard) => {
+    if (townFilter === "All") return true;
+    const hay = `${e.town || ""} ${e.venue || ""}`.toLowerCase();
+    return hay.includes(townFilter.toLowerCase());
+  };
+
   const rails: { key: RailKey; title: string; subtitle: string; events: EventCard[] }[] = [
-    { key: "featured", title: "Featured This Week",       subtitle: "Hand-picked by Capital District Nest.",                       events: byRail("featured") },
-    { key: "music",    title: "Live Music & Nightlife",   subtitle: "Concerts, jazz, comedy, and evening events.",                 events: byRail("music") },
-    { key: "dining",   title: "Food, Drink & Dining",     subtitle: "Restaurant nights, tastings, brunches, and openings.",        events: byRail("dining") },
-    { key: "markets",  title: "Markets & Festivals",      subtitle: "Farmers markets, street fairs, and seasonal celebrations.",   events: byRail("markets") },
-    { key: "family",   title: "Family & Community",       subtitle: "Family-friendly outings and neighborhood happenings.",        events: byRail("family") },
-    { key: "sports",   title: "Sports & Local Competition", subtitle: "Local games, races, and athletic events across the region.", events: byRail("sports") },
-    { key: "business", title: "Business & Networking",    subtitle: "Chambers, meetups, and professional gatherings.",             events: byRail("business") },
-    { key: "upcoming", title: "Upcoming Events",          subtitle: "Coming up beyond this week.",                                 events: upcoming },
+    { key: "featured", title: "Featured This Week",       subtitle: "Hand-picked by Capital District Nest.",                       events: byRail("featured").filter(townMatch) },
+    { key: "music",    title: "Live Music & Nightlife",   subtitle: "Concerts, jazz, comedy, and evening events.",                 events: byRail("music").filter(townMatch) },
+    { key: "dining",   title: "Food, Drink & Dining",     subtitle: "Restaurant nights, tastings, brunches, and openings.",        events: byRail("dining").filter(townMatch) },
+    { key: "markets",  title: "Markets & Festivals",      subtitle: "Farmers markets, street fairs, and seasonal celebrations.",   events: byRail("markets").filter(townMatch) },
+    { key: "family",   title: "Family & Community",       subtitle: "Family-friendly outings and neighborhood happenings.",        events: byRail("family").filter(townMatch) },
+    { key: "sports",   title: "Sports & Local Competition", subtitle: "Local games, races, and athletic events across the region.", events: byRail("sports").filter(townMatch) },
+    { key: "business", title: "Business & Networking",    subtitle: "Chambers, meetups, and professional gatherings.",             events: byRail("business").filter(townMatch) },
+    { key: "upcoming", title: "Upcoming Events",          subtitle: "Coming up beyond this week.",                                 events: upcoming.filter(townMatch) },
   ];
+
 
   const visibleRails =
     filter === "all" ? rails : rails.filter((r) => r.key === filter);
