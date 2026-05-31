@@ -123,26 +123,31 @@ const HomesPage = () => {
     [town]
   );
 
+  const openRemax = (event: "homes_search_click" | "full_mls_search_click") => {
+    track(event, {
+      source_page: "/homes",
+      selected_town: town || null,
+      selected_price: price || null,
+      selected_type: type || null,
+      destination: "scottalvarez.remax.com",
+    });
+    window.open(REMAX_BASE, "_blank", "noopener,noreferrer");
+  };
+
   const submitSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    track("homes_search_click", { town, price, type, source_page: "/homes" });
-    const url = buildRemaxUrl({ townSlug: town, price, type });
-    window.open(url, "_blank", "noopener,noreferrer");
+    openRemax("homes_search_click");
   };
 
   const handleTownChip = (slug: string) => {
     track("homes_town_selected", { town: slug, source_page: "/homes" });
     setTown(slug);
-    // Stay on /homes — URL params update via the sync effect.
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
-  const handleFullMls = () => {
-    track("full_mls_search_click", { source_page: "/homes" });
-    window.open(REMAX_BASE, "_blank", "noopener,noreferrer");
-  };
+  const handleFullMls = () => openRemax("full_mls_search_click");
 
   const submitLead = async (e: React.FormEvent) => {
     e.preventDefault();
