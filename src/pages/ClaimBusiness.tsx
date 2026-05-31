@@ -267,11 +267,12 @@ const ClaimBusiness = () => {
       }
       track("claim_business_form_submit", {
         slug: slugParam || null,
-        tier: tierParam || null,
+        tier: requestedTier || tierParam || null,
         town: form.town || null,
         category: form.category || null,
         source_location: location.pathname,
       });
+
       setIsSubmitted(true);
     } catch (err: any) {
       console.error("[claim] submit exception:", err);
