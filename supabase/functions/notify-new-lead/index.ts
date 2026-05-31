@@ -274,7 +274,23 @@ const buildHtml = (sourceTable: string, row: Row): string => {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
+  // Require a shared secret (pg_net trigger should send this header).
+  // Falls back to the service-role key so existing triggers using it keep working.
+  const expectedSecret =
+    Deno.env.get("LEAD_NOTIFY_WEBHOOK_SECRET") ||
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  const provided =
+    req.headers.get("x-webhook-secret") ||
+    (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "").trim();
+  if (!expectedSecret || provided !== expectedSecret) {
+    return new Response(
+      JSON.stringify({ ok: false, error: "Unauthorized" }),
+      { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+    );
+  }
+
   try {
+
     if (!RESEND_API_KEY) {
       console.error("[notify-new-lead] RESEND_API_KEY not configured");
       return new Response(
