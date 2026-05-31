@@ -167,10 +167,12 @@ interface RailProps {
   subtitle?: string;
   events: EventCard[];
   size?: "lg" | "md";
+  onPending: (ev: EventCard, sourceLocation: string) => void;
 }
 
-const Rail = ({ id, title, subtitle, events, size = "lg" }: RailProps) => {
+const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps) => {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
+
 
   if (!events.length) return null;
 
