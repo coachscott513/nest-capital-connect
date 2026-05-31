@@ -56,6 +56,16 @@ const FILTERS: { key: FilterKey; label: string }[] = [
   { key: "upcoming", label: "Upcoming" },
 ];
 
+type LinkKind = "ticket" | "reservation" | "official" | "source" | "internal" | "pending";
+
+interface LinkState {
+  kind: LinkKind;
+  label: string;
+  href: string;          // "#" for pending
+  external: boolean;
+  pending: boolean;
+}
+
 interface EventCard {
   key: string;
   title: string;
@@ -70,7 +80,29 @@ interface EventCard {
   image: string;
   href: string;
   isFeatured?: boolean;
+  link: LinkState;
+  needsVerification: boolean;
 }
+
+function resolveLink(item: WeeklyFeedItem): LinkState {
+  const isExternal = (u?: string) => !!u && /^https?:\/\//i.test(u);
+  if (isExternal(item.ticket_url))
+    return { kind: "ticket", label: "Tickets", href: item.ticket_url!, external: true, pending: false };
+  if (isExternal(item.reservation_url))
+    return { kind: "reservation", label: "Reservations", href: item.reservation_url!, external: true, pending: false };
+  if (isExternal(item.official_url))
+    return { kind: "official", label: "View Event", href: item.official_url!, external: true, pending: false };
+  if (isExternal(item.source_url) || isExternal(item.external_article_url) || isExternal(item.original_url)) {
+    const href = (item.source_url || item.external_article_url || item.original_url)!;
+    return { kind: "source", label: "View Details", href, external: true, pending: false };
+  }
+  if (item.cta?.href && /^https?:\/\//i.test(item.cta.href))
+    return { kind: "official", label: item.cta.label || "View Event", href: item.cta.href, external: true, pending: false };
+  if (item.cta?.href && item.cta.href !== "#" && !item.cta.href.startsWith("#"))
+    return { kind: "internal", label: item.cta.label || "View Details", href: item.cta.href, external: false, pending: false };
+  return { kind: "pending", label: "Details Coming Soon", href: "#", external: false, pending: true };
+}
+
 
 function classify(item: WeeklyFeedItem): { category: string; rails: RailKey[] } {
   const t = item.type;
