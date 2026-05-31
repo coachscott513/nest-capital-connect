@@ -696,6 +696,7 @@ const Index = () => {
       {/* CATEGORY DISCOVERY — Apple-style 2x3 premium tile grid */}
       <CategoryFeatureGrid />
       <EndlessEntertainment />
+      <WellnessRail />
 
 
       {/* HERO 2 — Find what's near you (live local discovery) */}
