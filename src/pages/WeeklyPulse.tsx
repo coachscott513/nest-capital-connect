@@ -320,6 +320,7 @@ const WeeklyPulse = () => {
       .map((i, idx) => {
         const { category, rails } = classify(i);
         const allRails: RailKey[] = i.featured ? ["featured", ...rails] : rails;
+        const link = resolveLink(i);
         return {
           key: `${i.title}-${idx}`,
           title: i.title,
@@ -332,8 +333,10 @@ const WeeklyPulse = () => {
           dateLabel: i.date,
           dateBadge: dateBadge(i),
           image: i.image || FALLBACK_IMAGES[idx % FALLBACK_IMAGES.length],
-          href: i.cta?.href || "#",
+          href: link.href,
           isFeatured: i.featured,
+          link,
+          needsVerification: !!i.needs_verification || i.event_status === "pending_verification" || link.pending,
         };
       });
   }, []);
