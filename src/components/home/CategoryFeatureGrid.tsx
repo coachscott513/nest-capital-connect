@@ -74,7 +74,7 @@ const DEFAULT_TILES: CategoryTile[] = [
     description: "Local lenders, attorneys, accountants, insurance providers, and financial professionals.",
     cta: "Explore Finance",
     to: "/finances",
-    image: imgRetail,
+    image: imgFinance,
   },
 ];
 
