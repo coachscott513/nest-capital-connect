@@ -9,6 +9,7 @@ import imgRealEstate from "@/assets/category-realestate.jpg";
 import imgEvents from "@/assets/category-events.jpg";
 import imgRetail from "@/assets/category-retail.jpg";
 import imgServices from "@/assets/category-services.jpg";
+import imgFinance from "@/assets/category-finance.jpg";
 
 /* =============================================================
    CATEGORY FEATURE GRID
