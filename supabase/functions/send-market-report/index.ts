@@ -23,6 +23,15 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
+
+const esc = (s: unknown) =>
+  String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
 interface MarketReportRequest {
   name: string;
   email: string;
@@ -46,7 +55,7 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { name, email, market, reportUrl }: MarketReportRequest = await req.json();
 
-    console.log(`Sending ${market} market report to ${email}`);
+    console.log(`Sending ${esc(market)} market report to ${esc(email)}`);
 
     // Send user email with the report link
     const userEmailResponse = await fetch("https://api.resend.com/emails", {
@@ -58,15 +67,15 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "Capital District Nest <hello@capitaldistrictnest.com>",
         to: [email],
-        subject: `Your ${market} Market Report`,
+        subject: `Your ${esc(market)} Market Report`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #1a1a1a;">Your ${market} Market Report</h1>
-            <p>Hi ${name},</p>
-            <p>Thank you for your interest in the ${market} real estate market. Here's your up-to-date market report with recent sales, pricing trends, and market activity.</p>
+            <h1 style="color: #1a1a1a;">Your ${esc(market)} Market Report</h1>
+            <p>Hi ${esc(name)},</p>
+            <p>Thank you for your interest in the ${esc(market)} real estate market. Here's your up-to-date market report with recent sales, pricing trends, and market activity.</p>
             
             <p style="margin: 24px 0;">
-              <a href="${reportUrl}" style="background: #2563eb; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">View Your Market Report (PDF)</a>
+              <a href="${esc(reportUrl)}" style="background: #2563eb; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block;">View Your Market Report (PDF)</a>
             </p>
             
             <p style="color: #666; font-size: 14px;">This report updates every 48 hours with the latest sales and pricing data.</p>
@@ -104,20 +113,20 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "Capital District Nest <hello@capitaldistrictnest.com>",
         to: ["scott@capitaldistrictnest.com"],
-        subject: `NEW Market Report Request — ${market}`,
+        subject: `NEW Market Report Request — ${esc(market)}`,
         html: `
           <h2>New Market Report Download</h2>
-          <p><strong>Market:</strong> ${market}</p>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Market:</strong> ${esc(market)}</p>
+          <p><strong>Name:</strong> ${esc(name)}</p>
+          <p><strong>Email:</strong> ${esc(email)}</p>
           <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
           <hr>
-          <p>Follow up with personalized content for their ${market} search.</p>
+          <p>Follow up with personalized content for their ${esc(market)} search.</p>
         `,
       }),
     });
 
-    console.log(`Successfully sent ${market} market report to ${email}`);
+    console.log(`Successfully sent ${esc(market)} market report to ${esc(email)}`);
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
