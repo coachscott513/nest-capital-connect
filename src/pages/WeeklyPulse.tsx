@@ -662,8 +662,33 @@ const WeeklyPulse = () => {
                 );
               })}
             </div>
+
+            {/* Town chips */}
+            <div className="mt-4 flex gap-2 md:gap-3 overflow-x-auto pb-2 -mx-2 px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {TOWN_FILTERS.map((t) => {
+                const active = townFilter === t;
+                return (
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => {
+                      setTownFilter(t);
+                      gtag("weekly_town_filter_click", { town: t });
+                    }}
+                    className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition border ${
+                      active
+                        ? "bg-[#5eead4] text-[#0B0F19] border-[#5eead4]"
+                        : "bg-white/[0.04] text-white/80 border-white/10 hover:border-white/30 hover:text-white"
+                    }`}
+                  >
+                    {t}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </section>
+
 
         {/* ===== RAILS ===== */}
         <div className="pt-2 md:pt-4 pb-8 md:pb-12">
