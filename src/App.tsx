@@ -308,6 +308,10 @@ const App = () => {
           <Route path="/this-week" element={<WeeklyPulse />} />
           <Route path="/media" element={<LocalMedia />} />
           <Route path="/submit-event" element={<SubmitEvent />} />
+          <Route path="/add-event" element={<Navigate to="/submit-event" replace />} />
+          <Route path="/add-profile" element={<Navigate to="/claim-business" replace />} />
+          <Route path="/add-business" element={<Navigate to="/claim-business" replace />} />
+          <Route path="/list-your-business" element={<Navigate to="/claim-business" replace />} />
           <Route path="/contact" element={<ContactPage />} />
 
           
