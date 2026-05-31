@@ -44,18 +44,16 @@ const CleanHeader = () => {
     }
   };
 
-  const goToEvents = () => {
-    if (location.pathname !== "/") {
-      navigate("/#weekly-feed");
-      setTimeout(() => {
-        const el = document.getElementById("weekly-feed");
-        el?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 400);
-    } else {
-      const el = document.getElementById("weekly-feed");
-      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const trackNavClick = (destination: string) => {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "event_nav_click", {
+        destination,
+        source_location: "main_navigation",
+        page_path: location.pathname,
+      });
     }
   };
+
 
   useEffect(() => {
     setMobileMenuOpen(false);
