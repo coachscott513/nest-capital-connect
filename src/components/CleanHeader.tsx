@@ -253,12 +253,16 @@ const CleanHeader = () => {
               <Link
                 key={mode.label}
                 to={mode.href!}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (mode.href) trackNavClick(mode.href);
+                }}
                 className={cls}
               >
                 {mode.mobileLabel}
               </Link>
             );
+
           })}
 
           <Link
