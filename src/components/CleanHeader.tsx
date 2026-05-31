@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, X, Menu, Phone } from "lucide-react";
 import GlobalSearchCommand from "@/components/GlobalSearchCommand";
 import AnalystCard from "@/components/AnalystCard";
+import cdnLogo from "@/assets/cdn-logo.jpeg";
 
 const TEAL = "#0d6e66";
 
