@@ -735,7 +735,38 @@ const WeeklyPulse = () => {
           </div>
         </section>
 
+        {/* ===== SEO COPY ===== */}
+        <section className="relative border-t border-white/[0.06]">
+          <div className="max-w-4xl mx-auto px-6 md:px-10 py-16 md:py-20">
+            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-4">
+              Discover the Capital District
+            </p>
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-white leading-[1.1]">
+              Things to do in the Capital District
+            </h2>
+            <div className="mt-6 space-y-4 text-base md:text-[17px] text-white/70 font-light leading-relaxed">
+              <p>
+                From live music in downtown Albany to farmers markets in Troy, summer concerts
+                in Saratoga Springs, family weekends in Delmar, and restaurant nights across
+                Clifton Park and Schenectady — the Capital District is full of things to do
+                every week of the year.
+              </p>
+              <p>
+                Capital District Nest curates local concerts, festivals, dining events,
+                community markets, sports, networking nights, and family activities so you
+                can find what is happening near you. Browse by category or by town, save the
+                ones you love, and share them with friends and neighbors.
+              </p>
+              <p>
+                Hosting an event? Submit a concert, restaurant night, market, fundraiser, or
+                community gathering and we will feature it in the Capital District Events Room.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* ===== BOTTOM CTA ===== */}
+
         <section className="relative">
           <div className="max-w-4xl mx-auto px-6 md:px-10 py-20 md:py-28 text-center">
             <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-5">
