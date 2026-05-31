@@ -798,10 +798,32 @@ const ClaimBusiness = () => {
             </p>
           </SectionBlock>
 
-          {/* SECTION: Growth interests */}
+          {/* SECTION: Tier interest */}
           <SectionBlock
             eyebrow="Section 04"
-            title="What are you interested in?"
+            title="Which tier are you interested in?"
+            desc="Pick whichever fits — you can change your mind. Our team confirms before any charges."
+          >
+            <Field label="Interested in">
+              <select
+                value={requestedTier}
+                onChange={(e) => setRequestedTier(e.target.value)}
+                className={inputCls + " cursor-pointer [&>option]:text-black"}
+              >
+                <option value="">Just exploring / not sure yet</option>
+                <option value="free">Free Listing update — $0</option>
+                <option value="featured">Featured Listing — $15/month</option>
+                <option value="premier">Premier Business Page — $25 setup + $25/month</option>
+                <option value="spotlight">Spotlight Partner — $50/month</option>
+                <option value="anchor">Anchor Partner — $100–$150/month</option>
+              </select>
+            </Field>
+          </SectionBlock>
+
+          {/* SECTION: Growth interests */}
+          <SectionBlock
+            eyebrow="Section 05"
+            title="What else are you interested in?"
             desc="Optional. Just check what sounds relevant — we'll bring ideas, not invoices."
           >
             <div className="grid sm:grid-cols-2 gap-3">
@@ -827,6 +849,7 @@ const ClaimBusiness = () => {
               />
             </div>
           </SectionBlock>
+
 
           {/* Submit */}
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/[0.06] pt-7">
