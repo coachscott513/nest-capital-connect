@@ -8,10 +8,11 @@ const GOLD = "#c9a449";
 const PLATINUM = "#e5e4e2";
 
 type Tier = {
-  id: "free" | "member" | "featured" | "spotlight";
+  id: "free" | "featured" | "spotlight";
   name: string;
   price: string;
   cadence: string;
+  setup?: string;
   tagline: string;
   features: string[];
   cta: string;
@@ -37,44 +38,27 @@ const tiers: Tier[] = [
     ],
     cta: "Review Your Listing",
     ctaHref: "/claim-business?tier=free",
-    accent: "rgba(255,255,255,0.12)",
-  },
-  {
-    id: "member",
-    name: "Member",
-    price: "$10",
-    cadence: "per month",
-    tagline: "Upgrade your profile with richer business info.",
-    features: [
-      "Everything in Free",
-      "Full image uploads",
-      "Business description",
-      "Social media links",
-      "Store hours",
-      "Member badge",
-      "Submit events & specials for review",
-    ],
-    cta: "Become a Member",
-    ctaHref: "/claim-business?tier=member",
     accent: "rgba(255,255,255,0.55)",
   },
   {
     id: "featured",
-    name: "Featured Local Partner",
-    price: "$15",
+    name: "Featured Business Page",
+    price: "$25",
     cadence: "per month",
-    tagline: "Stand out across search and town pages.",
+    setup: "+ $25 one-time setup",
+    tagline: "A polished local profile that works like a mini website inside Nest.",
     features: [
-      "Everything in Member",
-      "Priority placement in category search",
-      "Featured badge on business cards",
-      "Larger featured profile card",
-      "10-photo gallery",
-      "Enhanced description",
-      "Featured category visibility",
-      "Live Pulse / local update integration",
+      "Full business profile page",
+      "Business description & services list",
+      "Photos & logo",
+      "Phone, text, email & website buttons",
+      "Town & category placement",
+      "Priority search visibility",
+      "Shareable profile link",
+      "Submit events & specials",
+      "Featured Local Partner badge (pilot)",
     ],
-    cta: "Get Featured",
+    cta: "Claim My Profile",
     ctaHref: "/claim-business?tier=featured",
     accent: TEAL,
     badge: "Most Popular",
@@ -88,9 +72,9 @@ const tiers: Tier[] = [
     tagline: "Premium visibility for businesses that want more local attention.",
     features: [
       "Everything in Featured",
-      "Dedicated business page",
+      "Higher category & town placement",
+      "Specials & events promotion",
       "Unlimited photo gallery",
-      "Specials & promotions with images",
       "Newsletter / local pulse spotlight",
       "Weekly event matrix feature",
       "Priority review for homepage placement",
@@ -115,7 +99,7 @@ const Pricing = () => {
         <title>Pricing | Local Business Solutions — Capital District Nest</title>
         <meta
           name="description"
-          content="Free directory listing for every Capital District business. Member $10/mo, Featured Local Partner $15/mo, Spotlight $50/mo, Anchor Partner $100–150/mo (application-based)."
+          content="Free directory listing for every Capital District business. Featured Business Page $25 setup + $25/mo, Spotlight $50/mo, Anchor Partner $100–150/mo (application-based)."
         />
         <link rel="canonical" href="https://www.capitaldistrictnest.com/pricing" />
       </Helmet>
@@ -137,18 +121,19 @@ const Pricing = () => {
             Local Business Solutions
           </p>
           <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] text-white">
-            Free gets you listed. $15 makes you featured.
+            Free gets you listed. $25 gets you a full business page.
           </h1>
           <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
-            Every Capital District business is already searchable on Nest, for free. Upgrade when you
-            want richer profile, featured placement, a dedicated page — or to anchor your category.
+            Every Capital District business is already searchable on Nest, for free. Upgrade to a
+            polished Featured Business Page that works like a mini website inside Nest — or anchor
+            your category.
           </p>
         </div>
       </section>
 
       {/* TIERS */}
       <section className="px-6 md:px-10 pb-16 md:pb-20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
           {tiers.map((t) => (
             <article
               key={t.id}
@@ -180,6 +165,11 @@ const Pricing = () => {
                   </span>
                   <span className="text-sm text-white/55">/ {t.cadence}</span>
                 </div>
+                {t.setup && (
+                  <p className="mt-1 text-[12px] font-semibold uppercase tracking-[0.18em]" style={{ color: t.accent }}>
+                    {t.setup}
+                  </p>
+                )}
                 <p className="mt-3 text-[14px] text-white/70 font-light leading-relaxed min-h-[42px]">
                   {t.tagline}
                 </p>
@@ -253,7 +243,7 @@ const Pricing = () => {
         </div>
 
         <p className="mt-12 text-center text-xs text-white/45 max-w-2xl mx-auto">
-          Cancel anytime. No setup fees. Pricing locks in for life on your start date — even if rates change later.
+          Cancel anytime. One-time $25 setup on Featured covers the manual profile build. Monthly pricing locks in for life on your start date — even if rates change later.
         </p>
       </section>
 
@@ -324,7 +314,7 @@ const Pricing = () => {
               },
               {
                 q: "What does Spotlight unlock that Featured doesn't?",
-                a: "Spotlight gives you a dedicated microsite at /biz/your-business with a 60-second video, unlimited gallery, rich specials, and an embedded lead capture form. It's the equivalent of a $2,500 custom website — for $50/month.",
+                a: "Spotlight stacks on top of a Featured Business Page with higher category and town placement, specials and events promotion, an unlimited photo gallery, newsletter spotlights, and priority review for homepage placement. Featured already gives you the full polished profile page — Spotlight is for businesses that want maximum local visibility.",
               },
               {
                 q: "What is the Anchor tier and why is it limited?",
