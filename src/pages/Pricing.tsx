@@ -99,7 +99,7 @@ const Pricing = () => {
         <title>Pricing | Local Business Solutions — Capital District Nest</title>
         <meta
           name="description"
-          content="Free directory listing for every Capital District business. Member $10/mo, Featured Local Partner $15/mo, Spotlight $50/mo, Anchor Partner $100–150/mo (application-based)."
+          content="Free directory listing for every Capital District business. Featured Business Page $25 setup + $25/mo, Spotlight $50/mo, Anchor Partner $100–150/mo (application-based)."
         />
         <link rel="canonical" href="https://www.capitaldistrictnest.com/pricing" />
       </Helmet>
@@ -121,18 +121,19 @@ const Pricing = () => {
             Local Business Solutions
           </p>
           <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] text-white">
-            Free gets you listed. $15 makes you featured.
+            Free gets you listed. $25 gets you a full business page.
           </h1>
           <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
-            Every Capital District business is already searchable on Nest, for free. Upgrade when you
-            want richer profile, featured placement, a dedicated page — or to anchor your category.
+            Every Capital District business is already searchable on Nest, for free. Upgrade to a
+            polished Featured Business Page that works like a mini website inside Nest — or anchor
+            your category.
           </p>
         </div>
       </section>
 
       {/* TIERS */}
       <section className="px-6 md:px-10 pb-16 md:pb-20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
           {tiers.map((t) => (
             <article
               key={t.id}
