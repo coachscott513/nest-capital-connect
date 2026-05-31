@@ -56,11 +56,8 @@ const TYPE_LABEL: Record<string, string> = {
 
 function track(event: string, payload: Record<string, unknown>) {
   try {
-    // @ts-expect-error gtag may be injected by analytics
-    if (typeof window !== "undefined" && typeof window.gtag === "function") {
-      // @ts-expect-error gtag
-      window.gtag("event", event, payload);
-    }
+    const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
+    if (typeof gtag === "function") gtag("event", event, payload);
   } catch {
     /* no-op */
   }
