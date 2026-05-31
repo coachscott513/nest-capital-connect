@@ -515,7 +515,13 @@ const WeeklyPulse = () => {
 
             <div className="mt-10 flex flex-wrap items-center gap-3">
               <a
-                href="#rail-featured"
+                href="#seven-day-schedule"
+                onClick={(e) => {
+                  e.preventDefault();
+                  gtag("view_this_week_click", { source_page: "/weekly" });
+                  const el = document.getElementById("seven-day-schedule");
+                  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
                 className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
               >
                 View This Week <ArrowRight className="w-4 h-4" />
