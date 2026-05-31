@@ -108,7 +108,7 @@ const Footer = () => {
               <li><Link to="/local?category=Healthcare" className={linkBase}>Healthcare</Link></li>
               <li><Link to="/local?category=Dental" className={linkBase}>Dental</Link></li>
               <li><Link to="/local?q=attorney" className={linkBase}>Professional Services</Link></li>
-              <li><Link to="/#weekly-feed" className={linkBase}>Events</Link></li>
+              <li><Link to="/weekly" className={linkBase}>Events</Link></li>
               <li><Link to="/local" className="text-[13px] text-[#5eead4] hover:opacity-80 transition-opacity">All businesses →</Link></li>
             </ul>
           </div>

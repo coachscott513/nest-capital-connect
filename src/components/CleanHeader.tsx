@@ -22,7 +22,7 @@ const navModes: NavMode[] = [
   { label: "Homes", mobileLabel: "Search Homes", href: "/homes", matchPaths: ["/homes"] },
   { label: "Businesses", mobileLabel: "Search Businesses", href: "/local", matchPaths: ["/local"] },
   { label: "Towns", mobileLabel: "Explore Towns", href: "/communities", matchPaths: ["/communities", "/living-in"] },
-  { label: "Events", mobileLabel: "Local Events", href: "/#weekly-feed", matchPaths: [] },
+  { label: "Events", mobileLabel: "Local Events", href: "/weekly", matchPaths: ["/weekly"] },
   { label: "Finances", mobileLabel: "Finances Hub", href: "/finances", matchPaths: ["/finances", "/analyze", "/invest", "/financial-console"] },
   { label: "For Local Businesses", mobileLabel: "Advertise With Us", href: "/pricing", matchPaths: ["/pricing"] },
 ];
@@ -44,18 +44,16 @@ const CleanHeader = () => {
     }
   };
 
-  const goToEvents = () => {
-    if (location.pathname !== "/") {
-      navigate("/#weekly-feed");
-      setTimeout(() => {
-        const el = document.getElementById("weekly-feed");
-        el?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 400);
-    } else {
-      const el = document.getElementById("weekly-feed");
-      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const trackNavClick = (destination: string) => {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "event_nav_click", {
+        destination,
+        source_location: "main_navigation",
+        page_path: location.pathname,
+      });
     }
   };
+
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -90,11 +88,11 @@ const CleanHeader = () => {
       focusOmniSearch();
       return;
     }
-    if (mode.label === "Events") {
-      e.preventDefault();
-      goToEvents();
+    if (mode.href) {
+      trackNavClick(mode.href);
     }
   };
+
 
   const isFrosted = scrolled || mobileMenuOpen;
 
@@ -141,7 +139,7 @@ const CleanHeader = () => {
                   </>
                 );
 
-                if (mode.action === "focus-search" || mode.label === "Events") {
+                if (mode.action === "focus-search") {
                   return (
                     <button
                       key={mode.label}
@@ -152,6 +150,7 @@ const CleanHeader = () => {
                     </button>
                   );
                 }
+
 
                 return (
                   <Link
@@ -234,7 +233,7 @@ const CleanHeader = () => {
               isClaim ? "text-[#5eead4]" : "text-white/90 hover:text-white"
             }`;
 
-            if (mode.action === "focus-search" || mode.label === "Events") {
+            if (mode.action === "focus-search") {
               return (
                 <button
                   key={mode.label}
@@ -249,16 +248,21 @@ const CleanHeader = () => {
               );
             }
 
+
             return (
               <Link
                 key={mode.label}
                 to={mode.href!}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (mode.href) trackNavClick(mode.href);
+                }}
                 className={cls}
               >
                 {mode.mobileLabel}
               </Link>
             );
+
           })}
 
           <Link
