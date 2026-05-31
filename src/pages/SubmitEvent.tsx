@@ -144,10 +144,9 @@ const SubmitEvent = () => {
         {done ? (
           <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 md:p-12 text-center">
             <CheckCircle2 className="w-12 h-12 text-[#5eead4] mx-auto" />
-            <h2 className="mt-5 text-2xl md:text-3xl font-semibold tracking-tight">Your event has been submitted.</h2>
+            <h2 className="mt-5 text-2xl md:text-3xl font-semibold tracking-tight">Thanks — your event was received.</h2>
             <p className="mt-3 text-white/70">
-              Want more visibility? Featured placements appear across the Capital District Nest weekly feed, town pages,
-              and local discovery sections.
+              Our team will review it and follow up shortly. Featured placements appear across the Capital District Nest weekly feed, town pages, and local discovery sections.
             </p>
             <div className="mt-7 flex flex-wrap gap-3 justify-center">
               <button
