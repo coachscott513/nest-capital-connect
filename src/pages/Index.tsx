@@ -691,6 +691,10 @@ const Index = () => {
       {/* HERO 1 — Search anything local */}
       <CinematicHero />
 
+      {/* CATEGORY DISCOVERY — Apple-style 2x3 premium tile grid */}
+      <CategoryFeatureGrid />
+
+
       {/* HERO 2 — Find what's near you (live local discovery) */}
       <AppleHero
         eyebrow="Live Local Discovery"
