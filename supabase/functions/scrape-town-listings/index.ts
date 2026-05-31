@@ -294,6 +294,19 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Require service-role bearer token (admin/cron only)
+  const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  const authHeader = req.headers.get('Authorization') || '';
+  const provided = authHeader.replace(/^Bearer\s+/i, '').trim();
+  if (!serviceRoleKey || provided !== serviceRoleKey) {
+    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
+
+
   try {
     // Try both possible secret names (connector uses FIRECRAWL_API_KEY_1)
     const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY_1') || Deno.env.get('FIRECRAWL_API_KEY');
