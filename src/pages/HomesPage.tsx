@@ -371,9 +371,11 @@ const HomesPage = () => {
       <Dialog open={leadOpen} onOpenChange={setLeadOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Send me matching homes</DialogTitle>
+            <DialogTitle>
+              {currentTownLabel ? `Want homes in ${currentTownLabel} sent to you?` : "Want matching homes sent to you?"}
+            </DialogTitle>
             <DialogDescription>
-              Tell us what you're looking for and our team will follow up with curated listings.
+              Tell us what you're looking for and our team will follow up.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={submitLead} className="space-y-3">
