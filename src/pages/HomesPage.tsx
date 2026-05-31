@@ -363,7 +363,7 @@ const HomesPage = () => {
             >
               Open Full MLS Search <ExternalLink className="w-4 h-4" />
             </button>
-            <p className="mt-3 text-xs text-[#1d1d1f]/55">Live MLS via RE/MAX — opens in a new tab</p>
+            <p className="mt-3 text-xs text-[#1d1d1f]/55">Search opens our MLS-powered home search in a new tab.</p>
           </div>
         </div>
       </section>
