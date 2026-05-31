@@ -422,6 +422,8 @@ const WeeklyPulse = () => {
           isFeatured: i.featured,
           link,
           needsVerification: !!i.needs_verification || i.event_status === "pending_verification" || link.pending,
+          startISO: i.startDate,
+          endISO: i.endDate || i.startDate,
         };
       });
   }, []);
