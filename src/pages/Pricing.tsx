@@ -137,17 +137,17 @@ const Pricing = () => {
             Local Business Solutions
           </p>
           <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] text-white">
-            Four tiers. One regional media network.
+            Free gets you listed. $15 makes you featured.
           </h1>
           <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
             Every Capital District business is already searchable on Nest, for free. Upgrade when you
-            want priority, your own microsite, or to own your category outright.
+            want richer profile, featured placement, a dedicated page — or to anchor your category.
           </p>
         </div>
       </section>
 
       {/* TIERS */}
-      <section className="px-6 md:px-10 pb-24 md:pb-28">
+      <section className="px-6 md:px-10 pb-16 md:pb-20">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 md:gap-6">
           {tiers.map((t) => (
             <article
@@ -163,7 +163,7 @@ const Pricing = () => {
                   className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] text-[#0B0F19] whitespace-nowrap"
                   style={{ background: t.accent }}
                 >
-                  {t.id === "anchor" ? <Crown className="w-3 h-3" /> : <Star className="w-3 h-3 fill-current" />} {t.badge}
+                  <Star className="w-3 h-3 fill-current" /> {t.badge}
                 </span>
               )}
 
@@ -203,20 +203,13 @@ const Pricing = () => {
                 className={`mt-8 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-[13px] font-semibold transition ${
                   t.highlighted
                     ? "bg-white text-[#0B0F19] hover:opacity-90"
-                    : t.id === "spotlight" || t.id === "anchor"
+                    : t.id === "spotlight"
                     ? "text-[#0B0F19] hover:opacity-90"
                     : "border border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08]"
                 }`}
-                style={
-                  t.id === "spotlight"
-                    ? { background: GOLD }
-                    : t.id === "anchor"
-                    ? { background: PLATINUM }
-                    : undefined
-                }
+                style={t.id === "spotlight" ? { background: GOLD } : undefined}
               >
                 {t.id === "featured" && <Sparkles className="w-4 h-4" />}
-                {t.id === "anchor" && <Crown className="w-4 h-4" />}
                 {t.cta}
                 <ArrowRight className="w-4 h-4" />
               </a>
@@ -224,10 +217,46 @@ const Pricing = () => {
           ))}
         </div>
 
+        {/* ANCHOR — application strip */}
+        <div className="max-w-7xl mx-auto mt-6">
+          <article
+            className="relative rounded-3xl border border-white/15 bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-white/[0.02] backdrop-blur-xl p-7 md:p-9 flex flex-col md:flex-row md:items-center gap-7"
+          >
+            <span
+              className="absolute -top-3 left-7 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
+              style={{ background: PLATINUM, color: "#0B0F19" }}
+            >
+              <Crown className="w-3 h-3" /> Enterprise · Anchor Partner
+            </span>
+            <div className="flex-1">
+              <div className="flex items-baseline gap-2 flex-wrap">
+                <span className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-white">
+                  $100–$150
+                </span>
+                <span className="text-sm text-white/55">/ month · application-based</span>
+              </div>
+              <p className="mt-3 text-[15px] text-white/75 font-light leading-relaxed max-w-2xl">
+                Own your category or become a major local sponsor. Everything in Spotlight, plus
+                homepage hero rotation, category sponsorship, town sponsorship, competitor lockout
+                where available, custom campaigns, and concierge setup.
+              </p>
+            </div>
+            <a
+              href="/claim-business?tier=anchor"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-[13px] font-semibold whitespace-nowrap hover:opacity-90 transition"
+              style={{ background: PLATINUM, color: "#0B0F19" }}
+            >
+              <Crown className="w-4 h-4" /> Apply as Anchor Partner
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </article>
+        </div>
+
         <p className="mt-12 text-center text-xs text-white/45 max-w-2xl mx-auto">
           Cancel anytime. No setup fees. Pricing locks in for life on your start date — even if rates change later.
         </p>
       </section>
+
 
       {/* ADD-ONS */}
       <section className="border-t border-white/[0.06] px-6 md:px-10 py-20 md:py-24">
