@@ -23,6 +23,15 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
+
+const esc = (s: unknown) =>
+  String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
 interface JourneyEmailRequest {
   firstName: string;
   email: string;
@@ -89,9 +98,9 @@ const handler = async (req: Request): Promise<Response> => {
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <h1 style="color: #1a1a1a;">${content.heading}</h1>
-            <p>Hi ${firstName},</p>
+            <p>Hi ${esc(firstName)},</p>
             <p>${content.body}</p>
-            <p><strong>Your download:</strong> ${leadMagnet}</p>
+            <p><strong>Your download:</strong> ${esc(leadMagnet)}</p>
             <p>Our team will follow up shortly with your personalized resources. In the meantime, feel free to explore:</p>
             <p style="margin: 24px 0;">
               <a href="${content.ctaUrl}" style="background: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">${content.cta}</a>
@@ -116,13 +125,13 @@ const handler = async (req: Request): Promise<Response> => {
         subject: `NEW Lead Magnet Request — ${journeyType.toUpperCase()} Journey`,
         html: `
           <h2>New Lead Magnet Download</h2>
-          <p><strong>Journey:</strong> ${journeyType}</p>
-          <p><strong>Name:</strong> ${firstName}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Resource:</strong> ${leadMagnet}</p>
+          <p><strong>Journey:</strong> ${esc(journeyType)}</p>
+          <p><strong>Name:</strong> ${esc(firstName)}</p>
+          <p><strong>Email:</strong> ${esc(email)}</p>
+          <p><strong>Resource:</strong> ${esc(leadMagnet)}</p>
           <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
           <hr>
-          <p>Follow up with personalized content for their ${journeyType} journey.</p>
+          <p>Follow up with personalized content for their ${esc(journeyType)} journey.</p>
         `,
       }),
     });

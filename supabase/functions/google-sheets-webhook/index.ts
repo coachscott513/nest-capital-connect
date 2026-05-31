@@ -13,29 +13,58 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Require shared secret header to prevent abuse
+  const expectedSecret =
+    Deno.env.get('SHEETS_WEBHOOK_SECRET') || Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  const provided =
+    req.headers.get('x-webhook-secret') ||
+    (req.headers.get('authorization') || '').replace(/^Bearer\s+/i, '').trim();
+  if (!expectedSecret || provided !== expectedSecret) {
+    return new Response(
+      JSON.stringify({ error: 'Unauthorized' }),
+      { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+  }
+
   try {
     console.log('Google Sheets webhook function called');
-    
+
     if (req.method !== 'POST') {
       return new Response(
         JSON.stringify({ error: 'Method not allowed' }),
-        { 
-          status: 405, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        {
+          status: 405,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         }
       );
     }
 
-    const requestData = await req.json();
-    console.log('Received data:', requestData);
+    // Enforce a payload size cap (16 KB) to prevent abuse
+    const raw = await req.text();
+    if (raw.length > 16_384) {
+      return new Response(
+        JSON.stringify({ error: 'Payload too large' }),
+        { status: 413, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    const requestData = JSON.parse(raw);
 
-    // Send data to Google Sheets via the webhook using GET with query parameters
+    // Whitelist allowed fields to prevent arbitrary spreadsheet pollution
+    const ALLOWED_FIELDS = new Set([
+      'name', 'full_name', 'email', 'phone', 'message', 'type',
+      'location', 'town', 'origin_town', 'bedrooms', 'price_range',
+      'lead_type', 'source', 'page_url', 'referrer', 'created_at',
+    ]);
+
     const queryParams = new URLSearchParams();
     Object.entries(requestData).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
-        queryParams.append(key, String(value));
-      }
+      if (!ALLOWED_FIELDS.has(key)) return;
+      if (value === null || value === undefined) return;
+      // Cap individual values at 500 chars
+      queryParams.append(key, String(value).slice(0, 500));
     });
+
+
     
     const response = await fetch(`${GOOGLE_SHEETS_WEBHOOK_URL}?${queryParams.toString()}`, {
       method: 'GET',
