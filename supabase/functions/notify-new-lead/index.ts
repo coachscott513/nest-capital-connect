@@ -174,6 +174,19 @@ const TABLE_DESCRIPTORS: Record<string, TableDescriptor> = {
       ["Source page", "source_page"],
     ],
   },
+  partner_referrals: {
+    label: "Partner Referral",
+    nameKeys: ["client_name"],
+    phoneKey: "client_phone",
+    identifierKeys: ["project_type"],
+    fields: [
+      ["Client name", "client_name"],
+      ["Client phone", "client_phone"],
+      ["Project type", "project_type"],
+      ["Status", "status"],
+      ["Partner ID", "partner_id"],
+    ],
+  },
 };
 
 const pickFirst = (row: Row, keys: string[]): string | null => {
