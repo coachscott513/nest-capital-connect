@@ -729,8 +729,62 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
 // ──────────────────────────────────────────────────────────────
 //  ROUTER COMPONENT
 // ──────────────────────────────────────────────────────────────
-const titleizeSlug = (s: string) =>
-  s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+const CAPITAL_DISTRICT_TOWNS = new Set([
+  "albany","schenectady","troy","saratoga-springs","colonie","clifton-park",
+  "delmar","bethlehem","guilderland","niskayuna","rotterdam","latham","loudonville",
+  "menands","cohoes","watervliet","rensselaer","east-greenbush","ballston-spa",
+  "malta","wilton","mechanicville","glenville","scotia","altamont","voorheesville",
+  "ravena","catskill","hudson","queensbury","glens-falls","north-of-hudson",
+]);
+const ACRONYM_SET = new Set([
+  "MD","DDS","DMD","DO","DC","DPM","PHD","LLC","PC","PA","CPA","ESQ","MBA",
+  "RN","NP","LCSW","PT","OD","JR","SR","II","III","IV","USA","NY","NYC","HVAC",
+]);
+
+const stripTrailingNoise = (slug: string): string[] => {
+  const parts = slug.split("-").filter(Boolean);
+  // Drop trailing 3-4 digit chunks (phone numbers, e.g. "518-270-9229")
+  while (parts.length > 2 && /^\d{3,4}$/.test(parts[parts.length - 1])) parts.pop();
+  // Drop a single trailing 6-10 char alphanumeric hash (e.g. "kljgiegc", "2cuba1uy")
+  const last = parts[parts.length - 1];
+  if (
+    parts.length > 2 &&
+    last &&
+    /^[a-z0-9]{6,10}$/.test(last) &&
+    /\d/.test(last) &&
+    /[a-z]/.test(last)
+  ) {
+    parts.pop();
+  }
+  return parts;
+};
+
+const titleizeSlug = (s: string): string => {
+  const parts = stripTrailingNoise(s);
+  return parts
+    .map((p) => {
+      const upper = p.toUpperCase();
+      if (ACRONYM_SET.has(upper)) return upper;
+      if (/^\d+$/.test(p)) return p;
+      return p.charAt(0).toUpperCase() + p.slice(1);
+    })
+    .join(" ");
+};
+
+const inferTownFromSlug = (s: string): string | null => {
+  const parts = s.toLowerCase().split("-").filter(Boolean);
+  for (let n = 3; n >= 1; n--) {
+    for (let i = parts.length - n; i >= 0; i--) {
+      const candidate = parts.slice(i, i + n).join("-");
+      if (CAPITAL_DISTRICT_TOWNS.has(candidate)) {
+        return candidate
+          .replace(/-/g, " ")
+          .replace(/\b\w/g, (c) => c.toUpperCase());
+      }
+    }
+  }
+  return null;
+};
 
 const SLUG_ALIASES: Record<string, string> = {
   "the-perfect-blend-cafe": "perfect-blend-cafe-bakery-delmar",
@@ -755,37 +809,90 @@ const buildPlaceholderBusiness = (slug: string): Business => ({
   name: titleizeSlug(slug),
   description: null,
   category: "Local Business",
-  town_name: null,
+  town_name: inferTownFromSlug(slug),
   state: "NY",
   plan_tier: "free_claimed",
   is_active: true,
 });
 
-const NotFoundBiz = ({ slug }: { slug: string }) => {
+// Polished "profile being prepared" experience for slugs not yet in the DB.
+// Intentionally NOT a 404 — every clicked business URL should feel intentional.
+const PendingProfile = ({ slug }: { slug: string }) => {
   const guess = titleizeSlug(slug);
+  const town = inferTownFromSlug(slug);
+  const townParam = town ? town.toLowerCase().replace(/\s+/g, "-") : "";
+  const claimHref = `/claim-business?slug=${encodeURIComponent(slug)}${
+    townParam ? `&town=${encodeURIComponent(townParam)}` : ""
+  }`;
+  const title = `${guess} | Capital District Nest`;
+  const description = `View or claim this local business profile on Capital District Nest.`;
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Helmet>
-        <title>Business Not Found | Capital District Nest</title>
+        <title>{title}</title>
+        <meta name="description" content={description} />
         <meta name="robots" content="noindex, follow" />
         <link rel="canonical" href={`https://www.capitaldistrictnest.com/biz/${slug}`} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={`https://www.capitaldistrictnest.com/biz/${slug}`} />
+        <meta property="og:type" content="website" />
       </Helmet>
       <CleanHeader />
       <section className="px-6 md:px-10 pt-28 md:pt-32 pb-20 max-w-3xl mx-auto">
-        <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-4 text-white/55">404 · Listing Unavailable</p>
+        <div className="flex items-center gap-3 mb-5">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70 border border-white/15 bg-white/[0.04]">
+            <Building2 className="w-3 h-3" /> Profile Pending
+          </span>
+          {town && (
+            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/55">
+              {town}, NY
+            </span>
+          )}
+        </div>
         <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
-          We couldn't find "{guess}"
+          {guess}
         </h1>
+        <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.26em]" style={{ color: TEAL }}>
+          This business profile is being prepared
+        </p>
         <p className="mt-5 text-[15px] text-white/70 font-light leading-relaxed">
-          This profile may have been removed, renamed, or is not yet listed in the Capital District Nest local business index. Browse our active local directory or claim a business profile to get listed across the Capital District.
+          Capital District Nest is building local business profiles across the region.
+          If this is your business, you can claim or update this profile to add photos,
+          contact details, hours, specials, and a video showcase — and have it appear
+          across search and town pages.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link to="/local" className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
-            Browse Local Directory <ArrowRight className="w-4 h-4" />
+          <Link
+            to={claimHref}
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+            style={{ backgroundColor: TEAL }}
+          >
+            Claim or Update This Business <ArrowRight className="w-4 h-4" />
           </Link>
-          <Link to="/claim-business" className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
-            Claim or Add a Business
+          <Link
+            to="/local"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+          >
+            Search Local Businesses
           </Link>
+          <Link
+            to="/local"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
+          >
+            Back to Directory
+          </Link>
+        </div>
+        <div className="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
+          <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>
+            About this listing
+          </p>
+          <p className="text-[15px] text-white/75 font-light leading-relaxed">
+            {guess} is part of the Capital District Nest local business index
+            {town ? ` for ${town}, NY` : ""}. Full profile details haven't been
+            published yet. Owners can claim this profile to publish contact info,
+            hours, and updates in minutes.
+          </p>
         </div>
       </section>
       <Footer />
