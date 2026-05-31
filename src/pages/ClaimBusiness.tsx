@@ -564,9 +564,43 @@ const ClaimBusiness = () => {
 
       {/* FORM */}
       <section id="claim-form" className="pb-28 px-6 md:px-10 scroll-mt-24">
+        <div className="max-w-3xl mx-auto">
+          {slugParam && (
+            <div
+              className="mb-5 rounded-2xl border px-5 py-4 text-sm flex items-start gap-3"
+              style={{
+                borderColor: resolvedBiz ? `${TEAL}55` : "rgba(255,255,255,0.12)",
+                background: resolvedBiz ? `${TEAL}14` : "rgba(255,255,255,0.04)",
+              }}
+            >
+              <Building2 className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} />
+              <div className="text-white/80 leading-relaxed">
+                {resolvedBiz ? (
+                  <>
+                    Claiming or updating{" "}
+                    <span className="font-semibold text-white">{resolvedBiz.name}</span>
+                    {resolvedBiz.town ? <> in <span className="text-white">{resolvedBiz.town}</span></> : null}.
+                    Confirm the details below and add anything we should know.
+                  </>
+                ) : slugLookupTried ? (
+                  <>
+                    We couldn't find an existing profile for that link, but you can still claim or
+                    update this business — just enter the name below.
+                  </>
+                ) : (
+                  <>Looking up this business…</>
+                )}
+                {tierParam && (
+                  <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.18em] border border-white/15 text-white/70">
+                    Tier: {tierParam}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
         <form
           onSubmit={handleSubmit}
-          className="max-w-3xl mx-auto rounded-3xl bg-[#1E2230] border border-white/[0.08] p-7 md:p-10 space-y-10"
+          className="rounded-3xl bg-[#1E2230] border border-white/[0.08] p-7 md:p-10 space-y-10"
         >
           {/* SECTION: Basic */}
           <SectionBlock
