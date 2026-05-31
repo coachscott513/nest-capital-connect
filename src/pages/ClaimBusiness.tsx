@@ -290,6 +290,7 @@ const ClaimBusiness = () => {
                 eyebrow: "Free Listing",
                 price: "$0",
                 cadence: "always",
+                setup: null as string | null,
                 tag: "Your basic listing is already live.",
                 accent: "rgba(255,255,255,0.55)",
                 items: [
@@ -302,36 +303,23 @@ const ClaimBusiness = () => {
                 style: "neutral" as const,
               },
               {
-                id: "member",
-                eyebrow: "Member",
-                price: "$10",
-                cadence: "/mo",
-                tag: "Richer profile content.",
-                accent: "#ffffff",
-                items: [
-                  "Everything in Free",
-                  "Photo uploads & description",
-                  "Social links & store hours",
-                  "Submit events & specials",
-                ],
-                cta: "Become a Member",
-                style: "neutral" as const,
-              },
-              {
                 id: "featured",
-                eyebrow: "Featured Local Partner · Most Popular",
-                price: "$15",
+                eyebrow: "Featured Business Page · Most Popular",
+                price: "$25",
                 cadence: "/mo",
-                tag: "Stand out across search and town pages.",
+                setup: "+ $25 one-time setup",
+                tag: "A polished local profile that works like a mini website inside Nest.",
                 accent: TEAL,
                 items: [
-                  "Everything in Member",
-                  "Priority placement in category search",
-                  "Featured badge + larger card",
-                  "10-photo gallery & enhanced description",
-                  "Live Pulse / local update integration",
+                  "Full business profile page",
+                  "Description, services & photos",
+                  "Phone, text, email & website buttons",
+                  "Town & category placement",
+                  "Shareable profile link",
+                  "Submit events & specials",
+                  "Featured Local Partner badge (pilot)",
                 ],
-                cta: "Get Featured",
+                cta: "Claim My Profile",
                 style: "teal" as const,
               },
               {
@@ -339,21 +327,22 @@ const ClaimBusiness = () => {
                 eyebrow: "Spotlight Partner",
                 price: "$50",
                 cadence: "/mo",
+                setup: null,
                 tag: "Premium visibility for more local attention.",
                 accent: "#c9a449",
                 items: [
                   "Everything in Featured",
-                  "Dedicated business page",
+                  "Higher category & town placement",
+                  "Specials & events promotion",
                   "Unlimited photo gallery",
-                  "Specials with images & newsletter spotlight",
-                  "Weekly event matrix feature",
+                  "Newsletter / local pulse spotlight",
                 ],
                 cta: "Request Spotlight",
                 style: "gold" as const,
               },
             ];
             return (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {cards.map((c) => (
                   <div
                     key={c.id}
@@ -383,6 +372,11 @@ const ClaimBusiness = () => {
                       {c.price}
                       <span className="text-base text-white/55 font-light">{c.cadence === "always" ? " / always" : c.cadence}</span>
                     </p>
+                    {c.setup && (
+                      <p className="mt-1 text-[11.5px] font-semibold uppercase tracking-[0.18em]" style={{ color: c.accent }}>
+                        {c.setup}
+                      </p>
+                    )}
                     <p className="mt-2 text-[13px] text-white/65 font-light leading-relaxed min-h-[40px]">
                       {c.tag}
                     </p>
