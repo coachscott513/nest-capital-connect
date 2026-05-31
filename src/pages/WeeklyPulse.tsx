@@ -896,6 +896,16 @@ const WeeklyPulse = () => {
                                 {[ev.venue, ev.town].filter(Boolean).join(" · ")}
                               </span>
                             )}
+                            {ev.endISO && ev.startISO && ev.endISO !== ev.startISO && ev.endISO !== selectedDay.iso && (
+                              <span className="inline-flex items-center gap-1 text-[#5eead4]/90">
+                                Runs through {formatRunsThrough(ev.endISO)}
+                              </span>
+                            )}
+                            {ev.startISO === selectedDay.iso && ev.endISO === ev.startISO && (
+                              <span className="inline-flex items-center gap-1 text-[#5eead4]/90">
+                                Today only
+                              </span>
+                            )}
                           </div>
                           {ev.description && (
                             <p className="mt-2 text-[13px] text-white/55 font-light line-clamp-2">
