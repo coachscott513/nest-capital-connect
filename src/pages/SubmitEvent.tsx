@@ -90,7 +90,13 @@ const SubmitEvent = () => {
     });
     setSubmitting(false);
     if (error) {
-      toast({ title: "Submission failed", description: error.message, variant: "destructive" });
+      console.error("[submit-event] supabase error:", error);
+      toast({
+        title: "We couldn't submit this right now",
+        description:
+          "Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.",
+        variant: "destructive",
+      });
       return;
     }
     if (typeof window !== "undefined" && (window as any).gtag) {

@@ -137,11 +137,9 @@ const ClaimBusiness = () => {
       const { error } = await supabase.from("leads").insert(payload);
       if (error) {
         console.error("[claim] supabase error:", error);
-        const detail = import.meta.env.DEV
-          ? ` (${error.message})`
-          : "";
+        const detail = import.meta.env.DEV ? ` (${error.message})` : "";
         toast.error(
-          `We couldn't submit your profile right now. Please try again, or email scott@capitaldistrictnest.com.${detail}`
+          `We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.${detail}`
         );
         return;
       }
@@ -149,7 +147,7 @@ const ClaimBusiness = () => {
     } catch (err: any) {
       console.error("[claim] submit exception:", err);
       toast.error(
-        "We couldn't submit your profile right now. Please try again, or email scott@capitaldistrictnest.com."
+        "We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled."
       );
     } finally {
       setIsSubmitting(false);
