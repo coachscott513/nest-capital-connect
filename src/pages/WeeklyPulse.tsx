@@ -735,6 +735,7 @@ const WeeklyPulse = () => {
                     onClick={() => {
                       setTownFilter(t);
                       gtag("weekly_town_filter_click", { town: t });
+                      gtag("schedule_filter_click", { selected_category: filter, selected_town: t, source_page: "/weekly" });
                     }}
                     className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition border ${
                       active
