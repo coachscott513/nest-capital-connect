@@ -1,10 +1,11 @@
 import { useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ChevronLeft, ChevronRight, MapPin, Clock, Plus } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, MapPin, Clock, Plus, AlertCircle, X } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
+
 
 import heroBg from "@/assets/events-room-hero.jpg";
 import evAlive from "@/assets/event-alive-at-five.jpg";
