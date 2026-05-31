@@ -82,6 +82,8 @@ interface EventCard {
   isFeatured?: boolean;
   link: LinkState;
   needsVerification: boolean;
+  startISO?: string;
+  endISO?: string;
 }
 
 function resolveLink(item: WeeklyFeedItem): LinkState {
