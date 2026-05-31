@@ -88,11 +88,11 @@ const CleanHeader = () => {
       focusOmniSearch();
       return;
     }
-    if (mode.label === "Events") {
-      e.preventDefault();
-      goToEvents();
+    if (mode.href) {
+      trackNavClick(mode.href);
     }
   };
+
 
   const isFrosted = scrolled || mobileMenuOpen;
 
