@@ -123,6 +123,7 @@ function trackClick(ev: FeaturedEvent) {
 export default function EndlessEntertainment() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   // Scroll active slide into centered position
   const scrollToIndex = useCallback((idx: number, smooth = true) => {
@@ -176,12 +177,29 @@ export default function EndlessEntertainment() {
     return () => cancelAnimationFrame(id);
   }, [scrollToIndex]);
 
+  // Autoplay — slow, infinite, pause on hover / interaction
+  useEffect(() => {
+    if (paused) return;
+    const id = window.setInterval(() => {
+      setActive((prev) => {
+        const next = (prev + 1) % EVENTS.length;
+        scrollToIndex(next);
+        return next;
+      });
+    }, 5500);
+    return () => window.clearInterval(id);
+  }, [paused, scrollToIndex]);
+
   const go = (delta: number) => scrollToIndex(active + delta);
 
   return (
     <section
       id="endless-entertainment"
       className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06]"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={() => setPaused(true)}
+      onTouchEnd={() => window.setTimeout(() => setPaused(false), 1500)}
     >
       <div
         className="absolute inset-0 pointer-events-none"
