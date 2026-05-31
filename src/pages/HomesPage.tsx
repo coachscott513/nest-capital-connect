@@ -130,11 +130,13 @@ const HomesPage = () => {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
-  const handleTownChip = (slug: string, name: string) => {
-    track("homes_town_chip_click", { town: slug, source_page: "/homes" });
+  const handleTownChip = (slug: string) => {
+    track("homes_town_selected", { town: slug, source_page: "/homes" });
     setTown(slug);
-    const url = buildRemaxUrl({ townSlug: slug, price, type });
-    window.open(url, "_blank", "noopener,noreferrer");
+    // Stay on /homes — URL params update via the sync effect.
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const handleFullMls = () => {
