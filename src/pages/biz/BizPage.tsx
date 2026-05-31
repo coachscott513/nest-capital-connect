@@ -941,9 +941,9 @@ const BizPage = () => {
     return () => { cancelled = true; };
   }, [requestedSlug]);
 
-  // Real 404 once we've confirmed the slug doesn't resolve.
+  // Render the polished "profile being prepared" page when the slug doesn't resolve.
   if (!loading && notFound) {
-    return <NotFoundBiz slug={requestedSlug} />;
+    return <PendingProfile slug={requestedSlug} />;
   }
 
   // During loading, render the full Free profile shell using a slug-derived
