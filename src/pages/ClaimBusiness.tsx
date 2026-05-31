@@ -437,7 +437,7 @@ const ClaimBusiness = () => {
 
 
       {/* FORM */}
-      <section className="pb-28 px-6 md:px-10">
+      <section id="claim-form" className="pb-28 px-6 md:px-10 scroll-mt-24">
         <form
           onSubmit={handleSubmit}
           className="max-w-3xl mx-auto rounded-3xl bg-[#1E2230] border border-white/[0.08] p-7 md:p-10 space-y-10"
