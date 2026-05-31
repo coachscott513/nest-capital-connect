@@ -59,6 +59,13 @@ export interface WeeklyFeedItem {
   video_provider?: string;
   video_iframe_html?: string;
   featured_video?: boolean;
+  /** Link-state fields for event CTA routing. Priority: ticket → reservation → official → source. */
+  official_url?: string;
+  ticket_url?: string;
+  reservation_url?: string;
+  source_url?: string;
+  event_status?: "confirmed" | "pending_verification" | "cancelled";
+  needs_verification?: boolean;
 }
 
 export const weeklyFeed: WeeklyFeedItem[] = [
