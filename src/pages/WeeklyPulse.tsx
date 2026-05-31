@@ -365,6 +365,19 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
 
 const WeeklyPulse = () => {
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [pendingEvent, setPendingEvent] = useState<EventCard | null>(null);
+
+  const openPending = (ev: EventCard, sourceLocation: string) => {
+    setPendingEvent(ev);
+    gtag("event_details_pending_click", {
+      event_title: ev.title,
+      event_category: ev.category,
+      event_date: ev.dateLabel,
+      event_location: ev.venue || ev.town || "",
+      link_state: ev.link.kind,
+      source_location: sourceLocation,
+    });
+  };
 
   const events: EventCard[] = useMemo(() => {
     const today = new Date();
