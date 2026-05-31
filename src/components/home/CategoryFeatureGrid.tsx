@@ -87,8 +87,8 @@ type Props = {
 
 export default function CategoryFeatureGrid({
   eyebrow = "Browse by Category",
-  title = "Explore the Capital District by Category",
-  subtitle = "Find restaurants, contractors, real estate services, events, shopping, healthcare, wellness, and professional services across the region.",
+  title = "Explore Local Life",
+  subtitle = "Restaurants, services, homes, events, shops, and local experts across the Capital District.",
   tiles = DEFAULT_TILES,
   sourceLocation = "homepage_six_tile_grid",
 }: Props) {
@@ -120,12 +120,12 @@ export default function CategoryFeatureGrid({
         }}
         aria-hidden
       />
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-20 md:py-28">
+      <div className="relative w-full px-3 sm:px-4 md:px-6 lg:px-8 py-20 md:py-28">
         <div className="text-center max-w-3xl mx-auto">
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
             {eyebrow}
           </p>
-          <h2 className="mt-5 text-3xl sm:text-4xl md:text-5xl lg:text-[3.75rem] font-semibold tracking-[-0.035em] leading-[1.05] text-white">
+          <h2 className="mt-5 text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-semibold tracking-[-0.04em] leading-[1.02] text-white">
             {title}
           </h2>
           <p className="mt-5 text-base md:text-lg text-white/70 font-light leading-relaxed">
@@ -133,7 +133,7 @@ export default function CategoryFeatureGrid({
           </p>
         </div>
 
-        <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+        <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
           {tiles.map((tile, idx) => (
             <motion.div
               key={tile.key}
@@ -145,7 +145,7 @@ export default function CategoryFeatureGrid({
               <Link
                 to={tile.to}
                 onClick={() => handleClick(tile)}
-                className="group relative block rounded-[28px] overflow-hidden border border-white/[0.08] bg-[#11151f] min-h-[360px] md:min-h-[420px] shadow-[0_30px_80px_-40px_rgba(0,0,0,0.9)] hover:border-[#5eead4]/40 hover:shadow-[0_40px_100px_-30px_rgba(94,234,212,0.25)] transition-all duration-500"
+                className="group relative block rounded-md overflow-hidden bg-[#11151f] h-[380px] sm:h-[440px] md:h-[520px] lg:h-[600px] transition-all duration-500"
               >
                 <img
                   src={tile.image}
@@ -153,32 +153,25 @@ export default function CategoryFeatureGrid({
                   loading="lazy"
                   width={1280}
                   height={896}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
                 />
                 <div
                   className="absolute inset-0"
                   style={{
                     background:
-                      "linear-gradient(to top, rgba(11,15,25,0.96) 0%, rgba(11,15,25,0.75) 38%, rgba(11,15,25,0.35) 70%, rgba(11,15,25,0.20) 100%)",
-                  }}
-                  aria-hidden
-                />
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{
-                    background:
-                      "radial-gradient(80% 60% at 50% 100%, rgba(94,234,212,0.15), transparent 70%)",
+                      "linear-gradient(to bottom, rgba(11,15,25,0.55) 0%, rgba(11,15,25,0.20) 35%, rgba(11,15,25,0.20) 60%, rgba(11,15,25,0.85) 100%)",
                   }}
                   aria-hidden
                 />
 
-                <div className="relative h-full flex flex-col justify-end p-7 md:p-8">
-                  <h3 className="text-2xl md:text-[1.75rem] font-semibold text-white tracking-[-0.02em] leading-[1.1]">
+                <div className="relative h-full flex flex-col items-center text-center px-6 md:px-10 pt-10 md:pt-14">
+                  <h3 className="text-3xl sm:text-4xl md:text-[2.75rem] lg:text-5xl font-semibold text-white tracking-[-0.03em] leading-[1.05] max-w-xl">
                     {tile.headline}
                   </h3>
-                  <p className="mt-3 text-[14.5px] md:text-[15px] text-white/75 font-light leading-relaxed max-w-md">
+                  <p className="mt-4 text-[15px] md:text-base text-white/80 font-light leading-relaxed max-w-md">
                     {tile.description}
                   </p>
-                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#5eead4] group-hover:text-white transition">
+                  <span className="mt-6 inline-flex items-center gap-1.5 text-[15px] font-medium text-[#5eead4] group-hover:text-white transition">
                     {tile.cta}
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                   </span>
@@ -191,3 +184,4 @@ export default function CategoryFeatureGrid({
     </section>
   );
 }
+
