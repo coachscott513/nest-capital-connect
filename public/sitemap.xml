@@ -12127,12 +12127,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.capitaldistrictnest.com/biz/denofio-insurance-agency-l26ccpp0</loc>
-    <lastmod>2026-05-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://www.capitaldistrictnest.com/biz/nationwide-insurance-william-m-kirvin-ia--zjfe</loc>
     <lastmod>2026-05-24</lastmod>
     <changefreq>monthly</changefreq>
@@ -28343,5 +28337,11 @@
     <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.capitaldistrictnest.com/biz/denofio-insurance-agency</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
   </url>
 </urlset>

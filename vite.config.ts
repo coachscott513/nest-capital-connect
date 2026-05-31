@@ -48,6 +48,9 @@ const PRERENDER_ROUTES = [
   "/towns/queensbury",
   "/towns/voorheesville",
   "/towns/mechanicville",
+  // Featured business profiles — prerendered so iMessage/Facebook/LinkedIn
+  // see the correct OG tags without executing client JS.
+  "/biz/denofio-insurance-agency",
 ];
 
 // https://vitejs.dev/config/
