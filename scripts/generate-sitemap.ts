@@ -100,7 +100,7 @@ async function fetchDynamic(): Promise<Entry[]> {
   const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
   const out: Entry[] = [];
 
-  // Towns
+  // Towns — canonical URL is /living-in/:slug
   try {
     const { data: towns } = await sb
       .from("town_market_data")
@@ -112,7 +112,7 @@ async function fetchDynamic(): Promise<Entry[]> {
       if (isExcluded(slug) || seenTowns.has(slug)) return;
       seenTowns.add(slug);
       out.push({
-        path: `/towns/${slug}`,
+        path: `/living-in/${slug}`,
         changefreq: "weekly",
         priority: "0.85",
         lastmod: (t.updated_at || today).slice(0, 10),
@@ -122,7 +122,9 @@ async function fetchDynamic(): Promise<Entry[]> {
     console.warn("sitemap: town fetch failed", e);
   }
 
-  // Businesses — paginate to handle >1000 rows
+  // Businesses — only include profiles with real content.
+  // Fallback / unclaimed-thin profiles are noindex,follow in BizPage and
+  // must NOT appear in the sitemap (avoids Soft 404 and thin-content flags).
   try {
     const pageSize = 1000;
     const seenBiz = new Set<string>();
@@ -130,7 +132,7 @@ async function fetchDynamic(): Promise<Entry[]> {
     for (;;) {
       const { data, error } = await sb
         .from("businesses")
-        .select("slug, updated_at, plan_tier, is_claimed")
+        .select("slug, updated_at, plan_tier, is_claimed, description, long_description, photos")
         .eq("is_active", true)
         .range(from, from + pageSize - 1);
       if (error) {
@@ -141,11 +143,21 @@ async function fetchDynamic(): Promise<Entry[]> {
       data.forEach((b: any) => {
         const slug = (b.slug || "").trim().toLowerCase();
         if (isExcluded(slug) || seenBiz.has(slug)) return;
-        seenBiz.add(slug);
-        // Claimed / paid tiers get higher priority
         const tier = (b.plan_tier || "").toLowerCase();
+        const isPaid =
+          tier === "premium_partner" ||
+          tier === "spotlight" ||
+          tier === "featured" ||
+          tier === "anchor";
+        const hasContent =
+          !!(b.description && String(b.description).trim().length > 40) ||
+          !!(b.long_description && String(b.long_description).trim().length > 40) ||
+          (Array.isArray(b.photos) && b.photos.length > 0);
+        // Only index claimed+content OR paid tiers. Skip thin/fallback profiles.
+        if (!isPaid && !(b.is_claimed && hasContent)) return;
+        seenBiz.add(slug);
         const priority =
-          tier === "premium_partner" || tier === "spotlight"
+          tier === "premium_partner" || tier === "spotlight" || tier === "anchor"
             ? "0.75"
             : tier === "featured" || b.is_claimed
             ? "0.65"
