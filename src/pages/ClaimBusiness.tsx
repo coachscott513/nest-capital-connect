@@ -344,6 +344,10 @@ const ClaimBusiness = () => {
           name="description"
           content="Be considered for Capital District Nest — a curated, concierge platform elevating the Capital District's best local businesses."
         />
+        <link rel="canonical" href="https://www.capitaldistrictnest.com/claim-business" />
+        {Array.from(searchParams.keys()).length > 0 && (
+          <meta name="robots" content="noindex, follow" />
+        )}
       </Helmet>
 
       <MainHeader />
