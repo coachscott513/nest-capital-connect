@@ -22,13 +22,16 @@ const today = new Date().toISOString().slice(0, 10);
 const STATIC: Entry[] = [
   { path: "/", changefreq: "daily", priority: "1.0" },
   { path: "/local", changefreq: "daily", priority: "0.95" },
+  { path: "/weekly", changefreq: "daily", priority: "0.95" },
+  { path: "/homes", changefreq: "daily", priority: "0.9" },
+  { path: "/communities", changefreq: "weekly", priority: "0.9" },
+  { path: "/submit-event", changefreq: "monthly", priority: "0.6" },
   { path: "/analyze", changefreq: "weekly", priority: "1.0" },
   { path: "/analyze-home", changefreq: "weekly", priority: "0.9" },
   { path: "/analyze-any-property", changefreq: "weekly", priority: "1.0" },
   { path: "/markets", changefreq: "weekly", priority: "0.9" },
   { path: "/blog", changefreq: "daily", priority: "0.9" },
   { path: "/financing", changefreq: "monthly", priority: "0.9" },
-  { path: "/communities", changefreq: "weekly", priority: "0.9" },
   { path: "/intelligence", changefreq: "weekly", priority: "0.9" },
   { path: "/sell-investment-property", changefreq: "monthly", priority: "0.9" },
   { path: "/first-time-homebuyers", changefreq: "monthly", priority: "0.9" },
@@ -39,12 +42,12 @@ const STATIC: Entry[] = [
   { path: "/reviews", changefreq: "monthly", priority: "0.7" },
   { path: "/pricing", changefreq: "monthly", priority: "0.7" },
   { path: "/claim-business", changefreq: "monthly", priority: "0.6" },
-  // Living-In SEO pages
+  // Living-In town pages (canonical: /living-in/:slug)
   ...[
     "delmar", "albany", "troy", "schenectady", "saratoga-springs",
     "clifton-park", "niskayuna", "guilderland", "voorheesville",
     "queensbury", "amsterdam",
-  ].map((s) => ({ path: `/living-in-${s}`, changefreq: "weekly", priority: "0.9" })),
+  ].map((s) => ({ path: `/living-in/${s}`, changefreq: "weekly", priority: "0.9" })),
   // Analyzer sub-pages
   ...["condo", "single-family", "rental", "multifamily", "luxury", "commercial", "land"].map(
     (s) => ({ path: `/analyze/${s}`, changefreq: "monthly", priority: "0.8" })
@@ -97,7 +100,7 @@ async function fetchDynamic(): Promise<Entry[]> {
   const sb = createClient(SUPABASE_URL, SUPABASE_ANON);
   const out: Entry[] = [];
 
-  // Towns
+  // Towns — canonical URL is /living-in/:slug
   try {
     const { data: towns } = await sb
       .from("town_market_data")
@@ -109,7 +112,7 @@ async function fetchDynamic(): Promise<Entry[]> {
       if (isExcluded(slug) || seenTowns.has(slug)) return;
       seenTowns.add(slug);
       out.push({
-        path: `/towns/${slug}`,
+        path: `/living-in/${slug}`,
         changefreq: "weekly",
         priority: "0.85",
         lastmod: (t.updated_at || today).slice(0, 10),
@@ -119,7 +122,9 @@ async function fetchDynamic(): Promise<Entry[]> {
     console.warn("sitemap: town fetch failed", e);
   }
 
-  // Businesses — paginate to handle >1000 rows
+  // Businesses — only include profiles with real content.
+  // Fallback / unclaimed-thin profiles are noindex,follow in BizPage and
+  // must NOT appear in the sitemap (avoids Soft 404 and thin-content flags).
   try {
     const pageSize = 1000;
     const seenBiz = new Set<string>();
@@ -127,7 +132,7 @@ async function fetchDynamic(): Promise<Entry[]> {
     for (;;) {
       const { data, error } = await sb
         .from("businesses")
-        .select("slug, updated_at, plan_tier, is_claimed")
+        .select("slug, updated_at, plan_tier, is_claimed, description, long_description, photos")
         .eq("is_active", true)
         .range(from, from + pageSize - 1);
       if (error) {
@@ -138,11 +143,21 @@ async function fetchDynamic(): Promise<Entry[]> {
       data.forEach((b: any) => {
         const slug = (b.slug || "").trim().toLowerCase();
         if (isExcluded(slug) || seenBiz.has(slug)) return;
-        seenBiz.add(slug);
-        // Claimed / paid tiers get higher priority
         const tier = (b.plan_tier || "").toLowerCase();
+        const isPaid =
+          tier === "premium_partner" ||
+          tier === "spotlight" ||
+          tier === "featured" ||
+          tier === "anchor";
+        const hasContent =
+          !!(b.description && String(b.description).trim().length > 40) ||
+          !!(b.long_description && String(b.long_description).trim().length > 40) ||
+          (Array.isArray(b.photos) && b.photos.length > 0);
+        // Only index claimed+content OR paid tiers. Skip thin/fallback profiles.
+        if (!isPaid && !(b.is_claimed && hasContent)) return;
+        seenBiz.add(slug);
         const priority =
-          tier === "premium_partner" || tier === "spotlight"
+          tier === "premium_partner" || tier === "spotlight" || tier === "anchor"
             ? "0.75"
             : tier === "featured" || b.is_claimed
             ? "0.65"

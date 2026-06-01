@@ -14,18 +14,14 @@ const titleize = (s: string) =>
 
 const LocalPage = () => {
   const [params] = useSearchParams();
-  const rawCategory = params.get("category") || params.get("q") || "";
-  const category = rawCategory ? titleize(rawCategory) : "";
+  const hasQuery = Array.from(params.keys()).length > 0;
 
-  const title = category
-    ? `${category} in the Capital District | Capital District Nest`
-    : "Local Businesses in the Capital District | Capital District Nest";
-  const description = category
-    ? `Browse local ${category} providers, businesses, services, and featured partners across the Capital District.`
-    : "Browse local businesses, restaurants, services, and featured partners across Albany, Saratoga, Troy, Schenectady, and every Capital District town.";
-  const canonical = category
-    ? `https://www.capitaldistrictnest.com/local?category=${encodeURIComponent(rawCategory)}`
-    : "https://www.capitaldistrictnest.com/local";
+  // Canonical ALWAYS points to clean /local. Filtered/query states are
+  // marked noindex,follow so Google consolidates ranking signals on /local.
+  const canonical = "https://www.capitaldistrictnest.com/local";
+  const title = "Capital District Local Business Directory | Capital District Nest";
+  const description =
+    "Search local businesses, services, restaurants, professionals, contractors, and community resources across the Capital District.";
 
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white">
@@ -33,6 +29,7 @@ const LocalPage = () => {
         <title>{title}</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={canonical} />
+        {hasQuery && <meta name="robots" content="noindex, follow" />}
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonical} />

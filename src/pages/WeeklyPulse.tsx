@@ -541,8 +541,9 @@ const WeeklyPulse = () => {
   return (
     <div className="min-h-screen bg-[#0B0F19]">
       <SEOHead
-        title="Events Across the Capital District | Capital District Nest"
-        description="The Capital District events room — live music, festivals, markets, dining events, family activities, sports, and things to do across the region."
+        title="Capital District Events This Week | Capital District Nest"
+        description="Browse live music, dining events, markets, family activities, community events, and things to do across the Capital District."
+        canonical="https://www.capitaldistrictnest.com/weekly"
       />
       <CleanHeader />
 

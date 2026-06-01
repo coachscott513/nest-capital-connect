@@ -373,8 +373,8 @@ const TownPageTemplate = ({ town }: Props) => {
   );
 
   /* ----- SEO ----- */
-  const seoTitle = `${name}, NY — Local Businesses, Events, Restaurants & Homes | Capital District Nest`;
-  const seoDescription = `Discover ${name}: restaurants, local businesses, events, services, homes, and community life. The premium local discovery page for ${name} on Capital District Nest.`;
+  const seoTitle = `Living in ${name}, NY | Capital District Nest`;
+  const seoDescription = `Explore local businesses, restaurants, services, events, homes, and community updates in ${name}, NY on Capital District Nest.`;
   const placeSchema = {
     "@context": "https://schema.org",
     "@type": "Place",
