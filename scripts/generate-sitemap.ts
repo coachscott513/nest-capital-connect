@@ -22,13 +22,16 @@ const today = new Date().toISOString().slice(0, 10);
 const STATIC: Entry[] = [
   { path: "/", changefreq: "daily", priority: "1.0" },
   { path: "/local", changefreq: "daily", priority: "0.95" },
+  { path: "/weekly", changefreq: "daily", priority: "0.95" },
+  { path: "/homes", changefreq: "daily", priority: "0.9" },
+  { path: "/communities", changefreq: "weekly", priority: "0.9" },
+  { path: "/submit-event", changefreq: "monthly", priority: "0.6" },
   { path: "/analyze", changefreq: "weekly", priority: "1.0" },
   { path: "/analyze-home", changefreq: "weekly", priority: "0.9" },
   { path: "/analyze-any-property", changefreq: "weekly", priority: "1.0" },
   { path: "/markets", changefreq: "weekly", priority: "0.9" },
   { path: "/blog", changefreq: "daily", priority: "0.9" },
   { path: "/financing", changefreq: "monthly", priority: "0.9" },
-  { path: "/communities", changefreq: "weekly", priority: "0.9" },
   { path: "/intelligence", changefreq: "weekly", priority: "0.9" },
   { path: "/sell-investment-property", changefreq: "monthly", priority: "0.9" },
   { path: "/first-time-homebuyers", changefreq: "monthly", priority: "0.9" },
@@ -39,12 +42,12 @@ const STATIC: Entry[] = [
   { path: "/reviews", changefreq: "monthly", priority: "0.7" },
   { path: "/pricing", changefreq: "monthly", priority: "0.7" },
   { path: "/claim-business", changefreq: "monthly", priority: "0.6" },
-  // Living-In SEO pages
+  // Living-In town pages (canonical: /living-in/:slug)
   ...[
     "delmar", "albany", "troy", "schenectady", "saratoga-springs",
     "clifton-park", "niskayuna", "guilderland", "voorheesville",
     "queensbury", "amsterdam",
-  ].map((s) => ({ path: `/living-in-${s}`, changefreq: "weekly", priority: "0.9" })),
+  ].map((s) => ({ path: `/living-in/${s}`, changefreq: "weekly", priority: "0.9" })),
   // Analyzer sub-pages
   ...["condo", "single-family", "rental", "multifamily", "luxury", "commercial", "land"].map(
     (s) => ({ path: `/analyze/${s}`, changefreq: "monthly", priority: "0.8" })
