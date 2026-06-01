@@ -3,6 +3,8 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /test/
+Disallow: /test
 Disallow: /admin/
 Disallow: /admin
 Disallow: /auth
