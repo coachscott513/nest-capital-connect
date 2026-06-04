@@ -16,6 +16,10 @@ import Index from "./pages/Index";
 import AdminMediaStories from "./pages/AdminMediaStories";
 import HomesPage from "./pages/HomesPage";
 import RealEstateHub from "./pages/RealEstateHub";
+import Restaurants from "./pages/Restaurants";
+import HomeServices from "./pages/HomeServices";
+import Wellness from "./pages/Wellness";
+import ProfessionalServices from "./pages/ProfessionalServices";
 import LocalPage from "./pages/LocalPage";
 import ContactPage from "./pages/ContactPage";
 import InvestorTools from "./pages/InvestorTools";
@@ -304,6 +308,10 @@ const App = () => {
           {/* Simplified canonical destinations from main nav */}
           <Route path="/homes" element={<HomesPage />} />
           <Route path="/real-estate" element={<RealEstateHub />} />
+          <Route path="/restaurants" element={<Restaurants />} />
+          <Route path="/home-services" element={<HomeServices />} />
+          <Route path="/wellness" element={<Wellness />} />
+          <Route path="/professional-services" element={<ProfessionalServices />} />
           <Route path="/housing" element={<Navigate to="/real-estate" replace />} />
           <Route path="/local" element={<LocalPage />} />
           <Route path="/weekly" element={<WeeklyPulse />} />

@@ -33,7 +33,7 @@ const DEFAULT_TILES: CategoryTile[] = [
     headline: "Restaurants & Taverns",
     description: "Dining, drinks, cafés, and neighborhood favorites across the Capital District.",
     cta: "Explore Dining",
-    to: "/local?category=restaurant",
+    to: "/restaurants",
     image: imgRestaurants,
   },
   {
@@ -41,7 +41,7 @@ const DEFAULT_TILES: CategoryTile[] = [
     headline: "Contractors & Home Services",
     description: "Discover trusted local contractors, home improvement pros, and essential service providers.",
     cta: "Explore Contractors",
-    to: "/local?category=home-services",
+    to: "/home-services",
     image: imgContractors,
   },
   {
@@ -65,7 +65,7 @@ const DEFAULT_TILES: CategoryTile[] = [
     headline: "Health & Wellness",
     description: "Healthcare, dental, fitness, mental health, and wellness providers across the region.",
     cta: "Explore Wellness",
-    to: "/local?category=health-wellness",
+    to: "/wellness",
     image: imgServices,
   },
   {
@@ -96,10 +96,17 @@ export default function CategoryFeatureGrid({
   const handleClick = (tile: CategoryTile) => {
     try {
       if (typeof window !== "undefined" && (window as any).gtag) {
-        (window as any).gtag("event", "category_tile_click", {
+        const payload = {
           category_name: tile.headline,
           destination_url: tile.to,
           source_location: sourceLocation,
+          page_path: window.location.pathname,
+        };
+        (window as any).gtag("event", "category_tile_click", payload);
+        (window as any).gtag("event", "homepage_room_click", {
+          room_name: tile.key,
+          destination_url: tile.to,
+          source_section: sourceLocation,
           page_path: window.location.pathname,
         });
       }
