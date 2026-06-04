@@ -20,22 +20,52 @@ const mapCategory = (
   name = "",
   subcategory: string | null = null,
 ): BusinessCategory => {
+  // PASS 1 — strong NAME + SUBCATEGORY signals only. The raw `category` column
+  // is unreliable (many import-time mis-classifications), so name/subcategory
+  // win when they unambiguously identify a vertical.
+  const nameSub = `${name} ${subcategory ?? ""}`.toLowerCase();
+  const testNS = (re: RegExp) => re.test(nameSub);
+
+  // High-specificity professional verticals — check first.
+  if (testNS(/\bcpa\b|\baccountant\b|\baccounting\b|\bbookkeep|\btax service/)) return "Accountant";
+  if (testNS(/\bdental\b|\bdentist\b|\bdentistry\b|orthodont|endodont|periodont|oral surgeon/)) return "Dental";
+  if (testNS(/\binsurance\b/)) return "Insurance";
+  if (testNS(/\bmortgage\b|\blender\b/)) return "Mortgage Lender";
+  if (testNS(/\bbank\b|credit union/)) return "Bank/Credit Union";
+  if (testNS(/real estate attorney/)) return "Real Estate Attorney";
+  if (testNS(/\battorney|\blaw firm|\blaw office|\blawyer|\blegal services\b|\bpllc\b|\bllp\b|\besq\b/)) return "Attorney";
+  if (testNS(/\bmd\b|\bm\.d\.|physician|\bclinic\b|\bhospital\b|urgent care|pediatric|dermatolog|cardiolog|orthopedic|family medicine|primary care/)) return "Healthcare";
+  if (testNS(/financial advisor|wealth management|\bplanner\b|primerica/)) return "Financial Advisor";
+
+  // Trades / home services — strong name signals.
+  if (testNS(/\bplumb/)) return "Plumber";
+  if (testNS(/\broof/)) return "Roofer";
+  if (testNS(/\bhvac\b|\bheating\b|\bcooling\b|furnace/)) return "HVAC";
+  if (testNS(/\belectric|\belectrician/)) return "Electrician";
+  if (testNS(/landscap|lawn care|tree service/)) return "Landscaper";
+  if (testNS(/\bhandyman\b|handywoman/)) return "Handyman";
+  if (testNS(/contractor|construction|remodel|builder|painting/)) return "Contractor";
+  if (testNS(/inspector|inspection/)) return "Home Inspector";
+
+  // Food / dining — only on strong name signals.
+  if (testNS(/coffee|espresso|roaster/)) return "Coffee";
+  if (testNS(/bakery|patisserie|donut|bagel|pastry/)) return "Bakery";
+  if (testNS(/restaurant|pizz|deli|tavern|\bpub\b|bistro|diner|grill|eatery|sandwich|kitchen|steakhouse|sushi|brewery|\bbbq\b/)) return "Restaurant";
+
+  // PASS 2 — broader signals across the raw category + tags + everything else.
   const hay = `${raw ?? ""} ${subcategory ?? ""} ${name} ${tags.join(" ")}`.toLowerCase();
   const test = (re: RegExp) => re.test(hay);
-  if (test(/coffee|espresso|cafe|café|roaster/)) return "Coffee";
-  if (test(/bakery|patisserie|donut|bagel|pastry/)) return "Bakery";
+
+  if (test(/cafe|café/)) return "Coffee";
+  if (test(/bakery|patisserie/)) return "Bakery";
   if (test(/cater/)) return "Restaurant";
-  if (test(/restaurant|bar|pub|pizz|deli|diner|grill|food|eatery|sandwich|kitchen|bistro/)) return "Restaurant";
-  // Dental — first-class vertical, check BEFORE generic medical/wellness
+  if (test(/restaurant|\bbar\b|pub|pizz|deli|diner|grill|eatery|sandwich|kitchen|bistro|food & beverage|food and beverage/)) return "Restaurant";
   if (test(/dental|dentist|orthodont|endodont|periodont|oral surgeon|tooth|teeth|braces|invisalign|cosmetic dentistry/)) return "Dental";
-  // Healthcare — medical, clinics, therapy providers
   if (test(/healthcare|health care|medical|doctor|physician|clinic|urgent care|pediatric|pediatrician|dermatolog|family medicine|primary care|chiropract|physical therapy|mental health|counseling|psycholog|psychiatr|optometr|cardiolog|orthopedic/)) return "Healthcare";
-  // Fitness
   if (test(/gym|fitness|crossfit/)) return "Gym";
   if (test(/salon|barber|nail|hair|beauty/)) return "Salon";
-  // Wellness — spa, massage, yoga, holistic
   if (test(/spa|massage|yoga|pilates|acupunct|holistic|meditation|nutrition|wellness coach|recovery|sauna|cryo|wellness/)) return "Wellness";
-  if (test(/pet|vet|groom|kennel/)) return "Pet";
+  if (test(/\bpet\b|\bvet\b|groom|kennel/)) return "Pet";
   if (test(/auto|mechanic|tire|car wash|oil change/)) return "Auto";
   if (test(/book|library/)) return "Bookstore";
   if (test(/mortgage|lender|loan/)) return "Mortgage Lender";
@@ -43,10 +73,10 @@ const mapCategory = (
   if (test(/insurance/)) return "Insurance";
   if (test(/inspector|inspection/)) return "Home Inspector";
   if (test(/financial|advisor|planner|wealth|primerica/)) return "Financial Advisor";
-  if (test(/accountant|cpa|tax|bookkeep/)) return "Accountant";
+  if (test(/accountant|\bcpa\b|\btax\b|bookkeep/)) return "Accountant";
   if (test(/real estate attorney/)) return "Real Estate Attorney";
-  if (test(/attorney|lawyer|legal|law/)) return "Attorney";
-  if (test(/marketing|advertis|agency/)) return "Marketing";
+  if (test(/attorney|lawyer|legal|\blaw\b/)) return "Attorney";
+  if (test(/marketing|advertis|\bagency\b/)) return "Marketing";
   if (test(/roof/)) return "Roofer";
   if (test(/plumb/)) return "Plumber";
   if (test(/electric/)) return "Electrician";
@@ -58,6 +88,7 @@ const mapCategory = (
   if (test(/retail|shop|store|boutique|market/)) return "Retail";
   return "Home Service";
 };
+
 
 const slugify = (s: string) =>
   s.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[’']/g, "").toLowerCase()
