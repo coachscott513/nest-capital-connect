@@ -15,6 +15,7 @@ import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext
 import Index from "./pages/Index";
 import AdminMediaStories from "./pages/AdminMediaStories";
 import HomesPage from "./pages/HomesPage";
+import RealEstateHub from "./pages/RealEstateHub";
 import LocalPage from "./pages/LocalPage";
 import ContactPage from "./pages/ContactPage";
 import InvestorTools from "./pages/InvestorTools";
