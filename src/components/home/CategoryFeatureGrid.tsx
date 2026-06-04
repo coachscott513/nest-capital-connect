@@ -96,10 +96,17 @@ export default function CategoryFeatureGrid({
   const handleClick = (tile: CategoryTile) => {
     try {
       if (typeof window !== "undefined" && (window as any).gtag) {
-        (window as any).gtag("event", "category_tile_click", {
+        const payload = {
           category_name: tile.headline,
           destination_url: tile.to,
           source_location: sourceLocation,
+          page_path: window.location.pathname,
+        };
+        (window as any).gtag("event", "category_tile_click", payload);
+        (window as any).gtag("event", "homepage_room_click", {
+          room_name: tile.key,
+          destination_url: tile.to,
+          source_section: sourceLocation,
           page_path: window.location.pathname,
         });
       }
