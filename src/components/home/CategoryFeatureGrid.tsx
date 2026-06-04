@@ -109,6 +109,11 @@ export default function CategoryFeatureGrid({
           source_section: sourceLocation,
           page_path: window.location.pathname,
         });
+        (window as any).gtag("event", "homepage_category_click", {
+          category_name: tile.headline,
+          destination_url: tile.to,
+          source_section: sourceLocation,
+        });
       }
     } catch {
       /* analytics is best-effort */
