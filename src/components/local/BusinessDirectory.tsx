@@ -42,6 +42,7 @@ import {
   OFFICIAL_CATEGORIES,
   type OfficialCategory,
 } from "@/data/officialCategories";
+import { resolveCategoryParam } from "@/lib/categoryDeepLink";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import {
   usePaginatedBusinesses,
