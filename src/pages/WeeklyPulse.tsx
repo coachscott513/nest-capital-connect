@@ -375,10 +375,25 @@ const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTH_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const WeeklyPulse = () => {
+  const [searchParams] = useSearchParams();
+  const townParamSlug = searchParams.get("town") || "";
+  const townParamName = useMemo(() => {
+    if (!townParamSlug) return "";
+    for (const c of CAPITAL_DISTRICT_COUNTIES) {
+      const m = c.towns.find((t) => t.slug === townParamSlug);
+      if (m) return m.name;
+    }
+    return "";
+  }, [townParamSlug]);
+
   const [filter, setFilter] = useState<FilterKey>("all");
-  const [townFilter, setTownFilter] = useState<string>("All");
+  const [townFilter, setTownFilter] = useState<string>(townParamName || "All");
   const [pendingEvent, setPendingEvent] = useState<EventCard | null>(null);
   const [selectedDayIdx, setSelectedDayIdx] = useState<number>(0);
+
+  useEffect(() => {
+    if (townParamName) setTownFilter(townParamName);
+  }, [townParamName]);
 
   useEffect(() => {
     gtag("seven_day_schedule_view", { source_page: "/weekly" });
