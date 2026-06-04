@@ -33,7 +33,7 @@ const DEFAULT_TILES: CategoryTile[] = [
     headline: "Restaurants & Taverns",
     description: "Dining, drinks, cafés, and neighborhood favorites across the Capital District.",
     cta: "Explore Dining",
-    to: "/restaurants",
+    to: "/local?search=restaurant&category=restaurants",
     image: imgRestaurants,
   },
   {
@@ -41,7 +41,7 @@ const DEFAULT_TILES: CategoryTile[] = [
     headline: "Contractors & Home Services",
     description: "Discover trusted local contractors, home improvement pros, and essential service providers.",
     cta: "Explore Contractors",
-    to: "/home-services",
+    to: "/local?search=contractor&category=home-services",
     image: imgContractors,
   },
   {
@@ -65,7 +65,7 @@ const DEFAULT_TILES: CategoryTile[] = [
     headline: "Health & Wellness",
     description: "Healthcare, dental, fitness, mental health, and wellness providers across the region.",
     cta: "Explore Wellness",
-    to: "/wellness",
+    to: "/local?category=health-wellness",
     image: imgServices,
   },
   {
@@ -73,7 +73,7 @@ const DEFAULT_TILES: CategoryTile[] = [
     headline: "Mortgage, Legal & Finance",
     description: "Local lenders, attorneys, accountants, insurance providers, and financial professionals.",
     cta: "Explore Finance",
-    to: "/finances",
+    to: "/local?category=finance-legal",
     image: imgFinance,
   },
 ];
