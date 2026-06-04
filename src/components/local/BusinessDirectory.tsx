@@ -197,6 +197,26 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     return () => io.disconnect();
   }, [hasMore, loading, loadMore, results.length]);
 
+  // Fire `local_prefilter_loaded` once when /local opens with deep-link
+  // params present. Waits for the first data load so result_count is real.
+  const prefilterFired = useRef(false);
+  useEffect(() => {
+    if (prefilterFired.current || loading) return;
+    const hadDeepLink = Boolean(initialSearch || initialCategory || (!townSlug && town));
+    if (!hadDeepLink) return;
+    prefilterFired.current = true;
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "local_prefilter_loaded", {
+        search: initialSearch || "",
+        category: initialCategory || "",
+        town: effectiveTown || "",
+        result_count: total ?? results.length,
+      });
+    }
+  }, [loading, total, results.length, initialSearch, initialCategory, townSlug, town, effectiveTown]);
+
+
+
 
   return (
     <div className="bg-[#0B0F19] text-white">
