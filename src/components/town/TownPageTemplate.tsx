@@ -84,7 +84,7 @@ const CATEGORY_PANELS: CategoryPanel[] = [
     title: "Restaurants & Taverns",
     body: "Dining, cafés, drinks, and neighborhood favorites.",
     cta: "Explore Dining",
-    href: (s) => `/local?town=${s}&group=Local%20Lifestyle`,
+    href: (s) => `/local?town=${s}&search=restaurant&category=restaurants`,
     Icon: Utensils,
     image: CAT_IMG.dining,
   },
@@ -104,7 +104,7 @@ const CATEGORY_PANELS: CategoryPanel[] = [
     title: "Events & Things To Do",
     body: "Community events, family activities, markets, and local happenings.",
     cta: "See Events",
-    href: () => `/weekly`,
+    href: (s) => `/weekly?town=${s}`,
     Icon: CalendarDays,
     image: CAT_IMG.events,
   },
@@ -114,7 +114,7 @@ const CATEGORY_PANELS: CategoryPanel[] = [
     title: "Contractors & Home Services",
     body: "Home improvement, repairs, maintenance, and trusted local service providers.",
     cta: "Find Services",
-    href: (s) => `/local?town=${s}&group=Home%20Services`,
+    href: (s) => `/local?town=${s}&search=contractor&category=home-services`,
     Icon: Wrench,
     image: CAT_IMG.services,
   },
@@ -134,7 +134,7 @@ const CATEGORY_PANELS: CategoryPanel[] = [
     title: "Health & Professional Services",
     body: "Healthcare, wellness, legal, finance, insurance, and local experts.",
     cta: "Explore Services",
-    href: (s) => `/local?town=${s}&group=Health%20%26%20Wellness`,
+    href: (s) => `/local?town=${s}&category=health-wellness`,
     Icon: Stethoscope,
     image: CAT_IMG.health,
   },
@@ -521,13 +521,23 @@ const TownPageTemplate = ({ town }: Props) => {
               {CATEGORY_PANELS.map((p) => {
                 const href = p.href(slug);
                 const isAnchor = href.startsWith("#");
-                const onClick = () =>
+                const onClick = () => {
                   trackTown("town_category_tile_click", {
                     town_name: name,
                     town_slug: slug,
                     category: p.key,
                     source_location: "town_category_panels",
                   });
+                  if (!isAnchor) {
+                    trackTown("town_category_deeplink_click", {
+                      town_name: name,
+                      town_slug: slug,
+                      category: p.key,
+                      destination_url: href,
+                      source_page: `/living-in/${slug}`,
+                    });
+                  }
+                };
                 const inner = (
                   <>
                     <img
@@ -746,13 +756,14 @@ const TownPageTemplate = ({ town }: Props) => {
                 </h2>
               </div>
               <Link
-                to={`/local?town=${slug}&group=Local%20Lifestyle`}
+                to={`/local?town=${slug}&search=restaurant&category=restaurants`}
                 onClick={() =>
-                  trackTown("town_category_tile_click", {
+                  trackTown("town_category_deeplink_click", {
                     town_name: name,
                     town_slug: slug,
                     category: "restaurants",
-                    source_location: "town_restaurants_view_all",
+                    destination_url: `/local?town=${slug}&search=restaurant&category=restaurants`,
+                    source_page: `/living-in/${slug}`,
                   })
                 }
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] hover:text-white transition"
@@ -800,13 +811,14 @@ const TownPageTemplate = ({ town }: Props) => {
                 </h2>
               </div>
               <Link
-                to={`/local?town=${slug}&group=Home%20Services`}
+                to={`/local?town=${slug}&search=contractor&category=home-services`}
                 onClick={() =>
-                  trackTown("town_category_tile_click", {
+                  trackTown("town_category_deeplink_click", {
                     town_name: name,
                     town_slug: slug,
-                    category: "home_services",
-                    source_location: "town_services_view_all",
+                    category: "home-services",
+                    destination_url: `/local?town=${slug}&search=contractor&category=home-services`,
+                    source_page: `/living-in/${slug}`,
                   })
                 }
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] hover:text-white transition"
