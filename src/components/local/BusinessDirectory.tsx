@@ -250,7 +250,18 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       {/* SEARCH BAR */}
       <section className={embedded ? "px-0" : "pt-16 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
-          <form onSubmit={(e) => { e.preventDefault(); trackGAEvent.searchSubmit({ query: q, town: effectiveTown, category, source_location: townSlug ? "town_directory" : "local_directory" }); }} className="search-module rounded-2xl p-3 md:p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2.5 md:gap-2">
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            trackGAEvent.searchSubmit({ query: q, town: effectiveTown, category, source_location: townSlug ? "town_directory" : "local_directory" });
+            if (typeof window !== "undefined" && (window as any).gtag) {
+              (window as any).gtag("event", "local_search_submit", {
+                search_term: q,
+                town: effectiveTown || "",
+                category: category || "",
+                result_count: total ?? results.length,
+              });
+            }
+          }} className="search-module rounded-2xl p-3 md:p-2.5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_auto] gap-2.5 md:gap-2">
 
             <label className="search-input-surface flex items-center gap-2.5 px-4 py-3.5 rounded-xl">
               <Search className="w-4 h-4 text-[#5eead4] shrink-0" />
