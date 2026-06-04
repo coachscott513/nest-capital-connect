@@ -108,7 +108,7 @@ const CATEGORIES: CategoryRow[] = [
     key: "real-estate",
     label: "Real Estate",
     icon: HomeIcon,
-    to: "/communities",
+    to: "/real-estate",
     patterns: [], // Real estate lives in its own vertical — no business count.
     unit: "towns",
   },

@@ -15,6 +15,7 @@ import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext
 import Index from "./pages/Index";
 import AdminMediaStories from "./pages/AdminMediaStories";
 import HomesPage from "./pages/HomesPage";
+import RealEstateHub from "./pages/RealEstateHub";
 import LocalPage from "./pages/LocalPage";
 import ContactPage from "./pages/ContactPage";
 import InvestorTools from "./pages/InvestorTools";
@@ -302,6 +303,8 @@ const App = () => {
           <Route path="/towns/:slug" element={<TownPulse />} />
           {/* Simplified canonical destinations from main nav */}
           <Route path="/homes" element={<HomesPage />} />
+          <Route path="/real-estate" element={<RealEstateHub />} />
+          <Route path="/housing" element={<Navigate to="/real-estate" replace />} />
           <Route path="/local" element={<LocalPage />} />
           <Route path="/weekly" element={<WeeklyPulse />} />
           <Route path="/events" element={<WeeklyPulse />} />
