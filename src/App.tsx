@@ -308,6 +308,10 @@ const App = () => {
           {/* Simplified canonical destinations from main nav */}
           <Route path="/homes" element={<HomesPage />} />
           <Route path="/real-estate" element={<RealEstateHub />} />
+          <Route path="/restaurants" element={<Restaurants />} />
+          <Route path="/home-services" element={<HomeServices />} />
+          <Route path="/wellness" element={<Wellness />} />
+          <Route path="/professional-services" element={<ProfessionalServices />} />
           <Route path="/housing" element={<Navigate to="/real-estate" replace />} />
           <Route path="/local" element={<LocalPage />} />
           <Route path="/weekly" element={<WeeklyPulse />} />
