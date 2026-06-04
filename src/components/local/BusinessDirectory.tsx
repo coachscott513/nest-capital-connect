@@ -42,6 +42,7 @@ import {
   OFFICIAL_CATEGORIES,
   type OfficialCategory,
 } from "@/data/officialCategories";
+import { resolveCategoryParam } from "@/lib/categoryDeepLink";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import {
   usePaginatedBusinesses,
@@ -106,9 +107,26 @@ const slugText = (value: string) =>
 
 const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [q, setQ] = useState(() => searchParams.get("search") ?? searchParams.get("q") ?? searchParams.get("category") ?? "");
+
+  // Resolve deep-link category param (supports official category names,
+  // single-vertical slugs like "plumber", and group slugs like
+  // "home-services" or "professional-services").
+  const initialResolved = useMemo(
+    () => resolveCategoryParam(searchParams.get("category")),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  const initialSearch =
+    searchParams.get("search") ??
+    searchParams.get("q") ??
+    initialResolved.search ??
+    "";
+  const initialCategory = initialResolved.official ?? "";
+
+  const [q, setQ] = useState(initialSearch);
   const [town, setTown] = useState(() => townSlug ?? searchParams.get("town") ?? "");
-  const [category, setCategory] = useState<string>(() => isOfficialCategory(searchParams.get("category")) ? searchParams.get("category")! : "");
+  const [category, setCategory] = useState<string>(initialCategory);
   const [tier, setTier] = useState<TierFilter>("all");
   const [hasWebsite, setHasWebsite] = useState(false);
   const [hasPhone, setHasPhone] = useState(false);
@@ -178,6 +196,26 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     io.observe(el);
     return () => io.disconnect();
   }, [hasMore, loading, loadMore, results.length]);
+
+  // Fire `local_prefilter_loaded` once when /local opens with deep-link
+  // params present. Waits for the first data load so result_count is real.
+  const prefilterFired = useRef(false);
+  useEffect(() => {
+    if (prefilterFired.current || loading) return;
+    const hadDeepLink = Boolean(initialSearch || initialCategory || (!townSlug && town));
+    if (!hadDeepLink) return;
+    prefilterFired.current = true;
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "local_prefilter_loaded", {
+        search: initialSearch || "",
+        category: initialCategory || "",
+        town: effectiveTown || "",
+        result_count: total ?? results.length,
+      });
+    }
+  }, [loading, total, results.length, initialSearch, initialCategory, townSlug, town, effectiveTown]);
+
+
 
 
   return (
