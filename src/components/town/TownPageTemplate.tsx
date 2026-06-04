@@ -811,13 +811,14 @@ const TownPageTemplate = ({ town }: Props) => {
                 </h2>
               </div>
               <Link
-                to={`/local?town=${slug}&group=Home%20Services`}
+                to={`/local?town=${slug}&search=contractor&category=home-services`}
                 onClick={() =>
-                  trackTown("town_category_tile_click", {
+                  trackTown("town_category_deeplink_click", {
                     town_name: name,
                     town_slug: slug,
-                    category: "home_services",
-                    source_location: "town_services_view_all",
+                    category: "home-services",
+                    destination_url: `/local?town=${slug}&search=contractor&category=home-services`,
+                    source_page: `/living-in/${slug}`,
                   })
                 }
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] hover:text-white transition"
