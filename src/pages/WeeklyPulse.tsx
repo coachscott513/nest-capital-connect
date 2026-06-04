@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ArrowRight, ChevronLeft, ChevronRight, MapPin, Clock, Plus, AlertCircle, X } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
+import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 
 
 import heroBg from "@/assets/events-room-hero.jpg";
