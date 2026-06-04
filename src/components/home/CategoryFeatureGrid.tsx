@@ -49,7 +49,7 @@ const DEFAULT_TILES: CategoryTile[] = [
     headline: "Real Estate & Housing",
     description: "Browse homes, housing resources, local agents, lenders, and real estate services.",
     cta: "Explore Housing",
-    to: "/homes",
+    to: "/real-estate",
     image: imgRealEstate,
   },
   {
