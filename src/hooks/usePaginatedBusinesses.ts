@@ -143,6 +143,88 @@ export interface PaginatedBusinessOptions {
 
 const escapeIlike = (v: string) => v.replace(/[%,()]/g, " ").trim();
 
+/* Search synonym map — keys are normalized user inputs, values are
+   additional ilike fragments that should also match. Keeps the directory
+   feeling accurate when a customer types a common everyday term. */
+const SEARCH_SYNONYMS: Record<string, string[]> = {
+  restaurant: ["restaurant", "food", "dining", "cafe", "café", "coffee", "tavern", "bar", "pizza", "deli", "bakery", "bistro", "diner", "grill", "eatery", "brewery"],
+  food: ["restaurant", "food", "dining", "cafe", "deli", "bakery"],
+  dining: ["restaurant", "dining", "cafe", "bistro", "grill"],
+  cafe: ["cafe", "café", "coffee", "bakery"],
+  coffee: ["coffee", "cafe", "café", "espresso", "roaster"],
+  pizza: ["pizza", "pizzeria", "italian", "restaurant"],
+  tavern: ["tavern", "pub", "bar", "brewery"],
+  bar: ["bar", "tavern", "pub", "brewery"],
+  bakery: ["bakery", "patisserie", "pastry", "bread"],
+
+  attorney: ["attorney", "lawyer", "law firm", "law office", "legal", "pllc", "llp", "esq"],
+  lawyer: ["attorney", "lawyer", "law firm", "legal"],
+  legal: ["attorney", "lawyer", "law firm", "legal"],
+  law: ["attorney", "lawyer", "law firm", "legal"],
+
+  cpa: ["cpa", "accountant", "accounting", "tax", "bookkeeping"],
+  accountant: ["cpa", "accountant", "accounting", "tax", "bookkeeping"],
+  accounting: ["cpa", "accountant", "accounting", "tax", "bookkeeping"],
+  tax: ["cpa", "accountant", "accounting", "tax service", "tax prep"],
+  bookkeeper: ["bookkeeping", "bookkeeper", "accountant"],
+
+  insurance: ["insurance"],
+  mortgage: ["mortgage", "lender", "loan"],
+  bank: ["bank", "credit union"],
+  financial: ["financial advisor", "wealth", "planner"],
+
+  doctor: ["doctor", "physician", "medical", "healthcare", "clinic", "md"],
+  physician: ["doctor", "physician", "medical", "healthcare", "clinic"],
+  medical: ["doctor", "physician", "medical", "healthcare", "clinic"],
+  healthcare: ["healthcare", "medical", "doctor", "physician", "clinic"],
+  clinic: ["clinic", "medical", "doctor", "healthcare"],
+  dentist: ["dental", "dentist", "dentistry", "orthodontic"],
+  dental: ["dental", "dentist", "dentistry", "orthodontic"],
+
+  contractor: ["contractor", "construction", "home improvement", "handyman", "builder", "remodel"],
+  construction: ["contractor", "construction", "builder", "remodel"],
+  plumber: ["plumber", "plumbing"],
+  plumbing: ["plumber", "plumbing"],
+  electrician: ["electrician", "electric", "electrical"],
+  electric: ["electrician", "electric", "electrical"],
+  hvac: ["hvac", "heating", "cooling", "furnace", "air conditioning"],
+  heating: ["hvac", "heating", "furnace"],
+  cooling: ["hvac", "cooling", "air conditioning"],
+  roofing: ["roofing", "roofer", "roof"],
+  roofer: ["roofing", "roofer", "roof"],
+  landscaping: ["landscaping", "landscaper", "lawn", "tree service"],
+  landscaper: ["landscaping", "landscaper", "lawn"],
+  painter: ["painting", "painter"],
+  painting: ["painting", "painter"],
+  handyman: ["handyman", "handywoman", "home repair"],
+
+  gym: ["gym", "fitness", "crossfit", "yoga", "pilates"],
+  fitness: ["gym", "fitness", "crossfit", "yoga", "pilates"],
+  yoga: ["yoga", "pilates", "fitness", "studio"],
+  spa: ["spa", "med spa", "massage", "wellness"],
+  salon: ["salon", "barber", "nail", "hair", "beauty"],
+  pet: ["pet", "veterinary", "vet", "grooming"],
+  vet: ["vet", "veterinary", "pet"],
+  auto: ["auto", "mechanic", "tire", "car wash", "oil change"],
+};
+
+const expandSearchSynonyms = (raw: string): string[] => {
+  const key = raw.toLowerCase().trim();
+  const list = SEARCH_SYNONYMS[key];
+  if (!list || list.length === 0) return [raw];
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const t of [raw, ...list]) {
+    const safe = escapeIlike(t);
+    if (safe.length >= 2 && !seen.has(safe.toLowerCase())) {
+      seen.add(safe.toLowerCase());
+      out.push(safe);
+    }
+  }
+  // Cap to avoid PostgREST URL bloat.
+  return out.slice(0, 12);
+};
+
 export const usePaginatedBusinesses = (opts: PaginatedBusinessOptions) => {
   const {
     townSlug, search, category, tier = "all",
