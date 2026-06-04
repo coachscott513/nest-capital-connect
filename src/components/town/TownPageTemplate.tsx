@@ -521,13 +521,23 @@ const TownPageTemplate = ({ town }: Props) => {
               {CATEGORY_PANELS.map((p) => {
                 const href = p.href(slug);
                 const isAnchor = href.startsWith("#");
-                const onClick = () =>
+                const onClick = () => {
                   trackTown("town_category_tile_click", {
                     town_name: name,
                     town_slug: slug,
                     category: p.key,
                     source_location: "town_category_panels",
                   });
+                  if (!isAnchor) {
+                    trackTown("town_category_deeplink_click", {
+                      town_name: name,
+                      town_slug: slug,
+                      category: p.key,
+                      destination_url: href,
+                      source_page: `/living-in/${slug}`,
+                    });
+                  }
+                };
                 const inner = (
                   <>
                     <img
