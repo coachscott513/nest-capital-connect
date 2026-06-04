@@ -179,9 +179,21 @@ export const usePaginatedBusinesses = (opts: PaginatedBusinessOptions) => {
     if (search) {
       const safe = escapeIlike(search);
       if (safe.length >= 2) {
-        q = q.or(
-          `name.ilike.%${safe}%,category.ilike.%${safe}%,subcategory.ilike.%${safe}%,description.ilike.%${safe}%,city.ilike.%${safe}%`,
-        );
+        // Expand the user's keyword with category synonyms so e.g. "restaurant"
+        // also matches "cafe", "tavern", "bakery"; "cpa" also matches "accounting"
+        // etc. Each term is OR-matched across name/category/subcategory/desc/city.
+        const terms = expandSearchSynonyms(safe);
+        const orClause = terms
+          .flatMap((t) => [
+            `name.ilike.%${t}%`,
+            `category.ilike.%${t}%`,
+            `subcategory.ilike.%${t}%`,
+            `description.ilike.%${t}%`,
+            `tagline.ilike.%${t}%`,
+            `city.ilike.%${t}%`,
+          ])
+          .join(",");
+        q = q.or(orClause);
       }
     }
 
