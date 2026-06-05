@@ -167,6 +167,50 @@ const CorridorStreetMap = ({
         </div>
       </div>
 
+      {/* Owner CTA bar — above filters */}
+      <div className="relative px-6 md:px-8 pt-5">
+        <div className="rounded-2xl border border-white/[0.10] bg-white/[0.04] backdrop-blur px-5 py-4 md:px-6 md:py-5 flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
+              For Business Owners
+            </p>
+            <p className="mt-1.5 text-sm md:text-base font-semibold text-white">
+              Own a business or event on {corridorName}?
+            </p>
+            <p className="mt-1 text-xs md:text-sm text-white/65 font-light">
+              Claim your spot, add photos, submit events, or request featured placement inside the {corridorName} Neighborhood Explorer.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2 shrink-0">
+            <Link
+              to={claimHref}
+              onClick={() => track("neighborhood_claim_spot_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_top_cta" })}
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-4 py-2 text-xs font-semibold hover:brightness-105 transition shadow-[0_8px_24px_-12px_rgba(94,234,212,0.7)]"
+            >
+              <Plus className="w-3.5 h-3.5" /> Claim Your Spot
+            </Link>
+            {submitEventHref && (
+              <Link
+                to={submitEventHref}
+                onClick={() => track("neighborhood_add_event_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_top_cta" })}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/25 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
+              >
+                Add an Event
+              </Link>
+            )}
+            {claimFeaturedHref && (
+              <Link
+                to={claimFeaturedHref}
+                onClick={() => track("neighborhood_featured_request_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_top_cta" })}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 text-white/85 px-4 py-2 text-xs font-semibold hover:bg-white/10 hover:text-white transition"
+              >
+                <Sparkles className="w-3.5 h-3.5" /> Request Featured Placement
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* Filters */}
       <div className="px-6 md:px-8 pt-5 flex flex-wrap gap-2">
         {CATEGORY_FILTERS.map((f) => {
@@ -189,6 +233,33 @@ const CorridorStreetMap = ({
           );
         })}
       </div>
+
+      {/* Category-aware contextual CTA */}
+      {filter !== "all" && (
+        <div className="px-6 md:px-8 pt-4">
+          <div className="rounded-xl border border-[#5eead4]/25 bg-[#5eead4]/[0.05] px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+            <p className="text-xs md:text-sm text-white/85 font-light">
+              {filter === "events" ? (
+                <>Hosting something on {corridorName}? <span className="text-white font-medium">Submit your event</span> to Capital District Nest.</>
+              ) : (
+                <>Own a <span className="text-white font-medium">{CATEGORY_NOUN[filter]}</span> business on {corridorName}? Claim your spot in the Neighborhood Explorer.</>
+              )}
+            </p>
+            <Link
+              to={filter === "events" && submitEventHref ? submitEventHref : claimHref}
+              onClick={() =>
+                filter === "events"
+                  ? track("neighborhood_add_event_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_category_cta", category: filter })
+                  : track("neighborhood_category_claim_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_category_cta", category: filter })
+              }
+              className="inline-flex items-center gap-1.5 rounded-full bg-white text-[#0B0F19] px-4 py-2 text-xs font-semibold hover:bg-[#5eead4] transition shrink-0"
+            >
+              {filter === "events" ? "Add Your Event" : "Claim Your Spot"} <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
+      )}
+
 
       {/* Ambient grid */}
       <div className="relative mt-6 mx-6 md:mx-8 mb-8 rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.03] to-white/[0.01] overflow-hidden">
