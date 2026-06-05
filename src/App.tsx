@@ -304,6 +304,7 @@ const App = () => {
           <Route path="/delmar" element={<Navigate to="/living-in/delmar" replace />} />
           {/* Town pages — UNIFIED. /living-in/:townSlug renders the master template or a coming-soon fallback. */}
           <Route path="/living-in/:townSlug" element={<LivingInTown />} />
+          <Route path="/living-in/:townSlug/:neighborhoodSlug" element={<MicroNeighborhood />} />
           <Route path="/app/living-in/:townSlug" element={<LivingInTown />} />
           <Route path="/towns/:slug" element={<TownPulse />} />
           {/* Simplified canonical destinations from main nav */}
