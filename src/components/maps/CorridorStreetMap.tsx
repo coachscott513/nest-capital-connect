@@ -35,12 +35,27 @@ export interface CrossStreet {
 interface Props {
   corridorName: string;            // e.g. "Lark Street"
   cityName: string;                // e.g. "Albany"
+  townSlug?: string;               // e.g. "albany" — for analytics
+  neighborhoodSlug?: string;       // e.g. "lark-street" — for analytics
   crossStreets: CrossStreet[];     // intersections
   pins: CorridorPin[];             // business locations
   claimHref: string;
   exploreHref: string;
+  claimFeaturedHref?: string;
+  submitEventHref?: string;
   className?: string;
 }
+
+const CATEGORY_NOUN: Record<Exclude<CorridorCategory, "all">, string> = {
+  dining: "dining",
+  taverns: "tavern or bar",
+  coffee: "coffee shop or café",
+  retail: "retail",
+  wellness: "wellness",
+  services: "service",
+  events: "event",
+};
+
 
 const CATEGORY_FILTERS: { key: CorridorCategory; label: string }[] = [
   { key: "all", label: "All" },
@@ -82,12 +97,17 @@ function track(event: string, payload: Record<string, unknown> = {}) {
 const CorridorStreetMap = ({
   corridorName,
   cityName,
+  townSlug,
+  neighborhoodSlug,
   crossStreets,
   pins,
   claimHref,
   exploreHref,
+  claimFeaturedHref,
+  submitEventHref,
   className = "",
 }: Props) => {
+
   const [filter, setFilter] = useState<CorridorCategory>("all");
   const [hovered, setHovered] = useState<string | null>(null);
 
@@ -147,6 +167,50 @@ const CorridorStreetMap = ({
         </div>
       </div>
 
+      {/* Owner CTA bar — above filters */}
+      <div className="relative px-6 md:px-8 pt-5">
+        <div className="rounded-2xl border border-white/[0.10] bg-white/[0.04] backdrop-blur px-5 py-4 md:px-6 md:py-5 flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
+              For Business Owners
+            </p>
+            <p className="mt-1.5 text-sm md:text-base font-semibold text-white">
+              Own a business or event on {corridorName}?
+            </p>
+            <p className="mt-1 text-xs md:text-sm text-white/65 font-light">
+              Claim your spot, add photos, submit events, or request featured placement inside the {corridorName} Neighborhood Explorer.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2 shrink-0">
+            <Link
+              to={claimHref}
+              onClick={() => track("neighborhood_claim_spot_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_top_cta" })}
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-4 py-2 text-xs font-semibold hover:brightness-105 transition shadow-[0_8px_24px_-12px_rgba(94,234,212,0.7)]"
+            >
+              <Plus className="w-3.5 h-3.5" /> Claim Your Spot
+            </Link>
+            {submitEventHref && (
+              <Link
+                to={submitEventHref}
+                onClick={() => track("neighborhood_add_event_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_top_cta" })}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/25 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
+              >
+                Add an Event
+              </Link>
+            )}
+            {claimFeaturedHref && (
+              <Link
+                to={claimFeaturedHref}
+                onClick={() => track("neighborhood_featured_request_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_top_cta" })}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 text-white/85 px-4 py-2 text-xs font-semibold hover:bg-white/10 hover:text-white transition"
+              >
+                <Sparkles className="w-3.5 h-3.5" /> Request Featured Placement
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* Filters */}
       <div className="px-6 md:px-8 pt-5 flex flex-wrap gap-2">
         {CATEGORY_FILTERS.map((f) => {
@@ -169,6 +233,33 @@ const CorridorStreetMap = ({
           );
         })}
       </div>
+
+      {/* Category-aware contextual CTA */}
+      {filter !== "all" && (
+        <div className="px-6 md:px-8 pt-4">
+          <div className="rounded-xl border border-[#5eead4]/25 bg-[#5eead4]/[0.05] px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+            <p className="text-xs md:text-sm text-white/85 font-light">
+              {filter === "events" ? (
+                <>Hosting something on {corridorName}? <span className="text-white font-medium">Submit your event</span> to Capital District Nest.</>
+              ) : (
+                <>Own a <span className="text-white font-medium">{CATEGORY_NOUN[filter]}</span> business on {corridorName}? Claim your spot in the Neighborhood Explorer.</>
+              )}
+            </p>
+            <Link
+              to={filter === "events" && submitEventHref ? submitEventHref : claimHref}
+              onClick={() =>
+                filter === "events"
+                  ? track("neighborhood_add_event_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_category_cta", category: filter })
+                  : track("neighborhood_category_claim_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_category_cta", category: filter })
+              }
+              className="inline-flex items-center gap-1.5 rounded-full bg-white text-[#0B0F19] px-4 py-2 text-xs font-semibold hover:bg-[#5eead4] transition shrink-0"
+            >
+              {filter === "events" ? "Add Your Event" : "Claim Your Spot"} <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
+      )}
+
 
       {/* Ambient grid */}
       <div className="relative mt-6 mx-6 md:mx-8 mb-8 rounded-2xl border border-white/[0.06] bg-gradient-to-br from-white/[0.03] to-white/[0.01] overflow-hidden">
@@ -313,17 +404,54 @@ const CorridorStreetMap = ({
 
         {/* Hover business card */}
         {hov && (
-          <div className="pointer-events-none absolute left-4 right-4 md:left-6 md:right-auto md:max-w-xs bottom-4 rounded-2xl border border-white/[0.10] bg-[#0B0F19]/95 backdrop-blur p-4 shadow-2xl">
+          <div className="absolute left-4 right-4 md:left-6 md:right-auto md:max-w-xs bottom-4 rounded-2xl border border-white/[0.10] bg-[#0B0F19]/95 backdrop-blur p-4 shadow-2xl">
             <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
               {hov.category}
               {hov.status === "featured" && " · Featured"}
               {hov.status === "available" && " · Available"}
             </p>
-            <p className="mt-1.5 text-sm font-semibold text-white">{hov.name}</p>
-            {hov.blurb && <p className="mt-1.5 text-xs text-white/65 font-light">{hov.blurb}</p>}
+            {hov.status === "available" ? (
+              <>
+                <p className="mt-1.5 text-sm font-semibold text-white">This spot is being prepared.</p>
+                <p className="mt-1 text-xs text-white/65 font-light">Is this your business?</p>
+                <Link
+                  to={claimHref}
+                  onClick={() => track("neighborhood_claim_spot_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_available_pin", category: hov.category })}
+                  className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-3 py-1.5 text-[11px] font-semibold hover:brightness-105 transition"
+                >
+                  <Plus className="w-3 h-3" /> Claim This Spot
+                </Link>
+              </>
+            ) : (
+              <>
+                <p className="mt-1.5 text-sm font-semibold text-white">{hov.name}</p>
+                {hov.blurb && <p className="mt-1.5 text-xs text-white/65 font-light">{hov.blurb}</p>}
+              </>
+            )}
           </div>
         )}
+
+        {/* Floating map action pill */}
+        <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
+          <Link
+            to={claimHref}
+            onClick={() => track("neighborhood_claim_spot_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_floating_pill" })}
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#0B0F19]/85 backdrop-blur border border-[#5eead4]/40 text-white px-3.5 py-2 text-[11px] font-semibold hover:bg-[#5eead4] hover:text-[#0B0F19] transition shadow-lg"
+          >
+            <Plus className="w-3.5 h-3.5" /> Add Your Business
+          </Link>
+          {submitEventHref && (
+            <Link
+              to={submitEventHref}
+              onClick={() => track("neighborhood_add_event_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_floating_pill" })}
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#0B0F19]/75 backdrop-blur border border-white/20 text-white/85 px-3.5 py-1.5 text-[11px] font-medium hover:bg-white/10 transition"
+            >
+              Submit Event
+            </Link>
+          )}
+        </div>
       </div>
+
 
       {/* Footer CTA */}
       <div className="px-6 md:px-8 pb-7 -mt-2 flex flex-wrap items-center justify-between gap-3">

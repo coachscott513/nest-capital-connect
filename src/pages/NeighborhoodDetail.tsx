@@ -193,11 +193,16 @@ const NeighborhoodDetail = () => {
             <CorridorStreetMap
               corridorName={n.name}
               cityName={n.townName}
+              townSlug={n.townSlug}
+              neighborhoodSlug={n.slug}
               crossStreets={getCorridorData(n.slug).crossStreets}
               pins={getCorridorData(n.slug).pins}
               claimHref={claim}
               exploreHref={exploreBiz}
+              claimFeaturedHref={claimFeatured}
+              submitEventHref={submitEvent}
             />
+
 
           </div>
         </section>
@@ -369,8 +374,29 @@ const NeighborhoodDetail = () => {
         </section>
       </main>
 
+      {/* Mobile sticky owner action bar */}
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 px-3 pb-3 pt-2 pointer-events-none">
+        <div className="pointer-events-auto rounded-2xl border border-white/15 bg-[#0B0F19]/95 backdrop-blur shadow-2xl flex items-stretch gap-2 p-2">
+          <Link
+            to={claim}
+            onClick={() => track("neighborhood_claim_spot_click", { neighborhood: n.slug, town: n.townSlug, source_location: "mobile_sticky_bar" })}
+            className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#5eead4] text-[#0B0F19] px-3 py-2.5 text-xs font-semibold"
+          >
+            <Plus className="w-3.5 h-3.5" /> Claim Spot
+          </Link>
+          <Link
+            to={submitEvent}
+            onClick={() => track("neighborhood_add_event_click", { neighborhood: n.slug, town: n.townSlug, source_location: "mobile_sticky_bar" })}
+            className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl border border-white/20 text-white px-3 py-2.5 text-xs font-semibold"
+          >
+            Add Event
+          </Link>
+        </div>
+      </div>
+
       <Footer />
     </div>
+
   );
 };
 
