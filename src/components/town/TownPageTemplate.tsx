@@ -500,7 +500,10 @@ const TownPageTemplate = ({ town }: Props) => {
           </div>
         </section>
 
-        {/* ═══════════ 2. APPLE-STYLE CATEGORY PANELS ═══════════ */}
+        {/* ═══════════ 2. NEIGHBORHOOD GUIDE ═══════════ */}
+        <NeighborhoodGuide townSlug={slug} townName={name} />
+
+        {/* ═══════════ 3. APPLE-STYLE CATEGORY PANELS ═══════════ */}
         <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-28">
           <div className="max-w-[1600px] mx-auto px-6 md:px-10">
             <div className="mb-12 md:mb-16 max-w-3xl">
