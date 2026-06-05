@@ -1,8 +1,9 @@
+import * as React from "react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight, Plus, Sparkles, X, Phone, Globe, Navigation, Mail,
-  Instagram, Facebook, CalendarDays, Clock, MapPin,
+  Instagram, Facebook, CalendarDays, Clock, MapPin, ChevronDown,
 } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -20,6 +21,8 @@ export type CorridorCategory =
 
 export interface CorridorPin {
   id: string;
+  /** optional URL slug for /biz/[slug] — falls back to id */
+  slug?: string;
   name: string;
   category: Exclude<CorridorCategory, "all">;
   /** position along corridor 0–100 */
@@ -42,7 +45,13 @@ export interface CorridorPin {
   email?: string;
   specials?: string;
   partnerLabel?: string; // e.g. "Lark Street Partner"
+  /** event-specific (when category === "events") */
+  eventDate?: string;
+  eventTime?: string;
+  venue?: string;
+  eventUrl?: string;
 }
+
 
 export interface CrossStreet {
   /** position along corridor 0–100 */
@@ -108,13 +117,15 @@ function track(event: string, payload: Record<string, unknown> = {}) {
 
 /**
  * Premium business preview card — opens when a pin is clicked.
- * Renders a rich "mini profile" for claimed/featured businesses,
- * or a FOMO claim card for unclaimed/available spots.
+ * Renders four explicit states: featured / claimed / unclaimed / event.
+ * Closes via X, "Back to Map" button, backdrop click, swipe-down, or Escape.
  */
 function BusinessPreviewCard({
   pin,
   corridorName,
   claimHref,
+  exploreHref,
+  submitEventHref,
   neighborhoodSlug,
   townSlug,
   onClose,
@@ -122,210 +133,390 @@ function BusinessPreviewCard({
   pin: CorridorPin;
   corridorName: string;
   claimHref: string;
+  exploreHref: string;
+  submitEventHref?: string;
   neighborhoodSlug?: string;
   townSlug?: string;
   onClose: () => void;
 }) {
   const isAvail = pin.status === "available";
-  const isFeatured = pin.status === "featured" || pin.tier === "featured" || pin.tier === "premier" || pin.tier === "spotlight";
+  const isFeatured =
+    !isAvail && (pin.status === "featured" || pin.tier === "featured" || pin.tier === "premier" || pin.tier === "spotlight");
+  const isEvent = pin.category === "events" && !isAvail;
+  const popupState: "featured" | "claimed" | "unclaimed" | "event" =
+    isAvail ? "unclaimed" : isEvent ? "event" : isFeatured ? "featured" : "claimed";
+
+  const slug = pin.slug || pin.id;
+  const qs = new URLSearchParams();
+  if (townSlug) qs.set("town", townSlug);
+  if (neighborhoodSlug) qs.set("neighborhood", neighborhoodSlug);
+  const qsBase = qs.toString();
+
+  // Routes
+  const profileHref = `/biz/${slug}`;
+  const claimSpotHref = `/claim-business?slug=${encodeURIComponent(slug)}${qsBase ? `&${qsBase}` : ""}`;
+  const updateInfoHref = `/claim-business?slug=${encodeURIComponent(slug)}${qsBase ? `&${qsBase}` : ""}&intent=update`;
+  const upgradeHref = `/claim-business?slug=${encodeURIComponent(slug)}${qsBase ? `&${qsBase}` : ""}&tier=featured`;
+  const featuredRequestHref = `/claim-business?${qsBase}${qsBase ? "&" : ""}tier=featured`;
+  const directoryHref = `/local?${qsBase}`;
+  const submitEventUpdateHref = `/submit-event?${qsBase}${qsBase ? "&" : ""}intent=update`;
+
   const directionsHref = pin.address
     ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pin.address)}`
     : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${pin.name} ${corridorName}`)}`;
 
-  return (
-    <div
-      className="absolute inset-x-3 bottom-3 md:inset-x-auto md:bottom-5 md:left-5 md:right-5 md:max-w-md rounded-3xl border border-white/[0.12] bg-[#0B0F19]/95 backdrop-blur-xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] overflow-hidden animate-fade-in"
-      role="dialog"
-      aria-label={`${pin.name} preview`}
-    >
-      {/* Featured glow halo */}
-      {isFeatured && (
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(60% 50% at 50% 0%, rgba(94,234,212,0.18), transparent 70%)" }}
-          aria-hidden
-        />
-      )}
+  const analyticsPayload = {
+    business_name: pin.name,
+    business_slug: slug,
+    neighborhood: neighborhoodSlug,
+    town: townSlug,
+    category: pin.category,
+    popup_state: popupState,
+    source_page: "corridor_map",
+  };
 
-      {/* Close */}
+  // Open analytics + Escape key
+  React.useEffect(() => {
+    track("map_popup_open", analyticsPayload);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        track("map_popup_close", { ...analyticsPayload, method: "escape" });
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pin.id]);
+
+  // Swipe-down to close (mobile)
+  const touchStartY = React.useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartY.current === null) return;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    if (dy > 60) {
+      track("map_popup_close", { ...analyticsPayload, method: "swipe_down" });
+      onClose();
+    }
+    touchStartY.current = null;
+  };
+
+  const closeAndTrack = (method: string) => {
+    track("map_popup_close", { ...analyticsPayload, method });
+    onClose();
+  };
+
+  // Badge label
+  const badge =
+    popupState === "featured" ? `FEATURED ON ${corridorName.toUpperCase()}`
+    : popupState === "claimed" ? "CLAIMED LOCAL PROFILE"
+    : popupState === "event" ? `EVENT ON ${corridorName.toUpperCase()}`
+    : "AVAILABLE SPOT";
+
+  // Fallback description by state
+  const fallbackDescription =
+    popupState === "featured"
+      ? `A featured local destination on ${corridorName}, highlighted inside Capital District Nest's Neighborhood Explorer.`
+      : popupState === "claimed"
+      ? `A local business on ${corridorName} with a verified Capital District Nest profile.`
+      : popupState === "event"
+      ? `An upcoming event on ${corridorName}.`
+      : `This business spot is being prepared for the ${corridorName} Neighborhood Explorer.`;
+
+  return (
+    <>
+      {/* Backdrop — click outside to close (desktop), tap to close (mobile) */}
       <button
         type="button"
-        onClick={onClose}
-        aria-label="Close"
-        className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 border border-white/15 text-white/80 hover:text-white flex items-center justify-center transition"
+        aria-label="Close preview"
+        onClick={() => closeAndTrack("backdrop")}
+        className="absolute inset-0 z-0 bg-black/30 backdrop-blur-[2px] animate-fade-in cursor-default"
+      />
+
+      <div
+        role="dialog"
+        aria-label={`${pin.name} preview`}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        className="absolute z-10 inset-x-3 bottom-3 md:inset-x-auto md:bottom-5 md:left-5 md:right-5 md:max-w-md rounded-3xl border border-white/[0.12] bg-[#0B0F19]/95 backdrop-blur-xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] overflow-hidden animate-fade-in"
       >
-        <X className="w-4 h-4" />
-      </button>
-
-      {/* Photo / hero */}
-      {pin.image ? (
-        <div className="relative h-36 w-full overflow-hidden">
-          <img src={pin.image} alt={pin.name} className="w-full h-full object-cover" loading="lazy" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" aria-hidden />
+        {/* Mobile swipe handle */}
+        <div className="md:hidden flex justify-center pt-2.5 pb-1">
+          <div className="w-10 h-1 rounded-full bg-white/25" aria-hidden />
         </div>
-      ) : !isAvail ? (
-        <div
-          className="relative h-24 w-full"
-          style={{
-            background: "linear-gradient(135deg, rgba(94,234,212,0.10), rgba(13,110,102,0.18))",
-          }}
-          aria-hidden
-        />
-      ) : null}
 
-      <div className="relative p-5 md:p-6">
-        {/* Category + status row */}
-        <div className="flex items-center gap-2 flex-wrap">
-          <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
-            {pin.category}
-          </p>
-          {isFeatured && !isAvail && (
+        {/* Featured glow halo */}
+        {isFeatured && (
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ background: "radial-gradient(60% 50% at 50% 0%, rgba(94,234,212,0.18), transparent 70%)" }}
+            aria-hidden
+          />
+        )}
+
+        {/* Close (X) */}
+        <button
+          type="button"
+          onClick={() => closeAndTrack("x_button")}
+          aria-label="Close"
+          className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 border border-white/15 text-white/80 hover:text-white flex items-center justify-center transition"
+        >
+          <X className="w-4 h-4" />
+        </button>
+
+        {/* Photo / hero */}
+        {pin.image ? (
+          <div className="relative h-36 w-full overflow-hidden">
+            <img src={pin.image} alt={pin.name} className="w-full h-full object-cover" loading="lazy" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" aria-hidden />
+          </div>
+        ) : !isAvail ? (
+          <div
+            className="relative h-20 w-full"
+            style={{ background: "linear-gradient(135deg, rgba(94,234,212,0.10), rgba(13,110,102,0.18))" }}
+            aria-hidden
+          />
+        ) : null}
+
+        <div className="relative p-5 md:p-6">
+          {/* Badge row */}
+          <div className="flex items-center gap-2 flex-wrap">
             <span
-              className="text-[9px] font-semibold tracking-[0.22em] uppercase rounded-full px-2 py-0.5 border"
-              style={{ color: TEAL, borderColor: "rgba(94,234,212,0.4)", background: "rgba(94,234,212,0.08)" }}
+              className="text-[10px] font-semibold tracking-[0.28em] uppercase rounded-full px-2 py-0.5 border"
+              style={
+                popupState === "featured" || popupState === "event"
+                  ? { color: TEAL, borderColor: "rgba(94,234,212,0.4)", background: "rgba(94,234,212,0.08)" }
+                  : popupState === "claimed"
+                  ? { color: "rgba(255,255,255,0.85)", borderColor: "rgba(255,255,255,0.22)", background: "rgba(255,255,255,0.04)" }
+                  : { color: "rgba(255,255,255,0.7)", borderColor: "rgba(255,255,255,0.18)", background: "rgba(255,255,255,0.03)" }
+              }
             >
-              Featured on {corridorName}
+              {badge}
             </span>
-          )}
-          {pin.partnerLabel && (
-            <span className="text-[9px] font-semibold tracking-[0.22em] uppercase rounded-full px-2 py-0.5 border border-white/20 text-white/80">
-              {pin.partnerLabel}
-            </span>
-          )}
-          {pin.openNow !== undefined && !isAvail && (
-            <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 ${pin.openNow ? "text-emerald-300 bg-emerald-400/10 border border-emerald-400/30" : "text-white/55 bg-white/5 border border-white/15"}`}>
-              {pin.openNow ? "Open now" : "Closed"}
-            </span>
-          )}
-        </div>
-
-        {/* Name */}
-        <h4 className="mt-2 text-xl md:text-2xl font-semibold tracking-[-0.01em] text-white">
-          {isAvail ? "Available Storefront" : pin.name}
-        </h4>
-
-        {isAvail ? (
-          <>
-            <p className="mt-2 text-sm text-white/70 font-light">
-              This profile is being prepared. Is this your business on {corridorName}?
-            </p>
-            <p className="mt-1 text-xs text-white/50 font-light">
-              Featured businesses appear directly on the map. Claim your spot to glow in teal.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              <Link
-                to={claimHref}
-                onClick={() =>
-                  track("neighborhood_claim_spot_click", {
-                    neighborhood: neighborhoodSlug, town: townSlug,
-                    source_location: "corridor_pin_card", pin_id: pin.id, category: pin.category,
-                  })
-                }
-                className="inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-4 py-2 text-xs font-semibold hover:brightness-105 transition shadow-[0_8px_24px_-12px_rgba(94,234,212,0.7)]"
-              >
-                <Plus className="w-3.5 h-3.5" /> Claim This Spot
-              </Link>
-              <Link
-                to={claimHref}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
-              >
-                Add Photos & Business Info
-              </Link>
-            </div>
-          </>
-        ) : (
-          <>
-            {pin.blurb && (
-              <p className="mt-2 text-sm text-white/75 font-light leading-relaxed">{pin.blurb}</p>
+            {pin.partnerLabel && popupState !== "unclaimed" && (
+              <span className="text-[9px] font-semibold tracking-[0.22em] uppercase rounded-full px-2 py-0.5 border border-white/20 text-white/80">
+                {pin.partnerLabel}
+              </span>
             )}
+            {pin.openNow !== undefined && (popupState === "featured" || popupState === "claimed") && (
+              <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 ${pin.openNow ? "text-emerald-300 bg-emerald-400/10 border border-emerald-400/30" : "text-white/55 bg-white/5 border border-white/15"}`}>
+                {pin.openNow ? "Open now" : "Closed"}
+              </span>
+            )}
+          </div>
 
-            {/* Meta rows */}
-            <div className="mt-4 space-y-1.5 text-xs text-white/65">
-              {pin.address && (
-                <p className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-white/40" /> {pin.address}</p>
-              )}
-              {pin.hours && (
-                <p className="flex items-center gap-2"><Clock className="w-3.5 h-3.5 text-white/40" /> {pin.hours}</p>
-              )}
-              {pin.specials && (
-                <p className="flex items-center gap-2 text-[#5eead4]"><Sparkles className="w-3.5 h-3.5" /> {pin.specials}</p>
-              )}
-            </div>
+          {/* Name */}
+          <h4 className="mt-2 text-xl md:text-2xl font-semibold tracking-[-0.01em] text-white">
+            {popupState === "unclaimed" ? (pin.name && !pin.name.startsWith("Available") ? pin.name : `${corridorName} Business Spot`) : pin.name}
+          </h4>
 
-            {/* Primary CTAs */}
-            <div className="mt-5 flex flex-wrap gap-2">
-              {pin.phone && (
-                <a
-                  href={`tel:${pin.phone.replace(/[^0-9+]/g, "")}`}
-                  onClick={() => track("corridor_pin_action", { action: "call", pin_id: pin.id })}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-4 py-2 text-xs font-semibold hover:brightness-105 transition shadow-[0_8px_24px_-12px_rgba(94,234,212,0.7)]"
-                >
-                  <Phone className="w-3.5 h-3.5" /> Call
-                </a>
-              )}
-              {pin.website && (
-                <a
-                  href={pin.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => track("corridor_pin_action", { action: "website", pin_id: pin.id })}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/20 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
-                >
-                  <Globe className="w-3.5 h-3.5" /> Website
-                </a>
-              )}
-              <a
-                href={directionsHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => track("corridor_pin_action", { action: "directions", pin_id: pin.id })}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
-              >
-                <Navigation className="w-3.5 h-3.5" /> Directions
-              </a>
-              <Link
-                to={claimHref}
-                onClick={() => track("corridor_pin_action", { action: "view_full_profile", pin_id: pin.id })}
-                className="inline-flex items-center gap-1.5 rounded-full text-white/85 hover:text-white text-xs font-semibold px-2 py-2 transition"
-              >
-                View Full Profile <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
+          {/* Description */}
+          <p className="mt-2 text-sm text-white/75 font-light leading-relaxed">
+            {pin.blurb || fallbackDescription}
+          </p>
 
-            {/* Secondary row — only if data present */}
-            {(pin.instagram || pin.facebook || pin.email) && (
-              <div className="mt-3 flex items-center gap-2">
-                {pin.instagram && (
-                  <a href={pin.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-                    className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition">
-                    <Instagram className="w-3.5 h-3.5" />
-                  </a>
+          {/* === EVENT STATE === */}
+          {popupState === "event" && (
+            <>
+              <div className="mt-4 space-y-1.5 text-xs text-white/65">
+                {pin.eventDate && (
+                  <p className="flex items-center gap-2"><CalendarDays className="w-3.5 h-3.5 text-white/40" /> {pin.eventDate}</p>
                 )}
-                {pin.facebook && (
-                  <a href={pin.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-                    className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition">
-                    <Facebook className="w-3.5 h-3.5" />
-                  </a>
+                {pin.eventTime && (
+                  <p className="flex items-center gap-2"><Clock className="w-3.5 h-3.5 text-white/40" /> {pin.eventTime}</p>
                 )}
-                {pin.email && (
-                  <a href={`mailto:${pin.email}`} aria-label="Email"
-                    className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition">
-                    <Mail className="w-3.5 h-3.5" />
-                  </a>
+                {pin.venue && (
+                  <p className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-white/40" /> {pin.venue}</p>
                 )}
-                {pin.specials && (
-                  <span className="text-[10px] tracking-[0.22em] uppercase text-white/50 ml-auto inline-flex items-center gap-1">
-                    <CalendarDays className="w-3 h-3" /> Event / Special
-                  </span>
+                {pin.address && !pin.venue && (
+                  <p className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-white/40" /> {pin.address}</p>
                 )}
               </div>
-            )}
-          </>
-        )}
+              <div className="mt-5 flex flex-wrap gap-2">
+                {pin.eventUrl ? (
+                  <a
+                    href={pin.eventUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => track("map_view_profile_click", { ...analyticsPayload, action: "view_event" })}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-4 py-2 text-xs font-semibold hover:brightness-105 transition shadow-[0_8px_24px_-12px_rgba(94,234,212,0.7)]"
+                  >
+                    View Event <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    disabled
+                    className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] border border-white/15 text-white/60 px-4 py-2 text-xs font-semibold cursor-not-allowed"
+                  >
+                    Details Being Confirmed
+                  </button>
+                )}
+                <Link
+                  to={submitEventUpdateHref}
+                  onClick={() => track("map_view_profile_click", { ...analyticsPayload, action: "submit_event_details" })}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/20 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
+                >
+                  Submit Event Details
+                </Link>
+              </div>
+            </>
+          )}
+
+          {/* === UNCLAIMED STATE === */}
+          {popupState === "unclaimed" && (
+            <>
+              <p className="mt-3 text-xs text-white/55 font-light leading-relaxed">
+                Own or manage this business? Claim your spot, add photos, update contact details, submit events,
+                and appear inside the {corridorName} guide.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                <Link
+                  to={claimSpotHref}
+                  onClick={() => track("map_claim_this_spot_click", analyticsPayload)}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-4 py-2 text-xs font-semibold hover:brightness-105 transition shadow-[0_8px_24px_-12px_rgba(94,234,212,0.7)]"
+                >
+                  <Plus className="w-3.5 h-3.5" /> Claim This Spot
+                </Link>
+                <Link
+                  to={updateInfoHref}
+                  onClick={() => track("map_claim_this_spot_click", { ...analyticsPayload, action: "add_info" })}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/20 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
+                >
+                  Add Business Info
+                </Link>
+                <Link
+                  to={directoryHref}
+                  onClick={() => track("map_view_profile_click", { ...analyticsPayload, action: "view_directory" })}
+                  className="inline-flex items-center gap-1.5 rounded-full text-white/85 hover:text-white text-xs font-semibold px-2 py-2 transition"
+                >
+                  View Directory <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </>
+          )}
+
+          {/* === FEATURED + CLAIMED STATES === */}
+          {(popupState === "featured" || popupState === "claimed") && (
+            <>
+              {/* Meta */}
+              <div className="mt-4 space-y-1.5 text-xs text-white/65">
+                {pin.address && (
+                  <p className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-white/40" /> {pin.address}</p>
+                )}
+                {pin.hours && (
+                  <p className="flex items-center gap-2"><Clock className="w-3.5 h-3.5 text-white/40" /> {pin.hours}</p>
+                )}
+                {pin.phone && (
+                  <p className="flex items-center gap-2"><Phone className="w-3.5 h-3.5 text-white/40" /> {pin.phone}</p>
+                )}
+                {pin.specials && (
+                  <p className="flex items-center gap-2" style={{ color: TEAL }}><Sparkles className="w-3.5 h-3.5" /> {pin.specials}</p>
+                )}
+              </div>
+
+              {/* Primary CTAs */}
+              <div className="mt-5 flex flex-wrap gap-2">
+                {pin.phone && (
+                  <a
+                    href={`tel:${pin.phone.replace(/[^0-9+]/g, "")}`}
+                    onClick={() => track("map_business_call_click", analyticsPayload)}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-4 py-2 text-xs font-semibold hover:brightness-105 transition shadow-[0_8px_24px_-12px_rgba(94,234,212,0.7)]"
+                  >
+                    <Phone className="w-3.5 h-3.5" /> Call
+                  </a>
+                )}
+                {pin.website && (
+                  <a
+                    href={pin.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => track("map_business_website_click", analyticsPayload)}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/20 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
+                  >
+                    <Globe className="w-3.5 h-3.5" /> Website
+                  </a>
+                )}
+                <a
+                  href={directionsHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("map_business_directions_click", analyticsPayload)}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/20 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
+                >
+                  <Navigation className="w-3.5 h-3.5" /> Directions
+                </a>
+                <Link
+                  to={profileHref}
+                  onClick={() => track("map_view_profile_click", analyticsPayload)}
+                  className="inline-flex items-center gap-1.5 rounded-full text-white/85 hover:text-white text-xs font-semibold px-2 py-2 transition"
+                >
+                  View Full Profile <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+
+              {/* Social row */}
+              {(pin.instagram || pin.facebook || pin.email) && (
+                <div className="mt-3 flex items-center gap-2">
+                  {pin.instagram && (
+                    <a href={pin.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                      className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition">
+                      <Instagram className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  {pin.facebook && (
+                    <a href={pin.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                      className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition">
+                      <Facebook className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  {pin.email && (
+                    <a href={`mailto:${pin.email}`} aria-label="Email"
+                      className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition">
+                      <Mail className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                </div>
+              )}
+
+              {/* Footer CTA */}
+              <div className="mt-5 pt-4 border-t border-white/[0.08]">
+                <p className="text-[11px] text-white/55 font-light">
+                  {popupState === "featured"
+                    ? "Want your business featured here?"
+                    : `Want more visibility on the ${corridorName} guide?`}
+                </p>
+                <Link
+                  to={popupState === "featured" ? featuredRequestHref : upgradeHref}
+                  onClick={() => track("map_request_featured_click", { ...analyticsPayload, intent: popupState === "featured" ? "featured" : "upgrade" })}
+                  className="mt-1 inline-flex items-center gap-1 text-xs font-semibold"
+                  style={{ color: TEAL }}
+                >
+                  {popupState === "featured" ? "Request Featured Placement" : "Upgrade Your Placement"} <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </>
+          )}
+
+          {/* Back to Map (mobile) */}
+          <div className="md:hidden mt-5">
+            <button
+              type="button"
+              onClick={() => closeAndTrack("back_to_map")}
+              className="w-full inline-flex items-center justify-center gap-1.5 rounded-full border border-white/20 text-white px-4 py-2.5 text-xs font-semibold hover:bg-white/10 transition"
+            >
+              <ChevronDown className="w-3.5 h-3.5" /> Back to Map
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
+
 
 /**
  * Stylized horizontal corridor map. Renders a clean street line with
@@ -708,6 +899,8 @@ const CorridorStreetMap = ({
             pin={selected}
             corridorName={corridorName}
             claimHref={claimHref}
+            exploreHref={exploreHref}
+            submitEventHref={submitEventHref}
             neighborhoodSlug={neighborhoodSlug}
             townSlug={townSlug}
             onClose={() => setSelectedId(null)}
