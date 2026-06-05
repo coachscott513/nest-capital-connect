@@ -8,7 +8,10 @@ import {
   COUNTIES,
   getAllNeighborhoods,
   getNeighborhoodsByCounty,
+  sortByStatus,
+  statusMeta,
   type MicroNeighborhood,
+  type NeighborhoodStatus,
 } from "@/data/neighborhoods";
 
 const TEAL = "#5eead4";
@@ -22,23 +25,32 @@ function track(event: string, payload: Record<string, unknown> = {}) {
   } catch { /* noop */ }
 }
 
+type StatusFilter = "all" | NeighborhoodStatus;
+
 const NeighborhoodsHub = () => {
   const [params, setParams] = useSearchParams();
   const countyParam = params.get("county") ?? "all";
+  const statusParam = (params.get("status") as StatusFilter) ?? "all";
   const [county, setCounty] = useState(countyParam);
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>(statusParam);
 
   useEffect(() => {
     setCounty(countyParam);
   }, [countyParam]);
 
   useEffect(() => {
-    track("neighborhood_hub_view", { county });
-  }, [county]);
+    setStatusFilter(statusParam);
+  }, [statusParam]);
+
+  useEffect(() => {
+    track("neighborhood_hub_view", { county, status: statusFilter });
+  }, [county, statusFilter]);
 
   const list: MicroNeighborhood[] = useMemo(() => {
-    if (county === "all") return getAllNeighborhoods();
-    return getNeighborhoodsByCounty(county);
-  }, [county]);
+    const base = county === "all" ? getAllNeighborhoods() : getNeighborhoodsByCounty(county);
+    const filtered = statusFilter === "all" ? base : base.filter((n) => (n.status ?? "building") === statusFilter);
+    return sortByStatus(filtered);
+  }, [county, statusFilter]);
 
   const setCountyFilter = (slug: string) => {
     setCounty(slug);
@@ -47,6 +59,15 @@ const NeighborhoodsHub = () => {
     else next.set("county", slug);
     setParams(next, { replace: true });
   };
+
+  const setStatus = (s: StatusFilter) => {
+    setStatusFilter(s);
+    const next = new URLSearchParams(params);
+    if (s === "all") next.delete("status");
+    else next.set("status", s);
+    setParams(next, { replace: true });
+  };
+
 
   const title = "Capital District Neighborhood Explorer | Capital District Nest";
   const description =
@@ -114,33 +135,59 @@ const NeighborhoodsHub = () => {
           </div>
         </section>
 
-        {/* County selector */}
+        {/* Filters */}
         <section className="relative border-t border-white/[0.06] bg-background">
-          <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-10">
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setCountyFilter("all")}
-                className={`px-4 py-2 rounded-full text-sm font-medium border transition ${
-                  county === "all"
-                    ? "bg-[#5eead4] text-[#0B0F19] border-[#5eead4]"
-                    : "bg-white/[0.04] text-white/75 border-white/15 hover:bg-white/10"
-                }`}
-              >
-                All
-              </button>
-              {COUNTIES.map((c) => (
+          <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-10 space-y-5">
+            <div>
+              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-white/50 mb-3">Status</p>
+              <div className="flex flex-wrap gap-2">
+                {([
+                  { k: "all", label: "All" },
+                  { k: "live", label: "Live" },
+                  { k: "building", label: "Building" },
+                  { k: "coming_soon", label: "Coming Soon" },
+                ] as Array<{ k: StatusFilter; label: string }>).map(({ k, label }) => (
+                  <button
+                    key={k}
+                    onClick={() => setStatus(k)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium border transition ${
+                      statusFilter === k
+                        ? "bg-[#5eead4] text-[#0B0F19] border-[#5eead4]"
+                        : "bg-white/[0.04] text-white/75 border-white/15 hover:bg-white/10"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-white/50 mb-3">County</p>
+              <div className="flex flex-wrap gap-2">
                 <button
-                  key={c.slug}
-                  onClick={() => setCountyFilter(c.slug)}
+                  onClick={() => setCountyFilter("all")}
                   className={`px-4 py-2 rounded-full text-sm font-medium border transition ${
-                    county === c.slug
+                    county === "all"
                       ? "bg-[#5eead4] text-[#0B0F19] border-[#5eead4]"
                       : "bg-white/[0.04] text-white/75 border-white/15 hover:bg-white/10"
                   }`}
                 >
-                  {c.name}
+                  All
                 </button>
-              ))}
+                {COUNTIES.map((c) => (
+                  <button
+                    key={c.slug}
+                    onClick={() => setCountyFilter(c.slug)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium border transition ${
+                      county === c.slug
+                        ? "bg-[#5eead4] text-[#0B0F19] border-[#5eead4]"
+                        : "bg-white/[0.04] text-white/75 border-white/15 hover:bg-white/10"
+                    }`}
+                  >
+                    {c.name}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -149,51 +196,86 @@ const NeighborhoodsHub = () => {
         <section id="featured-neighborhoods" className="relative border-t border-white/[0.06] bg-background py-16 md:py-24">
           <div className="max-w-[1600px] mx-auto px-6 md:px-10">
             {list.length === 0 ? (
-              <p className="text-white/60">No neighborhoods configured for this county yet.</p>
+              <p className="text-white/60">No neighborhoods match these filters yet.</p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {list.map((n) => (
-                  <Link
-                    key={`${n.townSlug}-${n.slug}`}
-                    to={`/neighborhoods/${n.slug}`}
-                    onClick={() =>
-                      track("neighborhood_card_click", {
-                        town_name: n.townName,
-                        town_slug: n.townSlug,
-                        neighborhood_name: n.name,
-                        neighborhood_slug: n.slug,
-                        source_page: "neighborhoods_hub",
-                        destination_url: `/neighborhoods/${n.slug}`,
-                      })
-                    }
-                    className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#5eead4]/40 transition p-7 min-h-[260px] flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-5">
-                        <span className="w-10 h-10 rounded-full flex items-center justify-center border border-white/15 bg-white/[0.04]">
-                          <MapPin className="w-4 h-4" style={{ color: TEAL }} />
-                        </span>
-                        <ArrowRight className="w-5 h-5 text-white/30 group-hover:text-white group-hover:translate-x-1 transition" />
+                {list.map((n) => {
+                  const status: NeighborhoodStatus = n.status ?? "building";
+                  const meta = statusMeta(status);
+                  const primaryHref = meta.primaryHref(n);
+                  return (
+                    <div
+                      key={`${n.townSlug}-${n.slug}`}
+                      className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#5eead4]/40 transition p-7 min-h-[280px] flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-5">
+                          <span className="w-10 h-10 rounded-full flex items-center justify-center border border-white/15 bg-white/[0.04]">
+                            <MapPin className="w-4 h-4" style={{ color: TEAL }} />
+                          </span>
+                          <span
+                            className={`inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-[0.22em] uppercase px-2.5 py-1 rounded-full border ${meta.badgeClass}`}
+                          >
+                            <span className={`w-1.5 h-1.5 rounded-full ${meta.dotClass}`} />
+                            {meta.label}
+                          </span>
+                        </div>
+                        <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
+                          {n.townName} · {n.county}
+                        </p>
+                        <h3 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">{n.name}</h3>
+                        <p className="mt-3 text-sm text-white/65 font-light leading-relaxed line-clamp-3">{n.description}</p>
+                        <div className="mt-4 flex flex-wrap gap-1.5">
+                          {n.tags.slice(0, 4).map((t) => (
+                            <span key={t} className="text-[10px] tracking-wide uppercase px-2 py-1 rounded-full border border-white/12 text-white/65">
+                              {t}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                      <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
-                        {n.townName} · {n.county}
-                      </p>
-                      <h3 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">{n.name}</h3>
-                      <p className="mt-3 text-sm text-white/65 font-light leading-relaxed line-clamp-3">{n.description}</p>
+                      <div className="mt-6 flex items-center justify-between gap-3">
+                        <Link
+                          to={primaryHref}
+                          onClick={() =>
+                            track("neighborhood_card_click", {
+                              town_name: n.townName,
+                              town_slug: n.townSlug,
+                              neighborhood_name: n.name,
+                              neighborhood_slug: n.slug,
+                              status,
+                              source_page: "neighborhoods_hub",
+                              destination_url: primaryHref,
+                            })
+                          }
+                          className="inline-flex items-center gap-1.5 text-sm font-semibold text-white hover:text-[#5eead4] transition"
+                        >
+                          {meta.primaryCta} {status === "live" ? n.name : ""}
+                          <ArrowRight className="w-4 h-4" />
+                        </Link>
+                        {meta.secondaryCta && meta.secondaryHref && (
+                          <Link
+                            to={meta.secondaryHref(n)}
+                            onClick={() =>
+                              track("neighborhood_card_secondary_click", {
+                                neighborhood_slug: n.slug,
+                                status,
+                                source_page: "neighborhoods_hub",
+                              })
+                            }
+                            className="text-[11px] font-medium text-white/55 hover:text-white transition"
+                          >
+                            {meta.secondaryCta}
+                          </Link>
+                        )}
+                      </div>
                     </div>
-                    <div className="mt-5 flex flex-wrap gap-1.5">
-                      {n.tags.slice(0, 4).map((t) => (
-                        <span key={t} className="text-[10px] tracking-wide uppercase px-2 py-1 rounded-full border border-white/12 text-white/65">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </Link>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
         </section>
+
 
         {/* CTAs */}
         <section className="relative border-t border-white/[0.06] bg-background py-16 md:py-24">

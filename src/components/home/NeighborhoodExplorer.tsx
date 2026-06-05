@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Compass, Sparkles } from "lucide-react";
-import { COUNTIES, getFeaturedNeighborhoods } from "@/data/neighborhoods";
+import {
+  COUNTIES,
+  getHomepageFeaturedNeighborhoods,
+  statusMeta,
+  type NeighborhoodStatus,
+} from "@/data/neighborhoods";
 import RegionalDiscoveryMap from "@/components/maps/RegionalDiscoveryMap";
 
 const TEAL = "#5eead4";
@@ -15,7 +20,7 @@ function track(event: string, payload: Record<string, unknown> = {}) {
 }
 
 
-const FEATURED = getFeaturedNeighborhoods();
+const FEATURED = getHomepageFeaturedNeighborhoods(6);
 
 const NeighborhoodExplorer = () => {
 
@@ -118,52 +123,80 @@ const NeighborhoodExplorer = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {FEATURED.map((n) => (
-              <Link
-                key={n.slug}
-                to={`/neighborhoods/${n.slug}`}
-                onClick={() =>
-                  track("neighborhood_card_click", {
-                    town_name: n.townName,
-                    town_slug: n.townSlug,
-                    neighborhood_name: n.name,
-                    neighborhood_slug: n.slug,
-                    source_page: "homepage_explorer_featured",
-                    destination_url: `/neighborhoods/${n.slug}`,
-                  })
-                }
-                className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#5eead4]/40 transition p-7 min-h-[260px] flex flex-col justify-between"
-              >
+            {FEATURED.map((n) => {
+              const status: NeighborhoodStatus = n.status ?? "building";
+              const meta = statusMeta(status);
+              const primaryHref = meta.primaryHref(n);
+              return (
                 <div
-                  className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
-                  style={{ background: "radial-gradient(50% 60% at 30% 0%, rgba(94,234,212,0.10), transparent 70%)" }}
-                  aria-hidden
-                />
-                <div className="relative">
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="w-10 h-10 rounded-full flex items-center justify-center border border-white/15 bg-white/[0.04]">
-                      <MapPin className="w-4 h-4" style={{ color: TEAL }} />
-                    </span>
-                    <ArrowRight className="w-5 h-5 text-white/30 group-hover:text-white group-hover:translate-x-1 transition" />
+                  key={n.slug}
+                  className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#5eead4]/40 transition p-7 min-h-[280px] flex flex-col justify-between"
+                >
+                  <div
+                    className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ background: "radial-gradient(50% 60% at 30% 0%, rgba(94,234,212,0.10), transparent 70%)" }}
+                    aria-hidden
+                  />
+                  <div className="relative">
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="w-10 h-10 rounded-full flex items-center justify-center border border-white/15 bg-white/[0.04]">
+                        <MapPin className="w-4 h-4" style={{ color: TEAL }} />
+                      </span>
+                      <span
+                        className={`inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-[0.22em] uppercase px-2.5 py-1 rounded-full border ${meta.badgeClass}`}
+                      >
+                        <span className={`w-1.5 h-1.5 rounded-full ${meta.dotClass}`} />
+                        {meta.label}
+                      </span>
+                    </div>
+                    <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
+                      {n.townName} · {n.county}
+                    </p>
+                    <h4 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">{n.name}</h4>
+                    <p className="mt-3 text-sm text-white/65 font-light leading-relaxed line-clamp-3">
+                      {n.description}
+                    </p>
                   </div>
-                  <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
-                    {n.townName} · {n.county}
-                  </p>
-                  <h4 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-white">{n.name}</h4>
-                  <p className="mt-3 text-sm text-white/65 font-light leading-relaxed line-clamp-3">
-                    {n.description}
-                  </p>
+                  <div className="relative mt-6 flex items-center justify-between gap-3">
+                    <Link
+                      to={primaryHref}
+                      onClick={() =>
+                        track("neighborhood_card_click", {
+                          town_name: n.townName,
+                          town_slug: n.townSlug,
+                          neighborhood_name: n.name,
+                          neighborhood_slug: n.slug,
+                          status,
+                          source_page: "homepage_explorer_featured",
+                          destination_url: primaryHref,
+                        })
+                      }
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-white hover:text-[#5eead4] transition"
+                    >
+                      {meta.primaryCta} {status === "live" ? n.name : ""}
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                    {meta.secondaryCta && meta.secondaryHref && (
+                      <Link
+                        to={meta.secondaryHref(n)}
+                        onClick={() =>
+                          track("neighborhood_card_secondary_click", {
+                            neighborhood_slug: n.slug,
+                            status,
+                            source_page: "homepage_explorer_featured",
+                          })
+                        }
+                        className="text-[11px] font-medium text-white/55 hover:text-white transition"
+                      >
+                        {meta.secondaryCta}
+                      </Link>
+                    )}
+                  </div>
                 </div>
-                <div className="relative mt-5 flex flex-wrap gap-1.5">
-                  {n.tags.slice(0, 4).map((t) => (
-                    <span key={t} className="text-[10px] tracking-wide uppercase px-2 py-1 rounded-full border border-white/12 text-white/65">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </Link>
-            ))}
+              );
+            })}
           </div>
+
 
           <div className="md:hidden mt-6">
             <Link
