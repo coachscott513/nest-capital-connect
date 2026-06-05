@@ -73,104 +73,9 @@ const NeighborhoodExplorer = () => {
           </div>
         </div>
 
-        {/* Stylized interactive map */}
+        {/* Regional Discovery Map */}
         <div className="mt-14 md:mt-20 grid lg:grid-cols-[1.15fr_1fr] gap-8 lg:gap-12 items-start">
-          <div className="relative rounded-3xl border border-white/[0.08] bg-gradient-to-br from-white/[0.04] to-white/[0.01] overflow-hidden aspect-[4/3] lg:aspect-[5/4]">
-            {/* Grid lines */}
-            <div
-              className="absolute inset-0 opacity-[0.06] pointer-events-none"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
-                backgroundSize: "40px 40px",
-              }}
-              aria-hidden
-            />
-            {/* Teal glow halo */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{ background: "radial-gradient(40% 45% at 45% 60%, rgba(94,234,212,0.12), transparent 70%)" }}
-              aria-hidden
-            />
-
-            {/* Connecting lines between counties */}
-            <svg
-              className="absolute inset-0 w-full h-full pointer-events-none"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-              aria-hidden
-            >
-              {[
-                ["warren", "saratoga"],
-                ["saratoga", "schenectady"],
-                ["saratoga", "rensselaer"],
-                ["schenectady", "albany"],
-                ["albany", "rensselaer"],
-              ].map(([a, b]) => {
-                const pa = COUNTY_POS[a];
-                const pb = COUNTY_POS[b];
-                return (
-                  <line
-                    key={`${a}-${b}`}
-                    x1={pa.x} y1={pa.y} x2={pb.x} y2={pb.y}
-                    stroke="rgba(94,234,212,0.25)"
-                    strokeWidth="0.25"
-                    strokeDasharray="0.6 0.8"
-                    vectorEffect="non-scaling-stroke"
-                  />
-                );
-              })}
-            </svg>
-
-            {/* County pins */}
-            {COUNTIES.map((c) => {
-              const pos = COUNTY_POS[c.slug];
-              if (!pos) return null;
-              const isHover = hovered === c.slug;
-              return (
-                <Link
-                  key={c.slug}
-                  to={`/neighborhoods?county=${c.slug}`}
-                  onMouseEnter={() => setHovered(c.slug)}
-                  onMouseLeave={() => setHovered(null)}
-                  onClick={() =>
-                    track("homepage_neighborhood_map_click", {
-                      county: c.slug,
-                      source_page: "homepage_explorer_map",
-                      destination_url: `/neighborhoods?county=${c.slug}`,
-                    })
-                  }
-                  className="group absolute -translate-x-1/2 -translate-y-1/2"
-                  style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-                >
-                  <span className="relative flex items-center justify-center">
-                    <span className={`absolute inline-flex h-10 w-10 rounded-full ${isHover ? "bg-[#5eead4]/40" : "bg-[#5eead4]/20"} animate-ping opacity-70`} />
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-[#5eead4] shadow-[0_0_18px_rgba(94,234,212,0.8)]" />
-                  </span>
-                  <span className={`absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap text-[10px] font-semibold tracking-[0.18em] uppercase transition ${isHover ? "text-white" : "text-white/70 group-hover:text-white"}`}>
-                    {c.name.replace(" County", "")}
-                  </span>
-                </Link>
-              );
-            })}
-
-            {/* Hover tooltip card */}
-            {hovered && (() => {
-              const c = COUNTIES.find((x) => x.slug === hovered)!;
-              return (
-                <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-auto md:max-w-sm rounded-2xl border border-white/[0.10] bg-[#0B0F19]/95 backdrop-blur p-5 shadow-2xl">
-                  <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>{c.name}</p>
-                  <p className="mt-2 text-sm text-white/80 font-light">{c.towns.slice(0, 5).join(" · ")}</p>
-                  <p className="mt-3 text-xs text-white/55">
-                    Featured: <span className="text-white/80">{c.featured.slice(0, 3).join(", ")}</span>
-                  </p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[#5eead4]">
-                    Explore {c.name} <ArrowRight className="w-3 h-3" />
-                  </span>
-                </div>
-              );
-            })()}
-          </div>
+          <RegionalDiscoveryMap source="homepage_explorer_map" />
 
           {/* County list (mobile-friendly) */}
           <div>
@@ -181,8 +86,6 @@ const NeighborhoodExplorer = () => {
                   key={c.slug}
                   to={`/neighborhoods?county=${c.slug}`}
                   onClick={() => track("homepage_neighborhood_map_click", { county: c.slug, source_page: "homepage_explorer_list", destination_url: `/neighborhoods?county=${c.slug}` })}
-                  onMouseEnter={() => setHovered(c.slug)}
-                  onMouseLeave={() => setHovered(null)}
                   className="group flex items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#5eead4]/40 px-5 py-4 transition"
                 >
                   <div>
@@ -195,6 +98,7 @@ const NeighborhoodExplorer = () => {
             </div>
           </div>
         </div>
+
 
         {/* Featured neighborhood rail */}
         <div className="mt-20 md:mt-28">
