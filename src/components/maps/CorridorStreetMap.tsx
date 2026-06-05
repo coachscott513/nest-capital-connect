@@ -404,17 +404,54 @@ const CorridorStreetMap = ({
 
         {/* Hover business card */}
         {hov && (
-          <div className="pointer-events-none absolute left-4 right-4 md:left-6 md:right-auto md:max-w-xs bottom-4 rounded-2xl border border-white/[0.10] bg-[#0B0F19]/95 backdrop-blur p-4 shadow-2xl">
+          <div className="absolute left-4 right-4 md:left-6 md:right-auto md:max-w-xs bottom-4 rounded-2xl border border-white/[0.10] bg-[#0B0F19]/95 backdrop-blur p-4 shadow-2xl">
             <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
               {hov.category}
               {hov.status === "featured" && " · Featured"}
               {hov.status === "available" && " · Available"}
             </p>
-            <p className="mt-1.5 text-sm font-semibold text-white">{hov.name}</p>
-            {hov.blurb && <p className="mt-1.5 text-xs text-white/65 font-light">{hov.blurb}</p>}
+            {hov.status === "available" ? (
+              <>
+                <p className="mt-1.5 text-sm font-semibold text-white">This spot is being prepared.</p>
+                <p className="mt-1 text-xs text-white/65 font-light">Is this your business?</p>
+                <Link
+                  to={claimHref}
+                  onClick={() => track("neighborhood_claim_spot_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_available_pin", category: hov.category })}
+                  className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-3 py-1.5 text-[11px] font-semibold hover:brightness-105 transition"
+                >
+                  <Plus className="w-3 h-3" /> Claim This Spot
+                </Link>
+              </>
+            ) : (
+              <>
+                <p className="mt-1.5 text-sm font-semibold text-white">{hov.name}</p>
+                {hov.blurb && <p className="mt-1.5 text-xs text-white/65 font-light">{hov.blurb}</p>}
+              </>
+            )}
           </div>
         )}
+
+        {/* Floating map action pill */}
+        <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
+          <Link
+            to={claimHref}
+            onClick={() => track("neighborhood_claim_spot_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_floating_pill" })}
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#0B0F19]/85 backdrop-blur border border-[#5eead4]/40 text-white px-3.5 py-2 text-[11px] font-semibold hover:bg-[#5eead4] hover:text-[#0B0F19] transition shadow-lg"
+          >
+            <Plus className="w-3.5 h-3.5" /> Add Your Business
+          </Link>
+          {submitEventHref && (
+            <Link
+              to={submitEventHref}
+              onClick={() => track("neighborhood_add_event_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_floating_pill" })}
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#0B0F19]/75 backdrop-blur border border-white/20 text-white/85 px-3.5 py-1.5 text-[11px] font-medium hover:bg-white/10 transition"
+            >
+              Submit Event
+            </Link>
+          )}
+        </div>
       </div>
+
 
       {/* Footer CTA */}
       <div className="px-6 md:px-8 pb-7 -mt-2 flex flex-wrap items-center justify-between gap-3">
