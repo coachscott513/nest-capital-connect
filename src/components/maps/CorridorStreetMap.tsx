@@ -1,6 +1,10 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Plus, Sparkles } from "lucide-react";
+import {
+  ArrowRight, Plus, Sparkles, X, Phone, Globe, Navigation, Mail,
+  Instagram, Facebook, CalendarDays, Clock, MapPin,
+} from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const TEAL = "#5eead4";
 
@@ -23,7 +27,21 @@ export interface CorridorPin {
   /** which side of the street: "n" north / "s" south */
   side: "n" | "s";
   status?: "featured" | "claimed" | "available";
+  /** monetization tier — controls visual prominence */
+  tier?: "free" | "featured" | "premier" | "spotlight";
   blurb?: string;
+  /** rich profile fields (optional) */
+  image?: string;
+  address?: string;
+  phone?: string;
+  website?: string;
+  hours?: string;
+  openNow?: boolean;
+  instagram?: string;
+  facebook?: string;
+  email?: string;
+  specials?: string;
+  partnerLabel?: string; // e.g. "Lark Street Partner"
 }
 
 export interface CrossStreet {
@@ -45,6 +63,7 @@ interface Props {
   submitEventHref?: string;
   className?: string;
 }
+
 
 const CATEGORY_NOUN: Record<Exclude<CorridorCategory, "all">, string> = {
   dining: "dining",
@@ -88,6 +107,227 @@ function track(event: string, payload: Record<string, unknown> = {}) {
 }
 
 /**
+ * Premium business preview card — opens when a pin is clicked.
+ * Renders a rich "mini profile" for claimed/featured businesses,
+ * or a FOMO claim card for unclaimed/available spots.
+ */
+function BusinessPreviewCard({
+  pin,
+  corridorName,
+  claimHref,
+  neighborhoodSlug,
+  townSlug,
+  onClose,
+}: {
+  pin: CorridorPin;
+  corridorName: string;
+  claimHref: string;
+  neighborhoodSlug?: string;
+  townSlug?: string;
+  onClose: () => void;
+}) {
+  const isAvail = pin.status === "available";
+  const isFeatured = pin.status === "featured" || pin.tier === "featured" || pin.tier === "premier" || pin.tier === "spotlight";
+  const directionsHref = pin.address
+    ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(pin.address)}`
+    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${pin.name} ${corridorName}`)}`;
+
+  return (
+    <div
+      className="absolute inset-x-3 bottom-3 md:inset-x-auto md:bottom-5 md:left-5 md:right-5 md:max-w-md rounded-3xl border border-white/[0.12] bg-[#0B0F19]/95 backdrop-blur-xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] overflow-hidden animate-fade-in"
+      role="dialog"
+      aria-label={`${pin.name} preview`}
+    >
+      {/* Featured glow halo */}
+      {isFeatured && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "radial-gradient(60% 50% at 50% 0%, rgba(94,234,212,0.18), transparent 70%)" }}
+          aria-hidden
+        />
+      )}
+
+      {/* Close */}
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close"
+        className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 border border-white/15 text-white/80 hover:text-white flex items-center justify-center transition"
+      >
+        <X className="w-4 h-4" />
+      </button>
+
+      {/* Photo / hero */}
+      {pin.image ? (
+        <div className="relative h-36 w-full overflow-hidden">
+          <img src={pin.image} alt={pin.name} className="w-full h-full object-cover" loading="lazy" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" aria-hidden />
+        </div>
+      ) : !isAvail ? (
+        <div
+          className="relative h-24 w-full"
+          style={{
+            background: "linear-gradient(135deg, rgba(94,234,212,0.10), rgba(13,110,102,0.18))",
+          }}
+          aria-hidden
+        />
+      ) : null}
+
+      <div className="relative p-5 md:p-6">
+        {/* Category + status row */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
+            {pin.category}
+          </p>
+          {isFeatured && !isAvail && (
+            <span
+              className="text-[9px] font-semibold tracking-[0.22em] uppercase rounded-full px-2 py-0.5 border"
+              style={{ color: TEAL, borderColor: "rgba(94,234,212,0.4)", background: "rgba(94,234,212,0.08)" }}
+            >
+              Featured on {corridorName}
+            </span>
+          )}
+          {pin.partnerLabel && (
+            <span className="text-[9px] font-semibold tracking-[0.22em] uppercase rounded-full px-2 py-0.5 border border-white/20 text-white/80">
+              {pin.partnerLabel}
+            </span>
+          )}
+          {pin.openNow !== undefined && !isAvail && (
+            <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 ${pin.openNow ? "text-emerald-300 bg-emerald-400/10 border border-emerald-400/30" : "text-white/55 bg-white/5 border border-white/15"}`}>
+              {pin.openNow ? "Open now" : "Closed"}
+            </span>
+          )}
+        </div>
+
+        {/* Name */}
+        <h4 className="mt-2 text-xl md:text-2xl font-semibold tracking-[-0.01em] text-white">
+          {isAvail ? "Available Storefront" : pin.name}
+        </h4>
+
+        {isAvail ? (
+          <>
+            <p className="mt-2 text-sm text-white/70 font-light">
+              This profile is being prepared. Is this your business on {corridorName}?
+            </p>
+            <p className="mt-1 text-xs text-white/50 font-light">
+              Featured businesses appear directly on the map. Claim your spot to glow in teal.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <Link
+                to={claimHref}
+                onClick={() =>
+                  track("neighborhood_claim_spot_click", {
+                    neighborhood: neighborhoodSlug, town: townSlug,
+                    source_location: "corridor_pin_card", pin_id: pin.id, category: pin.category,
+                  })
+                }
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-4 py-2 text-xs font-semibold hover:brightness-105 transition shadow-[0_8px_24px_-12px_rgba(94,234,212,0.7)]"
+              >
+                <Plus className="w-3.5 h-3.5" /> Claim This Spot
+              </Link>
+              <Link
+                to={claimHref}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
+              >
+                Add Photos & Business Info
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            {pin.blurb && (
+              <p className="mt-2 text-sm text-white/75 font-light leading-relaxed">{pin.blurb}</p>
+            )}
+
+            {/* Meta rows */}
+            <div className="mt-4 space-y-1.5 text-xs text-white/65">
+              {pin.address && (
+                <p className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-white/40" /> {pin.address}</p>
+              )}
+              {pin.hours && (
+                <p className="flex items-center gap-2"><Clock className="w-3.5 h-3.5 text-white/40" /> {pin.hours}</p>
+              )}
+              {pin.specials && (
+                <p className="flex items-center gap-2 text-[#5eead4]"><Sparkles className="w-3.5 h-3.5" /> {pin.specials}</p>
+              )}
+            </div>
+
+            {/* Primary CTAs */}
+            <div className="mt-5 flex flex-wrap gap-2">
+              {pin.phone && (
+                <a
+                  href={`tel:${pin.phone.replace(/[^0-9+]/g, "")}`}
+                  onClick={() => track("corridor_pin_action", { action: "call", pin_id: pin.id })}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-4 py-2 text-xs font-semibold hover:brightness-105 transition shadow-[0_8px_24px_-12px_rgba(94,234,212,0.7)]"
+                >
+                  <Phone className="w-3.5 h-3.5" /> Call
+                </a>
+              )}
+              {pin.website && (
+                <a
+                  href={pin.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("corridor_pin_action", { action: "website", pin_id: pin.id })}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/20 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
+                >
+                  <Globe className="w-3.5 h-3.5" /> Website
+                </a>
+              )}
+              <a
+                href={directionsHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => track("corridor_pin_action", { action: "directions", pin_id: pin.id })}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 text-white px-4 py-2 text-xs font-semibold hover:bg-white/10 transition"
+              >
+                <Navigation className="w-3.5 h-3.5" /> Directions
+              </a>
+              <Link
+                to={claimHref}
+                onClick={() => track("corridor_pin_action", { action: "view_full_profile", pin_id: pin.id })}
+                className="inline-flex items-center gap-1.5 rounded-full text-white/85 hover:text-white text-xs font-semibold px-2 py-2 transition"
+              >
+                View Full Profile <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            {/* Secondary row — only if data present */}
+            {(pin.instagram || pin.facebook || pin.email) && (
+              <div className="mt-3 flex items-center gap-2">
+                {pin.instagram && (
+                  <a href={pin.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                    className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition">
+                    <Instagram className="w-3.5 h-3.5" />
+                  </a>
+                )}
+                {pin.facebook && (
+                  <a href={pin.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                    className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition">
+                    <Facebook className="w-3.5 h-3.5" />
+                  </a>
+                )}
+                {pin.email && (
+                  <a href={`mailto:${pin.email}`} aria-label="Email"
+                    className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition">
+                    <Mail className="w-3.5 h-3.5" />
+                  </a>
+                )}
+                {pin.specials && (
+                  <span className="text-[10px] tracking-[0.22em] uppercase text-white/50 ml-auto inline-flex items-center gap-1">
+                    <CalendarDays className="w-3 h-3" /> Event / Special
+                  </span>
+                )}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/**
  * Stylized horizontal corridor map. Renders a clean street line with
  * intersection cross-streets, abstracted building parcels on both sides,
  * and glowing storefront pins per business.
@@ -110,6 +350,8 @@ const CorridorStreetMap = ({
 
   const [filter, setFilter] = useState<CorridorCategory>("all");
   const [hovered, setHovered] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   const visible = useMemo(
     () => (filter === "all" ? pins : pins.filter((p) => p.category === filter)),
@@ -117,6 +359,8 @@ const CorridorStreetMap = ({
   );
 
   const hov = hovered ? pins.find((p) => p.id === hovered) : null;
+  const selected = selectedId ? pins.find((p) => p.id === selectedId) : null;
+
 
   // Build deterministic abstract building parcels along corridor
   const parcels = useMemo(() => {
@@ -367,16 +611,35 @@ const CorridorStreetMap = ({
             const x = 60 + (p.t / 100) * 880;
             const y = p.side === "n" ? 200 : 280;
             const isHov = hovered === p.id;
+            const isSel = selectedId === p.id;
             const isFeatured = p.status === "featured";
             const isAvail = p.status === "available";
-            const dotColor = isAvail ? "rgba(255,255,255,0.25)" : isFeatured ? TEAL : CATEGORY_DOT[p.category];
-            const r = isFeatured ? 7 : 5;
+            const tier = p.tier || (isFeatured ? "featured" : isAvail ? "free" : "free");
+            const isSpotlight = tier === "spotlight";
+            const isPremier = tier === "premier";
+            const dotColor = isAvail
+              ? "rgba(255,255,255,0.25)"
+              : isFeatured || isSpotlight || isPremier
+              ? TEAL
+              : CATEGORY_DOT[p.category];
+            const r = isSpotlight ? 8 : isFeatured || isPremier ? 7 : 5;
+            // Persistent label: featured / premier / spotlight always show name (desktop only)
+            const showPersistentLabel = !isMobile && !isAvail && (isFeatured || isSpotlight || isPremier);
+            // Above pin if north side, below if south
+            const labelY = p.side === "n" ? y - (isFeatured || isSpotlight ? 16 : 13) : y + (isFeatured || isSpotlight ? 22 : 18);
             return (
               <g
                 key={p.id}
                 style={{ cursor: "pointer" }}
                 onMouseEnter={() => setHovered(p.id)}
                 onMouseLeave={() => setHovered(null)}
+                onClick={() => {
+                  setSelectedId(p.id);
+                  track("corridor_pin_click", {
+                    pin_id: p.id, pin_name: p.name, category: p.category,
+                    status: p.status, tier, neighborhood: neighborhoodSlug, town: townSlug,
+                  });
+                }}
               >
                 {/* connector tick from street to parcel */}
                 <line
@@ -386,50 +649,71 @@ const CorridorStreetMap = ({
                   strokeWidth="0.8"
                   strokeDasharray={isAvail ? "2 3" : undefined}
                 />
-                {isFeatured && (
-                  <circle cx={x} cy={y} r={22} fill="url(#pinGlow)" />
+                {(isFeatured || isSpotlight) && (
+                  <circle cx={x} cy={y} r={isSpotlight ? 28 : 22} fill="url(#pinGlow)" />
                 )}
+                {/* generous click target */}
+                <circle cx={x} cy={y} r={14} fill="transparent" />
                 <circle
-                  cx={x} cy={y} r={r + (isHov ? 2 : 0)}
+                  cx={x} cy={y} r={r + (isHov || isSel ? 2 : 0)}
                   fill={dotColor}
                   stroke={isAvail ? "rgba(255,255,255,0.4)" : "rgba(11,15,25,0.9)"}
                   strokeWidth={isAvail ? 1 : 1.5}
                   style={{ transition: "all 180ms ease",
-                    filter: isFeatured ? "drop-shadow(0 0 6px rgba(94,234,212,0.9))" : undefined }}
+                    filter: isFeatured || isSpotlight ? "drop-shadow(0 0 6px rgba(94,234,212,0.9))" : undefined }}
                 />
+                {/* Persistent label for premium tiers */}
+                {showPersistentLabel && (
+                  <text
+                    x={x}
+                    y={labelY}
+                    textAnchor="middle"
+                    fontSize={isSpotlight ? 11 : 10}
+                    fontWeight={600}
+                    fill="rgba(255,255,255,0.95)"
+                    style={{
+                      paintOrder: "stroke",
+                      stroke: "rgba(7,10,18,0.9)",
+                      strokeWidth: 3,
+                      strokeLinejoin: "round",
+                      letterSpacing: "0.02em",
+                      pointerEvents: "none",
+                    }}
+                  >
+                    {p.name}
+                  </text>
+                )}
               </g>
             );
           })}
         </svg>
 
-        {/* Hover business card */}
-        {hov && (
-          <div className="absolute left-4 right-4 md:left-6 md:right-auto md:max-w-xs bottom-4 rounded-2xl border border-white/[0.10] bg-[#0B0F19]/95 backdrop-blur p-4 shadow-2xl">
-            <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
-              {hov.category}
-              {hov.status === "featured" && " · Featured"}
-              {hov.status === "available" && " · Available"}
-            </p>
-            {hov.status === "available" ? (
-              <>
-                <p className="mt-1.5 text-sm font-semibold text-white">This spot is being prepared.</p>
-                <p className="mt-1 text-xs text-white/65 font-light">Is this your business?</p>
-                <Link
-                  to={claimHref}
-                  onClick={() => track("neighborhood_claim_spot_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_available_pin", category: hov.category })}
-                  className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-3 py-1.5 text-[11px] font-semibold hover:brightness-105 transition"
-                >
-                  <Plus className="w-3 h-3" /> Claim This Spot
-                </Link>
-              </>
-            ) : (
-              <>
-                <p className="mt-1.5 text-sm font-semibold text-white">{hov.name}</p>
-                {hov.blurb && <p className="mt-1.5 text-xs text-white/65 font-light">{hov.blurb}</p>}
-              </>
-            )}
+        {/* Hover label pill (for non-featured pins, shows on hover only) */}
+        {hov && !selected && !(hov.status === "featured" || hov.tier === "spotlight" || hov.tier === "premier") && (
+          <div
+            className="absolute pointer-events-none rounded-full border border-white/15 bg-[#0B0F19]/95 backdrop-blur px-3 py-1.5 text-[11px] font-medium text-white/90 shadow-xl whitespace-nowrap animate-fade-in"
+            style={{
+              left: `${(60 + (hov.t / 100) * 880) / 1000 * 100}%`,
+              top: hov.side === "n" ? "32%" : "70%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            {hov.status === "available" ? "Available · Claim This Spot" : hov.name}
           </div>
         )}
+
+        {/* Premium business preview card — click-driven */}
+        {selected && (
+          <BusinessPreviewCard
+            pin={selected}
+            corridorName={corridorName}
+            claimHref={claimHref}
+            neighborhoodSlug={neighborhoodSlug}
+            townSlug={townSlug}
+            onClose={() => setSelectedId(null)}
+          />
+        )}
+
 
         {/* Floating map action pill */}
         <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
