@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Compass, Sparkles } from "lucide-react";
-import { COUNTIES, getFeaturedNeighborhoods } from "@/data/neighborhoods";
+import {
+  COUNTIES,
+  getHomepageFeaturedNeighborhoods,
+  statusMeta,
+  type NeighborhoodStatus,
+} from "@/data/neighborhoods";
 import RegionalDiscoveryMap from "@/components/maps/RegionalDiscoveryMap";
 
 const TEAL = "#5eead4";
@@ -15,7 +20,7 @@ function track(event: string, payload: Record<string, unknown> = {}) {
 }
 
 
-const FEATURED = getFeaturedNeighborhoods();
+const FEATURED = getHomepageFeaturedNeighborhoods(6);
 
 const NeighborhoodExplorer = () => {
 
