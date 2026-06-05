@@ -201,22 +201,26 @@ function CinematicHero() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-5xl mx-auto text-center"
           >
-            <h1 className="text-[2.75rem] sm:text-6xl md:text-[5.5rem] lg:text-[6.5rem] font-semibold tracking-[-0.045em] leading-[0.98] text-white">
-              Search anything{" "}
+            <p className="text-[11px] md:text-xs font-semibold tracking-[0.32em] uppercase text-[#5eead4]">
+              Capital District Nest
+            </p>
+            <h1 className="mt-5 text-[2.5rem] sm:text-5xl md:text-[5rem] lg:text-[6rem] font-semibold tracking-[-0.045em] leading-[0.98] text-white">
+              Discover the Capital District,{" "}
               <span className="bg-gradient-to-r from-white via-white to-[#5eead4] bg-clip-text text-transparent">
-                local.
+                neighborhood by neighborhood.
               </span>
             </h1>
-            <p className="mt-6 md:mt-8 text-base md:text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
-              The digital front door of the Capital District — businesses, towns, events,
-              services, media, homes, and local updates in one place.
+            <p className="mt-6 md:mt-8 text-base md:text-xl text-white/70 max-w-3xl mx-auto font-light leading-relaxed">
+              Explore local businesses, events, restaurants, services, homes, and town guides
+              across the Capital District — from Lark Street to Saratoga, Delmar, Troy,
+              Schenectady, and beyond.
             </p>
 
             <motion.div
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10 md:mt-14"
+              className="mt-9 md:mt-12"
             >
               <SpotlightSearch />
             </motion.div>
@@ -228,18 +232,33 @@ function CinematicHero() {
               className="mt-7 flex flex-wrap items-center justify-center gap-3"
             >
               <Link
-                to="/local"
+                to="/neighborhoods"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
               >
-                Start Searching <ArrowRight className="w-4 h-4" />
+                Explore Neighborhoods <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
-                to="/communities"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.06] backdrop-blur text-white border border-white/20 text-sm font-semibold hover:bg-white/[0.12] transition"
+                to="/claim-business"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.08] backdrop-blur text-white border border-white/20 text-sm font-semibold hover:bg-white/[0.16] transition"
               >
-                Explore the Region
+                Add Your Business
               </Link>
+              <Link
+                to="/submit-event"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.04] backdrop-blur text-white/85 border border-white/15 text-sm font-semibold hover:bg-white/[0.12] hover:text-white transition"
+              >
+                Submit an Event
+              </Link>
+              <a
+                href="https://scottalvarez.remax.com/"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="inline-flex items-center gap-1 text-sm font-medium text-white/65 hover:text-white px-2 py-3 transition"
+              >
+                Search Homes
+              </a>
             </motion.div>
+
           </motion.div>
         </div>
       </div>
@@ -683,11 +702,12 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#0B0F19]">
       <SEOHead
-        title="Capital District Nest | Search Anything Local"
-        description="The digital front door of the Capital District — search businesses, towns, events, restaurants, services, media, homes, and local updates in one place."
-        keywords="Capital District, search anything local, local businesses Albany NY, Capital District restaurants, Capital District events, Capital District towns, Capital District homes, Saratoga, Troy NY, Schenectady"
+        title="Capital District Nest | Discover the Capital District, Neighborhood by Neighborhood"
+        description="A local discovery platform for the Capital District. Explore neighborhoods, businesses, events, restaurants, services, homes, and town guides — from Lark Street to Saratoga, Delmar, Troy, and Schenectady."
+        keywords="Capital District, local discovery platform, neighborhood guide Albany NY, Lark Street, Broadway Saratoga, Downtown Troy, Four Corners Delmar, Capital District businesses, Capital District events, Capital District homes"
         structuredData={localBusinessSchema}
       />
+
       <CleanHeader />
       <FloatingOmniSearch />
 
