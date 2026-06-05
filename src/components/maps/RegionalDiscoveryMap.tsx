@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const TEAL = "#5eead4";
 
@@ -193,7 +194,9 @@ interface Props {
 const RegionalDiscoveryMap = ({ className = "", source = "homepage_explorer_map" }: Props) => {
   const [hoveredCounty, setHoveredCounty] = useState<string | null>(null);
   const [hoveredMicro, setHoveredMicro] = useState<{ name: string; x: number; y: number; comingSoon?: boolean } | null>(null);
+  const isMobile = useIsMobile();
   const active = hoveredCounty ? COUNTIES.find((c) => c.slug === hoveredCounty) : null;
+
 
   return (
     <div
@@ -297,19 +300,26 @@ const RegionalDiscoveryMap = ({ className = "", source = "homepage_explorer_map"
           );
         })}
 
-        {/* County labels — sparse, uppercase, top of polygon */}
+        {/* County labels — larger, higher contrast */}
         {COUNTIES.map((c) => {
-          // place near the primary town, offset up
           const primary = c.towns.find((t) => t.primary) || c.towns[0];
+          const isActive = hoveredCounty === c.slug;
           return (
             <text
               key={`clabel-${c.slug}`}
               x={primary.x}
-              y={primary.y - 38}
+              y={primary.y - (isMobile ? 24 : 42)}
               textAnchor="middle"
-              fontSize="9.5"
-              fill="rgba(255,255,255,0.38)"
-              style={{ letterSpacing: "0.32em" }}
+              fontSize={isMobile ? 20 : 13}
+              fontWeight={600}
+              fill={isActive ? "rgba(94,234,212,0.95)" : "rgba(255,255,255,0.72)"}
+              style={{
+                letterSpacing: "0.22em",
+                paintOrder: "stroke",
+                stroke: "rgba(7,10,18,0.85)",
+                strokeWidth: 3,
+                strokeLinejoin: "round",
+              }}
               pointerEvents="none"
             >
               {c.short.toUpperCase()}
@@ -317,34 +327,56 @@ const RegionalDiscoveryMap = ({ className = "", source = "homepage_explorer_map"
           );
         })}
 
-        {/* City / town hubs (medium tier) */}
-        {COUNTIES.flatMap((c) =>
+        {/* City / town hubs (medium tier) — desktop only to reduce mobile clutter */}
+        {!isMobile && COUNTIES.flatMap((c) =>
           c.towns.map((t) => {
             const isActive = hoveredCounty === c.slug;
             const r = t.primary ? (isActive ? 8 : 6) : isActive ? 5.5 : 4;
             const glowR = t.primary ? (isActive ? 34 : 24) : 18;
+            // Secondary town labels only on county hover
+            const showLabel = t.primary || isActive;
             return (
               <g key={`town-${c.slug}-${t.name}`} pointerEvents="none">
                 <circle cx={t.x} cy={t.y} r={glowR} fill="url(#hubGlowLg)" opacity={t.primary ? 1 : 0.5} />
                 <circle cx={t.x} cy={t.y} r={r} fill={TEAL} />
-                <text
-                  x={t.x}
-                  y={t.y - (t.primary ? 16 : 12)}
-                  textAnchor="middle"
-                  fontSize={t.primary ? 12.5 : 10.5}
-                  fontWeight={t.primary ? 600 : 500}
-                  fill={t.primary ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.72)"}
-                  style={{ letterSpacing: "0.04em" }}
-                >
-                  {t.name}
-                </text>
+                {showLabel && (
+                  <text
+                    x={t.x}
+                    y={t.y - (t.primary ? 18 : 14)}
+                    textAnchor="middle"
+                    fontSize={t.primary ? 15 : 12}
+                    fontWeight={t.primary ? 700 : 500}
+                    fill={t.primary ? "rgba(255,255,255,0.98)" : "rgba(255,255,255,0.85)"}
+                    style={{
+                      letterSpacing: "0.02em",
+                      paintOrder: "stroke",
+                      stroke: "rgba(7,10,18,0.85)",
+                      strokeWidth: 3.5,
+                      strokeLinejoin: "round",
+                    }}
+                  >
+                    {t.name}
+                  </text>
+                )}
               </g>
             );
           })
         )}
 
-        {/* Neighborhood / street micro nodes — smallest tier */}
-        {COUNTIES.flatMap((c) =>
+        {/* Mobile: single primary dot per county, no labels (county labels handle naming) */}
+        {isMobile && COUNTIES.flatMap((c) => {
+          const t = c.towns.find((x) => x.primary) || c.towns[0];
+          if (!t) return [];
+          return [(
+            <g key={`mtown-${c.slug}`} pointerEvents="none">
+              <circle cx={t.x} cy={t.y} r={30} fill="url(#hubGlowLg)" />
+              <circle cx={t.x} cy={t.y} r={8} fill={TEAL} />
+            </g>
+          )];
+        })}
+
+        {/* Neighborhood / street micro nodes — desktop only; labels reveal on hover */}
+        {!isMobile && COUNTIES.flatMap((c) =>
           c.micros.map((m) => {
             const isHover = hoveredMicro?.name === m.name;
             const href = m.href || `/neighborhoods?county=${c.slug}`;
@@ -364,13 +396,12 @@ const RegionalDiscoveryMap = ({ className = "", source = "homepage_explorer_map"
                   onMouseLeave={() => setHoveredMicro(null)}
                   style={{ cursor: "pointer" }}
                 >
-                  {/* generous hit target */}
-                  <circle cx={m.x} cy={m.y} r={12} fill="transparent" />
-                  <circle cx={m.x} cy={m.y} r={isHover ? 12 : 8} fill="url(#hubGlowSm)" opacity={m.comingSoon ? 0.45 : 0.9} />
+                  <circle cx={m.x} cy={m.y} r={14} fill="transparent" />
+                  <circle cx={m.x} cy={m.y} r={isHover ? 14 : 9} fill="url(#hubGlowSm)" opacity={m.comingSoon ? 0.45 : 0.9} />
                   <circle
                     cx={m.x}
                     cy={m.y}
-                    r={isHover ? 3 : 2.2}
+                    r={isHover ? 3.5 : 2.4}
                     fill={m.comingSoon ? "rgba(255,255,255,0.55)" : TEAL}
                     stroke={m.comingSoon ? "rgba(255,255,255,0.4)" : "none"}
                     strokeWidth={m.comingSoon ? 0.6 : 0}
@@ -382,9 +413,10 @@ const RegionalDiscoveryMap = ({ className = "", source = "homepage_explorer_map"
           })
         )}
 
+
         {/* River labels */}
-        <text x="900" y="470" fontSize="9" fill="rgba(94,234,212,0.55)" style={{ letterSpacing: "0.3em" }}>HUDSON</text>
-        <text x="280" y="555" fontSize="9" fill="rgba(94,234,212,0.5)" style={{ letterSpacing: "0.3em" }}>MOHAWK</text>
+        {!isMobile && <text x="900" y="470" fontSize="11" fill="rgba(94,234,212,0.7)" style={{ letterSpacing: "0.28em" }}>HUDSON</text>}
+        {!isMobile && <text x="280" y="555" fontSize="11" fill="rgba(94,234,212,0.65)" style={{ letterSpacing: "0.28em" }}>MOHAWK</text>}
       </svg>
 
       {/* Compass / legend */}

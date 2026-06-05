@@ -41,12 +41,12 @@ const NeighborhoodExplorer = () => {
             <Compass className="w-3 h-3" /> Neighborhood Explorer
           </p>
           <h2 className="mt-5 text-[2.25rem] sm:text-5xl md:text-[4.25rem] font-semibold tracking-[-0.04em] leading-[1.02] text-white">
-            Discover the Capital District,{" "}
-            <span className="text-[#5eead4]">neighborhood by neighborhood.</span>
+            Explore the region{" "}
+            <span className="text-[#5eead4]">visually.</span>
           </h2>
           <p className="mt-6 text-base md:text-lg text-white/70 font-light leading-relaxed">
-            Explore towns, streets, business corridors, restaurants, events, services, and local favorites
-            through an interactive local discovery map — from Lark Street to Broadway Saratoga to Downtown Troy.
+            Move from county to town to street-level guides — from Albany and Saratoga to Lark Street,
+            Broadway, Downtown Troy, Wolf Road, and beyond.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -54,7 +54,7 @@ const NeighborhoodExplorer = () => {
               onClick={() => track("neighborhood_nav_click", { source_page: "homepage_explorer_primary", destination_url: "/neighborhoods" })}
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
             >
-              Explore Neighborhoods <ArrowRight className="w-4 h-4" />
+              Open Neighborhood Explorer <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/neighborhoods/lark-street"
@@ -73,31 +73,32 @@ const NeighborhoodExplorer = () => {
           </div>
         </div>
 
-        {/* Regional Discovery Map */}
-        <div className="mt-14 md:mt-20 grid lg:grid-cols-[1.15fr_1fr] gap-8 lg:gap-12 items-start">
-          <RegionalDiscoveryMap source="homepage_explorer_map" />
+        {/* Full-width Regional Discovery Map */}
+        <div className="mt-14 md:mt-20">
+          <RegionalDiscoveryMap source="homepage_explorer_map" className="w-full" />
+        </div>
 
-          {/* County list (mobile-friendly) */}
-          <div>
-            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-white/55 mb-4">By County</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-              {COUNTIES.map((c) => (
-                <Link
-                  key={c.slug}
-                  to={`/neighborhoods?county=${c.slug}`}
-                  onClick={() => track("homepage_neighborhood_map_click", { county: c.slug, source_page: "homepage_explorer_list", destination_url: `/neighborhoods?county=${c.slug}` })}
-                  className="group flex items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#5eead4]/40 px-5 py-4 transition"
-                >
-                  <div>
-                    <p className="text-sm font-semibold text-white">{c.name}</p>
-                    <p className="mt-1 text-xs text-white/55 line-clamp-1">{c.featured.slice(0, 3).join(" · ")}</p>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-[#5eead4] group-hover:translate-x-0.5 transition" />
-                </Link>
-              ))}
-            </div>
+        {/* County cards below the map */}
+        <div className="mt-10 md:mt-14">
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-white/55 mb-5">Browse by county</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {COUNTIES.map((c) => (
+              <Link
+                key={c.slug}
+                to={`/neighborhoods?county=${c.slug}`}
+                onClick={() => track("homepage_neighborhood_map_click", { county: c.slug, source_page: "homepage_explorer_list", destination_url: `/neighborhoods?county=${c.slug}` })}
+                className="group flex items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#5eead4]/40 px-5 py-4 transition"
+              >
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-white truncate">{c.name}</p>
+                  <p className="mt-1 text-xs text-white/55 truncate">{c.featured.slice(0, 3).join(" · ")}</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-[#5eead4] group-hover:translate-x-0.5 transition flex-shrink-0" />
+              </Link>
+            ))}
           </div>
         </div>
+
 
 
         {/* Featured neighborhood rail */}
