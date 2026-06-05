@@ -39,9 +39,15 @@ import { getSearchRoute } from "@/lib/searchIntent";
    ============================================================= */
 
 const ROTATING_PLACEHOLDERS = [
-  "Search Delmar restaurants, Albany homes, Troy contractors, Saratoga events…",
-  "Search Delmar restaurants, Albany homes, Troy contractors, Saratoga events…",
+  "Search businesses, towns, events, homes, or neighborhoods",
+  "Search Lark Street",
+  "Find a Delmar restaurant",
+  "Search contractors in Clifton Park",
+  "Explore events this week",
+  "Find insurance agencies",
+  "Search Saratoga homes",
 ];
+
 
 // Curated prompt pills — each fires the omni-search using its label as the query
 const PROMPT_PILLS: { label: string; query: string; to?: string }[] = [
