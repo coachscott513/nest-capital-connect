@@ -1,6 +1,10 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Plus, Sparkles } from "lucide-react";
+import {
+  ArrowRight, Plus, Sparkles, X, Phone, Globe, Navigation, Mail,
+  Instagram, Facebook, CalendarDays, Clock, MapPin,
+} from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const TEAL = "#5eead4";
 
@@ -23,7 +27,21 @@ export interface CorridorPin {
   /** which side of the street: "n" north / "s" south */
   side: "n" | "s";
   status?: "featured" | "claimed" | "available";
+  /** monetization tier — controls visual prominence */
+  tier?: "free" | "featured" | "premier" | "spotlight";
   blurb?: string;
+  /** rich profile fields (optional) */
+  image?: string;
+  address?: string;
+  phone?: string;
+  website?: string;
+  hours?: string;
+  openNow?: boolean;
+  instagram?: string;
+  facebook?: string;
+  email?: string;
+  specials?: string;
+  partnerLabel?: string; // e.g. "Lark Street Partner"
 }
 
 export interface CrossStreet {
@@ -45,6 +63,7 @@ interface Props {
   submitEventHref?: string;
   className?: string;
 }
+
 
 const CATEGORY_NOUN: Record<Exclude<CorridorCategory, "all">, string> = {
   dining: "dining",
@@ -110,6 +129,8 @@ const CorridorStreetMap = ({
 
   const [filter, setFilter] = useState<CorridorCategory>("all");
   const [hovered, setHovered] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   const visible = useMemo(
     () => (filter === "all" ? pins : pins.filter((p) => p.category === filter)),
@@ -117,6 +138,8 @@ const CorridorStreetMap = ({
   );
 
   const hov = hovered ? pins.find((p) => p.id === hovered) : null;
+  const selected = selectedId ? pins.find((p) => p.id === selectedId) : null;
+
 
   // Build deterministic abstract building parcels along corridor
   const parcels = useMemo(() => {
