@@ -17,11 +17,14 @@ import {
 } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
+import CorridorStreetMap from "@/components/maps/CorridorStreetMap";
+import { getCorridorData } from "@/data/corridors";
 import {
   findNeighborhoodBySlug,
   getAllNeighborhoods,
   type MicroNeighborhood,
 } from "@/data/neighborhoods";
+
 
 const TEAL = "#5eead4";
 
