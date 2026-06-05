@@ -20,6 +20,7 @@ import {
 import MainLayout from "@/components/MainLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { findTownInDirectory } from "@/data/capitalDistrictCounties";
+import { canonicalCategory } from "@/lib/canonicalCategory";
 
 const TEAL = "#0d6e66";
 const TEAL_LIGHT = "#5eead4";
@@ -111,6 +112,7 @@ type Biz = {
   hero_image_url: string | null;
   photos: string[] | null;
   is_featured: boolean | null;
+  tags: string[] | null;
 };
 
 // ── tiny UI atoms ──────────────────────────────────────────────────────────
@@ -271,7 +273,7 @@ const TownPulse = () => {
         supabase
           .from("businesses")
           .select(
-            "id,slug,name,category,subcategory,description,address,city,phone,website,instagram,facebook,linkedin,tiktok,x_url,hero_image_url,photos,is_featured",
+            "id,slug,name,category,subcategory,tags,description,address,city,phone,website,instagram,facebook,linkedin,tiktok,x_url,hero_image_url,photos,is_featured",
           )
           .eq("town_slug", townSlug)
           .eq("is_active", true)
@@ -295,11 +297,12 @@ const TownPulse = () => {
   const filteredBiz = useMemo(() => {
     const q = search.trim().toLowerCase();
     if (!q) return businesses;
-    return businesses.filter((b) =>
-      `${b.name} ${b.category ?? ""} ${b.subcategory ?? ""} ${b.description ?? ""}`
+    return businesses.filter((b) => {
+      const canon = canonicalCategory(b.name, b.category, b.subcategory, b.tags ?? []);
+      return `${b.name} ${canon} ${b.description ?? ""}`
         .toLowerCase()
-        .includes(q),
-    );
+        .includes(q);
+    });
   }, [search, businesses]);
 
   const socialBusinesses = useMemo(
@@ -620,7 +623,7 @@ const TownPulse = () => {
                       </span>
                       <h3 className="text-lg font-semibold text-white tracking-[-0.01em]">{b.name}</h3>
                       <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-white/45">
-                        {b.subcategory || b.category}
+                        {canonicalCategory(b.name, b.category, b.subcategory, b.tags ?? [])}
                       </p>
                       {b.description && (
                         <p className="mt-3 text-sm text-white/65 leading-relaxed line-clamp-2">{b.description}</p>
@@ -710,7 +713,7 @@ const TownPulse = () => {
                       <div className="flex items-center gap-2 mb-2">
                         <Store className="w-3.5 h-3.5" style={{ color: TEAL_LIGHT }} />
                         <span className="text-[11px] uppercase tracking-[0.18em] text-white/55">
-                          {b.subcategory || b.category || "Local"}
+                          {canonicalCategory(b.name, b.category, b.subcategory, b.tags ?? [])}
                         </span>
                       </div>
                       <h3 className="text-lg font-semibold text-white tracking-[-0.01em]">
@@ -816,7 +819,7 @@ const TownPulse = () => {
                   <div className="min-w-0">
                     <p className="text-sm font-semibold text-white truncate">{b.name}</p>
                     <p className="text-[11px] uppercase tracking-[0.14em] text-white/45 truncate">
-                      {b.subcategory || b.category || "Local"}
+                      {canonicalCategory(b.name, b.category, b.subcategory, b.tags ?? [])}
                     </p>
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
