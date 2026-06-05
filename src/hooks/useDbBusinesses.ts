@@ -1,62 +1,21 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Business, BusinessCategory } from "@/data/businesses";
+import { canonicalCategory } from "@/lib/canonicalCategory";
 
 /**
- * Maps a free-text Google Places category string to one of our
- * canonical BusinessCategory values so the row shows up in the
- * grouped directory. Falls back to "Home Service" (catch-all in
- * Home Services group) so nothing imported is silently dropped.
+ * Maps an imported business row to our canonical BusinessCategory.
+ * Delegates to `canonicalCategory` so name signals (e.g. "Law Group, P.C.",
+ * "CPA", "MD") override stale/wrong imported category text (e.g. Google
+ * Places tagging a law firm as "Restaurant"). Single source of truth shared
+ * with TownPulse, search, and filtering so cards never contradict the eyebrow.
  */
 const mapCategory = (
   raw: string | null,
   tags: string[] = [],
   name = "",
   subcategory: string | null = null,
-): BusinessCategory => {
-  const hay = `${raw ?? ""} ${subcategory ?? ""} ${name} ${tags.join(" ")}`.toLowerCase();
-  const test = (re: RegExp) => re.test(hay);
-
-  if (test(/coffee|espresso|cafe|café/)) return "Coffee";
-  if (test(/bakery|patisserie|donut|bagel/)) return "Bakery";
-  if (test(/restaurant|bar|pub|pizz|deli|diner|grill|food|eatery|sandwich/))
-    return "Restaurant";
-
-  // Dental — first-class vertical
-  if (test(/dental|dentist|orthodont|endodont|periodont|oral surgeon|tooth|teeth|braces|invisalign|cosmetic dentistry/)) return "Dental";
-  // Healthcare — medical/clinical providers
-  if (test(/healthcare|health care|medical|doctor|physician|clinic|urgent care|pediatric|pediatrician|dermatolog|family medicine|primary care|chiropract|physical therapy|mental health|counseling|psycholog|psychiatr|optometr|cardiolog|orthopedic/)) return "Healthcare";
-  if (test(/gym|fitness|crossfit/)) return "Gym";
-  if (test(/salon|barber|nail|hair|beauty/)) return "Salon";
-  if (test(/spa|massage|yoga|pilates|acupunct|holistic|meditation|nutrition|wellness coach|recovery|sauna|cryo|wellness/)) return "Wellness";
-  if (test(/pet|vet|groom|kennel/)) return "Pet";
-  if (test(/auto|mechanic|tire|car wash|oil change/)) return "Auto";
-  if (test(/book|library/)) return "Bookstore";
-
-  if (test(/mortgage|lender|loan/)) return "Mortgage Lender";
-  if (test(/bank|credit union/)) return "Bank/Credit Union";
-  if (test(/insurance/)) return "Insurance";
-  if (test(/inspector|inspection/)) return "Home Inspector";
-  if (test(/financial|advisor|planner|wealth|primerica/)) return "Financial Advisor";
-  if (test(/accountant|cpa|tax|bookkeep/)) return "Accountant";
-
-  if (test(/real estate attorney/)) return "Real Estate Attorney";
-  if (test(/attorney|lawyer|legal|law/)) return "Attorney";
-  if (test(/marketing|advertis|agency/)) return "Marketing";
-
-  if (test(/roof/)) return "Roofer";
-  if (test(/plumb/)) return "Plumber";
-  if (test(/electric/)) return "Electrician";
-  if (test(/hvac|heating|cooling|furnace/)) return "HVAC";
-  if (test(/landscap|lawn|tree|garden/)) return "Landscaper";
-  if (test(/clean/)) return "Cleaner";
-  if (test(/handyman|handywoman/)) return "Handyman";
-  if (test(/contractor|construction|remodel|builder/)) return "Contractor";
-
-  if (test(/retail|shop|store|boutique|market/)) return "Retail";
-
-  return "Home Service";
-};
+): BusinessCategory => canonicalCategory(name, raw, subcategory, tags);
 
 const slugify = (s: string) =>
   s
