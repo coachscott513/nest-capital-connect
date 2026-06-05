@@ -37,16 +37,8 @@ function track(event: string, payload: Record<string, unknown> = {}) {
   } catch { /* noop */ }
 }
 
-const CATEGORY_FILTERS = [
-  { key: "all", label: "All" },
-  { key: "dining", label: "Dining" },
-  { key: "taverns", label: "Taverns" },
-  { key: "coffee", label: "Coffee" },
-  { key: "retail", label: "Retail" },
-  { key: "wellness", label: "Wellness" },
-  { key: "services", label: "Services" },
-  { key: "events", label: "Events" },
-];
+
+
 
 const NeighborhoodDetail = () => {
   const { slug = "" } = useParams();
