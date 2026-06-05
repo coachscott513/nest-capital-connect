@@ -193,11 +193,16 @@ const NeighborhoodDetail = () => {
             <CorridorStreetMap
               corridorName={n.name}
               cityName={n.townName}
+              townSlug={n.townSlug}
+              neighborhoodSlug={n.slug}
               crossStreets={getCorridorData(n.slug).crossStreets}
               pins={getCorridorData(n.slug).pins}
               claimHref={claim}
               exploreHref={exploreBiz}
+              claimFeaturedHref={claimFeatured}
+              submitEventHref={submitEvent}
             />
+
 
           </div>
         </section>
