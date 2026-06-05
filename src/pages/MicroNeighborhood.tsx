@@ -39,7 +39,8 @@ const MicroNeighborhood = () => {
   const exploreBiz = `/local?town=${n.townSlug}&neighborhood=${n.slug}`;
   const exploreEvents = `/weekly?town=${n.townSlug}&neighborhood=${n.slug}`;
   const claim = `/claim-business?town=${n.townSlug}&neighborhood=${n.slug}`;
-  const url = `https://www.capitaldistrictnest.com/living-in/${n.townSlug}/${n.slug}`;
+  // Canonical points to the /neighborhoods/:slug hub page; this /living-in/ path is an alias.
+  const url = `https://www.capitaldistrictnest.com/neighborhoods/${n.slug}`;
 
   const title = `${n.name} ${n.townName}, NY | Capital District Nest`;
   const description = `Explore restaurants, taverns, cafés, shops, services, events, and local businesses on ${n.name} in ${n.townName}, NY.`;
