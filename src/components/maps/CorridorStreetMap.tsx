@@ -390,16 +390,35 @@ const CorridorStreetMap = ({
             const x = 60 + (p.t / 100) * 880;
             const y = p.side === "n" ? 200 : 280;
             const isHov = hovered === p.id;
+            const isSel = selectedId === p.id;
             const isFeatured = p.status === "featured";
             const isAvail = p.status === "available";
-            const dotColor = isAvail ? "rgba(255,255,255,0.25)" : isFeatured ? TEAL : CATEGORY_DOT[p.category];
-            const r = isFeatured ? 7 : 5;
+            const tier = p.tier || (isFeatured ? "featured" : isAvail ? "free" : "free");
+            const isSpotlight = tier === "spotlight";
+            const isPremier = tier === "premier";
+            const dotColor = isAvail
+              ? "rgba(255,255,255,0.25)"
+              : isFeatured || isSpotlight || isPremier
+              ? TEAL
+              : CATEGORY_DOT[p.category];
+            const r = isSpotlight ? 8 : isFeatured || isPremier ? 7 : 5;
+            // Persistent label: featured / premier / spotlight always show name (desktop only)
+            const showPersistentLabel = !isMobile && !isAvail && (isFeatured || isSpotlight || isPremier);
+            // Above pin if north side, below if south
+            const labelY = p.side === "n" ? y - (isFeatured || isSpotlight ? 16 : 13) : y + (isFeatured || isSpotlight ? 22 : 18);
             return (
               <g
                 key={p.id}
                 style={{ cursor: "pointer" }}
                 onMouseEnter={() => setHovered(p.id)}
                 onMouseLeave={() => setHovered(null)}
+                onClick={() => {
+                  setSelectedId(p.id);
+                  track("corridor_pin_click", {
+                    pin_id: p.id, pin_name: p.name, category: p.category,
+                    status: p.status, tier, neighborhood: neighborhoodSlug, town: townSlug,
+                  });
+                }}
               >
                 {/* connector tick from street to parcel */}
                 <line
@@ -409,50 +428,71 @@ const CorridorStreetMap = ({
                   strokeWidth="0.8"
                   strokeDasharray={isAvail ? "2 3" : undefined}
                 />
-                {isFeatured && (
-                  <circle cx={x} cy={y} r={22} fill="url(#pinGlow)" />
+                {(isFeatured || isSpotlight) && (
+                  <circle cx={x} cy={y} r={isSpotlight ? 28 : 22} fill="url(#pinGlow)" />
                 )}
+                {/* generous click target */}
+                <circle cx={x} cy={y} r={14} fill="transparent" />
                 <circle
-                  cx={x} cy={y} r={r + (isHov ? 2 : 0)}
+                  cx={x} cy={y} r={r + (isHov || isSel ? 2 : 0)}
                   fill={dotColor}
                   stroke={isAvail ? "rgba(255,255,255,0.4)" : "rgba(11,15,25,0.9)"}
                   strokeWidth={isAvail ? 1 : 1.5}
                   style={{ transition: "all 180ms ease",
-                    filter: isFeatured ? "drop-shadow(0 0 6px rgba(94,234,212,0.9))" : undefined }}
+                    filter: isFeatured || isSpotlight ? "drop-shadow(0 0 6px rgba(94,234,212,0.9))" : undefined }}
                 />
+                {/* Persistent label for premium tiers */}
+                {showPersistentLabel && (
+                  <text
+                    x={x}
+                    y={labelY}
+                    textAnchor="middle"
+                    fontSize={isSpotlight ? 11 : 10}
+                    fontWeight={600}
+                    fill="rgba(255,255,255,0.95)"
+                    style={{
+                      paintOrder: "stroke",
+                      stroke: "rgba(7,10,18,0.9)",
+                      strokeWidth: 3,
+                      strokeLinejoin: "round",
+                      letterSpacing: "0.02em",
+                      pointerEvents: "none",
+                    }}
+                  >
+                    {p.name}
+                  </text>
+                )}
               </g>
             );
           })}
         </svg>
 
-        {/* Hover business card */}
-        {hov && (
-          <div className="absolute left-4 right-4 md:left-6 md:right-auto md:max-w-xs bottom-4 rounded-2xl border border-white/[0.10] bg-[#0B0F19]/95 backdrop-blur p-4 shadow-2xl">
-            <p className="text-[10px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
-              {hov.category}
-              {hov.status === "featured" && " · Featured"}
-              {hov.status === "available" && " · Available"}
-            </p>
-            {hov.status === "available" ? (
-              <>
-                <p className="mt-1.5 text-sm font-semibold text-white">This spot is being prepared.</p>
-                <p className="mt-1 text-xs text-white/65 font-light">Is this your business?</p>
-                <Link
-                  to={claimHref}
-                  onClick={() => track("neighborhood_claim_spot_click", { neighborhood: neighborhoodSlug, town: townSlug, source_location: "corridor_available_pin", category: hov.category })}
-                  className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#5eead4] text-[#0B0F19] px-3 py-1.5 text-[11px] font-semibold hover:brightness-105 transition"
-                >
-                  <Plus className="w-3 h-3" /> Claim This Spot
-                </Link>
-              </>
-            ) : (
-              <>
-                <p className="mt-1.5 text-sm font-semibold text-white">{hov.name}</p>
-                {hov.blurb && <p className="mt-1.5 text-xs text-white/65 font-light">{hov.blurb}</p>}
-              </>
-            )}
+        {/* Hover label pill (for non-featured pins, shows on hover only) */}
+        {hov && !selected && !(hov.status === "featured" || hov.tier === "spotlight" || hov.tier === "premier") && (
+          <div
+            className="absolute pointer-events-none rounded-full border border-white/15 bg-[#0B0F19]/95 backdrop-blur px-3 py-1.5 text-[11px] font-medium text-white/90 shadow-xl whitespace-nowrap animate-fade-in"
+            style={{
+              left: `${(60 + (hov.t / 100) * 880) / 1000 * 100}%`,
+              top: hov.side === "n" ? "32%" : "70%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            {hov.status === "available" ? "Available · Claim This Spot" : hov.name}
           </div>
         )}
+
+        {/* Premium business preview card — click-driven */}
+        {selected && (
+          <BusinessPreviewCard
+            pin={selected}
+            corridorName={corridorName}
+            claimHref={claimHref}
+            neighborhoodSlug={neighborhoodSlug}
+            townSlug={townSlug}
+            onClose={() => setSelectedId(null)}
+          />
+        )}
+
 
         {/* Floating map action pill */}
         <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
