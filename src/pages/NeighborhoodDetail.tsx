@@ -80,11 +80,15 @@ const NeighborhoodDetail = () => {
         <title>{title}</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={url} />
+        {(n.status ?? "building") !== "live" && (
+          <meta name="robots" content="noindex,follow" />
+        )}
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={url} />
         <meta property="og:type" content="website" />
       </Helmet>
+
 
       <MainHeader />
 
