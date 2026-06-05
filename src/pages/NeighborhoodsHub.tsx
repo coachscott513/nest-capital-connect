@@ -8,7 +8,10 @@ import {
   COUNTIES,
   getAllNeighborhoods,
   getNeighborhoodsByCounty,
+  sortByStatus,
+  statusMeta,
   type MicroNeighborhood,
+  type NeighborhoodStatus,
 } from "@/data/neighborhoods";
 
 const TEAL = "#5eead4";
@@ -22,23 +25,32 @@ function track(event: string, payload: Record<string, unknown> = {}) {
   } catch { /* noop */ }
 }
 
+type StatusFilter = "all" | NeighborhoodStatus;
+
 const NeighborhoodsHub = () => {
   const [params, setParams] = useSearchParams();
   const countyParam = params.get("county") ?? "all";
+  const statusParam = (params.get("status") as StatusFilter) ?? "all";
   const [county, setCounty] = useState(countyParam);
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>(statusParam);
 
   useEffect(() => {
     setCounty(countyParam);
   }, [countyParam]);
 
   useEffect(() => {
-    track("neighborhood_hub_view", { county });
-  }, [county]);
+    setStatusFilter(statusParam);
+  }, [statusParam]);
+
+  useEffect(() => {
+    track("neighborhood_hub_view", { county, status: statusFilter });
+  }, [county, statusFilter]);
 
   const list: MicroNeighborhood[] = useMemo(() => {
-    if (county === "all") return getAllNeighborhoods();
-    return getNeighborhoodsByCounty(county);
-  }, [county]);
+    const base = county === "all" ? getAllNeighborhoods() : getNeighborhoodsByCounty(county);
+    const filtered = statusFilter === "all" ? base : base.filter((n) => (n.status ?? "building") === statusFilter);
+    return sortByStatus(filtered);
+  }, [county, statusFilter]);
 
   const setCountyFilter = (slug: string) => {
     setCounty(slug);
@@ -47,6 +59,15 @@ const NeighborhoodsHub = () => {
     else next.set("county", slug);
     setParams(next, { replace: true });
   };
+
+  const setStatus = (s: StatusFilter) => {
+    setStatusFilter(s);
+    const next = new URLSearchParams(params);
+    if (s === "all") next.delete("status");
+    else next.set("status", s);
+    setParams(next, { replace: true });
+  };
+
 
   const title = "Capital District Neighborhood Explorer | Capital District Nest";
   const description =
