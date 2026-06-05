@@ -20,6 +20,8 @@ export type CorridorCategory =
 
 export interface CorridorPin {
   id: string;
+  /** optional URL slug for /biz/[slug] — falls back to id */
+  slug?: string;
   name: string;
   category: Exclude<CorridorCategory, "all">;
   /** position along corridor 0–100 */
@@ -42,7 +44,13 @@ export interface CorridorPin {
   email?: string;
   specials?: string;
   partnerLabel?: string; // e.g. "Lark Street Partner"
+  /** event-specific (when category === "events") */
+  eventDate?: string;
+  eventTime?: string;
+  venue?: string;
+  eventUrl?: string;
 }
+
 
 export interface CrossStreet {
   /** position along corridor 0–100 */
