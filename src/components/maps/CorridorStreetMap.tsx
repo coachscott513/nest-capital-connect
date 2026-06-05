@@ -35,12 +35,27 @@ export interface CrossStreet {
 interface Props {
   corridorName: string;            // e.g. "Lark Street"
   cityName: string;                // e.g. "Albany"
+  townSlug?: string;               // e.g. "albany" — for analytics
+  neighborhoodSlug?: string;       // e.g. "lark-street" — for analytics
   crossStreets: CrossStreet[];     // intersections
   pins: CorridorPin[];             // business locations
   claimHref: string;
   exploreHref: string;
+  claimFeaturedHref?: string;
+  submitEventHref?: string;
   className?: string;
 }
+
+const CATEGORY_NOUN: Record<Exclude<CorridorCategory, "all">, string> = {
+  dining: "dining",
+  taverns: "tavern or bar",
+  coffee: "coffee shop or café",
+  retail: "retail",
+  wellness: "wellness",
+  services: "service",
+  events: "event",
+};
+
 
 const CATEGORY_FILTERS: { key: CorridorCategory; label: string }[] = [
   { key: "all", label: "All" },
@@ -82,12 +97,17 @@ function track(event: string, payload: Record<string, unknown> = {}) {
 const CorridorStreetMap = ({
   corridorName,
   cityName,
+  townSlug,
+  neighborhoodSlug,
   crossStreets,
   pins,
   claimHref,
   exploreHref,
+  claimFeaturedHref,
+  submitEventHref,
   className = "",
 }: Props) => {
+
   const [filter, setFilter] = useState<CorridorCategory>("all");
   const [hovered, setHovered] = useState<string | null>(null);
 
