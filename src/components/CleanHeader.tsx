@@ -22,6 +22,7 @@ const navModes: NavMode[] = [
   { label: "Homes", mobileLabel: "Search Homes", href: "/homes", matchPaths: ["/homes"] },
   { label: "Businesses", mobileLabel: "Search Businesses", href: "/local", matchPaths: ["/local"] },
   { label: "Towns", mobileLabel: "Explore Towns", href: "/communities", matchPaths: ["/communities", "/living-in"] },
+  { label: "Neighborhoods", mobileLabel: "Neighborhood Explorer", href: "/neighborhoods", matchPaths: ["/neighborhoods"] },
   { label: "Events", mobileLabel: "Local Events", href: "/weekly", matchPaths: ["/weekly"] },
   { label: "Finances", mobileLabel: "Finances Hub", href: "/finances", matchPaths: ["/finances", "/analyze", "/invest", "/financial-console"] },
   { label: "For Local Businesses", mobileLabel: "Advertise With Us", href: "/pricing", matchPaths: ["/pricing"] },
