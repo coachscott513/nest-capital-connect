@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
+import NeighborhoodGuide from "@/components/town/NeighborhoodGuide";
 import type { LivingInTown } from "@/data/livingInTowns";
 import { getTownOverride } from "@/data/townOverrides";
 import {
