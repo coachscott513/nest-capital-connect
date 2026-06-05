@@ -17,11 +17,14 @@ import {
 } from "lucide-react";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
+import CorridorStreetMap from "@/components/maps/CorridorStreetMap";
+import { getCorridorData } from "@/data/corridors";
 import {
   findNeighborhoodBySlug,
   getAllNeighborhoods,
   type MicroNeighborhood,
 } from "@/data/neighborhoods";
+
 
 const TEAL = "#5eead4";
 
@@ -34,16 +37,8 @@ function track(event: string, payload: Record<string, unknown> = {}) {
   } catch { /* noop */ }
 }
 
-const CATEGORY_FILTERS = [
-  { key: "all", label: "All" },
-  { key: "dining", label: "Dining" },
-  { key: "taverns", label: "Taverns" },
-  { key: "coffee", label: "Coffee" },
-  { key: "retail", label: "Retail" },
-  { key: "wellness", label: "Wellness" },
-  { key: "services", label: "Services" },
-  { key: "events", label: "Events" },
-];
+
+
 
 const NeighborhoodDetail = () => {
   const { slug = "" } = useParams();
@@ -195,87 +190,15 @@ const NeighborhoodDetail = () => {
               </p>
             </div>
 
-            {/* Filter chips */}
-            <div className="flex flex-wrap gap-2 mb-10">
-              {CATEGORY_FILTERS.map((f) => (
-                <button
-                  key={f.key}
-                  onClick={() =>
-                    track("micro_neighborhood_filter_click", {
-                      town_slug: n.townSlug, neighborhood_slug: n.slug, category: f.key,
-                    })
-                  }
-                  className="px-4 py-2 rounded-full text-sm font-medium border border-white/15 bg-white/[0.04] text-white/75 hover:bg-white/10 hover:text-white transition"
-                >
-                  {f.label}
-                </button>
-              ))}
-            </div>
+            <CorridorStreetMap
+              corridorName={n.name}
+              cityName={n.townName}
+              crossStreets={getCorridorData(n.slug).crossStreets}
+              pins={getCorridorData(n.slug).pins}
+              claimHref={claim}
+              exploreHref={exploreBiz}
+            />
 
-            {/* Stylized corridor strip */}
-            <div className="relative rounded-3xl border border-white/[0.08] bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-8 md:p-12 overflow-hidden">
-              <div
-                className="absolute inset-0 pointer-events-none opacity-[0.06]"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
-                  backgroundSize: "32px 32px",
-                }}
-                aria-hidden
-              />
-              {/* Corridor line */}
-              <div className="relative h-44 md:h-56 flex items-center">
-                <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-px bg-gradient-to-r from-transparent via-[#5eead4]/40 to-transparent" />
-                {[18, 38, 58, 78].map((x, i) => (
-                  <div
-                    key={i}
-                    className="absolute -translate-x-1/2"
-                    style={{ left: `${x}%`, top: "50%" }}
-                  >
-                    <span className="relative flex items-center justify-center -translate-y-1/2">
-                      <span className="absolute inline-flex h-10 w-10 rounded-full bg-[#5eead4]/20 animate-ping opacity-60" />
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-[#5eead4] shadow-[0_0_18px_rgba(94,234,212,0.8)]" />
-                    </span>
-                  </div>
-                ))}
-                {/* Block labels */}
-                {["West Block", "Center", "Park Block", "East Block"].map((label, i) => (
-                  <div
-                    key={label}
-                    className="absolute -translate-x-1/2 text-[10px] tracking-[0.18em] uppercase text-white/55"
-                    style={{ left: `${[18, 38, 58, 78][i]}%`, top: "calc(50% + 28px)" }}
-                  >
-                    {label}
-                  </div>
-                ))}
-              </div>
-
-              <div className="relative mt-8 rounded-2xl border border-white/[0.08] bg-[#0B0F19]/60 p-6 text-center">
-                <p className="text-sm text-white/65 font-light">
-                  Interactive {n.name} business pins go live as local businesses claim their spot.
-                </p>
-                <div className="mt-4 flex flex-wrap justify-center gap-3">
-                  <Link
-                    to={claim}
-                    onClick={() =>
-                      track("micro_neighborhood_claim_click", {
-                        town_slug: n.townSlug, neighborhood_slug: n.slug,
-                        source_page: "detail_corridor", destination_url: claim,
-                      })
-                    }
-                    className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-5 py-2.5 text-sm font-semibold hover:bg-[#5eead4] transition"
-                  >
-                    <Plus className="w-4 h-4" /> Claim Your Spot
-                  </Link>
-                  <Link
-                    to={exploreBiz}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-5 py-2.5 text-sm font-semibold hover:bg-white/10 transition"
-                  >
-                    Open Directory <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 
