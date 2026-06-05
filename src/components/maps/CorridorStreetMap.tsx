@@ -1,8 +1,9 @@
+import * as React from "react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight, Plus, Sparkles, X, Phone, Globe, Navigation, Mail,
-  Instagram, Facebook, CalendarDays, Clock, MapPin,
+  Instagram, Facebook, CalendarDays, Clock, MapPin, ChevronDown,
 } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -898,6 +899,8 @@ const CorridorStreetMap = ({
             pin={selected}
             corridorName={corridorName}
             claimHref={claimHref}
+            exploreHref={exploreHref}
+            submitEventHref={submitEventHref}
             neighborhoodSlug={neighborhoodSlug}
             townSlug={townSlug}
             onClose={() => setSelectedId(null)}
