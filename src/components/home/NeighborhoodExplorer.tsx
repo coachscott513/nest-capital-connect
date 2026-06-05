@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, MapPin, Compass, Sparkles } from "lucide-react";
 import { COUNTIES, getFeaturedNeighborhoods } from "@/data/neighborhoods";
+import RegionalDiscoveryMap from "@/components/maps/RegionalDiscoveryMap";
 
 const TEAL = "#5eead4";
 
@@ -14,20 +14,11 @@ function track(event: string, payload: Record<string, unknown> = {}) {
   } catch { /* noop */ }
 }
 
-// Approximate positional layout for each county on a stylized
-// Capital District map. Values are 0–100 in both axes.
-const COUNTY_POS: Record<string, { x: number; y: number }> = {
-  warren:     { x: 58, y: 12 },
-  saratoga:   { x: 50, y: 32 },
-  schenectady:{ x: 28, y: 50 },
-  rensselaer: { x: 72, y: 58 },
-  albany:     { x: 42, y: 70 },
-};
 
 const FEATURED = getFeaturedNeighborhoods();
 
 const NeighborhoodExplorer = () => {
-  const [hovered, setHovered] = useState<string | null>(null);
+
 
   return (
     <section
