@@ -68,6 +68,8 @@ import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 import DelmarIntelligence from "./pages/DelmarIntelligence";
 import LivingInTown from "./pages/LivingInTown";
 import MicroNeighborhood from "./pages/MicroNeighborhood";
+import NeighborhoodsHub from "./pages/NeighborhoodsHub";
+import NeighborhoodDetail from "./pages/NeighborhoodDetail";
 import DynamicTownIntelligence from "./pages/DynamicTownIntelligence";
 import NiskayunaIntelligence from "./pages/NiskayunaIntelligence";
 import VoorheesvilleIntelligence from "./pages/VoorheesvilleIntelligence";
@@ -307,6 +309,9 @@ const App = () => {
           <Route path="/living-in/:townSlug/:neighborhoodSlug" element={<MicroNeighborhood />} />
           <Route path="/app/living-in/:townSlug" element={<LivingInTown />} />
           <Route path="/towns/:slug" element={<TownPulse />} />
+          {/* Neighborhood Explorer — canonical hub + micro-district pages */}
+          <Route path="/neighborhoods" element={<NeighborhoodsHub />} />
+          <Route path="/neighborhoods/:slug" element={<NeighborhoodDetail />} />
           {/* Simplified canonical destinations from main nav */}
           <Route path="/homes" element={<HomesPage />} />
           <Route path="/real-estate" element={<RealEstateHub />} />

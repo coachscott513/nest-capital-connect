@@ -11,6 +11,7 @@ import FloatingOmniSearch from "@/components/home/FloatingOmniSearch";
 import CategoryFeatureGrid from "@/components/home/CategoryFeatureGrid";
 import EndlessEntertainment from "@/components/home/EndlessEntertainment";
 import WellnessRail from "@/components/home/WellnessRail";
+import NeighborhoodExplorer from "@/components/home/NeighborhoodExplorer";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -692,6 +693,9 @@ const Index = () => {
 
       {/* HERO 1 — Search anything local */}
       <CinematicHero />
+
+      {/* NEIGHBORHOOD EXPLORER — signature local discovery feature */}
+      <NeighborhoodExplorer />
 
       {/* CATEGORY DISCOVERY — Apple-style 2x3 premium tile grid */}
       <CategoryFeatureGrid />
