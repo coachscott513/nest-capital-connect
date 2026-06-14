@@ -176,6 +176,77 @@ async function fetchDynamic(): Promise<Entry[]> {
     console.warn("sitemap: business fetch failed", e);
   }
 
+  // Property board town pages (/homes/listings/:townSlug) — one per distinct town with listings.
+  try {
+    const { data: townRows } = await sb
+      .from("property_listings")
+      .select("town_slug")
+      .neq("status", "archived")
+      .not("town_slug", "is", null)
+      .limit(10000);
+    const townCounts = new Map<string, number>();
+    (townRows || []).forEach((r: any) => {
+      const slug = (r.town_slug || "").trim().toLowerCase();
+      if (isExcluded(slug)) return;
+      townCounts.set(slug, (townCounts.get(slug) || 0) + 1);
+    });
+    Array.from(townCounts.entries()).forEach(([slug, count]) => {
+      if (count < 3) return; // skip thin town boards
+      out.push({
+        path: `/homes/listings/${slug}`,
+        changefreq: "weekly",
+        priority: "0.75",
+      });
+    });
+  } catch (e) {
+    console.warn("sitemap: property town fetch failed", e);
+  }
+
+  // Approved property link previews (only indexable rows with public URL).
+  try {
+    const { data: approved } = await sb
+      .from("property_listings")
+      .select("town_slug, address_slug, updated_at")
+      .eq("status", "approved")
+      .eq("is_indexable", true)
+      .not("public_listing_url", "is", null)
+      .limit(5000);
+    (approved || []).forEach((r: any) => {
+      const t = (r.town_slug || "").trim().toLowerCase();
+      const a = (r.address_slug || "").trim().toLowerCase();
+      if (isExcluded(t) || isExcluded(a)) return;
+      out.push({
+        path: `/homes/listings/${t}/${a}`,
+        changefreq: "weekly",
+        priority: "0.55",
+        lastmod: (r.updated_at || today).slice(0, 10),
+      });
+    });
+  } catch (e) {
+    console.warn("sitemap: approved listings fetch failed", e);
+  }
+
+  // Claimed listing agents.
+  try {
+    const { data: agents } = await sb
+      .from("listing_agents")
+      .select("slug, updated_at, claim_status, is_featured")
+      .limit(5000);
+    (agents || []).forEach((a: any) => {
+      const slug = (a.slug || "").trim().toLowerCase();
+      if (isExcluded(slug)) return;
+      if (a.claim_status !== "claimed" && !a.is_featured) return;
+      out.push({
+        path: `/homes/agents/${slug}`,
+        changefreq: "monthly",
+        priority: "0.6",
+        lastmod: (a.updated_at || today).slice(0, 10),
+      });
+    });
+  } catch (e) {
+    console.warn("sitemap: agent fetch failed", e);
+  }
+
   return out;
 }
 
