@@ -127,9 +127,8 @@ const TownListings = () => {
                           {l.beds ? `${l.beds} bed` : ""}{l.baths ? ` · ${l.baths} bath` : ""} · {l.propertyType} · Listed by <span className="text-white/85">{l.agentName}</span>, {l.brokerage}
                         </div>
                       </div>
-                      <a href={l.listingUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[#5eead4] hover:underline whitespace-nowrap inline-flex items-center gap-1">
-                        View Original Listing <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                      <ListingLinkButton url={l.listingUrl} />
+
                     </div>
                   ))}
                 </div>
@@ -143,9 +142,8 @@ const TownListings = () => {
                         {l.beds ? `${l.beds} bed` : ""}{l.baths ? ` · ${l.baths} bath` : ""} · {l.propertyType}
                       </div>
                       <div className="text-xs text-white/55 mt-2">Listed by {l.agentName} · {l.brokerage}</div>
-                      <a href={l.listingUrl} target="_blank" rel="noopener noreferrer" className="mt-4 text-sm text-[#5eead4] hover:underline inline-flex items-center gap-1">
-                        View Original Listing <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                      <div className="mt-4"><ListingLinkButton url={l.listingUrl} /></div>
+
                     </div>
                   ))}
                 </div>
