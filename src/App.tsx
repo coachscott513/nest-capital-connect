@@ -329,6 +329,7 @@ const App = () => {
           <Route path="/homes/open-houses" element={<OpenHouses />} />
           <Route path="/homes/add-listing" element={<AddListing />} />
           <Route path="/homes/partners" element={<HomesPartners />} />
+          <Route path="/homes/claim-listing" element={<ClaimListing />} />
           <Route path="/homes/mortgage" element={<HomesPartners />} />
           <Route path="/homes/insurance" element={<HomesPartners />} />
           <Route path="/homes/attorneys" element={<HomesPartners />} />
