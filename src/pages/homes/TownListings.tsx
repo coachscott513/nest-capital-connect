@@ -6,6 +6,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 import AgentBusinessCard from "@/components/homes/AgentBusinessCard";
+import AnalyzePropertyHero from "@/components/homes/AnalyzePropertyHero";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { getHomesTown } from "@/data/homesTowns";
 import { getTownBoard, uniqueBrokerages, type TownAgent } from "@/data/townPropertyBoard";
@@ -84,8 +85,15 @@ const TownListings = () => {
         </div>
       </section>
 
+      {/* INVESTMENT ANALYZER HERO — town-specific */}
+      <AnalyzePropertyHero
+        townName={town.name}
+        browseHref={`/homes/listings/${town.slug}?type=investment`}
+      />
+
       {/* 2-6. Tabs */}
       <section className="px-[5%] py-12">
+
         <div className="max-w-6xl mx-auto">
           <Tabs defaultValue="listings" className="w-full">
             <TabsList className="bg-[#1E2230] border border-white/10 flex flex-wrap h-auto p-1 gap-1">

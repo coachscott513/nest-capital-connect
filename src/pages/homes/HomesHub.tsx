@@ -16,6 +16,7 @@ import Footer from "@/components/Footer";
 import TownBoard from "@/components/homes/TownBoard";
 import HomesServicesGrid from "@/components/homes/HomesServicesGrid";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
+import AnalyzePropertyHero from "@/components/homes/AnalyzePropertyHero";
 import { HOMES_TOWNS } from "@/data/homesTowns";
 
 const MULTI_UNIT = [
@@ -81,8 +82,12 @@ const HomesHub = () => {
         </div>
       </section>
 
+      {/* INVESTMENT ANALYZER HERO */}
+      <AnalyzePropertyHero browseHref="/homes/listings?type=investment" />
+
       {/* TOWN LISTING BOARD */}
       <TownBoard />
+
 
       {/* NEW LISTINGS BY TOWN — preview rail */}
       <section className="px-[5%] py-20 bg-background border-t border-white/10">
