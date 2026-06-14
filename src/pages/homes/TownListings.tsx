@@ -23,6 +23,7 @@ const TownListings = () => {
   const { townSlug } = useParams<{ townSlug: string }>();
   const town = getHomesTown(townSlug);
   const board = useMemo(() => getTownBoard(townSlug), [townSlug]);
+  const preview = usePreviewListings(townSlug);
   const [view, setView] = useState<"list" | "grid">("list");
   const [popupAgent, setPopupAgent] = useState<TownAgent | null>(null);
 
