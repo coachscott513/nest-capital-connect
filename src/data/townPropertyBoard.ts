@@ -10,6 +10,7 @@ export type PropertyLink = {
   beds?: number;
   baths?: number;
   sqft?: number;
+  units?: number;
   propertyType: string; // Single Family, Condo, Multi-Family, Land, Rental
   agentName: string;
   brokerage: string;
