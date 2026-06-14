@@ -94,7 +94,7 @@ const AgentBusinessCard = ({ agent, townName, townSlug, open, onOpenChange }: Pr
               )}
               {agent.website && (
                 <a href={agent.website} target="_blank" rel="noopener noreferrer" className="btn-secondary-apple-dark inline-flex items-center gap-2">
-                  View Listing Links <ExternalLink className="w-4 h-4" />
+                  Visit Website <ExternalLink className="w-4 h-4" />
                 </a>
               )}
             </div>

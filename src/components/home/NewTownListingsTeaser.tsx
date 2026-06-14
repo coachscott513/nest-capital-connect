@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ExternalLink, Home, Plus } from "lucide-react";
-import { REMAX_SEARCH_URL } from "@/data/homesTowns";
+import { ArrowRight, Home, Plus } from "lucide-react";
 
 const NewTownListingsTeaser = () => {
   return (
@@ -21,29 +20,22 @@ const NewTownListingsTeaser = () => {
                 <Home className="w-3.5 h-3.5" /> NEW TOWN LISTINGS
               </div>
               <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
-                Homes, rentals, and property links by town.
+                Property links by town.
               </h2>
               <p className="body-apple-dark mb-6 max-w-xl">
-                Browse new listings, rentals, open houses, and active listing
-                agents across the Capital District.
+                Capital District Nest organizes local property links, listing
+                agents, brokerages, rentals, and open houses by town. Direct
+                links to the listing source.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link to="/homes" className="btn-primary-apple inline-flex items-center gap-2">
                   Explore Homes <ArrowRight className="w-4 h-4" />
                 </Link>
-                <a
-                  href={REMAX_SEARCH_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary-apple-dark inline-flex items-center gap-2"
-                >
-                  Search MLS <ExternalLink className="w-4 h-4" />
-                </a>
                 <Link
                   to="/homes/add-listing"
                   className="btn-secondary-apple-dark inline-flex items-center gap-2"
                 >
-                  <Plus className="w-4 h-4" /> Post Listing Link
+                  <Plus className="w-4 h-4" /> Submit Listing Link
                 </Link>
               </div>
             </div>
