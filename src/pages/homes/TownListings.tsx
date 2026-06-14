@@ -71,10 +71,10 @@ const TownListings = () => {
 
           {/* Stat row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-            <StatBlock label="Active property links" value={board.listings.length} />
-            <StatBlock label="Listing agents" value={board.agents.length} />
+            <StatBlock label="Property link previews" value={preview.all.length || board.listings.length} />
+            <StatBlock label="Listing agents" value={preview.agentCount || board.agents.length} />
             <StatBlock label="Brokerages" value={brokerageCount} />
-            <StatBlock label="Status" value={board.updatedAt || "Updated during launch"} small />
+            <StatBlock label="Status" value="Property links updated during launch" small />
           </div>
 
           <div className="flex flex-wrap gap-3">
