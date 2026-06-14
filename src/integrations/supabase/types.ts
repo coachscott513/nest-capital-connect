@@ -721,6 +721,159 @@ export type Database = {
         }
         Relationships: []
       }
+      listing_agents: {
+        Row: {
+          active_count: number
+          brokerage_name: string | null
+          brokerage_slug: string | null
+          claim_status: string
+          created_at: string
+          email: string | null
+          id: string
+          is_featured: boolean
+          name: string
+          phone: string | null
+          photo_url: string | null
+          slug: string
+          social_facebook: string | null
+          social_instagram: string | null
+          social_linkedin: string | null
+          towns: string[] | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          active_count?: number
+          brokerage_name?: string | null
+          brokerage_slug?: string | null
+          claim_status?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_featured?: boolean
+          name: string
+          phone?: string | null
+          photo_url?: string | null
+          slug: string
+          social_facebook?: string | null
+          social_instagram?: string | null
+          social_linkedin?: string | null
+          towns?: string[] | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          active_count?: number
+          brokerage_name?: string | null
+          brokerage_slug?: string | null
+          claim_status?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          is_featured?: boolean
+          name?: string
+          phone?: string | null
+          photo_url?: string | null
+          slug?: string
+          social_facebook?: string | null
+          social_instagram?: string | null
+          social_linkedin?: string | null
+          towns?: string[] | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      listing_brokerages: {
+        Row: {
+          active_count: number
+          agent_count: number
+          claim_status: string
+          created_at: string
+          id: string
+          is_featured: boolean
+          name: string
+          office_email: string | null
+          office_phone: string | null
+          office_website: string | null
+          slug: string
+          towns: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          active_count?: number
+          agent_count?: number
+          claim_status?: string
+          created_at?: string
+          id?: string
+          is_featured?: boolean
+          name: string
+          office_email?: string | null
+          office_phone?: string | null
+          office_website?: string | null
+          slug: string
+          towns?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          active_count?: number
+          agent_count?: number
+          claim_status?: string
+          created_at?: string
+          id?: string
+          is_featured?: boolean
+          name?: string
+          office_email?: string | null
+          office_phone?: string | null
+          office_website?: string | null
+          slug?: string
+          towns?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      listing_claims: {
+        Row: {
+          agent_slug: string | null
+          claimant_email: string
+          claimant_name: string
+          claimant_phone: string
+          created_at: string
+          id: string
+          message: string | null
+          mls_number: string | null
+          requested_public_url: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          agent_slug?: string | null
+          claimant_email: string
+          claimant_name: string
+          claimant_phone: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          mls_number?: string | null
+          requested_public_url?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          agent_slug?: string | null
+          claimant_email?: string
+          claimant_name?: string
+          claimant_phone?: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          mls_number?: string | null
+          requested_public_url?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       listings: {
         Row: {
           agency: string | null
@@ -1133,6 +1286,120 @@ export type Database = {
           updated_at?: string
           year_built?: number | null
           zip?: string | null
+        }
+        Relationships: []
+      }
+      property_listings: {
+        Row: {
+          acres: number | null
+          address: string
+          address_slug: string
+          agent_email: string | null
+          agent_name: string | null
+          agent_phone: string | null
+          agent_slug: string | null
+          agent_website: string | null
+          baths: number | null
+          beds: number | null
+          brokerage_name: string | null
+          brokerage_slug: string | null
+          city: string | null
+          claim_status: string
+          county: string | null
+          created_at: string
+          days_on_market: number | null
+          id: string
+          is_featured: boolean
+          is_indexable: boolean
+          listing_contract_date: string | null
+          mls_number: string
+          needs_agent_public_url: boolean
+          price: number | null
+          property_category: string | null
+          property_subtype: string | null
+          public_listing_url: string | null
+          raw: Json | null
+          school_district: string | null
+          source_type: string
+          sqft: number | null
+          status: string
+          town_slug: string | null
+          updated_at: string
+          year_built: number | null
+        }
+        Insert: {
+          acres?: number | null
+          address: string
+          address_slug: string
+          agent_email?: string | null
+          agent_name?: string | null
+          agent_phone?: string | null
+          agent_slug?: string | null
+          agent_website?: string | null
+          baths?: number | null
+          beds?: number | null
+          brokerage_name?: string | null
+          brokerage_slug?: string | null
+          city?: string | null
+          claim_status?: string
+          county?: string | null
+          created_at?: string
+          days_on_market?: number | null
+          id?: string
+          is_featured?: boolean
+          is_indexable?: boolean
+          listing_contract_date?: string | null
+          mls_number: string
+          needs_agent_public_url?: boolean
+          price?: number | null
+          property_category?: string | null
+          property_subtype?: string | null
+          public_listing_url?: string | null
+          raw?: Json | null
+          school_district?: string | null
+          source_type?: string
+          sqft?: number | null
+          status?: string
+          town_slug?: string | null
+          updated_at?: string
+          year_built?: number | null
+        }
+        Update: {
+          acres?: number | null
+          address?: string
+          address_slug?: string
+          agent_email?: string | null
+          agent_name?: string | null
+          agent_phone?: string | null
+          agent_slug?: string | null
+          agent_website?: string | null
+          baths?: number | null
+          beds?: number | null
+          brokerage_name?: string | null
+          brokerage_slug?: string | null
+          city?: string | null
+          claim_status?: string
+          county?: string | null
+          created_at?: string
+          days_on_market?: number | null
+          id?: string
+          is_featured?: boolean
+          is_indexable?: boolean
+          listing_contract_date?: string | null
+          mls_number?: string
+          needs_agent_public_url?: boolean
+          price?: number | null
+          property_category?: string | null
+          property_subtype?: string | null
+          public_listing_url?: string | null
+          raw?: Json | null
+          school_district?: string | null
+          source_type?: string
+          sqft?: number | null
+          status?: string
+          town_slug?: string | null
+          updated_at?: string
+          year_built?: number | null
         }
         Relationships: []
       }
