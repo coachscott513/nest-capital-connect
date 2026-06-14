@@ -15,11 +15,11 @@ const FloatingLiveAgent = () => {
       <AnalystCard>
         <button
           aria-label="Open Local Concierge"
-          className="group lift-hover flex items-center gap-2.5 pl-2 pr-5 py-2 rounded-full text-white font-semibold text-sm shadow-[0_12px_30px_-8px_rgba(0,0,0,0.35)] hover:shadow-[0_20px_44px_-8px_rgba(0,0,0,0.55)]"
+          className="group flex items-center gap-2.5 pl-2 pr-5 py-2 rounded-full text-white font-semibold text-sm shadow-[0_12px_30px_-8px_rgba(0,0,0,0.35)] transition-all duration-300 hover:shadow-[0_20px_44px_-8px_rgba(94,234,212,0.35)] hover:scale-[1.03]"
           style={{ backgroundColor: CHARCOAL }}
         >
           <span
-            className="relative w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110"
+            className="relative w-8 h-8 rounded-full flex items-center justify-center"
             style={{ backgroundColor: TEAL }}
           >
             <Phone className="w-4 h-4" />
@@ -28,10 +28,7 @@ const FloatingLiveAgent = () => {
               style={{ boxShadow: `0 0 0 2px ${CHARCOAL}` }}
             />
           </span>
-          <span className="transition-all duration-300 max-w-0 overflow-hidden opacity-0 group-hover:max-w-[180px] group-hover:opacity-100 group-hover:ml-0 whitespace-nowrap">
-            Contact Capital District Nest
-          </span>
-          <span className="group-hover:hidden">Local Concierge</span>
+          <span className="whitespace-nowrap">Local Concierge</span>
         </button>
       </AnalystCard>
     </div>

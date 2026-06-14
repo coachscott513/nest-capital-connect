@@ -148,7 +148,7 @@ const DELMAR: TownPropertyBoard = {
 };
 
 const ALBANY: TownPropertyBoard = {
-  updatedAt: "Live MLS feed · updated daily · agent public URLs pending",
+  updatedAt: "Property links updated during launch · Agent public links being added",
   listings: [
     { id: "202614666", price: 79000, address: "450 Hudson Avenue", beds: 4, baths: 2.0, sqft: 1200, units: 1, propertyType: "Single Family", agentName: "Eileen Buonome", brokerage: "Coldwell Banker Prime Properties", agentId: "eileen-buonome", listingUrl: "", listedAt: "2026-04-08" },
     { id: "202614535", price: 225000, address: "26 Link Street", beds: 3, baths: 1.0, sqft: 1134, units: 1, propertyType: "Single Family", agentName: "June Bartlett", brokerage: "Howard Hanna Capital Inc", agentId: "june-bartlett", listingUrl: "", listedAt: "2026-04-07" },
