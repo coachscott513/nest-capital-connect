@@ -21,6 +21,7 @@ import AddListing from "./pages/homes/AddListing";
 import HomesRentals from "./pages/homes/HomesRentals";
 import OpenHouses from "./pages/homes/OpenHouses";
 import HomesPartners from "./pages/homes/HomesPartners";
+import ClaimListing from "./pages/homes/ClaimListing";
 import RealEstateHub from "./pages/RealEstateHub";
 import Restaurants from "./pages/Restaurants";
 import HomeServices from "./pages/HomeServices";
