@@ -101,26 +101,26 @@ const EMPTY_BOARD: TownPropertyBoard = {
 const DELMAR: TownPropertyBoard = {
   updatedAt: "Updated daily",
   listings: [
-    { id: "d1", price: 449000, address: "616 Kenwood Avenue", beds: 4, baths: 2, sqft: 2100, propertyType: "Single Family", agentName: "Scott Alvarez", brokerage: "RE/MAX Solutions", agentId: "scott-alvarez", listingUrl: "" },
-    { id: "d2", price: 389000, address: "42 Lavery Drive", beds: 3, baths: 2, propertyType: "Single Family", agentName: "Scott Alvarez", brokerage: "RE/MAX Solutions", agentId: "scott-alvarez", listingUrl: "" },
+    { id: "d1", price: 449000, address: "616 Kenwood Avenue", beds: 4, baths: 2, sqft: 2100, propertyType: "Single Family", agentName: "Listing Agent", brokerage: "Brokerage Pending", listingUrl: "" },
+    { id: "d2", price: 389000, address: "42 Lavery Drive", beds: 3, baths: 2, propertyType: "Single Family", agentName: "Listing Agent", brokerage: "Brokerage Pending", listingUrl: "" },
     { id: "d3", price: 525000, address: "137A Elsmere Avenue", beds: 4, baths: 3, sqft: 2450, propertyType: "Single Family", agentName: "Jane Patel", brokerage: "Berkshire Hathaway HomeServices", listingUrl: "" },
     { id: "d4", price: 299000, address: "88 Adams Street", beds: 3, baths: 1, propertyType: "Single Family", agentName: "Mark Russo", brokerage: "Howard Hanna", listingUrl: "" },
     { id: "d5", price: 615000, address: "21 Salisbury Road", beds: 5, baths: 3, sqft: 3100, propertyType: "Single Family", agentName: "Linda Chen", brokerage: "Coldwell Banker Prime", listingUrl: "" },
     { id: "d6", price: 259000, address: "14 Murray Avenue", beds: 2, baths: 1, propertyType: "Condo", agentName: "Mark Russo", brokerage: "Howard Hanna", listingUrl: "" },
     { id: "d7", price: 749000, address: "9 Tamarack Lane", beds: 5, baths: 4, sqft: 3800, propertyType: "Single Family", agentName: "Linda Chen", brokerage: "Coldwell Banker Prime", listingUrl: "" },
     { id: "d8", price: 339000, address: "57 Fernbank Avenue", beds: 3, baths: 2, propertyType: "Single Family", agentName: "Jane Patel", brokerage: "Berkshire Hathaway HomeServices", listingUrl: "" },
-    { id: "d9", price: 199000, address: "104 Delaware Avenue #3", beds: 2, baths: 1, propertyType: "Condo", agentName: "Scott Alvarez", brokerage: "RE/MAX Solutions", agentId: "scott-alvarez", listingUrl: "" },
+    { id: "d9", price: 199000, address: "104 Delaware Avenue #3", beds: 2, baths: 1, propertyType: "Condo", agentName: "Listing Agent", brokerage: "Brokerage Pending", listingUrl: "" },
     { id: "d10", price: 469000, address: "33 Wellington Drive", beds: 4, baths: 2, propertyType: "Single Family", agentName: "Mark Russo", brokerage: "Howard Hanna", listingUrl: "" },
     { id: "d11", price: 875000, address: "5 Orchard Lane", beds: 5, baths: 4, sqft: 4200, propertyType: "Single Family", agentName: "Linda Chen", brokerage: "Coldwell Banker Prime", listingUrl: "" },
     { id: "d12", price: 359000, address: "212 Cherry Avenue", beds: 3, baths: 2, propertyType: "Single Family", agentName: "Jane Patel", brokerage: "Berkshire Hathaway HomeServices", listingUrl: "" },
   ],
   rentals: [
-    { id: "dr1", price: 2200, address: "18 Hudson Avenue", beds: 2, baths: 1, propertyType: "Apartment", agentName: "Scott Alvarez", brokerage: "RE/MAX Solutions", listingUrl: "" },
+    { id: "dr1", price: 2200, address: "18 Hudson Avenue", beds: 2, baths: 1, propertyType: "Apartment", agentName: "Listing Agent", brokerage: "Brokerage Pending", listingUrl: "" },
     { id: "dr2", price: 2750, address: "44 Salisbury Road", beds: 3, baths: 2, propertyType: "Single Family", agentName: "Jane Patel", brokerage: "Berkshire Hathaway HomeServices", listingUrl: "" },
     { id: "dr3", price: 1850, address: "104 Delaware Avenue #5", beds: 1, baths: 1, propertyType: "Condo", agentName: "Mark Russo", brokerage: "Howard Hanna", listingUrl: "" },
   ],
   openHouses: [
-    { id: "doh1", address: "616 Kenwood Avenue", price: 449000, date: "Sun, 1–3pm", agentName: "Scott Alvarez", brokerage: "RE/MAX Solutions", listingUrl: "" },
+    { id: "doh1", address: "616 Kenwood Avenue", price: 449000, date: "Sun, 1–3pm", agentName: "Listing Agent", brokerage: "Brokerage Pending", listingUrl: "" },
     { id: "doh2", address: "21 Salisbury Road", price: 615000, date: "Sat, 12–2pm", agentName: "Linda Chen", brokerage: "Coldwell Banker Prime", listingUrl: "" },
   ],
   agents: [
@@ -145,12 +145,12 @@ const DELMAR: TownPropertyBoard = {
     { id: "linda-chen", name: "Linda Chen", brokerage: "Coldwell Banker Prime", activeCount: 3, soldLast12: 11 },
   ],
   sold: [
-    { id: "s1", address: "28 Adams Place", soldPrice: 412000, soldDate: "2026-05-20", agentName: "Scott Alvarez", brokerage: "RE/MAX Solutions", side: "list" },
-    { id: "s2", address: "71 Fernbank Avenue", soldPrice: 355000, soldDate: "2026-05-08", agentName: "Scott Alvarez", brokerage: "RE/MAX Solutions", side: "list" },
+    { id: "s1", address: "28 Adams Place", soldPrice: 412000, soldDate: "2026-05-20", agentName: "Listing Agent", brokerage: "Brokerage Pending", side: "list" },
+    { id: "s2", address: "71 Fernbank Avenue", soldPrice: 355000, soldDate: "2026-05-08", agentName: "Listing Agent", brokerage: "Brokerage Pending", side: "list" },
     { id: "s3", address: "9 Berkshire Boulevard", soldPrice: 489000, soldDate: "2026-04-22", agentName: "Linda Chen", brokerage: "Coldwell Banker Prime", side: "list" },
     { id: "s4", address: "55 Murray Avenue", soldPrice: 325000, soldDate: "2026-04-11", agentName: "Mark Russo", brokerage: "Howard Hanna", side: "list" },
     { id: "s5", address: "12 Orchard Lane", soldPrice: 705000, soldDate: "2026-03-28", agentName: "Jane Patel", brokerage: "Berkshire Hathaway HomeServices", side: "list" },
-    { id: "s6", address: "118 Delaware Avenue", soldPrice: 268000, soldDate: "2026-03-15", agentName: "Scott Alvarez", brokerage: "RE/MAX Solutions", side: "list" },
+    { id: "s6", address: "118 Delaware Avenue", soldPrice: 268000, soldDate: "2026-03-15", agentName: "Listing Agent", brokerage: "Brokerage Pending", side: "list" },
   ],
   services: [
     { category: "Mortgage Lender", name: "Local Lenders in Delmar", href: "/local?category=mortgage&town=delmar" },
