@@ -1,53 +1,83 @@
-This is a 10-section system-wide overhaul. Before I write thousands of lines, I want to confirm scope and sequencing so we don't waste a build cycle. Here's the proposed execution plan.
+# Capital District Nest Homes — Real Estate Hub
 
-## Phase 1 — Town Template Restructure (`TownPageTemplate.tsx`)
+This is a big scope, so I'm proposing a 3‑phase build. Phase 1 ships the visible product (hub + town pages + agent cards + submission form) using mocked/curated data. Phases 2–3 add the database, agent monetization, and analytics.
 
-Apply to all `/living-in/:slug` routes (Delmar, Saratoga, Troy, Albany, Clifton Park, Schenectady, and any others).
+## Phase 1 — Visible product (ship this first)
 
-1. **Hero copy** — Replace "Tree-lined streets…" / "What it feels like…" with `Discover {Town}.` + one-line subhead.
-2. **Discover Bento Grid** — 4–6 asymmetric modules per town: Morning Routine, Neighborhoods, Community, Schools, Local Businesses, Market Snapshot. Pulls from existing `townOverrides` data (dining, culture, ribbon stats) — no new DB.
-3. **"This Week in {Town}"** — Replace "What it feels like to live here." Reuses `weeklyFeed.ts` filtered by town tag; modules: farmers markets, town events, school events, library, business openings, market movement.
-4. **"Why People Move to {Town}"** — Keep concept, convert paragraph → 6–8 scannable bullet rows.
-5. **"Local Sports & Community"** — Delete fake scores. Replace with YMCA/youth programs/rec/gyms/school athletics + "Submit Your Team or Program" CTA → opens lead modal.
-6. **"Local Buyer Resources"** (renamed from Make the Numbers Work) — 3 columns: Buying a Home / Property & Ownership / Investing. Each is a link list to existing routes (`/first-time-buyer-guide`, `/grants`, `/financing`, `/investment-analyzer`, etc.).
-7. **CTA wiring** — Every primary CTA (Connect with Specialist, Talk to Scott, Ask About This Town, Explore Homes) opens the global Live Agent (`AnalystCard` modal).
+### Homepage teaser
+Add a "New Town Listings" hero card section on `Index.tsx` (dark, premium, single section, does NOT compete with Neighborhood Explorer):
+- Eyebrow: NEW TOWN LISTINGS
+- Headline: Homes, rentals, and property links by town.
+- Sub: Browse new listings, rentals, open houses, and active listing agents across the Capital District.
+- CTAs: `Explore Homes` → `/homes` · `Search MLS` → `https://scottalvarez.remax.com/` (new tab) · `Post Listing Link` → `/homes/add-listing`
 
-## Phase 2 — Town Imagery System
+### /homes — full redesign (replace current `HomesPage.tsx`)
+Sections in this order:
+1. **Hero** — dark cinematic, eyebrow "CAPITAL DISTRICT NEST HOMES", headline, 3 CTAs (Browse Town Listings / Open Full MLS / Post Listing Link).
+2. **Town Listing Board** (`#town-listings`) — 14 town cards (Delmar, Albany, Troy, Schenectady, Saratoga Springs, Clifton Park, Colonie, Niskayuna, Guilderland, Latham, Queensbury, Lake George, Amsterdam, Gloversville). Each shows live counts when available, otherwise "Listings being added". Links to `/homes/listings/[town]`.
+3. **New Listings by Town** — town tabs + property cards. CTA `View Original Listing` opens external `listing_url` in new tab (no lead capture).
+4. **Active Listing Agents by Town** — agent cards + Apple-style popup (close X, photo, brokerage, phone, email, website, socials, active listings in town). Featured vs basic states. Upgrade CTA → `/claim-business?category=real-estate&tier=featured&town=[slug]`.
+5. **Rentals** — curated card + browse / post buttons.
+6. **Open Houses** — cards or empty state with Submit Open House CTA.
+7. **Multi‑Unit / Investment** — 4 category cards.
+8. **Local Real Estate Services** — 8 service category cards linking into `/local?category=...`.
+9. **Search MLS** — opens `https://scottalvarez.remax.com/` in new tab.
+10. **Post Listing Link CTA** — `/homes/add-listing` + featured agent upsell.
+11. **Disclaimer** — exact copy from spec.
 
-Create `src/data/townVisuals.ts` as the single source of truth: `{ slug: { hero, why, bento: {...} } }`. Backfill `townOverrides` to read from it. Reuse existing local photos in `public/assets/towns/`; generate any missing town heroes (Clifton Park, Cohoes, Watervliet, Guilderland, Colonie, Niskayuna, Rotterdam, Glenville, East Greenbush, Ballston Spa, etc.) as needed in batches via `imagegen`. Add a build-time fallback so any unmapped town renders a neutral regional photo (never NYC/Toronto).
+### New routes (registered in `App.tsx`)
+- `/homes` (rebuilt)
+- `/homes/listings` (board view)
+- `/homes/listings/:townSlug` (per‑town page — listings + agents + open houses + rentals filtered)
+- `/homes/rentals`
+- `/homes/open-houses`
+- `/homes/add-listing` (submission form)
 
-## Phase 3 — `/communities` Master Index Rebuild
+### Submission form `/homes/add-listing`
+Zod‑validated. Fields per spec, authorization checkbox required, status defaults to `pending`. Writes to `property_listings` (Phase 2) or, until the table lands, to the existing `leads` table tagged `source = "homes_listing_submission"` so launch isn't blocked. Triggers `notify-new-lead`.
 
-Full Apple dark-mode regional directory grouped by county. Add the missing counties:
+### Design
+Dark cinematic hero (token: onyx `--background`, teal `#5eead4` accent). Cards use `bg-card` + hairline border. Apple typography utilities (`.h-hero`, `.body-apple`, `.eyebrow-apple`) and existing button utilities — no ad‑hoc styles. No blue. Red reserved for CALL buttons only.
 
-- **Existing**: Albany, Saratoga, Rensselaer, Schenectady (expand town lists to match the master list)
-- **New**: Schoharie, Fulton, Montgomery
+### SEO
+Helmet per route with the exact title/description templates from spec. Canonicals self‑reference each route.
 
-Each county = card section with town rows: `name · median price · → arrow` linking to `/living-in/{slug}`. Towns without a dedicated page link to a lightweight `LivingInTown` route that renders `TownPageTemplate` with sensible defaults (no 404s). 4-col desktop / 2-col tablet / 1-col mobile accordion.
+### Language
+Strict: "Property links", "Listed by", "View Original Listing", "Contact listing agent directly". Never "our listings" / "schedule with us" / "verified" unless truly verified.
 
-## Phase 4 — Hero Search Ticker Fix
+## Phase 2 — Data layer
 
-Find ticker component, apply `w-full overflow-visible flex-nowrap whitespace-nowrap`, mobile `text-sm md:text-base`. Verify no clipping on 888px viewport.
+Two new tables (via migration, RLS + GRANTs):
 
-## Phase 5 — Global CTA Audit
+**`property_listings`** — fields per spec. RLS:
+- Public can SELECT where `status = 'approved'`.
+- Authenticated users can INSERT (status forced to `pending` via trigger).
+- Admins can UPDATE/DELETE.
 
-Sweep `TownPageTemplate` + homepage for dead-end buttons; route all major CTAs to `<AnalystCard>` trigger or `/dealdesk`.
+**`listing_agents`** — fields per spec. RLS:
+- Public SELECT where `is_verified = true`.
+- Admins manage.
 
-## Technical Notes
+Helpers in `src/lib/propertyListings.ts`: `getTownListingCounts()`, `getListingsByTown(slug)`, `getAgentsByTown(slug)`, `submitListing(payload)`.
 
-- No new DB tables. All content rides on `townOverrides.ts`, `weeklyFeed.ts`, `townVisuals.ts`.
-- Brand-locked colors preserved (teal #0d6e66, charcoal #0e0f12, dark canvas #0B0F19, gold investor-only, red call-button-only).
-- Apple typography utilities already in `index.css` (`.h-hero`, `.body-apple`, `.eyebrow-apple`, `.btn-primary-apple`, `.btn-dark-cta`) — reuse, do not invent.
-- `<Reveal>` and `<RouteFade>` already global — apply for section entrances.
-- No `react-leaflet`. No fake live data.
+Wire all Phase 1 sections to real data; keep curated fallback when counts are zero.
 
-## Sequencing Question
+## Phase 3 — Monetization + analytics
 
-This is roughly **6–10 build cycles** of work. I'd like to confirm priority before starting. My recommendation:
+- Featured agent flow integrated with existing `partner_subscriptions`.
+- Analytics events per spec via existing `track()` util: `homes_hub_view`, `town_listing_board_click`, `view_original_listing_click`, `agent_card_open`, `agent_social_click`, `agent_upgrade_click`, `post_listing_link_click`, `post_listing_submit`, `mls_search_click`. Payload includes town, listing_type, agent_id, destination_url.
 
-1. **Phase 1 first** (template restructure) — biggest visual/positioning lift, applies to all 6 live town pages at once.
-2. Then Phase 3 (/communities expansion).
-3. Then Phase 2 imagery (so the new bento has correct visuals).
-4. Phases 4 & 5 in the same final pass.
+## Technical notes
 
-If you approve, I'll start Phase 1 immediately in the next message and ship it as a single cohesive PR before moving to Phase 3.
+- Files to add: `src/pages/HomesHub.tsx` (replaces `HomesPage.tsx` usage), `src/pages/homes/TownListingBoard.tsx`, `src/pages/homes/TownListings.tsx`, `src/pages/homes/HomesRentals.tsx`, `src/pages/homes/OpenHouses.tsx`, `src/pages/homes/AddListing.tsx`, `src/components/homes/*` (HomesHero, TownBoard, TownTabs, PropertyCard, AgentCard, AgentPopup, ServicesGrid, DisclaimerBlock).
+- Files to edit: `src/App.tsx` (routes), `src/pages/Index.tsx` (New Town Listings teaser), `src/pages/HomesPage.tsx` → either replace export or redirect to new hub.
+- Existing `listings` table stays untouched; new `property_listings` is the agent‑submitted link board (different concept from MLS scrape).
+- Disclaimer block reused on `/homes` and every town page.
+
+## What I want to confirm before building
+
+1. **Scope of first PR**: I'd ship **Phase 1 only** in this turn (hub + routes + form wired to `leads` table). Phases 2–3 follow. OK?
+2. **Town list**: keep all 14 towns on the board, even where we have zero data yet (with "Listings being added")? Or trim to towns with real data?
+3. **Homepage teaser placement**: insert directly above or below the Neighborhood Explorer on `Index.tsx`?
+
+Reply with answers (or "go" to accept defaults: Phase 1 only, all 14 towns, teaser **below** Neighborhood Explorer) and I'll build it.

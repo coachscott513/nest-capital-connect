@@ -1,0 +1,34 @@
+/* Capital District Nest Homes — town board source of truth */
+
+export type HomesTown = {
+  slug: string;
+  name: string;
+  county: string;
+  blurb?: string;
+  /** RE/MAX IDX or curated source link for this town's active listings */
+  externalSearchUrl?: string;
+};
+
+export const HOMES_TOWNS: HomesTown[] = [
+  { slug: "delmar", name: "Delmar", county: "Albany County" },
+  { slug: "albany", name: "Albany", county: "Albany County" },
+  { slug: "troy", name: "Troy", county: "Rensselaer County" },
+  { slug: "schenectady", name: "Schenectady", county: "Schenectady County" },
+  { slug: "saratoga-springs", name: "Saratoga Springs", county: "Saratoga County" },
+  { slug: "clifton-park", name: "Clifton Park", county: "Saratoga County" },
+  { slug: "colonie", name: "Colonie", county: "Albany County" },
+  { slug: "niskayuna", name: "Niskayuna", county: "Schenectady County" },
+  { slug: "guilderland", name: "Guilderland", county: "Albany County" },
+  { slug: "latham", name: "Latham", county: "Albany County" },
+  { slug: "queensbury", name: "Queensbury", county: "Warren County" },
+  { slug: "lake-george", name: "Lake George", county: "Warren County" },
+  { slug: "amsterdam", name: "Amsterdam", county: "Montgomery County" },
+  { slug: "gloversville", name: "Gloversville", county: "Fulton County" },
+];
+
+export const REMAX_SEARCH_URL = "https://scottalvarez.remax.com/";
+
+export function getHomesTown(slug?: string): HomesTown | undefined {
+  if (!slug) return undefined;
+  return HOMES_TOWNS.find((t) => t.slug === slug);
+}
