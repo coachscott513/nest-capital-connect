@@ -14,7 +14,7 @@ const FloatingLiveAgent = () => {
     <div className="hidden md:block fixed bottom-6 right-6 z-[1500]">
       <AnalystCard>
         <button
-          aria-label="Open Live Agent"
+          aria-label="Open Local Concierge"
           className="group lift-hover flex items-center gap-2.5 pl-2 pr-5 py-2 rounded-full text-white font-semibold text-sm shadow-[0_12px_30px_-8px_rgba(0,0,0,0.35)] hover:shadow-[0_20px_44px_-8px_rgba(0,0,0,0.55)]"
           style={{ backgroundColor: CHARCOAL }}
         >
@@ -28,10 +28,10 @@ const FloatingLiveAgent = () => {
               style={{ boxShadow: `0 0 0 2px ${CHARCOAL}` }}
             />
           </span>
-          <span className="transition-all duration-300 max-w-0 overflow-hidden opacity-0 group-hover:max-w-[140px] group-hover:opacity-100 group-hover:ml-0 whitespace-nowrap">
-            Talk to Scott
+          <span className="transition-all duration-300 max-w-0 overflow-hidden opacity-0 group-hover:max-w-[180px] group-hover:opacity-100 group-hover:ml-0 whitespace-nowrap">
+            Contact Capital District Nest
           </span>
-          <span className="group-hover:hidden">Live Agent</span>
+          <span className="group-hover:hidden">Local Concierge</span>
         </button>
       </AnalystCard>
     </div>
