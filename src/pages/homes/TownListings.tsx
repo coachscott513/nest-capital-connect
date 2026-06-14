@@ -10,6 +10,8 @@ import AnalyzePropertyHero from "@/components/homes/AnalyzePropertyHero";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { getHomesTown } from "@/data/homesTowns";
 import { getTownBoard, uniqueBrokerages, type TownAgent } from "@/data/townPropertyBoard";
+import { usePreviewListings } from "@/hooks/usePreviewListings";
+import PreviewListingsPanel from "@/components/homes/PreviewListingsPanel";
 
 const fmtPrice = (n: number) =>
   n >= 1000 ? `$${n.toLocaleString()}` : `$${n}`;
