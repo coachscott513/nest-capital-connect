@@ -41,11 +41,21 @@ const PreviewListingsPanel = ({ townName, townSlug, listings, category }: Props)
         if (l.year_built) meta.push(`built ${l.year_built}`);
         if (l.days_on_market != null) meta.push(`${l.days_on_market} DOM`);
 
+        const detailHref =
+          l.town_slug && l.address_slug
+            ? `/homes/listings/${l.town_slug}/${l.address_slug}`
+            : null;
         return (
           <div key={l.id} className="flex flex-col sm:flex-row sm:items-center gap-3 px-5 py-4 hover:bg-white/[0.03] transition-colors">
             <div className="sm:w-28 text-lg font-semibold text-white shrink-0">{fmtPrice(l.price)}</div>
             <div className="flex-1 min-w-0">
-              <div className="text-white font-medium truncate">{l.address}</div>
+              {detailHref ? (
+                <Link to={detailHref} className="text-white font-medium truncate hover:text-[#5eead4] block">
+                  {l.address}
+                </Link>
+              ) : (
+                <div className="text-white font-medium truncate">{l.address}</div>
+              )}
               <div className="text-xs text-white/55 truncate">{meta.join(" · ")}</div>
               <div className="text-xs text-white/65 truncate mt-0.5">
                 Listed by{" "}
