@@ -21,6 +21,7 @@ import AddListing from "./pages/homes/AddListing";
 import HomesRentals from "./pages/homes/HomesRentals";
 import OpenHouses from "./pages/homes/OpenHouses";
 import HomesPartners from "./pages/homes/HomesPartners";
+import ClaimListing from "./pages/homes/ClaimListing";
 import RealEstateHub from "./pages/RealEstateHub";
 import Restaurants from "./pages/Restaurants";
 import HomeServices from "./pages/HomeServices";
@@ -328,6 +329,7 @@ const App = () => {
           <Route path="/homes/open-houses" element={<OpenHouses />} />
           <Route path="/homes/add-listing" element={<AddListing />} />
           <Route path="/homes/partners" element={<HomesPartners />} />
+          <Route path="/homes/claim-listing" element={<ClaimListing />} />
           <Route path="/homes/mortgage" element={<HomesPartners />} />
           <Route path="/homes/insurance" element={<HomesPartners />} />
           <Route path="/homes/attorneys" element={<HomesPartners />} />

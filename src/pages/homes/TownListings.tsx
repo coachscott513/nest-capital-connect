@@ -10,6 +10,8 @@ import AnalyzePropertyHero from "@/components/homes/AnalyzePropertyHero";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { getHomesTown } from "@/data/homesTowns";
 import { getTownBoard, uniqueBrokerages, type TownAgent } from "@/data/townPropertyBoard";
+import { usePreviewListings } from "@/hooks/usePreviewListings";
+import PreviewListingsPanel from "@/components/homes/PreviewListingsPanel";
 
 const fmtPrice = (n: number) =>
   n >= 1000 ? `$${n.toLocaleString()}` : `$${n}`;
@@ -21,6 +23,7 @@ const TownListings = () => {
   const { townSlug } = useParams<{ townSlug: string }>();
   const town = getHomesTown(townSlug);
   const board = useMemo(() => getTownBoard(townSlug), [townSlug]);
+  const preview = usePreviewListings(townSlug);
   const [view, setView] = useState<"list" | "grid">("list");
   const [popupAgent, setPopupAgent] = useState<TownAgent | null>(null);
 
@@ -68,10 +71,10 @@ const TownListings = () => {
 
           {/* Stat row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-            <StatBlock label="Active property links" value={board.listings.length} />
-            <StatBlock label="Listing agents" value={board.agents.length} />
+            <StatBlock label="Property link previews" value={preview.all.length || board.listings.length} />
+            <StatBlock label="Listing agents" value={preview.agentCount || board.agents.length} />
             <StatBlock label="Brokerages" value={brokerageCount} />
-            <StatBlock label="Status" value={board.updatedAt || "Updated during launch"} small />
+            <StatBlock label="Status" value="Property links updated during launch" small />
           </div>
 
           <div className="flex flex-wrap gap-3">
@@ -95,8 +98,13 @@ const TownListings = () => {
       <section className="px-[5%] py-12">
 
         <div className="max-w-6xl mx-auto">
-          <Tabs defaultValue="listings" className="w-full">
+          <Tabs defaultValue={preview.all.length > 0 ? "previews" : "listings"} className="w-full">
             <TabsList className="bg-[#1E2230] border border-white/10 flex flex-wrap h-auto p-1 gap-1">
+              {preview.all.length > 0 && (
+                <TabsTrigger value="previews" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">
+                  All Property Links ({preview.all.length})
+                </TabsTrigger>
+              )}
               <TabsTrigger value="listings" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">New Listings</TabsTrigger>
               <TabsTrigger value="rentals" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">Rentals</TabsTrigger>
               <TabsTrigger value="open" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">Open Houses</TabsTrigger>
@@ -104,6 +112,20 @@ const TownListings = () => {
               <TabsTrigger value="sold" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">Recently Sold</TabsTrigger>
               <TabsTrigger value="services" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">Local Services</TabsTrigger>
             </TabsList>
+
+            {/* Property Link Previews (DB-sourced) */}
+            {preview.all.length > 0 && (
+              <TabsContent value="previews" className="mt-6">
+                <div className="mb-4">
+                  <h2 className="text-xl font-semibold text-white">Property link previews in {town.name}</h2>
+                  <p className="text-sm text-white/55">
+                    Listing source pending · agent public links being added · contact the listing source directly for property inquiries.
+                  </p>
+                </div>
+                <PreviewSubTabs townName={town.name} townSlug={town.slug} preview={preview} />
+              </TabsContent>
+            )}
+
 
             {/* New Listings */}
             <TabsContent value="listings" className="mt-6">
@@ -397,5 +419,43 @@ const ListingLinkButton = ({ url, label = "View Original Listing" }: { url?: str
   );
 };
 
+const PreviewSubTabs = ({
+  townName, townSlug, preview,
+}: {
+  townName: string;
+  townSlug: string;
+  preview: ReturnType<typeof usePreviewListings>;
+}) => {
+  const cats = [
+    { key: "all", label: `All (${preview.all.length})`, rows: preview.all },
+    { key: "residential", label: `Residential (${preview.byCategory.residential?.length ?? 0})`, rows: preview.byCategory.residential ?? [] },
+    { key: "rental", label: `Rentals (${preview.byCategory.rental?.length ?? 0})`, rows: preview.byCategory.rental ?? [] },
+    { key: "multi_family", label: `Multi-Family / Mixed-Use (${preview.byCategory.multi_family?.length ?? 0})`, rows: preview.byCategory.multi_family ?? [] },
+    { key: "land", label: `Land (${preview.byCategory.land?.length ?? 0})`, rows: preview.byCategory.land ?? [] },
+  ].filter((c) => c.key === "all" || c.rows.length > 0);
+
+  return (
+    <Tabs defaultValue="all" className="w-full">
+      <TabsList className="bg-[#1E2230]/60 border border-white/5 flex flex-wrap h-auto p-1 gap-1 mb-4">
+        {cats.map((c) => (
+          <TabsTrigger
+            key={c.key}
+            value={c.key}
+            className="text-xs data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/65"
+          >
+            {c.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {cats.map((c) => (
+        <TabsContent key={c.key} value={c.key} className="mt-0">
+          <PreviewListingsPanel townName={townName} townSlug={townSlug} listings={c.rows} category={c.key === "all" ? undefined : c.key} />
+        </TabsContent>
+      ))}
+    </Tabs>
+  );
+};
+
 export default TownListings;
+
 
