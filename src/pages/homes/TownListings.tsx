@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 import AgentBusinessCard from "@/components/homes/AgentBusinessCard";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { getHomesTown, REMAX_SEARCH_URL } from "@/data/homesTowns";
+import { getHomesTown } from "@/data/homesTowns";
 import { getTownBoard, uniqueBrokerages, type TownAgent } from "@/data/townPropertyBoard";
 
 const fmtPrice = (n: number) =>
@@ -52,28 +52,33 @@ const TownListings = () => {
           <Link to="/homes#town-listings" className="inline-flex items-center gap-1 text-sm text-white/65 hover:text-[#5eead4] mb-6">
             <ArrowLeft className="w-4 h-4" /> All towns
           </Link>
-          <div className="eyebrow-apple text-[#5eead4] mb-3">{town.county.toUpperCase()}</div>
+          <div className="eyebrow-apple text-[#5eead4] mb-3">{town.name.toUpperCase()} PROPERTY BOARD</div>
           <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-3">
-            {town.name} Property Board
+            {town.name} Property Links
           </h1>
-          <p className="body-apple-dark max-w-2xl mb-8">
-            A simple, scannable board of {town.name} property links — listings, rentals, open houses, agents, and recent sales. Updated daily. Click through to the original listing.
+          <p className="body-apple-dark max-w-2xl mb-3">
+            Browse active property links, listing agents, brokerages, and local
+            real estate resources in {town.name}.
+          </p>
+          <p className="text-sm text-white/55 max-w-2xl mb-8">
+            Capital District Nest organizes local property links by town.
+            Contact the listing source directly for property inquiries.
           </p>
 
           {/* Stat row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
             <StatBlock label="Active property links" value={board.listings.length} />
-            <StatBlock label="Active listing agents" value={board.agents.length} />
+            <StatBlock label="Listing agents" value={board.agents.length} />
             <StatBlock label="Brokerages" value={brokerageCount} />
-            <StatBlock label="Status" value={board.updatedAt || "Listings being added"} small />
+            <StatBlock label="Status" value={board.updatedAt || "Updated during launch"} small />
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <a href={REMAX_SEARCH_URL} target="_blank" rel="noopener noreferrer" className="btn-primary-apple inline-flex items-center gap-2">
-              Search MLS for {town.name} <ExternalLink className="w-4 h-4" />
-            </a>
-            <Link to={`/homes/add-listing?town=${town.slug}`} className="btn-secondary-apple-dark inline-flex items-center gap-2">
-              <Plus className="w-4 h-4" /> Post {town.name} Listing
+            <Link to={`/homes/add-listing?town=${town.slug}`} className="btn-primary-apple inline-flex items-center gap-2">
+              <Plus className="w-4 h-4" /> Submit {town.name} Listing Link
+            </Link>
+            <Link to={`/claim-business?category=real-estate&town=${town.slug}`} className="btn-secondary-apple-dark inline-flex items-center gap-2">
+              Claim Agent Card
             </Link>
           </div>
         </div>
