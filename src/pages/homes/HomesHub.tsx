@@ -16,6 +16,7 @@ import Footer from "@/components/Footer";
 import TownBoard from "@/components/homes/TownBoard";
 import HomesServicesGrid from "@/components/homes/HomesServicesGrid";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
+import AnalyzePropertyHero from "@/components/homes/AnalyzePropertyHero";
 import { HOMES_TOWNS } from "@/data/homesTowns";
 
 const MULTI_UNIT = [
