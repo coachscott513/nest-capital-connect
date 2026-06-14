@@ -7,14 +7,15 @@ import {
 import { Phone, MessageCircle, Mail, Calendar } from 'lucide-react';
 
 /**
- * AnalystCard — Capital District Nest live concierge modal.
- * Dark premium surface, teal accents, red reserved for the Call CTA only.
+ * AnalystCard — Capital District Nest Local Concierge modal.
+ * Neutral platform identity. Dark premium surface, teal accents,
+ * red reserved strictly for the Call CTA.
  */
 
 const PHONE_NUMBER = '5185227265';
 const FORMATTED_PHONE = '(518) 522-7265';
-const EMAIL = 'scott@capitaldistrictnest.com';
-const SMS_BODY = "Hi Scott, I'd like help with a Capital District property.";
+const EMAIL = 'hello@capitaldistrictnest.com';
+const SMS_BODY = "Hi Capital District Nest, I have a question about a local listing.";
 
 const RED_CALL = '#DC1C2E';   // strict: call button only
 const TEAL = '#0d6e66';        // primary brand
@@ -32,8 +33,8 @@ interface AnalystCardProps {
 }
 
 const AnalystCard: React.FC<AnalystCardProps> = ({
-  title = "Talk to the Local Concierge",
-  description = "Scott Alvarez · Capital District Nest",
+  title = "Contact the Local Concierge",
+  description = "Capital District Nest · Local Concierge",
   children,
 }) => {
   const trigger = children ?? (
@@ -42,10 +43,10 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
     >
       <div className="flex items-center gap-4">
         <div
-          className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-base shrink-0 relative"
+          className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 relative tracking-wider"
           style={{ backgroundColor: TEAL }}
         >
-          SA
+          CDN
           <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full ring-2 ring-white" />
         </div>
         <div>
@@ -72,20 +73,19 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
         >
           <div className="flex items-start gap-4">
             <div
-              className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl shrink-0 ring-4 ring-white/10"
+              className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0 ring-4 ring-white/10 tracking-wider"
               style={{ backgroundColor: TEAL }}
             >
-              SA
+              CDN
             </div>
             <div className="leading-tight pt-1">
-              <p className="text-xl font-bold tracking-tight text-white">Scott Alvarez</p>
+              <p className="text-xl font-bold tracking-tight text-white">Capital District Nest</p>
               <p
                 className="text-[11px] font-semibold uppercase tracking-[0.14em] mt-0.5"
                 style={{ color: TEAL_BRIGHT }}
               >
-                Capital District Nest
+                Local Concierge
               </p>
-              <p className="text-sm font-medium text-white/85 mt-1">Live local concierge</p>
               <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-white/80">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 Online · usually replies in minutes
@@ -106,7 +106,7 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
               <Phone className="w-5 h-5" />
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-white">Call now</p>
+              <p className="font-semibold text-white">Call Capital District Nest</p>
               <p className="text-sm text-white/95">{FORMATTED_PHONE}</p>
             </div>
           </a>
@@ -124,7 +124,7 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
               <MessageCircle className="w-5 h-5" style={{ color: TEAL_BRIGHT }} />
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-white">Text</p>
+              <p className="font-semibold text-white">Text Us</p>
               <p className="text-sm text-white/75">Quick SMS conversation</p>
             </div>
           </a>
@@ -142,14 +142,14 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
               <Mail className="w-5 h-5" style={{ color: TEAL_BRIGHT }} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-white">Email</p>
+              <p className="font-semibold text-white">Email the Team</p>
               <p className="text-sm text-white/75 truncate">{EMAIL}</p>
             </div>
           </a>
 
           {/* Schedule */}
           <a
-            href={`mailto:${EMAIL}?subject=Schedule%20a%20consultation`}
+            href={`mailto:${EMAIL}?subject=Schedule%20a%20call%20with%20Capital%20District%20Nest`}
             className="flex items-center gap-4 p-4 rounded-2xl text-white transition hover:bg-white/[0.06]"
             style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: `1px solid ${HAIRLINE}` }}
           >
@@ -157,14 +157,14 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
               <Calendar className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-white">Schedule</p>
-              <p className="text-sm text-white/75">Book a consultation</p>
+              <p className="font-semibold text-white">Schedule a Call</p>
+              <p className="text-sm text-white/75">Pick a time that works for you</p>
             </div>
           </a>
         </div>
 
-        <p className="px-6 pb-6 text-xs text-center text-white/55">
-          Capital District Nest
+        <p className="px-6 pb-6 text-xs text-center text-white/55 leading-relaxed">
+          Capital District Nest is a local discovery, directory, and advertising platform.
         </p>
       </SheetContent>
     </Sheet>
