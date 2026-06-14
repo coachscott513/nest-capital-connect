@@ -263,7 +263,7 @@ const AddListing = () => {
                 <Input
                   value={form.brokerage}
                   onChange={(e) => onChange("brokerage", e.target.value)}
-                  placeholder="RE/MAX Solutions"
+                  placeholder="e.g. Coldwell Banker Prime Properties"
                 />
               </Field>
 
