@@ -16,7 +16,7 @@ import Footer from "@/components/Footer";
 import TownBoard from "@/components/homes/TownBoard";
 import HomesServicesGrid from "@/components/homes/HomesServicesGrid";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
-import { REMAX_SEARCH_URL, HOMES_TOWNS } from "@/data/homesTowns";
+import { HOMES_TOWNS } from "@/data/homesTowns";
 
 const MULTI_UNIT = [
   { label: "Multi-Unit Income Properties", icon: Building2, href: "/homes/listings?type=multi_unit" },
@@ -63,26 +63,19 @@ const HomesHub = () => {
             New town listings across the Capital District.
           </h1>
           <p className="body-apple-dark max-w-3xl mx-auto mb-3">
-            Browse homes, rentals, multi-units, land, open houses, and active
-            listing agents by town — with direct links to the listing source.
+            Capital District Nest organizes local property links, listing
+            agents, brokerages, rentals, open houses, and real estate services
+            by town.
           </p>
           <p className="text-sm text-white/55 mb-10">
-            Search locally. View the source. Contact the listing agent directly.
+            We organize the local market. The inquiry goes to the listing source.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="#town-listings" className="btn-primary-apple">
               Browse Town Listings <ArrowRight className="w-4 h-4" />
             </a>
-            <a
-              href={REMAX_SEARCH_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary-apple-dark inline-flex items-center gap-2"
-            >
-              Open Full MLS Search <ExternalLink className="w-4 h-4" />
-            </a>
             <Link to="/homes/add-listing" className="btn-secondary-apple-dark inline-flex items-center gap-2">
-              <Plus className="w-4 h-4" /> Post Listing Link
+              <Plus className="w-4 h-4" /> Submit Listing Link
             </Link>
           </div>
         </div>
@@ -140,23 +133,21 @@ const HomesHub = () => {
           </div>
           <div className="rounded-2xl border border-white/10 bg-[#1E2230] p-6">
             <div className="text-xs text-[#5eead4] font-semibold mb-2">
-              MLS-POWERED SEARCH
+              RENTAL LINKS BY TOWN
             </div>
             <div className="text-xl font-semibold text-white mb-2">
-              Albany Rentals Under $3k
+              Albany & Capital District Rentals
             </div>
             <p className="text-sm text-white/65 mb-4">
-              Browse active apartments, townhomes, and single-family rentals
-              across Albany and the Capital District.
+              Apartments, townhomes, and single-family rentals — submitted by
+              landlords, property managers, and listing agents.
             </p>
-            <a
-              href={REMAX_SEARCH_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/homes/rentals"
               className="btn-dark-cta inline-flex items-center gap-2"
             >
-              View Available Rentals <ExternalLink className="w-4 h-4" />
-            </a>
+              Browse Rental Links
+            </Link>
           </div>
         </div>
       </section>
@@ -213,27 +204,25 @@ const HomesHub = () => {
       {/* SERVICES */}
       <HomesServicesGrid />
 
-      {/* SEARCH MLS */}
+      {/* SUBMIT LINK CTA — replaces the legacy IDX outbound */}
       <section className="px-[5%] py-20 bg-background border-t border-white/10">
         <div className="max-w-3xl mx-auto text-center">
           <Home className="w-10 h-10 text-[#5eead4] mx-auto mb-4" />
-          <div className="eyebrow-apple text-[#5eead4] mb-3">SEARCH MLS</div>
+          <div className="eyebrow-apple text-[#5eead4] mb-3">PROPERTY LINKS</div>
           <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
-            Search the full MLS-powered home search.
+            A neutral, town-by-town board of property links.
           </h2>
           <p className="body-apple-dark mb-6">
-            Use the full broker-powered search experience for active homes,
-            rentals, land, and more.
+            Capital District Nest does not represent buyers or sellers. Listing
+            agents, brokerages, landlords, and property managers may submit
+            their preferred public listing link.
           </p>
-          <a
-            href={REMAX_SEARCH_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/homes/add-listing"
             className="btn-primary-apple inline-flex items-center gap-2"
           >
-            Open Full MLS Search <ExternalLink className="w-4 h-4" />
-          </a>
-          <div className="text-xs text-white/45 mt-3">Search opens in a new tab.</div>
+            Submit Listing Link
+          </Link>
         </div>
       </section>
 
