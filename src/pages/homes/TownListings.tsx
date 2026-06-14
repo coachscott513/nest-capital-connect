@@ -419,5 +419,43 @@ const ListingLinkButton = ({ url, label = "View Original Listing" }: { url?: str
   );
 };
 
+const PreviewSubTabs = ({
+  townName, townSlug, preview,
+}: {
+  townName: string;
+  townSlug: string;
+  preview: ReturnType<typeof usePreviewListings>;
+}) => {
+  const cats = [
+    { key: "all", label: `All (${preview.all.length})`, rows: preview.all },
+    { key: "residential", label: `Residential (${preview.byCategory.residential?.length ?? 0})`, rows: preview.byCategory.residential ?? [] },
+    { key: "rental", label: `Rentals (${preview.byCategory.rental?.length ?? 0})`, rows: preview.byCategory.rental ?? [] },
+    { key: "multi_family", label: `Multi-Family / Mixed-Use (${preview.byCategory.multi_family?.length ?? 0})`, rows: preview.byCategory.multi_family ?? [] },
+    { key: "land", label: `Land (${preview.byCategory.land?.length ?? 0})`, rows: preview.byCategory.land ?? [] },
+  ].filter((c) => c.key === "all" || c.rows.length > 0);
+
+  return (
+    <Tabs defaultValue="all" className="w-full">
+      <TabsList className="bg-[#1E2230]/60 border border-white/5 flex flex-wrap h-auto p-1 gap-1 mb-4">
+        {cats.map((c) => (
+          <TabsTrigger
+            key={c.key}
+            value={c.key}
+            className="text-xs data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/65"
+          >
+            {c.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      {cats.map((c) => (
+        <TabsContent key={c.key} value={c.key} className="mt-0">
+          <PreviewListingsPanel townName={townName} townSlug={townSlug} listings={c.rows} category={c.key === "all" ? undefined : c.key} />
+        </TabsContent>
+      ))}
+    </Tabs>
+  );
+};
+
 export default TownListings;
+
 
