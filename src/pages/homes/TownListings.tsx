@@ -366,4 +366,28 @@ const EmptyState = ({ town, action, slug, note }: { town: string; action: string
   </div>
 );
 
+/**
+ * Renders the per-listing outbound CTA. Empty URL → neutral
+ * "Listing Link Pending" state per brand-neutrality policy
+ * (no agent or brokerage IDX fallbacks).
+ */
+const ListingLinkButton = ({ url, label = "View Original Listing" }: { url?: string; label?: string }) => {
+  if (!url) {
+    return (
+      <span
+        title="This property link is being prepared. Listing agents may submit their preferred public listing link."
+        className="text-sm text-white/45 whitespace-nowrap inline-flex items-center gap-1 cursor-help"
+      >
+        Listing Link Pending
+      </span>
+    );
+  }
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" className="text-sm text-[#5eead4] hover:underline whitespace-nowrap inline-flex items-center gap-1">
+      {label} <ExternalLink className="w-3.5 h-3.5" />
+    </a>
+  );
+};
+
 export default TownListings;
+
