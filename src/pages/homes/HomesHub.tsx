@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   ArrowRight,
-  ExternalLink,
+  
   Home,
   Building2,
   Trees,
