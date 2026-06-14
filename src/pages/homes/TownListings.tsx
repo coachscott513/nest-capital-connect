@@ -98,8 +98,13 @@ const TownListings = () => {
       <section className="px-[5%] py-12">
 
         <div className="max-w-6xl mx-auto">
-          <Tabs defaultValue="listings" className="w-full">
+          <Tabs defaultValue={preview.all.length > 0 ? "previews" : "listings"} className="w-full">
             <TabsList className="bg-[#1E2230] border border-white/10 flex flex-wrap h-auto p-1 gap-1">
+              {preview.all.length > 0 && (
+                <TabsTrigger value="previews" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">
+                  All Property Links ({preview.all.length})
+                </TabsTrigger>
+              )}
               <TabsTrigger value="listings" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">New Listings</TabsTrigger>
               <TabsTrigger value="rentals" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">Rentals</TabsTrigger>
               <TabsTrigger value="open" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">Open Houses</TabsTrigger>
@@ -107,6 +112,20 @@ const TownListings = () => {
               <TabsTrigger value="sold" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">Recently Sold</TabsTrigger>
               <TabsTrigger value="services" className="data-[state=active]:bg-[#5eead4] data-[state=active]:text-[#0B0F19] text-white/70">Local Services</TabsTrigger>
             </TabsList>
+
+            {/* Property Link Previews (DB-sourced) */}
+            {preview.all.length > 0 && (
+              <TabsContent value="previews" className="mt-6">
+                <div className="mb-4">
+                  <h2 className="text-xl font-semibold text-white">Property link previews in {town.name}</h2>
+                  <p className="text-sm text-white/55">
+                    Listing source pending · agent public links being added · contact the listing source directly for property inquiries.
+                  </p>
+                </div>
+                <PreviewSubTabs townName={town.name} townSlug={town.slug} preview={preview} />
+              </TabsContent>
+            )}
+
 
             {/* New Listings */}
             <TabsContent value="listings" className="mt-6">
