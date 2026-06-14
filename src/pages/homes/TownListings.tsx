@@ -85,8 +85,15 @@ const TownListings = () => {
         </div>
       </section>
 
+      {/* INVESTMENT ANALYZER HERO — town-specific */}
+      <AnalyzePropertyHero
+        townName={town.name}
+        browseHref={`/homes/listings/${town.slug}?type=investment`}
+      />
+
       {/* 2-6. Tabs */}
       <section className="px-[5%] py-12">
+
         <div className="max-w-6xl mx-auto">
           <Tabs defaultValue="listings" className="w-full">
             <TabsList className="bg-[#1E2230] border border-white/10 flex flex-wrap h-auto p-1 gap-1">
