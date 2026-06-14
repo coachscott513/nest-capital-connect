@@ -6,6 +6,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 import AgentBusinessCard from "@/components/homes/AgentBusinessCard";
+import AnalyzePropertyHero from "@/components/homes/AnalyzePropertyHero";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { getHomesTown } from "@/data/homesTowns";
 import { getTownBoard, uniqueBrokerages, type TownAgent } from "@/data/townPropertyBoard";
