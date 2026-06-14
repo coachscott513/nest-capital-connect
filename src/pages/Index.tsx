@@ -12,6 +12,7 @@ import CategoryFeatureGrid from "@/components/home/CategoryFeatureGrid";
 import EndlessEntertainment from "@/components/home/EndlessEntertainment";
 import WellnessRail from "@/components/home/WellnessRail";
 import NeighborhoodExplorer from "@/components/home/NeighborhoodExplorer";
+import NewTownListingsTeaser from "@/components/home/NewTownListingsTeaser";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -716,6 +717,10 @@ const Index = () => {
 
       {/* NEIGHBORHOOD EXPLORER — signature local discovery feature */}
       <NeighborhoodExplorer />
+
+      {/* NEW TOWN LISTINGS — gateway to /homes hub */}
+      <NewTownListingsTeaser />
+
 
       {/* CATEGORY DISCOVERY — Apple-style 2x3 premium tile grid */}
       <CategoryFeatureGrid />

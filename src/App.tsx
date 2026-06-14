@@ -15,6 +15,11 @@ import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext
 import Index from "./pages/Index";
 import AdminMediaStories from "./pages/AdminMediaStories";
 import HomesPage from "./pages/HomesPage";
+import HomesHub from "./pages/homes/HomesHub";
+import TownListings from "./pages/homes/TownListings";
+import AddListing from "./pages/homes/AddListing";
+import HomesRentals from "./pages/homes/HomesRentals";
+import OpenHouses from "./pages/homes/OpenHouses";
 import RealEstateHub from "./pages/RealEstateHub";
 import Restaurants from "./pages/Restaurants";
 import HomeServices from "./pages/HomeServices";
@@ -313,7 +318,13 @@ const App = () => {
           <Route path="/neighborhoods" element={<NeighborhoodsHub />} />
           <Route path="/neighborhoods/:slug" element={<NeighborhoodDetail />} />
           {/* Simplified canonical destinations from main nav */}
-          <Route path="/homes" element={<HomesPage />} />
+          <Route path="/homes" element={<HomesHub />} />
+          <Route path="/homes/search" element={<HomesPage />} />
+          <Route path="/homes/listings" element={<HomesHub />} />
+          <Route path="/homes/listings/:townSlug" element={<TownListings />} />
+          <Route path="/homes/rentals" element={<HomesRentals />} />
+          <Route path="/homes/open-houses" element={<OpenHouses />} />
+          <Route path="/homes/add-listing" element={<AddListing />} />
           <Route path="/real-estate" element={<RealEstateHub />} />
           <Route path="/restaurants" element={<Restaurants />} />
           <Route path="/home-services" element={<HomeServices />} />
