@@ -20,6 +20,7 @@ import TownListings from "./pages/homes/TownListings";
 import AddListing from "./pages/homes/AddListing";
 import HomesRentals from "./pages/homes/HomesRentals";
 import OpenHouses from "./pages/homes/OpenHouses";
+import HomesPartners from "./pages/homes/HomesPartners";
 import RealEstateHub from "./pages/RealEstateHub";
 import Restaurants from "./pages/Restaurants";
 import HomeServices from "./pages/HomeServices";
@@ -325,6 +326,13 @@ const App = () => {
           <Route path="/homes/rentals" element={<HomesRentals />} />
           <Route path="/homes/open-houses" element={<OpenHouses />} />
           <Route path="/homes/add-listing" element={<AddListing />} />
+          <Route path="/homes/partners" element={<HomesPartners />} />
+          <Route path="/homes/mortgage" element={<HomesPartners />} />
+          <Route path="/homes/insurance" element={<HomesPartners />} />
+          <Route path="/homes/attorneys" element={<HomesPartners />} />
+          <Route path="/homes/contractors" element={<HomesPartners />} />
+          <Route path="/homes/inspectors" element={<HomesPartners />} />
+          <Route path="/homes/property-management" element={<HomesPartners />} />
           <Route path="/real-estate" element={<RealEstateHub />} />
           <Route path="/restaurants" element={<Restaurants />} />
           <Route path="/home-services" element={<HomeServices />} />
