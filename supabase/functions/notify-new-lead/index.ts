@@ -187,6 +187,23 @@ const TABLE_DESCRIPTORS: Record<string, TableDescriptor> = {
       ["Partner ID", "partner_id"],
     ],
   },
+  listing_claims: {
+    label: "Listing Claim",
+    nameKeys: ["claimant_name"],
+    emailKey: "claimant_email",
+    phoneKey: "claimant_phone",
+    identifierKeys: ["mls_number", "agent_slug"],
+    fields: [
+      ["Claimant name", "claimant_name"],
+      ["Email", "claimant_email"],
+      ["Phone", "claimant_phone"],
+      ["MLS #", "mls_number"],
+      ["Agent slug", "agent_slug"],
+      ["Requested public URL", "requested_public_url"],
+      ["Message", "message"],
+      ["Status", "status"],
+    ],
+  },
 };
 
 const pickFirst = (row: Row, keys: string[]): string | null => {
