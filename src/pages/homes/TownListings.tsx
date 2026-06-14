@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 import AgentBusinessCard from "@/components/homes/AgentBusinessCard";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { getHomesTown, REMAX_SEARCH_URL } from "@/data/homesTowns";
+import { getHomesTown } from "@/data/homesTowns";
 import { getTownBoard, uniqueBrokerages, type TownAgent } from "@/data/townPropertyBoard";
 
 const fmtPrice = (n: number) =>
@@ -52,28 +52,33 @@ const TownListings = () => {
           <Link to="/homes#town-listings" className="inline-flex items-center gap-1 text-sm text-white/65 hover:text-[#5eead4] mb-6">
             <ArrowLeft className="w-4 h-4" /> All towns
           </Link>
-          <div className="eyebrow-apple text-[#5eead4] mb-3">{town.county.toUpperCase()}</div>
+          <div className="eyebrow-apple text-[#5eead4] mb-3">{town.name.toUpperCase()} PROPERTY BOARD</div>
           <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-3">
-            {town.name} Property Board
+            {town.name} Property Links
           </h1>
-          <p className="body-apple-dark max-w-2xl mb-8">
-            A simple, scannable board of {town.name} property links — listings, rentals, open houses, agents, and recent sales. Updated daily. Click through to the original listing.
+          <p className="body-apple-dark max-w-2xl mb-3">
+            Browse active property links, listing agents, brokerages, and local
+            real estate resources in {town.name}.
+          </p>
+          <p className="text-sm text-white/55 max-w-2xl mb-8">
+            Capital District Nest organizes local property links by town.
+            Contact the listing source directly for property inquiries.
           </p>
 
           {/* Stat row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
             <StatBlock label="Active property links" value={board.listings.length} />
-            <StatBlock label="Active listing agents" value={board.agents.length} />
+            <StatBlock label="Listing agents" value={board.agents.length} />
             <StatBlock label="Brokerages" value={brokerageCount} />
-            <StatBlock label="Status" value={board.updatedAt || "Listings being added"} small />
+            <StatBlock label="Status" value={board.updatedAt || "Updated during launch"} small />
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <a href={REMAX_SEARCH_URL} target="_blank" rel="noopener noreferrer" className="btn-primary-apple inline-flex items-center gap-2">
-              Search MLS for {town.name} <ExternalLink className="w-4 h-4" />
-            </a>
-            <Link to={`/homes/add-listing?town=${town.slug}`} className="btn-secondary-apple-dark inline-flex items-center gap-2">
-              <Plus className="w-4 h-4" /> Post {town.name} Listing
+            <Link to={`/homes/add-listing?town=${town.slug}`} className="btn-primary-apple inline-flex items-center gap-2">
+              <Plus className="w-4 h-4" /> Submit {town.name} Listing Link
+            </Link>
+            <Link to={`/claim-business?category=real-estate&town=${town.slug}`} className="btn-secondary-apple-dark inline-flex items-center gap-2">
+              Claim Agent Card
             </Link>
           </div>
         </div>
@@ -122,9 +127,8 @@ const TownListings = () => {
                           {l.beds ? `${l.beds} bed` : ""}{l.baths ? ` · ${l.baths} bath` : ""} · {l.propertyType} · Listed by <span className="text-white/85">{l.agentName}</span>, {l.brokerage}
                         </div>
                       </div>
-                      <a href={l.listingUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[#5eead4] hover:underline whitespace-nowrap inline-flex items-center gap-1">
-                        View Original Listing <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                      <ListingLinkButton url={l.listingUrl} />
+
                     </div>
                   ))}
                 </div>
@@ -138,9 +142,8 @@ const TownListings = () => {
                         {l.beds ? `${l.beds} bed` : ""}{l.baths ? ` · ${l.baths} bath` : ""} · {l.propertyType}
                       </div>
                       <div className="text-xs text-white/55 mt-2">Listed by {l.agentName} · {l.brokerage}</div>
-                      <a href={l.listingUrl} target="_blank" rel="noopener noreferrer" className="mt-4 text-sm text-[#5eead4] hover:underline inline-flex items-center gap-1">
-                        View Original Listing <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                      <div className="mt-4"><ListingLinkButton url={l.listingUrl} /></div>
+
                     </div>
                   ))}
                 </div>
@@ -164,9 +167,7 @@ const TownListings = () => {
                           {r.beds ? `${r.beds} bed` : ""}{r.baths ? ` · ${r.baths} bath` : ""} · {r.propertyType} · {r.agentName}, {r.brokerage}
                         </div>
                       </div>
-                      <a href={r.listingUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[#5eead4] hover:underline whitespace-nowrap inline-flex items-center gap-1">
-                        View Rental <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                      <ListingLinkButton url={r.listingUrl} label="View Rental Link" />
                     </div>
                   ))}
                 </div>
@@ -188,9 +189,7 @@ const TownListings = () => {
                         <div className="text-white font-medium truncate">{o.address} · {fmtPrice(o.price)}</div>
                         <div className="text-sm text-white/65 truncate">Hosted by {o.agentName}, {o.brokerage}</div>
                       </div>
-                      <a href={o.listingUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[#5eead4] hover:underline whitespace-nowrap inline-flex items-center gap-1">
-                        View Listing <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                      <ListingLinkButton url={o.listingUrl} />
                     </div>
                   ))}
                 </div>
@@ -367,4 +366,28 @@ const EmptyState = ({ town, action, slug, note }: { town: string; action: string
   </div>
 );
 
+/**
+ * Renders the per-listing outbound CTA. Empty URL → neutral
+ * "Listing Link Pending" state per brand-neutrality policy
+ * (no agent or brokerage IDX fallbacks).
+ */
+const ListingLinkButton = ({ url, label = "View Original Listing" }: { url?: string; label?: string }) => {
+  if (!url) {
+    return (
+      <span
+        title="This property link is being prepared. Listing agents may submit their preferred public listing link."
+        className="text-sm text-white/45 whitespace-nowrap inline-flex items-center gap-1 cursor-help"
+      >
+        Listing Link Pending
+      </span>
+    );
+  }
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" className="text-sm text-[#5eead4] hover:underline whitespace-nowrap inline-flex items-center gap-1">
+      {label} <ExternalLink className="w-3.5 h-3.5" />
+    </a>
+  );
+};
+
 export default TownListings;
+

@@ -3,11 +3,11 @@ const HomesDisclaimer = () => (
     <div className="max-w-4xl mx-auto">
       <p className="text-xs text-white/55 leading-relaxed text-center">
         Capital District Nest is a local advertising and directory platform.
-        Property listings and property links are submitted by or attributed to
-        licensed real estate professionals, landlords, property managers,
-        owners, or authorized representatives. Capital District Nest does not
-        participate in real estate transactions. Contact the listing agent,
-        landlord, owner, or property manager directly for property inquiries.
+        Property links are submitted by or attributed to licensed real estate
+        professionals, brokerages, landlords, property managers, owners, or
+        authorized representatives. Capital District Nest does not represent
+        buyers or sellers and does not participate in real estate transactions.
+        Contact the listing source directly for property inquiries.
       </p>
     </div>
   </section>

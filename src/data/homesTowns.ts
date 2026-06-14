@@ -5,7 +5,7 @@ export type HomesTown = {
   name: string;
   county: string;
   blurb?: string;
-  /** RE/MAX IDX or curated source link for this town's active listings */
+  /** Optional public search URL for this town's active listings */
   externalSearchUrl?: string;
 };
 
@@ -26,7 +26,13 @@ export const HOMES_TOWNS: HomesTown[] = [
   { slug: "gloversville", name: "Gloversville", county: "Fulton County" },
 ];
 
-export const REMAX_SEARCH_URL = "https://scottalvarez.remax.com/";
+/**
+ * Neutral property search constant — kept for backwards-compatible imports.
+ * Public site does NOT link to any single brokerage IDX. Consumers should
+ * treat an empty string as "no outbound search link" and hide the CTA.
+ */
+export const REMAX_SEARCH_URL = "";
+export const PROPERTY_SEARCH_URL = "";
 
 export function getHomesTown(slug?: string): HomesTown | undefined {
   if (!slug) return undefined;

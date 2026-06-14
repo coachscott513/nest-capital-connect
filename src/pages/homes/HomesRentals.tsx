@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
-import { REMAX_SEARCH_URL, HOMES_TOWNS } from "@/data/homesTowns";
+import { HOMES_TOWNS } from "@/data/homesTowns";
 
 const HomesRentals = () => {
   useEffect(() => {
@@ -33,20 +33,12 @@ const HomesRentals = () => {
             Rentals across the Capital District.
           </h1>
           <p className="body-apple-dark mb-6">
-            Apartments, houses, rooms, and rental property links by town. Use
-            full MLS-powered search or post your rental link below.
+            Rental links submitted by landlords, property managers, and
+            listing agents — organized by town.
           </p>
           <div className="flex flex-wrap gap-3">
-            <a
-              href={REMAX_SEARCH_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary-apple inline-flex items-center gap-2"
-            >
-              Open Rentals Search <ExternalLink className="w-4 h-4" />
-            </a>
-            <Link to="/homes/add-listing?type=rental" className="btn-secondary-apple-dark">
-              Post Rental Link
+            <Link to="/homes/add-listing?type=rental" className="btn-primary-apple inline-flex items-center gap-2">
+              <Plus className="w-4 h-4" /> Submit Rental Link
             </Link>
           </div>
         </div>
