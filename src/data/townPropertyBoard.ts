@@ -161,8 +161,28 @@ const DELMAR: TownPropertyBoard = {
   ],
 };
 
+const ALBANY: TownPropertyBoard = {
+  updatedAt: "Updated during launch",
+  listings: [],
+  rentals: [],
+  openHouses: [],
+  agents: [],
+  sold: [],
+  services: [
+    { category: "Mortgage & Lending", name: "Albany Mortgage Lenders", href: "/local?category=mortgage&town=albany" },
+    { category: "Insurance", name: "Albany Insurance Agents", href: "/local?category=insurance&town=albany" },
+    { category: "Real Estate Attorneys", name: "Albany Closing Attorneys", href: "/local?category=attorney&town=albany" },
+    { category: "Inspectors", name: "Albany Home Inspectors", href: "/local?category=home-inspector&town=albany" },
+    { category: "Contractors", name: "Albany Contractors", href: "/local?category=contractor&town=albany" },
+    { category: "Property Management", name: "Albany Property Managers", href: "/local?category=property-management&town=albany" },
+    { category: "Appraisers", name: "Albany Appraisers", href: "/local?category=appraiser&town=albany" },
+    { category: "Moving & Storage", name: "Albany Movers & Storage", href: "/local?category=movers&town=albany" },
+  ],
+};
+
 const BOARDS: Record<string, TownPropertyBoard> = {
   delmar: DELMAR,
+  albany: ALBANY,
 };
 
 export function getTownBoard(slug?: string): TownPropertyBoard {
