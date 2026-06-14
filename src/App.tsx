@@ -409,6 +409,8 @@ const App = () => {
           
           {/* Investment Analyzer & Yield Platform */}
           <Route path="/analyzer" element={<InvestmentAnalyzer />} />
+          <Route path="/investment-analyzer" element={<InvestmentAnalyzer />} />
+          <Route path="/homes/analyze" element={<InvestmentAnalyzer />} />
           <Route path="/yield" element={<YieldHome />} />
           <Route path="/loan-types" element={<LoanTypes />} />
           <Route path="/reports" element={<Reports />} />
