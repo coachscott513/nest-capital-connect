@@ -246,10 +246,10 @@ const HomesHub = () => {
               Post Listing Link
             </Link>
             <Link
-              to="/claim-business?category=real-estate&tier=featured"
+              to="/homes/partners"
               className="btn-secondary-apple-dark"
             >
-              Request Featured Agent Card
+              View Partner Packages
             </Link>
           </div>
           <div className="text-xs text-white/55 mt-4">
