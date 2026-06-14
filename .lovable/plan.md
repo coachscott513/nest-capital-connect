@@ -1,83 +1,77 @@
-# Capital District Nest Homes — Real Estate Hub
 
-This is a big scope, so I'm proposing a 3‑phase build. Phase 1 ships the visible product (hub + town pages + agent cards + submission form) using mocked/curated data. Phases 2–3 add the database, agent monetization, and analytics.
+# Property Link Preview System — Phased Plan
 
-## Phase 1 — Visible product (ship this first)
+This is a large, multi-week build. I want to confirm scope and sequence before writing code, because doing it all in one pass would produce a brittle import and a half-finished claim workflow.
 
-### Homepage teaser
-Add a "New Town Listings" hero card section on `Index.tsx` (dark, premium, single section, does NOT compete with Neighborhood Explorer):
-- Eyebrow: NEW TOWN LISTINGS
-- Headline: Homes, rentals, and property links by town.
-- Sub: Browse new listings, rentals, open houses, and active listing agents across the Capital District.
-- CTAs: `Explore Homes` → `/homes` · `Search MLS` → `https://scottalvarez.remax.com/` (new tab) · `Post Listing Link` → `/homes/add-listing`
+## What you uploaded
+A FlexMLS PDF export with ~3,703 active records across Residential, Residential Lease, Land, and MultiFamily. Each row carries listing + listing-member contact info. PDFs are not a clean import source — I'll need to parse it server-side (text extraction + row reconstruction) and normalize fields before loading.
 
-### /homes — full redesign (replace current `HomesPage.tsx`)
-Sections in this order:
-1. **Hero** — dark cinematic, eyebrow "CAPITAL DISTRICT NEST HOMES", headline, 3 CTAs (Browse Town Listings / Open Full MLS / Post Listing Link).
-2. **Town Listing Board** (`#town-listings`) — 14 town cards (Delmar, Albany, Troy, Schenectady, Saratoga Springs, Clifton Park, Colonie, Niskayuna, Guilderland, Latham, Queensbury, Lake George, Amsterdam, Gloversville). Each shows live counts when available, otherwise "Listings being added". Links to `/homes/listings/[town]`.
-3. **New Listings by Town** — town tabs + property cards. CTA `View Original Listing` opens external `listing_url` in new tab (no lead capture).
-4. **Active Listing Agents by Town** — agent cards + Apple-style popup (close X, photo, brokerage, phone, email, website, socials, active listings in town). Featured vs basic states. Upgrade CTA → `/claim-business?category=real-estate&tier=featured&town=[slug]`.
-5. **Rentals** — curated card + browse / post buttons.
-6. **Open Houses** — cards or empty state with Submit Open House CTA.
-7. **Multi‑Unit / Investment** — 4 category cards.
-8. **Local Real Estate Services** — 8 service category cards linking into `/local?category=...`.
-9. **Search MLS** — opens `https://scottalvarez.remax.com/` in new tab.
-10. **Post Listing Link CTA** — `/homes/add-listing` + featured agent upsell.
-11. **Disclaimer** — exact copy from spec.
+## Phase 1 — Data layer (this turn, if you approve)
 
-### New routes (registered in `App.tsx`)
-- `/homes` (rebuilt)
-- `/homes/listings` (board view)
-- `/homes/listings/:townSlug` (per‑town page — listings + agents + open houses + rentals filtered)
-- `/homes/rentals`
-- `/homes/open-houses`
-- `/homes/add-listing` (submission form)
+**Migration: new `property_listings` table** (separate from legacy `properties` and current `listings` so we don't disturb Delmar/Albany curated boards).
 
-### Submission form `/homes/add-listing`
-Zod‑validated. Fields per spec, authorization checkbox required, status defaults to `pending`. Writes to `property_listings` (Phase 2) or, until the table lands, to the existing `leads` table tagged `source = "homes_listing_submission"` so launch isn't blocked. Triggers `notify-new-lead`.
+Columns:
+- `mls_number` (unique), `status` (`preview`/`approved`/`claimed`/`archived`)
+- `source_type` (`market_data_import`), `claim_status` (`unclaimed`/`pending`/`claimed`)
+- `is_featured`, `is_indexable` (default false), `needs_agent_public_url` (default true)
+- `public_listing_url` (nullable)
+- address, address_slug, city, town_slug, county, price
+- property_category (`residential`/`rental`/`multi_family`/`land`/`commercial`), property_subtype (raw MLS code)
+- beds, baths, sqft, acres, year_built, days_on_market, listing_contract_date
+- agent_name, agent_slug, agent_phone, agent_email, agent_website
+- brokerage_name, brokerage_slug, office_phone, office_email
+- timestamps, RLS: public SELECT only where `status != 'archived'`; writes service_role only.
 
-### Design
-Dark cinematic hero (token: onyx `--background`, teal `#5eead4` accent). Cards use `bg-card` + hairline border. Apple typography utilities (`.h-hero`, `.body-apple`, `.eyebrow-apple`) and existing button utilities — no ad‑hoc styles. No blue. Red reserved for CALL buttons only.
+Plus supporting tables:
+- `listing_agents` (denormalized: slug, name, brokerage, claim_status, photo_url, social links, contact prefs)
+- `listing_brokerages` (slug, name, office info, claim_status)
+- `listing_claims` (mls_number, claimant_email, requested_public_url, status, submitted_at)
 
-### SEO
-Helmet per route with the exact title/description templates from spec. Canonicals self‑reference each route.
+## Phase 2 — Import pipeline
 
-### Language
-Strict: "Property links", "Listed by", "View Original Listing", "Contact listing agent directly". Never "our listings" / "schedule with us" / "verified" unless truly verified.
+A one-shot Node script (`scripts/import-flexmls-pdf.ts`) that:
+1. Extracts text from the PDF with `pdfjs-dist`.
+2. Reconstructs rows (FlexMLS export is column-stable).
+3. Normalizes town names → `town_slug`, MLS subtypes → `property_category`.
+4. Upserts into `property_listings`, `listing_agents`, `listing_brokerages` via service role.
+5. Prints a per-town / per-category count report.
 
-## Phase 2 — Data layer
+I'll run it once, you review the counts, then we proceed.
 
-Two new tables (via migration, RLS + GRANTs):
+## Phase 3 — Public routes (after import lands cleanly)
 
-**`property_listings`** — fields per spec. RLS:
-- Public can SELECT where `status = 'approved'`.
-- Authenticated users can INSERT (status forced to `pending` via trigger).
-- Admins can UPDATE/DELETE.
+- `/homes/listings/[townSlug]` — hero, stats, tabs (All / Residential / Rentals / Multi-Family / Land / Agents / Brokerages), scannable row list. Default DB-backed; falls back to curated `townPropertyBoard.ts` for Delmar/Albany flagships.
+- `/homes/listings/[townSlug]/[addressSlug]` — preview page, `noindex` unless `status='approved'` AND `public_listing_url` set.
+- `/homes/agents/[agentSlug]` — `noindex` unless claimed/enhanced.
+- `/homes/brokerages/[brokerageSlug]` — index when content threshold met.
+- `/homes/claim-listing?mls=...` — claim form → `listing_claims` + email to Scott.
 
-**`listing_agents`** — fields per spec. RLS:
-- Public SELECT where `is_verified = true`.
-- Admins manage.
+All copy uses the neutral language you specified:
+- "Property link previews" / "Listing source pending" / "Agent public link pending" / "Claim this listing link"
+- Standard disclaimer block on every Homes/town page.
+- No "Live MLS feed", no "MLS-sourced", no Scott/RE/MAX branding.
 
-Helpers in `src/lib/propertyListings.ts`: `getTownListingCounts()`, `getListingsByTown(slug)`, `getAgentsByTown(slug)`, `submitListing(payload)`.
+## Phase 4 — SEO
 
-Wire all Phase 1 sections to real data; keep curated fallback when counts are zero.
+- Town boards: indexable, dynamic meta `"[Town] Property Links & Listing Agents | Capital District Nest"`.
+- Preview address pages + unclaimed agent pages: `<meta name="robots" content="noindex,follow">` via Helmet.
+- Sitemap generator extended to include town boards + claimed agent/brokerage pages only.
 
-## Phase 3 — Monetization + analytics
+## Phase 5 (future, not this build)
 
-- Featured agent flow integrated with existing `partner_subscriptions`.
-- Analytics events per spec via existing `track()` util: `homes_hub_view`, `town_listing_board_click`, `view_original_listing_click`, `agent_card_open`, `agent_social_click`, `agent_upgrade_click`, `post_listing_link_click`, `post_listing_submit`, `mls_search_click`. Payload includes town, listing_type, agent_id, destination_url.
+Outreach email templates, featured-card monetization, partner packages. Out of scope until Phases 1–4 ship.
 
-## Technical notes
+---
 
-- Files to add: `src/pages/HomesHub.tsx` (replaces `HomesPage.tsx` usage), `src/pages/homes/TownListingBoard.tsx`, `src/pages/homes/TownListings.tsx`, `src/pages/homes/HomesRentals.tsx`, `src/pages/homes/OpenHouses.tsx`, `src/pages/homes/AddListing.tsx`, `src/components/homes/*` (HomesHero, TownBoard, TownTabs, PropertyCard, AgentCard, AgentPopup, ServicesGrid, DisclaimerBlock).
-- Files to edit: `src/App.tsx` (routes), `src/pages/Index.tsx` (New Town Listings teaser), `src/pages/HomesPage.tsx` → either replace export or redirect to new hub.
-- Existing `listings` table stays untouched; new `property_listings` is the agent‑submitted link board (different concept from MLS scrape).
-- Disclaimer block reused on `/homes` and every town page.
+## What I need from you to start
 
-## What I want to confirm before building
+**Approve Phase 1 + Phase 2 now (schema + import script)?**
 
-1. **Scope of first PR**: I'd ship **Phase 1 only** in this turn (hub + routes + form wired to `leads` table). Phases 2–3 follow. OK?
-2. **Town list**: keep all 14 towns on the board, even where we have zero data yet (with "Listings being added")? Or trim to towns with real data?
-3. **Homepage teaser placement**: insert directly above or below the Neighborhood Explorer on `Index.tsx`?
+I will:
+1. Create the `property_listings` / `listing_agents` / `listing_brokerages` / `listing_claims` migration (you'll approve it in the migration dialog).
+2. Write and run the PDF import script.
+3. Report back the counts (e.g., "Albany: 412 residential, 87 multi-family, 14 land · 211 unique agents · 38 brokerages").
 
-Reply with answers (or "go" to accept defaults: Phase 1 only, all 14 towns, teaser **below** Neighborhood Explorer) and I'll build it.
+Then in a follow-up turn we build the public routes (Phase 3) and SEO rules (Phase 4).
+
+If you'd rather I compress this into one mega-turn, say so — but I recommend the split so you can sanity-check the imported data before it powers public pages.
