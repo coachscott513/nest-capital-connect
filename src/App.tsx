@@ -126,6 +126,7 @@ import FirstTimeBuyerJourney from "./pages/buyer-journey/FirstTimeBuyerJourney";
 import LandBuyerJourney from "./pages/buyer-journey/LandBuyerJourney";
 import FinancingJourney from "./pages/buyer-journey/FinancingJourney";
 import InvestmentAnalyzer from "./pages/InvestmentAnalyzer";
+import PropertyAnalyzer from "./pages/homes/PropertyAnalyzer";
 import YieldHome from "./pages/YieldHome";
 import LoanTypes from "./pages/LoanTypes";
 import Reports from "./pages/Reports";
@@ -417,8 +418,8 @@ const App = () => {
           
           {/* Investment Analyzer & Yield Platform */}
           <Route path="/analyzer" element={<InvestmentAnalyzer />} />
-          <Route path="/investment-analyzer" element={<InvestmentAnalyzer />} />
-          <Route path="/homes/analyze" element={<InvestmentAnalyzer />} />
+          <Route path="/investment-analyzer" element={<PropertyAnalyzer />} />
+          <Route path="/homes/analyze" element={<PropertyAnalyzer />} />
           <Route path="/yield" element={<YieldHome />} />
           <Route path="/loan-types" element={<LoanTypes />} />
           <Route path="/reports" element={<Reports />} />
