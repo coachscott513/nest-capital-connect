@@ -95,10 +95,11 @@ const PartnerInquiry = () => {
     }
     setSubmitting(true);
     const { error } = await supabase.from("leads").insert({
-      name: parsed.data.name,
+      full_name: parsed.data.name,
       email: parsed.data.email,
       phone: parsed.data.phone,
-      source: "homes_partner_inquiry",
+      type: "partner_inquiry",
+      lead_type: "homes_partner",
       message: [
         `Category: ${parsed.data.category}`,
         `Package: ${parsed.data.pkg}`,

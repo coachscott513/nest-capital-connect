@@ -21,6 +21,7 @@ import AddListing from "./pages/homes/AddListing";
 import HomesRentals from "./pages/homes/HomesRentals";
 import OpenHouses from "./pages/homes/OpenHouses";
 import HomesPartners from "./pages/homes/HomesPartners";
+import PartnerInquiry from "./pages/homes/PartnerInquiry";
 import ClaimListing from "./pages/homes/ClaimListing";
 import AgentProfile from "./pages/homes/AgentProfile";
 import ListingPreview from "./pages/homes/ListingPreview";
