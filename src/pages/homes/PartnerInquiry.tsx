@@ -140,11 +140,11 @@ const PartnerInquiry = () => {
           </Link>
           <div className="eyebrow-apple text-[#5eead4] mb-3">PARTNER INQUIRY</div>
           <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-3">
-            Request partner placement
+            Request founding partner placement.
           </h1>
           <p className="body-apple-dark">
-            Tell us your town, category, and preferred placement. We'll confirm
-            availability during the pilot.
+            Tell us your category, town, and preferred placement. Capital
+            District Nest will confirm availability during the pilot.
           </p>
         </div>
       </section>
@@ -154,10 +154,10 @@ const PartnerInquiry = () => {
           {submitted ? (
             <div className="rounded-2xl border border-[#5eead4]/30 bg-[#5eead4]/[0.06] p-8 text-center">
               <Check className="w-10 h-10 text-[#5eead4] mx-auto mb-3" />
-              <h2 className="text-2xl font-semibold text-white mb-2">Thank you.</h2>
+              <h2 className="text-2xl font-semibold text-white mb-2">Thanks — your request has been received.</h2>
               <p className="text-white/75 max-w-md mx-auto">
-                Capital District Nest will review your request and follow up
-                with next steps.
+                Capital District Nest will review the town/category availability
+                and follow up with next steps.
               </p>
               <Link to="/homes" className="btn-secondary-apple-dark inline-flex mt-6">
                 Back to Homes

@@ -149,11 +149,38 @@ const TOWN_TIERS = [
   },
 ];
 
-const CATEGORY_PRICING = [
-  { name: "Featured Category Card", price: "$25", cadence: "month" },
-  { name: "Town Service Spotlight", price: "$75", cadence: "month" },
-  { name: "Core Market Service Package", price: "$199", cadence: "month" },
-  { name: "Category Anchor Partner", price: "From $399", cadence: "month" },
+const FOUNDING_PRICING = [
+  {
+    name: "Free Profile",
+    price: "$0",
+    cadence: "",
+    blurb: "Basic directory presence.",
+  },
+  {
+    name: "Featured Card",
+    price: "$25",
+    cadence: "month",
+    blurb: "Enhanced profile with contact links, photo/logo, website, and social links.",
+  },
+  {
+    name: "Town Partner",
+    price: "From $20",
+    cadence: "month",
+    blurb: "Featured visibility inside one town page. Pricing depends on town tier.",
+    featured: true,
+  },
+  {
+    name: "Core Market Package",
+    price: "From $199",
+    cadence: "month",
+    blurb: "Visibility across Albany, Troy, Schenectady, and Saratoga Springs.",
+  },
+  {
+    name: "Category Anchor",
+    price: "From $399",
+    cadence: "month",
+    blurb: "Premium category placement for mortgage, insurance, contractors, attorneys, inspectors, or property management.",
+  },
 ];
 
 const PREMIUM_TOWNS = [
@@ -206,30 +233,61 @@ const HomesPartners = () => {
             LOCAL STARTUP · LOCAL SEARCH · COMMUNITY DISCOVERY
           </div>
           <h1 className="h-hero text-white mb-5">
-            Get featured where local decisions begin.
+            Get featured where local searches begin.
           </h1>
           <p className="body-apple-dark max-w-3xl mx-auto mb-3">
             Capital District Nest is building a local search and community
-            discovery platform for the Capital District — organized by towns,
-            neighborhoods, homes, businesses, and local services.
+            discovery platform for Capital District towns, homes, businesses,
+            and services.
           </p>
-          <p className="text-sm text-white/55 mb-3 max-w-3xl mx-auto">
-            Featured partners appear inside relevant town pages, property
-            boards, buyer tools, and local service categories.
+          <p className="text-sm text-white/65 mb-8 max-w-3xl mx-auto">
+            Founding partners can be featured inside relevant town pages,
+            property boards, buyer tools, and local service categories.
           </p>
-          <p className="text-xs text-white/45 mb-10 max-w-2xl mx-auto italic">
-            We are a local startup, not a national portal. Our goal is to build
-            a cleaner, more useful way for people to discover Capital District
-            communities — and to help local professionals show up where those
-            searches begin.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-3 mb-4">
             <Link to="/homes/partner-inquiry" className="btn-primary-apple">
               Request Partner Placement <ArrowRight className="w-4 h-4" />
             </Link>
-            <a href="#town-tiers" className="btn-secondary-apple-dark">
-              View Town Tiers
+            <a href="#pricing" className="btn-secondary-apple-dark">
+              View Pricing
             </a>
+          </div>
+          <p className="text-xs text-white/50">
+            Founding partner placements are opening by town and category during the pilot.
+          </p>
+        </div>
+      </section>
+
+      {/* ABOVE-THE-FOLD OFFER BOX */}
+      <section className="px-[5%] py-12 border-b border-white/10">
+        <div className="max-w-4xl mx-auto rounded-2xl border border-[#5eead4]/30 bg-[#5eead4]/[0.05] p-6 md:p-8">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+            <div className="flex-1">
+              <div className="eyebrow-apple text-[#5eead4] mb-2">WHAT PARTNERS GET</div>
+              <h2 className="text-xl md:text-2xl font-semibold text-white tracking-tight mb-4">
+                A featured presence inside local search.
+              </h2>
+              <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+                {[
+                  "Featured town or category placement",
+                  "Premium partner card",
+                  "Website, phone, and social links",
+                  "Monthly updates",
+                  "Local visibility inside Capital District Nest",
+                  "Pilot pricing based on town/category",
+                ].map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-sm text-white/85">
+                    <Check className="w-4 h-4 text-[#5eead4] mt-0.5 shrink-0" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="shrink-0 md:self-center">
+              <Link to="/homes/partner-inquiry" className="btn-primary-apple whitespace-nowrap">
+                Request Placement <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -390,13 +448,13 @@ const HomesPartners = () => {
       <section id="town-tiers" className="px-[5%] py-20 border-b border-white/10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <div className="eyebrow-apple text-[#5eead4] mb-3">TOWN PRICING</div>
+            <div className="eyebrow-apple text-[#5eead4] mb-3">TOWN TIERS</div>
             <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
-              Town pricing is based on market activity.
+              Not every town is priced the same.
             </h2>
             <p className="body-apple-dark max-w-2xl mx-auto">
-              Every town is different. Pricing reflects population, property
-              activity, search opportunity, local demand, and update volume.
+              Town pricing is based on population, property activity, search
+              opportunity, business density, and update volume.
             </p>
           </div>
 
@@ -464,35 +522,44 @@ const HomesPartners = () => {
         </div>
       </section>
 
-      {/* CATEGORY PARTNER PRODUCT */}
-      <section className="px-[5%] py-20 border-b border-white/10">
+      {/* FOUNDING PARTNER PRICING */}
+      <section id="pricing" className="px-[5%] py-20 border-b border-white/10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
-            <div className="eyebrow-apple text-[#5eead4] mb-3">CATEGORY PARTNERS</div>
+            <div className="eyebrow-apple text-[#5eead4] mb-3">FOUNDING PARTNER PRICING</div>
             <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
-              Category partner placements.
+              Founding partner pricing.
             </h2>
             <p className="body-apple-dark max-w-2xl mx-auto">
-              Mortgage, insurance, attorneys, contractors, inspectors, and
-              property managers can be featured inside local service categories
-              across town pages and the Homes hub — visible where local
-              property decisions are being made.
+              Pricing is based on town activity, market size, category, and
+              placement type.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {CATEGORY_PRICING.map((c) => (
-              <div key={c.name} className="rounded-2xl border border-white/10 bg-[#1E2230] p-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {FOUNDING_PRICING.map((c) => (
+              <div
+                key={c.name}
+                className={`rounded-2xl border p-5 flex flex-col ${
+                  c.featured
+                    ? "border-[#5eead4]/60 bg-[#5eead4]/[0.06]"
+                    : "border-white/10 bg-[#1E2230]"
+                }`}
+              >
                 <div className="text-sm text-white/65 mb-1">{c.name}</div>
-                <div className="flex items-baseline gap-1">
+                <div className="flex items-baseline gap-1 mb-3">
                   <span className="text-2xl font-semibold text-white">{c.price}</span>
-                  <span className="text-xs text-white/55">/ {c.cadence}</span>
+                  {c.cadence && <span className="text-xs text-white/55">/ {c.cadence}</span>}
                 </div>
+                <p className="text-xs text-white/70 leading-relaxed">{c.blurb}</p>
               </div>
             ))}
           </div>
-          <div className="text-center mt-8">
-            <Link to="/homes/partner-inquiry?category=category-partner" className="btn-secondary-apple-dark inline-flex">
-              Ask About Category Placement
+          <p className="text-xs text-white/50 text-center mt-6">
+            Founding rates are pilot rates and may change for future partners.
+          </p>
+          <div className="text-center mt-6">
+            <Link to="/homes/partner-inquiry" className="btn-primary-apple inline-flex">
+              Request Partner Placement <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -577,12 +644,13 @@ const HomesPartners = () => {
       <section className="px-[5%] pb-10">
         <div className="max-w-4xl mx-auto">
           <p className="text-[11px] text-white/45 leading-relaxed text-center">
-            Capital District Nest is a local media, directory, and advertising
-            platform. Featured partner placements are advertising products.
-            Capital District Nest does not represent buyers or sellers and does
-            not participate in real estate transactions. Real estate
-            professionals are responsible for their own licensing, advertising
-            compliance, and client relationships.
+            Capital District Nest is a local media, directory, advertising, and
+            community search platform. Featured partner placements are
+            advertising products. Capital District Nest does not represent
+            buyers or sellers and does not participate in real estate
+            transactions. Real estate professionals and service providers are
+            responsible for their own licensing, advertising compliance, and
+            client relationships.
           </p>
         </div>
       </section>
