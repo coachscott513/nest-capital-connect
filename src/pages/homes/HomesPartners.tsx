@@ -448,13 +448,13 @@ const HomesPartners = () => {
       <section id="town-tiers" className="px-[5%] py-20 border-b border-white/10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <div className="eyebrow-apple text-[#5eead4] mb-3">TOWN PRICING</div>
+            <div className="eyebrow-apple text-[#5eead4] mb-3">TOWN TIERS</div>
             <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
-              Town pricing is based on market activity.
+              Not every town is priced the same.
             </h2>
             <p className="body-apple-dark max-w-2xl mx-auto">
-              Every town is different. Pricing reflects population, property
-              activity, search opportunity, local demand, and update volume.
+              Town pricing is based on population, property activity, search
+              opportunity, business density, and update volume.
             </p>
           </div>
 
