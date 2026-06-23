@@ -473,8 +473,10 @@ const HomesPartners = () => {
               Category partner placements.
             </h2>
             <p className="body-apple-dark max-w-2xl mx-auto">
-              Professionals can also be featured inside real estate service
-              categories across town pages and the Homes hub.
+              Mortgage, insurance, attorneys, contractors, inspectors, and
+              property managers can be featured inside local service categories
+              across town pages and the Homes hub — visible where local
+              property decisions are being made.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
