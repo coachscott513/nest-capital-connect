@@ -94,21 +94,23 @@ const PartnerInquiry = () => {
       return;
     }
     setSubmitting(true);
-    const { error } = await supabase.from("leads").insert({
-      full_name: parsed.data.name,
+    const townsArray = (parsed.data.towns ?? "")
+      .split(/[,;\n]/)
+      .map((t) => t.trim())
+      .filter(Boolean);
+    const { error } = await supabase.from("partner_inquiries").insert({
+      name: parsed.data.name,
+      company: parsed.data.company || null,
       email: parsed.data.email,
       phone: parsed.data.phone,
-      type: "partner_inquiry",
-      lead_type: "homes_partner",
-      message: [
-        `Category: ${parsed.data.category}`,
-        `Package: ${parsed.data.pkg}`,
-        parsed.data.company ? `Company: ${parsed.data.company}` : null,
-        parsed.data.towns ? `Towns: ${parsed.data.towns}` : null,
-        parsed.data.website ? `Website: ${parsed.data.website}` : null,
-        parsed.data.social ? `Social: ${parsed.data.social}` : null,
-        parsed.data.notes ? `Notes: ${parsed.data.notes}` : null,
-      ].filter(Boolean).join("\n"),
+      profession_category: parsed.data.category,
+      towns_of_interest: townsArray,
+      interested_package: parsed.data.pkg,
+      website: parsed.data.website || null,
+      social_links: parsed.data.social ? { raw: parsed.data.social } : null,
+      notes: parsed.data.notes || null,
+      source_page: "/homes/partner-inquiry",
+      status: "new",
     });
     setSubmitting(false);
     if (error) {

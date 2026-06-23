@@ -835,47 +835,66 @@ export type Database = {
       listing_claims: {
         Row: {
           agent_slug: string | null
+          claimant_company: string | null
           claimant_email: string
           claimant_name: string
           claimant_phone: string
+          claimant_role: string | null
           created_at: string
           id: string
           message: string | null
           mls_number: string | null
+          preferred_listing_url: string | null
+          property_address: string | null
+          property_listing_id: string | null
           requested_public_url: string | null
           status: string
+          town_slug: string | null
           updated_at: string
         }
         Insert: {
           agent_slug?: string | null
+          claimant_company?: string | null
           claimant_email: string
           claimant_name: string
           claimant_phone: string
+          claimant_role?: string | null
           created_at?: string
           id?: string
           message?: string | null
           mls_number?: string | null
+          preferred_listing_url?: string | null
+          property_address?: string | null
+          property_listing_id?: string | null
           requested_public_url?: string | null
           status?: string
+          town_slug?: string | null
           updated_at?: string
         }
         Update: {
           agent_slug?: string | null
+          claimant_company?: string | null
           claimant_email?: string
           claimant_name?: string
           claimant_phone?: string
+          claimant_role?: string | null
           created_at?: string
           id?: string
           message?: string | null
           mls_number?: string | null
+          preferred_listing_url?: string | null
+          property_address?: string | null
+          property_listing_id?: string | null
           requested_public_url?: string | null
           status?: string
+          town_slug?: string | null
           updated_at?: string
         }
         Relationships: []
       }
       listings: {
         Row: {
+          address_slug: string | null
           agency: string | null
           annual_taxes: number | null
           bathrooms: number | null
@@ -883,6 +902,7 @@ export type Database = {
           cap_rate: number | null
           cash_flow_monthly: number | null
           city: string
+          claim_status: string | null
           county: string | null
           created_at: string
           days_on_market: number | null
@@ -891,27 +911,38 @@ export type Database = {
           full_address: string | null
           gross_rent_monthly: number | null
           id: string
+          is_featured: boolean | null
+          is_indexable: boolean | null
           is_investment: boolean | null
           list_date: string | null
           list_price: number | null
           listing_agent: string | null
+          listing_agent_email_internal: string | null
+          listing_agent_name_internal: string | null
+          listing_agent_phone_internal: string | null
+          listing_brokerage_internal: string | null
           masked_address: string | null
           mls_number: string | null
+          needs_agent_public_url: boolean | null
           noi_annual: number | null
           photo_url: string | null
           property_type: string | null
           property_type_code: string | null
+          public_listing_url: string | null
+          public_listing_url_approved: boolean | null
           remarks: string | null
           sqft: number | null
           status: string | null
           street_name: string | null
           street_number: string | null
+          town_slug: string | null
           units: number | null
           updated_at: string
           year_built: number | null
           zipcode: string | null
         }
         Insert: {
+          address_slug?: string | null
           agency?: string | null
           annual_taxes?: number | null
           bathrooms?: number | null
@@ -919,6 +950,7 @@ export type Database = {
           cap_rate?: number | null
           cash_flow_monthly?: number | null
           city: string
+          claim_status?: string | null
           county?: string | null
           created_at?: string
           days_on_market?: number | null
@@ -927,27 +959,38 @@ export type Database = {
           full_address?: string | null
           gross_rent_monthly?: number | null
           id?: string
+          is_featured?: boolean | null
+          is_indexable?: boolean | null
           is_investment?: boolean | null
           list_date?: string | null
           list_price?: number | null
           listing_agent?: string | null
+          listing_agent_email_internal?: string | null
+          listing_agent_name_internal?: string | null
+          listing_agent_phone_internal?: string | null
+          listing_brokerage_internal?: string | null
           masked_address?: string | null
           mls_number?: string | null
+          needs_agent_public_url?: boolean | null
           noi_annual?: number | null
           photo_url?: string | null
           property_type?: string | null
           property_type_code?: string | null
+          public_listing_url?: string | null
+          public_listing_url_approved?: boolean | null
           remarks?: string | null
           sqft?: number | null
           status?: string | null
           street_name?: string | null
           street_number?: string | null
+          town_slug?: string | null
           units?: number | null
           updated_at?: string
           year_built?: number | null
           zipcode?: string | null
         }
         Update: {
+          address_slug?: string | null
           agency?: string | null
           annual_taxes?: number | null
           bathrooms?: number | null
@@ -955,6 +998,7 @@ export type Database = {
           cap_rate?: number | null
           cash_flow_monthly?: number | null
           city?: string
+          claim_status?: string | null
           county?: string | null
           created_at?: string
           days_on_market?: number | null
@@ -963,21 +1007,31 @@ export type Database = {
           full_address?: string | null
           gross_rent_monthly?: number | null
           id?: string
+          is_featured?: boolean | null
+          is_indexable?: boolean | null
           is_investment?: boolean | null
           list_date?: string | null
           list_price?: number | null
           listing_agent?: string | null
+          listing_agent_email_internal?: string | null
+          listing_agent_name_internal?: string | null
+          listing_agent_phone_internal?: string | null
+          listing_brokerage_internal?: string | null
           masked_address?: string | null
           mls_number?: string | null
+          needs_agent_public_url?: boolean | null
           noi_annual?: number | null
           photo_url?: string | null
           property_type?: string | null
           property_type_code?: string | null
+          public_listing_url?: string | null
+          public_listing_url_approved?: boolean | null
           remarks?: string | null
           sqft?: number | null
           status?: string | null
           street_name?: string | null
           street_number?: string | null
+          town_slug?: string | null
           units?: number | null
           updated_at?: string
           year_built?: number | null
@@ -1132,6 +1186,135 @@ export type Database = {
         }
         Relationships: []
       }
+      partner_inquiries: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          interested_package: string | null
+          name: string
+          notes: string | null
+          phone: string
+          profession_category: string | null
+          social_links: Json | null
+          source_page: string | null
+          status: string
+          towns_of_interest: string[] | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          interested_package?: string | null
+          name: string
+          notes?: string | null
+          phone: string
+          profession_category?: string | null
+          social_links?: Json | null
+          source_page?: string | null
+          status?: string
+          towns_of_interest?: string[] | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          interested_package?: string | null
+          name?: string
+          notes?: string | null
+          phone?: string
+          profession_category?: string | null
+          social_links?: Json | null
+          source_page?: string | null
+          status?: string
+          towns_of_interest?: string[] | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      partner_placements: {
+        Row: {
+          badge_text: string | null
+          category: string | null
+          created_at: string
+          featured_position: number | null
+          founding_rate_locked: boolean | null
+          id: string
+          monthly_price: number | null
+          notes: string | null
+          partner_id: string
+          placement_type: string
+          renewal_date: string | null
+          start_date: string | null
+          status: string
+          tier: string | null
+          town_id: string | null
+          town_slug: string | null
+          updated_at: string
+        }
+        Insert: {
+          badge_text?: string | null
+          category?: string | null
+          created_at?: string
+          featured_position?: number | null
+          founding_rate_locked?: boolean | null
+          id?: string
+          monthly_price?: number | null
+          notes?: string | null
+          partner_id: string
+          placement_type?: string
+          renewal_date?: string | null
+          start_date?: string | null
+          status?: string
+          tier?: string | null
+          town_id?: string | null
+          town_slug?: string | null
+          updated_at?: string
+        }
+        Update: {
+          badge_text?: string | null
+          category?: string | null
+          created_at?: string
+          featured_position?: number | null
+          founding_rate_locked?: boolean | null
+          id?: string
+          monthly_price?: number | null
+          notes?: string | null
+          partner_id?: string
+          placement_type?: string
+          renewal_date?: string | null
+          start_date?: string | null
+          status?: string
+          tier?: string | null
+          town_id?: string | null
+          town_slug?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_placements_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "partner_placements_town_id_fkey"
+            columns: ["town_id"]
+            isOneToOne: false
+            referencedRelation: "towns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partner_referrals: {
         Row: {
           client_name: string
@@ -1213,6 +1396,90 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      partners: {
+        Row: {
+          bio: string | null
+          brokerage_or_company: string | null
+          category: string
+          company: string | null
+          created_at: string
+          email: string | null
+          id: string
+          license_or_title: string | null
+          logo_url: string | null
+          name: string
+          phone: string | null
+          preferred_contact_email: string | null
+          preferred_contact_phone: string | null
+          preferred_cta_label: string | null
+          preferred_cta_url: string | null
+          profile_photo_url: string | null
+          social_facebook: string | null
+          social_instagram: string | null
+          social_linkedin: string | null
+          social_tiktok: string | null
+          social_youtube: string | null
+          status: string
+          towns_served: string[] | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          bio?: string | null
+          brokerage_or_company?: string | null
+          category?: string
+          company?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          license_or_title?: string | null
+          logo_url?: string | null
+          name: string
+          phone?: string | null
+          preferred_contact_email?: string | null
+          preferred_contact_phone?: string | null
+          preferred_cta_label?: string | null
+          preferred_cta_url?: string | null
+          profile_photo_url?: string | null
+          social_facebook?: string | null
+          social_instagram?: string | null
+          social_linkedin?: string | null
+          social_tiktok?: string | null
+          social_youtube?: string | null
+          status?: string
+          towns_served?: string[] | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          bio?: string | null
+          brokerage_or_company?: string | null
+          category?: string
+          company?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          license_or_title?: string | null
+          logo_url?: string | null
+          name?: string
+          phone?: string | null
+          preferred_contact_email?: string | null
+          preferred_contact_phone?: string | null
+          preferred_cta_label?: string | null
+          preferred_cta_url?: string | null
+          profile_photo_url?: string | null
+          social_facebook?: string | null
+          social_instagram?: string | null
+          social_linkedin?: string | null
+          social_tiktok?: string | null
+          social_youtube?: string | null
+          status?: string
+          towns_served?: string[] | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
       }
       properties: {
         Row: {
@@ -1905,6 +2172,72 @@ export type Database = {
           target_yield?: number | null
           town_name?: string
           town_slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      towns: {
+        Row: {
+          activity_score: number | null
+          county: string | null
+          created_at: string
+          founding_price: number | null
+          future_price: number | null
+          id: string
+          is_active: boolean
+          land_count: number | null
+          multifamily_count: number | null
+          notes: string | null
+          population_estimate: number | null
+          property_count: number | null
+          region: string | null
+          rental_count: number | null
+          residential_count: number | null
+          town_name: string
+          town_slug: string
+          town_tier: string
+          updated_at: string
+        }
+        Insert: {
+          activity_score?: number | null
+          county?: string | null
+          created_at?: string
+          founding_price?: number | null
+          future_price?: number | null
+          id?: string
+          is_active?: boolean
+          land_count?: number | null
+          multifamily_count?: number | null
+          notes?: string | null
+          population_estimate?: number | null
+          property_count?: number | null
+          region?: string | null
+          rental_count?: number | null
+          residential_count?: number | null
+          town_name: string
+          town_slug: string
+          town_tier?: string
+          updated_at?: string
+        }
+        Update: {
+          activity_score?: number | null
+          county?: string | null
+          created_at?: string
+          founding_price?: number | null
+          future_price?: number | null
+          id?: string
+          is_active?: boolean
+          land_count?: number | null
+          multifamily_count?: number | null
+          notes?: string | null
+          population_estimate?: number | null
+          property_count?: number | null
+          region?: string | null
+          rental_count?: number | null
+          residential_count?: number | null
+          town_name?: string
+          town_slug?: string
+          town_tier?: string
           updated_at?: string
         }
         Relationships: []

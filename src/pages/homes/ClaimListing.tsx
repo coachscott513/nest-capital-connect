@@ -35,12 +35,14 @@ const ClaimListing = () => {
     const { error: insertError } = await supabase.from("listing_claims").insert({
       mls_number: mlsParam || null,
       agent_slug: agentParam || null,
+      town_slug: townParam || null,
       claimant_name: form.claimant_name,
       claimant_email: form.claimant_email,
       claimant_phone: form.claimant_phone,
       requested_public_url: form.requested_public_url || null,
+      preferred_listing_url: form.requested_public_url || null,
       message: form.message || null,
-      status: "pending",
+      status: "new",
     });
     setSubmitting(false);
     if (insertError) {
