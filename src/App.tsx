@@ -14,6 +14,14 @@ import GARouteTracker from "@/components/GARouteTracker";
 import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext";
 import Index from "./pages/Index";
 import AdminMediaStories from "./pages/AdminMediaStories";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminTowns from "./pages/admin/AdminTowns";
+import AdminPartners from "./pages/admin/AdminPartners";
+import AdminPartnerInquiries from "./pages/admin/AdminPartnerInquiries";
+import AdminPartnerPlacements from "./pages/admin/AdminPartnerPlacements";
+import AdminListingClaims from "./pages/admin/AdminListingClaims";
+import AdminPropertyListings from "./pages/admin/AdminPropertyListings";
+import AdminRevenue from "./pages/admin/AdminRevenue";
 import HomesPage from "./pages/HomesPage";
 import HomesHub from "./pages/homes/HomesHub";
 import TownListings from "./pages/homes/TownListings";
@@ -225,6 +233,14 @@ const App = () => {
             <RouteFade>
             <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/towns" element={<AdminTowns />} />
+          <Route path="/admin/partners" element={<AdminPartners />} />
+          <Route path="/admin/partner-inquiries" element={<AdminPartnerInquiries />} />
+          <Route path="/admin/partner-placements" element={<AdminPartnerPlacements />} />
+          <Route path="/admin/listing-claims" element={<AdminListingClaims />} />
+          <Route path="/admin/property-listings" element={<AdminPropertyListings />} />
+          <Route path="/admin/revenue" element={<AdminRevenue />} />
           <Route path="/admin/media-stories" element={<AdminMediaStories />} />
 
           <Route path="/investor-tools" element={<InvestorTools />} />
