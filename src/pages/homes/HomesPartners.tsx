@@ -19,20 +19,69 @@ import {
   ClipboardCheck,
   Banknote,
   Building,
+  Compass,
+  Users,
+  Globe2,
+  LayoutGrid,
 } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 
+const WHY_LOCAL = [
+  {
+    icon: Users,
+    title: "People search by community",
+    body: "Buyers, sellers, renters, investors, and residents do not only search for listings. They search for towns, neighborhoods, schools, services, businesses, lifestyle, and local context.",
+  },
+  {
+    icon: Globe2,
+    title: "National portals are not local enough",
+    body: "Large platforms are useful, but they are not built around the real texture of local communities. Capital District Nest is designed around the towns and neighborhoods people actually care about.",
+  },
+  {
+    icon: MapPin,
+    title: "Local professionals need local visibility",
+    body: "Agents, lenders, insurance professionals, attorneys, contractors, inspectors, and property managers should be discoverable where local decisions are happening.",
+  },
+  {
+    icon: Compass,
+    title: "Real estate is part of the community journey",
+    body: "Homes matter, but they are only one part of the local decision. Capital District Nest connects property search with town guides, local businesses, services, and community resources.",
+  },
+];
+
+const BUILDING = [
+  "Town and neighborhood discovery pages",
+  "Local business directories",
+  "Property link boards",
+  "First-time buyer and investment tools",
+  "Local service partner sections",
+  "Community guides",
+  "Local search pages organized by town",
+  "Advertising opportunities for local professionals",
+];
+
+const PARTNER_GETS = [
+  "Town-based visibility",
+  "Featured partner card",
+  "Local service category placement",
+  "Contact buttons",
+  "Website and social links",
+  "Monthly updates",
+  "Property link support when applicable",
+  "Placement inside relevant community pages",
+];
+
 const WHO = [
-  { icon: Home, label: "Real Estate Agents", value: "Become a featured town partner on a town property board." },
-  { icon: Building, label: "Brokerages", value: "Position your brokerage across multiple Capital District towns." },
+  { icon: Home, label: "Real Estate Agents", value: "Become a featured real estate partner inside a local community search platform." },
+  { icon: Building, label: "Brokerages", value: "Position your brokerage across multiple Capital District town pages." },
   { icon: Banknote, label: "Mortgage & Lending", value: "Get visibility near first-time buyer tools, affordability estimates, and town property boards." },
-  { icon: Shield, label: "Insurance", value: "Appear near buyer, landlord, investor, and closing-related property resources." },
-  { icon: Scale, label: "Real Estate Attorneys", value: "Be present on town pages where buyers and sellers are researching the market." },
-  { icon: Hammer, label: "Contractors", value: "Get discovered by homeowners, investors, landlords, and buyers evaluating properties." },
+  { icon: Shield, label: "Insurance", value: "Show up where buyers, landlords, investors, and homeowners are researching property decisions." },
+  { icon: Scale, label: "Real Estate Attorneys", value: "Appear near real estate decision points including buying, selling, investing, and closing-related resources." },
+  { icon: Hammer, label: "Contractors", value: "Be discoverable by homeowners, buyers, landlords, and investors evaluating local properties." },
   { icon: ClipboardCheck, label: "Home Inspectors", value: "Reach buyers and investors as they move from browsing to evaluation." },
-  { icon: Briefcase, label: "Property Managers", value: "Be visible to rental owners, multi-family investors, and out-of-area landlords." },
+  { icon: Briefcase, label: "Property Managers", value: "Reach landlords, investors, and rental property owners by town." },
   { icon: Search, label: "Appraisers", value: "Appear inside investment, multi-family, and valuation-related resources." },
   { icon: Truck, label: "Moving & Storage", value: "Connect with relocators and new buyers moving into the Capital District." },
 ];
