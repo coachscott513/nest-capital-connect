@@ -234,8 +234,65 @@ const HomesPartners = () => {
         </div>
       </section>
 
+      {/* BUILT LOCALLY FOR LOCAL SEARCH */}
+      <section className="px-[5%] py-20 border-b border-white/10">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="eyebrow-apple text-[#5eead4] mb-3">
+            A LOCAL SEARCH PLATFORM FOR CAPITAL DISTRICT COMMUNITIES
+          </div>
+          <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-6">
+            Built locally for local search.
+          </h2>
+          <p className="body-apple-dark mb-4">
+            Capital District Nest is a local startup focused on helping people
+            search, discover, and understand Capital District towns,
+            neighborhoods, businesses, homes, and services.
+          </p>
+          <p className="body-apple-dark mb-4">
+            Before someone chooses an agent, lender, contractor, insurance
+            provider, or local business, they usually start with a local
+            question — what is this town like, what homes are available, who
+            serves this area, what businesses are nearby, and what should I
+            know before moving, buying, selling, renting, or investing.
+          </p>
+          <p className="body-apple-dark">
+            Capital District Nest is being built to answer those questions
+            locally. This is not a brokerage website. Not a national portal.
+            Not a lead-resale machine. Not just a real estate directory.
+          </p>
+        </div>
+      </section>
+
+      {/* WHY LOCAL SEARCH MATTERS */}
+      <section className="px-[5%] py-20 border-b border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="eyebrow-apple text-[#5eead4] mb-3">WHY LOCAL SEARCH MATTERS</div>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">
+              Local decisions deserve local infrastructure.
+            </h2>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {WHY_LOCAL.map((w) => {
+              const Icon = w.icon;
+              return (
+                <div
+                  key={w.title}
+                  className="rounded-2xl border border-white/10 bg-[#1E2230] p-6 hover:border-[#5eead4]/30 transition-colors"
+                >
+                  <Icon className="w-5 h-5 text-[#5eead4] mb-3" />
+                  <div className="text-white font-semibold mb-2">{w.title}</div>
+                  <div className="text-sm text-white/65 leading-relaxed">{w.body}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* WHO THIS IS FOR */}
       <section className="px-[5%] py-20 border-b border-white/10">
+
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <div className="eyebrow-apple text-[#5eead4] mb-3">WHO THIS IS FOR</div>
