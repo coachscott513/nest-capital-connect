@@ -496,8 +496,51 @@ const HomesPartners = () => {
         </div>
       </section>
 
+      {/* WHAT WE'RE BUILDING + WHAT PARTNERS GET */}
+      <section className="px-[5%] py-20 border-b border-white/10">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-6">
+          <div className="rounded-2xl border border-white/10 bg-[#1E2230] p-8">
+            <div className="eyebrow-apple text-[#5eead4] mb-3 flex items-center gap-2">
+              <LayoutGrid className="w-3.5 h-3.5" /> WHAT WE'RE BUILDING
+            </div>
+            <h3 className="text-2xl font-semibold text-white tracking-tight mb-5">
+              What Capital District Nest is building
+            </h3>
+            <ul className="space-y-2">
+              {BUILDING.map((b) => (
+                <li key={b} className="flex items-start gap-2 text-sm text-white/80">
+                  <Check className="w-4 h-4 text-[#5eead4] mt-0.5 shrink-0" />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-2xl border border-[#5eead4]/30 bg-[#5eead4]/[0.04] p-8">
+            <div className="eyebrow-apple text-[#5eead4] mb-3 flex items-center gap-2">
+              <Crown className="w-3.5 h-3.5" /> WHAT PARTNERS GET
+            </div>
+            <h3 className="text-2xl font-semibold text-white tracking-tight mb-3">
+              What partners get
+            </h3>
+            <p className="text-sm text-white/70 mb-5">
+              Partners receive visibility inside a local search platform
+              organized around the communities they serve.
+            </p>
+            <ul className="space-y-2">
+              {PARTNER_GETS.map((p) => (
+                <li key={p} className="flex items-start gap-2 text-sm text-white/85">
+                  <Check className="w-4 h-4 text-[#5eead4] mt-0.5 shrink-0" />
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* MID CTA */}
       <section className="px-[5%] py-16 border-b border-white/10">
+
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-semibold text-white tracking-tight mb-3">
             Want to be featured in a town?
