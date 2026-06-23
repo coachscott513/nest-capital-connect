@@ -644,12 +644,13 @@ const HomesPartners = () => {
       <section className="px-[5%] pb-10">
         <div className="max-w-4xl mx-auto">
           <p className="text-[11px] text-white/45 leading-relaxed text-center">
-            Capital District Nest is a local media, directory, and advertising
-            platform. Featured partner placements are advertising products.
-            Capital District Nest does not represent buyers or sellers and does
-            not participate in real estate transactions. Real estate
-            professionals are responsible for their own licensing, advertising
-            compliance, and client relationships.
+            Capital District Nest is a local media, directory, advertising, and
+            community search platform. Featured partner placements are
+            advertising products. Capital District Nest does not represent
+            buyers or sellers and does not participate in real estate
+            transactions. Real estate professionals and service providers are
+            responsible for their own licensing, advertising compliance, and
+            client relationships.
           </p>
         </div>
       </section>
