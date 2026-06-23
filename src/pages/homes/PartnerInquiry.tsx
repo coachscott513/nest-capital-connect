@@ -140,11 +140,11 @@ const PartnerInquiry = () => {
           </Link>
           <div className="eyebrow-apple text-[#5eead4] mb-3">PARTNER INQUIRY</div>
           <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-3">
-            Request partner placement
+            Request founding partner placement.
           </h1>
           <p className="body-apple-dark">
-            Tell us your town, category, and preferred placement. We'll confirm
-            availability during the pilot.
+            Tell us your category, town, and preferred placement. Capital
+            District Nest will confirm availability during the pilot.
           </p>
         </div>
       </section>
