@@ -203,23 +203,25 @@ const HomesPartners = () => {
         />
         <div className="max-w-5xl mx-auto text-center">
           <div className="eyebrow-apple text-[#5eead4] mb-4">
-            CAPITAL DISTRICT NEST HOMES PARTNERS
+            LOCAL STARTUP · LOCAL SEARCH · COMMUNITY DISCOVERY
           </div>
           <h1 className="h-hero text-white mb-5">
-            Get featured where local property decisions begin.
+            Get featured where local decisions begin.
           </h1>
           <p className="body-apple-dark max-w-3xl mx-auto mb-3">
-            Capital District Nest Homes organizes property links, town boards,
-            buyer tools, and local real estate resources across the Capital
-            District.
+            Capital District Nest is building a local search and community
+            discovery platform for the Capital District — organized by towns,
+            neighborhoods, homes, businesses, and local services.
           </p>
           <p className="text-sm text-white/55 mb-3 max-w-3xl mx-auto">
             Featured partners appear inside relevant town pages, property
-            boards, and real estate service categories.
+            boards, buyer tools, and local service categories.
           </p>
           <p className="text-xs text-white/45 mb-10 max-w-2xl mx-auto italic">
-            This is not an MLS product. This is local visibility inside a
-            neutral property media platform.
+            We are a local startup, not a national portal. Our goal is to build
+            a cleaner, more useful way for people to discover Capital District
+            communities — and to help local professionals show up where those
+            searches begin.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link to="/homes/partner-inquiry" className="btn-primary-apple">
