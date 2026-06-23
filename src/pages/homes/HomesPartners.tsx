@@ -149,11 +149,38 @@ const TOWN_TIERS = [
   },
 ];
 
-const CATEGORY_PRICING = [
-  { name: "Featured Category Card", price: "$25", cadence: "month" },
-  { name: "Town Service Spotlight", price: "$75", cadence: "month" },
-  { name: "Core Market Service Package", price: "$199", cadence: "month" },
-  { name: "Category Anchor Partner", price: "From $399", cadence: "month" },
+const FOUNDING_PRICING = [
+  {
+    name: "Free Profile",
+    price: "$0",
+    cadence: "",
+    blurb: "Basic directory presence.",
+  },
+  {
+    name: "Featured Card",
+    price: "$25",
+    cadence: "month",
+    blurb: "Enhanced profile with contact links, photo/logo, website, and social links.",
+  },
+  {
+    name: "Town Partner",
+    price: "From $20",
+    cadence: "month",
+    blurb: "Featured visibility inside one town page. Pricing depends on town tier.",
+    featured: true,
+  },
+  {
+    name: "Core Market Package",
+    price: "From $199",
+    cadence: "month",
+    blurb: "Visibility across Albany, Troy, Schenectady, and Saratoga Springs.",
+  },
+  {
+    name: "Category Anchor",
+    price: "From $399",
+    cadence: "month",
+    blurb: "Premium category placement for mortgage, insurance, contractors, attorneys, inspectors, or property management.",
+  },
 ];
 
 const PREMIUM_TOWNS = [
