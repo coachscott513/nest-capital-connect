@@ -19,20 +19,69 @@ import {
   ClipboardCheck,
   Banknote,
   Building,
+  Compass,
+  Users,
+  Globe2,
+  LayoutGrid,
 } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 
+const WHY_LOCAL = [
+  {
+    icon: Users,
+    title: "People search by community",
+    body: "Buyers, sellers, renters, investors, and residents do not only search for listings. They search for towns, neighborhoods, schools, services, businesses, lifestyle, and local context.",
+  },
+  {
+    icon: Globe2,
+    title: "National portals are not local enough",
+    body: "Large platforms are useful, but they are not built around the real texture of local communities. Capital District Nest is designed around the towns and neighborhoods people actually care about.",
+  },
+  {
+    icon: MapPin,
+    title: "Local professionals need local visibility",
+    body: "Agents, lenders, insurance professionals, attorneys, contractors, inspectors, and property managers should be discoverable where local decisions are happening.",
+  },
+  {
+    icon: Compass,
+    title: "Real estate is part of the community journey",
+    body: "Homes matter, but they are only one part of the local decision. Capital District Nest connects property search with town guides, local businesses, services, and community resources.",
+  },
+];
+
+const BUILDING = [
+  "Town and neighborhood discovery pages",
+  "Local business directories",
+  "Property link boards",
+  "First-time buyer and investment tools",
+  "Local service partner sections",
+  "Community guides",
+  "Local search pages organized by town",
+  "Advertising opportunities for local professionals",
+];
+
+const PARTNER_GETS = [
+  "Town-based visibility",
+  "Featured partner card",
+  "Local service category placement",
+  "Contact buttons",
+  "Website and social links",
+  "Monthly updates",
+  "Property link support when applicable",
+  "Placement inside relevant community pages",
+];
+
 const WHO = [
-  { icon: Home, label: "Real Estate Agents", value: "Become a featured town partner on a town property board." },
-  { icon: Building, label: "Brokerages", value: "Position your brokerage across multiple Capital District towns." },
+  { icon: Home, label: "Real Estate Agents", value: "Become a featured real estate partner inside a local community search platform." },
+  { icon: Building, label: "Brokerages", value: "Position your brokerage across multiple Capital District town pages." },
   { icon: Banknote, label: "Mortgage & Lending", value: "Get visibility near first-time buyer tools, affordability estimates, and town property boards." },
-  { icon: Shield, label: "Insurance", value: "Appear near buyer, landlord, investor, and closing-related property resources." },
-  { icon: Scale, label: "Real Estate Attorneys", value: "Be present on town pages where buyers and sellers are researching the market." },
-  { icon: Hammer, label: "Contractors", value: "Get discovered by homeowners, investors, landlords, and buyers evaluating properties." },
+  { icon: Shield, label: "Insurance", value: "Show up where buyers, landlords, investors, and homeowners are researching property decisions." },
+  { icon: Scale, label: "Real Estate Attorneys", value: "Appear near real estate decision points including buying, selling, investing, and closing-related resources." },
+  { icon: Hammer, label: "Contractors", value: "Be discoverable by homeowners, buyers, landlords, and investors evaluating local properties." },
   { icon: ClipboardCheck, label: "Home Inspectors", value: "Reach buyers and investors as they move from browsing to evaluation." },
-  { icon: Briefcase, label: "Property Managers", value: "Be visible to rental owners, multi-family investors, and out-of-area landlords." },
+  { icon: Briefcase, label: "Property Managers", value: "Reach landlords, investors, and rental property owners by town." },
   { icon: Search, label: "Appraisers", value: "Appear inside investment, multi-family, and valuation-related resources." },
   { icon: Truck, label: "Moving & Storage", value: "Connect with relocators and new buyers moving into the Capital District." },
 ];
@@ -154,23 +203,25 @@ const HomesPartners = () => {
         />
         <div className="max-w-5xl mx-auto text-center">
           <div className="eyebrow-apple text-[#5eead4] mb-4">
-            CAPITAL DISTRICT NEST HOMES PARTNERS
+            LOCAL STARTUP · LOCAL SEARCH · COMMUNITY DISCOVERY
           </div>
           <h1 className="h-hero text-white mb-5">
-            Get featured where local property decisions begin.
+            Get featured where local decisions begin.
           </h1>
           <p className="body-apple-dark max-w-3xl mx-auto mb-3">
-            Capital District Nest Homes organizes property links, town boards,
-            buyer tools, and local real estate resources across the Capital
-            District.
+            Capital District Nest is building a local search and community
+            discovery platform for the Capital District — organized by towns,
+            neighborhoods, homes, businesses, and local services.
           </p>
           <p className="text-sm text-white/55 mb-3 max-w-3xl mx-auto">
             Featured partners appear inside relevant town pages, property
-            boards, and real estate service categories.
+            boards, buyer tools, and local service categories.
           </p>
           <p className="text-xs text-white/45 mb-10 max-w-2xl mx-auto italic">
-            This is not an MLS product. This is local visibility inside a
-            neutral property media platform.
+            We are a local startup, not a national portal. Our goal is to build
+            a cleaner, more useful way for people to discover Capital District
+            communities — and to help local professionals show up where those
+            searches begin.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link to="/homes/partner-inquiry" className="btn-primary-apple">
@@ -183,8 +234,65 @@ const HomesPartners = () => {
         </div>
       </section>
 
+      {/* BUILT LOCALLY FOR LOCAL SEARCH */}
+      <section className="px-[5%] py-20 border-b border-white/10">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="eyebrow-apple text-[#5eead4] mb-3">
+            A LOCAL SEARCH PLATFORM FOR CAPITAL DISTRICT COMMUNITIES
+          </div>
+          <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-6">
+            Built locally for local search.
+          </h2>
+          <p className="body-apple-dark mb-4">
+            Capital District Nest is a local startup focused on helping people
+            search, discover, and understand Capital District towns,
+            neighborhoods, businesses, homes, and services.
+          </p>
+          <p className="body-apple-dark mb-4">
+            Before someone chooses an agent, lender, contractor, insurance
+            provider, or local business, they usually start with a local
+            question — what is this town like, what homes are available, who
+            serves this area, what businesses are nearby, and what should I
+            know before moving, buying, selling, renting, or investing.
+          </p>
+          <p className="body-apple-dark">
+            Capital District Nest is being built to answer those questions
+            locally. This is not a brokerage website. Not a national portal.
+            Not a lead-resale machine. Not just a real estate directory.
+          </p>
+        </div>
+      </section>
+
+      {/* WHY LOCAL SEARCH MATTERS */}
+      <section className="px-[5%] py-20 border-b border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="eyebrow-apple text-[#5eead4] mb-3">WHY LOCAL SEARCH MATTERS</div>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">
+              Local decisions deserve local infrastructure.
+            </h2>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {WHY_LOCAL.map((w) => {
+              const Icon = w.icon;
+              return (
+                <div
+                  key={w.title}
+                  className="rounded-2xl border border-white/10 bg-[#1E2230] p-6 hover:border-[#5eead4]/30 transition-colors"
+                >
+                  <Icon className="w-5 h-5 text-[#5eead4] mb-3" />
+                  <div className="text-white font-semibold mb-2">{w.title}</div>
+                  <div className="text-sm text-white/65 leading-relaxed">{w.body}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* WHO THIS IS FOR */}
       <section className="px-[5%] py-20 border-b border-white/10">
+
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <div className="eyebrow-apple text-[#5eead4] mb-3">WHO THIS IS FOR</div>
@@ -216,12 +324,13 @@ const HomesPartners = () => {
           <div>
             <div className="eyebrow-apple text-[#5eead4] mb-3">FOR AGENTS</div>
             <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-4">
-              Become a featured town partner.
+              Become a featured real estate partner inside a local community search platform.
             </h2>
             <p className="body-apple-dark mb-6">
-              Attach your brand to a town page where buyers, sellers,
-              relocators, and property owners are researching the local market.
-              One featured real estate partner per town during the pilot.
+              For agents, this means visibility before the consumer reaches a
+              national portal. Your brand can appear on town pages, property
+              boards, buyer tools, and local real estate resource sections
+              connected to the communities you serve.
             </p>
             <ul className="space-y-2 mb-6">
               {[
@@ -364,8 +473,10 @@ const HomesPartners = () => {
               Category partner placements.
             </h2>
             <p className="body-apple-dark max-w-2xl mx-auto">
-              Professionals can also be featured inside real estate service
-              categories across town pages and the Homes hub.
+              Mortgage, insurance, attorneys, contractors, inspectors, and
+              property managers can be featured inside local service categories
+              across town pages and the Homes hub — visible where local
+              property decisions are being made.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -387,8 +498,51 @@ const HomesPartners = () => {
         </div>
       </section>
 
+      {/* WHAT WE'RE BUILDING + WHAT PARTNERS GET */}
+      <section className="px-[5%] py-20 border-b border-white/10">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-6">
+          <div className="rounded-2xl border border-white/10 bg-[#1E2230] p-8">
+            <div className="eyebrow-apple text-[#5eead4] mb-3 flex items-center gap-2">
+              <LayoutGrid className="w-3.5 h-3.5" /> WHAT WE'RE BUILDING
+            </div>
+            <h3 className="text-2xl font-semibold text-white tracking-tight mb-5">
+              What Capital District Nest is building
+            </h3>
+            <ul className="space-y-2">
+              {BUILDING.map((b) => (
+                <li key={b} className="flex items-start gap-2 text-sm text-white/80">
+                  <Check className="w-4 h-4 text-[#5eead4] mt-0.5 shrink-0" />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-2xl border border-[#5eead4]/30 bg-[#5eead4]/[0.04] p-8">
+            <div className="eyebrow-apple text-[#5eead4] mb-3 flex items-center gap-2">
+              <Crown className="w-3.5 h-3.5" /> WHAT PARTNERS GET
+            </div>
+            <h3 className="text-2xl font-semibold text-white tracking-tight mb-3">
+              What partners get
+            </h3>
+            <p className="text-sm text-white/70 mb-5">
+              Partners receive visibility inside a local search platform
+              organized around the communities they serve.
+            </p>
+            <ul className="space-y-2">
+              {PARTNER_GETS.map((p) => (
+                <li key={p} className="flex items-start gap-2 text-sm text-white/85">
+                  <Check className="w-4 h-4 text-[#5eead4] mt-0.5 shrink-0" />
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* MID CTA */}
       <section className="px-[5%] py-16 border-b border-white/10">
+
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-semibold text-white tracking-tight mb-3">
             Want to be featured in a town?
