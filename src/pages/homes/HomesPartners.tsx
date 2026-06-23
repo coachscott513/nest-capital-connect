@@ -1,134 +1,143 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Check, ArrowRight, Sparkles, MapPin, Building2, Crown, Star } from "lucide-react";
+import {
+  Check,
+  ArrowRight,
+  Sparkles,
+  MapPin,
+  Building2,
+  Crown,
+  Star,
+  Home,
+  Briefcase,
+  Hammer,
+  Shield,
+  Scale,
+  Search,
+  Truck,
+  ClipboardCheck,
+  Banknote,
+  Building,
+} from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 
-type Tier = {
-  name: string;
-  price: string;
-  cadence?: string;
-  tagline: string;
-  features: string[];
-  cta: { label: string; href: string };
-  featured?: boolean;
-  icon: typeof Star;
-  badge?: string;
-};
+const WHO = [
+  { icon: Home, label: "Real Estate Agents", value: "Become a featured town partner on a town property board." },
+  { icon: Building, label: "Brokerages", value: "Position your brokerage across multiple Capital District towns." },
+  { icon: Banknote, label: "Mortgage & Lending", value: "Get visibility near first-time buyer tools, affordability estimates, and town property boards." },
+  { icon: Shield, label: "Insurance", value: "Appear near buyer, landlord, investor, and closing-related property resources." },
+  { icon: Scale, label: "Real Estate Attorneys", value: "Be present on town pages where buyers and sellers are researching the market." },
+  { icon: Hammer, label: "Contractors", value: "Get discovered by homeowners, investors, landlords, and buyers evaluating properties." },
+  { icon: ClipboardCheck, label: "Home Inspectors", value: "Reach buyers and investors as they move from browsing to evaluation." },
+  { icon: Briefcase, label: "Property Managers", value: "Be visible to rental owners, multi-family investors, and out-of-area landlords." },
+  { icon: Search, label: "Appraisers", value: "Appear inside investment, multi-family, and valuation-related resources." },
+  { icon: Truck, label: "Moving & Storage", value: "Connect with relocators and new buyers moving into the Capital District." },
+];
 
-const TIERS: Tier[] = [
+const TOWN_TIERS = [
   {
-    name: "Free Profile",
-    price: "$0",
-    cadence: "always",
-    tagline: "Basic presence in the Capital District Nest real estate directory.",
+    name: "Starter Town",
+    price: "$20",
+    cadence: "month · founding rate",
+    tagline: "For smaller or emerging local markets.",
     features: [
-      "Name or company",
-      "Category & town visibility",
-      "Basic contact link",
-      "Website link",
+      "Featured town placement",
+      "Agent or partner card",
+      "Basic monthly updates",
+      "Contact links",
+      "Social links",
     ],
-    cta: { label: "Claim Free Profile", href: "/claim-business?category=real-estate" },
     icon: Star,
   },
   {
-    name: "Featured Card",
-    price: "$25",
-    cadence: "per month",
-    tagline: "Upgrade your local profile with a premium business card.",
+    name: "Growth Town",
+    price: "$39",
+    cadence: "month · founding rate",
+    tagline: "For active suburban, commuter, or growing markets.",
     features: [
-      "Photo or logo",
-      "Phone, email, website",
-      "Social media links",
-      "Apple-style business card popup",
-      "Featured badge",
-      "Priority category placement",
+      "Featured town placement",
+      "Enhanced profile card",
+      "Monthly updates",
+      "Property link support",
+      "Contact / social links",
+      "Category visibility",
     ],
-    cta: { label: "Request Featured Card", href: "/claim-business?category=real-estate&tier=featured" },
+    icon: MapPin,
+    featured: true,
+    badge: "MOST COMMON",
+  },
+  {
+    name: "Premium Town",
+    price: "$79",
+    cadence: "month · founding rate",
+    tagline: "For high-demand buyer, seller, investor, or relocation markets.",
+    features: [
+      "Premium town placement",
+      "Enhanced partner card",
+      "Monthly updates",
+      "Property link support",
+      "Featured badge",
+      "Stronger visibility on town page",
+    ],
     icon: Sparkles,
   },
   {
-    name: "Town Spotlight",
-    price: "$75",
-    cadence: "per town / month",
-    tagline: "Own stronger visibility in a specific town.",
-    features: [
-      "Featured placement on one town page",
-      "Featured Partner badge",
-      "Enhanced business card",
-      "Priority in local services",
-      "CTA buttons",
-    ],
-    cta: { label: "Request Town Spotlight", href: "/claim-business?category=real-estate&tier=town-spotlight" },
-    icon: MapPin,
-    featured: true,
-    badge: "MOST POPULAR",
-  },
-  {
-    name: "Capital Region Core Market",
+    name: "Core Market Package",
     price: "$199",
-    cadence: "per month (launch)",
-    tagline: "Visibility across Albany, Schenectady, Troy, and Saratoga Springs.",
+    cadence: "month · founding rate",
+    tagline: "Visibility across Albany, Troy, Schenectady, and Saratoga Springs.",
     features: [
-      "Placement across all four core markets",
-      "Enhanced business card",
-      "Category placement",
-      "Rotating visibility inside /homes",
-      "Social links & CTA buttons",
+      "All four core markets",
+      "Best for mortgage, insurance, attorneys",
+      "Contractors, inspectors, PMs, brokerages",
+      "Enhanced card + category visibility",
+      "Monthly updates",
     ],
-    cta: { label: "Request Core Market Package", href: "/claim-business?category=real-estate&tier=core-market" },
     icon: Building2,
   },
-  {
-    name: "Category Anchor Partner",
-    price: "From $399",
-    cadence: "per month",
-    tagline: "Limited top placement for a major real estate service category.",
-    features: [
-      "Top category placement",
-      "Regional visibility",
-      "Featured sponsor position",
-      "Town page placement",
-      "/homes hub visibility",
-    ],
-    cta: { label: "Request Anchor Placement", href: "/claim-business?category=real-estate&tier=anchor" },
-    icon: Crown,
-  },
 ];
 
-const CATEGORIES = [
-  "Listing Agents",
-  "Brokerages",
-  "Mortgage & Lending",
-  "Insurance",
-  "Real Estate Attorneys",
-  "Contractors",
-  "Home Inspectors",
-  "Property Management",
-  "Appraisers",
-  "Moving & Storage",
+const CATEGORY_PRICING = [
+  { name: "Featured Category Card", price: "$25", cadence: "month" },
+  { name: "Town Service Spotlight", price: "$75", cadence: "month" },
+  { name: "Core Market Service Package", price: "$199", cadence: "month" },
+  { name: "Category Anchor Partner", price: "From $399", cadence: "month" },
 ];
 
-const TOWNS = [
-  "Albany", "Schenectady", "Troy", "Saratoga Springs",
-  "Delmar", "Clifton Park", "Colonie", "Niskayuna",
-  "Guilderland", "Latham", "Queensbury", "Lake George",
+const PREMIUM_TOWNS = [
+  "Albany", "Saratoga Springs", "Delmar / Bethlehem", "Clifton Park",
+  "Loudonville", "Niskayuna", "Guilderland", "Colonie",
+  "Lake George", "Queensbury", "Troy", "Schenectady",
+];
+const GROWTH_TOWNS = [
+  "Ballston Spa", "Latham", "Cohoes", "Watervliet", "East Greenbush",
+  "Glenmont", "Voorheesville", "Mechanicville", "Glens Falls",
+  "Amsterdam", "Scotia / Glenville", "Rotterdam",
+];
+const STARTER_TOWNS = [
+  "Ravena", "Selkirk", "Altamont", "Waterford", "Green Island",
+  "Stillwater", "Johnstown", "Gloversville", "Hudson Falls", "Schuylerville",
 ];
 
 const HomesPartners = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
+  const title = "Capital District Nest Homes Partner Network";
+  const description =
+    "Featured town placement for agents, brokerages, mortgage, insurance, attorneys, contractors, inspectors, property managers, and local real estate service providers.";
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Helmet>
-        <title>Capital District Nest Homes Partner Network | Local Real Estate Visibility</title>
-        <meta
-          name="description"
-          content="Town-by-town real estate visibility for agents, brokerages, mortgage lenders, insurance agents, attorneys, contractors, inspectors, and property managers."
-        />
+        <title>{title} | Capital District Nest</title>
+        <meta name="description" content={description} />
         <link rel="canonical" href="https://www.capitaldistrictnest.com/homes/partners" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content="https://www.capitaldistrictnest.com/homes/partners" />
       </Helmet>
 
       <CleanHeader />
@@ -144,47 +153,146 @@ const HomesPartners = () => {
           }}
         />
         <div className="max-w-5xl mx-auto text-center">
-          <div className="eyebrow-apple text-[#5eead4] mb-4">CAPITAL DISTRICT NEST HOMES PARTNER NETWORK</div>
-          <h1 className="h-hero text-white mb-5">Real estate visibility by town.</h1>
+          <div className="eyebrow-apple text-[#5eead4] mb-4">
+            CAPITAL DISTRICT NEST HOMES PARTNERS
+          </div>
+          <h1 className="h-hero text-white mb-5">
+            Get featured where local property decisions begin.
+          </h1>
           <p className="body-apple-dark max-w-3xl mx-auto mb-3">
-            Get featured where local buyers, sellers, landlords, investors, and property
-            owners are browsing property links and town real estate resources.
+            Capital District Nest Homes organizes property links, town boards,
+            buyer tools, and local real estate resources across the Capital
+            District.
           </p>
-          <p className="text-sm text-white/55 mb-10 max-w-3xl mx-auto">
-            Available for agents, brokerages, mortgage lenders, insurance professionals,
-            attorneys, contractors, inspectors, property managers, and local real estate
-            service providers.
+          <p className="text-sm text-white/55 mb-3 max-w-3xl mx-auto">
+            Featured partners appear inside relevant town pages, property
+            boards, and real estate service categories.
+          </p>
+          <p className="text-xs text-white/45 mb-10 max-w-2xl mx-auto italic">
+            This is not an MLS product. This is local visibility inside a
+            neutral property media platform.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <a href="#packages" className="btn-primary-apple">
-              View Partner Packages <ArrowRight className="w-4 h-4" />
-            </a>
-            <Link
-              to="/claim-business?category=real-estate"
-              className="btn-secondary-apple-dark"
-            >
-              Claim Free Profile
+            <Link to="/homes/partner-inquiry" className="btn-primary-apple">
+              Request Partner Placement <ArrowRight className="w-4 h-4" />
             </Link>
+            <a href="#town-tiers" className="btn-secondary-apple-dark">
+              View Town Tiers
+            </a>
           </div>
         </div>
       </section>
 
-      {/* PRICING */}
-      <section id="packages" className="px-[5%] py-20 bg-background border-t border-white/10">
+      {/* WHO THIS IS FOR */}
+      <section className="px-[5%] py-20 border-b border-white/10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <div className="eyebrow-apple text-[#5eead4] mb-3">PARTNER PACKAGES</div>
+            <div className="eyebrow-apple text-[#5eead4] mb-3">WHO THIS IS FOR</div>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">
+              Built for local real estate professionals.
+            </h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {WHO.map((w) => {
+              const Icon = w.icon;
+              return (
+                <div
+                  key={w.label}
+                  className="rounded-2xl border border-white/10 bg-[#1E2230] p-5 hover:border-[#5eead4]/30 transition-colors"
+                >
+                  <Icon className="w-5 h-5 text-[#5eead4] mb-3" />
+                  <div className="text-white font-semibold mb-1">{w.label}</div>
+                  <div className="text-sm text-white/65">{w.value}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* AGENT-SPECIFIC PRODUCT */}
+      <section className="px-[5%] py-20 border-b border-white/10">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <div className="eyebrow-apple text-[#5eead4] mb-3">FOR AGENTS</div>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-4">
+              Become a featured town partner.
+            </h2>
+            <p className="body-apple-dark mb-6">
+              Attach your brand to a town page where buyers, sellers,
+              relocators, and property owners are researching the local market.
+              One featured real estate partner per town during the pilot.
+            </p>
+            <ul className="space-y-2 mb-6">
+              {[
+                "Featured placement on one town page",
+                "Apple-style agent card (photo, brokerage, phone, website, social)",
+                "Preferred CTA button + buyer/seller inquiry link",
+                "Monthly page updates",
+                "Active property link support when provided",
+                '"Featured Local Real Estate Partner" badge',
+              ].map((f) => (
+                <li key={f} className="flex items-start gap-2 text-sm text-white/80">
+                  <Check className="w-4 h-4 text-[#5eead4] mt-0.5 shrink-0" />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+            <Link
+              to="/homes/partner-inquiry?category=agent"
+              className="btn-primary-apple inline-flex"
+            >
+              Ask About a Town
+            </Link>
+          </div>
+
+          {/* Premium agent page preview */}
+          <div className="rounded-2xl border border-[#5eead4]/30 bg-gradient-to-br from-[#5eead4]/10 to-[#1E2230] p-6">
+            <div className="flex items-center gap-2 text-[10px] tracking-widest uppercase text-[#5eead4] mb-3">
+              <Sparkles className="w-3 h-3" /> Featured Town Partner
+            </div>
+            <div className="text-lg font-semibold text-white mb-1">Your premium agent page</div>
+            <p className="text-sm text-white/70 mb-4">
+              A clean profile page connected to your featured town placement.
+            </p>
+            <div className="space-y-1.5 text-sm text-white/75">
+              {[
+                "Photo · name · brokerage · towns served",
+                "Specialties · phone · email · website · social",
+                "Buyer CTA · seller CTA",
+                "Active property links when provided",
+                "Home value request form",
+              ].map((l) => (
+                <div key={l} className="flex items-start gap-2">
+                  <Check className="w-3.5 h-3.5 text-[#5eead4] mt-0.5 shrink-0" />
+                  <span>{l}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-[11px] text-white/45 mt-4">
+              Inquiries can route to your preferred contact method once your
+              partner profile is configured.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* TOWN TIER PRICING */}
+      <section id="town-tiers" className="px-[5%] py-20 border-b border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="eyebrow-apple text-[#5eead4] mb-3">TOWN PRICING</div>
             <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
-              Simple, town-specific visibility.
+              Town pricing is based on market activity.
             </h2>
             <p className="body-apple-dark max-w-2xl mx-auto">
-              Start free. Upgrade when you want enhanced placement in the towns that
-              matter for your business.
+              Every town is different. Pricing reflects population, property
+              activity, search opportunity, local demand, and update volume.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {TIERS.map((tier) => {
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {TOWN_TIERS.map((tier) => {
               const Icon = tier.icon;
               return (
                 <div
@@ -204,9 +312,7 @@ const HomesPartners = () => {
                   <div className="text-lg font-semibold text-white mb-1">{tier.name}</div>
                   <div className="flex items-baseline gap-1 mb-2">
                     <span className="text-3xl font-bold text-white">{tier.price}</span>
-                    {tier.cadence && (
-                      <span className="text-xs text-white/55">/ {tier.cadence}</span>
-                    )}
+                    <span className="text-xs text-white/55">/ {tier.cadence}</span>
                   </div>
                   <p className="text-sm text-white/70 mb-4">{tier.tagline}</p>
                   <ul className="space-y-2 mb-6 flex-1">
@@ -218,69 +324,112 @@ const HomesPartners = () => {
                     ))}
                   </ul>
                   <Link
-                    to={tier.cta.href}
+                    to={`/homes/partner-inquiry?package=${encodeURIComponent(tier.name)}`}
                     className={tier.featured ? "btn-primary-apple w-full justify-center" : "btn-secondary-apple-dark w-full justify-center"}
                   >
-                    {tier.cta.label}
+                    Request Placement
                   </Link>
                 </div>
               );
             })}
           </div>
           <p className="text-xs text-white/45 text-center mt-6">
-            Launch pricing. Subject to change. Category Anchor placement is limited per market.
+            Founding rates are pilot rates. Early partners keep their founding
+            rate during the pilot.
           </p>
         </div>
       </section>
 
-      {/* CATEGORIES + TOWNS */}
-      <section className="px-[5%] py-20 bg-background border-t border-white/10">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
-          <div>
-            <div className="eyebrow-apple text-[#5eead4] mb-3">CATEGORY TARGETING</div>
-            <h3 className="text-2xl font-semibold text-white mb-4">Real estate categories</h3>
-            <div className="flex flex-wrap gap-2">
-              {CATEGORIES.map((c) => (
-                <span key={c} className="px-3 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-sm text-white/85">
-                  {c}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div className="eyebrow-apple text-[#5eead4] mb-3">TOWN TARGETING</div>
-            <h3 className="text-2xl font-semibold text-white mb-4">Available towns</h3>
-            <div className="flex flex-wrap gap-2">
-              {TOWNS.map((t) => (
-                <span key={t} className="px-3 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-sm text-white/85">
-                  {t}
-                </span>
-              ))}
-            </div>
+      {/* TOWN EXAMPLES */}
+      <section className="px-[5%] py-16 border-b border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="eyebrow-apple text-[#5eead4] mb-3 text-center">TOWN TIER EXAMPLES</div>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white tracking-tight text-center mb-10">
+            How towns map to tiers.
+          </h2>
+          <div className="grid md:grid-cols-3 gap-5">
+            <TownTierList title="Premium markets" towns={PREMIUM_TOWNS} accent />
+            <TownTierList title="Growth markets" towns={GROWTH_TOWNS} />
+            <TownTierList title="Starter markets" towns={STARTER_TOWNS} />
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="px-[5%] py-20 bg-background border-t border-white/10">
-        <div className="max-w-3xl mx-auto text-center rounded-2xl border border-[#5eead4]/30 bg-[#5eead4]/5 p-8 md:p-12">
+      {/* CATEGORY PARTNER PRODUCT */}
+      <section className="px-[5%] py-20 border-b border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10">
+            <div className="eyebrow-apple text-[#5eead4] mb-3">CATEGORY PARTNERS</div>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
+              Category partner placements.
+            </h2>
+            <p className="body-apple-dark max-w-2xl mx-auto">
+              Professionals can also be featured inside real estate service
+              categories across town pages and the Homes hub.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {CATEGORY_PRICING.map((c) => (
+              <div key={c.name} className="rounded-2xl border border-white/10 bg-[#1E2230] p-5">
+                <div className="text-sm text-white/65 mb-1">{c.name}</div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-2xl font-semibold text-white">{c.price}</span>
+                  <span className="text-xs text-white/55">/ {c.cadence}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link to="/homes/partner-inquiry?category=category-partner" className="btn-secondary-apple-dark inline-flex">
+              Ask About Category Placement
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* MID CTA */}
+      <section className="px-[5%] py-16 border-b border-white/10">
+        <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-semibold text-white tracking-tight mb-3">
-            Serve buyers, sellers, landlords, or investors?
+            Want to be featured in a town?
           </h2>
           <p className="body-apple-dark mb-6">
-            Claim your free profile or request featured placement inside Capital District Nest Homes.
+            Tell us your town, category, and preferred placement. We'll confirm
+            availability during the pilot.
           </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link to="/claim-business?category=real-estate" className="btn-primary-apple">
-              Claim Free Profile
-            </Link>
-            <Link to="/claim-business?category=real-estate&tier=featured" className="btn-secondary-apple-dark">
-              Request Featured Placement
-            </Link>
-          </div>
-          <div className="text-xs text-white/55 mt-4">
-            Capital District Nest is a local advertising and directory platform. We organize the local market. The inquiry goes to the listing source.
-          </div>
+          <Link to="/homes/partner-inquiry" className="btn-primary-apple inline-flex">
+            Request Partner Placement
+          </Link>
+        </div>
+      </section>
+
+      {/* BOTTOM CTA */}
+      <section className="px-[5%] py-20">
+        <div className="max-w-3xl mx-auto text-center rounded-2xl border border-[#5eead4]/30 bg-[#5eead4]/5 p-8 md:p-12">
+          <Crown className="w-8 h-8 text-[#5eead4] mx-auto mb-3" />
+          <h2 className="text-2xl md:text-3xl font-semibold text-white tracking-tight mb-3">
+            Build your local presence before the market is crowded.
+          </h2>
+          <p className="body-apple-dark mb-6">
+            Capital District Nest Homes is opening pilot placements across
+            select Capital District towns and real estate categories.
+          </p>
+          <Link to="/homes/partner-inquiry" className="btn-primary-apple inline-flex">
+            Request Placement
+          </Link>
+        </div>
+      </section>
+
+      <section className="px-[5%] pb-10">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-[11px] text-white/45 leading-relaxed text-center">
+            Capital District Nest is a local media, directory, and advertising
+            platform. Featured partner placements are advertising products.
+            Capital District Nest does not represent buyers or sellers and does
+            not participate in real estate transactions. Real estate
+            professionals are responsible for their own licensing, advertising
+            compliance, and client relationships.
+          </p>
         </div>
       </section>
 
@@ -289,5 +438,23 @@ const HomesPartners = () => {
     </div>
   );
 };
+
+const TownTierList = ({ title, towns, accent }: { title: string; towns: string[]; accent?: boolean }) => (
+  <div className={`rounded-2xl border p-5 ${accent ? "border-[#5eead4]/30 bg-[#5eead4]/[0.04]" : "border-white/10 bg-[#1E2230]"}`}>
+    <div className={`text-xs uppercase tracking-widest mb-3 ${accent ? "text-[#5eead4]" : "text-white/55"}`}>
+      {title}
+    </div>
+    <div className="flex flex-wrap gap-1.5">
+      {towns.map((t) => (
+        <span
+          key={t}
+          className="px-2.5 py-1 rounded-md border border-white/10 bg-white/[0.03] text-xs text-white/80"
+        >
+          {t}
+        </span>
+      ))}
+    </div>
+  </div>
+);
 
 export default HomesPartners;
