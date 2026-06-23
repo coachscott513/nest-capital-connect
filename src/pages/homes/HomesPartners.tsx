@@ -324,12 +324,13 @@ const HomesPartners = () => {
           <div>
             <div className="eyebrow-apple text-[#5eead4] mb-3">FOR AGENTS</div>
             <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-4">
-              Become a featured town partner.
+              Become a featured real estate partner inside a local community search platform.
             </h2>
             <p className="body-apple-dark mb-6">
-              Attach your brand to a town page where buyers, sellers,
-              relocators, and property owners are researching the local market.
-              One featured real estate partner per town during the pilot.
+              For agents, this means visibility before the consumer reaches a
+              national portal. Your brand can appear on town pages, property
+              boards, buyer tools, and local real estate resource sections
+              connected to the communities you serve.
             </p>
             <ul className="space-y-2 mb-6">
               {[
