@@ -522,35 +522,44 @@ const HomesPartners = () => {
         </div>
       </section>
 
-      {/* CATEGORY PARTNER PRODUCT */}
-      <section className="px-[5%] py-20 border-b border-white/10">
+      {/* FOUNDING PARTNER PRICING */}
+      <section id="pricing" className="px-[5%] py-20 border-b border-white/10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
-            <div className="eyebrow-apple text-[#5eead4] mb-3">CATEGORY PARTNERS</div>
+            <div className="eyebrow-apple text-[#5eead4] mb-3">FOUNDING PARTNER PRICING</div>
             <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
-              Category partner placements.
+              Founding partner pricing.
             </h2>
             <p className="body-apple-dark max-w-2xl mx-auto">
-              Mortgage, insurance, attorneys, contractors, inspectors, and
-              property managers can be featured inside local service categories
-              across town pages and the Homes hub — visible where local
-              property decisions are being made.
+              Pricing is based on town activity, market size, category, and
+              placement type.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {CATEGORY_PRICING.map((c) => (
-              <div key={c.name} className="rounded-2xl border border-white/10 bg-[#1E2230] p-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {FOUNDING_PRICING.map((c) => (
+              <div
+                key={c.name}
+                className={`rounded-2xl border p-5 flex flex-col ${
+                  c.featured
+                    ? "border-[#5eead4]/60 bg-[#5eead4]/[0.06]"
+                    : "border-white/10 bg-[#1E2230]"
+                }`}
+              >
                 <div className="text-sm text-white/65 mb-1">{c.name}</div>
-                <div className="flex items-baseline gap-1">
+                <div className="flex items-baseline gap-1 mb-3">
                   <span className="text-2xl font-semibold text-white">{c.price}</span>
-                  <span className="text-xs text-white/55">/ {c.cadence}</span>
+                  {c.cadence && <span className="text-xs text-white/55">/ {c.cadence}</span>}
                 </div>
+                <p className="text-xs text-white/70 leading-relaxed">{c.blurb}</p>
               </div>
             ))}
           </div>
-          <div className="text-center mt-8">
-            <Link to="/homes/partner-inquiry?category=category-partner" className="btn-secondary-apple-dark inline-flex">
-              Ask About Category Placement
+          <p className="text-xs text-white/50 text-center mt-6">
+            Founding rates are pilot rates and may change for future partners.
+          </p>
+          <div className="text-center mt-6">
+            <Link to="/homes/partner-inquiry" className="btn-primary-apple inline-flex">
+              Request Partner Placement <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
