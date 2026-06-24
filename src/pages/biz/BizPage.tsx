@@ -1007,7 +1007,6 @@ const BizPage = () => {
         const townRaw = biz.town_name || biz.city || "";
         const town = townRaw || "Capital District";
         const url = `https://www.capitaldistrictnest.com/biz/${biz.slug}`;
-        const tagline = (biz.tagline || "").trim();
         const desc = `View ${biz.name} in ${town} on Capital District Nest. Business details may include category, location, website, and contact information when available.`;
         const title = `${biz.name} | ${town} Business Profile | Capital District Nest`;
         const rawImage = biz.hero_image_url || biz.photos?.[0] || biz.logo_url || "/og-image-capital-district.jpg";
