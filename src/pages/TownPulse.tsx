@@ -105,6 +105,7 @@ type Biz = {
   address: string | null;
   city: string | null;
   phone: string | null;
+  contact_status: string | null;
   website: string | null;
   instagram: string | null;
   facebook: string | null;
@@ -275,7 +276,7 @@ const TownPulse = () => {
         supabase
           .from("businesses")
           .select(
-            "id,slug,name,category,subcategory,tags,description,address,city,phone,website,instagram,facebook,linkedin,tiktok,x_url,hero_image_url,photos,is_featured",
+            "id,slug,name,category,subcategory,tags,description,address,city,phone,contact_status,website,instagram,facebook,linkedin,tiktok,x_url,hero_image_url,photos,is_featured",
           )
           .eq("town_slug", townSlug)
           .eq("is_active", true)
