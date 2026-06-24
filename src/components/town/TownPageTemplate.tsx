@@ -29,6 +29,7 @@ import {
   type BusinessCategory,
 } from "@/data/businesses";
 import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
+import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
 /* =============================================================
    MASTER TOWN PAGE — Apple-style local discovery template.
@@ -42,6 +43,7 @@ import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
 const TEAL = "#0d6e66";
 const TEAL_DARK = "#5eead4";
 const REMAX_BASE = "https://scottalvarez.remax.com/";
+const contactStatusOf = (biz: Business) => (biz as any).contactStatus ?? (biz as any).contact_status ?? null;
 
 interface Props {
   town: LivingInTown;
@@ -215,14 +217,18 @@ const BizCard = ({
       </div>
 
       <div className="mt-4 flex flex-wrap items-center gap-2">
-        {biz.phone && (
+        {isValidBusinessPhone(biz.phone, contactStatusOf(biz)) ? (
           <a
-            href={`tel:${biz.phone.replace(/[^0-9+]/g, "")}`}
+            href={businessTelHref(biz.phone, contactStatusOf(biz)) ?? undefined}
             onClick={onClick}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-[12px] font-medium text-white hover:bg-white/[0.1] transition"
           >
-            <Phone className="w-3 h-3 text-[#5eead4]" /> Call
+            <Phone className="w-3 h-3 text-[#5eead4]" /> Call Business
           </a>
+        ) : (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10 text-[12px] font-medium text-white/45">
+            <Phone className="w-3 h-3" /> Phone unavailable
+          </span>
         )}
         {(biz.website || biz.website_url || biz.websiteUrl) && (
           <a
