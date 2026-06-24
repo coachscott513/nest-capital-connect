@@ -115,6 +115,7 @@ export interface Business {
   why?: string[];
   services?: string[];
   phone?: string;
+  contactStatus?: string;
   email?: string;
   website?: string;
   website_url?: string;
@@ -224,7 +225,8 @@ export const businesses: Business[] = [
     about:
       "Residential real estate attorneys handling purchases, sales, refinances, and investor closings throughout the Capital Region.",
     services: ["Purchase closings", "Sale closings", "Refinance", "Investor closings"],
-    phone: "(518) 522-7265",
+    phone: undefined,
+    contactStatus: "needs_verification",
     website: "https://www.deangelislaw.com",
     address: "Capital District, NY",
     hours: "Mon–Fri · 9:00 AM – 5:00 PM",

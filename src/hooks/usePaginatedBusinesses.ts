@@ -12,7 +12,7 @@ import type { Business, BusinessCategory } from "@/data/businesses";
    ───────────────────────────────────────────────────────────── */
 
 const CARD_COLUMNS =
-  "id,name,slug,town_slug,town_name,city,county,category,subcategory,tagline,phone,website,email,address,rating,review_count,hero_image_url,latitude,longitude,is_featured,is_claimed,is_verified,tags";
+  "id,name,slug,town_slug,town_name,city,county,category,subcategory,tagline,phone,website,email,address,rating,review_count,hero_image_url,latitude,longitude,is_featured,is_claimed,is_verified,contact_status,tags";
 
 const mapCategory = (
   raw: string | null,
@@ -116,6 +116,7 @@ const mapRow = (r: any): Business => {
     tagline: r.tagline || r.category || "Local business",
     about: undefined,
     phone: r.phone ?? undefined,
+    contactStatus: r.contact_status ?? undefined,
     email: r.email ?? undefined,
     website: r.website ?? undefined,
     address: r.address ?? undefined,
