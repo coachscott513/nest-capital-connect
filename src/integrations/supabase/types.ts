@@ -304,6 +304,8 @@ export type Database = {
           city: string | null
           claimed_at: string | null
           claimed_by_user_id: string | null
+          contact_notes: string | null
+          contact_status: string
           county: string | null
           created_at: string
           data_status: string
@@ -373,6 +375,8 @@ export type Database = {
           city?: string | null
           claimed_at?: string | null
           claimed_by_user_id?: string | null
+          contact_notes?: string | null
+          contact_status?: string
           county?: string | null
           created_at?: string
           data_status?: string
@@ -442,6 +446,8 @@ export type Database = {
           city?: string | null
           claimed_at?: string | null
           claimed_by_user_id?: string | null
+          contact_notes?: string | null
+          contact_status?: string
           county?: string | null
           created_at?: string
           data_status?: string
