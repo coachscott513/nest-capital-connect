@@ -3,6 +3,7 @@ import { Star, Phone, Globe, MapPin, Sparkles, Crown, Search } from "lucide-reac
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
 export type BusinessTier = "free" | "featured" | "premium";
 
@@ -150,6 +151,7 @@ const LocalBusinessesDirectory = ({
   }, [businesses]);
 
   const shown = filtered.slice(0, visible);
+  const activeTelHref = active ? businessTelHref(active.phone) : null;
 
   return (
     <section id="local-favorites" className="bg-white py-20 md:py-28 px-6 scroll-mt-24">
@@ -255,7 +257,7 @@ const LocalBusinessesDirectory = ({
                 <div className="space-y-1.5 mb-4 select-none rounded-xl bg-foreground/[0.025] p-3">
                   <div className="flex items-center gap-2 text-sm text-foreground/70">
                     <Phone className="w-3.5 h-3.5 shrink-0" />
-                    <span className="blur-[3px]">{b.phone}</span>
+                    <span>{isValidBusinessPhone(b.phone) ? "Business phone available" : "Phone unavailable"}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-foreground/70">
                     <Globe className="w-3.5 h-3.5 shrink-0" />
@@ -328,7 +330,7 @@ const LocalBusinessesDirectory = ({
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-foreground">
                   <Phone className="w-4 h-4 text-primary" />
-                  <span className="font-medium">{active.phone}</span>
+                  <span className="font-medium">{isValidBusinessPhone(active.phone) ? active.phone : "Not available yet"}</span>
                 </div>
                 <div className="flex items-center gap-3 text-foreground">
                   <Globe className="w-4 h-4 text-primary" />
@@ -340,12 +342,18 @@ const LocalBusinessesDirectory = ({
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-2 pt-2">
-                <a
-                  href={`tel:${active.phone.replace(/\D/g, "")}`}
-                  className="text-center text-sm font-medium px-3 py-2.5 rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
-                >
-                  Call Now
-                </a>
+                {activeTelHref ? (
+                  <a
+                    href={activeTelHref}
+                    className="text-center text-sm font-medium px-3 py-2.5 rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    Call Business
+                  </a>
+                ) : (
+                  <span className="text-center text-sm font-medium px-3 py-2.5 rounded-full bg-foreground/[0.06] text-foreground/50">
+                    Phone unavailable
+                  </span>
+                )}
                 <a
                   href={`https://${active.website}`}
                   target="_blank"
@@ -363,6 +371,9 @@ const LocalBusinessesDirectory = ({
                   Directions
                 </a>
               </div>
+              <p className="text-xs text-foreground/50 text-center pt-2">
+                Capital District Nest is not the listed business. Business information may be incomplete or pending verification.
+              </p>
               <p className="text-xs text-foreground/50 text-center pt-2">
                 Want your business here?{" "}
                 <a href="/pricing" className="text-primary underline font-medium">

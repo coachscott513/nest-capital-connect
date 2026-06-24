@@ -1,6 +1,7 @@
 import { ArrowRight, ArrowUpRight, Home, DollarSign, Coffee, Calendar, Building2, Receipt, FileText, GraduationCap, Trash2, Zap, Car, Shield, Star, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { LivingInTown, EssentialIcon, WeeklyUpdateType } from "@/data/livingInTowns";
+import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
 const TEAL = "#0d6e66";
 
@@ -166,6 +167,7 @@ export const TownHomes = ({ town }: Props) => {
 export const TownFeatured = ({ town }: Props) => {
   if (!town.featuredBusiness) return null;
   const f = town.featuredBusiness;
+  const telHref = businessTelHref(f.phone);
   return (
     <section className="bg-white py-24 md:py-28 px-6 md:px-10">
       <div className="max-w-4xl mx-auto">
@@ -185,13 +187,17 @@ export const TownFeatured = ({ town }: Props) => {
           <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">{f.name}</h3>
           <p className="mt-4 text-lg text-white/75 font-light leading-relaxed">{f.tagline}</p>
           {f.address && <p className="mt-6 text-sm text-white/55">{f.address}</p>}
-          {f.phone && (
+          {isValidBusinessPhone(f.phone) && telHref ? (
             <a
-              href={`tel:${f.phone.replace(/[^\d+]/g, "")}`}
+              href={telHref}
               className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-[#0e0f12] text-sm font-semibold hover:bg-white/90 transition"
             >
-              <Phone className="w-4 h-4" /> {f.phone}
+              <Phone className="w-4 h-4" /> Call Business
             </a>
+          ) : (
+            <span className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white/55 text-sm font-semibold">
+              <Phone className="w-4 h-4" /> Phone unavailable
+            </span>
           )}
         </div>
       </div>

@@ -27,14 +27,16 @@ const HAIRLINE = '#2D3748';    // hairline border on dark
 interface AnalystCardProps {
   title?: string;
   description?: string;
+  contextualDisclaimer?: string;
   /** kept for backward compat; visual style is now consistent */
   accentColor?: 'amber' | 'primary' | 'emerald' | 'orange' | 'green' | 'violet';
   children?: React.ReactNode;
 }
 
 const AnalystCard: React.FC<AnalystCardProps> = ({
-  title = "Contact the Local Concierge",
-  description = "Capital District Nest · Local Concierge",
+  title = "Capital District Nest Local Concierge",
+  description = "Questions about Capital District Nest, local search, business profiles, or partner placements? Contact our local concierge.",
+  contextualDisclaimer,
   children,
 }) => {
   const trigger = children ?? (
@@ -79,13 +81,8 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
               CDN
             </div>
             <div className="leading-tight pt-1">
-              <p className="text-xl font-bold tracking-tight text-white">Capital District Nest</p>
-              <p
-                className="text-[11px] font-semibold uppercase tracking-[0.14em] mt-0.5"
-                style={{ color: TEAL_BRIGHT }}
-              >
-                Local Concierge
-              </p>
+              <p className="text-xl font-bold tracking-tight text-white">{title}</p>
+              <p className="mt-2 text-sm text-white/75 leading-relaxed">{description}</p>
               <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-white/80">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 Online · usually replies in minutes
@@ -164,6 +161,7 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
         </div>
 
         <p className="px-6 pb-6 text-xs text-center text-white/55 leading-relaxed">
+          {contextualDisclaimer ? `${contextualDisclaimer} ` : ""}
           Capital District Nest is a local discovery, directory, and advertising platform.
         </p>
       </SheetContent>

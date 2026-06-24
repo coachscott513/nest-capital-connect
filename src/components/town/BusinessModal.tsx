@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 import { Phone, Globe, MapPin, Facebook, Instagram, Linkedin, Star, Lock } from "lucide-react";
 import type { Business } from "@/data/businesses";
 import { trackGAEvent } from "@/components/GARouteTracker";
+import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
 interface Props {
   business: Business | null;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const TEAL = "#0d6e66";
+const contactStatusOf = (business: Business) => (business as any).contactStatus ?? (business as any).contact_status ?? null;
 
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
@@ -74,7 +76,7 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
   if (!business) return null;
   const b = business;
   const verified = !!b.verified;
-  const telHref = b.phone ? `tel:${b.phone.replace(/[^\d+]/g, "")}` : undefined;
+  const telHref = businessTelHref(b.phone, contactStatusOf(b)) ?? undefined;
   const socials = b.socials ?? {};
   const bizPayload = {
     business_id: (b as any).id,
@@ -114,7 +116,7 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
           </DialogDescription>
 
           <div className="mt-6 space-y-2.5">
-            {b.phone && (
+            {isValidBusinessPhone(b.phone, contactStatusOf(b)) ? (
               <a
                 href={telHref}
                 onClick={() => trackGAEvent.callClick(bizPayload)}
@@ -123,6 +125,11 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
                 <Phone className="w-4 h-4 text-white/45" />
                 <span>{b.phone}</span>
               </a>
+            ) : (
+              <div className="flex items-center gap-3 text-[15px] text-white/55">
+                <Phone className="w-4 h-4 text-white/35" />
+                <span>Phone unavailable</span>
+              </div>
             )}
             {b.website && (
               <a
@@ -148,7 +155,7 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
               className="mt-7 w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white transition-all hover:opacity-90"
               style={{ backgroundColor: TEAL }}
             >
-              <Phone className="w-4 h-4" /> Contact {b.name.split(" ")[0]}
+              <Phone className="w-4 h-4" /> Call Business
             </a>
           )}
 
@@ -171,6 +178,9 @@ const BusinessModal = ({ business, open, onOpenChange }: Props) => {
               <>
                 <p className="mt-3 text-xs text-white/45 leading-relaxed">
                   Are you the owner? Claim this profile to spotlight social links and unlock premium features.
+                </p>
+                <p className="mt-2 text-xs text-white/45 leading-relaxed">
+                  This profile is part of the Capital District Nest local directory and may be incomplete or pending verification. Capital District Nest is not the listed business.
                 </p>
                 <a
                   href={`/claim-business?slug=${b.slug}`}

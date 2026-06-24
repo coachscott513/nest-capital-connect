@@ -22,6 +22,7 @@ import {
 import { Link } from "react-router-dom";
 import { useMemo } from "react";
 import { townMatches, useDbBusinesses } from "@/hooks/useDbBusinesses";
+import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
 interface LocalBusiness {
   name: string;
@@ -70,6 +71,7 @@ const BusinessCard = ({
   categoryId: string;
 }) => {
   const isPartner = business.isPartner;
+  const telHref = businessTelHref(business.phone);
 
   return (
     <Card 
@@ -137,16 +139,21 @@ const BusinessCard = ({
           <>
             {/* Direct Contact Buttons */}
             <div className="flex gap-2 mb-3">
-              {business.phone && (
+              {isValidBusinessPhone(business.phone) && telHref ? (
                 <Button 
                   size="sm" 
                   className="h-9 flex-1 bg-[#00F5FF] hover:bg-[#00F5FF]/90 text-foreground font-medium"
                   asChild
                 >
-                  <a href={`tel:${business.phone}`}>
+                  <a href={telHref}>
                     <Phone className="w-3.5 h-3.5 mr-1.5" />
-                    Call Now
+                    Call Business
                   </a>
+                </Button>
+              ) : (
+                <Button size="sm" variant="outline" disabled className="h-9 flex-1">
+                  <Phone className="w-3.5 h-3.5 mr-1.5" />
+                  Phone unavailable
                 </Button>
               )}
               {business.email && (

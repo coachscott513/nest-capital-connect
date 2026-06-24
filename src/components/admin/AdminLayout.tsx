@@ -15,6 +15,7 @@ const NAV = [
   { to: "/admin/partner-placements", label: "Placements" },
   { to: "/admin/listing-claims", label: "Listing Claims" },
   { to: "/admin/property-listings", label: "Property Listings" },
+  { to: "/admin/business-audit", label: "Business Audit" },
   { to: "/admin/revenue", label: "Revenue" },
 ];
 

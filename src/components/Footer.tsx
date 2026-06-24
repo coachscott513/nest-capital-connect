@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Phone, Mail } from 'lucide-react';
 
 const townDirectory = {
@@ -48,6 +48,8 @@ const headerBase =
   "text-[11px] font-semibold text-white/95 mb-4 uppercase tracking-[0.18em]";
 
 const Footer = () => {
+  const { pathname } = useLocation();
+  const isBusinessProfile = pathname.startsWith('/biz/');
   return (
     <footer className="bg-[#05080F] text-white border-t border-white/[0.06]">
       {/* Main columns */}
@@ -63,9 +65,16 @@ const Footer = () => {
             </p>
 
             <div className="mt-6 space-y-2.5">
-              <a href="tel:+15185227265" className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
-                <Phone className="h-3.5 w-3.5" /> (518) 522-7265
-              </a>
+              {!isBusinessProfile && (
+                <a href="tel:+15185227265" className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
+                  <Phone className="h-3.5 w-3.5" /> (518) 522-7265
+                </a>
+              )}
+              {isBusinessProfile && (
+                <p className="flex items-center gap-2 text-[13px] text-white/55">
+                  <Phone className="h-3.5 w-3.5" /> Directory support, not the listed business
+                </p>
+              )}
               <a href="mailto:team@capitaldistrictnest.com" className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
                 <Mail className="h-3.5 w-3.5" /> team@capitaldistrictnest.com
               </a>

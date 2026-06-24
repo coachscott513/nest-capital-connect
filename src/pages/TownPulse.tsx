@@ -21,9 +21,11 @@ import MainLayout from "@/components/MainLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { findTownInDirectory } from "@/data/capitalDistrictCounties";
 import { canonicalCategory } from "@/lib/canonicalCategory";
+import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
 const TEAL = "#0d6e66";
 const TEAL_LIGHT = "#5eead4";
+const contactStatusOf = (b: any) => b.contact_status ?? b.contactStatus ?? null;
 
 // ── helpers ────────────────────────────────────────────────────────────────
 const titleizeSlug = (slug: string) =>
@@ -103,6 +105,7 @@ type Biz = {
   address: string | null;
   city: string | null;
   phone: string | null;
+  contact_status: string | null;
   website: string | null;
   instagram: string | null;
   facebook: string | null;
@@ -273,7 +276,7 @@ const TownPulse = () => {
         supabase
           .from("businesses")
           .select(
-            "id,slug,name,category,subcategory,tags,description,address,city,phone,website,instagram,facebook,linkedin,tiktok,x_url,hero_image_url,photos,is_featured",
+            "id,slug,name,category,subcategory,tags,description,address,city,phone,contact_status,website,instagram,facebook,linkedin,tiktok,x_url,hero_image_url,photos,is_featured",
           )
           .eq("town_slug", townSlug)
           .eq("is_active", true)
@@ -634,10 +637,14 @@ const TownPulse = () => {
                             <Globe className="w-3.5 h-3.5" /> Website
                           </a>
                         )}
-                        {b.phone && (
-                          <a href={`tel:${b.phone}`} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-xs font-semibold hover:border-white/30 transition">
-                            <Phone className="w-3.5 h-3.5" /> Call
+                        {isValidBusinessPhone(b.phone, contactStatusOf(b)) ? (
+                          <a href={businessTelHref(b.phone, contactStatusOf(b)) ?? undefined} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-xs font-semibold hover:border-white/30 transition">
+                            <Phone className="w-3.5 h-3.5" /> Call Business
                           </a>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-white/45 text-xs font-semibold">
+                            <Phone className="w-3.5 h-3.5" /> Phone unavailable
+                          </span>
                         )}
                         {dirUrl && (
                           <a href={dirUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-xs font-semibold hover:border-white/30 transition">
@@ -742,13 +749,17 @@ const TownPulse = () => {
                             <Globe className="w-3.5 h-3.5" /> Website
                           </a>
                         )}
-                        {b.phone && (
+                        {isValidBusinessPhone(b.phone, contactStatusOf(b)) ? (
                           <a
-                            href={`tel:${b.phone}`}
+                            href={businessTelHref(b.phone, contactStatusOf(b)) ?? undefined}
                             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-xs font-semibold hover:border-white/30 hover:bg-white/[0.08] transition"
                           >
-                            <Phone className="w-3.5 h-3.5" /> Call
+                            <Phone className="w-3.5 h-3.5" /> Call Business
                           </a>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-white/45 text-xs font-semibold">
+                            <Phone className="w-3.5 h-3.5" /> Phone unavailable
+                          </span>
                         )}
                         {dirUrl && (
                           <a

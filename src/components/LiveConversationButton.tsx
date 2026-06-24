@@ -40,7 +40,7 @@ const LiveConversationButton: React.FC<LiveConversationButtonProps> = ({
           style={variant === 'default' ? { backgroundColor: TEAL, color: '#fff' } : undefined}
         >
           <MessageCircle className="h-4 w-4" />
-          {showLabel && <span className="ml-2">Talk to Scott</span>}
+          {showLabel && <span className="ml-2">Local Concierge</span>}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-72 p-2">
@@ -53,9 +53,9 @@ const LiveConversationButton: React.FC<LiveConversationButtonProps> = ({
               SA
             </div>
             <div className="leading-tight">
-              <p className="font-semibold text-sm text-foreground">Scott Alvarez</p>
+              <p className="font-semibold text-sm text-foreground">Capital District Nest Local Concierge</p>
               <p className="text-[11px] uppercase tracking-wider font-semibold" style={{ color: TEAL }}>
-                RE/MAX Solutions
+                Directory Support
               </p>
             </div>
           </div>
@@ -65,7 +65,7 @@ const LiveConversationButton: React.FC<LiveConversationButtonProps> = ({
           <a href={`tel:+1${PHONE_NUMBER}`} className="flex items-center gap-3 cursor-pointer py-2">
             <Phone className="h-4 w-4 shrink-0" style={{ color: RED_CALL }} />
             <div>
-              <p className="font-medium text-sm">Call</p>
+              <p className="font-medium text-sm">Call Capital District Nest</p>
               <p className="text-xs text-muted-foreground">{FORMATTED_PHONE}</p>
             </div>
           </a>

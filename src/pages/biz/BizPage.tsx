@@ -26,6 +26,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { businessSmsHref, businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
 const TEAL = "#5eead4";
 const GOLD = "#c9a449";
@@ -45,6 +46,7 @@ type Business = {
   city?: string | null;
   state?: string | null;
   phone?: string | null;
+  contact_status?: string | null;
   email?: string | null;
   website?: string | null;
   hours?: Record<string, string> | null;
@@ -157,6 +159,8 @@ const TierBadge = ({ tier }: { tier: string }) => {
 const fmtAddress = (b: Business) =>
   [b.address, b.city || b.town_name, b.state].filter(Boolean).join(", ");
 
+const contactStatusOf = (biz: Business) => biz.contact_status ?? (biz as any).contactStatus ?? null;
+
 const ActionChips = ({
   biz,
   directionsHref,
@@ -166,8 +170,8 @@ const ActionChips = ({
   directionsHref: string | null;
   onShare: () => void;
 }) => {
-  const telHref = biz.phone ? `tel:${biz.phone.replace(/[^\d+]/g, "")}` : null;
-  const smsHref = biz.phone ? `sms:${biz.phone.replace(/[^\d+]/g, "")}` : null;
+  const telHref = businessTelHref(biz.phone, contactStatusOf(biz));
+  const smsHref = businessSmsHref(biz.phone, contactStatusOf(biz));
   const quoteSubject = encodeURIComponent("Quote request from Capital District Nest");
   const quoteBody = encodeURIComponent(
     `Hi ${biz.name},\n\nI found your profile on Capital District Nest and would like to request a quote.\n\nDetails:\n- \n\nThanks!`
@@ -187,8 +191,13 @@ const ActionChips = ({
     <div className="mt-7 flex flex-wrap gap-2.5">
       {telHref && (
         <a href={telHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
-          <Phone className="w-4 h-4" /> Call
+          <Phone className="w-4 h-4" /> Call Business
         </a>
+      )}
+      {!telHref && (
+        <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white/55 text-sm font-semibold">
+          <Phone className="w-4 h-4" /> Phone unavailable
+        </span>
       )}
       {smsHref && (
         <a href={smsHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
@@ -292,19 +301,19 @@ const ClaimCard = ({ biz }: { biz: Business }) => (
     style={{ borderColor: "rgba(94,234,212,0.25)", background: "rgba(94,234,212,0.05)" }}
   >
     <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>
-      Own this business?
+      Own or manage this business?
     </p>
     <h3 className="text-lg font-semibold text-white tracking-[-0.01em]">
-      Claim & upgrade your listing
+      Claim this profile
     </h3>
     <p className="mt-2 text-sm text-white/65 font-light leading-relaxed">
-      Add photos, a description, specials, and a video showcase. Stand out across search and town pages.
+      Claim this profile to update your phone number, website, hours, photos, social links, and contact details.
     </p>
     <Link
       to={`/claim-business?slug=${biz.slug}&tier=featured`}
       className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition w-full"
     >
-      Claim This Business <ArrowRight className="w-4 h-4" />
+      Claim Business <ArrowRight className="w-4 h-4" />
     </Link>
     <Link
       to={`/partner-auth?slug=${biz.slug}`}
@@ -326,6 +335,7 @@ const ClaimCard = ({ biz }: { biz: Business }) => (
 // ──────────────────────────────────────────────────────────────
 const FreeProfile = ({ biz }: { biz: Business }) => {
   const fullAddress = fmtAddress(biz);
+  const telHref = businessTelHref(biz.phone, contactStatusOf(biz));
   const directionsHref = fullAddress
     ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(fullAddress)}`
     : null;
@@ -345,6 +355,11 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-5">
             <TierBadge tier={biz.plan_tier} />
+            {!biz.is_claimed && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70 border border-white/15 bg-white/[0.04]">
+                Unclaimed
+              </span>
+            )}
             {biz.category && (
               <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/55">
                 {biz.category}
@@ -372,6 +387,12 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
         <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
           <div className="space-y-6">
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 space-y-4">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1">Business contact information</p>
+                {!biz.is_claimed && (
+                  <p className="text-sm text-white/60">This profile has not been claimed by the business owner.</p>
+                )}
+              </div>
               {fullAddress && (
                 <div className="flex items-start gap-3 text-sm">
                   <MapPin className="w-4 h-4 mt-0.5 text-white/45 shrink-0" />
@@ -381,15 +402,17 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
                   </div>
                 </div>
               )}
-              {biz.phone && (
-                <div className="flex items-start gap-3 text-sm">
-                  <Phone className="w-4 h-4 mt-0.5 text-white/45 shrink-0" />
-                  <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1">Phone</p>
-                    <a href={`tel:${biz.phone.replace(/[^\d+]/g, "")}`} className="text-white/85 hover:text-white">{biz.phone}</a>
-                  </div>
+              <div className="flex items-start gap-3 text-sm">
+                <Phone className="w-4 h-4 mt-0.5 text-white/45 shrink-0" />
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1">Phone</p>
+                  {telHref ? (
+                    <a href={telHref} className="text-white/85 hover:text-white">{biz.phone}</a>
+                  ) : (
+                    <p className="text-white/55">Not available yet</p>
+                  )}
                 </div>
-              )}
+              </div>
               {biz.website && (
                 <div className="flex items-start gap-3 text-sm">
                   <Globe className="w-4 h-4 mt-0.5 text-white/45 shrink-0" />
@@ -400,6 +423,11 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
                 </div>
               )}
             </div>
+            {!biz.is_claimed && (
+              <p className="text-xs text-white/45 leading-relaxed">
+                This profile is part of the Capital District Nest local directory and may be incomplete or pending verification. Capital District Nest is not the listed business.
+              </p>
+            )}
 
             {biz.description ? (
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
@@ -458,6 +486,11 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-3 mb-5">
             <TierBadge tier={biz.plan_tier} />
+            {!biz.is_claimed && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70 border border-white/15 bg-white/[0.04]">
+                Unclaimed
+              </span>
+            )}
             {biz.category && (
               <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/55">{biz.category}</span>
             )}
@@ -507,6 +540,13 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
           </div>
 
           <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 space-y-3">
+              <p className="text-[10px] font-semibold tracking-[0.26em] uppercase" style={{ color: TEAL }}>Business contact information</p>
+              {!biz.is_claimed && <p className="text-sm text-white/60">This profile has not been claimed by the business owner.</p>}
+              <p className="text-sm text-white/75"><span className="text-white/45">Phone:</span> {isValidBusinessPhone(biz.phone, contactStatusOf(biz)) ? biz.phone : "Not available yet"}</p>
+              {biz.website && <p className="text-sm text-white/75 break-all"><span className="text-white/45">Website:</span> {biz.website.replace(/^https?:\/\//, "")}</p>}
+              {!biz.is_claimed && <p className="text-xs text-white/45 leading-relaxed">This profile is part of the Capital District Nest local directory and may be incomplete or pending verification. Capital District Nest is not the listed business.</p>}
+            </div>
             {biz.hours && Object.keys(biz.hours).length > 0 && <HoursBlock hours={biz.hours} />}
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6">
               <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>Want more?</p>
@@ -682,6 +722,13 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
           </div>
 
           <aside className="lg:sticky lg:top-24 lg:self-start space-y-5">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6 space-y-3">
+              <p className="text-[10px] font-semibold tracking-[0.26em] uppercase" style={{ color: TEAL }}>Business contact information</p>
+              {!biz.is_claimed && <p className="text-sm text-white/60">This profile has not been claimed by the business owner.</p>}
+              <p className="text-sm text-white/75"><span className="text-white/45">Phone:</span> {isValidBusinessPhone(biz.phone, contactStatusOf(biz)) ? biz.phone : "Not available yet"}</p>
+              {biz.website && <p className="text-sm text-white/75 break-all"><span className="text-white/45">Website:</span> {biz.website.replace(/^https?:\/\//, "")}</p>}
+              {!biz.is_claimed && <p className="text-xs text-white/45 leading-relaxed">This profile is part of the Capital District Nest local directory and may be incomplete or pending verification. Capital District Nest is not the listed business.</p>}
+            </div>
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6">
               <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>Contact & Inquire</p>
               <h3 className="text-xl font-semibold text-white tracking-[-0.01em]">Get in touch with {biz.name.split(" ")[0]}</h3>
@@ -960,12 +1007,8 @@ const BizPage = () => {
         const townRaw = biz.town_name || biz.city || "";
         const town = townRaw || "Capital District";
         const url = `https://www.capitaldistrictnest.com/biz/${biz.slug}`;
-        const tagline = (biz.tagline || "").trim();
-        const fallbackDesc = townRaw
-          ? `Get hours, contact info, website, directions, and local profile details for ${biz.name} in ${townRaw}, NY on Capital District Nest.`
-          : `Get hours, contact info, website, directions, and local profile details for ${biz.name} on Capital District Nest.`;
-        const desc = tagline || (biz.description || "").trim() || fallbackDesc;
-        const title = `${biz.name} | Capital District Nest`;
+        const desc = `View ${biz.name} in ${town} on Capital District Nest. Business details may include category, location, website, and contact information when available.`;
+        const title = `${biz.name} | ${town} Business Profile | Capital District Nest`;
         const rawImage = biz.hero_image_url || biz.photos?.[0] || biz.logo_url || "/og-image-capital-district.jpg";
         const image = rawImage.startsWith("http")
           ? rawImage
@@ -977,7 +1020,7 @@ const BizPage = () => {
           url,
           ...(image && { image }),
           ...(biz.description && { description: biz.description }),
-          ...(biz.phone && { telephone: biz.phone }),
+          ...(isValidBusinessPhone(biz.phone, contactStatusOf(biz)) && { telephone: biz.phone }),
           ...(biz.email && { email: biz.email }),
           ...(biz.website && { sameAs: [biz.website, biz.facebook, biz.instagram, biz.linkedin].filter(Boolean) }),
           address: {

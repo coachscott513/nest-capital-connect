@@ -21,6 +21,7 @@ import AdminPartnerInquiries from "./pages/admin/AdminPartnerInquiries";
 import AdminPartnerPlacements from "./pages/admin/AdminPartnerPlacements";
 import AdminListingClaims from "./pages/admin/AdminListingClaims";
 import AdminPropertyListings from "./pages/admin/AdminPropertyListings";
+import AdminBusinessAudit from "./pages/admin/AdminBusinessAudit";
 import AdminRevenue from "./pages/admin/AdminRevenue";
 import HomesPage from "./pages/HomesPage";
 import HomesHub from "./pages/homes/HomesHub";
@@ -240,6 +241,7 @@ const App = () => {
           <Route path="/admin/partner-placements" element={<AdminPartnerPlacements />} />
           <Route path="/admin/listing-claims" element={<AdminListingClaims />} />
           <Route path="/admin/property-listings" element={<AdminPropertyListings />} />
+          <Route path="/admin/business-audit" element={<AdminBusinessAudit />} />
           <Route path="/admin/revenue" element={<AdminRevenue />} />
           <Route path="/admin/media-stories" element={<AdminMediaStories />} />
 

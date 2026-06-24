@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { businessSmsHref, businessTelHref } from "@/lib/businessContact";
 
 interface Vendor {
   id: string;
@@ -359,21 +360,29 @@ const ProfessionalNetwork = () => {
 
                 {/* Quick Actions */}
                 <div className="grid grid-cols-2 gap-3">
+                  {(() => {
+                    const telHref = businessTelHref(selectedVendor.vendor.phone);
+                    const smsHref = businessSmsHref(selectedVendor.vendor.phone);
+                    return <>
                   <Button 
                     className="h-12"
-                    onClick={() => window.open(`tel:${selectedVendor.vendor.phone}`, "_self")}
+                    disabled={!telHref}
+                    onClick={() => telHref && window.open(telHref, "_self")}
                   >
                     <Phone className="h-4 w-4 mr-2" />
-                    Call Now
+                    {telHref ? "Call Business" : "Phone unavailable"}
                   </Button>
                   <Button 
                     variant="outline"
                     className="h-12"
-                    onClick={() => window.open(`sms:${selectedVendor.vendor.phone}`, "_self")}
+                    disabled={!smsHref}
+                    onClick={() => smsHref && window.open(smsHref, "_self")}
                   >
                     <MessageCircle className="h-4 w-4 mr-2" />
                     Text
                   </Button>
+                    </>;
+                  })()}
                   {selectedVendor.vendor.email && (
                     <Button 
                       variant="outline"

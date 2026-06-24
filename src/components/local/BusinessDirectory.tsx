@@ -51,6 +51,7 @@ import {
 } from "@/hooks/usePaginatedBusinesses";
 import { hasRealBusinessMedia } from "@/lib/businessImages";
 import { trackGAEvent } from "@/components/GARouteTracker";
+import { businessSmsHref, businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
 const bizPayload = (b: Business, source: string) => ({
   business_id: (b as any).id,
@@ -96,6 +97,8 @@ const isOfficialCategory = (value: string | null): value is OfficialCategory =>
   Boolean(value && OFFICIAL_CATEGORIES.some((c) => c.toLowerCase() === value.toLowerCase()));
 
 const isMember = (b: Business) => Boolean(b.claimed ?? b.verified);
+const contactStatusOf = (b: Business) => (b as any).contactStatus ?? (b as any).contact_status ?? null;
+const hasBusinessPhone = (b: Business) => isValidBusinessPhone(b.phone, contactStatusOf(b));
 
 // Tier filter type now lives in usePaginatedBusinesses.
 
@@ -527,10 +530,15 @@ const maskWebsite = (w?: string) => {
 const ContactPreview = ({ b, claimed }: { b: Business; claimed: boolean }) => (
   <div className="mt-4 group/contact relative">
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-md px-3 py-2.5 flex flex-col gap-1.5 transition group-hover/contact:border-[#5eead4]/25">
-      {b.phone && (
+      {hasBusinessPhone(b) ? (
         <span className="inline-flex items-center gap-2 text-[11px] text-white/75">
           <Phone className="w-3 h-3 text-[#5eead4]/80 shrink-0" />
           {b.phone}
+        </span>
+      ) : (
+        <span className="inline-flex items-center gap-2 text-[11px] text-white/45">
+          <Phone className="w-3 h-3 text-white/30 shrink-0" />
+          Contact info pending
         </span>
       )}
       {b.website && (
@@ -608,16 +616,16 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
 
       {/* Premium visible contact row — horizontally scrollable on mobile, snap pills */}
       <div className="mt-5 -mx-1 px-1 flex gap-1.5 overflow-x-auto snap-x snap-mandatory scrollbar-none flex-nowrap md:flex-wrap">
-        {b.phone ? (
+        {hasBusinessPhone(b) ? (
           <a
-            href={`tel:${b.phone.replace(/[^\d+]/g, "")}`}
+            href={businessTelHref(b.phone, contactStatusOf(b)) ?? undefined}
             onClick={(e) => { e.stopPropagation(); fireBizAction("call", b, "directory_featured_tile"); }}
             className="snap-start shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/10 border border-[#5eead4]/25 text-[11px] text-[#5eead4] hover:bg-[#5eead4]/20 transition"
           >
-            <Phone className="w-3 h-3" /> Call
+            <Phone className="w-3 h-3" /> Call Business
           </a>
         ) : (
-          <GhostPill icon={<Phone className="w-3 h-3" />} label="Call" />
+          <GhostPill icon={<Phone className="w-3 h-3" />} label="Phone unavailable" />
         )}
         {b.website ? (
           <a
@@ -948,8 +956,8 @@ export const BusinessDetailModal = ({
   }
 
   const claimed = isMember(biz);
-  const telHref = biz.phone ? `tel:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
-  const smsHref = biz.phone ? `sms:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
+  const telHref = businessTelHref(biz.phone, contactStatusOf(biz)) ?? undefined;
+  const smsHref = businessSmsHref(biz.phone, contactStatusOf(biz)) ?? undefined;
   const dirHref = biz.address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(biz.address)}`
     : undefined;
@@ -1061,9 +1069,13 @@ export const BusinessDetailModal = ({
                   <MapPin className="w-3.5 h-3.5 text-[#5eead4]" /> {biz.address}
                 </span>
               )}
-              {biz.phone && (
+              {hasBusinessPhone(biz) ? (
                 <span className="inline-flex items-center gap-1.5">
                   <Phone className="w-3.5 h-3.5 text-[#5eead4]" /> {biz.phone}
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5">
+                  <Phone className="w-3.5 h-3.5 text-white/35" /> Contact info pending
                 </span>
               )}
               {biz.website && (
@@ -1214,10 +1226,15 @@ export const BusinessDetailModal = ({
           )}
 
           {/* Contact info grid */}
-          {claimed && (
-            <Section eyebrow="Visit" title="Contact & hours">
+          <Section eyebrow="Visit" title="Business contact information">
+              {!claimed && (
+                <div className="mb-4 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4 text-sm text-white/65">
+                  <p className="font-semibold text-white">This profile has not been claimed by the business owner.</p>
+                  <p className="mt-1 text-xs leading-relaxed">Capital District Nest is a local directory and community search platform. Business information may be incomplete or pending verification.</p>
+                </div>
+              )}
               <div className="grid sm:grid-cols-2 gap-3">
-                {biz.phone && <Info icon={<Phone className="w-4 h-4" />} label="Phone" value={biz.phone} />}
+                <Info icon={<Phone className="w-4 h-4" />} label="Phone" value={hasBusinessPhone(biz) ? biz.phone as string : "Not available yet"} />
                 {biz.email && <Info icon={<Mail className="w-4 h-4" />} label="Email" value={biz.email} />}
                 {biz.website && (
                   <a
@@ -1237,7 +1254,7 @@ export const BusinessDetailModal = ({
                 {biz.hours && <Info icon={<Clock className="w-4 h-4" />} label="Hours" value={biz.hours} />}
               </div>
 
-              {biz.socials && (
+              {claimed && biz.socials && (
                 <div className="mt-6 flex items-center gap-2 flex-wrap">
                   {biz.socials.facebook && <SocialBtn href={biz.socials.facebook} Icon={Facebook} />}
                   {biz.socials.instagram && <SocialBtn href={biz.socials.instagram} Icon={Instagram} />}
@@ -1249,7 +1266,6 @@ export const BusinessDetailModal = ({
               )}
 
             </Section>
-          )}
 
           {/* SECTION D2 — SOCIAL MEDIA & UPDATES (always visible) */}
           <SocialFootprint biz={biz} claimed={claimed} />
@@ -1285,8 +1301,10 @@ export const BusinessDetailModal = ({
             <div className="rounded-2xl border border-dashed border-[#5eead4]/30 bg-[#5eead4]/[0.04] p-7">
               <p className="text-sm font-semibold text-white">Is this your business?</p>
               <p className="mt-1.5 text-sm text-white/65 font-light">
-                Claim this profile to control photos, hours, contact info, social links,
-                events, and specials. Free during the pilot — concierge onboarding included.
+                Claim this profile to update your phone number, website, hours, photos, social links, and contact details.
+              </p>
+              <p className="mt-3 text-xs text-white/45 leading-relaxed">
+                This profile is part of the Capital District Nest local directory and may be incomplete or pending verification. Capital District Nest is not the listed business.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 <a href={`/claim-business?slug=${biz.slug}`} onClick={() => fireBizAction("claim", biz, "business_modal_claim_strip")} className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
@@ -1365,8 +1383,8 @@ const TikTokIcon = ({ className }: { className?: string }) => (
 /* ─────────────────────────  ACTION HUB  ───────────────────────── */
 
 const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: boolean }) => {
-  const tel = biz.phone ? `tel:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
-  const sms = biz.phone ? `sms:${biz.phone.replace(/[^\d+]/g, "")}` : undefined;
+  const tel = businessTelHref(biz.phone, contactStatusOf(biz)) ?? undefined;
+  const sms = businessSmsHref(biz.phone, contactStatusOf(biz)) ?? undefined;
   const mail = biz.email ? `mailto:${biz.email}` : undefined;
   const dir = biz.address
     ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(biz.address)}`
@@ -1419,7 +1437,7 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
           onClick={() => trackGAEvent.businessContactOpen(bizPayload(biz, "business_action_hub"))}
           className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#5eead4] text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
         >
-          <Phone className="w-4 h-4" /> Contact
+          <Phone className="w-4 h-4" /> Business Contact
         </button>
       </PopoverTrigger>
       <PopoverContent
@@ -1428,8 +1446,11 @@ const BusinessActionHub = ({ biz, claimed = false }: { biz: Business; claimed?: 
         className="w-[280px] p-2 rounded-3xl border border-white/10 bg-[#0B0F19]/95 backdrop-blur-xl text-white shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]"
       >
         <p className="px-3 pt-2 pb-1.5 text-[10px] uppercase tracking-[0.22em] font-semibold text-[#5eead4]">
-          Action Hub
+          Business contact information
         </p>
+        {!tel && (
+          <p className="px-3 pb-2 text-xs text-white/50">Phone unavailable</p>
+        )}
         <div className="flex flex-col">
           {rows.map((r) => {
             const external = r.href.startsWith("http");
