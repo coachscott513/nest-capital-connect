@@ -124,7 +124,7 @@ const AddListing = () => {
       console.error(err);
       toast({
         title: "Submission failed",
-        description: "Please try again or email scott@capitaldistrictnest.com.",
+        description: "Please try again or email team@capitaldistrictnest.com.",
         variant: "destructive",
       });
     } finally {

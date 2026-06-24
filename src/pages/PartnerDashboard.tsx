@@ -151,7 +151,7 @@ const PartnerDashboard = () => {
               Your account isn't linked to a business yet. Contact the Nest team to get your business profile set up.
             </p>
             <Button asChild>
-              <a href="mailto:scott@capitaldistrictnest.com?subject=Link My Business to Partner Dashboard">
+              <a href="mailto:team@capitaldistrictnest.com?subject=Link My Business to Partner Dashboard">
                 Contact Support
               </a>
             </Button>

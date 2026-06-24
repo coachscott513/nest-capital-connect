@@ -34,7 +34,7 @@ const DueDiligenceEngine = () => {
       `I would like the financial report for ${searchTerm}. Please send it to this email address.${dataPointsText}`
     );
     
-    window.location.href = `mailto:scott@capitaldistrictnest.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:team@capitaldistrictnest.com?subject=${subject}&body=${body}`;
   };
 
   return (

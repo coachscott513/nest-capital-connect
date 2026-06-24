@@ -24,7 +24,7 @@ function checkRateLimit(ip: string): boolean {
   return true;
 }
 
-const ADMIN_EMAIL = "scott@capitaldistrictnest.com";
+const ADMIN_EMAIL = "team@capitaldistrictnest.com";
 
 const esc = (s: unknown) =>
   String(s ?? "")

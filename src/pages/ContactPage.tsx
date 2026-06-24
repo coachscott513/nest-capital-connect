@@ -110,10 +110,10 @@ const ContactPage = () => (
             <Phone className="w-4 h-4" /> (518) 522-7265
           </a>
           <a
-            href="mailto:scott@capitaldistrictnest.com"
+            href="mailto:team@capitaldistrictnest.com"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#1d1d1f]/15 text-[#1d1d1f] hover:bg-[#1d1d1f]/[0.04] transition"
           >
-            <Mail className="w-4 h-4" /> scott@capitaldistrictnest.com
+            <Mail className="w-4 h-4" /> team@capitaldistrictnest.com
           </a>
         </div>
       </div>

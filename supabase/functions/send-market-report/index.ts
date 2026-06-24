@@ -65,7 +65,7 @@ const handler = async (req: Request): Promise<Response> => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Capital District Nest <hello@capitaldistrictnest.com>",
+        from: "Capital District Nest <team@capitaldistrictnest.com>",
         to: [email],
         subject: `Your ${esc(market)} Market Report`,
         html: `
@@ -111,8 +111,8 @@ const handler = async (req: Request): Promise<Response> => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Capital District Nest <hello@capitaldistrictnest.com>",
-        to: ["scott@capitaldistrictnest.com"],
+        from: "Capital District Nest <team@capitaldistrictnest.com>",
+        to: ["team@capitaldistrictnest.com"],
         subject: `NEW Market Report Request — ${esc(market)}`,
         html: `
           <h2>New Market Report Download</h2>
