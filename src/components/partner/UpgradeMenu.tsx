@@ -184,8 +184,8 @@ const UpgradeMenu = ({ partnerId }: UpgradeMenuProps) => {
 
       <p className="text-center text-sm text-muted-foreground mt-8">
         Questions about upgrades? Email us at{' '}
-        <a href="mailto:scott@capitaldistrictnest.com" className="text-primary hover:underline">
-          scott@capitaldistrictnest.com
+        <a href="mailto:team@capitaldistrictnest.com" className="text-primary hover:underline">
+          team@capitaldistrictnest.com
         </a>
       </p>
     </div>

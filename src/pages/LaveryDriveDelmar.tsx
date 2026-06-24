@@ -985,13 +985,13 @@ const LaveryDriveDelmar = () => {
                     <span className="font-medium">(518) 671-8048</span>
                   </a>
                   <a 
-                    href="mailto:scott@capitaldistrictnest.com" 
+                    href="mailto:team@capitaldistrictnest.com" 
                     className="flex items-center gap-3 text-foreground hover:text-primary transition-colors"
                   >
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                       <Mail className="h-5 w-5 text-primary" />
                     </div>
-                    <span className="font-medium">scott@capitaldistrictnest.com</span>
+                    <span className="font-medium">team@capitaldistrictnest.com</span>
                   </a>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">

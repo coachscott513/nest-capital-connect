@@ -139,7 +139,7 @@ const PropertySearchBar = ({ onSearch }: PropertySearchBarProps) => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <a
-              href={`mailto:scott@capitaldistrictnest.com?subject=${encodeURIComponent(getReportSubject())}&body=${getReportBody()}`}
+              href={`mailto:team@capitaldistrictnest.com?subject=${encodeURIComponent(getReportSubject())}&body=${getReportBody()}`}
               className="flex items-center justify-center gap-3 h-14 bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-base rounded-md transition-colors"
             >
               <Mail className="w-5 h-5" />

@@ -14,7 +14,7 @@ import { Phone, MessageCircle, Mail, Calendar } from 'lucide-react';
 
 const PHONE_NUMBER = '5185227265';
 const FORMATTED_PHONE = '(518) 522-7265';
-const EMAIL = 'hello@capitaldistrictnest.com';
+const EMAIL = 'team@capitaldistrictnest.com';
 const SMS_BODY = "Hi Capital District Nest, I have a question about a local listing.";
 
 const RED_CALL = '#DC1C2E';   // strict: call button only

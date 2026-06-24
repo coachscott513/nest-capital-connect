@@ -182,7 +182,7 @@ const FirstTimeHomebuyers = () => {
                     Text Scott
                   </Button>
                 </a>
-                <a href="mailto:scott@capitaldistrictnest.com" className="flex-1">
+                <a href="mailto:team@capitaldistrictnest.com" className="flex-1">
                   <Button variant="outline" className="w-full h-12 gap-2 border-[#C9A84C] text-[#C9A84C] hover:bg-[#C9A84C]/10 font-semibold">
                     <Mail className="w-4 h-4" />
                     Email Scott

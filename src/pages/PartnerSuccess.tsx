@@ -207,7 +207,7 @@ const PartnerSuccess = () => {
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <a href="mailto:scott@capitaldistrictnest.com">
+              <a href="mailto:team@capitaldistrictnest.com">
                 Contact an Agent
               </a>
             </Button>

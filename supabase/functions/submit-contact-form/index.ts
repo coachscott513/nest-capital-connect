@@ -262,8 +262,8 @@ const handler = async (req: Request): Promise<Response> => {
           },
           body: JSON.stringify({
             from: 'Capital District Nest <onboarding@resend.dev>',
-            reply_to: 'hello@capitaldistrictnest.com',
-            to: ['scott@capitaldistrictnest.com'],
+            reply_to: 'team@capitaldistrictnest.com',
+            to: ['team@capitaldistrictnest.com'],
             subject: `🎉 New ${formData.type} lead from ${formData.name}`,
             html: emailHtml,
           }),
@@ -286,7 +286,7 @@ const handler = async (req: Request): Promise<Response> => {
             },
             body: JSON.stringify({
               from: 'Capital District Nest <onboarding@resend.dev>',
-              reply_to: 'hello@capitaldistrictnest.com',
+              reply_to: 'team@capitaldistrictnest.com',
               to: [formData.email],
               subject: `Welcome to Capital District Nest Market Updates!`,
               html: `

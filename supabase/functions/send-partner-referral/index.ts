@@ -75,7 +75,7 @@ const handler = async (req: Request): Promise<Response> => {
       },
       body: JSON.stringify({
         from: "Nest Partner <notifications@capitaldistrictnest.com>",
-        to: ["scott@capitaldistrictnest.com"],
+        to: ["team@capitaldistrictnest.com"],
         subject: `New Partner Referral from ${esc(businessName)}`,
         html: `<div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;"><h1 style="color: #0d9488;">New Partner Referral</h1><div style="background: #f4f4f5; padding: 20px; border-radius: 8px; margin: 20px 0;"><h2 style="margin-top: 0;">Referred By</h2><p><strong>Business:</strong> ${esc(businessName)}</p><p><strong>Owner:</strong> ${esc(ownerName)}</p><p><strong>Town:</strong> ${esc(townSlug)}</p></div><div style="background: #ecfdf5; padding: 20px; border-radius: 8px; margin: 20px 0;"><h2 style="margin-top: 0; color: #0d9488;">Client Details</h2><p><strong>Name:</strong> ${esc(clientName)}</p><p><strong>Phone:</strong> ${esc(clientPhone)}</p><p><strong>Project Type:</strong> ${projectType === 'commercial' ? 'Commercial' : 'Residential'}</p></div><p style="color: #71717a; font-size: 14px;">This referral has been logged in the database.</p></div>`,
       }),

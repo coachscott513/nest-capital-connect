@@ -1449,8 +1449,8 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
                   (518) 522-7265
                 </a>
                 <span className="hidden sm:inline">•</span>
-                <a href="mailto:scott@capitaldistrictnest.com" className="hover:text-primary transition-colors">
-                  scott@capitaldistrictnest.com
+                <a href="mailto:team@capitaldistrictnest.com" className="hover:text-primary transition-colors">
+                  team@capitaldistrictnest.com
                 </a>
               </div>
             </div>

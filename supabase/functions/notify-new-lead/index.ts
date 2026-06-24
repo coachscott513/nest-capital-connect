@@ -10,7 +10,7 @@ const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 // Until capitaldistrictnest.com is verified inside Resend, the sandbox sender
 // (onboarding@resend.dev) can only deliver to the Resend account owner.
 // Override via `LEAD_NOTIFY_TO` once team@capitaldistrictnest.com is reachable.
-const TEAM_EMAIL = Deno.env.get("LEAD_NOTIFY_TO") || "scott@capitaldistrictnest.com";
+const TEAM_EMAIL = Deno.env.get("LEAD_NOTIFY_TO") || "team@capitaldistrictnest.com";
 // Once the domain is verified, set FROM via env: LEAD_NOTIFY_FROM="Capital District Nest <team@capitaldistrictnest.com>"
 const FROM = Deno.env.get("LEAD_NOTIFY_FROM") || "Capital District Nest <onboarding@resend.dev>";
 

@@ -19,7 +19,7 @@ interface LiveConversationButtonProps {
 
 const PHONE_NUMBER = '5185227265';
 const FORMATTED_PHONE = '(518) 522-7265';
-const EMAIL = 'scott@capitaldistrictnest.com';
+const EMAIL = 'team@capitaldistrictnest.com';
 
 const RED_CALL = '#DC1C2E'; // strict: call button only
 const TEAL = '#0d6e66';     // primary brand
