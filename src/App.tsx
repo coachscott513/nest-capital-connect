@@ -355,7 +355,7 @@ const App = () => {
               element={<PropertyBrief />}
             />
           ))}
-          <Route path="/homes/listings/:city/:addressSlug" element={<ListingPreview />} />
+          <Route path="/homes/listings/:townSlug/:addressSlug" element={<ListingPreview />} />
           <Route path="/homes/agents/:agentSlug" element={<AgentProfile />} />
           <Route path="/homes/rentals" element={<HomesRentals />} />
           <Route path="/homes/open-houses" element={<OpenHouses />} />
