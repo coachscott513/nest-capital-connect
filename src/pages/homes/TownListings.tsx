@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Link, useParams, Navigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, Calculator, Wallet, Sparkles } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
@@ -14,18 +14,27 @@ import FeaturedPropertyCard from "@/components/homes/FeaturedPropertyCard";
 import { getFeaturedForTown } from "@/data/featuredProperties";
 
 const TownListings = () => {
-  const { townSlug } = useParams<{ townSlug: string }>();
-  const town = resolveHomesTown(townSlug);
-  const board = useMemo(() => getTownBoard(townSlug), [townSlug]);
-  const preview = usePreviewListings(townSlug);
+  const { city } = useParams<{ city?: string }>();
+  const citySlug = city?.toLowerCase();
+  const town = resolveHomesTown(citySlug);
+  const board = useMemo(() => getTownBoard(citySlug), [citySlug]);
+  const preview = usePreviewListings(citySlug);
 
-  useEffect(() => { window.scrollTo(0, 0); }, [townSlug]);
+  useEffect(() => { window.scrollTo(0, 0); }, [citySlug]);
 
-  if (!townSlug || !town) return <Navigate to="/homes" replace />;
+  const isAllListings = !citySlug;
+  const townName = town?.name ?? "Capital District";
+  const townRouteSlug = town?.slug ?? citySlug ?? "capital-district";
 
-  const title = `${town.name} Property Links & Real Estate Resources | Capital District Nest`;
-  const description = `Browse ${town.name} property link previews, rentals, multi-family properties, land, investment opportunities, and local real estate services on Capital District Nest.`;
-  const canonical = `https://www.capitaldistrictnest.com/homes/listings/${town.slug}`;
+  const title = isAllListings
+    ? "Capital District Property Links & Real Estate Resources | Capital District Nest"
+    : `${townName} Property Links & Real Estate Resources | Capital District Nest`;
+  const description = isAllListings
+    ? "Browse Capital District property link previews, rentals, multi-family properties, land, investment opportunities, and local real estate services on Capital District Nest."
+    : `Browse ${townName} property link previews, rentals, multi-family properties, land, investment opportunities, and local real estate services on Capital District Nest.`;
+  const canonical = isAllListings
+    ? "https://www.capitaldistrictnest.com/homes/listings"
+    : `https://www.capitaldistrictnest.com/homes/listings/${townRouteSlug}`;
 
   const all = preview.all;
   const byCat = preview.byCategory;
@@ -80,15 +89,15 @@ const TownListings = () => {
             <ArrowLeft className="w-4 h-4" /> All towns
           </Link>
           <div className="eyebrow-apple text-[#5eead4] mb-3">
-            {town.name.toUpperCase()} PROPERTY BOARD
+            {isAllListings ? "CAPITAL DISTRICT PROPERTY BOARD" : `${townName.toUpperCase()} PROPERTY BOARD`}
           </div>
           <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-3">
-            {town.name} Property Links
+            {isAllListings ? "Capital District Property Links" : `${townName} Property Links`}
           </h1>
           <p className="body-apple-dark max-w-2xl mb-3">
             Browse property link previews, rentals, multi-family properties,
             land, investment opportunities, and local real estate resources
-            in {town.name}.
+            {isAllListings ? " across the Capital District." : ` in ${townName}.`}
           </p>
           <p className="text-sm text-white/55 max-w-2xl mb-8">
             Capital District Nest organizes local property links by town.
@@ -110,10 +119,10 @@ const TownListings = () => {
       </section>
 
       {/* FEATURED PROPERTY BRIEFS */}
-      {getFeaturedForTown(town.slug).length > 0 && (
+      {!isAllListings && getFeaturedForTown(townRouteSlug).length > 0 && (
         <section className="px-[5%] py-10 border-b border-white/10">
           <div className="max-w-6xl mx-auto space-y-5">
-            {getFeaturedForTown(town.slug).map((p) => (
+            {getFeaturedForTown(townRouteSlug).map((p) => (
               <FeaturedPropertyCard key={p.slug} property={p} />
             ))}
           </div>
@@ -127,23 +136,23 @@ const TownListings = () => {
             <div className="max-w-2xl">
               <div className="eyebrow-apple text-[#5eead4] mb-2">RUN THE NUMBERS</div>
               <h2 className="text-2xl font-semibold text-white mb-2">
-                Analyze a {town.name} Property
+                Analyze {isAllListings ? "a Local" : `a ${townName}`} Property
               </h2>
               <p className="text-sm text-white/70">
-                Run quick numbers on {town.name} rentals, multi-units, mixed-use
+                Run quick numbers on {isAllListings ? "local" : townName} rentals, multi-units, mixed-use
                 properties, and investment opportunities — or estimate the cash
                 you actually need to buy.
               </p>
             </div>
             <div className="flex flex-wrap gap-2 shrink-0">
               <Link
-                to={`/investment-analyzer?town=${town.slug}`}
+                to={isAllListings ? "/investment-analyzer" : `/investment-analyzer?town=${townRouteSlug}`}
                 className="btn-primary-apple inline-flex items-center gap-2"
               >
                 <Calculator className="w-4 h-4" /> Analyze Property
               </Link>
               <Link
-                to={`/investment-analyzer?tab=first-time-buyer&town=${town.slug}`}
+                to={isAllListings ? "/investment-analyzer?tab=first-time-buyer" : `/investment-analyzer?tab=first-time-buyer&town=${townRouteSlug}`}
                 className="btn-secondary-apple-dark inline-flex items-center gap-2"
               >
                 <Wallet className="w-4 h-4" /> First-Time Buyer Estimate
@@ -158,7 +167,7 @@ const TownListings = () => {
         <div className="max-w-6xl mx-auto">
           <div className="mb-5">
             <h2 className="text-xl font-semibold text-white">
-              {town.name} property board
+              {isAllListings ? "Capital District property board" : `${townName} property board`}
             </h2>
             <p className="text-sm text-white/55">
               Property link previews · Listing source pending unless a public
@@ -190,8 +199,8 @@ const TownListings = () => {
             {tabs.map((t) => (
               <TabsContent key={t.key} value={t.key} className="mt-5">
                 <PreviewListingsPanel
-                  townName={town.name}
-                  townSlug={town.slug}
+                  townName={townName}
+                  townSlug={townRouteSlug}
                   listings={t.rows}
                   category={t.category}
                 />
@@ -199,7 +208,7 @@ const TownListings = () => {
             ))}
 
             <TabsContent value="services" className="mt-5">
-              <LocalServices townName={town.name} townSlug={town.slug} services={board.services} />
+              <LocalServices townName={townName} townSlug={townRouteSlug} services={board.services} />
             </TabsContent>
           </Tabs>
         </div>
@@ -213,7 +222,7 @@ const TownListings = () => {
               Connected to a property here?
             </div>
             <div className="text-xl font-semibold text-white mb-2">
-              Claim a {town.name} listing link
+              Claim {isAllListings ? "a local" : `a ${townName}`} listing link
             </div>
             <p className="text-sm text-white/70 mb-4">
               Listing agents and authorized representatives can confirm the
@@ -228,14 +237,14 @@ const TownListings = () => {
               For Real Estate Professionals
             </div>
             <div className="text-xl font-semibold text-white mb-2">
-              Become a {town.name} town partner
+              Become {isAllListings ? "a Capital District" : `a ${townName}`} town partner
             </div>
             <p className="text-sm text-white/80 mb-4">
-              Get featured inside the {town.name} property board, buyer tools,
+              Get featured inside the {isAllListings ? "Capital District" : townName} property board, buyer tools,
               and local real estate services categories.
             </p>
             <Link
-              to={`/homes/partners?town=${town.slug}&intent=featured`}
+              to={isAllListings ? "/homes/partners?intent=featured" : `/homes/partners?town=${townRouteSlug}&intent=featured`}
               className="btn-dark-cta inline-flex"
             >
               <Sparkles className="w-4 h-4" /> Request Featured Placement
