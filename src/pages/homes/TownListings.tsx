@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, Calculator, Wallet, Sparkles } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
@@ -13,18 +13,35 @@ import PreviewListingsPanel from "@/components/homes/PreviewListingsPanel";
 import FeaturedPropertyCard from "@/components/homes/FeaturedPropertyCard";
 import { getFeaturedForTown } from "@/data/featuredProperties";
 
+const CITY_SLUG_ALIASES: Record<string, string> = {
+  saratoga: "saratoga-springs",
+};
+
+const cleanCitySlug = (value?: string) => {
+  const firstSegment = value?.split("/")[0]?.trim().toLowerCase();
+  return firstSegment || undefined;
+};
+
+const cityFromPathname = (pathname: string) => {
+  const match = pathname.match(/^\/homes\/listings\/?([^/]*)/i);
+  return cleanCitySlug(match?.[1]);
+};
+
 const TownListings = () => {
-  const { city } = useParams<{ city?: string }>();
-  const citySlug = city?.toLowerCase();
-  const town = resolveHomesTown(citySlug);
-  const board = useMemo(() => getTownBoard(citySlug), [citySlug]);
-  const preview = usePreviewListings(citySlug);
+  const { city, "*": splat } = useParams<{ city?: string; "*"?: string }>();
+  const location = useLocation();
+  const citySlug = cleanCitySlug(city) ?? cleanCitySlug(splat) ?? cityFromPathname(location.pathname);
+  const dataTownSlug = citySlug ? CITY_SLUG_ALIASES[citySlug] ?? citySlug : undefined;
+  const town = resolveHomesTown(dataTownSlug);
+  const board = useMemo(() => getTownBoard(dataTownSlug), [dataTownSlug]);
+  const preview = usePreviewListings(dataTownSlug);
 
   useEffect(() => { window.scrollTo(0, 0); }, [citySlug]);
 
   const isAllListings = !citySlug;
-  const townName = town?.name ?? "Capital District";
-  const townRouteSlug = town?.slug ?? citySlug ?? "capital-district";
+  const townName = citySlug === "saratoga" ? "Saratoga" : town?.name ?? "Capital District";
+  const townRouteSlug = citySlug ?? "capital-district";
+  const townDataSlug = dataTownSlug ?? townRouteSlug;
 
   const title = isAllListings
     ? "Capital District Property Links & Real Estate Resources | Capital District Nest"
@@ -119,10 +136,10 @@ const TownListings = () => {
       </section>
 
       {/* FEATURED PROPERTY BRIEFS */}
-      {!isAllListings && getFeaturedForTown(townRouteSlug).length > 0 && (
+      {!isAllListings && getFeaturedForTown(townDataSlug).length > 0 && (
         <section className="px-[5%] py-10 border-b border-white/10">
           <div className="max-w-6xl mx-auto space-y-5">
-            {getFeaturedForTown(townRouteSlug).map((p) => (
+            {getFeaturedForTown(townDataSlug).map((p) => (
               <FeaturedPropertyCard key={p.slug} property={p} />
             ))}
           </div>
@@ -200,7 +217,7 @@ const TownListings = () => {
               <TabsContent key={t.key} value={t.key} className="mt-5">
                 <PreviewListingsPanel
                   townName={townName}
-                  townSlug={townRouteSlug}
+                  townSlug={townDataSlug}
                   listings={t.rows}
                   category={t.category}
                 />
@@ -208,7 +225,7 @@ const TownListings = () => {
             ))}
 
             <TabsContent value="services" className="mt-5">
-              <LocalServices townName={townName} townSlug={townRouteSlug} services={board.services} />
+              <LocalServices townName={townName} townSlug={townDataSlug} services={board.services} />
             </TabsContent>
           </Tabs>
         </div>
