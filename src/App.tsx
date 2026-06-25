@@ -347,7 +347,10 @@ const App = () => {
           <Route path="/homes" element={<HomesHub />} />
           <Route path="/homes/search" element={<HomesPage />} />
           <Route path="/homes/listings" element={<TownListings />} />
+          <Route path="/homes/listings/" element={<TownListings />} />
           <Route path="/homes/listings/:city" element={<TownListings />} />
+          <Route path="/homes/listings/:city/" element={<TownListings />} />
+          <Route path="/homes/listings/*" element={<TownListings />} />
           {featuredProperties.map((p) => (
             <Route
               key={`${p.townSlug}-${p.slug}`}
