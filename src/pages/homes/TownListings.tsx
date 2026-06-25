@@ -6,7 +6,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { getHomesTown } from "@/data/homesTowns";
+import { resolveHomesTown } from "@/data/homesTowns";
 import { getTownBoard } from "@/data/townPropertyBoard";
 import { usePreviewListings } from "@/hooks/usePreviewListings";
 import PreviewListingsPanel from "@/components/homes/PreviewListingsPanel";
@@ -15,13 +15,13 @@ import { getFeaturedForTown } from "@/data/featuredProperties";
 
 const TownListings = () => {
   const { townSlug } = useParams<{ townSlug: string }>();
-  const town = getHomesTown(townSlug);
+  const town = resolveHomesTown(townSlug);
   const board = useMemo(() => getTownBoard(townSlug), [townSlug]);
   const preview = usePreviewListings(townSlug);
 
   useEffect(() => { window.scrollTo(0, 0); }, [townSlug]);
 
-  if (!town) return <Navigate to="/homes" replace />;
+  if (!townSlug || !town) return <Navigate to="/homes" replace />;
 
   const title = `${town.name} Property Links & Real Estate Resources | Capital District Nest`;
   const description = `Browse ${town.name} property link previews, rentals, multi-family properties, land, investment opportunities, and local real estate services on Capital District Nest.`;
