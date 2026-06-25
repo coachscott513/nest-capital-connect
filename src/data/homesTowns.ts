@@ -38,3 +38,21 @@ export function getHomesTown(slug?: string): HomesTown | undefined {
   if (!slug) return undefined;
   return HOMES_TOWNS.find((t) => t.slug === slug);
 }
+
+/**
+ * Resolve a town for the /homes/listings/:townSlug route.
+ * Always returns a town when a slug is provided — falls back to a
+ * derived display name so unknown slugs (e.g. towns only present in
+ * the property_listings table or sitemap) still render a real page
+ * instead of redirecting to /homes.
+ */
+export function resolveHomesTown(slug?: string): HomesTown | undefined {
+  if (!slug) return undefined;
+  const known = HOMES_TOWNS.find((t) => t.slug === slug);
+  if (known) return known;
+  const name = slug
+    .split("-")
+    .map((s) => (s.length ? s[0].toUpperCase() + s.slice(1) : s))
+    .join(" ");
+  return { slug, name, county: "Capital District" };
+}
