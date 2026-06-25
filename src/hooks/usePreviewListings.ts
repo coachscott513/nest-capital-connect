@@ -42,18 +42,14 @@ export function usePreviewListings(townSlug?: string): PreviewListingsState {
     let cancelled = false;
     setState((current) => ({ ...current, loading: true, error: null }));
     (async () => {
-      let query = supabase
+      const query = supabase
         .from("property_listings")
         .select("id,mls_number,address,address_slug,price,property_category,property_subtype,town_slug,city,county,acres,year_built,days_on_market,agent_name,agent_slug,agent_phone,agent_email,agent_website,public_listing_url,claim_status,is_featured")
-        .neq("status", "archived")
+        .neq("status", "archived");
+
+      const { data, error } = await (townSlug ? query.eq("town_slug", townSlug) : query)
         .order("days_on_market", { ascending: true })
         .limit(500);
-
-      if (townSlug) {
-        query = query.eq("town_slug", townSlug);
-      }
-
-      const { data, error } = await query;
       if (cancelled) return;
       if (error) {
         setState({ loading: false, error: error.message, all: [], byCategory: {}, agentCount: 0 });
