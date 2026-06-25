@@ -34,6 +34,8 @@ import PartnerInquiry from "./pages/homes/PartnerInquiry";
 import ClaimListing from "./pages/homes/ClaimListing";
 import AgentProfile from "./pages/homes/AgentProfile";
 import ListingPreview from "./pages/homes/ListingPreview";
+import PropertyBrief from "./pages/homes/PropertyBrief";
+import { featuredProperties } from "./data/featuredProperties";
 import RealEstateHub from "./pages/RealEstateHub";
 import Restaurants from "./pages/Restaurants";
 import HomeServices from "./pages/HomeServices";
@@ -346,6 +348,13 @@ const App = () => {
           <Route path="/homes/search" element={<HomesPage />} />
           <Route path="/homes/listings" element={<HomesHub />} />
           <Route path="/homes/listings/:townSlug" element={<TownListings />} />
+          {featuredProperties.map((p) => (
+            <Route
+              key={`${p.townSlug}-${p.slug}`}
+              path={`/homes/listings/${p.townSlug}/${p.slug}`}
+              element={<PropertyBrief />}
+            />
+          ))}
           <Route path="/homes/listings/:townSlug/:addressSlug" element={<ListingPreview />} />
           <Route path="/homes/agents/:agentSlug" element={<AgentProfile />} />
           <Route path="/homes/rentals" element={<HomesRentals />} />
