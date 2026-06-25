@@ -10,6 +10,8 @@ import { getHomesTown } from "@/data/homesTowns";
 import { getTownBoard } from "@/data/townPropertyBoard";
 import { usePreviewListings } from "@/hooks/usePreviewListings";
 import PreviewListingsPanel from "@/components/homes/PreviewListingsPanel";
+import FeaturedPropertyCard from "@/components/homes/FeaturedPropertyCard";
+import { getFeaturedForTown } from "@/data/featuredProperties";
 
 const TownListings = () => {
   const { townSlug } = useParams<{ townSlug: string }>();
@@ -106,6 +108,17 @@ const TownListings = () => {
           )}
         </div>
       </section>
+
+      {/* FEATURED PROPERTY BRIEFS */}
+      {getFeaturedForTown(town.slug).length > 0 && (
+        <section className="px-[5%] py-10 border-b border-white/10">
+          <div className="max-w-6xl mx-auto space-y-5">
+            {getFeaturedForTown(town.slug).map((p) => (
+              <FeaturedPropertyCard key={p.slug} property={p} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ANALYZER CTA */}
       <section className="px-[5%] py-8 border-b border-white/10">
