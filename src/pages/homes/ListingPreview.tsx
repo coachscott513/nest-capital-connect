@@ -49,7 +49,7 @@ const ListingPreview = () => {
       setLoading(true);
       const { data } = await supabase
         .from("property_listings")
-        .select("*")
+        .select("id,mls_number,status,address,address_slug,city,town_slug,county,price,property_category,property_subtype,beds,baths,sqft,acres,year_built,days_on_market,agent_name,agent_slug,agent_website,brokerage_name,public_listing_url,is_indexable,claim_status")
         .eq("town_slug", townSlug)
         .eq("address_slug", addressSlug)
         .neq("status", "archived")
