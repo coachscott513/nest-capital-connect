@@ -181,12 +181,9 @@ const ListingPreview = () => {
               <div className="text-white/65 text-sm mt-1">{row.brokerage_name}</div>
             )}
             <div className="mt-4 space-y-2 text-sm">
-              {row?.agent_phone && (
-                <a href={`tel:${row.agent_phone}`} className="block text-white/85 hover:text-[#5eead4]">{row.agent_phone}</a>
-              )}
-              {row?.agent_email && (
-                <a href={`mailto:${row.agent_email}`} className="block text-white/85 hover:text-[#5eead4] truncate">{row.agent_email}</a>
-              )}
+              <p className="text-white/55 text-xs leading-relaxed">
+                Agent contact details are not published on Capital District Nest. Use the claim flow below to verify your profile and add a contact link.
+              </p>
               {row?.agent_website && (
                 <a href={row.agent_website} target="_blank" rel="noopener noreferrer" className="block text-white/85 hover:text-[#5eead4] truncate">Website</a>
               )}
