@@ -37,7 +37,7 @@ const AgentProfile = () => {
     (async () => {
       setLoading(true);
       const [{ data: a }, { data: l }] = await Promise.all([
-        supabase.from("listing_agents").select("*").eq("slug", agentSlug).maybeSingle(),
+        supabase.from("listing_agents").select("slug,name,brokerage_name,brokerage_slug,website,photo_url,claim_status,is_featured,active_count,towns").eq("slug", agentSlug).maybeSingle(),
         supabase
           .from("property_listings")
           .select(
