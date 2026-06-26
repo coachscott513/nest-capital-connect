@@ -14,8 +14,6 @@ type AgentRow = {
   name: string;
   brokerage_name: string | null;
   brokerage_slug: string | null;
-  phone: string | null;
-  email: string | null;
   website: string | null;
   photo_url: string | null;
   claim_status: string;
