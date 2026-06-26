@@ -27,8 +27,6 @@ type Row = {
   days_on_market: number | null;
   agent_name: string | null;
   agent_slug: string | null;
-  agent_phone: string | null;
-  agent_email: string | null;
   agent_website: string | null;
   brokerage_name: string | null;
   public_listing_url: string | null;
@@ -51,7 +49,7 @@ const ListingPreview = () => {
       setLoading(true);
       const { data } = await supabase
         .from("property_listings")
-        .select("*")
+        .select("id,mls_number,status,address,address_slug,city,town_slug,county,price,property_category,property_subtype,beds,baths,sqft,acres,year_built,days_on_market,agent_name,agent_slug,agent_website,brokerage_name,public_listing_url,is_indexable,claim_status")
         .eq("town_slug", townSlug)
         .eq("address_slug", addressSlug)
         .neq("status", "archived")
@@ -183,12 +181,9 @@ const ListingPreview = () => {
               <div className="text-white/65 text-sm mt-1">{row.brokerage_name}</div>
             )}
             <div className="mt-4 space-y-2 text-sm">
-              {row?.agent_phone && (
-                <a href={`tel:${row.agent_phone}`} className="block text-white/85 hover:text-[#5eead4]">{row.agent_phone}</a>
-              )}
-              {row?.agent_email && (
-                <a href={`mailto:${row.agent_email}`} className="block text-white/85 hover:text-[#5eead4] truncate">{row.agent_email}</a>
-              )}
+              <p className="text-white/55 text-xs leading-relaxed">
+                Agent contact details are not published on Capital District Nest. Use the claim flow below to verify your profile and add a contact link.
+              </p>
               {row?.agent_website && (
                 <a href={row.agent_website} target="_blank" rel="noopener noreferrer" className="block text-white/85 hover:text-[#5eead4] truncate">Website</a>
               )}

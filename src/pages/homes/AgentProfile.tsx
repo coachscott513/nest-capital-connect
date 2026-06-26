@@ -14,8 +14,6 @@ type AgentRow = {
   name: string;
   brokerage_name: string | null;
   brokerage_slug: string | null;
-  phone: string | null;
-  email: string | null;
   website: string | null;
   photo_url: string | null;
   claim_status: string;
@@ -39,11 +37,11 @@ const AgentProfile = () => {
     (async () => {
       setLoading(true);
       const [{ data: a }, { data: l }] = await Promise.all([
-        supabase.from("listing_agents").select("*").eq("slug", agentSlug).maybeSingle(),
+        supabase.from("listing_agents").select("slug,name,brokerage_name,brokerage_slug,website,photo_url,claim_status,is_featured,active_count,towns").eq("slug", agentSlug).maybeSingle(),
         supabase
           .from("property_listings")
           .select(
-            "id,mls_number,address,address_slug,price,property_category,property_subtype,town_slug,city,county,acres,year_built,days_on_market,agent_name,agent_slug,agent_phone,agent_email,agent_website,public_listing_url,claim_status,is_featured"
+            "id,mls_number,address,address_slug,price,property_category,property_subtype,town_slug,city,county,acres,year_built,days_on_market,agent_name,agent_slug,agent_website,public_listing_url,claim_status,is_featured"
           )
           .eq("agent_slug", agentSlug)
           .neq("status", "archived")
@@ -137,15 +135,13 @@ const AgentProfile = () => {
           </div>
 
           <div className="grid sm:grid-cols-3 gap-3">
-            {agent?.phone && (
-              <a href={`tel:${agent.phone}`} className="flex items-center gap-2 text-sm text-white/85 rounded-lg border border-white/10 bg-white/5 px-3 py-2 hover:border-[#5eead4]/40">
-                <Phone className="w-4 h-4 text-[#5eead4]" /> {agent.phone}
-              </a>
-            )}
-            {agent?.email && (
-              <a href={`mailto:${agent.email}`} className="flex items-center gap-2 text-sm text-white/85 rounded-lg border border-white/10 bg-white/5 px-3 py-2 hover:border-[#5eead4]/40 truncate">
-                <Mail className="w-4 h-4 text-[#5eead4] shrink-0" /> <span className="truncate">{agent.email}</span>
-              </a>
+            {!isClaimed && (
+              <Link
+                to={`/homes/claim-listing?agent=${encodeURIComponent(agentSlug)}`}
+                className="flex items-center gap-2 text-sm text-white/85 rounded-lg border border-[#5eead4]/40 bg-[#5eead4]/10 px-3 py-2 hover:bg-[#5eead4]/20"
+              >
+                <ShieldCheck className="w-4 h-4 text-[#5eead4]" /> Claim profile to add contact info
+              </Link>
             )}
             {agent?.website && (
               <a href={agent.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-white/85 rounded-lg border border-white/10 bg-white/5 px-3 py-2 hover:border-[#5eead4]/40 truncate">

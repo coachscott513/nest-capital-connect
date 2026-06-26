@@ -17,8 +17,6 @@ export type PreviewListing = {
   days_on_market: number | null;
   agent_name: string | null;
   agent_slug: string | null;
-  agent_phone: string | null;
-  agent_email: string | null;
   agent_website: string | null;
   public_listing_url: string | null;
   claim_status: string;
@@ -44,7 +42,7 @@ export function usePreviewListings(townSlug?: string): PreviewListingsState {
     (async () => {
       const query = supabase
         .from("property_listings")
-        .select("id,mls_number,address,address_slug,price,property_category,property_subtype,town_slug,city,county,acres,year_built,days_on_market,agent_name,agent_slug,agent_phone,agent_email,agent_website,public_listing_url,claim_status,is_featured")
+        .select("id,mls_number,address,address_slug,price,property_category,property_subtype,town_slug,city,county,acres,year_built,days_on_market,agent_name,agent_slug,agent_website,public_listing_url,claim_status,is_featured")
         .neq("status", "archived");
 
       const { data, error } = await (townSlug ? query.eq("town_slug", townSlug) : query)
