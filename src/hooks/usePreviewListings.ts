@@ -17,8 +17,6 @@ export type PreviewListing = {
   days_on_market: number | null;
   agent_name: string | null;
   agent_slug: string | null;
-  agent_phone: string | null;
-  agent_email: string | null;
   agent_website: string | null;
   public_listing_url: string | null;
   claim_status: string;
