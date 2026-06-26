@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams, Navigate } from "react-router-dom";
+import { Link, useParams, useLocation, Navigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import {
   ArrowLeft,
@@ -34,7 +34,14 @@ const fmtMoney = (n: number) =>
 const fmtPct = (n: number) => `${(n * 100).toFixed(2)}%`;
 
 const PropertyBrief = () => {
-  const { townSlug, addressSlug } = useParams<{ townSlug: string; addressSlug: string }>();
+  const params = useParams<{ townSlug: string; addressSlug: string }>();
+  const location = useLocation();
+  // Featured-property routes are registered with literal path segments, so
+  // useParams() returns empty. Fall back to parsing the pathname so the
+  // "View Property Brief" button resolves correctly in both cases.
+  const pathParts = location.pathname.replace(/\/+$/, "").split("/");
+  const townSlug = params.townSlug ?? pathParts[pathParts.length - 2];
+  const addressSlug = params.addressSlug ?? pathParts[pathParts.length - 1];
   const town = getHomesTown(townSlug);
   const property = getFeaturedProperty(townSlug, addressSlug);
   const [agentOpen, setAgentOpen] = useState(false);
