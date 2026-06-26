@@ -41,7 +41,7 @@ const AgentProfile = () => {
         supabase
           .from("property_listings")
           .select(
-            "id,mls_number,address,address_slug,price,property_category,property_subtype,town_slug,city,county,acres,year_built,days_on_market,agent_name,agent_slug,agent_phone,agent_email,agent_website,public_listing_url,claim_status,is_featured"
+            "id,mls_number,address,address_slug,price,property_category,property_subtype,town_slug,city,county,acres,year_built,days_on_market,agent_name,agent_slug,agent_website,public_listing_url,claim_status,is_featured"
           )
           .eq("agent_slug", agentSlug)
           .neq("status", "archived")
