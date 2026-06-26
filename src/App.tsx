@@ -346,11 +346,7 @@ const App = () => {
           {/* Simplified canonical destinations from main nav */}
           <Route path="/homes" element={<HomesHub />} />
           <Route path="/homes/search" element={<HomesPage />} />
-          <Route path="/homes/listings" element={<TownListings />} />
-          <Route path="/homes/listings/" element={<TownListings />} />
-          <Route path="/homes/listings/:city" element={<TownListings />} />
-          <Route path="/homes/listings/:city/" element={<TownListings />} />
-          <Route path="/homes/listings/*" element={<TownListings />} />
+          <Route path="/homes/listings/:townSlug/:addressSlug" element={<ListingPreview />} />
           {featuredProperties.map((p) => (
             <Route
               key={`${p.townSlug}-${p.slug}`}
@@ -358,7 +354,8 @@ const App = () => {
               element={<PropertyBrief />}
             />
           ))}
-          <Route path="/homes/listings/:townSlug/:addressSlug" element={<ListingPreview />} />
+          <Route path="/homes/listings/:city" element={<TownListings />} />
+          <Route path="/homes/listings" element={<TownListings />} />
           <Route path="/homes/agents/:agentSlug" element={<AgentProfile />} />
           <Route path="/homes/rentals" element={<HomesRentals />} />
           <Route path="/homes/open-houses" element={<OpenHouses />} />
