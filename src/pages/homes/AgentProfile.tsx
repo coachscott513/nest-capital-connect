@@ -135,15 +135,13 @@ const AgentProfile = () => {
           </div>
 
           <div className="grid sm:grid-cols-3 gap-3">
-            {agent?.phone && (
-              <a href={`tel:${agent.phone}`} className="flex items-center gap-2 text-sm text-white/85 rounded-lg border border-white/10 bg-white/5 px-3 py-2 hover:border-[#5eead4]/40">
-                <Phone className="w-4 h-4 text-[#5eead4]" /> {agent.phone}
-              </a>
-            )}
-            {agent?.email && (
-              <a href={`mailto:${agent.email}`} className="flex items-center gap-2 text-sm text-white/85 rounded-lg border border-white/10 bg-white/5 px-3 py-2 hover:border-[#5eead4]/40 truncate">
-                <Mail className="w-4 h-4 text-[#5eead4] shrink-0" /> <span className="truncate">{agent.email}</span>
-              </a>
+            {!isClaimed && (
+              <Link
+                to={`/homes/claim-listing?agent=${encodeURIComponent(agentSlug)}`}
+                className="flex items-center gap-2 text-sm text-white/85 rounded-lg border border-[#5eead4]/40 bg-[#5eead4]/10 px-3 py-2 hover:bg-[#5eead4]/20"
+              >
+                <ShieldCheck className="w-4 h-4 text-[#5eead4]" /> Claim profile to add contact info
+              </Link>
             )}
             {agent?.website && (
               <a href={agent.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-white/85 rounded-lg border border-white/10 bg-white/5 px-3 py-2 hover:border-[#5eead4]/40 truncate">
