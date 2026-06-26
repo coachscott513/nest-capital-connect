@@ -28,9 +28,9 @@ const cityFromPathname = (pathname: string) => {
 };
 
 const TownListings = () => {
-  const { city, "*": splat } = useParams<{ city?: string; "*"?: string }>();
+  const { city } = useParams<{ city?: string }>();
   const location = useLocation();
-  const citySlug = cleanCitySlug(city) ?? cleanCitySlug(splat) ?? cityFromPathname(location.pathname);
+  const citySlug = cleanCitySlug(city) ?? cityFromPathname(location.pathname);
   const dataTownSlug = citySlug ? CITY_SLUG_ALIASES[citySlug] ?? citySlug : undefined;
   const town = resolveHomesTown(dataTownSlug);
   const board = useMemo(() => getTownBoard(dataTownSlug), [dataTownSlug]);
