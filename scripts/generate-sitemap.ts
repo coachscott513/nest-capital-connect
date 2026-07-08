@@ -41,6 +41,7 @@ const STATIC: Entry[] = [
   { path: "/buyer-roadmap", changefreq: "monthly", priority: "0.8" },
   { path: "/reviews", changefreq: "monthly", priority: "0.7" },
   { path: "/pricing", changefreq: "monthly", priority: "0.7" },
+  { path: "/business", changefreq: "weekly", priority: "0.9" },
   { path: "/claim-business", changefreq: "monthly", priority: "0.6" },
   // Living-In town pages (canonical: /living-in/:slug)
   ...[
