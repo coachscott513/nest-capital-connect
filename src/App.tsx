@@ -35,6 +35,7 @@ import ClaimListing from "./pages/homes/ClaimListing";
 import AgentProfile from "./pages/homes/AgentProfile";
 import ListingPreview from "./pages/homes/ListingPreview";
 import PropertyBrief from "./pages/homes/PropertyBrief";
+import BusinessLanding from "./pages/BusinessLanding";
 import { featuredProperties } from "./data/featuredProperties";
 import RealEstateHub from "./pages/RealEstateHub";
 import Restaurants from "./pages/Restaurants";
@@ -478,6 +479,7 @@ const App = () => {
           {/* Concierge inquiry form for Featured / Spotlight upgrades (pilot mode) */}
           <Route path="/claim-business" element={<ClaimBusiness />} />
           <Route path="/get-listed" element={<ClaimBusiness />} />
+          <Route path="/business" element={<BusinessLanding />} />
           <Route path="/biz/:slug" element={<BizPage />} />
           
           {/* Partner Dashboard */}
