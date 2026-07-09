@@ -66,7 +66,7 @@ const Card = ({
   body: string;
 }) => (
   <div className="rounded-2xl border border-white/10 bg-[#1E2230] p-6 md:p-7 hover:border-[#5eead4]/40 transition">
-    {Icon && <Icon className="w-5 h-5 text-[#5eead4] mb-4" strokeWidth={1.5} />}
+    {Icon && <Icon className="w-5 h-5 text-[#5eead4] mb-4" />}
     <h3 className="text-lg font-semibold text-white tracking-tight">{title}</h3>
     <p className="mt-2 text-sm text-white/65 leading-relaxed">{body}</p>
   </div>
