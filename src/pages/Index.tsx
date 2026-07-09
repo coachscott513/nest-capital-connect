@@ -891,83 +891,8 @@ const Index = () => {
         overlay="strong"
       />
 
-      {/* HERO 8 — For Local Businesses → /business */}
-      <section className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06]">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: GLOW_BG.teal }}
-          aria-hidden
-        />
-        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-24 md:py-32">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:col-span-7"
-            >
-              <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
-                <Building2 className="w-3 h-3" /> For Local Businesses
-              </p>
-              <h2 className="mt-6 text-[2.5rem] sm:text-5xl md:text-[4.25rem] font-semibold tracking-[-0.04em] leading-[1.02] text-white">
-                Get found locally.<br className="hidden sm:block" />{" "}
-                Respond faster.{" "}
-                <span className="text-[#5eead4]">Run smoother.</span>
-              </h2>
-              <p className="mt-7 text-base md:text-xl text-white/75 font-light leading-relaxed max-w-2xl">
-                Capital District Nest helps local businesses improve their local visibility, claim their profile, add better contact tools, and use simple automation to save time.
-              </p>
-              <p className="mt-4 text-sm md:text-base text-white/55 max-w-2xl">
-                We're building better local search for Capital District communities — connecting residents with businesses, services, events, homes, and local resources by town.
-              </p>
-              <div className="mt-10 flex flex-wrap gap-3">
-                <Link
-                  to="/business"
-                  onClick={() => trackGAEvent.pricingClick({ source_location: "homepage_hero_business" })}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
-                >
-                  See Business Tools <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  to="/claim-business"
-                  onClick={() => trackGAEvent.claimProfileClick({ source_location: "homepage_hero_business" } as any)}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.08] backdrop-blur text-white border border-white/20 text-sm font-semibold hover:bg-white/[0.16] transition"
-                >
-                  Claim Your Business
-                </Link>
-              </div>
-              <div className="mt-8 flex flex-wrap gap-2">
-                {["Local search visibility","Business profile upgrades","Quote request forms","Booking links","AI-assisted content","Auto-reply templates"].map((chip) => (
-                  <span key={chip} className="px-3 py-1.5 rounded-full text-xs text-white/70 border border-white/12 bg-white/[0.03]">
-                    {chip}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:col-span-5 grid grid-cols-2 gap-4"
-            >
-              {[
-                { title: "Local Visibility", body: "Show up in town pages, category searches, and local discovery." },
-                { title: "Customer Inquiries", body: "Quote requests, booking links, and cleaner contact paths." },
-                { title: "Simple Automation", body: "Auto-replies, follow-ups, and workflow shortcuts." },
-                { title: "AI Content Help", body: "Descriptions, FAQs, social posts, and review responses." },
-              ].map((c) => (
-                <div key={c.title} className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur p-5 hover:border-[#5eead4]/40 transition">
-                  <div className="text-sm font-semibold text-white tracking-tight">{c.title}</div>
-                  <p className="mt-2 text-xs text-white/65 leading-relaxed">{c.body}</p>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
+
 
       <PartnerModal partner={partner} onClose={() => setPartner(null)} />
       <FinanceExpertModal open={financeOpen} onClose={() => setFinanceOpen(false)} />
