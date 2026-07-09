@@ -703,10 +703,29 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#0B0F19]">
       <SEOHead
-        title="Capital District Nest | Discover the Capital District, Neighborhood by Neighborhood"
-        description="A local discovery platform for the Capital District. Explore neighborhoods, businesses, events, restaurants, services, homes, and town guides — from Lark Street to Saratoga, Delmar, Troy, and Schenectady."
-        keywords="Capital District, local discovery platform, neighborhood guide Albany NY, Lark Street, Broadway Saratoga, Downtown Troy, Four Corners Delmar, Capital District businesses, Capital District events, Capital District homes"
-        structuredData={localBusinessSchema}
+        title="Capital District Nest | Local Guide & Real Estate in Albany, Saratoga & Troy"
+        description="Your local guide to the Capital District — explore neighborhoods, businesses, restaurants, events, and real estate across Albany, Saratoga Springs, Troy, Schenectady & Delmar NY."
+        keywords="Capital District, local discovery platform, neighborhood guide Albany NY, Capital District real estate, Saratoga Springs homes, Troy NY homes, Schenectady homes, Delmar NY"
+        structuredData={[
+          localBusinessSchema,
+          {
+            "@context": "https://schema.org",
+            "@type": "RealEstateAgent",
+            "name": "Scott Alvarez",
+            "url": "https://capitaldistrictnest.com",
+            "worksFor": {
+              "@type": "RealEstateAgent",
+              "name": "RE/MAX Solutions",
+            },
+            "areaServed": [
+              { "@type": "City", "name": "Albany", "addressRegion": "NY" },
+              { "@type": "City", "name": "Saratoga Springs", "addressRegion": "NY" },
+              { "@type": "City", "name": "Troy", "addressRegion": "NY" },
+              { "@type": "City", "name": "Schenectady", "addressRegion": "NY" },
+              { "@type": "City", "name": "Delmar", "addressRegion": "NY" },
+            ],
+          },
+        ]}
       />
 
       <CleanHeader />
