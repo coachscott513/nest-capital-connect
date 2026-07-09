@@ -43,6 +43,17 @@ const STATIC: Entry[] = [
   { path: "/pricing", changefreq: "monthly", priority: "0.7" },
   { path: "/business", changefreq: "weekly", priority: "0.9" },
   { path: "/claim-business", changefreq: "monthly", priority: "0.6" },
+  // Market Reports — open-access housing data
+  { path: "/market-reports", changefreq: "weekly", priority: "0.9" },
+  ...[
+    "albany", "troy", "schenectady", "saratoga-springs", "delmar",
+    "clifton-park", "niskayuna", "guilderland", "colonie", "latham",
+    "queensbury", "lake-george", "amsterdam", "gloversville",
+  ].map((slug) => ({
+    path: `/market-reports/${slug}`,
+    changefreq: "weekly" as const,
+    priority: "0.85",
+  })),
   // Living-In town pages (canonical: /living-in/:slug)
   ...[
     "delmar", "albany", "troy", "schenectady", "saratoga-springs",

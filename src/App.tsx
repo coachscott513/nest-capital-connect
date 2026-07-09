@@ -36,6 +36,8 @@ import AgentProfile from "./pages/homes/AgentProfile";
 import ListingPreview from "./pages/homes/ListingPreview";
 import PropertyBrief from "./pages/homes/PropertyBrief";
 import BusinessLanding from "./pages/BusinessLanding";
+import MarketReport from "./pages/MarketReport";
+import MarketReportsIndex from "./pages/MarketReportsIndex";
 import { featuredProperties } from "./data/featuredProperties";
 import RealEstateHub from "./pages/RealEstateHub";
 import Restaurants from "./pages/Restaurants";
@@ -504,6 +506,10 @@ const App = () => {
           <Route path="/search/foreclosures" element={<ForeclosuresHub />} />
           <Route path="/search/land" element={<LandHub />} />
           <Route path="/search/rentals" element={<RentalsSearchHub />} />
+
+          {/* Market Reports (open-access authority assets) */}
+          <Route path="/market-reports" element={<MarketReportsIndex />} />
+          <Route path="/market-reports/:town" element={<MarketReport />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFoundOrLegacyTown />} />
