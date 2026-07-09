@@ -799,8 +799,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* NEIGHBORHOOD EXPLORER — signature local discovery feature */}
-      <NeighborhoodExplorer />
+      {/* TOWN EXPLORER — premium local coverage by town */}
+      <TownExplorerSection />
 
       {/* NEW TOWN LISTINGS — gateway to /homes hub */}
       <NewTownListingsTeaser />
