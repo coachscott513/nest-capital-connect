@@ -250,16 +250,20 @@ const BusinessLanding = () => {
           }}
         />
         <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-28 md:pt-36 pb-20 md:pb-28 text-center">
-          <Eyebrow>Local Search · Business Tools · Community Visibility</Eyebrow>
+          <Eyebrow>Local Search · AI Tools · Business Automation</Eyebrow>
+          <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#5eead4]/30 bg-[#5eead4]/[0.06] px-4 py-1.5 text-xs md:text-sm font-medium tracking-tight text-[#5eead4]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#5eead4]" />
+            Your local AI growth partner.
+          </div>
           <h1 className="mt-6 text-4xl sm:text-5xl md:text-[5rem] font-semibold tracking-[-0.045em] leading-[1.02] text-white">
             Get found locally.<br className="hidden sm:block" /> Respond faster.{" "}
             <span className="text-[#5eead4]">Run smoother.</span>
           </h1>
           <p className="mt-7 text-base md:text-xl text-white/75 font-light leading-relaxed max-w-3xl mx-auto">
-            Capital District Nest helps local businesses improve their visibility, claim their profile, add better contact tools, and use simple automation to save time.
+            Capital District Nest helps local businesses improve visibility, claim and upgrade their profile, automate simple customer tasks, and use practical AI tools to save time.
           </p>
           <p className="mt-5 text-sm md:text-base text-white/55 max-w-2xl mx-auto">
-            We are a local startup building better local search for the Capital District — helping residents discover businesses, services, events, homes, and community resources by town.
+            We're a local startup building better local search for the Capital District — helping residents discover businesses, services, events, homes, and community resources by town.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <PrimaryBtn to="/claim-business">Claim Your Business</PrimaryBtn>
