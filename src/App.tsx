@@ -505,6 +505,10 @@ const App = () => {
           <Route path="/search/land" element={<LandHub />} />
           <Route path="/search/rentals" element={<RentalsSearchHub />} />
 
+          {/* Market Reports (open-access authority assets) */}
+          <Route path="/market-reports" element={<MarketReportsIndex />} />
+          <Route path="/market-reports/:town" element={<MarketReport />} />
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFoundOrLegacyTown />} />
           </Routes>
