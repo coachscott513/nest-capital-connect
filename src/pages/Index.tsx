@@ -11,7 +11,7 @@ import FloatingOmniSearch from "@/components/home/FloatingOmniSearch";
 import CategoryFeatureGrid from "@/components/home/CategoryFeatureGrid";
 import EndlessEntertainment from "@/components/home/EndlessEntertainment";
 import WellnessRail from "@/components/home/WellnessRail";
-import NeighborhoodExplorer from "@/components/home/NeighborhoodExplorer";
+import TownExplorerSection from "@/components/home/TownExplorerSection";
 import NewTownListingsTeaser from "@/components/home/NewTownListingsTeaser";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 import { supabase } from "@/integrations/supabase/client";
@@ -799,8 +799,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* NEIGHBORHOOD EXPLORER — signature local discovery feature */}
-      <NeighborhoodExplorer />
+      {/* TOWN EXPLORER — premium local coverage by town */}
+      <TownExplorerSection />
 
       {/* NEW TOWN LISTINGS — gateway to /homes hub */}
       <NewTownListingsTeaser />
