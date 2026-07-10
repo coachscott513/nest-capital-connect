@@ -165,8 +165,8 @@ const RooseveltRoom = () => {
       <SEOHead
         title="The Roosevelt Room — Troy, NY | Capital District Nest Spotlight"
         description="An editorial spotlight on The Roosevelt Room, a modern American restaurant in downtown Troy. Craft cocktails, seasonal menu, and one of the Capital District's most memorable dining rooms."
-        jsonLd={jsonLd}
       />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <CleanHeader />
 
       {/* HERO */}
