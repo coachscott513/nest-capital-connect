@@ -864,6 +864,65 @@ const RooseveltRoom = () => {
       </section>
 
       <Footer />
+
+      {/* MOBILE STICKY ACTION BAR */}
+      <div
+        className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-white/10"
+        style={{
+          backgroundColor: "rgba(11,15,25,0.92)",
+          backdropFilter: "blur(16px) saturate(150%)",
+          WebkitBackdropFilter: "blur(16px) saturate(150%)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+        }}
+      >
+        <div className="grid grid-cols-4 gap-1 p-2">
+          <a
+            href={BUSINESS.reservationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("reserve", "mobile_bar")}
+            className="flex flex-col items-center justify-center gap-1 py-2.5 rounded-xl bg-white text-black text-[11px] font-semibold"
+          >
+            <Calendar className="h-4 w-4" /> Reserve
+          </a>
+          <a
+            href={BUSINESS.phoneHref}
+            onClick={() => track("call", "mobile_bar")}
+            className="flex flex-col items-center justify-center gap-1 py-2.5 rounded-xl text-white text-[11px] font-semibold border border-white/15 bg-white/[0.05]"
+          >
+            <Phone className="h-4 w-4" /> Call
+          </a>
+          <a
+            href={BUSINESS.directionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("directions", "mobile_bar")}
+            className="flex flex-col items-center justify-center gap-1 py-2.5 rounded-xl text-white text-[11px] font-semibold border border-white/15 bg-white/[0.05]"
+          >
+            <MapPin className="h-4 w-4" /> Directions
+          </a>
+          <button
+            onClick={() => { setContactOpen(true); track("more", "mobile_bar"); }}
+            className="flex flex-col items-center justify-center gap-1 py-2.5 rounded-xl text-white text-[11px] font-semibold border border-white/15 bg-white/[0.05]"
+          >
+            <MoreHorizontal className="h-4 w-4" /> More
+          </button>
+        </div>
+      </div>
+
+      <BusinessContactModal
+        open={contactOpen}
+        onOpenChange={setContactOpen}
+        business={{
+          slug: BUSINESS.slug,
+          name: BUSINESS.name,
+          phoneDisplay: BUSINESS.phoneDisplay,
+          phoneHref: BUSINESS.phoneHref,
+          email: BUSINESS.email,
+          website: BUSINESS.website,
+          reservationUrl: BUSINESS.reservationUrl,
+        }}
+      />
     </div>
   );
 };
