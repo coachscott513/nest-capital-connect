@@ -392,7 +392,107 @@ const RooseveltRoom = () => {
         </div>
       </section>
 
+      {/* FOLLOW THE EXPERIENCE — SOCIAL HERO */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeading
+            eyebrow="Follow the Experience"
+            title="See what's happening at The Roosevelt Room."
+            intro="Follow the restaurant for seasonal dishes, cocktails, live jazz, events, behind-the-scenes moments, and dining updates."
+          />
+
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Instagram */}
+            <a
+              href={BUSINESS.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("instagram", "social_hero")}
+              className="group relative overflow-hidden rounded-3xl aspect-[4/5] md:aspect-[5/6] border border-white/10 block"
+            >
+              <img
+                src={plateImg}
+                alt="Instagram — The Roosevelt Room"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-[1.04]"
+              />
+              <div
+                className="absolute inset-0 opacity-70 mix-blend-multiply"
+                style={{ background: "linear-gradient(135deg, #833AB4 0%, #E1306C 50%, #F77737 100%)" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
+              <div className="relative z-10 h-full flex flex-col justify-between p-8 md:p-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center">
+                    <Instagram className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/80">Instagram</p>
+                    <p className="text-white text-sm">{BUSINESS.instagramHandle}</p>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-white leading-tight">
+                    The Roosevelt Room on Instagram
+                  </h3>
+                  <p className="mt-4 text-white/85 max-w-md">
+                    Explore new dishes, cocktails, special events, live jazz, and moments from inside the dining room.
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black">
+                    View Instagram <ArrowUpRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </div>
+            </a>
+
+            {/* Facebook */}
+            <a
+              href={BUSINESS.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("facebook", "social_hero")}
+              className="group relative overflow-hidden rounded-3xl aspect-[4/5] md:aspect-[5/6] border border-white/10 block"
+            >
+              <img
+                src={diningImg}
+                alt="Facebook — The Roosevelt Room"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-[1.04]"
+              />
+              <div
+                className="absolute inset-0 opacity-55 mix-blend-multiply"
+                style={{ background: "linear-gradient(135deg, #1877F2 0%, #0a4db3 100%)" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
+              <div className="relative z-10 h-full flex flex-col justify-between p-8 md:p-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center">
+                    <Facebook className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/80">Facebook</p>
+                    <p className="text-white text-sm">The Roosevelt Room</p>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-white leading-tight">
+                    Follow The Roosevelt Room on Facebook
+                  </h3>
+                  <p className="mt-4 text-white/85 max-w-md">
+                    See restaurant updates, community events, reservations, live entertainment, announcements, and special experiences.
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black">
+                    View Facebook <ArrowUpRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* MEDIA ROOM */}
+
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
