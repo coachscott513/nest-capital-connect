@@ -40,7 +40,12 @@ const LivingInTown = ({ slugOverride }: LivingInTownProps) => {
   const resolvedSlug = (slugOverride ?? routeSlug).toLowerCase();
 
   const town = resolveTown(resolvedSlug);
-  return <TownPageTemplate town={town} />;
+  return (
+    <>
+      <TownPageTemplate town={town} />
+      {resolvedSlug === "albany" && <RealScoutAlbanySearch />}
+    </>
+  );
 };
 
 export default LivingInTown;
