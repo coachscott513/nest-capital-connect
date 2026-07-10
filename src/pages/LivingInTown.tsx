@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import TownPageTemplate from "@/components/town/TownPageTemplate";
+import RealScoutAlbanySearch from "@/components/home/RealScoutAlbanySearch";
 import { livingInTowns, makeTownPlaceholder, type LivingInTown as LivingInTownData } from "@/data/livingInTowns";
 import { findTownInDirectory } from "@/data/capitalDistrictCounties";
 
@@ -39,7 +40,12 @@ const LivingInTown = ({ slugOverride }: LivingInTownProps) => {
   const resolvedSlug = (slugOverride ?? routeSlug).toLowerCase();
 
   const town = resolveTown(resolvedSlug);
-  return <TownPageTemplate town={town} />;
+  return (
+    <>
+      <TownPageTemplate town={town} />
+      {resolvedSlug === "albany" && <RealScoutAlbanySearch />}
+    </>
+  );
 };
 
 export default LivingInTown;

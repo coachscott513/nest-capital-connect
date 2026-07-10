@@ -782,3 +782,14 @@ html, body { overflow-x: hidden; }
   .border-\[\#2D3748\] { border-color: #36405a !important; }
 }
 
+
+/* RealScout Advanced Search widget (Albany + future town pages) */
+realscout-advanced-search {
+  --rs-as-button-text-color: #ffffff;
+  --rs-as-background-color: #ffffff;
+  --rs-as-button-color: rgb(35, 93, 137);
+  --rs-as-widget-width: 100% !important;
+  max-width: 500px;
+  display: block;
+  margin: 0 auto;
+}
