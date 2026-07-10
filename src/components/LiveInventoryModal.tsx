@@ -341,18 +341,17 @@ const LiveInventoryModal: React.FC<LiveInventoryModalProps> = ({
               <p className="text-sm text-white/50">
                 Showing {filteredProperties.length} of {properties.length} properties
               </p>
-              {searchUrl && (
-                <a
-                  href={searchUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              {townSlug && (
+                <Link
+                  to={`/homes/search/${townSlug}`}
+                  onClick={onClose}
                   className="inline-flex items-center gap-2 px-6 py-2.5 bg-background/5 hover:bg-background/10 text-white font-medium rounded-lg transition-colors"
                 >
                   <TrendingUp className="w-4 h-4" />
-                  Full MLS Search
-                  <ExternalLink className="w-4 h-4" />
-                </a>
+                  Smart Home Search
+                </Link>
               )}
+
             </div>
           </motion.div>
         </motion.div>
