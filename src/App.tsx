@@ -485,6 +485,7 @@ const App = () => {
           <Route path="/claim-business" element={<ClaimBusiness />} />
           <Route path="/get-listed" element={<ClaimBusiness />} />
           <Route path="/business" element={<BusinessLanding />} />
+          <Route path="/business/the-roosevelt-room" element={<RooseveltRoom />} />
           <Route path="/biz/:slug" element={<BizPage />} />
           
           {/* Partner Dashboard */}
