@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Phone,
+  Mail,
   MapPin,
   Globe,
   Calendar,
   Star,
   Clock,
   Instagram,
+  Facebook,
   Linkedin,
   Play,
   Sparkles,
@@ -19,16 +21,40 @@ import {
   Leaf,
   CalendarHeart,
   MessageCircle,
+  Copy,
+  Check,
+  MoreHorizontal,
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import BusinessContactModal from "@/components/business/BusinessContactModal";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { trackGAEvent } from "@/components/GARouteTracker";
 import heroImg from "@/assets/roosevelt-hero.jpg";
 import cocktailImg from "@/assets/roosevelt-cocktail.jpg";
 import plateImg from "@/assets/roosevelt-plate.jpg";
 import chefImg from "@/assets/roosevelt-chef.jpg";
 import troyImg from "@/assets/roosevelt-troy.jpg";
 import diningImg from "@/assets/roosevelt-dining.jpg";
+
+const BUSINESS = {
+  slug: "the-roosevelt-room",
+  name: "The Roosevelt Room",
+  phoneDisplay: "(518) 244-3721",
+  phoneHref: "tel:+15182443721",
+  email: "rooseveltroomny@gmail.com",
+  website: "https://rooseveltroom.com/",
+  reservationUrl: "https://www.exploretock.com/the-roosevelt-room-troy",
+  instagramUrl: "https://www.instagram.com/the.roosevelt.room/",
+  instagramHandle: "@the.roosevelt.room",
+  facebookUrl: "https://www.facebook.com/100348325657557",
+  directionsUrl:
+    "https://www.google.com/maps/dir/?api=1&destination=The+Roosevelt+Room&destination_place_id=ChIJL17Q8DcJ3okRD6h2M0_yL3M",
+  addressLine1: "112 North Greenbush Road",
+  addressLine2: "Troy, NY 12180",
+};
 
 const TEAL = "#5eead4";
 
@@ -138,16 +164,35 @@ const conciergeQuestions = [
 
 const RooseveltRoom = () => {
   const [conciergeInput, setConciergeInput] = useState("");
+  const [contactOpen, setContactOpen] = useState(false);
+  const [phoneCopied, setPhoneCopied] = useState(false);
+  const isMobile = useIsMobile();
+
+  const track = (action: string, source: string) =>
+    trackGAEvent.businessProfileOpen({
+      business_slug: BUSINESS.slug,
+      business_name: BUSINESS.name,
+      source_location: `${action}::${source}`,
+    });
+
+  const copyPhone = async () => {
+    await navigator.clipboard.writeText(BUSINESS.phoneDisplay);
+    setPhoneCopied(true);
+    setTimeout(() => setPhoneCopied(false), 1600);
+  };
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Restaurant",
-    name: "The Roosevelt Room",
+    name: BUSINESS.name,
     servesCuisine: "Modern American",
     priceRange: "$$$",
+    telephone: BUSINESS.phoneDisplay,
+    email: BUSINESS.email,
+    url: BUSINESS.website,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Broadway",
+      streetAddress: BUSINESS.addressLine1,
       addressLocality: "Troy",
       addressRegion: "NY",
       postalCode: "12180",
@@ -158,6 +203,7 @@ const RooseveltRoom = () => {
       ratingValue: "4.8",
       reviewCount: "312",
     },
+    sameAs: [BUSINESS.instagramUrl, BUSINESS.facebookUrl],
   };
 
   return (
@@ -200,30 +246,104 @@ const RooseveltRoom = () => {
 
           <div className="mt-8 flex flex-wrap gap-3">
             <a
-              href="#reserve"
+              href={BUSINESS.reservationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("reserve", "hero")}
               className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90 transition"
             >
               <Calendar className="h-4 w-4" /> Reserve
             </a>
-            <a
-              href="tel:+15185227265"
+
+            {isMobile ? (
+              <a
+                href={BUSINESS.phoneHref}
+                onClick={() => track("call", "hero")}
+                className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
+              >
+                <Phone className="h-4 w-4" /> Call
+              </a>
+            ) : (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button
+                    onClick={() => track("call_popover", "hero")}
+                    className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
+                  >
+                    <Phone className="h-4 w-4" /> Call
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="bg-[#0B0F19] border border-white/10 text-white w-72 p-5">
+                  <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-white/50">Call</p>
+                  <p className="mt-2 text-lg font-semibold">{BUSINESS.name}</p>
+                  <p className="mt-1 text-white/80 text-xl tracking-tight">{BUSINESS.phoneDisplay}</p>
+                  <div className="mt-4 flex gap-2">
+                    <a
+                      href={BUSINESS.phoneHref}
+                      onClick={() => track("call", "hero_popover")}
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-full text-xs font-semibold bg-white text-black hover:bg-white/90"
+                    >
+                      <Phone className="h-3.5 w-3.5" /> Call Now
+                    </a>
+                    <button
+                      onClick={copyPhone}
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-full text-xs font-semibold border border-white/20 text-white hover:bg-white/10"
+                    >
+                      {phoneCopied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                      {phoneCopied ? "Copied" : "Copy Number"}
+                    </button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )}
+
+            <button
+              onClick={() => { setContactOpen(true); track("email", "hero"); }}
               className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
             >
-              <Phone className="h-4 w-4" /> Call
-            </a>
+              <Mail className="h-4 w-4" /> Email
+            </button>
+
             <a
-              href="#visit"
+              href={BUSINESS.directionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("directions", "hero")}
               className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
             >
               <MapPin className="h-4 w-4" /> Directions
             </a>
             <a
-              href="#"
+              href={BUSINESS.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("website", "hero")}
               className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
             >
               <Globe className="h-4 w-4" /> Website
             </a>
+
+            {/* Secondary social */}
+            <a
+              href={BUSINESS.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("instagram", "hero")}
+              className="lift-hover inline-flex items-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white/85 border border-white/20 bg-white/[0.04] hover:bg-white/[0.1] backdrop-blur-md transition"
+            >
+              <Instagram className="h-4 w-4" /> Instagram
+            </a>
+            <a
+              href={BUSINESS.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("facebook", "hero")}
+              className="lift-hover inline-flex items-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white/85 border border-white/20 bg-white/[0.04] hover:bg-white/[0.1] backdrop-blur-md transition"
+            >
+              <Facebook className="h-4 w-4" /> Facebook
+            </a>
           </div>
+
 
           {/* Meta strip */}
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/70">
@@ -272,7 +392,107 @@ const RooseveltRoom = () => {
         </div>
       </section>
 
+      {/* FOLLOW THE EXPERIENCE — SOCIAL HERO */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeading
+            eyebrow="Follow the Experience"
+            title="See what's happening at The Roosevelt Room."
+            intro="Follow the restaurant for seasonal dishes, cocktails, live jazz, events, behind-the-scenes moments, and dining updates."
+          />
+
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Instagram */}
+            <a
+              href={BUSINESS.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("instagram", "social_hero")}
+              className="group relative overflow-hidden rounded-3xl aspect-[4/5] md:aspect-[5/6] border border-white/10 block"
+            >
+              <img
+                src={plateImg}
+                alt="Instagram — The Roosevelt Room"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-[1.04]"
+              />
+              <div
+                className="absolute inset-0 opacity-70 mix-blend-multiply"
+                style={{ background: "linear-gradient(135deg, #833AB4 0%, #E1306C 50%, #F77737 100%)" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
+              <div className="relative z-10 h-full flex flex-col justify-between p-8 md:p-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center">
+                    <Instagram className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/80">Instagram</p>
+                    <p className="text-white text-sm">{BUSINESS.instagramHandle}</p>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-white leading-tight">
+                    The Roosevelt Room on Instagram
+                  </h3>
+                  <p className="mt-4 text-white/85 max-w-md">
+                    Explore new dishes, cocktails, special events, live jazz, and moments from inside the dining room.
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black">
+                    View Instagram <ArrowUpRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </div>
+            </a>
+
+            {/* Facebook */}
+            <a
+              href={BUSINESS.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("facebook", "social_hero")}
+              className="group relative overflow-hidden rounded-3xl aspect-[4/5] md:aspect-[5/6] border border-white/10 block"
+            >
+              <img
+                src={diningImg}
+                alt="Facebook — The Roosevelt Room"
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-[1.04]"
+              />
+              <div
+                className="absolute inset-0 opacity-55 mix-blend-multiply"
+                style={{ background: "linear-gradient(135deg, #1877F2 0%, #0a4db3 100%)" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
+              <div className="relative z-10 h-full flex flex-col justify-between p-8 md:p-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center">
+                    <Facebook className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/80">Facebook</p>
+                    <p className="text-white text-sm">The Roosevelt Room</p>
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-white leading-tight">
+                    Follow The Roosevelt Room on Facebook
+                  </h3>
+                  <p className="mt-4 text-white/85 max-w-md">
+                    See restaurant updates, community events, reservations, live entertainment, announcements, and special experiences.
+                  </p>
+                  <span className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black">
+                    View Facebook <ArrowUpRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* MEDIA ROOM */}
+
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
@@ -483,7 +703,46 @@ const RooseveltRoom = () => {
             <div className="mt-10 space-y-6 text-white/80">
               <div>
                 <p className="text-xs uppercase tracking-[0.22em] text-white/50">Address</p>
-                <p className="mt-2">Broadway, Troy, NY 12180</p>
+                <a
+                  href={BUSINESS.directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("directions", "visit")}
+                  className="mt-2 block hover:text-white transition"
+                >
+                  {BUSINESS.addressLine1}<br />{BUSINESS.addressLine2}
+                </a>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Phone</p>
+                <a
+                  href={BUSINESS.phoneHref}
+                  onClick={() => track("call", "visit")}
+                  className="mt-2 block hover:text-white transition"
+                >
+                  {BUSINESS.phoneDisplay}
+                </a>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Email</p>
+                <button
+                  onClick={() => { setContactOpen(true); track("email", "visit"); }}
+                  className="mt-2 block hover:text-white transition text-left"
+                >
+                  {BUSINESS.email}
+                </button>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Website</p>
+                <a
+                  href={BUSINESS.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("website", "visit")}
+                  className="mt-2 block hover:text-white transition"
+                >
+                  rooseveltroom.com
+                </a>
               </div>
               <div>
                 <p className="text-xs uppercase tracking-[0.22em] text-white/50">Hours</p>
@@ -491,18 +750,46 @@ const RooseveltRoom = () => {
                 <p className="text-white/50 text-sm">Closed Monday</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Parking</p>
-                <p className="mt-2">Street parking on Broadway; municipal lot two blocks west.</p>
+                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Reservations</p>
+                <a
+                  href={BUSINESS.reservationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("reserve", "visit")}
+                  className="mt-2 block hover:text-white transition"
+                >
+                  Reserve on Tock
+                </a>
               </div>
               <div className="pt-2 flex flex-wrap gap-3" id="reserve">
-                <a href="#" className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90">
-                  <Calendar className="h-4 w-4" /> Reserve a table
+                <a
+                  href={BUSINESS.reservationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("reserve", "visit_cta")}
+                  className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90"
+                >
+                  <Calendar className="h-4 w-4" /> Reserve a Table
                 </a>
-                <a href="tel:+15185227265" className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-white/25 bg-white/[0.06] hover:bg-white/[0.12]">
-                  <Phone className="h-4 w-4" /> Call
+                <a
+                  href={BUSINESS.phoneHref}
+                  onClick={() => track("call", "visit_cta")}
+                  className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-white/25 bg-white/[0.06] hover:bg-white/[0.12]"
+                >
+                  <Phone className="h-4 w-4" /> Call The Roosevelt Room
+                </a>
+                <a
+                  href={BUSINESS.directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("directions", "visit_cta")}
+                  className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-white/25 bg-white/[0.06] hover:bg-white/[0.12]"
+                >
+                  <MapPin className="h-4 w-4" /> Get Directions
                 </a>
               </div>
             </div>
+
           </div>
           <GlassCard className="overflow-hidden min-h-[380px] relative">
             <img src={troyImg} alt="Downtown Troy" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-60" />
@@ -577,6 +864,65 @@ const RooseveltRoom = () => {
       </section>
 
       <Footer />
+
+      {/* MOBILE STICKY ACTION BAR */}
+      <div
+        className="md:hidden fixed bottom-0 inset-x-0 z-40 border-t border-white/10"
+        style={{
+          backgroundColor: "rgba(11,15,25,0.92)",
+          backdropFilter: "blur(16px) saturate(150%)",
+          WebkitBackdropFilter: "blur(16px) saturate(150%)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+        }}
+      >
+        <div className="grid grid-cols-4 gap-1 p-2">
+          <a
+            href={BUSINESS.reservationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("reserve", "mobile_bar")}
+            className="flex flex-col items-center justify-center gap-1 py-2.5 rounded-xl bg-white text-black text-[11px] font-semibold"
+          >
+            <Calendar className="h-4 w-4" /> Reserve
+          </a>
+          <a
+            href={BUSINESS.phoneHref}
+            onClick={() => track("call", "mobile_bar")}
+            className="flex flex-col items-center justify-center gap-1 py-2.5 rounded-xl text-white text-[11px] font-semibold border border-white/15 bg-white/[0.05]"
+          >
+            <Phone className="h-4 w-4" /> Call
+          </a>
+          <a
+            href={BUSINESS.directionsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("directions", "mobile_bar")}
+            className="flex flex-col items-center justify-center gap-1 py-2.5 rounded-xl text-white text-[11px] font-semibold border border-white/15 bg-white/[0.05]"
+          >
+            <MapPin className="h-4 w-4" /> Directions
+          </a>
+          <button
+            onClick={() => { setContactOpen(true); track("more", "mobile_bar"); }}
+            className="flex flex-col items-center justify-center gap-1 py-2.5 rounded-xl text-white text-[11px] font-semibold border border-white/15 bg-white/[0.05]"
+          >
+            <MoreHorizontal className="h-4 w-4" /> More
+          </button>
+        </div>
+      </div>
+
+      <BusinessContactModal
+        open={contactOpen}
+        onOpenChange={setContactOpen}
+        business={{
+          slug: BUSINESS.slug,
+          name: BUSINESS.name,
+          phoneDisplay: BUSINESS.phoneDisplay,
+          phoneHref: BUSINESS.phoneHref,
+          email: BUSINESS.email,
+          website: BUSINESS.website,
+          reservationUrl: BUSINESS.reservationUrl,
+        }}
+      />
     </div>
   );
 };
