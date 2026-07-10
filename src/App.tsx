@@ -35,6 +35,7 @@ import ClaimListing from "./pages/homes/ClaimListing";
 import AgentProfile from "./pages/homes/AgentProfile";
 import ListingPreview from "./pages/homes/ListingPreview";
 import PropertyBrief from "./pages/homes/PropertyBrief";
+import BuyerTownSearch from "./pages/homes/BuyerTownSearch";
 import BusinessLanding from "./pages/BusinessLanding";
 import MarketReport from "./pages/MarketReport";
 import MarketReportsIndex from "./pages/MarketReportsIndex";
@@ -349,6 +350,7 @@ const App = () => {
           {/* Simplified canonical destinations from main nav */}
           <Route path="/homes" element={<HomesHub />} />
           <Route path="/homes/search" element={<HomesPage />} />
+          <Route path="/homes/search/:townSlug" element={<BuyerTownSearch />} />
           <Route path="/homes/listings/:townSlug/:addressSlug" element={<ListingPreview />} />
           {featuredProperties.map((p) => (
             <Route
