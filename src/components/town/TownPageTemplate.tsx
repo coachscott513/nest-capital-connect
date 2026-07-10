@@ -508,6 +508,9 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
           </div>
         </section>
 
+        {afterHero}
+
+
         {/* ═══════════ 2. NEIGHBORHOOD GUIDE ═══════════ */}
         <NeighborhoodGuide townSlug={slug} townName={name} />
 
