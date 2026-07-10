@@ -47,6 +47,7 @@ const contactStatusOf = (biz: Business) => (biz as any).contactStatus ?? (biz as
 
 interface Props {
   town: LivingInTown;
+  beforeFooter?: React.ReactNode;
 }
 
 /* ---------- analytics ---------- */
