@@ -41,10 +41,10 @@ const LivingInTown = ({ slugOverride }: LivingInTownProps) => {
 
   const town = resolveTown(resolvedSlug);
   return (
-    <>
-      <TownPageTemplate town={town} />
-      {resolvedSlug === "albany" && <RealScoutAlbanySearch />}
-    </>
+    <TownPageTemplate
+      town={town}
+      beforeFooter={resolvedSlug === "albany" ? <RealScoutAlbanySearch /> : undefined}
+    />
   );
 };
 
