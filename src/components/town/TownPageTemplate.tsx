@@ -48,6 +48,7 @@ const contactStatusOf = (biz: Business) => (biz as any).contactStatus ?? (biz as
 interface Props {
   town: LivingInTown;
   beforeFooter?: React.ReactNode;
+  afterHero?: React.ReactNode;
 }
 
 /* ---------- analytics ---------- */
@@ -325,7 +326,7 @@ const EmptyCTA = ({
 );
 
 /* ---------- the master template ---------- */
-const TownPageTemplate = ({ town, beforeFooter }: Props) => {
+const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
   const o = getTownOverride(town.slug);
   const slug = town.slug;
   const name = town.townName;
@@ -506,6 +507,9 @@ const TownPageTemplate = ({ town, beforeFooter }: Props) => {
             </div>
           </div>
         </section>
+
+        {afterHero}
+
 
         {/* ═══════════ 2. NEIGHBORHOOD GUIDE ═══════════ */}
         <NeighborhoodGuide townSlug={slug} townName={name} />
