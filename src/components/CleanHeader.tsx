@@ -118,7 +118,7 @@ const CleanHeader = () => {
             <div className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
               {navModes.map((mode) => {
                 const active = isActive(mode);
-                const isClaim = mode.label === "Nest for Business";
+                const isClaim = mode.label === "For Businesses";
                 const baseCls =
                   "relative px-3 py-2 text-[13.5px] font-medium rounded-full transition-colors whitespace-nowrap";
                 const stateCls = active
