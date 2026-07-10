@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
+
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, Search, ExternalLink } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
@@ -94,6 +95,7 @@ function buildRemaxUrl(opts: { townSlug?: string; price?: string; type?: string 
 
 const HomesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { toast } = useToast();
   
 
@@ -123,20 +125,21 @@ const HomesPage = () => {
     [town]
   );
 
-  const openRemax = (event: "homes_search_click" | "full_mls_search_click") => {
+  const openSmartSearch = (event: "homes_search_click" | "full_mls_search_click") => {
+    const slug = town || "albany";
     track(event, {
       source_page: "/homes",
       selected_town: town || null,
       selected_price: price || null,
       selected_type: type || null,
-      destination: "scottalvarez.remax.com",
+      destination: `/homes/search/${slug}`,
     });
-    window.open(REMAX_BASE, "_blank", "noopener,noreferrer");
+    navigate(`/homes/search/${slug}`);
   };
 
   const submitSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    openRemax("homes_search_click");
+    openSmartSearch("homes_search_click");
   };
 
   const handleTownChip = (slug: string) => {
@@ -147,7 +150,8 @@ const HomesPage = () => {
     }
   };
 
-  const handleFullMls = () => openRemax("full_mls_search_click");
+  const handleFullMls = () => openSmartSearch("full_mls_search_click");
+
 
   const submitLead = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -231,7 +235,7 @@ const HomesPage = () => {
               Search homes across the Capital District.
             </h1>
             <p className="mt-6 text-lg text-[#1d1d1f]/65 font-light">
-              Pick a town, price, and property type — then jump into the full MLS-powered search.
+              Pick a town, price, and property type — then jump into our smart home search.
             </p>
           </div>
 
@@ -277,7 +281,7 @@ const HomesPage = () => {
             </button>
           </form>
           <p className="mt-3 text-center text-xs text-[#1d1d1f]/55">
-            Search opens our full MLS-powered home search in a new tab.
+            Search opens our RealScout-powered smart home search.
           </p>
 
           {/* Selected-search state */}
@@ -293,7 +297,7 @@ const HomesPage = () => {
                   {type ? ` · ${TYPE_LABEL[type]}` : ""}
                 </h2>
                 <p className="text-sm text-[#1d1d1f]/65 mt-1">
-                  Open full MLS results or have our team send matches that fit.
+                  Open the Capital District Nest smart home search or have our team send matches that fit.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -302,8 +306,9 @@ const HomesPage = () => {
                   onClick={submitSearch}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
                 >
-                  <ExternalLink className="w-4 h-4" /> Open Full MLS Search
+                  <Search className="w-4 h-4" /> Open Smart Home Search
                 </button>
+
                 <button
                   type="button"
                   onClick={() => setLeadOpen(true)}
@@ -361,9 +366,10 @@ const HomesPage = () => {
               onClick={handleFullMls}
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white font-semibold hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(13,110,102,0.55)]"
             >
-              Open Full MLS Search <ExternalLink className="w-4 h-4" />
+              Open Smart Home Search <Search className="w-4 h-4" />
             </button>
-            <p className="mt-3 text-xs text-[#1d1d1f]/55">Search opens our MLS-powered home search in a new tab.</p>
+            <p className="mt-3 text-xs text-[#1d1d1f]/55">Opens the Capital District Nest smart home search powered by RealScout.</p>
+
           </div>
         </div>
       </section>
