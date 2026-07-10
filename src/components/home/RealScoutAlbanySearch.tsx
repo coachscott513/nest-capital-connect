@@ -18,7 +18,7 @@ const MAP_URL =
 
 const RealScoutAlbanySearch = () => {
   return (
-    <section className="relative bg-[#0B0F19] border-t border-white/[0.06] py-16 md:py-24 px-4 sm:px-6">
+    <section id="albany-home-search" className="relative bg-[#0B0F19] border-t border-white/[0.06] py-16 md:py-24 px-4 sm:px-6 scroll-mt-24">
       {/* soft teal glow */}
       <div
         aria-hidden

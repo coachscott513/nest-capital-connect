@@ -134,7 +134,7 @@ const BuyerTownSearch = () => {
         </section>
 
         {/* Search widget card */}
-        <section id="search" className="px-6 pb-20">
+        <section id={`${town.slug}-home-search`} className="px-6 pb-20 scroll-mt-24">
           <div className="max-w-3xl mx-auto">
             <div className="rounded-2xl border border-white/10 bg-[#1E2230] p-6 md:p-10 shadow-xl">
               <div className="text-center mb-6">

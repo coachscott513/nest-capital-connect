@@ -890,22 +890,20 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                   Real estate is one part of {name} — not the whole story.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <a
-                    href={REMAX_BASE}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to={`/homes/search/${slug}`}
                     onClick={() =>
                       trackTown("town_homes_click", {
                         town_name: name,
                         town_slug: slug,
-                        category: "mls_open",
+                        category: "smart_search_open",
                         source_location: "town_homes_section",
                       })
                     }
                     className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
                   >
-                    Open Full MLS Search <ArrowUpRight className="w-4 h-4" />
-                  </a>
+                    Search {name} Homes <ArrowUpRight className="w-4 h-4" />
+                  </Link>
                   <Link
                     to={`/homes?town=${slug}&intent=matches`}
                     onClick={() =>
@@ -922,8 +920,9 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                   </Link>
                 </div>
                 <p className="mt-4 text-[12px] text-white/45 font-light">
-                  Opens our MLS-powered home search in a new tab.
+                  Opens the Capital District Nest smart home search powered by RealScout.
                 </p>
+
               </div>
 
               <div className="relative aspect-[5/4] rounded-2xl overflow-hidden border border-white/[0.08]">

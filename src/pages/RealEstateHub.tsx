@@ -12,7 +12,7 @@ import Footer from "@/components/Footer";
    insurance, attorneys, contractors, and housing resources.
    ============================================================= */
 
-const MLS_URL = "https://scottalvarez.remax.com/";
+const MLS_URL = "/homes/search/albany";
 
 type GTag = (...args: any[]) => void;
 
@@ -39,13 +39,14 @@ const CATEGORY_PANELS: CategoryPanel[] = [
     key: "homes",
     icon: Home,
     headline: "Homes for Sale",
-    text: "Search active homes across the Capital District.",
-    cta: "Open MLS Search",
+    text: "Search active homes across the Capital District through our smart home search.",
+    cta: "Open Smart Home Search",
     href: MLS_URL,
-    external: true,
+    external: false,
     trackCategory: "homes_for_sale",
     destination: MLS_URL,
   },
+
   {
     key: "agents",
     icon: Users,
@@ -240,15 +241,14 @@ const RealEstateHub = () => {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">
-              <a
-                href={MLS_URL}
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                to={MLS_URL}
                 onClick={() => handleMlsClick("hero_primary")}
                 className="btn-dark-cta cta-arrow"
               >
-                Search Homes <ArrowUpRight className="w-4 h-4" />
-              </a>
+                Search Albany Homes <ArrowUpRight className="w-4 h-4" />
+              </Link>
+
               <a
                 href="#real-estate-experts"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 hover:border-[#5eead4] hover:text-[#5eead4] text-white text-sm font-medium tracking-tight transition"
@@ -339,19 +339,18 @@ const RealEstateHub = () => {
                   Search homes across the Capital District.
                 </h2>
                 <p className="mt-6 body-apple-dark text-white/70 max-w-xl">
-                  Open the full MLS-powered home search or tell us what you are looking for and
-                  we'll help send matching listings.
+                  Open the Capital District Nest smart home search powered by RealScout, or tell us
+                  what you are looking for and we'll help send matching listings.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <a
-                    href={MLS_URL}
-                    target="_blank"
-                    rel="noreferrer"
+                  <Link
+                    to={MLS_URL}
                     onClick={() => handleMlsClick("search_section")}
                     className="btn-dark-cta cta-arrow"
                   >
-                    Open Full MLS Search <ArrowUpRight className="w-4 h-4" />
-                  </a>
+                    Open Smart Home Search <ArrowUpRight className="w-4 h-4" />
+                  </Link>
+
                   <Link
                     to="/contact?type=homes_search_request&lead_type=buyer"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 hover:border-[#5eead4] hover:text-[#5eead4] text-white text-sm font-medium tracking-tight transition"
