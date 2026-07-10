@@ -164,16 +164,35 @@ const conciergeQuestions = [
 
 const RooseveltRoom = () => {
   const [conciergeInput, setConciergeInput] = useState("");
+  const [contactOpen, setContactOpen] = useState(false);
+  const [phoneCopied, setPhoneCopied] = useState(false);
+  const isMobile = useIsMobile();
+
+  const track = (action: string, source: string) =>
+    trackGAEvent.businessProfileOpen({
+      business_slug: BUSINESS.slug,
+      business_name: BUSINESS.name,
+      source_location: `${action}::${source}`,
+    });
+
+  const copyPhone = async () => {
+    await navigator.clipboard.writeText(BUSINESS.phoneDisplay);
+    setPhoneCopied(true);
+    setTimeout(() => setPhoneCopied(false), 1600);
+  };
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Restaurant",
-    name: "The Roosevelt Room",
+    name: BUSINESS.name,
     servesCuisine: "Modern American",
     priceRange: "$$$",
+    telephone: BUSINESS.phoneDisplay,
+    email: BUSINESS.email,
+    url: BUSINESS.website,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Broadway",
+      streetAddress: BUSINESS.addressLine1,
       addressLocality: "Troy",
       addressRegion: "NY",
       postalCode: "12180",
@@ -184,6 +203,7 @@ const RooseveltRoom = () => {
       ratingValue: "4.8",
       reviewCount: "312",
     },
+    sameAs: [BUSINESS.instagramUrl, BUSINESS.facebookUrl],
   };
 
   return (
