@@ -229,7 +229,7 @@ const CleanHeader = () => {
         </p>
         <div className="space-y-1">
           {navModes.map((mode) => {
-            const isClaim = mode.label === "Nest for Business";
+            const isClaim = mode.label === "For Businesses";
             const cls = `block w-full text-left py-3.5 px-1 text-[17px] font-medium border-b border-white/[0.06] transition-colors ${
               isClaim ? "text-[#5eead4]" : "text-white/90 hover:text-white"
             }`;
