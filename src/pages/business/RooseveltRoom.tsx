@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Phone,
+  Mail,
   MapPin,
   Globe,
   Calendar,
   Star,
   Clock,
   Instagram,
+  Facebook,
   Linkedin,
   Play,
   Sparkles,
@@ -19,16 +21,40 @@ import {
   Leaf,
   CalendarHeart,
   MessageCircle,
+  Copy,
+  Check,
+  MoreHorizontal,
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import BusinessContactModal from "@/components/business/BusinessContactModal";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { trackGAEvent } from "@/components/GARouteTracker";
 import heroImg from "@/assets/roosevelt-hero.jpg";
 import cocktailImg from "@/assets/roosevelt-cocktail.jpg";
 import plateImg from "@/assets/roosevelt-plate.jpg";
 import chefImg from "@/assets/roosevelt-chef.jpg";
 import troyImg from "@/assets/roosevelt-troy.jpg";
 import diningImg from "@/assets/roosevelt-dining.jpg";
+
+const BUSINESS = {
+  slug: "the-roosevelt-room",
+  name: "The Roosevelt Room",
+  phoneDisplay: "(518) 244-3721",
+  phoneHref: "tel:+15182443721",
+  email: "rooseveltroomny@gmail.com",
+  website: "https://rooseveltroom.com/",
+  reservationUrl: "https://www.exploretock.com/the-roosevelt-room-troy",
+  instagramUrl: "https://www.instagram.com/the.roosevelt.room/",
+  instagramHandle: "@the.roosevelt.room",
+  facebookUrl: "https://www.facebook.com/100348325657557",
+  directionsUrl:
+    "https://www.google.com/maps/dir/?api=1&destination=The+Roosevelt+Room&destination_place_id=ChIJL17Q8DcJ3okRD6h2M0_yL3M",
+  addressLine1: "112 North Greenbush Road",
+  addressLine2: "Troy, NY 12180",
+};
 
 const TEAL = "#5eead4";
 
