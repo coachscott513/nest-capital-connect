@@ -1100,6 +1100,7 @@ const TownPageTemplate = ({ town, beforeFooter }: Props) => {
         </section>
       </main>
 
+      {beforeFooter}
       <Footer />
     </div>
   );
