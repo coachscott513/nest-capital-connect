@@ -246,30 +246,104 @@ const RooseveltRoom = () => {
 
           <div className="mt-8 flex flex-wrap gap-3">
             <a
-              href="#reserve"
+              href={BUSINESS.reservationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("reserve", "hero")}
               className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90 transition"
             >
               <Calendar className="h-4 w-4" /> Reserve
             </a>
-            <a
-              href="tel:+15185227265"
+
+            {isMobile ? (
+              <a
+                href={BUSINESS.phoneHref}
+                onClick={() => track("call", "hero")}
+                className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
+              >
+                <Phone className="h-4 w-4" /> Call
+              </a>
+            ) : (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button
+                    onClick={() => track("call_popover", "hero")}
+                    className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
+                  >
+                    <Phone className="h-4 w-4" /> Call
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent className="bg-[#0B0F19] border border-white/10 text-white w-72 p-5">
+                  <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-white/50">Call</p>
+                  <p className="mt-2 text-lg font-semibold">{BUSINESS.name}</p>
+                  <p className="mt-1 text-white/80 text-xl tracking-tight">{BUSINESS.phoneDisplay}</p>
+                  <div className="mt-4 flex gap-2">
+                    <a
+                      href={BUSINESS.phoneHref}
+                      onClick={() => track("call", "hero_popover")}
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-full text-xs font-semibold bg-white text-black hover:bg-white/90"
+                    >
+                      <Phone className="h-3.5 w-3.5" /> Call Now
+                    </a>
+                    <button
+                      onClick={copyPhone}
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-full text-xs font-semibold border border-white/20 text-white hover:bg-white/10"
+                    >
+                      {phoneCopied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                      {phoneCopied ? "Copied" : "Copy Number"}
+                    </button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )}
+
+            <button
+              onClick={() => { setContactOpen(true); track("email", "hero"); }}
               className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
             >
-              <Phone className="h-4 w-4" /> Call
-            </a>
+              <Mail className="h-4 w-4" /> Email
+            </button>
+
             <a
-              href="#visit"
+              href={BUSINESS.directionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("directions", "hero")}
               className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
             >
               <MapPin className="h-4 w-4" /> Directions
             </a>
             <a
-              href="#"
+              href={BUSINESS.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("website", "hero")}
               className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
             >
               <Globe className="h-4 w-4" /> Website
             </a>
+
+            {/* Secondary social */}
+            <a
+              href={BUSINESS.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("instagram", "hero")}
+              className="lift-hover inline-flex items-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white/85 border border-white/20 bg-white/[0.04] hover:bg-white/[0.1] backdrop-blur-md transition"
+            >
+              <Instagram className="h-4 w-4" /> Instagram
+            </a>
+            <a
+              href={BUSINESS.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("facebook", "hero")}
+              className="lift-hover inline-flex items-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white/85 border border-white/20 bg-white/[0.04] hover:bg-white/[0.1] backdrop-blur-md transition"
+            >
+              <Facebook className="h-4 w-4" /> Facebook
+            </a>
           </div>
+
 
           {/* Meta strip */}
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/70">
