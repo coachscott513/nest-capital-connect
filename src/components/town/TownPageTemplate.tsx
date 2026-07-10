@@ -326,7 +326,7 @@ const EmptyCTA = ({
 );
 
 /* ---------- the master template ---------- */
-const TownPageTemplate = ({ town, beforeFooter }: Props) => {
+const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
   const o = getTownOverride(town.slug);
   const slug = town.slug;
   const name = town.townName;
