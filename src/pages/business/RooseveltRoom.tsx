@@ -1,0 +1,584 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  Phone,
+  MapPin,
+  Globe,
+  Calendar,
+  Star,
+  Clock,
+  Instagram,
+  Linkedin,
+  Play,
+  Sparkles,
+  ArrowUpRight,
+  Wine,
+  Utensils,
+  Users,
+  Gift,
+  Leaf,
+  CalendarHeart,
+  MessageCircle,
+} from "lucide-react";
+import SEOHead from "@/components/SEOHead";
+import CleanHeader from "@/components/CleanHeader";
+import Footer from "@/components/Footer";
+import heroImg from "@/assets/roosevelt-hero.jpg";
+import cocktailImg from "@/assets/roosevelt-cocktail.jpg";
+import plateImg from "@/assets/roosevelt-plate.jpg";
+import chefImg from "@/assets/roosevelt-chef.jpg";
+import troyImg from "@/assets/roosevelt-troy.jpg";
+import diningImg from "@/assets/roosevelt-dining.jpg";
+
+const TEAL = "#5eead4";
+
+const Eyebrow = ({ children }: { children: React.ReactNode }) => (
+  <p className="text-[11px] font-semibold tracking-[0.28em] uppercase" style={{ color: TEAL }}>
+    {children}
+  </p>
+);
+
+const SectionHeading = ({
+  eyebrow,
+  title,
+  intro,
+  align = "left",
+}: {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  align?: "left" | "center";
+}) => (
+  <div className={`max-w-3xl ${align === "center" ? "mx-auto text-center" : ""}`}>
+    <Eyebrow>{eyebrow}</Eyebrow>
+    <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
+      {title}
+    </h2>
+    {intro && (
+      <p className="mt-5 text-lg text-white/70 font-light leading-relaxed">{intro}</p>
+    )}
+  </div>
+);
+
+const GlassCard = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div
+    className={`rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl ${className}`}
+  >
+    {children}
+  </div>
+);
+
+const mediaCards = [
+  { tag: "LATEST STORY", title: "An editor's night at The Roosevelt Room", meta: "CDN Editorial · 5 min read" },
+  { tag: "LATEST VIDEO", title: "Behind the bar: the smoked old fashioned", meta: "Short film · 1:12" },
+  { tag: "BEHIND THE SCENES", title: "Sourcing from Hudson Valley farms", meta: "Photo essay" },
+  { tag: "CHEF INTERVIEW", title: "The philosophy behind the seasonal menu", meta: "Interview · 8 min" },
+  { tag: "COMMUNITY SPOTLIGHT", title: "How Broadway became Troy's dining corridor", meta: "CDN Local" },
+  { tag: "AWARDS & PRESS", title: "Recent recognition and press coverage", meta: "Press room" },
+];
+
+const team = [
+  { name: "Michael Roosevelt", title: "Owner", bio: "Troy native, third-generation restaurateur.", img: chefImg },
+  { name: "Chef Elena Ruiz", title: "Executive Chef", bio: "Formerly of Blue Hill at Stone Barns.", img: chefImg },
+  { name: "Marcus Chen", title: "General Manager", bio: "Hospitality lead with 15 years at flagship dining rooms.", img: chefImg },
+  { name: "Sara Delaney", title: "Lead Bartender", bio: "Craft cocktail program built around Hudson Valley spirits.", img: chefImg },
+  { name: "Priya Iyer", title: "Pastry Chef", bio: "Seasonal desserts inspired by regional orchards.", img: chefImg },
+];
+
+const experiences = [
+  { icon: CalendarHeart, title: "Anniversary Dinner", text: "A quiet corner, candlelight, and a menu designed to be remembered." },
+  { icon: Wine, title: "Craft Cocktails", text: "A bar program grounded in classics, elevated with regional spirits." },
+  { icon: Utensils, title: "Chef's Specials", text: "Nightly creations from Chef Ruiz — off-menu, seasonal, and rare." },
+  { icon: Users, title: "Private Dining", text: "Intimate rooms for milestone gatherings, up to 24 guests." },
+  { icon: Leaf, title: "Seasonal Menu", text: "Sourced from Hudson Valley farms and rotated with the seasons." },
+  { icon: Gift, title: "Weekend Reservations", text: "The best tables of the week — book two weeks ahead." },
+];
+
+const themes = [
+  "Excellent cocktails",
+  "Professional service",
+  "Elegant atmosphere",
+  "Great date-night location",
+  "Beautiful presentation",
+  "Thoughtful wine list",
+];
+
+const nearby = [
+  { label: "Boutique shopping", href: "/local?town=troy&category=retail" },
+  { label: "Coffee & cafés", href: "/local?town=troy&category=cafe" },
+  { label: "Hotels & stays", href: "/local?town=troy&category=hotel" },
+  { label: "Riverfront & parks", href: "/living-in/troy" },
+  { label: "Parking", href: "/living-in/troy#parking" },
+  { label: "Nightlife", href: "/local?town=troy&category=tavern" },
+  { label: "Weekend events", href: "/weekly" },
+  { label: "Nearby homes", href: "/homes/search/troy" },
+];
+
+const timeline = [
+  { year: "2014", title: "Opening", text: "Doors open on Broadway in downtown Troy." },
+  { year: "2017", title: "Bar program", text: "Craft cocktail bar launches, quickly recognized regionally." },
+  { year: "2019", title: "Private dining", text: "Expansion into the adjacent room for private events." },
+  { year: "2022", title: "James Beard nod", text: "Semi-finalist recognition for outstanding hospitality." },
+  { year: "2024", title: "Community fund", text: "Launches quarterly fundraising dinners for Troy nonprofits." },
+];
+
+const conciergeQuestions = [
+  "Is this good for anniversaries?",
+  "Do they take reservations?",
+  "What is parking like?",
+  "What should I order?",
+  "Are there vegetarian options?",
+];
+
+const RooseveltRoom = () => {
+  const [conciergeInput, setConciergeInput] = useState("");
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    name: "The Roosevelt Room",
+    servesCuisine: "Modern American",
+    priceRange: "$$$",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Broadway",
+      addressLocality: "Troy",
+      addressRegion: "NY",
+      postalCode: "12180",
+      addressCountry: "US",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      reviewCount: "312",
+    },
+  };
+
+  return (
+    <div className="min-h-screen bg-[#0B0F19] text-white">
+      <SEOHead
+        title="The Roosevelt Room — Troy, NY | Capital District Nest Spotlight"
+        description="An editorial spotlight on The Roosevelt Room, a modern American restaurant in downtown Troy. Craft cocktails, seasonal menu, and one of the Capital District's most memorable dining rooms."
+      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <CleanHeader />
+
+      {/* HERO */}
+      <section className="relative w-full h-[92vh] min-h-[640px] overflow-hidden">
+        <img
+          src={heroImg}
+          alt="The Roosevelt Room dining room in Troy, NY"
+          className="absolute inset-0 w-full h-full object-cover"
+          width={1920}
+          height={1200}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/55 to-[#0B0F19]" />
+
+        <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-10 flex flex-col justify-end pb-16 md:pb-24">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-14 h-14 rounded-full border border-white/20 bg-white/[0.06] backdrop-blur-md flex items-center justify-center">
+              <span className="font-serif text-lg tracking-widest">RR</span>
+            </div>
+            <div>
+              <Eyebrow>Capital District Nest · Spotlight</Eyebrow>
+              <p className="text-white/70 text-sm mt-1">Troy, New York</p>
+            </div>
+          </div>
+
+          <h1 className="text-5xl md:text-8xl font-semibold tracking-[-0.04em] leading-[0.95] max-w-4xl">
+            The Roosevelt Room
+          </h1>
+          <p className="mt-5 text-xl md:text-2xl text-white/80 font-light max-w-2xl">
+            Modern American dining on Broadway — cocktails, seasonal menus, and one of Troy's most memorable rooms.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#reserve"
+              className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90 transition"
+            >
+              <Calendar className="h-4 w-4" /> Reserve
+            </a>
+            <a
+              href="tel:+15185227265"
+              className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
+            >
+              <Phone className="h-4 w-4" /> Call
+            </a>
+            <a
+              href="#visit"
+              className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
+            >
+              <MapPin className="h-4 w-4" /> Directions
+            </a>
+            <a
+              href="#"
+              className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
+            >
+              <Globe className="h-4 w-4" /> Website
+            </a>
+          </div>
+
+          {/* Meta strip */}
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/70">
+            <div className="flex items-center gap-2">
+              <Star className="h-4 w-4" style={{ color: TEAL }} fill="currentColor" />
+              <span className="text-white">4.8</span>
+              <span>· 312 reviews</span>
+            </div>
+            <span>$$$</span>
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4" />
+              <span>Tue–Sun · 5pm–11pm</span>
+            </div>
+            <span>Reservations recommended</span>
+          </div>
+        </div>
+      </section>
+
+      {/* EDITORIAL INTRO */}
+      <section className="px-6 md:px-10 py-24 md:py-32 max-w-4xl mx-auto">
+        <Eyebrow>Capital District Nest Spotlight</Eyebrow>
+        <h2 className="mt-4 text-4xl md:text-6xl font-semibold tracking-[-0.035em] leading-[1.02]">
+          Why locals love The Roosevelt Room
+        </h2>
+        <div className="mt-10 space-y-6 text-lg md:text-xl text-white/75 font-light leading-relaxed">
+          <p>
+            Walk into The Roosevelt Room on a Thursday night and the first thing
+            you notice isn't the food — it's the sound. A room full of people
+            leaning in. Brass sconces, low light, the soft clatter of a bar
+            that knows what it's doing. It feels less like a restaurant and
+            more like a well-kept secret that a city decided to share.
+          </p>
+          <p>
+            The kitchen is unshowy in the best way. Modern American, sourced
+            from Hudson Valley farms, plated with restraint. Cocktails are the
+            counterweight — a smoked old fashioned that arrives under glass, a
+            martini that could pass a Manhattan blind taste test. This is a
+            room where you order the second round without discussion.
+          </p>
+          <p>
+            Downtown Troy is having a moment, and The Roosevelt Room is one of
+            the reasons why. Anniversaries, deal-closers, the last dinner
+            before someone moves away — this is the room people pick when the
+            night has to mean something.
+          </p>
+        </div>
+      </section>
+
+      {/* MEDIA ROOM */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
+            <SectionHeading
+              eyebrow="Media Room"
+              title="Stories, video, and press."
+              intro="Original editorial coverage from Capital District Nest — refreshed as new stories go live."
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {mediaCards.map((card, i) => (
+              <GlassCard key={card.tag} className="overflow-hidden group cursor-pointer">
+                <div className="aspect-[4/3] overflow-hidden bg-black/40">
+                  <img
+                    src={[cocktailImg, plateImg, chefImg, diningImg, troyImg, heroImg][i]}
+                    alt={card.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-[1.03] transition duration-700"
+                  />
+                </div>
+                <div className="p-6">
+                  <p className="text-[10px] font-semibold tracking-[0.24em] text-white/50">
+                    {card.tag}
+                  </p>
+                  <h3 className="mt-3 text-xl font-semibold tracking-tight leading-snug group-hover:text-[color:var(--teal)]" style={{ ["--teal" as any]: TEAL }}>
+                    {card.title}
+                  </h3>
+                  <p className="mt-3 text-sm text-white/55">{card.meta}</p>
+                </div>
+              </GlassCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* MEET THE TEAM */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeading
+            eyebrow="Meet the Team"
+            title="The people behind the room."
+            intro="From the pass to the bar, the crew that shapes every night at The Roosevelt Room."
+          />
+          <div className="mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {team.map((p) => (
+              <GlassCard key={p.name} className="overflow-hidden">
+                <div className="aspect-[3/4] overflow-hidden bg-black/40">
+                  <img src={p.img} alt={p.name} loading="lazy" className="w-full h-full object-cover" />
+                </div>
+                <div className="p-5">
+                  <p className="text-[10px] font-semibold tracking-[0.22em] text-white/50">{p.title.toUpperCase()}</p>
+                  <h3 className="mt-2 text-lg font-semibold tracking-tight">{p.name}</h3>
+                  <p className="mt-2 text-sm text-white/60 leading-relaxed">{p.bio}</p>
+                  <div className="mt-4 flex gap-3 text-white/50">
+                    <Instagram className="h-4 w-4 hover:text-white cursor-pointer" />
+                    <Linkedin className="h-4 w-4 hover:text-white cursor-pointer" />
+                  </div>
+                </div>
+              </GlassCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SIGNATURE EXPERIENCES */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeading
+            eyebrow="Signature Experiences"
+            title="What a night here can be."
+            intro="Not a menu — the shape of an evening. Come for one, discover the others."
+          />
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {experiences.map(({ icon: Icon, title, text }) => (
+              <GlassCard key={title} className="p-8 hover:border-white/20 transition">
+                <Icon className="h-6 w-6" style={{ color: TEAL }} />
+                <h3 className="mt-6 text-xl font-semibold tracking-tight">{title}</h3>
+                <p className="mt-3 text-sm text-white/60 leading-relaxed">{text}</p>
+              </GlassCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* GALLERY */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeading eyebrow="Gallery" title="The room, the plates, the light." />
+          <div className="mt-14 grid grid-cols-6 gap-3 md:gap-4">
+            <img src={heroImg} alt="Dining room" loading="lazy" className="col-span-6 md:col-span-4 aspect-[16/10] object-cover rounded-2xl" />
+            <img src={cocktailImg} alt="Cocktail" loading="lazy" className="col-span-3 md:col-span-2 aspect-square object-cover rounded-2xl" />
+            <img src={plateImg} alt="Plated dish" loading="lazy" className="col-span-3 md:col-span-2 aspect-square object-cover rounded-2xl" />
+            <img src={diningImg} alt="Table setting" loading="lazy" className="col-span-6 md:col-span-2 aspect-[4/5] object-cover rounded-2xl" />
+            <img src={chefImg} alt="Chef at work" loading="lazy" className="col-span-3 md:col-span-2 aspect-[4/5] object-cover rounded-2xl" />
+            <img src={troyImg} alt="Downtown Troy" loading="lazy" className="col-span-3 md:col-span-4 aspect-[16/10] object-cover rounded-2xl" />
+          </div>
+        </div>
+      </section>
+
+      {/* SHORT FILM */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-6xl mx-auto">
+          <SectionHeading eyebrow="Short Film" title="Experience The Roosevelt Room." align="center" />
+          <div className="mt-12 relative rounded-3xl overflow-hidden aspect-video group cursor-pointer">
+            <img src={heroImg} alt="Short film preview" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/95 flex items-center justify-center group-hover:scale-105 transition">
+                <Play className="h-8 w-8 md:h-9 md:w-9 text-black ml-1" fill="currentColor" />
+              </div>
+            </div>
+            <p className="absolute bottom-6 left-6 text-white/80 text-sm">One-minute cinematic feature · CDN Films</p>
+          </div>
+        </div>
+      </section>
+
+      {/* AI CONCIERGE */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-4xl mx-auto">
+          <SectionHeading
+            eyebrow="AI Concierge"
+            title="Ask about The Roosevelt Room."
+            intro="Powered by Capital District Nest AI. Ask anything — reservations, atmosphere, what to order."
+            align="center"
+          />
+          <GlassCard className="mt-12 p-6 md:p-8">
+            <div className="flex items-center gap-3 mb-6">
+              <Sparkles className="h-5 w-5" style={{ color: TEAL }} />
+              <p className="text-sm text-white/60">Capital District Nest AI</p>
+            </div>
+            <div className="flex gap-2">
+              <input
+                value={conciergeInput}
+                onChange={(e) => setConciergeInput(e.target.value)}
+                placeholder="Ask a question about The Roosevelt Room…"
+                className="flex-1 bg-black/30 border border-white/10 rounded-xl px-4 py-3.5 text-sm placeholder:text-white/40 focus:outline-none focus:border-white/25"
+              />
+              <button className="px-5 py-3.5 rounded-xl bg-white text-black text-sm font-semibold hover:bg-white/90">
+                Ask
+              </button>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {conciergeQuestions.map((q) => (
+                <button
+                  key={q}
+                  onClick={() => setConciergeInput(q)}
+                  className="text-xs px-3.5 py-2 rounded-full border border-white/10 bg-white/[0.03] text-white/70 hover:text-white hover:border-white/25 transition"
+                >
+                  <MessageCircle className="h-3 w-3 inline mr-1.5" />
+                  {q}
+                </button>
+              ))}
+            </div>
+          </GlassCard>
+        </div>
+      </section>
+
+      {/* COMMUNITY CONNECTIONS */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeading
+            eyebrow="Community Connections"
+            title="What's nearby."
+            intro="The Roosevelt Room lives inside downtown Troy — explore the block, the neighborhood, and the homes around it."
+          />
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-3">
+            {nearby.map((n) => (
+              <Link
+                key={n.label}
+                to={n.href}
+                className="group flex items-center justify-between p-5 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/25 transition"
+              >
+                <span className="text-sm font-medium text-white/85">{n.label}</span>
+                <ArrowUpRight className="h-4 w-4 text-white/40 group-hover:text-white transition" />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* REVIEW THEMES */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-5xl mx-auto">
+          <SectionHeading
+            eyebrow="What Guests Say"
+            title="Themes that come up, over and over."
+            intro="Not a review aggregator — the patterns Capital District Nest editors hear again and again when locals talk about this room."
+          />
+          <div className="mt-12 flex flex-wrap gap-3">
+            {themes.map((t) => (
+              <span
+                key={t}
+                className="px-5 py-3 rounded-full border border-white/15 bg-white/[0.04] text-sm text-white/85"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PLAN YOUR VISIT */}
+      <section id="visit" className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10">
+          <div>
+            <SectionHeading eyebrow="Plan Your Visit" title="Everything you need to know." />
+            <div className="mt-10 space-y-6 text-white/80">
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Address</p>
+                <p className="mt-2">Broadway, Troy, NY 12180</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Hours</p>
+                <p className="mt-2">Tuesday – Sunday · 5:00pm – 11:00pm</p>
+                <p className="text-white/50 text-sm">Closed Monday</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Parking</p>
+                <p className="mt-2">Street parking on Broadway; municipal lot two blocks west.</p>
+              </div>
+              <div className="pt-2 flex flex-wrap gap-3" id="reserve">
+                <a href="#" className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90">
+                  <Calendar className="h-4 w-4" /> Reserve a table
+                </a>
+                <a href="tel:+15185227265" className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-white/25 bg-white/[0.06] hover:bg-white/[0.12]">
+                  <Phone className="h-4 w-4" /> Call
+                </a>
+              </div>
+            </div>
+          </div>
+          <GlassCard className="overflow-hidden min-h-[380px] relative">
+            <img src={troyImg} alt="Downtown Troy" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-60" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6">
+              <p className="text-xs uppercase tracking-[0.22em]" style={{ color: TEAL }}>On the map</p>
+              <p className="mt-2 text-lg font-semibold">Downtown Troy · Broadway corridor</p>
+            </div>
+          </GlassCard>
+        </div>
+      </section>
+
+      {/* BUSINESS STORY / TIMELINE */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-5xl mx-auto">
+          <SectionHeading eyebrow="Business Story" title="A ten-year arc on Broadway." />
+          <div className="mt-14 space-y-8">
+            {timeline.map((t) => (
+              <div key={t.year} className="grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr] gap-6 border-b border-white/[0.06] pb-8">
+                <p className="text-2xl md:text-3xl font-semibold text-white/40 tracking-tight">{t.year}</p>
+                <div>
+                  <h3 className="text-xl font-semibold tracking-tight">{t.title}</h3>
+                  <p className="mt-2 text-white/60 leading-relaxed">{t.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* RELATED */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeading eyebrow="Related Stories" title="Keep exploring Troy." />
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: "More restaurants nearby", href: "/local?town=troy&category=restaurant", img: plateImg },
+              { title: "Things to do in Troy", href: "/weekly?town=troy", img: troyImg },
+              { title: "Living in Troy", href: "/living-in/troy", img: diningImg },
+              { title: "Homes near downtown Troy", href: "/homes/search/troy", img: heroImg },
+            ].map((c) => (
+              <Link key={c.title} to={c.href} className="group">
+                <div className="aspect-[4/5] overflow-hidden rounded-2xl">
+                  <img src={c.img} alt={c.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-700" />
+                </div>
+                <p className="mt-4 text-lg font-semibold tracking-tight group-hover:text-white/80">{c.title}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* OWNER CTA */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-4xl mx-auto text-center">
+          <Eyebrow>Own this business?</Eyebrow>
+          <h2 className="mt-5 text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05]">
+            Claim your profile. Become a Featured Partner.
+          </h2>
+          <p className="mt-6 text-white/70 max-w-2xl mx-auto">
+            This is the flagship editorial experience on Capital District Nest. Featured partners get original storytelling, media coverage, and a place inside the region's most trusted local guide.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link to="/claim-business" className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90">
+              Claim this listing
+            </Link>
+            <Link to="/business" className="lift-hover inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold border border-white/25 bg-white/[0.06] hover:bg-white/[0.12]">
+              Become a Featured Partner
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default RooseveltRoom;

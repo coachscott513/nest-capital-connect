@@ -38,6 +38,7 @@ import PropertyBrief from "./pages/homes/PropertyBrief";
 import BuyerTownSearch from "./pages/homes/BuyerTownSearch";
 import SearchHub from "./pages/homes/SearchHub";
 import BusinessLanding from "./pages/BusinessLanding";
+import RooseveltRoom from "./pages/business/RooseveltRoom";
 import MarketReport from "./pages/MarketReport";
 import MarketReportsIndex from "./pages/MarketReportsIndex";
 import { featuredProperties } from "./data/featuredProperties";
@@ -485,6 +486,7 @@ const App = () => {
           <Route path="/claim-business" element={<ClaimBusiness />} />
           <Route path="/get-listed" element={<ClaimBusiness />} />
           <Route path="/business" element={<BusinessLanding />} />
+          <Route path="/business/the-roosevelt-room" element={<RooseveltRoom />} />
           <Route path="/biz/:slug" element={<BizPage />} />
           
           {/* Partner Dashboard */}

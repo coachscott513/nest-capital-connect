@@ -18,14 +18,14 @@ type NavMode = {
 // Top nav reads as search modes inside a local operating system,
 // not a list of marketing pages.
 const navModes: NavMode[] = [
-  { label: "Search", mobileLabel: "Search Anything Local", action: "focus-search" },
-  { label: "Homes", mobileLabel: "Search Homes", href: "/homes", matchPaths: ["/homes"] },
-  { label: "Businesses", mobileLabel: "Search Businesses", href: "/local", matchPaths: ["/local"] },
-  { label: "Towns", mobileLabel: "Explore Towns", href: "/communities", matchPaths: ["/communities", "/living-in"] },
-  { label: "Neighborhoods", mobileLabel: "Neighborhood Explorer", href: "/neighborhoods", matchPaths: ["/neighborhoods"] },
-  { label: "Events", mobileLabel: "Local Events", href: "/weekly", matchPaths: ["/weekly"] },
-  { label: "Finances", mobileLabel: "Finances Hub", href: "/finances", matchPaths: ["/finances", "/analyze", "/invest", "/financial-console"] },
-  { label: "Nest for Business", mobileLabel: "Nest for Business", href: "/business", matchPaths: ["/business", "/pricing"] },
+  { label: "Discover", mobileLabel: "Discover Anything Local", action: "focus-search" },
+  { label: "Homes", mobileLabel: "Homes", href: "/homes", matchPaths: ["/homes"] },
+  { label: "Local Businesses", mobileLabel: "Local Businesses", href: "/local", matchPaths: ["/local"] },
+  { label: "Communities", mobileLabel: "Communities", href: "/communities", matchPaths: ["/communities", "/living-in"] },
+  { label: "Neighborhood Guides", mobileLabel: "Neighborhood Guides", href: "/neighborhoods", matchPaths: ["/neighborhoods"] },
+  { label: "What's Happening", mobileLabel: "What's Happening", href: "/weekly", matchPaths: ["/weekly"] },
+  { label: "Local Resources", mobileLabel: "Local Resources", href: "/finances", matchPaths: ["/finances", "/analyze", "/invest", "/financial-console"] },
+  { label: "For Businesses", mobileLabel: "For Businesses", href: "/business", matchPaths: ["/business", "/pricing"] },
 ];
 
 const CleanHeader = () => {
@@ -118,7 +118,7 @@ const CleanHeader = () => {
             <div className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
               {navModes.map((mode) => {
                 const active = isActive(mode);
-                const isClaim = mode.label === "Nest for Business";
+                const isClaim = mode.label === "For Businesses";
                 const baseCls =
                   "relative px-3 py-2 text-[13.5px] font-medium rounded-full transition-colors whitespace-nowrap";
                 const stateCls = active
@@ -229,7 +229,7 @@ const CleanHeader = () => {
         </p>
         <div className="space-y-1">
           {navModes.map((mode) => {
-            const isClaim = mode.label === "Nest for Business";
+            const isClaim = mode.label === "For Businesses";
             const cls = `block w-full text-left py-3.5 px-1 text-[17px] font-medium border-b border-white/[0.06] transition-colors ${
               isClaim ? "text-[#5eead4]" : "text-white/90 hover:text-white"
             }`;
