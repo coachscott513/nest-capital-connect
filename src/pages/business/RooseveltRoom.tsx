@@ -703,7 +703,46 @@ const RooseveltRoom = () => {
             <div className="mt-10 space-y-6 text-white/80">
               <div>
                 <p className="text-xs uppercase tracking-[0.22em] text-white/50">Address</p>
-                <p className="mt-2">Broadway, Troy, NY 12180</p>
+                <a
+                  href={BUSINESS.directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("directions", "visit")}
+                  className="mt-2 block hover:text-white transition"
+                >
+                  {BUSINESS.addressLine1}<br />{BUSINESS.addressLine2}
+                </a>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Phone</p>
+                <a
+                  href={BUSINESS.phoneHref}
+                  onClick={() => track("call", "visit")}
+                  className="mt-2 block hover:text-white transition"
+                >
+                  {BUSINESS.phoneDisplay}
+                </a>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Email</p>
+                <button
+                  onClick={() => { setContactOpen(true); track("email", "visit"); }}
+                  className="mt-2 block hover:text-white transition text-left"
+                >
+                  {BUSINESS.email}
+                </button>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Website</p>
+                <a
+                  href={BUSINESS.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("website", "visit")}
+                  className="mt-2 block hover:text-white transition"
+                >
+                  rooseveltroom.com
+                </a>
               </div>
               <div>
                 <p className="text-xs uppercase tracking-[0.22em] text-white/50">Hours</p>
@@ -711,18 +750,46 @@ const RooseveltRoom = () => {
                 <p className="text-white/50 text-sm">Closed Monday</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Parking</p>
-                <p className="mt-2">Street parking on Broadway; municipal lot two blocks west.</p>
+                <p className="text-xs uppercase tracking-[0.22em] text-white/50">Reservations</p>
+                <a
+                  href={BUSINESS.reservationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("reserve", "visit")}
+                  className="mt-2 block hover:text-white transition"
+                >
+                  Reserve on Tock
+                </a>
               </div>
               <div className="pt-2 flex flex-wrap gap-3" id="reserve">
-                <a href="#" className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90">
-                  <Calendar className="h-4 w-4" /> Reserve a table
+                <a
+                  href={BUSINESS.reservationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("reserve", "visit_cta")}
+                  className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90"
+                >
+                  <Calendar className="h-4 w-4" /> Reserve a Table
                 </a>
-                <a href="tel:+15185227265" className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-white/25 bg-white/[0.06] hover:bg-white/[0.12]">
-                  <Phone className="h-4 w-4" /> Call
+                <a
+                  href={BUSINESS.phoneHref}
+                  onClick={() => track("call", "visit_cta")}
+                  className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-white/25 bg-white/[0.06] hover:bg-white/[0.12]"
+                >
+                  <Phone className="h-4 w-4" /> Call The Roosevelt Room
+                </a>
+                <a
+                  href={BUSINESS.directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => track("directions", "visit_cta")}
+                  className="lift-hover inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold border border-white/25 bg-white/[0.06] hover:bg-white/[0.12]"
+                >
+                  <MapPin className="h-4 w-4" /> Get Directions
                 </a>
               </div>
             </div>
+
           </div>
           <GlassCard className="overflow-hidden min-h-[380px] relative">
             <img src={troyImg} alt="Downtown Troy" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-60" />
