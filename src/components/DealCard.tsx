@@ -67,7 +67,7 @@ function UnlockModal({ listing, onClose, onUnlocked }: UnlockModalProps) {
       toast.success("Address unlocked!");
       onClose();
     } catch {
-      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.");
+      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
     } finally {
       setSubmitting(false);
     }

@@ -201,7 +201,7 @@ const HomesPage = () => {
       toast({
         title: "Couldn't submit",
         description:
-          "We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.",
+          "We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.",
         variant: "destructive",
       });
     } finally {
@@ -451,8 +451,9 @@ const HomesPage = () => {
               {submitting ? "Sending…" : (<><ArrowRight className="w-4 h-4" /> Send my request</>)}
             </button>
             <p className="text-[11px] text-[#1d1d1f]/55 text-center">
-              Or call/text Scott directly at 518-207-9348
+              Or email the team at team@capitaldistrictnest.com
             </p>
+
           </form>
         </DialogContent>
       </Dialog>

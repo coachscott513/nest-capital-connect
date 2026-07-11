@@ -188,7 +188,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
       setNewsletterPhone("");
     } catch (error) {
       console.error('Newsletter signup error:', error);
-      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.");
+      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
     } finally {
       setIsSubmitting(false);
     }
@@ -220,7 +220,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
       setAddressNote("");
     } catch (error) {
       console.error('Address submission error:', error);
-      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.");
+      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
     } finally {
       setIsAddressSubmitting(false);
     }

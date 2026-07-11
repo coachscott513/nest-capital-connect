@@ -2,10 +2,8 @@ import { Helmet } from "react-helmet-async";
 import { Phone, Mail, ArrowRight } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import { TEAM_EMAIL } from "@/config/contact";
 
-const TEAM_PHONE_DISPLAY = "518-207-9348";
-const TEAM_PHONE_TEL = "+15182079348";
-const TEAM_EMAIL = "team@capitaldistrictnest.com";
 
 const ContactPage = () => (
   <div className="min-h-screen bg-background text-foreground">
@@ -37,19 +35,13 @@ const ContactPage = () => (
 
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
-            href={`tel:${TEAM_PHONE_TEL}`}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-white hover:opacity-90 transition shadow-[0_10px_30px_-10px_rgba(220,28,46,0.6)]"
-            style={{ backgroundColor: "#DC1C2E" }}
-          >
-            <Phone className="w-4 h-4" /> {TEAM_PHONE_DISPLAY}
-          </a>
-          <a
             href={`mailto:${TEAM_EMAIL}`}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-white/20 bg-white/5 text-white hover:bg-white/10 transition"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold bg-[#0d6e66] text-white hover:opacity-90 transition"
           >
             <Mail className="w-4 h-4" /> {TEAM_EMAIL}
           </a>
         </div>
+
 
         <p className="mt-6 text-xs text-white/45 tracking-wide">
           Mon–Sat · We typically reply within a few hours.
