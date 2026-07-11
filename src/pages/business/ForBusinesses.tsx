@@ -177,8 +177,12 @@ const ForBusinesses = () => {
   const regionSlug = region?.slug ?? "capital-district";
   const [plans, setPlans] = useState<Plan[]>(fallbackPlans);
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
+  const [heroIdx, setHeroIdx] = useState(0);
 
   useEffect(() => {
+    const id = setInterval(() => setHeroIdx((i) => (i + 1) % heroMontage.length), 7000);
+    return () => clearInterval(id);
+  }, []);
     (async () => {
       const { data } = await supabase
         .from("subscription_plans")
