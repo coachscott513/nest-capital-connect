@@ -183,6 +183,8 @@ const ForBusinesses = () => {
     const id = setInterval(() => setHeroIdx((i) => (i + 1) % heroMontage.length), 7000);
     return () => clearInterval(id);
   }, []);
+
+  useEffect(() => {
     (async () => {
       const { data } = await supabase
         .from("subscription_plans")
