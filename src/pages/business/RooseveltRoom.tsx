@@ -355,6 +355,35 @@ const RooseveltRoom = () => {
         </div>
       </section>
 
+      {/* WHAT'S HAPPENING — living strip, owner-editable */}
+      <section className="px-6 md:px-10 py-10 border-t border-white/[0.06] bg-white/[0.02]">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center gap-6">
+          <div className="flex items-center gap-3 shrink-0">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full rounded-full opacity-70 animate-ping" style={{ background: TEAL }} />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ background: TEAL }} />
+            </span>
+            <p className="text-xs uppercase tracking-[0.28em] text-white/60">What's Happening</p>
+          </div>
+          <div className="flex-1 flex flex-wrap gap-2.5">
+            {[
+              { icon: "🍸", label: "Happy Hour Tonight" },
+              { icon: "🎵", label: "Live Jazz Friday" },
+              { icon: "🥃", label: "New Summer Cocktail Menu" },
+              { icon: "🍽", label: "Reservations Available" },
+            ].map((chip) => (
+              <span
+                key={chip.label}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/12 bg-white/[0.04] text-sm text-white/90 hover:bg-white/[0.07] transition"
+              >
+                <span className="text-base leading-none">{chip.icon}</span>
+                {chip.label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* EDITORIAL INTRO */}
       <section className="px-6 md:px-10 py-24 md:py-32 max-w-4xl mx-auto">
         <Eyebrow>Capital District Nest Spotlight</Eyebrow>
