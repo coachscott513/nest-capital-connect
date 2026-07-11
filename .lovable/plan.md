@@ -1,77 +1,101 @@
 
-# Property Link Preview System — Phased Plan
+# Category-First Business Discovery System
 
-This is a large, multi-week build. I want to confirm scope and sequence before writing code, because doing it all in one pass would produce a brittle import and a half-finished claim workflow.
+Turn Capital District Nest into a browsable editorial platform: 6 consumer-facing category groups → 54 category pages → up to 3 Spotlights per category → full directory + town cross-filter. Keep The Roosevelt Room as the locked premium template.
 
-## What you uploaded
-A FlexMLS PDF export with ~3,703 active records across Residential, Residential Lease, Land, and MultiFamily. Each row carries listing + listing-member contact info. PDFs are not a clean import source — I'll need to parse it server-side (text extraction + row reconstruction) and normalize fields before loading.
+## 1. Data model
 
-## Phase 1 — Data layer (this turn, if you approve)
+**New file: `src/data/businessCategoryGroups.ts`**
+- 6 groups: Food & Drink, Home & Property, Professional Services, Health & Wellness, Automotive & Transportation, Shopping / Creative / Community.
+- Each group has: `id`, `label`, `blurb`, `icon`, `categories: OfficialCategory[]`.
+- Source categories from existing `src/data/officialCategories.ts` (no schema change).
 
-**Migration: new `property_listings` table** (separate from legacy `properties` and current `listings` so we don't disturb Delmar/Albany curated boards).
+**New file: `src/data/businessSpotlights.ts`**
+- Manually curated list: `{ slug, businessName, category, town, summary, heroImage, hasVideo, profileRoute }`.
+- Seed with The Roosevelt Room under `Restaurant`. Structure supports up to 3 per category; empty categories just show directory.
 
-Columns:
-- `mls_number` (unique), `status` (`preview`/`approved`/`claimed`/`archived`)
-- `source_type` (`market_data_import`), `claim_status` (`unclaimed`/`pending`/`claimed`)
-- `is_featured`, `is_indexable` (default false), `needs_agent_public_url` (default true)
-- `public_listing_url` (nullable)
-- address, address_slug, city, town_slug, county, price
-- property_category (`residential`/`rental`/`multi_family`/`land`/`commercial`), property_subtype (raw MLS code)
-- beds, baths, sqft, acres, year_built, days_on_market, listing_contract_date
-- agent_name, agent_slug, agent_phone, agent_email, agent_website
-- brokerage_name, brokerage_slug, office_phone, office_email
-- timestamps, RLS: public SELECT only where `status != 'archived'`; writes service_role only.
+**New file: `src/lib/categorySlug.ts`**
+- `categoryToSlug(OfficialCategory)` / `slugToCategory(string)` — reuse mappings from `src/lib/categoryDeepLink.ts` where possible.
 
-Plus supporting tables:
-- `listing_agents` (denormalized: slug, name, brokerage, claim_status, photo_url, social links, contact prefs)
-- `listing_brokerages` (slug, name, office info, claim_status)
-- `listing_claims` (mls_number, claimant_email, requested_public_url, status, submitted_at)
+## 2. Routes (add to `src/App.tsx`)
 
-## Phase 2 — Import pipeline
+- `/businesses` → new `BusinessesHub` page (discovery hub).
+- `/businesses/:categorySlug` → new `BusinessCategoryPage` (dynamic, one component handles all 54).
+- `/stories` → new `StoriesHub` page (editorial index).
+- `/business-spotlight-intake` → new `SpotlightIntake` form page.
+- Keep `/business/the-roosevelt-room` as-is (canonical premium page).
 
-A one-shot Node script (`scripts/import-flexmls-pdf.ts`) that:
-1. Extracts text from the PDF with `pdfjs-dist`.
-2. Reconstructs rows (FlexMLS export is column-stable).
-3. Normalizes town names → `town_slug`, MLS subtypes → `property_category`.
-4. Upserts into `property_listings`, `listing_agents`, `listing_brokerages` via service role.
-5. Prints a per-town / per-category count report.
+## 3. New pages
 
-I'll run it once, you review the counts, then we proceed.
+**`src/pages/businesses/BusinessesHub.tsx`**
+- Hero: eyebrow "LOCAL BUSINESS DISCOVERY", H1 "Explore local businesses by category.", subhead, CTAs (Browse Categories / Search Businesses → `/local`).
+- 6 group sections, each with a headline + tile grid of that group's categories. Each tile links to `/businesses/:categorySlug` with icon + label + count (count pulled via lightweight Supabase count query or from `useDbBusinesses`).
+- Footer CTA: "Own a business?" → `/claim-business` and `/business-spotlight-intake`.
 
-## Phase 3 — Public routes (after import lands cleanly)
+**`src/pages/businesses/BusinessCategoryPage.tsx`**
+- Reads `:categorySlug`, resolves to `OfficialCategory`. 404 fallback if unknown.
+- Sections:
+  1. Category hero (dynamic copy: "Capital District [Category]" etc.).
+  2. **Capital District Nest Spotlights** — up to 3 cards from `businessSpotlights.ts` filtered by category. Header copy: "Three local businesses we're currently highlighting…". Cards link to `/business/:slug`. Explicitly no ranking language.
+  3. **Explore more local [category] businesses** — reuse `BusinessDirectory` or a trimmed variant filtered by category (uses existing `useDbBusinesses` / `usePaginatedBusinesses`). Grid + list toggle; filters for town, claimed, featured.
+  4. **Browse [category] by town** — town tile grid; each tile routes to `/businesses/:categorySlug?town=<slug>` (page reads `town` search param and applies).
+  5. **Related categories** — 3–5 tiles from same group.
+  6. Owner CTA (Claim / Request Spotlight).
 
-- `/homes/listings/[townSlug]` — hero, stats, tabs (All / Residential / Rentals / Multi-Family / Land / Agents / Brokerages), scannable row list. Default DB-backed; falls back to curated `townPropertyBoard.ts` for Delmar/Albany flagships.
-- `/homes/listings/[townSlug]/[addressSlug]` — preview page, `noindex` unless `status='approved'` AND `public_listing_url` set.
-- `/homes/agents/[agentSlug]` — `noindex` unless claimed/enhanced.
-- `/homes/brokerages/[brokerageSlug]` — index when content threshold met.
-- `/homes/claim-listing?mls=...` — claim form → `listing_claims` + email to Scott.
+**`src/pages/StoriesHub.tsx`**
+- Public editorial hub with sections: Business Spotlights, Food & Drink, People, Homes, Town Life, Weekend, New & Notable, Community.
+- Business Spotlight cards link to canonical `/business/:slug` (no duplicate content).
+- v1 pulls from `businessSpotlights.ts` + existing `useMediaStories`. Non-business sections can start empty with placeholder cards.
 
-All copy uses the neutral language you specified:
-- "Property link previews" / "Listing source pending" / "Agent public link pending" / "Claim this listing link"
-- Standard disclaimer block on every Homes/town page.
-- No "Live MLS feed", no "MLS-sourced", no Scott/RE/MAX branding.
+**`src/pages/business/SpotlightIntake.tsx`**
+- Form fields per spec. On submit, insert into a new lightweight table OR reuse existing `partner_inquiries` with a `type=spotlight_intake` marker (prefer reuse — no migration this pass).
+- Required approval checkbox: "I confirm that I own or have permission to provide the submitted photos, videos, logos, and business information for use by Capital District Nest."
+- Confirmation screen with the exact copy from the spec.
 
-## Phase 4 — SEO
+## 4. Navigation
 
-- Town boards: indexable, dynamic meta `"[Town] Property Links & Listing Agents | Capital District Nest"`.
-- Preview address pages + unclaimed agent pages: `<meta name="robots" content="noindex,follow">` via Helmet.
-- Sitemap generator extended to include town boards + claimed agent/brokerage pages only.
+Update `src/components/CleanHeader.tsx`:
+- Ensure top-level items: Discover, Homes, **Businesses** (→ `/businesses`), Communities, Neighborhoods, Events, **Stories** (→ `/stories`), Local Resources, **For Businesses**.
+- Preserve existing routes; only relabel where safe.
 
-## Phase 5 (future, not this build)
+Update `LocalGuideSection.tsx` category tiles to link into `/businesses/:categorySlug` instead of static labels (small, additive).
 
-Outreach email templates, featured-card monetization, partner packages. Out of scope until Phases 1–4 ship.
+## 5. Spotlight seed content (Phase 1)
 
----
+Seed `businessSpotlights.ts` with placeholders for the 5 proof cases requested:
+- Restaurant: The Roosevelt Room (real, live).
+- Coffee, Contractor, Professional Service, Wellness: placeholder entries with `status: 'coming_soon'` so cards render an "In production" state and link to intake form. No fake business names — use "Spotlight coming soon" cards with a Nominate CTA.
 
-## What I need from you to start
+## 6. Locked premium template
 
-**Approve Phase 1 + Phase 2 now (schema + import script)?**
+Extract a small `PremiumBusinessTemplate` note in `src/pages/business/RooseveltRoom.tsx` header comment listing required sections (hero, actions, editorial intro, Known For, First-Timers, Team, Gallery, Reel, Instagram/Facebook cards, Seasonal, Plan Your Visit, Related, Claim CTA). Do not refactor the page — the comment locks the pattern for future duplicates. Full componentization is a later pass.
 
-I will:
-1. Create the `property_listings` / `listing_agents` / `listing_brokerages` / `listing_claims` migration (you'll approve it in the migration dialog).
-2. Write and run the PDF import script.
-3. Report back the counts (e.g., "Albany: 412 residential, 87 multi-family, 14 land · 211 unique agents · 38 brokerages").
+## 7. Out of scope this pass
 
-Then in a follow-up turn we build the public routes (Phase 3) and SEO rules (Phase 4).
+- QR asset generator (data model supports it via `profileRoute`; generation later).
+- Spotlight lifecycle states table (`invited`, `questionnaire_sent`, …). Recorded in intake row for now; formal state machine later.
+- Building the other 4 real Spotlight pages — those come after real business questionnaires.
+- Admin CMS for Spotlights (still manual via `businessSpotlights.ts`).
 
-If you'd rather I compress this into one mega-turn, say so — but I recommend the split so you can sanity-check the imported data before it powers public pages.
+## Technical details
+
+- Category slugs: kebab-case of `OfficialCategory`, resolver reuses `src/lib/categoryDeepLink.ts` maps.
+- Business fetching: existing `useDbBusinesses({ category, townSlug, limit })` — extend if needed to accept category filter (currently supports it via `subcategory`/free-text; verify and add explicit `category` param if missing).
+- Design tokens: dark navy `#0B0F19`, teal `#5eead4`, glass cards — matches locked global dark canvas. No new colors.
+- SEO: each category page emits `Helmet` with dynamic title/description, canonical `/businesses/:slug`, filtered `?town=` variants `noindex,follow` (mirrors `LocalPage.tsx` pattern).
+- No DB migration required for v1.
+
+```text
+/businesses
+   ├── hero + 6 group tiles
+   ├── /businesses/restaurants
+   │      ├── hero
+   │      ├── 3 Spotlights (Roosevelt Room + 2 coming soon)
+   │      ├── directory (filtered)
+   │      ├── by-town tiles
+   │      └── related categories
+   ├── /businesses/coffee    …
+   └── /businesses/hvac      …
+/stories  → surfaces /business/:slug (canonical)
+/business-spotlight-intake  → owner questionnaire
+```
