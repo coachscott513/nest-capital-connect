@@ -44,3 +44,4 @@
 - [Location Accuracy Policy](mem://editorial/location-accuracy-policy) — Exact municipality/neighborhood rules.
 - [No Fabricated Content](mem://editorial/no-fabricated-content) — Verified sources only; coming-soon patterns.
 - [Brokerage Disclosure Isolation](mem://preferences/brokerage-disclosure) — Neutral platform globally; brokerage identity only via `<RealEstateDisclosure />` config.
+- [Spotlight Page States (LOCKED)](mem://editorial/spotlight-page-states) — Business pages publish as template/preview/owner_review/verified/published. Badge, no fake imagery, no invented team. Roosevelt Room = canonical template.
