@@ -5,6 +5,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Phone, MessageCircle, Mail, Calendar } from 'lucide-react';
+import { PHONE_RAW, PHONE_DISPLAY, PHONE_TEL, PHONE_SMS, GENERAL_EMAIL } from '@/config/contact';
 
 /**
  * AnalystCard — Capital District Nest Local Concierge modal.
@@ -12,9 +13,9 @@ import { Phone, MessageCircle, Mail, Calendar } from 'lucide-react';
  * red reserved strictly for the Call CTA.
  */
 
-const PHONE_NUMBER = '5185227265';
-const FORMATTED_PHONE = '(518) 522-7265';
-const EMAIL = 'team@capitaldistrictnest.com';
+const PHONE_NUMBER = PHONE_RAW.replace(/^\+1/, '');
+const FORMATTED_PHONE = PHONE_DISPLAY;
+const EMAIL = GENERAL_EMAIL;
 const SMS_BODY = "Hi Capital District Nest, I have a question about a local listing.";
 
 const RED_CALL = '#DC1C2E';   // strict: call button only
