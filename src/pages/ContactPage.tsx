@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Mail, ArrowRight } from "lucide-react";
+import { Phone, Mail, ArrowRight } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { TEAM_EMAIL } from "@/config/contact";
