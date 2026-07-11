@@ -46,3 +46,4 @@
 - [No Fabricated Content](mem://editorial/no-fabricated-content) — Verified sources only; coming-soon patterns.
 - [Brokerage Disclosure Isolation](mem://preferences/brokerage-disclosure) — Neutral platform globally; brokerage identity only via `<RealEstateDisclosure />` config.
 - [Spotlight Page States (LOCKED)](mem://editorial/spotlight-page-states) — Business pages publish as template/preview/owner_review/verified/published. Badge, no fake imagery, no invented team. Roosevelt Room = canonical template.
+- [Platform vs Founder Identity (LOCKED)](mem://preferences/platform-vs-founder-identity) — Capital District Nest is the public identity. Scott Alvarez only on real-estate surfaces. Centralized `src/config/contact.ts`.
