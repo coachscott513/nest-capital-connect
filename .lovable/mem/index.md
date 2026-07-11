@@ -43,3 +43,4 @@
 - [Category Taxonomy: Healthcare & Dental](mem://features/category-taxonomy-healthcare-dental) — First-class verticals.
 - [Location Accuracy Policy](mem://editorial/location-accuracy-policy) — Exact municipality/neighborhood rules.
 - [No Fabricated Content](mem://editorial/no-fabricated-content) — Verified sources only; coming-soon patterns.
+- [Brokerage Disclosure Isolation](mem://preferences/brokerage-disclosure) — Neutral platform globally; brokerage identity only via `<RealEstateDisclosure />` config.
