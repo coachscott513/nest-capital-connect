@@ -185,6 +185,120 @@ export type Database = {
         }
         Relationships: []
       }
+      business_applications: {
+        Row: {
+          address: string | null
+          badges: Json
+          business_name: string
+          category: string | null
+          contact_name: string | null
+          created_at: string
+          editorial_notes: string | null
+          email: string
+          facebook: string | null
+          features: Json
+          first_timer: string | null
+          hours: string | null
+          id: string
+          instagram: string | null
+          known_for: string | null
+          logo_url: string | null
+          media: Json
+          own_words: string | null
+          phone: string | null
+          photos: string[]
+          published_business_id: string | null
+          reel_url: string | null
+          region_slug: string
+          reservation_url: string | null
+          seasonal: string | null
+          selected_plan_key: string | null
+          social: Json
+          status: string
+          story_origin: string | null
+          submitted_by: string | null
+          team: Json
+          town: string | null
+          updated_at: string
+          video_url: string | null
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          badges?: Json
+          business_name: string
+          category?: string | null
+          contact_name?: string | null
+          created_at?: string
+          editorial_notes?: string | null
+          email: string
+          facebook?: string | null
+          features?: Json
+          first_timer?: string | null
+          hours?: string | null
+          id?: string
+          instagram?: string | null
+          known_for?: string | null
+          logo_url?: string | null
+          media?: Json
+          own_words?: string | null
+          phone?: string | null
+          photos?: string[]
+          published_business_id?: string | null
+          reel_url?: string | null
+          region_slug?: string
+          reservation_url?: string | null
+          seasonal?: string | null
+          selected_plan_key?: string | null
+          social?: Json
+          status?: string
+          story_origin?: string | null
+          submitted_by?: string | null
+          team?: Json
+          town?: string | null
+          updated_at?: string
+          video_url?: string | null
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          badges?: Json
+          business_name?: string
+          category?: string | null
+          contact_name?: string | null
+          created_at?: string
+          editorial_notes?: string | null
+          email?: string
+          facebook?: string | null
+          features?: Json
+          first_timer?: string | null
+          hours?: string | null
+          id?: string
+          instagram?: string | null
+          known_for?: string | null
+          logo_url?: string | null
+          media?: Json
+          own_words?: string | null
+          phone?: string | null
+          photos?: string[]
+          published_business_id?: string | null
+          reel_url?: string | null
+          region_slug?: string
+          reservation_url?: string | null
+          seasonal?: string | null
+          selected_plan_key?: string | null
+          social?: Json
+          status?: string
+          story_origin?: string | null
+          submitted_by?: string | null
+          team?: Json
+          town?: string | null
+          updated_at?: string
+          video_url?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
       business_partners: {
         Row: {
           created_at: string
@@ -544,6 +658,42 @@ export type Database = {
           notes?: string | null
           property_address?: string
           strategy?: string
+        }
+        Relationships: []
+      }
+      engagement_events: {
+        Row: {
+          business_id: string | null
+          business_slug: string | null
+          created_at: string
+          event_type: string
+          id: string
+          metadata: Json
+          referrer: string | null
+          region_slug: string
+          user_agent: string | null
+        }
+        Insert: {
+          business_id?: string | null
+          business_slug?: string | null
+          created_at?: string
+          event_type: string
+          id?: string
+          metadata?: Json
+          referrer?: string | null
+          region_slug?: string
+          user_agent?: string | null
+        }
+        Update: {
+          business_id?: string | null
+          business_slug?: string | null
+          created_at?: string
+          event_type?: string
+          id?: string
+          metadata?: Json
+          referrer?: string | null
+          region_slug?: string
+          user_agent?: string | null
         }
         Relationships: []
       }
@@ -1870,6 +2020,60 @@ export type Database = {
           town_slug?: string
           updated_at?: string
           utilities_included?: boolean | null
+        }
+        Relationships: []
+      }
+      subscription_plans: {
+        Row: {
+          active: boolean
+          annual_price_cents: number
+          created_at: string
+          description: string | null
+          features: Json
+          id: string
+          monthly_price_cents: number
+          plan_key: string
+          plan_name: string
+          region_slug: string
+          sort_order: number
+          stripe_annual_price_id: string | null
+          stripe_monthly_price_id: string | null
+          stripe_product_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          annual_price_cents?: number
+          created_at?: string
+          description?: string | null
+          features?: Json
+          id?: string
+          monthly_price_cents?: number
+          plan_key: string
+          plan_name: string
+          region_slug?: string
+          sort_order?: number
+          stripe_annual_price_id?: string | null
+          stripe_monthly_price_id?: string | null
+          stripe_product_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          annual_price_cents?: number
+          created_at?: string
+          description?: string | null
+          features?: Json
+          id?: string
+          monthly_price_cents?: number
+          plan_key?: string
+          plan_name?: string
+          region_slug?: string
+          sort_order?: number
+          stripe_annual_price_id?: string | null
+          stripe_monthly_price_id?: string | null
+          stripe_product_id?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
