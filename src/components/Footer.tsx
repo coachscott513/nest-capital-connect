@@ -215,6 +215,8 @@ const Footer = () => {
           </p>
         </div>
       </div>
+
+      {showRealEstateDisclosure && <RealEstateDisclosure />}
     </footer>
   );
 };
