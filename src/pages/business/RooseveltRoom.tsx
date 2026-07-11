@@ -30,6 +30,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import FeaturedInModule from "@/components/business/FeaturedInModule";
 import BusinessContactModal from "@/components/business/BusinessContactModal";
+import EditorialBadges from "@/components/business/EditorialBadges";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { trackGAEvent } from "@/components/GARouteTracker";
@@ -134,13 +135,6 @@ const nearby = [
   { label: "Nearby homes", href: "/homes/search/troy" },
 ];
 
-const timeline = [
-  { year: "2014", title: "Opening", text: "Doors open on North Greenbush Road, just outside Troy." },
-  { year: "2017", title: "Bar program", text: "Craft cocktail bar launches, quickly recognized regionally." },
-  { year: "2019", title: "Private dining", text: "Expansion into the adjacent room for private events." },
-  { year: "2022", title: "James Beard nod", text: "Semi-finalist recognition for outstanding hospitality." },
-  { year: "2024", title: "Community fund", text: "Launches quarterly fundraising dinners for Rensselaer County nonprofits." },
-];
 
 const conciergeQuestions = [
   "Is this good for anniversaries?",
@@ -185,11 +179,6 @@ const RooseveltRoom = () => {
       addressRegion: "NY",
       postalCode: "12180",
       addressCountry: "US",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.8",
-      reviewCount: "312",
     },
     sameAs: [BUSINESS.instagramUrl, BUSINESS.facebookUrl],
   };
@@ -333,14 +322,15 @@ const RooseveltRoom = () => {
           </div>
 
 
-          {/* Meta strip */}
-          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/70">
-            <div className="flex items-center gap-2">
-              <Star className="h-4 w-4" style={{ color: TEAL }} fill="currentColor" />
-              <span className="text-white">4.8</span>
-              <span>· 312 reviews</span>
-            </div>
-            <span>$$$</span>
+          {/* Editorial trust badges */}
+          <EditorialBadges
+            className="mt-10"
+            badges={["cdn-editorial", "original-photography"]}
+          />
+
+          {/* Meta strip — verified public info only */}
+          <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/70">
+            <span>$$$ · Modern American</span>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4" />
               <span>Tue–Sun · 5pm–11pm</span>
