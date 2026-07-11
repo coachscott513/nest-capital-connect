@@ -76,7 +76,7 @@ const blogPosts = {
         <h3 class="text-xl font-semibold mb-4">📞 Ready to See This Home or Discuss Your Schenectady Home Search?</h3>
         <p class="mb-4">Interested in viewing this property or exploring other <a href="/schenectady-rentals" class="text-primary hover:underline">Schenectady homes for sale</a>? Our team specializes in 12309 real estate value analysis and can help you find the perfect home.</p>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="/contact" class="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors text-center font-medium">Book a 15-minute consultation with Scott today!</a>
+          <a href="/contact" class="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors text-center font-medium">Book a 15-minute consultation with our team</a>
           <a href="/contact" class="inline-block bg-secondary text-secondary-foreground px-6 py-3 rounded-lg hover:bg-secondary/90 transition-colors text-center font-medium">Get notified about other move-in ready homes!</a>
         </div>
       </div>
@@ -431,24 +431,24 @@ const BlogPost = () => {
                 </div>
               </div>
               
-              {/* Author Bio */}
+              {/* Editorial Byline */}
               <Card className="mt-12">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-xl font-bold">
-                      SA
+                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-sm font-bold">
+                      CDN
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-semibold mb-2">Scott Alvarez</h3>
+                      <h3 className="text-xl font-semibold mb-2">Capital District Nest Editorial Team</h3>
                       <p className="text-muted-foreground mb-4">
-                        Licensed Real Estate Professional and Investment Specialist with over 10 years of experience in the Capital District market. Scott has helped hundreds of investors build wealth through strategic property acquisitions and has personally completed over 50 investment property transactions.
+                        Original local reporting from Capital District Nest — an independent regional media and local discovery platform covering Albany, Rensselaer, Saratoga, Schenectady, and Warren counties. Story tips and corrections: media@capitaldistrictnest.com.
                       </p>
                       <div className="flex gap-4">
-                        <Button variant="outline" size="sm">
-                          View Profile
+                        <Button variant="outline" size="sm" asChild>
+                          <a href="/about-editorial">About Our Editorial Team</a>
                         </Button>
                         <Button variant="outline" size="sm" asChild>
-                          <a href="tel:+15186718048">Contact an Agent</a>
+                          <a href="mailto:media@capitaldistrictnest.com">Contact Editorial</a>
                         </Button>
                       </div>
                     </div>
