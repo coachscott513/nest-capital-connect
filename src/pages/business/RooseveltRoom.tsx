@@ -100,14 +100,6 @@ const GlassCard = ({
   </div>
 );
 
-const mediaCards = [
-  { tag: "LATEST STORY", title: "An editor's night at The Roosevelt Room", meta: "CDN Editorial · 5 min read" },
-  { tag: "LATEST VIDEO", title: "Behind the bar: the smoked old fashioned", meta: "Short film · 1:12" },
-  { tag: "BEHIND THE SCENES", title: "Sourcing from Hudson Valley farms", meta: "Photo essay" },
-  { tag: "CHEF INTERVIEW", title: "The philosophy behind the seasonal menu", meta: "Interview · 8 min" },
-  { tag: "COMMUNITY SPOTLIGHT", title: "How Broadway became Troy's dining corridor", meta: "CDN Local" },
-  { tag: "AWARDS & PRESS", title: "Recent recognition and press coverage", meta: "Press room" },
-];
 
 const team = [
   { name: "Michael Roosevelt", title: "Owner", bio: "Troy native, third-generation restaurateur.", img: chefImg },
@@ -392,13 +384,13 @@ const RooseveltRoom = () => {
         </div>
       </section>
 
-      {/* FOLLOW THE EXPERIENCE — SOCIAL HERO */}
+      {/* FOLLOW THE BUSINESS — SOCIAL MEDIA FEATURE */}
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto">
           <SectionHeading
-            eyebrow="Follow the Experience"
-            title="See what's happening at The Roosevelt Room."
-            intro="Follow the restaurant for seasonal dishes, cocktails, live jazz, events, behind-the-scenes moments, and dining updates."
+            eyebrow="Follow the Business"
+            title="Follow The Roosevelt Room."
+            intro="See current dishes, events, restaurant updates, behind-the-scenes moments, and community activity directly from The Roosevelt Room."
           />
 
           <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -416,27 +408,42 @@ const RooseveltRoom = () => {
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-[1.04]"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/45" />
               <div
-                className="absolute inset-0 opacity-70 mix-blend-multiply"
-                style={{ background: "linear-gradient(135deg, #833AB4 0%, #E1306C 50%, #F77737 100%)" }}
+                className="absolute -top-24 -right-24 w-80 h-80 rounded-full opacity-40 blur-3xl pointer-events-none"
+                style={{ background: "radial-gradient(circle, #E1306C 0%, transparent 70%)" }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
+
               <div className="relative z-10 h-full flex flex-col justify-between p-8 md:p-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center">
-                    <Instagram className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/80">Instagram</p>
-                    <p className="text-white text-sm">{BUSINESS.instagramHandle}</p>
-                  </div>
-                </div>
+                {/* Oversized Instagram glyph, upper-left */}
                 <div>
-                  <h3 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-white leading-tight">
-                    The Roosevelt Room on Instagram
+                  <div
+                    className="inline-flex items-center justify-center rounded-[26%] shadow-2xl"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #FEDA75 0%, #FA7E1E 25%, #D62976 50%, #962FBF 75%, #4F5BD5 100%)",
+                      padding: "14px",
+                    }}
+                  >
+                    <Instagram
+                      className="text-white h-12 w-12 md:h-[76px] md:w-[76px]"
+                      strokeWidth={1.6}
+                    />
+                  </div>
+                  <span className="mt-4 inline-block px-3 py-1 rounded-full text-[10px] font-semibold tracking-[0.22em] uppercase bg-white/10 border border-white/20 text-white/85 backdrop-blur">
+                    Official Instagram
+                  </span>
+                </div>
+
+                <div>
+                  <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-white/70">
+                    Instagram
+                  </p>
+                  <h3 className="mt-2 text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-white leading-tight">
+                    {BUSINESS.instagramHandle}
                   </h3>
                   <p className="mt-4 text-white/85 max-w-md">
-                    Explore new dishes, cocktails, special events, live jazz, and moments from inside the dining room.
+                    Explore new dishes, cocktails, special events, live jazz, and moments from inside The Roosevelt Room.
                   </p>
                   <span className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black">
                     View Instagram <ArrowUpRight className="h-4 w-4" />
@@ -459,27 +466,41 @@ const RooseveltRoom = () => {
                 loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-[1.04]"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/45" />
               <div
-                className="absolute inset-0 opacity-55 mix-blend-multiply"
-                style={{ background: "linear-gradient(135deg, #1877F2 0%, #0a4db3 100%)" }}
+                className="absolute -top-24 -right-24 w-80 h-80 rounded-full opacity-40 blur-3xl pointer-events-none"
+                style={{ background: "radial-gradient(circle, #1877F2 0%, transparent 70%)" }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
+
               <div className="relative z-10 h-full flex flex-col justify-between p-8 md:p-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center">
-                    <Facebook className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-white/80">Facebook</p>
-                    <p className="text-white text-sm">The Roosevelt Room</p>
-                  </div>
-                </div>
+                {/* Oversized Facebook "f" glyph, upper-left */}
                 <div>
-                  <h3 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-white leading-tight">
-                    Follow The Roosevelt Room on Facebook
+                  <div
+                    className="inline-flex items-center justify-center rounded-2xl shadow-2xl h-16 w-16 md:h-[92px] md:w-[92px]"
+                    style={{ background: "#1877F2" }}
+                    aria-label="Facebook"
+                  >
+                    <span
+                      className="text-white font-bold leading-none text-[44px] md:text-[64px]"
+                      style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+                    >
+                      f
+                    </span>
+                  </div>
+                  <span className="mt-4 inline-block px-3 py-1 rounded-full text-[10px] font-semibold tracking-[0.22em] uppercase bg-white/10 border border-white/20 text-white/85 backdrop-blur">
+                    Official Facebook
+                  </span>
+                </div>
+
+                <div>
+                  <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-white/70">
+                    Facebook
+                  </p>
+                  <h3 className="mt-2 text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-white leading-tight">
+                    The Roosevelt Room
                   </h3>
                   <p className="mt-4 text-white/85 max-w-md">
-                    See restaurant updates, community events, reservations, live entertainment, announcements, and special experiences.
+                    Follow restaurant updates, announcements, community events, reservations, live entertainment, and special experiences.
                   </p>
                   <span className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black">
                     View Facebook <ArrowUpRight className="h-4 w-4" />
@@ -491,40 +512,35 @@ const RooseveltRoom = () => {
         </div>
       </section>
 
-      {/* MEDIA ROOM */}
-
+      {/* STORIES — placeholder until real editorial is published */}
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
-            <SectionHeading
-              eyebrow="Media Room"
-              title="Stories, video, and press."
-              intro="Original editorial coverage from Capital District Nest — refreshed as new stories go live."
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mediaCards.map((card, i) => (
-              <GlassCard key={card.tag} className="overflow-hidden group cursor-pointer">
-                <div className="aspect-[4/3] overflow-hidden bg-black/40">
-                  <img
-                    src={[cocktailImg, plateImg, chefImg, diningImg, troyImg, heroImg][i]}
-                    alt={card.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-[1.03] transition duration-700"
-                  />
-                </div>
-                <div className="p-6">
-                  <p className="text-[10px] font-semibold tracking-[0.24em] text-white/50">
-                    {card.tag}
-                  </p>
-                  <h3 className="mt-3 text-xl font-semibold tracking-tight leading-snug group-hover:text-[color:var(--teal)]" style={{ ["--teal" as any]: TEAL }}>
-                    {card.title}
-                  </h3>
-                  <p className="mt-3 text-sm text-white/55">{card.meta}</p>
-                </div>
-              </GlassCard>
-            ))}
+        <div className="max-w-4xl mx-auto text-center">
+          <Eyebrow>Media Room</Eyebrow>
+          <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05]">
+            Stories from The Roosevelt Room are coming soon.
+          </h2>
+          <p className="mt-6 text-lg text-white/70 font-light leading-relaxed">
+            Capital District Nest is preparing original features, interviews, seasonal updates, and behind-the-scenes stories. Until then, follow the restaurant directly for the most current updates.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <a
+              href={BUSINESS.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("instagram", "stories_placeholder")}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90 transition"
+            >
+              <Instagram className="h-4 w-4" /> Instagram
+            </a>
+            <a
+              href={BUSINESS.facebookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => track("facebook", "stories_placeholder")}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition"
+            >
+              <Facebook className="h-4 w-4" /> Facebook
+            </a>
           </div>
         </div>
       </section>
