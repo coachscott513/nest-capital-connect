@@ -325,7 +325,7 @@ const RealEstateAnalyzer: React.FC = () => {
           Property Investment Analyzer
         </h3>
         <div className="w-32 sm:w-40 h-12 bg-primary rounded-md flex items-center justify-center">
-          <span className="text-primary-foreground font-bold">REMAX</span>
+          <span className="text-primary-foreground font-bold">MLS</span>
         </div>
       </header>
 
@@ -879,7 +879,7 @@ const RealEstateAnalyzer: React.FC = () => {
           Disclaimer: This analyzer is for informational purposes only. Not financial advice. 
           Consult professionals before making investment decisions.
         </p>
-        <p>&copy; 2025 Remax - Capital District Real Estate</p>
+        <p>&copy; 2025 Capital District Nest</p>
       </footer>
     </div>
   );

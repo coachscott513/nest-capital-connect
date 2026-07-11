@@ -84,12 +84,12 @@ The Scott Alvarez Team - Investment Property Specialists
 Capital District Nest
 
 📱 Call Now: (518) 522-7265
-📧 Email: scottalvarez@remax.net
+📧 Email: scott@capitaldistrictnest.com
 🌐 Serving Albany, Troy, Schenectady & Saratoga Springs
 
 🔗 Social Media:
-Facebook: @scottalvarez.remax
-Instagram: @scottalvarez.remax
+Facebook: @capitaldistrictnest
+Instagram: @capitaldistrictnest
 LinkedIn: /in/scottalvarez
 YouTube: @scottalvarez
 
@@ -259,13 +259,13 @@ Contact an Agent at (518) 522-7265
     
     addText('Contact Information:', 11, true);
     addText('Phone: (518) 522-7265');
-    addText('Email: scottalvarez@remax.net');
+    addText('Email: scott@capitaldistrictnest.com');
     addText('Serving Albany, Troy, Schenectady & Saratoga Springs');
     currentY += 5;
 
     addText('Social Media:', 11, true);
-    addText('Facebook: @scottalvarez.remax');
-    addText('Instagram: @scottalvarez.remax');
+    addText('Facebook: @capitaldistrictnest');
+    addText('Instagram: @capitaldistrictnest');
     addText('LinkedIn: /in/scottalvarez');
     addText('YouTube: @scottalvarez');
     currentY += 5;
@@ -430,7 +430,7 @@ Contact an Agent at (518) 522-7265
             </div>
           </div>
           <div className="text-sm">
-            <p className="mb-1">📱 (518) 522-7265 | 📧 scottalvarez@remax.net</p>
+            <p className="mb-1">📱 (518) 522-7265 | 📧 scott@capitaldistrictnest.com</p>
             <p className="opacity-90">Serving Albany, Troy, Schenectady & Saratoga Springs</p>
           </div>
         </div>

@@ -81,7 +81,7 @@ export interface LivingInTown {
   seoIntro: string;
 }
 
-const REMAX = (city: string) =>
+const MLS = (city: string) =>
   `/homes/search)}`;
 
 // ── Helper: default essentials shell (Capital District–wide fallbacks) ─────
@@ -107,7 +107,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12054",
     schoolDistrict: "Bethlehem Central School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Delmar"),
+    listingSearchUrl: MLS("Delmar"),
     weeklyUpdates: [
       { type: "listings", title: "4 new listings on the market",        description: "Mostly 3–4 bed colonials between $475K–$640K.",         date: "May 7, 2026" },
       { type: "sold",     title: "5 homes closed this week",            description: "Median sale price ~$485K, average 8 days on market.",   date: "May 6, 2026" },
@@ -153,7 +153,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12207",
     schoolDistrict: "Albany City School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Albany"),
+    listingSearchUrl: MLS("Albany"),
     weeklyUpdates: [
       { type: "listings", title: "12 new listings citywide",            description: "Pine Hills, Buckingham Pond, and Center Square activity.", date: "May 7, 2026" },
       { type: "sold",     title: "9 homes closed this week",            description: "Median sale price ~$245K across all neighborhoods.",       date: "May 6, 2026" },
@@ -198,7 +198,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12180",
     schoolDistrict: "Troy City School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Troy"),
+    listingSearchUrl: MLS("Troy"),
     weeklyUpdates: [
       { type: "listings", title: "8 new listings this week",        description: "Brownstones in the Pottery District and South Troy two-families.", date: "May 7, 2026" },
       { type: "sold",     title: "6 homes closed this week",        description: "Median sale price ~$215K across the city.",                       date: "May 6, 2026" },
@@ -243,7 +243,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12305",
     schoolDistrict: "Schenectady City School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Schenectady"),
+    listingSearchUrl: MLS("Schenectady"),
     weeklyUpdates: [
       { type: "listings", title: "10 new listings this week",     description: "Stockade colonials and Upper Union value plays.",       date: "May 7, 2026" },
       { type: "sold",     title: "7 homes closed this week",      description: "Median sale price ~$195K — strong cash flow market.",   date: "May 6, 2026" },
@@ -288,7 +288,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12866",
     schoolDistrict: "Saratoga Springs City School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Saratoga Springs"),
+    listingSearchUrl: MLS("Saratoga Springs"),
     weeklyUpdates: [
       { type: "listings", title: "6 new listings this week",       description: "East Side Victorians and West Side single-families.",  date: "May 7, 2026" },
       { type: "sold",     title: "4 homes closed this week",       description: "Median sale price ~$615K — highest in the region.",    date: "May 6, 2026" },
@@ -333,7 +333,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12065",
     schoolDistrict: "Shenendehowa Central School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Clifton Park"),
+    listingSearchUrl: MLS("Clifton Park"),
     weeklyUpdates: [
       { type: "listings", title: "9 new listings this week",      description: "Family colonials and split-levels near Shen schools.",      date: "May 7, 2026" },
       { type: "sold",     title: "8 homes closed this week",      description: "Median sale price ~$425K, average 11 days on market.",      date: "May 6, 2026" },
@@ -378,7 +378,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12084",
     schoolDistrict: "Guilderland Central School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Guilderland"),
+    listingSearchUrl: MLS("Guilderland"),
     weeklyUpdates: [
       { type: "listings", title: "5 new listings this week",         description: "Western Ave colonials and Altamont-area homes.",     date: "May 7, 2026" },
       { type: "sold",     title: "4 homes closed this week",         description: "Median sale price ~$385K, strong school demand.",    date: "May 6, 2026" },
@@ -424,7 +424,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12110",
     schoolDistrict: "North Colonie Central School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Latham"),
+    listingSearchUrl: MLS("Latham"),
     weeklyUpdates: [
       { type: "listings", title: "7 new listings this week",         description: "Family ranches and split-levels near North Colonie schools.", date: "May 7, 2026" },
       { type: "sold",     title: "5 homes closed this week",         description: "Median sale price ~$365K, strong family demand.",             date: "May 6, 2026" },
@@ -469,7 +469,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12309",
     schoolDistrict: "Niskayuna Central School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Niskayuna"),
+    listingSearchUrl: MLS("Niskayuna"),
     weeklyUpdates: [
       { type: "listings", title: "5 new listings this week",         description: "Mid-century ranches and updated colonials.",                date: "May 7, 2026" },
       { type: "sold",     title: "4 homes closed this week",         description: "Median sale price ~$455K — strong school demand.",          date: "May 6, 2026" },
@@ -515,7 +515,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12077",
     schoolDistrict: "Bethlehem Central School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Glenmont"),
+    listingSearchUrl: MLS("Glenmont"),
     weeklyUpdates: [
       { type: "listings", title: "3 new listings this week",         description: "Newer construction and Bethlehem-area family homes.",     date: "May 7, 2026" },
       { type: "sold",     title: "2 homes closed this week",         description: "Median sale price ~$455K with Bethlehem schools.",        date: "May 6, 2026" },
@@ -555,7 +555,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12159",
     schoolDistrict: "Bethlehem Central School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Slingerlands"),
+    listingSearchUrl: MLS("Slingerlands"),
     weeklyUpdates: [
       { type: "listings", title: "2 new listings this week",        description: "Larger lots and executive homes near Slingerlands.",     date: "May 7, 2026" },
       { type: "sold",     title: "3 homes closed this week",        description: "Median sale price ~$595K, premium Bethlehem.",            date: "May 6, 2026" },
@@ -594,7 +594,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12205",
     schoolDistrict: "South Colonie Central School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Colonie"),
+    listingSearchUrl: MLS("Colonie"),
     weeklyUpdates: [
       { type: "listings", title: "8 new listings this week",       description: "Family ranches and Wolf Road area homes.",        date: "May 7, 2026" },
       { type: "sold",     title: "6 homes closed this week",       description: "Median sale price ~$340K, strong family market.", date: "May 6, 2026" },
@@ -633,7 +633,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12047",
     schoolDistrict: "Cohoes City School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Cohoes"),
+    listingSearchUrl: MLS("Cohoes"),
     weeklyUpdates: [
       { type: "listings", title: "5 new listings this week",      description: "Affordable two-families and starter homes.",           date: "May 7, 2026" },
       { type: "sold",     title: "4 homes closed this week",      description: "Median sale price ~$215K — strong cash flow market.",  date: "May 6, 2026" },
@@ -678,7 +678,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12189",
     schoolDistrict: "Watervliet City School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Watervliet"),
+    listingSearchUrl: MLS("Watervliet"),
     weeklyUpdates: [
       { type: "listings", title: "4 new listings this week",      description: "Affordable single-families and two-families.",        date: "May 7, 2026" },
       { type: "sold",     title: "3 homes closed this week",      description: "Median sale price ~$205K — investor-friendly.",       date: "May 6, 2026" },
@@ -717,7 +717,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12061",
     schoolDistrict: "East Greenbush Central School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("East Greenbush"),
+    listingSearchUrl: MLS("East Greenbush"),
     weeklyUpdates: [
       { type: "listings", title: "5 new listings this week",          description: "Family colonials and Columbia school district homes.",  date: "May 7, 2026" },
       { type: "sold",     title: "4 homes closed this week",          description: "Median sale price ~$345K, growing demand.",             date: "May 6, 2026" },
@@ -757,7 +757,7 @@ export const livingInTowns: Record<string, LivingInTown> = {
     zip: "12054",
     schoolDistrict: "Bethlehem Central School District",
     updatedDate: "May 7, 2026",
-    listingSearchUrl: REMAX("Bethlehem"),
+    listingSearchUrl: MLS("Bethlehem"),
     weeklyUpdates: [
       { type: "listings", title: "New listings across Bethlehem",   description: "Mostly Delmar, Slingerlands, and Glenmont activity.",     date: "May 7, 2026" },
       { type: "sold",     title: "Recent closings townwide",        description: "Median sale prices remain in the high $400Ks.",          date: "May 6, 2026" },
@@ -799,7 +799,7 @@ export const makeTownPlaceholder = (
   zip,
   schoolDistrict,
   updatedDate: "May 7, 2026",
-  listingSearchUrl: REMAX(townName),
+  listingSearchUrl: MLS(townName),
   weeklyUpdates: [
     { type: "listings", title: `${townName} listings are being monitored`, description: "Live MLS activity and local updates are being prepared for this town guide.", date: "Updated weekly" },
     { type: "sold", title: "Recent sales snapshot coming soon", description: "Pricing, days on market, and buyer activity will be added as the guide expands.", date: "Coming soon" },

@@ -30,7 +30,7 @@ const InvestorTools = () => {
         "description": "Premier investment property specialists for rental properties, rehab projects, and multi-unit buildings in Albany, Troy, Schenectady, and Saratoga Springs, NY.",
         "url": "https://capitaldistrictnest.com",
         "telephone": "+1-518-522-7265",
-        "email": "scottalvarez@remax.net",
+        "email": "scott@capitaldistrictnest.com",
         "foundingDate": "2020",
         "address": {
           "@type": "PostalAddress",
