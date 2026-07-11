@@ -945,21 +945,18 @@ const RooseveltRoom = () => {
         </div>
       </section>
 
-      {/* BUSINESS STORY / TIMELINE */}
+      {/* BUSINESS STORY — awaiting owner input */}
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
-        <div className="max-w-5xl mx-auto">
-          <SectionHeading eyebrow="Business Story" title="A ten-year arc in North Greenbush." />
-          <div className="mt-14 space-y-8">
-            {timeline.map((t) => (
-              <div key={t.year} className="grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr] gap-6 border-b border-white/[0.06] pb-8">
-                <p className="text-2xl md:text-3xl font-semibold text-white/40 tracking-tight">{t.year}</p>
-                <div>
-                  <h3 className="text-xl font-semibold tracking-tight">{t.title}</h3>
-                  <p className="mt-2 text-white/60 leading-relaxed">{t.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="max-w-3xl mx-auto text-center">
+          <SectionHeading
+            align="center"
+            eyebrow="Business Story"
+            title="The full story, straight from the team."
+            intro="We're working with The Roosevelt Room to publish their opening story, chef background, and milestones — verified by the owner, not guessed by us."
+          />
+          <p className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs uppercase tracking-[0.22em] text-white/60">
+            Coming soon · Owner Verified
+          </p>
         </div>
       </section>
 
