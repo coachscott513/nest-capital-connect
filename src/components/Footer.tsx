@@ -59,6 +59,14 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 md:gap-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
+            {region.logo_url ? (
+              <img
+                src={region.logo_url}
+                alt={`${region.name} logo`}
+                className="h-8 w-auto mb-3"
+                loading="lazy"
+              />
+            ) : null}
             <h3 className="text-lg font-semibold tracking-tight text-white mb-3">
               {region.name}
             </h3>
