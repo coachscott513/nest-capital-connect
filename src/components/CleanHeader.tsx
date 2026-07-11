@@ -25,7 +25,7 @@ const navModes: NavMode[] = [
   { label: "Neighborhoods", mobileLabel: "Neighborhood Guides", href: "/neighborhoods", matchPaths: ["/neighborhoods"] },
   { label: "Stories", mobileLabel: "Stories", href: "/stories", matchPaths: ["/stories"] },
   { label: "What's Happening", mobileLabel: "What's Happening", href: "/weekly", matchPaths: ["/weekly"] },
-  { label: "For Businesses", mobileLabel: "For Businesses", href: "/business", matchPaths: ["/business", "/pricing"] },
+  { label: "For Businesses", mobileLabel: "For Businesses", href: "/for-businesses", matchPaths: ["/for-businesses", "/business", "/pricing"] },
 ];
 
 const CleanHeader = () => {
