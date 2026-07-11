@@ -752,22 +752,72 @@ const RooseveltRoom = () => {
         </div>
       </section>
 
-      {/* COMMUNITY CONNECTIONS */}
+      {/* BEFORE YOU VISIT — quick-hit glass cards */}
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto">
           <SectionHeading
-            eyebrow="Community Connections"
-            title="What's nearby."
-            intro="The Roosevelt Room lives inside downtown Troy — explore the block, the neighborhood, and the homes around it."
+            eyebrow="Before You Visit"
+            title="Good to know."
+            intro="A quick read of the room before you book — what to expect, and what it's best for."
           />
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { icon: Calendar, title: "Reservations Recommended", text: "Weekends fill 10–14 days out. Weekdays easier." },
+              { icon: Leaf, title: "Outdoor Seating", text: "Seasonal patio available May through October." },
+              { icon: CalendarHeart, title: "Date Night", text: "Low light, quiet corners, unhurried service." },
+              { icon: Wine, title: "Craft Cocktails", text: "Full bar with a Hudson Valley–forward program." },
+              { icon: Users, title: "Private Events", text: "Adjacent room seats up to 24 for milestones." },
+              { icon: Gift, title: "Gift Cards Available", text: "Purchase in-house or ask by phone." },
+            ].map((c) => (
+              <div
+                key={c.title}
+                className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:bg-white/[0.05] hover:border-white/20 transition"
+              >
+                <c.icon className="h-6 w-6 mb-4" style={{ color: TEAL }} />
+                <p className="text-base font-medium text-white">{c.title}</p>
+                <p className="mt-2 text-sm text-white/65 leading-relaxed">{c.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* NEARBY YOU'LL LOVE — real neighboring destinations */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeading
+            eyebrow="Nearby You'll Love"
+            title="Make a night of it in Troy."
+            intro="Real neighbors on the block. Not paid placements — just what's genuinely worth walking to."
+          />
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { name: "Lucas Confectionery", kind: "Wine bar · River Street", note: "Natural wine and small plates two blocks north." },
+              { name: "Bard & Baker", kind: "Board game café · Broadway", note: "Coffee, dessert, and hundreds of games after dinner." },
+              { name: "Superior Merchandise Co.", kind: "Café + cocktails · River Street", note: "Espresso by day, cocktails by night — a Troy fixture." },
+              { name: "River Street", kind: "Walkable district", note: "Boutiques, galleries, and the Hudson a block away." },
+              { name: "Troy Waterfront", kind: "Riverfront + park", note: "Sunset walk along the Hudson before or after dinner." },
+              { name: "Troy Farmers Market", kind: "Saturdays · River Street", note: "Year-round market. One of the largest in the Northeast." },
+            ].map((n) => (
+              <div
+                key={n.name}
+                className="group p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/25 transition"
+              >
+                <p className="text-xs uppercase tracking-[0.2em] text-white/50">{n.kind}</p>
+                <p className="mt-3 text-lg font-medium text-white">{n.name}</p>
+                <p className="mt-2 text-sm text-white/65 leading-relaxed">{n.note}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3">
             {nearby.map((n) => (
               <Link
                 key={n.label}
                 to={n.href}
-                className="group flex items-center justify-between p-5 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/25 transition"
+                className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition"
               >
-                <span className="text-sm font-medium text-white/85">{n.label}</span>
+                <span className="text-sm text-white/80">{n.label}</span>
                 <ArrowUpRight className="h-4 w-4 text-white/40 group-hover:text-white transition" />
               </Link>
             ))}
