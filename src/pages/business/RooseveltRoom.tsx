@@ -28,6 +28,7 @@ import {
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import FeaturedInModule from "@/components/business/FeaturedInModule";
 import BusinessContactModal from "@/components/business/BusinessContactModal";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -710,6 +711,12 @@ const RooseveltRoom = () => {
           </div>
         </div>
       </section>
+
+      {/* FEATURED IN — editorial ecosystem placements */}
+      <FeaturedInModule
+        businessSlug="the-roosevelt-room"
+        currentPath="/business/the-roosevelt-room"
+      />
 
       {/* PLAN YOUR VISIT */}
       <section id="visit" className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
