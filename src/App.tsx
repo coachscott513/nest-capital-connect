@@ -66,6 +66,7 @@ import BlogPost from "./pages/BlogPost";
 import BlogArticle from "./pages/BlogArticle";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import AboutEditorial from "./pages/AboutEditorial";
 import AlbanyRealEstate from "./pages/AlbanyRealEstate";
 import TroyRealEstate from "./pages/TroyRealEstate";
 import SchenectadyRealEstate from "./pages/SchenectadyRealEstate";
@@ -295,6 +296,8 @@ const App = () => {
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-of-service" element={<PrivacyPolicyPage />} />
+          <Route path="/about-editorial" element={<AboutEditorial />} />
+          <Route path="/editorial" element={<AboutEditorial />} />
           <Route path="/reviews" element={<Reviews />} />
           
           {/* City Real Estate Redirects - canonical URLs are /living-in/:slug */}
