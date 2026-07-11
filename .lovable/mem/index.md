@@ -1,7 +1,8 @@
 # Project Memory
 
 ## Core
-- Global contacts (LOCKED): general = team@capitaldistrictnest.com · business apply = /for-businesses/apply · profile fix = /claim-business · property/report = /dealdesk. Real-estate phone lives only in `<RealEstateDisclosure />`.
+- Public identity (LOCKED): Capital District Nest is an independent regional media platform. Scott Alvarez appears ONLY on real-estate surfaces (Homes, property pages, RealEstateDisclosure). Editorial bylines/business/marketing = "Capital District Nest Editorial Team". See `mem://preferences/platform-vs-founder-identity`.
+- Global contacts (LOCKED): ALL public phone/email from `src/config/contact.ts`. Business phone = (518) 981-2248 (Follow Up Boss). Emails: hello@ (general), media@ (editorial), business@ (partnerships), support@. NEVER hardcode a phone or email. Scott's line (518) 522-7265 = real estate only, via `SCOTT_*` constants.
 - Brokerage identity (LOCKED): NEVER globally. Rendered only via `<RealEstateDisclosure />` on real-estate routes. Config in `src/config/realEstateDisclosure.ts`, `disclosure_active: false` until broker approves wording. NO RE/MAX or Coldwell Banker in footer/homepage/businesses/stories.
 - Brand colors (LOCKED): Teal #0d6e66 primary, Charcoal #0e0f12 dark bg, Gold #c9a449 investor-only, Red #DC1C2E CALL BUTTON ONLY. NO blue anywhere. Cream #f5efe4 is DEPRECATED as a default — only allowed inside print/report surfaces.
 - GLOBAL DARK CANVAS (LOCKED): `--background` token is dark onyx #0B0F19 site-wide. Card surface #1E2230, hairline border #2D3748, muted text white/65, on-dark eyebrow teal #5eead4. Light sections only by explicit opt-in.
