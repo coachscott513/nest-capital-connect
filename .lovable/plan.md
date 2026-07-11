@@ -1,101 +1,120 @@
+# Global Branding, Search Routing & Disclosure Cleanup
 
-# Category-First Business Discovery System
+Capital District Nest becomes a neutral regional discovery/media/directory platform. Brokerage identity is confined to real-estate surfaces only, behind a single configurable disclosure block. No brokerage name (RE/MAX or Coldwell Banker) is baked in globally.
 
-Turn Capital District Nest into a browsable editorial platform: 6 consumer-facing category groups → 54 category pages → up to 3 Spotlights per category → full directory + town cross-filter. Keep The Roosevelt Room as the locked premium template.
+---
 
-## 1. Data model
+## 1. Global Footer (neutral)
 
-**New file: `src/data/businessCategoryGroups.ts`**
-- 6 groups: Food & Drink, Home & Property, Professional Services, Health & Wellness, Automotive & Transportation, Shopping / Creative / Community.
-- Each group has: `id`, `label`, `blurb`, `icon`, `categories: OfficialCategory[]`.
-- Source categories from existing `src/data/officialCategories.ts` (no schema change).
+Rewrite `src/components/Footer.tsx`:
 
-**New file: `src/data/businessSpotlights.ts`**
-- Manually curated list: `{ slug, businessName, category, town, summary, heroImage, hasVideo, profileRoute }`.
-- Seed with The Roosevelt Room under `Restaurant`. Structure supports up to 3 per category; empty categories just show directory.
+- Remove the RE/MAX legal line and any brokerage identity from the bottom strip.
+- Remove the duplicated "Homes" column (there are currently two).
+- Legal strip becomes exactly:
 
-**New file: `src/lib/categorySlug.ts`**
-- `categoryToSlug(OfficialCategory)` / `slugToCategory(string)` — reuse mappings from `src/lib/categoryDeepLink.ts` where possible.
+  > © {year} Capital District Nest.
+  > A local discovery, media, directory, advertising, and community search platform.
+  >
+  > Real estate tools and property searches may connect users with licensed real estate professionals and third-party listing providers. Equal Housing Opportunity.
 
-## 2. Routes (add to `src/App.tsx`)
+- Contact column: keep `team@capitaldistrictnest.com`. Remove the global `(518) 522-7265` phone from the footer (it is Scott's real-estate line — it lives on real-estate pages instead, via the disclosure block).
+- Footer stays identical across homepage, businesses, stories, communities, events, resources, business-owner pages.
 
-- `/businesses` → new `BusinessesHub` page (discovery hub).
-- `/businesses/:categorySlug` → new `BusinessCategoryPage` (dynamic, one component handles all 54).
-- `/stories` → new `StoriesHub` page (editorial index).
-- `/business-spotlight-intake` → new `SpotlightIntake` form page.
-- Keep `/business/the-roosevelt-room` as-is (canonical premium page).
+## 2. Configurable Real-Estate Disclosure Block
 
-## 3. New pages
+New file `src/config/realEstateDisclosure.ts`:
 
-**`src/pages/businesses/BusinessesHub.tsx`**
-- Hero: eyebrow "LOCAL BUSINESS DISCOVERY", H1 "Explore local businesses by category.", subhead, CTAs (Browse Categories / Search Businesses → `/local`).
-- 6 group sections, each with a headline + tile grid of that group's categories. Each tile links to `/businesses/:categorySlug` with icon + label + count (count pulled via lightweight Supabase count query or from `useDbBusinesses`).
-- Footer CTA: "Own a business?" → `/claim-business` and `/business-spotlight-intake`.
-
-**`src/pages/businesses/BusinessCategoryPage.tsx`**
-- Reads `:categorySlug`, resolves to `OfficialCategory`. 404 fallback if unknown.
-- Sections:
-  1. Category hero (dynamic copy: "Capital District [Category]" etc.).
-  2. **Capital District Nest Spotlights** — up to 3 cards from `businessSpotlights.ts` filtered by category. Header copy: "Three local businesses we're currently highlighting…". Cards link to `/business/:slug`. Explicitly no ranking language.
-  3. **Explore more local [category] businesses** — reuse `BusinessDirectory` or a trimmed variant filtered by category (uses existing `useDbBusinesses` / `usePaginatedBusinesses`). Grid + list toggle; filters for town, claimed, featured.
-  4. **Browse [category] by town** — town tile grid; each tile routes to `/businesses/:categorySlug?town=<slug>` (page reads `town` search param and applies).
-  5. **Related categories** — 3–5 tiles from same group.
-  6. Owner CTA (Claim / Request Spotlight).
-
-**`src/pages/StoriesHub.tsx`**
-- Public editorial hub with sections: Business Spotlights, Food & Drink, People, Homes, Town Life, Weekend, New & Notable, Community.
-- Business Spotlight cards link to canonical `/business/:slug` (no duplicate content).
-- v1 pulls from `businessSpotlights.ts` + existing `useMediaStories`. Non-business sections can start empty with placeholder cards.
-
-**`src/pages/business/SpotlightIntake.tsx`**
-- Form fields per spec. On submit, insert into a new lightweight table OR reuse existing `partner_inquiries` with a `type=spotlight_intake` marker (prefer reuse — no migration this pass).
-- Required approval checkbox: "I confirm that I own or have permission to provide the submitted photos, videos, logos, and business information for use by Capital District Nest."
-- Confirmation screen with the exact copy from the spec.
-
-## 4. Navigation
-
-Update `src/components/CleanHeader.tsx`:
-- Ensure top-level items: Discover, Homes, **Businesses** (→ `/businesses`), Communities, Neighborhoods, Events, **Stories** (→ `/stories`), Local Resources, **For Businesses**.
-- Preserve existing routes; only relabel where safe.
-
-Update `LocalGuideSection.tsx` category tiles to link into `/businesses/:categorySlug` instead of static labels (small, additive).
-
-## 5. Spotlight seed content (Phase 1)
-
-Seed `businessSpotlights.ts` with placeholders for the 5 proof cases requested:
-- Restaurant: The Roosevelt Room (real, live).
-- Coffee, Contractor, Professional Service, Wellness: placeholder entries with `status: 'coming_soon'` so cards render an "In production" state and link to intake form. No fake business names — use "Spotlight coming soon" cards with a Nominate CTA.
-
-## 6. Locked premium template
-
-Extract a small `PremiumBusinessTemplate` note in `src/pages/business/RooseveltRoom.tsx` header comment listing required sections (hero, actions, editorial intro, Known For, First-Timers, Team, Gallery, Reel, Instagram/Facebook cards, Seasonal, Plan Your Visit, Related, Claim CTA). Do not refactor the page — the comment locks the pattern for future duplicates. Full componentization is a later pass.
-
-## 7. Out of scope this pass
-
-- QR asset generator (data model supports it via `profileRoute`; generation later).
-- Spotlight lifecycle states table (`invited`, `questionnaire_sent`, …). Recorded in intake row for now; formal state machine later.
-- Building the other 4 real Spotlight pages — those come after real business questionnaires.
-- Admin CMS for Spotlights (still manual via `businessSpotlights.ts`).
-
-## Technical details
-
-- Category slugs: kebab-case of `OfficialCategory`, resolver reuses `src/lib/categoryDeepLink.ts` maps.
-- Business fetching: existing `useDbBusinesses({ category, townSlug, limit })` — extend if needed to accept category filter (currently supports it via `subcategory`/free-text; verify and add explicit `category` param if missing).
-- Design tokens: dark navy `#0B0F19`, teal `#5eead4`, glass cards — matches locked global dark canvas. No new colors.
-- SEO: each category page emits `Helmet` with dynamic title/description, canonical `/businesses/:slug`, filtered `?town=` variants `noindex,follow` (mirrors `LocalPage.tsx` pattern).
-- No DB migration required for v1.
-
-```text
-/businesses
-   ├── hero + 6 group tiles
-   ├── /businesses/restaurants
-   │      ├── hero
-   │      ├── 3 Spotlights (Roosevelt Room + 2 coming soon)
-   │      ├── directory (filtered)
-   │      ├── by-town tiles
-   │      └── related categories
-   ├── /businesses/coffee    …
-   └── /businesses/hvac      …
-/stories  → surfaces /business/:slug (canonical)
-/business-spotlight-intake  → owner questionnaire
+```ts
+export const realEstateDisclosure = {
+  disclosure_active: false, // flip to true once broker approves wording
+  agent_name: "Scott Alvarez",
+  license_title: "Licensed Real Estate Salesperson",
+  brokerage_name: "",          // fill after broker confirmation
+  brokerage_office: "",
+  brokerage_phone: "(518) 522-7265",
+  license_number: "",
+  equal_housing_text: "Equal Housing Opportunity",
+};
 ```
+
+New component `src/components/RealEstateDisclosure.tsx`:
+
+- Reads the config. Renders nothing when `disclosure_active` is false OR `brokerage_name` is empty — instead renders a minimal safe fallback:
+
+  > Real estate services provided by a licensed New York real estate salesperson. Brokerage details available on request. Equal Housing Opportunity.
+
+- When active, renders the full agent / brokerage / license / EHO block.
+
+Mount `<RealEstateDisclosure />` only on real-estate surfaces:
+
+- `/homes`, `/homes/*`, `/homes-for-sale*`, `/rentals*`
+- `/investment-*`, `/investment-analyzer`, `/dealdesk`, `/analyze*`
+- Scott-specific pages: `/137a-elsmere-ave`, `/lavery-drive-delmar`, `/ridge-road-queensbury`, `/lancaster-street-case-study`, property-listing routes
+- `PropertyFooterAttribution` and `PropertyListingTemplate` swap their hardcoded RE/MAX line for `<RealEstateDisclosure />`.
+
+Non-real-estate pages (home, businesses, stories, communities, events, for-businesses) never render this block.
+
+## 3. Search Routing (canonical CDN routes)
+
+Add these routes/redirects in `src/App.tsx` so the target URLs the user specified always resolve:
+
+- `/homes/search` → `HomesForSale` (existing)
+- `/homes/search/:townSlug` → `TownListings` (existing component, dynamic)
+- `/homes/listings` → `TownListings` hub / property board
+- `/investment-analyzer` already exists
+
+Codebase-wide rewrite of all home-search CTAs:
+
+- Any `href` pointing to `remax.com`, `scottalvarez.remax.com`, `www.remax.com/*`, `troyData.remaxSearchUrl`, `albanyData.remaxSearchUrl`, etc. → replaced with the matching internal route (`/homes/search`, `/homes/search/<town>`, `/homes/listings`, or `/investment-analyzer`).
+- CTA labels "Open Full MLS Search", "Full MLS Search", "View Live … Listings (RE/MAX)", "Search on RE/MAX" → renamed to "Search Homes", "Search <Town> Homes", or "View Property Board".
+- Iframes that embed `remax.com` (e.g. `TroyHomesForSalePage`, `SchenectadyHomesForSalePage`, `SaratogaHomesForSalePage`, `CliftonParkHomesForSale`, `QueensburyHomesForSale`, `NiskayunaHomesForSale`, `VoorheesvilleHomesForSale`, `AmsterdamHomesForSale`, `DelmarHomesForSale`) → replaced with a link-out card that routes to `/homes/search/<town>`; the RE/MAX iframe URL is removed.
+- `src/data/townData.ts`, `src/data/homesTowns.ts`, `src/data/livingInTowns.ts`, `src/data/townPropertyBoard.ts`, `src/data/rentalData.ts` — strip `remaxSearchUrl` / RE/MAX fields, add `searchPath: "/homes/search/<slug>"`.
+- `RealScoutAlbanySearch` and other RealScout embeds are preserved as-is (they're the CDN search flow).
+
+## 4. Contact & Report Link Audit
+
+Purpose-based destinations:
+
+| Purpose | Destination |
+| --- | --- |
+| General platform / editorial | `team@capitaldistrictnest.com` |
+| Business application | `/for-businesses/apply` |
+| Business profile correction / claim | `/claim-business` |
+| Property analysis / report request | `/dealdesk` (existing form → `leads` table) |
+| Real-estate phone | rendered only via `<RealEstateDisclosure />` on real-estate pages |
+
+Sweep:
+
+- Replace every `mailto:scott@…` outside real-estate pages with `mailto:team@capitaldistrictnest.com`.
+- Replace every `tel:+15185227265` outside real-estate pages and outside `<RealEstateDisclosure />` with nothing (button removed) or with a link to `/contact`.
+- Business inquiry forms currently posting into the leads table with `type: "contact"` keep working — only the surface labels + destinations change.
+- `ContactPage.tsx`: split visible contact info into "General" (team@) and "Real estate" (Scott + disclosure block).
+
+## 5. Deal Desk / Investment Tools audit
+
+For `/dealdesk`, `/investment-properties`, `/investment-analyzer`, every "Analyze a Property", "Request Report", "View Sample Report" CTA:
+
+- Verify the route exists in `App.tsx` (add redirects for any that don't).
+- Verify the form posts to Supabase (`leads` / `analyzer_leads` / `intel_report_leads`) and the confirmation edge function (`send-dealdesk-emails`, `send-market-report`) still fires — no code change unless a destination is broken.
+- Any CTA still pointing at a RE/MAX URL is rerouted to `/investment-analyzer` or `/dealdesk`.
+- "View Sample Report" continues to link to `/assets/sample-investment-report.pdf` (present in `public/assets/`).
+
+## 6. Acceptance checks
+
+Run after edits:
+
+- `rg -i "remax|re/max"` in `src/` returns **zero** matches outside the disclosure config file.
+- `rg "Each RE/MAX"` returns zero.
+- `rg "scottalvarez\\.remax"` returns zero.
+- Global footer text matches spec verbatim, no brokerage name.
+- `<RealEstateDisclosure />` renders only on real-estate routes; disabled state shows the safe neutral fallback.
+- Every home-search CTA resolves to `/homes/search`, `/homes/search/:town`, `/homes/listings`, or `/investment-analyzer`.
+- Homepage, `/for-businesses`, `/local`, `/communities`, `/weekly` show the neutral footer only — no brokerage line.
+- `tsgo` typecheck passes; preview loads `/`, `/homes/search`, `/for-businesses`, `/dealdesk`, one town intelligence page without console errors.
+
+## Technical notes
+
+- Scope: ~80 files touched, mostly mechanical link/label replacements plus one new component + one config file.
+- No DB schema changes. No new edge functions. No changes to `client.ts`, `types.ts`, `.env`, `supabase/config.toml`.
+- Memory rule "Global Contact: Scott Alvarez · RE/MAX Solutions" in `mem://index.md` is stale after this change; I'll update it to reflect the new split (general `team@`, real-estate contact via disclosure block) once the plan is approved.
+- Coldwell Banker wording is **not** inserted anywhere. The disclosure config ships with `disclosure_active: false` and empty brokerage fields until you confirm the exact broker-approved language.
