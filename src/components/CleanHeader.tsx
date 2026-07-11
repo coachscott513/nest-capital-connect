@@ -20,11 +20,11 @@ type NavMode = {
 const navModes: NavMode[] = [
   { label: "Discover", mobileLabel: "Discover Anything Local", action: "focus-search" },
   { label: "Homes", mobileLabel: "Homes", href: "/homes", matchPaths: ["/homes"] },
-  { label: "Local Businesses", mobileLabel: "Local Businesses", href: "/local", matchPaths: ["/local"] },
+  { label: "Businesses", mobileLabel: "Businesses", href: "/businesses", matchPaths: ["/businesses", "/local"] },
   { label: "Communities", mobileLabel: "Communities", href: "/communities", matchPaths: ["/communities", "/living-in"] },
-  { label: "Neighborhood Guides", mobileLabel: "Neighborhood Guides", href: "/neighborhoods", matchPaths: ["/neighborhoods"] },
+  { label: "Neighborhoods", mobileLabel: "Neighborhood Guides", href: "/neighborhoods", matchPaths: ["/neighborhoods"] },
+  { label: "Stories", mobileLabel: "Stories", href: "/stories", matchPaths: ["/stories"] },
   { label: "What's Happening", mobileLabel: "What's Happening", href: "/weekly", matchPaths: ["/weekly"] },
-  { label: "Local Resources", mobileLabel: "Local Resources", href: "/finances", matchPaths: ["/finances", "/analyze", "/invest", "/financial-console"] },
   { label: "For Businesses", mobileLabel: "For Businesses", href: "/business", matchPaths: ["/business", "/pricing"] },
 ];
 

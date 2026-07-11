@@ -39,6 +39,10 @@ import BuyerTownSearch from "./pages/homes/BuyerTownSearch";
 import SearchHub from "./pages/homes/SearchHub";
 import BusinessLanding from "./pages/BusinessLanding";
 import RooseveltRoom from "./pages/business/RooseveltRoom";
+import SpotlightIntake from "./pages/business/SpotlightIntake";
+import BusinessesHub from "./pages/businesses/BusinessesHub";
+import BusinessCategoryPage from "./pages/businesses/BusinessCategoryPage";
+import StoriesHub from "./pages/StoriesHub";
 import MarketReport from "./pages/MarketReport";
 import MarketReportsIndex from "./pages/MarketReportsIndex";
 import { featuredProperties } from "./data/featuredProperties";
@@ -487,6 +491,10 @@ const App = () => {
           <Route path="/get-listed" element={<ClaimBusiness />} />
           <Route path="/business" element={<BusinessLanding />} />
           <Route path="/business/the-roosevelt-room" element={<RooseveltRoom />} />
+          <Route path="/business-spotlight-intake" element={<SpotlightIntake />} />
+          <Route path="/businesses" element={<BusinessesHub />} />
+          <Route path="/businesses/:categorySlug" element={<BusinessCategoryPage />} />
+          <Route path="/stories" element={<StoriesHub />} />
           <Route path="/biz/:slug" element={<BizPage />} />
           
           {/* Partner Dashboard */}
