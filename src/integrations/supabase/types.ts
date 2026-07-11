@@ -1676,6 +1676,75 @@ export type Database = {
         }
         Relationships: []
       }
+      regions: {
+        Row: {
+          created_at: string
+          default_cta_href: string | null
+          default_cta_label: string | null
+          default_hero_subtitle: string | null
+          default_hero_title: string | null
+          domain: string | null
+          font_family: string
+          hero_image_url: string | null
+          id: string
+          launch_status: string
+          logo_url: string | null
+          name: string
+          partner_pricing: Json
+          primary_color: string
+          realscout_id: string | null
+          secondary_color: string
+          slug: string
+          sort_order: number
+          tagline: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          default_cta_href?: string | null
+          default_cta_label?: string | null
+          default_hero_subtitle?: string | null
+          default_hero_title?: string | null
+          domain?: string | null
+          font_family?: string
+          hero_image_url?: string | null
+          id?: string
+          launch_status?: string
+          logo_url?: string | null
+          name: string
+          partner_pricing?: Json
+          primary_color?: string
+          realscout_id?: string | null
+          secondary_color?: string
+          slug: string
+          sort_order?: number
+          tagline?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          default_cta_href?: string | null
+          default_cta_label?: string | null
+          default_hero_subtitle?: string | null
+          default_hero_title?: string | null
+          domain?: string | null
+          font_family?: string
+          hero_image_url?: string | null
+          id?: string
+          launch_status?: string
+          logo_url?: string | null
+          name?: string
+          partner_pricing?: Json
+          primary_color?: string
+          realscout_id?: string | null
+          secondary_color?: string
+          slug?: string
+          sort_order?: number
+          tagline?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       rental_applications: {
         Row: {
           annual_income: string

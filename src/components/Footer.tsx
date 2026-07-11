@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Phone, Mail } from 'lucide-react';
+import { useRegion } from '@/hooks/useRegion';
 
 const townDirectory = {
   "Albany County": [
@@ -50,6 +51,7 @@ const headerBase =
 const Footer = () => {
   const { pathname } = useLocation();
   const isBusinessProfile = pathname.startsWith('/biz/');
+  const { region } = useRegion();
   return (
     <footer className="bg-[#05080F] text-white border-t border-white/[0.06]">
       {/* Main columns */}
@@ -58,10 +60,10 @@ const Footer = () => {
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <h3 className="text-lg font-semibold tracking-tight text-white mb-3">
-              Capital District Nest
+              {region.name}
             </h3>
             <p className="text-[13px] text-white/70 font-light leading-relaxed max-w-xs">
-              The digital front door of the Capital District — businesses, towns, events, homes, and local life.
+              {region.tagline ?? 'The digital front door of the Capital District — businesses, towns, events, homes, and local life.'}
             </p>
 
             <div className="mt-6 space-y-2.5">
@@ -188,7 +190,7 @@ const Footer = () => {
       <div className="border-t border-white/[0.06]">
         <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-6">
           <p className="text-[11px] text-white/45 text-center leading-relaxed">
-            © {new Date().getFullYear()} Capital District Nest. Scott Alvarez, Licensed Real Estate Salesperson.
+            © {new Date().getFullYear()} {region.name}. Scott Alvarez, Licensed Real Estate Salesperson.
             Each RE/MAX® Office is Independently Owned and Operated. Equal Housing Opportunity.
           </p>
         </div>
