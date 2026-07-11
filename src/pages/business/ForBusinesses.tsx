@@ -84,38 +84,54 @@ const fmt = (cents: number) =>
   cents === 0 ? "$0" : `$${(cents / 100).toFixed(cents % 100 === 0 ? 0 : 2)}`;
 
 const trustBadges = [
-  "No anonymous reviews",
-  "Original editorial features",
-  "Local business spotlights",
-  "Community discovery",
-  "Measurable engagement",
-  "Capital District company",
+  "No Anonymous Reviews",
+  "Original Editorial Features",
+  "Built for Local Businesses",
+  "Community Discovery",
+  "Measurable Results",
+  "Capital District Company",
+];
+
+const heroMontage = [
+  { src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2400&q=85", label: "The Roosevelt Room" },
+  { src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2400&q=85", label: "Iron Gate Café" },
+  { src: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=2400&q=85", label: "Superior Merchandise" },
+  { src: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=2400&q=85", label: "Common Roots" },
+];
+
+const discoverySurfaces = [
+  "Business Directory",
+  "Town Guides",
+  "Community Stories",
+  "Neighborhood Pages",
+  "Local Search",
+  "Featured Collections",
 ];
 
 const whyCards = [
   {
     icon: Compass,
     title: "Be Discovered",
-    body: "Your business appears across town guides, category pages, community collections, stories, and local search.",
-    items: ["Town guides", "Business categories", "Community pages", "Stories", "Local collections", "Search"],
+    body: "Appear across town guides, neighborhood pages, category collections, and local search.",
+    items: ["Town guides", "Neighborhood pages", "Category collections", "Community pages", "Local search"],
   },
   {
     icon: BookOpen,
     title: "Tell Your Story",
-    body: "Beautiful editorial business pages. Original writing. Professional presentation.",
+    body: "Beautiful editorial pages that showcase what makes your business unique.",
     items: ["Editorial writing", "Photo galleries", "Owner updates", "Social integration", "Functional CTAs"],
   },
   {
     icon: BarChart3,
-    title: "Measure Your Growth",
-    body: "See meaningful customer engagement — not vanity metrics.",
-    items: ["Phone calls", "Website visits", "Direction requests", "Social clicks", "Reservations", "QR scans"],
+    title: "Measure Results",
+    body: "Track phone calls, website visits, directions, reservations, and customer engagement.",
+    items: ["Phone calls", "Website visits", "Direction requests", "Reservations", "Social clicks", "QR scans"],
   },
   {
     icon: Wand2,
-    title: "Grow With AI",
-    body: "Modern AI tools that support your business — never replace your voice.",
-    items: ["Generate content", "Customer replies", "Social ideas", "Automation", "Online presence"],
+    title: "Grow Smarter",
+    body: "Use AI tools, automation, and modern digital workflows to save time and improve customer communication.",
+    items: ["Content help", "Customer replies", "Social ideas", "Automation", "Time saved"],
   },
 ];
 
