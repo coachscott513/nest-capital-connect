@@ -40,9 +40,8 @@ const ContactPage = () => (
           >
             <Mail className="w-4 h-4" /> {TEAM_EMAIL}
           </a>
-
-          </a>
         </div>
+
 
         <p className="mt-6 text-xs text-white/45 tracking-wide">
           Mon–Sat · We typically reply within a few hours.
