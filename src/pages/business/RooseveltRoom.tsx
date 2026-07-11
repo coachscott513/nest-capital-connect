@@ -54,7 +54,7 @@ const BUSINESS = {
   directionsUrl:
     "https://www.google.com/maps/dir/?api=1&destination=The+Roosevelt+Room&destination_place_id=ChIJL17Q8DcJ3okRD6h2M0_yL3M",
   addressLine1: "112 North Greenbush Road",
-  addressLine2: "Troy, NY 12180",
+  addressLine2: "North Greenbush, NY 12180",
 };
 
 const TEAL = "#5eead4";
@@ -140,11 +140,11 @@ const nearby = [
 ];
 
 const timeline = [
-  { year: "2014", title: "Opening", text: "Doors open on Broadway in downtown Troy." },
+  { year: "2014", title: "Opening", text: "Doors open on North Greenbush Road, just outside Troy." },
   { year: "2017", title: "Bar program", text: "Craft cocktail bar launches, quickly recognized regionally." },
   { year: "2019", title: "Private dining", text: "Expansion into the adjacent room for private events." },
   { year: "2022", title: "James Beard nod", text: "Semi-finalist recognition for outstanding hospitality." },
-  { year: "2024", title: "Community fund", text: "Launches quarterly fundraising dinners for Troy nonprofits." },
+  { year: "2024", title: "Community fund", text: "Launches quarterly fundraising dinners for Rensselaer County nonprofits." },
 ];
 
 const conciergeQuestions = [
@@ -186,7 +186,7 @@ const RooseveltRoom = () => {
     address: {
       "@type": "PostalAddress",
       streetAddress: BUSINESS.addressLine1,
-      addressLocality: "Troy",
+      addressLocality: "North Greenbush",
       addressRegion: "NY",
       postalCode: "12180",
       addressCountry: "US",
@@ -202,8 +202,8 @@ const RooseveltRoom = () => {
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white">
       <SEOHead
-        title="The Roosevelt Room — Troy, NY | Capital District Nest Spotlight"
-        description="An editorial spotlight on The Roosevelt Room, a modern American restaurant in downtown Troy. Craft cocktails, seasonal menu, and one of the Capital District's most memorable dining rooms."
+        title="The Roosevelt Room — North Greenbush, NY | Capital District Nest Spotlight"
+        description="An editorial spotlight on The Roosevelt Room, a destination restaurant in North Greenbush, just minutes from downtown Troy. Craft cocktails, seasonal menus, and one of the Capital District's most memorable dining rooms."
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <CleanHeader />
@@ -212,7 +212,7 @@ const RooseveltRoom = () => {
       <section className="relative w-full h-[92vh] min-h-[640px] overflow-hidden">
         <img
           src={heroImg}
-          alt="The Roosevelt Room dining room in Troy, NY"
+          alt="The Roosevelt Room dining room in North Greenbush, NY"
           className="absolute inset-0 w-full h-full object-cover"
           width={1920}
           height={1200}
@@ -226,7 +226,7 @@ const RooseveltRoom = () => {
             </div>
             <div>
               <Eyebrow>Capital District Nest · Spotlight</Eyebrow>
-              <p className="text-white/70 text-sm mt-1">Troy, New York</p>
+              <p className="text-white/70 text-sm mt-1">North Greenbush · Rensselaer County, NY</p>
             </div>
           </div>
 
@@ -234,7 +234,7 @@ const RooseveltRoom = () => {
             The Roosevelt Room
           </h1>
           <p className="mt-5 text-xl md:text-2xl text-white/80 font-light max-w-2xl">
-            Modern American dining on Broadway — cocktails, seasonal menus, and one of Troy's most memorable rooms.
+            A destination restaurant in North Greenbush, minutes from downtown Troy — craft cocktails, seasonal menus, and one of the Capital District's most memorable rooms.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -406,10 +406,11 @@ const RooseveltRoom = () => {
             room where you order the second round without discussion.
           </p>
           <p>
-            Downtown Troy is having a moment, and The Roosevelt Room is one of
-            the reasons why. Anniversaries, deal-closers, the last dinner
-            before someone moves away — this is the room people pick when the
-            night has to mean something.
+            Located in North Greenbush, just minutes from downtown Troy, The
+            Roosevelt Room has quietly become one of the Capital District's
+            destination restaurants. Anniversaries, deal-closers, the last
+            dinner before someone moves away — this is the room people pick
+            when the night has to mean something.
           </p>
         </div>
       </section>
@@ -949,11 +950,11 @@ const RooseveltRoom = () => {
 
           </div>
           <GlassCard className="overflow-hidden min-h-[380px] relative">
-            <img src={troyImg} alt="Downtown Troy" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-60" />
+            <img src={troyImg} alt="North Greenbush · near Troy" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-60" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6">
               <p className="text-xs uppercase tracking-[0.22em]" style={{ color: TEAL }}>On the map</p>
-              <p className="mt-2 text-lg font-semibold">Downtown Troy · Broadway corridor</p>
+              <p className="mt-2 text-lg font-semibold">North Greenbush · minutes from downtown Troy</p>
             </div>
           </GlassCard>
         </div>
@@ -962,7 +963,7 @@ const RooseveltRoom = () => {
       {/* BUSINESS STORY / TIMELINE */}
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
         <div className="max-w-5xl mx-auto">
-          <SectionHeading eyebrow="Business Story" title="A ten-year arc on Broadway." />
+          <SectionHeading eyebrow="Business Story" title="A ten-year arc in North Greenbush." />
           <div className="mt-14 space-y-8">
             {timeline.map((t) => (
               <div key={t.year} className="grid grid-cols-[80px_1fr] md:grid-cols-[120px_1fr] gap-6 border-b border-white/[0.06] pb-8">
@@ -980,13 +981,13 @@ const RooseveltRoom = () => {
       {/* RELATED */}
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto">
-          <SectionHeading eyebrow="Related Stories" title="Keep exploring Troy." />
+          <SectionHeading eyebrow="Related Stories" title="Keep exploring the area." />
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: "More restaurants nearby", href: "/local?town=troy&category=restaurant", img: plateImg },
+              { title: "Restaurants nearby", href: "/local?town=troy&category=restaurant", img: plateImg },
               { title: "Things to do in Troy", href: "/weekly?town=troy", img: troyImg },
               { title: "Living in Troy", href: "/living-in/troy", img: diningImg },
-              { title: "Homes near downtown Troy", href: "/homes/search/troy", img: heroImg },
+              { title: "Homes in Rensselaer County", href: "/homes/search/troy", img: heroImg },
             ].map((c) => (
               <Link key={c.title} to={c.href} className="group">
                 <div className="aspect-[4/5] overflow-hidden rounded-2xl">
