@@ -78,7 +78,8 @@ const headerBase =
   "text-[11px] font-semibold text-white/95 mb-4 uppercase tracking-[0.18em]";
 
 const Footer = () => {
-  useLocation();
+  const { pathname } = useLocation();
+  const showRealEstateDisclosure = isRealEstateRoute(pathname);
   const { region } = useRegion();
   return (
     <footer className="bg-[#05080F] text-white border-t border-white/[0.06]">
