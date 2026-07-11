@@ -81,8 +81,10 @@ export interface LivingInTown {
   seoIntro: string;
 }
 
-const MLS = (city: string) =>
-  `/homes/search)}`;
+const MLS = (city: string) => {
+  const slug = city.toLowerCase().trim().replace(/\s+/g, "-");
+  return `/homes/search/${slug}`;
+};
 
 // ── Helper: default essentials shell (Capital District–wide fallbacks) ─────
 const baseEssentials = (townSite: string, schoolUrl: string, taxUrl: string): Essential[] => [
