@@ -40,6 +40,8 @@ import SearchHub from "./pages/homes/SearchHub";
 import BusinessLanding from "./pages/BusinessLanding";
 import RooseveltRoom from "./pages/business/RooseveltRoom";
 import SpotlightIntake from "./pages/business/SpotlightIntake";
+import ForBusinesses from "./pages/business/ForBusinesses";
+import ForBusinessesApply from "./pages/business/Apply";
 import BusinessesHub from "./pages/businesses/BusinessesHub";
 import BusinessCategoryPage from "./pages/businesses/BusinessCategoryPage";
 import StoriesHub from "./pages/StoriesHub";
