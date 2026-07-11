@@ -737,7 +737,7 @@ const ForBusinesses = () => {
             Your story deserves to be discovered.
           </h2>
           <p className="mt-6 text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-            Join the growing community of local businesses helping define the Capital District.
+            Join the growing network of businesses helping define the Capital District.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
