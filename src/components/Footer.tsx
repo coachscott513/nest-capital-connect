@@ -108,12 +108,21 @@ const Footer = () => {
               {region.name}
             </h3>
             <p className="text-[13px] text-white/70 font-light leading-relaxed max-w-xs">
-              {region.tagline ?? 'A local discovery, media, directory, advertising, and community search platform for the Capital District.'}
+              {region.tagline ?? PLATFORM_TAGLINE + '. An independent regional media and local discovery platform for New York\'s Capital District.'}
             </p>
 
             <div className="mt-6 space-y-2.5">
-              <a href="mailto:team@capitaldistrictnest.com" className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
-                <Mail className="h-3.5 w-3.5" /> team@capitaldistrictnest.com
+              <a href={PHONE_TEL} className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
+                <Phone className="h-3.5 w-3.5" /> {PHONE_DISPLAY}
+              </a>
+              <a href={`mailto:${GENERAL_EMAIL}`} className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
+                <Mail className="h-3.5 w-3.5" /> {GENERAL_EMAIL}
+              </a>
+              <a href={`mailto:${MEDIA_EMAIL}`} className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
+                <Mail className="h-3.5 w-3.5" /> {MEDIA_EMAIL}
+              </a>
+              <a href={`mailto:${BUSINESS_EMAIL}`} className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
+                <Mail className="h-3.5 w-3.5" /> {BUSINESS_EMAIL}
               </a>
             </div>
           </div>
@@ -164,7 +173,7 @@ const Footer = () => {
           <div>
             <h4 className={headerBase}>Company</h4>
             <ul className="space-y-2.5">
-              <li><Link to="/contact" className={linkBase}>About</Link></li>
+              <li><Link to="/about-editorial" className={linkBase}>About Our Editorial Team</Link></li>
               <li><Link to="/contact" className={linkBase}>Contact</Link></li>
               <li><Link to="/for-businesses" className={linkBase}>For Local Businesses</Link></li>
               <li><Link to="/for-businesses/apply" className={linkBase}>Apply / Claim</Link></li>
