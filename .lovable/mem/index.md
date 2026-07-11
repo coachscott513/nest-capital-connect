@@ -1,11 +1,12 @@
 # Project Memory
 
 ## Core
-- Global Contact: Scott Alvarez · RE/MAX Solutions · (518) 522-7265 · scott@capitaldistrictnest.com. Default lead route.
+- Global contacts (LOCKED): general = team@capitaldistrictnest.com · business apply = /for-businesses/apply · profile fix = /claim-business · property/report = /dealdesk. Real-estate phone lives only in `<RealEstateDisclosure />`.
+- Brokerage identity (LOCKED): NEVER globally. Rendered only via `<RealEstateDisclosure />` on real-estate routes. Config in `src/config/realEstateDisclosure.ts`, `disclosure_active: false` until broker approves wording. NO RE/MAX or Coldwell Banker in footer/homepage/businesses/stories.
 - Brand colors (LOCKED): Teal #0d6e66 primary, Charcoal #0e0f12 dark bg, Gold #c9a449 investor-only, Red #DC1C2E CALL BUTTON ONLY. NO blue anywhere. Cream #f5efe4 is DEPRECATED as a default — only allowed inside print/report surfaces.
 - GLOBAL DARK CANVAS (LOCKED): `--background` token is dark onyx #0B0F19 site-wide. Card surface #1E2230, hairline border #2D3748, muted text white/65, on-dark eyebrow teal #5eead4. Light sections only by explicit opt-in.
 - Platform stack (LOCKED): SearchAnythingLocal = platform/admin · Shared Supabase = backend · Capital District Nest = Region #1 frontend · Nest OS = playbook. Never conflate. Region config lives in shared `regions` table, read via `useRegion()`.
-- Search: Direct RE/MAX IDX URLs only. No BoldTrail/CRM login wrappers.
+- Search: Route all home-search CTAs to `/homes/search`, `/homes/search/:townSlug`, `/homes/listings`, or `/investment-analyzer`. NO remax.com / scottalvarez.remax.com / BoldTrail links.
 - Maps: Use plain Leaflet API. NEVER use react-leaflet due to React 18 version mismatch.
 - Lead Capture: Unified 'leads' table. Name, Email, Phone are ALWAYS mandatory.
 - DB: Use `listings` and `rentals` tables. `properties` is legacy; ignore it.
