@@ -102,13 +102,8 @@ const GlassCard = ({
 );
 
 
-const team = [
-  { name: "Michael Roosevelt", title: "Owner", bio: "Troy native, third-generation restaurateur.", img: chefImg },
-  { name: "Chef Elena Ruiz", title: "Executive Chef", bio: "Formerly of Blue Hill at Stone Barns.", img: chefImg },
-  { name: "Marcus Chen", title: "General Manager", bio: "Hospitality lead with 15 years at flagship dining rooms.", img: chefImg },
-  { name: "Sara Delaney", title: "Lead Bartender", bio: "Craft cocktail program built around Hudson Valley spirits.", img: chefImg },
-  { name: "Priya Iyer", title: "Pastry Chef", bio: "Seasonal desserts inspired by regional orchards.", img: chefImg },
-];
+// NOTE: Team roster is intentionally not published until the business supplies
+// real names, titles, photos, and bios. See mem://editorial/no-fabricated-content.
 
 const experiences = [
   { icon: CalendarHeart, title: "Anniversary Dinner", text: "A quiet corner, candlelight, and a menu designed to be remembered." },
@@ -631,31 +626,31 @@ const RooseveltRoom = () => {
         </div>
       </section>
 
-      {/* MEET THE TEAM */}
+      {/* MEET THE TEAM — honest placeholder until real profiles are supplied */}
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <SectionHeading
             eyebrow="Meet the Team"
-            title="The people behind the room."
-            intro="From the pass to the bar, the crew that shapes every night at The Roosevelt Room."
+            title="The people behind The Roosevelt Room."
+            intro="Every memorable dining experience is shaped by the chefs, bartenders, hosts, and hospitality professionals who welcome guests each day."
           />
-          <div className="mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {team.map((p) => (
-              <GlassCard key={p.name} className="overflow-hidden">
-                <div className="aspect-[3/4] overflow-hidden bg-black/40">
-                  <img src={p.img} alt={p.name} loading="lazy" className="w-full h-full object-cover" />
-                </div>
-                <div className="p-5">
-                  <p className="text-[10px] font-semibold tracking-[0.22em] text-white/50">{p.title.toUpperCase()}</p>
-                  <h3 className="mt-2 text-lg font-semibold tracking-tight">{p.name}</h3>
-                  <p className="mt-2 text-sm text-white/60 leading-relaxed">{p.bio}</p>
-                  <div className="mt-4 flex gap-3 text-white/50">
-                    <Instagram className="h-4 w-4 hover:text-white cursor-pointer" />
-                    <Linkedin className="h-4 w-4 hover:text-white cursor-pointer" />
-                  </div>
-                </div>
-              </GlassCard>
-            ))}
+
+          <div className="mt-14 relative overflow-hidden rounded-3xl border border-white/[0.08]">
+            <img
+              src={chefImg}
+              alt="Inside The Roosevelt Room"
+              loading="lazy"
+              className="w-full aspect-[16/9] object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6">
+              <p className="text-xs uppercase tracking-[0.22em]" style={{ color: TEAL }}>
+                Coming soon
+              </p>
+              <p className="mt-2 text-lg md:text-xl text-white/90 font-light max-w-2xl">
+                Capital District Nest is working with The Roosevelt Room to introduce the team behind the experience.
+              </p>
+            </div>
           </div>
         </div>
       </section>
