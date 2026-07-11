@@ -14,7 +14,7 @@ const featuredArticle = {
   title: "The 2025 Capital District Market Forecast",
   subtitle: "How macro forces, local demand, and investor sentiment are reshaping Albany, Troy, and Schenectady real estate",
   slug: "2025-capital-district-market-forecast",
-  author: "Scott Alvarez",
+  author: "Capital District Nest Editorial Team",
   authorTitle: "Principal Analyst",
   publishedAt: "December 8, 2025",
   readTime: "12 min read",
@@ -29,7 +29,7 @@ const topStories = [
     title: "Albany Investment Properties: Best Neighborhoods for Cash Flow in 2025",
     slug: "albany-investment-properties-for-sale-best-neighborhoods-2025",
     excerpt: "From Center Square to Pine Hills, discover where smart investors are buying to maximize cash flow.",
-    author: "Scott Alvarez",
+    author: "Capital District Nest Editorial Team",
     publishedAt: "Jan 22, 2025",
     readTime: "8 min",
     category: "Market Analysis",
@@ -40,7 +40,7 @@ const topStories = [
     title: "Troy Multi-Family: RPI Corridor Properties Outperform Market",
     slug: "troy-rpi-multi-family-properties-investment",
     excerpt: "Student housing near Rensselaer sees 15% rent growth as enrollment stabilizes.",
-    author: "Scott Alvarez",
+    author: "Capital District Nest Editorial Team",
     publishedAt: "Jan 20, 2025",
     readTime: "6 min",
     category: "Property Analysis",
@@ -51,7 +51,7 @@ const topStories = [
     title: "Schenectady Tax Abatement Program: A Complete Investor Guide",
     slug: "schenectady-tax-abatement-program-investor-guide",
     excerpt: "How to leverage 485-a exemptions for maximum after-tax returns on rehabilitation projects.",
-    author: "Scott Alvarez",
+    author: "Capital District Nest Editorial Team",
     publishedAt: "Jan 18, 2025",
     readTime: "10 min",
     category: "Tax Strategy",
@@ -108,13 +108,13 @@ const latestAnalysis = [
 const opinionPieces = [
   {
     title: "Why I'm Bullish on Troy for 2025",
-    author: "Scott Alvarez",
+    author: "Capital District Nest Editorial Team",
     excerpt: "The Collar City's fundamentals have never looked stronger.",
     slug: "why-bullish-troy-2025"
   },
   {
     title: "The BRRRR Strategy Still Works—With Adjustments",
-    author: "Scott Alvarez",
+    author: "Capital District Nest Editorial Team",
     excerpt: "Higher rates require smarter execution, not abandonment.",
     slug: "brrrr-strategy-capital-district-guide"
   }

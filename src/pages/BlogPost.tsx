@@ -81,7 +81,7 @@ const blogPosts = {
         </div>
       </div>
     `,
-    author: "Scott Rossi",
+    author: "Capital District Nest Editorial Team",
     publishedAt: "2025-01-12",
     readTime: "6 min read",
     category: "Property Analysis",
@@ -180,7 +180,7 @@ const blogPosts = {
         <li>Analyze comparable recent sales in Center Square</li>
       </ol>
     `,
-    author: "Scott Alvarez",
+    author: "Capital District Nest Editorial Team",
     publishedAt: "2025-01-12",
     readTime: "6 min read",
     category: "Property Analysis",
@@ -224,7 +224,7 @@ const blogPosts = {
       <h3>Getting Started</h3>
       <p>Ready to explore investment opportunities in Albany? Our team has access to off-market deals and can provide detailed cash flow analysis for any property you're considering.</p>
     `,
-    author: "Scott Alvarez",
+    author: "Capital District Nest Editorial Team",
     publishedAt: "2025-01-10",
     readTime: "5 min read",
     category: "Market Analysis",
@@ -295,7 +295,7 @@ const blogPosts = {
       <h3>Getting Started with BRRRR</h3>
       <p>Ready to implement the BRRRR strategy? We can help you identify suitable properties, connect with reliable contractors, and guide you through the entire process.</p>
     `,
-    author: "Scott Alvarez",
+    author: "Capital District Nest Editorial Team",
     publishedAt: "2025-01-08",
     readTime: "8 min read",
     category: "Investment Strategy",
