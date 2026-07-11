@@ -2,6 +2,35 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Mail } from 'lucide-react';
 import { useRegion } from '@/hooks/useRegion';
+import RealEstateDisclosure from '@/components/RealEstateDisclosure';
+
+const REAL_ESTATE_ROUTE_PREFIXES = [
+  '/homes',
+  '/homes-for-sale',
+  '/rentals',
+  '/investment',
+  '/analyze',
+  '/dealdesk',
+  '/cash-flow-report',
+  '/market-report',
+  '/property',
+  '/137a-elsmere',
+  '/lavery-drive',
+  '/ridge-road',
+  '/lancaster-street',
+  '/albany-multi-unit',
+  '/troy-multi-unit',
+  '/schenectady-multi-unit',
+  '/albany-land',
+  '/single-family-market',
+  '/best-neighborhoods',
+  '/first-time',
+  '/buyer-',
+  '/sell-investment',
+];
+
+const isRealEstateRoute = (pathname: string) =>
+  REAL_ESTATE_ROUTE_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/') || pathname.startsWith(p));
 
 const townDirectory = {
   "Albany County": [
