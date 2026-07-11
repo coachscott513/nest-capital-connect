@@ -21,7 +21,7 @@ const articles: Record<string, {
   "1022-union-schenectady-dscr-analysis": {
     title: "Investment Analysis: 1022 Union St, Schenectady",
     subtitle: "The \"DSCR\" Leverage Play - Why the deal structure matters more than the price tag",
-    author: "Scott Alvarez",
+    author: "Capital District Nest Editorial Team",
     authorTitle: "Principal Analyst, Capital District Nest",
     publishedAt: "December 9, 2025",
     readTime: "6 min read",
@@ -142,7 +142,7 @@ const articles: Record<string, {
   "2025-capital-district-market-forecast": {
     title: "The 2025 Capital District Market Forecast",
     subtitle: "How macro forces, local demand, and investor sentiment are reshaping Albany, Troy, and Schenectady real estate",
-    author: "Scott Alvarez",
+    author: "Capital District Nest Editorial Team",
     authorTitle: "Principal Analyst, Capital District Nest",
     publishedAt: "December 8, 2025",
     readTime: "12 min read",

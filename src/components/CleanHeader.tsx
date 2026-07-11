@@ -193,8 +193,8 @@ const CleanHeader = () => {
                 <Search className="h-4 w-4 text-foreground" />
               </button>
               <a
-                href="tel:+15185227265"
-                aria-label="Call Scott"
+                href="tel:+15189812248"
+                aria-label="Call Capital District Nest"
                 className="flex items-center justify-center w-9 h-9 rounded-full text-foreground/80 hover:text-foreground border border-white/15 hover:border-white/35 bg-white/[0.04] hover:bg-white/[0.08] backdrop-blur-md transition-colors"
               >
                 <Phone className="h-4 w-4" strokeWidth={1.75} />

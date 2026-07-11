@@ -9,6 +9,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  PHONE_SMS,
+  GENERAL_EMAIL,
+  EDITORIAL_TEAM,
+} from '@/config/contact';
 
 interface LiveConversationButtonProps {
   variant?: 'default' | 'outline' | 'ghost';
@@ -16,10 +23,6 @@ interface LiveConversationButtonProps {
   className?: string;
   showLabel?: boolean;
 }
-
-const PHONE_NUMBER = '5185227265';
-const FORMATTED_PHONE = '(518) 522-7265';
-const EMAIL = 'team@capitaldistrictnest.com';
 
 const RED_CALL = '#DC1C2E'; // strict: call button only
 const TEAL = '#0d6e66';     // primary brand
@@ -47,44 +50,44 @@ const LiveConversationButton: React.FC<LiveConversationButtonProps> = ({
         <DropdownMenuLabel className="px-3 py-2">
           <div className="flex items-center gap-3">
             <div
-              className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0"
+              className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0"
               style={{ backgroundColor: TEAL }}
             >
-              SA
+              CDN
             </div>
             <div className="leading-tight">
-              <p className="font-semibold text-sm text-foreground">Capital District Nest Local Concierge</p>
+              <p className="font-semibold text-sm text-foreground">{EDITORIAL_TEAM}</p>
               <p className="text-[11px] uppercase tracking-wider font-semibold" style={{ color: TEAL }}>
-                Directory Support
+                Local Concierge
               </p>
             </div>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <a href={`tel:+1${PHONE_NUMBER}`} className="flex items-center gap-3 cursor-pointer py-2">
+          <a href={PHONE_TEL} className="flex items-center gap-3 cursor-pointer py-2">
             <Phone className="h-4 w-4 shrink-0" style={{ color: RED_CALL }} />
             <div>
               <p className="font-medium text-sm">Call Capital District Nest</p>
-              <p className="text-xs text-muted-foreground">{FORMATTED_PHONE}</p>
+              <p className="text-xs text-muted-foreground">{PHONE_DISPLAY}</p>
             </div>
           </a>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <a href={`sms:+1${PHONE_NUMBER}`} className="flex items-center gap-3 cursor-pointer py-2">
+          <a href={PHONE_SMS} className="flex items-center gap-3 cursor-pointer py-2">
             <MessageCircle className="h-4 w-4 shrink-0" style={{ color: TEAL }} />
             <div>
               <p className="font-medium text-sm">Text</p>
-              <p className="text-xs text-muted-foreground">{FORMATTED_PHONE}</p>
+              <p className="text-xs text-muted-foreground">{PHONE_DISPLAY}</p>
             </div>
           </a>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <a href={`mailto:${EMAIL}`} className="flex items-center gap-3 cursor-pointer py-2">
+          <a href={`mailto:${GENERAL_EMAIL}`} className="flex items-center gap-3 cursor-pointer py-2">
             <Mail className="h-4 w-4 shrink-0 text-muted-foreground" />
             <div className="min-w-0">
               <p className="font-medium text-sm">Email</p>
-              <p className="text-xs text-muted-foreground truncate">{EMAIL}</p>
+              <p className="text-xs text-muted-foreground truncate">{GENERAL_EMAIL}</p>
             </div>
           </a>
         </DropdownMenuItem>
