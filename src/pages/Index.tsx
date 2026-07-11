@@ -850,8 +850,13 @@ const Index = () => {
       <CleanHeader />
       <FloatingOmniSearch />
 
-      {/* HERO 1 — Search anything local */}
+      {/* HERO 1 — Editorial entrance */}
       <CinematicHero />
+
+      {/* Explore the Capital District — 4 editorial cards */}
+      <ExploreCapitalDistrict />
+
+
 
       {/* HOMEPAGE BUSINESS TEASER → /business */}
       <section className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06]">
