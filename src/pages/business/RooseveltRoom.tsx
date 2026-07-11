@@ -414,6 +414,61 @@ const RooseveltRoom = () => {
         </div>
       </section>
 
+      {/* REEL-FIRST MOMENT — experience the room */}
+      <section className="px-6 md:px-10 py-16 md:py-24 border-t border-white/[0.06]">
+        <div className="max-w-6xl mx-auto">
+          <div className="max-w-3xl">
+            <p className="text-xs uppercase tracking-[0.28em]" style={{ color: TEAL }}>The Reel</p>
+            <h2 className="mt-4 text-4xl md:text-5xl font-light tracking-tight text-white">
+              Experience The Roosevelt Room.
+            </h2>
+            <p className="mt-5 text-white/70 text-lg leading-relaxed">
+              A minute inside the room — the bar, the plates, the light — straight from Instagram.
+            </p>
+          </div>
+
+          <a
+            href={BUSINESS.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("reel_hero", "reel")}
+            className="group relative mt-10 block overflow-hidden rounded-3xl border border-white/10 aspect-[9/12] sm:aspect-[16/9] max-h-[78vh] mx-auto"
+          >
+            <img
+              src={plateImg}
+              alt="The Roosevelt Room — reel preview"
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-[1.03]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/40" />
+            <div
+              className="absolute inset-0 opacity-40 pointer-events-none"
+              style={{ background: "radial-gradient(circle at 50% 55%, rgba(225,48,108,0.35) 0%, transparent 60%)" }}
+            />
+
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 rounded-full blur-2xl opacity-70" style={{ background: TEAL }} />
+                <div className="relative h-24 w-24 md:h-28 md:w-28 rounded-full bg-white/95 flex items-center justify-center shadow-2xl transition group-hover:scale-105">
+                  <Play className="h-9 w-9 md:h-10 md:w-10 text-black translate-x-0.5" fill="currentColor" />
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-6 left-6 right-6 flex flex-wrap items-center justify-between gap-3">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur text-white/90 text-xs uppercase tracking-[0.22em] border border-white/15">
+                <Instagram className="h-3.5 w-3.5" />
+                Official Reel
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-white text-sm font-medium">
+                Watch on Instagram
+                <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
+            </div>
+          </a>
+        </div>
+      </section>
+
       {/* FOLLOW THE BUSINESS — SOCIAL MEDIA FEATURE */}
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto">
