@@ -355,6 +355,35 @@ const RooseveltRoom = () => {
         </div>
       </section>
 
+      {/* WHAT'S HAPPENING — living strip, owner-editable */}
+      <section className="px-6 md:px-10 py-10 border-t border-white/[0.06] bg-white/[0.02]">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center gap-6">
+          <div className="flex items-center gap-3 shrink-0">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full rounded-full opacity-70 animate-ping" style={{ background: TEAL }} />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ background: TEAL }} />
+            </span>
+            <p className="text-xs uppercase tracking-[0.28em] text-white/60">What's Happening</p>
+          </div>
+          <div className="flex-1 flex flex-wrap gap-2.5">
+            {[
+              { icon: "🍸", label: "Happy Hour Tonight" },
+              { icon: "🎵", label: "Live Jazz Friday" },
+              { icon: "🥃", label: "New Summer Cocktail Menu" },
+              { icon: "🍽", label: "Reservations Available" },
+            ].map((chip) => (
+              <span
+                key={chip.label}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/12 bg-white/[0.04] text-sm text-white/90 hover:bg-white/[0.07] transition"
+              >
+                <span className="text-base leading-none">{chip.icon}</span>
+                {chip.label}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* EDITORIAL INTRO */}
       <section className="px-6 md:px-10 py-24 md:py-32 max-w-4xl mx-auto">
         <Eyebrow>Capital District Nest Spotlight</Eyebrow>
@@ -382,6 +411,61 @@ const RooseveltRoom = () => {
             before someone moves away — this is the room people pick when the
             night has to mean something.
           </p>
+        </div>
+      </section>
+
+      {/* REEL-FIRST MOMENT — experience the room */}
+      <section className="px-6 md:px-10 py-16 md:py-24 border-t border-white/[0.06]">
+        <div className="max-w-6xl mx-auto">
+          <div className="max-w-3xl">
+            <p className="text-xs uppercase tracking-[0.28em]" style={{ color: TEAL }}>The Reel</p>
+            <h2 className="mt-4 text-4xl md:text-5xl font-light tracking-tight text-white">
+              Experience The Roosevelt Room.
+            </h2>
+            <p className="mt-5 text-white/70 text-lg leading-relaxed">
+              A minute inside the room — the bar, the plates, the light — straight from Instagram.
+            </p>
+          </div>
+
+          <a
+            href={BUSINESS.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("reel_hero", "reel")}
+            className="group relative mt-10 block overflow-hidden rounded-3xl border border-white/10 aspect-[9/12] sm:aspect-[16/9] max-h-[78vh] mx-auto"
+          >
+            <img
+              src={plateImg}
+              alt="The Roosevelt Room — reel preview"
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-[1.03]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/40" />
+            <div
+              className="absolute inset-0 opacity-40 pointer-events-none"
+              style={{ background: "radial-gradient(circle at 50% 55%, rgba(225,48,108,0.35) 0%, transparent 60%)" }}
+            />
+
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 rounded-full blur-2xl opacity-70" style={{ background: TEAL }} />
+                <div className="relative h-24 w-24 md:h-28 md:w-28 rounded-full bg-white/95 flex items-center justify-center shadow-2xl transition group-hover:scale-105">
+                  <Play className="h-9 w-9 md:h-10 md:w-10 text-black translate-x-0.5" fill="currentColor" />
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-6 left-6 right-6 flex flex-wrap items-center justify-between gap-3">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur text-white/90 text-xs uppercase tracking-[0.22em] border border-white/15">
+                <Instagram className="h-3.5 w-3.5" />
+                Official Reel
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-white text-sm font-medium">
+                Watch on Instagram
+                <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
+            </div>
+          </a>
         </div>
       </section>
 
@@ -668,22 +752,72 @@ const RooseveltRoom = () => {
         </div>
       </section>
 
-      {/* COMMUNITY CONNECTIONS */}
+      {/* BEFORE YOU VISIT — quick-hit glass cards */}
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto">
           <SectionHeading
-            eyebrow="Community Connections"
-            title="What's nearby."
-            intro="The Roosevelt Room lives inside downtown Troy — explore the block, the neighborhood, and the homes around it."
+            eyebrow="Before You Visit"
+            title="Good to know."
+            intro="A quick read of the room before you book — what to expect, and what it's best for."
           />
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { icon: Calendar, title: "Reservations Recommended", text: "Weekends fill 10–14 days out. Weekdays easier." },
+              { icon: Leaf, title: "Outdoor Seating", text: "Seasonal patio available May through October." },
+              { icon: CalendarHeart, title: "Date Night", text: "Low light, quiet corners, unhurried service." },
+              { icon: Wine, title: "Craft Cocktails", text: "Full bar with a Hudson Valley–forward program." },
+              { icon: Users, title: "Private Events", text: "Adjacent room seats up to 24 for milestones." },
+              { icon: Gift, title: "Gift Cards Available", text: "Purchase in-house or ask by phone." },
+            ].map((c) => (
+              <div
+                key={c.title}
+                className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:bg-white/[0.05] hover:border-white/20 transition"
+              >
+                <c.icon className="h-6 w-6 mb-4" style={{ color: TEAL }} />
+                <p className="text-base font-medium text-white">{c.title}</p>
+                <p className="mt-2 text-sm text-white/65 leading-relaxed">{c.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* NEARBY YOU'LL LOVE — real neighboring destinations */}
+      <section className="px-6 md:px-10 py-20 md:py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeading
+            eyebrow="Nearby You'll Love"
+            title="Make a night of it in Troy."
+            intro="Real neighbors on the block. Not paid placements — just what's genuinely worth walking to."
+          />
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { name: "Lucas Confectionery", kind: "Wine bar · River Street", note: "Natural wine and small plates two blocks north." },
+              { name: "Bard & Baker", kind: "Board game café · Broadway", note: "Coffee, dessert, and hundreds of games after dinner." },
+              { name: "Superior Merchandise Co.", kind: "Café + cocktails · River Street", note: "Espresso by day, cocktails by night — a Troy fixture." },
+              { name: "River Street", kind: "Walkable district", note: "Boutiques, galleries, and the Hudson a block away." },
+              { name: "Troy Waterfront", kind: "Riverfront + park", note: "Sunset walk along the Hudson before or after dinner." },
+              { name: "Troy Farmers Market", kind: "Saturdays · River Street", note: "Year-round market. One of the largest in the Northeast." },
+            ].map((n) => (
+              <div
+                key={n.name}
+                className="group p-6 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/25 transition"
+              >
+                <p className="text-xs uppercase tracking-[0.2em] text-white/50">{n.kind}</p>
+                <p className="mt-3 text-lg font-medium text-white">{n.name}</p>
+                <p className="mt-2 text-sm text-white/65 leading-relaxed">{n.note}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-3">
             {nearby.map((n) => (
               <Link
                 key={n.label}
                 to={n.href}
-                className="group flex items-center justify-between p-5 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/25 transition"
+                className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition"
               >
-                <span className="text-sm font-medium text-white/85">{n.label}</span>
+                <span className="text-sm text-white/80">{n.label}</span>
                 <ArrowUpRight className="h-4 w-4 text-white/40 group-hover:text-white transition" />
               </Link>
             ))}

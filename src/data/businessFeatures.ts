@@ -51,15 +51,15 @@ export const FEATURE_TYPE_LABEL: Record<BusinessFeatureType, string> = {
 
 export const FEATURE_TYPE_CTA: Record<BusinessFeatureType, string> = {
   story: "Read Story",
-  category: "View Collection",
+  category: "Explore Collection",
   town_guide: "Explore Guide",
   weekend_guide: "Explore Guide",
-  event: "View Event",
+  event: "Discover Event",
   seasonal_guide: "Explore Guide",
   dining_guide: "Explore Guide",
   neighborhood_guide: "Explore Guide",
   community_feature: "Read Feature",
-  business_collection: "View Collection",
+  business_collection: "Explore Collection",
 };
 
 export const BUSINESS_FEATURES: BusinessFeature[] = [
