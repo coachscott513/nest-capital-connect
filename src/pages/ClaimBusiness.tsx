@@ -261,7 +261,7 @@ const ClaimBusiness = () => {
         });
         const detail = import.meta.env.DEV ? ` (${error.message})` : "";
         toast.error(
-          `We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.${detail}`
+          `We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.${detail}`
         );
         return;
       }
@@ -282,7 +282,7 @@ const ClaimBusiness = () => {
         reason: err?.message || "exception",
       });
       toast.error(
-        "We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled."
+        "We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled."
       );
     } finally {
       setIsSubmitting(false);

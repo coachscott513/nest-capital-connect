@@ -69,7 +69,7 @@ const MarketReportRequestForm = ({ townName, townSlug, isOpen, onClose }: Market
       
     } catch (error) {
       console.error('Form submission error:', error);
-      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.");
+      toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
     } finally {
       setIsSubmitting(false);
     }

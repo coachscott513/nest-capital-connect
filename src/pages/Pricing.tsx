@@ -348,7 +348,7 @@ const Pricing = () => {
               },
               {
                 q: "How do I get started?",
-                a: "Email the team at team@capitaldistrictnest.com or call/text 518-207-9348. We'll confirm your listing, collect your assets, and activate within 48 hours.",
+                a: "Email the team at team@capitaldistrictnest.com. We'll confirm your listing, collect your assets, and activate within 48 hours.",
               },
             ].map((item) => (
 

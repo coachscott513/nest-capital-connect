@@ -94,7 +94,7 @@ const SubmitEvent = () => {
       toast({
         title: "We couldn't submit this right now",
         description:
-          "Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.",
+          "Please email team@capitaldistrictnest.com and we'll help get it handled.",
         variant: "destructive",
       });
       return;

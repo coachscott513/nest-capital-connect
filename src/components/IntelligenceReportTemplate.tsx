@@ -147,7 +147,7 @@ const IntelligenceReportTemplate = ({
       console.error("Error submitting form:", error);
       toast({
         title: "Error",
-        description: "We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.",
+        description: "We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.",
         variant: "destructive",
       });
     } finally {
@@ -182,7 +182,7 @@ const IntelligenceReportTemplate = ({
       console.error("Error submitting form:", error);
       toast({
         title: "Error",
-        description: "We couldn't submit this right now. Please email team@capitaldistrictnest.com or call/text 518-207-9348 and we'll help get it handled.",
+        description: "We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.",
         variant: "destructive",
       });
     } finally {
