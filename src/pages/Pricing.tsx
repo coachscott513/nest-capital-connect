@@ -382,22 +382,23 @@ const Pricing = () => {
             Ready to upgrade?
           </h2>
           <p className="mt-5 text-base md:text-lg text-white/65 leading-relaxed">
-            Talk to the Capital District Nest team — no forms, no funnels. We'll get you live this week.
+            Choose the option that fits your business, or contact the Capital District Nest team for help.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
-              href="mailto:team@capitaldistrictnest.com?subject=Local%20Business%20Solutions%20%E2%80%93%20Capital%20District%20Nest"
+              href="/for-businesses/apply"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
             >
-              Email the Team <ArrowRight className="w-4 h-4" />
+              Get Started <ArrowRight className="w-4 h-4" />
             </a>
             <a
-              href="tel:+15182079348"
+              href="mailto:team@capitaldistrictnest.com?subject=Local%20Business%20Solutions%20%E2%80%93%20Capital%20District%20Nest"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
             >
-              Call 518-207-9348
+              Email the Team
             </a>
           </div>
+
         </div>
       </section>
 
