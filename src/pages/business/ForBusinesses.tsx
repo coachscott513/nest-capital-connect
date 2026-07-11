@@ -84,38 +84,54 @@ const fmt = (cents: number) =>
   cents === 0 ? "$0" : `$${(cents / 100).toFixed(cents % 100 === 0 ? 0 : 2)}`;
 
 const trustBadges = [
-  "No anonymous reviews",
-  "Original editorial features",
-  "Local business spotlights",
-  "Community discovery",
-  "Measurable engagement",
-  "Capital District company",
+  "No Anonymous Reviews",
+  "Original Editorial Features",
+  "Built for Local Businesses",
+  "Community Discovery",
+  "Measurable Results",
+  "Capital District Company",
+];
+
+const heroMontage = [
+  { src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2400&q=85", label: "The Roosevelt Room" },
+  { src: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2400&q=85", label: "Iron Gate Café" },
+  { src: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=2400&q=85", label: "Superior Merchandise" },
+  { src: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=2400&q=85", label: "Common Roots" },
+];
+
+const discoverySurfaces = [
+  "Business Directory",
+  "Town Guides",
+  "Community Stories",
+  "Neighborhood Pages",
+  "Local Search",
+  "Featured Collections",
 ];
 
 const whyCards = [
   {
     icon: Compass,
     title: "Be Discovered",
-    body: "Your business appears across town guides, category pages, community collections, stories, and local search.",
-    items: ["Town guides", "Business categories", "Community pages", "Stories", "Local collections", "Search"],
+    body: "Appear across town guides, neighborhood pages, category collections, and local search.",
+    items: ["Town guides", "Neighborhood pages", "Category collections", "Community pages", "Local search"],
   },
   {
     icon: BookOpen,
     title: "Tell Your Story",
-    body: "Beautiful editorial business pages. Original writing. Professional presentation.",
+    body: "Beautiful editorial pages that showcase what makes your business unique.",
     items: ["Editorial writing", "Photo galleries", "Owner updates", "Social integration", "Functional CTAs"],
   },
   {
     icon: BarChart3,
-    title: "Measure Your Growth",
-    body: "See meaningful customer engagement — not vanity metrics.",
-    items: ["Phone calls", "Website visits", "Direction requests", "Social clicks", "Reservations", "QR scans"],
+    title: "Measure Results",
+    body: "Track phone calls, website visits, directions, reservations, and customer engagement.",
+    items: ["Phone calls", "Website visits", "Direction requests", "Reservations", "Social clicks", "QR scans"],
   },
   {
     icon: Wand2,
-    title: "Grow With AI",
-    body: "Modern AI tools that support your business — never replace your voice.",
-    items: ["Generate content", "Customer replies", "Social ideas", "Automation", "Online presence"],
+    title: "Grow Smarter",
+    body: "Use AI tools, automation, and modern digital workflows to save time and improve customer communication.",
+    items: ["Content help", "Customer replies", "Social ideas", "Automation", "Time saved"],
   },
 ];
 
@@ -161,6 +177,12 @@ const ForBusinesses = () => {
   const regionSlug = region?.slug ?? "capital-district";
   const [plans, setPlans] = useState<Plan[]>(fallbackPlans);
   const [billing, setBilling] = useState<"monthly" | "annual">("monthly");
+  const [heroIdx, setHeroIdx] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setHeroIdx((i) => (i + 1) % heroMontage.length), 7000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -195,72 +217,168 @@ const ForBusinesses = () => {
       <CleanHeader />
 
       {/* HERO */}
-      <section className="relative px-6 md:px-10 pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden">
+      <section className="relative px-6 md:px-10 pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <img
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2400&q=85"
-            alt="The Roosevelt Room — a featured Capital District business"
-            className="w-full h-full object-cover opacity-25"
-            loading="eager"
-          />
+          {heroMontage.map((s, i) => (
+            <img
+              key={s.src}
+              src={s.src}
+              alt={s.label}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ${
+                i === heroIdx ? "opacity-25" : "opacity-0"
+              }`}
+              loading={i === 0 ? "eager" : "lazy"}
+            />
+          ))}
           <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19]/70 via-[#0B0F19]/85 to-[#0B0F19]" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(13,110,102,0.22),_transparent_60%)]" />
         </div>
-        <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.1] mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-[#5eead4]" />
-            <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
-              For Local Businesses
-            </span>
+
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-[1.15fr_1fr] gap-14 lg:gap-20 items-center">
+          {/* LEFT — narrative */}
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.1] mb-6">
+              <Sparkles className="w-3.5 h-3.5 text-[#5eead4]" />
+              <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
+                The Capital District's Trusted Business Platform
+              </span>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-semibold tracking-[-0.03em] leading-[1.02]">
+              Tell Your Story.
+              <br />
+              <span className="text-[#5eead4]">Grow Your Business.</span>
+              <br />
+              <span className="text-white/70">Become Part of the Capital District.</span>
+            </h1>
+            <p className="mt-8 text-lg md:text-xl text-white/75 font-light max-w-xl leading-relaxed">
+              Capital District Nest helps local businesses connect with residents, homeowners, visitors, and newcomers through premium editorial features, community discovery, measurable engagement, and modern business tools.
+            </p>
+            <p className="mt-4 text-base text-white/55 font-light max-w-xl leading-relaxed">
+              We believe local businesses deserve more than anonymous reviews. We help people discover the businesses that make the Capital District worth living in.
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row gap-3">
+              <Link
+                to="/for-businesses/apply"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-[#0d6e66] hover:bg-[#0d6e66]/90 text-white text-sm font-semibold transition"
+              >
+                Claim Your Free Business Profile <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/business/the-roosevelt-room"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full border border-white/20 hover:border-white/40 bg-white/[0.04] text-sm font-semibold"
+              >
+                Explore Featured Businesses
+              </Link>
+            </div>
           </div>
-          <h1 className="text-5xl md:text-7xl font-semibold tracking-[-0.03em] leading-[1.02]">
-            Tell your story.
-            <br />
-            Grow your business.
-            <br />
-            <span className="text-white/70">Become part of the Capital District's trusted local guide.</span>
-          </h1>
-          <p className="mt-8 text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
-            Capital District Nest helps local businesses connect with residents, homeowners, visitors, and newcomers through beautiful editorial storytelling, local discovery, measurable engagement, and modern business tools.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link
-              to="/for-businesses/apply"
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-[#0d6e66] hover:bg-[#0d6e66]/90 text-white text-sm font-semibold transition"
-            >
-              Claim Your Free Business Profile <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/business/the-roosevelt-room"
-              className="inline-flex items-center gap-2 px-7 py-4 rounded-full border border-white/20 hover:border-white/40 bg-white/[0.04] text-sm font-semibold"
-            >
-              See a Featured Business
-            </Link>
+
+          {/* RIGHT — floating business page preview */}
+          <div className="relative hidden lg:block">
+            <div className="relative rounded-2xl overflow-hidden border border-white/[0.12] bg-[#0e0f12] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.6)] backdrop-blur">
+              {/* browser chrome */}
+              <div className="flex items-center gap-1.5 px-4 py-3 border-b border-white/[0.08] bg-white/[0.03]">
+                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                <div className="ml-3 flex-1 px-3 py-1 rounded-md bg-white/[0.05] text-[10px] text-white/40 truncate">
+                  capitaldistrictnest.com/business/the-roosevelt-room
+                </div>
+              </div>
+              {/* hero image */}
+              <div className="relative aspect-[4/3]">
+                {heroMontage.map((s, i) => (
+                  <img
+                    key={s.src}
+                    src={s.src}
+                    alt={s.label}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ${
+                      i === heroIdx ? "opacity-100" : "opacity-0"
+                    }`}
+                    loading="lazy"
+                  />
+                ))}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0e0f12] via-transparent to-transparent" />
+                <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/50 border border-white/15 backdrop-blur">
+                  <ShieldCheck className="w-3 h-3 text-[#5eead4]" />
+                  <span className="text-[9px] font-semibold tracking-[0.18em] uppercase text-white/90">Editorial Feature</span>
+                </div>
+                <div className="absolute bottom-4 left-5 right-5">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-[#5eead4] mb-1">Featured Business</p>
+                  <h3 className="text-2xl font-semibold tracking-[-0.02em] text-white">
+                    {heroMontage[heroIdx].label}
+                  </h3>
+                </div>
+              </div>
+              {/* action row */}
+              <div className="grid grid-cols-3 gap-2 p-4 border-t border-white/[0.06] bg-white/[0.02]">
+                {[
+                  { icon: Phone, label: "Call" },
+                  { icon: MapPin, label: "Directions" },
+                  { icon: Globe, label: "Website" },
+                ].map(({ icon: Icon, label }) => (
+                  <div key={label} className="flex items-center justify-center gap-1.5 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06]">
+                    <Icon className="w-3 h-3 text-[#5eead4]" />
+                    <span className="text-[11px] font-medium text-white/85">{label}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center gap-2 px-4 pb-4">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06]">
+                  <Instagram className="w-3 h-3 text-white/70" />
+                  <span className="text-[10px] text-white/70">@rooseveltroom</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06]">
+                  <Facebook className="w-3 h-3 text-white/70" />
+                  <span className="text-[10px] text-white/70">Facebook</span>
+                </div>
+              </div>
+            </div>
+            {/* floating caption */}
+            <div className="absolute -bottom-4 -left-4 px-3 py-1.5 rounded-full bg-[#0d6e66] text-white text-[10px] font-semibold tracking-[0.18em] uppercase shadow-lg">
+              Live Business Page
+            </div>
           </div>
         </div>
       </section>
 
-      {/* TRUST STRIP */}
-      <section className="px-6 md:px-10 pb-24">
-        <div className="max-w-6xl mx-auto rounded-3xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl p-10 md:p-14">
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
-              Built locally. Focused locally.
-            </h2>
-            <p className="mt-4 text-white/60 leading-relaxed">
-              We're building a trusted local platform that helps people discover great businesses — not another anonymous review website.
-            </p>
-          </div>
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-3 gap-4">
+      {/* TRUST STRIP — thin premium glass */}
+      <section className="px-6 md:px-10 -mt-8 pb-24 relative z-10">
+        <div className="max-w-6xl mx-auto rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl px-6 py-6 md:px-10 md:py-7">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-3">
             {trustBadges.map((b) => (
-              <div key={b} className="flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-white/[0.02] px-5 py-4">
-                <CheckCircle2 className="w-4 h-4 text-[#5eead4] flex-shrink-0" />
-                <span className="text-sm text-white/85">{b}</span>
+              <div key={b} className="flex items-center gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#5eead4] flex-shrink-0" />
+                <span className="text-[12px] md:text-[13px] font-medium text-white/85 whitespace-nowrap">{b}</span>
               </div>
             ))}
           </div>
+          <p className="mt-5 text-center text-xs text-white/45">
+            Helping great local businesses become easier to discover.
+          </p>
         </div>
       </section>
+
+      {/* NEXT CUSTOMER — powerful statistic-style section */}
+      <section className="px-6 md:px-10 py-24 border-t border-white/[0.06]">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-4xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.05]">
+            Your next customer is already searching.
+            <br />
+            <span className="text-white/60">Make sure they find you.</span>
+          </h2>
+          <div className="mt-14 grid grid-cols-2 md:grid-cols-3 gap-3 max-w-4xl mx-auto">
+            {discoverySurfaces.map((s) => (
+              <div key={s} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-5 py-6 text-sm font-medium text-white/85">
+                {s}
+              </div>
+            ))}
+          </div>
+          <p className="mt-10 text-white/55 max-w-2xl mx-auto">
+            All working together to help people discover your business.
+          </p>
+        </div>
+      </section>
+
 
       {/* WHY JOIN */}
       <section className="px-6 md:px-10 py-24 border-t border-white/[0.06]">
@@ -619,7 +737,7 @@ const ForBusinesses = () => {
             Your story deserves to be discovered.
           </h2>
           <p className="mt-6 text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-            Join the growing community of local businesses helping define the Capital District.
+            Join the growing network of businesses helping define the Capital District.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
