@@ -174,93 +174,212 @@ function AppleHero({
   );
 }
 
-/* ============== Hero 1 — Cinematic Search Hero ============== */
+/* ============== Hero 1 — Editorial Entrance ============== */
 function CinematicHero() {
   return (
     <section className="relative w-full overflow-hidden bg-[#0B0F19]">
+      {/* Subtle dark editorial gradient */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(60% 55% at 50% 35%, rgba(94,234,212,0.10), transparent 65%), radial-gradient(45% 60% at 15% 85%, rgba(13,110,102,0.18), transparent 70%), radial-gradient(40% 50% at 85% 15%, rgba(94,234,212,0.06), transparent 70%)",
+            "radial-gradient(60% 50% at 50% 30%, rgba(94,234,212,0.08), transparent 70%), radial-gradient(50% 60% at 20% 90%, rgba(13,110,102,0.14), transparent 75%), linear-gradient(180deg, #0B0F19 0%, #0A0D16 100%)",
         }}
         aria-hidden
       />
       <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-overlay"
+        className="absolute inset-0 opacity-[0.035] pointer-events-none mix-blend-overlay"
         style={{
           backgroundImage: "radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px)",
           backgroundSize: "3px 3px",
         }}
         aria-hidden
       />
+
       <div className="relative w-full min-h-[100svh] flex items-center">
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-28 md:py-40">
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-5 sm:px-6 md:px-10 py-32 md:py-44">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-5xl mx-auto text-center"
           >
-            <p className="text-[11px] md:text-xs font-semibold tracking-[0.32em] uppercase text-[#5eead4]">
+            <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.42em] uppercase text-[#5eead4]/90">
               Capital District Nest
             </p>
-            <h1 className="mt-5 text-[2.5rem] sm:text-5xl md:text-[5rem] lg:text-[6rem] font-semibold tracking-[-0.045em] leading-[0.98] text-white">
-              Discover the Capital District,{" "}
-              <span className="bg-gradient-to-r from-white via-white to-[#5eead4] bg-clip-text text-transparent">
-                neighborhood by neighborhood.
+
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-10 md:mt-14 text-[3rem] sm:text-6xl md:text-[6rem] lg:text-[7.5rem] font-semibold tracking-[-0.045em] leading-[0.95] text-white"
+            >
+              <span className="block">The Capital District.</span>
+              <span className="block mt-2 md:mt-3">Beautifully organized.</span>
+              <span className="block mt-2 md:mt-3 bg-gradient-to-r from-white via-white to-[#5eead4] bg-clip-text text-transparent">
+                Everything local.
               </span>
-            </h1>
-            <p className="mt-6 md:mt-8 text-base md:text-xl text-white/70 max-w-3xl mx-auto font-light leading-relaxed">
-              Explore local businesses, events, restaurants, services, homes, and town guides
-              across the Capital District — from Lark Street to Saratoga, Delmar, Troy,
-              Schenectady, and beyond.
-            </p>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-10 md:mt-14 text-lg md:text-2xl text-white/70 max-w-2xl mx-auto font-light leading-[1.5]"
+            >
+              Discover neighborhoods. Find exceptional local businesses. Search homes.
+              Explore events. Everything happening across New York's Capital District —
+              in one beautiful place.
+            </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 22 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-9 md:mt-12"
-            >
-              <SpotlightSearch />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-7 flex flex-wrap items-center justify-center gap-3"
+              transition={{ duration: 1, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-14 md:mt-16 flex flex-col items-center gap-6"
             >
               <Link
-                to="/neighborhoods"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
+                to="#explore-capital-district"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("explore-capital-district")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="group inline-flex items-center gap-3 px-9 py-4 rounded-full bg-[#0d6e66] text-white text-[15px] font-semibold hover:bg-[#0d6e66]/90 hover:-translate-y-0.5 transition-all shadow-[0_20px_50px_-20px_rgba(94,234,212,0.5)]"
               >
-                Explore Neighborhoods <ArrowRight className="w-4 h-4" />
+                Explore the Capital District
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
-              <Link
-                to="/claim-business"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.08] backdrop-blur text-white border border-white/20 text-sm font-semibold hover:bg-white/[0.16] transition"
-              >
-                Add Your Business
-              </Link>
-              <Link
-                to="/submit-event"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.04] backdrop-blur text-white/85 border border-white/15 text-sm font-semibold hover:bg-white/[0.12] hover:text-white transition"
-              >
-                Submit an Event
-              </Link>
-              <a
-                href="https://scottalvarez.remax.com/"
-                target="_blank"
-                rel="noreferrer noopener"
-                className="inline-flex items-center gap-1 text-sm font-medium text-white/65 hover:text-white px-2 py-3 transition"
-              >
-                Search Homes
-              </a>
-            </motion.div>
 
+              <p className="text-[13px] text-white/50 font-light">
+                Own a local business?{" "}
+                <Link
+                  to="/for-businesses"
+                  className="text-white/75 hover:text-[#5eead4] underline underline-offset-4 decoration-white/20 hover:decoration-[#5eead4]/60 transition-colors"
+                >
+                  Explore Nest for Business →
+                </Link>
+              </p>
+            </motion.div>
           </motion.div>
+        </div>
+
+        {/* Soft scroll cue */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none" aria-hidden>
+          <div className="w-px h-14 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============== Explore the Capital District — 4 editorial cards ============== */
+type ExploreCard = {
+  title: string;
+  copy: string;
+  cta: string;
+  to: string;
+  image: string;
+};
+
+function ExploreCapitalDistrict() {
+  const cards: ExploreCard[] = [
+    {
+      title: "Living Here",
+      copy: "Neighborhoods, schools, parks and everything that makes each town unique.",
+      cta: "Explore Towns",
+      to: "/communities",
+      image: heroTownsWide,
+    },
+    {
+      title: "Local Businesses",
+      copy: "Editorial features highlighting restaurants, shops, contractors, cafés and the businesses that shape our communities.",
+      cta: "Browse Businesses",
+      to: "/businesses",
+      image: heroBusinessWide,
+    },
+    {
+      title: "Homes",
+      copy: "MLS-powered home search with neighborhood guides and market insights.",
+      cta: "Search Homes",
+      to: "/homes",
+      image: heroDiscoveryWide,
+    },
+    {
+      title: "What's Happening",
+      copy: "Events, festivals, farmers markets and community happenings across the region.",
+      cta: "Explore Events",
+      to: "/local",
+      image: heroEventsWide,
+    },
+  ];
+
+  return (
+    <section
+      id="explore-capital-district"
+      className="relative w-full overflow-hidden bg-[#0A0D16] border-t border-white/[0.05] scroll-mt-20"
+    >
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-28 md:py-40">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl"
+        >
+          <h2 className="text-4xl md:text-6xl lg:text-[4.5rem] font-semibold tracking-[-0.04em] leading-[1.02] text-white">
+            Explore the Capital District
+          </h2>
+          <p className="mt-6 text-lg md:text-xl text-white/60 font-light">
+            Choose how you'd like to explore.
+          </p>
+        </motion.div>
+
+        <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
+          {cards.map((card, i) => (
+            <motion.div
+              key={card.title}
+              initial={{ opacity: 0, y: 26 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.9, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Link
+                to={card.to}
+                className="group relative block rounded-[28px] overflow-hidden border border-white/[0.08] bg-white/[0.02] hover:border-[#5eead4]/30 hover:-translate-y-1 transition-all duration-500 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6)]"
+              >
+                <div className="relative aspect-[4/5] md:aspect-[16/11] overflow-hidden">
+                  <img
+                    src={card.image}
+                    alt={card.title}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+                  />
+                  {/* Editorial glass overlay */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(11,15,25,0.15) 0%, rgba(11,15,25,0.55) 55%, rgba(11,15,25,0.92) 100%)",
+                    }}
+                    aria-hidden
+                  />
+
+                  <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10">
+                    <h3 className="text-3xl md:text-4xl lg:text-[2.75rem] font-semibold tracking-[-0.03em] leading-[1.05] text-white">
+                      {card.title}
+                    </h3>
+                    <p className="mt-4 text-[15px] md:text-base text-white/75 font-light leading-relaxed max-w-md">
+                      {card.copy}
+                    </p>
+                    <div className="mt-6 inline-flex items-center gap-2 text-[13px] font-semibold text-[#5eead4] group-hover:gap-3 transition-all">
+                      {card.cta}
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -731,8 +850,13 @@ const Index = () => {
       <CleanHeader />
       <FloatingOmniSearch />
 
-      {/* HERO 1 — Search anything local */}
+      {/* HERO 1 — Editorial entrance */}
       <CinematicHero />
+
+      {/* Explore the Capital District — 4 editorial cards */}
+      <ExploreCapitalDistrict />
+
+
 
       {/* HOMEPAGE BUSINESS TEASER → /business */}
       <section className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06]">
