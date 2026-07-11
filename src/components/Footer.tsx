@@ -1,8 +1,16 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Mail } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import { useRegion } from '@/hooks/useRegion';
 import RealEstateDisclosure from '@/components/RealEstateDisclosure';
+import {
+  GENERAL_EMAIL,
+  MEDIA_EMAIL,
+  BUSINESS_EMAIL,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  PLATFORM_TAGLINE,
+} from '@/config/contact';
 
 const REAL_ESTATE_ROUTE_PREFIXES = [
   '/homes',
