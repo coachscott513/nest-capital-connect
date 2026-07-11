@@ -100,14 +100,6 @@ const GlassCard = ({
   </div>
 );
 
-const mediaCards = [
-  { tag: "LATEST STORY", title: "An editor's night at The Roosevelt Room", meta: "CDN Editorial · 5 min read" },
-  { tag: "LATEST VIDEO", title: "Behind the bar: the smoked old fashioned", meta: "Short film · 1:12" },
-  { tag: "BEHIND THE SCENES", title: "Sourcing from Hudson Valley farms", meta: "Photo essay" },
-  { tag: "CHEF INTERVIEW", title: "The philosophy behind the seasonal menu", meta: "Interview · 8 min" },
-  { tag: "COMMUNITY SPOTLIGHT", title: "How Broadway became Troy's dining corridor", meta: "CDN Local" },
-  { tag: "AWARDS & PRESS", title: "Recent recognition and press coverage", meta: "Press room" },
-];
 
 const team = [
   { name: "Michael Roosevelt", title: "Owner", bio: "Troy native, third-generation restaurateur.", img: chefImg },
