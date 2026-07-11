@@ -99,7 +99,7 @@ const ContactPage = () => (
           Scott Alvarez
         </h2>
         <p className="mt-3 text-[15px] text-[#1d1d1f]/65 font-light leading-relaxed">
-          Founder of Capital District Nest · REALTOR® at RE/MAX Solutions.
+          Founder of Capital District Nest · REALTOR® at Capital District Nest.
           For direct real estate inquiries you can also reach Scott directly.
         </p>
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 text-sm">

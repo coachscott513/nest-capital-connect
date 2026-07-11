@@ -285,7 +285,7 @@ const NeighborhoodDetail = () => {
               icon={Home}
               title={`Living Near ${n.name}`}
               copy={`Explore homes and apartments near ${n.name}.`}
-              href="https://scottalvarez.remax.com/"
+              href="/homes/search"
               external
               cta="Search Homes"
             />

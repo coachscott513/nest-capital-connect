@@ -679,7 +679,7 @@ const SchenectadyCountyIntelligence = () => {
                 <span className="font-semibold text-foreground">Capital District Nest</span> — Local expertise. Institutional-grade data.
               </p>
               <p className="text-sm text-muted-foreground">
-                Powered by RE/MAX
+                Powered by
               </p>
             </div>
           </div>

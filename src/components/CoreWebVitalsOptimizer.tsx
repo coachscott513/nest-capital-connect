@@ -35,7 +35,7 @@ const CoreWebVitalsOptimizer = () => {
     const resourceHints = [
       { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
       { rel: 'dns-prefetch', href: 'https://fonts.gstatic.com' },
-      { rel: 'dns-prefetch', href: 'https://scottalvarez.remax.com' },
+      { rel: 'dns-prefetch', href: '/homes/search' },
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
       { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' }
     ];

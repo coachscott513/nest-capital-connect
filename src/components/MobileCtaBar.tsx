@@ -33,7 +33,7 @@ const MobileCtaBar = () => {
   }> = [
     { label: 'Search Local Directory',     sub: 'Businesses, towns, services',         icon: Search,        to: '/local' },
     { label: 'Stream a Business Special',  sub: 'Featured + DealDesk submissions',     icon: Building2,     to: '/claim-business' },
-    { label: 'Connect with an Agent',      sub: 'Scott Alvarez · RE/MAX Solutions',    icon: Phone,         href: 'tel:+15185227265', iconColor: '#DC1C2E' },
+    { label: 'Connect with an Agent',      sub: 'Scott Alvarez, Licensed Real Estate Salesperson',    icon: Phone,         href: 'tel:+15185227265', iconColor: '#DC1C2E' },
     { label: 'Submit a Town Event',        sub: 'Add to this week\u2019s pulse',         icon: CalendarPlus,  to: '/contact?intent=add-event' },
   ];
 

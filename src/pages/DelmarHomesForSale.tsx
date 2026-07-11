@@ -128,7 +128,7 @@ const DelmarHomesForSale = () => {
           </div>
         </section>
 
-        {/* 3) Listing Search - RE/MAX Embed */}
+        {/* 3) Listing Search - Embed */}
         <section id="listing-search" className="py-14 bg-muted/30">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-8">
@@ -140,14 +140,14 @@ const DelmarHomesForSale = () => {
               </p>
             </div>
 
-            {/* RE/MAX Embed - Responsive with branded styling */}
+            {/* Embed - Responsive with branded styling */}
             <div
               className="w-full max-w-[980px] mx-auto rounded-[18px] overflow-hidden border-2 border-primary bg-background"
               style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
             >
               <iframe
                 title="Delmar Home Search"
-                src="https://scottalvarez.remax.com/embedsmall.php"
+                src="/homes/search"
                 loading="lazy"
                 className="w-full h-[680px] md:h-[780px] block border-0"
               />

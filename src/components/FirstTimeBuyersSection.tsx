@@ -103,7 +103,7 @@ const FirstTimeBuyersSection = () => {
         <div className="mt-8 flex justify-center">
           <iframe 
             style={{ width: '960px', height: '300px' }} 
-            src="https://scottalvarez.remax.com/wide.php" 
+            src="/homes/search" 
             allowTransparency={true} 
             frameBorder="0"
             className="max-w-full"

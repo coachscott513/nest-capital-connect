@@ -834,7 +834,7 @@ const Index = () => {
             "url": "https://capitaldistrictnest.com",
             "worksFor": {
               "@type": "RealEstateAgent",
-              "name": "RE/MAX Solutions",
+              "name": "Capital District Nest",
             },
             "areaServed": [
               { "@type": "City", "name": "Albany", "addressRegion": "NY" },

@@ -75,7 +75,7 @@ const TroyHomesForSalePage = () => {
     <>
       <Helmet>
         <title>Troy Homes for Sale | Capital District Nest</title>
-        <meta name="description" content="Browse live Troy homes for sale plus buyer tools and local market insights. Updated directly from RE/MAX." />
+        <meta name="description" content="Browse live Troy homes for sale plus buyer tools and local market insights. Updated live from the local MLS." />
         <link rel="canonical" href="https://capitaldistrictnest.com/troy-homes-for-sale" />
       </Helmet>
 
@@ -86,10 +86,10 @@ const TroyHomesForSalePage = () => {
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Troy Homes for Sale</h1>
             <p className="text-xl text-muted-foreground mb-2">Live listings + local market intel—built to make buying easier.</p>
-            <p className="text-sm text-muted-foreground mb-8">Updated directly from RE/MAX. Map + list view.</p>
+            <p className="text-sm text-muted-foreground mb-8">Updated live from the local MLS. Map + list view.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg" asChild>
-                <a href={troyData.remaxSearchUrl} target="_blank" rel="noopener noreferrer">
+                <a href={troyData.searchPath} target="_blank" rel="noopener noreferrer">
                   View Live Troy Listings <ExternalLink className="w-5 h-5 ml-2" />
                 </a>
               </Button>
@@ -103,12 +103,12 @@ const TroyHomesForSalePage = () => {
         <section id="live-listings" className="py-14 bg-muted/30">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-foreground mb-3">Live Troy Listings (RE/MAX)</h2>
-              <p className="text-muted-foreground">Updated directly from RE/MAX. Map + list view.</p>
+              <h2 className="text-3xl font-bold text-foreground mb-3">Live Troy Listings</h2>
+              <p className="text-muted-foreground">Updated live from the local MLS. Map + list view.</p>
             </div>
             {!iframeError ? (
               <div className="w-full max-w-[1200px] mx-auto rounded-[16px] overflow-hidden border-2 border-primary/30 bg-background" style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}>
-                <iframe id="troy-listings-iframe" title="Troy Home Search" src={troyData.remaxSearchUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full h-[800px] md:h-[1100px] block border-0" onError={() => setIframeError(true)} />
+                <iframe id="troy-listings-iframe" title="Troy Home Search" src={troyData.searchPath} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full h-[800px] md:h-[1100px] block border-0" onError={() => setIframeError(true)} />
               </div>
             ) : (
               <Card className="max-w-2xl mx-auto p-8 bg-background border-primary/20 text-center">
@@ -116,9 +116,9 @@ const TroyHomesForSalePage = () => {
                   <Home className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-2xl font-bold text-foreground mb-3">View Troy Listings</h3>
-                <p className="text-muted-foreground mb-6">Browse the full RE/MAX property search with map view, filters, and detailed listing info.</p>
+                <p className="text-muted-foreground mb-6">Browse the full property search with map view, filters, and detailed listing info.</p>
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8" asChild>
-                  <a href={troyData.remaxSearchUrl} target="_blank" rel="noopener noreferrer">Open RE/MAX Search <ExternalLink className="w-5 h-5 ml-2" /></a>
+                  <a href={troyData.searchPath} target="_blank" rel="noopener noreferrer">Search Homes <ExternalLink className="w-5 h-5 ml-2" /></a>
                 </Button>
               </Card>
             )}

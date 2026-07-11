@@ -23,7 +23,7 @@ const DelmarMarketInsights = () => {
         />
         <meta 
           name="keywords" 
-          content="Delmar homes for sale, Bethlehem Central School District, Albany County real estate, Delmar market trends, Scott Alvarez RE/MAX" 
+          content="Delmar homes for sale, Bethlehem Central School District, Albany County real estate, Delmar market trends, Scott Alvarez, Licensed Real Estate Salesperson" 
         />
       </Helmet>
 

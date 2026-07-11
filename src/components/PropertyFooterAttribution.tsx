@@ -27,18 +27,18 @@ const PropertyFooterAttribution: React.FC<PropertyFooterAttributionProps> = ({
             </a>
           )}
           
-          {/* Agent Attribution - Very subtle disclosure */}
+          {/* Agent Attribution — brokerage identity intentionally omitted until confirmed. */}
           <p className="text-xs text-muted-foreground/70">
             Listing marketed by{' '}
-            <a 
-              href="https://www.scottalvarez.com" 
-              target="_blank" 
+            <a
+              href="https://www.scottalvarez.com"
+              target="_blank"
               rel="noopener noreferrer"
               className="hover:text-muted-foreground transition-colors"
             >
               Scott Alvarez
             </a>
-            , Licensed Real Estate Salesperson, RE/MAX
+            , Licensed Real Estate Salesperson. Equal Housing Opportunity.
           </p>
         </div>
       </div>

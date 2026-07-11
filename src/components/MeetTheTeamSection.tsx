@@ -17,7 +17,7 @@ const MeetTheTeamSection = () => {
         <div className="flex justify-center">
           <div className="w-full max-w-xs">
             <a 
-              href="https://scottalvarez.remax.com" 
+              href="/homes/search" 
               target="_blank" 
               rel="noopener noreferrer"
               className="block group"

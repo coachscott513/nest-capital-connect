@@ -64,10 +64,10 @@ const NiskayunaHomesForSale = () => {
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Niskayuna Homes for Sale</h1>
             <p className="text-xl text-muted-foreground mb-2">Live listings + local market intel—built to make buying easier.</p>
-            <p className="text-sm text-muted-foreground mb-8">Updated directly from RE/MAX. Map + list view.</p>
+            <p className="text-sm text-muted-foreground mb-8">Updated live from the local MLS. Map + list view.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-primary hover:bg-primary/90 font-semibold px-8 py-6 text-lg" asChild>
-                <a href={niskayunaData.remaxSearchUrl} target="_blank" rel="noopener noreferrer">View Live Niskayuna Listings <ExternalLink className="w-5 h-5 ml-2" /></a>
+                <a href={niskayunaData.searchPath} target="_blank" rel="noopener noreferrer">View Live Niskayuna Listings <ExternalLink className="w-5 h-5 ml-2" /></a>
               </Button>
               <Button size="lg" variant="outline" className="border-primary/50 hover:bg-primary/10 font-semibold px-8 py-6 text-lg" asChild>
                 <Link to="/dealdesk">Get My Free Intelligence Report →</Link>
@@ -79,17 +79,17 @@ const NiskayunaHomesForSale = () => {
         <section className="py-14 bg-muted/30">
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-foreground mb-3">Live Niskayuna Listings (RE/MAX)</h2>
+              <h2 className="text-3xl font-bold text-foreground mb-3">Live Niskayuna Listings</h2>
             </div>
             {!iframeError ? (
               <div className="w-full max-w-[1200px] mx-auto rounded-[16px] overflow-hidden border-2 border-primary/30 bg-background">
-                <iframe id="niskayuna-listings-iframe" title="Niskayuna Home Search" src={niskayunaData.remaxSearchUrl} loading="lazy" className="w-full h-[800px] md:h-[1100px] block border-0" onError={() => setIframeError(true)} />
+                <iframe id="niskayuna-listings-iframe" title="Niskayuna Home Search" src={niskayunaData.searchPath} loading="lazy" className="w-full h-[800px] md:h-[1100px] block border-0" onError={() => setIframeError(true)} />
               </div>
             ) : (
               <Card className="max-w-2xl mx-auto p-8 text-center">
                 <Home className="w-8 h-8 text-primary mx-auto mb-4" />
                 <h3 className="text-2xl font-bold mb-3">View Niskayuna Listings</h3>
-                <Button size="lg" asChild><a href={niskayunaData.remaxSearchUrl} target="_blank" rel="noopener noreferrer">Open RE/MAX Search</a></Button>
+                <Button size="lg" asChild><a href={niskayunaData.searchPath} target="_blank" rel="noopener noreferrer">Search Homes</a></Button>
               </Card>
             )}
           </div>

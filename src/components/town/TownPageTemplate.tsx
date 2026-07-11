@@ -42,7 +42,7 @@ import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
 const TEAL = "#0d6e66";
 const TEAL_DARK = "#5eead4";
-const REMAX_BASE = "https://scottalvarez.remax.com/";
+const REMAX_BASE = "/homes/search";
 const contactStatusOf = (biz: Business) => (biz as any).contactStatus ?? (biz as any).contact_status ?? null;
 
 interface Props {

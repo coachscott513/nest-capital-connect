@@ -1000,7 +1000,7 @@ const LaveryDriveDelmar = () => {
                   <Star className="h-4 w-4 text-primary fill-primary" />
                   <Star className="h-4 w-4 text-primary fill-primary" />
                   <Star className="h-4 w-4 text-primary fill-primary" />
-                  <span className="ml-2">5.0 Rating · RE/MAX</span>
+                  <span className="ml-2">5.0 Client Rating</span>
                 </div>
               </div>
 

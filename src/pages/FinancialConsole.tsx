@@ -412,7 +412,7 @@ const FinancialScenarioForm = ({ defaultObjective }: { defaultObjective?: string
         {submitting ? "Submitting…" : "Request Financial Introduction"}
       </button>
       <p className="text-xs text-white/45 text-center">
-        Routed to Scott Alvarez · RE/MAX Solutions · (518) 522-7265 · team@capitaldistrictnest.com
+        Routed to Scott Alvarez, Licensed Real Estate Salesperson · (518) 522-7265 · team@capitaldistrictnest.com
       </p>
     </form>
   );
@@ -439,7 +439,7 @@ const FinancialConsole = () => {
       areaServed: "Capital District, New York",
       provider: {
         "@type": "RealEstateAgent",
-        name: "Scott Alvarez · RE/MAX Solutions",
+        name: "Scott Alvarez, Licensed Real Estate Salesperson",
         telephone: "+1-518-522-7265",
         email: "team@capitaldistrictnest.com",
       },

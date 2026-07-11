@@ -50,7 +50,7 @@ export interface TownData {
   slug: string;
   schoolDistrict?: string;
   description: string;
-  remaxSearchUrl: string;
+  searchPath: string;
   marketSnapshot: {
     label: string;
     value: string;
@@ -82,7 +82,7 @@ export interface TownData {
     // Qualitative market trend (replaces % change)
     marketTrendLabel?: string;
   };
-  // RE/MAX data source links
+  // data source links
   dataSourceLinks?: {
     activeListings?: string;
     justListed?: string;
@@ -326,7 +326,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
               className="h-14 px-8 text-lg font-bold w-full sm:w-auto"
               asChild
             >
-              <a href={town.remaxSearchUrl} target="_blank" rel="noopener noreferrer">
+              <a href={town.searchPath} target="_blank" rel="noopener noreferrer">
                 <Search className="w-5 h-5 mr-2" />
                 Search {town.name} Homes
               </a>
@@ -433,8 +433,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="underline hover:text-foreground transition-colors"
-                >
-                  RE/MAX {town.schoolDistrict || town.name} listings
+                > {town.schoolDistrict || town.name} listings
                 </a>
                 . Updated weekly.
               </p>
@@ -1308,7 +1307,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
             
             {/* Condos / Townhomes */}
             <a 
-              href={town.remaxSearchUrl}
+              href={town.searchPath}
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col items-center justify-center p-6 bg-background border border-border rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all text-center group"
@@ -1467,7 +1466,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
       <section className="px-[5%] py-8 bg-muted/30 border-t border-border">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-xs text-muted-foreground">
-            Data sourced from MLS and public records. Updated regularly. Capital District Nest • Licensed Real Estate Broker • RE/MAX
+            Data sourced from MLS and public records. Updated regularly. Capital District Nest • Licensed Real Estate Broker •
           </p>
         </div>
       </section>

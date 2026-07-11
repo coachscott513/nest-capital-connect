@@ -90,7 +90,7 @@ export function buildArticleSchema(article: {
       "jobTitle": "Licensed Real Estate Agent",
       "worksFor": {
         "@type": "Organization",
-        "name": "RE/MAX Capital District"
+        "name": "Capital District Nest"
       }
     },
     "publisher": {

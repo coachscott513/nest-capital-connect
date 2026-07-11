@@ -1,7 +1,36 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Phone, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { useRegion } from '@/hooks/useRegion';
+import RealEstateDisclosure from '@/components/RealEstateDisclosure';
+
+const REAL_ESTATE_ROUTE_PREFIXES = [
+  '/homes',
+  '/homes-for-sale',
+  '/rentals',
+  '/investment',
+  '/analyze',
+  '/dealdesk',
+  '/cash-flow-report',
+  '/market-report',
+  '/property',
+  '/137a-elsmere',
+  '/lavery-drive',
+  '/ridge-road',
+  '/lancaster-street',
+  '/albany-multi-unit',
+  '/troy-multi-unit',
+  '/schenectady-multi-unit',
+  '/albany-land',
+  '/single-family-market',
+  '/best-neighborhoods',
+  '/first-time',
+  '/buyer-',
+  '/sell-investment',
+];
+
+const isRealEstateRoute = (pathname: string) =>
+  REAL_ESTATE_ROUTE_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/') || pathname.startsWith(p));
 
 const townDirectory = {
   "Albany County": [
@@ -50,7 +79,7 @@ const headerBase =
 
 const Footer = () => {
   const { pathname } = useLocation();
-  const isBusinessProfile = pathname.startsWith('/biz/');
+  const showRealEstateDisclosure = isRealEstateRoute(pathname);
   const { region } = useRegion();
   return (
     <footer className="bg-[#05080F] text-white border-t border-white/[0.06]">
@@ -71,20 +100,10 @@ const Footer = () => {
               {region.name}
             </h3>
             <p className="text-[13px] text-white/70 font-light leading-relaxed max-w-xs">
-              {region.tagline ?? 'The digital front door of the Capital District — businesses, towns, events, homes, and local life.'}
+              {region.tagline ?? 'A local discovery, media, directory, advertising, and community search platform for the Capital District.'}
             </p>
 
             <div className="mt-6 space-y-2.5">
-              {!isBusinessProfile && (
-                <a href="tel:+15185227265" className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
-                  <Phone className="h-3.5 w-3.5" /> (518) 522-7265
-                </a>
-              )}
-              {isBusinessProfile && (
-                <p className="flex items-center gap-2 text-[13px] text-white/55">
-                  <Phone className="h-3.5 w-3.5" /> Directory support, not the listed business
-                </p>
-              )}
               <a href="mailto:team@capitaldistrictnest.com" className="flex items-center gap-2 text-[13px] text-white/70 hover:text-[#5eead4] transition-colors">
                 <Mail className="h-3.5 w-3.5" /> team@capitaldistrictnest.com
               </a>
@@ -109,10 +128,11 @@ const Footer = () => {
           <div>
             <h4 className={headerBase}>Homes</h4>
             <ul className="space-y-2.5">
-              <li><Link to="/homes-for-sale" className={linkBase}>Search Homes</Link></li>
+              <li><Link to="/homes/search" className={linkBase}>Search Homes</Link></li>
+              <li><Link to="/homes/listings" className={linkBase}>Property Board</Link></li>
               <li><Link to="/investment-properties" className={linkBase}>Investment Properties</Link></li>
               <li><Link to="/first-time-homebuyers" className={linkBase}>First-Time Buyers</Link></li>
-              <li><Link to="/analyze" className={linkBase}>Analyze Deals</Link></li>
+              <li><Link to="/investment-analyzer" className={linkBase}>Analyze a Property</Link></li>
               <li><Link to="/rentals" className={linkBase}>Rentals</Link></li>
               <li><Link to="/dealdesk" className={linkBase}>Request Report</Link></li>
             </ul>
@@ -132,24 +152,14 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Homes */}
-          <div>
-            <h4 className={headerBase}>Homes</h4>
-            <ul className="space-y-2.5">
-              <li><Link to="/homes-for-sale" className={linkBase}>Search Homes</Link></li>
-              <li><Link to="/investment-properties" className={linkBase}>Investment Properties</Link></li>
-              <li><Link to="/rentals" className={linkBase}>Rentals</Link></li>
-              <li><Link to="/analyze" className={linkBase}>Analyze Deals</Link></li>
-            </ul>
-          </div>
-
           {/* Company */}
           <div>
             <h4 className={headerBase}>Company</h4>
             <ul className="space-y-2.5">
               <li><Link to="/contact" className={linkBase}>About</Link></li>
               <li><Link to="/contact" className={linkBase}>Contact</Link></li>
-              <li><Link to="/pricing" className={linkBase}>For Local Businesses</Link></li>
+              <li><Link to="/for-businesses" className={linkBase}>For Local Businesses</Link></li>
+              <li><Link to="/for-businesses/apply" className={linkBase}>Apply / Claim</Link></li>
               <li><Link to="/partner-auth" className={linkBase}>Business Login</Link></li>
               <li><Link to="/claim-business" className={linkBase}>Claim Business</Link></li>
               <li><Link to="/site-index" className={linkBase}>Site Index</Link></li>
@@ -194,15 +204,19 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Legal strip */}
+      {/* Neutral platform legal strip — no brokerage identity here. */}
       <div className="border-t border-white/[0.06]">
-        <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-6">
-          <p className="text-[11px] text-white/45 text-center leading-relaxed">
-            © {new Date().getFullYear()} {region.name}. Scott Alvarez, Licensed Real Estate Salesperson.
-            Each RE/MAX® Office is Independently Owned and Operated. Equal Housing Opportunity.
+        <div className="max-w-[1600px] mx-auto px-6 md:px-10 lg:px-14 py-8 space-y-2">
+          <p className="text-[11px] text-white/55 text-center leading-relaxed">
+            © {new Date().getFullYear()} {region.name}. A local discovery, media, directory, advertising, and community search platform.
+          </p>
+          <p className="text-[11px] text-white/40 text-center leading-relaxed max-w-3xl mx-auto">
+            Real estate tools and property searches may connect users with licensed real estate professionals and third-party listing providers. Equal Housing Opportunity.
           </p>
         </div>
       </div>
+
+      {showRealEstateDisclosure && <RealEstateDisclosure />}
     </footer>
   );
 };

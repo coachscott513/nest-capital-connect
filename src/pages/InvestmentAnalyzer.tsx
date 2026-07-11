@@ -413,7 +413,7 @@ const InvestmentAnalyzer = () => {
       doc.text('CAPITAL DISTRICT NEST', pageWidth - margin, 12, { align: 'right' });
       doc.text('KNOW THE NUMBERS BEFORE YOU BUY', pageWidth - margin, 18, { align: 'right' });
       doc.setFontSize(7);
-      doc.text('Scott Alvarez | RE/MAX Solutions', pageWidth - margin, 24, { align: 'right' });
+      doc.text('Scott Alvarez, Licensed Real Estate Salesperson', pageWidth - margin, 24, { align: 'right' });
     } else {
       // Default branding
       doc.text('CAPITAL DISTRICT NEST', margin, 14);

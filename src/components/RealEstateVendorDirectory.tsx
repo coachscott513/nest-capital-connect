@@ -154,9 +154,9 @@ const vendorPhases: VendorPhase[] = [
     vendors: [
       {
         id: "remax",
-        name: "RE/MAX Solutions",
+        name: "Capital District Nest",
         category: "broker",
-        description: "The backbone of our local real estate practice. RE/MAX Solutions combines global reach with unmatched local knowledge to deliver results for every buyer and seller we represent.",
+        description: "The backbone of our local real estate practice. Capital District Nest combines global reach with unmatched local knowledge to deliver results for every buyer and seller we represent.",
         specialty: "Real Estate Brokerage",
         phone: "(518) 522-7265",
         website: "https://capitaldistrictnest.com",

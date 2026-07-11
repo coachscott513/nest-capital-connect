@@ -297,7 +297,7 @@ const LoanTypes = () => {
               <Link to="/contact" className="text-muted-foreground hover:text-white transition-colors">Contact</Link>
             </div>
             <div className="text-right">
-              <p className="text-sm text-muted-foreground">Scott Alvarez | RE/MAX Solutions</p>
+              <p className="text-sm text-muted-foreground">Scott Alvarez, Licensed Real Estate Salesperson</p>
               <p className="text-sm text-muted-foreground">518-522-7265</p>
               <p className="text-sm text-muted-foreground">2 Gold Street, Albany, NY</p>
             </div>

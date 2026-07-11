@@ -446,7 +446,7 @@ const LovableNeighborhoodTemplate = ({
             <div className="w-full max-w-[960px] mx-auto mb-8">
               <iframe 
                 className="w-full h-[600px] border-0 rounded-2xl"
-                src={`https://scottalvarez.remax.com/wide.php?city=${encodeURIComponent(cityName)}&neighborhood=${encodeURIComponent(neighborhoodName)}`}
+                src={`/homes/search?neighborhood=${encodeURIComponent(neighborhoodName)}`}
                 title={`${neighborhoodName} Property Listings`}
               />
             </div>

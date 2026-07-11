@@ -206,7 +206,7 @@ const InvestmentLanding = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-primary">Scott Alvarez</h3>
-                  <p className="text-sm text-muted-foreground">Remax Solutions</p>
+                  <p className="text-sm text-muted-foreground">Capital District Nest</p>
                 </div>
               </div>
               <blockquote className="text-muted-foreground italic">
@@ -230,10 +230,10 @@ const InvestmentLanding = () => {
                     📞 (518) 522-7265
                   </a>
                   <a 
-                    href="mailto:scottalvarez@remax.net" 
+                    href="mailto:scott@capitaldistrictnest.com" 
                     className="text-primary text-lg md:text-xl font-semibold hover:text-primary/80 transition-colors duration-200 flex items-center justify-center"
                   >
-                    ✉️ scottalvarez@remax.net
+                    ✉️ scott@capitaldistrictnest.com
                   </a>
                   <p className="text-primary text-sm opacity-90">Available 7 Days a Week</p>
                 </div>

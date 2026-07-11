@@ -78,7 +78,7 @@ const PrivacyPolicyPage: React.FC = () => {
             <p className="text-foreground mb-4">We may share your information only in the following situations:</p>
             <ul className="text-foreground space-y-2 mb-6">
               <li><strong>With service providers</strong> who help us operate our website, CRM systems, or marketing tools</li>
-              <li><strong>With real estate professionals</strong> within Capital District Nest or RE/MAX when necessary to assist you</li>
+              <li><strong>With real estate professionals</strong> within Capital District Nest or when necessary to assist you</li>
               <li><strong>When required by law</strong>, subpoena, or regulatory inquiry</li>
               <li><strong>With your permission</strong>, if you ask us to connect you to a lender, attorney, inspector, or vendor</li>
             </ul>
