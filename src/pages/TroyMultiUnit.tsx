@@ -10,7 +10,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-const IDX_URL = "https://scottalvarez.remax.com/index.php?advanced=1&display=Troy&min=0&max=100000000&beds=0&baths=0&types[]=3&statuses[]=0&sortby=listings.price+ASC&rtype=map";
+const IDX_URL = "/homes/search";
 const SCOTT_PHONE = "518-671-8048";
 const SCOTT_PHONE_TEL = "+15186718048";
 

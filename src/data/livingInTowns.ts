@@ -5,7 +5,7 @@
  * Structure:
  *   townName, slug, county, township, zip, schoolDistrict
  *   updatedDate          → "May 7, 2026"
- *   listingSearchUrl     → RE/MAX direct IDX link
+ *   listingSearchUrl     → direct IDX link
  *   listingEmbedUrl?     → iframe src (defaults to listingSearchUrl)
  *   weeklyUpdates[4]     → curated cards
  *   featuredBusiness     → ONE spotlight per town
@@ -82,7 +82,7 @@ export interface LivingInTown {
 }
 
 const REMAX = (city: string) =>
-  `https://scottalvarez.remax.com/wide.php?city=${encodeURIComponent(city)}`;
+  `/homes/search)}`;
 
 // ── Helper: default essentials shell (Capital District–wide fallbacks) ─────
 const baseEssentials = (townSite: string, schoolUrl: string, taxUrl: string): Essential[] => [

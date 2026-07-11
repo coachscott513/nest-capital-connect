@@ -81,7 +81,7 @@ ${propertyAddress}
 
 📞 CAPITAL DISTRICT NEST
 The Scott Alvarez Team - Investment Property Specialists
-RE/MAX Solutions
+Capital District Nest
 
 📱 Call Now: (518) 522-7265
 📧 Email: scottalvarez@remax.net
@@ -254,7 +254,7 @@ Contact an Agent at (518) 522-7265
     // Contact Information
     addText('CAPITAL DISTRICT NEST', 14, true);
     addText('The Scott Alvarez Team - Investment Property Specialists', 12, true);
-    addText('RE/MAX Solutions', 12);
+    addText('Capital District Nest', 12);
     currentY += 5;
     
     addText('Contact Information:', 11, true);
@@ -422,7 +422,7 @@ Contact an Agent at (518) 522-7265
         <div className="bg-gradient-to-r from-blue-600 to-red-600 rounded-lg p-4 text-white text-center">
           <div className="flex items-center justify-center space-x-4 mb-2">
             <div className="bg-background rounded px-3 py-1">
-              <span className="text-red-600 font-bold">RE/MAX</span>
+              <span className="text-red-600 font-bold"></span>
             </div>
             <div>
               <h4 className="font-bold text-lg">Capital District Nest</h4>

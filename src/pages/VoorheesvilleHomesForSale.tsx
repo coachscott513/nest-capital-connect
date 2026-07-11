@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
-const REMAX_URL = "https://scottalvarez.remax.com/index.php?advanced=1&display=Voorheesville&pak=city%3Ag30_dre6tsd2&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt";
+const REMAX_URL = "/homes/search";
 
 const VoorheesvilleHomesForSale = () => {
   const { toast } = useToast();
@@ -114,7 +114,7 @@ const VoorheesvilleHomesForSale = () => {
               Live listings + local market intel—built to make buying easier.
             </p>
             <p className="text-sm text-muted-foreground mb-8">
-              Updated directly from RE/MAX. Map + list view.
+              Updated live from the local MLS. Map + list view.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
@@ -146,10 +146,10 @@ const VoorheesvilleHomesForSale = () => {
           <div className="max-w-5xl mx-auto px-6">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-foreground mb-3">
-                Live Voorheesville Listings (RE/MAX)
+                Live Voorheesville Listings
               </h2>
               <p className="text-muted-foreground">
-                Updated directly from RE/MAX. Map + list view.
+                Updated live from the local MLS. Map + list view.
               </p>
             </div>
 
@@ -178,7 +178,7 @@ const VoorheesvilleHomesForSale = () => {
                   View Voorheesville Listings
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Browse the full RE/MAX property search with map view, filters, and detailed listing info.
+                  Browse the full property search with map view, filters, and detailed listing info.
                 </p>
                 <Button
                   size="lg"
@@ -186,7 +186,7 @@ const VoorheesvilleHomesForSale = () => {
                   asChild
                 >
                   <a href={REMAX_URL} target="_blank" rel="noopener noreferrer">
-                    Open RE/MAX Search
+                    Search Homes
                     <ExternalLink className="w-5 h-5 ml-2" />
                   </a>
                 </Button>

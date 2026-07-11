@@ -52,49 +52,49 @@ const RehabInvestmentHowTo = () => {
           "name": "Property Research and Market Analysis",
           "text": "Research the Capital District market to identify neighborhoods with strong appreciation potential and rental demand. Focus on areas like Albany, Troy, Schenectady, and Saratoga.",
           "image": "/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png",
-          "url": "https://scottalvarez.remax.com/#property-research"
+          "url": "/homes/search"
         },
         {
           "@type": "HowToStep",
           "name": "Find Distressed Properties",
           "text": "Identify properties that need renovation but have strong underlying value. Look for properties priced below market value due to needed repairs or dated finishes.",
           "image": "/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png",
-          "url": "https://scottalvarez.remax.com/#find-properties"
+          "url": "/homes/search"
         },
         {
           "@type": "HowToStep",
           "name": "Conduct Property Assessment",
           "text": "Perform a comprehensive evaluation including structural analysis, cost estimation, permit requirements, and timeline planning. Our team provides detailed assessments.",
           "image": "/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png",
-          "url": "https://scottalvarez.remax.com/#assessment"
+          "url": "/homes/search"
         },
         {
           "@type": "HowToStep",
           "name": "Calculate Investment Returns",
           "text": "Analyze purchase price, renovation costs, after repair value (ARV), and potential rental income. Use the 70% rule and calculate your expected ROI before proceeding.",
           "image": "/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png",
-          "url": "https://scottalvarez.remax.com/#investment-analysis"
+          "url": "/homes/search"
         },
         {
           "@type": "HowToStep",
           "name": "Secure Financing",
           "text": "Apply for fix-and-flip financing with as little as 10-20% down. Our partner lenders offer up to 100% renovation cost financing with fast 2-3 week closings.",
           "image": "/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png",
-          "url": "https://scottalvarez.remax.com/#financing"
+          "url": "/homes/search"
         },
         {
           "@type": "HowToStep",
           "name": "Execute Renovation Plan",
           "text": "Work with our vetted contractor network to complete renovations on time and on budget. You can also perform work yourself to maximize returns.",
           "image": "/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png",
-          "url": "https://scottalvarez.remax.com/#renovation"
+          "url": "/homes/search"
         },
         {
           "@type": "HowToStep",
           "name": "Choose Your Exit Strategy",
           "text": "Decide whether to flip for immediate profit or hold as a rental property. We provide market timing advice and staging services for optimal returns.",
           "image": "/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png",
-          "url": "https://scottalvarez.remax.com/#exit-strategy"
+          "url": "/homes/search"
         }
       ]
     });

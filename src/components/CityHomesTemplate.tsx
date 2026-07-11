@@ -125,7 +125,7 @@ const CityHomesTemplate = ({
             <div className="w-full max-w-[960px] mx-auto mb-8">
               <iframe 
                 className="w-full h-[600px] border-0"
-                src={`https://scottalvarez.remax.com/wide.php?city=${encodeURIComponent(cityName)}`}
+                src={`/homes/search)}`}
                 title={`${cityName} Property Listings`}
               />
             </div>

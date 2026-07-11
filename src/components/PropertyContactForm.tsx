@@ -54,7 +54,7 @@ const PropertyContactForm = ({ propertyAddress, mlsId }: PropertyContactFormProp
       <CardHeader className="bg-gradient-to-r from-primary/5 to-primary/10">
         <CardTitle className="text-2xl">Contact an Agent</CardTitle>
         <CardDescription className="text-base">
-          Your trusted RE/MAX team for the Capital District
+          Your trusted team for the Capital District
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-6">

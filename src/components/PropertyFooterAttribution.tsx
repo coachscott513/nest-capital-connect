@@ -38,7 +38,7 @@ const PropertyFooterAttribution: React.FC<PropertyFooterAttributionProps> = ({
             >
               Scott Alvarez
             </a>
-            , Licensed Real Estate Salesperson, RE/MAX
+            , Licensed Real Estate Salesperson,
           </p>
         </div>
       </div>

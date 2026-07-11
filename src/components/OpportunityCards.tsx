@@ -26,7 +26,7 @@ const OpportunityCards = () => {
       icon: Building2,
       title: "Multi-Unit Properties",
       description: "Discover investment opportunities in duplexes, triplexes, and apartment buildings across the Capital District.",
-      action: () => handleGatedClick('https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=grid&leadid=948'),
+      action: () => handleGatedClick('/homes/search'),
       gradient: "from-primary/10 to-primary/5"
     },
     {

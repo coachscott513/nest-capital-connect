@@ -352,7 +352,7 @@ export const TownExpertCTA = ({ town }: Props) => (
         Talk to Scott Alvarez.
       </h2>
       <p className="mt-5 text-lg text-[#1d1d1f]/65 font-light">
-        Local {town.townName} expert · RE/MAX Solutions
+        Local {town.townName} expert · Capital District Nest
       </p>
       <a
         href="tel:+15185227265"

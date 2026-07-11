@@ -35,11 +35,11 @@ const DelmarSearchCTA = () => {
             </Button>
           </div>
 
-          {/* RE/MAX Search Widget - Responsive with branded styling */}
+          {/* Search Widget - Responsive with branded styling */}
           <div className="w-full mx-auto">
             <iframe
               className="w-full h-[640px] md:h-[720px] rounded-[16px] border-2 border-primary shadow-lg"
-              src="https://scottalvarez.remax.com/embedsmall.php"
+              src="/homes/search"
               title="Search Delmar Properties"
               loading="lazy"
             />

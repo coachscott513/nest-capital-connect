@@ -408,7 +408,7 @@ const AnalyzeHub = () => {
       <Footer />
 
       <div className="py-4 text-center text-[11px] text-gray-300 tracking-wide" style={{ borderTop: "1px solid rgba(0,0,0,0.04)" }}>
-        AnalyzeAnyDeal.com is powered by Capital District Nest · Built by Scott Alvarez · RE/MAX Solutions · Albany, NY
+        AnalyzeAnyDeal.com is powered by Capital District Nest · Built by Scott Alvarez, Licensed Real Estate Salesperson
       </div>
 
       {unlockListing && <UnlockModal listing={unlockListing} onClose={() => setUnlockListing(null)} onUnlocked={handleUnlocked} />}

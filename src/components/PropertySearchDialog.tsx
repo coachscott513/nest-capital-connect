@@ -29,14 +29,14 @@ const PropertySearchDialog = ({ children }: PropertySearchDialogProps) => {
   const [selectedCounty, setSelectedCounty] = useState("");
 
   const rentalLinks = {
-    albany: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=2500&beds=0&baths=0&types%5B%5D=6&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=grid&leadid=948",
-    schenectady: "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady&min=0&max=2500&beds=0&baths=0&types%5B%5D=6&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre7dfb1&sortby=listings.price+ASC&rtype=grid&leadid=948",
-    rensselaer: "https://scottalvarez.remax.com/index.php?advanced=1&display=Rensselaer&min=0&max=2500&beds=0&baths=0&types%5B%5D=6&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dredzprc&sortby=listings.price+ASC&rtype=grid&leadid=948",
-    saratoga: "https://scottalvarez.remax.com/index.php?advanced=1&display=Saratoga&min=0&max=2500&beds=0&baths=0&types%5B%5D=6&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dremppmy&sortby=listings.price+ASC&rtype=grid&leadid=948",
+    albany: "/homes/search",
+    schenectady: "/homes/search",
+    rensselaer: "/homes/search",
+    saratoga: "/homes/search",
   };
 
   const buyingLinks = {
-    albany: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=125000&max=100000000&beds=&baths=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map&leadid=948",
+    albany: "/homes/search",
     schenectady: "", // To be added later
     rensselaer: "", // To be added later
     saratoga: "", // To be added later

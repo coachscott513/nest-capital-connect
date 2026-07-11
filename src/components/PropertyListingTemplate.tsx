@@ -51,8 +51,8 @@ const PropertyListingTemplate = ({ property }: PropertyListingTemplateProps) => 
     <>
       <Helmet>
         <title>{fullAddress} | Homes for Sale | Capital District Nest</title>
-        <meta name="description" content={`Explore ${fullAddress} — ${property.beds} beds, ${property.baths} baths, ${property.sqft.toLocaleString()} sqft. Detailed analytics and insights from RE/MAX Realtor Scott Alvarez.`} />
-        <meta name="keywords" content={`${property.city} homes for sale, ${property.address}, RE/MAX Scott Alvarez, Capital District real estate, Albany homes`} />
+        <meta name="description" content={`Explore ${fullAddress} — ${property.beds} beds, ${property.baths} baths, ${property.sqft.toLocaleString()} sqft. Detailed analytics and insights from Realtor Scott Alvarez.`} />
+        <meta name="keywords" content={`${property.city} homes for sale, ${property.address}, Scott Alvarez, Capital District real estate, Albany homes`} />
         <link rel="canonical" href={`https://capitaldistrictnest.com/listings/${property.mls_id}`} />
         
         {/* Open Graph */}
@@ -255,7 +255,7 @@ const PropertyListingTemplate = ({ property }: PropertyListingTemplateProps) => 
               Thinking of selling your {property.city} home?
             </h2>
             <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Contact our team, your trusted RE/MAX agents, for a free valuation and expert guidance through the selling process.
+              Contact our team, your trusted agents, for a free valuation and expert guidance through the selling process.
             </p>
             <Button size="lg" asChild>
               <a href="/sell-investment-property">

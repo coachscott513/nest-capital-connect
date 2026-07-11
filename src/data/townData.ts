@@ -5,9 +5,9 @@ export const delmarData: TownData = {
   slug: "delmar",
   schoolDistrict: "Bethlehem Central School District",
   description: "Homes, market activity, and local insights — all built specifically for Delmar, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Delmar&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DBethlehem&pak=city%3Ag30_drd64p0&sortby=listings.price+ASC&rtype=map&leadid=948",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Delmar&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DBethlehem&pak=city%3Ag30_drd64p0&sortby=listings.price+ASC&rtype=map&leadid=948",
+    activeListings: "/homes/search",
   },
   // MLS Data Source: GlobalMLS InfoSparks - December 2025
   mlsDataSource: "GlobalMLS InfoSparks",
@@ -115,9 +115,9 @@ export const troyData: TownData = {
   slug: "troy",
   schoolDistrict: "Troy City School District",
   description: "Homes, market activity, and local insights for Troy, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Troy&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=city%3Ag30_dree57z2&sortby=listings.price+ASC&rtype=map",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Troy&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=city%3Ag30_dree57z2&sortby=listings.price+ASC&rtype=map",
+    activeListings: "/homes/search",
   },
   // MLS Data Source: GlobalMLS InfoSparks - December 2025
   mlsDataSource: "GlobalMLS InfoSparks",
@@ -224,9 +224,9 @@ export const niskayunaData: TownData = {
   slug: "niskayuna",
   schoolDistrict: "Niskayuna Central School District",
   description: "Homes, market activity, and local insights for Niskayuna, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Niskayuna+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3Ab5QBqXEBDeU4HJVijxZS&sortby=listings.price+ASC&rtype=map",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Niskayuna+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3Ab5QBqXEBDeU4HJVijxZS&sortby=listings.price+ASC&rtype=map",
+    activeListings: "/homes/search",
   },
   // MLS Data Source: GlobalMLS InfoSparks - December 2025
   mlsDataSource: "GlobalMLS InfoSparks",
@@ -332,9 +332,9 @@ export const saratogaData: TownData = {
   slug: "saratoga-springs",
   schoolDistrict: "Saratoga Springs City School District",
   description: "Homes, market activity, and local insights for Saratoga Springs, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Saratoga+Springs+City+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3AWh4CqXEBvDrqX0JUFazL&sortby=listings.price+ASC&rtype=map",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Saratoga+Springs+City+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3AWh4CqXEBvDrqX0JUFazL&sortby=listings.price+ASC&rtype=map",
+    activeListings: "/homes/search",
   },
   // MLS Data Source: GlobalMLS InfoSparks - December 2025
   mlsDataSource: "GlobalMLS InfoSparks",
@@ -441,10 +441,10 @@ export const cliftonParkData: TownData = {
   slug: "clifton-park",
   schoolDistrict: "Shenendehowa Central School District",
   description: "Clear, local housing intelligence for Clifton Park and the surrounding Capital District. Updated regularly using MLS market data and local analysis.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Shenendehowa+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DClifton+Park&pak=school_district%3ATScAqXEBP2ySQEDmIXO6&sortby=listings.price+ASC&rtype=map",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Shenendehowa+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DClifton+Park&pak=school_district%3ATScAqXEBP2ySQEDmIXO6&sortby=listings.price+ASC&rtype=map",
-    justListed: "https://scottalvarez.remax.com/index.php?advanced=1&display=Shenendehowa+Central+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&options%5B%5D=new&keywords=City%3DClifton+Park&pak=school_district%3ATScAqXEBP2ySQEDmIXO6&sortby=listings.price+ASC&rtype=map",
+    activeListings: "/homes/search",
+    justListed: "/homes/search",
   },
   // MLS Data Source: GlobalMLS InfoSparks - December 2025
   mlsDataSource: "GlobalMLS InfoSparks",
@@ -551,9 +551,9 @@ export const schenectadyData: TownData = {
   slug: "schenectady",
   schoolDistrict: "Schenectady City School District",
   description: "Homes, market activity, and local insights for Schenectady, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady+City+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3A3YcAqXEBrfxrYfk40-yv&sortby=listings.price+ASC&rtype=map",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady+City+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3A3YcAqXEBrfxrYfk40-yv&sortby=listings.price+ASC&rtype=map",
+    activeListings: "/homes/search",
   },
   // MLS Data Source: GlobalMLS InfoSparks - December 2025
   mlsDataSource: "GlobalMLS InfoSparks",
@@ -655,9 +655,9 @@ export const amsterdamData: TownData = {
   slug: "amsterdam",
   schoolDistrict: "Amsterdam City School District",
   description: "Homes, market activity, and local insights for Amsterdam, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Amsterdam+City+SD&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DAmsterdam&pak=scho%3Ag30_5qr8d4z&sortby=listings.price+ASC&rtype=map&leadid=948",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Amsterdam+City+SD&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DAmsterdam&pak=scho%3Ag30_5qr8d4z&sortby=listings.price+ASC&rtype=map&leadid=948",
+    activeListings: "/homes/search",
   },
   // MLS Data Source: GlobalMLS InfoSparks - December 2025
   mlsDataSource: "GlobalMLS InfoSparks",
@@ -758,9 +758,9 @@ export const queensburyData: TownData = {
   slug: "queensbury",
   schoolDistrict: "Queensbury Union Free School District",
   description: "Homes, market activity, and local insights for Queensbury, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Queensbury+Union+Free+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3AuAsBqXEBNCODdP_3qCa7&sortby=listings.price+ASC&rtype=map",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Queensbury+Union+Free+School+District&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=school_district%3AuAsBqXEBNCODdP_3qCa7&sortby=listings.price+ASC&rtype=map",
+    activeListings: "/homes/search",
   },
   // MLS Data Source: GlobalMLS InfoSparks - November 2025
   mlsDataSource: "GlobalMLS InfoSparks",
@@ -862,9 +862,9 @@ export const voorheesvilleData: TownData = {
   slug: "voorheesville",
   schoolDistrict: "Voorheesville Central School District",
   description: "Homes, market activity, and local insights for Voorheesville, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Voorheesville&pak=city%3Ag30_dre6tsd2&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Voorheesville&pak=city%3Ag30_dre6tsd2&statuses%5B%5D=0&statuses%5B%5D=57&custombox=&types%5B%5D=1&types%5B%5D=2&types%5B%5D=4&types%5B%5D=31&types%5B%5D=12&types%5B%5D=5&types%5B%5D=15&types%5B%5D=3&types%5B%5D=6&beds=0&baths=0&min=0&max=100000000&rtype=map#rslt",
+    activeListings: "/homes/search",
   },
   // MLS Data Source: GlobalMLS InfoSparks - December 2025
   mlsDataSource: "GlobalMLS InfoSparks",
@@ -964,9 +964,9 @@ export const albanyData: TownData = {
   slug: "albany",
   schoolDistrict: "Albany City School District",
   description: "Homes, market activity, and local insights for Albany, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DAlbany&pak=city%3Ag30_drbpt5d2&sortby=listings.price+ASC&rtype=map&leadid=948",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DAlbany&pak=city%3Ag30_drbpt5d2&sortby=listings.price+ASC&rtype=map&leadid=948",
+    activeListings: "/homes/search",
   },
   newTodayListings: [
     { address: "245 State St", price: "$329,000", beds: 3, baths: 2, sqft: 1850, mlsId: "202500001" },
@@ -1075,9 +1075,9 @@ export const guilderlandData: TownData = {
   slug: "guilderland",
   schoolDistrict: "Guilderland Central School District",
   description: "Homes, market activity, and local insights for Guilderland, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Guilderland&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DGuilderland&pak=city%3Ag30_drc9v1sm&sortby=listings.price+ASC&rtype=map&leadid=948",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Guilderland&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DGuilderland&pak=city%3Ag30_drc9v1sm&sortby=listings.price+ASC&rtype=map&leadid=948",
+    activeListings: "/homes/search",
   },
   // MLS Data Source: GlobalMLS InfoSparks - December 2025
   mlsDataSource: "GlobalMLS InfoSparks",
@@ -1174,9 +1174,9 @@ export const mechanicvilleData: TownData = {
   slug: "mechanicville",
   schoolDistrict: "Mechanicville City School District",
   description: "Homes, market activity, and local insights for Mechanicville, NY.",
-  remaxSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Mechanicville&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DMechanicville&pak=city%3Ag30_drdqsf8b&sortby=listings.price+ASC&rtype=map&leadid=948",
+  searchPath: "/homes/search",
   dataSourceLinks: {
-    activeListings: "https://scottalvarez.remax.com/index.php?advanced=1&display=Mechanicville&min=0&max=100000000&beds=0&baths=0&types%5B%5D=1&types%5B%5D=2&types%5B%5D=31&types%5B%5D=5&types%5B%5D=3&types%5B%5D=12&types%5B%5D=15&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DMechanicville&pak=city%3Ag30_drdqsf8b&sortby=listings.price+ASC&rtype=map&leadid=948",
+    activeListings: "/homes/search",
   },
   // MLS Data Source: GlobalMLS InfoSparks - December 2025
   mlsDataSource: "GlobalMLS InfoSparks",

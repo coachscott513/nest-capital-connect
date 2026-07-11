@@ -82,7 +82,7 @@ const HeroSection = () => {
           {/* Mobile Trust Strip */}
           <div className="text-xs text-white/80 space-y-1">
             <p>⭐ 500+ Properties Analyzed • 📊 Investor-Focused Analysis</p>
-            <p>🌆 Albany • Troy • Saratoga Expert • 🏢 RE/MAX Licensed Professional</p>
+            <p>🌆 Albany • Troy • Saratoga Expert • 🏢 Licensed Professional</p>
           </div>
         </div>
       </section>
@@ -233,8 +233,7 @@ const HeroSection = () => {
             </span>
             <span className="hidden lg:inline">•</span>
             <span className="flex items-center gap-1.5">
-              <Award className="w-4 h-4 text-primary" />
-              RE/MAX licensed professional
+              <Award className="w-4 h-4 text-primary" /> licensed professional
             </span>
           </div>
         </div>

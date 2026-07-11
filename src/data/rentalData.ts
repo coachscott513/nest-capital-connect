@@ -80,7 +80,7 @@ export const albanyRentalData: CityRentalData = {
     { name: "Guilderland Central", rating: "Suburban", rentalAvailability: "Moderate" },
   ],
   neighborhoods: ["Downtown Albany", "Pine Hills", "Center Square", "Delaware Avenue", "New Scotland", "Buckingham Pond"],
-  mlsSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&types%5B%5D=12&sortby=listings.price+ASC&rtype=map&leadid=948",
+  mlsSearchUrl: "/homes/search",
   whyBetterThanCraigslist: [
     "No scam listings — every property is verified",
     "Real landlord contact information",
@@ -124,7 +124,7 @@ export const schenectadyRentalData: CityRentalData = {
     { name: "Scotia-Glenville", rating: "Suburban", rentalAvailability: "Moderate" },
   ],
   neighborhoods: ["Downtown Schenectady", "Stockade District", "GE Plot", "Mont Pleasant", "Woodlawn", "Hamilton Hill"],
-  mlsSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Schenectady&min=0&max=100000000&beds=&baths=&types%5B%5D=6&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=City%3DSchenectady&sortby=listings.price+ASC&rtype=map&leadid=948",
+  mlsSearchUrl: "/homes/search",
   whyBetterThanCraigslist: [
     "No scam listings — every property is verified",
     "Real landlord contact information",
@@ -174,7 +174,7 @@ export const troyRentalData: CityRentalData = {
     { name: "East Greenbush Central", rating: "Suburban", rentalAvailability: "Moderate" },
   ],
   neighborhoods: ["Downtown Troy", "South Troy", "North Central", "Lansingburgh", "Brunswick", "Frear Park"],
-  mlsSearchUrl: "https://scottalvarez.remax.com/index.php?advanced=1&display=Troy&types%5B%5D=12&sortby=listings.price+ASC&rtype=map&leadid=948",
+  mlsSearchUrl: "/homes/search",
   whyBetterThanCraigslist: [
     "No scam listings — every property is verified",
     "Real landlord contact information",

@@ -531,7 +531,7 @@ const BrandedReportModal = ({ isOpen, onClose, onGeneratePdf, analysisData }: Br
                         type="text"
                         value={branding.brokerage}
                         onChange={(e) => setBranding({ ...branding, brokerage: e.target.value })}
-                        placeholder="e.g., RE/MAX Solutions"
+                        placeholder="e.g., Capital District Nest"
                         className="w-full px-4 py-3 rounded-lg text-sm text-white placeholder:text-[#5a6a8e]"
                         style={{ background: "#1a2a48", border: "1px solid #2a3a58" }}
                       />

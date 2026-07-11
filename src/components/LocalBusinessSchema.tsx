@@ -7,7 +7,7 @@ const LocalBusinessSchema = () => {
       "@graph": [
         {
           "@type": "RealEstateAgent",
-          "name": "Capital District Nest Team at RE/MAX",
+          "name": "Capital District Nest Team at",
           "image": "https://capitaldistrictnest.com/logo.png",
           "url": "https://capitaldistrictnest.com",
           "telephone": "+15185227265",

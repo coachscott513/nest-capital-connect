@@ -298,10 +298,10 @@ const YieldHome = () => {
             Built by investors, for investors
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-8">
-            Capital District Nest was built by Scott Alvarez, a licensed real estate professional with RE/MAX Solutions in Albany, New York. After fielding over 1,500 investor calls a year and building custom analyses for every property, Scott created the platform to put that same expert-level analysis in the hands of every investor. Based in the heart of New York's Capital District, we specialize in multi-unit investment properties, rehab strategies, land opportunities, and the financing structures that make deals work.
+            Capital District Nest was built by Scott Alvarez, a licensed real estate professional with Capital District Nest in Albany, New York. After fielding over 1,500 investor calls a year and building custom analyses for every property, Scott created the platform to put that same expert-level analysis in the hands of every investor. Based in the heart of New York's Capital District, we specialize in multi-unit investment properties, rehab strategies, land opportunities, and the financing structures that make deals work.
           </p>
           <p className="text-white font-medium">
-            Scott Alvarez | RE/MAX Solutions | 518-522-7265 | 2 Gold Street, Albany, NY
+            Scott Alvarez, Licensed Real Estate Salesperson | 518-522-7265 | 2 Gold Street, Albany, NY
           </p>
         </div>
       </section>
@@ -348,7 +348,7 @@ const YieldHome = () => {
               <Link to="/contact" className="text-muted-foreground hover:text-white transition-colors">Contact</Link>
             </div>
             <div className="text-right">
-              <p className="text-sm text-muted-foreground">Scott Alvarez | RE/MAX Solutions</p>
+              <p className="text-sm text-muted-foreground">Scott Alvarez, Licensed Real Estate Salesperson</p>
               <p className="text-sm text-muted-foreground">518-522-7265</p>
               <p className="text-sm text-muted-foreground">2 Gold Street, Albany, NY</p>
             </div>

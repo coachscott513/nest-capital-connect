@@ -29,10 +29,10 @@ const TOWNS = [
   { name: "Guilderland", slug: "guilderland", display: "Guilderland" },
 ];
 
-const REMAX_BASE = "https://scottalvarez.remax.com/";
-const REMAX_ADVANCED = "https://scottalvarez.remax.com/index.php";
+const REMAX_BASE = "/homes/search";
+const REMAX_ADVANCED = "/homes/search";
 
-// RE/MAX IDX property type codes
+// MLS IDX property type codes
 const TYPE_CODE: Record<string, string[]> = {
   "single-family": ["1"],
   multifamily: ["3"],

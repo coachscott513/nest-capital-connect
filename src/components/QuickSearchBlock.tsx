@@ -16,11 +16,11 @@ const searchCategories: SearchCategory[] = [
     links: [
       {
         text: "Multi-Family Homes Under $300k in Albany NY",
-        href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=300000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map"
+        href: "/homes/search"
       },
       {
         text: "All Multi-Family Properties in Albany County NY",
-        href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=3&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map"
+        href: "/homes/search"
       }
     ]
   },
@@ -29,7 +29,7 @@ const searchCategories: SearchCategory[] = [
     links: [
       {
         text: "Homes for Sale in Albany County NY",
-        href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=100000000&beds=0&baths=0&types%5B%5D=0&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map"
+        href: "/homes/search"
       }
     ]
   },
@@ -38,7 +38,7 @@ const searchCategories: SearchCategory[] = [
     links: [
       {
         text: "Homes Under $300k in Albany County NY",
-        href: "https://scottalvarez.remax.com/index.php?advanced=1&display=Albany&min=0&max=300000&beds=0&baths=0&types%5B%5D=0&statuses%5B%5D=0&minfootage=0&maxfootage=30000&minacres=0&maxacres=0&yearbuilt=0&maxyearbuilt=0&walkscore=0&keywords=&pak=county%3Ag40_dre6kenh&sortby=listings.price+ASC&rtype=map"
+        href: "/homes/search"
       }
     ]
   }
@@ -92,7 +92,7 @@ const QuickSearchBlock = () => {
 
         <footer className="mt-12 pt-8 border-t border-border/20 text-center">
           <p className="text-sm text-muted-foreground font-light">
-            All listings provided by RE/MAX • Updated daily
+            All listings provided by • Updated daily
           </p>
         </footer>
       </div>
