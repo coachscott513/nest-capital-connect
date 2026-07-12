@@ -526,7 +526,7 @@ const Cassone = () => {
               {
                 icon: Instagram,
                 label: "Instagram",
-                handle: "@CassoneLeasing",
+                handle: "@cassonecompanies",
                 href: OFFICIAL.instagram,
                 body: "Project photos, on-site deliveries, and finished modular installations — posted directly from the field.",
                 accent: BLUE,
