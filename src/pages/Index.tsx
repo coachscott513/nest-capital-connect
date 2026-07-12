@@ -232,6 +232,11 @@ function FeaturedCardEl({ card, index, large }: { card: FeaturedCard; index: num
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
             />
           )}
+          {card.badge && (
+            <span className="absolute top-4 left-4 z-10 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-[0.18em] uppercase bg-black/60 border border-white/20 text-white/90 backdrop-blur">
+              {card.badge}
+            </span>
+          )}
           <div
             className="absolute inset-0"
             style={{
