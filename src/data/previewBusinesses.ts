@@ -312,17 +312,6 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
     addedAt: "2026-07-11",
   },
   {
-    slug: "capital-district-photography",
-    name: "Capital District Photography",
-    category: "Photography",
-    categoryGroup: "Retail & Lifestyle",
-    town: "Capital District",
-    summary:
-      "Placeholder slot for a founding photographer preview. Awaiting verified selection before publication.",
-    label: "owner_review_pending",
-    addedAt: "2026-07-11",
-  },
-  {
     slug: "lia-auto-group",
     name: "Lia Auto Group",
     category: "Automotive Sales",
@@ -334,11 +323,13 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
     label: "preview",
     addedAt: "2026-07-11",
   },
+
+  // ────── NONPROFIT & COMMUNITY ──────
   {
     slug: "regional-food-bank-of-northeastern-ny",
     name: "Regional Food Bank of Northeastern New York",
     category: "Nonprofit",
-    categoryGroup: "Retail & Lifestyle",
+    categoryGroup: "Nonprofit & Community",
     town: "Latham",
     county: "Albany",
     summary:
