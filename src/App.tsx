@@ -299,6 +299,7 @@ const App = () => {
           <Route path="/terms-of-service" element={<PrivacyPolicyPage />} />
           <Route path="/about-editorial" element={<AboutEditorial />} />
           <Route path="/editorial" element={<AboutEditorial />} />
+          <Route path="/editorial-policy" element={<AboutEditorial />} />
           <Route path="/reviews" element={<Reviews />} />
           
           {/* City Real Estate Redirects - canonical URLs are /living-in/:slug */}
