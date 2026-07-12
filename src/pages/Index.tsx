@@ -120,7 +120,7 @@ function EditorialHero() {
   );
 }
 
-// ─── FEATURED THIS WEEK ──────────────────────────────────────────────────────
+// ─── CURRENTLY FEATURED ──────────────────────────────────────────────────────
 type FeaturedCard = {
   eyebrow: string;
   title: string;
@@ -128,6 +128,7 @@ type FeaturedCard = {
   to: string;
   image?: string;
   span?: "large" | "small";
+  badge?: string;
 };
 
 function FeaturedThisWeek() {
@@ -139,6 +140,7 @@ function FeaturedThisWeek() {
       to: "/business/roosevelt-room",
       image: partnerRooseveltImg,
       span: "large",
+      badge: "Spotlight Template",
     },
     {
       eyebrow: "Industrial Spotlight",
@@ -147,6 +149,7 @@ function FeaturedThisWeek() {
       to: "/business/cassone",
       image: heroBusinessWide,
       span: "large",
+      badge: "Profile Preview",
     },
     {
       eyebrow: "Weekend Guide",
