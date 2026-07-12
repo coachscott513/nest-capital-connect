@@ -1,63 +1,303 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Search, X, Menu, Phone } from "lucide-react";
+import { Search, X, Menu, ChevronRight, ArrowLeft, Phone } from "lucide-react";
 import GlobalSearchCommand from "@/components/GlobalSearchCommand";
-import AnalystCard from "@/components/AnalystCard";
 import cdnLogo from "@/assets/cdn-logo.jpeg";
 
-const TEAL = "#0d6e66";
+/* =============================================================
+   CLEAN HEADER — V2 (Apple-style mega menu + iOS drill-down)
+   The header is the first discovery surface of the platform.
+   Desktop: hover a top-level word → a large editorial panel
+   glides down with categorized links and a small feature card.
+   Mobile: tap a top-level word → a full-screen dark sheet
+   slides in, one category at a time, with a back arrow.
+   ============================================================= */
 
-type NavMode = {
+// ─── Mega menu data ──────────────────────────────────────────────────────────
+type MegaLink = { label: string; href: string; note?: string };
+type MegaColumn = { title: string; links: MegaLink[] };
+type MegaFeature = {
+  eyebrow: string;
+  title: string;
+  copy: string;
+  href: string;
+  cta: string;
+};
+type MegaSection = {
+  key: string;
   label: string;
-  mobileLabel: string;
   href?: string;
-  action?: "focus-search";
-  matchPaths?: string[];
+  columns: MegaColumn[];
+  feature?: MegaFeature;
 };
 
-// Top nav reads as search modes inside a local operating system,
-// not a list of marketing pages.
-const navModes: NavMode[] = [
-  { label: "Discover", mobileLabel: "Discover Anything Local", action: "focus-search" },
-  { label: "Homes", mobileLabel: "Homes", href: "/homes", matchPaths: ["/homes"] },
-  { label: "Businesses", mobileLabel: "Businesses", href: "/businesses", matchPaths: ["/businesses", "/local"] },
-  { label: "Communities", mobileLabel: "Communities", href: "/communities", matchPaths: ["/communities", "/living-in"] },
-  { label: "Neighborhoods", mobileLabel: "Neighborhood Guides", href: "/neighborhoods", matchPaths: ["/neighborhoods"] },
-  { label: "Stories", mobileLabel: "Stories", href: "/stories", matchPaths: ["/stories"] },
-  { label: "What's Happening", mobileLabel: "What's Happening", href: "/weekly", matchPaths: ["/weekly"] },
-  { label: "For Businesses", mobileLabel: "For Businesses", href: "/for-businesses", matchPaths: ["/for-businesses", "/business", "/pricing"] },
+const SECTIONS: MegaSection[] = [
+  {
+    key: "discover",
+    label: "Discover",
+    columns: [
+      {
+        title: "Food & Drink",
+        links: [
+          { label: "Restaurants", href: "/businesses/restaurants" },
+          { label: "Coffee", href: "/businesses/coffee" },
+          { label: "Breweries", href: "/businesses/breweries" },
+          { label: "Wine & Cocktails", href: "/businesses/wine" },
+        ],
+      },
+      {
+        title: "Home & Property",
+        links: [
+          { label: "Contractors", href: "/businesses/contractors" },
+          { label: "Roofing", href: "/businesses/roofing" },
+          { label: "HVAC", href: "/businesses/hvac" },
+          { label: "Plumbing", href: "/businesses/plumbing" },
+          { label: "Interior Design", href: "/businesses/interior-design" },
+        ],
+      },
+      {
+        title: "Professional",
+        links: [
+          { label: "Mortgage", href: "/businesses/mortgage" },
+          { label: "Insurance", href: "/businesses/insurance" },
+          { label: "Legal", href: "/businesses/legal" },
+          { label: "Accounting", href: "/businesses/accounting" },
+        ],
+      },
+      {
+        title: "Health & Wellness",
+        links: [
+          { label: "Medical", href: "/businesses/medical" },
+          { label: "Dental", href: "/businesses/dental" },
+          { label: "Fitness", href: "/businesses/fitness" },
+          { label: "Salon & Spa", href: "/businesses/salon" },
+        ],
+      },
+    ],
+    feature: {
+      eyebrow: "Featured this week",
+      title: "Roosevelt Room",
+      copy: "Dinner, craft cocktails, and live jazz in downtown Albany.",
+      href: "/business/roosevelt-room",
+      cta: "Read the story",
+    },
+  },
+  {
+    key: "homes",
+    label: "Homes",
+    href: "/homes",
+    columns: [
+      {
+        title: "Search",
+        links: [
+          { label: "Smart Search", href: "/homes/search" },
+          { label: "Property Boards", href: "/homes/listings" },
+          { label: "Open Houses", href: "/homes/open-houses" },
+          { label: "Rentals", href: "/rentals" },
+        ],
+      },
+      {
+        title: "Guides",
+        links: [
+          { label: "Neighborhood Guides", href: "/neighborhoods" },
+          { label: "First-Time Buyers", href: "/first-time-buyers" },
+          { label: "Buyer Roadmap", href: "/buyer-roadmap" },
+          { label: "Financing", href: "/financing" },
+        ],
+      },
+      {
+        title: "Investors",
+        links: [
+          { label: "Investment Tools", href: "/investor-tools" },
+          { label: "Multi-Family", href: "/investment-properties" },
+          { label: "Land", href: "/land-buyers" },
+          { label: "Analyzer", href: "/analyze" },
+        ],
+      },
+    ],
+    feature: {
+      eyebrow: "Property intelligence",
+      title: "Run the numbers on any address",
+      copy: "Cash flow, cap rate, and local comparables in one report.",
+      href: "/analyze",
+      cta: "Open the analyzer",
+    },
+  },
+  {
+    key: "businesses",
+    label: "Local Businesses",
+    href: "/businesses",
+    columns: [
+      {
+        title: "The Registry",
+        links: [
+          { label: "Featured Businesses", href: "/businesses" },
+          { label: "Browse Categories", href: "/local" },
+          { label: "Browse Towns", href: "/communities" },
+          { label: "Browse All", href: "/businesses" },
+        ],
+      },
+      {
+        title: "Spotlights",
+        links: [
+          { label: "Roosevelt Room", href: "/business/roosevelt-room" },
+          { label: "Cassone", href: "/business/cassone" },
+          { label: "All Business Stories", href: "/stories" },
+        ],
+      },
+      {
+        title: "Owners",
+        links: [
+          { label: "Claim Your Business", href: "/claim-business" },
+          { label: "Request a Spotlight", href: "/for-businesses/apply" },
+          { label: "Editorial Standards", href: "/editorial-policy" },
+        ],
+      },
+    ],
+  },
+  {
+    key: "communities",
+    label: "Communities",
+    href: "/communities",
+    columns: [
+      {
+        title: "Albany County",
+        links: [
+          { label: "Albany", href: "/living-in/albany" },
+          { label: "Delmar", href: "/living-in/delmar" },
+          { label: "Guilderland", href: "/living-in/guilderland" },
+          { label: "Voorheesville", href: "/living-in/voorheesville" },
+        ],
+      },
+      {
+        title: "Rensselaer & Schenectady",
+        links: [
+          { label: "Troy", href: "/living-in/troy" },
+          { label: "Schenectady", href: "/living-in/schenectady" },
+          { label: "Niskayuna", href: "/living-in/niskayuna" },
+        ],
+      },
+      {
+        title: "Saratoga & Beyond",
+        links: [
+          { label: "Saratoga Springs", href: "/living-in/saratoga-springs" },
+          { label: "Clifton Park", href: "/living-in/clifton-park" },
+          { label: "Queensbury", href: "/living-in/queensbury" },
+          { label: "Browse All Communities", href: "/communities" },
+        ],
+      },
+    ],
+  },
+  {
+    key: "stories",
+    label: "Stories",
+    href: "/stories",
+    columns: [
+      {
+        title: "Editorial",
+        links: [
+          { label: "Business Spotlights", href: "/stories" },
+          { label: "Weekend Guide", href: "/weekly" },
+          { label: "Food & Drink", href: "/businesses/restaurants" },
+        ],
+      },
+      {
+        title: "Places",
+        links: [
+          { label: "Neighborhoods", href: "/neighborhoods" },
+          { label: "Communities", href: "/communities" },
+          { label: "Living in Delmar", href: "/living-in/delmar" },
+        ],
+      },
+      {
+        title: "People & Homes",
+        links: [
+          { label: "The Editorial Team", href: "/about-editorial" },
+          { label: "Homes", href: "/homes" },
+        ],
+      },
+    ],
+  },
+  {
+    key: "happening",
+    label: "What's Happening",
+    href: "/weekly",
+    columns: [
+      {
+        title: "This Week",
+        links: [
+          { label: "Weekly Pulse", href: "/weekly" },
+          { label: "This Weekend", href: "/weekly" },
+          { label: "Submit an Event", href: "/submit-event" },
+        ],
+      },
+      {
+        title: "By Category",
+        links: [
+          { label: "Concerts", href: "/local" },
+          { label: "Festivals", href: "/local" },
+          { label: "Farm Markets", href: "/local" },
+          { label: "Community Events", href: "/local" },
+        ],
+      },
+    ],
+  },
+  {
+    key: "forbusiness",
+    label: "For Business",
+    href: "/for-businesses",
+    columns: [
+      {
+        title: "Grow with Nest",
+        links: [
+          { label: "Grow Your Business", href: "/for-businesses" },
+          { label: "Pricing", href: "/pricing" },
+          { label: "Request a Spotlight", href: "/for-businesses/apply" },
+        ],
+      },
+      {
+        title: "Manage",
+        links: [
+          { label: "Claim Your Business", href: "/claim-business" },
+          { label: "Partner Sign-In", href: "/partner-auth" },
+          { label: "Editorial Standards", href: "/editorial-policy" },
+        ],
+      },
+    ],
+    feature: {
+      eyebrow: "Become part of the Capital District",
+      title: "Tell your story",
+      copy: "Editorial features, local search, and tools built for regional businesses.",
+      href: "/for-businesses/apply",
+      cta: "Apply for a Spotlight",
+    },
+  },
 ];
 
+// ─── Component ────────────────────────────────────────────────────────────────
 const CleanHeader = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileSection, setMobileSection] = useState<MegaSection | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hoverKey, setHoverKey] = useState<string | null>(null);
+  const closeTimer = useRef<number | null>(null);
 
-  const focusOmniSearch = () => {
-    const dispatch = () => window.dispatchEvent(new CustomEvent("omni-search:focus"));
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(dispatch, 400);
-    } else {
-      dispatch();
-    }
+  const openMega = (key: string) => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    setHoverKey(key);
   };
-
-  const trackNavClick = (destination: string) => {
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "event_nav_click", {
-        destination,
-        source_location: "main_navigation",
-        page_path: location.pathname,
-      });
-    }
+  const closeMegaSoon = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setHoverKey(null), 140);
   };
-
 
   useEffect(() => {
-    setMobileMenuOpen(false);
+    setMobileOpen(false);
+    setMobileSection(null);
+    setHoverKey(null);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -68,42 +308,32 @@ const CleanHeader = () => {
   }, []);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         setSearchOpen(true);
       }
+      if (e.key === "Escape") {
+        setHoverKey(null);
+      }
     };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
   }, []);
 
-  const isActive = (mode: NavMode) => {
-    if (!mode.matchPaths || mode.matchPaths.length === 0) return false;
-    return mode.matchPaths.some((p) => location.pathname === p || location.pathname.startsWith(p + "/"));
-  };
-
-  const handleModeClick = (mode: NavMode, e: React.MouseEvent) => {
-    if (mode.action === "focus-search") {
-      e.preventDefault();
-      focusOmniSearch();
-      return;
-    }
-    if (mode.href) {
-      trackNavClick(mode.href);
-    }
-  };
-
-
-  const isFrosted = scrolled || mobileMenuOpen;
+  const isFrosted = scrolled || !!hoverKey || mobileOpen;
+  const active = hoverKey ? SECTIONS.find((s) => s.key === hoverKey) ?? null : null;
 
   return (
     <>
-      <header className={`sticky top-0 z-[2000] nav-shell ${isFrosted ? "nav-frost" : "nav-transparent"}`}>
+      <header
+        className={`sticky top-0 z-[2000] nav-shell ${isFrosted ? "nav-frost" : "nav-transparent"}`}
+        onMouseLeave={closeMegaSoon}
+      >
         <nav className="w-full max-w-7xl mx-auto px-5 md:px-8">
           <div className="flex items-center justify-between h-16 md:h-[68px]">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 shrink-0">
+            <Link to="/" className="flex items-center gap-3 shrink-0" onMouseEnter={closeMegaSoon}>
               <img
                 src={cdnLogo}
                 alt="Capital District Nest"
@@ -114,80 +344,64 @@ const CleanHeader = () => {
               </span>
             </Link>
 
-            {/* Centered nav — search modes */}
+            {/* Desktop nav — mega-menu triggers */}
             <div className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
-              {navModes.map((mode) => {
-                const active = isActive(mode);
-                const isClaim = mode.label === "For Businesses";
-                const baseCls =
-                  "relative px-3 py-2 text-[13.5px] font-medium rounded-full transition-colors whitespace-nowrap";
-                const stateCls = active
-                  ? "text-foreground bg-white/[0.08]"
-                  : "text-foreground/70 hover:text-foreground hover:bg-white/[0.05]";
-                const claimCls = isClaim
-                  ? "ml-1 text-[#5eead4] hover:text-white hover:bg-[#0d6e66]"
-                  : "";
+              {SECTIONS.map((s) => {
+                const isActive = hoverKey === s.key;
+                const routeActive = s.href
+                  ? location.pathname === s.href || location.pathname.startsWith(s.href + "/")
+                  : false;
 
-                const inner = (
-                  <>
-                    {mode.label}
-                    {active && (
-                      <span
-                        className="absolute left-1/2 -translate-x-1/2 -bottom-[6px] w-1 h-1 rounded-full"
-                        style={{ backgroundColor: "#5eead4" }}
-                      />
-                    )}
-                  </>
+                const content = (
+                  <span
+                    className={`relative px-3 py-2 text-[13.5px] font-medium rounded-full transition-colors ${
+                      isActive || routeActive
+                        ? "text-foreground bg-white/[0.08]"
+                        : "text-foreground/70 hover:text-foreground"
+                    }`}
+                  >
+                    {s.label}
+                  </span>
                 );
 
-                if (mode.action === "focus-search") {
-                  return (
-                    <button
-                      key={mode.label}
-                      onClick={(e) => handleModeClick(mode, e)}
-                      className={`${baseCls} ${stateCls} ${claimCls}`}
-                    >
-                      {inner}
-                    </button>
-                  );
-                }
-
-
                 return (
-                  <Link
-                    key={mode.label}
-                    to={mode.href!}
-                    onClick={(e) => handleModeClick(mode, e)}
-                    className={`${baseCls} ${stateCls} ${claimCls}`}
+                  <div
+                    key={s.key}
+                    onMouseEnter={() => openMega(s.key)}
+                    className="relative"
                   >
-                    {inner}
-                  </Link>
+                    {s.href ? (
+                      <Link to={s.href} onClick={() => setHoverKey(null)}>{content}</Link>
+                    ) : (
+                      <button type="button">{content}</button>
+                    )}
+                  </div>
                 );
               })}
             </div>
 
             {/* Right cluster */}
-            <div className="hidden lg:flex items-center gap-2 shrink-0 whitespace-nowrap">
+            <div className="hidden lg:flex items-center gap-2 shrink-0" onMouseEnter={closeMegaSoon}>
               <button
-                onClick={focusOmniSearch}
-                aria-label="Focus the local search bar"
+                onClick={() => setSearchOpen(true)}
+                aria-label="Search"
                 className="flex items-center justify-center w-9 h-9 rounded-full text-foreground/70 hover:text-foreground hover:bg-white/[0.06] transition"
               >
                 <Search className="h-4 w-4" />
               </button>
-
-              <AnalystCard>
-                <button className="lift-hover inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-white border border-white/20 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md transition-colors">
-                  Request Intro
-                </button>
-              </AnalystCard>
+              <Link
+                to="/for-businesses/apply"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-[#0B0F19] bg-[#5eead4] hover:bg-white transition-colors"
+              >
+                Get Featured
+              </Link>
             </div>
 
             {/* Mobile cluster */}
             <div className="flex items-center gap-2 lg:hidden">
               <button
-                onClick={focusOmniSearch}
-                aria-label="Focus the local search bar"
+                onClick={() => setSearchOpen(true)}
+                aria-label="Search"
                 className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-white/[0.06] transition-colors"
               >
                 <Search className="h-4 w-4 text-foreground" />
@@ -195,99 +409,199 @@ const CleanHeader = () => {
               <a
                 href="tel:+15189812248"
                 aria-label="Call Capital District Nest"
-                className="flex items-center justify-center w-9 h-9 rounded-full text-foreground/80 hover:text-foreground border border-white/15 hover:border-white/35 bg-white/[0.04] hover:bg-white/[0.08] backdrop-blur-md transition-colors"
+                className="flex items-center justify-center w-9 h-9 rounded-full text-foreground/80 hover:text-foreground border border-white/15 bg-white/[0.04]"
               >
                 <Phone className="h-4 w-4" strokeWidth={1.75} />
               </a>
               <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                onClick={() => setMobileOpen((v) => !v)}
                 aria-label="Menu"
                 className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-white/[0.06] transition-colors"
               >
-                {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+                {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
               </button>
             </div>
           </div>
         </nav>
+
+        {/* Desktop mega-menu panel */}
+        <div
+          className={`hidden lg:block absolute inset-x-0 top-full transition-all duration-300 ease-out ${
+            active ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"
+          }`}
+          onMouseEnter={() => active && openMega(active.key)}
+          onMouseLeave={closeMegaSoon}
+        >
+          <div
+            className="border-t border-white/[0.06]"
+            style={{
+              background: "rgba(11, 15, 25, 0.94)",
+              backdropFilter: "blur(28px) saturate(140%)",
+              WebkitBackdropFilter: "blur(28px) saturate(140%)",
+            }}
+          >
+            <div className="max-w-7xl mx-auto px-8 py-12">
+              {active && (
+                <div className="grid grid-cols-12 gap-10">
+                  <div className={`${active.feature ? "col-span-8" : "col-span-12"} grid grid-cols-4 gap-8`}>
+                    {active.columns.map((col) => (
+                      <div key={col.title}>
+                        <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4] mb-4">
+                          {col.title}
+                        </p>
+                        <ul className="space-y-3">
+                          {col.links.map((l) => (
+                            <li key={l.label}>
+                              <Link
+                                to={l.href}
+                                onClick={() => setHoverKey(null)}
+                                className="text-[18px] font-medium text-white/85 hover:text-white transition-colors tracking-[-0.01em]"
+                              >
+                                {l.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+
+                  {active.feature && (
+                    <Link
+                      to={active.feature.href}
+                      onClick={() => setHoverKey(null)}
+                      className="col-span-4 group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 hover:border-[#5eead4]/40 transition-colors"
+                    >
+                      <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+                        {active.feature.eyebrow}
+                      </p>
+                      <h3 className="mt-4 text-2xl font-semibold text-white tracking-[-0.02em] leading-tight">
+                        {active.feature.title}
+                      </h3>
+                      <p className="mt-3 text-sm text-white/65 font-light leading-relaxed">
+                        {active.feature.copy}
+                      </p>
+                      <span className="mt-6 inline-flex items-center gap-2 text-[13px] font-semibold text-[#5eead4] group-hover:gap-3 transition-all">
+                        {active.feature.cta}
+                        <ChevronRight className="w-4 h-4" />
+                      </span>
+                    </Link>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </header>
 
       <GlobalSearchCommand isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
-      {/* Mobile menu — premium glass sheet */}
+      {/* Mobile — full-screen iOS-style sheet with drill-down */}
       <div
-        className={`fixed inset-0 z-[1999] pt-24 px-6 pb-10 overflow-y-auto transition-transform duration-300 ease-out lg:hidden ${
-          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed inset-0 z-[1999] lg:hidden transition-transform duration-300 ease-out ${
+          mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
         style={{
-          background: "rgba(11, 15, 25, 0.96)",
+          background: "rgba(11, 15, 25, 0.98)",
           backdropFilter: "blur(28px) saturate(140%)",
           WebkitBackdropFilter: "blur(28px) saturate(140%)",
         }}
       >
-        <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#5eead4] mb-4">
-          Search modes
-        </p>
-        <div className="space-y-1">
-          {navModes.map((mode) => {
-            const isClaim = mode.label === "For Businesses";
-            const cls = `block w-full text-left py-3.5 px-1 text-[17px] font-medium border-b border-white/[0.06] transition-colors ${
-              isClaim ? "text-[#5eead4]" : "text-white/90 hover:text-white"
-            }`;
+        <div className="h-full flex flex-col pt-24 pb-10 px-6 overflow-y-auto">
+          {/* Drill-down */}
+          <div
+            className={`transition-transform duration-300 ease-out ${
+              mobileSection ? "-translate-x-full opacity-0 pointer-events-none absolute inset-x-6 top-24" : "translate-x-0 opacity-100"
+            }`}
+          >
+            <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4] mb-5">
+              Explore
+            </p>
+            <ul className="space-y-1">
+              {SECTIONS.map((s) => (
+                <li key={s.key}>
+                  <button
+                    onClick={() => setMobileSection(s)}
+                    className="w-full flex items-center justify-between py-4 border-b border-white/[0.08] text-left"
+                  >
+                    <span className="text-[22px] font-semibold text-white tracking-[-0.02em]">
+                      {s.label}
+                    </span>
+                    <ChevronRight className="w-5 h-5 text-white/40" />
+                  </button>
+                </li>
+              ))}
+            </ul>
 
-            if (mode.action === "focus-search") {
-              return (
-                <button
-                  key={mode.label}
-                  onClick={(e) => {
-                    setMobileMenuOpen(false);
-                    setTimeout(() => handleModeClick(mode, e as unknown as React.MouseEvent), 50);
-                  }}
-                  className={cls}
-                >
-                  {mode.mobileLabel}
-                </button>
-              );
-            }
-
-
-            return (
+            <div className="mt-10 space-y-3">
               <Link
-                key={mode.label}
-                to={mode.href!}
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  if (mode.href) trackNavClick(mode.href);
-                }}
-                className={cls}
+                to="/for-businesses/apply"
+                onClick={() => setMobileOpen(false)}
+                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-[#0B0F19] bg-[#5eead4]"
               >
-                {mode.mobileLabel}
+                Get Featured
               </Link>
-            );
+              <Link
+                to="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white border border-white/20 bg-white/[0.04]"
+              >
+                Contact
+              </Link>
+            </div>
+          </div>
 
-          })}
-
-          <Link
-            to="/contact"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-3.5 px-1 text-[17px] font-medium text-white/90 hover:text-white border-b border-white/[0.06]"
+          {/* Category detail */}
+          <div
+            className={`transition-transform duration-300 ease-out ${
+              mobileSection ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none absolute inset-x-6 top-24"
+            }`}
           >
-            About Capital District Nest
-          </Link>
-          <Link
-            to="/contact"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-3.5 px-1 text-[17px] font-medium text-white/90 hover:text-white border-b border-white/[0.06]"
-          >
-            Contact
-          </Link>
-        </div>
-
-        <div className="mt-8">
-          <AnalystCard>
-            <button className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold text-white border border-white/20 bg-white/[0.06] hover:bg-white/[0.12] backdrop-blur-md">
-              Request Intro
-            </button>
-          </AnalystCard>
+            {mobileSection && (
+              <>
+                <button
+                  onClick={() => setMobileSection(null)}
+                  className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#5eead4] mb-6"
+                >
+                  <ArrowLeft className="w-4 h-4" /> Back
+                </button>
+                <h2 className="text-[32px] font-semibold text-white tracking-[-0.03em] mb-8">
+                  {mobileSection.label}
+                </h2>
+                {mobileSection.href && (
+                  <Link
+                    to={mobileSection.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="block mb-6 text-[15px] font-semibold text-[#5eead4]"
+                  >
+                    Overview →
+                  </Link>
+                )}
+                <div className="space-y-8">
+                  {mobileSection.columns.map((col) => (
+                    <div key={col.title}>
+                      <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-white/50 mb-4">
+                        {col.title}
+                      </p>
+                      <ul className="space-y-1">
+                        {col.links.map((l) => (
+                          <li key={l.label}>
+                            <Link
+                              to={l.href}
+                              onClick={() => setMobileOpen(false)}
+                              className="block py-3 border-b border-white/[0.06] text-[18px] font-medium text-white/90"
+                            >
+                              {l.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </>
