@@ -7,6 +7,7 @@ import {
   Instagram,
   Facebook,
   Youtube,
+  Linkedin,
   ArrowUpRight,
   ArrowRight,
   HardHat,
@@ -18,6 +19,7 @@ import {
   ClipboardCheck,
   Info,
   Camera,
+  Play,
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
@@ -29,60 +31,73 @@ import { trackGAEvent } from "@/components/GARouteTracker";
  * See mem://editorial/spotlight-page-states — this page is published in
  * `template` state. Editorial narrative summarizes verified public info in
  * our own words. No fabricated staff, quotes, awards, or project claims.
- * Imagery: abstract industrial backdrops only. Real photography and video
- * come in through the owner's official social channels (linked, not copied)
- * until Cassone approves media use.
+ *
+ * Visual palette: Cassone-adjacent industrial — charcoal, white, industrial
+ * blue, steel gray, sparing safety-yellow accent. Teal / Nest tokens are
+ * intentionally suppressed on this profile so the page feels like Cassone.
+ *
+ * Imagery policy: no protected Cassone photography is copied. Official
+ * photos and video live on Cassone's own social channels (linked, not
+ * rehosted). Approved media only appears here after Cassone grants rights.
  */
 
 const BUSINESS = {
   slug: "cassone",
   name: "Cassone",
-  tagline: "Temporary Space. Permanent Relationships.",
+  tagline: "Space When You Need It.",
   category: "Modular Buildings, Office Trailers & Storage Solutions",
   region: "Northeast",
   applyUrl: "/for-businesses/apply?business=cassone",
 };
 
-// Official public channels — link out, do not embed protected imagery until approved.
+// Official public channels — link out, never rehost protected imagery.
+// LinkedIn: we don't publish an unverified company URL, so the card routes
+// to a LinkedIn search for the verified brand name until the owner confirms.
 const OFFICIAL = {
   website: "https://www.cassone.com",
   instagram: "https://www.instagram.com/cassonecompanies/",
   facebook: "https://www.facebook.com/CassoneCompanies/",
   youtube: "https://www.youtube.com/@cassonecompanies",
+  linkedin: "https://www.linkedin.com/search/results/companies/?keywords=Cassone%20Companies",
 };
 
-const TEAL = "#5eead4";
-const GOLD = "#c9a449";
+// Cassone industrial palette (used only on this profile).
+const BLUE = "#1E5AC8";      // industrial blue
+const BLUE_DEEP = "#0B3D91"; // deeper blue for backgrounds
+const YELLOW = "#F5B700";    // safety yellow — used very sparingly
+const CHAR = "#0B0F14";      // charcoal canvas
 
-const Eyebrow = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+const Eyebrow = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
   <p
     className={`text-[11px] font-semibold tracking-[0.32em] uppercase ${className}`}
-    style={{ color: TEAL }}
+    style={{ color: BLUE }}
   >
     {children}
   </p>
 );
 
-const PendingChip = ({ children = "Pending owner verification" }: { children?: React.ReactNode }) => (
-  <span
-    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-semibold tracking-[0.22em] uppercase border"
-    style={{ borderColor: "rgba(255,255,255,0.18)", color: "rgba(255,255,255,0.6)" }}
-  >
-    {children}
-  </span>
-);
-
 /**
  * Industrial hero backdrop — engineered feel, not photographic.
- * Blueprint grid, dawn light, steel wash. Signals scale without faking a jobsite photo.
+ * Blueprint grid, deep-blue wash, thin yellow horizon.
+ * Signals scale without copying a real jobsite photo.
  */
-const IndustrialBackdrop = ({ variant = "dawn" }: { variant?: "dawn" | "steel" | "night" }) => {
+const IndustrialBackdrop = ({
+  variant = "hero",
+}: {
+  variant?: "hero" | "steel" | "night";
+}) => {
   const gradients =
-    variant === "dawn"
-      ? "radial-gradient(70% 60% at 15% 100%, rgba(201,164,73,0.28), transparent 60%), radial-gradient(60% 80% at 90% 10%, rgba(94,234,212,0.18), transparent 65%), linear-gradient(180deg, #05080f 0%, #0B0F19 55%, #0e1626 100%)"
+    variant === "hero"
+      ? `radial-gradient(70% 60% at 15% 100%, ${BLUE_DEEP}55, transparent 60%), radial-gradient(60% 80% at 90% 10%, ${BLUE}33, transparent 65%), linear-gradient(180deg, #05080f 0%, ${CHAR} 55%, #0e1626 100%)`
       : variant === "night"
-      ? "radial-gradient(60% 60% at 80% 20%, rgba(94,234,212,0.14), transparent 65%), linear-gradient(180deg, #05070d 0%, #0B0F19 100%)"
-      : "radial-gradient(60% 60% at 20% 30%, rgba(148,163,184,0.16), transparent 65%), radial-gradient(50% 60% at 85% 80%, rgba(94,234,212,0.14), transparent 70%), linear-gradient(180deg, #0B0F19 0%, #0e1626 100%)";
+      ? `radial-gradient(60% 60% at 80% 20%, ${BLUE}22, transparent 65%), linear-gradient(180deg, #05070d 0%, ${CHAR} 100%)`
+      : `radial-gradient(60% 60% at 20% 30%, rgba(148,163,184,0.16), transparent 65%), radial-gradient(50% 60% at 85% 80%, ${BLUE}22, transparent 70%), linear-gradient(180deg, ${CHAR} 0%, #0e1626 100%)`;
   return (
     <>
       <div className="absolute inset-0" style={{ background: gradients }} />
@@ -100,17 +115,15 @@ const IndustrialBackdrop = ({ variant = "dawn" }: { variant?: "dawn" | "steel" |
       <div
         className="absolute inset-0 opacity-[0.18]"
         style={{
-          backgroundImage:
-            "linear-gradient(rgba(94,234,212,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(94,234,212,0.25) 1px, transparent 1px)",
+          backgroundImage: `linear-gradient(${BLUE}66 1px, transparent 1px), linear-gradient(90deg, ${BLUE}55 1px, transparent 1px)`,
           backgroundSize: "320px 320px",
         }}
       />
-      {/* Horizon glow */}
+      {/* Horizon glow — subtle safety-yellow line at bottom */}
       <div
         className="absolute inset-x-0 bottom-0 h-1/2"
         style={{
-          background:
-            "linear-gradient(180deg, transparent 0%, rgba(201,164,73,0.08) 60%, rgba(11,15,25,0.9) 100%)",
+          background: `linear-gradient(180deg, transparent 0%, ${YELLOW}0F 60%, ${CHAR}E6 100%)`,
         }}
       />
     </>
@@ -197,6 +210,17 @@ const reasons = [
   },
 ];
 
+// Recent Projects — intentionally left as owner-pending sector cards.
+// No fabricated project names, addresses, clients, or dates.
+const projectSectors = [
+  { icon: HardHat, label: "Construction jobsites" },
+  { icon: GraduationCap, label: "School expansions" },
+  { icon: Stethoscope, label: "Healthcare facilities" },
+  { icon: Building2, label: "Commercial swing space" },
+  { icon: Landmark, label: "Municipal & government" },
+  { icon: Container, label: "Ground-level storage" },
+];
+
 const Cassone = () => {
   const track = (action: string, source: string) =>
     trackGAEvent.businessProfileOpen({
@@ -217,7 +241,7 @@ const Cassone = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-white">
+    <div className="min-h-screen text-white" style={{ background: CHAR }}>
       <SEOHead
         title="Cassone | Modular Buildings, Office Trailers & Storage Solutions | Capital District Nest"
         description="Cassone provides modular buildings, office trailers, storage containers, and portable space solutions for construction, education, healthcare, commercial, and government projects across the Northeast. A Capital District Nest editorial Spotlight."
@@ -227,54 +251,50 @@ const Cassone = () => {
 
       {/* =========================== HERO =========================== */}
       <section className="relative w-full min-h-[100vh] overflow-hidden">
-        <IndustrialBackdrop variant="dawn" />
+        <IndustrialBackdrop variant="hero" />
         <div className="relative z-10 h-full max-w-[1400px] mx-auto px-6 md:px-12 pt-40 md:pt-48 pb-20 md:pb-28 flex flex-col justify-end min-h-[100vh]">
-          <div className="flex flex-wrap items-center gap-2 mb-8">
-            <Eyebrow>Capital District Nest · Spotlight</Eyebrow>
-            <PendingChip>Spotlight Template</PendingChip>
+          <div className="mb-8">
+            <Eyebrow>Capital District Nest · Spotlight Template</Eyebrow>
           </div>
 
           <h1
-            className="text-[64px] md:text-[168px] font-semibold tracking-[-0.055em] leading-[0.86]"
+            className="text-[56px] md:text-[132px] font-semibold tracking-[-0.055em] leading-[0.86] max-w-5xl"
             style={{ textShadow: "0 20px 60px rgba(0,0,0,0.4)" }}
           >
-            Cassone
+            Space When
+            <br />
+            You Need It.
           </h1>
 
-          <p className="mt-10 text-2xl md:text-4xl text-white font-light tracking-[-0.02em] max-w-4xl leading-[1.05]">
-            Temporary Space.
-            <span className="text-white/60"> Permanent Relationships.</span>
+          <p className="mt-10 text-xl md:text-2xl text-white/75 font-light tracking-[-0.015em] max-w-3xl leading-[1.35]">
+            Serving construction, education, healthcare, government, and commercial clients
+            throughout the Northeast for more than 50 years.
           </p>
 
-          <p className="mt-8 max-w-2xl text-base md:text-lg text-white/65 font-light leading-relaxed">
-            For over five decades, Cassone has provided modular buildings, office trailers, storage
-            containers, and portable space solutions for businesses, construction sites, schools,
-            healthcare organizations, and municipalities throughout the Northeast.
-          </p>
-
-          <div className="mt-10 flex flex-wrap gap-3">
+          <div className="mt-12 flex flex-wrap gap-3">
             <a
               href={OFFICIAL.website}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => track("website", "hero")}
-              className="lift-hover inline-flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90 transition"
+              className="lift-hover inline-flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-white transition"
+              style={{ background: BLUE }}
             >
-              Visit Cassone.com <ArrowUpRight className="h-4 w-4" />
+              Talk to Cassone <ArrowUpRight className="h-4 w-4" />
             </a>
             <Link
               to={BUSINESS.applyUrl}
-              onClick={() => track("owner_claim", "hero")}
+              onClick={() => track("quote", "hero")}
               className="lift-hover inline-flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.05] hover:bg-white/[0.12] backdrop-blur-md transition"
             >
-              <ClipboardCheck className="h-4 w-4" /> Request Quote
+              <ClipboardCheck className="h-4 w-4" /> Request a Quote
             </Link>
           </div>
 
-          <p className="mt-8 text-xs text-white/45 max-w-xl">
+          <p className="mt-10 text-xs text-white/45 max-w-xl">
             This is Capital District Nest's editorial profile — not Cassone's official website.
-            Verified public information summarized in our own words. Project photography, phone,
-            and address are added after owner review.
+            Verified public information summarized in our own words. Official project photography,
+            direct phone, and headquarters address will appear here after owner review.
           </p>
         </div>
       </section>
@@ -284,10 +304,11 @@ const Cassone = () => {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-24 md:py-32">
           <Eyebrow>At a glance</Eyebrow>
 
-          {/* Hero metric */}
           <div className="mt-12 md:mt-16">
-            <div className="text-[96px] md:text-[168px] font-semibold tracking-[-0.055em] leading-[0.86]">
-              50<span className="text-white/70">+</span>
+            <div
+              className="text-[96px] md:text-[168px] font-semibold tracking-[-0.055em] leading-[0.86]"
+            >
+              50<span style={{ color: BLUE }}>+</span>
             </div>
             <div className="mt-4 text-lg md:text-xl text-white/70 font-light tracking-tight">
               Years serving businesses across the Northeast.
@@ -326,8 +347,53 @@ const Cassone = () => {
         </div>
       </section>
 
+      {/* =========================== FEATURED VIDEO =========================== */}
+      <section className="border-t border-white/[0.06]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-24 md:py-32">
+          <div className="max-w-3xl">
+            <Eyebrow>Featured</Eyebrow>
+            <h2 className="mt-5 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02]">
+              See a modular building come to life.
+            </h2>
+            <p className="mt-6 text-lg text-white/60 font-light leading-relaxed">
+              A curated Cassone-approved video will appear here once the company selects the
+              feature. Until then, watch the latest walkthroughs on their official YouTube channel.
+            </p>
+          </div>
+
+          <a
+            href={OFFICIAL.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("video", "featured")}
+            className="group mt-14 block relative overflow-hidden rounded-3xl border border-white/10 aspect-[16/9]"
+            style={{ background: `linear-gradient(135deg, ${BLUE_DEEP} 0%, ${CHAR} 60%, #05080f 100%)` }}
+          >
+            <div className="absolute inset-0 opacity-40">
+              <IndustrialBackdrop variant="night" />
+            </div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 text-center">
+              <div
+                className="h-24 w-24 md:h-32 md:w-32 rounded-full flex items-center justify-center transition-transform duration-500 group-hover:scale-110"
+                style={{ background: BLUE, boxShadow: `0 20px 80px ${BLUE}66` }}
+              >
+                <Play className="h-10 w-10 md:h-14 md:w-14 text-white fill-white ml-2" />
+              </div>
+              <div>
+                <p className="text-2xl md:text-3xl font-semibold tracking-[-0.02em]">
+                  Watch on Cassone's official channel
+                </p>
+                <p className="mt-2 text-sm text-white/60">
+                  YouTube · @cassonecompanies
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
       {/* =========================== SOLUTIONS =========================== */}
-      <section className="border-t border-white/[0.06] bg-gradient-to-b from-transparent to-white/[0.015]">
+      <section className="border-t border-white/[0.06] bg-white/[0.015]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-28 md:py-36">
           <div className="max-w-3xl">
             <Eyebrow>Solutions</Eyebrow>
@@ -358,7 +424,7 @@ const Cassone = () => {
                     className="h-14 w-14 rounded-2xl border border-white/15 flex items-center justify-center backdrop-blur-md"
                     style={{ background: "rgba(255,255,255,0.06)" }}
                   >
-                    <Icon className="h-6 w-6" style={{ color: TEAL }} />
+                    <Icon className="h-6 w-6" style={{ color: BLUE }} />
                   </div>
                 </div>
                 <div className="relative z-10">
@@ -378,19 +444,76 @@ const Cassone = () => {
         </div>
       </section>
 
-      {/* =========================== FROM THE FIELD =========================== */}
+      {/* =========================== RECENT PROJECTS (owner-pending) =========================== */}
       <section className="border-t border-white/[0.06]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-28 md:py-36">
+          <div className="max-w-3xl">
+            <Eyebrow>Recent Projects</Eyebrow>
+            <h2 className="mt-5 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02]">
+              The work. Sector by sector.
+            </h2>
+            <p className="mt-6 text-lg text-white/60 font-light leading-relaxed">
+              A gallery of real Cassone projects — with photography, location, industry, and a short
+              summary — will populate this section once the company approves media rights. Capital
+              District Nest does not publish invented project names, addresses, or clients.
+            </p>
+          </div>
+
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {projectSectors.map(({ icon: Icon, label }) => (
+              <div
+                key={label}
+                className="relative overflow-hidden rounded-3xl border border-white/10 aspect-[4/3] p-8"
+                style={{
+                  background: `linear-gradient(160deg, ${BLUE_DEEP}44 0%, ${CHAR} 60%, #05080f 100%)`,
+                }}
+              >
+                <div className="absolute inset-0 opacity-40">
+                  <IndustrialBackdrop variant="steel" />
+                </div>
+                <div className="relative z-10 h-full flex flex-col justify-between">
+                  <div
+                    className="h-12 w-12 rounded-xl border border-white/15 flex items-center justify-center"
+                    style={{ background: "rgba(255,255,255,0.05)" }}
+                  >
+                    <Icon className="h-5 w-5" style={{ color: BLUE }} />
+                  </div>
+                  <div>
+                    <p className="text-xl md:text-2xl font-semibold tracking-[-0.02em]">
+                      {label}
+                    </p>
+                    <p className="mt-2 text-xs uppercase tracking-[0.22em] text-white/40">
+                      Owner-supplied photography pending
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 flex items-start gap-4 max-w-3xl">
+            <Camera className="h-5 w-5 mt-0.5 shrink-0" style={{ color: BLUE }} />
+            <p className="text-sm text-white/60 leading-relaxed">
+              Every project card will feature approved Cassone imagery — real deliveries, real
+              installs, real locations. Nothing here is generated, borrowed, or staged.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================== FOLLOW CASSONE (large social cards) =========================== */}
+      <section className="border-t border-white/[0.06] bg-white/[0.015]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-28 md:py-36">
           <div className="grid lg:grid-cols-12 gap-12 items-end">
             <div className="lg:col-span-7">
-              <Eyebrow>From the Field</Eyebrow>
+              <Eyebrow>Follow Cassone</Eyebrow>
               <h2 className="mt-5 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02]">
-                Latest deliveries. Latest installs. Live from Cassone.
+                The company, in its own voice.
               </h2>
               <p className="mt-6 text-lg text-white/60 font-light max-w-2xl leading-relaxed">
                 Rather than copy protected imagery, this Spotlight links directly to Cassone's
-                official social channels — the real, dated record of recent projects, jobsite
-                deliveries, and finished modular installations.
+                official channels — the real, dated record of recent projects, jobsite deliveries,
+                and finished modular installations.
               </p>
             </div>
             <div className="lg:col-span-5 text-sm text-white/50 lg:text-right">
@@ -398,70 +521,76 @@ const Cassone = () => {
             </div>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-5">
             {[
               {
                 icon: Instagram,
                 label: "Instagram",
                 handle: "@cassonecompanies",
                 href: OFFICIAL.instagram,
-                body: "Recent project photos, on-site deliveries, and finished modular installations.",
+                body: "Project photos, on-site deliveries, and finished modular installations — posted directly from the field.",
+                accent: BLUE,
               },
               {
                 icon: Facebook,
                 label: "Facebook",
                 handle: "Cassone Companies",
                 href: OFFICIAL.facebook,
-                body: "Company updates, community involvement, and long-form project stories.",
+                body: "Company updates, community involvement, and long-form project stories from across the Northeast.",
+                accent: BLUE,
+              },
+              {
+                icon: Linkedin,
+                label: "LinkedIn",
+                handle: "Cassone Companies",
+                href: OFFICIAL.linkedin,
+                body: "Company news, career openings, industry insights, and B2B project announcements.",
+                accent: BLUE,
               },
               {
                 icon: Youtube,
                 label: "YouTube",
-                handle: "Cassone Companies",
+                handle: "@cassonecompanies",
                 href: OFFICIAL.youtube,
-                body: "Walkthroughs, capability videos, and modular building overviews.",
+                body: "Walkthroughs, capability videos, and modular building overviews on the official channel.",
+                accent: BLUE,
               },
-            ].map(({ icon: Icon, label, handle, href, body }) => (
+            ].map(({ icon: Icon, label, handle, href, body, accent }) => (
               <a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => track("social", label.toLowerCase())}
-                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-10 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500"
+                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-10 md:p-12 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500 min-h-[280px] flex flex-col justify-between"
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-start justify-between">
                   <div
-                    className="h-12 w-12 rounded-xl border border-white/15 flex items-center justify-center"
-                    style={{ background: "rgba(255,255,255,0.05)" }}
+                    className="h-16 w-16 rounded-2xl flex items-center justify-center"
+                    style={{ background: `${accent}22`, border: `1px solid ${accent}55` }}
                   >
-                    <Icon className="h-5 w-5" style={{ color: TEAL }} />
+                    <Icon className="h-7 w-7" style={{ color: accent }} />
                   </div>
-                  <ArrowUpRight className="h-5 w-5 text-white/50 group-hover:text-white transition" />
+                  <ArrowUpRight className="h-6 w-6 text-white/40 group-hover:text-white transition" />
                 </div>
-                <p className="mt-8 text-2xl font-semibold tracking-[-0.02em]">{label}</p>
-                <p className="mt-1 text-sm text-white/50">{handle}</p>
-                <p className="mt-5 text-sm text-white/60 font-light leading-relaxed">{body}</p>
+                <div>
+                  <p className="text-4xl md:text-5xl font-semibold tracking-[-0.03em]">{label}</p>
+                  <p className="mt-2 text-sm text-white/50">{handle}</p>
+                  <p className="mt-5 text-base text-white/65 font-light leading-relaxed max-w-[42ch]">
+                    {body}
+                  </p>
+                </div>
               </a>
             ))}
-          </div>
-
-          <div className="mt-10 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 flex items-start gap-4 max-w-3xl">
-            <Camera className="h-5 w-5 mt-0.5 shrink-0" style={{ color: TEAL }} />
-            <p className="text-sm text-white/60 leading-relaxed">
-              A native gallery of approved Cassone photography will appear here once the company
-              grants media rights to Capital District Nest. Until then, all imagery lives on the
-              official channels above.
-            </p>
           </div>
         </div>
       </section>
 
-      {/* =========================== SERVING THE NORTHEAST =========================== */}
+      {/* =========================== SERVICE AREAS =========================== */}
       <section className="border-t border-white/[0.06]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-28 md:py-36">
           <div className="max-w-3xl">
-            <Eyebrow>Serving the Northeast</Eyebrow>
+            <Eyebrow>Service Areas</Eyebrow>
             <h2 className="mt-5 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02]">
               Regional coverage. Rooted in New York.
             </h2>
@@ -477,13 +606,9 @@ const Cassone = () => {
                 key={area}
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-medium text-white/85 border border-white/15 bg-white/[0.03]"
               >
-                <MapPin className="h-3.5 w-3.5" style={{ color: TEAL }} /> {area}
+                <MapPin className="h-3.5 w-3.5" style={{ color: BLUE }} /> {area}
               </span>
             ))}
-          </div>
-
-          <div className="mt-10">
-            <PendingChip>Specific yard and office locations pending owner verification</PendingChip>
           </div>
         </div>
       </section>
@@ -507,7 +632,7 @@ const Cassone = () => {
               <div key={r.title} className="flex gap-6">
                 <div
                   className="shrink-0 text-sm font-semibold tracking-[0.2em]"
-                  style={{ color: GOLD }}
+                  style={{ color: YELLOW }}
                 >
                   0{i + 1}
                 </div>
@@ -525,7 +650,7 @@ const Cassone = () => {
         </div>
       </section>
 
-      {/* =========================== TIMELINE PLACEHOLDER =========================== */}
+      {/* =========================== TIMELINE (owner-pending) =========================== */}
       <section className="border-t border-white/[0.06]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-24 md:py-32">
           <div className="max-w-4xl">
@@ -541,9 +666,9 @@ const Cassone = () => {
             </p>
 
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6 flex items-start gap-4">
-              <Info className="h-5 w-5 mt-0.5" style={{ color: TEAL }} />
+              <Info className="h-5 w-5 mt-0.5" style={{ color: BLUE }} />
               <p className="text-sm text-white/65">
-                Timeline entries pending owner verification.
+                Timeline entries awaiting owner confirmation.
               </p>
             </div>
           </div>
@@ -551,13 +676,13 @@ const Cassone = () => {
       </section>
 
       {/* =========================== CONTACT / QUOTE =========================== */}
-      <section className="border-t border-white/[0.06]">
+      <section className="border-t border-white/[0.06] bg-white/[0.015]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-28 md:py-36">
           <div className="grid lg:grid-cols-12 gap-12">
             <div className="lg:col-span-6">
               <Eyebrow>Get in touch</Eyebrow>
               <h2 className="mt-5 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02]">
-                Have a project? Start a conversation.
+                Talk to Cassone.
               </h2>
               <p className="mt-6 text-lg text-white/60 font-light leading-relaxed max-w-xl">
                 For quotes, delivery, and specifications, reach Cassone directly through their
@@ -571,10 +696,18 @@ const Cassone = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => track("website", "contact")}
-                  className="lift-hover inline-flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90 transition"
+                  className="lift-hover inline-flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-white transition"
+                  style={{ background: BLUE }}
                 >
                   <Globe className="h-4 w-4" /> Visit Cassone.com
                 </a>
+                <Link
+                  to={BUSINESS.applyUrl}
+                  onClick={() => track("quote", "contact")}
+                  className="lift-hover inline-flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-white border border-white/25 bg-white/[0.05] hover:bg-white/[0.12] backdrop-blur-md transition"
+                >
+                  <ClipboardCheck className="h-4 w-4" /> Request a Quote
+                </Link>
                 <Link
                   to="/contact"
                   onClick={() => track("intro", "contact")}
@@ -587,12 +720,13 @@ const Cassone = () => {
 
             <div className="lg:col-span-6 space-y-3">
               {[
-                { icon: Phone, label: "Phone", value: "Pending owner verification" },
+                { icon: Phone, label: "Call", value: "Pending owner verification" },
                 { icon: MapPin, label: "Headquarters", value: "Pending owner verification" },
                 { icon: Globe, label: "Website", value: "cassone.com", href: OFFICIAL.website },
                 { icon: Instagram, label: "Instagram", value: "@cassonecompanies", href: OFFICIAL.instagram },
                 { icon: Facebook, label: "Facebook", value: "Cassone Companies", href: OFFICIAL.facebook },
-                { icon: Youtube, label: "YouTube", value: "Cassone Companies", href: OFFICIAL.youtube },
+                { icon: Linkedin, label: "LinkedIn", value: "Cassone Companies", href: OFFICIAL.linkedin },
+                { icon: Youtube, label: "YouTube", value: "@cassonecompanies", href: OFFICIAL.youtube },
               ].map(({ icon: Icon, label, value, href }) => {
                 const inner = (
                   <div className="flex items-center gap-5 rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-5 hover:bg-white/[0.06] transition">
@@ -600,7 +734,7 @@ const Cassone = () => {
                       className="h-11 w-11 rounded-xl border border-white/10 flex items-center justify-center shrink-0"
                       style={{ background: "rgba(255,255,255,0.05)" }}
                     >
-                      <Icon className="h-5 w-5" style={{ color: TEAL }} />
+                      <Icon className="h-5 w-5" style={{ color: BLUE }} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-white/45">
@@ -629,7 +763,13 @@ const Cassone = () => {
       {/* =========================== OWNER CTA =========================== */}
       <section className="border-t border-white/[0.06]">
         <div className="max-w-4xl mx-auto px-6 md:px-12 py-28 md:py-36">
-          <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.015] backdrop-blur-xl p-10 md:p-16 text-center">
+          <div
+            className="rounded-3xl border p-10 md:p-16 text-center"
+            style={{
+              borderColor: `${BLUE}33`,
+              background: `linear-gradient(160deg, ${BLUE_DEEP}22 0%, rgba(255,255,255,0.02) 100%)`,
+            }}
+          >
             <Eyebrow className="!text-center">Own or manage Cassone?</Eyebrow>
             <h2 className="mt-5 text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05]">
               Complete the Spotlight with your official media.
@@ -642,7 +782,8 @@ const Cassone = () => {
             <Link
               to={BUSINESS.applyUrl}
               onClick={() => track("owner_claim", "owner_cta")}
-              className="mt-12 inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold bg-white text-black hover:bg-white/90 transition"
+              className="mt-12 inline-flex items-center gap-2 px-8 py-4 rounded-full text-sm font-semibold text-white transition"
+              style={{ background: BLUE }}
             >
               Complete This Spotlight <ArrowUpRight className="h-4 w-4" />
             </Link>
