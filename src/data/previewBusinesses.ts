@@ -11,16 +11,22 @@ export type PreviewLabel =
   | "owner_review_pending"
   | "owner_verified";
 
+export type PreviewGroup =
+  | "Food & Drink"
+  | "Home & Property"
+  | "Professional Services"
+  | "Health & Wellness"
+  | "Retail & Lifestyle"
+  | "Nonprofit & Community";
+
 export interface PreviewBusiness {
   slug: string;
   name: string;
+  /** Parent taxonomy — must be one of the 54 official categories. */
   category: OfficialCategory;
-  categoryGroup:
-    | "Food & Drink"
-    | "Home & Property"
-    | "Professional Services"
-    | "Health & Wellness"
-    | "Retail & Lifestyle";
+  /** Optional precise label shown to users (e.g. "Mortgage Lending"). */
+  displayCategory?: string;
+  categoryGroup: PreviewGroup;
   town: string;
   county?: string;
   summary: string;
