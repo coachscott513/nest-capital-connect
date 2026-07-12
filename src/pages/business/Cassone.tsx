@@ -723,7 +723,7 @@ const Cassone = () => {
                 { icon: Phone, label: "Call", value: "Pending owner verification" },
                 { icon: MapPin, label: "Headquarters", value: "Pending owner verification" },
                 { icon: Globe, label: "Website", value: "cassone.com", href: OFFICIAL.website },
-                { icon: Instagram, label: "Instagram", value: "@CassoneLeasing", href: OFFICIAL.instagram },
+                { icon: Instagram, label: "Instagram", value: "@cassonecompanies", href: OFFICIAL.instagram },
                 { icon: Facebook, label: "Facebook", value: "Cassone Companies", href: OFFICIAL.facebook },
                 { icon: Linkedin, label: "LinkedIn", value: "Cassone Companies", href: OFFICIAL.linkedin },
                 { icon: Youtube, label: "YouTube", value: "@CassoneLeasing", href: OFFICIAL.youtube },
