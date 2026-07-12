@@ -502,6 +502,7 @@ const App = () => {
           <Route path="/business/the-roosevelt-room" element={<RooseveltRoom />} />
           <Route path="/business/cassone" element={<Cassone />} />
           <Route path="/business-spotlight-intake" element={<SpotlightIntake />} />
+          <Route path="/business/:slug" element={<BusinessPreviewPage />} />
           <Route path="/businesses" element={<BusinessesHub />} />
           <Route path="/businesses/:categorySlug" element={<BusinessCategoryPage />} />
           <Route path="/stories" element={<StoriesHub />} />
