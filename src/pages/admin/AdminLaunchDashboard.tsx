@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
-import { previewBusinesses } from "@/data/previewBusinesses";
+import { PREVIEW_BUSINESSES } from "@/data/previewBusinesses";
 import {
   Rocket,
   Mail,
