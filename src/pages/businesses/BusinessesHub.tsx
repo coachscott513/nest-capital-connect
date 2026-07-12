@@ -14,7 +14,12 @@ import {
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { BUSINESS_CATEGORY_GROUPS } from "@/data/businessCategoryGroups";
-import { BUSINESS_SPOTLIGHTS } from "@/data/businessSpotlights";
+import {
+  BUSINESS_SPOTLIGHTS,
+  SPOTLIGHT_LABEL_TEXT,
+  type BusinessSpotlight,
+  type SpotlightLabel,
+} from "@/data/businessSpotlights";
 import { categoryToSlug } from "@/lib/categorySlug";
 
 import imgRestaurants from "@/assets/category-restaurants.jpg";
@@ -41,7 +46,7 @@ const GROUP_IMAGES: Record<string, string> = {
 };
 
 const DIFFERENTIATORS = [
-  { icon: BookOpen, label: "Original Business Stories" },
+  { icon: BookOpen, label: "Original Stories" },
   { icon: Users, label: "Owner Profiles" },
   { icon: Camera, label: "Local Photography" },
   { icon: MapPin, label: "Community Features" },
@@ -64,13 +69,86 @@ const TOWNS: { name: string; slug: string; image?: string }[] = [
   { name: "Greenville", slug: "greenville" },
 ];
 
+/* ---------- Shared status chip ---------- */
+const chipClassFor = (label: SpotlightLabel) => {
+  switch (label) {
+    case "spotlight":
+      return "border-[#5eead4]/60 text-[#5eead4] bg-[#5eead4]/5";
+    case "preview":
+      return "border-white/25 text-white/90 bg-white/[0.04]";
+    case "coming_soon":
+      return "border-white/10 text-white/60 bg-white/[0.02]";
+    case "claim_available":
+      return "border-[#c9a449]/60 text-[#c9a449] bg-[#c9a449]/5";
+  }
+};
+
+const StatusChip = ({ label }: { label: SpotlightLabel }) => (
+  <span
+    className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-[0.18em] uppercase border backdrop-blur ${chipClassFor(
+      label
+    )}`}
+  >
+    {SPOTLIGHT_LABEL_TEXT[label]}
+  </span>
+);
+
+/* ---------- Reusable business card ---------- */
+const BusinessCard = ({ s }: { s: BusinessSpotlight }) => {
+  const isLinkable = s.status === "published" && s.profileRoute;
+  const href = isLinkable ? s.profileRoute! : "/business-spotlight-intake";
+  return (
+    <Link
+      to={href}
+      className="group block rounded-2xl overflow-hidden border border-white/[0.08] bg-white/[0.03] hover:border-[#0d6e66]/50 transition"
+    >
+      <div className="relative aspect-[4/3] bg-[#0d6e66]/10 overflow-hidden">
+        {s.heroImage ? (
+          <img
+            src={s.heroImage}
+            alt={s.businessName}
+            loading="lazy"
+            className="w-full h-full object-cover group-hover:scale-[1.03] transition duration-700"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-[#0d6e66]/30 via-[#0B0F19] to-black" />
+        )}
+        <div className="absolute top-3 left-3">
+          <StatusChip label={s.label} />
+        </div>
+      </div>
+      <div className="p-5">
+        <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/50">
+          {s.category} · {s.town}
+        </p>
+        <h3 className="mt-2 text-lg font-semibold tracking-tight group-hover:text-[#5eead4] transition">
+          {s.businessName}
+        </h3>
+        <p className="mt-2 text-sm text-white/65 line-clamp-3">{s.summary}</p>
+      </div>
+    </Link>
+  );
+};
+
 const BusinessesHub = () => {
   const canonical = "https://www.capitaldistrictnest.com/businesses";
-  const title = "Discover Local Businesses | Capital District Nest";
+  const title = "Local Businesses | Capital District Nest";
   const description =
-    "Discover the businesses that make the Capital District worth living in — original stories, local favorites, trusted professionals, and exceptional places across Albany, Troy, Saratoga, Schenectady, Delmar, Clifton Park, and beyond.";
+    "The businesses that make the Capital District worth living in — original stories, local favorites, and trusted professionals across Albany, Troy, Saratoga, Schenectady, Delmar, Clifton Park, and beyond.";
 
-  const featured = BUSINESS_SPOTLIGHTS.slice(0, 6);
+  const featured = BUSINESS_SPOTLIGHTS.filter(
+    (s) => s.status === "published" || s.featured
+  ).slice(0, 6);
+
+  const recentlyAdded = [...BUSINESS_SPOTLIGHTS]
+    .filter((s) => s.addedAt)
+    .sort((a, b) => (b.addedAt! > a.addedAt! ? 1 : -1))
+    .slice(0, 8);
+
+  const rooseveltTemplate = BUSINESS_SPOTLIGHTS.find(
+    (s) => s.slug === "the-roosevelt-room"
+  );
+  const cassonePreview = BUSINESS_SPOTLIGHTS.find((s) => s.slug === "cassone");
 
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white">
@@ -86,19 +164,18 @@ const BusinessesHub = () => {
 
       <CleanHeader />
 
-      {/* Hero */}
+      {/* Hero — restrained typographic */}
       <section className="relative px-6 md:px-10 pt-24 pb-16 md:pt-32 md:pb-20">
         <div className="max-w-5xl mx-auto text-center">
           <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-[#5eead4] mb-5">
-            The Registry
+            Local Businesses
           </p>
           <h1 className="text-4xl md:text-6xl font-semibold tracking-[-0.025em] leading-[1.03]">
-            Discover the businesses that make the Capital District worth living in.
+            The businesses that make the Capital District worth living in.
           </h1>
-          <p className="mt-6 text-lg md:text-xl text-white/70 max-w-3xl mx-auto font-light">
-            Original stories, local favorites, trusted professionals, and
-            exceptional places across Albany, Troy, Saratoga, Schenectady,
-            Delmar, Clifton Park, and beyond.
+          <p className="mt-6 text-lg md:text-xl text-white/70 max-w-2xl mx-auto font-light">
+            Original stories, local favorites, and trusted professionals —
+            organized so you can find them and connect with them directly.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
@@ -115,27 +192,44 @@ const BusinessesHub = () => {
             </Link>
           </div>
         </div>
+      </section>
 
-        {/* Differentiator strip */}
-        <div className="mt-12 max-w-5xl mx-auto rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur px-6 py-5">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-3 gap-x-4">
-            {DIFFERENTIATORS.map(({ icon: Icon, label }) => (
-              <div key={label} className="flex items-center gap-2 text-sm text-white/85">
-                <Icon className="w-4 h-4 text-[#5eead4] shrink-0" strokeWidth={1.75} />
-                <span>{label}</span>
-              </div>
+      {/* Currently Featured */}
+      <section className="px-6 md:px-10 pb-20 md:pb-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-end justify-between flex-wrap gap-4 mb-8">
+            <div>
+              <p className="text-[11px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+                Editorial
+              </p>
+              <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
+                Currently Featured
+              </h2>
+            </div>
+            <p className="text-white/60 max-w-md text-sm">
+              Businesses we're currently highlighting — not a ranking, an
+              editorial selection updated as we publish more stories.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {featured.map((s) => (
+              <BusinessCard key={s.slug} s={s} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Browse by Category — editorial photo tiles */}
-      <section id="categories" className="px-6 md:px-10 pb-20 md:pb-28">
+      {/* Browse by Category */}
+      <section
+        id="categories"
+        className="px-6 md:px-10 pb-20 md:pb-28 border-t border-white/[0.06] pt-16 md:pt-24"
+      >
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-4 mb-8">
             <div>
               <p className="text-[11px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
-                The Registry
+                By Category
               </p>
               <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
                 Browse by Category
@@ -143,7 +237,7 @@ const BusinessesHub = () => {
             </div>
             <p className="text-white/60 max-w-md text-sm">
               Six pillars, dozens of categories. Every path leads to real local
-              businesses — reviewed, photographed, and connected across the site.
+              businesses.
             </p>
           </div>
 
@@ -174,7 +268,9 @@ const BusinessesHub = () => {
                     <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.01em] leading-tight">
                       {group.label}
                     </h3>
-                    <p className="mt-2 text-sm text-white/75 max-w-sm">{group.blurb}</p>
+                    <p className="mt-2 text-sm text-white/75 max-w-sm">
+                      {group.blurb}
+                    </p>
                     <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-white group-hover:text-[#5eead4] transition">
                       Explore <ArrowUpRight className="w-4 h-4" />
                     </span>
@@ -186,7 +282,7 @@ const BusinessesHub = () => {
         </div>
       </section>
 
-      {/* Explore by Town */}
+      {/* Browse by Town */}
       <section className="px-6 md:px-10 pb-20 md:pb-28 border-t border-white/[0.06] pt-16 md:pt-24">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-4 mb-8">
@@ -195,12 +291,12 @@ const BusinessesHub = () => {
                 By Place
               </p>
               <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
-                Explore by Town
+                Browse by Town
               </h2>
             </div>
             <p className="text-white/60 max-w-md text-sm">
-              Each town has its own guide — businesses, stories, and neighborhoods
-              woven into a single place.
+              Each town has its own guide — businesses, stories, and
+              neighborhoods woven into a single place.
             </p>
           </div>
 
@@ -223,7 +319,9 @@ const BusinessesHub = () => {
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />
                 <div className="relative z-10 h-full flex flex-col justify-end p-4">
-                  <h3 className="text-lg font-semibold tracking-tight">{t.name}</h3>
+                  <h3 className="text-lg font-semibold tracking-tight">
+                    {t.name}
+                  </h3>
                   <span className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-white/70 group-hover:text-[#5eead4] transition">
                     Explore <ArrowUpRight className="w-3.5 h-3.5" />
                   </span>
@@ -234,96 +332,187 @@ const BusinessesHub = () => {
         </div>
       </section>
 
-      {/* Recently Featured */}
+      {/* Recently Added */}
+      {recentlyAdded.length > 0 && (
+        <section className="px-6 md:px-10 pb-20 md:pb-28 border-t border-white/[0.06] pt-16 md:pt-24">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-end justify-between flex-wrap gap-4 mb-8">
+              <div>
+                <p className="text-[11px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+                  Fresh
+                </p>
+                <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
+                  Recently Added
+                </h2>
+              </div>
+              <p className="text-white/60 max-w-md text-sm">
+                The newest business pages on Capital District Nest.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              {recentlyAdded.map((s) => (
+                <BusinessCard key={s.slug} s={s} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Spotlight Templates & Profile Previews */}
       <section className="px-6 md:px-10 pb-20 md:pb-28 border-t border-white/[0.06] pt-16 md:pt-24">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-end justify-between flex-wrap gap-4 mb-8">
-            <div>
-              <p className="text-[11px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
-                Editorial
-              </p>
-              <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
-                Recently Featured
-              </h2>
-            </div>
-            <Link
-              to="/stories"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-white hover:text-[#5eead4] transition"
-            >
-              View All Stories <ArrowRight className="w-4 h-4" />
-            </Link>
+          <div className="mb-10 max-w-2xl">
+            <p className="text-[11px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+              How Pages Work
+            </p>
+            <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
+              Spotlight Templates & Profile Previews.
+            </h2>
+            <p className="mt-4 text-white/70">
+              Every business on Capital District Nest starts as one of two
+              things. Here's exactly what each looks like — nothing hidden.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {featured.map((s) => {
-              const isPublished = s.status === "published";
-              const href = isPublished && s.profileRoute ? s.profileRoute : "/business-spotlight-intake";
-              return (
-                <Link
-                  key={s.slug}
-                  to={href}
-                  className="group block rounded-2xl overflow-hidden border border-white/[0.08] bg-white/[0.03] hover:border-[#0d6e66]/50 transition"
-                >
-                  <div className="relative aspect-[4/3] bg-[#0d6e66]/10 overflow-hidden">
-                    {s.heroImage ? (
-                      <img
-                        src={s.heroImage}
-                        alt={s.businessName}
-                        loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-[1.03] transition duration-700"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-[#0d6e66]/30 via-[#0B0F19] to-black" />
-                    )}
-                    {!isPublished && (
-                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-[0.18em] uppercase bg-black/60 border border-white/20 text-white/90 backdrop-blur">
-                        Coming Soon
-                      </span>
-                    )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {rooseveltTemplate && (
+              <Link
+                to={rooseveltTemplate.profileRoute!}
+                className="group block rounded-3xl overflow-hidden border border-white/[0.08] bg-white/[0.03] hover:border-[#5eead4]/40 transition"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <img
+                    src={rooseveltTemplate.heroImage}
+                    alt={rooseveltTemplate.businessName}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-[1.03] transition duration-700"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <StatusChip label="spotlight" />
                   </div>
-                  <div className="p-5">
-                    <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/50">
-                      {s.category} · {s.town}
-                    </p>
-                    <h3 className="mt-2 text-lg font-semibold tracking-tight group-hover:text-[#5eead4] transition">
-                      {s.businessName}
-                    </h3>
-                    <p className="mt-2 text-sm text-white/65 line-clamp-3">{s.summary}</p>
+                </div>
+                <div className="p-6 md:p-8">
+                  <h3 className="text-2xl font-semibold tracking-tight">
+                    {rooseveltTemplate.businessName}
+                  </h3>
+                  <p className="mt-3 text-white/70">
+                    This is what a full editorial Spotlight looks like —
+                    original photography, story, and direct connection.
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4]">
+                    View the Spotlight <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
+              </Link>
+            )}
+
+            {cassonePreview && (
+              <Link
+                to={cassonePreview.profileRoute!}
+                className="group block rounded-3xl overflow-hidden border border-white/[0.08] bg-white/[0.03] hover:border-white/25 transition"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-[#0d6e66]/25 via-[#0B0F19] to-black">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-3xl md:text-4xl font-semibold tracking-tight text-white/80">
+                      Cassone
+                    </span>
                   </div>
-                </Link>
-              );
-            })}
+                  <div className="absolute top-4 left-4">
+                    <StatusChip label="preview" />
+                  </div>
+                </div>
+                <div className="p-6 md:p-8">
+                  <h3 className="text-2xl font-semibold tracking-tight">
+                    {cassonePreview.businessName}
+                  </h3>
+                  <p className="mt-3 text-white/70">
+                    This is what an in-progress Profile Preview looks like —
+                    drafted from public information, awaiting owner review.
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
+                    View the Preview <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Owner CTA — Tell Your Story */}
-      <section className="px-6 md:px-10 pb-24 pt-4">
-        <div className="max-w-4xl mx-auto text-center rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.02] px-8 py-14">
+      {/* Browse All Businesses */}
+      <section className="px-6 md:px-10 pb-20 md:pb-28">
+        <div className="max-w-5xl mx-auto">
+          <Link
+            to="/local"
+            className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-white/[0.02] hover:border-[#0d6e66]/40 transition block px-8 py-14 md:px-14 md:py-20"
+          >
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+              <div className="max-w-2xl">
+                <p className="text-[11px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+                  The Full Directory
+                </p>
+                <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
+                  Browse all businesses.
+                </h2>
+                <p className="mt-4 text-white/70">
+                  Search every business in the Capital District — restaurants,
+                  contractors, healthcare, professional services, and more.
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#0d6e66] group-hover:bg-[#0d6e66]/90 text-white text-sm font-semibold transition self-start md:self-auto">
+                Open the Directory <ArrowRight className="w-4 h-4" />
+              </span>
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* Owner CTA — Claim or complete your profile */}
+      <section className="px-6 md:px-10 pb-20">
+        <div className="max-w-4xl mx-auto text-center rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.02] px-8 py-14 md:py-16">
           <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-[#5eead4]">
             For Business Owners
           </p>
           <h2 className="mt-4 text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
-            Tell Your Story.
+            Claim or complete your profile.
           </h2>
           <p className="text-white/70 mt-4 max-w-xl mx-auto">
-            Join the Capital District Nest community and create a beautiful
-            business profile with photography, editorial storytelling, and
-            direct connections to local residents.
+            Own one of the businesses featured here? Claim your page. Not
+            featured yet? Request a Spotlight and tell us your story.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
               to="/claim-business"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-white/25 hover:border-white/50 bg-white/[0.05] hover:bg-white/[0.1] text-sm font-semibold transition"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#0d6e66] hover:bg-[#0d6e66]/90 text-white text-sm font-semibold transition"
             >
-              Claim Your Business
+              Claim Your Business <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/business-spotlight-intake"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#0d6e66] hover:bg-[#0d6e66]/90 text-white text-sm font-semibold transition"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-white/25 hover:border-white/50 bg-white/[0.05] hover:bg-white/[0.1] text-sm font-semibold transition"
             >
-              Request a Spotlight <ArrowRight className="w-4 h-4" />
+              Request a Spotlight
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Quiet trust bar */}
+      <section className="px-6 md:px-10 pb-20">
+        <div className="max-w-5xl mx-auto rounded-2xl border border-white/[0.06] bg-white/[0.02] px-6 py-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-3 gap-x-4">
+            {DIFFERENTIATORS.map(({ icon: Icon, label }) => (
+              <div
+                key={label}
+                className="flex items-center gap-2 text-xs text-white/60"
+              >
+                <Icon
+                  className="w-3.5 h-3.5 text-[#5eead4]/80 shrink-0"
+                  strokeWidth={1.75}
+                />
+                <span>{label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
