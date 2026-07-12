@@ -4,6 +4,8 @@ import rooseveltHero from "@/assets/roosevelt-hero.jpg";
 export type SpotlightLabel =
   | "spotlight"
   | "preview"
+  | "owner_review_pending"
+  | "owner_verified"
   | "coming_soon"
   | "claim_available";
 
