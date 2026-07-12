@@ -39,6 +39,7 @@ import BuyerTownSearch from "./pages/homes/BuyerTownSearch";
 import SearchHub from "./pages/homes/SearchHub";
 import BusinessLanding from "./pages/BusinessLanding";
 import RooseveltRoom from "./pages/business/RooseveltRoom";
+import Cassone from "./pages/business/Cassone";
 import SpotlightIntake from "./pages/business/SpotlightIntake";
 import ForBusinesses from "./pages/business/ForBusinesses";
 import ForBusinessesApply from "./pages/business/Apply";
@@ -498,6 +499,7 @@ const App = () => {
           <Route path="/for-businesses" element={<ForBusinesses />} />
           <Route path="/for-businesses/apply" element={<ForBusinessesApply />} />
           <Route path="/business/the-roosevelt-room" element={<RooseveltRoom />} />
+          <Route path="/business/cassone" element={<Cassone />} />
           <Route path="/business-spotlight-intake" element={<SpotlightIntake />} />
           <Route path="/businesses" element={<BusinessesHub />} />
           <Route path="/businesses/:categorySlug" element={<BusinessCategoryPage />} />
