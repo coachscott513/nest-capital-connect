@@ -161,7 +161,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "christie-hoyt-mortgage-team",
     name: "Christie Hoyt Mortgage Team",
-    category: "Financial Services",
+    category: "Banking and Finance",
     categoryGroup: "Professional Services",
     town: "Capital District",
     summary:
@@ -184,7 +184,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "denofio-insurance-agency",
     name: "Denofio Insurance Agency",
-    category: "Financial Services",
+    category: "Banking and Finance",
     categoryGroup: "Professional Services",
     town: "Niskayuna",
     county: "Schenectady",
@@ -196,7 +196,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "marvin-and-company",
     name: "Marvin and Company, P.C.",
-    category: "Financial Services",
+    category: "Banking and Finance",
     categoryGroup: "Professional Services",
     town: "Latham",
     county: "Albany",
@@ -246,7 +246,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "complexions-spa",
     name: "Complexions Spa for Beauty & Wellness",
-    category: "Wellness",
+    category: "Salon and Spa",
     categoryGroup: "Health & Wellness",
     town: "Saratoga Springs",
     county: "Saratoga",
@@ -331,7 +331,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "regional-food-bank-of-northeastern-ny",
     name: "Regional Food Bank of Northeastern New York",
-    category: "Community",
+    category: "Nonprofit",
     categoryGroup: "Retail & Lifestyle",
     town: "Latham",
     county: "Albany",
