@@ -39,6 +39,7 @@ import BuyerTownSearch from "./pages/homes/BuyerTownSearch";
 import SearchHub from "./pages/homes/SearchHub";
 import BusinessLanding from "./pages/BusinessLanding";
 import RooseveltRoom from "./pages/business/RooseveltRoom";
+import BusinessPreviewPage from "./pages/business/BusinessPreviewPage";
 import Cassone from "./pages/business/Cassone";
 import SpotlightIntake from "./pages/business/SpotlightIntake";
 import ForBusinesses from "./pages/business/ForBusinesses";
@@ -502,6 +503,7 @@ const App = () => {
           <Route path="/business/the-roosevelt-room" element={<RooseveltRoom />} />
           <Route path="/business/cassone" element={<Cassone />} />
           <Route path="/business-spotlight-intake" element={<SpotlightIntake />} />
+          <Route path="/business/:slug" element={<BusinessPreviewPage />} />
           <Route path="/businesses" element={<BusinessesHub />} />
           <Route path="/businesses/:categorySlug" element={<BusinessCategoryPage />} />
           <Route path="/stories" element={<StoriesHub />} />
