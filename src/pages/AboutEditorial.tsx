@@ -16,17 +16,27 @@ const standards = [
   {
     title: "Original local reporting",
     body:
-      "Every story, business feature, and neighborhood guide is written by the Capital District Nest editorial team based on first-hand research, verified public information, and direct conversations with local operators.",
+      "Every story, business feature, and neighborhood guide is written by the Capital District Nest editorial team based on first-hand research, verified public information, and direct conversations with local operators. We don't republish press releases as editorial coverage.",
   },
   {
-    title: "No anonymous reviews",
+    title: "No anonymous reviews, no public star ratings",
     body:
-      "We don't aggregate anonymous ratings. Business coverage reflects verifiable facts — hours, location, ownership, offerings — and clearly labels editorial opinion when we include it.",
+      "We don't aggregate anonymous ratings or publish public star scores for the businesses we cover. Business coverage reflects verifiable facts — hours, location, ownership, offerings — and clearly labels editorial opinion when we include it.",
   },
   {
-    title: "Verification process",
+    title: "Verified information only",
     body:
-      "Business names, addresses, phone numbers, hours, and ownership details are verified against public records and, wherever possible, confirmed directly with the business before publication.",
+      "Business names, addresses, phone numbers, hours, ownership, and claims about longevity or scope are verified against public records and, wherever possible, confirmed directly with the business before publication. Unverified facts are marked or omitted.",
+  },
+  {
+    title: "No fabricated content",
+    body:
+      "We do not invent team members, quotes, awards, project photos, or history. If we don't have a verified detail, we mark it as pending owner verification or leave it out.",
+  },
+  {
+    title: "Owner review process",
+    body:
+      "Business profiles move through clear states — template, preview, owner review, verified, and published. Owners are invited to review and correct their profile before it moves to published. The current state is always shown on the page.",
   },
   {
     title: "Corrections policy",
@@ -34,9 +44,19 @@ const standards = [
       "If we get something wrong, we fix it and note the correction. Email corrections to our editorial team and we will respond within one business day.",
   },
   {
+    title: "Sponsorship does not buy editorial opinion",
+    body:
+      "Featured placements, spotlights, and sponsorships are disclosed. Editorial opinion, ranking, and inclusion are not for sale. A business paying to be featured does not receive different treatment of the facts.",
+  },
+  {
     title: "How businesses can update their profile",
     body:
       "Owners can claim or update any Capital District Nest business profile at /claim-business or /for-businesses/apply. We prefer owner-supplied photography, hours, and descriptions over anything we might otherwise infer.",
+  },
+  {
+    title: "Trust and independence",
+    body:
+      "Capital District Nest is an independent regional media and local discovery platform. Editorial coverage is separate from real estate services, and brokerage identity appears only on real estate pages where it is legally required.",
   },
 ];
 
