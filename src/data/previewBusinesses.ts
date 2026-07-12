@@ -258,7 +258,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "shaker-veterinary-hospital",
     name: "Shaker Veterinary Hospital",
-    category: "Retail",
+    category: "Veterinary",
     categoryGroup: "Health & Wellness",
     town: "Latham",
     county: "Albany",
@@ -284,7 +284,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "emil-j-nagengast-florist",
     name: "Emil J. Nagengast Florist",
-    category: "Retail",
+    category: "Florist",
     categoryGroup: "Retail & Lifestyle",
     town: "Albany",
     county: "Albany",
@@ -308,7 +308,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "capital-district-photography",
     name: "Capital District Photography",
-    category: "Retail",
+    category: "Photography",
     categoryGroup: "Retail & Lifestyle",
     town: "Capital District",
     summary:
@@ -319,7 +319,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "lia-auto-group",
     name: "Lia Auto Group",
-    category: "Retail",
+    category: "Automotive Sales",
     categoryGroup: "Retail & Lifestyle",
     town: "Albany",
     county: "Albany",
