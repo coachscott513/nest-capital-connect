@@ -57,7 +57,7 @@ const OFFICIAL = {
   website: "https://www.cassone.com",
   instagram: "https://www.instagram.com/cassonecompanies/",
   facebook: "https://www.facebook.com/CassoneCompanies/",
-  youtube: "https://www.youtube.com/@cassonecompanies",
+  youtube: "https://www.youtube.com/@CassoneLeasing",
   linkedin: "https://www.linkedin.com/search/results/companies/?keywords=Cassone%20Companies",
 };
 
@@ -384,7 +384,7 @@ const Cassone = () => {
                   Watch on Cassone's official channel
                 </p>
                 <p className="mt-2 text-sm text-white/60">
-                  YouTube · @cassonecompanies
+                  YouTube · @CassoneLeasing
                 </p>
               </div>
             </div>
@@ -550,7 +550,7 @@ const Cassone = () => {
               {
                 icon: Youtube,
                 label: "YouTube",
-                handle: "@cassonecompanies",
+                handle: "@CassoneLeasing",
                 href: OFFICIAL.youtube,
                 body: "Walkthroughs, capability videos, and modular building overviews on the official channel.",
                 accent: BLUE,
@@ -726,7 +726,7 @@ const Cassone = () => {
                 { icon: Instagram, label: "Instagram", value: "@cassonecompanies", href: OFFICIAL.instagram },
                 { icon: Facebook, label: "Facebook", value: "Cassone Companies", href: OFFICIAL.facebook },
                 { icon: Linkedin, label: "LinkedIn", value: "Cassone Companies", href: OFFICIAL.linkedin },
-                { icon: Youtube, label: "YouTube", value: "@cassonecompanies", href: OFFICIAL.youtube },
+                { icon: Youtube, label: "YouTube", value: "@CassoneLeasing", href: OFFICIAL.youtube },
               ].map(({ icon: Icon, label, value, href }) => {
                 const inner = (
                   <div className="flex items-center gap-5 rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-5 hover:bg-white/[0.06] transition">
