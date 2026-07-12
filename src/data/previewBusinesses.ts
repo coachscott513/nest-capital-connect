@@ -168,6 +168,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
     slug: "christie-hoyt-mortgage-team",
     name: "Christie Hoyt Mortgage Team",
     category: "Banking and Finance",
+    displayCategory: "Mortgage Lending",
     categoryGroup: "Professional Services",
     town: "Capital District",
     summary:
@@ -190,7 +191,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "denofio-insurance-agency",
     name: "Denofio Insurance Agency",
-    category: "Banking and Finance",
+    category: "Insurance",
     categoryGroup: "Professional Services",
     town: "Niskayuna",
     county: "Schenectady",
@@ -202,7 +203,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "marvin-and-company",
     name: "Marvin and Company, P.C.",
-    category: "Banking and Finance",
+    category: "Accounting",
     categoryGroup: "Professional Services",
     town: "Latham",
     county: "Albany",
@@ -215,6 +216,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
     slug: "pyramid-brokerage-company",
     name: "Pyramid Brokerage Company",
     category: "Real Estate",
+    displayCategory: "Commercial Real Estate",
     categoryGroup: "Professional Services",
     town: "Albany",
     county: "Albany",
@@ -223,8 +225,6 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
     label: "preview",
     addedAt: "2026-07-11",
   },
-
-  // ────── HEALTH & WELLNESS ──────
   {
     slug: "delmar-dental-medicine",
     name: "Delmar Dental Medicine",
