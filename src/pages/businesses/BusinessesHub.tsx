@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
 import {
   Search,
   ArrowRight,
@@ -20,6 +21,13 @@ import {
   type BusinessSpotlight,
   type SpotlightLabel,
 } from "@/data/businessSpotlights";
+import {
+  PREVIEW_BUSINESSES,
+  PREVIEW_LABEL_TEXT,
+  type PreviewBusiness,
+  type PreviewLabel,
+  type PreviewGroup,
+} from "@/data/previewBusinesses";
 import { categoryToSlug } from "@/lib/categorySlug";
 
 import imgRestaurants from "@/assets/category-restaurants.jpg";
@@ -129,6 +137,79 @@ const BusinessCard = ({ s }: { s: BusinessSpotlight }) => {
     </Link>
   );
 };
+/* ---------- Preview chip + card ---------- */
+const previewChipClass = (label: PreviewLabel) => {
+  switch (label) {
+    case "spotlight":
+      return "border-[#5eead4]/60 text-[#5eead4] bg-[#5eead4]/5";
+    case "owner_verified":
+      return "border-[#c9a449]/60 text-[#c9a449] bg-[#c9a449]/5";
+    case "owner_review_pending":
+      return "border-white/25 text-white/85 bg-white/[0.04]";
+    case "preview":
+    default:
+      return "border-white/15 text-white/75 bg-white/[0.03]";
+  }
+};
+
+const PreviewChip = ({ label }: { label: PreviewLabel }) => (
+  <span
+    className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-[0.18em] uppercase border backdrop-blur ${previewChipClass(
+      label
+    )}`}
+  >
+    {PREVIEW_LABEL_TEXT[label]}
+  </span>
+);
+
+const PreviewCard = ({ b }: { b: PreviewBusiness }) => {
+  const href = b.customRoute ?? `/business/${b.slug}`;
+  const claimHref = `/claim-business?slug=${encodeURIComponent(b.slug)}`;
+  const displayCat = b.displayCategory ?? b.category;
+  const canClaim = b.label !== "owner_verified";
+  return (
+    <article className="group flex flex-col rounded-2xl overflow-hidden border border-white/[0.08] bg-white/[0.03] hover:border-[#0d6e66]/50 transition">
+      <Link to={href} className="block p-5 flex-1">
+        <div className="flex items-start justify-between gap-3">
+          <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/50">
+            {displayCat} · {b.town}
+          </p>
+          <PreviewChip label={b.label} />
+        </div>
+        <h3 className="mt-3 text-lg font-semibold tracking-tight group-hover:text-[#5eead4] transition">
+          {b.name}
+        </h3>
+        <p className="mt-2 text-sm text-white/65 line-clamp-3">{b.summary}</p>
+      </Link>
+      <div className="px-5 pb-5 pt-1 flex items-center justify-between gap-3">
+        <Link
+          to={href}
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5eead4] hover:text-white transition"
+        >
+          Explore Profile <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
+        {canClaim && (
+          <Link
+            to={claimHref}
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/70 hover:text-white transition"
+          >
+            Claim or Update
+          </Link>
+        )}
+      </div>
+    </article>
+  );
+};
+
+const PREVIEW_GROUPS: PreviewGroup[] = [
+  "Food & Drink",
+  "Home & Property",
+  "Professional Services",
+  "Health & Wellness",
+  "Retail & Lifestyle",
+  "Nonprofit & Community",
+];
+
 
 const BusinessesHub = () => {
   const canonical = "https://www.capitaldistrictnest.com/businesses";
@@ -144,6 +225,26 @@ const BusinessesHub = () => {
     .filter((s) => s.addedAt)
     .sort((a, b) => (b.addedAt! > a.addedAt! ? 1 : -1))
     .slice(0, 8);
+
+  const [groupFilter, setGroupFilter] = useState<PreviewGroup | "All">("All");
+  const [townFilter, setTownFilter] = useState<string>("All");
+
+  const previewTowns = useMemo(
+    () =>
+      Array.from(new Set(PREVIEW_BUSINESSES.map((b) => b.town))).sort(),
+    []
+  );
+
+  const visiblePreviews = useMemo(
+    () =>
+      PREVIEW_BUSINESSES.filter(
+        (b) =>
+          (groupFilter === "All" || b.categoryGroup === groupFilter) &&
+          (townFilter === "All" || b.town === townFilter)
+      ),
+    [groupFilter, townFilter]
+  );
+
 
   const rooseveltTemplate = BUSINESS_SPOTLIGHTS.find(
     (s) => s.slug === "the-roosevelt-room"
@@ -329,6 +430,91 @@ const BusinessesHub = () => {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Founding Business Previews */}
+      <section
+        id="founding-previews"
+        className="px-6 md:px-10 pb-20 md:pb-28 border-t border-white/[0.06] pt-16 md:pt-24"
+      >
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-8 max-w-2xl">
+            <p className="text-[11px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+              Founding Business Previews
+            </p>
+            <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
+              Local businesses we're preparing to feature.
+            </h2>
+            <p className="mt-4 text-white/70">
+              These profiles use verified public information and are awaiting
+              owner review, approved media, and additional business details.
+            </p>
+          </div>
+
+          {/* Filters */}
+          <div className="flex flex-col gap-3 mb-8">
+            <div className="flex flex-wrap gap-2">
+              {(["All", ...PREVIEW_GROUPS] as const).map((g) => (
+                <button
+                  key={g}
+                  onClick={() => setGroupFilter(g as PreviewGroup | "All")}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold border transition ${
+                    groupFilter === g
+                      ? "border-[#5eead4] text-[#5eead4] bg-[#5eead4]/10"
+                      : "border-white/15 text-white/70 hover:border-white/30 hover:text-white"
+                  }`}
+                >
+                  {g}
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/40 mr-1">
+                Town
+              </span>
+              <button
+                onClick={() => setTownFilter("All")}
+                className={`px-3 py-1 rounded-full text-xs border transition ${
+                  townFilter === "All"
+                    ? "border-white/40 text-white bg-white/[0.08]"
+                    : "border-white/10 text-white/60 hover:text-white hover:border-white/25"
+                }`}
+              >
+                All towns
+              </button>
+              {previewTowns.map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setTownFilter(t)}
+                  className={`px-3 py-1 rounded-full text-xs border transition ${
+                    townFilter === t
+                      ? "border-white/40 text-white bg-white/[0.08]"
+                      : "border-white/10 text-white/60 hover:text-white hover:border-white/25"
+                  }`}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {visiblePreviews.length === 0 ? (
+            <p className="text-white/50 text-sm">
+              No previews match those filters yet.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {visiblePreviews.map((b) => (
+                <PreviewCard key={b.slug} b={b} />
+              ))}
+            </div>
+          )}
+
+          <p className="mt-8 text-xs text-white/45">
+            Showing {visiblePreviews.length} of {PREVIEW_BUSINESSES.length}{" "}
+            founding previews.
+          </p>
         </div>
       </section>
 

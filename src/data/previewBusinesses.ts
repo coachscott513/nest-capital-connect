@@ -11,16 +11,22 @@ export type PreviewLabel =
   | "owner_review_pending"
   | "owner_verified";
 
+export type PreviewGroup =
+  | "Food & Drink"
+  | "Home & Property"
+  | "Professional Services"
+  | "Health & Wellness"
+  | "Retail & Lifestyle"
+  | "Nonprofit & Community";
+
 export interface PreviewBusiness {
   slug: string;
   name: string;
+  /** Parent taxonomy — must be one of the 54 official categories. */
   category: OfficialCategory;
-  categoryGroup:
-    | "Food & Drink"
-    | "Home & Property"
-    | "Professional Services"
-    | "Health & Wellness"
-    | "Retail & Lifestyle";
+  /** Optional precise label shown to users (e.g. "Mortgage Lending"). */
+  displayCategory?: string;
+  categoryGroup: PreviewGroup;
   town: string;
   county?: string;
   summary: string;
@@ -162,6 +168,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
     slug: "christie-hoyt-mortgage-team",
     name: "Christie Hoyt Mortgage Team",
     category: "Banking and Finance",
+    displayCategory: "Mortgage Lending",
     categoryGroup: "Professional Services",
     town: "Capital District",
     summary:
@@ -184,7 +191,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "denofio-insurance-agency",
     name: "Denofio Insurance Agency",
-    category: "Banking and Finance",
+    category: "Insurance",
     categoryGroup: "Professional Services",
     town: "Niskayuna",
     county: "Schenectady",
@@ -196,7 +203,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
   {
     slug: "marvin-and-company",
     name: "Marvin and Company, P.C.",
-    category: "Banking and Finance",
+    category: "Accounting",
     categoryGroup: "Professional Services",
     town: "Latham",
     county: "Albany",
@@ -209,6 +216,7 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
     slug: "pyramid-brokerage-company",
     name: "Pyramid Brokerage Company",
     category: "Real Estate",
+    displayCategory: "Commercial Real Estate",
     categoryGroup: "Professional Services",
     town: "Albany",
     county: "Albany",
@@ -217,8 +225,6 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
     label: "preview",
     addedAt: "2026-07-11",
   },
-
-  // ────── HEALTH & WELLNESS ──────
   {
     slug: "delmar-dental-medicine",
     name: "Delmar Dental Medicine",
@@ -306,17 +312,6 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
     addedAt: "2026-07-11",
   },
   {
-    slug: "capital-district-photography",
-    name: "Capital District Photography",
-    category: "Photography",
-    categoryGroup: "Retail & Lifestyle",
-    town: "Capital District",
-    summary:
-      "Placeholder slot for a founding photographer preview. Awaiting verified selection before publication.",
-    label: "owner_review_pending",
-    addedAt: "2026-07-11",
-  },
-  {
     slug: "lia-auto-group",
     name: "Lia Auto Group",
     category: "Automotive Sales",
@@ -328,11 +323,13 @@ export const PREVIEW_BUSINESSES: PreviewBusiness[] = [
     label: "preview",
     addedAt: "2026-07-11",
   },
+
+  // ────── NONPROFIT & COMMUNITY ──────
   {
     slug: "regional-food-bank-of-northeastern-ny",
     name: "Regional Food Bank of Northeastern New York",
     category: "Nonprofit",
-    categoryGroup: "Retail & Lifestyle",
+    categoryGroup: "Nonprofit & Community",
     town: "Latham",
     county: "Albany",
     summary:

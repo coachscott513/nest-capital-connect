@@ -81,7 +81,7 @@ export default function BusinessPreviewPage() {
           className="text-[11px] font-semibold tracking-[0.28em] uppercase"
           style={{ color: TEAL }}
         >
-          {business.category}
+          {business.displayCategory ?? business.category}
         </p>
         <h1 className="mt-3 text-4xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.03]">
           {business.name}
