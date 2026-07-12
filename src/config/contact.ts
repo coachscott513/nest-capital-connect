@@ -22,7 +22,7 @@ export const PHONE_TEL = `tel:${PHONE_RAW}`;
 export const PHONE_SMS = `sms:${PHONE_RAW}`;
 
 // ─── Public emails ────────────────────────────────────────────────────────────
-export const GENERAL_EMAIL = "hello@capitaldistrictnest.com";
+export const GENERAL_EMAIL = "team@capitaldistrictnest.com";
 export const MEDIA_EMAIL = "media@capitaldistrictnest.com";
 export const BUSINESS_EMAIL = "business@capitaldistrictnest.com";
 export const SUPPORT_EMAIL = "support@capitaldistrictnest.com";

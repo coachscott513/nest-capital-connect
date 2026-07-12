@@ -24,7 +24,7 @@ Alvarez as founder.
 
 **Centralized contact config: `src/config/contact.ts`**
 - `PHONE_DISPLAY = "(518) 981-2248"` · `PHONE_TEL = "tel:+15189812248"` (Follow Up Boss business line)
-- `GENERAL_EMAIL = "hello@..."` · `MEDIA_EMAIL = "media@..."` · `BUSINESS_EMAIL = "business@..."` · `SUPPORT_EMAIL = "support@..."`
+- `GENERAL_EMAIL = "team@..."` · `MEDIA_EMAIL = "media@..."` · `BUSINESS_EMAIL = "business@..."` · `SUPPORT_EMAIL = "support@..."`
 - `EDITORIAL_TEAM = "Capital District Nest Editorial Team"`
 - `SCOTT_*` constants exist for real-estate-only usage.
 
