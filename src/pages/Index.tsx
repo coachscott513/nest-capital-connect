@@ -120,7 +120,7 @@ function EditorialHero() {
   );
 }
 
-// ─── FEATURED THIS WEEK ──────────────────────────────────────────────────────
+// ─── CURRENTLY FEATURED ──────────────────────────────────────────────────────
 type FeaturedCard = {
   eyebrow: string;
   title: string;
@@ -128,6 +128,7 @@ type FeaturedCard = {
   to: string;
   image?: string;
   span?: "large" | "small";
+  badge?: string;
 };
 
 function FeaturedThisWeek() {
@@ -139,6 +140,7 @@ function FeaturedThisWeek() {
       to: "/business/roosevelt-room",
       image: partnerRooseveltImg,
       span: "large",
+      badge: "Spotlight Template",
     },
     {
       eyebrow: "Industrial Spotlight",
@@ -147,6 +149,7 @@ function FeaturedThisWeek() {
       to: "/business/cassone",
       image: heroBusinessWide,
       span: "large",
+      badge: "Profile Preview",
     },
     {
       eyebrow: "Weekend Guide",
@@ -185,7 +188,7 @@ function FeaturedThisWeek() {
           className="max-w-3xl"
         >
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
-            Featured This Week
+            Currently Featured
           </p>
           <h2 className="mt-4 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02] text-white">
             The stories worth your time.
@@ -228,6 +231,11 @@ function FeaturedCardEl({ card, index, large }: { card: FeaturedCard; index: num
               loading="lazy"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
             />
+          )}
+          {card.badge && (
+            <span className="absolute top-4 left-4 z-10 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-[0.18em] uppercase bg-black/60 border border-white/20 text-white/90 backdrop-blur">
+              {card.badge}
+            </span>
           )}
           <div
             className="absolute inset-0"
