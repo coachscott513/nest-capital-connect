@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
-import { PREVIEW_BUSINESSES } from "@/data/previewBusinesses";
+import { PREVIEW_BUSINESSES } from "@/data/PREVIEW_BUSINESSES";
 import {
   Rocket,
   Mail,
@@ -83,10 +83,10 @@ export default function AdminLaunchDashboard() {
     })();
   }, []);
 
-  const spotlightsPublished = previewBusinesses.filter(
+  const spotlightsPublished = PREVIEW_BUSINESSES.filter(
     (b) => b.label === "spotlight" || b.label === "owner_verified"
   ).length;
-  const previewsLive = previewBusinesses.length;
+  const previewsLive = PREVIEW_BUSINESSES.length;
   const sopsDone = SOP_LIST.filter((s) => s.done).length;
 
   const cards = [
