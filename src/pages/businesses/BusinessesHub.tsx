@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
 import {
   Search,
   ArrowRight,
@@ -20,6 +21,13 @@ import {
   type BusinessSpotlight,
   type SpotlightLabel,
 } from "@/data/businessSpotlights";
+import {
+  PREVIEW_BUSINESSES,
+  PREVIEW_LABEL_TEXT,
+  type PreviewBusiness,
+  type PreviewLabel,
+  type PreviewGroup,
+} from "@/data/previewBusinesses";
 import { categoryToSlug } from "@/lib/categorySlug";
 
 import imgRestaurants from "@/assets/category-restaurants.jpg";
