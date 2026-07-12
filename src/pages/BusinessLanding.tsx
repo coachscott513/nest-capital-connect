@@ -211,7 +211,7 @@ const BusinessLanding = () => {
       toast.success("Request received — we'll follow up shortly.");
     } catch (err) {
       console.error(err);
-      toast.error("Couldn't submit. Please call/text (518) 522-7265.");
+      toast.error("Couldn't submit. Please call/text (518) 981-2248.");
     } finally {
       setSubmitting(false);
     }
@@ -459,7 +459,7 @@ const BusinessLanding = () => {
               <p className="mt-3 text-white/70">
                 Capital District Nest received your request. We'll review your business profile and follow up with next steps.
                 {" "}Prefer to talk now? Call or text{" "}
-                <a href="tel:+15185227265" className="text-[#5eead4] underline">(518) 522-7265</a>.
+                <a href="tel:+15189812248" className="text-[#5eead4] underline">(518) 981-2248</a>.
               </p>
             </div>
           ) : (
@@ -524,7 +524,7 @@ const BusinessLanding = () => {
               </button>
               <p className="text-xs text-white/45 text-center">
                 Or call/text directly:{" "}
-                <a href="tel:+15185227265" className="text-[#5eead4]">(518) 522-7265</a>
+                <a href="tel:+15189812248" className="text-[#5eead4]">(518) 981-2248</a>
               </p>
             </form>
           )}
