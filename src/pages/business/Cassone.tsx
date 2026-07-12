@@ -279,15 +279,6 @@ const Cassone = () => {
         </div>
       </section>
 
-      {/* =========================== NUMBERS =========================== */}
-      <section className="border-t border-white/[0.06]">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-24 md:py-32">
-          <Eyebrow>At a glance</Eyebrow>
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-14">
-            {stats.map((s) => (
-              <div key={s.label} className="relative">
-                <div
-                  className="text-5xl md:text-7xl font-semibold tracking-[-0.045em] leading-[0.9]"
       {/* =========================== AT A GLANCE =========================== */}
       <section className="border-t border-white/[0.06]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-24 md:py-32">
