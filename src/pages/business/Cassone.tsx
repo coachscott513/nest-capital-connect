@@ -150,11 +150,20 @@ const solutions = [
   },
 ];
 
-const stats: { value: string; label: string; verified: boolean }[] = [
-  { value: "50+", label: "Years in modular space", verified: true },
-  { value: "Northeast", label: "Regional coverage", verified: true },
-  { value: "Commercial · Industrial · Government", label: "Sectors served", verified: true },
-  { value: "Family-Owned", label: "Ownership", verified: false },
+const glanceStates = [
+  "New York",
+  "New Jersey",
+  "Connecticut",
+  "Pennsylvania",
+  "Massachusetts",
+];
+
+const glanceSolutions = [
+  "Construction",
+  "Commercial",
+  "Education",
+  "Healthcare",
+  "Government",
 ];
 
 const serviceAreas = [
