@@ -1,184 +1,34 @@
 import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
-import { ArrowRight, Sparkles, Newspaper, CalendarDays, Building2, Wallet, Compass, Store, MapPin, X, Phone, Globe, Calendar, Music, Navigation } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
-import SpotlightSearch from "@/components/home/SpotlightSearch";
-import FloatingOmniSearch from "@/components/home/FloatingOmniSearch";
-import CategoryFeatureGrid from "@/components/home/CategoryFeatureGrid";
-import EndlessEntertainment from "@/components/home/EndlessEntertainment";
-import WellnessRail from "@/components/home/WellnessRail";
-import TownExplorerSection from "@/components/home/TownExplorerSection";
-import NewTownListingsTeaser from "@/components/home/NewTownListingsTeaser";
 import { localBusinessSchema } from "@/utils/seoSchemas";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import { trackGAEvent } from "@/components/GARouteTracker";
 
 import heroTownsWide from "@/assets/hero-towns-wide.jpg";
-import heroMediaWide from "@/assets/hero-media-wide.jpg";
-import heroEventsWide from "@/assets/hero-events-wide.jpg";
 import heroBusinessWide from "@/assets/hero-business-wide.jpg";
-import heroFinanceWide from "@/assets/hero-finance-wide.jpg";
-import heroOwnersWide from "@/assets/hero-owners-wide.jpg";
 import heroDiscoveryWide from "@/assets/hero-discovery-wide.jpg";
-import partnerChristieImg from "@/assets/partner-christie.jpg";
-import partnerDgLawImg from "@/assets/partner-dglaw.jpg";
+import heroEventsWide from "@/assets/hero-events-wide.jpg";
 import partnerRooseveltImg from "@/assets/partner-roosevelt.jpg";
 
 /* =============================================================
-   CAPITAL DISTRICT NEST — HOMEPAGE
-   Apple-style cinematic product launch page.
+   CAPITAL DISTRICT NEST — HOMEPAGE V2
+   The Digital Front Door of the Capital District.
+   Editorial. Confident. Uncluttered.
+   Structure:
+     1. Typographic hero
+     2. Featured This Week (5 editorial cards)
+     3. Explore the Capital District (4 gateways)
+     4. Grow Your Business (Apple-style refined)
    ============================================================= */
 
-type CTA = { label: string; to?: string; onClick?: () => void };
-
-type AppleHeroProps = {
-  id?: string;
-  eyebrow: string;
-  EyebrowIcon?: React.ComponentType<{ className?: string }>;
-  headline: React.ReactNode;
-  sub: string;
-  primary: CTA;
-  secondary?: CTA;
-  bgImage?: string;
-  overlay?: "soft" | "strong" | "medium";
-  glow?: "teal" | "violet" | "amber" | "graphite";
-  align?: "center" | "left";
-  liveBadge?: string;
-  showRadar?: boolean;
-  className?: string;
-};
-
-const GLOW_BG: Record<NonNullable<AppleHeroProps["glow"]>, string> = {
-  teal:
-    "radial-gradient(55% 55% at 50% 35%, rgba(94,234,212,0.10), transparent 65%), radial-gradient(45% 60% at 15% 85%, rgba(13,110,102,0.18), transparent 70%)",
-  violet:
-    "radial-gradient(55% 55% at 50% 30%, rgba(167,139,250,0.10), transparent 65%), radial-gradient(45% 60% at 80% 80%, rgba(94,234,212,0.10), transparent 70%)",
-  amber:
-    "radial-gradient(55% 55% at 50% 30%, rgba(201,168,76,0.10), transparent 65%), radial-gradient(45% 60% at 20% 80%, rgba(13,110,102,0.18), transparent 70%)",
-  graphite:
-    "radial-gradient(55% 55% at 50% 30%, rgba(255,255,255,0.05), transparent 65%), radial-gradient(45% 60% at 80% 80%, rgba(13,110,102,0.14), transparent 70%)",
-};
-
-function CTAButton({ cta, variant = "primary" }: { cta: CTA; variant?: "primary" | "secondary" }) {
-  const className =
-    variant === "primary"
-      ? "inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
-      : "inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.08] backdrop-blur text-white border border-white/20 text-sm font-semibold hover:bg-white/[0.16] transition";
-  const content = (
-    <>
-      {cta.label}
-      {variant === "primary" && <ArrowRight className="w-4 h-4" />}
-    </>
-  );
-  if (cta.onClick && !cta.to) {
-    return (
-      <button type="button" onClick={cta.onClick} className={className}>
-        {content}
-      </button>
-    );
-  }
-  return (
-    <Link to={cta.to ?? "#"} onClick={cta.onClick} className={className}>
-      {content}
-    </Link>
-  );
-}
-
-function AppleHero({
-  id, eyebrow, EyebrowIcon, headline, sub, primary, secondary,
-  bgImage, overlay = "soft", glow = "teal", align = "center",
-  liveBadge, showRadar, className = "",
-}: AppleHeroProps) {
-  const alignClasses = align === "center" ? "text-center mx-auto" : "text-left";
-  const overlayGradient =
-    overlay === "strong"
-      ? "linear-gradient(to bottom, rgba(11,15,25,0.92) 0%, rgba(11,15,25,0.78) 45%, rgba(11,15,25,0.92) 100%)"
-      : overlay === "medium"
-      ? "linear-gradient(to bottom, rgba(11,15,25,0.85) 0%, rgba(11,15,25,0.62) 45%, rgba(11,15,25,0.90) 100%)"
-      : "linear-gradient(to bottom, rgba(11,15,25,0.82) 0%, rgba(11,15,25,0.55) 45%, rgba(11,15,25,0.88) 100%)";
-
-  return (
-    <section
-      id={id}
-      className={`relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06] ${className}`}
-    >
-      {bgImage ? (
-        <>
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ backgroundImage: `url(${bgImage})`, backgroundSize: "cover", backgroundPosition: "center" }}
-            aria-hidden
-          />
-          <div className="absolute inset-0 pointer-events-none" style={{ background: overlayGradient }} aria-hidden />
-          {/* vignette */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: "radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,0.55) 100%)" }}
-            aria-hidden
-          />
-        </>
-      ) : (
-        <div className="absolute inset-0 pointer-events-none" style={{ background: GLOW_BG[glow] }} aria-hidden />
-      )}
-
-      {showRadar && (
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-center" aria-hidden>
-          <div className="relative w-[520px] h-[520px] max-w-[80vw] max-h-[80vw] opacity-40">
-            <span className="absolute inset-0 rounded-full border border-[#5eead4]/20 animate-[ping_3.5s_ease-out_infinite]" />
-            <span className="absolute inset-[12%] rounded-full border border-[#5eead4]/15 animate-[ping_3.5s_ease-out_infinite] [animation-delay:.8s]" />
-            <span className="absolute inset-[28%] rounded-full border border-[#5eead4]/10 animate-[ping_3.5s_ease-out_infinite] [animation-delay:1.6s]" />
-            <span className="absolute inset-[44%] rounded-full bg-[#5eead4]/15 blur-2xl" />
-          </div>
-        </div>
-      )}
-
-      <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 min-h-[80svh] md:min-h-[88svh] flex items-center py-24 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className={`w-full max-w-4xl ${alignClasses}`}
-        >
-          <p className={`inline-flex items-center gap-2 text-[11px] md:text-xs font-semibold tracking-[0.3em] uppercase text-[#5eead4] ${align === "center" ? "justify-center" : ""}`}>
-            {EyebrowIcon && <EyebrowIcon className="w-3 h-3" />}
-            {eyebrow}
-          </p>
-          {liveBadge && (
-            <p className={`mt-3 inline-flex items-center gap-2 text-[10px] md:text-[11px] font-semibold tracking-wider uppercase text-white/70 px-3 py-1 rounded-full border border-[#5eead4]/30 bg-[#5eead4]/[0.06] ${align === "center" ? "" : ""}`}>
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#5eead4] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#5eead4]" />
-              </span>
-              {liveBadge}
-            </p>
-          )}
-          <h2 className="mt-6 text-[2.5rem] sm:text-5xl md:text-[4.5rem] lg:text-[5.25rem] font-semibold tracking-[-0.04em] leading-[1.0] text-white">
-            {headline}
-          </h2>
-          <p className={`mt-7 text-base md:text-xl text-white/75 font-light leading-relaxed max-w-2xl ${align === "center" ? "mx-auto" : ""}`}>
-            {sub}
-          </p>
-          <div className={`mt-10 flex flex-wrap items-center gap-3 ${align === "center" ? "justify-center" : ""}`}>
-            <CTAButton cta={primary} variant="primary" />
-            {secondary && <CTAButton cta={secondary} variant="secondary" />}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ============== Hero 1 — Editorial Entrance ============== */
-function CinematicHero() {
+// ─── HERO ────────────────────────────────────────────────────────────────────
+function EditorialHero() {
   return (
     <section className="relative w-full overflow-hidden bg-[#0B0F19]">
-      {/* Subtle dark editorial gradient */}
+      {/* Subtle editorial ambient glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -212,12 +62,11 @@ function CinematicHero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10 md:mt-14 text-[3rem] sm:text-6xl md:text-[6rem] lg:text-[7.5rem] font-semibold tracking-[-0.045em] leading-[0.95] text-white"
+              className="mt-10 md:mt-14 text-[3rem] sm:text-6xl md:text-[6rem] lg:text-[7.25rem] font-semibold tracking-[-0.045em] leading-[0.95] text-white"
             >
               <span className="block">The Capital District.</span>
-              <span className="block mt-2 md:mt-3">Beautifully organized.</span>
               <span className="block mt-2 md:mt-3 bg-gradient-to-r from-white via-white to-[#5eead4] bg-clip-text text-transparent">
-                Everything local.
+                Beautifully organized.
               </span>
             </motion.h1>
 
@@ -227,9 +76,8 @@ function CinematicHero() {
               transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="mt-10 md:mt-14 text-lg md:text-2xl text-white/70 max-w-2xl mx-auto font-light leading-[1.5]"
             >
-              Discover neighborhoods. Find exceptional local businesses. Search homes.
-              Explore events. Everything happening across New York's Capital District —
-              in one beautiful place.
+              Discover neighborhoods. Explore local businesses. Search homes.
+              Experience the Capital District through one trusted local platform.
             </motion.p>
 
             <motion.div
@@ -238,17 +86,17 @@ function CinematicHero() {
               transition={{ duration: 1, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
               className="mt-14 md:mt-16 flex flex-col items-center gap-6"
             >
-              <Link
-                to="#explore-capital-district"
+              <a
+                href="#featured-this-week"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById("explore-capital-district")?.scrollIntoView({ behavior: "smooth" });
+                  document.getElementById("featured-this-week")?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="group inline-flex items-center gap-3 px-9 py-4 rounded-full bg-[#0d6e66] text-white text-[15px] font-semibold hover:bg-[#0d6e66]/90 hover:-translate-y-0.5 transition-all shadow-[0_20px_50px_-20px_rgba(94,234,212,0.5)]"
               >
-                Explore the Capital District
+                Explore
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
+              </a>
 
               <p className="text-[13px] text-white/50 font-light">
                 Own a local business?{" "}
@@ -256,7 +104,7 @@ function CinematicHero() {
                   to="/for-businesses"
                   className="text-white/75 hover:text-[#5eead4] underline underline-offset-4 decoration-white/20 hover:decoration-[#5eead4]/60 transition-colors"
                 >
-                  Explore Nest for Business →
+                  Grow Your Business →
                 </Link>
               </p>
             </motion.div>
@@ -272,27 +120,157 @@ function CinematicHero() {
   );
 }
 
-/* ============== Explore the Capital District — 4 editorial cards ============== */
-type ExploreCard = {
+// ─── FEATURED THIS WEEK ──────────────────────────────────────────────────────
+type FeaturedCard = {
+  eyebrow: string;
   title: string;
   copy: string;
-  cta: string;
   to: string;
-  image: string;
+  image?: string;
+  span?: "large" | "small";
 };
 
+function FeaturedThisWeek() {
+  const cards: FeaturedCard[] = [
+    {
+      eyebrow: "Business Spotlight",
+      title: "Roosevelt Room",
+      copy: "Dinner, craft cocktails, and live jazz in downtown Albany.",
+      to: "/business/roosevelt-room",
+      image: partnerRooseveltImg,
+      span: "large",
+    },
+    {
+      eyebrow: "Industrial Spotlight",
+      title: "Cassone",
+      copy: "Space when you need it — modular buildings, trailers, and storage across the Northeast.",
+      to: "/business/cassone",
+      image: heroBusinessWide,
+      span: "large",
+    },
+    {
+      eyebrow: "Weekend Guide",
+      title: "This week in the Capital District",
+      copy: "Concerts, restaurant openings, farm markets, and family events.",
+      to: "/weekly",
+      image: heroEventsWide,
+    },
+    {
+      eyebrow: "Neighborhood",
+      title: "Living in Delmar",
+      copy: "Schools, shops, and the quiet corners of Bethlehem.",
+      to: "/living-in/delmar",
+      image: heroTownsWide,
+    },
+    {
+      eyebrow: "Homes",
+      title: "Smart Home Search",
+      copy: "Search by neighborhood, price, or investment potential.",
+      to: "/homes/search",
+      image: heroDiscoveryWide,
+    },
+  ];
+
+  return (
+    <section
+      id="featured-this-week"
+      className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06] scroll-mt-20"
+    >
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-28 md:py-36">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl"
+        >
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+            Featured This Week
+          </p>
+          <h2 className="mt-4 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02] text-white">
+            The stories worth your time.
+          </h2>
+        </motion.div>
+
+        {/* 2 large cards + 3 smaller cards */}
+        <div className="mt-14 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
+          {cards.slice(0, 2).map((card, i) => (
+            <FeaturedCardEl key={card.title} card={card} index={i} large />
+          ))}
+        </div>
+        <div className="mt-6 md:mt-7 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-7">
+          {cards.slice(2).map((card, i) => (
+            <FeaturedCardEl key={card.title} card={card} index={i + 2} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FeaturedCardEl({ card, index, large }: { card: FeaturedCard; index: number; large?: boolean }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 26 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.9, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <Link
+        to={card.to}
+        className="group relative block rounded-[28px] overflow-hidden border border-white/[0.08] bg-white/[0.02] hover:border-[#5eead4]/30 hover:-translate-y-1 transition-all duration-500 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6)]"
+      >
+        <div className={`relative overflow-hidden ${large ? "aspect-[16/10]" : "aspect-[4/5]"}`}>
+          {card.image && (
+            <img
+              src={card.image}
+              alt={card.title}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+            />
+          )}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(11,15,25,0.15) 0%, rgba(11,15,25,0.55) 55%, rgba(11,15,25,0.92) 100%)",
+            }}
+            aria-hidden
+          />
+          <div className="absolute inset-0 flex flex-col justify-end p-7 md:p-9">
+            <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+              {card.eyebrow}
+            </p>
+            <h3 className={`mt-3 font-semibold tracking-[-0.02em] leading-[1.05] text-white ${large ? "text-3xl md:text-[2.5rem]" : "text-2xl md:text-3xl"}`}>
+              {card.title}
+            </h3>
+            <p className={`mt-3 text-white/75 font-light leading-relaxed ${large ? "text-[15px] md:text-base max-w-md" : "text-[14px]"}`}>
+              {card.copy}
+            </p>
+            <div className="mt-5 inline-flex items-center gap-2 text-[13px] font-semibold text-[#5eead4] group-hover:gap-3 transition-all">
+              Read
+              <ArrowRight className="w-4 h-4" />
+            </div>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
+
+// ─── EXPLORE THE CAPITAL DISTRICT — 4 GATEWAYS ───────────────────────────────
 function ExploreCapitalDistrict() {
-  const cards: ExploreCard[] = [
+  const cards = [
     {
       title: "Living Here",
-      copy: "Neighborhoods, schools, parks and everything that makes each town unique.",
+      copy: "Neighborhoods, schools, parks, and everything that makes each town unique.",
       cta: "Explore Towns",
       to: "/communities",
       image: heroTownsWide,
     },
     {
       title: "Local Businesses",
-      copy: "Editorial features highlighting restaurants, shops, contractors, cafés and the businesses that shape our communities.",
+      copy: "Editorial features on the restaurants, shops, contractors, and cafés that shape the region.",
       cta: "Browse Businesses",
       to: "/businesses",
       image: heroBusinessWide,
@@ -306,9 +284,9 @@ function ExploreCapitalDistrict() {
     },
     {
       title: "What's Happening",
-      copy: "Events, festivals, farmers markets and community happenings across the region.",
+      copy: "Events, festivals, farm markets, and community happenings across the Capital District.",
       cta: "Explore Events",
-      to: "/local",
+      to: "/weekly",
       image: heroEventsWide,
     },
   ];
@@ -326,12 +304,12 @@ function ExploreCapitalDistrict() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl"
         >
-          <h2 className="text-4xl md:text-6xl lg:text-[4.5rem] font-semibold tracking-[-0.04em] leading-[1.02] text-white">
-            Explore the Capital District
-          </h2>
-          <p className="mt-6 text-lg md:text-xl text-white/60 font-light">
-            Choose how you'd like to explore.
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+            Four ways in
           </p>
+          <h2 className="mt-4 text-4xl md:text-6xl lg:text-[4.5rem] font-semibold tracking-[-0.04em] leading-[1.02] text-white">
+            Explore the Capital District.
+          </h2>
         </motion.div>
 
         <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
@@ -354,7 +332,6 @@ function ExploreCapitalDistrict() {
                     loading="lazy"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
                   />
-                  {/* Editorial glass overlay */}
                   <div
                     className="absolute inset-0"
                     style={{
@@ -363,7 +340,6 @@ function ExploreCapitalDistrict() {
                     }}
                     aria-hidden
                   />
-
                   <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10">
                     <h3 className="text-3xl md:text-4xl lg:text-[2.75rem] font-semibold tracking-[-0.03em] leading-[1.05] text-white">
                       {card.title}
@@ -386,659 +362,120 @@ function ExploreCapitalDistrict() {
   );
 }
 
-/* ============== Featured Partners Section ============== */
-type Partner = {
-  id: string;
-  name: string;
-  category: string;
-  town: string;
-  address?: string;
-  mapsQuery?: string;
-  tagline: string;
-  promo?: string;
-  promoHighlight?: boolean;
-  website: string;
-  phone?: string;
-  image: string;
-  primary: { label: string; href: string };
-  secondary: { label: string; href: string }[];
-  accent: string;
-};
+// ─── GROW YOUR BUSINESS ──────────────────────────────────────────────────────
+function GrowYourBusiness() {
+  const features = [
+    { title: "Editorial Spotlight", body: "A long-form, photography-led profile of your business." },
+    { title: "Local Search", body: "Show up in town and category searches across the platform." },
+    { title: "Website Review", body: "A practical audit of what's working and what to fix." },
+    { title: "Google Business Review", body: "Sharpen the profile most customers see first." },
+    { title: "SEO Foundation", body: "Structured schema, clean URLs, and the technical baseline." },
+    { title: "Customer Inquiry Tools", body: "Quote forms, booking links, and one-tap contact." },
+    { title: "Automation", body: "Simple workflows so the small stuff runs itself." },
+    { title: "Content Help", body: "AI-assisted copy, replies, and FAQs — reviewed by editors." },
+    { title: "Business Spotlight", body: "Featured placement across the Nest editorial surface." },
+    { title: "Business Dashboard", body: "Track profile performance and leads.", soon: true },
+  ];
 
-const PARTNERS: Partner[] = [
-  {
-    id: "christie",
-    name: "Christie Hoyt Mortgage Team",
-    category: "Mortgage / Home Lending",
-    town: "Capital District",
-    tagline: "Local mortgage guidance from a trusted Broadview lending team — for first-time buyers, move-ups, and investors.",
-    website: "https://www.broadviewfcu.com/personal/home-lending-solutions/meet-the-mortgage-team/christie-hoyt/",
-    image: partnerChristieImg,
-    primary: { label: "Connect with Christie", href: "https://www.broadviewfcu.com/personal/home-lending-solutions/meet-the-mortgage-team/christie-hoyt/" },
-    secondary: [
-      { label: "Apply Now", href: "https://www.broadviewfcu.com/personal/home-lending-solutions/" },
-      { label: "Website", href: "https://www.broadviewfcu.com/" },
-    ],
-    accent: "from-[#0d6e66] to-[#5eead4]",
-  },
-  {
-    id: "dglaw",
-    name: "D&G Law",
-    category: "Legal / Real Estate Attorney",
-    town: "Capital District",
-    tagline: "Real estate, business, and legal counsel for Capital District clients — closings, contracts, and counsel that holds up.",
-    website: "https://www.dglawny.com/",
-    image: partnerDgLawImg,
-    primary: { label: "Contact D&G Law", href: "https://www.dglawny.com/contact" },
-    secondary: [
-      { label: "Website", href: "https://www.dglawny.com/" },
-    ],
-    accent: "from-[#1e3a5f] to-[#5eead4]",
-  },
-  {
-    id: "roosevelt",
-    name: "Roosevelt Room",
-    category: "Restaurant / Cocktails / Live Jazz",
-    town: "Albany",
-    mapsQuery: "Roosevelt Room Albany NY",
-    tagline: "Dinner, craft cocktails, and a live jazz lounge in the heart of Albany.",
-    promo: "Live Jazz · Friday & Saturday Nights",
-    promoHighlight: true,
-    website: "https://rooseveltroom.com/",
-    image: partnerRooseveltImg,
-    primary: { label: "View Reservations", href: "https://rooseveltroom.com/" },
-    secondary: [
-      { label: "Menu", href: "https://rooseveltroom.com/menu" },
-      { label: "Website", href: "https://rooseveltroom.com/" },
-    ],
-    accent: "from-[#5c2018] to-[#c9a449]",
-  },
-];
-
-function partnerAnalyticsPayload(p: Partner) {
-  return {
-    business_name: p.name,
-    category: p.category,
-    town: p.town,
-    tier: "featured",
-    source_location: "homepage_featured",
-    page_path: typeof window !== "undefined" ? window.location.pathname : "/",
-  };
-}
-
-function FeaturedPartnersSection({ onOpen }: { onOpen: (p: Partner) => void }) {
   return (
-    <section
-      id="featured-partners"
-      className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06] scroll-mt-24"
-    >
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: GLOW_BG.amber }}
-        aria-hidden
-      />
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-24 md:py-32">
-        <div className="text-center max-w-3xl mx-auto">
-          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#c9a449]">
-            Premium Showcase
+    <section className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06]">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-28 md:py-40">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl"
+        >
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+            For Business
           </p>
-          <h2 className="mt-5 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.05] text-white">
-            Featured local <span className="text-[#5eead4]">partners.</span>
+          <h2 className="mt-4 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02] text-white">
+            Tell your story.<br />Grow your business.
           </h2>
-          <p className="mt-5 text-base md:text-lg text-white/70 font-light">
-            A curated set of premium Capital District businesses. Tap any partner to see profile,
-            contact, and one-tap actions.
+          <p className="mt-7 text-lg text-white/65 font-light max-w-2xl leading-relaxed">
+            Capital District Nest gives regional businesses editorial coverage,
+            local visibility, and modern tools — all in one place.
           </p>
-          <p className="mt-4 text-sm text-[#c9a449]/85 font-medium">
-            Founding local partner placements are limited — only a select group of businesses are featured during the pilot.
-          </p>
-        </div>
-
-        <div className="mt-14 grid md:grid-cols-3 gap-6">
-          {PARTNERS.map((p) => (
-            <button
-              key={p.id}
-              onClick={() => {
-                trackGAEvent.businessProfileOpen(partnerAnalyticsPayload(p));
-                onOpen(p);
-              }}
-              className="group text-left rounded-3xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-[#5eead4]/40 transition overflow-hidden flex flex-col"
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link
+              to="/for-businesses/apply"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition"
             >
-              <div className="relative h-52 overflow-hidden">
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
-                />
-                <div className={`absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent`} />
-                {p.promo && (
-                  <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#c9a449]/95 text-[#0B0F19] text-[10px] font-bold tracking-[0.14em] uppercase shadow-lg">
-                    {p.promoHighlight && <Music className="w-3 h-3" />} {p.promo}
-                  </span>
-                )}
-                <div className="absolute bottom-3 left-4 right-4">
-                  <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">{p.category}</p>
+              Apply for a Spotlight
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/pricing"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/20 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
+            >
+              See Pricing
+            </Link>
+          </div>
+        </motion.div>
+
+        {/* Horizontal scrolling feature rail */}
+        <div className="mt-16 md:mt-20 -mx-5 sm:-mx-6 md:-mx-10 px-5 sm:px-6 md:px-10 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-5 pb-4" style={{ minWidth: "min-content" }}>
+            {features.map((f) => (
+              <div
+                key={f.title}
+                className="shrink-0 w-[280px] md:w-[320px] rounded-3xl border border-white/[0.08] bg-white/[0.03] p-7 hover:border-[#5eead4]/30 hover:bg-white/[0.05] transition"
+              >
+                <div className="flex items-center justify-between">
+                  <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+                    Capability
+                  </p>
+                  {f.soon && (
+                    <span className="text-[9px] font-semibold tracking-[0.18em] uppercase text-white/50 border border-white/15 rounded-full px-2 py-0.5">
+                      Coming Soon
+                    </span>
+                  )}
                 </div>
+                <h3 className="mt-4 text-xl font-semibold text-white tracking-[-0.02em]">
+                  {f.title}
+                </h3>
+                <p className="mt-3 text-sm text-white/65 font-light leading-relaxed">
+                  {f.body}
+                </p>
               </div>
-              <div className="p-6 flex-1 flex flex-col">
-                <h3 className="text-xl font-semibold text-white">{p.name}</h3>
-                <p className="mt-3 text-sm text-white/65 flex-1">{p.tagline}</p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-[#5eead4] transition">
-                  View profile <ArrowRight className="w-4 h-4" />
-                </span>
-              </div>
-            </button>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="mt-10 text-center">
-          <Link to="/local" className="text-sm text-white/60 hover:text-white transition underline-offset-4 hover:underline">
-            Explore full business directory →
+        <p className="mt-8 text-xs text-white/40">
+          Coverage follows our{" "}
+          <Link to="/editorial-policy" className="text-[#5eead4] hover:underline">
+            editorial standards
           </Link>
-        </div>
+          . Sponsorship never buys editorial opinion.
+        </p>
       </div>
     </section>
   );
 }
 
-/* Lock body scroll while a modal is open */
-function useBodyScrollLock(active: boolean) {
-  useEffect(() => {
-    if (!active) return;
-    const { overflow, paddingRight } = document.body.style;
-    const scrollbarComp = window.innerWidth - document.documentElement.clientWidth;
-    document.body.style.overflow = "hidden";
-    if (scrollbarComp > 0) document.body.style.paddingRight = `${scrollbarComp}px`;
-    return () => {
-      document.body.style.overflow = overflow;
-      document.body.style.paddingRight = paddingRight;
-    };
-  }, [active]);
-}
-
-function PartnerModal({ partner, onClose }: { partner: Partner | null; onClose: () => void }) {
-  useBodyScrollLock(!!partner);
-  useEffect(() => {
-    if (!partner) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [partner, onClose]);
-
-  if (!partner || typeof document === "undefined") return null;
-
-  return createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true">
-      <div className="fixed inset-0 bg-black/85 backdrop-blur-md" onClick={onClose} />
-      <div className="relative w-full max-w-2xl my-auto rounded-3xl bg-[#0B0F19] border border-white/10 overflow-hidden shadow-[0_40px_120px_-20px_rgba(0,0,0,0.9)] animate-in fade-in zoom-in-95 duration-200">
-        <div className="relative h-56 overflow-hidden">
-          <img src={partner.image} alt={partner.name} className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/55 to-transparent" />
-          <button onClick={onClose} aria-label="Close" className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur flex items-center justify-center text-white border border-white/15">
-            <X className="w-4 h-4" />
-          </button>
-          <div className="absolute bottom-4 left-6 right-6">
-            <p className="text-[10px] font-semibold tracking-[0.25em] uppercase text-[#5eead4]">{partner.category}</p>
-            <h3 className="mt-1 text-2xl md:text-3xl font-semibold tracking-tight text-white">{partner.name}</h3>
-            <p className="mt-1 text-xs text-white/70 inline-flex items-center gap-1.5">
-              <MapPin className="w-3 h-3" /> {partner.address || partner.town}
-            </p>
-          </div>
-        </div>
-        <div className="p-7 md:p-9 max-h-[70vh] overflow-y-auto">
-          {partner.promo && (
-            <div className="mb-5 px-4 py-3.5 rounded-2xl bg-gradient-to-r from-[#c9a449]/[0.18] to-[#c9a449]/[0.06] border border-[#c9a449]/40 text-[#c9a449] text-sm font-semibold flex items-center gap-2.5">
-              {partner.promoHighlight ? <Music className="w-4 h-4 shrink-0" /> : <Calendar className="w-4 h-4 shrink-0" />}
-              <span>{partner.promo}</span>
-            </div>
-          )}
-          <p className="text-white/75 leading-relaxed">{partner.tagline}</p>
-
-          <div className="mt-7 flex flex-wrap gap-3">
-            <a href={partner.primary.href} target="_blank" rel="noreferrer noopener"
-              onClick={() => trackGAEvent.websiteClick(partnerAnalyticsPayload(partner))}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition">
-              {partner.primary.label} <ArrowRight className="w-4 h-4" />
-            </a>
-            {partner.secondary.map((s) => (
-              <a key={s.label} href={s.href} target="_blank" rel="noreferrer noopener"
-                onClick={() => trackGAEvent.websiteClick(partnerAnalyticsPayload(partner))}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.08] border border-white/20 text-white text-sm font-semibold hover:bg-white/[0.16] transition">
-                {s.label}
-              </a>
-            ))}
-            {(partner.address || partner.mapsQuery) && (
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(partner.address || partner.mapsQuery || "")}`}
-                target="_blank"
-                rel="noreferrer noopener"
-                onClick={() => trackGAEvent.directionsClick(partnerAnalyticsPayload(partner))}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.08] border border-white/20 text-white text-sm font-semibold hover:bg-white/[0.16] transition"
-              >
-                <Navigation className="w-4 h-4" /> Directions
-              </a>
-            )}
-          </div>
-
-          <div className="mt-7 pt-6 border-t border-white/10 flex flex-wrap gap-4 text-sm text-white/60">
-            <a href={partner.website} target="_blank" rel="noreferrer noopener"
-              onClick={() => trackGAEvent.websiteClick(partnerAnalyticsPayload(partner))}
-              className="inline-flex items-center gap-2 hover:text-white transition">
-              <Globe className="w-4 h-4" /> {new URL(partner.website).hostname.replace("www.", "")}
-            </a>
-            {partner.phone && (
-              <a href={`tel:${partner.phone}`}
-                onClick={() => trackGAEvent.callClick(partnerAnalyticsPayload(partner))}
-                className="inline-flex items-center gap-2 hover:text-white transition">
-                <Phone className="w-4 h-4" /> {partner.phone}
-              </a>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>,
-    document.body
-  );
-}
-
-/* ============== Talk-to-a-Local-Expert Modal ============== */
-const FIN_OPTIONS = [
-  "Mortgage", "Business Banking", "Investing", "Tax Strategy", "Accounting",
-  "Insurance", "Wealth Planning", "Business Capital", "Other",
-];
-
-function FinanceExpertModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { toast } = useToast();
-  const [submitting, setSubmitting] = useState(false);
-  const [done, setDone] = useState(false);
-  const [started, setStarted] = useState(false);
-  const [form, setForm] = useState({
-    name: "", email: "", phone: "", need: FIN_OPTIONS[0], message: "",
-  });
-  useBodyScrollLock(open);
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
-  useEffect(() => {
-    if (!open) { setStarted(false); }
-  }, [open]);
-
-  if (!open || typeof document === "undefined") return null;
-
-  const onFirstInteract = () => {
-    if (started) return;
-    setStarted(true);
-    trackGAEvent.contactFormSubmit("finance_expert_start", "homepage_finance_modal");
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "form_start", {
-        event_category: "Lead Generation",
-        form_name: "finance_expert",
-        source_location: "homepage_finance_modal",
-        page_path: window.location.pathname,
-      });
-    }
-  };
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.name || !form.email || !form.phone) {
-      toast({ title: "Missing info", description: "Name, email, and phone are required.", variant: "destructive" });
-      return;
-    }
-    setSubmitting(true);
-    const { error } = await supabase.from("leads").insert({
-      full_name: form.name,
-      email: form.email,
-      phone: form.phone,
-      type: "finance_expert",
-      message: `Need: ${form.need}\n\n${form.message}`,
-      lead_type: "finance",
-    });
-    setSubmitting(false);
-    if (error) {
-      toast({ title: "Submission failed", description: error.message, variant: "destructive" });
-      return;
-    }
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "form_submit", {
-        event_category: "Lead Generation",
-        form_name: "finance_expert",
-        source_location: "homepage_finance_modal",
-        page_path: window.location.pathname,
-        product_type: form.need,
-      });
-    }
-    trackGAEvent.financialIntroSubmit({ product_type: form.need, source_location: "homepage_finance_modal" });
-    setDone(true);
-  };
-
-  return createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true">
-      <div className="fixed inset-0 bg-black/85 backdrop-blur-md" onClick={onClose} />
-      <div className="relative w-full max-w-lg rounded-3xl bg-[#0B0F19] border border-white/10 p-7 md:p-9">
-        <button onClick={onClose} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/[0.06] hover:bg-white/[0.12] flex items-center justify-center text-white">
-          <X className="w-4 h-4" />
-        </button>
-        {done ? (
-          <div className="text-center py-6">
-            <h3 className="text-2xl font-semibold text-white">Thank you — we'll reach out shortly.</h3>
-            <p className="mt-3 text-white/65">A local financial expert will follow up via phone or email.</p>
-            <button onClick={onClose} className="mt-7 px-6 py-3 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition">
-              Close
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={submit} onFocusCapture={onFirstInteract} onChange={onFirstInteract} className="space-y-4">
-            <h3 className="text-2xl font-semibold tracking-tight text-white">What financial help do you need?</h3>
-            <p className="text-sm text-white/60">Tell us what you're working on. We'll connect you with the right local expert.</p>
-            <ModalField label="Name *" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
-            <div className="grid grid-cols-2 gap-3">
-              <ModalField label="Email *" type="email" value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
-              <ModalField label="Phone *" value={form.phone} onChange={(v) => setForm({ ...form, phone: v })} />
-            </div>
-            <label className="block">
-              <span className="text-xs font-semibold tracking-wider uppercase text-white/60">What do you need help with?</span>
-              <select
-                value={form.need}
-                onChange={(e) => setForm({ ...form, need: e.target.value })}
-                className="mt-2 w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-white focus:outline-none focus:border-[#5eead4] transition"
-              >
-                {FIN_OPTIONS.map((o) => (
-                  <option key={o} value={o} className="bg-[#0B0F19]">{o}</option>
-                ))}
-              </select>
-            </label>
-            <label className="block">
-              <span className="text-xs font-semibold tracking-wider uppercase text-white/60">Message / details</span>
-              <textarea
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                rows={3}
-                className="mt-2 w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-[#5eead4] transition"
-              />
-            </label>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition disabled:opacity-50 inline-flex items-center justify-center gap-2"
-            >
-              {submitting ? "Submitting…" : "Submit Request"} <ArrowRight className="w-4 h-4" />
-            </button>
-            <p className="text-xs text-center text-white/50">
-              Prefer to speak now? <Link to="/contact" className="text-[#5eead4] hover:underline">Contact us directly</Link>
-            </p>
-          </form>
-        )}
-      </div>
-    </div>,
-    document.body
-  );
-}
-
-function ModalField({ label, value, onChange, type = "text" }: { label: string; value: string; onChange: (v: string) => void; type?: string }) {
-  return (
-    <label className="block">
-      <span className="text-xs font-semibold tracking-wider uppercase text-white/60">{label}</span>
-      <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="mt-2 w-full rounded-xl bg-white/[0.04] border border-white/10 px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-[#5eead4] transition"
-      />
-    </label>
-  );
-}
-
-/* ============== PAGE ============== */
+// ─── PAGE ────────────────────────────────────────────────────────────────────
 const Index = () => {
-  const [partner, setPartner] = useState<Partner | null>(null);
-  const [financeOpen, setFinanceOpen] = useState(false);
-
-  const useNearMe = () => {
-    if (typeof window === "undefined") return;
-    if (!("geolocation" in navigator)) {
-      window.location.href = "/local?near=1";
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const { latitude, longitude } = pos.coords;
-        window.location.href = `/local?near=1&lat=${latitude.toFixed(5)}&lng=${longitude.toFixed(5)}`;
-      },
-      () => { window.location.href = "/local?near=1"; },
-      { maximumAge: 60_000, timeout: 8000 }
-    );
-  };
-
-  const scrollTo = (id: string) => () => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  useEffect(() => {
+    // no-op: reserved for future analytics hooks
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0B0F19]">
       <SEOHead
-        title="Capital District Nest | Local Guide & Real Estate in Albany, Saratoga & Troy"
-        description="Your local guide to the Capital District — explore neighborhoods, businesses, restaurants, events, and real estate across Albany, Saratoga Springs, Troy, Schenectady & Delmar NY."
-        keywords="Capital District, local discovery platform, neighborhood guide Albany NY, Capital District real estate, Saratoga Springs homes, Troy NY homes, Schenectady homes, Delmar NY"
-        structuredData={[
-          localBusinessSchema,
-          {
-            "@context": "https://schema.org",
-            "@type": "RealEstateAgent",
-            "name": "Scott Alvarez",
-            "url": "https://capitaldistrictnest.com",
-            "worksFor": {
-              "@type": "RealEstateAgent",
-              "name": "Capital District Nest",
-            },
-            "areaServed": [
-              { "@type": "City", "name": "Albany", "addressRegion": "NY" },
-              { "@type": "City", "name": "Saratoga Springs", "addressRegion": "NY" },
-              { "@type": "City", "name": "Troy", "addressRegion": "NY" },
-              { "@type": "City", "name": "Schenectady", "addressRegion": "NY" },
-              { "@type": "City", "name": "Delmar", "addressRegion": "NY" },
-            ],
-          },
-        ]}
+        title="Capital District Nest | The Digital Front Door of the Capital District"
+        description="Discover neighborhoods, local businesses, homes, and events across New York's Capital District — Albany, Saratoga Springs, Troy, Schenectady, and Delmar — through one trusted local platform."
+        keywords="Capital District, local discovery, neighborhood guide Albany NY, Capital District real estate, Saratoga Springs, Troy NY, Schenectady, Delmar NY, local businesses"
+        structuredData={[localBusinessSchema]}
       />
 
       <CleanHeader />
-      <FloatingOmniSearch />
 
-      {/* HERO 1 — Editorial entrance */}
-      <CinematicHero />
-
-      {/* Explore the Capital District — 4 editorial cards */}
+      <EditorialHero />
+      <FeaturedThisWeek />
       <ExploreCapitalDistrict />
-
-
-
-      {/* HOMEPAGE BUSINESS TEASER → /business */}
-      <section className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06]">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: GLOW_BG.teal }}
-          aria-hidden
-        />
-        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-20 md:py-28">
-          <div className="rounded-[28px] border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-14 shadow-[0_40px_120px_-40px_rgba(94,234,212,0.25)]">
-            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="lg:col-span-7"
-              >
-                <p className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
-                  <Building2 className="w-3 h-3" /> For Local Businesses
-                </p>
-                <div className="mt-5 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#5eead4]/30 bg-[#5eead4]/[0.06] text-[12px] text-[#5eead4]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#5eead4]" />
-                  Your local AI growth partner.
-                </div>
-                <h2 className="mt-5 text-[2.25rem] sm:text-5xl md:text-[3.75rem] font-semibold tracking-[-0.04em] leading-[1.02] text-white">
-                  Get found locally.<br className="hidden sm:block" />{" "}
-                  Respond faster.{" "}
-                  <span className="text-[#5eead4]">Run smoother.</span>
-                </h2>
-                <p className="mt-7 text-base md:text-lg text-white/75 font-light leading-relaxed max-w-2xl">
-                  Capital District Nest helps local businesses improve visibility, claim and upgrade their profile, automate simple customer tasks, and use practical AI tools to save time.
-                </p>
-                <p className="mt-4 text-sm md:text-base text-white/55 max-w-2xl">
-                  We're a local startup building better local search for the Capital District — helping residents discover businesses, services, events, homes, and community resources by town.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Link
-                    to="/business"
-                    onClick={() => trackGAEvent.pricingClick({ source_location: "homepage_business_teaser" })}
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]"
-                  >
-                    See Business Tools <ArrowRight className="w-4 h-4" />
-                  </Link>
-                  <Link
-                    to="/claim-business"
-                    onClick={() => trackGAEvent.claimProfileClick({ source_location: "homepage_business_teaser" } as any)}
-                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.08] backdrop-blur text-white border border-white/20 text-sm font-semibold hover:bg-white/[0.16] transition"
-                  >
-                    Claim Your Business
-                  </Link>
-                </div>
-                <div className="mt-7 flex flex-wrap gap-2">
-                  {["Local Search","Profile Upgrades","Simple Automation","AI Content Help"].map((chip) => (
-                    <span key={chip} className="px-3 py-1.5 rounded-full text-xs text-white/70 border border-white/12 bg-white/[0.03]">
-                      {chip}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-                className="lg:col-span-5 grid grid-cols-2 gap-4"
-              >
-                {[
-                  { title: "Local Visibility", body: "Show up in town and category searches." },
-                  { title: "Customer Inquiries", body: "Add quote forms, booking links, and contact tools." },
-                  { title: "AI Tools", body: "Use practical AI for content, replies, FAQs, and workflows." },
-                  { title: "Business Profile", body: "Claim, correct, and improve your local profile." },
-                ].map((c) => (
-                  <div key={c.title} className="rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur p-5 hover:border-[#5eead4]/40 hover:-translate-y-0.5 transition">
-                    <div className="text-sm font-semibold text-white tracking-tight">{c.title}</div>
-                    <p className="mt-2 text-xs text-white/65 leading-relaxed">{c.body}</p>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* TOWN EXPLORER — premium local coverage by town */}
-      <TownExplorerSection />
-
-      {/* NEW TOWN LISTINGS — gateway to /homes hub */}
-      <NewTownListingsTeaser />
-
-
-
-
-      {/* CATEGORY DISCOVERY — Apple-style 2x3 premium tile grid */}
-      <CategoryFeatureGrid />
-      <EndlessEntertainment />
-      <WellnessRail />
-
-
-      {/* HERO 2 — Find what's near you (live local discovery) */}
-      <AppleHero
-        eyebrow="Live Local Discovery"
-        EyebrowIcon={MapPin}
-        
-        headline={<>Find what's <span className="text-[#5eead4]">near you.</span></>}
-        sub="Tap once and discover restaurants, events, services, and businesses around you right now."
-        primary={{ label: "Use Near Me", onClick: useNearMe }}
-        secondary={{ label: "Browse Categories", to: "/local#categories" }}
-        bgImage={heroDiscoveryWide}
-        overlay="medium"
-        showRadar
-      />
-
-      {/* HERO 3 — Local media pulse */}
-      <AppleHero
-        eyebrow="Local Media Pulse"
-        EyebrowIcon={Newspaper}
-        headline={<>Today's local coverage, <span className="text-[#5eead4]">curated.</span></>}
-        sub="Business openings, restaurants, development, sports, events, and neighborhood stories from trusted local sources."
-        primary={{ label: "Watch Coverage", to: "/media#featured" }}
-        secondary={{ label: "View Local Media", to: "/media#sources" }}
-        bgImage={heroMediaWide}
-        overlay="medium"
-      />
-
-      {/* HERO 4 — Plan the week */}
-      <AppleHero
-        eyebrow="This Week"
-        EyebrowIcon={CalendarDays}
-        headline={<>Plan the week <span className="text-[#5eead4]">in one place.</span></>}
-        sub="Concerts, restaurant weeks, markets, openings, family events, networking, and local specials."
-        primary={{ label: "See This Week", to: "/weekly" }}
-        secondary={{ label: "Submit Event", to: "/submit-event" }}
-        bgImage={heroEventsWide}
-        overlay="soft"
-      />
-
-      {/* HERO 5 — Discover every town */}
-      <AppleHero
-        eyebrow="Every Town"
-        EyebrowIcon={Compass}
-        headline={<>Discover every <span className="text-[#5eead4]">town.</span></>}
-        sub="Explore Delmar, Albany, Troy, Saratoga Springs, Clifton Park, Schenectady, and more through one local discovery layer."
-        primary={{ label: "Browse Towns", to: "/communities" }}
-        secondary={{ label: "Search Near Me", onClick: useNearMe }}
-        bgImage={heroTownsWide}
-        overlay="soft"
-      />
-
-      {/* HERO 6 — Local businesses, brought to life */}
-      <AppleHero
-        eyebrow="Featured Local Partners"
-        EyebrowIcon={Store}
-        headline={<>Local businesses, <span className="text-[#5eead4]">brought to life.</span></>}
-        sub="Premium profiles with photos, events, menus, reservations, social links, and one-tap contact."
-        primary={{ label: "View Featured Partners", onClick: scrollTo("featured-partners") }}
-        secondary={{ label: "Request Featured Placement", to: "/claim-business", onClick: () => trackGAEvent.claimProfileClick({ source_location: "homepage_hero_partners" } as any) }}
-        bgImage={heroBusinessWide}
-        overlay="soft"
-      />
-
-      {/* Featured Partners showcase */}
-      <FeaturedPartnersSection onOpen={setPartner} />
-
-      {/* HERO 7 — Finances */}
-      <AppleHero
-        eyebrow="Finances"
-        EyebrowIcon={Wallet}
-        headline={<>Local financial help, <span className="text-[#5eead4]">connected.</span></>}
-        sub="Mortgages, business banking, investing, tax strategy, accounting, insurance, and wealth planning from regional professionals."
-        primary={{ label: "Explore Finances", to: "/finances" }}
-        secondary={{ label: "Talk to a Local Expert", onClick: () => setFinanceOpen(true) }}
-        bgImage={heroFinanceWide}
-        overlay="strong"
-      />
-
-
-
-
-      <PartnerModal partner={partner} onClose={() => setPartner(null)} />
-      <FinanceExpertModal open={financeOpen} onClose={() => setFinanceOpen(false)} />
+      <GrowYourBusiness />
 
       <Footer />
     </div>
