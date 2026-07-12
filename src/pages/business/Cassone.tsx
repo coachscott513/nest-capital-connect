@@ -150,11 +150,20 @@ const solutions = [
   },
 ];
 
-const stats: { value: string; label: string; verified: boolean }[] = [
-  { value: "50+", label: "Years in modular space", verified: true },
-  { value: "Northeast", label: "Regional coverage", verified: true },
-  { value: "Commercial · Industrial · Government", label: "Sectors served", verified: true },
-  { value: "Family-Owned", label: "Ownership", verified: false },
+const glanceStates = [
+  "New York",
+  "New Jersey",
+  "Connecticut",
+  "Pennsylvania",
+  "Massachusetts",
+];
+
+const glanceSolutions = [
+  "Construction",
+  "Commercial",
+  "Education",
+  "Healthcare",
+  "Government",
 ];
 
 const serviceAreas = [
@@ -270,29 +279,49 @@ const Cassone = () => {
         </div>
       </section>
 
-      {/* =========================== NUMBERS =========================== */}
+      {/* =========================== AT A GLANCE =========================== */}
       <section className="border-t border-white/[0.06]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-24 md:py-32">
           <Eyebrow>At a glance</Eyebrow>
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-14">
-            {stats.map((s) => (
-              <div key={s.label} className="relative">
-                <div
-                  className="text-5xl md:text-7xl font-semibold tracking-[-0.045em] leading-[0.9]"
-                  style={{ color: s.verified ? "#ffffff" : "rgba(255,255,255,0.55)" }}
-                >
-                  {s.value}
-                </div>
-                <div className="mt-4 text-sm md:text-base text-white/60 font-light max-w-[220px] leading-snug">
-                  {s.label}
-                </div>
-                {!s.verified && (
-                  <div className="mt-3">
-                    <PendingChip>Pending verification</PendingChip>
-                  </div>
-                )}
+
+          {/* Hero metric */}
+          <div className="mt-12 md:mt-16">
+            <div className="text-[96px] md:text-[168px] font-semibold tracking-[-0.055em] leading-[0.86]">
+              50<span className="text-white/70">+</span>
+            </div>
+            <div className="mt-4 text-lg md:text-xl text-white/70 font-light tracking-tight">
+              Years serving businesses across the Northeast.
+            </div>
+          </div>
+
+          <div className="mt-20 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 max-w-4xl">
+            <div>
+              <div className="text-xs uppercase tracking-[0.18em] text-white/40 font-medium">
+                Serving
               </div>
-            ))}
+              <div className="mt-6 h-px bg-white/10" />
+              <ul className="mt-6 space-y-3">
+                {glanceStates.map((s) => (
+                  <li key={s} className="text-base md:text-lg text-white/85 font-light tracking-tight">
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <div className="text-xs uppercase tracking-[0.18em] text-white/40 font-medium">
+                Solutions
+              </div>
+              <div className="mt-6 h-px bg-white/10" />
+              <ul className="mt-6 space-y-3">
+                {glanceSolutions.map((s) => (
+                  <li key={s} className="text-base md:text-lg text-white/85 font-light tracking-tight">
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
