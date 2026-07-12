@@ -226,6 +226,26 @@ const BusinessesHub = () => {
     .sort((a, b) => (b.addedAt! > a.addedAt! ? 1 : -1))
     .slice(0, 8);
 
+  const [groupFilter, setGroupFilter] = useState<PreviewGroup | "All">("All");
+  const [townFilter, setTownFilter] = useState<string>("All");
+
+  const previewTowns = useMemo(
+    () =>
+      Array.from(new Set(PREVIEW_BUSINESSES.map((b) => b.town))).sort(),
+    []
+  );
+
+  const visiblePreviews = useMemo(
+    () =>
+      PREVIEW_BUSINESSES.filter(
+        (b) =>
+          (groupFilter === "All" || b.categoryGroup === groupFilter) &&
+          (townFilter === "All" || b.town === townFilter)
+      ),
+    [groupFilter, townFilter]
+  );
+
+
   const rooseveltTemplate = BUSINESS_SPOTLIGHTS.find(
     (s) => s.slug === "the-roosevelt-room"
   );
