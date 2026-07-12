@@ -1,74 +1,109 @@
-## Phase 2 — Local Businesses Hub (/businesses only)
+# Phase 3 — 25 Business Previews
 
-Scope is strictly limited to `src/pages/businesses/BusinessesHub.tsx` plus the small data files that feed it. Homepage, navigation, footer, header, and every other page stay frozen.
+Goal: publish 25 real, verified previews so outreach emails can link to a live URL per business. No homepage, navigation, or hub redesigns.
 
-### What /businesses becomes
+## Selection (final list, locked before authoring)
 
-The visible home for the 25 founding business previews, organized so a visitor and a business owner both understand in five seconds what this platform is.
+Each entry must pass: active business, verified website, real public phone, at least one official social profile, enough public info for an original summary, non-duplicative town/category, no fabricated content.
 
-Section order, top to bottom:
+**Food & Drink (5)**
+1. The Roosevelt Room — North Greenbush *(existing flagship)*
+2. Iron Gate Cafe — Albany
+3. Superior Merchandise Co. — Troy
+4. Lucas Confectionery — Troy
+5. Common Roots (Albany outpost) — Albany
 
-1. **Editorial hero** — restrained typographic hero on onyx canvas. One eyebrow ("Local Businesses"), one headline ("The businesses that make the Capital District worth living in."), one subhead, two buttons: `Browse by Category` (anchor) + `Search Businesses` (`/local`). No differentiator strip — moves down.
+**Home & Property (5)**
+6. Cassone — Capital District *(existing)*
+7. Family Danz Heating & Cooling — Albany
+8. Grasshopper Heating & Cooling — Latham
+9. Murray Painting — Capital District
+10. One verified plumbing / electrical / roofing company (TBD from public sources)
 
-2. **Currently Featured** — same label and treatment as the homepage rail. Up to 6 tiles pulled from `BUSINESS_SPOTLIGHTS` where `status === "published"`, plus any preview-ready entries flagged as `featured: true`. Each tile carries a status chip using the shared label vocabulary (see below).
+**Professional Services (5)**
+11. Christie Hoyt Mortgage Team
+12. D&G Law
+13. One verified insurance agency (candidate: Denofio — already in data)
+14. One verified accounting firm
+15. One verified property-management / real-estate company
 
-3. **Browse by Category** — the existing six editorial photo tiles (Food & Drink, Home & Property, Professional Services, Health & Wellness, Automotive, Shopping/Creative/Community). No visual change; only tightened copy.
+**Health & Wellness (5)**
+16. Dental practice (TBD)
+17. Fitness studio (TBD)
+18. Salon / spa (TBD)
+19. Veterinary or pet services (TBD)
+20. Physical therapy / healthcare (TBD)
 
-4. **Browse by Town** — existing 12-town grid, unchanged visually. Move above Recently Added so location-first visitors land quickly.
+**Retail & Lifestyle (5)**
+21. Florist (TBD)
+22. Boutique (TBD)
+23. Photographer (TBD)
+24. Automotive (TBD)
+25. Nonprofit / community org (TBD)
 
-5. **Recently Added** — new section. Chronological rail of the newest previews (up to 8), sorted by a new `addedAt` field on the spotlight record. Each card shows status chip + town + category. Falls back to Currently Featured order if `addedAt` is missing.
+TBD entries get filled in during research; nothing publishes without verified data.
 
-6. **Spotlight Templates & Profile Previews** — new dedicated strip. Two example cards side by side, honest about what they are:
-   - Spotlight Template — Roosevelt Room ("This is what a full editorial Spotlight looks like.")
-   - Profile Preview — Cassone ("This is what an in-progress business preview looks like.")
-   Each links to the actual page. This is the transparency section owners will read before deciding to claim.
+## Two build tiers
 
-7. **Browse All Businesses** — single wide card linking to `/local` with the full searchable directory. Short copy, one CTA.
+- **Flagship (5):** Roosevelt Room, Cassone, Christie Hoyt, Iron Gate Cafe, one wellness pick. Custom hero, richer editorial summary, `label: "spotlight"` only if the page truly meets the bar — otherwise `preview`.
+- **Standard (20):** Locked template, verified public data only. `label: "preview"` with an "Owner Review Pending" sub-note.
 
-8. **Owner CTA — Claim or Complete Your Profile** — replaces the current "Tell Your Story" block. Two buttons only:
-   - Primary: `Claim Your Business` → `/claim-business`
-   - Secondary: `Request a Spotlight` → `/business-spotlight-intake`
-   Copy explicitly names the two paths ("Own one of the 25 featured businesses? Claim it. Not featured yet? Request a Spotlight.").
+## Data model additions
 
-9. **Differentiator strip** — moved to bottom as a quiet trust bar (Original Stories, Owner Profiles, Local Photography, etc.). One row, muted.
+Extend `SpotlightLabel` in `src/data/businessSpotlights.ts`:
+```
+"spotlight" | "preview" | "owner_review_pending" | "owner_verified" | "coming_soon" | "claim_available"
+```
+Extend `SPOTLIGHT_LABEL_TEXT` with:
+- `owner_review_pending: "Owner Review Pending"`
+- `owner_verified: "Owner Verified"`
 
-### Status label vocabulary (single source of truth)
+Each of the 25 records lives in `businessSpotlights.ts` (for hub surfaces) and, where a full profile page is needed, mirrored into `src/data/businesses.ts` so `/business/:slug` works.
 
-All chips on this page use exactly these four labels — no synonyms:
+Fields authored per record (only verified data — omit anything unsupported):
+```
+slug, businessName, category, town (exact municipality),
+summary (original, factual), profileRoute,
+status: "published", label,
+website, phone, socials, services,
+addedAt (ISO)
+```
+Hidden by policy for previews: team, awards, ratings, reviews, timelines, project galleries, events, stats, owner quotes.
 
-- `Spotlight` — full editorial feature (Roosevelt Room)
-- `Profile Preview` — preview page drafted from public info (Cassone, most of the 25)
-- `Coming Soon` — placeholder, no page yet
-- `Claim Available` — profile exists but owner hasn't claimed
+## Page rendering
 
-Chip styling: shared component, teal border for `Spotlight`, white/20 border for `Profile Preview`, white/10 for `Coming Soon`, gold `#c9a449` border for `Claim Available` (investor/owner-only accent per locked palette).
+- Reuse the existing `/business/:slug` route and template. No new route patterns.
+- Flagship five may add a hero image where a legitimately licensable/public image exists (e.g. existing `roosevelt-hero.jpg`). Otherwise dark typographic hero — same rule as homepage.
+- Every page must render: name, town, website button, tel button (only if `isValidBusinessPhone`), social links, categories/services, summary, and a persistent "Claim or update this profile" CTA to `/claim-business?slug=...`.
+- If a field is missing, the section is hidden — never a placeholder.
 
-### Data changes
+## QA before outreach
 
-`src/data/businessSpotlights.ts`:
-- Extend `BusinessSpotlight` with `addedAt?: string` (ISO date) and `label: "spotlight" | "preview" | "coming_soon" | "claim_available"`.
-- Backfill existing entries (Roosevelt Room = `spotlight`, the four "coming soon" entries = `coming_soon`).
-- Do NOT add the 25 previews in this phase — that is the next work item after /businesses ships.
+For each of 25 slugs:
+1. Page loads at `/business/<slug>`.
+2. Website button opens the official site.
+3. Phone button dials the correct verified number (or is hidden).
+4. Every social link resolves.
+5. Claim CTA lands on `/claim-business` with the slug preserved.
+6. No fabricated content on the page.
 
-### What is explicitly NOT touched
+Playwright pass hits all 25 URLs, screenshots each, and confirms the claim CTA is present.
 
-- `CleanHeader.tsx`, `Footer.tsx`, `Index.tsx`
-- `BusinessCategoryPage.tsx` (category subpages)
-- Any route registration in `App.tsx`
-- `/local`, `/claim-business`, `/business-spotlight-intake`, `/business/*` pages
-- Any global CSS token
+## Execution order
 
-### Verification
+1. Extend label enum + text map (small edit).
+2. Research + author the 20 TBD selections into a locked shortlist (I will surface each with source URLs before writing the record so you can approve/swap).
+3. Write the 25 data records in one pass.
+4. Ensure `/business/:slug` renders each record; add minimal per-slug page files only for the 5 flagships if the template needs custom sections.
+5. Run Playwright QA across all 25.
+6. Hand back the 25 URLs for the outreach batch.
 
-Playwright QA against the live preview at `/businesses`:
-- Hero renders, both CTAs work, anchor scrolls to Categories.
-- Currently Featured shows Roosevelt Room with `Spotlight` chip.
-- Templates & Previews strip shows both Roosevelt Room and Cassone with correct chips and links resolve 200.
-- Owner CTA buttons resolve to `/claim-business` and `/business-spotlight-intake`.
-- Mobile 402px width: all sections stack cleanly, chips remain legible.
+## Out of scope this phase
 
-Screenshots saved for desktop + mobile before reporting done.
+Homepage, navigation, `/businesses` hub layout, `/local`, `/claim-business`, global tokens, new categories, the outreach email tooling itself.
 
-### After this ships
+## What I need from you before I start writing records
 
-Freeze `/businesses`. Next work item is authoring the 25 preview pages and their `businessSpotlights.ts` entries — separate turn, separate scope.
+1. Confirm the label vocabulary above (adding `owner_review_pending` + `owner_verified`).
+2. Confirm which 5 you want as flagships — my proposal: Roosevelt Room, Cassone, Iron Gate Cafe, Christie Hoyt Mortgage Team, and one wellness pick once selected.
+3. Approve me researching + proposing the ~12 TBD businesses in a single shortlist message (with source links) before any of them are written into the codebase.

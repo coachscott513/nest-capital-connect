@@ -4,6 +4,8 @@ import rooseveltHero from "@/assets/roosevelt-hero.jpg";
 export type SpotlightLabel =
   | "spotlight"
   | "preview"
+  | "owner_review_pending"
+  | "owner_verified"
   | "coming_soon"
   | "claim_available";
 
@@ -108,6 +110,8 @@ export const spotlightsForCategory = (cat: string) =>
 export const SPOTLIGHT_LABEL_TEXT: Record<SpotlightLabel, string> = {
   spotlight: "Spotlight",
   preview: "Profile Preview",
+  owner_review_pending: "Owner Review Pending",
+  owner_verified: "Owner Verified",
   coming_soon: "Coming Soon",
   claim_available: "Claim Available",
 };
