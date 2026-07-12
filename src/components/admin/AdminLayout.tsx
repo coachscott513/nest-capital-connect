@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const NAV = [
   { to: "/admin", label: "Overview", end: true },
+  { to: "/launch-dashboard", label: "Launch" },
   { to: "/admin/towns", label: "Towns" },
   { to: "/admin/partner-inquiries", label: "Inquiries" },
   { to: "/admin/partners", label: "Partners" },

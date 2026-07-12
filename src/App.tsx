@@ -23,6 +23,7 @@ import AdminListingClaims from "./pages/admin/AdminListingClaims";
 import AdminPropertyListings from "./pages/admin/AdminPropertyListings";
 import AdminBusinessAudit from "./pages/admin/AdminBusinessAudit";
 import AdminRevenue from "./pages/admin/AdminRevenue";
+import AdminLaunchDashboard from "./pages/admin/AdminLaunchDashboard";
 import HomesPage from "./pages/HomesPage";
 import HomesHub from "./pages/homes/HomesHub";
 import TownListings from "./pages/homes/TownListings";
@@ -261,6 +262,8 @@ const App = () => {
           <Route path="/admin/business-audit" element={<AdminBusinessAudit />} />
           <Route path="/admin/revenue" element={<AdminRevenue />} />
           <Route path="/admin/media-stories" element={<AdminMediaStories />} />
+          <Route path="/launch-dashboard" element={<AdminLaunchDashboard />} />
+          <Route path="/admin/launch-dashboard" element={<AdminLaunchDashboard />} />
 
           <Route path="/investor-tools" element={<InvestorTools />} />
           <Route path="/finances" element={<FinancialConsole />} />
