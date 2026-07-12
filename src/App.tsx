@@ -23,6 +23,7 @@ import AdminListingClaims from "./pages/admin/AdminListingClaims";
 import AdminPropertyListings from "./pages/admin/AdminPropertyListings";
 import AdminBusinessAudit from "./pages/admin/AdminBusinessAudit";
 import AdminRevenue from "./pages/admin/AdminRevenue";
+import AdminLaunchDashboard from "./pages/admin/AdminLaunchDashboard";
 import HomesPage from "./pages/HomesPage";
 import HomesHub from "./pages/homes/HomesHub";
 import TownListings from "./pages/homes/TownListings";
