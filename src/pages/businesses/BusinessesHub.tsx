@@ -433,6 +433,91 @@ const BusinessesHub = () => {
         </div>
       </section>
 
+      {/* Founding Business Previews */}
+      <section
+        id="founding-previews"
+        className="px-6 md:px-10 pb-20 md:pb-28 border-t border-white/[0.06] pt-16 md:pt-24"
+      >
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-8 max-w-2xl">
+            <p className="text-[11px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+              Founding Business Previews
+            </p>
+            <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
+              Local businesses we're preparing to feature.
+            </h2>
+            <p className="mt-4 text-white/70">
+              These profiles use verified public information and are awaiting
+              owner review, approved media, and additional business details.
+            </p>
+          </div>
+
+          {/* Filters */}
+          <div className="flex flex-col gap-3 mb-8">
+            <div className="flex flex-wrap gap-2">
+              {(["All", ...PREVIEW_GROUPS] as const).map((g) => (
+                <button
+                  key={g}
+                  onClick={() => setGroupFilter(g as PreviewGroup | "All")}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold border transition ${
+                    groupFilter === g
+                      ? "border-[#5eead4] text-[#5eead4] bg-[#5eead4]/10"
+                      : "border-white/15 text-white/70 hover:border-white/30 hover:text-white"
+                  }`}
+                >
+                  {g}
+                </button>
+              ))}
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/40 mr-1">
+                Town
+              </span>
+              <button
+                onClick={() => setTownFilter("All")}
+                className={`px-3 py-1 rounded-full text-xs border transition ${
+                  townFilter === "All"
+                    ? "border-white/40 text-white bg-white/[0.08]"
+                    : "border-white/10 text-white/60 hover:text-white hover:border-white/25"
+                }`}
+              >
+                All towns
+              </button>
+              {previewTowns.map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setTownFilter(t)}
+                  className={`px-3 py-1 rounded-full text-xs border transition ${
+                    townFilter === t
+                      ? "border-white/40 text-white bg-white/[0.08]"
+                      : "border-white/10 text-white/60 hover:text-white hover:border-white/25"
+                  }`}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {visiblePreviews.length === 0 ? (
+            <p className="text-white/50 text-sm">
+              No previews match those filters yet.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {visiblePreviews.map((b) => (
+                <PreviewCard key={b.slug} b={b} />
+              ))}
+            </div>
+          )}
+
+          <p className="mt-8 text-xs text-white/45">
+            Showing {visiblePreviews.length} of {PREVIEW_BUSINESSES.length}{" "}
+            founding previews.
+          </p>
+        </div>
+      </section>
+
       {/* Recently Added */}
       {recentlyAdded.length > 0 && (
         <section className="px-6 md:px-10 pb-20 md:pb-28 border-t border-white/[0.06] pt-16 md:pt-24">
