@@ -137,6 +137,79 @@ const BusinessCard = ({ s }: { s: BusinessSpotlight }) => {
     </Link>
   );
 };
+/* ---------- Preview chip + card ---------- */
+const previewChipClass = (label: PreviewLabel) => {
+  switch (label) {
+    case "spotlight":
+      return "border-[#5eead4]/60 text-[#5eead4] bg-[#5eead4]/5";
+    case "owner_verified":
+      return "border-[#c9a449]/60 text-[#c9a449] bg-[#c9a449]/5";
+    case "owner_review_pending":
+      return "border-white/25 text-white/85 bg-white/[0.04]";
+    case "preview":
+    default:
+      return "border-white/15 text-white/75 bg-white/[0.03]";
+  }
+};
+
+const PreviewChip = ({ label }: { label: PreviewLabel }) => (
+  <span
+    className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-[0.18em] uppercase border backdrop-blur ${previewChipClass(
+      label
+    )}`}
+  >
+    {PREVIEW_LABEL_TEXT[label]}
+  </span>
+);
+
+const PreviewCard = ({ b }: { b: PreviewBusiness }) => {
+  const href = b.customRoute ?? `/business/${b.slug}`;
+  const claimHref = `/claim-business?slug=${encodeURIComponent(b.slug)}`;
+  const displayCat = b.displayCategory ?? b.category;
+  const canClaim = b.label !== "owner_verified";
+  return (
+    <article className="group flex flex-col rounded-2xl overflow-hidden border border-white/[0.08] bg-white/[0.03] hover:border-[#0d6e66]/50 transition">
+      <Link to={href} className="block p-5 flex-1">
+        <div className="flex items-start justify-between gap-3">
+          <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/50">
+            {displayCat} · {b.town}
+          </p>
+          <PreviewChip label={b.label} />
+        </div>
+        <h3 className="mt-3 text-lg font-semibold tracking-tight group-hover:text-[#5eead4] transition">
+          {b.name}
+        </h3>
+        <p className="mt-2 text-sm text-white/65 line-clamp-3">{b.summary}</p>
+      </Link>
+      <div className="px-5 pb-5 pt-1 flex items-center justify-between gap-3">
+        <Link
+          to={href}
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5eead4] hover:text-white transition"
+        >
+          Explore Profile <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
+        {canClaim && (
+          <Link
+            to={claimHref}
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/70 hover:text-white transition"
+          >
+            Claim or Update
+          </Link>
+        )}
+      </div>
+    </article>
+  );
+};
+
+const PREVIEW_GROUPS: PreviewGroup[] = [
+  "Food & Drink",
+  "Home & Property",
+  "Professional Services",
+  "Health & Wellness",
+  "Retail & Lifestyle",
+  "Nonprofit & Community",
+];
+
 
 const BusinessesHub = () => {
   const canonical = "https://www.capitaldistrictnest.com/businesses";
