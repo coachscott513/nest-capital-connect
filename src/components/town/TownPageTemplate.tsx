@@ -29,6 +29,7 @@ import {
   type BusinessCategory,
 } from "@/data/businesses";
 import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
+import CommunityUpdatesSection from "@/components/community/CommunityUpdatesSection";
 import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
 /* =============================================================
