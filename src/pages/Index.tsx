@@ -367,7 +367,7 @@ function ExploreCapitalDistrict() {
   return (
     <section
       id="explore-capital-district"
-      className="relative w-full overflow-hidden bg-[#0A0D16] border-t border-white/[0.05] scroll-mt-20"
+      className="relative w-full overflow-hidden bg-[#F5F3EE] scroll-mt-20"
     >
       <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-28 md:py-40">
         <motion.div
@@ -377,10 +377,10 @@ function ExploreCapitalDistrict() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl"
         >
-          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#0d6e66]">
             Browse Local Search Indexes
           </p>
-          <h2 className="mt-4 text-4xl md:text-6xl lg:text-[4.5rem] font-semibold tracking-[-0.04em] leading-[1.02] text-white">
+          <h2 className="mt-4 text-4xl md:text-6xl lg:text-[4.5rem] font-semibold tracking-[-0.04em] leading-[1.02] text-[#0B0F19]">
             Explore by category.
           </h2>
         </motion.div>
@@ -396,7 +396,7 @@ function ExploreCapitalDistrict() {
             >
               <Link
                 to={card.to}
-                className="group relative block rounded-[28px] overflow-hidden border border-white/[0.08] bg-white/[0.02] hover:border-[#5eead4]/30 hover:-translate-y-1 transition-all duration-500 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.6)]"
+                className="group relative block rounded-[28px] overflow-hidden border border-black/[0.06] bg-white hover:-translate-y-1 transition-all duration-500 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.25)] hover:shadow-[0_30px_60px_-30px_rgba(0,0,0,0.35)]"
               >
                 <div className="relative aspect-[4/5] md:aspect-[16/11] overflow-hidden">
                   <img
