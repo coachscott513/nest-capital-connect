@@ -545,7 +545,7 @@ const Index = () => {
 
       <CleanHeader />
 
-      <EditorialHero />
+      <SearchHero />
       <FeaturedThisWeek />
       <ExploreCapitalDistrict />
       <GrowYourBusiness />
