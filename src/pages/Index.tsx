@@ -451,7 +451,7 @@ function GrowYourBusiness() {
   ];
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06]">
+    <section className="relative w-full overflow-hidden bg-white border-t border-black/[0.06]">
       <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-28 md:py-40">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -460,13 +460,13 @@ function GrowYourBusiness() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl"
         >
-          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#0d6e66]">
             For Business
           </p>
-          <h2 className="mt-4 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02] text-white">
+          <h2 className="mt-4 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02] text-[#0B0F19]">
             Tell your story.<br />Grow your business.
           </h2>
-          <p className="mt-7 text-lg text-white/65 font-light max-w-2xl leading-relaxed">
+          <p className="mt-7 text-lg text-neutral-600 font-light max-w-2xl leading-relaxed">
             Capital District Nest gives regional businesses editorial coverage,
             local visibility, and modern tools — all in one place.
           </p>
@@ -480,7 +480,7 @@ function GrowYourBusiness() {
             </Link>
             <Link
               to="/pricing"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/20 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-black/15 bg-white text-[#0B0F19] text-sm font-semibold hover:bg-black/[0.04] transition"
             >
               See Pricing
             </Link>
@@ -493,22 +493,22 @@ function GrowYourBusiness() {
             {features.map((f) => (
               <div
                 key={f.title}
-                className="shrink-0 w-[280px] md:w-[320px] rounded-3xl border border-white/[0.08] bg-white/[0.03] p-7 hover:border-[#5eead4]/30 hover:bg-white/[0.05] transition"
+                className="shrink-0 w-[280px] md:w-[320px] rounded-3xl border border-black/[0.06] bg-[#FAF9F6] p-7 hover:border-[#0d6e66]/30 hover:bg-white transition shadow-[0_10px_30px_-20px_rgba(0,0,0,0.15)]"
               >
                 <div className="flex items-center justify-between">
-                  <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
+                  <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#0d6e66]">
                     Capability
                   </p>
                   {f.soon && (
-                    <span className="text-[9px] font-semibold tracking-[0.18em] uppercase text-white/50 border border-white/15 rounded-full px-2 py-0.5">
+                    <span className="text-[9px] font-semibold tracking-[0.18em] uppercase text-neutral-500 border border-black/15 rounded-full px-2 py-0.5">
                       Coming Soon
                     </span>
                   )}
                 </div>
-                <h3 className="mt-4 text-xl font-semibold text-white tracking-[-0.02em]">
+                <h3 className="mt-4 text-xl font-semibold text-[#0B0F19] tracking-[-0.02em]">
                   {f.title}
                 </h3>
-                <p className="mt-3 text-sm text-white/65 font-light leading-relaxed">
+                <p className="mt-3 text-sm text-neutral-600 font-light leading-relaxed">
                   {f.body}
                 </p>
               </div>
@@ -516,9 +516,9 @@ function GrowYourBusiness() {
           </div>
         </div>
 
-        <p className="mt-8 text-xs text-white/40">
+        <p className="mt-8 text-xs text-neutral-500">
           Coverage follows our{" "}
-          <Link to="/editorial-policy" className="text-[#5eead4] hover:underline">
+          <Link to="/editorial-policy" className="text-[#0d6e66] hover:underline font-medium">
             editorial standards
           </Link>
           . Sponsorship never buys editorial opinion.
