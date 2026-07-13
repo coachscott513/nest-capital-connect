@@ -253,10 +253,10 @@ function FeaturedThisWeek() {
           className="max-w-3xl"
         >
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
-            Currently Featured
+            Live Regional Discovery
           </p>
           <h2 className="mt-4 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02] text-white">
-            The stories worth your time.
+            What's moving this week.
           </h2>
         </motion.div>
 
