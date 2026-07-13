@@ -29,6 +29,7 @@ import {
   type BusinessCategory,
 } from "@/data/businesses";
 import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
+import CommunityUpdatesSection from "@/components/community/CommunityUpdatesSection";
 import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
 /* =============================================================
@@ -1062,6 +1063,9 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
             </div>
           </div>
         </section>
+
+        {/* ═══════════ 9.5 COMMUNITY UPDATES ═══════════ */}
+        <CommunityUpdatesSection townSlug={town.slug} townName={name} />
 
         {/* ═══════════ 10. SEO OVERVIEW ═══════════ */}
         <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-24">
