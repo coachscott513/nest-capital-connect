@@ -378,10 +378,10 @@ function ExploreCapitalDistrict() {
           className="max-w-3xl"
         >
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
-            Four ways in
+            Browse Local Search Indexes
           </p>
           <h2 className="mt-4 text-4xl md:text-6xl lg:text-[4.5rem] font-semibold tracking-[-0.04em] leading-[1.02] text-white">
-            Explore the Capital District.
+            Explore by category.
           </h2>
         </motion.div>
 
