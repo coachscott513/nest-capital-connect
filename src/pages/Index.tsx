@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, type FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronRight, Search } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { localBusinessSchema } from "@/utils/seoSchemas";
+import { getSearchRoute } from "@/lib/searchIntent";
+import { trackGAEvent } from "@/components/GARouteTracker";
 
 import heroTownsWide from "@/assets/hero-towns-wide.jpg";
 import heroBusinessWide from "@/assets/hero-business-wide.jpg";
