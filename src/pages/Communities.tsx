@@ -415,6 +415,11 @@ const Communities = () => {
             </div>
           </section>
 
+          <EditorialBreather
+            eyebrow="A Region of Towns"
+            quote="The Capital District isn't one city — it's a hundred neighborhoods that each know their own name."
+          />
+
           {/* ═══════════ 5. BUSINESS OWNER CTA ═══════════ */}
           <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-28">
             <div className="max-w-3xl mx-auto px-6 md:px-10 text-center">
