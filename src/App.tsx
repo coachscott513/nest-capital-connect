@@ -104,6 +104,8 @@ import DelmarMarketInsights from "./pages/DelmarMarketInsights";
 
 import DelmarIntelligence from "./pages/DelmarIntelligence";
 import LivingInTown from "./pages/LivingInTown";
+import CommunityUpdates from "./pages/CommunityUpdates";
+import CommunityUpdatesTown from "./pages/CommunityUpdatesTown";
 import MicroNeighborhood from "./pages/MicroNeighborhood";
 import NeighborhoodsHub from "./pages/NeighborhoodsHub";
 import NeighborhoodDetail from "./pages/NeighborhoodDetail";
