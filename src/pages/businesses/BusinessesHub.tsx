@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import EditorialBreather from "@/components/EditorialBreather";
 import { BUSINESS_CATEGORY_GROUPS } from "@/data/businessCategoryGroups";
 import {
   BUSINESS_SPOTLIGHTS,
@@ -382,6 +383,11 @@ const BusinessesHub = () => {
           </div>
         </div>
       </section>
+
+      <EditorialBreather
+        eyebrow="For Business"
+        quote="Every town has a business worth writing about. We help you find them."
+      />
 
       {/* Browse by Town */}
       <section className="px-6 md:px-10 pb-20 md:pb-28 border-t border-white/[0.06] pt-16 md:pt-24">

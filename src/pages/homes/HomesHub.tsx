@@ -116,40 +116,40 @@ const HomesHub = () => {
         </div>
       </section>
 
-      {/* RENTALS */}
-      <section className="px-[5%] py-20 bg-background border-t border-white/10">
+      {/* RENTALS — light editorial breathing block */}
+      <section className="px-[5%] py-20 bg-[#F5F3EE] border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <div className="eyebrow-apple text-[#5eead4] mb-3">RENTALS</div>
-            <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
+            <div className="eyebrow-apple text-[#0d6e66] mb-3">RENTALS</div>
+            <h2 className="text-3xl md:text-4xl font-semibold text-[#0B0F19] tracking-tight mb-3">
               Rentals across the Capital District.
             </h2>
-            <p className="body-apple-dark mb-6">
+            <p className="body-apple mb-6">
               Apartments, houses, rooms, and rental property links by town.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link to="/homes/rentals" className="btn-primary-apple">
                 Browse Rentals
               </Link>
-              <Link to="/homes/add-listing?type=rental" className="btn-secondary-apple-dark">
+              <Link to="/homes/add-listing?type=rental" className="btn-secondary-apple">
                 Post Rental Link
               </Link>
             </div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-[#1E2230] p-6">
-            <div className="text-xs text-[#5eead4] font-semibold mb-2">
+          <div className="rounded-2xl border border-black/[0.06] bg-white p-6 shadow-[0_10px_30px_-20px_rgba(0,0,0,0.15)]">
+            <div className="text-xs text-[#0d6e66] font-semibold mb-2">
               RENTAL LINKS BY TOWN
             </div>
-            <div className="text-xl font-semibold text-white mb-2">
+            <div className="text-xl font-semibold text-[#0B0F19] mb-2">
               Albany & Capital District Rentals
             </div>
-            <p className="text-sm text-white/65 mb-4">
+            <p className="text-sm text-neutral-600 mb-4">
               Apartments, townhomes, and single-family rentals — submitted by
               landlords, property managers, and listing agents.
             </p>
             <Link
               to="/homes/rentals"
-              className="btn-dark-cta inline-flex items-center gap-2"
+              className="btn-primary-apple inline-flex items-center gap-2"
             >
               Browse Rental Links
             </Link>
@@ -157,15 +157,15 @@ const HomesHub = () => {
         </div>
       </section>
 
-      {/* OPEN HOUSES */}
-      <section className="px-[5%] py-20 bg-background border-t border-white/10">
+      {/* OPEN HOUSES — light */}
+      <section className="px-[5%] py-20 bg-[#F5F3EE] border-t border-black/[0.06]">
         <div className="max-w-4xl mx-auto text-center">
-          <CalendarClock className="w-10 h-10 text-[#5eead4] mx-auto mb-4" />
-          <div className="eyebrow-apple text-[#5eead4] mb-3">OPEN HOUSES</div>
-          <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
+          <CalendarClock className="w-10 h-10 text-[#0d6e66] mx-auto mb-4" />
+          <div className="eyebrow-apple text-[#0d6e66] mb-3">OPEN HOUSES</div>
+          <h2 className="text-3xl md:text-4xl font-semibold text-[#0B0F19] tracking-tight mb-3">
             Open houses this week.
           </h2>
-          <p className="body-apple-dark mb-6">
+          <p className="body-apple mb-6">
             Open houses are being added. Agents can submit open house links
             during launch.
           </p>
@@ -178,15 +178,15 @@ const HomesHub = () => {
         </div>
       </section>
 
-      {/* MULTI-UNIT / INVESTMENT */}
-      <section className="px-[5%] py-20 bg-background border-t border-white/10">
+      {/* MULTI-UNIT / INVESTMENT — light */}
+      <section className="px-[5%] py-20 bg-[#F5F3EE] border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
-            <div className="eyebrow-apple text-[#5eead4] mb-3">INVESTMENT</div>
-            <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
+            <div className="eyebrow-apple text-[#0d6e66] mb-3">INVESTMENT</div>
+            <h2 className="text-3xl md:text-4xl font-semibold text-[#0B0F19] tracking-tight mb-3">
               Multi-units and investment properties.
             </h2>
-            <p className="body-apple-dark max-w-2xl mx-auto">
+            <p className="body-apple max-w-2xl mx-auto">
               Explore duplexes, triplexes, four-families, mixed-use properties,
               and investor opportunities.
             </p>
@@ -196,10 +196,10 @@ const HomesHub = () => {
               <Link
                 key={label}
                 to={href}
-                className="rounded-2xl border border-white/10 bg-[#1E2230] p-5 hover:border-[#5eead4]/50 transition"
+                className="rounded-2xl border border-black/[0.06] bg-white p-5 hover:border-[#0d6e66]/40 hover:-translate-y-0.5 transition shadow-[0_10px_30px_-20px_rgba(0,0,0,0.15)]"
               >
-                <Icon className="w-6 h-6 text-[#5eead4] mb-3" />
-                <div className="text-sm font-semibold text-white">{label}</div>
+                <Icon className="w-6 h-6 text-[#0d6e66] mb-3" />
+                <div className="text-sm font-semibold text-[#0B0F19]">{label}</div>
               </Link>
             ))}
           </div>

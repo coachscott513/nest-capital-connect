@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import MainLayout from "@/components/MainLayout";
 import SEOHead from "@/components/SEOHead";
+import EditorialBreather from "@/components/EditorialBreather";
 import {
   CAPITAL_DISTRICT_COUNTIES,
   type CDCounty as County,
@@ -413,6 +414,11 @@ const Communities = () => {
               )}
             </div>
           </section>
+
+          <EditorialBreather
+            eyebrow="A Region of Towns"
+            quote="The Capital District isn't one city — it's a hundred neighborhoods that each know their own name."
+          />
 
           {/* ═══════════ 5. BUSINESS OWNER CTA ═══════════ */}
           <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-28">

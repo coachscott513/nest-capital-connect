@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, Play, Sparkles } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import EditorialBreather from "@/components/EditorialBreather";
 import { BUSINESS_SPOTLIGHTS } from "@/data/businessSpotlights";
 
 const STORY_SECTIONS = [
@@ -136,6 +137,11 @@ const StoriesHub = () => {
           )}
         </div>
       </section>
+
+      <EditorialBreather
+        eyebrow="Editorial"
+        quote="Every story is reported first-hand — no press releases, no rewrites, no filler."
+      />
 
       {/* Placeholder sections */}
       {STORY_SECTIONS.filter((s) => s.id !== "business").map((s) => (

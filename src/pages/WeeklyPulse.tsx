@@ -1018,16 +1018,16 @@ const WeeklyPulse = () => {
           </div>
         </section>
 
-        {/* ===== SEO COPY ===== */}
-        <section className="relative border-t border-white/[0.06]">
-          <div className="max-w-4xl mx-auto px-6 md:px-10 py-16 md:py-20">
-            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-4">
+        {/* ===== SEO COPY — light editorial breathing block ===== */}
+        <section className="relative bg-[#F5F3EE] border-y border-black/[0.06]">
+          <div className="max-w-4xl mx-auto px-6 md:px-10 py-20 md:py-28">
+            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#0d6e66] mb-4">
               Discover the Capital District
             </p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-white leading-[1.1]">
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-[#0B0F19] leading-[1.1]">
               Things to do in the Capital District
             </h2>
-            <div className="mt-6 space-y-4 text-base md:text-[17px] text-white/70 font-light leading-relaxed">
+            <div className="mt-6 space-y-4 text-base md:text-[17px] text-neutral-600 font-light leading-relaxed">
               <p>
                 From live music in downtown Albany to farmers markets in Troy, summer concerts
                 in Saratoga Springs, family weekends in Delmar, and restaurant nights across
