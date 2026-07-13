@@ -138,6 +138,11 @@ const StoriesHub = () => {
         </div>
       </section>
 
+      <EditorialBreather
+        eyebrow="Editorial"
+        quote="Every story is reported first-hand — no press releases, no rewrites, no filler."
+      />
+
       {/* Placeholder sections */}
       {STORY_SECTIONS.filter((s) => s.id !== "business").map((s) => (
         <section
