@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import EditorialBreather from "@/components/EditorialBreather";
 import { BUSINESS_CATEGORY_GROUPS } from "@/data/businessCategoryGroups";
 import {
   BUSINESS_SPOTLIGHTS,
