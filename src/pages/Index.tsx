@@ -27,20 +27,47 @@ import partnerRooseveltImg from "@/assets/partner-roosevelt.jpg";
    ============================================================= */
 
 // ─── HERO ────────────────────────────────────────────────────────────────────
-function EditorialHero() {
+// ─── HERO — OMNI-SEARCH FIRST ────────────────────────────────────────────────
+const SEARCH_SUGGESTIONS = [
+  "Delmar homes",
+  "Troy restaurants",
+  "Albany investment properties",
+  "Saratoga events",
+  "Plumbers near me",
+  "Cafes in Bethlehem",
+  "55+ communities",
+  "Local contractors",
+];
+
+function SearchHero() {
+  const navigate = useNavigate();
+  const [q, setQ] = useState("");
+
+  const submit = (value: string) => {
+    const query = value.trim();
+    if (!query) return;
+    trackGAEvent.searchSubmit({ query, source_location: "home_hero_omni" });
+    navigate(getSearchRoute(query));
+  };
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    submit(q);
+  };
+
   return (
     <section className="relative w-full overflow-hidden bg-[#0B0F19]">
-      {/* Subtle editorial ambient glow */}
+      {/* Ambient dark glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(60% 50% at 50% 30%, rgba(94,234,212,0.08), transparent 70%), radial-gradient(50% 60% at 20% 90%, rgba(13,110,102,0.14), transparent 75%), linear-gradient(180deg, #0B0F19 0%, #0A0D16 100%)",
+            "radial-gradient(70% 55% at 50% 25%, rgba(94,234,212,0.10), transparent 70%), radial-gradient(55% 65% at 20% 95%, rgba(13,110,102,0.16), transparent 75%), linear-gradient(180deg, #0B0F19 0%, #0A0D16 100%)",
         }}
         aria-hidden
       />
       <div
-        className="absolute inset-0 opacity-[0.035] pointer-events-none mix-blend-overlay"
+        className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-overlay"
         style={{
           backgroundImage: "radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px)",
           backgroundSize: "3px 3px",
@@ -49,12 +76,12 @@ function EditorialHero() {
       />
 
       <div className="relative w-full min-h-[100svh] flex items-center">
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-5 sm:px-6 md:px-10 py-32 md:py-44">
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-5 sm:px-6 md:px-10 py-28 md:py-36">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-5xl mx-auto text-center"
+            transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center"
           >
             <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.42em] uppercase text-[#5eead4]/90">
               Capital District Nest
@@ -63,64 +90,100 @@ function EditorialHero() {
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10 md:mt-14 text-[3rem] sm:text-6xl md:text-[6rem] lg:text-[7.25rem] font-semibold tracking-[-0.045em] leading-[0.95] text-white"
+              transition={{ duration: 1.1, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-8 md:mt-12 text-[2.75rem] sm:text-6xl md:text-[6rem] lg:text-[6.75rem] font-semibold tracking-[-0.045em] leading-[0.95] text-white"
             >
-              <span className="block">The Capital District.</span>
-              <span className="block mt-2 md:mt-3 bg-gradient-to-r from-white via-white to-[#5eead4] bg-clip-text text-transparent">
-                Beautifully organized.
+              <span className="block">Search anything</span>
+              <span className="block mt-1 md:mt-2 bg-gradient-to-r from-white via-white to-[#5eead4] bg-clip-text text-transparent">
+                local.
               </span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10 md:mt-14 text-lg md:text-2xl text-white/70 max-w-2xl mx-auto font-light leading-[1.5]"
+              transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-8 md:mt-10 text-base md:text-xl text-white/70 max-w-2xl mx-auto font-light leading-[1.55]"
             >
-              Discover neighborhoods. Explore local businesses. Search homes.
-              Experience the Capital District through one trusted local platform.
+              Homes, businesses, towns, services, restaurants, events, and local
+              insight across the Capital District.
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
+            {/* Omni-search bar — the hero product */}
+            <motion.form
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-14 md:mt-16 flex flex-col items-center gap-6"
+              transition={{ duration: 1, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              onSubmit={onSubmit}
+              role="search"
+              aria-label="Search the Capital District"
+              className="mt-10 md:mt-14 mx-auto w-full max-w-3xl"
             >
-              <a
-                href="#featured-this-week"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("featured-this-week")?.scrollIntoView({ behavior: "smooth" });
+              <div
+                className="flex items-center gap-2 sm:gap-3 rounded-full border border-white/12 bg-white/[0.04] pl-4 sm:pl-6 pr-2 sm:pr-2.5 py-2 sm:py-2.5 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)]"
+                style={{
+                  backdropFilter: "blur(18px) saturate(140%)",
+                  WebkitBackdropFilter: "blur(18px) saturate(140%)",
+                  backgroundImage:
+                    "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))",
                 }}
-                className="group inline-flex items-center gap-3 px-9 py-4 rounded-full bg-[#0d6e66] text-white text-[15px] font-semibold hover:bg-[#0d6e66]/90 hover:-translate-y-0.5 transition-all shadow-[0_20px_50px_-20px_rgba(94,234,212,0.5)]"
               >
-                Explore
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </a>
-
-              <p className="text-[13px] text-white/50 font-light">
-                Own a local business?{" "}
-                <Link
-                  to="/for-businesses"
-                  className="text-white/75 hover:text-[#5eead4] underline underline-offset-4 decoration-white/20 hover:decoration-[#5eead4]/60 transition-colors"
+                <Search className="w-4 h-4 sm:w-5 sm:h-5 text-white/60 shrink-0" />
+                <input
+                  type="text"
+                  value={q}
+                  onChange={(e) => setQ(e.target.value.slice(0, 160))}
+                  placeholder="Search homes, businesses, towns…"
+                  className="flex-1 min-w-0 bg-transparent text-[15px] sm:text-lg text-white placeholder:text-white/45 focus:outline-none py-2 sm:py-2.5"
+                  aria-label="Search the Capital District"
+                  autoComplete="off"
+                />
+                <button
+                  type="submit"
+                  className="shrink-0 inline-flex items-center gap-1.5 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white text-[#0e0f12] text-[13px] sm:text-sm font-semibold hover:opacity-90 transition"
                 >
-                  Grow Your Business →
-                </Link>
-              </p>
-            </motion.div>
+                  Search
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                </button>
+              </div>
+
+              {/* Suggestion pills */}
+              <div className="mt-6 flex flex-wrap justify-center gap-2 sm:gap-2.5">
+                {SEARCH_SUGGESTIONS.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => {
+                      setQ(s);
+                      submit(s);
+                    }}
+                    className="px-3.5 py-1.5 rounded-full border border-white/12 bg-white/[0.03] text-[12.5px] sm:text-[13px] text-white/75 hover:text-white hover:border-[#5eead4]/40 hover:bg-white/[0.06] transition"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </motion.form>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.7 }}
+              className="mt-10 text-[12.5px] text-white/45 font-light"
+            >
+              One search for the Capital District — homes, businesses, towns, and more.
+            </motion.p>
           </motion.div>
         </div>
 
-        {/* Soft scroll cue */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none" aria-hidden>
-          <div className="w-px h-14 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none" aria-hidden>
+          <div className="w-px h-12 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
         </div>
       </div>
     </section>
   );
 }
+
 
 // ─── CURRENTLY FEATURED ──────────────────────────────────────────────────────
 type FeaturedCard = {
