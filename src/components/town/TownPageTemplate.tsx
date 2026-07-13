@@ -1064,6 +1064,9 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
           </div>
         </section>
 
+        {/* ═══════════ 9.5 COMMUNITY UPDATES ═══════════ */}
+        <CommunityUpdatesSection townSlug={town.slug} townName={name} />
+
         {/* ═══════════ 10. SEO OVERVIEW ═══════════ */}
         <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-24">
           <div className="max-w-3xl mx-auto px-6 md:px-10">
