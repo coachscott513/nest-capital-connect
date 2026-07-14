@@ -206,6 +206,33 @@ const PartnerAuth = () => {
                     {loading ? 'Signing in...' : 'Sign In'}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
+
+                  <div className="text-center">
+                    <button
+                      type="button"
+                      onClick={() => { setShowReset(v => !v); setResetEmail(signInData.email); }}
+                      className="text-sm text-primary hover:underline"
+                    >
+                      Forgot your password?
+                    </button>
+                  </div>
+
+                  {showReset && (
+                    <div className="rounded-md border border-border/60 bg-muted/30 p-4 space-y-3">
+                      <p className="text-sm text-muted-foreground">
+                        Enter your email and we'll send a reset link.
+                      </p>
+                      <Input
+                        type="email"
+                        placeholder="you@business.com"
+                        value={resetEmail}
+                        onChange={(e) => setResetEmail(e.target.value)}
+                      />
+                      <Button type="button" onClick={handleForgotPassword} disabled={loading} className="w-full">
+                        {loading ? 'Sending...' : 'Send reset link'}
+                      </Button>
+                    </div>
+                  )}
                 </form>
               </TabsContent>
 
