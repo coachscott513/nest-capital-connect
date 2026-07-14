@@ -877,6 +877,108 @@ export type Database = {
         }
         Relationships: []
       }
+      link_clicks: {
+        Row: {
+          business_id: string | null
+          campaign_id: string | null
+          country: string | null
+          created_at: string
+          device: string | null
+          id: string
+          ip_hash: string | null
+          is_bot: boolean
+          link_id: string | null
+          recipient_email_hash: string | null
+          referrer: string | null
+          region_id: string | null
+          slug: string
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          business_id?: string | null
+          campaign_id?: string | null
+          country?: string | null
+          created_at?: string
+          device?: string | null
+          id?: string
+          ip_hash?: string | null
+          is_bot?: boolean
+          link_id?: string | null
+          recipient_email_hash?: string | null
+          referrer?: string | null
+          region_id?: string | null
+          slug: string
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          business_id?: string | null
+          campaign_id?: string | null
+          country?: string | null
+          created_at?: string
+          device?: string | null
+          id?: string
+          ip_hash?: string | null
+          is_bot?: boolean
+          link_id?: string | null
+          recipient_email_hash?: string | null
+          referrer?: string | null
+          region_id?: string | null
+          slug?: string
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "link_clicks_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "link_clicks_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "link_clicks_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "outreach_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "link_clicks_link_id_fkey"
+            columns: ["link_id"]
+            isOneToOne: false
+            referencedRelation: "tracked_links"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "link_clicks_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       listing_agents: {
         Row: {
           active_count: number
@@ -1341,6 +1443,123 @@ export type Database = {
           video_embed_url?: string | null
         }
         Relationships: []
+      }
+      outreach_campaigns: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          notes: string | null
+          region_id: string | null
+          segment: string | null
+          sent_at: string | null
+          template: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          notes?: string | null
+          region_id?: string | null
+          segment?: string | null
+          sent_at?: string | null
+          template?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          region_id?: string | null
+          segment?: string | null
+          sent_at?: string | null
+          template?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "outreach_campaigns_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      outreach_recipients: {
+        Row: {
+          business_id: string | null
+          business_name: string | null
+          campaign_id: string | null
+          click_count: number
+          created_at: string
+          email: string | null
+          email_hash: string | null
+          first_click_at: string | null
+          id: string
+          interest_score: number
+          last_seen_at: string | null
+          notes: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          business_id?: string | null
+          business_name?: string | null
+          campaign_id?: string | null
+          click_count?: number
+          created_at?: string
+          email?: string | null
+          email_hash?: string | null
+          first_click_at?: string | null
+          id?: string
+          interest_score?: number
+          last_seen_at?: string | null
+          notes?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string | null
+          business_name?: string | null
+          campaign_id?: string | null
+          click_count?: number
+          created_at?: string
+          email?: string | null
+          email_hash?: string | null
+          first_click_at?: string | null
+          id?: string
+          interest_score?: number
+          last_seen_at?: string | null
+          notes?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "outreach_recipients_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outreach_recipients_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outreach_recipients_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "outreach_campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       partner_inquiries: {
         Row: {
@@ -2520,6 +2739,77 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      tracked_links: {
+        Row: {
+          business_id: string | null
+          campaign_id: string | null
+          click_count: number
+          created_at: string
+          destination_url: string
+          id: string
+          is_active: boolean
+          label: string | null
+          region_id: string | null
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          business_id?: string | null
+          campaign_id?: string | null
+          click_count?: number
+          created_at?: string
+          destination_url: string
+          id?: string
+          is_active?: boolean
+          label?: string | null
+          region_id?: string | null
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string | null
+          campaign_id?: string | null
+          click_count?: number
+          created_at?: string
+          destination_url?: string
+          id?: string
+          is_active?: boolean
+          label?: string | null
+          region_id?: string | null
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tracked_links_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tracked_links_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tracked_links_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "outreach_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tracked_links_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {

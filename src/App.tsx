@@ -24,6 +24,8 @@ import AdminPropertyListings from "./pages/admin/AdminPropertyListings";
 import AdminBusinessAudit from "./pages/admin/AdminBusinessAudit";
 import AdminRevenue from "./pages/admin/AdminRevenue";
 import AdminLaunchDashboard from "./pages/admin/AdminLaunchDashboard";
+import AdminOutreach from "./pages/admin/AdminOutreach";
+import GoRedirect from "./pages/GoRedirect";
 import HomesPage from "./pages/HomesPage";
 import HomesHub from "./pages/homes/HomesHub";
 import TownListings from "./pages/homes/TownListings";
@@ -254,6 +256,8 @@ const App = () => {
             <RouteFade>
             <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/go/:slug" element={<GoRedirect />} />
+          <Route path="/admin/outreach" element={<AdminOutreach />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/towns" element={<AdminTowns />} />
           <Route path="/admin/partners" element={<AdminPartners />} />
