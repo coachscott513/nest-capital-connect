@@ -523,6 +523,7 @@ const App = () => {
           
           {/* Partner Dashboard */}
           <Route path="/partner-auth" element={<PartnerAuth />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/partner-dashboard" element={<PartnerDashboard />} />
           <Route path="/dashboard" element={<PartnerDashboard />} />
           <Route path="/partner-success" element={<PartnerSuccess />} />
