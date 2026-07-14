@@ -28,6 +28,28 @@ const PartnerAuth = () => {
   const [signInData, setSignInData] = useState({ email: '', password: '' });
   const [signUpData, setSignUpData] = useState({ fullName: '', email: '', password: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const email = resetEmail.trim() || signInData.email.trim();
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      toast({ title: 'Enter your email', description: 'We need a valid email to send the reset link.', variant: 'destructive' });
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setLoading(false);
+    if (error) {
+      toast({ title: 'Could not send reset email', description: error.message, variant: 'destructive' });
+    } else {
+      toast({ title: 'Check your inbox', description: `Password reset link sent to ${email}.` });
+      setShowReset(false);
+    }
+  };
 
   useEffect(() => {
     const checkSession = async () => {
