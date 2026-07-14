@@ -28,6 +28,28 @@ const PartnerAuth = () => {
   const [signInData, setSignInData] = useState({ email: '', password: '' });
   const [signUpData, setSignUpData] = useState({ fullName: '', email: '', password: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const email = resetEmail.trim() || signInData.email.trim();
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      toast({ title: 'Enter your email', description: 'We need a valid email to send the reset link.', variant: 'destructive' });
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setLoading(false);
+    if (error) {
+      toast({ title: 'Could not send reset email', description: error.message, variant: 'destructive' });
+    } else {
+      toast({ title: 'Check your inbox', description: `Password reset link sent to ${email}.` });
+      setShowReset(false);
+    }
+  };
 
   useEffect(() => {
     const checkSession = async () => {
@@ -184,6 +206,33 @@ const PartnerAuth = () => {
                     {loading ? 'Signing in...' : 'Sign In'}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
+
+                  <div className="text-center">
+                    <button
+                      type="button"
+                      onClick={() => { setShowReset(v => !v); setResetEmail(signInData.email); }}
+                      className="text-sm text-primary hover:underline"
+                    >
+                      Forgot your password?
+                    </button>
+                  </div>
+
+                  {showReset && (
+                    <div className="rounded-md border border-border/60 bg-muted/30 p-4 space-y-3">
+                      <p className="text-sm text-muted-foreground">
+                        Enter your email and we'll send a reset link.
+                      </p>
+                      <Input
+                        type="email"
+                        placeholder="you@business.com"
+                        value={resetEmail}
+                        onChange={(e) => setResetEmail(e.target.value)}
+                      />
+                      <Button type="button" onClick={handleForgotPassword} disabled={loading} className="w-full">
+                        {loading ? 'Sending...' : 'Send reset link'}
+                      </Button>
+                    </div>
+                  )}
                 </form>
               </TabsContent>
 

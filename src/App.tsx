@@ -175,6 +175,7 @@ import Pricing from "./pages/Pricing";
 import ClaimBusiness from "./pages/ClaimBusiness";
 import BizPage from "./pages/biz/BizPage";
 import PartnerAuth from "./pages/PartnerAuth";
+import ResetPassword from "./pages/ResetPassword";
 import PartnerDashboard from "./pages/PartnerDashboard";
 import PartnerSuccess from "./pages/PartnerSuccess";
 import { generateTownRoutes, generateTownRentalRoutes } from "./components/ExpandedRoutingSystem";
@@ -522,6 +523,7 @@ const App = () => {
           
           {/* Partner Dashboard */}
           <Route path="/partner-auth" element={<PartnerAuth />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/partner-dashboard" element={<PartnerDashboard />} />
           <Route path="/dashboard" element={<PartnerDashboard />} />
           <Route path="/partner-success" element={<PartnerSuccess />} />
