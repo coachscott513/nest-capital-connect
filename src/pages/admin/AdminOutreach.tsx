@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import AdminLayout from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { Button } from "@/components/ui/button";
@@ -104,12 +105,12 @@ export default function AdminOutreach() {
   const totalClicks = useMemo(() => links.reduce((s, l) => s + (l.click_count || 0), 0), [links]);
   const humanClicks = useMemo(() => clicks.filter(c => !c.is_bot).length, [clicks]);
 
-  if (loading) return <div className="min-h-screen bg-background text-foreground p-8">Loading…</div>;
-  if (!isAdmin) return <Navigate to="/" replace />;
-
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="max-w-6xl mx-auto px-6 py-12">
+    <AdminLayout
+      title="Outreach"
+      description="First-party redirect engine. Every /go/* link is tracked, scored, and yours — no bit.ly, no third parties."
+    >
+      <div>
         <div className="flex items-center justify-between mb-2">
           <p className="text-xs uppercase tracking-[0.2em] text-[#5eead4]">Outreach</p>
           <Link to="/admin" className="text-xs text-white/60 hover:text-white">← Admin</Link>
@@ -236,7 +237,7 @@ export default function AdminOutreach() {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 }
 
