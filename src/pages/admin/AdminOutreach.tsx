@@ -237,7 +237,7 @@ export default function AdminOutreach() {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 }
 
