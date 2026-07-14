@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,9 +21,16 @@ const signUpSchema = z.object({
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
+const getSafeNextPath = (value: string | null) => {
+  if (!value || !value.startsWith('/') || value.startsWith('//')) return '/partner-dashboard';
+  return value;
+};
+
 const PartnerAuth = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { toast } = useToast();
+  const nextPath = getSafeNextPath(searchParams.get('next'));
   const [loading, setLoading] = useState(false);
   const [signInData, setSignInData] = useState({ email: '', password: '' });
   const [signUpData, setSignUpData] = useState({ fullName: '', email: '', password: '' });
@@ -55,19 +62,19 @@ const PartnerAuth = () => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        navigate('/partner-dashboard');
+        navigate(nextPath);
       }
     };
     checkSession();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        navigate('/partner-dashboard');
+        navigate(nextPath);
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, nextPath]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
