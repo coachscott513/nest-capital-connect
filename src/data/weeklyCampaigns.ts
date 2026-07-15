@@ -41,22 +41,24 @@ export type WeeklyCampaign = {
 
 export const WEEKLY_CAMPAIGNS: WeeklyCampaign[] = [
   {
-    id: "homeowners",
-    theme: "Homeowners",
+    id: "buying-a-home",
+    theme: "Buying a Home",
     hero: {
-      title: "Everything for the home you love.",
-      copy: "Mortgage, title, inspection, insurance, and the local pros who help you buy, sell, and take care of it.",
+      title: "Everything you need to buy a home here.",
+      copy: "Homes, agents, mortgage, inspection, attorneys, title, insurance, and movers — the full ecosystem that gets you to the closing table.",
       to: "/homes",
-      cta: "Explore Homeowners",
+      cta: "Explore Buying a Home",
       image: heroOwners,
     },
     cards: [
-      { eyebrow: "Real Estate", title: "Homes worth seeing", to: "/homes", image: categoryRealEstate },
+      { eyebrow: "Homes", title: "Homes worth seeing", to: "/homes", image: categoryRealEstate },
+      { eyebrow: "Real Estate", title: "Local agents", to: "/businesses/real-estate", image: categoryRealEstate },
       { eyebrow: "Mortgage", title: "Local lenders", to: "/businesses/finance", image: categoryFinance },
       { eyebrow: "Inspection", title: "Home inspectors", to: "/businesses/services", image: categoryServices },
-      { eyebrow: "Contractors", title: "Trusted trades", to: "/businesses/contractors", image: categoryContractors },
+      { eyebrow: "Attorneys", title: "Real estate attorneys", to: "/businesses/professional", image: heroBusiness },
+      { eyebrow: "Title", title: "Title companies", to: "/businesses/professional", image: categoryFinance },
       { eyebrow: "Insurance", title: "Coverage & agents", to: "/businesses/finance", image: heroBusiness },
-      { eyebrow: "Neighborhoods", title: "Living in Delmar", to: "/living-in/delmar", image: heroDiscovery },
+      { eyebrow: "Movers", title: "Local moving crews", to: "/businesses/services", image: categoryServices },
     ],
   },
   {
@@ -64,7 +66,7 @@ export const WEEKLY_CAMPAIGNS: WeeklyCampaign[] = [
     theme: "Dining",
     hero: {
       title: "A week of very good tables.",
-      copy: "Restaurants, coffee, cocktails, date nights, and the neighborhood spots worth the drive.",
+      copy: "Restaurants, coffee, cocktails, breweries, breakfast, and desserts — the Capital District's dining ecosystem on one page.",
       to: "/businesses/restaurant",
       cta: "Explore Dining",
       image: categoryRestaurants,
@@ -73,9 +75,9 @@ export const WEEKLY_CAMPAIGNS: WeeklyCampaign[] = [
       { eyebrow: "Restaurants", title: "Where to eat", to: "/businesses/restaurant", image: categoryRestaurants },
       { eyebrow: "Coffee", title: "Cafés & roasters", to: "/businesses/restaurant", image: wellnessBeauty },
       { eyebrow: "Cocktails", title: "Bars & lounges", to: "/business/roosevelt-room", image: heroEvents },
-      { eyebrow: "Date Night", title: "Reservations we love", to: "/businesses/restaurant", image: eventFoodWine },
+      { eyebrow: "Breweries", title: "Local taprooms", to: "/businesses/restaurant", image: eventFoodWine },
       { eyebrow: "Breakfast", title: "Morning spots", to: "/businesses/restaurant", image: wellnessCare },
-      { eyebrow: "Guide", title: "This week in the Capital District", to: "/weekly", image: eventAliveAtFive },
+      { eyebrow: "Desserts", title: "Sweets & bakeries", to: "/businesses/restaurant", image: categoryRestaurants },
     ],
   },
   {
@@ -83,59 +85,41 @@ export const WEEKLY_CAMPAIGNS: WeeklyCampaign[] = [
     theme: "Home Improvement",
     hero: {
       title: "Make it yours.",
-      copy: "Roofing, HVAC, windows, painting, landscaping, remodeling — the pros trusted across the Capital District.",
+      copy: "Roofing, windows, HVAC, painting, landscaping, and remodeling — the trades trusted across the Capital District.",
       to: "/businesses/contractors",
       cta: "Explore Home Improvement",
       image: categoryContractors,
     },
     cards: [
       { eyebrow: "Roofing", title: "Local roofers", to: "/businesses/contractors", image: categoryContractors },
-      { eyebrow: "HVAC", title: "Heating & cooling", to: "/businesses/contractors", image: categoryServices },
       { eyebrow: "Windows", title: "Windows & doors", to: "/businesses/contractors", image: heroOwners },
+      { eyebrow: "HVAC", title: "Heating & cooling", to: "/businesses/contractors", image: categoryServices },
       { eyebrow: "Painting", title: "Interior & exterior", to: "/businesses/contractors", image: heroBusiness },
       { eyebrow: "Landscaping", title: "Yards & outdoor spaces", to: "/businesses/contractors", image: wellnessOutdoor },
-      { eyebrow: "Industrial", title: "Cassone modular", to: "/business/cassone", image: categoryRetail },
+      { eyebrow: "Remodeling", title: "Kitchens & baths", to: "/businesses/contractors", image: categoryRetail },
     ],
   },
   {
-    id: "health",
-    theme: "Health",
+    id: "health-wellness",
+    theme: "Health & Wellness",
     hero: {
       title: "Take care of you.",
-      copy: "Dentists, doctors, fitness, physical therapy, chiropractic, and veterinary care — close to home.",
+      copy: "Doctors, dentists, fitness, physical therapy, veterinary, and wellness — close to home.",
       to: "/businesses/wellness",
-      cta: "Explore Health",
+      cta: "Explore Health & Wellness",
       image: wellnessCare,
     },
     cards: [
-      { eyebrow: "Dental", title: "Dentists nearby", to: "/businesses/dental", image: wellnessCare },
-      { eyebrow: "Healthcare", title: "Doctors & clinics", to: "/businesses/healthcare", image: wellnessRecovery },
+      { eyebrow: "Doctors", title: "Primary care & clinics", to: "/businesses/healthcare", image: wellnessRecovery },
+      { eyebrow: "Dentists", title: "Dentists nearby", to: "/businesses/dental", image: wellnessCare },
       { eyebrow: "Fitness", title: "Gyms & studios", to: "/businesses/wellness", image: wellnessFitness },
-      { eyebrow: "Recovery", title: "Physical therapy", to: "/businesses/wellness", image: wellnessRecovery },
-      { eyebrow: "Beauty", title: "Salon & spa", to: "/businesses/wellness", image: wellnessBeauty },
-      { eyebrow: "Outdoors", title: "Walks, parks, trails", to: "/communities", image: wellnessOutdoor },
-    ],
-  },
-  {
-    id: "weekend",
-    theme: "This Weekend",
-    hero: {
-      title: "What's happening this weekend.",
-      copy: "Concerts, farm markets, festivals, family events — the calendar worth clearing.",
-      to: "/weekly",
-      cta: "See the Weekend",
-      image: eventAliveAtFive,
-    },
-    cards: [
-      { eyebrow: "Concerts", title: "Live music", to: "/weekly", image: eventSaratoga },
-      { eyebrow: "Markets", title: "Farm & makers", to: "/weekly", image: eventTroyMarket },
-      { eyebrow: "Family", title: "Family weekend", to: "/weekly", image: eventFamily },
-      { eyebrow: "Food & Wine", title: "Tastings & pop-ups", to: "/weekly", image: eventFoodWine },
-      { eyebrow: "Downtown", title: "Alive at Five", to: "/weekly", image: eventAliveAtFive },
-      { eyebrow: "Guide", title: "Weekly pulse", to: "/weekly", image: heroEvents },
+      { eyebrow: "Physical Therapy", title: "Recovery & rehab", to: "/businesses/wellness", image: wellnessRecovery },
+      { eyebrow: "Veterinary", title: "Vets & pet care", to: "/businesses/wellness", image: wellnessOutdoor },
+      { eyebrow: "Wellness", title: "Spa, salon & self-care", to: "/businesses/wellness", image: wellnessBeauty },
     ],
   },
 ];
+
 
 // ISO week number — rotates the featured campaign automatically each Monday.
 function isoWeek(d: Date): number {
