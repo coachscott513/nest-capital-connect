@@ -502,10 +502,11 @@ const Index = () => {
       <CleanHeader />
 
       <SearchHero />
+      <ThisWeekCampaign />
       <ExploreCapitalDistrict />
       <FeaturedThisWeek />
       <BusinessCTA />
-      <ThisWeekCampaign />
+
 
       <Footer />
     </div>
