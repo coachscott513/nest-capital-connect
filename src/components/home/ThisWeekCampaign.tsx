@@ -77,8 +77,9 @@ export default function ThisWeekCampaign() {
               />
               <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-14 lg:p-20">
                 <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.32em] uppercase text-[#5eead4]">
-                  This Week · {campaign.theme}
+                  Featured Industry · {campaign.theme}
                 </p>
+
                 <h3 className="mt-4 md:mt-6 text-3xl sm:text-5xl md:text-[4.5rem] lg:text-[5.5rem] font-semibold tracking-[-0.045em] leading-[0.98] text-white max-w-4xl">
                   {campaign.hero.title}
                 </h3>
