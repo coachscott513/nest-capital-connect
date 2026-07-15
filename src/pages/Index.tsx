@@ -76,8 +76,8 @@ function SearchHero() {
         aria-hidden
       />
 
-      <div className="relative w-full min-h-[100svh] flex items-center">
-        <div className="relative z-10 w-full max-w-5xl mx-auto px-5 sm:px-6 md:px-10 py-28 md:py-36">
+      <div className="relative w-full min-h-[82svh] flex items-center">
+        <div className="relative z-10 w-full max-w-5xl mx-auto px-5 sm:px-6 md:px-10 py-20 md:py-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
