@@ -507,6 +507,7 @@ const Index = () => {
       <ExploreCapitalDistrict />
       <FeaturedThisWeek />
       <BusinessCTA />
+      <BuyingAndOwningHome />
 
 
       <Footer />
