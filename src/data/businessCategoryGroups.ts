@@ -13,6 +13,8 @@ export interface BusinessCategoryGroup {
   id: string;
   label: string;
   blurb: string;
+  /** One-line editorial slogan, Apple-product style. Shown large on Discover. */
+  slogan: string;
   icon: LucideIcon;
   categories: OfficialCategory[];
 }
