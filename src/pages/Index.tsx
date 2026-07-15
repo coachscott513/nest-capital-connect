@@ -642,7 +642,7 @@ const Index = () => {
       <ThisWeekCampaign />
       <FeaturedThisWeek />
       <ExploreCapitalDistrict />
-      <GrowYourBusiness />
+      <FeaturedIndustries />
 
       <Footer />
     </div>
