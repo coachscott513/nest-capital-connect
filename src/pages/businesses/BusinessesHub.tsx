@@ -395,10 +395,10 @@ const BusinessesHub = () => {
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
-              href="#categories"
+              href="#discover"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#0d6e66] hover:bg-[#0d6e66]/90 text-white text-sm font-semibold transition"
             >
-              Browse by Category <ArrowRight className="w-4 h-4" />
+              Discover Categories <ArrowRight className="w-4 h-4" />
             </a>
             <Link
               to="/local"
