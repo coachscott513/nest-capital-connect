@@ -37,11 +37,12 @@ interface Click {
 }
 
 const SEED_LINKS: Array<Pick<TrackedLink, "slug" | "destination_url" | "label">> = [
-  { slug: "roosevelt-room", destination_url: "/business/roosevelt-room", label: "Roosevelt Room spotlight" },
+  { slug: "roosevelt-room", destination_url: "/business/the-roosevelt-room", label: "Roosevelt Room spotlight" },
   { slug: "cassone", destination_url: "/business/cassone", label: "Cassone spotlight" },
   { slug: "pricing", destination_url: "/pricing", label: "Pricing" },
-  { slug: "apply", destination_url: "/business/apply", label: "Business application" },
+  { slug: "apply", destination_url: "/for-businesses/apply", label: "Business application" },
   { slug: "business", destination_url: "/for-businesses", label: "For businesses" },
+  { slug: "for-businesses", destination_url: "/for-businesses", label: "For businesses (alt)" },
   { slug: "founding-partner", destination_url: "/pricing", label: "Founding partner" },
 ];
 
