@@ -23,6 +23,7 @@ export const BUSINESS_CATEGORY_GROUPS: BusinessCategoryGroup[] = [
   {
     id: "food-drink",
     label: "Food & Drink",
+    slogan: "Places worth lingering.",
     blurb: "Restaurants, cafés, breweries, and the places locals return to.",
     icon: UtensilsCrossed,
     categories: ["Restaurant", "Food and Beverage", "Catering", "Hospitality"],
@@ -30,6 +31,7 @@ export const BUSINESS_CATEGORY_GROUPS: BusinessCategoryGroup[] = [
   {
     id: "home-property",
     label: "Home & Property",
+    slogan: "The people who keep the Capital District running.",
     blurb: "Contractors, tradespeople, and everyone who keeps the house running.",
     icon: Home,
     categories: [
@@ -52,6 +54,7 @@ export const BUSINESS_CATEGORY_GROUPS: BusinessCategoryGroup[] = [
   {
     id: "professional-services",
     label: "Professional Services",
+    slogan: "Trusted advice, close to home.",
     blurb: "Attorneys, accountants, advisors, and the people behind the paperwork.",
     icon: Briefcase,
     categories: [
@@ -70,6 +73,7 @@ export const BUSINESS_CATEGORY_GROUPS: BusinessCategoryGroup[] = [
   {
     id: "health-wellness",
     label: "Health & Wellness",
+    slogan: "Live well locally.",
     blurb: "Doctors, dentists, studios, and salons that care for people and pets.",
     icon: HeartPulse,
     categories: [
@@ -85,6 +89,7 @@ export const BUSINESS_CATEGORY_GROUPS: BusinessCategoryGroup[] = [
   {
     id: "automotive-transportation",
     label: "Automotive & Transportation",
+    slogan: "Everything that moves the region.",
     blurb: "Repair, sales, and everything that moves across the Capital District.",
     icon: Car,
     categories: [
@@ -98,6 +103,7 @@ export const BUSINESS_CATEGORY_GROUPS: BusinessCategoryGroup[] = [
   {
     id: "shopping-creative-community",
     label: "Shopping, Creative & Community",
+    slogan: "The shops and studios that shape local life.",
     blurb: "Shops, studios, and the community organizations that shape local life.",
     icon: ShoppingBag,
     categories: [
