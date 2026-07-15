@@ -99,8 +99,9 @@ export default function ThisWeekCampaign() {
         <div className="mt-10 md:mt-14">
           <div className="flex items-end justify-between mb-5">
             <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-white/60">
-              Around the theme
+              The full ecosystem
             </p>
+
             <div className="hidden md:flex items-center gap-2">
               <button
                 type="button"
