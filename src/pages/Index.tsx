@@ -6,6 +6,7 @@ import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import ThisWeekCampaign from "@/components/home/ThisWeekCampaign";
+import BuyingAndOwningHome from "@/components/home/BuyingAndOwningHome";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 import { getSearchRoute } from "@/lib/searchIntent";
 import { trackGAEvent } from "@/components/GARouteTracker";
