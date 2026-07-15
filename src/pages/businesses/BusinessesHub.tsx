@@ -323,66 +323,13 @@ const BusinessesHub = () => {
       </section>
 
       {/* Browse by Category */}
-      <section
-        id="categories"
-        className="px-6 md:px-10 pb-20 md:pb-28 border-t border-white/[0.06] pt-16 md:pt-24"
-      >
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-end justify-between flex-wrap gap-4 mb-8">
-            <div>
-              <p className="text-[11px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">
-                By Category
-              </p>
-              <h2 className="mt-3 text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
-                Browse by Category
-              </h2>
-            </div>
-            <p className="text-white/60 max-w-md text-sm">
-              Six pillars, dozens of categories. Every path leads to real local
-              businesses.
-            </p>
-          </div>
+      {/* =========================================================
+          DISCOVER — Apple TV-style immersive category shelf.
+          Horizontal, one big card at a time. No grid. No filters.
+          Each category is a destination, not a directory tile.
+          ========================================================= */}
+      <DiscoverShelf />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {BUSINESS_CATEGORY_GROUPS.map((group) => {
-              const firstCat = group.categories[0];
-              const href = `/businesses/${categoryToSlug(firstCat)}`;
-              const img = GROUP_IMAGES[group.id];
-              return (
-                <Link
-                  key={group.id}
-                  to={href}
-                  className="group relative overflow-hidden rounded-2xl aspect-[4/5] border border-white/[0.08] block"
-                >
-                  {img && (
-                    <img
-                      src={img}
-                      alt={group.label}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-[1.05]"
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/25" />
-                  <div className="relative z-10 h-full flex flex-col justify-end p-6">
-                    <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#5eead4] mb-2">
-                      {group.categories.length} categories
-                    </p>
-                    <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.01em] leading-tight">
-                      {group.label}
-                    </h3>
-                    <p className="mt-2 text-sm text-white/75 max-w-sm">
-                      {group.blurb}
-                    </p>
-                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-white group-hover:text-[#5eead4] transition">
-                      Explore <ArrowUpRight className="w-4 h-4" />
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       <EditorialBreather
         eyebrow="For Business"
