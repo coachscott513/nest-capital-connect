@@ -436,186 +436,49 @@ function ExploreCapitalDistrict() {
   );
 }
 
-// ─── FEATURED INDUSTRIES — APPLE TV-STYLE IMMERSIVE SHELF ────────────────────
-import categoryRealEstate from "@/assets/category-realestate.jpg";
-import categoryContractors from "@/assets/category-contractors.jpg";
-import categoryRestaurants from "@/assets/category-restaurants.jpg";
-import categoryFinance from "@/assets/category-finance.jpg";
-import categoryRetail from "@/assets/category-retail.jpg";
-import categoryServices from "@/assets/category-services.jpg";
-import wellnessCare from "@/assets/wellness-care.jpg";
-import wellnessOutdoor from "@/assets/wellness-outdoor.jpg";
-
-type Industry = {
-  eyebrow: string;
-  headline: string;
-  copy: string;
-  to: string;
-  image: string;
-};
-
-const INDUSTRIES: Industry[] = [
-  {
-    eyebrow: "Real Estate",
-    headline: "The way you find home.",
-    copy: "Agents, lenders, inspectors, title, and the homes worth seeing.",
-    to: "/homes",
-    image: categoryRealEstate,
-  },
-  {
-    eyebrow: "Home Services",
-    headline: "Make it yours.",
-    copy: "Roofing, HVAC, windows, remodeling — the pros trusted across the region.",
-    to: "/businesses/contractors",
-    image: categoryContractors,
-  },
-  {
-    eyebrow: "Dining & Drinks",
-    headline: "A very good table.",
-    copy: "Restaurants, coffee, cocktails, breweries, and neighborhood favorites.",
-    to: "/businesses/restaurant",
-    image: categoryRestaurants,
-  },
-  {
-    eyebrow: "Health & Wellness",
-    headline: "Take care of you.",
-    copy: "Dentists, doctors, fitness, therapy, and recovery — close to home.",
-    to: "/businesses/wellness",
-    image: wellnessCare,
-  },
-  {
-    eyebrow: "Professional Services",
-    headline: "The people behind the plan.",
-    copy: "Attorneys, CPAs, financial advisors, and consultants across the Capital District.",
-    to: "/businesses/finance",
-    image: categoryFinance,
-  },
-  {
-    eyebrow: "Shopping",
-    headline: "Discover local shops.",
-    copy: "Boutiques, makers, and Main Street storefronts worth the drive.",
-    to: "/businesses/retail",
-    image: categoryRetail,
-  },
-  {
-    eyebrow: "Pets",
-    headline: "For the whole family.",
-    copy: "Veterinary care, grooming, training, and the shops that spoil them.",
-    to: "/businesses/services",
-    image: wellnessOutdoor,
-  },
-  {
-    eyebrow: "Automotive",
-    headline: "Keep it running.",
-    copy: "Mechanics, dealers, detail shops, and the trusted names in every town.",
-    to: "/businesses/services",
-    image: categoryServices,
-  },
-];
-
-function FeaturedIndustries() {
+// ─── BUSINESS CTA — TELL YOUR STORY ──────────────────────────────────────────
+function BusinessCTA() {
   return (
-    <section
-      id="featured-industries"
-      className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06]"
-    >
-      <div className="relative max-w-[100rem] mx-auto px-5 sm:px-6 md:px-10 pt-28 md:pt-40 pb-14 md:pb-20">
+    <section className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06]">
+      <div className="relative max-w-5xl mx-auto px-5 sm:px-6 md:px-10 py-24 md:py-32 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl"
         >
           <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
-            Featured Industries
+            For Businesses
           </p>
-          <h2 className="mt-4 text-4xl md:text-6xl lg:text-[4.5rem] font-semibold tracking-[-0.04em] leading-[1.02] text-white">
-            Imagine your business here.
+          <h2 className="mt-4 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02] text-white">
+            Tell your story here.
           </h2>
-          <p className="mt-6 text-lg text-white/60 font-light max-w-2xl leading-relaxed">
-            One curated regional stage. Every industry, presented with the care of a magazine cover.
+          <p className="mt-6 text-lg text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
+            Join the businesses shaping the Capital District. Editorial coverage, curated placement, one trusted regional stage.
           </p>
-        </motion.div>
-      </div>
-
-      {/* Horizontal shelf — full bleed, snap scroll */}
-      <div className="relative overflow-x-auto scrollbar-hide snap-x snap-mandatory">
-        <div className="flex gap-5 md:gap-7 px-5 sm:px-6 md:px-10">
-          {INDUSTRIES.map((industry, i) => (
-            <motion.div
-              key={industry.headline}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.9, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-              className="snap-start shrink-0 w-[85vw] sm:w-[70vw] md:w-[62vw] lg:w-[48vw] xl:w-[42vw] max-w-[720px]"
+          <div className="mt-10 flex flex-wrap justify-center items-center gap-4">
+            <Link
+              to="/for-businesses/apply"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition"
             >
-              <Link
-                to={industry.to}
-                className="group relative block rounded-[32px] overflow-hidden border border-white/[0.08] shadow-[0_40px_100px_-40px_rgba(0,0,0,0.9)] hover:border-[#5eead4]/40 transition-all duration-500"
-              >
-                <div className="relative aspect-[4/5] md:aspect-[16/11] overflow-hidden bg-[#0e0f12]">
-                  <img
-                    src={industry.image}
-                    alt={industry.eyebrow}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.06]"
-                  />
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(180deg, rgba(11,15,25,0.10) 0%, rgba(11,15,25,0.45) 55%, rgba(11,15,25,0.95) 100%)",
-                    }}
-                    aria-hidden
-                  />
-                  <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12 lg:p-14">
-                    <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
-                      {industry.eyebrow}
-                    </p>
-                    <h3 className="mt-4 text-4xl md:text-6xl lg:text-[4.25rem] font-semibold tracking-[-0.035em] leading-[0.98] text-white max-w-[12ch]">
-                      {industry.headline}
-                    </h3>
-                    <p className="mt-5 text-[15px] md:text-lg text-white/75 font-light leading-relaxed max-w-md">
-                      {industry.copy}
-                    </p>
-                    <div className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:gap-3 group-hover:text-[#5eead4] transition-all">
-                      Explore
-                      <ArrowRight className="w-4 h-4" />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-          <div className="shrink-0 w-5 md:w-10" aria-hidden />
-        </div>
-      </div>
-
-      <div className="max-w-[100rem] mx-auto px-5 sm:px-6 md:px-10 pt-16 md:pt-20 pb-28 md:pb-40">
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
-          <Link
-            to="/for-businesses/apply"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition"
-          >
-            Feature your business
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-          <Link
-            to="/pricing"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/15 text-white text-sm font-semibold hover:bg-white/[0.05] transition"
-          >
-            See Pricing
-          </Link>
-          <p className="text-xs text-white/40 md:ml-auto">
+              Feature your business
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/pricing"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/15 text-white text-sm font-semibold hover:bg-white/[0.05] transition"
+            >
+              See Pricing
+            </Link>
+          </div>
+          <p className="mt-8 text-xs text-white/40">
             Editorial coverage follows our{" "}
             <Link to="/editorial-policy" className="text-[#5eead4] hover:underline font-medium">
               standards
             </Link>
             . Sponsorship never buys editorial opinion.
           </p>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -639,10 +502,10 @@ const Index = () => {
       <CleanHeader />
 
       <SearchHero />
-      <ThisWeekCampaign />
-      <FeaturedThisWeek />
       <ExploreCapitalDistrict />
-      <FeaturedIndustries />
+      <FeaturedThisWeek />
+      <BusinessCTA />
+      <ThisWeekCampaign />
 
       <Footer />
     </div>
