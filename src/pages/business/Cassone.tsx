@@ -22,6 +22,7 @@ import {
   Play,
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import cassoneHero from "@/assets/cassone-hero.jpg.asset.json";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { trackGAEvent } from "@/components/GARouteTracker";
