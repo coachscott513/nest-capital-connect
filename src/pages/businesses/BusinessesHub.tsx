@@ -395,10 +395,10 @@ const BusinessesHub = () => {
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
-              href="#categories"
+              href="#discover"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#0d6e66] hover:bg-[#0d6e66]/90 text-white text-sm font-semibold transition"
             >
-              Browse by Category <ArrowRight className="w-4 h-4" />
+              Discover Categories <ArrowRight className="w-4 h-4" />
             </a>
             <Link
               to="/local"
@@ -410,8 +410,16 @@ const BusinessesHub = () => {
         </div>
       </section>
 
+      {/* =========================================================
+          DISCOVER — Apple TV-style immersive category shelf.
+          Horizontal, one big card at a time. No grid. No filters.
+          Positioned immediately after the hero so it is the first
+          thing visitors see on /businesses.
+          ========================================================= */}
+      <DiscoverShelf />
+
       {/* Currently Featured */}
-      <section className="px-6 md:px-10 pb-20 md:pb-24">
+      <section className="px-6 md:px-10 pb-20 md:pb-24 pt-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-4 mb-8">
             <div>
@@ -436,13 +444,6 @@ const BusinessesHub = () => {
         </div>
       </section>
 
-      {/* Browse by Category */}
-      {/* =========================================================
-          DISCOVER — Apple TV-style immersive category shelf.
-          Horizontal, one big card at a time. No grid. No filters.
-          Each category is a destination, not a directory tile.
-          ========================================================= */}
-      <DiscoverShelf />
 
 
       <EditorialBreather
