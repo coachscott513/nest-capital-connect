@@ -211,6 +211,120 @@ const PREVIEW_GROUPS: PreviewGroup[] = [
   "Nonprofit & Community",
 ];
 
+/* ================================================================
+   DISCOVER SHELF — Apple TV-style horizontal category browser.
+   Each card occupies ~78vw and shows huge photography, a slogan,
+   and one Explore CTA. Clicking lands on the category's editorial
+   landing page, never a search grid.
+   ================================================================ */
+const DiscoverShelf = () => {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const scrollByCard = (dir: 1 | -1) => {
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.round(el.clientWidth * 0.82), behavior: "smooth" });
+  };
+
+  return (
+    <section
+      id="discover"
+      className="relative border-t border-white/[0.06] pt-20 md:pt-28 pb-24 md:pb-32 overflow-hidden"
+    >
+      {/* Header */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 mb-10 md:mb-14 flex items-end justify-between gap-6">
+        <div>
+          <p className="text-[11px] font-semibold tracking-[0.32em] uppercase text-[#5eead4]">
+            Discover
+          </p>
+          <h2 className="mt-3 text-4xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.035em] leading-[0.98]">
+            Fourteen ways
+            <br className="hidden md:block" />
+            <span className="text-white/85">to explore the Capital District.</span>
+          </h2>
+          <p className="mt-6 text-white/60 text-base md:text-lg font-light max-w-xl leading-relaxed">
+            Not a directory. A collection of places worth knowing — presented one at a time,
+            the way you'd flip through a great magazine.
+          </p>
+        </div>
+        <div className="hidden md:flex gap-2 shrink-0">
+          <button
+            aria-label="Previous category"
+            onClick={() => scrollByCard(-1)}
+            className="w-12 h-12 rounded-full border border-white/15 hover:border-white/40 hover:bg-white/[0.04] flex items-center justify-center transition"
+          >
+            <ArrowRight className="w-4 h-4 rotate-180" />
+          </button>
+          <button
+            aria-label="Next category"
+            onClick={() => scrollByCard(1)}
+            className="w-12 h-12 rounded-full border border-white/15 hover:border-white/40 hover:bg-white/[0.04] flex items-center justify-center transition"
+          >
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Horizontal track */}
+      <div
+        ref={trackRef}
+        className="flex gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-10 pl-6 md:pl-10 pr-6 md:pr-10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {BUSINESS_CATEGORY_GROUPS.map((group) => {
+          const firstCat = group.categories[0];
+          const href = `/businesses/${categoryToSlug(firstCat)}`;
+          const img = GROUP_IMAGES[group.id];
+          return (
+            <Link
+              key={group.id}
+              to={href}
+              className="group snap-start shrink-0 relative w-[86vw] md:w-[72vw] lg:w-[78vw] xl:w-[1120px] aspect-[4/5] md:aspect-[16/10] rounded-[32px] overflow-hidden border border-white/[0.08] hover:border-white/25 transition"
+            >
+              {img && (
+                <img
+                  src={img}
+                  alt={group.label}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover transition duration-[1200ms] group-hover:scale-[1.04]"
+                />
+              )}
+              {/* Cinematic gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/45 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0B0F19]/60 via-transparent to-transparent" />
+
+              <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-14 lg:p-16">
+                <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.32em] uppercase text-[#5eead4]">
+                  {group.label}
+                </p>
+                <h3 className="mt-4 md:mt-5 text-4xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.04em] leading-[0.98] max-w-3xl">
+                  {group.slogan}
+                </h3>
+                <div className="mt-8 md:mt-10 flex items-center gap-4">
+                  <span className="inline-flex items-center gap-2 text-sm md:text-base font-semibold text-white group-hover:gap-3 transition-all">
+                    Explore <ArrowRight className="w-4 h-4" />
+                  </span>
+                  <span className="text-white/50 text-xs md:text-sm">
+                    {group.categories.length} categories
+                  </span>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
+
+        {/* Trailing spacer so the last card can scroll flush */}
+        <div className="shrink-0 w-1" aria-hidden />
+      </div>
+
+      {/* Mobile hint */}
+      <div className="md:hidden text-center text-xs text-white/40 mt-2 tracking-wider uppercase">
+        Swipe to explore →
+      </div>
+    </section>
+  );
+};
+
+
 
 const BusinessesHub = () => {
   const canonical = "https://www.capitaldistrictnest.com/businesses";
