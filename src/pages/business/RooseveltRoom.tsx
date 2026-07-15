@@ -24,6 +24,7 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import rooseveltHero from "@/assets/roosevelt-room-hero.png.asset.json";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import BusinessContactModal from "@/components/business/BusinessContactModal";
