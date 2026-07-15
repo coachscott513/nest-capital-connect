@@ -410,8 +410,16 @@ const BusinessesHub = () => {
         </div>
       </section>
 
+      {/* =========================================================
+          DISCOVER — Apple TV-style immersive category shelf.
+          Horizontal, one big card at a time. No grid. No filters.
+          Positioned immediately after the hero so it is the first
+          thing visitors see on /businesses.
+          ========================================================= */}
+      <DiscoverShelf />
+
       {/* Currently Featured */}
-      <section className="px-6 md:px-10 pb-20 md:pb-24">
+      <section className="px-6 md:px-10 pb-20 md:pb-24 pt-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-end justify-between flex-wrap gap-4 mb-8">
             <div>
@@ -436,13 +444,6 @@ const BusinessesHub = () => {
         </div>
       </section>
 
-      {/* Browse by Category */}
-      {/* =========================================================
-          DISCOVER — Apple TV-style immersive category shelf.
-          Horizontal, one big card at a time. No grid. No filters.
-          Each category is a destination, not a directory tile.
-          ========================================================= */}
-      <DiscoverShelf />
 
 
       <EditorialBreather
