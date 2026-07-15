@@ -1,28 +1,35 @@
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
-  Check,
-  Sparkles,
-  BookOpen,
-  MapPin,
+  ArrowUpRight,
   BarChart3,
-  Wand2,
-  ShieldCheck,
-  Compass,
-  CheckCircle2,
-  MessageSquare,
+  BookOpen,
   CalendarDays,
+  Check,
+  CheckCircle2,
   LayoutDashboard,
+  MapPin,
   Megaphone,
-  Users,
+  MessageSquare,
+  ShieldCheck,
+  Wand2,
 } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import FAQSection from "@/components/FAQSection";
+import rooseveltHero from "@/assets/roosevelt-room-hero.png.asset.json";
+import cassoneHero from "@/assets/cassone-hero.jpg.asset.json";
 
 const APPLY_URL = "/for-businesses/apply";
+const PRICING_URL = "/pricing";
+
+// Warm editorial white — Apple-style, never pure #fff.
+const PAPER = "#F6F5F2";
+const INK = "#0e0f12";
+const TEAL = "#0d6e66";
+const TEAL_ACCENT = "#0d6e66";
 
 const trustBadges = [
   "Free profile available",
@@ -33,55 +40,48 @@ const trustBadges = [
   "Owner controlled profile",
 ];
 
-// Real Capital District neighborhood & storefront photography — used as
-// ambient background only. No captions imply any business participates
-// that has not actually joined the platform.
-const heroBackdrop = [
-  { src: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2400&q=85", label: "Downtown Albany, NY" },
-  { src: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=2400&q=85", label: "Historic Troy, NY" },
-  { src: "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?auto=format&fit=crop&w=2400&q=85", label: "Saratoga Springs, NY" },
-  { src: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2400&q=85", label: "Delmar, NY" },
-];
-
-const outcomeCards = [
+/* ============================================================
+   EDITORIAL SHOWCASE
+   Replaces the four equal capability cards.
+   Each entry is its own "product announcement" — one huge image,
+   one sentence, one Learn More. Horizontally scrollable.
+   ============================================================ */
+const showcase = [
   {
-    icon: Compass,
-    title: "Be Discovered",
-    body: "Appear in local searches, community guides and editorial collections.",
+    eyebrow: "Editorial Spotlight",
+    title: "A page that finally does your business justice.",
+    body: "Not a listing. A story. Photography, voice, and craft — presented the way great magazines present great brands.",
+    href: "/business/the-roosevelt-room",
+    cta: "See The Roosevelt Room",
+    image: rooseveltHero.url,
+    tone: "dark" as const,
   },
   {
-    icon: BookOpen,
-    title: "Tell Your Story",
-    body: "A professional editorial profile that highlights what makes your business unique.",
+    eyebrow: "Local Discovery",
+    title: "Show up where your neighbors are already looking.",
+    body: "Appear inside the Capital District's own answer engine — town guides, category pages, and weekly features people actually read.",
+    href: "/local",
+    cta: "Explore Local",
+    image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=2400&q=85",
+    tone: "dark" as const,
   },
   {
-    icon: BarChart3,
-    title: "Measure Results",
-    body: "Receive engagement reports as new analytics become available.",
-    future: true,
+    eyebrow: "Built For Every Business",
+    title: "From family restaurants to industrial suppliers.",
+    body: "Whether you serve a table of two or a 400-unit job site, your spotlight speaks the language of your customer.",
+    href: "/business/cassone",
+    cta: "See Cassone",
+    image: cassoneHero.url,
+    tone: "dark" as const,
   },
   {
-    icon: Wand2,
-    title: "Grow Smarter",
-    body: "Access practical AI tools and business resources designed to save time.",
-  },
-];
-
-const differentCards = [
-  {
-    icon: BookOpen,
-    title: "We Tell Stories",
-    body: "Instead of anonymous ratings, we create editorial profiles that help customers understand what makes your business special.",
-  },
-  {
-    icon: MapPin,
-    title: "We Focus Local",
-    body: "Everything is built specifically for the Capital District — and eventually every Nest region across the country.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "You Stay In Control",
-    body: "Claim your profile, update your information, and help shape how your business is presented.",
+    eyebrow: "Owner Control",
+    title: "You approve every word. Every photo. Every time.",
+    body: "No anonymous reviews. No surprise edits. Your voice, verified — and yours to change when the business does.",
+    href: APPLY_URL,
+    cta: "Claim Your Profile",
+    image: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2400&q=85",
+    tone: "dark" as const,
   },
 ];
 
@@ -109,15 +109,82 @@ const faqs = [
   { question: "Will more tools be added?", answer: "Yes. We're building supportive AI tools for content, customer communication, and analytics. New features will roll out to profiles as they become available." },
 ];
 
+/* ============================================================
+   Floating browser window — Apple-style product mockup.
+   Shows a real Capital District Nest spotlight page (Roosevelt Room).
+   ============================================================ */
+const BrowserMockup = () => (
+  <div className="relative">
+    {/* Ambient glow behind the window */}
+    <div
+      className="absolute -inset-10 rounded-[48px] blur-3xl opacity-60 pointer-events-none"
+      style={{
+        background:
+          "radial-gradient(60% 60% at 50% 40%, rgba(13,110,102,0.18), transparent 70%), radial-gradient(50% 50% at 80% 90%, rgba(201,164,73,0.12), transparent 70%)",
+      }}
+    />
+    <div
+      className="relative rounded-[22px] overflow-hidden border border-black/10 bg-white"
+      style={{ boxShadow: "0 40px 100px -20px rgba(14,15,18,0.35), 0 12px 30px -12px rgba(14,15,18,0.15)" }}
+    >
+      {/* Chrome */}
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-black/[0.06] bg-[#FAFAF8]">
+        <span className="w-3 h-3 rounded-full bg-[#FF5F57]" />
+        <span className="w-3 h-3 rounded-full bg-[#FEBC2E]" />
+        <span className="w-3 h-3 rounded-full bg-[#28C840]" />
+        <div className="flex-1 flex justify-center">
+          <div className="text-[11px] tracking-tight text-black/50 px-3 py-1 rounded-md bg-black/[0.04]">
+            capitaldistrictnest.com/business/the-roosevelt-room
+          </div>
+        </div>
+      </div>
+      {/* Content preview — the actual Roosevelt Room hero */}
+      <div className="relative aspect-[4/3] bg-[#0B0F19] overflow-hidden">
+        <img
+          src={rooseveltHero.url}
+          alt="Capital District Nest spotlight page for The Roosevelt Room"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19]/40 via-transparent to-[#0B0F19]/70" />
+        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
+          <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-[#5eead4]">
+            Capital District Nest · Spotlight
+          </p>
+          <h3 className="mt-2 text-2xl md:text-3xl font-semibold tracking-[-0.03em]">
+            The Roosevelt Room
+          </h3>
+          <p className="mt-1 text-xs md:text-sm text-white/75">North Greenbush, NY</p>
+        </div>
+      </div>
+    </div>
+
+    {/* Floating secondary card — Cassone peek */}
+    <div
+      className="hidden md:block absolute -bottom-10 -left-14 w-56 rounded-2xl overflow-hidden border border-black/10 bg-white rotate-[-4deg]"
+      style={{ boxShadow: "0 30px 60px -20px rgba(14,15,18,0.35)" }}
+    >
+      <div className="aspect-[4/3] relative">
+        <img src={cassoneHero.url} alt="Cassone spotlight preview" className="w-full h-full object-cover" loading="lazy" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0e0f12]/70 to-transparent" />
+        <div className="absolute bottom-2 left-3 right-3 text-white">
+          <p className="text-[9px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">Spotlight</p>
+          <p className="text-sm font-semibold tracking-tight">Cassone</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 const ForBusinesses = () => {
-  const [heroIdx, setHeroIdx] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => setHeroIdx((i) => (i + 1) % heroBackdrop.length), 7000);
-    return () => clearInterval(id);
-  }, []);
-
+  const scrollerRef = useRef<HTMLDivElement>(null);
   const pageUrl = typeof window !== "undefined" ? window.location.href : "";
+
+  const scrollBy = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.round(el.clientWidth * 0.85), behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white">
@@ -125,94 +192,163 @@ const ForBusinesses = () => {
         <title>For Local Businesses | Capital District Nest</title>
         <meta
           name="description"
-          content="Capital District Nest helps local businesses build a beautiful online presence, connect with local customers, and simplify everyday marketing through practical tools and thoughtful editorial."
+          content="Imagine your business presented with the care of a magazine feature. Capital District Nest builds editorial spotlights, local discovery, and owner-controlled profiles for Capital District businesses."
         />
       </Helmet>
       <CleanHeader />
 
-      {/* HERO */}
-      <section className="relative px-6 md:px-10 pt-32 pb-24 md:pt-44 md:pb-32 overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          {heroBackdrop.map((s, i) => (
-            <img
-              key={s.src + i}
-              src={s.src}
-              alt={s.label}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ${
-                i === heroIdx ? "opacity-20" : "opacity-0"
-              }`}
-              loading={i === 0 ? "eager" : "lazy"}
-            />
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19]/70 via-[#0B0F19]/85 to-[#0B0F19]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(13,110,102,0.22),_transparent_60%)]" />
-        </div>
+      {/* =========================================================
+          HERO — Apple-style, warm editorial white, split layout.
+          Left: emotional copy + primary/secondary CTAs.
+          Right: floating browser mockup showing a real spotlight.
+          ========================================================= */}
+      <section
+        className="relative overflow-hidden pt-32 md:pt-40 pb-24 md:pb-32 px-6 md:px-10"
+        style={{ background: PAPER, color: INK }}
+      >
+        {/* Very subtle warm wash to keep it from feeling flat */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.5]"
+          style={{
+            background:
+              "radial-gradient(70% 60% at 15% 20%, rgba(13,110,102,0.06), transparent 70%), radial-gradient(60% 60% at 100% 100%, rgba(201,164,73,0.06), transparent 70%)",
+          }}
+        />
 
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[11px] font-semibold tracking-[0.32em] uppercase text-[#5eead4]">
-            For Local Businesses
-          </p>
-          <div className="mt-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.1]">
-            <Sparkles className="w-3.5 h-3.5 text-[#5eead4]" />
-            <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-white/85">
-              Your Local AI Growth Partner
-            </span>
+        <div className="relative max-w-[1240px] mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-16 lg:gap-20 items-center">
+          {/* LEFT */}
+          <div>
+            <p className="text-[11px] font-semibold tracking-[0.32em] uppercase" style={{ color: TEAL }}>
+              For Local Businesses
+            </p>
+            <h1
+              className="mt-6 text-[44px] md:text-[68px] lg:text-[80px] font-semibold tracking-[-0.04em] leading-[0.98]"
+              style={{ color: INK }}
+            >
+              Imagine your business
+              <br />
+              <span style={{ color: TEAL }}>looking like this.</span>
+            </h1>
+            <p className="mt-8 text-lg md:text-xl font-light leading-relaxed max-w-xl" style={{ color: "rgba(14,15,18,0.68)" }}>
+              We don't create listings. We tell stories. A Capital District Nest spotlight
+              is a magazine feature for your business — presented with the care your work
+              deserves.
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row gap-3">
+              <Link
+                to={APPLY_URL}
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+                style={{ background: TEAL, boxShadow: "0 12px 30px -12px rgba(13,110,102,0.55)" }}
+              >
+                Tell Your Story <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to={PRICING_URL}
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold transition"
+                style={{ color: INK, border: "1px solid rgba(14,15,18,0.15)" }}
+              >
+                View Pricing
+              </Link>
+            </div>
+
+            <div className="mt-10 flex items-center gap-3 text-[13px]" style={{ color: "rgba(14,15,18,0.55)" }}>
+              <div className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5" style={{ color: TEAL }} /> Free profile available</div>
+              <span className="w-1 h-1 rounded-full bg-black/20" />
+              <div className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5" style={{ color: TEAL }} /> Owner controlled</div>
+              <span className="hidden md:block w-1 h-1 rounded-full bg-black/20" />
+              <div className="hidden md:flex items-center gap-1.5"><Check className="w-3.5 h-3.5" style={{ color: TEAL }} /> No anonymous reviews</div>
+            </div>
           </div>
-          <h1 className="mt-10 text-5xl md:text-7xl lg:text-[5.25rem] font-semibold tracking-[-0.035em] leading-[1.0]">
-            Get Discovered.
-            <br />
-            <span className="text-[#5eead4]">Tell Your Story.</span>
-            <br />
-            <span className="text-white/85">Grow Smarter.</span>
-          </h1>
-          <p className="mt-10 text-lg md:text-xl text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
-            Capital District Nest helps local businesses build a beautiful online presence, connect with local customers, and simplify everyday marketing through practical tools and thoughtful editorial.
-          </p>
-          <div className="mt-12 flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              to={APPLY_URL}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#0d6e66] hover:bg-[#0d6e66]/90 text-white text-sm font-semibold transition"
-            >
-              Claim Your Free Profile <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/business/the-roosevelt-room"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-white/20 hover:border-white/40 bg-white/[0.04] text-sm font-semibold"
-            >
-              See a Featured Business
-            </Link>
+
+          {/* RIGHT — floating browser window */}
+          <div className="relative">
+            <BrowserMockup />
           </div>
         </div>
       </section>
 
-      {/* OUTCOMES */}
-      <section className="px-6 md:px-10 py-24 border-t border-white/[0.06]">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">Outcomes</span>
-            <h2 className="mt-3 text-4xl md:text-5xl font-semibold tracking-[-0.02em]">
-              What joining is really about.
+      {/* =========================================================
+          QUOTE BAND — huge, light gray, Apple-esque.
+          ========================================================= */}
+      <section className="px-6 md:px-10 py-28 md:py-40" style={{ background: PAPER }}>
+        <div className="max-w-5xl mx-auto text-center">
+          <p
+            className="text-[42px] md:text-[76px] lg:text-[92px] font-semibold tracking-[-0.045em] leading-[0.98]"
+            style={{ color: "rgba(14,15,18,0.14)" }}
+          >
+            "We don't create listings.
+            <br />
+            We tell stories."
+          </p>
+        </div>
+      </section>
+
+      {/* =========================================================
+          EDITORIAL SHOWCASE — replaces the four-card SaaS grid.
+          Horizontally scrollable. Each slide is a "product announcement":
+          one huge image, one sentence, one Learn More.
+          ========================================================= */}
+      <section className="relative py-24 md:py-32 border-t border-white/[0.06]">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10 mb-10 md:mb-14 flex items-end justify-between gap-6">
+          <div>
+            <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-[#5eead4]">
+              The Showcase
+            </p>
+            <h2 className="mt-3 text-4xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
+              One capability at a time.
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {outcomeCards.map(({ icon: Icon, title, body, future }) => (
-              <div
-                key={title}
-                className="rounded-3xl border border-white/[0.08] bg-white/[0.03] backdrop-blur p-8"
-              >
-                <div className="w-11 h-11 rounded-full bg-[#0d6e66]/20 border border-[#0d6e66]/40 flex items-center justify-center mb-6">
-                  <Icon className="w-5 h-5 text-[#5eead4]" />
-                </div>
-                <h3 className="text-xl font-semibold tracking-tight">{title}</h3>
-                <p className="mt-3 text-white/65 leading-relaxed text-[15px]">{body}</p>
-                {future && (
-                  <p className="mt-4 text-[11px] uppercase tracking-[0.18em] text-[#5eead4]/80">
-                    Coming Soon
-                  </p>
-                )}
-              </div>
-            ))}
+          <div className="hidden md:flex gap-2">
+            <button
+              aria-label="Previous"
+              onClick={() => scrollBy(-1)}
+              className="w-11 h-11 rounded-full border border-white/15 hover:border-white/40 flex items-center justify-center transition"
+            >
+              <ArrowRight className="w-4 h-4 rotate-180" />
+            </button>
+            <button
+              aria-label="Next"
+              onClick={() => scrollBy(1)}
+              className="w-11 h-11 rounded-full border border-white/15 hover:border-white/40 flex items-center justify-center transition"
+            >
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
+        </div>
+
+        <div
+          ref={scrollerRef}
+          className="flex gap-6 md:gap-8 overflow-x-auto snap-x snap-mandatory pb-8 px-6 md:px-10 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {showcase.map((item) => (
+            <Link
+              key={item.title}
+              to={item.href}
+              className="snap-start group relative shrink-0 w-[86vw] md:w-[62vw] lg:w-[720px] aspect-[4/5] md:aspect-[16/11] rounded-[28px] overflow-hidden border border-white/[0.08] hover:border-white/25 transition"
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="absolute inset-0 w-full h-full object-cover transition duration-[900ms] group-hover:scale-[1.03]"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />
+              <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
+                <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+                  {item.eyebrow}
+                </p>
+                <h3 className="mt-3 text-2xl md:text-4xl font-semibold tracking-[-0.03em] leading-[1.05] max-w-xl">
+                  {item.title}
+                </h3>
+                <p className="mt-4 text-white/70 text-[15px] md:text-base font-light leading-relaxed max-w-lg">
+                  {item.body}
+                </p>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/95 group-hover:gap-3 transition-all">
+                  {item.cta} <ArrowUpRight className="w-4 h-4" />
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -227,68 +363,6 @@ const ForBusinesses = () => {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* WHY WE'RE DIFFERENT */}
-      <section className="px-6 md:px-10 py-24 border-y border-white/[0.06] bg-white/[0.015]">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.02em]">
-              We're building something different.
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {differentCards.map(({ icon: Icon, title, body }) => (
-              <div
-                key={title}
-                className="rounded-3xl border border-white/[0.08] bg-white/[0.03] backdrop-blur p-8"
-              >
-                <div className="w-11 h-11 rounded-full bg-[#0d6e66]/20 border border-[#0d6e66]/40 flex items-center justify-center mb-6">
-                  <Icon className="w-5 h-5 text-[#5eead4]" />
-                </div>
-                <h3 className="text-xl font-semibold tracking-tight">{title}</h3>
-                <p className="mt-3 text-white/65 leading-relaxed text-[15px]">{body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURED EXAMPLE — Roosevelt Room only */}
-      <section className="px-6 md:px-10 py-24">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">Featured Business</span>
-            <h2 className="mt-3 text-4xl md:text-5xl font-semibold tracking-[-0.02em]">
-              The Roosevelt Room
-            </h2>
-            <p className="mt-3 text-white/60">North Greenbush, New York</p>
-            <p className="mt-6 text-white/70 max-w-2xl mx-auto leading-relaxed">
-              Modern American dining in an intimate setting with seasonal menus, handcrafted cocktails, and warm hospitality.
-            </p>
-          </div>
-          <Link
-            to="/business/the-roosevelt-room"
-            className="group block rounded-3xl overflow-hidden border border-white/[0.08] hover:border-white/20 transition relative aspect-[21/9]"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2400&q=85"
-              alt="The Roosevelt Room — North Greenbush, NY"
-              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0B0F19]/90 via-[#0B0F19]/40 to-transparent" />
-            <div className="absolute inset-0 flex items-center p-10 md:p-16">
-              <div>
-                <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4] mb-3">Editorial Feature</p>
-                <h3 className="text-3xl md:text-5xl font-semibold tracking-[-0.02em]">The Roosevelt Room</h3>
-                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#5eead4] group-hover:gap-3 transition-all">
-                  Explore the Feature <ArrowRight className="w-4 h-4" />
-                </span>
-              </div>
-            </div>
-          </Link>
         </div>
       </section>
 
@@ -313,7 +387,7 @@ const ForBusinesses = () => {
         </div>
       </section>
 
-      {/* COMING SOON — future roadmap */}
+      {/* COMING SOON */}
       <section className="px-6 md:px-10 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
@@ -358,23 +432,14 @@ const ForBusinesses = () => {
               to={APPLY_URL}
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#0d6e66] hover:bg-[#0d6e66]/90 text-white text-sm font-semibold transition"
             >
-              Claim Your Free Profile <ArrowRight className="w-4 h-4" />
+              Tell Your Story <ArrowRight className="w-4 h-4" />
             </Link>
-            <a
-              href="#how-it-works"
-              onClick={(e) => {
-                e.preventDefault();
-                const el = document.querySelectorAll("h2");
-                el.forEach((h) => {
-                  if (h.textContent?.includes("Three simple steps")) {
-                    h.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }
-                });
-              }}
+            <Link
+              to={PRICING_URL}
               className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition underline underline-offset-4 decoration-white/20"
             >
-              See How It Works
-            </a>
+              View Pricing
+            </Link>
           </div>
         </div>
       </section>
