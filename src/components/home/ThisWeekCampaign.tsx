@@ -37,15 +37,16 @@ export default function ThisWeekCampaign() {
         >
           <div className="max-w-3xl">
             <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
-              This Week in the Capital District
+              Featured Industry of the Week
             </p>
             <h2 className="mt-4 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02] text-white">
               {campaign.theme}.
             </h2>
           </div>
           <p className="text-[12.5px] text-white/45 font-light">
-            A new theme every Monday.
+            A new industry every Monday.
           </p>
+
         </motion.div>
 
         {/* Immersive hero */}
