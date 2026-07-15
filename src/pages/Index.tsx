@@ -436,24 +436,90 @@ function ExploreCapitalDistrict() {
   );
 }
 
-// ─── GROW YOUR BUSINESS ──────────────────────────────────────────────────────
-function GrowYourBusiness() {
-  const features = [
-    { title: "Editorial Spotlight", body: "A long-form, photography-led profile of your business." },
-    { title: "Local Search", body: "Show up in town and category searches across the platform." },
-    { title: "Website Review", body: "A practical audit of what's working and what to fix." },
-    { title: "Google Business Review", body: "Sharpen the profile most customers see first." },
-    { title: "SEO Foundation", body: "Structured schema, clean URLs, and the technical baseline." },
-    { title: "Customer Inquiry Tools", body: "Quote forms, booking links, and one-tap contact." },
-    { title: "Automation", body: "Simple workflows so the small stuff runs itself." },
-    { title: "Content Help", body: "AI-assisted copy, replies, and FAQs — reviewed by editors." },
-    { title: "Business Spotlight", body: "Featured placement across the Nest editorial surface." },
-    { title: "Business Dashboard", body: "Track profile performance and leads.", soon: true },
-  ];
+// ─── FEATURED INDUSTRIES — APPLE TV-STYLE IMMERSIVE SHELF ────────────────────
+import categoryRealEstate from "@/assets/category-realestate.jpg";
+import categoryContractors from "@/assets/category-contractors.jpg";
+import categoryRestaurants from "@/assets/category-restaurants.jpg";
+import categoryFinance from "@/assets/category-finance.jpg";
+import categoryRetail from "@/assets/category-retail.jpg";
+import categoryServices from "@/assets/category-services.jpg";
+import wellnessCare from "@/assets/wellness-care.jpg";
+import wellnessOutdoor from "@/assets/wellness-outdoor.jpg";
 
+type Industry = {
+  eyebrow: string;
+  headline: string;
+  copy: string;
+  to: string;
+  image: string;
+};
+
+const INDUSTRIES: Industry[] = [
+  {
+    eyebrow: "Real Estate",
+    headline: "The way you find home.",
+    copy: "Agents, lenders, inspectors, title, and the homes worth seeing.",
+    to: "/homes",
+    image: categoryRealEstate,
+  },
+  {
+    eyebrow: "Home Services",
+    headline: "Make it yours.",
+    copy: "Roofing, HVAC, windows, remodeling — the pros trusted across the region.",
+    to: "/businesses/contractors",
+    image: categoryContractors,
+  },
+  {
+    eyebrow: "Dining & Drinks",
+    headline: "A very good table.",
+    copy: "Restaurants, coffee, cocktails, breweries, and neighborhood favorites.",
+    to: "/businesses/restaurant",
+    image: categoryRestaurants,
+  },
+  {
+    eyebrow: "Health & Wellness",
+    headline: "Take care of you.",
+    copy: "Dentists, doctors, fitness, therapy, and recovery — close to home.",
+    to: "/businesses/wellness",
+    image: wellnessCare,
+  },
+  {
+    eyebrow: "Professional Services",
+    headline: "The people behind the plan.",
+    copy: "Attorneys, CPAs, financial advisors, and consultants across the Capital District.",
+    to: "/businesses/finance",
+    image: categoryFinance,
+  },
+  {
+    eyebrow: "Shopping",
+    headline: "Discover local shops.",
+    copy: "Boutiques, makers, and Main Street storefronts worth the drive.",
+    to: "/businesses/retail",
+    image: categoryRetail,
+  },
+  {
+    eyebrow: "Pets",
+    headline: "For the whole family.",
+    copy: "Veterinary care, grooming, training, and the shops that spoil them.",
+    to: "/businesses/services",
+    image: wellnessOutdoor,
+  },
+  {
+    eyebrow: "Automotive",
+    headline: "Keep it running.",
+    copy: "Mechanics, dealers, detail shops, and the trusted names in every town.",
+    to: "/businesses/services",
+    image: categoryServices,
+  },
+];
+
+function FeaturedIndustries() {
   return (
-    <section className="relative w-full overflow-hidden bg-white border-t border-black/[0.06]">
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-28 md:py-40">
+    <section
+      id="featured-industries"
+      className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06]"
+    >
+      <div className="relative max-w-[100rem] mx-auto px-5 sm:px-6 md:px-10 pt-28 md:pt-40 pb-14 md:pb-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -461,69 +527,95 @@ function GrowYourBusiness() {
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl"
         >
-          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#0d6e66]">
-            For Business
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+            Featured Industries
           </p>
-          <h2 className="mt-4 text-4xl md:text-6xl font-semibold tracking-[-0.04em] leading-[1.02] text-[#0B0F19]">
-            Tell your story.<br />Grow your business.
+          <h2 className="mt-4 text-4xl md:text-6xl lg:text-[4.5rem] font-semibold tracking-[-0.04em] leading-[1.02] text-white">
+            Imagine your business here.
           </h2>
-          <p className="mt-7 text-lg text-neutral-600 font-light max-w-2xl leading-relaxed">
-            Capital District Nest gives regional businesses editorial coverage,
-            local visibility, and modern tools — all in one place.
+          <p className="mt-6 text-lg text-white/60 font-light max-w-2xl leading-relaxed">
+            One curated regional stage. Every industry, presented with the care of a magazine cover.
           </p>
-          <div className="mt-9 flex flex-wrap gap-3">
-            <Link
-              to="/for-businesses/apply"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition"
-            >
-              Apply for a Spotlight
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              to="/pricing"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-black/15 bg-white text-[#0B0F19] text-sm font-semibold hover:bg-black/[0.04] transition"
-            >
-              See Pricing
-            </Link>
-          </div>
         </motion.div>
+      </div>
 
-        {/* Horizontal scrolling feature rail */}
-        <div className="mt-16 md:mt-20 -mx-5 sm:-mx-6 md:-mx-10 px-5 sm:px-6 md:px-10 overflow-x-auto scrollbar-hide">
-          <div className="flex gap-5 pb-4" style={{ minWidth: "min-content" }}>
-            {features.map((f) => (
-              <div
-                key={f.title}
-                className="shrink-0 w-[280px] md:w-[320px] rounded-3xl border border-black/[0.06] bg-[#FAF9F6] p-7 hover:border-[#0d6e66]/30 hover:bg-white transition shadow-[0_10px_30px_-20px_rgba(0,0,0,0.15)]"
+      {/* Horizontal shelf — full bleed, snap scroll */}
+      <div className="relative overflow-x-auto scrollbar-hide snap-x snap-mandatory">
+        <div className="flex gap-5 md:gap-7 px-5 sm:px-6 md:px-10">
+          {INDUSTRIES.map((industry, i) => (
+            <motion.div
+              key={industry.headline}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.9, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+              className="snap-start shrink-0 w-[85vw] sm:w-[70vw] md:w-[62vw] lg:w-[48vw] xl:w-[42vw] max-w-[720px]"
+            >
+              <Link
+                to={industry.to}
+                className="group relative block rounded-[32px] overflow-hidden border border-white/[0.08] shadow-[0_40px_100px_-40px_rgba(0,0,0,0.9)] hover:border-[#5eead4]/40 transition-all duration-500"
               >
-                <div className="flex items-center justify-between">
-                  <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-[#0d6e66]">
-                    Capability
-                  </p>
-                  {f.soon && (
-                    <span className="text-[9px] font-semibold tracking-[0.18em] uppercase text-neutral-500 border border-black/15 rounded-full px-2 py-0.5">
-                      Coming Soon
-                    </span>
-                  )}
+                <div className="relative aspect-[4/5] md:aspect-[16/11] overflow-hidden bg-[#0e0f12]">
+                  <img
+                    src={industry.image}
+                    alt={industry.eyebrow}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.06]"
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(11,15,25,0.10) 0%, rgba(11,15,25,0.45) 55%, rgba(11,15,25,0.95) 100%)",
+                    }}
+                    aria-hidden
+                  />
+                  <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12 lg:p-14">
+                    <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+                      {industry.eyebrow}
+                    </p>
+                    <h3 className="mt-4 text-4xl md:text-6xl lg:text-[4.25rem] font-semibold tracking-[-0.035em] leading-[0.98] text-white max-w-[12ch]">
+                      {industry.headline}
+                    </h3>
+                    <p className="mt-5 text-[15px] md:text-lg text-white/75 font-light leading-relaxed max-w-md">
+                      {industry.copy}
+                    </p>
+                    <div className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:gap-3 group-hover:text-[#5eead4] transition-all">
+                      Explore
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
                 </div>
-                <h3 className="mt-4 text-xl font-semibold text-[#0B0F19] tracking-[-0.02em]">
-                  {f.title}
-                </h3>
-                <p className="mt-3 text-sm text-neutral-600 font-light leading-relaxed">
-                  {f.body}
-                </p>
-              </div>
-            ))}
-          </div>
+              </Link>
+            </motion.div>
+          ))}
+          <div className="shrink-0 w-5 md:w-10" aria-hidden />
         </div>
+      </div>
 
-        <p className="mt-8 text-xs text-neutral-500">
-          Coverage follows our{" "}
-          <Link to="/editorial-policy" className="text-[#0d6e66] hover:underline font-medium">
-            editorial standards
+      <div className="max-w-[100rem] mx-auto px-5 sm:px-6 md:px-10 pt-16 md:pt-20 pb-28 md:pb-40">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+          <Link
+            to="/for-businesses/apply"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition"
+          >
+            Feature your business
+            <ArrowRight className="w-4 h-4" />
           </Link>
-          . Sponsorship never buys editorial opinion.
-        </p>
+          <Link
+            to="/pricing"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/15 text-white text-sm font-semibold hover:bg-white/[0.05] transition"
+          >
+            See Pricing
+          </Link>
+          <p className="text-xs text-white/40 md:ml-auto">
+            Editorial coverage follows our{" "}
+            <Link to="/editorial-policy" className="text-[#5eead4] hover:underline font-medium">
+              standards
+            </Link>
+            . Sponsorship never buys editorial opinion.
+          </p>
+        </div>
       </div>
     </section>
   );
