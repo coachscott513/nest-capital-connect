@@ -5,6 +5,7 @@ import { ArrowRight, ChevronRight, Search } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import ThisWeekCampaign from "@/components/home/ThisWeekCampaign";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 import { getSearchRoute } from "@/lib/searchIntent";
 import { trackGAEvent } from "@/components/GARouteTracker";
@@ -546,6 +547,7 @@ const Index = () => {
       <CleanHeader />
 
       <SearchHero />
+      <ThisWeekCampaign />
       <FeaturedThisWeek />
       <ExploreCapitalDistrict />
       <GrowYourBusiness />
