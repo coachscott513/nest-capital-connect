@@ -22,6 +22,7 @@ import {
   Play,
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import cassoneHero from "@/assets/cassone-hero.jpg.asset.json";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { trackGAEvent } from "@/components/GARouteTracker";
@@ -251,7 +252,13 @@ const Cassone = () => {
 
       {/* =========================== HERO =========================== */}
       <section className="relative w-full min-h-[100vh] overflow-hidden">
-        <IndustrialBackdrop variant="hero" />
+        <img
+          src={cassoneHero.url}
+          alt="Cassone — official product lineup: ground level storage, office trailers, office containers, iBox modular solutions, concessions, and security booths"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0e0f12]/60 via-[#0e0f12]/55 to-[#0e0f12]" />
         <div className="relative z-10 h-full max-w-[1400px] mx-auto px-6 md:px-12 pt-40 md:pt-48 pb-20 md:pb-28 flex flex-col justify-end min-h-[100vh]">
           <div className="mb-8">
             <Eyebrow>Capital District Nest · Spotlight Template</Eyebrow>

@@ -24,6 +24,7 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import rooseveltHero from "@/assets/roosevelt-room-hero.png.asset.json";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import BusinessContactModal from "@/components/business/BusinessContactModal";
@@ -197,8 +198,14 @@ const RooseveltRoom = () => {
 
       {/* HERO — typographic, no unverified imagery */}
       <section className="relative w-full min-h-[92vh] overflow-hidden">
-        <AbstractBackdrop variant="cool" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0B0F19]" />
+        <img
+          src={rooseveltHero.url}
+          alt="The Roosevelt Room — official brand key art, North Greenbush, NY"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19]/70 via-[#0B0F19]/40 to-[#0B0F19]" />
+
 
         <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-10 pt-32 md:pt-40 pb-16 md:pb-24 flex flex-col justify-end min-h-[92vh]">
           <div className="flex items-center gap-3 mb-6">
