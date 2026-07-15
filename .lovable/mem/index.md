@@ -26,6 +26,7 @@
 - [Platform layer terminology (LOCKED)](mem://architecture/platform-layers) — SAL = platform/admin, Supabase = shared backend, Capital District Nest = Region #1 frontend, Nest OS = playbook. Never conflate.
 - [Nest Platform — multi-region](mem://architecture/nest-platform-multi-region) — Prime directive: every feature must launch Region #137 from data, not code. Regions table + useRegion() are the pattern.
 - [Brand Color System (LOCKED)](mem://style/brand-color-system-locked) — Exact hex tokens and strict usage rules.
+- [Discover Shelf (LOCKED)](mem://design/discover-shelf-locked) — /businesses categories are Apple TV horizontal, one huge card at a time with an editorial slogan. Never a grid.
 - [Apple Button + Typography System (LOCKED)](mem://style/apple-button-typography-system) — Use `.btn-primary-apple` / `.btn-dark-cta` / `.btn-secondary-apple` and `.h-hero`/`.body-apple`/`.eyebrow-apple`.
 - [Apple Interaction Layer (LOCKED)](mem://style/apple-interaction-layer) — Use `<Reveal>`, `<RouteFade>`, `.nav-frost`/`.nav-transparent`, `.dropdown-panel`, `.lift-hover`.
 - [National Analyzer Ecosystem](mem://architecture/national-analyzer-ecosystem) — Dual-brand SaaS strategy.
