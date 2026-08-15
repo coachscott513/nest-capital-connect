@@ -181,34 +181,51 @@ export default function AskNestDialog({
             </Field>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              <Field label="Name">
+            <p className="text-[11px] leading-relaxed text-white/45">
+              {anonymousAllowed
+                ? "Corrections can be sent anonymously. Leave contact details only if you want a reply."
+                : "We only need one way to reach you — an email address or a phone number."}
+            </p>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Field label={anonymousAllowed ? "Name (optional)" : "Name"}>
                 <input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  required
+                  required={!anonymousAllowed}
                   className="w-full rounded-lg border border-[#2D3748] bg-[#0B0F19] px-3 py-2 text-sm text-white"
                 />
               </Field>
-              <Field label="Phone">
+              <Field label="Phone (optional)">
                 <input
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  required
                   inputMode="tel"
                   className="w-full rounded-lg border border-[#2D3748] bg-[#0B0F19] px-3 py-2 text-sm text-white"
                 />
               </Field>
             </div>
 
-            <Field label="Email">
+            <Field label="Email (optional)">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
                 className="w-full rounded-lg border border-[#2D3748] bg-[#0B0F19] px-3 py-2 text-sm text-white"
               />
             </Field>
+
+            {/* Honeypot — hidden from people, tempting to bots. */}
+            <input
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              className="hidden"
+            />
+
+
 
             <Field label="How did you find us? (optional)">
               <select
