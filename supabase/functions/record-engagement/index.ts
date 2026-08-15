@@ -339,6 +339,14 @@ Deno.serve(async (req) => {
 
     // ---- 5. sanitize + insert (idempotent) ---------------------------------
     const referrer_host = hostOnly(body.referrer_host ?? req.headers.get("referer"));
+    // Trusted attribution first. A declared assistant utm_source is recorded as a
+    // clearly weaker, separate value and only when the host is allowlisted.
+    let traffic_source = trafficSource(referrer_host);
+    if (traffic_source === "direct" || traffic_source === "internal") {
+      const utmHost = hostOnly(body.utm_source_hint ?? null);
+      if (utmHost && AI_ASSISTANT_HOSTS.has(utmHost)) traffic_source = "ai_assistant_utm";
+    }
+
 
     const row = {
       event_id: body.event_id,
