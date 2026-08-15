@@ -57,6 +57,7 @@ export default function AdminMissionControl() {
   const [loading, setLoading] = useState(true);
   const [supplyEligibility, setSupplyEligibility] = useState<Tally>({});
   const [supplyVerification, setSupplyVerification] = useState<Tally>({});
+  const [recordStatus, setRecordStatus] = useState<Tally>({});
   const [seoCohort, setSeoCohort] = useState<Tally>({});
   const [demandSource, setDemandSource] = useState<Tally>({});
   const [demandEvents, setDemandEvents] = useState<Tally>({});
@@ -87,9 +88,10 @@ export default function AdminMissionControl() {
         return out as { k: string | null }[];
       };
 
-      const [elig, verif, cohort, evtSource, evtType] = await Promise.all([
+      const [elig, verif, status, cohort, evtSource, evtType] = await Promise.all([
         pageAll("businesses", "eligibility_state"),
         pageAll("businesses", "verification_status"),
+        pageAll("businesses", "record_status"),
         pageAll("seo_protected_urls", "protection_tier"),
         pageAll("engagement_events", "traffic_source"),
         pageAll("engagement_events", "event_type"),
@@ -97,6 +99,7 @@ export default function AdminMissionControl() {
 
       setSupplyEligibility(tally(elig));
       setSupplyVerification(tally(verif));
+      setRecordStatus(tally(status));
       setSeoCohort(tally(cohort));
       setDemandSource(tally(evtSource));
       setDemandEvents(tally(evtType));
