@@ -3,30 +3,24 @@
 // browser -> submit-ask-nest -> validate -> rate limit -> split PII from analytics
 //         -> ask_nest_requests (private, admin/service-role only)
 //         -> engagement_events (metadata only, never PII)
-//         -> founder notification (subject/metadata only, no message body)
+//
+// Data minimization (accepted contract):
+//   - `report_incorrect` may be fully anonymous: no name, no email, no phone.
+//   - every other request type needs a name plus EXACTLY ONE reachable
+//     contact method (email OR phone). Both are never required.
 //
 // Privacy contract:
 //   message, name, email, phone NEVER reach engagement_events.
-//   Technical attribution is derived server-side from the Referer against an
-//   allowlist, or from the first server-recorded event of the same anonymous
-//   session. A client field can never set trusted attribution.
-//   Self-reported discovery is stored as self-report and is never promoted.
-//
-// Data minimization:
-//   name + (email OR phone) required. Correction reports may be anonymous.
-//
-// Retention:
-//   contact details and message text are erased 180 days after a request is
-//   resolved/closed via public.purge_ask_nest_pii().
+//   Technical attribution is derived server-side: first from the visitor's own
+//   earliest recorded engagement event for this anonymous session, otherwise
+//   from the Referer header against an allowlist. A client field can never set
+//   trusted attribution. Self-reported discovery is stored as self-report only.
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { z } from "npm:zod@3.23.8";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-const NOTIFY_TO = Deno.env.get("ASK_NEST_NOTIFY_TO") || "team@capitaldistrictnest.com";
-const NOTIFY_FROM = Deno.env.get("LEAD_NOTIFY_FROM") || "Capital District Nest <onboarding@resend.dev>";
 
 const REQUEST_TYPES = [
   "verify_operating",
@@ -49,36 +43,23 @@ const DISCOVERY = [
   "other",
 ] as const;
 
-const BodySchema = z
-  .object({
-    request_type: z.enum(REQUEST_TYPES),
-    business_slug: z.string().max(160).nullable().optional(),
-    town_slug: z.string().max(80).nullable().optional(),
-    service_intent: z.string().max(80).nullable().optional(),
-    message: z.string().min(2).max(2000),
-    contact_name: z.string().max(120).optional(),
-    contact_email: z.string().email().max(200).optional().or(z.literal("")),
-    contact_phone: z.string().max(40).optional().or(z.literal("")),
-    self_reported_discovery: z.enum(DISCOVERY).optional(),
-    session_id: z.string().uuid().optional(),
-    // Honeypot — must stay empty.
-    company_website: z.string().max(200).optional(),
-  })
-  .superRefine((v, ctx) => {
-    if (v.request_type === "report_incorrect") return; // corrections may be anonymous
-    const hasEmail = !!v.contact_email?.trim();
-    const hasPhone = !!v.contact_phone?.trim();
-    if (!v.contact_name?.trim()) {
-      ctx.addIssue({ code: "custom", path: ["contact_name"], message: "Your name is required." });
-    }
-    if (!hasEmail && !hasPhone) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["contact_email"],
-        message: "Add an email address or a phone number so we can reply.",
-      });
-    }
-  });
+const emptyToUndefined = (v: unknown) =>
+  typeof v === "string" && v.trim() === "" ? undefined : v;
+
+const BodySchema = z.object({
+  request_type: z.enum(REQUEST_TYPES),
+  business_slug: z.string().max(160).nullable().optional(),
+  town_slug: z.string().max(80).nullable().optional(),
+  service_intent: z.string().max(80).nullable().optional(),
+  message: z.string().min(2).max(2000),
+  contact_name: z.preprocess(emptyToUndefined, z.string().min(1).max(120).optional()),
+  contact_email: z.preprocess(emptyToUndefined, z.string().email().max(200).optional()),
+  contact_phone: z.preprocess(emptyToUndefined, z.string().min(7).max(40).optional()),
+  self_reported_discovery: z.preprocess(emptyToUndefined, z.enum(DISCOVERY).optional()),
+  session_id: z.preprocess(emptyToUndefined, z.string().uuid().optional()),
+  // Honeypot: must stay empty. Bots fill it.
+  website: z.preprocess(emptyToUndefined, z.string().max(200).optional()),
+});
 
 /** Allowlisted normalized AI-assistant hosts. Host only — never a full URL. */
 const AI_ASSISTANT_HOSTS = new Set([
@@ -101,7 +82,7 @@ const AI_ASSISTANT_HOSTS = new Set([
   "kagi.com",
 ]);
 
-function hostOnly(value: string | null): string | null {
+function hostOnly(value: string | null | undefined): string | null {
   if (!value) return null;
   try {
     const host = value.includes("://") ? new URL(value).hostname : value.split("/")[0];
@@ -110,6 +91,16 @@ function hostOnly(value: string | null): string | null {
   } catch {
     return null;
   }
+}
+
+function classifyHost(host: string | null): string {
+  if (!host) return "direct";
+  if (AI_ASSISTANT_HOSTS.has(host)) return "ai_assistant";
+  if (/(^|\.)(google|bing|duckduckgo|yahoo|ecosia|brave)\./.test(host + ".")) return "organic_search";
+  if (/(^|\.)(facebook|instagram|linkedin|x|twitter|t|reddit|tiktok|pinterest|youtube)\./.test(host + "."))
+    return "social";
+  if (/capitaldistrictnest\.com$|lovable\.app$|localhost/.test(host)) return "internal";
+  return "referral";
 }
 
 /**
@@ -128,30 +119,24 @@ function trustedSourceFamily(referer: string | null): string {
       /* ignore */
     }
   }
-  if (!host) return "direct";
-  if (/(^|\.)(google|bing|duckduckgo|yahoo|ecosia|brave)\./.test(host + ".")) return "organic_search";
-  if (/(^|\.)(facebook|instagram|linkedin|x|twitter|t|reddit|tiktok|pinterest|youtube)\./.test(host + "."))
-    return "social";
-  if (/capitaldistrictnest\.com$|lovable\.app$|localhost/.test(host)) return "internal";
-  return "referral";
+  return classifyHost(host);
 }
 
-/** Coarse, salted-per-hour fingerprint. No raw IP is ever stored. */
+/** Coarse, salted, non-reversible fingerprint. Never stored alongside PII. */
 async function fingerprint(req: Request): Promise<string> {
   const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
-    req.headers.get("cf-connecting-ip") ||
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("cf-connecting-ip") ??
     "unknown";
-  const hourSalt = new Date().toISOString().slice(0, 13);
-  const data = new TextEncoder().encode(`${ip}|${req.headers.get("user-agent") ?? ""}|${hourSalt}`);
-  const digest = await crypto.subtle.digest("SHA-256", data);
+  const ua = req.headers.get("user-agent") ?? "unknown";
+  const salt = SERVICE_ROLE_KEY.slice(0, 24);
+  const bytes = new TextEncoder().encode(`${salt}|${ip}|${ua}`);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
   return Array.from(new Uint8Array(digest))
     .slice(0, 16)
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
 }
-
-const MAX_PER_HOUR = 5;
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
@@ -174,80 +159,89 @@ Deno.serve(async (req) => {
     }
     const body = parsed.data;
 
-    // Silent bot rejection — looks successful, stores nothing.
-    if (body.company_website && body.company_website.trim().length > 0) {
-      return json({ ok: true });
+    // Honeypot — accept silently so bots learn nothing, store nothing.
+    if (body.website) return json({ ok: true });
+
+    // --- data minimization rules --------------------------------------------
+    const anonymousAllowed = body.request_type === "report_incorrect";
+    const hasContact = Boolean(body.contact_email || body.contact_phone);
+    const hasName = Boolean(body.contact_name);
+    if (!anonymousAllowed && (!hasName || !hasContact)) {
+      return json(
+        {
+          error: "contact required",
+          details: { contact: ["Provide your name and either an email address or a phone number."] },
+        },
+        400,
+      );
     }
 
     const admin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, { auth: { persistSession: false } });
 
-    // ---- abuse protection -------------------------------------------------
+    // --- rate limit: 5 requests per rolling hour per coarse fingerprint ------
     const fp = await fingerprint(req);
-    const windowStart = new Date();
-    windowStart.setMinutes(0, 0, 0);
+    const now = new Date();
     const { data: limitRow } = await admin
       .from("ask_nest_rate_limits")
-      .select("hits")
+      .select("fingerprint, window_start, hits")
       .eq("fingerprint", fp)
-      .eq("window_start", windowStart.toISOString())
       .maybeSingle();
 
-    const hits = (limitRow?.hits ?? 0) + 1;
-    if (hits > MAX_PER_HOUR) {
-      return json({ error: "too many requests", retry_after_minutes: 60 }, 429);
+    const windowOpen =
+      limitRow && new Date(limitRow.window_start as string).getTime() > now.getTime() - 60 * 60 * 1000;
+
+    if (windowOpen && (limitRow!.hits as number) >= 5) {
+      return json({ error: "rate limited", retry_after_minutes: 60 }, 429);
     }
+
     await admin.from("ask_nest_rate_limits").upsert(
       {
         fingerprint: fp,
-        window_start: windowStart.toISOString(),
-        hits,
-        expires_at: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+        window_start: windowOpen ? (limitRow!.window_start as string) : now.toISOString(),
+        hits: windowOpen ? (limitRow!.hits as number) + 1 : 1,
+        expires_at: new Date(now.getTime() + 2 * 60 * 60 * 1000).toISOString(),
       },
-      { onConflict: "fingerprint,window_start" },
+      { onConflict: "fingerprint" },
     );
 
     // Resolve the business only against a real row — never trust a client id.
     let business_id: string | null = null;
     let town_slug = body.town_slug ?? null;
-    let business_name: string | null = null;
     if (body.business_slug) {
       const { data: biz } = await admin
         .from("businesses")
-        .select("id, name, town_slug")
+        .select("id, town_slug")
         .eq("slug", body.business_slug)
         .maybeSingle();
       if (biz) {
         business_id = biz.id as string;
-        business_name = (biz.name as string | null) ?? null;
         town_slug = town_slug ?? ((biz.town_slug as string | null) ?? null);
       }
     }
 
     const technical_source_family = trustedSourceFamily(req.headers.get("referer"));
 
-    // ---- first-touch attribution -----------------------------------------
-    // The submit request's own Referer is internal, so first touch comes from
-    // the FIRST server-recorded event of the same anonymous session. That value
-    // was derived server-side at landing and cannot be set by the client.
+    // --- first-touch attribution: server-side lookup, never client-asserted --
     let first_touch_source: string | null = null;
-    let first_touch_evidence: "server_session_lookup" | "server_referer_only" | "unavailable" =
-      "unavailable";
+    let first_touch_evidence = "unavailable";
     if (body.session_id) {
       const { data: firstEvent } = await admin
         .from("engagement_events")
-        .select("traffic_source")
+        .select("traffic_source, referrer_host, created_at")
         .eq("session_id", body.session_id)
         .order("created_at", { ascending: true })
         .limit(1)
         .maybeSingle();
-      if (firstEvent?.traffic_source) {
-        first_touch_source = firstEvent.traffic_source as string;
-        first_touch_evidence = "server_session_lookup";
+      if (firstEvent) {
+        first_touch_source =
+          (firstEvent.traffic_source as string | null) ??
+          classifyHost(hostOnly(firstEvent.referrer_host as string | null));
+        first_touch_evidence = "session_first_event";
       }
     }
     if (!first_touch_source) {
       first_touch_source = technical_source_family;
-      first_touch_evidence = "server_referer_only";
+      first_touch_evidence = body.session_id ? "referer_fallback_no_session_event" : "referer_only";
     }
 
     // --- PII path: private request table -------------------------------------
@@ -260,15 +254,14 @@ Deno.serve(async (req) => {
         town_slug,
         service_intent: body.service_intent ?? null,
         message: body.message,
-        contact_name: body.contact_name?.trim() || null,
-        contact_email: body.contact_email?.trim() || null,
-        contact_phone: body.contact_phone?.trim() || null,
+        contact_name: body.contact_name ?? null,
+        contact_email: body.contact_email ?? null,
+        contact_phone: body.contact_phone ?? null,
         self_reported_discovery: body.self_reported_discovery ?? null,
         technical_source_family,
         session_id: body.session_id ?? null,
         first_touch_source,
         first_touch_evidence,
-        status: "new",
       })
       .select("id")
       .single();
@@ -294,37 +287,48 @@ Deno.serve(async (req) => {
         intent_category: body.request_type,
         // Self-report is stored as self-report — it never becomes traffic_source.
         surface: "ask_nest",
+        first_touch_source,
+        first_touch_evidence,
+        anonymous: !hasContact,
       },
     });
 
-    // --- founder notification: metadata only, never the message body ---------
-    if (RESEND_API_KEY) {
+    // --- founder notification (best effort, never blocks the request) --------
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    if (resendKey) {
       try {
         await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
+            Authorization: `Bearer ${resendKey}`,
             "Content-Type": "application/json",
-            Authorization: `Bearer ${RESEND_API_KEY}`,
           },
           body: JSON.stringify({
-            from: NOTIFY_FROM,
-            to: [NOTIFY_TO],
-            subject: `Ask Nest: ${body.request_type}${business_name ? ` — ${business_name}` : ""}`,
+            from: "Capital District Nest <team@capitaldistrictnest.com>",
+            to: ["team@capitaldistrictnest.com"],
+            subject: `Ask Nest: ${body.request_type.replace(/_/g, " ")}${
+              body.business_slug ? ` — ${body.business_slug}` : ""
+            }`,
             text: [
-              "A new Ask Nest request is waiting in the admin inbox.",
-              "",
+              `A new Ask Nest request is waiting. Due within one business day.`,
+              ``,
               `Type: ${body.request_type}`,
-              `Business: ${business_name ?? body.business_slug ?? "—"}`,
+              `Business: ${body.business_slug ?? "—"}`,
               `Town: ${town_slug ?? "—"}`,
-              `Due: within one business day`,
-              "",
-              "Open /admin/ask-nest to read the request and reply.",
-              "(The question and contact details are intentionally not included in this email.)",
+              ``,
+              `Message:`,
+              body.message,
+              ``,
+              `From: ${body.contact_name ?? "Anonymous"}`,
+              `Email: ${body.contact_email ?? "—"}`,
+              `Phone: ${body.contact_phone ?? "—"}`,
+              ``,
+              `Open the queue: https://www.capitaldistrictnest.com/admin/ask-nest`,
             ].join("\n"),
           }),
         });
-      } catch (notifyErr) {
-        console.error("ask nest notification failed", String(notifyErr));
+      } catch (notifyError) {
+        console.error("ask nest notification failed", notifyError);
       }
     }
 
