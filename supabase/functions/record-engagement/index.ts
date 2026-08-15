@@ -112,13 +112,33 @@ function hostOnly(value: string | null | undefined): string | null {
   }
 }
 
-/** Hosts used by AI assistants when a user follows a cited link. Host only — never a full URL. */
-const AI_ASSISTANT_HOSTS =
-  /(^|\.)(chatgpt|chat\.openai|openai|perplexity|claude|anthropic|copilot|bing\.com\/chat|gemini\.google|bard\.google|you|phind|poe|mistral|deepseek|grok|x\.ai|arc\.net|kagi)\./;
+/**
+ * Explicit allowlist of normalized assistant hosts. Host only — never a full URL,
+ * never a query string. Anything not on this list is NOT called an AI referral.
+ */
+const AI_ASSISTANT_HOSTS = new Set([
+  "chatgpt.com",
+  "chat.openai.com",
+  "openai.com",
+  "perplexity.ai",
+  "claude.ai",
+  "anthropic.com",
+  "copilot.microsoft.com",
+  "gemini.google.com",
+  "bard.google.com",
+  "you.com",
+  "phind.com",
+  "poe.com",
+  "chat.mistral.ai",
+  "chat.deepseek.com",
+  "grok.com",
+  "x.ai",
+  "kagi.com",
+]);
 
 function trafficSource(host: string | null): string {
   if (!host) return "direct";
-  if (AI_ASSISTANT_HOSTS.test(host + ".")) return "ai_assistant";
+  if (AI_ASSISTANT_HOSTS.has(host)) return "ai_assistant";
   if (/(^|\.)(google|bing|duckduckgo|yahoo|ecosia|brave)\./.test(host + ".")) return "organic_search";
   if (/(^|\.)(facebook|instagram|linkedin|x|twitter|t|reddit|tiktok|pinterest|youtube)\./.test(host + "."))
     return "social";

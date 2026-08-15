@@ -1,0 +1,1 @@
+ALTER VIEW public.v_data_health_summary SET (security_invoker = true);

@@ -2,7 +2,18 @@ import { useEffect, useState } from "react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, ShieldCheck, AlertTriangle } from "lucide-react";
-import { NEUTRALITY_PRINCIPLES, ELIGIBILITY_LABELS, type EligibilityState } from "@/lib/constants/policy";
+import {
+  NEUTRALITY_PRINCIPLES,
+  ELIGIBILITY_LABELS,
+  RECORD_STATUS_LABELS,
+  OWNER_AUTHORITY_RULE,
+  OWNER_ASSERTABLE_FIELDS,
+  EVIDENCE_GOVERNED_FIELDS,
+  EVIDENCE_STATE_LABELS,
+  type EligibilityState,
+  type RecordStatus,
+  type EvidenceState,
+} from "@/lib/constants/policy";
 
 type Summary = {
   total_records: number;
@@ -10,8 +21,11 @@ type Summary = {
   verified_basic: number;
   claimed_enriched: number;
   editorial_featured: number;
-  quarantined: number;
-  suppressed: number;
+  status_active: number;
+  status_quarantined: number;
+  status_suppressed: number;
+  status_reported_closed: number;
+  status_merged: number;
   missing_phone: number;
   missing_website: number;
   missing_address: number;
@@ -20,6 +34,7 @@ type Summary = {
   missing_image: number;
   schenectady_concentration: number;
   with_provenance: number;
+  two_source_coverage: number;
 };
 
 const PREVIEWS = [
@@ -27,13 +42,23 @@ const PREVIEWS = [
   { key: "v_preview_town_mismatch", label: "Town / city conflicts", desc: "Records whose stored city disagrees with the town slug they are published under." },
   { key: "v_preview_duplicates", label: "Duplicate clusters", desc: "Same name + phone, same address, or same website domain." },
   { key: "v_preview_category_conflicts", label: "Category conflicts", desc: "Business name signals a trade that the stored category contradicts." },
+  { key: "v_preview_taxonomy_mapping", label: "Taxonomy mapping", desc: "Imported category strings staged against the canonical taxonomy. Nothing is applied." },
 ] as const;
 
 type PreviewKey = (typeof PREVIEWS)[number]["key"];
 
+const STATUS_KEYS: Record<RecordStatus, keyof Summary> = {
+  active: "status_active",
+  quarantined: "status_quarantined",
+  suppressed: "status_suppressed",
+  reported_closed: "status_reported_closed",
+  merged: "status_merged",
+};
+
 export default function AdminDataHealth() {
   const [summary, setSummary] = useState<Summary | null>(null);
   const [counts, setCounts] = useState<Record<string, number>>({});
+  const [evidenceMix, setEvidenceMix] = useState<Record<string, number>>({});
   const [active, setActive] = useState<PreviewKey>(PREVIEWS[0].key);
   const [rows, setRows] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
@@ -45,7 +70,7 @@ export default function AdminDataHealth() {
       setLoading(true);
       const { data, error } = await supabase.from("v_data_health_summary").select("*").maybeSingle();
       if (error) setError(error.message);
-      setSummary((data as Summary) ?? null);
+      setSummary((data as unknown as Summary) ?? null);
 
       const next: Record<string, number> = {};
       for (const p of PREVIEWS) {
@@ -53,6 +78,17 @@ export default function AdminDataHealth() {
         next[p.key] = count ?? 0;
       }
       setCounts(next);
+
+      const mix: Record<string, number> = {};
+      for (const state of Object.keys(EVIDENCE_STATE_LABELS) as EvidenceState[]) {
+        const { count } = await supabase
+          .from("business_sources")
+          .select("*", { count: "exact", head: true })
+          .eq("evidence_state", state);
+        if (count) mix[state] = count;
+      }
+      setEvidenceMix(mix);
+
       setLoading(false);
     })();
   }, []);
@@ -92,18 +128,38 @@ export default function AdminDataHealth() {
           <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <Stat label="Total records" value={summary.total_records} />
             <Stat label="With provenance" value={summary.with_provenance} sub={`${pct(summary.with_provenance, summary.total_records)} of inventory`} />
-            <Stat label="Quarantined" value={summary.quarantined} />
+            <Stat label="Two-source coverage" value={summary.two_source_coverage} sub={`${pct(summary.two_source_coverage, summary.total_records)} of inventory`} />
             <Stat label="Schenectady bucket" value={summary.schenectady_concentration} sub={`${pct(summary.schenectady_concentration, summary.total_records)} of inventory`} />
           </section>
 
-          <h2 className="mt-10 mb-3 text-sm uppercase tracking-[0.14em] text-white/45">Eligibility mix</h2>
-          <section className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          <h2 className="mb-1 mt-10 text-sm uppercase tracking-[0.14em] text-white/45">Eligibility mix</h2>
+          <p className="mb-3 text-xs text-white/40">Content quality only. Four states, nothing operational.</p>
+          <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {(Object.keys(ELIGIBILITY_LABELS) as EligibilityState[]).map((k) => (
               <Stat key={k} label={ELIGIBILITY_LABELS[k]} value={(summary as unknown as Record<string, number>)[k] ?? 0} />
             ))}
           </section>
 
-          <h2 className="mt-10 mb-3 text-sm uppercase tracking-[0.14em] text-white/45">Completeness gaps</h2>
+          <h2 className="mb-1 mt-10 text-sm uppercase tracking-[0.14em] text-white/45">Record status mix</h2>
+          <p className="mb-3 text-xs text-white/40">Operational state. Never a quality signal.</p>
+          <section className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {(Object.keys(RECORD_STATUS_LABELS) as RecordStatus[]).map((k) => (
+              <Stat key={k} label={RECORD_STATUS_LABELS[k]} value={summary[STATUS_KEYS[k]] ?? 0} />
+            ))}
+          </section>
+
+          <h2 className="mb-1 mt-10 text-sm uppercase tracking-[0.14em] text-white/45">Source authority mix</h2>
+          <p className="mb-3 text-xs text-white/40">
+            Controlled evidence states. The old numeric confidence backfill (0.4 / 0.6 / 0.8) had no measured
+            basis and has been nulled — it is never shown as a score and never used for ranking or eligibility.
+          </p>
+          <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {Object.entries(evidenceMix).map(([k, v]) => (
+              <Stat key={k} label={EVIDENCE_STATE_LABELS[k as EvidenceState] ?? k} value={v} />
+            ))}
+          </section>
+
+          <h2 className="mb-3 mt-10 text-sm uppercase tracking-[0.14em] text-white/45">Completeness gaps</h2>
           <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <Stat label="Missing phone" value={summary.missing_phone} />
             <Stat label="Missing website" value={summary.missing_website} />
@@ -117,7 +173,7 @@ export default function AdminDataHealth() {
         <p className="text-sm text-white/60">No summary available.</p>
       )}
 
-      <h2 className="mt-12 mb-3 text-sm uppercase tracking-[0.14em] text-white/45">Staged cleanup previews</h2>
+      <h2 className="mb-3 mt-12 text-sm uppercase tracking-[0.14em] text-white/45">Staged cleanup previews</h2>
       <div className="flex flex-wrap gap-2">
         {PREVIEWS.map((p) => (
           <button
@@ -157,9 +213,28 @@ export default function AdminDataHealth() {
           </table>
         )}
       </div>
-      <p className="mt-2 text-[11px] text-white/40">Showing up to 100 rows per preview.</p>
+      <p className="mt-2 text-[11px] text-white/40">Showing up to 100 rows per preview. Zero rows committed.</p>
 
-      <h2 className="mt-12 mb-3 text-sm uppercase tracking-[0.14em] text-white/45">Neutrality principles</h2>
+      <h2 className="mb-3 mt-12 text-sm uppercase tracking-[0.14em] text-white/45">Owner authority contract</h2>
+      <div className="rounded-xl border border-[#2D3748] bg-[#1E2230] p-5">
+        <p className="text-sm leading-relaxed text-white/75">{OWNER_AUTHORITY_RULE}</p>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.12em] text-[#5eead4]">Owner may assert</p>
+            <ul className="mt-2 space-y-1 text-xs text-white/60">
+              {OWNER_ASSERTABLE_FIELDS.map((f) => <li key={f}>· {f}</li>)}
+            </ul>
+          </div>
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.12em] text-amber-300">Evidence and review govern</p>
+            <ul className="mt-2 space-y-1 text-xs text-white/60">
+              {EVIDENCE_GOVERNED_FIELDS.map((f) => <li key={f}>· {f}</li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <h2 className="mb-3 mt-12 text-sm uppercase tracking-[0.14em] text-white/45">Neutrality principles</h2>
       <div className="grid gap-3 md:grid-cols-2">
         {NEUTRALITY_PRINCIPLES.map((p) => (
           <div key={p.id} className="rounded-xl border border-[#2D3748] bg-[#1E2230] p-4">
