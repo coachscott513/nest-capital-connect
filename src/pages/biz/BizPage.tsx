@@ -850,17 +850,6 @@ const slugFromBizPath = () => {
   return match?.[1] ? decodeURIComponent(match[1]).toLowerCase() : "business";
 };
 
-const buildPlaceholderBusiness = (slug: string): Business => ({
-  id: `placeholder-${slug}`,
-  slug,
-  name: titleizeSlug(slug),
-  description: null,
-  category: "Local Business",
-  town_name: inferTownFromSlug(slug),
-  state: "NY",
-  plan_tier: "free_claimed",
-  is_active: true,
-});
 
 // Polished "profile being prepared" experience for slugs not yet in the DB.
 // Intentionally NOT a 404 — every clicked business URL should feel intentional.

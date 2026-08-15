@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { isLikelyBot } from '@/lib/botDetection';
+import { logEngagement } from '@/lib/engagement';
+
 
 declare global {
   interface Window {
