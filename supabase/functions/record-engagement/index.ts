@@ -361,7 +361,9 @@ Deno.serve(async (req) => {
       result_count: body.result_count ?? null,
       traffic_class,
       referrer_host,
-      traffic_source: trafficSource(referrer_host),
+      traffic_source,
+      session_id: body.session_id ?? null,
+
       device_class: deviceClass(ua),
       browser_family: browserFamily(ua),
       internal_test,
