@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { HelmetProvider } from 'react-helmet-async';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -245,6 +245,14 @@ const App = () => {
 
   return (
     <HelmetProvider>
+      {/* Default robots directive. Managed by Helmet (not index.html) so a page
+          that sets noindex REPLACES this tag instead of conflicting with it. */}
+      <Helmet>
+        <meta
+          name="robots"
+          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+        />
+      </Helmet>
       <AuthProvider>
         <DelmarConfirmationProvider>
           <QueryClientProvider client={queryClient}>
