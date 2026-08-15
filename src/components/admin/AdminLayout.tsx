@@ -20,6 +20,7 @@ const NAV = [
   { to: "/admin/data-health", label: "Data Health" },
   { to: "/admin/seo-manifest", label: "SEO Manifest" },
   { to: "/admin/previews", label: "Previews" },
+  { to: "/admin/answer-pilot", label: "Answer Pilot" },
   { to: "/admin/revenue", label: "Revenue" },
 ];
 
