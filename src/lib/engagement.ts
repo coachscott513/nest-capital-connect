@@ -1,5 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { isLikelyBot } from "@/lib/botDetection";
+import { getLandingUtmHost, getVisitSessionId } from "@/lib/visitSession";
+
 
 /**
  * First-party engagement logging (schema v2).
@@ -120,6 +122,9 @@ export function logEngagement(
     result_count:
       typeof dimensions.result_count === "number" ? dimensions.result_count : null,
     referrer_host: referrerHost(),
+    session_id: getVisitSessionId(),
+    utm_source_hint: getLandingUtmHost(),
+
     // Signal only — the server makes the final traffic_class decision.
     client_bot_signal: isLikelyBot(),
     metadata,

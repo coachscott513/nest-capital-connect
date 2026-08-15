@@ -37,9 +37,18 @@ const BodySchema = z.object({
   route_path: z.string().max(300).nullable().optional(),
   result_count: z.number().int().min(0).max(100000).nullable().optional(),
   referrer_host: z.string().max(160).nullable().optional(),
+  /** Rotating, anonymous per-visit token. Never tied to an identity. */
+  session_id: z.string().uuid().nullable().optional(),
+  /**
+   * Landing utm_source, host-shaped only. It is checked against the assistant
+   * allowlist and can ONLY ever produce `ai_assistant_utm` — a client can never
+   * set `ai_assistant`, `organic_search` or any other trusted value.
+   */
+  utm_source_hint: z.string().max(80).nullable().optional(),
   client_bot_signal: z.boolean().optional(),
   metadata: z.record(z.union([z.string(), z.number(), z.boolean()])).optional(),
 });
+
 
 // Only these metadata keys survive. Everything else is dropped silently.
 const METADATA_ALLOWLIST = new Set([
@@ -330,6 +339,14 @@ Deno.serve(async (req) => {
 
     // ---- 5. sanitize + insert (idempotent) ---------------------------------
     const referrer_host = hostOnly(body.referrer_host ?? req.headers.get("referer"));
+    // Trusted attribution first. A declared assistant utm_source is recorded as a
+    // clearly weaker, separate value and only when the host is allowlisted.
+    let traffic_source = trafficSource(referrer_host);
+    if (traffic_source === "direct" || traffic_source === "internal") {
+      const utmHost = hostOnly(body.utm_source_hint ?? null);
+      if (utmHost && AI_ASSISTANT_HOSTS.has(utmHost)) traffic_source = "ai_assistant_utm";
+    }
+
 
     const row = {
       event_id: body.event_id,
@@ -344,7 +361,9 @@ Deno.serve(async (req) => {
       result_count: body.result_count ?? null,
       traffic_class,
       referrer_host,
-      traffic_source: trafficSource(referrer_host),
+      traffic_source,
+      session_id: body.session_id ?? null,
+
       device_class: deviceClass(ua),
       browser_family: browserFamily(ua),
       internal_test,

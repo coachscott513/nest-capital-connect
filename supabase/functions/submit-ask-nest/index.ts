@@ -1,15 +1,20 @@
 // Ask Nest — structured business-information request intake.
 //
-// browser -> submit-ask-nest -> validate -> split PII from analytics
+// browser -> submit-ask-nest -> validate -> rate limit -> split PII from analytics
 //         -> ask_nest_requests (private, admin/service-role only)
 //         -> engagement_events (metadata only, never PII)
 //
+// Data minimization (accepted contract):
+//   - `report_incorrect` may be fully anonymous: no name, no email, no phone.
+//   - every other request type needs a name plus EXACTLY ONE reachable
+//     contact method (email OR phone). Both are never required.
+//
 // Privacy contract:
 //   message, name, email, phone NEVER reach engagement_events.
-//   The technical source family is derived server-side from the Referer header
-//   against an allowlist. A client field can never set trusted attribution.
-//   Self-reported discovery is stored as self-report and is never promoted to
-//   technical attribution.
+//   Technical attribution is derived server-side: first from the visitor's own
+//   earliest recorded engagement event for this anonymous session, otherwise
+//   from the Referer header against an allowlist. A client field can never set
+//   trusted attribution. Self-reported discovery is stored as self-report only.
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 import { z } from "npm:zod@3.23.8";
@@ -38,16 +43,22 @@ const DISCOVERY = [
   "other",
 ] as const;
 
+const emptyToUndefined = (v: unknown) =>
+  typeof v === "string" && v.trim() === "" ? undefined : v;
+
 const BodySchema = z.object({
   request_type: z.enum(REQUEST_TYPES),
   business_slug: z.string().max(160).nullable().optional(),
   town_slug: z.string().max(80).nullable().optional(),
   service_intent: z.string().max(80).nullable().optional(),
   message: z.string().min(2).max(2000),
-  contact_name: z.string().min(1).max(120),
-  contact_email: z.string().email().max(200),
-  contact_phone: z.string().min(7).max(40),
-  self_reported_discovery: z.enum(DISCOVERY).optional(),
+  contact_name: z.preprocess(emptyToUndefined, z.string().min(1).max(120).optional()),
+  contact_email: z.preprocess(emptyToUndefined, z.string().email().max(200).optional()),
+  contact_phone: z.preprocess(emptyToUndefined, z.string().min(7).max(40).optional()),
+  self_reported_discovery: z.preprocess(emptyToUndefined, z.enum(DISCOVERY).optional()),
+  session_id: z.preprocess(emptyToUndefined, z.string().uuid().optional()),
+  // Honeypot: must stay empty. Bots fill it.
+  website: z.preprocess(emptyToUndefined, z.string().max(200).optional()),
 });
 
 /** Allowlisted normalized AI-assistant hosts. Host only — never a full URL. */
@@ -71,7 +82,7 @@ const AI_ASSISTANT_HOSTS = new Set([
   "kagi.com",
 ]);
 
-function hostOnly(value: string | null): string | null {
+function hostOnly(value: string | null | undefined): string | null {
   if (!value) return null;
   try {
     const host = value.includes("://") ? new URL(value).hostname : value.split("/")[0];
@@ -80,6 +91,16 @@ function hostOnly(value: string | null): string | null {
   } catch {
     return null;
   }
+}
+
+function classifyHost(host: string | null): string {
+  if (!host) return "direct";
+  if (AI_ASSISTANT_HOSTS.has(host)) return "ai_assistant";
+  if (/(^|\.)(google|bing|duckduckgo|yahoo|ecosia|brave)\./.test(host + ".")) return "organic_search";
+  if (/(^|\.)(facebook|instagram|linkedin|x|twitter|t|reddit|tiktok|pinterest|youtube)\./.test(host + "."))
+    return "social";
+  if (/capitaldistrictnest\.com$|lovable\.app$|localhost/.test(host)) return "internal";
+  return "referral";
 }
 
 /**
@@ -98,12 +119,23 @@ function trustedSourceFamily(referer: string | null): string {
       /* ignore */
     }
   }
-  if (!host) return "direct";
-  if (/(^|\.)(google|bing|duckduckgo|yahoo|ecosia|brave)\./.test(host + ".")) return "organic_search";
-  if (/(^|\.)(facebook|instagram|linkedin|x|twitter|t|reddit|tiktok|pinterest|youtube)\./.test(host + "."))
-    return "social";
-  if (/capitaldistrictnest\.com$|lovable\.app$|localhost/.test(host)) return "internal";
-  return "referral";
+  return classifyHost(host);
+}
+
+/** Coarse, salted, non-reversible fingerprint. Never stored alongside PII. */
+async function fingerprint(req: Request): Promise<string> {
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("cf-connecting-ip") ??
+    "unknown";
+  const ua = req.headers.get("user-agent") ?? "unknown";
+  const salt = SERVICE_ROLE_KEY.slice(0, 24);
+  const bytes = new TextEncoder().encode(`${salt}|${ip}|${ua}`);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest))
+    .slice(0, 16)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 Deno.serve(async (req) => {
@@ -127,7 +159,59 @@ Deno.serve(async (req) => {
     }
     const body = parsed.data;
 
+    // Honeypot — accept silently so bots learn nothing, store nothing.
+    if (body.website) return json({ ok: true });
+
+    // --- data minimization rules --------------------------------------------
+    const anonymousAllowed = body.request_type === "report_incorrect";
+    const hasContact = Boolean(body.contact_email || body.contact_phone);
+    const hasName = Boolean(body.contact_name);
+    if (!anonymousAllowed && (!hasName || !hasContact)) {
+      return json(
+        {
+          error: "contact required",
+          details: { contact: ["Provide your name and either an email address or a phone number."] },
+        },
+        400,
+      );
+    }
+
     const admin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, { auth: { persistSession: false } });
+
+    // --- rate limit: 5 requests per rolling hour per coarse fingerprint ------
+    // The table's primary key is (fingerprint, window_start), so the counter is
+    // bucketed per hour and the rolling total is the sum of live buckets.
+    const fp = await fingerprint(req);
+    const now = new Date();
+    const hourStart = new Date(Math.floor(now.getTime() / 3_600_000) * 3_600_000);
+    const rollingFrom = new Date(now.getTime() - 60 * 60 * 1000).toISOString();
+
+    const { data: buckets } = await admin
+      .from("ask_nest_rate_limits")
+      .select("window_start, hits")
+      .eq("fingerprint", fp)
+      .gte("window_start", rollingFrom);
+
+    const used = (buckets ?? []).reduce((sum, b) => sum + Number(b.hits ?? 0), 0);
+    if (used >= 5) {
+      return json({ error: "rate limited", retry_after_minutes: 60 }, 429);
+    }
+
+    const currentBucket = (buckets ?? []).find(
+      (b) => new Date(b.window_start as string).getTime() === hourStart.getTime(),
+    );
+
+    const { error: limitError } = await admin.from("ask_nest_rate_limits").upsert(
+      {
+        fingerprint: fp,
+        window_start: hourStart.toISOString(),
+        hits: Number(currentBucket?.hits ?? 0) + 1,
+        expires_at: new Date(hourStart.getTime() + 2 * 60 * 60 * 1000).toISOString(),
+      },
+      { onConflict: "fingerprint,window_start" },
+    );
+    if (limitError) console.error(`rate limit write failed: ${limitError.message}`);
+
 
     // Resolve the business only against a real row — never trust a client id.
     let business_id: string | null = null;
@@ -146,6 +230,29 @@ Deno.serve(async (req) => {
 
     const technical_source_family = trustedSourceFamily(req.headers.get("referer"));
 
+    // --- first-touch attribution: server-side lookup, never client-asserted --
+    let first_touch_source: string | null = null;
+    let first_touch_evidence = "unavailable";
+    if (body.session_id) {
+      const { data: firstEvent } = await admin
+        .from("engagement_events")
+        .select("traffic_source, referrer_host, created_at")
+        .eq("session_id", body.session_id)
+        .order("created_at", { ascending: true })
+        .limit(1)
+        .maybeSingle();
+      if (firstEvent) {
+        first_touch_source =
+          (firstEvent.traffic_source as string | null) ??
+          classifyHost(hostOnly(firstEvent.referrer_host as string | null));
+        first_touch_evidence = "server_session_lookup";
+      }
+    }
+    if (!first_touch_source) {
+      first_touch_source = technical_source_family;
+      first_touch_evidence = "server_referer_only";
+    }
+
     // --- PII path: private request table -------------------------------------
     const { data: inserted, error } = await admin
       .from("ask_nest_requests")
@@ -156,11 +263,14 @@ Deno.serve(async (req) => {
         town_slug,
         service_intent: body.service_intent ?? null,
         message: body.message,
-        contact_name: body.contact_name,
-        contact_email: body.contact_email,
-        contact_phone: body.contact_phone,
+        contact_name: body.contact_name ?? null,
+        contact_email: body.contact_email ?? null,
+        contact_phone: body.contact_phone ?? null,
         self_reported_discovery: body.self_reported_discovery ?? null,
         technical_source_family,
+        session_id: body.session_id ?? null,
+        first_touch_source,
+        first_touch_evidence,
       })
       .select("id")
       .single();
@@ -181,12 +291,55 @@ Deno.serve(async (req) => {
       route_path: body.business_slug ? `/biz/${body.business_slug}` : null,
       traffic_class: "consumer",
       traffic_source: technical_source_family,
+      session_id: body.session_id ?? null,
       metadata: {
         intent_category: body.request_type,
         // Self-report is stored as self-report — it never becomes traffic_source.
         surface: "ask_nest",
+        first_touch_source,
+        first_touch_evidence,
+        anonymous: !hasContact,
       },
     });
+
+    // --- founder notification (best effort, never blocks the request) --------
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    if (resendKey) {
+      try {
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${resendKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "Capital District Nest <team@capitaldistrictnest.com>",
+            to: ["team@capitaldistrictnest.com"],
+            subject: `Ask Nest: ${body.request_type.replace(/_/g, " ")}${
+              body.business_slug ? ` — ${body.business_slug}` : ""
+            }`,
+            text: [
+              `A new Ask Nest request is waiting. Due within one business day.`,
+              ``,
+              `Type: ${body.request_type}`,
+              `Business: ${body.business_slug ?? "—"}`,
+              `Town: ${town_slug ?? "—"}`,
+              ``,
+              `Message:`,
+              body.message,
+              ``,
+              `From: ${body.contact_name ?? "Anonymous"}`,
+              `Email: ${body.contact_email ?? "—"}`,
+              `Phone: ${body.contact_phone ?? "—"}`,
+              ``,
+              `Open the queue: https://www.capitaldistrictnest.com/admin/ask-nest`,
+            ].join("\n"),
+          }),
+        });
+      } catch (notifyError) {
+        console.error("ask nest notification failed", notifyError);
+      }
+    }
 
     return json({ ok: true, id: inserted.id });
   } catch (e) {

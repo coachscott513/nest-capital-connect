@@ -11,8 +11,9 @@
  */
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { logEngagement } from "@/lib/engagement";
+import { getVisitSessionId } from "@/lib/visitSession";
 import { Loader2, X, CheckCircle2 } from "lucide-react";
+
 
 export const ASK_NEST_REQUEST_TYPES = [
   { key: "verify_operating", label: "Check whether this business is still operating" },
@@ -60,18 +61,32 @@ export default function AskNestDialog({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [discovery, setDiscovery] = useState<string>("");
+  const [honeypot, setHoneypot] = useState("");
+
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   if (!open) return null;
 
+  const anonymousAllowed = requestType === "report_incorrect";
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    if (!name.trim() || !email.trim() || !phone.trim() || message.trim().length < 2) {
-      setError("Name, email, phone and your question are all required.");
+    if (message.trim().length < 2) {
+      setError("Tell us what you'd like to know.");
       return;
+    }
+    if (!anonymousAllowed) {
+      if (!name.trim()) {
+        setError("Your name is required.");
+        return;
+      }
+      if (!email.trim() && !phone.trim()) {
+        setError("Add an email address or a phone number — either one is enough.");
+        return;
+      }
     }
     setSubmitting(true);
     const { data, error: fnError } = await supabase.functions.invoke("submit-ask-nest", {
@@ -81,10 +96,12 @@ export default function AskNestDialog({
         town_slug: context.town_slug ?? null,
         service_intent: context.service_intent ?? null,
         message: message.trim(),
-        contact_name: name.trim(),
-        contact_email: email.trim(),
-        contact_phone: phone.trim(),
+        contact_name: name.trim() || undefined,
+        contact_email: email.trim() || undefined,
+        contact_phone: phone.trim() || undefined,
         self_reported_discovery: discovery || undefined,
+        session_id: getVisitSessionId() ?? undefined,
+        website: honeypot,
       },
     });
     setSubmitting(false);
@@ -92,15 +109,12 @@ export default function AskNestDialog({
       setError("We could not send that just now. Please try again in a moment.");
       return;
     }
-    // Analytics only — no message, no contact details.
-    logEngagement(
-      "ask_nest_submit",
-      { business_slug: context.business_slug ?? null, business_id: context.business_id ?? null },
-      { intent_category: requestType, surface: "ask_nest" },
-      { town_slug: context.town_slug ?? null },
-    );
+    // The edge function writes the single analytics event (metadata only) so
+    // the submission is never double-counted from the browser.
     setDone(true);
+
   };
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-0 sm:items-center sm:p-6">
@@ -161,35 +175,52 @@ export default function AskNestDialog({
               />
             </Field>
 
+            <p className="text-[11px] leading-relaxed text-white/45">
+
+              {anonymousAllowed
+                ? "Corrections can be sent anonymously. Leave contact details only if you want a reply."
+                : "We only need one way to reach you — an email address or a phone number."}
+            </p>
+
             <div className="grid gap-3 sm:grid-cols-2">
-              <Field label="Name">
+              <Field label={anonymousAllowed ? "Name (optional)" : "Name"}>
                 <input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  required
+                  required={!anonymousAllowed}
                   className="w-full rounded-lg border border-[#2D3748] bg-[#0B0F19] px-3 py-2 text-sm text-white"
                 />
               </Field>
-              <Field label="Phone">
+              <Field label="Phone (optional)">
                 <input
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  required
                   inputMode="tel"
                   className="w-full rounded-lg border border-[#2D3748] bg-[#0B0F19] px-3 py-2 text-sm text-white"
                 />
               </Field>
             </div>
 
-            <Field label="Email">
+            <Field label="Email (optional)">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
                 className="w-full rounded-lg border border-[#2D3748] bg-[#0B0F19] px-3 py-2 text-sm text-white"
               />
             </Field>
+
+            {/* Honeypot — hidden from people, tempting to bots. */}
+            <input
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              className="hidden"
+            />
+
+
 
             <Field label="How did you find us? (optional)">
               <select
