@@ -179,30 +179,39 @@ Deno.serve(async (req) => {
     const admin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, { auth: { persistSession: false } });
 
     // --- rate limit: 5 requests per rolling hour per coarse fingerprint ------
+    // The table's primary key is (fingerprint, window_start), so the counter is
+    // bucketed per hour and the rolling total is the sum of live buckets.
     const fp = await fingerprint(req);
     const now = new Date();
-    const { data: limitRow } = await admin
+    const hourStart = new Date(Math.floor(now.getTime() / 3_600_000) * 3_600_000);
+    const rollingFrom = new Date(now.getTime() - 60 * 60 * 1000).toISOString();
+
+    const { data: buckets } = await admin
       .from("ask_nest_rate_limits")
-      .select("fingerprint, window_start, hits")
+      .select("window_start, hits")
       .eq("fingerprint", fp)
-      .maybeSingle();
+      .gte("window_start", rollingFrom);
 
-    const windowOpen =
-      limitRow && new Date(limitRow.window_start as string).getTime() > now.getTime() - 60 * 60 * 1000;
-
-    if (windowOpen && (limitRow!.hits as number) >= 5) {
+    const used = (buckets ?? []).reduce((sum, b) => sum + Number(b.hits ?? 0), 0);
+    if (used >= 5) {
       return json({ error: "rate limited", retry_after_minutes: 60 }, 429);
     }
 
-    await admin.from("ask_nest_rate_limits").upsert(
+    const currentBucket = (buckets ?? []).find(
+      (b) => new Date(b.window_start as string).getTime() === hourStart.getTime(),
+    );
+
+    const { error: limitError } = await admin.from("ask_nest_rate_limits").upsert(
       {
         fingerprint: fp,
-        window_start: windowOpen ? (limitRow!.window_start as string) : now.toISOString(),
-        hits: windowOpen ? (limitRow!.hits as number) + 1 : 1,
-        expires_at: new Date(now.getTime() + 2 * 60 * 60 * 1000).toISOString(),
+        window_start: hourStart.toISOString(),
+        hits: Number(currentBucket?.hits ?? 0) + 1,
+        expires_at: new Date(hourStart.getTime() + 2 * 60 * 60 * 1000).toISOString(),
       },
-      { onConflict: "fingerprint" },
+      { onConflict: "fingerprint,window_start" },
     );
+    if (limitError) console.error(`rate limit write failed: ${limitError.message}`);
+
 
     // Resolve the business only against a real row — never trust a client id.
     let business_id: string | null = null;
