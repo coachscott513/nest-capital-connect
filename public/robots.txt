@@ -20,6 +20,21 @@ Disallow: /dealdesk-thanks
 Disallow: /market-report-thanks
 Disallow: /partner-success
 
+# ───────────────────────────────────────────────
+# Parameter-index control — block tracking/faceted duplicates only.
+# Curated, param-free URLs are unaffected.
+# ───────────────────────────────────────────────
+Disallow: /*?*utm_
+Disallow: /*?*fbclid
+Disallow: /*?*gclid
+Disallow: /*?*msclkid
+Disallow: /*?*ref=
+Disallow: /*?*sort=
+Disallow: /*?*page=
+Disallow: /*?*view=
+Disallow: /*?*session
+Disallow: /go/
+
 
 # ───────────────────────────────────────────────
 # AI crawlers — explicitly allowed

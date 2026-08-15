@@ -25,6 +25,7 @@ import AdminBusinessAudit from "./pages/admin/AdminBusinessAudit";
 import AdminDataHealth from "./pages/admin/AdminDataHealth";
 import AdminSEOManifest from "./pages/admin/AdminSEOManifest";
 import AdminPreviews from "./pages/admin/AdminPreviews";
+import AdminMissionControl from "./pages/admin/AdminMissionControl";
 import AdminRevenue from "./pages/admin/AdminRevenue";
 import AdminLaunchDashboard from "./pages/admin/AdminLaunchDashboard";
 import AdminOutreach from "./pages/admin/AdminOutreach";
@@ -281,6 +282,7 @@ const App = () => {
           <Route path="/admin/data-health" element={<AdminDataHealth />} />
           <Route path="/admin/seo-manifest" element={<AdminSEOManifest />} />
           <Route path="/admin/previews" element={<AdminPreviews />} />
+          <Route path="/admin/mission-control" element={<AdminMissionControl />} />
           <Route path="/admin/revenue" element={<AdminRevenue />} />
           <Route path="/admin/media-stories" element={<AdminMediaStories />} />
           <Route path="/launch-dashboard" element={<AdminLaunchDashboard />} />

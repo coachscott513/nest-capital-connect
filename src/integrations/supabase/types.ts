@@ -906,6 +906,7 @@ export type Database = {
           data_status: string
           description: string | null
           editorial_note: string | null
+          eligibility_reason: string | null
           eligibility_state: string
           email: string | null
           external_id: string | null
@@ -933,14 +934,18 @@ export type Database = {
           long_description: string | null
           longitude: number | null
           menu_url: string | null
+          merge_candidate_status: string
           name: string
           needs_review: boolean
           phone: string | null
           photos: string[] | null
           plan_tier: string
+          quarantine_reason: string | null
+          quarantine_status: string
           rating: number | null
           region: string
           review_count: number | null
+          seo_cohort: string
           services: Json | null
           slug: string
           source: string | null
@@ -957,6 +962,9 @@ export type Database = {
           town_name: string | null
           town_slug: string
           updated_at: string
+          verification_expires_at: string | null
+          verification_status: string
+          verified_at: string | null
           video_url: string | null
           website: string | null
           website_status: string | null
@@ -978,6 +986,7 @@ export type Database = {
           data_status?: string
           description?: string | null
           editorial_note?: string | null
+          eligibility_reason?: string | null
           eligibility_state?: string
           email?: string | null
           external_id?: string | null
@@ -1005,14 +1014,18 @@ export type Database = {
           long_description?: string | null
           longitude?: number | null
           menu_url?: string | null
+          merge_candidate_status?: string
           name: string
           needs_review?: boolean
           phone?: string | null
           photos?: string[] | null
           plan_tier?: string
+          quarantine_reason?: string | null
+          quarantine_status?: string
           rating?: number | null
           region?: string
           review_count?: number | null
+          seo_cohort?: string
           services?: Json | null
           slug: string
           source?: string | null
@@ -1029,6 +1042,9 @@ export type Database = {
           town_name?: string | null
           town_slug: string
           updated_at?: string
+          verification_expires_at?: string | null
+          verification_status?: string
+          verified_at?: string | null
           video_url?: string | null
           website?: string | null
           website_status?: string | null
@@ -1050,6 +1066,7 @@ export type Database = {
           data_status?: string
           description?: string | null
           editorial_note?: string | null
+          eligibility_reason?: string | null
           eligibility_state?: string
           email?: string | null
           external_id?: string | null
@@ -1077,14 +1094,18 @@ export type Database = {
           long_description?: string | null
           longitude?: number | null
           menu_url?: string | null
+          merge_candidate_status?: string
           name?: string
           needs_review?: boolean
           phone?: string | null
           photos?: string[] | null
           plan_tier?: string
+          quarantine_reason?: string | null
+          quarantine_status?: string
           rating?: number | null
           region?: string
           review_count?: number | null
+          seo_cohort?: string
           services?: Json | null
           slug?: string
           source?: string | null
@@ -1101,6 +1122,9 @@ export type Database = {
           town_name?: string | null
           town_slug?: string
           updated_at?: string
+          verification_expires_at?: string | null
+          verification_status?: string
+          verified_at?: string | null
           video_url?: string | null
           website?: string | null
           website_status?: string | null
@@ -3838,6 +3862,23 @@ export type Database = {
         }
         Relationships: []
       }
+      v_cohort_counts: {
+        Row: {
+          claimed_enriched: number | null
+          editorial_featured: number | null
+          merge_flagged_records: number | null
+          quarantine_candidate: number | null
+          quarantined_records: number | null
+          registry_candidate: number | null
+          registry_only: number | null
+          seo_opportunity: number | null
+          seo_protected: number | null
+          total_records: number | null
+          verified_basic: number | null
+          verified_records: number | null
+        }
+        Relationships: []
+      }
       v_data_health_summary: {
         Row: {
           claimed_enriched: number | null
@@ -3857,6 +3898,23 @@ export type Database = {
           with_provenance: number | null
         }
         Relationships: []
+      }
+      v_demand_summary: {
+        Row: {
+          businesses_touched: number | null
+          event_type: string | null
+          events_28d: number | null
+          traffic_source: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "engagement_events_event_type_fkey"
+            columns: ["event_type"]
+            isOneToOne: false
+            referencedRelation: "engagement_event_types"
+            referencedColumns: ["event_type"]
+          },
+        ]
       }
       v_preview_category_conflicts: {
         Row: {
@@ -3900,6 +3958,19 @@ export type Database = {
           seo_protected: boolean | null
           slug: string | null
           town_slug: string | null
+        }
+        Relationships: []
+      }
+      v_preview_taxonomy_mapping: {
+        Row: {
+          existing_mapped_category: string | null
+          existing_mapped_group: string | null
+          mapping_approved: boolean | null
+          planned_action: string | null
+          proposed_industry_group: string | null
+          record_count: number | null
+          review_state: string | null
+          source_category: string | null
         }
         Relationships: []
       }

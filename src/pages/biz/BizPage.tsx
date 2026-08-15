@@ -971,6 +971,15 @@ const BizPage = () => {
         const image = rawImage.startsWith("http")
           ? rawImage
           : `https://www.capitaldistrictnest.com${rawImage.startsWith("/") ? "" : "/"}${rawImage}`;
+        // Structured-data contract: claim strength follows eligibility + verification.
+        // registry_only / unverified records emit an identity-only LocalBusiness —
+        // no ratings, no hours claims, no social graph assertions.
+        const eligibility = (biz as { eligibility_state?: string }).eligibility_state ?? "registry_only";
+        const verification = (biz as { verification_status?: string }).verification_status ?? "registry_candidate";
+        const canAssertRichClaims =
+          eligibility !== "registry_only" ||
+          verification === "owner_verified" ||
+          verification === "editorially_verified";
         const ldBusiness: Record<string, unknown> = {
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
@@ -979,8 +988,6 @@ const BizPage = () => {
           ...(image && { image }),
           ...(biz.description && { description: biz.description }),
           ...(isValidBusinessPhone(biz.phone, contactStatusOf(biz)) && { telephone: biz.phone }),
-          ...(biz.email && { email: biz.email }),
-          ...(biz.website && { sameAs: [biz.website, biz.facebook, biz.instagram, biz.linkedin].filter(Boolean) }),
           address: {
             "@type": "PostalAddress",
             ...(biz.address && { streetAddress: biz.address }),
@@ -991,14 +998,18 @@ const BizPage = () => {
           ...(biz.latitude && biz.longitude && {
             geo: { "@type": "GeoCoordinates", latitude: biz.latitude, longitude: biz.longitude },
           }),
-          ...(biz.rating && biz.review_count && {
+          ...(canAssertRichClaims && biz.email && { email: biz.email }),
+          ...(canAssertRichClaims && biz.website && {
+            sameAs: [biz.website, biz.facebook, biz.instagram, biz.linkedin].filter(Boolean),
+          }),
+          ...(canAssertRichClaims && biz.rating && biz.review_count && {
             aggregateRating: {
               "@type": "AggregateRating",
               ratingValue: biz.rating,
               reviewCount: biz.review_count,
             },
           }),
-          ...(biz.category && { "@type": "LocalBusiness", additionalType: biz.category }),
+          ...(biz.category && { additionalType: biz.category }),
         };
         const ldBreadcrumb = {
           "@context": "https://schema.org",

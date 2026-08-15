@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Loader2, EyeOff } from "lucide-react";
 import AnswerFirstProfile, { type AnswerProfileInput } from "@/components/preview/AnswerFirstProfile";
 import PopularNeedsRail from "@/components/preview/PopularNeedsRail";
+import BusinessHelpPanel from "@/components/preview/BusinessHelpPanel";
 
 export default function AdminPreviews() {
   const [options, setOptions] = useState<{ slug: string; name: string }[]>([]);
@@ -76,6 +77,24 @@ export default function AdminPreviews() {
 
       <h2 className="mt-12 text-sm uppercase tracking-[0.14em] text-white/45">Demand-led discovery rail</h2>
       <PopularNeedsRail />
+
+      <h2 className="mt-12 mb-3 text-sm uppercase tracking-[0.14em] text-white/45">Contextual business help</h2>
+      {business ? (
+        <BusinessHelpPanel
+          business={{
+            id: (business as { id?: string }).id ?? null,
+            slug,
+            name: business.name,
+            phone: (business as { phone?: string | null }).phone ?? null,
+            address: (business as { address?: string | null }).address ?? null,
+            town_name: (business as { town_name?: string | null }).town_name ?? null,
+            hours: (business as { hours?: unknown }).hours,
+            eligibility_state: (business as { eligibility_state?: string | null }).eligibility_state ?? null,
+          }}
+        />
+      ) : (
+        <p className="text-sm text-white/55">No record loaded.</p>
+      )}
     </AdminLayout>
   );
 }
