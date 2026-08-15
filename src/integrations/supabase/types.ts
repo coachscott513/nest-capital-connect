@@ -4684,6 +4684,7 @@ export type Database = {
       }
     }
     Functions: {
+      ask_nest_next_business_day: { Args: { _from?: string }; Returns: string }
       claim_first_admin: { Args: never; Returns: string }
       has_role: {
         Args: {
