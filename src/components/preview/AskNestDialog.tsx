@@ -66,12 +66,24 @@ export default function AskNestDialog({
 
   if (!open) return null;
 
+  const anonymousAllowed = requestType === "report_incorrect";
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    if (!name.trim() || !email.trim() || !phone.trim() || message.trim().length < 2) {
-      setError("Name, email, phone and your question are all required.");
+    if (message.trim().length < 2) {
+      setError("Tell us what you'd like to know.");
       return;
+    }
+    if (!anonymousAllowed) {
+      if (!name.trim()) {
+        setError("Your name is required.");
+        return;
+      }
+      if (!email.trim() && !phone.trim()) {
+        setError("Add an email address or a phone number — either one is enough.");
+        return;
+      }
     }
     setSubmitting(true);
     const { data, error: fnError } = await supabase.functions.invoke("submit-ask-nest", {
@@ -81,10 +93,12 @@ export default function AskNestDialog({
         town_slug: context.town_slug ?? null,
         service_intent: context.service_intent ?? null,
         message: message.trim(),
-        contact_name: name.trim(),
-        contact_email: email.trim(),
-        contact_phone: phone.trim(),
+        contact_name: name.trim() || undefined,
+        contact_email: email.trim() || undefined,
+        contact_phone: phone.trim() || undefined,
         self_reported_discovery: discovery || undefined,
+        session_id: getVisitSessionId() ?? undefined,
+        company_website: honeypot,
       },
     });
     setSubmitting(false);
@@ -101,6 +115,7 @@ export default function AskNestDialog({
     );
     setDone(true);
   };
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70 p-0 sm:items-center sm:p-6">
