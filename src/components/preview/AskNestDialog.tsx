@@ -62,6 +62,8 @@ export default function AskNestDialog({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [discovery, setDiscovery] = useState<string>("");
+  const [honeypot, setHoneypot] = useState("");
+
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
