@@ -12,7 +12,9 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { logEngagement } from "@/lib/engagement";
+import { getVisitSessionId } from "@/lib/visitSession";
 import { Loader2, X, CheckCircle2 } from "lucide-react";
+
 
 export const ASK_NEST_REQUEST_TYPES = [
   { key: "verify_operating", label: "Check whether this business is still operating" },
