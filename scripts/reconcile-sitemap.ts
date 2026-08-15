@@ -53,6 +53,11 @@ async function manifest() {
 async function main() {
   const inSitemap = sitemapPaths();
   const rows = await manifest();
+  if (rows.length === 0) {
+    console.warn(
+      "Manifest read returned 0 rows. seo_protected_urls is admin-only; run this script with SUPABASE_SERVICE_ROLE_KEY set, or read the same reconciliation from /admin/mission-control.",
+    );
+  }
 
   const missing: typeof rows = [];
   const present: typeof rows = [];
