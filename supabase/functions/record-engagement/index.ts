@@ -37,9 +37,18 @@ const BodySchema = z.object({
   route_path: z.string().max(300).nullable().optional(),
   result_count: z.number().int().min(0).max(100000).nullable().optional(),
   referrer_host: z.string().max(160).nullable().optional(),
+  /** Rotating, anonymous per-visit token. Never tied to an identity. */
+  session_id: z.string().uuid().nullable().optional(),
+  /**
+   * Landing utm_source, host-shaped only. It is checked against the assistant
+   * allowlist and can ONLY ever produce `ai_assistant_utm` — a client can never
+   * set `ai_assistant`, `organic_search` or any other trusted value.
+   */
+  utm_source_hint: z.string().max(80).nullable().optional(),
   client_bot_signal: z.boolean().optional(),
   metadata: z.record(z.union([z.string(), z.number(), z.boolean()])).optional(),
 });
+
 
 // Only these metadata keys survive. Everything else is dropped silently.
 const METADATA_ALLOWLIST = new Set([
