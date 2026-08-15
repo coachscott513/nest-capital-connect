@@ -690,8 +690,9 @@ export type Database = {
           asserted_by: string | null
           business_id: string
           captured_at: string | null
-          confidence: number
+          confidence: number | null
           created_at: string
+          evidence_state: string
           external_id: string | null
           field_scope: string[]
           id: string
@@ -708,8 +709,9 @@ export type Database = {
           asserted_by?: string | null
           business_id: string
           captured_at?: string | null
-          confidence?: number
+          confidence?: number | null
           created_at?: string
+          evidence_state?: string
           external_id?: string | null
           field_scope?: string[]
           id?: string
@@ -726,8 +728,9 @@ export type Database = {
           asserted_by?: string | null
           business_id?: string
           captured_at?: string | null
-          confidence?: number
+          confidence?: number | null
           created_at?: string
+          evidence_state?: string
           external_id?: string | null
           field_scope?: string[]
           id?: string
@@ -943,6 +946,7 @@ export type Database = {
           quarantine_reason: string | null
           quarantine_status: string
           rating: number | null
+          record_status: string
           region: string
           review_count: number | null
           seo_cohort: string
@@ -1023,6 +1027,7 @@ export type Database = {
           quarantine_reason?: string | null
           quarantine_status?: string
           rating?: number | null
+          record_status?: string
           region?: string
           review_count?: number | null
           seo_cohort?: string
@@ -1103,6 +1108,7 @@ export type Database = {
           quarantine_reason?: string | null
           quarantine_status?: string
           rating?: number | null
+          record_status?: string
           region?: string
           review_count?: number | null
           seo_cohort?: string
@@ -1202,6 +1208,54 @@ export type Database = {
           notes?: string | null
           property_address?: string
           strategy?: string
+        }
+        Relationships: []
+      }
+      demand_signals: {
+        Row: {
+          clicks: number
+          created_at: string
+          evidence_note: string | null
+          example_queries: string[]
+          id: string
+          impressions: number
+          is_active: boolean
+          need_label: string
+          need_slug: string
+          source: string
+          updated_at: string
+          window_end: string | null
+          window_start: string | null
+        }
+        Insert: {
+          clicks?: number
+          created_at?: string
+          evidence_note?: string | null
+          example_queries?: string[]
+          id?: string
+          impressions?: number
+          is_active?: boolean
+          need_label: string
+          need_slug: string
+          source: string
+          updated_at?: string
+          window_end?: string | null
+          window_start?: string | null
+        }
+        Update: {
+          clicks?: number
+          created_at?: string
+          evidence_note?: string | null
+          example_queries?: string[]
+          id?: string
+          impressions?: number
+          is_active?: boolean
+          need_label?: string
+          need_slug?: string
+          source?: string
+          updated_at?: string
+          window_end?: string | null
+          window_start?: string | null
         }
         Relationships: []
       }
@@ -3889,11 +3943,15 @@ export type Database = {
           missing_image: number | null
           missing_phone: number | null
           missing_website: number | null
-          quarantined: number | null
           registry_only: number | null
           schenectady_concentration: number | null
-          suppressed: number | null
+          status_active: number | null
+          status_merged: number | null
+          status_quarantined: number | null
+          status_reported_closed: number | null
+          status_suppressed: number | null
           total_records: number | null
+          two_source_coverage: number | null
           verified_basic: number | null
           with_provenance: number | null
         }
