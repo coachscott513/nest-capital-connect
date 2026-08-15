@@ -30,7 +30,9 @@ import {
 } from "@/data/businesses";
 import { weeklyFeed, type WeeklyFeedItem } from "@/data/weeklyFeed";
 import CommunityUpdatesSection from "@/components/community/CommunityUpdatesSection";
+import { trackGAEvent } from "@/components/GARouteTracker";
 import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
+
 
 /* =============================================================
    MASTER TOWN PAGE — Apple-style local discovery template.
@@ -338,6 +340,13 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
     window.scrollTo(0, 0);
   }, [slug]);
 
+  // Town-level engagement was defined but never fired. Without it we cannot
+  // measure which towns actually pull traffic.
+  useEffect(() => {
+    trackGAEvent.townPageView(name);
+  }, [name]);
+
+
   /* ----- dynamic data ----- */
   const townBiz = useMemo(
     () => ALL_BUSINESSES.filter((b) => matchesTown(b, slug, name)),
@@ -468,13 +477,15 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
             <div className="mt-10 flex flex-wrap items-center gap-3">
               <Link
                 to={searchTownHref}
-                onClick={() =>
+                onClick={() => {
                   trackTown("town_search_click", {
                     town_name: name,
                     town_slug: slug,
                     source_location: "town_hero",
-                  })
-                }
+                  });
+                  trackGAEvent.continueSearchClick("town_search", name);
+                }}
+
                 className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
               >
                 Search {name} <ArrowRight className="w-4 h-4" />

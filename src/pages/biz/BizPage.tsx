@@ -850,17 +850,6 @@ const slugFromBizPath = () => {
   return match?.[1] ? decodeURIComponent(match[1]).toLowerCase() : "business";
 };
 
-const buildPlaceholderBusiness = (slug: string): Business => ({
-  id: `placeholder-${slug}`,
-  slug,
-  name: titleizeSlug(slug),
-  description: null,
-  category: "Local Business",
-  town_name: inferTownFromSlug(slug),
-  state: "NY",
-  plan_tier: "free_claimed",
-  is_active: true,
-});
 
 // Polished "profile being prepared" experience for slugs not yet in the DB.
 // Intentionally NOT a 404 — every clicked business URL should feel intentional.
@@ -993,9 +982,39 @@ const BizPage = () => {
     return <PendingProfile slug={requestedSlug} />;
   }
 
-  // During loading, render the full Free profile shell using a slug-derived
-  // placeholder so Googlebot never sees an empty "Loading…" page.
-  const activeBiz: Business = biz ?? buildPlaceholderBusiness(requestedSlug || "business");
+  // While loading we must NOT render a slug-derived placeholder business:
+  // it briefly shows a guessed business name as if it were verified data.
+  // Render a neutral skeleton instead (this route is noindex until a real
+  // profile resolves, so there is no crawl downside).
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background text-foreground">
+        <Helmet>
+          <meta name="robots" content="noindex, follow" />
+        </Helmet>
+        <CleanHeader />
+        <section className="px-6 md:px-10 pt-28 md:pt-32 pb-20 max-w-3xl mx-auto animate-pulse">
+          <div className="h-4 w-28 rounded-full bg-white/10" />
+          <div className="mt-6 h-10 w-2/3 rounded-lg bg-white/10" />
+          <div className="mt-4 h-4 w-1/3 rounded bg-white/10" />
+          <div className="mt-10 space-y-3">
+            <div className="h-3 w-full rounded bg-white/[0.07]" />
+            <div className="h-3 w-11/12 rounded bg-white/[0.07]" />
+            <div className="h-3 w-9/12 rounded bg-white/[0.07]" />
+          </div>
+          <span className="sr-only">Loading business profile…</span>
+        </section>
+      </div>
+    );
+  }
+
+  // Data settled but no row (e.g. transient query error) — never fabricate.
+  if (!biz) {
+    return <PendingProfile slug={requestedSlug} />;
+  }
+
+  const activeBiz: Business = biz;
+
   const tier = activeBiz.plan_tier;
   const isPremium = !loading && PREMIUM_TIERS.has(tier);
   const isFeatured = !loading && FEATURED_TIERS.has(tier);

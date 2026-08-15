@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
+import { trackGAEvent } from "@/components/GARouteTracker";
+
 import { MARKET_REPORTS, getMarketReport } from "@/data/marketReports";
 import NotFound from "./NotFound";
 
@@ -30,6 +32,13 @@ const MarketReportPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [town]);
+
+  // Report consumption was previously untracked, so we had no signal on which
+  // market reports are worth maintaining.
+  useEffect(() => {
+    if (report) trackGAEvent.intelligenceReportView("market_report", report.name);
+  }, [report]);
+
 
   if (!report) return <NotFound />;
 
