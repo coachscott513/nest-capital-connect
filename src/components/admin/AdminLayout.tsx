@@ -17,6 +17,9 @@ const NAV = [
   { to: "/admin/listing-claims", label: "Listing Claims" },
   { to: "/admin/property-listings", label: "Property Listings" },
   { to: "/admin/business-audit", label: "Business Audit" },
+  { to: "/admin/data-health", label: "Data Health" },
+  { to: "/admin/seo-manifest", label: "SEO Manifest" },
+  { to: "/admin/previews", label: "Previews" },
   { to: "/admin/revenue", label: "Revenue" },
 ];
 

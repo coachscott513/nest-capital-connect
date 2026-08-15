@@ -22,6 +22,9 @@ import AdminPartnerPlacements from "./pages/admin/AdminPartnerPlacements";
 import AdminListingClaims from "./pages/admin/AdminListingClaims";
 import AdminPropertyListings from "./pages/admin/AdminPropertyListings";
 import AdminBusinessAudit from "./pages/admin/AdminBusinessAudit";
+import AdminDataHealth from "./pages/admin/AdminDataHealth";
+import AdminSEOManifest from "./pages/admin/AdminSEOManifest";
+import AdminPreviews from "./pages/admin/AdminPreviews";
 import AdminRevenue from "./pages/admin/AdminRevenue";
 import AdminLaunchDashboard from "./pages/admin/AdminLaunchDashboard";
 import AdminOutreach from "./pages/admin/AdminOutreach";
@@ -275,6 +278,9 @@ const App = () => {
           <Route path="/admin/listing-claims" element={<AdminListingClaims />} />
           <Route path="/admin/property-listings" element={<AdminPropertyListings />} />
           <Route path="/admin/business-audit" element={<AdminBusinessAudit />} />
+          <Route path="/admin/data-health" element={<AdminDataHealth />} />
+          <Route path="/admin/seo-manifest" element={<AdminSEOManifest />} />
+          <Route path="/admin/previews" element={<AdminPreviews />} />
           <Route path="/admin/revenue" element={<AdminRevenue />} />
           <Route path="/admin/media-stories" element={<AdminMediaStories />} />
           <Route path="/launch-dashboard" element={<AdminLaunchDashboard />} />
