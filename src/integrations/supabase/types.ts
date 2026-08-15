@@ -299,6 +299,190 @@ export type Database = {
         }
         Relationships: []
       }
+      business_correction_audit: {
+        Row: {
+          action: string
+          actor_id: string | null
+          correction_id: string
+          created_at: string
+          detail: Json
+          id: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          correction_id: string
+          created_at?: string
+          detail?: Json
+          id?: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          correction_id?: string
+          created_at?: string
+          detail?: Json
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_correction_audit_correction_id_fkey"
+            columns: ["correction_id"]
+            isOneToOne: false
+            referencedRelation: "business_corrections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      business_corrections: {
+        Row: {
+          batch_key: string | null
+          business_id: string
+          created_at: string
+          decided_at: string | null
+          effective_at: string | null
+          evidence_note: string | null
+          evidence_type: string
+          evidence_url: string | null
+          field_name: string
+          id: string
+          reviewer_decision: string | null
+          reviewer_id: string | null
+          status: string
+          submitted_by: string | null
+          submitter_role: string
+          updated_at: string
+          value_after: string | null
+          value_before: string | null
+        }
+        Insert: {
+          batch_key?: string | null
+          business_id: string
+          created_at?: string
+          decided_at?: string | null
+          effective_at?: string | null
+          evidence_note?: string | null
+          evidence_type?: string
+          evidence_url?: string | null
+          field_name: string
+          id?: string
+          reviewer_decision?: string | null
+          reviewer_id?: string | null
+          status?: string
+          submitted_by?: string | null
+          submitter_role?: string
+          updated_at?: string
+          value_after?: string | null
+          value_before?: string | null
+        }
+        Update: {
+          batch_key?: string | null
+          business_id?: string
+          created_at?: string
+          decided_at?: string | null
+          effective_at?: string | null
+          evidence_note?: string | null
+          evidence_type?: string
+          evidence_url?: string | null
+          field_name?: string
+          id?: string
+          reviewer_decision?: string | null
+          reviewer_id?: string | null
+          status?: string
+          submitted_by?: string | null
+          submitter_role?: string
+          updated_at?: string
+          value_after?: string | null
+          value_before?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_corrections_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_corrections_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      business_merge_candidates: {
+        Row: {
+          confidence: number
+          created_at: string
+          duplicate_business_id: string | null
+          evidence: Json
+          group_key: string
+          id: string
+          match_reason: string
+          primary_business_id: string | null
+          reviewed_at: string | null
+          reviewer_id: string | null
+          status: string
+        }
+        Insert: {
+          confidence?: number
+          created_at?: string
+          duplicate_business_id?: string | null
+          evidence?: Json
+          group_key: string
+          id?: string
+          match_reason: string
+          primary_business_id?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          status?: string
+        }
+        Update: {
+          confidence?: number
+          created_at?: string
+          duplicate_business_id?: string | null
+          evidence?: Json
+          group_key?: string
+          id?: string
+          match_reason?: string
+          primary_business_id?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_merge_candidates_duplicate_business_id_fkey"
+            columns: ["duplicate_business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_duplicate_business_id_fkey"
+            columns: ["duplicate_business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_primary_business_id_fkey"
+            columns: ["primary_business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_primary_business_id_fkey"
+            columns: ["primary_business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       business_partners: {
         Row: {
           created_at: string
@@ -327,6 +511,135 @@ export type Database = {
             columns: ["local_voice_id"]
             isOneToOne: false
             referencedRelation: "local_voices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      business_quarantine_flags: {
+        Row: {
+          business_id: string
+          confidence: number
+          created_at: string
+          detail: string | null
+          detected_by: string
+          evidence: Json
+          id: string
+          reason: string
+          reviewed_at: string | null
+          reviewer_id: string | null
+          status: string
+        }
+        Insert: {
+          business_id: string
+          confidence?: number
+          created_at?: string
+          detail?: string | null
+          detected_by?: string
+          evidence?: Json
+          id?: string
+          reason: string
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          status?: string
+        }
+        Update: {
+          business_id?: string
+          confidence?: number
+          created_at?: string
+          detail?: string | null
+          detected_by?: string
+          evidence?: Json
+          id?: string
+          reason?: string
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_quarantine_flags_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_quarantine_flags_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      business_sources: {
+        Row: {
+          asserted_at: string
+          asserted_by: string | null
+          business_id: string
+          captured_at: string | null
+          confidence: number
+          created_at: string
+          external_id: string | null
+          field_scope: string[]
+          id: string
+          import_batch_id: string | null
+          raw_snapshot_hash: string | null
+          raw_snapshot_ref: string | null
+          source_name: string | null
+          source_type: string
+          source_url: string | null
+          state: string
+        }
+        Insert: {
+          asserted_at?: string
+          asserted_by?: string | null
+          business_id: string
+          captured_at?: string | null
+          confidence?: number
+          created_at?: string
+          external_id?: string | null
+          field_scope?: string[]
+          id?: string
+          import_batch_id?: string | null
+          raw_snapshot_hash?: string | null
+          raw_snapshot_ref?: string | null
+          source_name?: string | null
+          source_type: string
+          source_url?: string | null
+          state?: string
+        }
+        Update: {
+          asserted_at?: string
+          asserted_by?: string | null
+          business_id?: string
+          captured_at?: string | null
+          confidence?: number
+          created_at?: string
+          external_id?: string | null
+          field_scope?: string[]
+          id?: string
+          import_batch_id?: string | null
+          raw_snapshot_hash?: string | null
+          raw_snapshot_ref?: string | null
+          source_name?: string | null
+          source_type?: string
+          source_url?: string | null
+          state?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
             referencedColumns: ["id"]
           },
         ]
@@ -425,6 +738,7 @@ export type Database = {
           data_status: string
           description: string | null
           editorial_note: string | null
+          eligibility_state: string
           email: string | null
           external_id: string | null
           facebook: string | null
@@ -496,6 +810,7 @@ export type Database = {
           data_status?: string
           description?: string | null
           editorial_note?: string | null
+          eligibility_state?: string
           email?: string | null
           external_id?: string | null
           facebook?: string | null
@@ -567,6 +882,7 @@ export type Database = {
           data_status?: string
           description?: string | null
           editorial_note?: string | null
+          eligibility_state?: string
           email?: string | null
           external_id?: string | null
           facebook?: string | null
@@ -622,6 +938,42 @@ export type Database = {
           website_status?: string | null
           x_url?: string | null
           zipcode?: string | null
+        }
+        Relationships: []
+      }
+      category_mapping: {
+        Row: {
+          approved: boolean
+          canonical_category: string
+          canonical_group: string
+          canonical_service_slug: string | null
+          confidence: number
+          created_at: string
+          id: string
+          mapped_by: string
+          raw_category: string
+        }
+        Insert: {
+          approved?: boolean
+          canonical_category: string
+          canonical_group: string
+          canonical_service_slug?: string | null
+          confidence?: number
+          created_at?: string
+          id?: string
+          mapped_by?: string
+          raw_category: string
+        }
+        Update: {
+          approved?: boolean
+          canonical_category?: string
+          canonical_group?: string
+          canonical_service_slug?: string | null
+          confidence?: number
+          created_at?: string
+          id?: string
+          mapped_by?: string
+          raw_category?: string
         }
         Relationships: []
       }
@@ -2347,6 +2699,99 @@ export type Database = {
           utilities_included?: boolean | null
         }
         Relationships: []
+      }
+      seo_protected_urls: {
+        Row: {
+          allow_merge: boolean
+          allow_noindex: boolean
+          allow_slug_change: boolean
+          average_position: number | null
+          business_id: string | null
+          business_slug: string | null
+          clicks_28d: number
+          clicks_90d: number
+          ctr: number | null
+          id: string
+          impressions_28d: number
+          impressions_90d: number
+          notes: string | null
+          protected_at: string
+          protection_reason: string
+          protection_tier: string
+          review_status: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          route_family: string
+          source_window: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          allow_merge?: boolean
+          allow_noindex?: boolean
+          allow_slug_change?: boolean
+          average_position?: number | null
+          business_id?: string | null
+          business_slug?: string | null
+          clicks_28d?: number
+          clicks_90d?: number
+          ctr?: number | null
+          id?: string
+          impressions_28d?: number
+          impressions_90d?: number
+          notes?: string | null
+          protected_at?: string
+          protection_reason: string
+          protection_tier?: string
+          review_status?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          route_family?: string
+          source_window: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          allow_merge?: boolean
+          allow_noindex?: boolean
+          allow_slug_change?: boolean
+          average_position?: number | null
+          business_id?: string | null
+          business_slug?: string | null
+          clicks_28d?: number
+          clicks_90d?: number
+          ctr?: number | null
+          id?: string
+          impressions_28d?: number
+          impressions_90d?: number
+          notes?: string | null
+          protected_at?: string
+          protection_reason?: string
+          protection_tier?: string
+          review_status?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          route_family?: string
+          source_window?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seo_protected_urls_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "seo_protected_urls_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       subscription_plans: {
         Row: {
