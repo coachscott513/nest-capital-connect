@@ -78,7 +78,7 @@ const SEOHead = ({
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <link rel="canonical" href={canonicalUrl} />
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta name="robots" content={robots} />
       <meta name="author" content="Scott Alvarez - Capital District Nest" />
       <meta httpEquiv="content-language" content="en-US" />
       
