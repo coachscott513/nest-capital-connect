@@ -410,6 +410,34 @@ export type Database = {
             referencedRelation: "businesses"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "business_corrections_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_corrections_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_corrections_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_corrections_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
+            referencedColumns: ["id"]
+          },
         ]
       }
       business_merge_candidates: {
@@ -468,6 +496,34 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "business_merge_candidates_duplicate_business_id_fkey"
+            columns: ["duplicate_business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_duplicate_business_id_fkey"
+            columns: ["duplicate_business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_duplicate_business_id_fkey"
+            columns: ["duplicate_business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_duplicate_business_id_fkey"
+            columns: ["duplicate_business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "business_merge_candidates_primary_business_id_fkey"
             columns: ["primary_business_id"]
             isOneToOne: false
@@ -479,6 +535,34 @@ export type Database = {
             columns: ["primary_business_id"]
             isOneToOne: false
             referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_primary_business_id_fkey"
+            columns: ["primary_business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_primary_business_id_fkey"
+            columns: ["primary_business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_primary_business_id_fkey"
+            columns: ["primary_business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_primary_business_id_fkey"
+            columns: ["primary_business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
             referencedColumns: ["id"]
           },
         ]
@@ -570,6 +654,34 @@ export type Database = {
             referencedRelation: "businesses"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "business_quarantine_flags_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_quarantine_flags_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_quarantine_flags_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_quarantine_flags_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
+            referencedColumns: ["id"]
+          },
         ]
       }
       business_sources: {
@@ -640,6 +752,34 @@ export type Database = {
             columns: ["business_id"]
             isOneToOne: false
             referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
             referencedColumns: ["id"]
           },
         ]
@@ -718,6 +858,34 @@ export type Database = {
             columns: ["business_id"]
             isOneToOne: false
             referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_specials_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_specials_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_specials_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_specials_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
             referencedColumns: ["id"]
           },
         ]
@@ -1123,6 +1291,34 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "engagement_events_event_type_fkey"
             columns: ["event_type"]
             isOneToOne: false
@@ -1412,6 +1608,34 @@ export type Database = {
             columns: ["business_id"]
             isOneToOne: false
             referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "link_clicks_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "link_clicks_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "link_clicks_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "link_clicks_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
             referencedColumns: ["id"]
           },
           {
@@ -2008,6 +2232,34 @@ export type Database = {
             columns: ["business_id"]
             isOneToOne: false
             referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outreach_recipients_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outreach_recipients_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outreach_recipients_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outreach_recipients_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
             referencedColumns: ["id"]
           },
           {
@@ -2791,6 +3043,34 @@ export type Database = {
             referencedRelation: "businesses"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "seo_protected_urls_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "seo_protected_urls_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "seo_protected_urls_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "seo_protected_urls_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
+            referencedColumns: ["id"]
+          },
         ]
       }
       subscription_plans: {
@@ -2999,6 +3279,34 @@ export type Database = {
             columns: ["business_id"]
             isOneToOne: false
             referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "town_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "town_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "town_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "town_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
             referencedColumns: ["id"]
           },
         ]
@@ -3347,6 +3655,34 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "tracked_links_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tracked_links_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tracked_links_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tracked_links_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "tracked_links_campaign_id_fkey"
             columns: ["campaign_id"]
             isOneToOne: false
@@ -3440,6 +3776,34 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "engagement_events_event_type_fkey"
             columns: ["event_type"]
             isOneToOne: false
@@ -3454,6 +3818,105 @@ export type Database = {
           day: string | null
           internal_test: boolean | null
           traffic_class: string | null
+        }
+        Relationships: []
+      }
+      v_business_cohorts: {
+        Row: {
+          category: string | null
+          clicks_90d: number | null
+          cohort: string | null
+          completeness_score: number | null
+          eligibility_state: string | null
+          id: string | null
+          impressions_90d: number | null
+          name: string | null
+          protection_tier: string | null
+          quarantine_reason: string | null
+          slug: string | null
+          town_slug: string | null
+        }
+        Relationships: []
+      }
+      v_data_health_summary: {
+        Row: {
+          claimed_enriched: number | null
+          editorial_featured: number | null
+          missing_address: number | null
+          missing_description: number | null
+          missing_hours: number | null
+          missing_image: number | null
+          missing_phone: number | null
+          missing_website: number | null
+          quarantined: number | null
+          registry_only: number | null
+          schenectady_concentration: number | null
+          suppressed: number | null
+          total_records: number | null
+          verified_basic: number | null
+          with_provenance: number | null
+        }
+        Relationships: []
+      }
+      v_preview_category_conflicts: {
+        Row: {
+          category: string | null
+          conflict_signal: string | null
+          id: string | null
+          name: string | null
+          planned_action: string | null
+          seo_protected: boolean | null
+          slug: string | null
+          subcategory: string | null
+          town_slug: string | null
+        }
+        Relationships: []
+      }
+      v_preview_duplicates: {
+        Row: {
+          address: string | null
+          group_key: string | null
+          group_size: number | null
+          id: string | null
+          match_reason: string | null
+          name: string | null
+          planned_action: string | null
+          seo_protected: boolean | null
+          slug: string | null
+          town_slug: string | null
+        }
+        Relationships: []
+      }
+      v_preview_poi_candidates: {
+        Row: {
+          address: string | null
+          category: string | null
+          clicks_90d: number | null
+          id: string | null
+          name: string | null
+          planned_action: string | null
+          poi_signal: string | null
+          protection_tier: string | null
+          seo_protected: boolean | null
+          slug: string | null
+          town_slug: string | null
+        }
+        Relationships: []
+      }
+      v_preview_town_mismatch: {
+        Row: {
+          address: string | null
+          city: string | null
+          city_slug: string | null
+          clicks_90d: number | null
+          id: string | null
+          mismatch_type: string | null
+          name: string | null
+          planned_action: string | null
+          seo_protected: boolean | null
+          slug: string | null
+          town_name: string | null
+          town_slug: string | null
         }
         Relationships: []
       }
