@@ -60,9 +60,14 @@ Deno.serve(async (req) => {
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-    // Caller must be a signed-in admin, or an operator holding the service-role key.
+    // Caller must be a signed-in admin, an operator holding the service-role key,
+    // or a scheduled/operator job holding the SEO_SYNC_TOKEN shared secret.
+    const syncToken = Deno.env.get("SEO_SYNC_TOKEN") ?? "";
+    const presentedToken = req.headers.get("x-sync-token") ?? "";
+    const isOperatorTokenCall =
+      !!syncToken && presentedToken.length === syncToken.length && presentedToken === syncToken;
     const isServiceRoleCall = authHeader === `Bearer ${serviceKey}`;
-    if (!isServiceRoleCall) {
+    if (!isServiceRoleCall && !isOperatorTokenCall) {
       const userClient = createClient(supabaseUrl, anonKey, {
         global: { headers: { Authorization: authHeader } },
       });
