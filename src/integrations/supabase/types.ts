@@ -185,44 +185,172 @@ export type Database = {
         }
         Relationships: []
       }
-      answerability_pilot_cohort: {
+      answer_pilot_metrics: {
         Row: {
           business_id: string | null
           business_slug: string | null
-          clicks_90d: number | null
+          cohort_role: string
           created_at: string
-          ctr: number | null
           id: string
-          impressions_90d: number | null
-          protection_tier: string | null
-          selection_bucket: string
-          selection_reason: string | null
-          url: string
+          metric: string
+          notes: string | null
+          phase: string
+          updated_at: string
+          value: number
+          window_end: string
+          window_start: string
         }
         Insert: {
           business_id?: string | null
           business_slug?: string | null
-          clicks_90d?: number | null
+          cohort_role: string
           created_at?: string
-          ctr?: number | null
           id?: string
-          impressions_90d?: number | null
-          protection_tier?: string | null
-          selection_bucket: string
-          selection_reason?: string | null
-          url: string
+          metric: string
+          notes?: string | null
+          phase: string
+          updated_at?: string
+          value?: number
+          window_end: string
+          window_start: string
         }
         Update: {
           business_id?: string | null
           business_slug?: string | null
+          cohort_role?: string
+          created_at?: string
+          id?: string
+          metric?: string
+          notes?: string | null
+          phase?: string
+          updated_at?: string
+          value?: number
+          window_end?: string
+          window_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "answer_pilot_metrics_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answer_pilot_metrics_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answer_pilot_metrics_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "answer_pilot_metrics_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answer_pilot_metrics_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answer_pilot_metrics_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answer_pilot_metrics_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      answerability_pilot_cohort: {
+        Row: {
+          average_position: number | null
+          business_id: string | null
+          business_slug: string | null
+          canonical_url: string | null
+          category: string | null
+          clicks_90d: number | null
+          cohort_role: string
+          created_at: string
+          ctr: number | null
+          eligibility_state: string | null
+          frozen: boolean
+          frozen_at: string | null
+          id: string
+          impressions_90d: number | null
+          protection_tier: string | null
+          readiness_state: string | null
+          record_status: string | null
+          selection_bucket: string
+          selection_reason: string | null
+          snapshot_window: string | null
+          town_slug: string | null
+          url: string
+        }
+        Insert: {
+          average_position?: number | null
+          business_id?: string | null
+          business_slug?: string | null
+          canonical_url?: string | null
+          category?: string | null
           clicks_90d?: number | null
+          cohort_role?: string
           created_at?: string
           ctr?: number | null
+          eligibility_state?: string | null
+          frozen?: boolean
+          frozen_at?: string | null
           id?: string
           impressions_90d?: number | null
           protection_tier?: string | null
+          readiness_state?: string | null
+          record_status?: string | null
+          selection_bucket: string
+          selection_reason?: string | null
+          snapshot_window?: string | null
+          town_slug?: string | null
+          url: string
+        }
+        Update: {
+          average_position?: number | null
+          business_id?: string | null
+          business_slug?: string | null
+          canonical_url?: string | null
+          category?: string | null
+          clicks_90d?: number | null
+          cohort_role?: string
+          created_at?: string
+          ctr?: number | null
+          eligibility_state?: string | null
+          frozen?: boolean
+          frozen_at?: string | null
+          id?: string
+          impressions_90d?: number | null
+          protection_tier?: string | null
+          readiness_state?: string | null
+          record_status?: string | null
           selection_bucket?: string
           selection_reason?: string | null
+          snapshot_window?: string | null
+          town_slug?: string | null
           url?: string
         }
         Relationships: [
@@ -277,18 +405,47 @@ export type Database = {
           },
         ]
       }
+      ask_nest_rate_limits: {
+        Row: {
+          expires_at: string
+          fingerprint: string
+          hits: number
+          window_start: string
+        }
+        Insert: {
+          expires_at?: string
+          fingerprint: string
+          hits?: number
+          window_start?: string
+        }
+        Update: {
+          expires_at?: string
+          fingerprint?: string
+          hits?: number
+          window_start?: string
+        }
+        Relationships: []
+      }
       ask_nest_requests: {
         Row: {
+          assigned_to: string | null
           business_id: string | null
           business_slug: string | null
+          closed_at: string | null
           contact_email: string | null
           contact_name: string | null
           contact_phone: string | null
           created_at: string
+          due_at: string
           id: string
           message: string | null
+          outcome: string | null
           outcome_note: string | null
+          pii_purged_at: string | null
+          read_at: string | null
           request_type: string
+          resolved_at: string | null
+          reviewed_at: string | null
           self_reported_discovery: string | null
           service_intent: string | null
           status: string
@@ -297,16 +454,24 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          assigned_to?: string | null
           business_id?: string | null
           business_slug?: string | null
+          closed_at?: string | null
           contact_email?: string | null
           contact_name?: string | null
           contact_phone?: string | null
           created_at?: string
+          due_at?: string
           id?: string
           message?: string | null
+          outcome?: string | null
           outcome_note?: string | null
+          pii_purged_at?: string | null
+          read_at?: string | null
           request_type: string
+          resolved_at?: string | null
+          reviewed_at?: string | null
           self_reported_discovery?: string | null
           service_intent?: string | null
           status?: string
@@ -315,16 +480,24 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          assigned_to?: string | null
           business_id?: string | null
           business_slug?: string | null
+          closed_at?: string | null
           contact_email?: string | null
           contact_name?: string | null
           contact_phone?: string | null
           created_at?: string
+          due_at?: string
           id?: string
           message?: string | null
+          outcome?: string | null
           outcome_note?: string | null
+          pii_purged_at?: string | null
+          read_at?: string | null
           request_type?: string
+          resolved_at?: string | null
+          reviewed_at?: string | null
           self_reported_discovery?: string | null
           service_intent?: string | null
           status?: string
@@ -4189,6 +4362,66 @@ export type Database = {
         }
         Relationships: []
       }
+      v_ask_nest_queue: {
+        Row: {
+          assigned_to: string | null
+          business_slug: string | null
+          closed_at: string | null
+          created_at: string | null
+          due_at: string | null
+          id: string | null
+          outcome: string | null
+          overdue: boolean | null
+          read_at: string | null
+          request_type: string | null
+          resolved_at: string | null
+          reviewed_at: string | null
+          self_reported_discovery: string | null
+          status: string | null
+          technical_source_family: string | null
+          town_slug: string | null
+          unread: boolean | null
+        }
+        Insert: {
+          assigned_to?: string | null
+          business_slug?: string | null
+          closed_at?: string | null
+          created_at?: string | null
+          due_at?: string | null
+          id?: string | null
+          outcome?: string | null
+          overdue?: never
+          read_at?: string | null
+          request_type?: string | null
+          resolved_at?: string | null
+          reviewed_at?: string | null
+          self_reported_discovery?: string | null
+          status?: string | null
+          technical_source_family?: string | null
+          town_slug?: string | null
+          unread?: never
+        }
+        Update: {
+          assigned_to?: string | null
+          business_slug?: string | null
+          closed_at?: string | null
+          created_at?: string | null
+          due_at?: string | null
+          id?: string | null
+          outcome?: string | null
+          overdue?: never
+          read_at?: string | null
+          request_type?: string | null
+          resolved_at?: string | null
+          reviewed_at?: string | null
+          self_reported_discovery?: string | null
+          status?: string | null
+          technical_source_family?: string | null
+          town_slug?: string | null
+          unread?: never
+        }
+        Relationships: []
+      }
       v_business_answerability_readiness: {
         Row: {
           authoritative_source_count: number | null
@@ -4204,15 +4437,19 @@ export type Database = {
           is_seo_protected: boolean | null
           last_verified_at: string | null
           name: string | null
+          owner_asserted: boolean | null
+          phone_evidenced: boolean | null
           protection_tier: string | null
           readiness_state: string | null
           record_status: string | null
           seo_cohort: string | null
+          services_evidenced: boolean | null
           slug: string | null
           source_count: number | null
           town_name: string | null
           town_slug: string | null
           verification_status: string | null
+          website_evidenced: boolean | null
         }
         Relationships: []
       }
@@ -4232,6 +4469,73 @@ export type Database = {
           town_slug: string | null
         }
         Relationships: []
+      }
+      v_business_field_evidence: {
+        Row: {
+          address_evidenced: boolean | null
+          authoritative_source_count: number | null
+          business_id: string | null
+          category_evidenced: boolean | null
+          editorial_evidence: boolean | null
+          has_authoritative_source: boolean | null
+          last_asserted_at: string | null
+          owner_asserted: boolean | null
+          phone_evidenced: boolean | null
+          services_evidenced: boolean | null
+          source_count: number | null
+          website_evidenced: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       v_cohort_counts: {
         Row: {
@@ -4376,6 +4680,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      purge_ask_nest_pii: { Args: { retention_days?: number }; Returns: number }
     }
     Enums: {
       app_role: "admin" | "editor" | "user"
