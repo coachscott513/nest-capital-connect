@@ -164,6 +164,31 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       pageSize: 24,
     });
 
+  // Zero-result demand signal — fired at the real no-results state, once per
+  // settled query. The raw query never leaves the browser: only coarse,
+  // non-reversible dimensions are persisted first-party.
+  const zeroResultKey = useRef<string | null>(null);
+  useEffect(() => {
+    if (loading) return;
+    const query = debouncedQ.trim();
+    if (!query) return;
+    const key = `${query}|${effectiveTown || ""}|${category || ""}`;
+    if (results.length > 0) {
+      if (zeroResultKey.current === key) zeroResultKey.current = null;
+      return;
+    }
+    if (zeroResultKey.current === key) return;
+    zeroResultKey.current = key;
+    trackGAEvent.searchZeroResult({
+      query,
+      town: effectiveTown,
+      category: category || undefined,
+      source_location: townSlug ? "town_directory" : "local_directory",
+      result_count: 0,
+    });
+  }, [loading, results.length, debouncedQ, effectiveTown, category, townSlug]);
+
+
   // Featured strip is its own tiny fetch (max 6 rows) — independent of pagination.
   const featuredAll = useFeaturedBusinesses(6);
   const featured = useMemo(

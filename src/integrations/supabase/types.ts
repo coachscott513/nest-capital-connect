@@ -661,39 +661,145 @@ export type Database = {
         }
         Relationships: []
       }
+      engagement_event_types: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          event_type: string
+          is_active: boolean
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          event_type: string
+          is_active?: boolean
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          event_type?: string
+          is_active?: boolean
+        }
+        Relationships: []
+      }
       engagement_events: {
         Row: {
+          browser_family: string | null
           business_id: string | null
           business_slug: string | null
           created_at: string
+          device_class: string | null
+          event_id: string
+          event_schema_version: number
           event_type: string
           id: string
+          internal_test: boolean
           metadata: Json
           referrer: string | null
+          referrer_host: string | null
           region_slug: string
+          result_count: number | null
+          route_path: string | null
+          service_slug: string | null
+          town_slug: string | null
+          traffic_class: string
+          traffic_source: string | null
           user_agent: string | null
         }
         Insert: {
+          browser_family?: string | null
           business_id?: string | null
           business_slug?: string | null
           created_at?: string
+          device_class?: string | null
+          event_id?: string
+          event_schema_version?: number
           event_type: string
           id?: string
+          internal_test?: boolean
           metadata?: Json
           referrer?: string | null
+          referrer_host?: string | null
           region_slug?: string
+          result_count?: number | null
+          route_path?: string | null
+          service_slug?: string | null
+          town_slug?: string | null
+          traffic_class?: string
+          traffic_source?: string | null
           user_agent?: string | null
         }
         Update: {
+          browser_family?: string | null
           business_id?: string | null
           business_slug?: string | null
           created_at?: string
+          device_class?: string | null
+          event_id?: string
+          event_schema_version?: number
           event_type?: string
           id?: string
+          internal_test?: boolean
           metadata?: Json
           referrer?: string | null
+          referrer_host?: string | null
           region_slug?: string
+          result_count?: number | null
+          route_path?: string | null
+          service_slug?: string | null
+          town_slug?: string | null
+          traffic_class?: string
+          traffic_source?: string | null
           user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "engagement_events_event_type_fkey"
+            columns: ["event_type"]
+            isOneToOne: false
+            referencedRelation: "engagement_event_types"
+            referencedColumns: ["event_type"]
+          },
+        ]
+      }
+      engagement_rate_limits: {
+        Row: {
+          bucket: string
+          expires_at: string
+          fingerprint: string
+          hits: number
+          window_start: string
+        }
+        Insert: {
+          bucket: string
+          expires_at?: string
+          fingerprint: string
+          hits?: number
+          window_start: string
+        }
+        Update: {
+          bucket?: string
+          expires_at?: string
+          fingerprint?: string
+          hits?: number
+          window_start?: string
         }
         Relationships: []
       }
@@ -2858,6 +2964,51 @@ export type Database = {
           stripe_subscription_id?: string | null
           subscription_current_period_end?: string | null
           subscription_status?: string | null
+        }
+        Relationships: []
+      }
+      engagement_daily_rollup: {
+        Row: {
+          actions: number | null
+          business_id: string | null
+          business_slug: string | null
+          day: string | null
+          device_class: string | null
+          event_type: string | null
+          region_slug: string | null
+          town_slug: string | null
+          zero_result_actions: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "engagement_events_event_type_fkey"
+            columns: ["event_type"]
+            isOneToOne: false
+            referencedRelation: "engagement_event_types"
+            referencedColumns: ["event_type"]
+          },
+        ]
+      }
+      engagement_traffic_class_rollup: {
+        Row: {
+          actions: number | null
+          day: string | null
+          internal_test: boolean | null
+          traffic_class: string | null
         }
         Relationships: []
       }

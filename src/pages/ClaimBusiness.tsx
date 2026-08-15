@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { trackGAEvent } from "@/components/GARouteTracker";
 
 const TEAL = "#5eead4";
 
@@ -205,6 +206,18 @@ const ClaimBusiness = () => {
   // Payment automation stays inactive until after the 25-business
   // pilot has validated demand.
   // ─────────────────────────────────────────────────────────────
+  // Instrumentation only — records that a claim flow was opened. No form
+  // content is ever included in the first-party event.
+  useEffect(() => {
+    trackGAEvent.claimStarted({
+      business_slug: slugParam || undefined,
+      town: prefillTown || undefined,
+      source_location: "claim_business_page",
+      claim_step: "form_opened",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.businessName.trim() || !form.ownerName.trim() || !form.email.trim() || !form.phone.trim()) {
@@ -265,6 +278,11 @@ const ClaimBusiness = () => {
         );
         return;
       }
+      trackGAEvent.claimSubmitted({
+        business_slug: slugParam || undefined,
+        town: form.town || undefined,
+        source_location: "claim_business_page",
+      });
       track("claim_business_form_submit", {
         slug: slugParam || null,
         tier: requestedTier || tierParam || null,
