@@ -26,7 +26,32 @@ const SEOHead = ({
   noBreadcrumb = false
 }: SEOHeadProps) => {
   const location = useLocation();
-  const canonicalUrl = canonical || `${BASE_URL}${location.pathname}`;
+
+  /**
+   * Parameter-index safety.
+   * Curated parameter states (the faceted pages we deliberately publish) keep
+   * their own canonical and stay indexable. Every other query-string state —
+   * tracking params, ad-hoc filters, /local?biz=, sort/page variants — is
+   * `noindex, follow` and canonicalises back to the clean base path so crawl
+   * budget stays on the curated hubs.
+   */
+  const CURATED_PARAMS: Record<string, string[]> = {
+    "/businesses": ["category"],
+    "/local": ["category"],
+  };
+  const params = new URLSearchParams(location.search);
+  const paramKeys = [...params.keys()];
+  const allowed = CURATED_PARAMS[location.pathname] ?? [];
+  const isCuratedParamState =
+    paramKeys.length > 0 && paramKeys.every((k) => allowed.includes(k));
+  const hasNonCuratedParams = paramKeys.length > 0 && !isCuratedParamState;
+
+  const canonicalUrl =
+    canonical || `${BASE_URL}${location.pathname}${isCuratedParamState ? location.search : ""}`;
+  const robots = hasNonCuratedParams
+    ? "noindex, follow"
+    : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+  
   
   // Auto-generate breadcrumb schema for inner pages
   const isHomepage = location.pathname === "/";
