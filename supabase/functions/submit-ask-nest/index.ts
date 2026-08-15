@@ -236,12 +236,12 @@ Deno.serve(async (req) => {
         first_touch_source =
           (firstEvent.traffic_source as string | null) ??
           classifyHost(hostOnly(firstEvent.referrer_host as string | null));
-        first_touch_evidence = "session_first_event";
+        first_touch_evidence = "server_session_lookup";
       }
     }
     if (!first_touch_source) {
       first_touch_source = technical_source_family;
-      first_touch_evidence = body.session_id ? "referer_fallback_no_session_event" : "referer_only";
+      first_touch_evidence = "server_referer_only";
     }
 
     // --- PII path: private request table -------------------------------------
