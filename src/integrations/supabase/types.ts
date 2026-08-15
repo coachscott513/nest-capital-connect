@@ -437,6 +437,8 @@ export type Database = {
           contact_phone: string | null
           created_at: string
           due_at: string
+          first_touch_evidence: string | null
+          first_touch_source: string | null
           id: string
           message: string | null
           outcome: string | null
@@ -448,6 +450,7 @@ export type Database = {
           reviewed_at: string | null
           self_reported_discovery: string | null
           service_intent: string | null
+          session_id: string | null
           status: string
           technical_source_family: string | null
           town_slug: string | null
@@ -463,6 +466,8 @@ export type Database = {
           contact_phone?: string | null
           created_at?: string
           due_at?: string
+          first_touch_evidence?: string | null
+          first_touch_source?: string | null
           id?: string
           message?: string | null
           outcome?: string | null
@@ -474,6 +479,7 @@ export type Database = {
           reviewed_at?: string | null
           self_reported_discovery?: string | null
           service_intent?: string | null
+          session_id?: string | null
           status?: string
           technical_source_family?: string | null
           town_slug?: string | null
@@ -489,6 +495,8 @@ export type Database = {
           contact_phone?: string | null
           created_at?: string
           due_at?: string
+          first_touch_evidence?: string | null
+          first_touch_source?: string | null
           id?: string
           message?: string | null
           outcome?: string | null
@@ -500,6 +508,7 @@ export type Database = {
           reviewed_at?: string | null
           self_reported_discovery?: string | null
           service_intent?: string | null
+          session_id?: string | null
           status?: string
           technical_source_family?: string | null
           town_slug?: string | null
@@ -1716,6 +1725,7 @@ export type Database = {
           result_count: number | null
           route_path: string | null
           service_slug: string | null
+          session_id: string | null
           town_slug: string | null
           traffic_class: string
           traffic_source: string | null
@@ -1739,6 +1749,7 @@ export type Database = {
           result_count?: number | null
           route_path?: string | null
           service_slug?: string | null
+          session_id?: string | null
           town_slug?: string | null
           traffic_class?: string
           traffic_source?: string | null
@@ -1762,6 +1773,7 @@ export type Database = {
           result_count?: number | null
           route_path?: string | null
           service_slug?: string | null
+          session_id?: string | null
           town_slug?: string | null
           traffic_class?: string
           traffic_source?: string | null
