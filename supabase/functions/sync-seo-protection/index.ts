@@ -60,23 +60,26 @@ Deno.serve(async (req) => {
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-    // Caller must be a signed-in admin.
-    const userClient = createClient(supabaseUrl, anonKey, {
-      global: { headers: { Authorization: authHeader } },
-    });
-    const { data: userData } = await userClient.auth.getUser();
-    if (!userData?.user) {
-      return new Response(JSON.stringify({ error: "Not signed in" }), {
-        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+    // Caller must be a signed-in admin, or an operator holding the service-role key.
+    const isServiceRoleCall = authHeader === `Bearer ${serviceKey}`;
+    if (!isServiceRoleCall) {
+      const userClient = createClient(supabaseUrl, anonKey, {
+        global: { headers: { Authorization: authHeader } },
       });
-    }
-    const { data: isAdmin } = await userClient.rpc("has_role", {
-      _user_id: userData.user.id, _role: "admin",
-    });
-    if (!isAdmin) {
-      return new Response(JSON.stringify({ error: "Admin role required" }), {
-        status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      const { data: userData } = await userClient.auth.getUser();
+      if (!userData?.user) {
+        return new Response(JSON.stringify({ error: "Not signed in" }), {
+          status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const { data: isAdmin } = await userClient.rpc("has_role", {
+        _user_id: userData.user.id, _role: "admin",
       });
+      if (!isAdmin) {
+        return new Response(JSON.stringify({ error: "Admin role required" }), {
+          status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
     }
 
     const lovableKey = Deno.env.get("LOVABLE_API_KEY");
