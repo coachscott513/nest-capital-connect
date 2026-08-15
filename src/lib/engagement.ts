@@ -1,5 +1,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import { isLikelyBot } from "@/lib/botDetection";
+import { getLandingUtmHost, getVisitSessionId } from "@/lib/visitSession";
+
 
 /**
  * First-party engagement logging (schema v2).
