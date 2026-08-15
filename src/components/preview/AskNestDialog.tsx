@@ -102,7 +102,7 @@ export default function AskNestDialog({
         contact_phone: phone.trim() || undefined,
         self_reported_discovery: discovery || undefined,
         session_id: getVisitSessionId() ?? undefined,
-        company_website: honeypot,
+        website: honeypot,
       },
     });
     setSubmitting(false);
@@ -110,14 +110,10 @@ export default function AskNestDialog({
       setError("We could not send that just now. Please try again in a moment.");
       return;
     }
-    // Analytics only — no message, no contact details.
-    logEngagement(
-      "ask_nest_submit",
-      { business_slug: context.business_slug ?? null, business_id: context.business_id ?? null },
-      { intent_category: requestType, surface: "ask_nest" },
-      { town_slug: context.town_slug ?? null },
-    );
+    // The edge function writes the single analytics event (metadata only) so
+    // the submission is never double-counted from the browser.
     setDone(true);
+
   };
 
 
