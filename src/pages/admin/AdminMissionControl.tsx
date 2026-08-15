@@ -152,6 +152,13 @@ export default function AdminMissionControl() {
                 data={supplyVerification}
                 empty="No verification states recorded."
               />
+              <Card
+                icon={Database}
+                title="Record status"
+                subtitle="Operational state only — quarantine and suppression are never quality signals."
+                data={recordStatus}
+                empty="No record statuses recorded."
+              />
             </div>
           </section>
 
