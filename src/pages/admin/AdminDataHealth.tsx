@@ -29,10 +29,12 @@ const PREVIEWS = [
   { key: "v_preview_category_conflicts", label: "Category conflicts", desc: "Business name signals a trade that the stored category contradicts." },
 ] as const;
 
+type PreviewKey = (typeof PREVIEWS)[number]["key"];
+
 export default function AdminDataHealth() {
   const [summary, setSummary] = useState<Summary | null>(null);
   const [counts, setCounts] = useState<Record<string, number>>({});
-  const [active, setActive] = useState<string>(PREVIEWS[0].key);
+  const [active, setActive] = useState<PreviewKey>(PREVIEWS[0].key);
   const [rows, setRows] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(true);
   const [rowsLoading, setRowsLoading] = useState(false);
