@@ -98,7 +98,7 @@ export default function AdminAskNest() {
   };
 
   return (
-    <AdminLayout>
+    <AdminLayout title="Ask Nest inbox" description="Private concierge queue — admin only.">
       <div className="mx-auto max-w-6xl px-5 py-10">
         <p className="text-[11px] uppercase tracking-[0.16em] text-[#5eead4]">Concierge operations</p>
         <h1 className="mt-1 text-2xl font-semibold text-white">Ask Nest inbox</h1>
