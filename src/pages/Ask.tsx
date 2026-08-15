@@ -9,7 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageCircle, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { trackGAEvent } from "@/components/GARouteTracker";
 import { toast } from "sonner";
+
 
 const Ask = () => {
   const [formData, setFormData] = useState({
@@ -43,7 +45,9 @@ const Ask = () => {
       if (error) throw error;
       
       setIsSubmitted(true);
+      trackGAEvent.contactFormSubmit("ask_a_question", "/ask");
       toast.success("Question received! We'll get back to you shortly.");
+
     } catch (error) {
       console.error('Question submission error:', error);
       toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");

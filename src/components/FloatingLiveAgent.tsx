@@ -1,6 +1,8 @@
 import { Phone } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import AnalystCard from "@/components/AnalystCard";
+import { trackGAEvent } from "@/components/GARouteTracker";
+
 
 /**
  * FloatingLiveAgent — bottom-right pill, every page (desktop).
@@ -18,9 +20,11 @@ const FloatingLiveAgent = () => {
       <AnalystCard contextualDisclaimer={isBusinessPage ? "This contacts Capital District Nest, not the listed business." : undefined}>
         <button
           aria-label="Open Local Concierge"
+          onClick={() => trackGAEvent.chatOpen("floating_live_agent")}
           className="group flex items-center gap-2.5 pl-2 pr-5 py-2 rounded-full text-white font-semibold text-sm shadow-[0_12px_30px_-8px_rgba(0,0,0,0.35)] transition-all duration-300 hover:shadow-[0_20px_44px_-8px_rgba(94,234,212,0.35)] hover:scale-[1.03]"
           style={{ backgroundColor: CHARCOAL }}
         >
+
           <span
             className="relative w-8 h-8 rounded-full flex items-center justify-center"
             style={{ backgroundColor: TEAL }}
