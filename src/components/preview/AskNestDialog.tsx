@@ -180,8 +180,8 @@ export default function AskNestDialog({
               />
             </Field>
 
-            <div className="grid gap-3 sm:grid-cols-2">
             <p className="text-[11px] leading-relaxed text-white/45">
+
               {anonymousAllowed
                 ? "Corrections can be sent anonymously. Leave contact details only if you want a reply."
                 : "We only need one way to reach you — an email address or a phone number."}
