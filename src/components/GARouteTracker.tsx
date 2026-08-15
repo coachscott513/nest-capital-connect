@@ -69,14 +69,26 @@ type FinancePayload = { product_type?: string; source_location?: string; page_pa
 
 const send = (name: string, params: Record<string, unknown>) => {
   if (isLikelyBot()) return;
-  if (typeof window === "undefined" || !window.gtag) return;
   // Strip undefined keys — GA4 doesn't like them.
   const clean: Record<string, unknown> = {};
   for (const [k, v] of Object.entries(params)) {
     if (v !== undefined && v !== null && v !== "") clean[k] = v;
   }
+  // First-party mirror: every tracked interaction is also written to our own
+  // engagement_events table so it can be queried, attributed to a business row,
+  // and reported back to owners. GA4 alone is not queryable by us.
+  logEngagement(
+    name,
+    {
+      business_id: (clean.business_id as string) || null,
+      business_slug: (clean.business_slug as string) || null,
+    },
+    clean,
+  );
+  if (typeof window === "undefined" || !window.gtag) return;
   window.gtag("event", name, clean);
 };
+
 
 const normBiz = (p: BizPayload | string, fallbackTown?: string): BizPayload =>
   typeof p === "string" ? { business_slug: p, town: fallbackTown } : p;
