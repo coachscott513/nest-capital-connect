@@ -1,0 +1,1 @@
+DELETE FROM public.engagement_events WHERE created_at >= timestamptz '2026-08-15 11:58+00';
