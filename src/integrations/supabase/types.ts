@@ -185,6 +185,205 @@ export type Database = {
         }
         Relationships: []
       }
+      answerability_pilot_cohort: {
+        Row: {
+          business_id: string | null
+          business_slug: string | null
+          clicks_90d: number | null
+          created_at: string
+          ctr: number | null
+          id: string
+          impressions_90d: number | null
+          protection_tier: string | null
+          selection_bucket: string
+          selection_reason: string | null
+          url: string
+        }
+        Insert: {
+          business_id?: string | null
+          business_slug?: string | null
+          clicks_90d?: number | null
+          created_at?: string
+          ctr?: number | null
+          id?: string
+          impressions_90d?: number | null
+          protection_tier?: string | null
+          selection_bucket: string
+          selection_reason?: string | null
+          url: string
+        }
+        Update: {
+          business_id?: string | null
+          business_slug?: string | null
+          clicks_90d?: number | null
+          created_at?: string
+          ctr?: number | null
+          id?: string
+          impressions_90d?: number | null
+          protection_tier?: string | null
+          selection_bucket?: string
+          selection_reason?: string | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "answerability_pilot_cohort_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answerability_pilot_cohort_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answerability_pilot_cohort_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "answerability_pilot_cohort_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answerability_pilot_cohort_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answerability_pilot_cohort_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "answerability_pilot_cohort_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ask_nest_requests: {
+        Row: {
+          business_id: string | null
+          business_slug: string | null
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          created_at: string
+          id: string
+          message: string | null
+          outcome_note: string | null
+          request_type: string
+          self_reported_discovery: string | null
+          service_intent: string | null
+          status: string
+          technical_source_family: string | null
+          town_slug: string | null
+          updated_at: string
+        }
+        Insert: {
+          business_id?: string | null
+          business_slug?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          message?: string | null
+          outcome_note?: string | null
+          request_type: string
+          self_reported_discovery?: string | null
+          service_intent?: string | null
+          status?: string
+          technical_source_family?: string | null
+          town_slug?: string | null
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string | null
+          business_slug?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          message?: string | null
+          outcome_note?: string | null
+          request_type?: string
+          self_reported_discovery?: string | null
+          service_intent?: string | null
+          status?: string
+          technical_source_family?: string | null
+          town_slug?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ask_nest_requests_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_billing"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ask_nest_requests_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ask_nest_requests_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "ask_nest_requests_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ask_nest_requests_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_category_conflicts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ask_nest_requests_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_poi_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ask_nest_requests_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_preview_town_mismatch"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       business_applications: {
         Row: {
           address: string | null
@@ -414,6 +613,13 @@ export type Database = {
             foreignKeyName: "business_corrections_business_id_fkey"
             columns: ["business_id"]
             isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "business_corrections_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
             referencedRelation: "v_business_cohorts"
             referencedColumns: ["id"]
           },
@@ -499,6 +705,13 @@ export type Database = {
             foreignKeyName: "business_merge_candidates_duplicate_business_id_fkey"
             columns: ["duplicate_business_id"]
             isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_duplicate_business_id_fkey"
+            columns: ["duplicate_business_id"]
+            isOneToOne: false
             referencedRelation: "v_business_cohorts"
             referencedColumns: ["id"]
           },
@@ -536,6 +749,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "businesses"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_merge_candidates_primary_business_id_fkey"
+            columns: ["primary_business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
           },
           {
             foreignKeyName: "business_merge_candidates_primary_business_id_fkey"
@@ -658,6 +878,13 @@ export type Database = {
             foreignKeyName: "business_quarantine_flags_business_id_fkey"
             columns: ["business_id"]
             isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "business_quarantine_flags_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
             referencedRelation: "v_business_cohorts"
             referencedColumns: ["id"]
           },
@@ -756,6 +983,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "businesses"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_sources_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
           },
           {
             foreignKeyName: "business_sources_business_id_fkey"
@@ -862,6 +1096,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "businesses"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "business_specials_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
           },
           {
             foreignKeyName: "business_specials_business_id_fkey"
@@ -1372,6 +1613,13 @@ export type Database = {
             foreignKeyName: "engagement_events_business_id_fkey"
             columns: ["business_id"]
             isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
             referencedRelation: "v_business_cohorts"
             referencedColumns: ["id"]
           },
@@ -1687,6 +1935,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "businesses"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "link_clicks_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
           },
           {
             foreignKeyName: "link_clicks_business_id_fkey"
@@ -2311,6 +2566,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "businesses"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outreach_recipients_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
           },
           {
             foreignKeyName: "outreach_recipients_business_id_fkey"
@@ -3125,6 +3387,13 @@ export type Database = {
             foreignKeyName: "seo_protected_urls_business_id_fkey"
             columns: ["business_id"]
             isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "seo_protected_urls_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
             referencedRelation: "v_business_cohorts"
             referencedColumns: ["id"]
           },
@@ -3358,6 +3627,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "businesses"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "town_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
           },
           {
             foreignKeyName: "town_events_business_id_fkey"
@@ -3736,6 +4012,13 @@ export type Database = {
             foreignKeyName: "tracked_links_business_id_fkey"
             columns: ["business_id"]
             isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "tracked_links_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
             referencedRelation: "v_business_cohorts"
             referencedColumns: ["id"]
           },
@@ -3857,6 +4140,13 @@ export type Database = {
             foreignKeyName: "engagement_events_business_id_fkey"
             columns: ["business_id"]
             isOneToOne: false
+            referencedRelation: "v_business_answerability_readiness"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "engagement_events_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
             referencedRelation: "v_business_cohorts"
             referencedColumns: ["id"]
           },
@@ -3896,6 +4186,33 @@ export type Database = {
           day: string | null
           internal_test: boolean | null
           traffic_class: string | null
+        }
+        Relationships: []
+      }
+      v_business_answerability_readiness: {
+        Row: {
+          authoritative_source_count: number | null
+          business_id: string | null
+          eligibility_state: string | null
+          has_category_field: boolean | null
+          has_hours_field: boolean | null
+          has_location_evidence: boolean | null
+          has_phone: boolean | null
+          has_services_field: boolean | null
+          has_social: boolean | null
+          has_website: boolean | null
+          is_seo_protected: boolean | null
+          last_verified_at: string | null
+          name: string | null
+          protection_tier: string | null
+          readiness_state: string | null
+          record_status: string | null
+          seo_cohort: string | null
+          slug: string | null
+          source_count: number | null
+          town_name: string | null
+          town_slug: string | null
+          verification_status: string | null
         }
         Relationships: []
       }
