@@ -87,13 +87,13 @@ const PropertyHero = () => {
       };
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#0B0F19]" id="property-search">
+    <section className="relative w-full overflow-hidden bg-[#FBFAF7]" id="property-search">
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(70% 55% at 50% 18%, rgba(94,234,212,0.10), transparent 70%), radial-gradient(55% 65% at 12% 100%, rgba(13,110,102,0.18), transparent 75%), linear-gradient(180deg, #0B0F19 0%, #090C14 100%)",
+            "radial-gradient(60% 45% at 50% 0%, rgba(13,110,102,0.07), transparent 70%), linear-gradient(180deg, #FBFAF7 0%, #F3F4F2 100%)",
         }}
       />
 
@@ -106,13 +106,13 @@ const PropertyHero = () => {
             Capital District Property Intelligence
           </p>
 
-          <h1 className="mt-8 md:mt-10 text-[2.3rem] sm:text-5xl md:text-[4rem] tracking-[-0.035em] leading-[1.06] text-white text-balance">
-            <span className="block font-extralight text-[#E2E8F0]">Find the property.</span>
+          <h1 className="mt-8 md:mt-10 text-[2.3rem] sm:text-5xl md:text-[4rem] tracking-[-0.035em] leading-[1.06] text-[#14181F] text-balance">
+            <span className="block font-extralight text-[#14181F]/70">Find the property.</span>
             <span className="block font-semibold">Know if the deal works.</span>
-            <span className="block font-light text-[#E2E8F0]">Build the right team.</span>
+            <span className="block font-light text-[#14181F]/70">Build the right team.</span>
           </h1>
 
-          <p className="mt-8 text-[15px] md:text-[17px] text-[#94A3B8] max-w-xl mx-auto font-light leading-[1.65]">
+          <p className="mt-8 text-[15px] md:text-[17px] text-[#64748B] max-w-xl mx-auto font-light leading-[1.65]">
             Search live homes across the Capital District, understand the financial
             reality behind the listing, and connect with the local professionals who
             help move the decision forward.
@@ -121,7 +121,7 @@ const PropertyHero = () => {
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <a
               href="#property-search-widget"
-              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 rounded-full bg-white text-[#0B0F19] text-[13px] font-semibold tracking-wide hover:opacity-90 transition"
+              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 rounded-full bg-[#14181F] text-white text-[13px] font-semibold tracking-wide hover:opacity-90 transition"
             >
               <Search className="w-4 h-4" /> Search live homes
             </a>
@@ -147,10 +147,10 @@ const PropertyHero = () => {
         <div
           id="property-search-widget"
           ref={slotRef}
-          className="mt-14 md:mt-20 scroll-mt-24 rounded-[24px] border border-white/[0.07] p-5 sm:p-7 md:p-8"
+          className="mt-14 md:mt-20 scroll-mt-24 rounded-[24px] border p-5 sm:p-7 md:p-8 bg-white"
           style={{
-            background: "linear-gradient(180deg, #13161E 0%, #1A1D26 100%)",
-            boxShadow: "0 24px 70px -32px rgba(0,0,0,0.7)",
+            borderColor: "#DFDCD4",
+            boxShadow: "0 24px 60px -38px rgba(11,15,25,0.35)",
           }}
         >
           <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-[#64748B] mb-5 text-center">
@@ -160,16 +160,16 @@ const PropertyHero = () => {
           <div className="min-h-[168px] flex items-center justify-center">
             {!mountWidget || (!ready && !failed) ? (
               <div className="w-full max-w-2xl animate-pulse space-y-3" aria-hidden>
-                <div className="h-12 rounded-full bg-white/[0.06]" />
+                <div className="h-12 rounded-full bg-[#F3F4F2]" />
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="h-10 rounded-xl bg-white/[0.05]" />
-                  <div className="h-10 rounded-xl bg-white/[0.05]" />
-                  <div className="h-10 rounded-xl bg-white/[0.05]" />
+                  <div className="h-10 rounded-xl bg-[#F3F4F2]" />
+                  <div className="h-10 rounded-xl bg-[#F3F4F2]" />
+                  <div className="h-10 rounded-xl bg-[#F3F4F2]" />
                 </div>
               </div>
             ) : failed ? (
               <div className="text-center">
-                <p className="text-white/70 text-sm mb-4">
+                <p className="text-[#64748B] text-sm mb-4">
                   The property search tool didn't load. You can open it directly.
                 </p>
                 <a
@@ -182,12 +182,13 @@ const PropertyHero = () => {
                       search_type: "fallback_map",
                     })
                   }
-                  className="inline-flex items-center gap-2 min-h-[48px] px-6 rounded-full bg-white text-[#0B0F19] text-sm font-semibold"
+                  className="inline-flex items-center gap-2 min-h-[48px] px-6 rounded-full bg-[#14181F] text-white text-sm font-semibold"
                 >
                   Open property search <ExternalLink className="w-4 h-4" />
                 </a>
               </div>
             ) : null}
+
 
             {mountWidget && !failed && (
               <div className={ready ? "w-full flex justify-center" : "sr-only"}>
