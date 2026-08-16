@@ -96,7 +96,8 @@ function SearchHero() {
               Capital District Nest
             </p>
 
-            <motion.h1
+            {/* h2, not h1 — the property hero above owns the page's single h1. */}
+            <motion.h2
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.1, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
@@ -106,7 +107,7 @@ function SearchHero() {
               <span className="block mt-1 md:mt-2 bg-gradient-to-r from-white via-white to-[#5eead4] bg-clip-text text-transparent">
                 local.
               </span>
-            </motion.h1>
+            </motion.h2>
 
             <motion.p
               initial={{ opacity: 0, y: 16 }}
