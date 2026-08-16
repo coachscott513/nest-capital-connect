@@ -269,7 +269,7 @@ const DecisionRail = () => (
         <Card
           eyebrow="Owning & improving"
           headline="Find local help for the work after closing."
-          body="Repairs, clean-outs, maintenance, landscaping, and ongoing ownership — handled by vetted local professionals."
+          body="Repairs, clean-outs, maintenance, landscaping, and ongoing ownership — organized by the local service category you need."
           primary={{
             label: "Browse Home Services",
             to: "/home-services",
@@ -279,7 +279,7 @@ const DecisionRail = () => (
           links={[
             {
               label: "Property management",
-              to: "/local?category=property-maintenance",
+              to: "/local?category=property-management",
               intent: "owning",
               product: "category",
             },
