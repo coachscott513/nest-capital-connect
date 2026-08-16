@@ -1,6 +1,15 @@
 {
   "cleanUrls": true,
   "rewrites": [
+    { "source": "/admin", "destination": "/private-shell.html" },
+    { "source": "/admin/(.*)", "destination": "/private-shell.html" },
+    { "source": "/launch-dashboard", "destination": "/private-shell.html" },
+    { "source": "/dashboard", "destination": "/private-shell.html" },
+    { "source": "/dashboard/(.*)", "destination": "/private-shell.html" },
+    { "source": "/auth", "destination": "/private-shell.html" },
+    { "source": "/auth/(.*)", "destination": "/private-shell.html" },
+    { "source": "/reset-password", "destination": "/private-shell.html" },
+    { "source": "/go/(.*)", "destination": "/private-shell.html" },
     { "source": "/((?!assets/|.*\\.[a-zA-Z0-9]+$).*)", "destination": "/spa-shell.html" }
   ]
 }

@@ -104,12 +104,23 @@ const PRIVATE_ROUTE_PREFIXES: string[] = [
 ];
 
 /**
- * Emits `dist/spa-shell.html`: a neutral, noindex fallback document for
- * unmatched / non-prerendered routes. It reuses the same hashed JS/CSS as the
- * real build so BrowserRouter hydrates the requested URL normally, but its raw
- * HTML carries NO homepage identity: no homepage title, no homepage H1 or body
- * copy, no canonical, and no Organization/WebSite/LocalBusiness/breadcrumb
- * schema. Runs in `closeBundle` so it observes the post-prerender dist output.
+ * Emits two fallback documents that reuse the real hashed JS/CSS so
+ * BrowserRouter hydrates the requested URL normally:
+ *
+ *  - `dist/spa-shell.html`   neutral, NO robots directive. Served to any
+ *    unmatched path that is not explicitly private. This is deliberate: the
+ *    app has ~5,000 valid DB-backed public dynamic routes (`/biz/:slug`,
+ *    `/business/:slug`, categories, towns, stories) that are NOT in the
+ *    prerender set. A raw `noindex` here would deindex live, click-bearing
+ *    pages. Robots/canonical for those routes are owned by the route's own
+ *    head (Helmet), and unknown slugs still fail closed at runtime by
+ *    emitting `noindex` themselves.
+ *  - `dist/private-shell.html`   raw `noindex, nofollow` for admin, auth and
+ *    other non-public prefixes, which fail closed before hydration.
+ *
+ * Neither shell carries homepage identity: no homepage title, H1, body copy,
+ * canonical, or Organization/WebSite/LocalBusiness/breadcrumb schema.
+ * Runs in `closeBundle` so it observes the post-prerender dist output.
  */
 function spaShellPlugin() {
   return {
@@ -132,14 +143,13 @@ function spaShellPlugin() {
         return;
       }
 
-      const shell = `<!DOCTYPE html>
+      const buildShell = (robots: string | null, title: string) => `<!DOCTYPE html>
 <html lang="en" class="dark" style="background-color: #0B0B0B;">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex, follow" />
-    <title>Page — Capital District Nest</title>
+${robots ? `    <meta name="robots" content="${robots}" />\n` : ""}    <title>${title}</title>
     ${styles}
     ${scripts}
   </head>
@@ -148,11 +158,22 @@ function spaShellPlugin() {
   </body>
 </html>
 `;
-      fs.writeFileSync(path.resolve(__dirname, "dist/spa-shell.html"), shell, "utf8");
-      console.log("[spa-shell] wrote dist/spa-shell.html (neutral, noindex)");
+
+      fs.writeFileSync(
+        path.resolve(__dirname, "dist/spa-shell.html"),
+        buildShell(null, "Capital District Nest"),
+        "utf8",
+      );
+      fs.writeFileSync(
+        path.resolve(__dirname, "dist/private-shell.html"),
+        buildShell("noindex, nofollow", "Capital District Nest"),
+        "utf8",
+      );
+      console.log("[spa-shell] wrote dist/spa-shell.html (neutral) and dist/private-shell.html (noindex)");
     },
   };
 }
+
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({

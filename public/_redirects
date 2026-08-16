@@ -1,3 +1,19 @@
-# Known prerendered static files win by precedence; only unmatched routes
-# fall through to the neutral, noindex SPA shell.
-/*  /spa-shell.html  200
+# Known prerendered static files win by precedence.
+#
+# Private surfaces fail closed with a raw noindex shell.
+/admin            /private-shell.html  200
+/admin/*          /private-shell.html  200
+/launch-dashboard /private-shell.html  200
+/dashboard        /private-shell.html  200
+/dashboard/*      /private-shell.html  200
+/auth             /private-shell.html  200
+/auth/*           /private-shell.html  200
+/reset-password   /private-shell.html  200
+/go/*             /private-shell.html  200
+#
+# Everything else falls through to a NEUTRAL shell with no robots directive.
+# ~5,000 valid DB-backed public routes (/biz/:slug, /business/:slug, category,
+# town and story pages) live outside the prerender set; a raw noindex here
+# would deindex live, click-bearing pages. Each route owns its own robots and
+# canonical via Helmet, and unknown slugs fail closed at runtime.
+/*                /spa-shell.html      200
