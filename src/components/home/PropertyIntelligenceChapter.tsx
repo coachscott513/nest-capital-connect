@@ -61,15 +61,19 @@ const PropertyIntelligenceChapter = () => (
       }}
     />
 
-    <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-20 md:py-28">
+    <div
+      className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-20 md:py-28"
+      style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
+    >
       <div className="max-w-3xl">
-        <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+        <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-[#64748B]">
           Property Intelligence
         </p>
-        <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-white text-balance">
-          Found a property? Pressure-test it before you decide.
+        <h2 className="mt-5 text-3xl md:text-5xl tracking-[-0.035em] leading-[1.07] text-white text-balance">
+          <span className="font-extralight text-[#E2E8F0]">Found a property?</span>
+          <span className="block font-semibold">Pressure-test it before you decide.</span>
         </h2>
-        <p className="mt-5 text-[15px] md:text-lg text-white/65 font-light leading-relaxed">
+        <p className="mt-5 text-[15px] md:text-[17px] text-[#94A3B8] font-light leading-relaxed">
           Look beyond the listing. Compare the numbers, surface the assumptions,
           identify what is still unknown, and decide what should be verified next.
         </p>
@@ -77,6 +81,37 @@ const PropertyIntelligenceChapter = () => (
           Technology organizes the evidence. Scott reviews the decision.
         </p>
       </div>
+
+      {/* Flagship route — deal math lives in Analyze Any Deal */}
+      <div
+        className="mt-10 rounded-2xl border border-white/[0.08] p-6 md:p-7 flex flex-col md:flex-row md:items-center md:justify-between gap-5"
+        style={{ background: "linear-gradient(180deg, #13161E 0%, #1A1D26 100%)" }}
+      >
+        <div>
+          <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-[#64748B]">
+            Start here
+          </p>
+          <p className="mt-3 text-[17px] md:text-xl text-white tracking-[-0.02em]">
+            <span className="font-extralight text-[#E2E8F0]">Buying or investing? </span>
+            <span className="font-semibold">Start with Analyze Any Deal.</span>
+          </p>
+        </div>
+        <Link
+          to="/analyze-any-deal"
+          onClick={() =>
+            logEngagement("property_analysis_click", {}, {
+              source_location: PLACEMENT,
+              intent_type: "buying",
+              product_type: "analyze_any_deal",
+            })
+          }
+          className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-full text-white text-[13px] font-semibold tracking-wide hover:opacity-90 transition shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60"
+          style={{ backgroundColor: "#0d6e66" }}
+        >
+          Open Analyze Any Deal <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+
 
       <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {PATHS.map((p) => (
