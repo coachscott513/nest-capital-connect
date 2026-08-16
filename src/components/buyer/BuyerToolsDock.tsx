@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { SlidersHorizontal, X } from "lucide-react";
-import { isBuyerToolsRoute } from "@/lib/routeGroups";
+import { isBuyerToolsRoute } from "@/lib/routeExperience";
 import BuyerToolsMenu from "@/components/buyer/BuyerToolsMenu";
 import { trackBuyerToolsOpen } from "@/components/buyer/buyerToolsAnalytics";
 

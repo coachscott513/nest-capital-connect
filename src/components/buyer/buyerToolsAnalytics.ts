@@ -1,5 +1,5 @@
 import { logEngagement } from "@/lib/engagement";
-import { routeGroupLabel } from "@/lib/routeGroups";
+import { analyticsPathname, routeGroupLabel } from "@/lib/routeExperience";
 
 /**
  * Buyer Tools analytics. Non-identifying only: no address, listing id,
@@ -14,7 +14,7 @@ export type BuyerToolProduct =
 export const trackBuyerToolsOpen = (sourceLocation: string, pathname: string) =>
   logEngagement("buyer_tools_open", {}, {
     source_location: sourceLocation,
-    pathname: pathname.split("?")[0].split("#")[0],
+    pathname: analyticsPathname(pathname),
     route_group: routeGroupLabel(pathname),
   });
 
@@ -26,8 +26,9 @@ export const trackBuyerToolSelect = (
 ) =>
   logEngagement("buyer_tool_select", {}, {
     source_location: sourceLocation,
-    pathname: pathname.split("?")[0].split("#")[0],
+    pathname: analyticsPathname(pathname),
     route_group: routeGroupLabel(pathname),
     product_type: productType,
     ...(intentType ? { intent_type: intentType } : {}),
   });
+

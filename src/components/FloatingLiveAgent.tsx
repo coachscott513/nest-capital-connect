@@ -2,7 +2,7 @@ import { Phone } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import AnalystCard from "@/components/AnalystCard";
 import { trackGAEvent } from "@/components/GARouteTracker";
-import { isBuyerToolsRoute, isLocalDiscoveryRoute } from "@/lib/routeGroups";
+import { isBuyerToolsRoute, isExcludedRoute, isLocalDiscoveryRoute } from "@/lib/routeExperience";
 
 /**
  * FloatingLiveAgent — single global floating contact (desktop).
@@ -37,7 +37,9 @@ const FloatingLiveAgent = () => {
   );
 
   // Buyer/property routes are owned by BuyerToolsDock — no second floating pill.
-  if (isBuyerToolsRoute(pathname)) return null;
+  // Admin / auth / dashboard / legal surfaces get no floating control at all.
+  if (isBuyerToolsRoute(pathname) || isExcludedRoute(pathname)) return null;
+
 
   return (
     <div className="hidden md:block fixed bottom-6 right-6 z-[1500]">

@@ -17,7 +17,8 @@ export type DecisionType =
 
 /**
  * Build a privacy-safe deep link into AnalyzeAnyProperty.
- * Only non-identifying campaign context is allowed in the query string.
+ * Only non-identifying campaign context is allowed in the query string:
+ * source, region, placement, and an optional decision type.
  */
 export function analyzeAnyPropertyUrl(opts: {
   path?: string;
@@ -26,10 +27,12 @@ export function analyzeAnyPropertyUrl(opts: {
 }): string {
   const url = new URL(opts.path ?? "/", ANALYZE_ANY_PROPERTY_URL);
   url.searchParams.set("source", "capital-district-nest");
+  url.searchParams.set("region", "capital-district");
   url.searchParams.set("placement", opts.placement);
   if (opts.decisionType) url.searchParams.set("decision_type", opts.decisionType);
   return url.toString();
 }
+
 
 /**
  * Verified RealScout configuration already present in the project.

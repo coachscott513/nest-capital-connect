@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   Sparkles, Search, Building2, Phone, CalendarPlus, X, SlidersHorizontal,
 } from 'lucide-react';
-import { isBuyerToolsRoute } from '@/lib/routeGroups';
+import { isBuyerToolsRoute, isExcludedRoute } from '@/lib/routeExperience';
 import BuyerToolsMenu from '@/components/buyer/BuyerToolsMenu';
 import { trackBuyerToolsOpen } from '@/components/buyer/buyerToolsAnalytics';
 
@@ -54,6 +54,11 @@ const MobileCtaBar = () => {
 
   const label = buyerMode ? 'Buyer tools' : 'Ask Local';
 
+  // Admin / auth / dashboard / legal surfaces get no floating control at all.
+  if (isExcludedRoute(pathname)) return null;
+
+
+
   return (
     <>
       {/* Floating dark-glass button (mobile only) */}
@@ -94,6 +99,9 @@ const MobileCtaBar = () => {
           onClick={() => setOpen(false)}
           role="dialog"
           aria-modal="true"
+          aria-labelledby="mobile-cta-title"
+          aria-describedby="mobile-cta-desc"
+
         >
           <div
             className="absolute inset-0"
@@ -114,9 +122,16 @@ const MobileCtaBar = () => {
                 <p className="text-[10px] font-semibold uppercase tracking-[0.24em]" style={{ color: '#5eead4' }}>
                   {label}
                 </p>
-                <h3 className="mt-1 text-base font-semibold text-white">
+                <p id="mobile-cta-desc" className="sr-only">
+                  {buyerMode
+                    ? 'Deal calculator, property intelligence, home search, and talking to Scott.'
+                    : 'Local directory, business features, agent contact, and town events.'}
+                </p>
+
+                <h3 id="mobile-cta-title" className="mt-1 text-base font-semibold text-white">
                   {buyerMode ? 'Test the decision' : 'How can we help?'}
                 </h3>
+
               </div>
               <button
                 type="button"
