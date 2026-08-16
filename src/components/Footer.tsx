@@ -193,7 +193,7 @@ const Footer = () => {
               <li><Link to="/for-businesses" className={linkBase}>For Local Businesses</Link></li>
               <li><Link to="/for-businesses/apply" className={linkBase}>Apply / Claim</Link></li>
               <li><Link to="/partner-auth" className={linkBase}>Business Login</Link></li>
-              <li><Link to="/claim-business" className={linkBase}>Claim Business</Link></li>
+              
               <li><Link to="/site-index" className={linkBase}>Site Index</Link></li>
               <li><Link to="/privacy-policy" className={linkBase}>Privacy</Link></li>
               <li>

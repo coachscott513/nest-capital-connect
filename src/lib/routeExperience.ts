@@ -112,5 +112,35 @@ export const isExcludedRoute = (pathname: string) =>
 /** Normalized, PII-free route group label for analytics. */
 export const routeGroupLabel = (pathname: string) => getRouteExperience(pathname);
 
-/** PII-free pathname for analytics (query and hash removed). */
-export const analyticsPathname = (pathname: string) => normalize(pathname);
+/**
+ * Dynamic route prefixes whose trailing segment can identify a specific
+ * property, listing, business, or person. Analytics stores the route group
+ * only — never the identifying slug. SEO URLs are unaffected.
+ */
+const IDENTIFYING_PREFIXES = [
+  "/listings",
+  "/property",
+  "/properties",
+  "/homes/search",
+  "/homes/listing",
+  "/homes/property",
+  "/biz",
+  "/business",
+  "/intel",
+  "/reports",
+  "/living-in",
+  "/agent",
+];
+
+/**
+ * PII-free pathname for analytics: query and hash removed, and any
+ * identifying dynamic segment collapsed to `/*`.
+ */
+export const analyticsPathname = (pathname: string) => {
+  const path = normalize(pathname);
+  for (const prefix of IDENTIFYING_PREFIXES) {
+    if (path === prefix) return prefix;
+    if (path.startsWith(`${prefix}/`)) return `${prefix}/*`;
+  }
+  return path;
+};
