@@ -572,7 +572,7 @@ const VendorHub = () => {
       <SEOHead 
         title="Vendor Intelligence Hub | Capital District Nest"
         description="Connect with verified mortgage specialists, attorneys, and insurance providers for your Capital District real estate investment."
-        canonical="/vendors"
+        canonical="https://www.capitaldistrictnest.com/vendors"
       />
       
       <div className="min-h-screen bg-background pt-24 pb-16">
