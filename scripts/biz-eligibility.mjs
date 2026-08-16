@@ -13,7 +13,7 @@
 // Tier B output (they remain client-rendered and self-govern their robots).
 
 export const BIZ_SELECT =
-  "id, slug, name, category, town_slug, town_name, city, state, zip, address, phone, website, description, long_description, plan_tier, is_claimed, is_active, quarantine_status, record_status, updated_at";
+  "id, slug, name, category, town_slug, town_name, city, state, zipcode, address, phone, website, description, long_description, plan_tier, is_claimed, is_active, quarantine_status, record_status, updated_at";
 
 const clean = (v) => (typeof v === "string" ? v.trim() : "");
 

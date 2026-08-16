@@ -63,7 +63,7 @@ function schema(b, url) {
     ...(t(b.address) && { streetAddress: t(b.address) }),
     ...((t(b.city) || t(b.town_name)) && { addressLocality: t(b.city) || t(b.town_name) }),
     addressRegion: t(b.state) || "NY",
-    ...(t(b.zip) && { postalCode: t(b.zip) }),
+    ...(t(b.zipcode) && { postalCode: t(b.zipcode) }),
     addressCountry: "US",
   };
   return {
