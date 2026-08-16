@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { Mail, Phone } from 'lucide-react';
 import { useRegion } from '@/hooks/useRegion';
 import RealEstateDisclosure from '@/components/RealEstateDisclosure';
+import { analyzeAnyDealDestination } from '@/config/externalProducts';
+
 import {
   GENERAL_EMAIL,
   MEDIA_EMAIL,
@@ -89,6 +91,9 @@ const Footer = () => {
   const { pathname } = useLocation();
   const showRealEstateDisclosure = isRealEstateRoute(pathname);
   const { region } = useRegion();
+  /** Shared Analyze Any Deal destination (internal `/analyze-any-deal` fallback today). */
+  const dealDest = analyzeAnyDealDestination({ placement: "footer-homes" });
+
   return (
     <footer className="bg-[#05080F] text-white border-t border-white/[0.06]">
       {/* Main columns */}
