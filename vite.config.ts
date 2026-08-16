@@ -136,18 +136,52 @@ export default defineConfig(({ mode }) => ({
             ""
           );
 
-          // Canonical safety net. index.html no longer ships a sitewide
-          // canonical, but if a stray homepage canonical ever survives on a
-          // non-home route, drop it so the route's own canonical is the only
-          // one crawlers see. Never invents a canonical.
-          if (renderedRoute.route !== "/") {
+          const route = renderedRoute.route;
+
+          // Drop a stray homepage canonical that survived on a non-home route.
+          if (route !== "/") {
             renderedRoute.html = renderedRoute.html.replace(
               /<link[^>]+rel="canonical"[^>]+href="https:\/\/www\.capitaldistrictnest\.com\/"[^>]*>/g,
               ""
             );
           }
+
+          // ── Canonical safety net ───────────────────────────────────────
+          // Adds a self-referencing canonical ONLY when every condition holds:
+          //  - the route is a known, prerendered, public route
+          //  - no canonical already exists (external canonical ownership, e.g.
+          //    Analyze Any Deal -> analyzeanydeal.com, is therefore preserved)
+          //  - the route is not private/auth/admin
+          //  - the snapshot is not noindex
+          // It never invents a canonical for an unknown route.
+          const isPrivate = PRIVATE_ROUTE_PREFIXES.some(
+            (p) => route === p || route.startsWith(p + "/")
+          );
+          const hasCanonical = /rel="canonical"/.test(renderedRoute.html);
+          const isNoindex = /<meta[^>]+name="robots"[^>]*content="[^"]*noindex/i.test(
+            renderedRoute.html
+          );
+          if (!isPrivate && !hasCanonical && !isNoindex) {
+            const canonical =
+              "https://www.capitaldistrictnest.com" +
+              (route === "/" ? "/" : route.replace(/\/+$/, ""));
+            renderedRoute.html = renderedRoute.html.replace(
+              "</head>",
+              `<link rel="canonical" href="${canonical}">` +
+                `<meta property="og:url" content="${canonical}">` +
+                `</head>`
+            );
+          }
+
+          // Normalise any non-www canonical to the www host of record.
+          renderedRoute.html = renderedRoute.html.replace(
+            /(rel="canonical"[^>]*href=")https:\/\/capitaldistrictnest\.com/g,
+            "$1https://www.capitaldistrictnest.com"
+          );
         },
       }),
+    // Neutral SPA fallback document for unmatched / non-prerendered routes.
+    mode !== "development" && spaShellPlugin(),
   ].filter(Boolean),
   resolve: {
     alias: {
