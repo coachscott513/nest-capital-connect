@@ -75,7 +75,14 @@ function resolvePrerenderRoutes(): string[] {
       try {
         const u = new URL(m[1]);
         const route = u.pathname.replace(/\/+$/, "") || "/";
-        if (!route.startsWith("/admin")) routes.add(route);
+        // Tier A is browser-rendered and must stay small. /biz/* is owned by
+        // Tier B (scripts/prerender-biz.mjs), which emits those same routes
+        // deterministically from the database in seconds; rendering ~5,000
+        // business pages through Puppeteer here would take hours and produce
+        // duplicate output.
+        if (route.startsWith("/admin") || route.startsWith("/biz/")) continue;
+        routes.add(route);
+
       } catch {
         /* ignore malformed loc */
       }
