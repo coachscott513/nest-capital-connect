@@ -99,6 +99,9 @@ const MobileCtaBar = () => {
           onClick={() => setOpen(false)}
           role="dialog"
           aria-modal="true"
+          aria-labelledby="mobile-cta-title"
+          aria-describedby="mobile-cta-desc"
+
         >
           <div
             className="absolute inset-0"
@@ -116,12 +119,15 @@ const MobileCtaBar = () => {
           >
             <div className="flex items-center justify-between mb-4">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.24em]" style={{ color: '#5eead4' }}>
-                  {label}
+                <p id="mobile-cta-desc" className="text-[10px] font-semibold uppercase tracking-[0.24em]" style={{ color: '#5eead4' }}>
+                  {buyerMode
+                    ? 'Buyer tools — deal math, property evidence, homes, and Scott'
+                    : 'Ask Local'}
                 </p>
-                <h3 className="mt-1 text-base font-semibold text-white">
+                <h3 id="mobile-cta-title" className="mt-1 text-base font-semibold text-white">
                   {buyerMode ? 'Test the decision' : 'How can we help?'}
                 </h3>
+
               </div>
               <button
                 type="button"
