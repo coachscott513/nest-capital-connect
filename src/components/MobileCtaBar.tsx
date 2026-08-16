@@ -112,25 +112,39 @@ const MobileCtaBar = () => {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.24em]" style={{ color: '#5eead4' }}>
-                  Ask Local
+                  {label}
                 </p>
-                <h3 className="mt-1 text-base font-semibold text-white">How can we help?</h3>
+                <h3 className="mt-1 text-base font-semibold text-white">
+                  {buyerMode ? 'Test the decision' : 'How can we help?'}
+                </h3>
               </div>
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  triggerRef.current?.focus();
+                }}
                 aria-label="Close"
-                className="w-9 h-9 rounded-full border border-white/15 text-white/80 inline-flex items-center justify-center hover:bg-white/10 transition"
+                className="w-11 h-11 rounded-full border border-white/15 text-white/80 inline-flex items-center justify-center hover:bg-white/10 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5eead4]"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
+            {buyerMode ? (
+              <BuyerToolsMenu
+                pathname={pathname}
+                sourceLocation="mobile-buyer-tools"
+                onNavigate={() => setOpen(false)}
+                includeSearchHomes
+                tone="dark"
+              />
+            ) : (
             <ul className="space-y-4">
               {items.map((it) => {
                 const Icon = it.icon;
                 const inner = (
-                  <span className="flex items-center gap-3 w-full px-3.5 py-3 rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] active:bg-white/[0.10] transition">
+                  <span className="flex items-center gap-3 w-full px-3.5 py-3 min-h-[44px] rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] active:bg-white/[0.10] transition">
                     <span
                       className="w-9 h-9 rounded-full inline-flex items-center justify-center shrink-0 border border-white/10"
                       style={{ backgroundColor: 'rgba(13,110,102,0.18)' }}
@@ -154,6 +168,8 @@ const MobileCtaBar = () => {
                 );
               })}
             </ul>
+            )}
+
           </div>
         </div>
       )}
