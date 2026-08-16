@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   Sparkles, Search, Building2, Phone, CalendarPlus, X, SlidersHorizontal,
 } from 'lucide-react';
-import { isBuyerToolsRoute } from '@/lib/routeExperience';
+import { isBuyerToolsRoute, isExcludedRoute } from '@/lib/routeExperience';
 import BuyerToolsMenu from '@/components/buyer/BuyerToolsMenu';
 import { trackBuyerToolsOpen } from '@/components/buyer/buyerToolsAnalytics';
 
@@ -53,6 +53,11 @@ const MobileCtaBar = () => {
   ];
 
   const label = buyerMode ? 'Buyer tools' : 'Ask Local';
+
+  // Admin / auth / dashboard / legal surfaces get no floating control at all.
+  if (isExcludedRoute(pathname)) return null;
+
+
 
   return (
     <>
