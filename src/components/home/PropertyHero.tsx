@@ -219,28 +219,29 @@ const PropertyHero = () => {
                   search_type: "map_link",
                 })
               }
-              className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#5eead4] hover:gap-3 transition-all"
+              className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#0D6E66] hover:gap-3 transition-all"
             >
               {REALSCOUT.capitalDistrictMapUrl
                 ? "Browse the Capital District map"
                 : "Browse the Albany map view"}
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
-            <span className="hidden sm:block w-px h-4 bg-white/15" aria-hidden />
+            <span className="hidden sm:block w-px h-4 bg-[#DFDCD4]" aria-hidden />
             <Link
               to="/homes"
-              className="text-[13px] font-semibold text-white/70 hover:text-white transition"
+              className="text-[13px] font-semibold text-[#14181F]/70 hover:text-[#14181F] transition"
             >
               All home resources
             </Link>
           </div>
 
-          <p className="mt-5 text-center text-[11.5px] leading-relaxed text-white/45 max-w-2xl mx-auto">
+          <p className="mt-5 text-center text-[11.5px] leading-relaxed text-[#64748B] max-w-2xl mx-auto">
             Property search is powered by RealScout on live MLS data. The map view
             linked above is currently scoped to the City of Albany. Looking for
             businesses, towns, or services instead? Use the site search in the
             navigation.
           </p>
+
         </div>
       </div>
     </section>
