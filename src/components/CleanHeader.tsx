@@ -280,8 +280,9 @@ const SECTION_DEFS: MegaSection[] = [
       {
         title: "The products",
         links: [
-          { label: "Analyze Any Deal", href: "/analyze-any-deal" },
-          { label: "Analyze Any Property", href: "/analyze-any-property" },
+          { label: "Deal Calculator — Analyze Any Deal", href: "/analyze-any-deal" },
+          { label: "Property Intelligence — Analyze Any Property", href: "/analyze-any-property" },
+
           { label: "Financial console", href: "/analyze" },
           { label: "Sample Report", href: "/reports" },
         ],

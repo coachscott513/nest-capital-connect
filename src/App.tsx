@@ -9,6 +9,8 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from "
 import { AuthProvider } from "@/contexts/AuthContext";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import FloatingLiveAgent from "@/components/FloatingLiveAgent";
+import BuyerToolsDock from "@/components/buyer/BuyerToolsDock";
+
 import RouteFade from "@/components/RouteFade";
 import GARouteTracker from "@/components/GARouteTracker";
 import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext";
@@ -576,10 +578,13 @@ const App = () => {
             <Route path="*" element={<NotFoundOrLegacyTown />} />
           </Routes>
           </RouteFade>
-          {/* Global Mobile CTA Bar - shows on mobile only */}
+          {/* Global Mobile CTA Bar - shows on mobile only (route-aware: Buyer tools / Ask Local) */}
           <MobileCtaBar />
-          {/* Global Floating Live Agent — bottom right, every page (desktop). SINGLE source of truth. */}
+          {/* Desktop persistent Buyer Tools dock — buyer/property routes only */}
+          <BuyerToolsDock />
+          {/* Global Floating Live Agent — local/business routes (desktop). SINGLE source of truth. */}
           <FloatingLiveAgent />
+
         </BrowserRouter>
         </QueryClientProvider>
       </DelmarConfirmationProvider>

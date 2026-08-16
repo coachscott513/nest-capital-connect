@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { Mail, Phone } from 'lucide-react';
 import { useRegion } from '@/hooks/useRegion';
 import RealEstateDisclosure from '@/components/RealEstateDisclosure';
+import { analyzeAnyDealDestination } from '@/config/externalProducts';
+
 import {
   GENERAL_EMAIL,
   MEDIA_EMAIL,
@@ -89,6 +91,9 @@ const Footer = () => {
   const { pathname } = useLocation();
   const showRealEstateDisclosure = isRealEstateRoute(pathname);
   const { region } = useRegion();
+  /** Shared Analyze Any Deal destination (internal `/analyze-any-deal` fallback today). */
+  const dealDest = analyzeAnyDealDestination({ placement: "footer-homes" });
+
   return (
     <footer className="bg-[#05080F] text-white border-t border-white/[0.06]">
       {/* Main columns */}
@@ -149,7 +154,17 @@ const Footer = () => {
               <li><Link to="/homes/listings" className={linkBase}>Property Board</Link></li>
               <li><Link to="/investment-properties" className={linkBase}>Investment Properties</Link></li>
               <li><Link to="/first-time-homebuyers" className={linkBase}>First-Time Buyers</Link></li>
+              <li>
+                {dealDest.kind === "internal" ? (
+                  <Link to={dealDest.to} className={linkBase}>Deal Calculator</Link>
+                ) : (
+                  <a href={dealDest.href} target="_blank" rel="noopener noreferrer" className={linkBase}>Deal Calculator</a>
+                )}
+              </li>
+
+              <li><Link to="/analyze-any-property" className={linkBase}>Property Intelligence</Link></li>
               <li><Link to="/investment-analyzer" className={linkBase}>Analyze a Property</Link></li>
+
               <li><Link to="/rentals" className={linkBase}>Rentals</Link></li>
               <li><Link to="/dealdesk" className={linkBase}>Request Report</Link></li>
             </ul>

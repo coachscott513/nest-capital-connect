@@ -5,6 +5,13 @@ import { logEngagement } from "@/lib/engagement";
 
 const PLACEMENT = "homepage-closing-team";
 
+/* Soft-neutral chapter — ink text, teal structure. */
+const SOFT = "#F3F4F2";
+const INK = "#14181F";
+const SLATE = "#64748B";
+const HAIRLINE = "#DFDCD4";
+const TEAL = "#0D6E66";
+
 /**
  * Quiet Closing Team chapter.
  * Renders only founder-approved members. When none exist it renders a truthful
@@ -16,17 +23,21 @@ const ClosingTeamChapter = () => {
   return (
     <section
       id="closing-team"
-      className="relative w-full bg-[#0E1220] border-t border-white/[0.06] scroll-mt-24"
+      className="relative w-full scroll-mt-24 border-t"
+      style={{ background: SOFT, borderTopColor: HAIRLINE, fontFamily: "'Manrope', system-ui, sans-serif" }}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-20 md:py-28">
         <div className="max-w-3xl">
-          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase" style={{ color: TEAL }}>
             The Closing Team
           </p>
-          <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-white text-balance">
+          <h2
+            className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance"
+            style={{ color: INK }}
+          >
             The people who help move the transaction forward.
           </h2>
-          <p className="mt-5 text-[15px] md:text-lg text-white/65 font-light leading-relaxed">
+          <p className="mt-5 text-[15px] md:text-lg font-light leading-relaxed" style={{ color: SLATE }}>
             Financing, legal review, inspection, insurance, and closing support —
             organized by the role each one plays, not by who paid to appear.
           </p>
@@ -36,16 +47,17 @@ const ClosingTeamChapter = () => {
           {CLOSING_TEAM_CATEGORIES.map((c) => (
             <div
               key={c.key}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-6"
+              className="rounded-2xl border bg-white p-6"
+              style={{ borderColor: HAIRLINE }}
             >
-              <h3 className="text-[17px] font-semibold text-white">{c.title}</h3>
-              <p className="mt-2 text-[14px] text-white/60 font-light leading-relaxed">{c.copy}</p>
+              <h3 className="text-[17px] font-semibold" style={{ color: INK }}>{c.title}</h3>
+              <p className="mt-2 text-[14px] font-light leading-relaxed" style={{ color: SLATE }}>{c.copy}</p>
             </div>
           ))}
         </div>
 
         {!loading && members.length === 0 && (
-          <p className="mt-8 text-[13.5px] text-white/55 max-w-3xl leading-relaxed">
+          <p className="mt-8 text-[13.5px] max-w-3xl leading-relaxed" style={{ color: SLATE }}>
             No providers have been approved for the Closing Team yet. Nothing is
             listed here until a real, named professional is reviewed and approved,
             with any relationship disclosed in plain language.
@@ -57,7 +69,8 @@ const ClosingTeamChapter = () => {
             {members.map((m) => (
               <li
                 key={m.id}
-                className="rounded-2xl border border-white/10 bg-white/[0.05] p-6"
+                className="rounded-2xl border bg-white p-6"
+                style={{ borderColor: HAIRLINE }}
                 onClick={() =>
                   logEngagement("closing_team_provider_open", {}, {
                     source_location: PLACEMENT,
@@ -65,17 +78,17 @@ const ClosingTeamChapter = () => {
                   })
                 }
               >
-                <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
+                <p className="text-[10px] font-semibold tracking-[0.22em] uppercase" style={{ color: TEAL }}>
                   {m.role_category}
                 </p>
-                <p className="mt-2 text-[17px] font-semibold text-white">
+                <p className="mt-2 text-[17px] font-semibold" style={{ color: INK }}>
                   {m.partner?.company || m.partner?.name || "Provider"}
                 </p>
                 {m.service_area && (
-                  <p className="mt-1 text-[13px] text-white/55">{m.service_area}</p>
+                  <p className="mt-1 text-[13px]" style={{ color: SLATE }}>{m.service_area}</p>
                 )}
                 {m.relationship_disclosure && (
-                  <p className="mt-3 text-[12px] text-white/45 leading-relaxed">
+                  <p className="mt-3 text-[12px] leading-relaxed" style={{ color: SLATE }}>
                     {m.relationship_disclosure}
                   </p>
                 )}
@@ -88,12 +101,13 @@ const ClosingTeamChapter = () => {
           <Link
             to="/closing-team"
             onClick={() => logEngagement("closing_team_open", {}, { source_location: PLACEMENT })}
-            className="inline-flex items-center gap-2 min-h-[48px] px-6 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.09] transition"
+            className="inline-flex items-center gap-2 min-h-[48px] px-6 rounded-full border bg-white text-sm font-semibold transition hover:bg-[#FBFAF7]"
+            style={{ borderColor: HAIRLINE, color: INK }}
           >
             How the Closing Team works <ArrowRight className="w-4 h-4" />
           </Link>
-          <span className="inline-flex items-center gap-2 text-[12.5px] text-white/45">
-            <ShieldCheck className="w-4 h-4 text-[#5eead4]" />
+          <span className="inline-flex items-center gap-2 text-[12.5px]" style={{ color: SLATE }}>
+            <ShieldCheck className="w-4 h-4" style={{ color: TEAL }} />
             Inclusion is never sold and never buys rank.
           </span>
         </div>
