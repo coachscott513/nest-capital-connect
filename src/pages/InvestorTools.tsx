@@ -31,7 +31,6 @@ const InvestorTools = () => {
         "url": "https://capitaldistrictnest.com",
         "telephone": "+1-518-522-7265",
         "email": "scott@capitaldistrictnest.com",
-        "foundingDate": "2020",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Albany",
