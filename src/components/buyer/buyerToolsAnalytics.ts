@@ -1,5 +1,5 @@
 import { logEngagement } from "@/lib/engagement";
-import { routeGroupLabel } from "@/lib/routeGroups";
+import { routeGroupLabel } from "@/lib/routeExperience";
 
 /**
  * Buyer Tools analytics. Non-identifying only: no address, listing id,

@@ -2,7 +2,7 @@ import { Phone } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import AnalystCard from "@/components/AnalystCard";
 import { trackGAEvent } from "@/components/GARouteTracker";
-import { isBuyerToolsRoute, isLocalDiscoveryRoute } from "@/lib/routeGroups";
+import { isBuyerToolsRoute, isLocalDiscoveryRoute } from "@/lib/routeExperience";
 
 /**
  * FloatingLiveAgent — single global floating contact (desktop).

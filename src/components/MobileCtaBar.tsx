@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   Sparkles, Search, Building2, Phone, CalendarPlus, X, SlidersHorizontal,
 } from 'lucide-react';
-import { isBuyerToolsRoute } from '@/lib/routeGroups';
+import { isBuyerToolsRoute } from '@/lib/routeExperience';
 import BuyerToolsMenu from '@/components/buyer/BuyerToolsMenu';
 import { trackBuyerToolsOpen } from '@/components/buyer/buyerToolsAnalytics';
 
