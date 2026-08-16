@@ -14,7 +14,11 @@ import ClosingTeamChapter from "@/components/home/ClosingTeamChapter";
 import HomeServicesRail from "@/components/home/HomeServicesRail";
 import TownRail from "@/components/home/TownRail";
 import TalkToScottChapter from "@/components/home/TalkToScottChapter";
-import { localBusinessSchema } from "@/utils/seoSchemas";
+import {
+  localBusinessSchema,
+  HOMEPAGE_ORGANIZATION_SCHEMA,
+  HOMEPAGE_WEBSITE_SCHEMA,
+} from "@/utils/seoSchemas";
 import { getSearchRoute } from "@/lib/searchIntent";
 import { trackGAEvent } from "@/components/GARouteTracker";
 
