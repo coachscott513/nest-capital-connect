@@ -9,7 +9,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from "
 import { AuthProvider } from "@/contexts/AuthContext";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import FloatingLiveAgent from "@/components/FloatingLiveAgent";
-import BuyerToolsDock from "@/components/buyer/BuyerToolsDock";
+import PropertyToolsDock from "@/components/property/PropertyToolsDock";
 
 import RouteFade from "@/components/RouteFade";
 import GARouteTracker from "@/components/GARouteTracker";
@@ -580,8 +580,8 @@ const App = () => {
           </RouteFade>
           {/* Global Mobile CTA Bar - shows on mobile only (route-aware: Buyer tools / Ask Local) */}
           <MobileCtaBar />
-          {/* Desktop persistent Buyer Tools dock — buyer/property routes only */}
-          <BuyerToolsDock />
+          {/* Persistent Property Tools dock — buyer/property routes only */}
+          <PropertyToolsDock />
           {/* Global Floating Live Agent — local/business routes (desktop). SINGLE source of truth. */}
           <FloatingLiveAgent />
 
