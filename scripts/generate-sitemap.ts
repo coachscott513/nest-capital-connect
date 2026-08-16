@@ -71,7 +71,6 @@ const STATIC: Entry[] = [
     (s) => ({ path: `/analyze/${s}`, changefreq: "monthly", priority: "0.8" })
   ),
   // Market pages
-  { path: "/single-family-market", changefreq: "weekly", priority: "0.8" },
   { path: "/albany-multi-unit", changefreq: "weekly", priority: "0.8" },
   { path: "/schenectady-multi-unit", changefreq: "weekly", priority: "0.8" },
   { path: "/troy-multi-unit", changefreq: "weekly", priority: "0.8" },
