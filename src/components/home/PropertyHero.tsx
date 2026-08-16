@@ -190,6 +190,15 @@ const PropertyHero = () => {
               <div className={ready ? "w-full flex justify-center" : "sr-only"}>
                 <realscout-advanced-search
                   agent-encoded-id={REALSCOUT.agentEncodedId}
+                  style={
+                    {
+                      // Brand lock: RealScout defaults to blue. Force teal.
+                      "--rs-as-button-text-color": "#ffffff",
+                      "--rs-as-background-color": "#ffffff",
+                      "--rs-as-button-color": "#0d6e66",
+                      "--rs-as-widget-width": "100%",
+                    } as React.CSSProperties
+                  }
                 ></realscout-advanced-search>
               </div>
             )}
