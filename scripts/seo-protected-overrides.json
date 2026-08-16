@@ -1,0 +1,18 @@
+{
+  "note": "SEO-protected /biz/* slugs that map to a REAL, active, non-quarantined business record but fail the shared quality floor (no address/phone/website on file). They are restored to the sitemap and Tier B output via a protected-record override so earned Google visibility is not lost. Derived from seo_protected_urls (route_family '/biz/*', allow_noindex = false); regenerate only from that table. Do not add slugs without a verified matching record.",
+  "generated_from": "seo_protected_urls @ 2026-08-16",
+  "overrides": [
+    "altamont-heating-air-conditioning--9zhnuke",
+    "bostick-realty-llc-5lvdeeoy",
+    "emf-electrical-services-llc-pvpgzfwu",
+    "mocker-bros-farms-widqkwf0"
+  ],
+  "resolution_hold": [
+    {
+      "slug": "the-perfect-blend-cafe",
+      "reason": "No business row matches this slug (exact, alias or normalized-name). Nearest real record is 'Perfect Blend Cafe & Bakery' (Delmar) under canonical slug 'perfect-blend-cafe-bakery-delmar'.",
+      "proposal": "REVIEW ONLY — propose 301 /biz/the-perfect-blend-cafe -> /biz/perfect-blend-cafe-bakery-delmar after founder confirms the two refer to the same business. Not applied automatically.",
+      "action_taken": "Excluded from sitemap and Tier B output. No synthetic page generated."
+    }
+  ]
+}

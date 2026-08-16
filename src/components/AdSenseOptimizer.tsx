@@ -104,8 +104,8 @@ export const AdSenseCompliance: React.FC = () => {
     addMetaTag('content-freshness', 'updated-daily');
     
     // Privacy policy indicator
-    addMetaTag('privacy-policy', 'https://your-domain.com/privacy-policy');
-    addMetaTag('terms-of-service', 'https://your-domain.com/terms-of-service');
+    addMetaTag('privacy-policy', 'https://www.capitaldistrictnest.com/privacy-policy');
+    addMetaTag('terms-of-service', 'https://www.capitaldistrictnest.com/terms-of-service');
     
     // Content classification for ad targeting
     addMetaTag('content-category', 'Real Estate Investment');
