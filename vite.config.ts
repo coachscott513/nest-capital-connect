@@ -274,6 +274,14 @@ export default defineConfig(({ mode }) => ({
             /(rel="canonical"[^>]*href=")https:\/\/capitaldistrictnest\.com/g,
             "$1https://www.capitaldistrictnest.com"
           );
+
+          // og:url must agree with the canonical host, otherwise crawlers see
+          // two competing URLs for the same document.
+          renderedRoute.html = renderedRoute.html.replace(
+            /(property="og:url"[^>]*content=")https:\/\/capitaldistrictnest\.com/g,
+            "$1https://www.capitaldistrictnest.com"
+          );
+
         },
       }),
     // Neutral SPA fallback document for unmatched / non-prerendered routes.
