@@ -24,8 +24,7 @@ const FultonMontgomeryMultiUnitMarket = () => {
       {
         "@type": "LocalBusiness",
         "name": "Capital District Nest",
-        "telephone": "+15185227265",
-        "address": { "@type": "PostalAddress", "addressLocality": "Amsterdam", "addressRegion": "NY" }
+        "telephone": "+15185227265"
       },
       {
         "@type": "FAQPage",
