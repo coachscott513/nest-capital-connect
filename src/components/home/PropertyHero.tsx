@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties, type DetailedHTMLProps
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ExternalLink, Search } from "lucide-react";
-import { REALSCOUT, analyzeAnyPropertyUrl } from "@/config/externalProducts";
+import { REALSCOUT } from "@/config/externalProducts";
 import { TalkToScottButton } from "@/components/property/TalkToScott";
 import { logEngagement } from "@/lib/engagement";
 
