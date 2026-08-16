@@ -139,7 +139,11 @@ const PropertyHero = () => {
             >
               Analyze any deal <ArrowRight className="w-4 h-4" />
             </Link>
-            <TalkToScottButton context={{ placement: PLACEMENT }} />
+            <TalkToScottButton
+              context={{ placement: PLACEMENT }}
+              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 rounded-full border border-[#DFDCD4] bg-white text-[#14181F] text-[13px] font-semibold tracking-wide hover:bg-[#F3F4F2] transition"
+            />
+
           </div>
         </motion.div>
 
