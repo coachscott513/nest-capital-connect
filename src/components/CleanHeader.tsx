@@ -31,7 +31,7 @@ type MegaSection = {
   feature?: MegaFeature;
 };
 
-const SECTIONS: MegaSection[] = [
+const SECTION_DEFS: MegaSection[] = [
   {
     key: "discover",
     label: "Discover",
@@ -84,7 +84,7 @@ const SECTIONS: MegaSection[] = [
   },
   {
     key: "homes",
-    label: "Homes",
+    label: "Search Homes",
     href: "/homes",
     columns: [
       {
@@ -157,7 +157,7 @@ const SECTIONS: MegaSection[] = [
   },
   {
     key: "communities",
-    label: "Communities",
+    label: "Towns",
     href: "/communities",
     columns: [
       {
@@ -272,7 +272,139 @@ const SECTIONS: MegaSection[] = [
       cta: "Apply for a Spotlight",
     },
   },
+  {
+    key: "analyze",
+    label: "Analyze",
+    href: "/analyze",
+    columns: [
+      {
+        title: "By property type",
+        links: [
+          { label: "Single Family", href: "/analyze/single-family" },
+          { label: "Multi-Family", href: "/analyze/multifamily" },
+          { label: "Rental", href: "/analyze/rental" },
+          { label: "Land", href: "/analyze/land" },
+        ],
+      },
+      {
+        title: "By decision",
+        links: [
+          { label: "First Property", href: "/first-time-buyers" },
+          { label: "Investment Tools", href: "/investor-tools" },
+          { label: "Financing", href: "/financing" },
+          { label: "Sample Report", href: "/reports" },
+        ],
+      },
+    ],
+    feature: {
+      eyebrow: "Property intelligence",
+      title: "Pressure-test the property",
+      copy: "Compare the numbers, surface the assumptions, and see what still needs verifying.",
+      href: "/analyze",
+      cta: "Open the analyzer",
+    },
+  },
+  {
+    key: "closingteam",
+    label: "Closing Team",
+    href: "/closing-team",
+    columns: [
+      {
+        title: "The roles",
+        links: [
+          { label: "Financing", href: "/closing-team" },
+          { label: "Real-estate attorneys", href: "/closing-team" },
+          { label: "Home inspection", href: "/closing-team" },
+          { label: "Insurance", href: "/closing-team" },
+        ],
+      },
+      {
+        title: "How it works",
+        links: [
+          { label: "Inclusion standards", href: "/closing-team" },
+          { label: "Editorial standards", href: "/editorial-policy" },
+        ],
+      },
+    ],
+    feature: {
+      eyebrow: "The Closing Team",
+      title: "Inclusion is never sold",
+      copy: "Providers are organized by the role they play — not by who paid to appear.",
+      href: "/closing-team",
+      cta: "See how it works",
+    },
+  },
+  {
+    key: "homeservices",
+    label: "Home Services",
+    href: "/home-services",
+    columns: [
+      {
+        title: "Before closing",
+        links: [
+          { label: "Home inspection help", href: "/local?category=construction" },
+          { label: "Roofing", href: "/local?category=roofing" },
+          { label: "Plumbing", href: "/local?category=plumbing" },
+          { label: "Electrical", href: "/local?category=electrician" },
+        ],
+      },
+      {
+        title: "After closing",
+        links: [
+          { label: "Cleaning & clean-outs", href: "/local?category=cleaning-services" },
+          { label: "Landscaping", href: "/local?category=landscaping" },
+          { label: "HVAC", href: "/local?category=hvac" },
+          { label: "Property management", href: "/local?category=property-management" },
+        ],
+      },
+    ],
+    feature: {
+      eyebrow: "Home Services",
+      title: "Everything a property needs",
+      copy: "Local service categories organized by where they fall in the property lifecycle.",
+      href: "/home-services",
+      cta: "Browse home services",
+    },
+  },
 ];
+
+/**
+ * Property-first navigation order. Existing sections are preserved (no indexed
+ * route is removed) — only the hierarchy changes.
+ */
+const NAV_ORDER = [
+  "homes",
+  "analyze",
+  "closingteam",
+  "homeservices",
+  "communities",
+  "discover",
+  "businesses",
+  "stories",
+  "happening",
+  "forbusiness",
+];
+
+const SECTIONS: MegaSection[] = NAV_ORDER.map((k) =>
+  SECTION_DEFS.find((s) => s.key === k),
+).filter((s): s is MegaSection => Boolean(s));
+
+/**
+ * Desktop bar shows the primary property-decision hierarchy only.
+ * Everything else stays reachable via the mobile menu and footer — no route
+ * is removed.
+ */
+const DESKTOP_KEYS = [
+  "homes",
+  "analyze",
+  "closingteam",
+  "homeservices",
+  "communities",
+  "businesses",
+];
+const DESKTOP_SECTIONS: MegaSection[] = DESKTOP_KEYS.map((k) =>
+  SECTIONS.find((s) => s.key === k),
+).filter((s): s is MegaSection => Boolean(s));
 
 // ─── Component ────────────────────────────────────────────────────────────────
 const CleanHeader = () => {
@@ -346,7 +478,7 @@ const CleanHeader = () => {
 
             {/* Desktop nav — mega-menu triggers */}
             <div className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
-              {SECTIONS.map((s) => {
+              {DESKTOP_SECTIONS.map((s) => {
                 const isActive = hoverKey === s.key;
                 const routeActive = s.href
                   ? location.pathname === s.href || location.pathname.startsWith(s.href + "/")

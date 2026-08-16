@@ -1598,6 +1598,68 @@ export type Database = {
         }
         Relationships: []
       }
+      closing_team_members: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          business_id: string | null
+          created_at: string
+          display_order: number
+          effective_date: string | null
+          evidence_reference: string | null
+          id: string
+          membership_state: string
+          partner_id: string | null
+          relationship_disclosure: string | null
+          review_due_date: string | null
+          role_category: string
+          service_area: string | null
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          business_id?: string | null
+          created_at?: string
+          display_order?: number
+          effective_date?: string | null
+          evidence_reference?: string | null
+          id?: string
+          membership_state?: string
+          partner_id?: string | null
+          relationship_disclosure?: string | null
+          review_due_date?: string | null
+          role_category: string
+          service_area?: string | null
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          business_id?: string | null
+          created_at?: string
+          display_order?: number
+          effective_date?: string | null
+          evidence_reference?: string | null
+          id?: string
+          membership_state?: string
+          partner_id?: string | null
+          relationship_disclosure?: string | null
+          review_due_date?: string | null
+          role_category?: string
+          service_area?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "closing_team_members_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       deal_desk_requests: {
         Row: {
           agreed_to_updates: boolean

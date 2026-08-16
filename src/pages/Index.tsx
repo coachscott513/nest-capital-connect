@@ -7,6 +7,13 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import ThisWeekCampaign from "@/components/home/ThisWeekCampaign";
 import BuyingAndOwningHome from "@/components/home/BuyingAndOwningHome";
+import PropertyHero from "@/components/home/PropertyHero";
+import DecisionRail from "@/components/home/DecisionRail";
+import PropertyIntelligenceChapter from "@/components/home/PropertyIntelligenceChapter";
+import ClosingTeamChapter from "@/components/home/ClosingTeamChapter";
+import HomeServicesRail from "@/components/home/HomeServicesRail";
+import TownRail from "@/components/home/TownRail";
+import TalkToScottChapter from "@/components/home/TalkToScottChapter";
 import { localBusinessSchema } from "@/utils/seoSchemas";
 import { getSearchRoute } from "@/lib/searchIntent";
 import { trackGAEvent } from "@/components/GARouteTracker";
@@ -502,6 +509,22 @@ const Index = () => {
 
       <CleanHeader />
 
+      {/* Chapter 1 — property-first entry */}
+      <PropertyHero />
+      {/* Chapter 2 — start with your decision */}
+      <DecisionRail />
+      {/* Chapter 3 — pressure-test the property */}
+      <PropertyIntelligenceChapter />
+      {/* Chapter 4 — the people around the transaction */}
+      <ClosingTeamChapter />
+      {/* Chapter 5 — before and after closing */}
+      <HomeServicesRail />
+      {/* Chapter 6 — where you buy */}
+      <TownRail />
+      {/* Chapter 7 — human close */}
+      <TalkToScottChapter />
+
+      {/* Existing local-discovery layer, preserved below the property flow */}
       <SearchHero />
       <ThisWeekCampaign />
       <ExploreCapitalDistrict />

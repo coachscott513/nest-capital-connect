@@ -78,6 +78,7 @@ import BlogArticle from "./pages/BlogArticle";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import AboutEditorial from "./pages/AboutEditorial";
+import ClosingTeamPage from "./pages/ClosingTeamPage";
 import AlbanyRealEstate from "./pages/AlbanyRealEstate";
 import TroyRealEstate from "./pages/TroyRealEstate";
 import SchenectadyRealEstate from "./pages/SchenectadyRealEstate";
@@ -329,6 +330,8 @@ const App = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-of-service" element={<PrivacyPolicyPage />} />
           <Route path="/about-editorial" element={<AboutEditorial />} />
+          {/* Preview-only, noindex until founder approval */}
+          <Route path="/closing-team" element={<ClosingTeamPage />} />
           <Route path="/editorial" element={<AboutEditorial />} />
           <Route path="/editorial-policy" element={<AboutEditorial />} />
           <Route path="/reviews" element={<Reviews />} />
