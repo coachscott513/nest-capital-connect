@@ -34,12 +34,11 @@ const InvestorTools = () => {
         "foundingDate": "2020",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "123 State Street",
           "addressLocality": "Albany",
           "addressRegion": "NY",
-          "postalCode": "12207",
           "addressCountry": "US"
         },
+
         "areaServed": [
           { "@type": "City", "name": "Albany", "addressRegion": "NY", "addressCountry": "US" },
           { "@type": "City", "name": "Troy", "addressRegion": "NY", "addressCountry": "US" },
