@@ -217,14 +217,24 @@ const queryClient = new QueryClient({
   },
 });
 
+const SHELL_DEFAULT_TITLE = "Capital District Nest";
+
 const PrerenderReadySignal = () => {
   React.useEffect(() => {
     if (typeof document === "undefined") return;
 
     // Prerender capture must happen AFTER react-helmet-async has flushed the
-    // route's head into the document. Helmet commits asynchronously, so the
-    // signal waits for two animation frames plus a short settle window.
-    const signalReady = () => {
+    // route's head into the document. Helmet commits asynchronously and lazy
+    // route chunks can mount their <Helmet> well after first paint, so a fixed
+    // delay raced the capture and some routes were snapshotted with the shell's
+    // default <title>. We now poll until the route owns its head (a title that
+    // is no longer the shell default, or a canonical link) and only then signal,
+    // with a hard ceiling so a route that legitimately keeps the default title
+    // still gets captured.
+    let done = false;
+    const dispatch = () => {
+      if (done) return;
+      done = true;
       requestAnimationFrame(() =>
         requestAnimationFrame(() =>
           window.setTimeout(
@@ -235,12 +245,24 @@ const PrerenderReadySignal = () => {
       );
     };
 
-    const timeoutId = window.setTimeout(signalReady, 3000);
-    return () => window.clearTimeout(timeoutId);
+    const start = Date.now();
+    const MAX_WAIT = 9000;
+    const intervalId = window.setInterval(() => {
+      const hasRouteTitle =
+        document.title && document.title.trim() !== SHELL_DEFAULT_TITLE;
+      const hasCanonical = !!document.querySelector('link[rel="canonical"]');
+      if ((hasRouteTitle && hasCanonical) || Date.now() - start > MAX_WAIT) {
+        window.clearInterval(intervalId);
+        dispatch();
+      }
+    }, 150);
+
+    return () => window.clearInterval(intervalId);
   }, []);
 
   return null;
 };
+
 
 // /towns/:slug is now the dedicated Town Pulse local-engagement dashboard
 // (real estate lives at /living-in/:slug and global /homes routes).
