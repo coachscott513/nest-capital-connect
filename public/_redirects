@@ -1,1 +1,3 @@
-/* /index.html 200
+# Known prerendered static files win by precedence; only unmatched routes
+# fall through to the neutral, noindex SPA shell.
+/*  /spa-shell.html  200

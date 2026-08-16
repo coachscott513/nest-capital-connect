@@ -157,3 +157,46 @@ export function buildFAQSchema(faqs: { question: string; answer: string }[]) {
     }))
   };
 }
+
+/**
+ * Homepage identity schemas. These used to live as static JSON-LD in
+ * index.html, which leaked homepage identity onto every route that fell
+ * through to the SPA shell. The homepage route now owns them.
+ */
+export const HOMEPAGE_ORGANIZATION_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Capital District Nest",
+  alternateName: "Search Anything Local",
+  description:
+    "The digital front door of the Capital District. Search local businesses, homes, restaurants, services, events, towns, and community updates in one place.",
+  url: "https://www.capitaldistrictnest.com",
+  logo: "https://www.capitaldistrictnest.com/favicon.png",
+  areaServed: {
+    "@type": "AdministrativeArea",
+    name: "Capital District, New York",
+  },
+  sameAs: [
+    "https://www.facebook.com/CapitalDistrictNest",
+    "https://www.linkedin.com/company/capital-district-nest",
+  ],
+};
+
+export const HOMEPAGE_WEBSITE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Capital District Nest",
+  alternateName: "Search Anything Local",
+  url: "https://www.capitaldistrictnest.com",
+  description:
+    "The digital front door of the Capital District — search businesses, homes, restaurants, services, events, towns, and local updates.",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate:
+        "https://www.capitaldistrictnest.com/local?q={search_term_string}",
+    },
+    "query-input": "required name=search_term_string",
+  },
+};

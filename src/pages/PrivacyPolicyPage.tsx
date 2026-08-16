@@ -11,7 +11,7 @@ const PrivacyPolicyPage: React.FC = () => {
           name="description" 
           content="Learn how Capital District Nest collects, uses and protects your information when you request reports or connect with our investment team." 
         />
-        <link rel="canonical" href="https://capitaldistrictnest.com/privacy-policy" />
+        <link rel="canonical" href="https://www.capitaldistrictnest.com/privacy-policy" />
       </Helmet>
       
       <div className="bg-background min-h-screen py-16 px-[5%]">

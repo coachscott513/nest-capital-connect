@@ -1,11 +1,21 @@
-
 <!DOCTYPE html>
 <html lang="en" class="dark" style="background-color: #0B0B0B;">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
+    <!--
+      NEUTRAL APPLICATION SHELL.
+      This document is the universal HTML shell for every route. It must NOT
+      carry homepage-specific identity: no homepage title/description, no
+      canonical, no og/twitter URL or content, no Organization/WebSite schema,
+      and no homepage H1 or body copy. The homepage route owns homepage
+      metadata via <Index /> + SEOHead; every other route owns its own.
+    -->
+    <title>Capital District Nest</title>
+    <meta http-equiv="content-language" content="en-US" />
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -16,137 +26,32 @@
 
     <!-- RealScout widgets -->
     <script src="https://em.realscout.com/widgets/realscout-web-components.umd.js" type="module"></script>
-    <title>Capital District Nest | Search Anything Local</title>
-    <meta name="description" content="The digital front door of the Capital District — search businesses, towns, events, restaurants, services, media, homes, and local updates in one place." />
-    <meta name="author" content="Capital District Nest" />
-    <meta name="keywords" content="Capital District, search anything local, local businesses Albany NY, Capital District restaurants, Capital District events, Capital District towns, Capital District homes, Saratoga Springs, Troy NY, Schenectady, Delmar, local search Capital District, digital front door Capital District" />
-    <meta http-equiv="content-language" content="en-US" />
 
-    <!-- Geo Meta Tags for Local SEO -->
-    <meta name="geo.region" content="US-NY" />
-    <meta name="geo.placename" content="Albany, NY" />
-    <meta name="geo.position" content="42.6803;-73.8370" />
-    <meta name="ICBM" content="42.6803, -73.8370" />
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Capital District Nest | Search Anything Local" />
-    <meta property="og:description" content="The digital front door of the Capital District — search businesses, towns, events, restaurants, services, media, homes, and local updates in one place." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.capitaldistrictnest.com/" />
-    <meta property="og:image" content="https://www.capitaldistrictnest.com/og-image-capital-district.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="640" />
-    <meta property="og:image:alt" content="Capital District Nest — Search Anything Local" />
-    <meta property="og:site_name" content="Capital District Nest" />
-    <meta property="og:locale" content="en_US" />
+    <!-- Non-identity presentation / device hints (route-agnostic) -->
     <meta name="theme-color" content="#0B0B0B" />
     <meta name="msapplication-navbutton-color" content="#0B0B0B" />
-    <meta property="business:contact_data:locality" content="Albany" />
-    <meta property="business:contact_data:region" content="NY" />
-    <meta property="business:contact_data:country_name" content="USA" />
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@CapitalDistrictNest" />
-    <meta name="twitter:creator" content="@CapitalDistrictNest" />
-    <meta name="twitter:title" content="Capital District Nest | Search Anything Local" />
-    <meta name="twitter:description" content="The digital front door of the Capital District — search businesses, towns, events, restaurants, services, media, homes, and local updates in one place." />
-    <meta name="twitter:image" content="https://www.capitaldistrictnest.com/og-image-capital-district.jpg" />
-    <meta name="twitter:image:alt" content="Capital District Nest — Search Anything Local" />
-    
-    <!-- Structured Data - Organization -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Capital District Nest",
-      "alternateName": "Search Anything Local",
-      "description": "The digital front door of the Capital District. Search local businesses, homes, restaurants, services, events, towns, and community updates in one place.",
-      "url": "https://www.capitaldistrictnest.com",
-      "logo": "https://www.capitaldistrictnest.com/favicon.png",
-      "areaServed": {
-        "@type": "AdministrativeArea",
-        "name": "Capital District, New York"
-      },
-      "sameAs": [
-        "https://www.facebook.com/CapitalDistrictNest",
-        "https://www.linkedin.com/company/capital-district-nest"
-      ]
-    }
-    </script>
-
-    <!-- Structured Data - WebSite -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Capital District Nest",
-      "alternateName": "Search Anything Local",
-      "url": "https://www.capitaldistrictnest.com",
-      "description": "The digital front door of the Capital District — search businesses, homes, restaurants, services, events, towns, and local updates.",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://www.capitaldistrictnest.com/local?q={search_term_string}"
-        },
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-
-    
-    <!-- Enhanced SEO Meta Tags -->
-    <meta name="rating" content="general" />
-    <meta name="distribution" content="global" />
-    <meta name="revisit-after" content="1 days" />
-    <meta name="copyright" content="Capital District Nest" />
-    <meta name="language" content="English" />
-    <meta name="category" content="Local Search & Community" />
-    <meta name="coverage" content="Worldwide" />
-    <meta name="target" content="all" />
     <meta name="HandheldFriendly" content="True" />
     <meta name="MobileOptimized" content="320" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="format-detection" content="telephone=yes" />
 
-    <!-- Additional Local SEO -->
-    <meta name="geo.country" content="us" />
-    <meta name="geo.state" content="ny" />
-    <meta name="geo.city" content="albany" />
-    <meta name="city" content="Albany" />
-    <meta name="state" content="New York" />
-    <meta name="country" content="United States" />
-
-    <!-- Platform Classification -->
-    <meta name="business-type" content="Local Search Platform" />
-    <meta name="industry" content="Local Search, Community Media, Discovery" />
-
-    <!-- Page Quality Indicators -->
-    <meta name="page-topic" content="Local search platform for the Capital District NY — businesses, homes, restaurants, services, events, towns" />
-    <meta name="page-type" content="local search homepage" />
-    <meta name="audience" content="Capital District residents, visitors, business owners, home seekers" />
-    
-    <!-- Google Fonts - Manrope + Playfair Display for WSJ-style blog -->
+    <!-- Google Fonts - Manrope + Playfair Display -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png" as="image" type="image/png">
-    
+
     <!-- DNS Prefetch for external domains -->
     <link rel="dns-prefetch" href="https://scottalvarez.remax.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.google-analytics.com">
     <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
     <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net">
-    
+
     <!-- Optimize resource loading -->
     <link rel="preload" href="/src/main.tsx" as="script" crossorigin>
     <link rel="modulepreload" href="/src/main.tsx">
-    
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-922988725"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLCCLEJ3M0"></script>
@@ -154,20 +59,10 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
-      // Google Ads conversion tracking
       gtag('config', 'AW-922988725');
-
       gtag('config', 'G-BLCCLEJ3M0', {
-        custom_map: {'custom_parameter': 'real_estate_category'},
-        page_title: 'Capital District Investment Properties',
-        page_location: window.location.href,
-        content_group1: 'Real Estate',
-        content_group2: 'Investment Properties',
-        content_group3: 'Capital District NY'
+        page_location: window.location.href
       });
-      
-      // Enhanced ecommerce tracking for AdSense optimization
       gtag('config', 'G-BLCCLEJ3M0', {
         enhanced_conversions: true
       });
@@ -179,23 +74,7 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N84MXWZD"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <div id="root">
-      <!-- Static crawler fallback — visible to bots before JS hydrates -->
-      <div style="max-width:960px;margin:0 auto;padding:64px 24px;font-family:Manrope,system-ui,sans-serif;color:#FFFFFF;">
-        <h1 style="font-size:40px;line-height:1.05;letter-spacing:-0.02em;font-weight:600;margin:0 0 16px;">Search anything local.</h1>
-        <p style="font-size:18px;line-height:1.55;color:rgba(255,255,255,0.75);margin:0 0 32px;max-width:680px;">The digital front door of the Capital District — search businesses, homes, restaurants, services, events, towns, and local updates in one place.</p>
-        <p style="font-size:16px;line-height:1.6;color:rgba(255,255,255,0.65);margin:0 0 24px;max-width:760px;">Capital District Nest helps residents, visitors, business owners, and home seekers search anything local across the Capital District. Explore businesses, homes, restaurants, services, events, towns, and local updates through one searchable regional platform.</p>
-        <nav aria-label="Primary categories" style="display:flex;flex-wrap:wrap;gap:12px;font-size:14px;">
-          <a href="/local" style="color:#5eead4;text-decoration:none;">Search Businesses</a>
-          <a href="/homes-for-sale" style="color:#5eead4;text-decoration:none;">Homes</a>
-          <a href="/communities" style="color:#5eead4;text-decoration:none;">Towns</a>
-          <a href="/local?q=restaurant" style="color:#5eead4;text-decoration:none;">Restaurants</a>
-          <a href="/#weekly-feed" style="color:#5eead4;text-decoration:none;">Events</a>
-          <a href="/analyze" style="color:#5eead4;text-decoration:none;">Invest</a>
-          <a href="/claim-business" style="color:#5eead4;text-decoration:none;">Claim Business</a>
-        </nav>
-      </div>
-    </div>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
