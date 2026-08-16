@@ -11,6 +11,7 @@ interface SEOHeadProps {
   ogImage?: string;
   ogType?: string;
   noBreadcrumb?: boolean;
+  noindex?: boolean;
 }
 
 const BASE_URL = "https://www.capitaldistrictnest.com";
@@ -23,7 +24,8 @@ const SEOHead = ({
   structuredData,
   ogImage = `${BASE_URL}/og-image-capital-district.jpg`,
   ogType = "website",
-  noBreadcrumb = false
+  noBreadcrumb = false,
+  noindex = false
 }: SEOHeadProps) => {
   const location = useLocation();
 
@@ -48,7 +50,9 @@ const SEOHead = ({
 
   const canonicalUrl =
     canonical || `${BASE_URL}${location.pathname}${isCuratedParamState ? location.search : ""}`;
-  const robots = hasNonCuratedParams
+  const robots = noindex
+    ? "noindex, nofollow"
+    : hasNonCuratedParams
     ? "noindex, follow"
     : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
   
