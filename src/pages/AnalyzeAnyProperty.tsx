@@ -91,7 +91,7 @@ const AnalyzeAnyProperty = () => {
                 className="w-10 h-10 rounded-full inline-flex items-center justify-center"
                 style={{ backgroundColor: "rgba(13,110,102,0.10)" }}
               >
-                <Calculator className="w-4.5 h-4.5" style={{ color: TEAL }} />
+                <Calculator className="w-4 h-4" style={{ color: TEAL }} />
               </span>
               <p className="text-[10px] font-medium tracking-[0.4em] uppercase" style={{ color: TEAL }}>
                 Analyze Any Deal
@@ -132,7 +132,7 @@ const AnalyzeAnyProperty = () => {
                 className="w-10 h-10 rounded-full inline-flex items-center justify-center"
                 style={{ backgroundColor: "rgba(31,74,95,0.10)" }}
               >
-                <FileSearch className="w-4.5 h-4.5" style={{ color: SURVEY }} />
+                <FileSearch className="w-4 h-4" style={{ color: SURVEY }} />
               </span>
               <p className="text-[10px] font-medium tracking-[0.4em] uppercase" style={{ color: SURVEY }}>
                 Analyze Any Property
