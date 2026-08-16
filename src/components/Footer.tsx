@@ -149,7 +149,10 @@ const Footer = () => {
               <li><Link to="/homes/listings" className={linkBase}>Property Board</Link></li>
               <li><Link to="/investment-properties" className={linkBase}>Investment Properties</Link></li>
               <li><Link to="/first-time-homebuyers" className={linkBase}>First-Time Buyers</Link></li>
+              <li><Link to="/analyze-any-deal" className={linkBase}>Deal Calculator</Link></li>
+              <li><Link to="/analyze-any-property" className={linkBase}>Property Intelligence</Link></li>
               <li><Link to="/investment-analyzer" className={linkBase}>Analyze a Property</Link></li>
+
               <li><Link to="/rentals" className={linkBase}>Rentals</Link></li>
               <li><Link to="/dealdesk" className={linkBase}>Request Report</Link></li>
             </ul>
