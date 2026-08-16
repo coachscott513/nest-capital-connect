@@ -283,7 +283,7 @@ const SECTION_DEFS: MegaSection[] = [
           { label: "Deal Calculator — Analyze Any Deal", href: "/analyze-any-deal" },
           { label: "Property Intelligence — Analyze Any Property", href: "/analyze-any-property" },
 
-          { label: "Financial console", href: "/analyze" },
+          { label: "Financial console", href: "/finances" },
           { label: "Sample Report", href: "/reports" },
         ],
       },

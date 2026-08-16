@@ -1,3 +1,4 @@
+import fs from "node:fs";
 // Shared public-eligibility contract for DB-backed business pages.
 // Used by BOTH the sitemap generator and the Tier B static HTML generator so
 // sitemap membership and crawler-facing HTML can never drift apart.
@@ -37,7 +38,8 @@ export function isEligible(b) {
   return !!(clean(b.address) || clean(b.phone) || clean(b.website));
 }
 
-export async function fetchEligibleBusinesses(sb) {
+// All active rows, paginated, de-duplicated by canonical slug.
+async function fetchActiveBusinesses(sb) {
   const pageSize = 1000;
   const seen = new Set();
   const rows = [];
@@ -52,7 +54,7 @@ export async function fetchEligibleBusinesses(sb) {
     if (!data || data.length === 0) break;
     for (const b of data) {
       const slug = clean(b.slug).toLowerCase();
-      if (seen.has(slug) || !isEligible(b)) continue;
+      if (!slug || seen.has(slug)) continue;
       seen.add(slug);
       rows.push({ ...b, slug });
     }
@@ -60,3 +62,49 @@ export async function fetchEligibleBusinesses(sb) {
   }
   return rows;
 }
+
+// SEO-protected /biz/* slugs that must keep their indexable contract.
+// Sourced from a repo manifest generated from seo_protected_urls (the table is
+// not anon-readable at build time, and only the failing delta matters).
+export function loadProtectedOverrides() {
+  const file = new URL("./seo-protected-overrides.json", import.meta.url);
+  const raw = JSON.parse(fs.readFileSync(file, "utf8"));
+  return {
+    overrides: new Set((raw.overrides || []).map((s) => String(s).toLowerCase())),
+    hold: raw.resolution_hold || [],
+  };
+}
+
+// The single source of truth for BOTH sitemap membership and Tier B HTML:
+// every publicly-eligible business, plus every SEO-protected /biz/* URL that
+// maps to a real, active, non-suppressed record (protected-record override),
+// unless a founder-locked override explicitly allows noindex.
+export async function fetchEligibleBusinesses(sb, opts = {}) {
+  const { includeProtected = true } = opts;
+  const active = await fetchActiveBusinesses(sb);
+  const { overrides: protectedSlugs, hold } = includeProtected
+    ? loadProtectedOverrides()
+    : { overrides: new Set(), hold: [] };
+  const rows = [];
+  const overrides = [];
+  const heldProtected = [];
+  for (const b of active) {
+    if (isSuppressed(b) || !hasCanonicalSlug(b)) continue;
+    if (isEligible(b)) {
+      rows.push(b);
+      continue;
+    }
+    if (protectedSlugs.has(b.slug) && clean(b.name).length >= 2) {
+      rows.push({ ...b, protectedOverride: true });
+      overrides.push(b.slug);
+    }
+  }
+  const bySlug = new Set(rows.map((r) => r.slug));
+  for (const slug of protectedSlugs) {
+    if (!bySlug.has(slug)) heldProtected.push(slug);
+  }
+  for (const h of hold) heldProtected.push(h.slug);
+  rows.stats = { eligible: rows.length - overrides.length, overrides, heldProtected };
+  return rows;
+}
+

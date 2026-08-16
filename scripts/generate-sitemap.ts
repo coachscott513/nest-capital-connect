@@ -1,10 +1,17 @@
 // Generates public/sitemap.xml at predev/prebuild.
-// Includes: curated static routes + all active /towns/:slug + all active /biz/:slug
-// from Supabase. Excludes broken slugs, inactive rows, admin/owner/thank-you routes.
+// Includes: curated static routes + all active /towns/:slug + every
+// publicly-eligible /biz/:slug from Supabase, using the SAME shared contract
+// (scripts/biz-eligibility.mjs) that drives Tier B static HTML generation, so
+// sitemap membership and crawler-facing HTML can never drift apart.
+// SEO-protected /biz/* URLs that map to a real active record are included via
+// a protected-record override even when they fail the quality floor.
 
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 import { createClient } from "@supabase/supabase-js";
+// @ts-ignore - plain ESM module shared with the Tier B generator
+import { fetchEligibleBusinesses } from "./biz-eligibility.mjs";
+
 
 const BASE_URL = "https://www.capitaldistrictnest.com";
 const SUPABASE_URL =
@@ -16,7 +23,6 @@ const SUPABASE_ANON =
 
 type Entry = { path: string; changefreq?: string; priority?: string; lastmod?: string };
 
-const today = new Date().toISOString().slice(0, 10);
 
 // ── Curated static + content hub routes ─────────────────────────────
 const STATIC: Entry[] = [
@@ -26,7 +32,7 @@ const STATIC: Entry[] = [
   { path: "/homes", changefreq: "daily", priority: "0.9" },
   { path: "/communities", changefreq: "weekly", priority: "0.9" },
   { path: "/submit-event", changefreq: "monthly", priority: "0.6" },
-  { path: "/analyze", changefreq: "weekly", priority: "1.0" },
+  { path: "/finances", changefreq: "weekly", priority: "1.0" },
   { path: "/analyze-home", changefreq: "weekly", priority: "0.9" },
   { path: "/analyze-any-property", changefreq: "weekly", priority: "1.0" },
   { path: "/markets", changefreq: "weekly", priority: "0.9" },
@@ -127,63 +133,43 @@ async function fetchDynamic(): Promise<Entry[]> {
         path: `/living-in/${slug}`,
         changefreq: "weekly",
         priority: "0.85",
-        lastmod: (t.updated_at || today).slice(0, 10),
+        lastmod: t.updated_at ? String(t.updated_at).slice(0, 10) : undefined,
       });
     });
   } catch (e) {
     console.warn("sitemap: town fetch failed", e);
   }
 
-  // Businesses — only include profiles with real content.
-  // Fallback / unclaimed-thin profiles are noindex,follow in BizPage and
-  // must NOT appear in the sitemap (avoids Soft 404 and thin-content flags).
+  // Businesses — shared eligibility contract (scripts/biz-eligibility.mjs).
+  // Same membership the Tier B static HTML generator uses, plus SEO-protected
+  // record overrides. Thin/synthetic/quarantined rows stay out.
   try {
-    const pageSize = 1000;
-    const seenBiz = new Set<string>();
-    let from = 0;
-    for (;;) {
-      const { data, error } = await sb
-        .from("businesses")
-        .select("slug, updated_at, plan_tier, is_claimed, description, long_description, photos")
-        .eq("is_active", true)
-        .range(from, from + pageSize - 1);
-      if (error) {
-        console.warn("sitemap: business fetch error", error.message);
-        break;
-      }
-      if (!data || data.length === 0) break;
-      data.forEach((b: any) => {
-        const slug = (b.slug || "").trim().toLowerCase();
-        if (isExcluded(slug) || seenBiz.has(slug)) return;
-        const tier = (b.plan_tier || "").toLowerCase();
-        const isPaid =
-          tier === "premium_partner" ||
-          tier === "spotlight" ||
-          tier === "featured" ||
-          tier === "anchor";
-        const hasContent =
-          !!(b.description && String(b.description).trim().length > 40) ||
-          !!(b.long_description && String(b.long_description).trim().length > 40) ||
-          (Array.isArray(b.photos) && b.photos.length > 0);
-        // Only index claimed+content OR paid tiers. Skip thin/fallback profiles.
-        if (!isPaid && !(b.is_claimed && hasContent)) return;
-        seenBiz.add(slug);
-        const priority =
-          tier === "premium_partner" || tier === "spotlight" || tier === "anchor"
-            ? "0.75"
-            : tier === "featured" || b.is_claimed
-            ? "0.65"
-            : "0.5";
-        out.push({
-          path: `/biz/${slug}`,
-          changefreq: "monthly",
-          priority,
-          lastmod: (b.updated_at || today).slice(0, 10),
-        });
+    const biz: any[] = await fetchEligibleBusinesses(sb);
+    const stats = (biz as any).stats || { eligible: biz.length, overrides: [], heldProtected: [] };
+    for (const b of biz) {
+      // Slug validity is already enforced by the shared contract
+      // (hasCanonicalSlug); do not re-filter with the stricter static-route
+      // charset check, which would silently drop valid underscore slugs.
+      const slug = String(b.slug || "").trim().toLowerCase();
+      const tier = String(b.plan_tier || "").toLowerCase();
+      const priority =
+        tier === "premium_partner" || tier === "spotlight" || tier === "anchor"
+          ? "0.75"
+          : tier === "featured" || b.is_claimed
+          ? "0.65"
+          : "0.5";
+      out.push({
+        path: `/biz/${slug}`,
+        changefreq: "monthly",
+        priority,
+        lastmod: b.updated_at ? String(b.updated_at).slice(0, 10) : undefined,
       });
-      if (data.length < pageSize) break;
-      from += pageSize;
     }
+    console.log(
+      `sitemap: businesses ${biz.length} (eligible ${stats.eligible} + protected overrides ${stats.overrides.length}); protected held ${stats.heldProtected.length}${
+        stats.heldProtected.length ? " -> " + stats.heldProtected.join(", ") : ""
+      }`
+    );
   } catch (e) {
     console.warn("sitemap: business fetch failed", e);
   }
@@ -231,7 +217,7 @@ async function fetchDynamic(): Promise<Entry[]> {
         path: `/homes/listings/${t}/${a}`,
         changefreq: "weekly",
         priority: "0.55",
-        lastmod: (r.updated_at || today).slice(0, 10),
+        lastmod: r.updated_at ? String(r.updated_at).slice(0, 10) : undefined,
       });
     });
   } catch (e) {
@@ -252,7 +238,7 @@ async function fetchDynamic(): Promise<Entry[]> {
         path: `/homes/agents/${slug}`,
         changefreq: "monthly",
         priority: "0.6",
-        lastmod: (a.updated_at || today).slice(0, 10),
+        lastmod: a.updated_at ? String(a.updated_at).slice(0, 10) : undefined,
       });
     });
   } catch (e) {
@@ -274,7 +260,7 @@ function renderXml(entries: Entry[]): string {
       [
         "  <url>",
         `    <loc>${BASE_URL}${e.path}</loc>`,
-        `    <lastmod>${e.lastmod || today}</lastmod>`,
+        e.lastmod ? `    <lastmod>${e.lastmod}</lastmod>` : "",
         e.changefreq ? `    <changefreq>${e.changefreq}</changefreq>` : "",
         e.priority ? `    <priority>${e.priority}</priority>` : "",
         "  </url>",

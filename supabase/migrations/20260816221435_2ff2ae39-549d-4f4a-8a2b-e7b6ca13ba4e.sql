@@ -1,0 +1,1 @@
+DROP VIEW IF EXISTS public.v_seo_protected_biz_slugs;
