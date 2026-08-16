@@ -86,6 +86,74 @@ function resolvePrerenderRoutes(): string[] {
   return [...routes];
 }
 
+// Routes that must never receive a synthesised canonical and must never be
+// treated as public/indexable by the build-time safety net.
+const PRIVATE_ROUTE_PREFIXES: string[] = [
+  "/admin",
+  "/auth",
+  "/dashboard",
+  "/partner-dashboard",
+  "/partner-auth",
+  "/partner-success",
+  "/reset-password",
+  "/seo-audit",
+  "/reports",
+  "/closing-team",
+  "/dealdesk-thanks",
+  "/market-report-thanks",
+];
+
+/**
+ * Emits `dist/spa-shell.html`: a neutral, noindex fallback document for
+ * unmatched / non-prerendered routes. It reuses the same hashed JS/CSS as the
+ * real build so BrowserRouter hydrates the requested URL normally, but its raw
+ * HTML carries NO homepage identity: no homepage title, no homepage H1 or body
+ * copy, no canonical, and no Organization/WebSite/LocalBusiness/breadcrumb
+ * schema. Runs in `closeBundle` so it observes the post-prerender dist output.
+ */
+function spaShellPlugin() {
+  return {
+    name: "cdn-spa-shell",
+    apply: "build" as const,
+    closeBundle() {
+      const distIndex = path.resolve(__dirname, "dist/index.html");
+      if (!fs.existsSync(distIndex)) return;
+      const html = fs.readFileSync(distIndex, "utf8");
+
+      const scripts = [...html.matchAll(/<script[^>]+type="module"[^>]*src="\/assets\/[^"]+"[^>]*><\/script>/g)]
+        .map((m) => m[0])
+        .join("\n    ");
+      const styles = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="\/assets\/[^"]+"[^>]*>/g)]
+        .map((m) => m[0])
+        .join("\n    ");
+
+      if (!scripts) {
+        console.warn("[spa-shell] no hashed module script found in dist/index.html — shell not written");
+        return;
+      }
+
+      const shell = `<!DOCTYPE html>
+<html lang="en" class="dark" style="background-color: #0B0B0B;">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, follow" />
+    <title>Page — Capital District Nest</title>
+    ${styles}
+    ${scripts}
+  </head>
+  <body style="background-color: #0B0B0B; color: #FFFFFF;">
+    <div id="root"></div>
+  </body>
+</html>
+`;
+      fs.writeFileSync(path.resolve(__dirname, "dist/spa-shell.html"), shell, "utf8");
+      console.log("[spa-shell] wrote dist/spa-shell.html (neutral, noindex)");
+    },
+  };
+}
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
