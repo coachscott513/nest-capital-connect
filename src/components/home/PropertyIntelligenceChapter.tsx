@@ -183,6 +183,7 @@ const PropertyIntelligenceChapter = () => (
         <TalkToScottButton
           context={{ placement: PLACEMENT }}
           label="Have Scott review the decision"
+          className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 py-3 rounded-full border border-[#DFDCD4] bg-white text-[#14181F] text-sm font-semibold hover:bg-[#F3F4F2] transition"
         />
       </div>
 
