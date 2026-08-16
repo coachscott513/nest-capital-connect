@@ -505,7 +505,12 @@ const Index = () => {
         title="Capital District Nest | The Digital Front Door of the Capital District"
         description="Discover neighborhoods, local businesses, homes, and events across New York's Capital District — Albany, Saratoga Springs, Troy, Schenectady, and Delmar — through one trusted local platform."
         keywords="Capital District, local discovery, neighborhood guide Albany NY, Capital District real estate, Saratoga Springs, Troy NY, Schenectady, Delmar NY, local businesses"
-        structuredData={[localBusinessSchema]}
+        canonical="https://www.capitaldistrictnest.com/"
+        structuredData={[
+          localBusinessSchema,
+          HOMEPAGE_ORGANIZATION_SCHEMA,
+          HOMEPAGE_WEBSITE_SCHEMA,
+        ]}
       />
 
       <CleanHeader />
