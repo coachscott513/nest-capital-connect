@@ -18,13 +18,12 @@ const ChapterRail = ({
   eyebrow: string;
   title: string;
   subtitle?: string;
-  /** `paper` is the light Capital District Nest editorial tone. */
-  tone?: "dark" | "elevated" | "paper";
+  tone?: "dark" | "elevated";
   action?: ReactNode;
   children: ReactNode;
 }) => {
   const scroller = useRef<HTMLDivElement | null>(null);
-  const light = tone === "paper";
+  const light = false;
 
   const nudge = (dir: 1 | -1) => {
     const el = scroller.current;
