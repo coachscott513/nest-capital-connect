@@ -55,7 +55,7 @@ const HomeBuyerHub = () => {
       links: [
         { label: "Market Insights", href: "/insights" },
         { label: "Delmar Market Analysis", href: "/delmar-market-insights" },
-        { label: "Single-Family Market Report", href: "/single-family-market" },
+        { label: "Single-Family Market Report", href: "/markets" },
       ],
     },
     {

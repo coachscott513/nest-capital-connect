@@ -396,7 +396,9 @@ const App = () => {
           
           {/* Market insights alias */}
           <Route path="/market-insights" element={<MarketInsights />} />
-          <Route path="/single-family-market" element={<SingleFamilyMarket />} />
+          {/* Parameterless single-family market URL has no town context and rendered an empty
+              "Market Not Found" page; it now resolves directly to the real markets hub. */}
+          <Route path="/single-family-market" element={<Navigate to="/markets" replace />} />
           
           {/* Buyer Journey Routes */}
           <Route path="/buyer-roadmap" element={<BuyerRoadmap />} />

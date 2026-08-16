@@ -22,7 +22,7 @@ const tiles = [
   },
   {
     name: 'Single Family',
-    slug: '/single-family-market',
+    slug: '/markets',
     description: 'Find homes for everyday living, long-term value, and neighborhood fit.',
     accent: 'hsl(var(--foreground) / 0.04)',
     accentHover: 'hsl(var(--foreground) / 0.07)',
