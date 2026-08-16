@@ -99,29 +99,8 @@ const InvestorTools = () => {
           </div>
         </section>
 
-        {/* Grants & Financing Stats Section */}
-        <section className="py-16 border-b border-border">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
-              <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">$25M+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Available Grants</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">$100M+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Financing Programs</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">0%</div>
-                <div className="text-sm md:text-base text-muted-foreground">Min. Down Payment</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">100+</div>
-                <div className="text-sm md:text-base text-muted-foreground">First-Time Buyers Helped</div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Unsupported performance/grant statistics removed — no verified source. */}
+
 
         <section id="investment-properties">
           <OpportunityCards />
