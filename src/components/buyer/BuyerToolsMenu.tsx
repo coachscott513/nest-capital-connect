@@ -38,14 +38,8 @@ const BuyerToolsMenu = ({
     ? "block mt-0.5 text-[12.5px] font-light leading-snug text-white/60"
     : "block mt-0.5 text-[12.5px] font-light leading-snug text-[#64748B]";
 
-  const iconWrap = (
-    <span
-      className="w-9 h-9 shrink-0 rounded-full inline-flex items-center justify-center"
-      style={{ backgroundColor: dark ? "rgba(13,110,102,0.22)" : "rgba(13,110,102,0.10)" }}
-    />
-  );
-
   const Icon = ({ children }: { children: React.ReactNode }) => (
+
     <span
       className="w-9 h-9 shrink-0 rounded-full inline-flex items-center justify-center"
       style={{ backgroundColor: dark ? "rgba(13,110,102,0.22)" : "rgba(13,110,102,0.10)" }}
