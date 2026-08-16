@@ -5,16 +5,10 @@ import { logEngagement } from "@/lib/engagement";
 
 const PLACEMENT = "homepage-decision-bento";
 
-/* Capital District Nest home palette. Light chapter; one deliberate navy
-   product surface for the flagship Analyze Any Deal card. */
-const PAPER = "#FBFAF7";
-const SOFT = "#F3F4F2";
-const INK = "#14181F";
 const NAVY = "#0B0F19";
 const CHARCOAL = "#13161E";
+const GRAPHITE = "#1A1D26";
 const SLATE = "#64748B";
-const HAIRLINE = "#DFDCD4";
-const TEAL = "#0D6E66";
 const PLATINUM = "#E2E8F0";
 
 type LinkItem = {
@@ -32,28 +26,27 @@ const track = (intent: string, product: string) =>
     product_type: product,
   });
 
-const SecondaryLink = ({ item, dark }: { item: LinkItem; dark: boolean }) => {
-  const cls = dark
-    ? "group inline-flex items-center gap-2 min-h-[44px] text-[14px] font-medium text-[#E2E8F0]/80 hover:text-[#5EEAD4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60 rounded-md"
-    : "group inline-flex items-center gap-2 min-h-[44px] text-[14px] font-medium text-[#14181F]/70 hover:text-[#0D6E66] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D6E66]/50 rounded-md";
-  return item.href ? (
+const linkClass =
+  "group inline-flex items-center gap-2 min-h-[44px] text-[14px] font-medium text-[#E2E8F0]/80 hover:text-[#5EEAD4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60 rounded-md";
+
+const SecondaryLink = ({ item }: { item: LinkItem }) =>
+  item.href ? (
     <a
       href={item.href}
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => track(item.intent, item.product)}
-      className={cls}
+      className={linkClass}
     >
       {item.label}
       <ArrowUpRight className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
     </a>
   ) : (
-    <Link to={item.to!} onClick={() => track(item.intent, item.product)} className={cls}>
+    <Link to={item.to!} onClick={() => track(item.intent, item.product)} className={linkClass}>
       {item.label}
       <ArrowRight className="w-3.5 h-3.5 opacity-50 group-hover:translate-x-0.5 transition-transform" />
     </Link>
   );
-};
 
 const Card = ({
   eyebrow,
@@ -63,7 +56,6 @@ const Card = ({
   primary,
   links,
   className = "",
-  dark = false,
   children,
 }: {
   eyebrow: string;
@@ -73,46 +65,28 @@ const Card = ({
   primary: { label: string; to?: string; href?: string; intent: string; product: string };
   links: LinkItem[];
   className?: string;
-  dark?: boolean;
   children?: React.ReactNode;
 }) => (
   <article
-    className={`rounded-[28px] border p-7 md:p-9 flex flex-col ${className}`}
-    style={
-      dark
-        ? {
-            borderColor: "rgba(255,255,255,0.07)",
-            background: `linear-gradient(180deg, ${NAVY} 0%, ${CHARCOAL} 100%)`,
-            boxShadow: "0 26px 60px -34px rgba(11,15,25,0.7)",
-          }
-        : {
-            borderColor: HAIRLINE,
-            background: "#FFFFFF",
-            boxShadow: "0 18px 44px -38px rgba(11,15,25,0.35)",
-          }
-    }
+    className={`rounded-[28px] border border-white/[0.07] p-7 md:p-9 flex flex-col ${className}`}
+    style={{
+      background: `linear-gradient(180deg, ${CHARCOAL} 0%, ${GRAPHITE} 100%)`,
+      boxShadow: "0 18px 50px -34px rgba(0,0,0,0.8)",
+    }}
   >
-    <p className="text-[10px] font-medium tracking-[0.45em] uppercase" style={{ color: dark ? SLATE : TEAL }}>
+    <p className="text-[10px] font-medium tracking-[0.45em] uppercase" style={{ color: SLATE }}>
       {eyebrow}
     </p>
     {title && (
-      <p
-        className="mt-4 text-[15px] font-semibold tracking-[-0.01em]"
-        style={{ color: dark ? "#FFFFFF" : INK }}
-      >
-        {title}
-      </p>
+      <p className="mt-4 text-[15px] font-semibold tracking-[-0.01em] text-white">{title}</p>
     )}
     <h3
-      className="mt-3 text-2xl md:text-[2rem] tracking-[-0.03em] leading-[1.12] text-balance"
-      style={{ fontWeight: 300, color: dark ? "#FFFFFF" : INK }}
+      className="mt-3 text-2xl md:text-[2rem] tracking-[-0.03em] leading-[1.12] text-white text-balance"
+      style={{ fontWeight: 300 }}
     >
       {headline}
     </h3>
-    <p
-      className="mt-4 text-[14.5px] font-light leading-relaxed"
-      style={{ color: dark ? "#94A3B8" : SLATE }}
-    >
+    <p className="mt-4 text-[14.5px] font-light leading-relaxed" style={{ color: "#94A3B8" }}>
       {body}
     </p>
 
@@ -125,8 +99,8 @@ const Card = ({
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => track(primary.intent, primary.product)}
-          className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-full text-white text-[13px] font-semibold tracking-wide hover:opacity-90 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D6E66]/60"
-          style={{ backgroundColor: TEAL }}
+          className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-full text-white text-[13px] font-semibold tracking-wide hover:opacity-90 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60"
+          style={{ backgroundColor: "#0d6e66" }}
         >
           {primary.label} <ArrowUpRight className="w-4 h-4" />
         </a>
@@ -134,8 +108,8 @@ const Card = ({
         <Link
           to={primary.to!}
           onClick={() => track(primary.intent, primary.product)}
-          className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-full text-white text-[13px] font-semibold tracking-wide hover:opacity-90 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D6E66]/60"
-          style={{ backgroundColor: TEAL }}
+          className="inline-flex items-center justify-center gap-2 min-h-[48px] px-6 rounded-full text-white text-[13px] font-semibold tracking-wide hover:opacity-90 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60"
+          style={{ backgroundColor: "#0d6e66" }}
         >
           {primary.label} <ArrowRight className="w-4 h-4" />
         </Link>
@@ -145,7 +119,7 @@ const Card = ({
     <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-1">
       {links.map((l) => (
         <li key={l.label}>
-          <SecondaryLink item={l} dark={dark} />
+          <SecondaryLink item={l} />
         </li>
       ))}
     </ul>
@@ -162,36 +136,28 @@ const PREVIEW_ROWS = [
 const DecisionRail = () => (
   <section
     id="start-with-your-decision"
-    className="relative w-full scroll-mt-24 border-t"
-    style={{
-      background: `linear-gradient(180deg, ${SOFT} 0%, ${PAPER} 100%)`,
-      borderTopColor: HAIRLINE,
-      fontFamily: "'Manrope', system-ui, sans-serif",
-    }}
+    className="relative w-full scroll-mt-24 border-t border-white/[0.06]"
+    style={{ background: NAVY, fontFamily: "'Manrope', system-ui, sans-serif" }}
   >
     <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-10 pt-20 pb-20 md:pt-28 md:pb-28">
       <div className="max-w-2xl">
-        <p className="text-[10px] font-medium tracking-[0.45em] uppercase" style={{ color: TEAL }}>
+        <p className="text-[10px] font-medium tracking-[0.45em] uppercase" style={{ color: SLATE }}>
           Start here
         </p>
-        <h2
-          className="mt-5 text-3xl md:text-5xl tracking-[-0.035em] leading-[1.07] text-balance"
-          style={{ color: INK }}
-        >
-          <span className="font-extralight" style={{ color: "rgba(20,24,31,0.65)" }}>
+        <h2 className="mt-5 text-3xl md:text-5xl tracking-[-0.035em] leading-[1.07] text-white text-balance">
+          <span className="font-extralight" style={{ color: PLATINUM }}>
             Start with your decision.
           </span>
           <span className="block font-semibold">Then check the numbers.</span>
         </h2>
-        <p className="mt-5 text-[15px] md:text-[17px] font-light leading-relaxed" style={{ color: SLATE }}>
+        <p className="mt-5 text-[15px] md:text-[17px] font-light leading-relaxed" style={{ color: "#94A3B8" }}>
           The right next step depends on what you are trying to do.
         </p>
       </div>
 
       <div className="mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-6">
-        {/* Flagship buying card — the one deep navy Analyze Any Deal surface */}
+        {/* Flagship buying card */}
         <Card
-          dark
           className="lg:col-span-3"
           eyebrow="Buying"
           title="Analyze Any Deal"
