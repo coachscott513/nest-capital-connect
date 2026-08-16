@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties, type DetailedHTMLProps
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ExternalLink, Search } from "lucide-react";
-import { REALSCOUT, analyzeAnyPropertyUrl } from "@/config/externalProducts";
+import { REALSCOUT } from "@/config/externalProducts";
 import { TalkToScottButton } from "@/components/property/TalkToScott";
 import { logEngagement } from "@/lib/engagement";
 
@@ -97,45 +97,48 @@ const PropertyHero = () => {
         }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-20 pb-16 md:pt-28 md:pb-24">
+      <div
+        className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-20 pb-16 md:pt-28 md:pb-24"
+        style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
+      >
         <motion.div {...fade} className="text-center">
-          <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.4em] uppercase text-[#5eead4]/90">
-            Capital District Nest
+          <p className="text-[10px] md:text-[11px] font-medium tracking-[0.45em] uppercase text-[#64748B]">
+            Capital District Property Intelligence
           </p>
 
-          <h1 className="mt-7 md:mt-9 text-[2.35rem] sm:text-5xl md:text-[4.25rem] font-semibold tracking-[-0.045em] leading-[1.02] text-white text-balance">
-            Find the home.
-            <span className="block">Understand the property.</span>
-            <span className="block bg-gradient-to-r from-white via-white to-[#5eead4] bg-clip-text text-transparent">
-              Build the right team.
-            </span>
+          <h1 className="mt-8 md:mt-10 text-[2.3rem] sm:text-5xl md:text-[4rem] tracking-[-0.035em] leading-[1.06] text-white text-balance">
+            <span className="block font-extralight text-[#E2E8F0]">Find the property.</span>
+            <span className="block font-semibold">Know if the deal works.</span>
+            <span className="block font-light text-[#E2E8F0]">Build the right team.</span>
           </h1>
 
-          <p className="mt-7 text-[15px] md:text-lg text-white/70 max-w-2xl mx-auto font-light leading-[1.6]">
-            Search homes across the Capital District, pressure-test the property, and
-            connect with the local professionals who help you buy, sell, invest,
-            renovate, and own with confidence.
+          <p className="mt-8 text-[15px] md:text-[17px] text-[#94A3B8] max-w-xl mx-auto font-light leading-[1.65]">
+            Search live homes across the Capital District, understand the financial
+            reality behind the listing, and connect with the local professionals who
+            help move the decision forward.
           </p>
 
-          <div className="mt-9 flex flex-wrap justify-center gap-3">
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
             <a
               href="#property-search-widget"
-              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 rounded-full bg-white text-[#0B0F19] text-[13px] font-semibold tracking-wide hover:opacity-90 transition"
             >
-              <Search className="w-4 h-4" /> Search homes
+              <Search className="w-4 h-4" /> Search live homes
             </a>
-            <a
-              href={analyzeAnyPropertyUrl({ placement: PLACEMENT })}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/analyze-any-deal"
               onClick={() =>
-                logEngagement("property_analysis_click", {}, { source_location: PLACEMENT })
+                logEngagement("property_analysis_click", {}, {
+                  source_location: PLACEMENT,
+                  intent_type: "buying",
+                  product_type: "analyze_any_deal",
+                })
               }
-              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 rounded-full text-white text-sm font-semibold transition hover:opacity-90"
+              className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 rounded-full text-white text-[13px] font-semibold tracking-wide transition hover:opacity-90"
               style={{ backgroundColor: "#0d6e66" }}
             >
-              Analyze a property <ArrowRight className="w-4 h-4" />
-            </a>
+              Analyze any deal <ArrowRight className="w-4 h-4" />
+            </Link>
             <TalkToScottButton context={{ placement: PLACEMENT }} />
           </div>
         </motion.div>
@@ -144,13 +147,13 @@ const PropertyHero = () => {
         <div
           id="property-search-widget"
           ref={slotRef}
-          className="mt-12 md:mt-16 scroll-mt-24 rounded-[28px] border border-white/10 bg-white/[0.03] p-5 sm:p-7 md:p-9 shadow-2xl"
+          className="mt-14 md:mt-20 scroll-mt-24 rounded-[24px] border border-white/[0.07] p-5 sm:p-7 md:p-8"
           style={{
-            boxShadow:
-              "0 24px 70px -24px rgba(13,110,102,0.4), 0 0 0 1px rgba(94,234,212,0.08)",
+            background: "linear-gradient(180deg, #13161E 0%, #1A1D26 100%)",
+            boxShadow: "0 24px 70px -32px rgba(0,0,0,0.7)",
           }}
         >
-          <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-[#5eead4] mb-4 text-center">
+          <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-[#64748B] mb-5 text-center">
             Live property search
           </p>
 

@@ -111,16 +111,16 @@ const SECTION_DEFS: MegaSection[] = [
           { label: "Investment Tools", href: "/investor-tools" },
           { label: "Multi-Family", href: "/investment-properties" },
           { label: "Land", href: "/land-buyers" },
-          { label: "Analyzer", href: "/analyze" },
+          { label: "Analyzer", href: "/analyze-any-deal" },
         ],
       },
     ],
     feature: {
-      eyebrow: "Property intelligence",
-      title: "Run the numbers on any address",
-      copy: "Cash flow, cap rate, and local comparables in one report.",
-      href: "/analyze",
-      cta: "Open the analyzer",
+      eyebrow: "Analyze Any Deal",
+      title: "Know if the deal works before you make it.",
+      copy: "Payment, cash needed, financing, cash flow, returns, and the assumptions behind the result.",
+      href: "/analyze-any-deal",
+      cta: "Open Analyze Any Deal",
     },
   },
   {
@@ -275,8 +275,17 @@ const SECTION_DEFS: MegaSection[] = [
   {
     key: "analyze",
     label: "Analyze",
-    href: "/analyze",
+    href: "/analyze-any-deal",
     columns: [
+      {
+        title: "The products",
+        links: [
+          { label: "Analyze Any Deal", href: "/analyze-any-deal" },
+          { label: "Analyze Any Property", href: "/analyze-any-property" },
+          { label: "Financial console", href: "/analyze" },
+          { label: "Sample Report", href: "/reports" },
+        ],
+      },
       {
         title: "By property type",
         links: [
@@ -297,11 +306,11 @@ const SECTION_DEFS: MegaSection[] = [
       },
     ],
     feature: {
-      eyebrow: "Property intelligence",
-      title: "Pressure-test the property",
-      copy: "Compare the numbers, surface the assumptions, and see what still needs verifying.",
-      href: "/analyze",
-      cta: "Open the analyzer",
+      eyebrow: "Analyze Any Deal",
+      title: "Know if the deal works before you make it.",
+      copy: "Payment, cash needed, financing, cash flow, returns, and the assumptions behind the result.",
+      href: "/analyze-any-deal",
+      cta: "Open Analyze Any Deal",
     },
   },
   {
