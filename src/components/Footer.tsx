@@ -149,7 +149,14 @@ const Footer = () => {
               <li><Link to="/homes/listings" className={linkBase}>Property Board</Link></li>
               <li><Link to="/investment-properties" className={linkBase}>Investment Properties</Link></li>
               <li><Link to="/first-time-homebuyers" className={linkBase}>First-Time Buyers</Link></li>
-              <li><Link to="/analyze-any-deal" className={linkBase}>Deal Calculator</Link></li>
+              <li>
+                {dealDest.kind === "internal" ? (
+                  <Link to={dealDest.to} className={linkBase}>Deal Calculator</Link>
+                ) : (
+                  <a href={dealDest.href} target="_blank" rel="noopener noreferrer" className={linkBase}>Deal Calculator</a>
+                )}
+              </li>
+
               <li><Link to="/analyze-any-property" className={linkBase}>Property Intelligence</Link></li>
               <li><Link to="/investment-analyzer" className={linkBase}>Analyze a Property</Link></li>
 
