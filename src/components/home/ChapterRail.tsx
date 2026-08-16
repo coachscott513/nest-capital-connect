@@ -18,11 +18,13 @@ const ChapterRail = ({
   eyebrow: string;
   title: string;
   subtitle?: string;
-  tone?: "dark" | "elevated";
+  /** `paper` is the light Capital District Nest editorial tone. */
+  tone?: "dark" | "elevated" | "paper";
   action?: ReactNode;
   children: ReactNode;
 }) => {
   const scroller = useRef<HTMLDivElement | null>(null);
+  const light = tone === "paper";
 
   const nudge = (dir: 1 | -1) => {
     const el = scroller.current;
@@ -30,24 +32,44 @@ const ChapterRail = ({
     el.scrollBy({ left: dir * Math.round(el.clientWidth * 0.8), behavior: "smooth" });
   };
 
+  const arrowClass = light
+    ? "w-11 h-11 rounded-full border border-[#DFDCD4] bg-white text-[#14181F]/70 hover:text-[#14181F] hover:bg-[#F3F4F2] inline-flex items-center justify-center transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D6E66]/60"
+    : "w-11 h-11 rounded-full border border-white/15 bg-white/[0.04] text-white/80 hover:text-white hover:bg-white/[0.1] inline-flex items-center justify-center transition";
+
   return (
     <section
       id={id}
-      className={`relative w-full scroll-mt-24 border-t border-white/[0.06] ${
-        tone === "elevated" ? "bg-[#0E1220]" : "bg-[#0B0F19]"
+      className={`relative w-full scroll-mt-24 border-t ${
+        light
+          ? "bg-[#FBFAF7] border-[#DFDCD4]"
+          : tone === "elevated"
+            ? "bg-[#0E1220] border-white/[0.06]"
+            : "bg-[#0B0F19] border-white/[0.06]"
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-10 pt-20 pb-16 md:pt-28 md:pb-24">
         <div className="flex items-end justify-between gap-6">
           <div className="max-w-2xl">
-            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+            <p
+              className={`text-[11px] font-semibold tracking-[0.3em] uppercase ${
+                light ? "text-[#0D6E66]" : "text-[#5eead4]"
+              }`}
+            >
               {eyebrow}
             </p>
-            <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-white text-balance">
+            <h2
+              className={`mt-4 text-3xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance ${
+                light ? "text-[#14181F]" : "text-white"
+              }`}
+            >
               {title}
             </h2>
             {subtitle && (
-              <p className="mt-4 text-[15px] md:text-lg text-white/65 font-light leading-relaxed">
+              <p
+                className={`mt-4 text-[15px] md:text-lg font-light leading-relaxed ${
+                  light ? "text-[#64748B]" : "text-white/65"
+                }`}
+              >
                 {subtitle}
               </p>
             )}
@@ -59,7 +81,7 @@ const ChapterRail = ({
               type="button"
               aria-label={`Scroll ${title} left`}
               onClick={() => nudge(-1)}
-              className="w-11 h-11 rounded-full border border-white/15 bg-white/[0.04] text-white/80 hover:text-white hover:bg-white/[0.1] inline-flex items-center justify-center transition"
+              className={arrowClass}
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -67,12 +89,13 @@ const ChapterRail = ({
               type="button"
               aria-label={`Scroll ${title} right`}
               onClick={() => nudge(1)}
-              className="w-11 h-11 rounded-full border border-white/15 bg-white/[0.04] text-white/80 hover:text-white hover:bg-white/[0.1] inline-flex items-center justify-center transition"
+              className={arrowClass}
             >
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
         </div>
+
 
         <div
           ref={scroller}
