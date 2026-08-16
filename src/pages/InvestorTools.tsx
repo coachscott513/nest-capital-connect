@@ -24,22 +24,20 @@ const InvestorTools = () => {
     "@graph": [
       {
         "@type": "LocalBusiness",
-        "@id": "https://capitaldistrictnest.com/#organization",
+        "@id": "https://www.capitaldistrictnest.com/#organization",
         "name": "Capital District Nest",
         "alternateName": ["Capital District Investment Properties", "CDN Real Estate"],
         "description": "Premier investment property specialists for rental properties, rehab projects, and multi-unit buildings in Albany, Troy, Schenectady, and Saratoga Springs, NY.",
-        "url": "https://capitaldistrictnest.com",
+        "url": "https://www.capitaldistrictnest.com",
         "telephone": "+1-518-522-7265",
         "email": "scott@capitaldistrictnest.com",
-        "foundingDate": "2020",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "123 State Street",
           "addressLocality": "Albany",
           "addressRegion": "NY",
-          "postalCode": "12207",
           "addressCountry": "US"
         },
+
         "areaServed": [
           { "@type": "City", "name": "Albany", "addressRegion": "NY", "addressCountry": "US" },
           { "@type": "City", "name": "Troy", "addressRegion": "NY", "addressCountry": "US" },
@@ -56,7 +54,7 @@ const InvestorTools = () => {
       },
       {
         "@type": "RealEstateAgent",
-        "@id": "https://capitaldistrictnest.com/#realestate",
+        "@id": "https://www.capitaldistrictnest.com/#realestate",
         "name": "Capital District Nest Real Estate Services",
         "speciality": ["Investment Properties", "Multi-Unit Buildings", "Property Rehabilitation", "Rental Properties"],
         "telephone": "+1-518-522-7265"
@@ -100,29 +98,8 @@ const InvestorTools = () => {
           </div>
         </section>
 
-        {/* Grants & Financing Stats Section */}
-        <section className="py-16 border-b border-border">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
-              <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">$25M+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Available Grants</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">$100M+</div>
-                <div className="text-sm md:text-base text-muted-foreground">Financing Programs</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">0%</div>
-                <div className="text-sm md:text-base text-muted-foreground">Min. Down Payment</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-4xl md:text-5xl font-bold text-primary">100+</div>
-                <div className="text-sm md:text-base text-muted-foreground">First-Time Buyers Helped</div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Unsupported performance/grant statistics removed — no verified source. */}
+
 
         <section id="investment-properties">
           <OpportunityCards />

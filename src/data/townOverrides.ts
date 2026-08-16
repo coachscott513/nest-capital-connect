@@ -269,9 +269,9 @@ export const townOverrides: Record<string, TownOverride> = {
       { category: "Property & Taxes", title: "Estimated Utility Costs", body: "Typical monthly utility ranges for Delmar homes.", href: "/financing" },
       { category: "Property & Taxes", title: "Insurance Guidance", body: "Homeowners insurance basics and local considerations.", href: "/financing" },
 
-      { category: "Investing", title: "Cash Flow Analyzer", body: "Run cash flow, cap rate, and long-term projections.", href: "/analyze" },
-      { category: "Investing", title: "Investor Underwriting", body: "Underwrite a Delmar deal with investor-grade math.", href: "/analyze" },
-      { category: "Investing", title: "Rental Property Analysis", body: "Model rent, expenses, and returns for Delmar rentals.", href: "/analyze" },
+      { category: "Investing", title: "Cash Flow Analyzer", body: "Run cash flow, cap rate, and long-term projections.", href: "/finances" },
+      { category: "Investing", title: "Investor Underwriting", body: "Underwrite a Delmar deal with investor-grade math.", href: "/finances" },
+      { category: "Investing", title: "Rental Property Analysis", body: "Model rent, expenses, and returns for Delmar rentals.", href: "/finances" },
       { category: "Investing", title: "Market Demand Trends", body: "Track pricing, velocity, and absorption trends.", href: "/delmar-market-insights" },
     ],
     partners: [
@@ -458,7 +458,7 @@ export const townOverrides: Record<string, TownOverride> = {
       { category: "Property & Taxes", title: "Utility Cost Estimates", body: "Typical monthly utility ranges in Albany.", href: "/financing" },
       { category: "Property & Taxes", title: "Insurance Guidance", body: "Homeowners insurance basics for city homes.", href: "/financing" },
 
-      { category: "Investing", title: "Cash Flow Analyzer", body: "Run cash flow on Albany rentals.", href: "/analyze" },
+      { category: "Investing", title: "Cash Flow Analyzer", body: "Run cash flow on Albany rentals.", href: "/finances" },
       { category: "Investing", title: "Multi-Family Underwriting", body: "Underwrite 2–4 units citywide.", href: "/albany-multi-unit" },
       { category: "Investing", title: "Pine Hills Investment Map", body: "Highest-yield Albany pockets.", href: "/best-neighborhoods-cash-flow" },
       { category: "Investing", title: "Market Demand Trends", body: "Track pricing and absorption.", href: "/albany-intelligence" },
@@ -561,9 +561,9 @@ export const townOverrides: Record<string, TownOverride> = {
       { category: "Property & Taxes", title: "Utility Cost Estimates", body: "Typical monthly utility ranges.", href: "/financing" },
       { category: "Property & Taxes", title: "Insurance Guidance", body: "Homeowners insurance for premium homes.", href: "/financing" },
 
-      { category: "Investing", title: "Short-Term Rental Analyzer", body: "Run STR math for the track season.", href: "/analyze" },
+      { category: "Investing", title: "Short-Term Rental Analyzer", body: "Run STR math for the track season.", href: "/finances" },
       { category: "Investing", title: "Multi-Family Underwriting", body: "Underwrite a Saratoga 2–4 unit.", href: "/saratoga-multi-unit-market" },
-      { category: "Investing", title: "Track-Season Yield Model", body: "Six-week rental income math.", href: "/analyze" },
+      { category: "Investing", title: "Track-Season Yield Model", body: "Six-week rental income math.", href: "/finances" },
       { category: "Investing", title: "Market Demand Trends", body: "Track pricing and absorption citywide.", href: "/saratoga-intelligence" },
     ],
     partners: [
@@ -665,8 +665,8 @@ export const townOverrides: Record<string, TownOverride> = {
       { category: "Property & Taxes", title: "Insurance for Historic Homes", body: "Brownstone-specific insurance considerations.", href: "/financing" },
 
       { category: "Investing", title: "Two-Family Cash Flow", body: "Run cash flow on Troy 2–4 units.", href: "/troy-multi-unit" },
-      { category: "Investing", title: "BRRRR Underwriting", body: "Brownstone rehab + refinance math.", href: "/analyze" },
-      { category: "Investing", title: "Rental Market Analysis", body: "Model rent and returns for Troy rentals.", href: "/analyze" },
+      { category: "Investing", title: "BRRRR Underwriting", body: "Brownstone rehab + refinance math.", href: "/finances" },
+      { category: "Investing", title: "Rental Market Analysis", body: "Model rent and returns for Troy rentals.", href: "/finances" },
       { category: "Investing", title: "Market Demand Trends", body: "Track pricing and absorption citywide.", href: "/troy-intelligence" },
     ],
     partners: [
@@ -767,7 +767,7 @@ export const townOverrides: Record<string, TownOverride> = {
       { category: "Property & Taxes", title: "Utility Cost Estimates", body: "Typical monthly utility ranges.", href: "/financing" },
       { category: "Property & Taxes", title: "Insurance Guidance", body: "Homeowners insurance basics.", href: "/financing" },
 
-      { category: "Investing", title: "Cash Flow Analyzer", body: "Run cash flow on Schenectady rentals.", href: "/analyze" },
+      { category: "Investing", title: "Cash Flow Analyzer", body: "Run cash flow on Schenectady rentals.", href: "/finances" },
       { category: "Investing", title: "Multi-Family Underwriting", body: "Underwrite 2–4 units citywide.", href: "/schenectady-multi-unit" },
       { category: "Investing", title: "Cash-Flow Neighborhoods", body: "Highest-yield pockets in the city.", href: "/best-neighborhoods-cash-flow" },
       { category: "Investing", title: "Market Demand Trends", body: "Track pricing and absorption.", href: "/schenectady-intelligence" },
@@ -872,9 +872,9 @@ export const townOverrides: Record<string, TownOverride> = {
       { category: "Property & Taxes", title: "Utility Cost Estimates", body: "Typical monthly utility ranges.", href: "/financing" },
       { category: "Property & Taxes", title: "Insurance Guidance", body: "Homeowners insurance basics.", href: "/financing" },
 
-      { category: "Investing", title: "Cash Flow Analyzer", body: "Run cash flow on Clifton Park rentals.", href: "/analyze" },
-      { category: "Investing", title: "New-Construction Underwriting", body: "Underwrite new builds and townhouses.", href: "/analyze" },
-      { category: "Investing", title: "Rental Demand Trends", body: "Track family rental demand.", href: "/analyze" },
+      { category: "Investing", title: "Cash Flow Analyzer", body: "Run cash flow on Clifton Park rentals.", href: "/finances" },
+      { category: "Investing", title: "New-Construction Underwriting", body: "Underwrite new builds and townhouses.", href: "/finances" },
+      { category: "Investing", title: "Rental Demand Trends", body: "Track family rental demand.", href: "/finances" },
       { category: "Investing", title: "Market Demand Trends", body: "Track pricing and absorption townwide.", href: "/clifton-park-intelligence" },
     ],
     partners: [

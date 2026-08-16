@@ -100,11 +100,20 @@ export async function fetchEligibleBusinesses(sb, opts = {}) {
     }
   }
   const bySlug = new Set(rows.map((r) => r.slug));
-  for (const slug of protectedSlugs) {
-    if (!bySlug.has(slug)) heldProtected.push(slug);
+  // Staleness guard: an override slug MUST resolve to a real, active,
+  // non-suppressed record. If it stops resolving (deleted, suppressed,
+  // re-slugged) we fail the build rather than emit a synthetic identity or
+  // silently drop a historically-indexed page.
+  const unresolved = [...protectedSlugs].filter((s) => !bySlug.has(s));
+  if (unresolved.length) {
+    throw new Error(
+      `seo-protected-overrides.json is stale — these slugs no longer resolve to a real active business: ${unresolved.join(", ")}. ` +
+        `Re-derive the manifest from seo_protected_urls, or remove/relocate the slug. No synthetic page will be generated.`,
+    );
   }
   for (const h of hold) heldProtected.push(h.slug);
   rows.stats = { eligible: rows.length - overrides.length, overrides, heldProtected };
   return rows;
+
 }
 
