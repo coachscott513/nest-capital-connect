@@ -36,25 +36,23 @@ const FloatingLiveAgent = () => {
     </button>
   );
 
+  // Buyer/property routes are owned by BuyerToolsDock — no second floating pill.
+  if (isBuyerToolsRoute(pathname)) return null;
+
   return (
     <div className="hidden md:block fixed bottom-6 right-6 z-[1500]">
-      {isPropertyPage ? (
-        <TalkToScottDialog context={{ placement: "floating-talk-to-scott" }}>
-          {pill("Talk to Scott", () => trackGAEvent.chatOpen("floating_talk_to_scott"))}
-        </TalkToScottDialog>
-      ) : (
-        <AnalystCard
-          contextualDisclaimer={
-            isBusinessPage
-              ? "This contacts Capital District Nest, not the listed business."
-              : undefined
-          }
-        >
-          {pill("Local Concierge", () => trackGAEvent.chatOpen("floating_live_agent"))}
-        </AnalystCard>
-      )}
+      <AnalystCard
+        contextualDisclaimer={
+          isBusinessPage
+            ? "This contacts Capital District Nest, not the listed business."
+            : undefined
+        }
+      >
+        {pill("Local Concierge", () => trackGAEvent.chatOpen("floating_live_agent"))}
+      </AnalystCard>
     </div>
   );
+
 };
 
 export default FloatingLiveAgent;
