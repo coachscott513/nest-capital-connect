@@ -55,7 +55,8 @@ const MobileCtaBar = () => {
   const label = buyerMode ? 'Buyer tools' : 'Ask Local';
 
   // Admin / auth / dashboard / legal surfaces get no floating control at all.
-  if (isExcludedRoute(pathname)) return null;
+  // Buyer/property routes are owned by PropertyToolsDock — no second mobile bar.
+  if (isExcludedRoute(pathname) || buyerMode) return null;
 
 
 

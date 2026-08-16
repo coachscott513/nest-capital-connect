@@ -793,3 +793,31 @@ realscout-advanced-search {
   display: block;
   margin: 0 auto;
 }
+
+/* ============================================================
+   Capital District Nest — regional product tokens
+   Warm-light primary mode + contained graphite analysis panels.
+   Additive only: no existing token is redefined.
+   ============================================================ */
+@layer base {
+  :root {
+    --nest-paper: 45 27% 98%;        /* #FBFAF7 warm page ground */
+    --nest-neutral: 100 6% 95%;      /* #F3F4F2 soft neutral */
+    --nest-surface: 0 0% 100%;       /* white surface */
+    --nest-ink: 220 19% 10%;         /* #14181F primary text */
+    --nest-slate: 215 16% 47%;       /* #64748B muted text */
+    --nest-teal: 173 79% 24%;        /* #0D6E66 primary action */
+    --nest-teal-tint: 173 45% 94%;   /* quiet emphasis */
+    --nest-graphite: 222 40% 7%;     /* #0B0F19 contained analysis panel */
+    --nest-border: 40 10% 85%;       /* #DFDCD4 quiet border */
+  }
+
+  /* Reserve space for the persistent property tools dock so it never covers
+     content, consent controls, or safe-area UI. */
+  body.has-property-dock {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+  @media (min-width: 768px) {
+    body.has-property-dock { padding-bottom: 0; }
+  }
+}
