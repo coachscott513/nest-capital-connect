@@ -1,25 +1,23 @@
 import { Phone } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import AnalystCard from "@/components/AnalystCard";
-import { TalkToScottDialog } from "@/components/property/TalkToScott";
 import { trackGAEvent } from "@/components/GARouteTracker";
+import { isBuyerToolsRoute, isLocalDiscoveryRoute } from "@/lib/routeGroups";
 
 /**
  * FloatingLiveAgent — single global floating contact (desktop).
- * On property-decision routes it becomes "Talk to Scott"; everywhere else it
- * stays the neutral Local Concierge. Brand-locked: charcoal pill, teal accent.
+ * On buyer/property routes it renders nothing: `BuyerToolsDock` is the single
+ * persistent control there (Talk to Scott lives inside it), so the two never
+ * overlap. Everywhere else this stays the neutral Local Concierge.
+ * Brand-locked: charcoal pill, teal accent.
  */
 const CHARCOAL = "#0e0f12";
 const TEAL = "#0d6e66";
 
-const PROPERTY_PREFIXES = ["/homes", "/analyze", "/closing-team", "/investment-analyzer", "/property"];
-
 const FloatingLiveAgent = () => {
   const { pathname } = useLocation();
-  const isBusinessPage =
-    pathname.startsWith("/biz/") || pathname === "/local" || pathname.startsWith("/towns/");
-  const isPropertyPage =
-    pathname === "/" || PROPERTY_PREFIXES.some((p) => pathname.startsWith(p));
+  const isBusinessPage = isLocalDiscoveryRoute(pathname);
+
 
   const pill = (label: string, onClick: () => void) => (
     <button
