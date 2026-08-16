@@ -13,6 +13,11 @@ const PLACEMENT = "homepage-closing-team";
 const ClosingTeamChapter = () => {
   const { members, loading } = useClosingTeam();
 
+  // Honest conditional behavior: with zero approved providers the homepage
+  // chapter collapses entirely rather than reserving an empty section.
+  // It returns automatically the moment an approved provider exists.
+  if (loading || members.length === 0) return null;
+
   return (
     <section
       id="closing-team"
