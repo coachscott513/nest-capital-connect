@@ -221,8 +221,18 @@ const PrerenderReadySignal = () => {
   React.useEffect(() => {
     if (typeof document === "undefined") return;
 
+    // Prerender capture must happen AFTER react-helmet-async has flushed the
+    // route's head into the document. Helmet commits asynchronously, so the
+    // signal waits for two animation frames plus a short settle window.
     const signalReady = () => {
-      document.dispatchEvent(new Event("render-complete"));
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() =>
+          window.setTimeout(
+            () => document.dispatchEvent(new Event("render-complete")),
+            400,
+          ),
+        ),
+      );
     };
 
     const timeoutId = window.setTimeout(signalReady, 3000);

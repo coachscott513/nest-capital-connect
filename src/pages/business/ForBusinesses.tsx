@@ -194,6 +194,8 @@ const ForBusinesses = () => {
           name="description"
           content="Imagine your business presented with the care of a magazine feature. Capital District Nest builds editorial spotlights, local discovery, and owner-controlled profiles for Capital District businesses."
         />
+        <link rel="canonical" href="https://www.capitaldistrictnest.com/for-businesses" />
+        <meta property="og:url" content="https://www.capitaldistrictnest.com/for-businesses" />
       </Helmet>
       <CleanHeader />
 

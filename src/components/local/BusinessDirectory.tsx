@@ -262,9 +262,12 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
             <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-5 text-[#5eead4]">
               Local Businesses
             </p>
-            <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
+            {/* Semantic level: the page H1 is owned by LocalHero. This
+                directory band is a subordinate section heading. Text and
+                styling are unchanged. */}
+            <h2 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
               {title ?? "The Capital District, curated."}
-            </h1>
+            </h2>
             <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
               Cinematic profiles of the cafés, lenders, attorneys, makers, and home services
               quietly powering our towns. Curated by town, not crowdsourced.

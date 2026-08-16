@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 import prerender from "@prerenderer/rollup-plugin";
+import fs from "fs";
 
 // Routes to prerender at build time. Curated list of highest-SEO-value
 // static pages. Dynamic routes (/towns/:slug, /blog/:slug, /listings/:id)
@@ -51,7 +52,39 @@ const PRERENDER_ROUTES = [
   // Featured business profiles — prerendered so iMessage/Facebook/LinkedIn
   // see the correct OG tags without executing client JS.
   "/biz/denofio-insurance-agency",
+  // Hub routes that are linked in navigation and self-canonical but were
+  // absent from both the sitemap and the prerender list, so raw fetches
+  // fell through to the SPA shell (a homepage snapshot).
+  "/businesses",
+  "/for-businesses",
+  "/pricing",
 ];
+
+/**
+ * Systemic fix for the prerender/canonical defect: the crawler-facing route
+ * list is derived from the generated sitemap (public/sitemap.xml, written by
+ * the predev/prebuild hook) and unioned with the curated list above. Any URL
+ * we advertise for indexing therefore gets its own prerendered HTML file
+ * instead of falling back to the SPA shell (which is the homepage snapshot).
+ */
+function resolvePrerenderRoutes(): string[] {
+  const routes = new Set(PRERENDER_ROUTES);
+  try {
+    const xml = fs.readFileSync(path.resolve(__dirname, "public/sitemap.xml"), "utf8");
+    for (const m of xml.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+      try {
+        const u = new URL(m[1]);
+        const route = u.pathname.replace(/\/+$/, "") || "/";
+        if (!route.startsWith("/admin")) routes.add(route);
+      } catch {
+        /* ignore malformed loc */
+      }
+    }
+  } catch {
+    console.warn("[prerender] public/sitemap.xml not found — using curated route list only");
+  }
+  return [...routes];
+}
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -79,15 +112,18 @@ export default defineConfig(({ mode }) => ({
     // Only prerender on production builds
     mode !== "development" &&
       prerender({
-        routes: PRERENDER_ROUTES,
+        routes: resolvePrerenderRoutes(),
         renderer: "@prerenderer/renderer-puppeteer",
         rendererOptions: {
           // Prefer an explicit signal from React once the routed page has mounted.
           renderAfterDocumentEvent: "render-complete",
           // Fallback wait for pages with browser-only effects or slower content.
-          renderAfterTime: 3000,
-          maxConcurrentRoutes: 2,
-          skipThirdPartyRequests: true,
+          renderAfterTime: 12000,
+          maxConcurrentRoutes: 3,
+          // Must stay false: Supabase-backed routes (/biz/:slug, town pages)
+          // need their data request to resolve, otherwise they snapshot in the
+          // fail-closed "not found" state.
+          skipThirdPartyRequests: false,
           launchOptions: {
             executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/bin/chromium",
             args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -99,6 +135,17 @@ export default defineConfig(({ mode }) => ({
             /<script (.*?)data-prerender(.*?)<\/script>/g,
             ""
           );
+
+          // Canonical safety net. index.html no longer ships a sitewide
+          // canonical, but if a stray homepage canonical ever survives on a
+          // non-home route, drop it so the route's own canonical is the only
+          // one crawlers see. Never invents a canonical.
+          if (renderedRoute.route !== "/") {
+            renderedRoute.html = renderedRoute.html.replace(
+              /<link[^>]+rel="canonical"[^>]+href="https:\/\/www\.capitaldistrictnest\.com\/"[^>]*>/g,
+              ""
+            );
+          }
         },
       }),
   ].filter(Boolean),
