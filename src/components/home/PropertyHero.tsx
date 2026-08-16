@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type DetailedHTMLProps, type HTMLAttributes } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type DetailedHTMLProps, type HTMLAttributes } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ExternalLink, Search } from "lucide-react";
@@ -190,6 +190,15 @@ const PropertyHero = () => {
               <div className={ready ? "w-full flex justify-center" : "sr-only"}>
                 <realscout-advanced-search
                   agent-encoded-id={REALSCOUT.agentEncodedId}
+                  style={
+                    {
+                      // Brand lock: RealScout defaults to blue. Force teal.
+                      "--rs-as-button-text-color": "#ffffff",
+                      "--rs-as-background-color": "#ffffff",
+                      "--rs-as-button-color": "#0d6e66",
+                      "--rs-as-widget-width": "100%",
+                    } as CSSProperties
+                  }
                 ></realscout-advanced-search>
               </div>
             )}
