@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { analyzeAnyPropertyUrl, type DecisionType } from "@/config/externalProducts";
 import { logEngagement } from "@/lib/engagement";
+import { propertyIntelligencePathClick } from "@/lib/homeAnalytics";
 import { TalkToScottButton } from "@/components/property/TalkToScott";
 
 const PLACEMENT = "homepage-property-intelligence";
@@ -10,8 +11,13 @@ type Path = {
   key: DecisionType;
   title: string;
   copy: string;
-  /** Existing indexed internal tool preserved alongside the flagship product. */
-  internal?: { label: string; to: string };
+  /**
+   * Exactly one primary decision destination per card. The card itself is the
+   * link — no competing secondary CTA. Deeper tooling (including the
+   * AnalyzeAnyProperty hand-off) lives on the destination page.
+   */
+  to: string;
+  action: string;
 };
 
 const PATHS: Path[] = [
@@ -19,33 +25,39 @@ const PATHS: Path[] = [
     key: "multi_unit",
     title: "Multi-Unit Cash Flow",
     copy: "Rent roll, operating assumptions, financing, and what still needs to be verified.",
-    internal: { label: "Internal multi-unit tool", to: "/analyze/multifamily" },
+    to: "/analyze/multifamily",
+    action: "Run multi-unit numbers",
   },
   {
     key: "land",
     title: "Land",
     copy: "Access, utilities, buildability questions, and carrying-cost assumptions.",
-    internal: { label: "Internal land tool", to: "/analyze/land" },
+    to: "/analyze/land",
+    action: "Run land numbers",
   },
   {
     key: "flip",
     title: "Fix & Flip",
     copy: "Scope, budget ranges, holding costs, and the exit assumptions behind the number.",
-    internal: { label: "Internal rental tool", to: "/analyze/rental" },
+    to: "/analyze/rental",
+    action: "Run flip numbers",
   },
   {
     key: "first_property",
     title: "First Property / House Hack",
     copy: "What the monthly payment actually looks like and which unknowns matter most.",
-    internal: { label: "First-time buyer hub", to: "/first-time-buyers" },
+    to: "/first-time-buyers",
+    action: "Start with the basics",
   },
   {
     key: "featured",
     title: "Featured Analyses",
     copy: "Worked examples showing how the evidence is organized before a decision.",
-    internal: { label: "Sample intelligence report", to: "/reports" },
+    to: "/reports",
+    action: "See a sample report",
   },
 ];
+
 
 const PropertyIntelligenceChapter = () => (
   <section
