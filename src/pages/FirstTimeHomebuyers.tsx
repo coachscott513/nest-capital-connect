@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEOHead from "@/components/SEOHead";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import MainLayout from "@/components/MainLayout";
