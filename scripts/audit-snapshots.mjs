@@ -37,6 +37,9 @@ const totals = {
   nonemptyTitle: 0,
   multipleTitles: [],
   emptyTitle: [],
+  shellDefaultTitle: [],
+  prerenderHeadTimeout: [],
+  unresolvedRouteIdentity: [],
   multipleCanonicals: [],
   missingCanonical: [],
   homepageCanonicalOnNonHome: [],
@@ -45,10 +48,12 @@ const totals = {
   unintendedNoindex: [],
   homepageFingerprintMismatch: [],
   missingBodyOrH1: [],
+  missingH1: [],
   placeholderSchemaRefs: [],
   routeContentMismatch: [],
   externalCanonicalOk: [],
 };
+
 
 for (const url of urls) {
   const route = new URL(url).pathname.replace(/\/+$/, "") || "/";
