@@ -113,10 +113,11 @@ const PropertyHero = () => {
           </h1>
 
           <p className="mt-8 text-[15px] md:text-[17px] text-[#94A3B8] max-w-xl mx-auto font-light leading-[1.65]">
-            Search live homes across the Capital District, understand the financial
-            reality behind the listing, and connect with the local professionals who
-            help move the decision forward.
+            Search live homes, understand the financial reality behind the listing,
+            and connect with the local professionals who help move the decision
+            forward.
           </p>
+
 
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <a
