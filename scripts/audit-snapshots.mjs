@@ -19,6 +19,8 @@ const EXTERNAL_CANONICAL_ALLOWLIST = {
 
 const HOMEPAGE_TITLE_FINGERPRINT = "The Digital Front Door of the Capital District";
 const HOMEPAGE_BODY_FINGERPRINT = "Search anything local.";
+// Neutral shell default title shipped in index.html — never valid on an inner route.
+const SHELL_DEFAULT_TITLE = "Capital District Nest";
 
 const xml = fs.readFileSync(path.join(ROOT, "public/sitemap.xml"), "utf8");
 const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
@@ -35,6 +37,9 @@ const totals = {
   nonemptyTitle: 0,
   multipleTitles: [],
   emptyTitle: [],
+  shellDefaultTitle: [],
+  prerenderHeadTimeout: [],
+  unresolvedRouteIdentity: [],
   multipleCanonicals: [],
   missingCanonical: [],
   homepageCanonicalOnNonHome: [],
@@ -43,10 +48,12 @@ const totals = {
   unintendedNoindex: [],
   homepageFingerprintMismatch: [],
   missingBodyOrH1: [],
+  missingH1: [],
   placeholderSchemaRefs: [],
   routeContentMismatch: [],
   externalCanonicalOk: [],
 };
+
 
 for (const url of urls) {
   const route = new URL(url).pathname.replace(/\/+$/, "") || "/";
@@ -64,6 +71,27 @@ for (const url of urls) {
   if (titles.length > 1) totals.multipleTitles.push(`${route} (${titles.length})`);
   if (titles.length === 0 || !titles[0]) totals.emptyTitle.push(route);
   else totals.nonemptyTitle++;
+
+  // route-appropriate title: an inner route must never keep the neutral shell title
+  if (route !== "/" && titles[0] === SHELL_DEFAULT_TITLE) totals.shellDefaultTitle.push(route);
+
+  // head-readiness ceiling expiry is a visible build condition
+  if (/name="x-prerender-head"\s+content="timeout"/.test(head)) {
+    const reason = head.match(/name="x-prerender-head-reason"\s+content="([^"]*)"/)?.[1] || "unknown";
+    totals.prerenderHeadTimeout.push(`${route} (${reason})`);
+  }
+
+  // data-driven routes must carry their resolved identity in the title
+  const identity = route.match(
+    /^\/(?:living-in|market-reports|homes\/listings|rentals|towns|biz|business)\/([^/]+)$/,
+  )?.[1];
+  if (identity && titles[0]) {
+    const tokens = identity.split("-").filter((t) => t.length > 3);
+    const hay = titles[0].toLowerCase();
+    if (tokens.length && !tokens.some((t) => hay.includes(t)))
+      totals.unresolvedRouteIdentity.push(`${route} title="${titles[0]}"`);
+  }
+
 
   // canonical
   const canonicals = [...head.matchAll(/<link[^>]*rel="canonical"[^>]*href="([^"]+)"[^>]*>/g)].map((m) => m[1]);
@@ -102,7 +130,9 @@ for (const url of urls) {
   // body / h1
   const h1s = [...html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/g)];
   const bodyText = html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<[^>]+>/g, " ");
+  if (h1s.length === 0) totals.missingH1.push(route);
   if (h1s.length === 0 || bodyText.trim().length < 500) totals.missingBodyOrH1.push(route);
+
 
   // placeholder schema refs
   if (/your-domain\.com|example\.com|lovableproject\.com/.test(head))
@@ -119,6 +149,9 @@ snapshots missing ............. ${fmt(totals.snapshotMissing)}
 nonempty titles ............... ${totals.nonemptyTitle}
 empty title ................... ${fmt(totals.emptyTitle)}
 >1 title ...................... ${fmt(totals.multipleTitles)}
+shell-default title on route .. ${fmt(totals.shellDefaultTitle)}
+head-readiness timeouts ....... ${fmt(totals.prerenderHeadTimeout)}
+unresolved route identity ..... ${fmt(totals.unresolvedRouteIdentity)}
 >1 canonical .................. ${fmt(totals.multipleCanonicals)}
 missing canonical ............. ${fmt(totals.missingCanonical)}
 homepage canonical off-home ... ${fmt(totals.homepageCanonicalOnNonHome)}
@@ -126,8 +159,28 @@ non-www canonical ............. ${fmt(totals.nonWwwCanonical)}
 duplicate robots .............. ${fmt(totals.duplicateRobots)}
 noindex ....................... ${fmt(totals.unintendedNoindex)}
 homepage fingerprint leak ..... ${fmt(totals.homepageFingerprintMismatch)}
+missing H1 .................... ${fmt(totals.missingH1)}
 missing body/H1 ............... ${fmt(totals.missingBodyOrH1)}
 placeholder schema refs ....... ${fmt(totals.placeholderSchemaRefs)}
 route/canonical mismatch ...... ${fmt(totals.routeContentMismatch)}
 approved external canonicals .. ${fmt(totals.externalCanonicalOk)}
 `);
+
+const blocking = [
+  ["shellDefaultTitle", totals.shellDefaultTitle],
+  ["prerenderHeadTimeout", totals.prerenderHeadTimeout],
+  ["unresolvedRouteIdentity", totals.unresolvedRouteIdentity],
+  ["emptyTitle", totals.emptyTitle],
+  ["multipleTitles", totals.multipleTitles],
+  ["multipleCanonicals", totals.multipleCanonicals],
+  ["missingCanonical", totals.missingCanonical],
+  ["missingH1", totals.missingH1],
+  ["snapshotMissing", totals.snapshotMissing],
+].filter(([, v]) => v.length);
+
+if (blocking.length) {
+  console.error(`SNAPSHOT AUDIT FAILED: ${blocking.map(([k, v]) => `${k}=${v.length}`).join(", ")}`);
+  process.exit(1);
+}
+console.log("SNAPSHOT AUDIT PASSED");
+
