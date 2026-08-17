@@ -52,6 +52,11 @@ for (const url of urls) {
   const text = body.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 
   if (titles.length !== 1 || !titles[0]) add(fam, "titleCount", p);
+  // Route-head assertion: no indexable route may ship the neutral shell title.
+  const SHELL_TITLE = "Capital District Nest";
+  const isPrivate = /^\/(admin|auth|dashboard|partner-|reset-password|seo-audit|reports)/.test(p);
+  if (!isPrivate && titles[0] === SHELL_TITLE) add(fam, "shellDefaultTitle", p);
+  if (/name="x-prerender-head"[^>]*content="timeout"/.test(head)) add(fam, "prerenderHeadTimeout", p);
   if (p !== "/" && titles[0] === homeTitle) add(fam, "homepageTitleLeak", p);
   if (canons.length !== 1) add(fam, "canonicalCount", p);
   if (canons[0] && canons[0] !== url) add(fam, "canonicalMismatch", `${p} -> ${canons[0]}`);
@@ -88,6 +93,7 @@ for (const url of urls) {
   }
 }
 
+let exitCode = 0;
 console.log(`\n=== FULL SITEMAP AUDIT === (${urls.length} urls, ${checked} artifacts read)`);
 const fams = Object.keys(defects).sort();
 if (!fams.length) console.log("no defects");
@@ -99,3 +105,10 @@ for (const f of fams) {
     console.log(`  ${(k + " ").padEnd(30, ".")} ${v.length}  e.g. ${v.slice(0, 3).join(" | ")}`);
   }
 }
+
+const blocking = fams.filter((f) =>
+  Object.keys(defects[f]).some((k) => k !== "thinBody"),
+);
+if (blocking.length) exitCode = 1;
+console.log(exitCode ? "\nFULL SITEMAP AUDIT: FAIL" : "\nFULL SITEMAP AUDIT: PASS");
+process.exit(exitCode);
