@@ -283,7 +283,9 @@ const PrerenderReadySignal = () => {
     const MAX_WAIT = 60000;
 
     let lastSignature: string | null = null;
+    let lateId = 0;
     let stableTicks = 0;
+
 
     const intervalId = window.setInterval(() => {
       const titleEls = document.querySelectorAll("title");
@@ -327,13 +329,39 @@ const PrerenderReadySignal = () => {
             .filter(Boolean)
             .join(",") || "unstable",
         );
+
         dispatch();
+        // The marker must describe the head that is actually CAPTURED, not the
+        // head as it stood at the deadline. Under prerender concurrency a slow
+        // route can satisfy the contract after the ceiling but before the
+        // renderer snapshots the DOM. Keep watching until then and upgrade the
+        // marker to `ready`, flagged `late` so the build can count these.
+        lateId = window.setInterval(() => {
+          const t = document.querySelectorAll("title");
+          const c = document.querySelectorAll('link[rel="canonical"]');
+          const tv = (t[0]?.textContent || "").trim();
+          const cv = (c[0]?.getAttribute("href") || "").trim();
+          const hv = (document.querySelector("h1")?.textContent || "").trim();
+          if (t.length === 1 && tv && tv !== SHELL_DEFAULT_TITLE && c.length === 1 && cv && hv) {
+            window.clearInterval(lateId);
+            stampMarker("ready");
+            const late = document.createElement("meta");
+            late.setAttribute("name", "x-prerender-head-late");
+            late.setAttribute("content", "1");
+            document.head.appendChild(late);
+          }
+        }, 250);
       }
     }, 150);
 
 
 
-    return () => window.clearInterval(intervalId);
+
+    return () => {
+      window.clearInterval(intervalId);
+      if (lateId) window.clearInterval(lateId);
+    };
+
   }, []);
 
   return null;

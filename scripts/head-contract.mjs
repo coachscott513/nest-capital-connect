@@ -185,13 +185,20 @@ export function checkHead({ route, html, requireReadiness }) {
   else if (!s.h1s[0]) push("emptyH1", route);
 
   // route identity
+  // /biz slugs are `<name>-<random-hash>`; the hash never appears in the title,
+  // so it is dropped before matching. Short names (CVS, ATM, GE) legitimately
+  // produce only sub-4-char tokens, so the floor is 2 characters.
   const identity = routeIdentity(route);
   if (identity && s.titles[0]) {
-    const tokens = identity.split("-").filter((t) => t.length > 3);
+    const isBiz = /^\/(?:biz|business)\//.test(route);
+    const parts = identity.split("-");
+    const usable = isBiz && parts.length > 1 ? parts.slice(0, -1) : parts;
+    const tokens = usable.filter((t) => t.length >= (isBiz ? 2 : 4));
     const hay = s.titles[0].toLowerCase();
     if (tokens.length && !tokens.some((t) => hay.includes(t)))
       push("unresolvedRouteIdentity", `${route} title="${s.titles[0]}"`);
   }
+
 
   // json-ld validity
   for (const raw of s.jsonLd) {
