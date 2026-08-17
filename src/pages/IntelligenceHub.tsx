@@ -1,6 +1,6 @@
 import { useState } from "react";
+import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { Search, FileText, BookOpen, Home, Send, TrendingUp, Shield, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -144,10 +144,10 @@ const IntelligenceHub = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Resource Hub | Capital District Nest</title>
-        <meta name="description" content="Access expert-level real estate resources for the Capital District. Sample reports, buyer guides, and property analysis tools." />
-      </Helmet>
+      <SEOHead
+        title="Resource Hub | Capital District Nest"
+        description="Access expert-level real estate resources for the Capital District. Sample reports, buyer guides, and property analysis tools."
+      />
 
       <CleanHeader />
 

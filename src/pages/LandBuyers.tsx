@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/MainLayout";
 import GuideLeadModal from "@/components/GuideLeadModal";
@@ -10,12 +10,11 @@ const LandBuyers = () => {
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>Land Buying Guide | Capital District NY</title>
-        <meta name="description" content="Everything you need to know before buying land in Albany, Troy, Schenectady, and the Capital District. Zoning, utilities, build costs, and resale value explained." />
-        <meta name="keywords" content="buy land Capital District, Albany land for sale, building lots NY, vacant land investment, zoning Capital District" />
-        <link rel="canonical" href="https://capitaldistrictnest.com/land-buyers" />
-      </Helmet>
+      <SEOHead
+        title="Land Buying Guide | Capital District NY"
+        description="Everything you need to know before buying land in Albany, Troy, Schenectady, and the Capital District. Zoning, utilities, build costs, and resale value explained."
+        keywords="buy land Capital District, Albany land for sale, building lots NY, vacant land investment, zoning Capital District"
+      />
 
       <GuideLeadModal
         open={showGuideModal}

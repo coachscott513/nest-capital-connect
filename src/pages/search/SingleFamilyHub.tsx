@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import SEOHead from "@/components/SEOHead";
 import { Search, ArrowRight, Home, MapPin, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainLayout from "@/components/MainLayout";
@@ -45,10 +45,10 @@ const SingleFamilyHub = () => {
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>Single Family Homes | Capital District Nest</title>
-        <meta name="description" content="Find your perfect single family home in the Capital District. Expert analysis and market intelligence for Albany, Troy, Schenectady, and Saratoga." />
-      </Helmet>
+      <SEOHead
+        title="Single Family Homes | Capital District Nest"
+        description="Find your perfect single family home in the Capital District. Expert analysis and market intelligence for Albany, Troy, Schenectady, and Saratoga."
+      />
 
       <div className="relative min-h-screen overflow-hidden">
         {/* Cinematic Background */}

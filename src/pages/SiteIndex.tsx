@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 
@@ -21,10 +21,10 @@ const towns = [
 const SiteIndex = () => {
   return (
     <>
-      <Helmet>
-        <title>Site Index | Capital District Nest</title>
-        <meta name="description" content="Complete site map for Capital District Nest - browse all pages for homes, rentals, investment properties, and market intelligence in the Capital District." />
-      </Helmet>
+      <SEOHead
+        title="Site Index | Capital District Nest"
+        description="Complete site map for Capital District Nest - browse all pages for homes, rentals, investment properties, and market intelligence in the Capital District."
+      />
 
       <CleanHeader />
 

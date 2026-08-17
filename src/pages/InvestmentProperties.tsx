@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/MainLayout";
 import GuideLeadModal from "@/components/GuideLeadModal";
@@ -10,12 +10,11 @@ const InvestmentProperties = () => {
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>Capital District Investment Properties & Cash Flow Analysis</title>
-        <meta name="description" content="Learn how to evaluate investment properties in Albany, Troy, and Schenectady. Understand cash flow, cap rates, and what makes a property a smart investment in the Capital District." />
-        <meta name="keywords" content="Capital District investment properties, Albany cash flow, Troy rental properties, cap rate NY, real estate investing upstate NY" />
-        <link rel="canonical" href="https://capitaldistrictnest.com/investment-properties" />
-      </Helmet>
+      <SEOHead
+        title="Capital District Investment Properties & Cash Flow Analysis"
+        description="Learn how to evaluate investment properties in Albany, Troy, and Schenectady. Understand cash flow, cap rates, and what makes a property a smart investment in the Capital District."
+        keywords="Capital District investment properties, Albany cash flow, Troy rental properties, cap rate NY, real estate investing upstate NY"
+      />
 
       <GuideLeadModal
         open={showGuideModal}

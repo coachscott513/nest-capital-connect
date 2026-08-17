@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import SEOHead from "@/components/SEOHead";
 import { Search, ArrowRight, Trees, FileCheck, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainLayout from "@/components/MainLayout";
@@ -45,10 +45,10 @@ const LandHub = () => {
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>Land & Development Opportunities | Capital District Nest</title>
-        <meta name="description" content="Find land for development in the Capital District. Zoning analysis, perc test guidance, and parcel intelligence for builders and developers." />
-      </Helmet>
+      <SEOHead
+        title="Land & Development Opportunities | Capital District Nest"
+        description="Find land for development in the Capital District. Zoning analysis, perc test guidance, and parcel intelligence for builders and developers."
+      />
 
       <div className="relative min-h-screen overflow-hidden">
         {/* Cinematic Background */}

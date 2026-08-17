@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEOHead from "@/components/SEOHead";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import MainLayout from "@/components/MainLayout";
@@ -55,11 +55,12 @@ const FirstTimeHomebuyers = () => {
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>{displayCity} First-Time Home Buyer Grants &amp; Low-Down Programs</title>
-        <meta name="description" content={`See every ${displayCity}-area grant, low-down, and first-time buyer option. Check eligibility in minutes.`} />
-        <meta name="keywords" content={`${displayCity.toLowerCase()} first time home buyer, down payment assistance, fha loans, grants`} />
-      </Helmet>
+      <SEOHead
+        title={`${displayCity} First-Time Home Buyer Grants & Low-Down Programs`}
+        description={`See every ${displayCity}-area grant, low-down, and first-time buyer option. Check eligibility in minutes.`}
+        keywords={`${displayCity.toLowerCase()} first time home buyer, down payment assistance, fha loans, grants`}
+      />
+
 
       <main className="flex-grow">
         {/* Hero Section */}
