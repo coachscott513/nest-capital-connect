@@ -19,6 +19,8 @@ const EXTERNAL_CANONICAL_ALLOWLIST = {
 
 const HOMEPAGE_TITLE_FINGERPRINT = "The Digital Front Door of the Capital District";
 const HOMEPAGE_BODY_FINGERPRINT = "Search anything local.";
+// Neutral shell default title shipped in index.html — never valid on an inner route.
+const SHELL_DEFAULT_TITLE = "Capital District Nest";
 
 const xml = fs.readFileSync(path.join(ROOT, "public/sitemap.xml"), "utf8");
 const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
