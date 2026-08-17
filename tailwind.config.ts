@@ -25,6 +25,16 @@ export default {
 			'lora': ['Lora', 'Georgia', 'serif'],
 		},
 			colors: {
+				surface: {
+					canvas: 'hsl(var(--surface-canvas))',
+					raised: 'hsl(var(--surface-raised))',
+					deep: 'hsl(var(--surface-deep))',
+					card: 'hsl(var(--surface-card))',
+					'card-2': 'hsl(var(--surface-card-2))'
+				},
+				'text-soft': 'hsl(var(--text-soft))',
+				'text-quiet': 'hsl(var(--text-quiet))',
+				'text-bright': 'hsl(var(--text-bright))',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
