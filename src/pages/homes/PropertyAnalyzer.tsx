@@ -332,7 +332,23 @@ const InvestorAnalyzer = ({
                 <Result label="Estimated ROI" value={pct(flipROI)} />
                 <Result label="Holding Costs" value={`$${fmt(flipHolding)}`} />
                 <Result label="Resale Costs" value={`$${fmt(flipResaleCost)}`} />
+
+                {/* Quiet secondary hand-off. Nest does the regional pass;
+                    AnalyzeAnyProperty owns the deeper decision-specific model. */}
+                <a
+                  href={analyzeAnyPropertyUrl({
+                    placement: "homes-analyzer-fix-flip",
+                    decisionType: "flip",
+                  })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-center gap-2 text-[13px] font-medium text-white/60 hover:text-[#5eead4] transition-colors"
+                >
+                  Open full Property Intelligence analysis
+                  <ArrowUpRight className="w-3.5 h-3.5" aria-hidden />
+                </a>
               </div>
+
             ) : isLand ? (
               <div className="space-y-4">
                 <Result label="Total Land Cost" value={`$${fmt(landTotalCost)}`} />
