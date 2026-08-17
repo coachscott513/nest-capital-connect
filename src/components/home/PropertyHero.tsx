@@ -153,9 +153,18 @@ const PropertyHero = () => {
             boxShadow: "0 24px 70px -32px rgba(0,0,0,0.7)",
           }}
         >
-          <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-[#64748B] mb-5 text-center">
-            Live property search
-          </p>
+          <div className="text-center max-w-2xl mx-auto mb-8 md:mb-10">
+            <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-[#64748B]">
+              Live property search
+            </p>
+            <h2 className="mt-4 text-[1.9rem] sm:text-4xl md:text-[2.75rem] font-extralight tracking-[-0.035em] leading-[1.08] text-white text-balance">
+              Search live homes.
+            </h2>
+            <p className="mt-4 text-[14.5px] md:text-[15.5px] font-light leading-[1.6] text-white/55">
+              Search by neighborhood, city, or school across my live MLS search.
+            </p>
+          </div>
+
 
           <div className="min-h-[168px] flex items-center justify-center">
             {!mountWidget || (!ready && !failed) ? (
