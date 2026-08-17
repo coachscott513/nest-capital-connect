@@ -98,7 +98,7 @@ const PropertyHero = () => {
       />
 
       <div
-        className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-20 pb-16 md:pt-28 md:pb-24"
+        className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-16 pb-12 md:pt-20 md:pb-16"
         style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
       >
         <motion.div {...fade} className="text-center">
@@ -106,20 +106,20 @@ const PropertyHero = () => {
             Capital District Property Intelligence
           </p>
 
-          <h1 className="mt-8 md:mt-10 text-[2.3rem] sm:text-5xl md:text-[4rem] tracking-[-0.035em] leading-[1.06] text-white text-balance">
+          <h1 className="mt-6 md:mt-7 text-[2.3rem] sm:text-5xl md:text-[4rem] tracking-[-0.035em] leading-[1.06] text-white text-balance">
             <span className="block font-extralight text-[#E2E8F0]">Find the property.</span>
             <span className="block font-semibold">Know if the deal works.</span>
             <span className="block font-light text-[#E2E8F0]">Build the right team.</span>
           </h1>
 
-          <p className="mt-8 text-[15px] md:text-[17px] text-[#94A3B8] max-w-xl mx-auto font-light leading-[1.65]">
+          <p className="mt-6 text-[15px] md:text-[17px] text-[#94A3B8] max-w-xl mx-auto font-light leading-[1.65]">
             Search live homes, understand the financial reality behind the listing,
             and connect with the local professionals who help move the decision
             forward.
           </p>
 
 
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
               href="#property-search-widget"
               className="inline-flex items-center justify-center gap-2 min-h-[48px] px-7 rounded-full bg-white text-[#0B0F19] text-[13px] font-semibold tracking-wide hover:opacity-90 transition"
@@ -148,20 +148,20 @@ const PropertyHero = () => {
         <div
           id="property-search-widget"
           ref={slotRef}
-          className="mt-14 md:mt-20 scroll-mt-24 rounded-[28px] border border-white/[0.06] px-5 py-9 sm:px-10 sm:py-12 md:px-14 md:py-16"
+          className="mt-10 md:mt-12 scroll-mt-24 rounded-[28px] border border-white/[0.06] px-5 py-8 sm:px-10 sm:py-10 md:px-14 md:py-12"
           style={{
             background: "linear-gradient(180deg, #13161E 0%, #1A1D26 100%)",
             boxShadow: "0 24px 70px -32px rgba(0,0,0,0.7)",
           }}
         >
-          <div className="text-center max-w-2xl mx-auto mb-8 md:mb-10">
+          <div className="text-center max-w-2xl mx-auto mb-7">
             <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-[#64748B]">
               Live property search
             </p>
-            <h2 className="mt-4 text-[1.9rem] sm:text-4xl md:text-[2.75rem] font-extralight tracking-[-0.035em] leading-[1.08] text-white text-balance">
+            <h2 className="mt-3 text-[1.75rem] sm:text-[2.1rem] md:text-[2.4rem] font-extralight tracking-[-0.035em] leading-[1.08] text-white text-balance">
               Search live homes.
             </h2>
-            <p className="mt-4 text-[14.5px] md:text-[15.5px] font-light leading-[1.6] text-white/55">
+            <p className="mt-3 text-[14.5px] md:text-[15.5px] font-light leading-[1.6] text-white/55">
               Search by neighborhood, city, or school across my live MLS search.
             </p>
           </div>
@@ -217,7 +217,7 @@ const PropertyHero = () => {
             )}
           </div>
 
-          <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-x-5 gap-y-2.5">
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-x-5 gap-y-2.5">
             <Link
               to="/homes"
               className="text-[13px] font-medium text-white/70 hover:text-white transition"
@@ -245,8 +245,8 @@ const PropertyHero = () => {
           </div>
 
 
-          <p className="mt-5 text-center text-[11.5px] leading-relaxed text-white/40 max-w-xl mx-auto font-light">
-            Live listing search powered by RealScout.
+          <p className="mt-4 text-center text-[11.5px] leading-relaxed text-white/40 max-w-xl mx-auto font-light">
+            Powered by RealScout.
           </p>
 
         </div>
