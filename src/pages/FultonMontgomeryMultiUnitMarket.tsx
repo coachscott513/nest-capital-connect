@@ -22,7 +22,9 @@ const FultonMontgomeryMultiUnitMarket = () => {
         "description": "Fulton & Montgomery County multi-unit market analysis with cap rates, cash-on-cash returns, BRRRR deals, and top ROI markets."
       },
       {
-        "@type": "LocalBusiness",
+        // Editorial market report — no business location is asserted for this
+        // URL; only publisher/organisation context.
+        "@type": "Organization",
         "name": "Capital District Nest",
         "telephone": "+15185227265"
       },
