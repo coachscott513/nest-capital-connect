@@ -120,10 +120,10 @@ const TownsEventsStoriesChapter = () => {
               All towns
             </Link>
             <button type="button" aria-label="Scroll towns left" onClick={() => towns.nudge(-1)} className={arrowClass}>
-              <ChevronLeft className="w-4.5 h-4.5" />
+              <ChevronLeft className="w-4 h-4" />
             </button>
             <button type="button" aria-label="Scroll towns right" onClick={() => towns.nudge(1)} className={arrowClass}>
-              <ChevronRight className="w-4.5 h-4.5" />
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </motion.div>
@@ -207,10 +207,10 @@ const TownsEventsStoriesChapter = () => {
           </p>
           <div className="hidden md:flex items-center gap-2">
             <button type="button" aria-label="Scroll stories left" onClick={() => stories.nudge(-1)} className={arrowClass}>
-              <ChevronLeft className="w-4.5 h-4.5" />
+              <ChevronLeft className="w-4 h-4" />
             </button>
             <button type="button" aria-label="Scroll stories right" onClick={() => stories.nudge(1)} className={arrowClass}>
-              <ChevronRight className="w-4.5 h-4.5" />
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
