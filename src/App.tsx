@@ -223,14 +223,21 @@ const PrerenderReadySignal = () => {
   React.useEffect(() => {
     if (typeof document === "undefined") return;
 
-    // Prerender capture must happen AFTER react-helmet-async has flushed the
-    // route's head into the document. Helmet commits asynchronously and lazy
-    // route chunks can mount their <Helmet> well after first paint, so a fixed
-    // delay raced the capture and some routes were snapshotted with the shell's
-    // default <title>. We now poll until the route owns its head (a title that
-    // is no longer the shell default, or a canonical link) and only then signal,
-    // with a hard ceiling so a route that legitimately keeps the default title
-    // still gets captured.
+    /**
+     * Route-head readiness contract for the prerenderer.
+     *
+     * Capture must never happen before react-helmet-async has committed the
+     * route's own head. Readiness therefore means BOTH:
+     *   1. the document title is helmet-owned (a `data-rh` <title>), and
+     *   2. that title is not the neutral shell default,
+     * held stable across two consecutive polls so a data-dependent route that
+     * upgrades its title after its query resolves is captured in its final
+     * state, not an intermediate one.
+     *
+     * The timeout is a FAIL CONDITION, not permission to capture a generic
+     * title: on expiry we stamp `<meta name="x-prerender-head" content="timeout">`
+     * so the build audit can name the offending route and fail the run.
+     */
     let done = false;
     const dispatch = () => {
       if (done) return;
@@ -246,13 +253,31 @@ const PrerenderReadySignal = () => {
     };
 
     const start = Date.now();
-    const MAX_WAIT = 9000;
+    const MAX_WAIT = 25000;
+    let lastTitle: string | null = null;
+    let stableTicks = 0;
+
     const intervalId = window.setInterval(() => {
-      const hasRouteTitle =
-        document.title && document.title.trim() !== SHELL_DEFAULT_TITLE;
-      const hasCanonical = !!document.querySelector('link[rel="canonical"]');
-      if ((hasRouteTitle && hasCanonical) || Date.now() - start > MAX_WAIT) {
+      const helmetTitle = document.querySelector('title[data-rh="true"]');
+      const title = (document.title || "").trim();
+      const routeOwnsHead = !!helmetTitle && !!title && title !== SHELL_DEFAULT_TITLE;
+
+      if (routeOwnsHead) {
+        stableTicks = title === lastTitle ? stableTicks + 1 : 0;
+        lastTitle = title;
+        if (stableTicks >= 1) {
+          window.clearInterval(intervalId);
+          dispatch();
+          return;
+        }
+      }
+
+      if (Date.now() - start > MAX_WAIT) {
         window.clearInterval(intervalId);
+        const marker = document.createElement("meta");
+        marker.setAttribute("name", "x-prerender-head");
+        marker.setAttribute("content", "timeout");
+        document.head.appendChild(marker);
         dispatch();
       }
     }, 150);
@@ -262,6 +287,7 @@ const PrerenderReadySignal = () => {
 
   return null;
 };
+
 
 
 // /towns/:slug is now the dedicated Town Pulse local-engagement dashboard

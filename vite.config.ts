@@ -214,7 +214,10 @@ export default defineConfig(({ mode }) => ({
           // Prefer an explicit signal from React once the routed page has mounted.
           renderAfterDocumentEvent: "render-complete",
           // Fallback wait for pages with browser-only effects or slower content.
-          renderAfterTime: 12000,
+          // Hard ceiling only. The route-head readiness contract in
+          // PrerenderReadySignal decides when a page is capturable; this must
+          // stay above that contract's own 25s bound so the signal always wins.
+          renderAfterTime: 32000,
           maxConcurrentRoutes: 3,
           // Must stay false: Supabase-backed routes (/biz/:slug, town pages)
           // need their data request to resolve, otherwise they snapshot in the

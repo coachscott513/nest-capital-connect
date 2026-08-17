@@ -42,39 +42,46 @@ const StarRating = ({ rating }: { rating: number }) => (
 );
 
 const Reviews = () => {
-  const reviewSchema = {
+  /**
+   * Schema policy: this is an editorial testimonial page, not the canonical
+   * page of a physical business, so it must not carry LocalBusiness. The
+   * displayed quotes are not backed by a verifiable stored-review dataset, so
+   * no Review/AggregateRating markup is emitted either — only page-level
+   * context that the visible content supports.
+   */
+  const pageSchema = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Capital District Nest - Scott Alvarez Real Estate Team",
-    "image": "https://capitaldistrictnest.com/lovable-uploads/85110425-79bb-4796-9796-22b5b647b1ee.png",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Albany",
-      "addressRegion": "NY",
-      "addressCountry": "US"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "reviewCount": "3",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "review": reviews.map((r) => ({
-      "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": r.name
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "Client Reviews | Capital District Nest Real Estate",
+        "url": "https://www.capitaldistrictnest.com/reviews",
+        "description":
+          "Client feedback from Albany, Amsterdam, and Pine Hills homebuyers and sellers who worked with Capital District Nest.",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Capital District Nest",
+          "url": "https://www.capitaldistrictnest.com",
+        },
       },
-      "datePublished": r.dateISO,
-      "reviewBody": r.review,
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": r.rating.toString(),
-        "bestRating": "5",
-        "worstRating": "1"
-      }
-    }))
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.capitaldistrictnest.com/",
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Reviews",
+            "item": "https://www.capitaldistrictnest.com/reviews",
+          },
+        ],
+      },
+    ],
   };
 
   return (
@@ -85,9 +92,10 @@ const Reviews = () => {
           name="description"
           content="Read real reviews from Albany, Amsterdam, and Pine Hills clients. See why investors and homeowners trust Capital District Nest for buying and selling homes in NY."
         />
-        <link rel="canonical" href="https://capitaldistrictnest.com/reviews" />
-        <script type="application/ld+json">{JSON.stringify(reviewSchema)}</script>
+        <link rel="canonical" href="https://www.capitaldistrictnest.com/reviews" />
+        <script type="application/ld+json">{JSON.stringify(pageSchema)}</script>
       </Helmet>
+
 
       <main className="py-20 px-[5%]">
         {/* Hero Section */}
