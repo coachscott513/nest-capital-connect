@@ -59,6 +59,22 @@
     --emerald: 160 84% 39%;
     --emerald-muted: 160 50% 50%;
 
+    /* ============================================================
+       HOMEPAGE SURFACE SCALE (Global Flow / Premium UX v1)
+       Promotes the previously hardcoded homepage chapter hexes to
+       tokens. Values are byte-equivalent to the shipped colors.
+       ============================================================ */
+    --surface-canvas: 222 40% 7%;      /* #0B0F19 base chapter */
+    --surface-raised: 226 33% 9%;      /* #0E1220 alternating chapter */
+    --surface-deep: 220 43% 5%;        /* #080B12 deepest chapter */
+    --surface-card: 228 22% 10%;       /* #13161E card gradient top */
+    --surface-card-2: 226 18% 13%;     /* #1A1D26 card gradient base */
+    --text-soft: 215 20% 65%;          /* #94A3B8 secondary body */
+    --text-quiet: 215 16% 47%;         /* #64748B eyebrow / meta */
+    --text-bright: 214 32% 91%;        /* #E2E8F0 light display weight */
+
+
+
     /* Report tokens kept on light paper — reports print on white */
     --report-bg: 0 0% 100%;
     --report-card: 0 0% 98%;
