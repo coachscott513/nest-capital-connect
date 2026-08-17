@@ -130,7 +130,9 @@ for (const url of urls) {
   // body / h1
   const h1s = [...html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/g)];
   const bodyText = html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<[^>]+>/g, " ");
+  if (h1s.length === 0) totals.missingH1.push(route);
   if (h1s.length === 0 || bodyText.trim().length < 500) totals.missingBodyOrH1.push(route);
+
 
   // placeholder schema refs
   if (/your-domain\.com|example\.com|lovableproject\.com/.test(head))
