@@ -1,5 +1,5 @@
-import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import { TrendingUp, ArrowRight, Mail } from "lucide-react";
 import MainLayout from "@/components/MainLayout";
 import { Input } from "@/components/ui/input";
@@ -81,10 +81,10 @@ const trendingTopics = [
 const MarketInsights = () => {
   return (
     <MainLayout>
-      <Helmet>
-        <title>Market Insights | Capital District Nest</title>
-        <meta name="description" content="Real estate market intelligence, investment memos, and analysis for the Capital District. Data-driven insights for serious investors." />
-      </Helmet>
+      <SEOHead
+        title="Market Insights | Capital District Nest"
+        description="Real estate market intelligence, investment memos, and analysis for the Capital District. Data-driven insights for serious investors."
+      />
 
       {/* Header Banner */}
       <section className="bg-[#022c22] py-10 px-4 mt-16">

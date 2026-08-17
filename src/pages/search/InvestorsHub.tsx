@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import SEOHead from "@/components/SEOHead";
 import { Search, ArrowRight, Building, TrendingUp, Calculator } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainLayout from "@/components/MainLayout";
@@ -45,10 +45,10 @@ const InvestorsHub = () => {
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>Investor Intelligence | Capital District Nest</title>
-        <meta name="description" content="Multi-unit investment analysis for the Capital District. Cash flow reports, cap rate data, and DSCR loan guidance for Albany, Troy, and Schenectady." />
-      </Helmet>
+      <SEOHead
+        title="Investor Intelligence | Capital District Nest"
+        description="Multi-unit investment analysis for the Capital District. Cash flow reports, cap rate data, and DSCR loan guidance for Albany, Troy, and Schenectady."
+      />
 
       <div className="relative min-h-screen overflow-hidden">
         {/* Cinematic Background */}

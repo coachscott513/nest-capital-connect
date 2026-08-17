@@ -276,7 +276,12 @@ const PrerenderReadySignal = () => {
     };
 
     const start = Date.now();
-    const MAX_WAIT = 25000;
+    // Bounded ceiling. Sized for the prerender machine under concurrency, not
+    // for a single warm page load: a correct route reaches `ready` in under a
+    // second, so this budget is only ever spent by a genuinely broken head.
+    // It must stay below the renderer's own renderAfterTime in vite.config.ts.
+    const MAX_WAIT = 60000;
+
     let lastSignature: string | null = null;
     let stableTicks = 0;
 

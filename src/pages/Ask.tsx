@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet-async";
+import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
@@ -58,10 +58,10 @@ const Ask = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>Ask a Question | Capital District Nest</title>
-        <meta name="description" content="Have a question about Capital District real estate? Ask anything about pricing, neighborhoods, taxes, rentals, or timelines. Get a clear, helpful answer." />
-      </Helmet>
+      <SEOHead
+        title="Ask a Question | Capital District Nest"
+        description="Have a question about Capital District real estate? Ask anything about pricing, neighborhoods, taxes, rentals, or timelines. Get a clear, helpful answer."
+      />
 
       <MainHeader />
 

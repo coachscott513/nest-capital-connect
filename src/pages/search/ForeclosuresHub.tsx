@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import SEOHead from "@/components/SEOHead";
 import { Search, ArrowRight, Building2, Hammer, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainLayout from "@/components/MainLayout";
@@ -45,10 +45,10 @@ const ForeclosuresHub = () => {
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>Foreclosure & Rehab Opportunities | Capital District Nest</title>
-        <meta name="description" content="Find distressed properties and rehab opportunities in the Capital District. BRRRR strategy analysis for Albany, Troy, and Schenectady investors." />
-      </Helmet>
+      <SEOHead
+        title="Foreclosure & Rehab Opportunities | Capital District Nest"
+        description="Find distressed properties and rehab opportunities in the Capital District. BRRRR strategy analysis for Albany, Troy, and Schenectady investors."
+      />
 
       <div className="relative min-h-screen overflow-hidden">
         {/* Cinematic Background */}

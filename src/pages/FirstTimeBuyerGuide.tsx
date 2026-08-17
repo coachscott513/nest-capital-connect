@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/MainLayout";
 import GuideLeadModal from "@/components/GuideLeadModal";
@@ -10,12 +10,11 @@ const FirstTimeHomeBuyers = () => {
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>First-Time Home Buyer Guide | Capital District NY</title>
-        <meta name="description" content="Everything first-time home buyers need to know about buying in Albany, Troy, and Schenectady. Grants, down-payment assistance, monthly costs, and the step-by-step process." />
-        <meta name="keywords" content="first-time home buyer Albany, NY home buyer grants, down payment assistance Capital District, buying first home Troy NY" />
-        <link rel="canonical" href="https://capitaldistrictnest.com/first-time-home-buyers" />
-      </Helmet>
+      <SEOHead
+        title="First-Time Home Buyer Guide | Capital District NY"
+        description="Everything first-time home buyers need to know about buying in Albany, Troy, and Schenectady. Grants, down-payment assistance, monthly costs, and the step-by-step process."
+        keywords="first-time home buyer Albany, NY home buyer grants, down payment assistance Capital District, buying first home Troy NY"
+      />
 
       <GuideLeadModal
         open={showGuideModal}

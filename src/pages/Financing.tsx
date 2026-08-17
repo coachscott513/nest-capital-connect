@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/MainLayout";
 import GuideLeadModal from "@/components/GuideLeadModal";
@@ -10,12 +10,11 @@ const Financing = () => {
 
   return (
     <MainLayout>
-      <Helmet>
-        <title>Mortgage & Financing Guide | Capital District NY</title>
-        <meta name="description" content="Understand mortgage options, down payment assistance, and financing for first-time buyers and investors in Albany, Troy, and the Capital District." />
-        <meta name="keywords" content="mortgage Capital District, home financing Albany, investor loans NY, first-time buyer mortgage, down payment assistance" />
-        <link rel="canonical" href="https://capitaldistrictnest.com/financing" />
-      </Helmet>
+      <SEOHead
+        title="Mortgage & Financing Guide | Capital District NY"
+        description="Understand mortgage options, down payment assistance, and financing for first-time buyers and investors in Albany, Troy, and the Capital District."
+        keywords="mortgage Capital District, home financing Albany, investor loans NY, first-time buyer mortgage, down payment assistance"
+      />
 
       <GuideLeadModal
         open={showGuideModal}
