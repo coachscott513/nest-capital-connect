@@ -519,28 +519,27 @@ const Index = () => {
 
       <CleanHeader />
 
-      {/* Chapter 1 — property-first entry */}
+      {/* Chapter 1 — hero: what this is, one action */}
       <PropertyHero />
-      {/* Chapter 2 — start with your decision */}
-      <DecisionRail />
-      {/* Chapter 3 — pressure-test the property */}
+      {/* Chapter 2 — regional search, four modes */}
+      <RegionalSearchChapter />
+      {/* Chapter 3 — businesses and services */}
+      <BusinessesServicesChapter />
+      {/* Chapter 4 — property intelligence */}
       <PropertyIntelligenceChapter />
-      {/* Chapter 4 — the people around the transaction */}
+      {/* Chapter 5 — the closing team */}
       <ClosingTeamChapter />
-      {/* Chapter 5 — before and after closing */}
+      {/* Chapter 6 — home services, before and after closing */}
       <HomeServicesRail />
-      {/* Chapter 6 — where you buy */}
+      <BuyingAndOwningHome />
+      {/* Chapter 7 — towns and neighborhoods */}
       <TownRail />
-      {/* Chapter 7 — human close */}
+      {/* Chapter 8 — this week in the Capital District */}
+      <ThisWeekCampaign />
+      <FeaturedThisWeek />
+      {/* Chapter 9 — talk to a human */}
       <TalkToScottChapter />
 
-      {/* Existing local-discovery layer, preserved below the property flow */}
-      <SearchHero />
-      <ThisWeekCampaign />
-      <ExploreCapitalDistrict />
-      <FeaturedThisWeek />
-      <BusinessCTA />
-      <BuyingAndOwningHome />
 
 
       <Footer />
