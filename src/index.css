@@ -834,6 +834,6 @@ realscout-advanced-search {
     padding-bottom: calc(72px + env(safe-area-inset-bottom));
   }
   @media (min-width: 768px) {
-    body.has-property-dock { padding-bottom: 0; }
+    body.has-property-dock { padding-bottom: 96px; }
   }
 }
