@@ -28,15 +28,14 @@ import heroEventsWide from "@/assets/hero-events-wide.jpg";
 import partnerRooseveltImg from "@/assets/partner-roosevelt.jpg";
 
 /* =============================================================
-   CAPITAL DISTRICT NEST — HOMEPAGE V2
-   The Digital Front Door of the Capital District.
-   Editorial. Confident. Uncluttered.
-   Structure:
-     1. Typographic hero
-     2. Featured This Week (5 editorial cards)
-     3. Explore the Capital District (4 gateways)
-     4. Grow Your Business (Apple-style refined)
+   CAPITAL DISTRICT NEST — HOMEPAGE (Global Flow / Premium UX v1)
+   Nine chapters, one idea each, in a fixed narrative order:
+     1. Hero            5. Closing Team
+     2. Regional Search 6. Home Services
+     3. Businesses      7. Towns
+     4. Property Intel  8. This Week      9. Talk to Scott
    ============================================================= */
+
 
 
 // ─── CURRENTLY FEATURED ──────────────────────────────────────────────────────
