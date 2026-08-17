@@ -234,12 +234,10 @@ const PropertyHero = () => {
             </Link>
           </div>
 
-          <p className="mt-5 text-center text-[11.5px] leading-relaxed text-white/45 max-w-2xl mx-auto">
-            Property search is powered by RealScout on live MLS data. The map view
-            linked above is currently scoped to the City of Albany. Looking for
-            businesses, towns, or services instead? Use the site search in the
-            navigation.
+          <p className="mt-5 text-center text-[11.5px] leading-relaxed text-white/40 max-w-xl mx-auto font-light">
+            Live listing search powered by RealScout.
           </p>
+
         </div>
       </div>
     </section>
