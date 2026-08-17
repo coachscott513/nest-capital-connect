@@ -3,7 +3,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { Link, useLocation } from "react-router-dom";
 import { ShieldCheck, Scale, Eye, ArrowRight } from "lucide-react";
-import { useClosingTeam, CLOSING_TEAM_CATEGORIES } from "@/components/property/useClosingTeam";
+import { useClosingTeam } from "@/components/property/useClosingTeam";
 import { TalkToScottButton } from "@/components/property/TalkToScott";
 import { realEstateDisclosure } from "@/config/realEstateDisclosure";
 
@@ -56,8 +56,8 @@ const ROLE_STATES = [
     body: "Walks the property and documents condition — structure, roof, mechanicals, water, and safety issues. The report is what you negotiate repairs or credits from. Nest does not select or rank inspectors.",
     when: "Inside the inspection contingency window, usually days after acceptance",
     cost: "Paid by the buyer, at the time of inspection",
-    to: "/businesses/home-services",
-    action: "Browse home services",
+    to: "/businesses/home-improvement",
+    action: "Browse home improvement and trades",
   },
   {
     id: "insurance",
