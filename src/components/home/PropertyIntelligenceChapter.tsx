@@ -127,47 +127,26 @@ const PropertyIntelligenceChapter = () => (
 
       <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {PATHS.map((p) => (
-          <div
+          <Link
             key={p.key}
-            className="group relative rounded-3xl border border-white/10 bg-white/[0.03] p-7 hover:border-[#5eead4]/40 transition-colors"
+            to={p.to}
+            onClick={() => {
+              propertyIntelligencePathClick(p.key, "internal");
+              logEngagement("property_analysis_click", {}, {
+                source_location: PLACEMENT,
+                intent_type: p.key,
+                product_type: "internal_tool",
+              });
+            }}
+            className="group relative flex flex-col rounded-3xl border border-white/10 bg-white/[0.03] p-7 hover:border-[#5eead4]/40 hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60"
           >
             <h3 className="text-xl font-semibold tracking-[-0.02em] text-white">{p.title}</h3>
             <p className="mt-3 text-[14.5px] text-white/65 font-light leading-relaxed">{p.copy}</p>
-
-            <a
-              href={analyzeAnyPropertyUrl({ placement: PLACEMENT, decisionType: p.key })}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() =>
-                logEngagement("property_analysis_click", {}, {
-                  source_location: PLACEMENT,
-                  intent_type: p.key,
-                  product_type: "analyze_any_property",
-                })
-              }
-              className="mt-6 inline-flex items-center gap-2 min-h-[44px] text-[14px] font-semibold text-white hover:text-[#5eead4] transition-colors"
-            >
-              Open in AnalyzeAnyProperty
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
-
-            {p.internal && (
-              <Link
-                to={p.internal.to}
-                onClick={() =>
-                  logEngagement("property_analysis_click", {}, {
-                    source_location: PLACEMENT,
-                    intent_type: p.key,
-                    product_type: "internal_tool",
-                  })
-                }
-                className="mt-1 flex items-center gap-2 min-h-[44px] text-[13px] font-medium text-white/50 hover:text-white/80 transition-colors"
-              >
-                {p.internal.label}
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            )}
-          </div>
+            <span className="mt-auto pt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-[#5eead4] group-hover:gap-3 transition-all">
+              {p.action}
+              <ArrowRight className="w-4 h-4" aria-hidden />
+            </span>
+          </Link>
         ))}
       </div>
 
@@ -176,7 +155,25 @@ const PropertyIntelligenceChapter = () => (
           context={{ placement: PLACEMENT }}
           label="Have Scott review the decision"
         />
+        <a
+          href={analyzeAnyPropertyUrl({ placement: PLACEMENT })}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => {
+            propertyIntelligencePathClick("chapter", "external");
+            logEngagement("property_analysis_click", {}, {
+              source_location: PLACEMENT,
+              intent_type: "property_intelligence",
+              product_type: "analyze_any_property",
+            });
+          }}
+          className="inline-flex items-center gap-2 min-h-[48px] px-5 rounded-full border border-white/15 bg-white/[0.04] text-white text-[13px] font-semibold hover:bg-white/[0.09] transition"
+        >
+          Open AnalyzeAnyProperty
+          <ArrowUpRight className="w-4 h-4" aria-hidden />
+        </a>
       </div>
+
 
       <p className="mt-8 text-[12px] leading-relaxed text-white/40 max-w-3xl">
         Analysis tools organize assumptions and public information. Outputs are
