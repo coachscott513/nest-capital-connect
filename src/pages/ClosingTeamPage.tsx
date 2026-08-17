@@ -1,7 +1,8 @@
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
-import { ShieldCheck, Scale, Eye } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { ShieldCheck, Scale, Eye, ArrowRight } from "lucide-react";
 import { useClosingTeam, CLOSING_TEAM_CATEGORIES } from "@/components/property/useClosingTeam";
 import { TalkToScottButton } from "@/components/property/TalkToScott";
 import { realEstateDisclosure } from "@/config/realEstateDisclosure";
@@ -24,11 +25,84 @@ const PRINCIPLES = [
   },
 ];
 
+
+/**
+ * Educational role states. Every role resolves either to a canonical business
+ * category or to this page's own explanation — never a dead end and never a
+ * partner-recruitment pitch.
+ */
+const ROLE_STATES = [
+  {
+    id: "financing",
+    title: "Lender",
+    body: "Confirms what you can borrow, at what rate, and on what timeline. A pre-approval is what makes an offer credible.",
+    when: "Before you make an offer",
+    cost: "Origination and appraisal fees appear at closing",
+    to: "/financing",
+    action: "See financing options",
+  },
+  {
+    id: "attorney",
+    title: "Real Estate Attorney",
+    body: "In New York, an attorney reviews and negotiates the contract, handles the attorney-approval period, and represents you at closing.",
+    when: "From accepted offer through closing",
+    cost: "Commonly a flat fee for a residential purchase",
+    to: "/businesses/legal-services",
+    action: "Browse local attorneys",
+  },
+  {
+    id: "inspection",
+    title: "Home Inspector",
+    body: "Walks the property and documents condition — structure, roof, mechanicals, water, and safety issues. The report is what you negotiate repairs or credits from. Nest does not select or rank inspectors.",
+    when: "Inside the inspection contingency window, usually days after acceptance",
+    cost: "Paid by the buyer, at the time of inspection",
+    to: "/businesses/home-services",
+    action: "Browse home services",
+  },
+  {
+    id: "insurance",
+    title: "Insurance",
+    body: "A bound homeowner's policy is a lender condition. Older housing stock, wood heat, and flood zones all change what is quotable in this region.",
+    when: "Bound before closing",
+    cost: "First-year premium is typically collected at closing",
+    to: "/businesses/insurance",
+    action: "Browse local insurance",
+  },
+  {
+    id: "title",
+    title: "Title and Closing",
+    body: "Searches the chain of ownership, clears liens and easements, issues title insurance, and moves the funds on closing day.",
+    when: "Runs quietly from contract to closing",
+    cost: "Title search and title insurance, itemized on the closing statement",
+    to: "/businesses/legal-services",
+    action: "Browse legal and title services",
+  },
+  {
+    id: "survey-appraisal",
+    title: "Survey and Appraisal",
+    body: "The appraisal is ordered by the lender to support the loan amount. A survey is separate — it establishes boundaries and encroachments, and matters most on land, rural parcels, and older lots.",
+    when: "Appraisal after contract; survey when the lot or boundary is in question",
+    cost: "Appraisal is a lender-ordered fee; a survey is quoted per parcel",
+    to: "/analyze/land",
+    action: "Run land numbers",
+  },
+  {
+    id: "property-management",
+    title: "Property Management",
+    body: "Relevant only if you are holding the property as a rental — leasing, tenant screening, maintenance, and rent collection.",
+    when: "After closing, before the first tenant",
+    cost: "Commonly a percentage of collected rent",
+    to: "/businesses/property-management",
+    action: "Browse property managers",
+  },
+];
+
 /**
  * Preview-only Closing Team page. Explicitly noindex until founder approval.
  */
 const ClosingTeamPage = () => {
   const { members, loading } = useClosingTeam();
+  const hash = useLocation().hash.replace("#", "");
 
   return (
     <div className="min-h-screen bg-[#0B0F19]">
