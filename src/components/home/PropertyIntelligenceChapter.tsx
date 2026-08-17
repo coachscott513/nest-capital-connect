@@ -7,17 +7,31 @@ import { TalkToScottButton } from "@/components/property/TalkToScott";
 
 const PLACEMENT = "homepage-property-intelligence";
 
+/**
+ * Destination contract (founder-approved, evidence-audited).
+ *
+ * Each card has exactly one primary action, pointing only at a page that
+ * genuinely performs that decision's analysis:
+ *  - multi_unit  -> /analyze/multifamily   (rent roll, NOI, DSCR, break-even)
+ *  - land        -> /analyze/land          (carrying cost, basis, resale)
+ *  - flip        -> /homes/analyze?property_type=fix_flip
+ *                   (ARV, rehab, holding, resale cost, flip ROI). The deeper
+ *                   AnalyzeAnyProperty hand-off lives on that page.
+ *  - first_property -> AnalyzeAnyProperty gateway (decision_type=first_property).
+ *                   No internal page performs effective-housing-cost math, so
+ *                   /first-time-buyers is offered as secondary reading only.
+ *  - featured    -> real worked analyses. /reports is a placeholder and is
+ *                   deliberately NOT used.
+ */
 type Path = {
   key: DecisionType;
   title: string;
   copy: string;
-  /**
-   * Exactly one primary decision destination per card. The card itself is the
-   * link — no competing secondary CTA. Deeper tooling (including the
-   * AnalyzeAnyProperty hand-off) lives on the destination page.
-   */
-  to: string;
   action: string;
+  /** Internal route, or an external AAP destination. Never both as primary. */
+  to?: string;
+  href?: string;
+  secondary?: { label: string; to: string };
 };
 
 const PATHS: Path[] = [
@@ -38,25 +52,34 @@ const PATHS: Path[] = [
   {
     key: "flip",
     title: "Fix & Flip",
-    copy: "Scope, budget ranges, holding costs, and the exit assumptions behind the number.",
-    to: "/analyze/rental",
+    copy: "ARV, repair budget, holding costs, and the exit assumptions behind the spread.",
+    to: "/homes/analyze?property_type=fix_flip",
     action: "Run flip numbers",
   },
   {
     key: "first_property",
     title: "First Property / House Hack",
-    copy: "What the monthly payment actually looks like and which unknowns matter most.",
-    to: "/first-time-buyers",
-    action: "Start with the basics",
+    copy: "Effective monthly housing cost after tenant income, FHA multi-unit rules, and reserves.",
+    href: analyzeAnyPropertyUrl({
+      placement: PLACEMENT,
+      decisionType: "first_property",
+    }),
+    action: "Run house-hack numbers",
+    secondary: { label: "How first-time buying works", to: "/first-time-buyers" },
   },
   {
     key: "featured",
     title: "Featured Analyses",
-    copy: "Worked examples showing how the evidence is organized before a decision.",
-    to: "/reports",
-    action: "See a sample report",
+    copy: "Real worked analyses showing how the evidence is organized before a decision.",
+    to: "/reports/sample-property-intelligence",
+    action: "See a worked analysis",
+    secondary: {
+      label: "1999 Ridge Road, Queensbury",
+      to: "/reports/1999-ridge-road-queensbury-ny",
+    },
   },
 ];
+
 
 
 const PropertyIntelligenceChapter = () => (
@@ -126,29 +149,65 @@ const PropertyIntelligenceChapter = () => (
 
 
       <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {PATHS.map((p) => (
-          <Link
-            key={p.key}
-            to={p.to}
-            onClick={() => {
-              propertyIntelligencePathClick(p.key, "internal");
-              logEngagement("property_analysis_click", {}, {
-                source_location: PLACEMENT,
-                intent_type: p.key,
-                product_type: "internal_tool",
-              });
-            }}
-            className="group relative flex flex-col rounded-3xl border border-white/10 bg-white/[0.03] p-7 hover:border-[#5eead4]/40 hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60"
-          >
-            <h3 className="text-xl font-semibold tracking-[-0.02em] text-white">{p.title}</h3>
-            <p className="mt-3 text-[14.5px] text-white/65 font-light leading-relaxed">{p.copy}</p>
-            <span className="mt-auto pt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-[#5eead4] group-hover:gap-3 transition-all">
-              {p.action}
-              <ArrowRight className="w-4 h-4" aria-hidden />
-            </span>
-          </Link>
-        ))}
+        {PATHS.map((p) => {
+          const external = Boolean(p.href);
+          const track = () => {
+            propertyIntelligencePathClick(p.key, external ? "external" : "internal");
+            logEngagement("property_analysis_click", {}, {
+              source_location: PLACEMENT,
+              intent_type: p.key,
+              product_type: external ? "analyze_any_property" : "internal_tool",
+            });
+          };
+          const cardClass =
+            "group relative flex flex-col rounded-3xl border border-white/10 bg-white/[0.03] p-7 hover:border-[#5eead4]/40 hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60";
+          const body = (
+            <>
+              <h3 className="text-xl font-semibold tracking-[-0.02em] text-white">{p.title}</h3>
+              <p className="mt-3 text-[14.5px] text-white/65 font-light leading-relaxed">{p.copy}</p>
+              <span className="mt-auto pt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-[#5eead4] group-hover:gap-3 transition-all">
+                {p.action}
+                {external ? (
+                  <ArrowUpRight className="w-4 h-4" aria-hidden />
+                ) : (
+                  <ArrowRight className="w-4 h-4" aria-hidden />
+                )}
+              </span>
+            </>
+          );
+
+          return (
+            <div key={p.key} className="flex flex-col">
+              {external ? (
+                <a
+                  href={p.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={track}
+                  className={`${cardClass} flex-1`}
+                >
+                  {body}
+                </a>
+              ) : (
+                <Link to={p.to!} onClick={track} className={`${cardClass} flex-1`}>
+                  {body}
+                </Link>
+              )}
+
+              {p.secondary && (
+                <Link
+                  to={p.secondary.to}
+                  className="mt-2.5 inline-flex items-center gap-1.5 px-2 min-h-[40px] text-[13px] font-medium text-white/50 hover:text-white/80 transition-colors"
+                >
+                  {p.secondary.label}
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden />
+                </Link>
+              )}
+            </div>
+          );
+        })}
       </div>
+
 
       <div className="mt-10 flex flex-wrap items-center gap-3">
         <TalkToScottButton

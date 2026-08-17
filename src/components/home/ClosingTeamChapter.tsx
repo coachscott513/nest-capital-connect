@@ -20,8 +20,10 @@ const PLACEMENT = "homepage-closing-team";
 /**
  * Closing Team chapter.
  *
- * Role cards are neutral category destinations — they never point at one
- * selected or paid provider. Named professionals are a separate layer that
+ * Role cards are neutral destinations — never a selected or paid provider.
+ * Where a real canonical business category exists it is used; the remaining
+ * roles open an educational role state on /closing-team rather than any
+ * provider-empty or partner-recruitment page. Named professionals are a separate layer that
  * stays hidden until at least three founder-approved providers exist across
  * at least three distinct roles.
  */
@@ -50,8 +52,8 @@ const ROLES: Role[] = [
     key: "attorney",
     title: "Real-estate attorneys",
     copy: "Contract review, negotiation of terms, and closing representation.",
-    to: "/homes/attorneys",
-    action: "Browse attorneys",
+    to: "/businesses/legal-services",
+    action: "Browse local attorneys",
     icon: Scale,
     art: "radial-gradient(120% 140% at 8% 0%, rgba(148,163,184,0.20), transparent 62%), linear-gradient(135deg, #1B2233 0%, #0C1220 100%)",
   },
@@ -59,8 +61,8 @@ const ROLES: Role[] = [
     key: "inspection",
     title: "Home inspection",
     copy: "Condition inspections and specialty testing before a contingency expires.",
-    to: "/homes/inspectors",
-    action: "Browse inspectors",
+    to: "/closing-team#inspection",
+    action: "What inspection covers",
     icon: ClipboardCheck,
     art: "radial-gradient(120% 140% at 8% 0%, rgba(13,110,102,0.34), transparent 62%), linear-gradient(135deg, #0F2A26 0%, #0C1220 100%)",
   },
@@ -68,8 +70,8 @@ const ROLES: Role[] = [
     key: "insurance",
     title: "Insurance",
     copy: "Homeowner, landlord, and flood coverage quoted ahead of closing.",
-    to: "/homes/insurance",
-    action: "Browse insurance",
+    to: "/businesses/insurance",
+    action: "Browse local insurance",
     icon: ShieldCheck,
     art: "radial-gradient(120% 140% at 8% 0%, rgba(94,234,212,0.16), transparent 62%), linear-gradient(135deg, #142033 0%, #0C1220 100%)",
   },
@@ -77,7 +79,7 @@ const ROLES: Role[] = [
     key: "title",
     title: "Title & closing support",
     copy: "Title search, examination, and closing coordination where applicable.",
-    to: "/closing-team",
+    to: "/closing-team#title",
     action: "How closing works",
     icon: FileSignature,
     art: "radial-gradient(120% 140% at 8% 0%, rgba(201,164,73,0.18), transparent 62%), linear-gradient(135deg, #231F16 0%, #0C1220 100%)",
@@ -86,7 +88,7 @@ const ROLES: Role[] = [
     key: "survey_appraisal",
     title: "Survey & appraisal",
     copy: "Included only where the property type and transaction actually require it.",
-    to: "/closing-team",
+    to: "/closing-team#survey-appraisal",
     action: "When it applies",
     icon: Ruler,
     art: "radial-gradient(120% 140% at 8% 0%, rgba(148,163,184,0.16), transparent 62%), linear-gradient(135deg, #171E2C 0%, #0C1220 100%)",
@@ -95,7 +97,7 @@ const ROLES: Role[] = [
     key: "property_management",
     title: "Property management",
     copy: "Leasing, maintenance, and day-to-day operation after you own the property.",
-    to: "/homes/property-management",
+    to: "/businesses/property-management",
     action: "Browse property managers",
     icon: KeyRound,
     art: "radial-gradient(120% 140% at 8% 0%, rgba(13,110,102,0.26), transparent 62%), linear-gradient(135deg, #10222B 0%, #0C1220 100%)",
