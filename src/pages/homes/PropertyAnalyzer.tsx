@@ -6,8 +6,9 @@ import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Home, Building2, KeyRound, Layers, Trees, Briefcase, Hammer, Wallet } from "lucide-react";
+import { Home, Building2, KeyRound, Layers, Trees, Briefcase, Hammer, Wallet, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { analyzeAnyPropertyUrl } from "@/config/externalProducts";
 
 type Mode = "investor" | "first_time_buyer";
 type PropertyType =
