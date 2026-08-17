@@ -45,6 +45,12 @@ const TownsEventsStoriesChapter = () => {
   const storyCards: StoryCard[] = useMemo(
     () => [
       {
+        eyebrow: `This week · ${campaign.theme}`,
+        title: campaign.hero.title,
+        to: campaign.hero.to,
+        image: campaign.hero.image,
+      },
+      {
         eyebrow: "Business Spotlight",
         title: "Roosevelt Room",
         to: "/business/roosevelt-room",
@@ -80,7 +86,7 @@ const TownsEventsStoriesChapter = () => {
         to: c.to,
         image: c.image,
       })),
-    ],
+    ].slice(0, 8),
     [campaign],
   );
 
@@ -89,7 +95,7 @@ const TownsEventsStoriesChapter = () => {
       id="towns-events-stories"
       className="relative w-full scroll-mt-24 border-t border-white/[0.06] bg-[#0E1220]"
     >
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-10 pt-20 pb-20 md:pt-28 md:pb-28">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-10 pt-16 pb-16 md:pt-20 md:pb-20">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -131,7 +137,7 @@ const TownsEventsStoriesChapter = () => {
         {/* Towns rail */}
         <div
           ref={towns.ref}
-          className="mt-10 md:mt-14 -mx-5 sm:-mx-6 md:-mx-10 px-5 sm:px-6 md:px-10 flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-3"
+          className="mt-8 md:mt-10 -mx-5 sm:-mx-6 md:-mx-10 px-5 sm:px-6 md:px-10 flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-3"
           style={{ scrollbarWidth: "none" }}
         >
           {HOMES_TOWNS.map((t) => (
@@ -141,7 +147,7 @@ const TownsEventsStoriesChapter = () => {
               onClick={() =>
                 logEngagement("town_open", {}, { source_location: PLACEMENT, town_slug: t.slug })
               }
-              className="group snap-start shrink-0 w-[52vw] sm:w-[30vw] lg:w-[18%] rounded-[20px] border border-white/[0.07] bg-white/[0.03] px-6 py-7 hover:border-[#5eead4]/35 transition-colors"
+              className="group snap-start shrink-0 w-[52vw] sm:w-[30vw] lg:w-[18%] rounded-[20px] border border-white/[0.07] bg-white/[0.03] px-5 py-6 hover:border-[#5eead4]/35 transition-colors"
             >
               <p className="text-[10px] font-medium tracking-[0.24em] uppercase text-[#5eead4]/80">
                 {t.county}
@@ -157,51 +163,8 @@ const TownsEventsStoriesChapter = () => {
           <div className="shrink-0 w-1" aria-hidden />
         </div>
 
-        {/* This week — one immersive feature */}
-        <motion.div
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-14 md:mt-20"
-        >
-          <Link
-            to={campaign.hero.to}
-            className="group relative block rounded-[28px] overflow-hidden border border-white/[0.07] hover:border-[#5eead4]/30 transition-all duration-500"
-          >
-            <div className="relative aspect-[16/10] sm:aspect-[16/7] md:aspect-[21/8] overflow-hidden">
-              <img
-                src={campaign.hero.image}
-                alt={campaign.hero.title}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.04]"
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(180deg, rgba(11,15,25,0.15) 0%, rgba(11,15,25,0.6) 60%, rgba(11,15,25,0.94) 100%)",
-                }}
-                aria-hidden
-              />
-              <div className="absolute inset-0 flex flex-col justify-end p-7 sm:p-10 md:p-14">
-                <p className="text-[10px] font-medium tracking-[0.32em] uppercase text-[#5eead4]">
-                  This week · {campaign.theme}
-                </p>
-                <h3 className="mt-4 text-2xl sm:text-4xl md:text-[3.25rem] font-extralight tracking-[-0.04em] leading-[1.04] text-white max-w-3xl">
-                  {campaign.hero.title}
-                </h3>
-                <span className="mt-6 inline-flex items-center gap-2 text-[13px] font-medium text-[#5eead4] group-hover:gap-3 transition-all">
-                  {campaign.hero.cta}
-                  <ArrowRight className="w-4 h-4" />
-                </span>
-              </div>
-            </div>
-          </Link>
-        </motion.div>
-
         {/* Local stories rail */}
-        <div className="mt-12 md:mt-16 flex items-end justify-between gap-4">
+        <div className="mt-10 md:mt-12 flex items-end justify-between gap-4">
           <p className="text-[10px] md:text-[11px] font-medium tracking-[0.32em] uppercase text-white/50">
             Local stories
           </p>
@@ -226,7 +189,7 @@ const TownsEventsStoriesChapter = () => {
               to={c.to}
               className="group shrink-0 snap-start w-[76%] sm:w-[44%] md:w-[30%] lg:w-[23%] rounded-[24px] overflow-hidden border border-white/[0.07] hover:border-[#5eead4]/30 transition-all duration-500"
             >
-              <div className="relative aspect-[4/5] overflow-hidden">
+              <div className="relative aspect-[4/5] max-h-[380px] overflow-hidden">
                 <img
                   src={c.image}
                   alt={c.title}
