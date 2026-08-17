@@ -15,12 +15,20 @@ export const ORIGIN = "https://www.capitaldistrictnest.com";
 export const SHELL_DEFAULT_TITLE = "Capital District Nest";
 
 // Routes whose canonical is deliberately owned by an external property.
+//
+// VERIFIED CONTRACT (2026-08-17):
+//   /analyze-any-deal      -> external https://www.analyzeanydeal.com. Intentional
+//                             bridge page for the shared engine; NOT in the sitemap.
+//   /analyze-any-property  -> SELF-canonical. Substantive unique internal landing
+//                             page ("Run the Numbers or Review the Evidence") that
+//                             deep-links to AnalyzeAnyProperty; it is in the sitemap.
+//   /analyze-home          -> SELF-canonical. Substantive internal Analyze Any Home
+//                             landing page; it is in the sitemap.
+//   /analyze-any-home      -> not routed and not in the sitemap; no contract needed.
 export const EXTERNAL_CANONICAL_ALLOWLIST = {
   "/analyze-any-deal": "https://www.analyzeanydeal.com",
-  "/analyze-any-property": "https://www.analyzeanyproperty.com",
-  "/analyze-any-home": "https://www.analyzeanyhome.com",
-  "/analyze-home": "https://www.analyzeanyhome.com",
 };
+
 
 export const PRIVATE_ROUTE_RE =
   /^\/(admin|auth|dashboard|partner-dashboard|partner-auth|partner-success|reset-password|seo-audit|reports)/;

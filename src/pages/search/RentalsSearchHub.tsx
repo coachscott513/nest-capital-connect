@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { Search, ArrowRight, Home, MapPin, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MainLayout from "@/components/MainLayout";
@@ -43,9 +43,11 @@ const RentalsSearchHub = () => {
   return (
     <MainLayout>
       <Helmet>
-        <title>Rentals | Capital District Nest</title>
+        <title>Rentals Search | Capital District Nest</title>
         <meta name="description" content="Find apartments and houses for rent in the Capital District. Albany, Troy, Schenectady, and Saratoga rentals with verified listings." />
+        <link rel="canonical" href="https://www.capitaldistrictnest.com/search/rentals" />
       </Helmet>
+
 
       <div className="relative min-h-screen overflow-hidden">
         {/* Cinematic Background */}
