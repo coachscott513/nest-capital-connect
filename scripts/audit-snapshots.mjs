@@ -72,6 +72,27 @@ for (const url of urls) {
   if (titles.length === 0 || !titles[0]) totals.emptyTitle.push(route);
   else totals.nonemptyTitle++;
 
+  // route-appropriate title: an inner route must never keep the neutral shell title
+  if (route !== "/" && titles[0] === SHELL_DEFAULT_TITLE) totals.shellDefaultTitle.push(route);
+
+  // head-readiness ceiling expiry is a visible build condition
+  if (/name="x-prerender-head"\s+content="timeout"/.test(head)) {
+    const reason = head.match(/name="x-prerender-head-reason"\s+content="([^"]*)"/)?.[1] || "unknown";
+    totals.prerenderHeadTimeout.push(`${route} (${reason})`);
+  }
+
+  // data-driven routes must carry their resolved identity in the title
+  const identity = route.match(
+    /^\/(?:living-in|market-reports|homes\/listings|rentals|towns|biz|business)\/([^/]+)$/,
+  )?.[1];
+  if (identity && titles[0]) {
+    const tokens = identity.split("-").filter((t) => t.length > 3);
+    const hay = titles[0].toLowerCase();
+    if (tokens.length && !tokens.some((t) => hay.includes(t)))
+      totals.unresolvedRouteIdentity.push(`${route} title="${titles[0]}"`);
+  }
+
+
   // canonical
   const canonicals = [...head.matchAll(/<link[^>]*rel="canonical"[^>]*href="([^"]+)"[^>]*>/g)].map((m) => m[1]);
   if (canonicals.length > 1) totals.multipleCanonicals.push(`${route} (${canonicals.length})`);
