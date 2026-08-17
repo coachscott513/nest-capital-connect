@@ -207,7 +207,14 @@ const PropertyHero = () => {
             )}
           </div>
 
-          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-x-5 gap-y-2.5">
+            <Link
+              to="/homes"
+              className="text-[13px] font-medium text-white/70 hover:text-white transition"
+            >
+              All home resources
+            </Link>
+            <span className="hidden sm:block w-px h-3.5 bg-white/12" aria-hidden />
             <a
               href={REALSCOUT.capitalDistrictMapUrl ?? REALSCOUT.albanyMapUrl}
               target="_blank"
@@ -218,21 +225,15 @@ const PropertyHero = () => {
                   search_type: "map_link",
                 })
               }
-              className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#5eead4] hover:gap-3 transition-all"
+              className="inline-flex items-center gap-1.5 text-[12.5px] font-light text-white/45 hover:text-white/70 transition"
             >
               {REALSCOUT.capitalDistrictMapUrl
-                ? "Browse the Capital District map"
-                : "Browse the Albany map view"}
-              <ExternalLink className="w-3.5 h-3.5" />
+                ? "View the Capital District map"
+                : "View the City of Albany map"}
+              <ExternalLink className="w-3 h-3" />
             </a>
-            <span className="hidden sm:block w-px h-4 bg-white/15" aria-hidden />
-            <Link
-              to="/homes"
-              className="text-[13px] font-semibold text-white/70 hover:text-white transition"
-            >
-              All home resources
-            </Link>
           </div>
+
 
           <p className="mt-5 text-center text-[11.5px] leading-relaxed text-white/40 max-w-xl mx-auto font-light">
             Live listing search powered by RealScout.
