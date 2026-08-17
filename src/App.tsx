@@ -226,18 +226,19 @@ const PrerenderReadySignal = () => {
     /**
      * Route-head readiness contract for the prerenderer.
      *
-     * Capture must never happen before react-helmet-async has committed the
-     * route's own head. Readiness therefore means BOTH:
-     *   1. the document title is helmet-owned (a `data-rh` <title>), and
-     *   2. that title is not the neutral shell default,
-     * held stable across two consecutive polls so a data-dependent route that
-     * upgrades its title after its query resolves is captured in its final
-     * state, not an intermediate one.
+     * react-helmet-async v2 does NOT stamp `data-rh` on the <title> element
+     * (only on meta/link), so title ownership must be judged by VALUE, not by
+     * a helmet attribute. Readiness therefore means, held stable across two
+     * consecutive polls:
+     *   1. exactly one non-empty <title> whose text is not the shell default,
+     *   2. exactly one non-empty canonical link,
+     *   3. one non-empty rendered <h1>.
      *
      * The timeout is a FAIL CONDITION, not permission to capture a generic
      * title: on expiry we stamp `<meta name="x-prerender-head" content="timeout">`
      * so the build audit can name the offending route and fail the run.
      */
+
     let done = false;
 
     // Exactly one readiness marker per snapshot. Any previously stamped
@@ -280,18 +281,18 @@ const PrerenderReadySignal = () => {
     let stableTicks = 0;
 
     const intervalId = window.setInterval(() => {
-      const helmetTitle = document.querySelector('title[data-rh="true"]');
-      const title = (document.title || "").trim();
-      const canonical = document
-        .querySelector('link[rel="canonical"]')
-        ?.getAttribute("href")
-        ?.trim();
+      const titleEls = document.querySelectorAll("title");
+      const canonicalEls = document.querySelectorAll('link[rel="canonical"]');
+      const title = (titleEls[0]?.textContent || "").trim();
+      const canonical = (canonicalEls[0]?.getAttribute("href") || "").trim();
       const h1 = (document.querySelector("h1")?.textContent || "").trim();
 
       // Shared readiness contract (identical for every Tier A route, no forks):
-      // helmet-owned non-shell title + canonical + a rendered H1, all stable.
-      const routeOwnsHead =
-        !!helmetTitle && !!title && title !== SHELL_DEFAULT_TITLE && !!canonical && h1.length > 0;
+      // exactly one non-shell title + exactly one canonical + a rendered H1,
+      // all stable across two consecutive polls.
+      const titleOk = titleEls.length === 1 && !!title && title !== SHELL_DEFAULT_TITLE;
+      const canonicalOk = canonicalEls.length === 1 && !!canonical;
+      const routeOwnsHead = titleOk && canonicalOk && h1.length > 0;
 
       if (routeOwnsHead) {
         const signature = `${title}::${canonical}::${h1}`;
@@ -310,8 +311,12 @@ const PrerenderReadySignal = () => {
         stampMarker(
           "timeout",
           [
-            !helmetTitle || title === SHELL_DEFAULT_TITLE ? "title" : null,
-            !canonical ? "canonical" : null,
+            !titleOk ? (titleEls.length !== 1 ? `titleCount=${titleEls.length}` : "title") : null,
+            !canonicalOk
+              ? canonicalEls.length !== 1
+                ? `canonicalCount=${canonicalEls.length}`
+                : "canonical"
+              : null,
             !h1 ? "h1" : null,
           ]
             .filter(Boolean)
@@ -320,6 +325,7 @@ const PrerenderReadySignal = () => {
         dispatch();
       }
     }, 150);
+
 
 
     return () => window.clearInterval(intervalId);
