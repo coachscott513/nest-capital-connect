@@ -1,114 +1,77 @@
-// Full-footprint acceptance audit: every URL in dist/sitemap.xml is checked
-// against its emitted HTML artifact. Read-only.
-//
-// Run AFTER a full production build.
+// Full-footprint acceptance audit. Read-only.
+// Shares scripts/head-contract.mjs with scripts/audit-snapshots.mjs so both
+// audits check the same paths with the same rules and report the same counts,
+// grouped here by route family. Run AFTER a full production build.
 
 import fs from "node:fs";
 import path from "node:path";
+import {
+  auditRoutes,
+  groupDefects,
+  artifactPath,
+  parseSnapshot,
+  isTierB,
+  NON_BLOCKING,
+} from "./head-contract.mjs";
 
-const ORIGIN = "https://www.capitaldistrictnest.com";
 const DIST = path.resolve("dist");
-const xml = fs.readFileSync(path.join(DIST, "sitemap.xml"), "utf8");
-const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
-
-const homeFile = path.join(DIST, "index.html");
-const homeHtml = fs.existsSync(homeFile) ? fs.readFileSync(homeFile, "utf8") : "";
-const homeTitle = (homeHtml.match(/<title>([\s\S]*?)<\/title>/) || [])[1]?.trim() || "\u0000";
-const homeH1 = (homeHtml.match(/<h1[^>]*>([\s\S]*?)<\/h1>/) || [])[1]?.replace(/<[^>]+>/g, "").trim() || "\u0000";
+const r = auditRoutes(DIST);
+const byKind = groupDefects(r.defects);
 
 const family = (p) => {
   if (p === "/") return "/ (home)";
-  if (p.startsWith("/biz/")) return "/biz/*";
-  const seg = p.split("/")[1];
-  return "/" + seg;
+  if (isTierB(p)) return "/biz/*";
+  return "/" + p.split("/")[1];
 };
 
-const defects = {};
-const add = (fam, kind, url) => {
-  defects[fam] ??= {};
-  (defects[fam][kind] ??= []).push(url);
-};
-
-let checked = 0;
-for (const url of urls) {
-  const p = url.replace(ORIGIN, "") || "/";
-  const fam = family(p);
-  const file = path.join(DIST, p === "/" ? "index.html" : path.join(p.replace(/^\//, ""), "index.html"));
-  if (!fs.existsSync(file)) {
-    add(fam, "missingArtifact", p);
-    continue;
-  }
-  checked += 1;
-  const html = fs.readFileSync(file, "utf8");
-  const head = html.split("</head>")[0] || html;
-
-  const titles = [...head.matchAll(/<title[^>]*>([\s\S]*?)<\/title>/g)].map((m) => m[1].trim());
-  const canons = [...head.matchAll(/<link[^>]+rel="canonical"[^>]+href="([^"]+)"/g)].map((m) => m[1]);
-  const robots = [...head.matchAll(/<meta[^>]+name="robots"[^>]+content="([^"]+)"/g)].map((m) => m[1]);
-  const ogUrls = [...head.matchAll(/<meta[^>]+property="og:url"[^>]+content="([^"]+)"/g)].map((m) => m[1]);
-  const h1s = [...html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/g)].map((m) => m[1].replace(/<[^>]+>/g, "").trim());
-  const ld = [...html.matchAll(/<script[^>]+application\/ld\+json[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
-  const body = (html.split("<body")[1] || "").replace(/<script[\s\S]*?<\/script>/g, "");
-  const text = body.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-
-  if (titles.length !== 1 || !titles[0]) add(fam, "titleCount", p);
-  // Route-head assertion: no indexable route may ship the neutral shell title.
-  const SHELL_TITLE = "Capital District Nest";
-  const isPrivate = /^\/(admin|auth|dashboard|partner-|reset-password|seo-audit|reports)/.test(p);
-  if (!isPrivate && titles[0] === SHELL_TITLE) add(fam, "shellDefaultTitle", p);
-  if (/name="x-prerender-head"[^>]*content="timeout"/.test(head)) add(fam, "prerenderHeadTimeout", p);
-  if (p !== "/" && titles[0] === homeTitle) add(fam, "homepageTitleLeak", p);
-  if (canons.length !== 1) add(fam, "canonicalCount", p);
-  if (canons[0] && canons[0] !== url) add(fam, "canonicalMismatch", `${p} -> ${canons[0]}`);
-  if (canons[0] && !canons[0].startsWith(ORIGIN)) add(fam, "canonicalHost", p);
-  if (robots.length > 1) add(fam, "robotsCount", p);
-  if (robots[0] && /noindex/i.test(robots[0])) add(fam, "unintendedNoindex", p);
-  if (new Set(ogUrls).size > 1) add(fam, "ogUrlConflict", p);
-  if (ogUrls[0] && canons[0] && ogUrls[0] !== canons[0]) add(fam, "ogUrlCanonicalMismatch", p);
-  if (h1s.length === 0) add(fam, "missingH1", p);
-  if (p !== "/" && h1s[0] && h1s[0] === homeH1) add(fam, "homepageH1Leak", p);
-  if (text.length < 200) add(fam, "thinBody", p);
-  if (/your-domain\.com/.test(html)) add(fam, "placeholderDomain", p);
-
-  const types = [];
-  for (const raw of ld) {
-    try {
-      const j = JSON.parse(raw);
-      const collect = (n) => {
-        if (!n || typeof n !== "object") return;
-        if (Array.isArray(n)) return n.forEach(collect);
-        if (n["@type"]) types.push(...[].concat(n["@type"]));
-        if (n["@graph"]) collect(n["@graph"]);
-      };
-      collect(j);
-    } catch {
-      add(fam, "brokenJsonLd", p);
-    }
-  }
-  if (!p.startsWith("/biz/") && types.includes("LocalBusiness") && fam !== "/ (home)") {
-    // LocalBusiness on a non-business page is only acceptable on the brand's own
-    // org/contact surfaces; flag everything else for review.
-    if (!/^\/(contact|about|for-businesses|privacy-policy|closing-team|investor-tools)/.test(p))
-      add(fam, "localBusinessOnNonBusinessPage", p);
+// Homepage identity leakage (family-level check, layered on the shared contract)
+const homeFile = path.join(DIST, "index.html");
+const home = fs.existsSync(homeFile) ? parseSnapshot(fs.readFileSync(homeFile, "utf8")) : null;
+const leaks = { title: [], h1: [] };
+if (home) {
+  for (const route of r.checked) {
+    if (route === "/") continue;
+    const s = parseSnapshot(fs.readFileSync(artifactPath(DIST, route), "utf8"));
+    if (home.titles[0] && s.titles[0] === home.titles[0]) leaks.title.push(route);
+    if (home.h1s[0] && s.h1s[0] === home.h1s[0]) leaks.h1.push(route);
   }
 }
 
-let exitCode = 0;
-console.log(`\n=== FULL SITEMAP AUDIT === (${urls.length} urls, ${checked} artifacts read)`);
-const fams = Object.keys(defects).sort();
-if (!fams.length) console.log("no defects");
+const perFamily = {};
+for (const { kind, detail } of r.defects) {
+  const route = String(detail).split(" ")[0];
+  const fam = family(route);
+  ((perFamily[fam] ??= {})[kind] ??= []).push(detail);
+}
+for (const route of r.missingArtifact) ((perFamily[family(route)] ??= {}).missingArtifact ??= []).push(route);
+for (const route of leaks.title) ((perFamily[family(route)] ??= {}).homepageTitleLeak ??= []).push(route);
+for (const route of leaks.h1) ((perFamily[family(route)] ??= {}).homepageH1Leak ??= []).push(route);
+
+console.log(`\n=== FULL SITEMAP AUDIT (shared head contract) ===`);
+console.log(`sitemap ....................... ${r.sitemapFile} (checksum ${r.checksum})`);
+console.log(`urls .......................... ${r.routes.length}`);
+console.log(`  Tier A ...................... ${r.routes.filter((p) => !isTierB(p)).length}`);
+console.log(`  Tier B (/biz/*) ............. ${r.routes.filter(isTierB).length}`);
+console.log(`artifacts read ................ ${r.checked.length}`);
+console.log(`thin bodies (non-blocking) .... ${r.thin.length}`);
+
+const fams = Object.keys(perFamily).sort();
+if (!fams.length) console.log("\nno defects");
 for (const f of fams) {
-  const kinds = defects[f];
+  const kinds = perFamily[f];
   const total = Object.values(kinds).reduce((a, b) => a + b.length, 0);
   console.log(`\n${f}  (${total} defects)`);
-  for (const [k, v] of Object.entries(kinds)) {
+  for (const [k, v] of Object.entries(kinds))
     console.log(`  ${(k + " ").padEnd(30, ".")} ${v.length}  e.g. ${v.slice(0, 3).join(" | ")}`);
-  }
 }
 
-const blocking = fams.filter((f) =>
-  Object.keys(defects[f]).some((k) => k !== "thinBody"),
-);
-if (blocking.length) exitCode = 1;
-console.log(exitCode ? "\nFULL SITEMAP AUDIT: FAIL" : "\nFULL SITEMAP AUDIT: PASS");
-process.exit(exitCode);
+const blockingKinds = Object.keys(byKind).filter((k) => !NON_BLOCKING.has(k));
+const blockingCount =
+  blockingKinds.reduce((a, k) => a + byKind[k].length, 0) +
+  r.missingArtifact.length +
+  leaks.title.length +
+  leaks.h1.length;
+
+console.log(`\nshared-contract defect total .. ${blockingCount}`);
+console.log(blockingCount ? "\nFULL SITEMAP AUDIT: FAIL" : "\nFULL SITEMAP AUDIT: PASS");
+process.exit(blockingCount ? 1 : 0);
