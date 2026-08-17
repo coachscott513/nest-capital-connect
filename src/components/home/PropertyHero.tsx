@@ -148,7 +148,7 @@ const PropertyHero = () => {
         <div
           id="property-search-widget"
           ref={slotRef}
-          className="mt-14 md:mt-20 scroll-mt-24 rounded-[24px] border border-white/[0.07] p-5 sm:p-7 md:p-8"
+          className="mt-14 md:mt-20 scroll-mt-24 rounded-[28px] border border-white/[0.06] px-5 py-9 sm:px-10 sm:py-12 md:px-14 md:py-16"
           style={{
             background: "linear-gradient(180deg, #13161E 0%, #1A1D26 100%)",
             boxShadow: "0 24px 70px -32px rgba(0,0,0,0.7)",
