@@ -108,6 +108,17 @@ const normalizeText = (value: string) =>
 const slugText = (value: string) =>
   normalizeText(value).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
+/** Accept either a town slug ("clifton-park") or display name ("Delmar"). */
+const normalizeTownParam = (raw: string | null) => {
+  if (!raw) return "";
+  const norm = raw.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-");
+  const match = TOWN_LIST.find(
+    (t) => t.slug === norm || t.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === norm,
+  );
+  return match?.slug ?? norm;
+};
+
+
 const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
