@@ -22,7 +22,10 @@ const SaratogaMultiUnitMarket = () => {
         "description": "Saratoga County multi-unit investing guide with cap rates, cash-on-cash returns, best towns, and real investor deals."
       },
       {
-        "@type": "LocalBusiness",
+        // Editorial market report — the brand's own contact block is not a
+        // LocalBusiness located at this URL, so only publisher/organisation
+        // context is asserted here.
+        "@type": "Organization",
         "name": "Capital District Nest",
         "telephone": "+15185227265"
       },
