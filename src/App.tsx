@@ -239,6 +239,28 @@ const PrerenderReadySignal = () => {
      * so the build audit can name the offending route and fail the run.
      */
     let done = false;
+
+    // Exactly one readiness marker per snapshot. Any previously stamped
+    // marker (or a duplicate from a re-mount) is removed first so the audit
+    // can assert "exactly one" without ambiguity.
+    const stampMarker = (status: "ready" | "timeout", reason?: string) => {
+      document
+        .querySelectorAll(
+          'meta[name="x-prerender-head"], meta[name="x-prerender-head-reason"]',
+        )
+        .forEach((el) => el.remove());
+      const marker = document.createElement("meta");
+      marker.setAttribute("name", "x-prerender-head");
+      marker.setAttribute("content", status);
+      document.head.appendChild(marker);
+      if (reason) {
+        const reasonEl = document.createElement("meta");
+        reasonEl.setAttribute("name", "x-prerender-head-reason");
+        reasonEl.setAttribute("content", reason);
+        document.head.appendChild(reasonEl);
+      }
+    };
+
     const dispatch = () => {
       if (done) return;
       done = true;
@@ -277,6 +299,7 @@ const PrerenderReadySignal = () => {
         lastSignature = signature;
         if (stableTicks >= 1) {
           window.clearInterval(intervalId);
+          stampMarker("ready");
           dispatch();
           return;
         }
@@ -284,14 +307,8 @@ const PrerenderReadySignal = () => {
 
       if (Date.now() - start > MAX_WAIT) {
         window.clearInterval(intervalId);
-        const marker = document.createElement("meta");
-        marker.setAttribute("name", "x-prerender-head");
-        marker.setAttribute("content", "timeout");
-        document.head.appendChild(marker);
-        const reason = document.createElement("meta");
-        reason.setAttribute("name", "x-prerender-head-reason");
-        reason.setAttribute(
-          "content",
+        stampMarker(
+          "timeout",
           [
             !helmetTitle || title === SHELL_DEFAULT_TITLE ? "title" : null,
             !canonical ? "canonical" : null,
@@ -300,10 +317,10 @@ const PrerenderReadySignal = () => {
             .filter(Boolean)
             .join(",") || "unstable",
         );
-        document.head.appendChild(reason);
         dispatch();
       }
     }, 150);
+
 
     return () => window.clearInterval(intervalId);
   }, []);

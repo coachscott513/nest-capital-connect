@@ -3,6 +3,9 @@
 Status: documentation only. No region, domain, schema, route, data import, or
 public page is created by this document.
 
+No second region begins until Capital District Nest is accepted as Template v1.0.
+
+
 ## Approved order
 
 1. **Capital District Nest** — reference implementation. Every pattern must be
