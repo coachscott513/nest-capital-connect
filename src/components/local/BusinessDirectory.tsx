@@ -278,7 +278,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
 
 
       {/* SEARCH BAR */}
-      <section className={embedded ? "px-0" : "pt-16 px-6 md:px-10"}>
+      <section className={embedded ? "px-0" : isFiltered ? "pt-10 md:pt-12 px-6 md:px-10" : "pt-14 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
           <form onSubmit={(e) => {
             e.preventDefault();
@@ -375,7 +375,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       </section>
 
       {/* RESULTS */}
-      <section className={embedded ? "py-10" : "py-20 px-6 md:px-10"}>
+      <section className={embedded ? "py-10" : "py-14 md:py-16 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
           {loading ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
