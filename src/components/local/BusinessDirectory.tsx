@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
+import { normalizeLocalSearch } from "@/lib/redundantGeoSearch";
 import {
   Search,
   Phone,
@@ -131,15 +132,22 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
     [],
   );
 
-  const initialSearch =
+  const initialTown = townSlug ?? normalizeTownParam(searchParams.get("town"));
+
+  // A geography-only search term is redundant once a town filter is active.
+  // Drop it from state; the URL-sync effect below rewrites the address bar
+  // with `replace`, so there is no navigation flash.
+  const initialSearch = normalizeLocalSearch(
     searchParams.get("search") ??
-    searchParams.get("q") ??
-    initialResolved.search ??
-    "";
+      searchParams.get("q") ??
+      initialResolved.search ??
+      "",
+    Boolean(initialTown),
+  );
   const initialCategory = initialResolved.official ?? "";
 
   const [q, setQ] = useState(initialSearch);
-  const [town, setTown] = useState(() => townSlug ?? normalizeTownParam(searchParams.get("town")));
+  const [town, setTown] = useState(initialTown);
   const [category, setCategory] = useState<string>(initialCategory);
   const [tier, setTier] = useState<TierFilter>("all");
   const [hasWebsite, setHasWebsite] = useState(false);
