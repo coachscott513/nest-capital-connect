@@ -149,6 +149,9 @@ snapshots missing ............. ${fmt(totals.snapshotMissing)}
 nonempty titles ............... ${totals.nonemptyTitle}
 empty title ................... ${fmt(totals.emptyTitle)}
 >1 title ...................... ${fmt(totals.multipleTitles)}
+shell-default title on route .. ${fmt(totals.shellDefaultTitle)}
+head-readiness timeouts ....... ${fmt(totals.prerenderHeadTimeout)}
+unresolved route identity ..... ${fmt(totals.unresolvedRouteIdentity)}
 >1 canonical .................. ${fmt(totals.multipleCanonicals)}
 missing canonical ............. ${fmt(totals.missingCanonical)}
 homepage canonical off-home ... ${fmt(totals.homepageCanonicalOnNonHome)}
@@ -156,8 +159,28 @@ non-www canonical ............. ${fmt(totals.nonWwwCanonical)}
 duplicate robots .............. ${fmt(totals.duplicateRobots)}
 noindex ....................... ${fmt(totals.unintendedNoindex)}
 homepage fingerprint leak ..... ${fmt(totals.homepageFingerprintMismatch)}
+missing H1 .................... ${fmt(totals.missingH1)}
 missing body/H1 ............... ${fmt(totals.missingBodyOrH1)}
 placeholder schema refs ....... ${fmt(totals.placeholderSchemaRefs)}
 route/canonical mismatch ...... ${fmt(totals.routeContentMismatch)}
 approved external canonicals .. ${fmt(totals.externalCanonicalOk)}
 `);
+
+const blocking = [
+  ["shellDefaultTitle", totals.shellDefaultTitle],
+  ["prerenderHeadTimeout", totals.prerenderHeadTimeout],
+  ["unresolvedRouteIdentity", totals.unresolvedRouteIdentity],
+  ["emptyTitle", totals.emptyTitle],
+  ["multipleTitles", totals.multipleTitles],
+  ["multipleCanonicals", totals.multipleCanonicals],
+  ["missingCanonical", totals.missingCanonical],
+  ["missingH1", totals.missingH1],
+  ["snapshotMissing", totals.snapshotMissing],
+].filter(([, v]) => v.length);
+
+if (blocking.length) {
+  console.error(`SNAPSHOT AUDIT FAILED: ${blocking.map(([k, v]) => `${k}=${v.length}`).join(", ")}`);
+  process.exit(1);
+}
+console.log("SNAPSHOT AUDIT PASSED");
+
