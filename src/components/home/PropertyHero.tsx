@@ -113,10 +113,11 @@ const PropertyHero = () => {
           </h1>
 
           <p className="mt-8 text-[15px] md:text-[17px] text-[#94A3B8] max-w-xl mx-auto font-light leading-[1.65]">
-            Search live homes across the Capital District, understand the financial
-            reality behind the listing, and connect with the local professionals who
-            help move the decision forward.
+            Search live homes, understand the financial reality behind the listing,
+            and connect with the local professionals who help move the decision
+            forward.
           </p>
+
 
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <a
@@ -147,15 +148,24 @@ const PropertyHero = () => {
         <div
           id="property-search-widget"
           ref={slotRef}
-          className="mt-14 md:mt-20 scroll-mt-24 rounded-[24px] border border-white/[0.07] p-5 sm:p-7 md:p-8"
+          className="mt-14 md:mt-20 scroll-mt-24 rounded-[28px] border border-white/[0.06] px-5 py-9 sm:px-10 sm:py-12 md:px-14 md:py-16"
           style={{
             background: "linear-gradient(180deg, #13161E 0%, #1A1D26 100%)",
             boxShadow: "0 24px 70px -32px rgba(0,0,0,0.7)",
           }}
         >
-          <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-[#64748B] mb-5 text-center">
-            Live property search
-          </p>
+          <div className="text-center max-w-2xl mx-auto mb-8 md:mb-10">
+            <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-[#64748B]">
+              Live property search
+            </p>
+            <h2 className="mt-4 text-[1.9rem] sm:text-4xl md:text-[2.75rem] font-extralight tracking-[-0.035em] leading-[1.08] text-white text-balance">
+              Search live homes.
+            </h2>
+            <p className="mt-4 text-[14.5px] md:text-[15.5px] font-light leading-[1.6] text-white/55">
+              Search by neighborhood, city, or school across my live MLS search.
+            </p>
+          </div>
+
 
           <div className="min-h-[168px] flex items-center justify-center">
             {!mountWidget || (!ready && !failed) ? (
@@ -207,7 +217,14 @@ const PropertyHero = () => {
             )}
           </div>
 
-          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-x-5 gap-y-2.5">
+            <Link
+              to="/homes"
+              className="text-[13px] font-medium text-white/70 hover:text-white transition"
+            >
+              All home resources
+            </Link>
+            <span className="hidden sm:block w-px h-3.5 bg-white/12" aria-hidden />
             <a
               href={REALSCOUT.capitalDistrictMapUrl ?? REALSCOUT.albanyMapUrl}
               target="_blank"
@@ -218,28 +235,20 @@ const PropertyHero = () => {
                   search_type: "map_link",
                 })
               }
-              className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#5eead4] hover:gap-3 transition-all"
+              className="inline-flex items-center gap-1.5 text-[12.5px] font-light text-white/45 hover:text-white/70 transition"
             >
               {REALSCOUT.capitalDistrictMapUrl
-                ? "Browse the Capital District map"
-                : "Browse the Albany map view"}
-              <ExternalLink className="w-3.5 h-3.5" />
+                ? "View the Capital District map"
+                : "View the City of Albany map"}
+              <ExternalLink className="w-3 h-3" />
             </a>
-            <span className="hidden sm:block w-px h-4 bg-white/15" aria-hidden />
-            <Link
-              to="/homes"
-              className="text-[13px] font-semibold text-white/70 hover:text-white transition"
-            >
-              All home resources
-            </Link>
           </div>
 
-          <p className="mt-5 text-center text-[11.5px] leading-relaxed text-white/45 max-w-2xl mx-auto">
-            Property search is powered by RealScout on live MLS data. The map view
-            linked above is currently scoped to the City of Albany. Looking for
-            businesses, towns, or services instead? Use the site search in the
-            navigation.
+
+          <p className="mt-5 text-center text-[11.5px] leading-relaxed text-white/40 max-w-xl mx-auto font-light">
+            Live listing search powered by RealScout.
           </p>
+
         </div>
       </div>
     </section>

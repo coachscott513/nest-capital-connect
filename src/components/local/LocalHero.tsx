@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { ArrowRight, Search, Building2 } from "lucide-react";
 import heroImg from "@/assets/local-hero-mainstreet.jpg";
+import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 
 const CHIPS = [
   { label: "Restaurants & Taverns", q: "Restaurant" },
@@ -28,7 +29,75 @@ const scrollToDirectory = () => {
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
+const ALL_TOWNS = CAPITAL_DISTRICT_COUNTIES.flatMap((c) => c.towns);
+
+const titleize = (value: string) =>
+  value
+    .replace(/[-_]+/g, " ")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+
+/** Resolve a `town` query value (slug or display name) to its real label. */
+const townLabel = (raw: string) => {
+  const norm = raw.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const match = ALL_TOWNS.find(
+    (t) => t.slug === norm || t.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === norm,
+  );
+  return match?.name ?? titleize(raw);
+};
+
 const LocalHero = () => {
+  const [params] = useSearchParams();
+  const town = params.get("town")?.trim() ?? "";
+  const category = params.get("category")?.trim() ?? "";
+  const search = (params.get("search") ?? params.get("q") ?? "").trim();
+  const isFiltered = Boolean(town || category || search);
+
+  /* ── Filtered state: a compact, premium town/category header ──
+     One eyebrow, one H1, one line of subcopy, then results.       */
+  if (isFiltered) {
+    const place = town ? townLabel(town) : "";
+    const cat = category ? titleize(category) : "";
+    const heading = cat
+      ? `${cat} in ${place || "the Capital District"}`
+      : place
+        ? `Businesses & services in ${place}`
+        : "Local businesses & services";
+
+    return (
+      <section className="relative w-full overflow-hidden border-b border-white/[0.06] bg-[#0B0F19]">
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(55% 60% at 50% 0%, rgba(94,234,212,0.09), transparent 70%)",
+          }}
+        />
+        <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-28 md:pt-36 pb-10 md:pb-14">
+          <p className="text-[10px] font-medium tracking-[0.42em] uppercase text-[#5eead4]">
+            Local directory
+          </p>
+          <h1 className="mt-5 text-[2rem] sm:text-4xl md:text-[3.25rem] font-extralight tracking-[-0.04em] leading-[1.06] text-white text-balance max-w-3xl">
+            {heading}
+          </h1>
+          <p className="mt-4 text-[15px] md:text-[16.5px] font-light leading-[1.6] text-white/55 max-w-xl">
+            Find local businesses, home services, professionals and everyday
+            essentials.
+          </p>
+          {search && (
+            <p className="mt-4 text-[12.5px] font-light text-white/40">
+              Matching “{search}”
+            </p>
+          )}
+        </div>
+      </section>
+    );
+  }
+
+  /* ── Unfiltered /local: the full editorial entry point ── */
   return (
     <section className="relative w-full overflow-hidden border-b border-white/[0.06]">
       {/* Cinematic background */}
@@ -57,13 +126,13 @@ const LocalHero = () => {
       </div>
 
       <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-32 md:pt-40 pb-14 md:pb-20 text-center">
-        <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
-          Local Businesses
+        <p className="text-[10px] font-medium tracking-[0.42em] uppercase text-[#5eead4]">
+          Local directory
         </p>
-        <h1 className="mt-5 text-4xl sm:text-5xl md:text-7xl font-semibold tracking-[-0.04em] leading-[1.02] text-white">
+        <h1 className="mt-5 text-4xl sm:text-5xl md:text-[4rem] font-extralight tracking-[-0.04em] leading-[1.04] text-white">
           Discover local businesses.
         </h1>
-        <p className="mt-6 text-base md:text-xl text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-6 text-base md:text-lg text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
           Restaurants, contractors, healthcare, finance, real estate services,
           and local experts across the Capital District.
         </p>
@@ -74,14 +143,14 @@ const LocalHero = () => {
               track("local_hero_cta_click", { cta: "search_businesses" });
               scrollToDirectory();
             }}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+            className="inline-flex items-center gap-2 min-h-[44px] px-7 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
           >
             <Search className="w-4 h-4" /> Search Businesses
           </button>
           <Link
             to="/claim-business"
             onClick={() => track("local_hero_cta_click", { cta: "claim_business" })}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
+            className="inline-flex items-center gap-2 min-h-[44px] px-7 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
           >
             <Building2 className="w-4 h-4" /> Claim Your Business
           </Link>
@@ -94,7 +163,7 @@ const LocalHero = () => {
               key={c.label}
               to={`/local?category=${encodeURIComponent(c.q)}`}
               onClick={() => track("local_hero_chip_click", { category: c.label })}
-              className="px-4 py-2 rounded-full text-xs md:text-sm font-medium text-white/80 border border-white/15 bg-white/[0.04] hover:bg-white/[0.10] hover:border-white/30 transition"
+              className="px-4 py-2 rounded-full text-xs md:text-sm font-medium text-white/75 border border-white/12 bg-white/[0.04] hover:bg-white/[0.09] hover:border-white/25 transition"
             >
               {c.label}
             </Link>
@@ -106,10 +175,10 @@ const LocalHero = () => {
       <div className="relative border-t border-white/[0.06] bg-white/[0.02] backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-10 py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
-            <p className="text-[10px] font-semibold tracking-[0.26em] uppercase text-[#5eead4]">
+            <p className="text-[10px] font-medium tracking-[0.26em] uppercase text-[#5eead4]">
               For Owners
             </p>
-            <p className="mt-1 text-white font-medium text-base md:text-lg tracking-[-0.01em]">
+            <p className="mt-1 text-white font-light text-base md:text-lg tracking-[-0.01em]">
               Own a local business? Claim, update, or feature your profile.
             </p>
           </div>
@@ -119,21 +188,21 @@ const LocalHero = () => {
                 track("local_hero_cta_click", { cta: "find_my_business" });
                 scrollToDirectory();
               }}
-              className="px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold text-white border border-white/15 bg-white/[0.04] hover:bg-white/[0.10] transition"
+              className="min-h-[44px] px-5 rounded-full text-xs md:text-sm font-semibold text-white border border-white/12 bg-white/[0.04] hover:bg-white/[0.09] transition"
             >
               Find My Business
             </button>
             <Link
               to="/claim-business"
               onClick={() => track("local_hero_cta_click", { cta: "claim_business_strip" })}
-              className="px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold text-white border border-white/15 bg-white/[0.04] hover:bg-white/[0.10] transition"
+              className="inline-flex items-center min-h-[44px] px-5 rounded-full text-xs md:text-sm font-semibold text-white border border-white/12 bg-white/[0.04] hover:bg-white/[0.09] transition"
             >
               Claim Profile
             </Link>
             <Link
               to="/pricing"
               onClick={() => track("local_hero_cta_click", { cta: "featured_placement" })}
-              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold bg-[#c9a449] text-[#0B0F19] hover:opacity-90 transition"
+              className="inline-flex items-center gap-1.5 min-h-[44px] px-5 rounded-full text-xs md:text-sm font-semibold bg-[#c9a449] text-[#0B0F19] hover:opacity-90 transition"
             >
               Request Featured Placement <ArrowRight className="w-3.5 h-3.5" />
             </Link>

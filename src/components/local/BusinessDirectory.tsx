@@ -108,6 +108,17 @@ const normalizeText = (value: string) =>
 const slugText = (value: string) =>
   normalizeText(value).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
+/** Accept either a town slug ("clifton-park") or display name ("Delmar"). */
+const normalizeTownParam = (raw: string | null) => {
+  if (!raw) return "";
+  const norm = raw.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-");
+  const match = TOWN_LIST.find(
+    (t) => t.slug === norm || t.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === norm,
+  );
+  return match?.slug ?? norm;
+};
+
+
 const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -128,7 +139,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
   const initialCategory = initialResolved.official ?? "";
 
   const [q, setQ] = useState(initialSearch);
-  const [town, setTown] = useState(() => townSlug ?? searchParams.get("town") ?? "");
+  const [town, setTown] = useState(() => townSlug ?? normalizeTownParam(searchParams.get("town")));
   const [category, setCategory] = useState<string>(initialCategory);
   const [tier, setTier] = useState<TierFilter>("all");
   const [hasWebsite, setHasWebsite] = useState(false);
@@ -246,62 +257,22 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
 
 
 
+  // When any filter is active the page becomes a results view: the marketing
+  // band and the featured strip step aside so results start near the top.
+  const isFiltered = Boolean(q.trim() || town || category);
+
   return (
     <div className="bg-[#0B0F19] text-white">
-      {/* HERO */}
-      {!embedded && (
-        <section className="pt-28 md:pt-36 pb-14 px-6 md:px-10 relative overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-[0.35] pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(60% 50% at 50% 0%, rgba(94,234,212,0.18) 0%, rgba(11,15,25,0) 70%)",
-            }}
-          />
-          <div className="max-w-4xl mx-auto text-center relative">
-            <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-5 text-[#5eead4]">
-              Local Businesses
-            </p>
-            {/* Semantic level: the page H1 is owned by LocalHero. This
-                directory band is a subordinate section heading. Text and
-                styling are unchanged. */}
-            <h2 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
-              {title ?? "The Capital District, curated."}
-            </h2>
-            <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
-              Cinematic profiles of the cafés, lenders, attorneys, makers, and home services
-              quietly powering our towns. Curated by town, not crowdsourced.
-            </p>
-            <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href="/pricing"
-                onClick={() => trackGAEvent.pricingClick({ source_location: "directory_hero" })}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
-              >
-                <Sparkles className="w-4 h-4" /> Local Business Solutions
-              </a>
-              <a
-                href="/pricing"
-                onClick={() => trackGAEvent.pricingClick({ source_location: "directory_hero_promote" })}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition"
-              >
-                <Megaphone className="w-4 h-4 text-[#5eead4]" /> Promote a Special
-              </a>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* FEATURED PARTNERS */}
-      {!embedded && featured.length > 0 && (
-        <section className="py-16 md:py-20 px-6 md:px-10 border-y border-white/[0.06] bg-[#10141F]">
+      {/* FEATURED PARTNERS — browse state only */}
+      {!embedded && !isFiltered && featured.length > 0 && (
+        <section className="pt-16 pb-14 md:pt-20 md:pb-16 px-6 md:px-10 border-b border-white/[0.06]">
           <div className="max-w-6xl mx-auto">
-            <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+            <div className="flex items-end justify-between mb-9 flex-wrap gap-4">
               <div>
-                <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-3 text-[#5eead4]">
+                <p className="text-[10px] font-medium tracking-[0.32em] uppercase mb-3 text-[#5eead4]">
                   Featured Partners
                 </p>
-                <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em]">
+                <h2 className="text-2xl md:text-[2.25rem] font-extralight tracking-[-0.035em] text-white">
                   Trusted across the Capital District.
                 </h2>
               </div>
@@ -316,8 +287,9 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
         </section>
       )}
 
+
       {/* SEARCH BAR */}
-      <section className={embedded ? "px-0" : "pt-16 px-6 md:px-10"}>
+      <section className={embedded ? "px-0" : isFiltered ? "pt-10 md:pt-12 px-6 md:px-10" : "pt-14 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
           <form onSubmit={(e) => {
             e.preventDefault();
@@ -414,7 +386,7 @@ const BusinessDirectory = ({ townSlug, title, embedded }: Props) => {
       </section>
 
       {/* RESULTS */}
-      <section className={embedded ? "py-10" : "py-20 px-6 md:px-10"}>
+      <section className={embedded ? "py-10" : "py-14 md:py-16 px-6 md:px-10"}>
         <div className="max-w-6xl mx-auto">
           {loading ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
