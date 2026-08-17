@@ -76,7 +76,7 @@ const LocalHero = () => {
               "radial-gradient(55% 60% at 50% 0%, rgba(94,234,212,0.09), transparent 70%)",
           }}
         />
-        <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-28 md:pt-36 pb-10 md:pb-14">
+        <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-24 md:pt-32 pb-8 md:pb-12">
           <p className="text-[10px] font-medium tracking-[0.42em] uppercase text-[#5eead4]">
             Local directory
           </p>
