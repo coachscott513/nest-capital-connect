@@ -7,17 +7,31 @@ import { TalkToScottButton } from "@/components/property/TalkToScott";
 
 const PLACEMENT = "homepage-property-intelligence";
 
+/**
+ * Destination contract (founder-approved, evidence-audited).
+ *
+ * Each card has exactly one primary action, pointing only at a page that
+ * genuinely performs that decision's analysis:
+ *  - multi_unit  -> /analyze/multifamily   (rent roll, NOI, DSCR, break-even)
+ *  - land        -> /analyze/land          (carrying cost, basis, resale)
+ *  - flip        -> /homes/analyze?property_type=fix_flip
+ *                   (ARV, rehab, holding, resale cost, flip ROI). The deeper
+ *                   AnalyzeAnyProperty hand-off lives on that page.
+ *  - first_property -> AnalyzeAnyProperty gateway (decision_type=first_property).
+ *                   No internal page performs effective-housing-cost math, so
+ *                   /first-time-buyers is offered as secondary reading only.
+ *  - featured    -> real worked analyses. /reports is a placeholder and is
+ *                   deliberately NOT used.
+ */
 type Path = {
   key: DecisionType;
   title: string;
   copy: string;
-  /**
-   * Exactly one primary decision destination per card. The card itself is the
-   * link — no competing secondary CTA. Deeper tooling (including the
-   * AnalyzeAnyProperty hand-off) lives on the destination page.
-   */
-  to: string;
   action: string;
+  /** Internal route, or an external AAP destination. Never both as primary. */
+  to?: string;
+  href?: string;
+  secondary?: { label: string; to: string };
 };
 
 const PATHS: Path[] = [
@@ -38,25 +52,34 @@ const PATHS: Path[] = [
   {
     key: "flip",
     title: "Fix & Flip",
-    copy: "Scope, budget ranges, holding costs, and the exit assumptions behind the number.",
-    to: "/analyze/rental",
+    copy: "ARV, repair budget, holding costs, and the exit assumptions behind the spread.",
+    to: "/homes/analyze?property_type=fix_flip",
     action: "Run flip numbers",
   },
   {
     key: "first_property",
     title: "First Property / House Hack",
-    copy: "What the monthly payment actually looks like and which unknowns matter most.",
-    to: "/first-time-buyers",
-    action: "Start with the basics",
+    copy: "Effective monthly housing cost after tenant income, FHA multi-unit rules, and reserves.",
+    href: analyzeAnyPropertyUrl({
+      placement: PLACEMENT,
+      decisionType: "first_property",
+    }),
+    action: "Run house-hack numbers",
+    secondary: { label: "How first-time buying works", to: "/first-time-buyers" },
   },
   {
     key: "featured",
     title: "Featured Analyses",
-    copy: "Worked examples showing how the evidence is organized before a decision.",
-    to: "/reports",
-    action: "See a sample report",
+    copy: "Real worked analyses showing how the evidence is organized before a decision.",
+    to: "/reports/sample-property-intelligence",
+    action: "See a worked analysis",
+    secondary: {
+      label: "1999 Ridge Road, Queensbury",
+      to: "/reports/1999-ridge-road-queensbury-ny",
+    },
   },
 ];
+
 
 
 const PropertyIntelligenceChapter = () => (
