@@ -1,5 +1,6 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { analyzeAnyPropertyUrl, type DecisionType } from "@/config/externalProducts";
 import { logEngagement } from "@/lib/engagement";
 import { propertyIntelligencePathClick } from "@/lib/homeAnalytics";
@@ -82,7 +83,18 @@ const PATHS: Path[] = [
 
 
 
-const PropertyIntelligenceChapter = () => (
+const arrowClass =
+  "w-10 h-10 rounded-full border border-white/12 bg-white/[0.04] text-white/70 hover:text-white hover:bg-white/[0.09] inline-flex items-center justify-center transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60";
+
+const PropertyIntelligenceChapter = () => {
+  const rail = useRef<HTMLDivElement | null>(null);
+  const nudge = (dir: 1 | -1) => {
+    const el = rail.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+  };
+
+  return (
   <section
     id="property-intelligence"
     className="relative w-full overflow-hidden bg-surface-deep border-t border-white/[0.06] scroll-mt-24"
@@ -97,10 +109,11 @@ const PropertyIntelligenceChapter = () => (
     />
 
     <div
-      className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-20 md:py-28"
+      className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-16 md:py-20"
       style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
     >
-      <div className="max-w-3xl">
+      <div className="flex items-end justify-between gap-6">
+        <div className="max-w-3xl">
         <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-text-quiet">
           Property Intelligence
         </p>
@@ -115,11 +128,20 @@ const PropertyIntelligenceChapter = () => (
         <p className="mt-6 text-[15px] font-medium text-[#5eead4]">
           Technology organizes the evidence. Scott reviews the decision.
         </p>
+        </div>
+        <div className="hidden md:flex items-center gap-2 shrink-0">
+          <button type="button" aria-label="Scroll decisions left" onClick={() => nudge(-1)} className={arrowClass}>
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button type="button" aria-label="Scroll decisions right" onClick={() => nudge(1)} className={arrowClass}>
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {/* Flagship route — deal math lives in Analyze Any Deal */}
       <div
-        className="mt-10 rounded-2xl border border-white/[0.08] p-6 md:p-7 flex flex-col md:flex-row md:items-center md:justify-between gap-5"
+        className="mt-8 rounded-2xl border border-white/[0.08] p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-5"
         style={{ background: "linear-gradient(180deg, #13161E 0%, #1A1D26 100%)" }}
       >
         <div>
@@ -148,7 +170,11 @@ const PropertyIntelligenceChapter = () => (
       </div>
 
 
-      <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div
+        ref={rail}
+        className="mt-9 md:mt-12 -mx-5 sm:-mx-6 md:-mx-10 px-5 sm:px-6 md:px-10 flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-3"
+        style={{ scrollbarWidth: "none" }}
+      >
         {PATHS.map((p) => {
           const external = Boolean(p.href);
           const track = () => {
@@ -160,12 +186,12 @@ const PropertyIntelligenceChapter = () => (
             });
           };
           const cardClass =
-            "group relative flex flex-col rounded-3xl border border-white/10 bg-white/[0.03] p-7 hover:border-[#5eead4]/40 hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60";
+            "group relative flex flex-col rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-7 hover:border-[#5eead4]/40 hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60";
           const body = (
             <>
               <h3 className="text-xl font-semibold tracking-[-0.02em] text-white">{p.title}</h3>
               <p className="mt-3 text-[14.5px] text-white/65 font-light leading-relaxed">{p.copy}</p>
-              <span className="mt-auto pt-6 inline-flex items-center gap-2 text-[14px] font-semibold text-[#5eead4] group-hover:gap-3 transition-all">
+              <span className="mt-auto pt-5 inline-flex items-center gap-2 text-[14px] font-semibold text-[#5eead4] group-hover:gap-3 transition-all">
                 {p.action}
                 {external ? (
                   <ArrowUpRight className="w-4 h-4" aria-hidden />
@@ -177,7 +203,7 @@ const PropertyIntelligenceChapter = () => (
           );
 
           return (
-            <div key={p.key} className="flex flex-col">
+            <div key={p.key} className="snap-start shrink-0 w-[80vw] sm:w-[52vw] lg:w-[38%] flex flex-col">
               {external ? (
                 <a
                   href={p.href}
@@ -206,10 +232,11 @@ const PropertyIntelligenceChapter = () => (
             </div>
           );
         })}
+        <div className="shrink-0 w-1" aria-hidden />
       </div>
 
 
-      <div className="mt-10 flex flex-wrap items-center gap-3">
+      <div className="mt-8 flex flex-wrap items-center gap-3">
         <TalkToScottButton
           context={{ placement: PLACEMENT }}
           label="Have Scott review the decision"
@@ -234,13 +261,14 @@ const PropertyIntelligenceChapter = () => (
       </div>
 
 
-      <p className="mt-8 text-[12px] leading-relaxed text-white/40 max-w-3xl">
+      <p className="mt-6 text-[12px] leading-relaxed text-white/40 max-w-3xl">
         Analysis tools organize assumptions and public information. Outputs are
         estimates, not verified facts, and are not an appraisal, a comparative
         market analysis, or financial, legal, or tax advice.
       </p>
     </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default PropertyIntelligenceChapter;

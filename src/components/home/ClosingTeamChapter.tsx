@@ -1,8 +1,11 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
   Banknote,
+  ChevronLeft,
+  ChevronRight,
   ClipboardCheck,
   FileSignature,
   KeyRound,
@@ -107,8 +110,17 @@ const ROLES: Role[] = [
 const MIN_NAMED_PROVIDERS = 3;
 const MIN_DISTINCT_ROLES = 3;
 
+const arrowClass =
+  "w-10 h-10 rounded-full border border-white/12 bg-white/[0.04] text-white/70 hover:text-white hover:bg-white/[0.09] inline-flex items-center justify-center transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60";
+
 const ClosingTeamChapter = () => {
   const { members, loading } = useClosingTeam();
+  const rail = useRef<HTMLDivElement | null>(null);
+  const nudge = (dir: 1 | -1) => {
+    const el = rail.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.round(el.clientWidth * 0.8), behavior: "smooth" });
+  };
 
   const distinctRoles = new Set(members.map((m) => m.role_category)).size;
   const showNamedRail =
@@ -122,7 +134,7 @@ const ClosingTeamChapter = () => {
       className="relative w-full border-t border-white/[0.06] bg-surface-raised scroll-mt-24"
     >
       <div
-        className="max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-20 md:py-28"
+        className="max-w-7xl mx-auto px-5 sm:px-6 md:px-10 py-16 md:py-20"
         style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
       >
         <motion.div
@@ -130,8 +142,9 @@ const ClosingTeamChapter = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl"
+          className="flex items-end justify-between gap-6"
         >
+          <div className="max-w-3xl">
           <p className="text-[10px] md:text-[11px] font-medium tracking-[0.45em] uppercase text-text-quiet">
             The Closing Team
           </p>
@@ -144,9 +157,22 @@ const ClosingTeamChapter = () => {
             Financing, legal review, inspection, insurance, and closing support —
             organized by the role each one plays, not by who paid to appear.
           </p>
+          </div>
+          <div className="hidden md:flex items-center gap-2 shrink-0">
+            <button type="button" aria-label="Scroll roles left" onClick={() => nudge(-1)} className={arrowClass}>
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button type="button" aria-label="Scroll roles right" onClick={() => nudge(1)} className={arrowClass}>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         </motion.div>
 
-        <div className="mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-6">
+        <div
+          ref={rail}
+          className="mt-9 md:mt-12 -mx-5 sm:-mx-6 md:-mx-10 px-5 sm:px-6 md:px-10 flex gap-5 md:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-3"
+          style={{ scrollbarWidth: "none" }}
+        >
           {ROLES.map((r, i) => {
             const Icon = r.icon;
             return (
@@ -156,6 +182,7 @@ const ClosingTeamChapter = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.75, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                className="snap-start shrink-0 w-[80vw] sm:w-[52vw] lg:w-[38%]"
               >
                 <Link
                   to={r.to}
@@ -169,7 +196,7 @@ const ClosingTeamChapter = () => {
                   className="group relative block h-full overflow-hidden rounded-[26px] border border-white/10 hover:border-[#5eead4]/40 hover:-translate-y-0.5 transition-all duration-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5EEAD4]/60"
                   style={{ background: r.art }}
                 >
-                  <div className="relative flex items-start gap-5 p-7 md:p-9">
+                  <div className="relative flex items-start gap-5 p-6 md:p-7">
                     <span
                       className="shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-2xl border border-white/12 bg-white/[0.06]"
                       aria-hidden
@@ -177,13 +204,13 @@ const ClosingTeamChapter = () => {
                       <Icon className="w-5 h-5 text-[#5eead4]" strokeWidth={1.6} />
                     </span>
                     <div className="min-w-0">
-                      <h3 className="text-[22px] md:text-[26px] font-semibold tracking-[-0.03em] leading-[1.1] text-white">
+                      <h3 className="text-[21px] md:text-[23px] font-semibold tracking-[-0.03em] leading-[1.1] text-white">
                         {r.title}
                       </h3>
                       <p className="mt-3 text-[14.5px] md:text-[15px] text-white/65 font-light leading-relaxed">
                         {r.copy}
                       </p>
-                      <span className="mt-6 inline-flex items-center gap-2 text-[13.5px] font-semibold text-[#5eead4] group-hover:gap-3 transition-all">
+                      <span className="mt-5 inline-flex items-center gap-2 text-[13.5px] font-semibold text-[#5eead4] group-hover:gap-3 transition-all">
                         {r.action}
                         <ArrowRight className="w-4 h-4" aria-hidden />
                       </span>
@@ -193,6 +220,7 @@ const ClosingTeamChapter = () => {
               </motion.div>
             );
           })}
+          <div className="shrink-0 w-1" aria-hidden />
         </div>
 
         {/* Named professionals — a separate, founder-approved layer only. */}
@@ -228,7 +256,7 @@ const ClosingTeamChapter = () => {
           </ul>
         )}
 
-        <div className="mt-10 flex flex-wrap items-center gap-4">
+        <div className="mt-8 flex flex-wrap items-center gap-4">
           <Link
             to="/closing-team"
             onClick={() => logEngagement("closing_team_open", {}, { source_location: PLACEMENT })}

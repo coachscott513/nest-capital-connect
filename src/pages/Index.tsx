@@ -7,7 +7,6 @@ import RegionalSearchChapter from "@/components/home/RegionalSearchChapter";
 import BusinessesServicesChapter from "@/components/home/BusinessesServicesChapter";
 import PropertyIntelligenceChapter from "@/components/home/PropertyIntelligenceChapter";
 import ClosingTeamChapter from "@/components/home/ClosingTeamChapter";
-import HomeServicesRail from "@/components/home/HomeServicesRail";
 import TownsEventsStoriesChapter from "@/components/home/TownsEventsStoriesChapter";
 import TalkToScottChapter from "@/components/home/TalkToScottChapter";
 import {
@@ -18,12 +17,12 @@ import {
 
 /* =============================================================
    CAPITAL DISTRICT NEST — HOMEPAGE (Global Flow / Premium UX v1)
-   Nine chapters, one idea each, in a fixed narrative order:
-     1. Property hero            6. Closing Team
-     2. Search the region        7. Home Services
-     3. Businesses & Services    8. Towns, Events & Local Stories
+   Eight chapters, one idea each, in a fixed narrative order:
+     1. Property hero            5. Property Intelligence
+     2. Search the region        6. Closing Team
+     3. Businesses & Services    7. Towns, Events & Local Stories
+        (incl. Home Services)    8. Talk to Scott
      4. Buy / Sell / Invest / Own
-     5. Property Intelligence    9. Talk to Scott
    ============================================================= */
 
 const Index = () => {
@@ -55,11 +54,9 @@ const Index = () => {
       <PropertyIntelligenceChapter />
       {/* 6 — the closing team */}
       <ClosingTeamChapter />
-      {/* 7 — home services */}
-      <HomeServicesRail />
-      {/* 8 — towns, events and local stories (consolidated) */}
+      {/* 7 — towns, events and local stories (consolidated) */}
       <TownsEventsStoriesChapter />
-      {/* 9 — talk to a human */}
+      {/* 8 — talk to a human */}
       <TalkToScottChapter />
 
       <Footer />

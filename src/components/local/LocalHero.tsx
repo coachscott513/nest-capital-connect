@@ -2,6 +2,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { ArrowRight, Search, Building2 } from "lucide-react";
 import heroImg from "@/assets/local-hero-mainstreet.jpg";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
+import { normalizeLocalSearch } from "@/lib/redundantGeoSearch";
 
 const CHIPS = [
   { label: "Restaurants & Taverns", q: "Restaurant" },
@@ -52,7 +53,7 @@ const LocalHero = () => {
   const [params] = useSearchParams();
   const town = params.get("town")?.trim() ?? "";
   const category = params.get("category")?.trim() ?? "";
-  const search = (params.get("search") ?? params.get("q") ?? "").trim();
+  const search = normalizeLocalSearch(params.get("search") ?? params.get("q") ?? "", Boolean(town));
   const isFiltered = Boolean(town || category || search);
 
   /* ── Filtered state: a compact, premium town/category header ──
