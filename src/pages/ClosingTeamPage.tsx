@@ -64,19 +64,59 @@ const ClosingTeamPage = () => {
           </div>
         </section>
 
+        {/* Role states. Each role explains itself and always offers a neutral
+            path forward, even with zero named providers. */}
         <section className="max-w-6xl mx-auto px-5 sm:px-6 py-16 md:py-24">
           <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.03em] text-white">
             The roles
           </h2>
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {CLOSING_TEAM_CATEGORIES.map((c) => (
-              <div key={c.key} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-                <h3 className="text-[17px] font-semibold text-white">{c.title}</h3>
-                <p className="mt-2 text-[14px] text-white/60 font-light leading-relaxed">{c.copy}</p>
+          <p className="mt-4 text-[15px] text-white/55 font-light leading-relaxed max-w-2xl">
+            What each professional actually does, roughly when it happens, and
+            where to look — no provider is selected or recommended for you.
+          </p>
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5">
+            {ROLE_STATES.map((r) => (
+              <div
+                key={r.id}
+                id={r.id}
+                className={`scroll-mt-28 rounded-3xl border p-7 transition-colors ${
+                  hash === r.id
+                    ? "border-[#5eead4]/50 bg-[#5eead4]/[0.05]"
+                    : "border-white/10 bg-white/[0.03]"
+                }`}
+              >
+                <h3 className="text-[20px] font-semibold tracking-[-0.02em] text-white">
+                  {r.title}
+                </h3>
+                <p className="mt-3 text-[14.5px] text-white/65 font-light leading-relaxed">
+                  {r.body}
+                </p>
+                <dl className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <dt className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/40">
+                      When it happens
+                    </dt>
+                    <dd className="mt-1.5 text-[13.5px] text-white/70 font-light">{r.when}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-[10px] font-semibold tracking-[0.22em] uppercase text-white/40">
+                      Typical cost
+                    </dt>
+                    <dd className="mt-1.5 text-[13.5px] text-white/70 font-light">{r.cost}</dd>
+                  </div>
+                </dl>
+                <Link
+                  to={r.to}
+                  className="mt-6 inline-flex items-center gap-2 min-h-[44px] text-[13.5px] font-semibold text-[#5eead4] hover:gap-3 transition-all"
+                >
+                  {r.action}
+                  <ArrowRight className="w-4 h-4" aria-hidden />
+                </Link>
               </div>
             ))}
           </div>
         </section>
+
 
         <section className="max-w-6xl mx-auto px-5 sm:px-6 pb-16 md:pb-24">
           <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.03em] text-white">
