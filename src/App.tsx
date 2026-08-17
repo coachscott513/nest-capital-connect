@@ -254,17 +254,27 @@ const PrerenderReadySignal = () => {
 
     const start = Date.now();
     const MAX_WAIT = 25000;
-    let lastTitle: string | null = null;
+    let lastSignature: string | null = null;
     let stableTicks = 0;
 
     const intervalId = window.setInterval(() => {
       const helmetTitle = document.querySelector('title[data-rh="true"]');
       const title = (document.title || "").trim();
-      const routeOwnsHead = !!helmetTitle && !!title && title !== SHELL_DEFAULT_TITLE;
+      const canonical = document
+        .querySelector('link[rel="canonical"]')
+        ?.getAttribute("href")
+        ?.trim();
+      const h1 = (document.querySelector("h1")?.textContent || "").trim();
+
+      // Shared readiness contract (identical for every Tier A route, no forks):
+      // helmet-owned non-shell title + canonical + a rendered H1, all stable.
+      const routeOwnsHead =
+        !!helmetTitle && !!title && title !== SHELL_DEFAULT_TITLE && !!canonical && h1.length > 0;
 
       if (routeOwnsHead) {
-        stableTicks = title === lastTitle ? stableTicks + 1 : 0;
-        lastTitle = title;
+        const signature = `${title}::${canonical}::${h1}`;
+        stableTicks = signature === lastSignature ? stableTicks + 1 : 0;
+        lastSignature = signature;
         if (stableTicks >= 1) {
           window.clearInterval(intervalId);
           dispatch();
@@ -278,6 +288,19 @@ const PrerenderReadySignal = () => {
         marker.setAttribute("name", "x-prerender-head");
         marker.setAttribute("content", "timeout");
         document.head.appendChild(marker);
+        const reason = document.createElement("meta");
+        reason.setAttribute("name", "x-prerender-head-reason");
+        reason.setAttribute(
+          "content",
+          [
+            !helmetTitle || title === SHELL_DEFAULT_TITLE ? "title" : null,
+            !canonical ? "canonical" : null,
+            !h1 ? "h1" : null,
+          ]
+            .filter(Boolean)
+            .join(",") || "unstable",
+        );
+        document.head.appendChild(reason);
         dispatch();
       }
     }, 150);
