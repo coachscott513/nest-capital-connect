@@ -62,7 +62,7 @@ const PATHS: Path[] = [
 const PropertyIntelligenceChapter = () => (
   <section
     id="property-intelligence"
-    className="relative w-full overflow-hidden bg-[#080B12] border-t border-white/[0.06] scroll-mt-24"
+    className="relative w-full overflow-hidden bg-surface-deep border-t border-white/[0.06] scroll-mt-24"
   >
     <div
       aria-hidden
@@ -78,14 +78,14 @@ const PropertyIntelligenceChapter = () => (
       style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
     >
       <div className="max-w-3xl">
-        <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-[#64748B]">
+        <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-text-quiet">
           Property Intelligence
         </p>
         <h2 className="mt-5 text-3xl md:text-5xl tracking-[-0.035em] leading-[1.07] text-white text-balance">
-          <span className="font-extralight text-[#E2E8F0]">Found a property?</span>
+          <span className="font-extralight text-text-bright">Found a property?</span>
           <span className="block font-semibold">Pressure-test it before you decide.</span>
         </h2>
-        <p className="mt-5 text-[15px] md:text-[17px] text-[#94A3B8] font-light leading-relaxed">
+        <p className="mt-5 text-[15px] md:text-[17px] text-text-soft font-light leading-relaxed">
           Look beyond the listing. Compare the numbers, surface the assumptions,
           identify what is still unknown, and decide what should be verified next.
         </p>
@@ -100,11 +100,11 @@ const PropertyIntelligenceChapter = () => (
         style={{ background: "linear-gradient(180deg, #13161E 0%, #1A1D26 100%)" }}
       >
         <div>
-          <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-[#64748B]">
+          <p className="text-[10px] font-medium tracking-[0.45em] uppercase text-text-quiet">
             Start here
           </p>
           <p className="mt-3 text-[17px] md:text-xl text-white tracking-[-0.02em]">
-            <span className="font-extralight text-[#E2E8F0]">Buying or investing? </span>
+            <span className="font-extralight text-text-bright">Buying or investing? </span>
             <span className="font-semibold">Start with Analyze Any Deal.</span>
           </p>
         </div>
