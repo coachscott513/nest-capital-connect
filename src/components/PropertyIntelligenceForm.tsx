@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MapPin, User, Mail, Phone, FileText } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import SmsConsent from '@/components/SmsConsent';
 
 interface PropertyIntelligenceFormProps {
   sourceProperty?: string;
@@ -19,6 +20,7 @@ const PropertyIntelligenceForm: React.FC<PropertyIntelligenceFormProps> = ({ sou
     phone: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,6 +45,7 @@ const PropertyIntelligenceForm: React.FC<PropertyIntelligenceFormProps> = ({ sou
         type: 'property_intelligence',
         location: formData.propertyAddress,
         lead_type: "buyer",
+        sms_consent: smsConsent,
       });
 
       if (error) throw error;
@@ -53,6 +56,7 @@ const PropertyIntelligenceForm: React.FC<PropertyIntelligenceFormProps> = ({ sou
       });
       
       setFormData({ propertyAddress: '', name: '', email: '', phone: '' });
+      setSmsConsent(false);
     } catch (error) {
       console.error('Form submission error:', error);
       toast({
@@ -152,6 +156,8 @@ const PropertyIntelligenceForm: React.FC<PropertyIntelligenceFormProps> = ({ sou
                   />
                 </div>
               </div>
+
+              <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="property-intel-sms-consent" />
 
               <Button 
                 type="submit" 
