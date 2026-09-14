@@ -90,6 +90,7 @@ const SubmitEvent = () => {
       location: form.town,
       origin_town: form.town,
       lead_type: "event",
+      sms_consent: smsConsent,
     });
     setSubmitting(false);
     if (error) {

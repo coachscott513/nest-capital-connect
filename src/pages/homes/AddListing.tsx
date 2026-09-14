@@ -120,6 +120,7 @@ const AddListing = () => {
         origin_town: townName,
         location: parsed.data.address,
         message,
+        sms_consent: smsConsent,
       });
       if (error) throw error;
       setDone(true);

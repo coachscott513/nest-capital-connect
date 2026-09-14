@@ -42,6 +42,7 @@ const Ask = () => {
         type: 'question',
         location: 'Capital District',
         lead_type: "buyer",
+        sms_consent: smsConsent,
       });
 
       if (error) throw error;

@@ -265,6 +265,7 @@ const ClaimBusiness = () => {
         type: "business_claim",
         origin_town: form.town || prettifyTown(prefillTown) || null,
         lead_type: "business_owner",
+        sms_consent: smsConsent,
       };
       if (import.meta.env.DEV) console.log("[claim] submitting", payload);
       const { error } = await supabase.from("leads").insert(payload);
