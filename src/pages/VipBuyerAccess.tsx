@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
+import SmsConsent from '@/components/SmsConsent';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -45,6 +46,7 @@ const VipBuyerAccess = () => {
     preferredCities: [] as string[],
     timeline: ''
   });
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const scrollToForm = () => {
     document.getElementById('vip-form')?.scrollIntoView({ behavior: 'smooth' });
@@ -91,7 +93,8 @@ const VipBuyerAccess = () => {
           message: `VIP Investor Request\n\nLooking for: ${formData.lookingFor.join(', ')}\nPrice Range: ${formData.priceRange}\nPreferred Cities: ${formData.preferredCities.join(', ')}\nTimeline: ${formData.timeline}`,
           type: 'vip-investor',
           location: formData.preferredCities.join(', '),
-          price_range: formData.priceRange
+          price_range: formData.priceRange,
+          sms_consent: smsConsent
         }
       });
 
@@ -111,6 +114,7 @@ const VipBuyerAccess = () => {
         preferredCities: [],
         timeline: ''
       });
+      setSmsConsent(false);
     } catch (error) {
       toast({
         title: "We couldn't submit this right now",
@@ -495,6 +499,8 @@ const VipBuyerAccess = () => {
                       </SelectContent>
                     </Select>
                   </div>
+
+                  <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="vip-buyer-sms-consent" />
 
                   <Button
                     type="submit"

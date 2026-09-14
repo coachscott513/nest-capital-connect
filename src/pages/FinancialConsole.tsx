@@ -27,6 +27,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import SmsConsent from "@/components/SmsConsent";
 
 type Product = {
   icon: typeof Calculator;
@@ -315,6 +316,7 @@ const FinancialScenarioForm = ({ defaultObjective }: { defaultObjective?: string
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const [form, setForm] = useState({
     full_name: "",
     email: "",
@@ -345,6 +347,7 @@ const FinancialScenarioForm = ({ defaultObjective }: { defaultObjective?: string
       estimated_rent: form.estimated_rent ? Number(form.estimated_rent) : null,
       notes: form.notes || null,
       source_page: "/finances",
+      sms_consent: smsConsent,
     });
     setSubmitting(false);
     if (error) {
@@ -404,6 +407,7 @@ const FinancialScenarioForm = ({ defaultObjective }: { defaultObjective?: string
       <Field label="Notes (optional)">
         <Textarea value={form.notes} onChange={(e) => update("notes", e.target.value)} className="bg-background/60 border-border min-h-[100px]" />
       </Field>
+      <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="financial-console-sms-consent" />
       <button
         type="submit"
         disabled={submitting}

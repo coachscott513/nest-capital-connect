@@ -6,6 +6,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import SmsConsent from "@/components/SmsConsent";
 
 const CATEGORIES = [
   "Concert / Live Music",
@@ -25,6 +26,7 @@ const SubmitEvent = () => {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [started, setStarted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const onFirstInteract = () => {
     if (started) return;
     setStarted(true);
@@ -76,6 +78,7 @@ const SubmitEvent = () => {
       `Link: ${form.link}`,
       `Reservation: ${form.reservationLink}`,
       `Featured requested: ${form.featured ? "yes" : "no"}`,
+      `SMS consent: ${smsConsent ? "yes" : "no"}`,
     ].join("\n");
 
     const { error } = await supabase.from("leads").insert({
@@ -204,6 +207,8 @@ const SubmitEvent = () => {
               />
               I would like this event considered for featured placement.
             </label>
+
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="submit-event-sms-consent" />
 
             <div className="flex flex-wrap gap-3 pt-4">
               <button

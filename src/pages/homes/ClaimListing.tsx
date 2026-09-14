@@ -6,6 +6,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 
 const ClaimListing = () => {
   const [params] = useSearchParams();
@@ -15,6 +16,7 @@ const ClaimListing = () => {
 
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
     claimant_name: "",
@@ -43,6 +45,7 @@ const ClaimListing = () => {
       preferred_listing_url: form.requested_public_url || null,
       message: form.message || null,
       status: "new",
+      sms_consent: smsConsent,
     });
     setSubmitting(false);
     if (insertError) {
@@ -153,6 +156,7 @@ const ClaimListing = () => {
                 />
               </Field>
               {error && <div className="text-sm text-[#DC1C2E]">{error}</div>}
+              <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="claim-listing-sms-consent" />
               <div className="flex flex-wrap gap-3 pt-2">
                 <button type="submit" disabled={submitting} className="btn-primary-apple inline-flex">
                   {submitting ? "Submitting…" : "Claim Listing Link"}

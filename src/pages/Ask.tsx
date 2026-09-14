@@ -11,6 +11,7 @@ import { MessageCircle, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { trackGAEvent } from "@/components/GARouteTracker";
 import { toast } from "sonner";
+import SmsConsent from "@/components/SmsConsent";
 
 
 const Ask = () => {
@@ -21,6 +22,7 @@ const Ask = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +38,7 @@ const Ask = () => {
         full_name: formData.name || "Question Submission",
         email: formData.contact.includes('@') ? formData.contact : `${formData.contact}@phone.placeholder`,
         phone: !formData.contact.includes('@') ? formData.contact : null,
-        message: formData.question,
+        message: `${formData.question}\n\nSMS consent: ${smsConsent ? 'yes' : 'no'}`,
         type: 'question',
         location: 'Capital District',
         lead_type: "buyer",
@@ -143,6 +145,8 @@ const Ask = () => {
                       required
                     />
                   </div>
+                  <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="ask-sms-consent" />
+
                   <Button 
                     type="submit" 
                     size="lg" 

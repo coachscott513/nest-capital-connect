@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Mail, Phone, User } from "lucide-react";
+import SmsConsent from "@/components/SmsConsent";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -24,6 +25,7 @@ interface PropertyContactFormProps {
 
 const PropertyContactForm = ({ propertyAddress, mlsId }: PropertyContactFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,9 +41,10 @@ const PropertyContactForm = ({ propertyAddress, mlsId }: PropertyContactFormProp
     setIsSubmitting(true);
     try {
       // TODO: Integrate with edge function to send to team@capitaldistrictnest.com and BoldTrail CRM
-      console.log("Contact form submission:", { ...values, property: propertyAddress, mlsId });
+      console.log("Contact form submission:", { ...values, property: propertyAddress, mlsId, sms_consent: smsConsent });
       toast.success("Thank you! An agent will contact you shortly.");
       form.reset();
+      setSmsConsent(false);
     } catch (error) {
       toast.error("Failed to send message. Please try again.");
     } finally {
@@ -125,6 +128,7 @@ const PropertyContactForm = ({ propertyAddress, mlsId }: PropertyContactFormProp
                 </FormItem>
               )}
             />
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="property-contact-sms-consent" />
             <Button type="submit" className="w-full" disabled={isSubmitting}>
               {isSubmitting ? "Sending..." : "Send Message"}
             </Button>

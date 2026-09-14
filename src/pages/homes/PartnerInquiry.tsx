@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import SmsConsent from "@/components/SmsConsent";
 
 const CATEGORIES = [
   "Agent",
@@ -50,6 +51,7 @@ const PartnerInquiry = () => {
   const { toast } = useToast();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -111,6 +113,7 @@ const PartnerInquiry = () => {
       notes: parsed.data.notes || null,
       source_page: "/homes/partner-inquiry",
       status: "new",
+      sms_consent: smsConsent,
     });
     setSubmitting(false);
     if (error) {
@@ -193,6 +196,8 @@ const PartnerInquiry = () => {
                 <Textarea value={form.social} onChange={set("social")} rows={2} />
               </Field>
               <Field label="Notes"><Textarea value={form.notes} onChange={set("notes")} rows={4} /></Field>
+
+              <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="partner-inquiry-sms-consent" />
 
               <button
                 type="submit"

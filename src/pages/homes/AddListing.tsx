@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { HOMES_TOWNS } from "@/data/homesTowns";
+import SmsConsent from "@/components/SmsConsent";
 
 const LISTING_TYPES = [
   { value: "sale", label: "For Sale" },
@@ -47,6 +48,7 @@ const AddListing = () => {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const [form, setForm] = useState({
     full_name: "",
@@ -104,6 +106,7 @@ const AddListing = () => {
         parsed.data.brokerage ? `Brokerage: ${parsed.data.brokerage}` : null,
         parsed.data.notes ? `Notes: ${parsed.data.notes}` : null,
         `Authorized to advertise: yes`,
+        `SMS consent: ${smsConsent ? "yes" : "no"}`,
       ]
         .filter(Boolean)
         .join("\n");
@@ -320,6 +323,8 @@ const AddListing = () => {
                   displayed on Capital District Nest.
                 </span>
               </label>
+
+              <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="add-listing-sms-consent" />
 
               <button
                 type="submit"
