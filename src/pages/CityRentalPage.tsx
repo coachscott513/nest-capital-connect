@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import SmsConsent from "@/components/SmsConsent";
 import { allCityRentalData, CityRentalData } from "@/data/rentalData";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -42,6 +43,7 @@ const CityRentalPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ fullName: "", email: "", phone: "" });
   const [pendingRedirectUrl, setPendingRedirectUrl] = useState<string | null>(null);
+  const [smsConsent, setSmsConsent] = useState(false);
   
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -71,6 +73,7 @@ const CityRentalPage = () => {
         type: "rental",
         lead_type: "High-Intent Renter",
         location: data.cityName,
+        sms_consent: smsConsent,
       });
 
       if (error) throw error;
@@ -87,6 +90,7 @@ const CityRentalPage = () => {
         }
         setShowLeadGate(false);
         setFormData({ fullName: "", email: "", phone: "" });
+        setSmsConsent(false);
       }, 1000);
 
     } catch (error) {
@@ -345,6 +349,8 @@ const CityRentalPage = () => {
                 className="bg-background border-border"
               />
             </div>
+
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="city-rental-lead" />
 
             <Button 
               type="submit" 

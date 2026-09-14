@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Lock, Unlock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import SmsConsent from "@/components/SmsConsent";
 
 interface IntelReportUnlockFormProps {
   reportSlug: string;
@@ -19,6 +20,7 @@ const IntelReportUnlockForm = ({ reportSlug, onUnlock }: IntelReportUnlockFormPr
     company: "" // Honeypot field
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +49,8 @@ const IntelReportUnlockForm = ({ reportSlug, onUnlock }: IntelReportUnlockFormPr
         phone: formData.phone.trim() || null,
         page_url: window.location.href,
         referrer: document.referrer || null,
-        user_agent: navigator.userAgent || null
+        user_agent: navigator.userAgent || null,
+        sms_consent: smsConsent
       });
 
       if (error) throw error;
@@ -135,6 +138,8 @@ const IntelReportUnlockForm = ({ reportSlug, onUnlock }: IntelReportUnlockFormPr
             className="mt-1"
           />
         </div>
+
+        <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="intel-unlock-sms-consent" className="text-left" />
 
         <Button
           type="submit"

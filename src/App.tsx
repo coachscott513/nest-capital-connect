@@ -466,6 +466,7 @@ const App = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/article/:slug" element={<BlogArticle />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-of-service" element={<PrivacyPolicyPage />} />
           <Route path="/about-editorial" element={<AboutEditorial />} />
