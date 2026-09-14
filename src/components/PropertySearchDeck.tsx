@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SmsConsent from "@/components/SmsConsent";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,6 +41,8 @@ const PropertySearchDeck = ({ sourcePropertyAddress = "", visible = true }: Prop
     email: "",
     selectedOptions: [] as string[],
   });
+  const [searchSmsConsent, setSearchSmsConsent] = useState(false);
+  const [narrowSmsConsent, setNarrowSmsConsent] = useState(false);
 
   const handleSearchSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,6 +55,7 @@ const PropertySearchDeck = ({ sourcePropertyAddress = "", visible = true }: Prop
         message: `Property Search Request: ${searchForm.propertyAddress}. Source: ${sourcePropertyAddress || "Property Page"}`,
         type: "buyer",
         location: searchForm.propertyAddress,
+        sms_consent: searchSmsConsent,
       });
       
       toast({
@@ -60,6 +64,7 @@ const PropertySearchDeck = ({ sourcePropertyAddress = "", visible = true }: Prop
       });
       
       setSearchForm({ propertyAddress: "", name: "", email: "", phone: "" });
+      setSearchSmsConsent(false);
     } catch (error) {
       toast({
         title: "Error",
@@ -83,6 +88,7 @@ const PropertySearchDeck = ({ sourcePropertyAddress = "", visible = true }: Prop
         email: narrowForm.email,
         message: `Search Narrowing Request. Priorities: ${selectedLabels || "General guidance"}. Source: ${sourcePropertyAddress || "Property Page"}`,
         type: "buyer",
+        sms_consent: narrowSmsConsent,
       });
       
       toast({
@@ -91,6 +97,7 @@ const PropertySearchDeck = ({ sourcePropertyAddress = "", visible = true }: Prop
       });
       
       setNarrowForm({ name: "", email: "", selectedOptions: [] });
+      setNarrowSmsConsent(false);
     } catch (error) {
       toast({
         title: "Error",
@@ -182,6 +189,11 @@ const PropertySearchDeck = ({ sourcePropertyAddress = "", visible = true }: Prop
                     onChange={(e) => setSearchForm(prev => ({ ...prev, phone: e.target.value }))}
                   />
                 </div>
+                <SmsConsent
+                  id="property-search-deck-search-sms-consent"
+                  checked={searchSmsConsent}
+                  onCheckedChange={setSearchSmsConsent}
+                />
                 <Button type="submit" className="w-full" disabled={loading}>
                   Get Property Intelligence
                 </Button>
@@ -248,6 +260,11 @@ const PropertySearchDeck = ({ sourcePropertyAddress = "", visible = true }: Prop
                     required
                   />
                 </div>
+                <SmsConsent
+                  id="property-search-deck-narrow-sms-consent"
+                  checked={narrowSmsConsent}
+                  onCheckedChange={setNarrowSmsConsent}
+                />
                 <Button type="submit" className="w-full" disabled={loading}>
                   Help Me Narrow My Options
                 </Button>

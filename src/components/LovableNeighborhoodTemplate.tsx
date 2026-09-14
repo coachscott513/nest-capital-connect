@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import SmsConsent from "@/components/SmsConsent";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -93,6 +94,7 @@ const LovableNeighborhoodTemplate = ({
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -107,6 +109,7 @@ const LovableNeighborhoodTemplate = ({
     // Reset form
     setEmail("");
     setName("");
+    setSmsConsent(false);
   };
 
   const vendorTypeConfig = {
@@ -511,6 +514,12 @@ const LovableNeighborhoodTemplate = ({
                     required
                   />
                 </div>
+                <SmsConsent
+                  id="neighborhood-quick-match-sms-consent"
+                  checked={smsConsent}
+                  onCheckedChange={setSmsConsent}
+                  className="text-left"
+                />
                 <Button 
                   type="submit" 
                   size="lg" 

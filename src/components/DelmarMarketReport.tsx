@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { FileText, Mail, Phone, CheckCircle2, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import SmsConsent from "@/components/SmsConsent";
 
 const REPORT_URL = "https://www.narrpr.com/reports-v2/6817b29a-44d8-4221-a604-05c717acee81/pdf";
 
@@ -15,6 +16,7 @@ const DelmarMarketReport = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +34,8 @@ const DelmarMarketReport = () => {
           name: name.trim(),
           email: email.trim(),
           market: "Delmar",
-          reportUrl: REPORT_URL
+          reportUrl: REPORT_URL,
+          sms_consent: smsConsent
         }
       });
 
@@ -107,6 +110,12 @@ const DelmarMarketReport = () => {
                   />
                 </div>
               </div>
+
+              <SmsConsent
+                id="delmar-market-report-sms-consent"
+                checked={smsConsent}
+                onCheckedChange={setSmsConsent}
+              />
 
               <Button 
                 type="submit" 
