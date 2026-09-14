@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 
 const REMAX_URL = "/homes/search";
 
@@ -23,6 +24,7 @@ const VoorheesvilleHomesForSale = () => {
     requirements: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   // Test if iframe can load (some sites block embedding)
   useEffect(() => {
@@ -58,6 +60,7 @@ const VoorheesvilleHomesForSale = () => {
         type: "voorheesville-homes",
         origin_town: "voorheesville",
         lead_type: "buyer",
+        sms_consent: smsConsent,
       });
 
       if (error) throw error;
@@ -68,6 +71,7 @@ const VoorheesvilleHomesForSale = () => {
       });
 
       setFormData({ name: "", email: "", phone: "", requirements: "" });
+      setSmsConsent(false);
     } catch (error) {
       console.error("Error submitting form:", error);
       toast({
@@ -269,6 +273,8 @@ const VoorheesvilleHomesForSale = () => {
                     className="border-border min-h-[100px]"
                   />
                 </div>
+
+                <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="voorheesville-homes-for-sale-sms" />
 
                 <Button
                   type="submit"

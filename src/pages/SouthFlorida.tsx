@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 import { useToast } from "@/hooks/use-toast";
 
 const areas = [
@@ -32,6 +33,7 @@ const SouthFlorida = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", timeline: "", interest: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,10 +50,12 @@ const SouthFlorida = () => {
         message: `South Florida Lead — Timeline: ${formData.timeline || "Not specified"}, Interest: ${formData.interest || "Not specified"}`,
         type: "south-florida",
         origin_town: "south-florida",
+        sms_consent: smsConsent,
       });
       if (error) throw error;
       toast({ title: "We'll be in touch!", description: "A South Florida specialist will reach out shortly." });
       setFormData({ name: "", email: "", phone: "", timeline: "", interest: "" });
+      setSmsConsent(false);
     } catch {
       toast({ title: "We couldn't submit this right now", description: "Please try again.", variant: "destructive" });
     } finally {
@@ -383,6 +387,7 @@ const SouthFlorida = () => {
                 <option value="exploring">Just starting</option>
               </select>
             </div>
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="south-florida-sms" />
             <Button type="submit" disabled={isSubmitting} className="w-full bg-foreground text-background hover:bg-foreground/85 rounded-xl h-14 text-lg font-semibold">
               {isSubmitting ? "Submitting..." : "Get Started"}
             </Button>
