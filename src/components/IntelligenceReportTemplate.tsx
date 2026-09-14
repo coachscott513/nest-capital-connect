@@ -20,6 +20,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 import { toast } from "@/hooks/use-toast";
 import {
   FileCheck,
@@ -109,6 +110,7 @@ const IntelligenceReportTemplate = ({
   });
   const [isOfferSubmitting, setIsOfferSubmitting] = useState(false);
   const [offerSubmitted, setOfferSubmitted] = useState(false);
+  const [offerSmsConsent, setOfferSmsConsent] = useState(false);
 
   const [searchFormData, setSearchFormData] = useState({
     address: "",
@@ -119,6 +121,7 @@ const IntelligenceReportTemplate = ({
   });
   const [isSearchSubmitting, setIsSearchSubmitting] = useState(false);
   const [searchSubmitted, setSearchSubmitted] = useState(false);
+  const [searchSmsConsent, setSearchSmsConsent] = useState(false);
 
   const handleOfferSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,6 +137,7 @@ const IntelligenceReportTemplate = ({
         page_url: window.location.href,
         referrer: document.referrer || null,
         user_agent: navigator.userAgent,
+        sms_consent: offerSmsConsent,
       });
 
       if (error) throw error;
@@ -169,6 +173,7 @@ const IntelligenceReportTemplate = ({
         page_url: window.location.href,
         referrer: document.referrer || null,
         user_agent: navigator.userAgent,
+        sms_consent: searchSmsConsent,
       });
 
       if (error) throw error;
@@ -868,6 +873,7 @@ const IntelligenceReportTemplate = ({
                           rows={3}
                         />
                       </div>
+                      <SmsConsent checked={offerSmsConsent} onCheckedChange={setOfferSmsConsent} id="intel-report-offer-sms" />
                       <Button type="submit" size="lg" className="w-full" disabled={isOfferSubmitting}>
                         <Send className="w-4 h-4 mr-2" />
                         {isOfferSubmitting ? "Submitting..." : "Get Offer-Ready Package"}
@@ -959,6 +965,7 @@ const IntelligenceReportTemplate = ({
                           className="bg-background border-border"
                         />
                       </div>
+                      <SmsConsent checked={searchSmsConsent} onCheckedChange={setSearchSmsConsent} id="intel-report-search-sms" />
                       <Button type="submit" size="lg" className="w-full" disabled={isSearchSubmitting}>
                         <Search className="w-4 h-4 mr-2" />
                         {isSearchSubmitting ? "Submitting..." : "Get My Free Intelligence Report"}
