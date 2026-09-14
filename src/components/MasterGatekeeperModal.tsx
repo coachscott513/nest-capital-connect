@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { ArrowRight, Sparkles, Smartphone } from "lucide-react";
 import { z } from "zod";
 import { Honeypot, useHoneypot } from "@/components/Honeypot";
+import SmsConsent from "@/components/SmsConsent";
 
 
 // Validation schema
@@ -59,6 +60,7 @@ const MasterGatekeeperModal = ({
   const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
+  const [smsConsent, setSmsConsent] = useState(false);
   const honeypot = useHoneypot();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -97,6 +99,7 @@ const MasterGatekeeperModal = ({
         location: townName || null,
         origin_town: townName || null,
         lead_type: "buyer",
+        sms_consent: smsConsent,
       });
 
       if (error) throw error;
@@ -110,6 +113,7 @@ const MasterGatekeeperModal = ({
         setName("");
         setEmail("");
         setPhone("");
+        setSmsConsent(false);
       }, 800);
     } catch (error) {
       console.error("Error saving lead:", error);
@@ -273,6 +277,8 @@ const MasterGatekeeperModal = ({
               Get SMS Alerts for off-market 30%+ yield opportunities
             </p>
           </div>
+
+          <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="master-gatekeeper-sms-consent" />
 
           {/* Authorize Passport Button */}
           <Button

@@ -4,10 +4,12 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import alphaListReport from "@/assets/alpha-list-report.jpg";
 import { trackGAEvent } from "@/components/GARouteTracker";
+import SmsConsent from "@/components/SmsConsent";
 
 const IntelListSection = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ const IntelListSection = () => {
 
     toast.success("You're on the list! Check your inbox for the Regional Insight Report.");
     setEmail("");
+    setSmsConsent(false);
     setIsSubmitting(false);
   };
 
@@ -65,15 +68,18 @@ const IntelListSection = () => {
         </div>
 
         {/* Email Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-          <Input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 h-12 bg-card border-border text-foreground placeholder:text-muted-foreground"
-            required
-          />
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3 max-w-md mx-auto">
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="flex-1 h-12 bg-card border-border text-foreground placeholder:text-muted-foreground"
+              required
+            />
+          </div>
+          <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="intel-list-sms-consent" className="text-left" />
           <Button 
             type="submit" 
             size="lg" 
