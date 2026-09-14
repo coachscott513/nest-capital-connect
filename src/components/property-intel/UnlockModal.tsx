@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { LeadFormData } from "./types";
 import { Lock } from "lucide-react";
+import SmsConsent from "@/components/SmsConsent";
 
 interface UnlockModalProps {
   open: boolean;
@@ -25,11 +26,12 @@ const UnlockModal = ({ open, onOpenChange, onSubmit, isSubmitting }: UnlockModal
     phone: "",
   });
   const [honeypot, setHoneypot] = useState("");
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (honeypot) return; // Bot trap
-    await onSubmit(formData);
+    await onSubmit({ ...formData, smsConsent });
   };
 
   return (
@@ -102,6 +104,8 @@ const UnlockModal = ({ open, onOpenChange, onSubmit, isSubmitting }: UnlockModal
               placeholder="(555) 123-4567"
             />
           </div>
+
+          <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="property-intel-unlock-sms-consent" />
 
           <Button
             type="submit"

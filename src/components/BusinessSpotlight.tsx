@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import SmsConsent from "@/components/SmsConsent";
 
 // TikTok icon component (not in lucide-react)
 const TikTokIcon = ({ className }: { className?: string }) => (
@@ -171,6 +172,7 @@ const BusinessSpotlight = () => {
   const verifyButtonRef = useRef<HTMLButtonElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "", email: "" });
+  const [smsConsent, setSmsConsent] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -248,6 +250,7 @@ const BusinessSpotlight = () => {
         type: "business-verification",
         lead_type: "Business Owner",
         location: verifyingBusiness?.town || "Capital District",
+        sms_consent: smsConsent,
       });
 
       if (error) throw error;
@@ -259,6 +262,7 @@ const BusinessSpotlight = () => {
 
       setShowVerifyModal(false);
       setFormData({ name: "", phone: "", email: "" });
+      setSmsConsent(false);
     } catch (error) {
       console.error("Verification error:", error);
       toast({
@@ -714,6 +718,8 @@ const BusinessSpotlight = () => {
                 className="bg-background border-border"
               />
             </div>
+
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="business-spotlight-sms-consent" />
 
             <Button 
               type="submit" 

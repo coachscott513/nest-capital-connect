@@ -72,4 +72,5 @@ export interface LeadFormData {
   name: string;
   email: string;
   phone?: string;
+  smsConsent?: boolean;
 }

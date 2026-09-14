@@ -13,6 +13,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { getVisitSessionId } from "@/lib/visitSession";
 import { Loader2, X, CheckCircle2 } from "lucide-react";
+import SmsConsent from "@/components/SmsConsent";
 
 
 export const ASK_NEST_REQUEST_TYPES = [
@@ -62,6 +63,7 @@ export default function AskNestDialog({
   const [phone, setPhone] = useState("");
   const [discovery, setDiscovery] = useState<string>("");
   const [honeypot, setHoneypot] = useState("");
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -102,6 +104,7 @@ export default function AskNestDialog({
         self_reported_discovery: discovery || undefined,
         session_id: getVisitSessionId() ?? undefined,
         website: honeypot,
+        sms_consent: smsConsent,
       },
     });
     setSubmitting(false);
@@ -239,6 +242,8 @@ export default function AskNestDialog({
                 Stored as what you told us. It is kept separate from how our own measurement classifies the visit.
               </p>
             </Field>
+
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="ask-nest-sms-consent" className="text-white/45" />
 
             {error && <p className="text-sm text-red-300">{error}</p>}
 

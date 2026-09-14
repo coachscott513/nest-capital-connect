@@ -3,6 +3,7 @@ import { ChevronRight, ArrowRight, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getFullAddress, type Listing } from "@/lib/listings";
 import { toast } from "sonner";
+import SmsConsent from "@/components/SmsConsent";
 
 const NAVY = "#0B0F19";
 
@@ -39,6 +40,7 @@ function UnlockModal({ listing, onClose, onUnlocked }: UnlockModalProps) {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,6 +55,7 @@ function UnlockModal({ listing, onClose, onUnlocked }: UnlockModalProps) {
         type: "deal_unlock",
         lead_type: "investor",
         origin_town: listing.city,
+        sms_consent: smsConsent,
       });
 
       const details = listing.mls_number
@@ -88,6 +91,7 @@ function UnlockModal({ listing, onClose, onUnlocked }: UnlockModalProps) {
             className="w-full px-5 py-3.5 rounded-xl bg-gray-50 text-gray-900 placeholder:text-gray-300 outline-none text-sm focus:ring-1 focus:ring-gray-200 transition-shadow" style={{ border: "1px solid rgba(0,0,0,0.06)" }} />
           <input type="email" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} required maxLength={255}
             className="w-full px-5 py-3.5 rounded-xl bg-gray-50 text-gray-900 placeholder:text-gray-300 outline-none text-sm focus:ring-1 focus:ring-gray-200 transition-shadow" style={{ border: "1px solid rgba(0,0,0,0.06)" }} />
+          <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="deal-card-unlock-sms-consent" className="text-gray-400" />
           <button type="submit" disabled={submitting}
             className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-[13px] tracking-wide transition-all disabled:opacity-50 text-white hover:brightness-110"
             style={{ backgroundColor: NAVY }}>

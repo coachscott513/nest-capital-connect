@@ -49,6 +49,7 @@ import laveryLivingRoom2 from "@/assets/22-lavery-drive-living-room-2.jpg";
 import laveryDiningRoom from "@/assets/22-lavery-drive-dining-room.jpg";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 
 const LaveryDriveDelmar = () => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
@@ -72,6 +73,9 @@ const LaveryDriveDelmar = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOtherPropertySubmitting, setIsOtherPropertySubmitting] = useState(false);
   const [isIntakeSubmitting, setIsIntakeSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
+  const [otherPropertySmsConsent, setOtherPropertySmsConsent] = useState(false);
+  const [buyerIntakeSmsConsent, setBuyerIntakeSmsConsent] = useState(false);
 
   const property = {
     address: "22 Lavery Drive",
@@ -162,7 +166,8 @@ const LaveryDriveDelmar = () => {
           email: formData.email,
           phone: formData.phone,
           message: `Property Intelligence Report Request for ${property.fullAddress}`,
-          type: "property_intelligence"
+          type: "property_intelligence",
+          sms_consent: smsConsent
         }
       });
 
@@ -170,6 +175,7 @@ const LaveryDriveDelmar = () => {
 
       toast.success("Report request submitted! Check your email within 24 hours.");
       setFormData({ name: "", email: "", phone: "" });
+      setSmsConsent(false);
     } catch (error) {
       console.error("Form submission error:", error);
       toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
@@ -632,6 +638,7 @@ const LaveryDriveDelmar = () => {
                       className="bg-background border-border"
                     />
                   </div>
+                  <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="lavery-report-sms" />
                   <Button 
                     type="submit" 
                     size="lg" 
@@ -724,10 +731,12 @@ const LaveryDriveDelmar = () => {
                           type: "other_property_intelligence",
                           location: otherPropertyForm.address,
                           lead_type: "buyer",
+                          sms_consent: otherPropertySmsConsent,
                         });
                         if (error) throw error;
                         toast.success("Request submitted! We'll analyze this property and get back to you.");
                         setOtherPropertyForm({ address: "", name: "", email: "", phone: "" });
+                        setOtherPropertySmsConsent(false);
                       } catch (error) {
                         console.error("Form submission error:", error);
                         toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
@@ -766,6 +775,7 @@ const LaveryDriveDelmar = () => {
                       onChange={(e) => setOtherPropertyForm({ ...otherPropertyForm, phone: e.target.value })}
                       className="bg-background border-border"
                     />
+                    <SmsConsent checked={otherPropertySmsConsent} onCheckedChange={setOtherPropertySmsConsent} id="lavery-other-property-sms" />
                     <Button 
                       type="submit" 
                       size="lg" 
@@ -841,10 +851,12 @@ const LaveryDriveDelmar = () => {
                           message: buyerIntakeForm.message || "Buyer intake - help narrowing search",
                           type: "buyer_intake",
                           lead_type: "buyer",
+                          sms_consent: buyerIntakeSmsConsent,
                         });
                         if (error) throw error;
                         toast.success("Got it! We'll reach out shortly to help narrow your search.");
                         setBuyerIntakeForm({ name: "", email: "", phone: "", message: "" });
+                        setBuyerIntakeSmsConsent(false);
                       } catch (error) {
                         console.error("Form submission error:", error);
                         toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
@@ -882,6 +894,7 @@ const LaveryDriveDelmar = () => {
                       onChange={(e) => setBuyerIntakeForm({ ...buyerIntakeForm, message: e.target.value })}
                       className="bg-background border-border min-h-[100px]"
                     />
+                    <SmsConsent checked={buyerIntakeSmsConsent} onCheckedChange={setBuyerIntakeSmsConsent} id="lavery-buyer-intake-sms" />
                     <Button 
                       type="submit" 
                       size="lg" 

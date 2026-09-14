@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { Users, Send, Clock, CheckCircle } from 'lucide-react';
 import { z } from 'zod';
+import SmsConsent from '@/components/SmsConsent';
 
 interface ReferralWidgetProps {
   partnerId: string;
@@ -34,6 +35,7 @@ const ReferralWidget = ({ partnerId }: ReferralWidgetProps) => {
   const [loading, setLoading] = useState(false);
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [smsConsent, setSmsConsent] = useState(false);
   
   const [formData, setFormData] = useState({
     client_name: '',
@@ -101,6 +103,7 @@ const ReferralWidget = ({ partnerId }: ReferralWidgetProps) => {
           clientPhone: formData.client_phone,
           projectType: formData.project_type,
           partnerId,
+          sms_consent: smsConsent,
         },
       });
     } catch (emailError) {
@@ -114,6 +117,7 @@ const ReferralWidget = ({ partnerId }: ReferralWidgetProps) => {
     });
 
     setFormData({ client_name: '', client_phone: '', project_type: 'residential' });
+    setSmsConsent(false);
     fetchReferrals();
     setLoading(false);
   };
@@ -183,6 +187,8 @@ const ReferralWidget = ({ partnerId }: ReferralWidgetProps) => {
                 </div>
               </RadioGroup>
             </div>
+
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="referral-widget-sms-consent" />
 
             <Button type="submit" disabled={loading} className="w-full">
               <Send className="w-4 h-4 mr-2" />

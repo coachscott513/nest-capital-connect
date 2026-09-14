@@ -430,6 +430,8 @@ const IntelligenceHub = () => {
               />
             </div>
             
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="intelligence-hub-underwrite" />
+
             <Button 
               type="submit" 
               className="w-full rounded-full" 

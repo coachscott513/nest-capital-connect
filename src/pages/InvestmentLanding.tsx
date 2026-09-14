@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { CheckCircle, Shield, Star, Phone, Mail } from "lucide-react";
 import { useAnalytics } from '@/components/AnalyticsTracker';
+import SmsConsent from "@/components/SmsConsent";
 
 const InvestmentLanding = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const InvestmentLanding = () => {
     phone: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const { toast } = useToast();
   const { trackLeadFormSubmission, trackPropertyInquiry } = useAnalytics();
   const navigate = useNavigate();
@@ -51,7 +53,8 @@ const InvestmentLanding = () => {
         email: formData.email,
         phone: formData.phone,
         message: "Investment property inquiry from landing page",
-        type: "investment"
+        type: "investment",
+        sms_consent: smsConsent
       };
 
       const result = await submitContactForm(submissionData);
@@ -75,6 +78,7 @@ const InvestmentLanding = () => {
         });
 
         setFormData({ name: "", email: "", phone: "" });
+        setSmsConsent(false);
         
         // Redirect to homepage after successful submission
         setTimeout(() => {
@@ -296,6 +300,8 @@ const InvestmentLanding = () => {
                       className="h-12 text-base border-2 focus:border-primary"
                     />
                   </div>
+
+                  <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="investment-landing" />
 
                   {/* CTA Button */}
                   <Button 
