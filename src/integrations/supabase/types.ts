@@ -111,6 +111,7 @@ export type Database = {
           property_city: string | null
           property_state: string | null
           report_sent: boolean | null
+          sms_consent: boolean
           source_url: string | null
           user_type: string
           utm_campaign: string | null
@@ -144,6 +145,7 @@ export type Database = {
           property_city?: string | null
           property_state?: string | null
           report_sent?: boolean | null
+          sms_consent?: boolean
           source_url?: string | null
           user_type: string
           utm_campaign?: string | null
@@ -177,6 +179,7 @@ export type Database = {
           property_city?: string | null
           property_state?: string | null
           report_sent?: boolean | null
+          sms_consent?: boolean
           source_url?: string | null
           user_type?: string
           utm_campaign?: string | null
@@ -451,6 +454,7 @@ export type Database = {
           self_reported_discovery: string | null
           service_intent: string | null
           session_id: string | null
+          sms_consent: boolean
           status: string
           technical_source_family: string | null
           town_slug: string | null
@@ -480,6 +484,7 @@ export type Database = {
           self_reported_discovery?: string | null
           service_intent?: string | null
           session_id?: string | null
+          sms_consent?: boolean
           status?: string
           technical_source_family?: string | null
           town_slug?: string | null
@@ -509,6 +514,7 @@ export type Database = {
           self_reported_discovery?: string | null
           service_intent?: string | null
           session_id?: string | null
+          sms_consent?: boolean
           status?: string
           technical_source_family?: string | null
           town_slug?: string | null
@@ -594,6 +600,7 @@ export type Database = {
           reservation_url: string | null
           seasonal: string | null
           selected_plan_key: string | null
+          sms_consent: boolean
           social: Json
           status: string
           story_origin: string | null
@@ -631,6 +638,7 @@ export type Database = {
           reservation_url?: string | null
           seasonal?: string | null
           selected_plan_key?: string | null
+          sms_consent?: boolean
           social?: Json
           status?: string
           story_origin?: string | null
@@ -668,6 +676,7 @@ export type Database = {
           reservation_url?: string | null
           seasonal?: string | null
           selected_plan_key?: string | null
+          sms_consent?: boolean
           social?: Json
           status?: string
           story_origin?: string | null
@@ -1670,6 +1679,7 @@ export type Database = {
           lead_type: string | null
           notes: string | null
           property_address: string
+          sms_consent: boolean
           strategy: string
         }
         Insert: {
@@ -1681,6 +1691,7 @@ export type Database = {
           lead_type?: string | null
           notes?: string | null
           property_address: string
+          sms_consent?: boolean
           strategy: string
         }
         Update: {
@@ -1692,6 +1703,7 @@ export type Database = {
           lead_type?: string | null
           notes?: string | null
           property_address?: string
+          sms_consent?: boolean
           strategy?: string
         }
         Relationships: []
@@ -1988,6 +2000,7 @@ export type Database = {
           phone: string | null
           referrer: string | null
           report_slug: string
+          sms_consent: boolean
           user_agent: string | null
         }
         Insert: {
@@ -1999,6 +2012,7 @@ export type Database = {
           phone?: string | null
           referrer?: string | null
           report_slug: string
+          sms_consent?: boolean
           user_agent?: string | null
         }
         Update: {
@@ -2010,6 +2024,7 @@ export type Database = {
           phone?: string | null
           referrer?: string | null
           report_slug?: string
+          sms_consent?: boolean
           user_agent?: string | null
         }
         Relationships: []
@@ -2026,6 +2041,7 @@ export type Database = {
           phone: string
           property_address: string | null
           purchase_price: number | null
+          sms_consent: boolean
           source_page: string | null
         }
         Insert: {
@@ -2039,6 +2055,7 @@ export type Database = {
           phone: string
           property_address?: string | null
           purchase_price?: number | null
+          sms_consent?: boolean
           source_page?: string | null
         }
         Update: {
@@ -2052,6 +2069,7 @@ export type Database = {
           phone?: string
           property_address?: string | null
           purchase_price?: number | null
+          sms_consent?: boolean
           source_page?: string | null
         }
         Relationships: []
@@ -2070,6 +2088,7 @@ export type Database = {
           origin_town: string | null
           phone: string | null
           price_range: string | null
+          sms_consent: boolean
           type: string
         }
         Insert: {
@@ -2085,6 +2104,7 @@ export type Database = {
           origin_town?: string | null
           phone?: string | null
           price_range?: string | null
+          sms_consent?: boolean
           type: string
         }
         Update: {
@@ -2100,6 +2120,7 @@ export type Database = {
           origin_town?: string | null
           phone?: string | null
           price_range?: string | null
+          sms_consent?: boolean
           type?: string
         }
         Relationships: []
@@ -2368,6 +2389,7 @@ export type Database = {
           property_address: string | null
           property_listing_id: string | null
           requested_public_url: string | null
+          sms_consent: boolean
           status: string
           town_slug: string | null
           updated_at: string
@@ -2387,6 +2409,7 @@ export type Database = {
           property_address?: string | null
           property_listing_id?: string | null
           requested_public_url?: string | null
+          sms_consent?: boolean
           status?: string
           town_slug?: string | null
           updated_at?: string
@@ -2406,6 +2429,7 @@ export type Database = {
           property_address?: string | null
           property_listing_id?: string | null
           requested_public_url?: string | null
+          sms_consent?: boolean
           status?: string
           town_slug?: string | null
           updated_at?: string
@@ -2619,6 +2643,7 @@ export type Database = {
           full_name: string
           id: string
           phone: string | null
+          sms_consent: boolean
           town_name: string
           town_slug: string
         }
@@ -2630,6 +2655,7 @@ export type Database = {
           full_name: string
           id?: string
           phone?: string | null
+          sms_consent?: boolean
           town_name: string
           town_slug: string
         }
@@ -2641,6 +2667,7 @@ export type Database = {
           full_name?: string
           id?: string
           phone?: string | null
+          sms_consent?: boolean
           town_name?: string
           town_slug?: string
         }
@@ -2869,6 +2896,7 @@ export type Database = {
           notes: string | null
           phone: string
           profession_category: string | null
+          sms_consent: boolean
           social_links: Json | null
           source_page: string | null
           status: string
@@ -2886,6 +2914,7 @@ export type Database = {
           notes?: string | null
           phone: string
           profession_category?: string | null
+          sms_consent?: boolean
           social_links?: Json | null
           source_page?: string | null
           status?: string
@@ -2903,6 +2932,7 @@ export type Database = {
           notes?: string | null
           phone?: string
           profession_category?: string | null
+          sms_consent?: boolean
           social_links?: Json | null
           source_page?: string | null
           status?: string
@@ -3423,6 +3453,7 @@ export type Database = {
           move_in_date: string
           phone: string | null
           rental_id: string | null
+          sms_consent: boolean
         }
         Insert: {
           annual_income: string
@@ -3435,6 +3466,7 @@ export type Database = {
           move_in_date: string
           phone?: string | null
           rental_id?: string | null
+          sms_consent?: boolean
         }
         Update: {
           annual_income?: string
@@ -3447,6 +3479,7 @@ export type Database = {
           move_in_date?: string
           phone?: string | null
           rental_id?: string | null
+          sms_consent?: boolean
         }
         Relationships: [
           {

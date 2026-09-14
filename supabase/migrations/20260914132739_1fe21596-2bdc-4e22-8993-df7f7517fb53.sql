@@ -1,0 +1,11 @@
+ALTER TABLE public.leads ADD COLUMN IF NOT EXISTS sms_consent boolean NOT NULL DEFAULT false;
+ALTER TABLE public.analyzer_leads ADD COLUMN IF NOT EXISTS sms_consent boolean NOT NULL DEFAULT false;
+ALTER TABLE public.intel_report_leads ADD COLUMN IF NOT EXISTS sms_consent boolean NOT NULL DEFAULT false;
+ALTER TABLE public.investment_leads ADD COLUMN IF NOT EXISTS sms_consent boolean NOT NULL DEFAULT false;
+ALTER TABLE public.market_report_leads ADD COLUMN IF NOT EXISTS sms_consent boolean NOT NULL DEFAULT false;
+ALTER TABLE public.deal_desk_requests ADD COLUMN IF NOT EXISTS sms_consent boolean NOT NULL DEFAULT false;
+ALTER TABLE public.listing_claims ADD COLUMN IF NOT EXISTS sms_consent boolean NOT NULL DEFAULT false;
+ALTER TABLE public.business_applications ADD COLUMN IF NOT EXISTS sms_consent boolean NOT NULL DEFAULT false;
+ALTER TABLE public.partner_inquiries ADD COLUMN IF NOT EXISTS sms_consent boolean NOT NULL DEFAULT false;
+ALTER TABLE public.rental_applications ADD COLUMN IF NOT EXISTS sms_consent boolean NOT NULL DEFAULT false;
+ALTER TABLE public.ask_nest_requests ADD COLUMN IF NOT EXISTS sms_consent boolean NOT NULL DEFAULT false;
