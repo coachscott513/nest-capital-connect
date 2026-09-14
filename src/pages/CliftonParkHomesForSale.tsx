@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 import { cliftonParkData } from "@/data/townData";
 
 const CliftonParkHomesForSale = () => {
@@ -17,6 +18,7 @@ const CliftonParkHomesForSale = () => {
   const [iframeError, setIframeError] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", requirements: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -39,10 +41,12 @@ const CliftonParkHomesForSale = () => {
         full_name: formData.name, email: formData.email, phone: formData.phone || null,
         message: formData.requirements || "Clifton Park home search request", type: "clifton-park-homes",
         origin_town: "clifton-park", lead_type: "buyer",
+        sms_consent: smsConsent,
       });
       if (error) throw error;
       toast({ title: "Request Sent!", description: "We'll send you matching properties shortly." });
       setFormData({ name: "", email: "", phone: "", requirements: "" });
+      setSmsConsent(false);
     } catch (error) {
       console.error("Error:", error);
       toast({ title: "We couldn't submit this right now", description: "Please try again.", variant: "destructive" });
@@ -109,6 +113,7 @@ const CliftonParkHomesForSale = () => {
                 </div>
                 <Input type="tel" placeholder="Phone (optional)" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
                 <Textarea placeholder="Price range + must-haves" value={formData.requirements} onChange={(e) => setFormData({ ...formData, requirements: e.target.value })} />
+                <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="clifton-park-homes-for-sale-sms" />
                 <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>{isSubmitting ? "Sending..." : <><Send className="w-5 h-5 mr-2" />Send My Matches</>}</Button>
               </form>
             </Card>

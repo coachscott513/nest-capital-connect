@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { FileText, Send } from "lucide-react";
+import SmsConsent from "@/components/SmsConsent";
 
 interface MarketReportRequestFormProps {
   townName: string;
@@ -20,6 +21,7 @@ interface MarketReportRequestFormProps {
 const MarketReportRequestForm = ({ townName, townSlug, isOpen, onClose }: MarketReportRequestFormProps) => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -48,7 +50,8 @@ const MarketReportRequestForm = ({ townName, townSlug, isOpen, onClose }: Market
           buyer_type: formData.buyerType,
           address_to_analyze: formData.addressToAnalyze || null,
           town_slug: townSlug,
-          town_name: townName
+          town_name: townName,
+          sms_consent: smsConsent
         });
 
       if (error) throw error;
@@ -61,6 +64,7 @@ const MarketReportRequestForm = ({ townName, townSlug, isOpen, onClose }: Market
         buyerType: "buyer",
         addressToAnalyze: ""
       });
+      setSmsConsent(false);
       
       onClose();
       
@@ -162,6 +166,8 @@ const MarketReportRequestForm = ({ townName, townSlug, isOpen, onClose }: Market
               rows={2}
             />
           </div>
+
+          <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="market-report-sms-consent" />
 
           <Button 
             type="submit" 
