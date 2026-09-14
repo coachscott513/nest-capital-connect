@@ -4,13 +4,11 @@ import { useToast } from "@/hooks/use-toast";
 import { useSupabase } from "@/hooks/useSupabase";
 import { useAnalytics } from './AnalyticsTracker';
 import { TrackedButton } from './TrackedButton';
-import SmsConsent from "@/components/SmsConsent";
 
 const ContactSection = () => {
   const { toast } = useToast();
   const { addLead, loading } = useSupabase();
   const { trackLeadFormSubmission } = useAnalytics();
-  const [smsConsent, setSmsConsent] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -59,8 +57,7 @@ const ContactSection = () => {
         email: formData.email,
         phone: formData.phone || null,
         message: formData.message,
-        type: 'seller',
-        sms_consent: smsConsent
+        type: 'seller'
       };
 
       const result = await submitContactForm(submissionData);
@@ -84,7 +81,6 @@ const ContactSection = () => {
         });
         
         setFormData({ name: '', email: '', phone: '', message: '' });
-        setSmsConsent(false);
       }
     } catch (error) {
       console.error('Contact form submission error:', error);
