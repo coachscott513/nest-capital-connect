@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import SmsConsent from "@/components/SmsConsent";
 
 const journeys = [
   {
@@ -79,6 +80,7 @@ const QuickLeadForm = ({ journeyId, journeyTitle }: QuickLeadFormProps) => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -92,6 +94,7 @@ const QuickLeadForm = ({ journeyId, journeyTitle }: QuickLeadFormProps) => {
         message: `Quick lead from ${journeyTitle} card`,
         type: journeyId,
         lead_type: "buyer",
+        sms_consent: smsConsent,
       });
 
       if (error) throw error;
@@ -123,7 +126,9 @@ const QuickLeadForm = ({ journeyId, journeyTitle }: QuickLeadFormProps) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mt-4">
+    <form onSubmit={handleSubmit} className="mt-4 space-y-2">
+      <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id={`buyer-roadmap-${journeyId}`} />
+      <div className="flex gap-2">
       <Input
         type="email"
         placeholder="Enter your email"
@@ -135,6 +140,7 @@ const QuickLeadForm = ({ journeyId, journeyTitle }: QuickLeadFormProps) => {
       <Button type="submit" size="sm" disabled={isSubmitting} className="h-10 px-3">
         {isSubmitting ? "..." : <Send className="w-4 h-4" />}
       </Button>
+      </div>
     </form>
   );
 };

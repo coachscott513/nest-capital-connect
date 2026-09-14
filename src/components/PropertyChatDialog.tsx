@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { MessageSquare, Send, MapPin, Clock } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 
 interface PropertyChatDialogProps {
   children: React.ReactNode;
@@ -29,6 +30,7 @@ const PropertyChatDialog = ({ children, propertyAddress, propertyUrl }: Property
     message: ""
   });
   const [messageSent, setMessageSent] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,6 +50,7 @@ const PropertyChatDialog = ({ children, propertyAddress, propertyUrl }: Property
         message: `[Property Inquiry: ${propertyAddress}]\n\nURL: ${propertyUrl}\n\n${formData.message}`,
         type: "property_chat",
         lead_type: "buyer",
+        sms_consent: smsConsent,
       });
 
       if (error) throw error;
@@ -68,6 +71,7 @@ const PropertyChatDialog = ({ children, propertyAddress, propertyUrl }: Property
       // Reset form when dialog closes
       setFormData({ name: "", email: "", phone: "", message: "" });
       setMessageSent(false);
+      setSmsConsent(false);
     }
   };
 
@@ -131,6 +135,7 @@ const PropertyChatDialog = ({ children, propertyAddress, propertyUrl }: Property
                 required
               />
             </div>
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="property-chat-sms-consent" />
             <Button 
               type="submit" 
               className="w-full rounded-full" 

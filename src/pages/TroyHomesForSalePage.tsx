@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 import { troyData } from "@/data/townData";
 
 const TroyHomesForSalePage = () => {
@@ -22,6 +23,7 @@ const TroyHomesForSalePage = () => {
     requirements: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -52,6 +54,7 @@ const TroyHomesForSalePage = () => {
         type: "troy-homes",
         origin_town: "troy",
         lead_type: "buyer",
+        sms_consent: smsConsent,
       });
       if (error) throw error;
       toast({
@@ -59,6 +62,7 @@ const TroyHomesForSalePage = () => {
         description: "We'll send you matching properties and neighborhood intel shortly.",
       });
       setFormData({ name: "", email: "", phone: "", requirements: "" });
+      setSmsConsent(false);
     } catch (error) {
       console.error("Error submitting form:", error);
       toast({
@@ -151,6 +155,7 @@ const TroyHomesForSalePage = () => {
                   <label htmlFor="requirements" className="block text-sm font-medium text-foreground mb-2">Price range + must-haves</label>
                   <Textarea id="requirements" value={formData.requirements} onChange={(e) => setFormData({ ...formData, requirements: e.target.value })} placeholder="e.g., Under $250K, 3+ bedrooms, multi-family..." className="border-border min-h-[100px]" />
                 </div>
+                <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="troy-homes-for-sale-sms" />
                 <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 text-lg" disabled={isSubmitting}>
                   {isSubmitting ? "Sending..." : <><Send className="w-5 h-5 mr-2" />Send My Matches</>}
                 </Button>

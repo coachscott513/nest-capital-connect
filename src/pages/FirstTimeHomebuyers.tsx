@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Phone, MessageCircle, Mail } from "lucide-react";
+import SmsConsent from "@/components/SmsConsent";
 
 const FirstTimeHomebuyers = () => {
   const [searchParams] = useSearchParams();
@@ -26,6 +27,7 @@ const FirstTimeHomebuyers = () => {
     concern: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,10 +44,12 @@ const FirstTimeHomebuyers = () => {
         type: "first-time-buyer",
         message: `Biggest concern: ${formData.concern || "Not specified"}. City: ${displayCity}`,
         origin_town: cityParam || null,
+        sms_consent: smsConsent,
       });
       if (error) throw error;
       toast.success("Thanks! We'll be in touch shortly.");
       setFormData({ fullName: "", email: "", phone: "", concern: "" });
+      setSmsConsent(false);
     } catch {
       toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
     } finally {
@@ -163,6 +167,7 @@ const FirstTimeHomebuyers = () => {
                   </SelectContent>
                 </Select>
               </div>
+              <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="first-time-homebuyers" />
               <Button type="submit" className="w-full h-12 font-semibold" disabled={isSubmitting}>
                 {isSubmitting ? "Sending…" : "Send My Question"}
               </Button>

@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, Shield, CheckCircle, ArrowRight } from "lucide-react";
 import { useAnalytics } from './AnalyticsTracker';
 import { z } from 'zod';
+import SmsConsent from "@/components/SmsConsent";
 
 // Validation schema
 const leadFormSchema = z.object({
@@ -43,6 +44,7 @@ const LeadCaptureForm = ({
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const { toast } = useToast();
   const { trackLeadFormSubmission, trackPropertyInquiry } = useAnalytics();
@@ -169,7 +171,8 @@ const LeadCaptureForm = ({
         phone: formData.phone || null,
         message: formData.message || null,
         type,
-        boldtrailTag: boldtrailTag || `CDN_${type}`
+        boldtrailTag: boldtrailTag || `CDN_${type}`,
+        sms_consent: smsConsent
       };
 
       const result = await submitContactForm(submissionData);
@@ -202,6 +205,7 @@ const LeadCaptureForm = ({
           phone: "",
           message: ""
         });
+        setSmsConsent(false);
 
         // Call onSuccess callback if provided
         if (onSuccess) {
@@ -313,6 +317,8 @@ const LeadCaptureForm = ({
               )}
             </div>
           </div>
+
+          <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="lead-capture-sms-consent" />
 
           {/* CTA Button */}
           <Button 

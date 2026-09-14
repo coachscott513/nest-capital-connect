@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Building2, TrendingUp, DollarSign, Users, MapPin, Phone, CheckCircle, ExternalLink, MessageCircle, Check, Crown, Percent } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 import { toast } from "sonner";
 
 const IDX_URL = "/homes/search";
@@ -24,6 +25,7 @@ const SchenectadyMultiUnit = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,12 +41,14 @@ const SchenectadyMultiUnit = () => {
         location: "Schenectady",
         price_range: formData.priceRange || null,
         lead_type: "investor",
+        sms_consent: smsConsent,
         origin_town: "schenectady",
       });
       
       if (error) throw error;
       
       setIsSubmitted(true);
+      setSmsConsent(false);
       toast.success("Got it! I'll text your custom list shortly.");
     } catch (error) {
       toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
@@ -220,6 +224,8 @@ const SchenectadyMultiUnit = () => {
                         </Select>
                       </div>
                       
+                      <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="schenectady-multi-unit-sms" />
+
                       <Button 
                         type="submit" 
                         size="lg" 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import SmsConsent from "@/components/SmsConsent";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
 import MainHeader from "@/components/MainHeader";
@@ -143,6 +144,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
   const [newsletterName, setNewsletterName] = useState("");
   const [newsletterPhone, setNewsletterPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const [isReportFormOpen, setIsReportFormOpen] = useState(false);
   const [propertyAddress, setPropertyAddress] = useState("");
   const [addressNote, setAddressNote] = useState("");
@@ -176,7 +178,8 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
           phone: newsletterPhone,
           message: `${town.name} Market Updates subscription`,
           type: 'newsletter',
-          boldtrailTag: `${town.slug}-market-updates`
+          boldtrailTag: `${town.slug}-market-updates`,
+          sms_consent: smsConsent
         }
       });
 
@@ -186,6 +189,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
       setNewsletterEmail("");
       setNewsletterName("");
       setNewsletterPhone("");
+      setSmsConsent(false);
     } catch (error) {
       console.error('Newsletter signup error:', error);
       toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
@@ -1419,6 +1423,7 @@ const TownPageTemplate = ({ town }: TownPageTemplateProps) => {
                   onChange={(e) => setNewsletterPhone(e.target.value)}
                   className="h-12"
                 />
+                <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="town-page-newsletter" />
                 <Button 
                   type="submit" 
                   size="lg" 

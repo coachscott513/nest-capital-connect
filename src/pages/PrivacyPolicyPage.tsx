@@ -11,7 +11,7 @@ const PrivacyPolicyPage: React.FC = () => {
           name="description" 
           content="Learn how Capital District Nest collects, uses and protects your information when you request reports or connect with our investment team." 
         />
-        <link rel="canonical" href="https://www.capitaldistrictnest.com/privacy-policy" />
+        <link rel="canonical" href="https://www.capitaldistrictnest.com/privacy" />
       </Helmet>
       
       <div className="bg-background min-h-screen py-16 px-[5%]">
@@ -141,6 +141,18 @@ const PrivacyPolicyPage: React.FC = () => {
               <p><strong>Email:</strong> <a href="mailto:team@capitaldistrictnest.com" className="text-primary hover:underline">team@capitaldistrictnest.com</a></p>
               <p><strong>Phone:</strong> <a href="tel:+15185227265" className="text-primary hover:underline">518-522-7265</a></p>
             </div>
+
+            <hr className="border-border my-8" />
+
+            <h2 className="text-2xl font-semibold text-foreground mt-8 mb-4">Terms and Conditions</h2>
+            <ol className="text-foreground space-y-4 mb-8 list-decimal pl-6">
+              <li>We use SMS to confirm appointments, send reminders, and notify clients of schedule updates or important changes.</li>
+              <li>You can cancel the SMS service at any time. Just text "STOP". After you send the SMS message "STOP" to us, we will send you an SMS message to confirm that you have been unsubscribed. After this, you will no longer receive SMS messages from us. If you want to join again, just sign up as you did the first time, and we will start sending SMS messages to you again.</li>
+              <li>If you are experiencing issues with the messaging program you can reply with the keyword "HELP" for more assistance, or you can get help directly at scott@scottalvarez.com.</li>
+              <li>Carriers are not liable for delayed or undelivered messages.</li>
+              <li>As always, message and data rates may apply for any messages sent to you from us and to us from you. Message frequency may vary. If you have any questions about your text plan or data plan, it is best to contact your wireless provider.</li>
+              <li>If you have any questions regarding privacy, please read our privacy policy: <a href="https://capitaldistrictnest.com/privacy" className="text-primary hover:underline">https://capitaldistrictnest.com/privacy</a></li>
+            </ol>
           </article>
         </div>
       </div>

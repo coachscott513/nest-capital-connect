@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import SmsConsent from "@/components/SmsConsent";
 
 const SearchAssistanceSection: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +25,7 @@ const SearchAssistanceSection: React.FC = () => {
     searchCriteria: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,6 +50,7 @@ const SearchAssistanceSection: React.FC = () => {
         type: 'search_assistance',
         location: 'Capital District',
         lead_type: "buyer",
+        sms_consent: smsConsent,
       });
 
       if (error) throw error;
@@ -58,6 +61,7 @@ const SearchAssistanceSection: React.FC = () => {
       });
       
       setFormData({ name: '', email: '', phone: '', searchCriteria: '' });
+      setSmsConsent(false);
       setIsOpen(false);
     } catch (error) {
       console.error('Form submission error:', error);
@@ -165,6 +169,8 @@ const SearchAssistanceSection: React.FC = () => {
                   className="min-h-[100px] resize-none"
                 />
               </div>
+
+              <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="search-assistance-sms-consent" />
 
               <Button 
                 type="submit" 

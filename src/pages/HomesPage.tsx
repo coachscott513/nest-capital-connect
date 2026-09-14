@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 
 const TOWNS = [
   { name: "Delmar", slug: "delmar", display: "Delmar" },
@@ -110,6 +111,7 @@ const HomesPage = () => {
     phone: "",
     notes: "",
   });
+  const [smsConsent, setSmsConsent] = useState(false);
 
   // Keep URL in sync (without reload)
   useEffect(() => {
@@ -185,6 +187,7 @@ const HomesPage = () => {
         location: currentTownLabel || null,
         origin_town: currentTownLabel || null,
         price_range: price ? PRICE_LABEL[price] || price : null,
+        sms_consent: smsConsent,
       });
       if (error) throw error;
 
@@ -195,6 +198,7 @@ const HomesPage = () => {
           "Thanks — your home search request was received. Our team will review it and follow up shortly.",
       });
       setLead({ full_name: "", email: "", phone: "", notes: "" });
+      setSmsConsent(false);
       setLeadOpen(false);
     } catch (err) {
       console.error(err);
@@ -443,6 +447,7 @@ const HomesPage = () => {
               onChange={(e) => setLead({ ...lead, notes: e.target.value })}
               rows={3}
             />
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="homes-page-lead" />
             <button
               type="submit"
               disabled={submitting}

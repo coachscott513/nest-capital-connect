@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { CheckCircle, Download, Shield, Phone, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 
 interface JourneyLeadMagnetProps {
   journeyType: "investor" | "first-time" | "land" | "financing";
@@ -43,6 +44,7 @@ const JourneyLeadMagnet = ({
   const [formData, setFormData] = useState({ firstName: "", email: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -58,6 +60,7 @@ const JourneyLeadMagnet = ({
         message: `Lead magnet request: ${downloadName}`,
         type: journeyType,
         lead_type: journeyType === "investor" ? "investor" : "buyer",
+        sms_consent: smsConsent,
       });
 
       if (dbError) throw dbError;
@@ -72,6 +75,7 @@ const JourneyLeadMagnet = ({
           journeyType,
           subject: emailConfig.subject,
           leadMagnet: emailConfig.leadMagnet,
+          sms_consent: smsConsent,
         },
       });
 
@@ -161,6 +165,7 @@ const JourneyLeadMagnet = ({
               className="h-12"
             />
           </div>
+          <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="journey-lead-magnet-sms-consent" />
           <Button type="submit" className="w-full h-12" disabled={isSubmitting}>
             {isSubmitting ? "Sending..." : "Get the Free Guide"}
           </Button>

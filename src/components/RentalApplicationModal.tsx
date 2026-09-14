@@ -9,6 +9,7 @@ import { Home, User, Mail, Phone, DollarSign, Calendar, MapPin, Loader2, CheckCi
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { z } from "zod";
+import SmsConsent from "@/components/SmsConsent";
 
 interface Rental {
   id: string;
@@ -36,6 +37,7 @@ const applicationSchema = z.object({
 const RentalApplicationModal = ({ open, onOpenChange, rental }: RentalApplicationModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -83,7 +85,8 @@ const RentalApplicationModal = ({ open, onOpenChange, rental }: RentalApplicatio
           annual_income: formData.annual_income,
           move_in_date: formData.move_in_date,
           current_address: formData.current_address.trim() || null,
-          message: formData.message.trim() || null
+          message: formData.message.trim() || null,
+          sms_consent: smsConsent
         });
 
       if (error) throw error;
@@ -94,6 +97,7 @@ const RentalApplicationModal = ({ open, onOpenChange, rental }: RentalApplicatio
       // Reset after delay
       setTimeout(() => {
         setIsSuccess(false);
+        setSmsConsent(false);
         setFormData({
           full_name: "",
           email: "",
@@ -286,6 +290,8 @@ const RentalApplicationModal = ({ open, onOpenChange, rental }: RentalApplicatio
                 placeholder="Tell us about yourself, pets, roommates, etc."
               />
             </div>
+
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="rental-application-sms-consent" />
 
             {/* Submit Button */}
             <Button

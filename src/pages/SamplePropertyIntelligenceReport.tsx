@@ -24,6 +24,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 import { toast } from "sonner";
 
 const SamplePropertyIntelligenceReport = () => {
@@ -33,6 +34,7 @@ const SamplePropertyIntelligenceReport = () => {
     propertyAddress: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -53,7 +55,8 @@ const SamplePropertyIntelligenceReport = () => {
           email: formData.email,
           message: `Property Intelligence Report Request${formData.propertyAddress ? `: ${formData.propertyAddress}` : ''}`,
           type: 'intel-report',
-          boldtrailTag: 'property-intel-request'
+          boldtrailTag: 'property-intel-request',
+          sms_consent: smsConsent
         }
       });
 
@@ -61,6 +64,7 @@ const SamplePropertyIntelligenceReport = () => {
 
       toast.success("Request received! We'll be in touch soon.");
       setFormData({ firstName: "", email: "", propertyAddress: "" });
+      setSmsConsent(false);
     } catch (error) {
       console.error('Form submission error:', error);
       toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
@@ -458,6 +462,7 @@ const SamplePropertyIntelligenceReport = () => {
                   onChange={(e) => setFormData({ ...formData, propertyAddress: e.target.value })}
                   className="h-12"
                 />
+                <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="sample-report-sms" />
                 <Button 
                   type="submit" 
                   size="lg" 

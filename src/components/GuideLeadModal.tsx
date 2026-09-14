@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Shield, Phone, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
+import SmsConsent from "@/components/SmsConsent";
 
 interface GuideLeadModalProps {
   open: boolean;
@@ -17,6 +18,7 @@ interface GuideLeadModalProps {
 const GuideLeadModal = ({ open, onOpenChange, redirectPath, guideType }: GuideLeadModalProps) => {
   const [formData, setFormData] = useState({ firstName: "", email: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -33,6 +35,7 @@ const GuideLeadModal = ({ open, onOpenChange, redirectPath, guideType }: GuideLe
         message: `Guide access request: ${guideType}`,
         type: guideType,
         lead_type: "buyer",
+        sms_consent: smsConsent,
       });
 
       if (dbError) throw dbError;
@@ -96,6 +99,7 @@ const GuideLeadModal = ({ open, onOpenChange, redirectPath, guideType }: GuideLe
               className="h-12"
             />
           </div>
+          <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="guide-lead-sms-consent" />
           <Button type="submit" className="w-full h-12" disabled={isSubmitting}>
             {isSubmitting ? "Unlocking..." : "Unlock the Guide"}
           </Button>

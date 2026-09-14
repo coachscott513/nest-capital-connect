@@ -19,6 +19,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import SmsConsent from "@/components/SmsConsent";
 
 /* =============================================================
    /business — Nest for Business
@@ -178,6 +179,7 @@ const BusinessLanding = () => {
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -205,9 +207,11 @@ const BusinessLanding = () => {
         message,
         type: "business_help_request",
         lead_type: "business_owner",
+        sms_consent: smsConsent,
       });
       if (error) throw error;
       setSubmitted(true);
+      setSmsConsent(false);
       toast.success("Request received — we'll follow up shortly.");
     } catch (err) {
       console.error(err);
@@ -515,6 +519,8 @@ const BusinessLanding = () => {
                   <textarea rows={4} className={inputCn} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} placeholder="Anything else we should know" />
                 </div>
               </div>
+              <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="business-landing-help" />
+
               <button
                 type="submit"
                 disabled={submitting}

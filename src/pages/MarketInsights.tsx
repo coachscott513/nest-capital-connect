@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import { TrendingUp, ArrowRight, Mail } from "lucide-react";
 import MainLayout from "@/components/MainLayout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import SmsConsent from "@/components/SmsConsent";
 
 const articles = [
   {
@@ -79,6 +81,7 @@ const trendingTopics = [
 ];
 
 const MarketInsights = () => {
+  const [smsConsent, setSmsConsent] = useState(false);
   return (
     <MainLayout>
       <SEOHead
@@ -167,6 +170,7 @@ const MarketInsights = () => {
                     placeholder="Enter your email"
                     className="bg-secondary border-border text-foreground placeholder:text-muted-foreground"
                   />
+                  <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="market-insights-newsletter" />
                   <Button className="w-full bg-primary hover:bg-primary/90 text-white font-medium">
                     Subscribe
                   </Button>

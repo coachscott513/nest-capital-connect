@@ -63,6 +63,7 @@ const PropertyIntelReport = ({
         page_url: window.location.href,
         referrer: document.referrer || null,
         user_agent: navigator.userAgent,
+        sms_consent: formData.smsConsent ?? false,
       });
 
       if (error) throw error;

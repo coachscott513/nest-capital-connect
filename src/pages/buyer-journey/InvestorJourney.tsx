@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 
 const investorFaqs = [
   {
@@ -38,6 +39,7 @@ const InvestorJourney = () => {
   const [hasAccess, setHasAccess] = useState(false);
   const [formData, setFormData] = useState({ firstName: "", email: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const { toast } = useToast();
 
   const handleUnlock = async (e: React.FormEvent) => {
@@ -52,6 +54,7 @@ const InvestorJourney = () => {
         message: "Guide access: Investor Guide",
         type: "investor-guide-access",
         lead_type: "investor",
+        sms_consent: smsConsent,
       });
 
       if (dbError) throw dbError;
@@ -138,6 +141,7 @@ const InvestorJourney = () => {
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="h-12"
                   />
+                  <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="investor-journey-unlock" />
                   <Button type="submit" className="w-full h-12" disabled={isSubmitting}>
                     {isSubmitting ? "Unlocking..." : "Get Instant Access"}
                   </Button>

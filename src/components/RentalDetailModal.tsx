@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import SmsConsent from "@/components/SmsConsent";
 
 interface RentalDetailModalProps {
   rental: {
@@ -33,6 +34,7 @@ const RentalDetailModal = ({ rental, open, onClose }: RentalDetailModalProps) =>
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   if (!rental) return null;
 
@@ -52,6 +54,7 @@ const RentalDetailModal = ({ rental, open, onClose }: RentalDetailModalProps) =>
       message: `Schedule showing: ${rental.address} — ${formatPrice(rental.rent_price)}/mo`,
       location: rental.town_slug.replace(/-/g, " "),
       origin_town: rental.town_slug,
+      sms_consent: smsConsent,
     });
 
     setSubmitting(false);
@@ -68,6 +71,7 @@ const RentalDetailModal = ({ rental, open, onClose }: RentalDetailModalProps) =>
     setPhone("");
     setEmail("");
     setSubmitted(false);
+    setSmsConsent(false);
     onClose();
   };
 
@@ -162,6 +166,7 @@ const RentalDetailModal = ({ rental, open, onClose }: RentalDetailModalProps) =>
                 maxLength={255}
                 className="w-full px-4 py-2.5 rounded-lg border border-border bg-background text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/30"
               />
+              <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="rental-detail-sms-consent" />
               <button
                 type="submit"
                 disabled={submitting}

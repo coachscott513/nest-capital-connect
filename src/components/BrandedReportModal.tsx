@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { X, FileText, ChevronRight, ChevronDown, Loader2, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 
 interface BrandingData {
   displayName: string;
@@ -74,6 +75,7 @@ const BrandedReportModal = ({ isOpen, onClose, onGeneratePdf, analysisData }: Br
   
   // UTM params
   const [utmParams, setUtmParams] = useState({ source: "", medium: "", campaign: "" });
+  const [smsConsent, setSmsConsent] = useState(false);
 
   // Load saved data and UTM params on mount
   useEffect(() => {
@@ -216,6 +218,7 @@ const BrandedReportModal = ({ isOpen, onClose, onGeneratePdf, analysisData }: Br
         utm_medium: utmParams.medium || null,
         utm_campaign: utmParams.campaign || null,
         report_sent: false,
+        sms_consent: smsConsent,
       });
 
       if (error) {
@@ -387,6 +390,11 @@ const BrandedReportModal = ({ isOpen, onClose, onGeneratePdf, analysisData }: Br
             </div>
           </div>
           
+          {/* SMS Consent */}
+          <div className="mt-6">
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="branded-report-sms-consent" className="text-[#8a8a9e]" />
+          </div>
+
           {/* Section B: Brand This Report (Collapsible) */}
           <div className="mt-6 pt-6 border-t border-[#2a3a58]">
             <button

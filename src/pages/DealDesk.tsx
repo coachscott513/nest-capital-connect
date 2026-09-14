@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { toast } from "@/hooks/use-toast";
 import { CheckCircle, FileText, TrendingUp, DollarSign, Shield, Clock, Zap, Map, AlertTriangle, ArrowRight, X } from "lucide-react";
+import SmsConsent from "@/components/SmsConsent";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -20,7 +21,7 @@ const formSchema = z.object({
   propertyAddress: z.string().optional().default(""),
   strategy: z.string().min(1, "Please select an option"),
   notes: z.string().optional(),
-  agreedToUpdates: z.boolean().refine(val => val === true, "You must agree to receive updates"),
+  agreedToUpdates: z.boolean().optional().default(false),
 });
 
 
@@ -72,6 +73,7 @@ const DealDesk = () => {
           lead_type: data.strategy,
           notes: data.notes || null,
           agreed_to_updates: data.agreedToUpdates,
+          sms_consent: data.agreedToUpdates,
         });
       if (insertError) console.error("Lead insert error:", insertError);
 
@@ -82,6 +84,7 @@ const DealDesk = () => {
           propertyAddress: data.propertyAddress || "—",
           strategy: data.strategy,
           notes: data.notes || null,
+          sms_consent: data.agreedToUpdates,
         },
       });
 
@@ -268,21 +271,11 @@ const DealDesk = () => {
                   control={form.control}
                   name="agreedToUpdates"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                          className="border-border data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500"
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel className="text-muted-foreground text-sm font-normal">
-                          I agree to receive my Snapshot and Deal Desk updates by email. *
-                        </FormLabel>
-                        <FormMessage />
-                      </div>
-                    </FormItem>
+                    <SmsConsent
+                      checked={!!field.value}
+                      onCheckedChange={field.onChange}
+                      id="dealdesk-sms-consent"
+                    />
                   )}
                 />
 

@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import SmsConsent from "@/components/SmsConsent";
 import { trackGAEvent } from "@/components/GARouteTracker";
 
 const TEAL = "#5eead4";
@@ -120,6 +121,7 @@ const ClaimBusiness = () => {
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const update = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
     setForm((p) => ({ ...p, [k]: v }));
@@ -251,6 +253,7 @@ const ClaimBusiness = () => {
         addonParam && `Add-on: ${addonParam}`,
         intentParam && `Intent: ${intentParam}`,
         `Source: ${location.pathname}${location.search}`,
+        `SMS consent: ${smsConsent ? "yes" : "no"}`,
       ].filter(Boolean).join("\n");
 
 
@@ -262,6 +265,7 @@ const ClaimBusiness = () => {
         type: "business_claim",
         origin_town: form.town || prettifyTown(prefillTown) || null,
         lead_type: "business_owner",
+        sms_consent: smsConsent,
       };
       if (import.meta.env.DEV) console.log("[claim] submitting", payload);
       const { error } = await supabase.from("leads").insert(payload);
@@ -872,6 +876,8 @@ const ClaimBusiness = () => {
             </div>
           </SectionBlock>
 
+
+          <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="claim-business-sms-consent" />
 
           {/* Submit */}
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/[0.06] pt-7">

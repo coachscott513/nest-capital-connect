@@ -7,6 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Building2, TrendingUp, DollarSign, Wrench, Calculator, FileText, Percent, MapPin, Phone, CheckCircle, ExternalLink, MessageCircle, Check, Crown, Calendar, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import SmsConsent from "@/components/SmsConsent";
 import { toast } from "sonner";
 
 const IDX_URL = "/homes/search";
@@ -23,6 +24,7 @@ const AlbanyMultiUnit = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,12 +40,14 @@ const AlbanyMultiUnit = () => {
         location: "Albany",
         price_range: formData.priceRange || null,
         lead_type: "investor",
+        sms_consent: smsConsent,
         origin_town: "albany",
       });
       
       if (error) throw error;
       
       setIsSubmitted(true);
+      setSmsConsent(false);
       toast.success("Got it! I'll text your custom list shortly.");
     } catch (error) {
       toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
@@ -218,6 +222,8 @@ const AlbanyMultiUnit = () => {
                         </Select>
                       </div>
                       
+                      <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="albany-multi-unit-sms" />
+
                       <Button 
                         type="submit" 
                         size="lg" 

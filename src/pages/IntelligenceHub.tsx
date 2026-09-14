@@ -17,6 +17,7 @@ import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import SmsConsent from "@/components/SmsConsent";
 
 const IntelligenceHub = () => {
   const [searchAddress, setSearchAddress] = useState("");
@@ -31,6 +32,7 @@ const IntelligenceHub = () => {
     propertyAddress: "",
     notes: ""
   });
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const handleDueDiligenceSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,7 +78,8 @@ const IntelligenceHub = () => {
         phone: formData.phone || null,
         message: `Custom Underwrite Request: ${formData.propertyAddress}. Notes: ${formData.notes}`,
         type: "custom_underwrite",
-        lead_type: "precision_underwrite"
+        lead_type: "precision_underwrite",
+        sms_consent: smsConsent
       });
 
       if (error) throw error;
@@ -84,6 +87,7 @@ const IntelligenceHub = () => {
       toast.success("Request submitted! Your precision underwrite will be delivered within 24 hours.");
       setUnderwriteModalOpen(false);
       setFormData({ fullName: "", email: "", phone: "", propertyAddress: "", notes: "" });
+      setSmsConsent(false);
     } catch (error) {
       console.error("Error submitting underwrite request:", error);
       toast.error("We couldn't submit this right now. Please email team@capitaldistrictnest.com and we'll help get it handled.");
@@ -426,6 +430,8 @@ const IntelligenceHub = () => {
               />
             </div>
             
+            <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="intelligence-hub-underwrite" />
+
             <Button 
               type="submit" 
               className="w-full rounded-full" 

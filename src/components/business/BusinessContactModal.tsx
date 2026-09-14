@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Phone, Mail, Globe, Calendar, Copy, Check, ExternalLink } from "lucide-react";
 import { trackGAEvent } from "@/components/GARouteTracker";
+import SmsConsent from "@/components/SmsConsent";
 
 export type BusinessContactInfo = {
   name: string;
@@ -39,6 +40,7 @@ const BusinessContactModal = ({ open, onOpenChange, business }: Props) => {
     inquiryType: INQUIRY_TYPES[0],
     message: "",
   });
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const copyNumber = async () => {
     await navigator.clipboard.writeText(business.phoneDisplay);
@@ -202,6 +204,10 @@ const BusinessContactModal = ({ open, onOpenChange, business }: Props) => {
                 rows={4}
                 className="sm:col-span-2 bg-black/30 border border-white/10 rounded-lg px-3.5 py-2.5 text-sm placeholder:text-white/40 focus:outline-none focus:border-white/25 resize-none"
               />
+            </div>
+
+            <div className="mt-4">
+              <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="business-contact-sms-consent" className="text-white/60" />
             </div>
 
             <a

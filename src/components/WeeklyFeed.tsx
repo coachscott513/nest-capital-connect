@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import SmsConsent from "@/components/SmsConsent";
 import { Link } from "react-router-dom";
 import { trackGAEvent } from "@/components/GARouteTracker";
 
@@ -564,6 +565,7 @@ const WeeklyFeed = ({
 export default WeeklyFeed;
 
 export const WeeklyNewsletterCTA = () => {
+  const [smsConsent, setSmsConsent] = useState(false);
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -577,6 +579,7 @@ export const WeeklyNewsletterCTA = () => {
       page_path: typeof window !== "undefined" ? window.location.pathname : undefined,
     });
     form.reset();
+    setSmsConsent(false);
   };
 
   return (
@@ -607,6 +610,12 @@ export const WeeklyNewsletterCTA = () => {
             Subscribe <ArrowRight className="w-4 h-4" />
           </button>
         </form>
+        <SmsConsent
+          id="weekly-newsletter-sms-consent"
+          checked={smsConsent}
+          onCheckedChange={setSmsConsent}
+          className="mt-6 max-w-md mx-auto text-left"
+        />
         <p className="mt-4 text-xs text-white/40">No spam. Unsubscribe anytime.</p>
       </div>
     </section>

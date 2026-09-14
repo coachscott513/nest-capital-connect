@@ -16,6 +16,7 @@ import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { OFFICIAL_CATEGORIES } from "@/data/officialCategories";
+import SmsConsent from "@/components/SmsConsent";
 
 type TeamMember = { name: string; title: string; bio: string };
 type Plan = {
@@ -82,6 +83,7 @@ const emptyForm = {
   billing: "monthly" as "monthly" | "annual",
   // consent
   approved: false,
+  smsConsent: false,
 };
 
 type Form = typeof emptyForm;
@@ -228,6 +230,7 @@ const Apply = () => {
         reel_url: form.reelUrl || null,
         video_url: form.videoUrl || null,
       } as any,
+      sms_consent: form.smsConsent,
     });
     setSubmitting(false);
     if (error) {
@@ -750,6 +753,9 @@ const StepSubmit = ({ form, set }: any) => (
         videos, logos, and business information for use by Capital District Nest.
       </span>
     </label>
+    <div className="mt-6">
+      <SmsConsent checked={form.smsConsent} onCheckedChange={(v) => set("smsConsent", v)} id="business-apply-sms-consent" />
+    </div>
     {form.selectedPlan !== "essential" && (
       <p className="mt-4 text-xs text-white/50">
         Featured Partner billing is set up after our editorial team reviews your submission — we'll send a secure checkout link when your profile is ready to go live.

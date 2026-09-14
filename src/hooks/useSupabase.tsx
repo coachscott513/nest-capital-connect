@@ -15,6 +15,7 @@ export interface Lead {
   origin_town?: string;
   lead_type?: string;
   assigned_agent_id?: string;
+  sms_consent?: boolean;
   created_at?: string;
 }
 

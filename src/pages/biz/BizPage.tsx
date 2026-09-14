@@ -28,6 +28,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { trackGAEvent } from "@/components/GARouteTracker";
 import { toast } from "sonner";
 import { businessSmsHref, businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
+import SmsConsent from "@/components/SmsConsent";
 
 const TEAL = "#5eead4";
 const GOLD = "#c9a449";
@@ -573,6 +574,7 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const heroMedia = getEmbedUrl(biz.video_url);
   const heroImage = biz.hero_image_url || biz.photos?.[0];
@@ -601,11 +603,13 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
       lead_type: "business_inquiry",
       origin_town: biz.town_name || biz.town_slug || null,
       location: fullAddress || null,
+      sms_consent: smsConsent,
     }]);
     setSubmitting(false);
     if (error) { toast.error("Could not send. Please try again."); return; }
     setSubmitted(true);
     setForm({ name: "", email: "", phone: "", message: "" });
+    setSmsConsent(false);
     toast.success("Message sent — we'll be in touch.");
   };
 
@@ -748,6 +752,7 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
                     className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white placeholder:text-white/35 focus:outline-none focus:border-white/30 transition" />
                   <textarea required rows={4} placeholder="How can we help?" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white placeholder:text-white/35 focus:outline-none focus:border-white/30 transition resize-none" />
+                  <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="bizpage-inquiry" />
                   <button type="submit" disabled={submitting}
                     className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition disabled:opacity-50">
                     {submitting ? "Sending…" : "Send Inquiry"} <ArrowRight className="w-4 h-4" />

@@ -271,6 +271,7 @@ Deno.serve(async (req) => {
         session_id: body.session_id ?? null,
         first_touch_source,
         first_touch_evidence,
+        sms_consent: body.sms_consent === true,
       })
       .select("id")
       .single();

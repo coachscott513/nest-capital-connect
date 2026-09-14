@@ -13,6 +13,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
+import SmsConsent from "@/components/SmsConsent";
 
 interface QuickMatchFormProps {
   townName?: string;
@@ -31,6 +32,7 @@ const QuickMatchForm = ({ townName, className = "", onSuccess }: QuickMatchFormP
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -64,6 +66,7 @@ const QuickMatchForm = ({ townName, className = "", onSuccess }: QuickMatchFormP
         type: "quick-match",
         lead_type: searchIntentLabel,
         location: townName || "Capital District",
+        sms_consent: smsConsent,
       });
 
       if (error) throw error;
@@ -219,6 +222,8 @@ const QuickMatchForm = ({ townName, className = "", onSuccess }: QuickMatchFormP
             className="h-12 bg-background/5 border-white/10 focus:border-primary"
           />
         </div>
+
+        <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="quick-match-sms-consent" />
 
         {/* Submit */}
         <Button

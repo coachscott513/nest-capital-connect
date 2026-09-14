@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { OFFICIAL_CATEGORIES } from "@/data/officialCategories";
+import SmsConsent from "@/components/SmsConsent";
 
 interface FormState {
   businessName: string;
@@ -54,6 +55,7 @@ const SpotlightIntake = () => {
   const [form, setForm] = useState<FormState>(empty);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [smsConsent, setSmsConsent] = useState(false);
 
   const set = <K extends keyof FormState>(k: K, v: FormState[K]) =>
     setForm((f) => ({ ...f, [k]: v }));
@@ -105,6 +107,7 @@ const SpotlightIntake = () => {
         .join("\n\n"),
       source_page: "/business-spotlight-intake",
       status: "new",
+      sms_consent: smsConsent,
     });
     setSubmitting(false);
     if (error) {
@@ -365,6 +368,8 @@ const SpotlightIntake = () => {
               Capital District Nest.
             </span>
           </label>
+
+          <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="spotlight-intake-sms-consent" />
 
           <button
             type="submit"

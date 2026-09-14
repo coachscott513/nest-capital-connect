@@ -229,6 +229,7 @@ const handler = async (req: Request): Promise<Response> => {
         location: formData.location || null,
         bedrooms: formData.bedrooms || null,
         price_range: formData.price_range || null,
+        sms_consent: rawData.sms_consent === true,
       })
       .select()
       .single();
