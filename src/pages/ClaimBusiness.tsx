@@ -27,6 +27,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SmsConsent from "@/components/SmsConsent";
 import { trackGAEvent } from "@/components/GARouteTracker";
+import claimHeroImg from "@/assets/hero-owners-wide.jpg";
 
 const TEAL = "var(--nest-brand-blue)";
 
@@ -318,10 +319,10 @@ const ClaimBusiness = () => {
           <title>Thanks — Capital District Nest</title>
         </Helmet>
         <MainHeader />
-        <section className="pt-32 md:pt-40 pb-28 px-6">
-          <div className="max-w-xl mx-auto text-center">
+        <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+          <div className="  ">
             <div
-              className="w-20 h-20 mx-auto mb-7 rounded-2xl border flex items-center justify-center"
+              className="w-20 h-20  mb-7 rounded-2xl border flex items-center "
               style={{ borderColor: `color-mix(in oklch, ${TEAL} 40%, transparent)`, background: `color-mix(in oklch, ${TEAL} 10%, transparent)` }}
             >
               <Sparkles className="w-9 h-9" style={{ color: TEAL }} />
@@ -329,7 +330,7 @@ const ClaimBusiness = () => {
             <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-4" style={{ color: TEAL }}>
               Received
             </p>
-            <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05]">
+            <h1 className="nest-display-page">
               Thank you.
             </h1>
             <p className="mt-6 text-lg text-muted-foreground font-light leading-relaxed">
@@ -337,22 +338,22 @@ const ClaimBusiness = () => {
               Capital District Nest presence. No automated funnels — a real person from our
               team will be in touch shortly.
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="mt-10 flex flex-col sm:flex-row gap-3 ">
               <Link
                 to="/local"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
+                className="inline-flex items-center  gap-2 px-6  rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
               >
                 Browse the directory <ArrowUpRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary hover:border-primary/40 transition"
+                className="inline-flex items-center  gap-2 px-6  rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary hover:border-primary/40 transition"
               >
                 <ArrowLeft className="w-4 h-4" /> Back home
               </Link>
             </div>
           </div>
-        </section>
+        </div><div className="nest-split-media nest-rise nest-rise--late"><img src={claimHeroImg} alt="A local business owner at their shop" loading="eager" /></div></div></section>
         <Footer />
       </div>
     );

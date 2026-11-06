@@ -28,6 +28,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import SmsConsent from "@/components/SmsConsent";
+import financeHeroImg from "@/assets/category-finance.jpg";
 
 type Product = {
   icon: typeof Calculator;
@@ -479,17 +480,17 @@ const FinancialConsole = () => {
         <CleanHeader />
 
         {/* HERO */}
-        <section className="px-[5%] pt-16 pb-12 md:pt-24 md:pb-20 border-b border-border/60">
-          <div className="max-w-6xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs uppercase tracking-[0.18em] mb-5">
+        <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+          <div className=" ">
+            <div className="inline-flex items-center gap-2 px-3  rounded-full border border-primary/30 bg-primary/10 text-primary text-xs uppercase tracking-[0.18em] mb-5">
               <Sparkles className="w-3.5 h-3.5" />
               Capital District Financial Console
             </div>
-            <h1 className="text-4xl md:text-6xl font-semibold tracking-tight max-w-3xl leading-[1.05]">
+            <h1 className="nest-display-page">
               Capital District
               <span className="text-primary"> Financial Console.</span>
             </h1>
-            <p className="mt-5 max-w-2xl text-muted-foreground text-lg md:text-xl">
+            <p className="mt-5  text-muted-foreground text-lg md:text-xl">
               Mortgages, banking, advisors, accountants, insurance, investment property analysis,
               commercial lending, and business capital — all connected through one local financial network.
             </p>
@@ -497,20 +498,20 @@ const FinancialConsole = () => {
               <a
                 href="#calculator"
                 onClick={scrollTo("calculator")}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
+                className="inline-flex items-center gap-2 px-6  rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
               >
                 Analyze a Financial Scenario <ArrowRight className="w-4 h-4" />
               </a>
               <a
                 href="#financial-intro"
                 onClick={scrollTo("financial-intro")}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border text-foreground hover:border-primary hover:text-primary transition"
+                className="inline-flex items-center gap-2 px-6  rounded-full border border-border text-foreground hover:border-primary hover:text-primary transition"
               >
                 Request Financial Introduction
               </a>
             </div>
           </div>
-        </section>
+        </div><div className="nest-split-media nest-rise nest-rise--late"><img src={financeHeroImg} alt="Reviewing local financial planning" loading="eager" /></div></div></section>
 
         {/* FINANCIAL PULSE */}
         <section className="px-[5%] py-16 md:py-20 border-b border-border/60 bg-card/30">
