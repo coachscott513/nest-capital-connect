@@ -256,7 +256,7 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
             };
 
             const cardInner = (
-              <div className={`relative ${aspect} overflow-hidden rounded-xl bg-[#0F1424] border border-white/[0.06] group-hover:border-border transition`}>
+              <div className={`relative ${aspect} overflow-hidden rounded-xl bg-card border border-white/[0.06] group-hover:border-border transition`}>
                 <img
                   src={ev.image}
                   alt={ev.title}
@@ -288,7 +288,7 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
                 </span>
 
                 {/* Bottom title block */}
-                <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                <div className="nest-on-photo absolute inset-x-0 bottom-0 p-4 md:p-5">
                   {ev.needsVerification && (
                     <span className="inline-flex items-center gap-1 mb-2 px-2 py-[3px] rounded-full bg-primary/12 border border-primary/35 text-[10px] font-medium tracking-[0.14em] uppercase text-primary">
                       <AlertCircle className="w-3 h-3" /> Details being confirmed
@@ -675,7 +675,7 @@ const WeeklyPulse = () => {
               </div>
             </div>
           );
-          const wrapperCls = "group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-border transition text-left w-full";
+          const wrapperCls = "group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-card hover:border-border transition text-left w-full";
           return (
             <section className="relative py-8 z-10">
               <div className="max-w-[1600px] mx-auto px-6 md:px-10">
@@ -831,7 +831,7 @@ const WeeklyPulse = () => {
                 </span>
               </div>
               {selectedDayEvents.length === 0 ? (
-                <div className="rounded-2xl border border-white/[0.08] bg-[#0F1424] p-8 md:p-12 text-center">
+                <div className="rounded-2xl border border-white/[0.08] bg-card p-8 md:p-12 text-center">
                   <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.02em] text-foreground">
                     No featured events listed yet for this day.
                   </h3>
@@ -862,7 +862,7 @@ const WeeklyPulse = () => {
                     };
                     const ctaLabel = ev.link.pending ? "Details Being Confirmed" : ev.link.label;
                     const inner = (
-                      <div className="flex gap-4 p-4 md:p-5 rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-border transition h-full">
+                      <div className="flex gap-4 p-4 md:p-5 rounded-2xl border border-white/[0.08] bg-card hover:border-border transition h-full">
                         <div className="relative w-[100px] md:w-[140px] shrink-0 aspect-[4/5] md:aspect-[4/5] rounded-xl overflow-hidden">
                           <img src={ev.image} alt={ev.title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                           <div className="absolute top-2 left-2 flex flex-col items-center justify-center w-[44px] rounded-md bg-background backdrop-blur border border-border py-1">
@@ -971,7 +971,7 @@ const WeeklyPulse = () => {
         </div>
 
         {/* ===== MID ADD-EVENT BAND ===== */}
-        <section className="relative border-y border-white/[0.06] bg-[#0F1424]">
+        <section className="relative border-y border-white/[0.06] bg-card">
           <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-12 md:py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
               <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-primary mb-2">
@@ -1067,7 +1067,7 @@ const WeeklyPulse = () => {
           aria-labelledby="pending-event-title"
         >
           <div
-            className="relative w-full max-w-lg rounded-2xl border border-white/[0.08] bg-[#0F1424] p-7 md:p-9 shadow-2xl"
+            className="relative w-full max-w-lg rounded-2xl border border-white/[0.08] bg-card p-7 md:p-9 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button

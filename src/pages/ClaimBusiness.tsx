@@ -446,7 +446,7 @@ const ClaimBusiness = () => {
                 cadence: "always",
                 setup: null as string | null,
                 tag: "Basic directory presence — already live for every Capital District business.",
-                accent: "rgba(255,255,255,0.55)",
+                accent: "var(--nest-brand-muted)",
                 items: [
                   "Capital District directory",
                   "Name, address & category",
@@ -529,9 +529,9 @@ const ClaimBusiness = () => {
                     key={c.id}
                     className={`relative rounded-3xl p-7 backdrop-blur-xl border flex flex-col transition ${
                       c.style === "teal"
-                        ? "bg-gradient-to-br from-primary/15 via-[#1E2230] to-[#1E2230] border-primary/45 shadow-[0_30px_70px_-30px_rgba(94,234,212,0.45)]"
+                        ? "bg-gradient-to-br from-primary/15 via-card to-card border-primary/45 shadow-[0_30px_70px_-30px_rgba(94,234,212,0.45)]"
                         : c.style === "gold"
-                        ? "bg-gradient-to-br from-primary/15 via-[#1E2230] to-[#1E2230] border-primary/40"
+                        ? "bg-gradient-to-br from-primary/15 via-card to-card border-primary/40"
                         : "bg-secondary border-border hover:border-border"
                     } ${isSelected ? "ring-2 ring-primary/70" : ""}`}
                   >
@@ -541,7 +541,7 @@ const ClaimBusiness = () => {
                         style={
                           c.style === "teal"
                             ? { background: TEAL, color: "var(--nest-brand-white)" }
-                            : { background: "rgba(255,255,255,0.92)", color: "var(--nest-brand-white)" }
+                            : { background: "var(--nest-brand-blue)", color: "var(--nest-brand-white)" }
                         }
                       >
                         <Star className="w-3 h-3 fill-current" /> {c.badge}
@@ -643,8 +643,8 @@ const ClaimBusiness = () => {
             <div
               className="mb-5 rounded-2xl border px-5 py-4 text-sm flex items-start gap-3"
               style={{
-                borderColor: resolvedBiz ? `color-mix(in oklch, ${TEAL} 33%, transparent)` : "rgba(255,255,255,0.12)",
-                background: resolvedBiz ? `color-mix(in oklch, ${TEAL} 8%, transparent)` : "rgba(255,255,255,0.04)",
+                borderColor: resolvedBiz ? `color-mix(in oklch, ${TEAL} 33%, transparent)` : "var(--nest-brand-border)",
+                background: resolvedBiz ? `color-mix(in oklch, ${TEAL} 8%, transparent)` : "var(--nest-brand-ice)",
               }}
             >
               <Building2 className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} />

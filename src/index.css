@@ -1080,3 +1080,6 @@ body.nest-brand { color: var(--nest-brand-foreground) !important; background: va
 /* Site-wide chrome on public routes (body-level) */
 body.nest-brand :is(.nav-shell,.nest-mega-panel,.nest-mobile-menu) { background: color-mix(in oklch, var(--nest-brand-white) 92%, transparent) !important; backdrop-filter: blur(16px); color: var(--nest-brand-foreground); border-color: var(--nest-brand-border); }
 body.nest-brand [role="dialog"], body.nest-brand [data-radix-popper-content-wrapper] > * { color: var(--nest-brand-foreground); }
+/* Explicit text-on-photo islands inside light templates (cards with a dark scrim). */
+.nest-on-photo, .nest-on-photo :is(h2,h3,h4,p,span,a,li) { color: var(--nest-brand-white) !important; }
+.nest-on-photo [class*="muted"] { color: color-mix(in oklch, var(--nest-brand-white) 80%, transparent) !important; }

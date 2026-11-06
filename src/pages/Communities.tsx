@@ -244,7 +244,7 @@ const Communities = () => {
                         source_location: "featured_tiles",
                       })
                     }
-                    className="group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-border transition aspect-[4/5]"
+                    className="group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-card hover:border-border transition aspect-[4/5]"
                   >
                     <img
                       src={t.image}
@@ -260,7 +260,7 @@ const Communities = () => {
                       }}
                       aria-hidden
                     />
-                    <div className="relative h-full p-6 md:p-7 flex flex-col justify-end">
+                    <div className="nest-on-photo relative h-full p-6 md:p-7 flex flex-col justify-end">
                       <p
                         className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-2"
                         style={{ color: TEAL }}

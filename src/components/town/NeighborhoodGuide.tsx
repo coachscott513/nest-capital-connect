@@ -138,7 +138,7 @@ const NeighborhoodCard = ({ n }: { n: MicroNeighborhood }) => {
           destination_url: href,
         })
       }
-      className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-secondary p-6 md:p-7 hover:border-primary/40 hover:bg-secondary transition-all"
+      className="group relative overflow-hidden rounded-3xl border border-border bg-card p-6 md:p-7 hover:border-primary/40 hover:bg-secondary transition-all"
     >
       {n.imageUrl && (
         <div
@@ -151,15 +151,14 @@ const NeighborhoodCard = ({ n }: { n: MicroNeighborhood }) => {
           aria-hidden
         />
       )}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(11,15,25,0.2) 0%, rgba(11,15,25,0.85) 100%)",
-        }}
-        aria-hidden
-      />
-      <div className="relative">
+      {n.imageUrl && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "linear-gradient(180deg, rgba(11,15,25,0.2) 0%, rgba(11,15,25,0.85) 100%)" }}
+          aria-hidden
+        />
+      )}
+      <div className={`relative ${n.imageUrl ? "nest-on-photo" : ""}`}>
         <div className="flex items-start justify-between gap-3 mb-4">
           <div className="w-10 h-10 rounded-full flex items-center justify-center border border-border bg-secondary">
             <Compass className="w-4 h-4" style={{ color: TEAL_DARK }} />
