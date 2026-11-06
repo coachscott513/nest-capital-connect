@@ -98,8 +98,7 @@ export default function DirectoryEditorialHome() {
           <p className="nest-hero-rotator mt-5 nest-rise">
             <span className="sr-only">Find restaurants, contractors, shops, dentists and advisors near you.</span>
             <span aria-hidden="true">Find{" "}
-              <span className="nest-rotator-slot"><span key={phrase} className={reduced ? "" : "nest-rotator-word"}>{phrases[phrase]}</span></span>
-              {" "}near you.
+              <span className="nest-rotator-slot"><span key={phrase} className={reduced ? "" : "nest-rotator-word"}>{phrases[phrase]}.</span></span>
             </span>
             {!reduced && (
               <button type="button" onClick={() => setPaused((p) => !p)} className="nest-rotator-toggle" aria-label={paused ? "Play changing examples" : "Pause changing examples"}>
