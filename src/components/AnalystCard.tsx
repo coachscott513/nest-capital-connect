@@ -46,7 +46,7 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
     >
       <div className="flex items-center gap-4">
         <div
-          className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 relative tracking-wider"
+          className="w-12 h-12 rounded-full flex items-center justify-center text-foreground font-bold text-sm shrink-0 relative tracking-wider"
           style={{ backgroundColor: TEAL }}
         >
           CDN
@@ -66,7 +66,7 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
 
       <SheetContent
         side="right"
-        className="p-0 w-full sm:max-w-[440px] border-l-0 text-white"
+        className="p-0 w-full sm:max-w-[440px] border-l-0 text-foreground"
         style={{ background: CHARCOAL }}
       >
         {/* Branded header band */}
@@ -76,15 +76,15 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
         >
           <div className="flex items-start gap-4">
             <div
-              className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0 ring-4 ring-white/10 tracking-wider"
+              className="w-16 h-16 rounded-full flex items-center justify-center text-foreground font-bold text-lg shrink-0 ring-4 ring-white/10 tracking-wider"
               style={{ backgroundColor: TEAL }}
             >
               CDN
             </div>
             <div className="leading-tight pt-1">
-              <p className="text-xl font-bold tracking-tight text-white">{title}</p>
-              <p className="mt-2 text-sm text-white/75 leading-relaxed">{description}</p>
-              <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-white/80">
+              <p className="text-xl font-bold tracking-tight text-foreground">{title}</p>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{description}</p>
+              <p className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 Online · usually replies in minutes
               </p>
@@ -97,22 +97,22 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
           {/* Call — ONLY surface allowed to use red */}
           <a
             href={`tel:+1${PHONE_NUMBER}`}
-            className="flex items-center gap-4 p-4 rounded-2xl text-white shadow-[0_10px_30px_-12px_rgba(220,28,46,0.6)] transition-transform active:scale-[0.99]"
+            className="flex items-center gap-4 p-4 rounded-2xl text-foreground shadow-[0_10px_30px_-12px_rgba(220,28,46,0.6)] transition-transform active:scale-[0.99]"
             style={{ backgroundColor: RED_CALL }}
           >
             <div className="w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center">
               <Phone className="w-5 h-5" />
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-white">Call Capital District Nest</p>
-              <p className="text-sm text-white/95">{FORMATTED_PHONE}</p>
+              <p className="font-semibold text-foreground">Call Capital District Nest</p>
+              <p className="text-sm text-muted-foreground">{FORMATTED_PHONE}</p>
             </div>
           </a>
 
           {/* Text */}
           <a
             href={`sms:+1${PHONE_NUMBER}?body=${encodeURIComponent(SMS_BODY)}`}
-            className="flex items-center gap-4 p-4 rounded-2xl transition hover:border-white/25"
+            className="flex items-center gap-4 p-4 rounded-2xl transition hover:border-border"
             style={{ backgroundColor: SURFACE, border: `1px solid ${HAIRLINE}` }}
           >
             <div
@@ -122,15 +122,15 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
               <MessageCircle className="w-5 h-5" style={{ color: TEAL_BRIGHT }} />
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-white">Text Us</p>
-              <p className="text-sm text-white/75">Quick SMS conversation</p>
+              <p className="font-semibold text-foreground">Text Us</p>
+              <p className="text-sm text-muted-foreground">Quick SMS conversation</p>
             </div>
           </a>
 
           {/* Email */}
           <a
             href={`mailto:${EMAIL}?subject=Capital%20District%20Nest%20inquiry`}
-            className="flex items-center gap-4 p-4 rounded-2xl transition hover:border-white/25"
+            className="flex items-center gap-4 p-4 rounded-2xl transition hover:border-border"
             style={{ backgroundColor: SURFACE, border: `1px solid ${HAIRLINE}` }}
           >
             <div
@@ -140,28 +140,28 @@ const AnalystCard: React.FC<AnalystCardProps> = ({
               <Mail className="w-5 h-5" style={{ color: TEAL_BRIGHT }} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-semibold text-white">Email the Team</p>
-              <p className="text-sm text-white/75 truncate">{EMAIL}</p>
+              <p className="font-semibold text-foreground">Email the Team</p>
+              <p className="text-sm text-muted-foreground truncate">{EMAIL}</p>
             </div>
           </a>
 
           {/* Schedule */}
           <a
             href={`mailto:${EMAIL}?subject=Schedule%20a%20call%20with%20Capital%20District%20Nest`}
-            className="flex items-center gap-4 p-4 rounded-2xl text-white transition hover:bg-white/[0.06]"
+            className="flex items-center gap-4 p-4 rounded-2xl text-foreground transition hover:bg-secondary"
             style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: `1px solid ${HAIRLINE}` }}
           >
-            <div className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center">
-              <Calendar className="w-5 h-5 text-white" />
+            <div className="w-11 h-11 rounded-xl bg-secondary flex items-center justify-center">
+              <Calendar className="w-5 h-5 text-foreground" />
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-white">Schedule a Call</p>
-              <p className="text-sm text-white/75">Pick a time that works for you</p>
+              <p className="font-semibold text-foreground">Schedule a Call</p>
+              <p className="text-sm text-muted-foreground">Pick a time that works for you</p>
             </div>
           </a>
         </div>
 
-        <p className="px-6 pb-6 text-xs text-center text-white/55 leading-relaxed">
+        <p className="px-6 pb-6 text-xs text-center text-muted-foreground leading-relaxed">
           {contextualDisclaimer ? `${contextualDisclaimer} ` : ""}
           Capital District Nest is a local discovery, directory, and advertising platform.
         </p>
