@@ -819,8 +819,8 @@ body.has-nest-brand { background: var(--nest-brand-white) !important; }
 .nest-brand :is(.nav-shell,.nest-mobile-menu) a:hover { color: var(--nest-brand-blue); }
 .nest-brand :is(.nav-shell,.nest-mobile-menu) :is(.bg-accent,[class*="bg-[#5eead4]"]):hover { color: var(--nest-brand-white); }
 .nest-brand footer { background: var(--nest-brand-ice); color: var(--nest-brand-foreground); border-color: var(--nest-brand-border); }
-.nest-brand footer [class*="text-white"] { color: var(--nest-brand-muted); }
-.nest-brand footer :is(h3,h4) { color: var(--nest-brand-foreground); font-weight: 500; }
+.nest-brand footer [class*="text-white"] { color: var(--nest-brand-muted) !important; }
+.nest-brand footer :is(h3,h4)[class] { color: var(--nest-brand-foreground) !important; font-weight: 500; }
 .nest-brand footer [class*="5eead4"], .nest-brand footer a:hover { color: var(--nest-brand-blue); }
 .nest-brand footer [class*="border-white"] { border-color: var(--nest-brand-border); }
 /* Embedded widget presentation only; its configuration and links are unchanged. */
@@ -828,8 +828,8 @@ body.has-nest-brand { background: var(--nest-brand-white) !important; }
 .nest-brand #property-search > [aria-hidden] { background: none !important; }
 .nest-brand #property-search [style*="font-family"] { font-family: var(--nest-brand-font) !important; }
 .nest-brand #property-search-widget { background: var(--nest-brand-ice) !important; box-shadow: none !important; border-color: var(--nest-brand-border); }
-.nest-brand #property-search [class*="text-white"] { color: var(--nest-brand-muted); }
-.nest-brand #property-search h2 { color: var(--nest-brand-foreground); font-weight: 300; }
+.nest-brand #property-search [class*="text-white"] { color: var(--nest-brand-muted) !important; }
+.nest-brand #property-search h2[class] { color: var(--nest-brand-foreground) !important; font-weight: 300; }
 .nest-brand #property-search [class*="64748B"] { color: var(--nest-brand-blue); letter-spacing: .14em; }
 .nest-brand realscout-advanced-search { --rs-as-button-color: var(--nest-brand-blue) !important; --rs-as-button-text-color: var(--nest-brand-white) !important; }
 /* Dock is mounted outside Index, so its mode follows the homepage body class. */
