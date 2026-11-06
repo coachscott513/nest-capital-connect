@@ -7,3 +7,9 @@ Use Geist, loaded from `https://fonts.googleapis.com/css2?family=Geist:wght@300;
 Full-value tokens in `src/index.css`: white/background/card/popover `oklch(1 0 0)`; foreground `oklch(0.16 0.011 258)`; light muted `oklch(0.52 0.014 256)`; ink `oklch(0.13 0.011 258)`; ink-soft `oklch(0.21 0.013 258)`; ice `oklch(0.976 0.014 240)`; ice-deep `oklch(0.945 0.028 240)`; blue `oklch(0.55 0.2 258)`; blue-bright `oklch(0.63 0.19 250)`; blue-soft `oklch(0.93 0.045 245)`; border `oklch(0.922 0.005 250)`; input `oklch(0.9 0.007 250)`; dark foreground `oklch(0.99 0.002 250)`; dark muted `oklch(0.76 0.012 256)`.
 
 White/frosted-white header, ice resources/footer, near-black photo scrims, white photo headings, electric-blue solid pills. No teal/mint, cream, gold, green gradients, or neon shadows on homepage/chrome. Preserve Nest logo/identity, imagery, feature layout/content/links and search. Scoped exception to legacy theme, not a global palette rewrite. Preview only.
+## Site-wide light system (Nov 2026)
+- Light public site: `PublicBrandMode` toggles `nest-brand` on `<body>` for every public route. Legacy theme kept only for: /admin*, /launch-dashboard, /dashboard, /partner-*, /seo-audit, /reports*, /intel*, /intelligence, /cash-flow-report, /market-reports*, /investor*, /go/.
+- Hero pattern: `SplitHero` — eyebrow + one short headline + one sentence + one blue pill CTA on the LEFT, photo/feature visual on the RIGHT. Never alternate sides. Mobile: text first.
+- Homepage hero is the only intentional text-on-photo island (Troy photo, directional scrim, frosted search card).
+- Motion: `.nest-rise`, `.nest-swap`, rotating phrase; all disabled under prefers-reduced-motion; rotator pauses while search is focused and has a pause button.
+- Coverage checklist: see docs/public-route-coverage.md.
