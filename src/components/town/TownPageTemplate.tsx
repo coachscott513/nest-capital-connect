@@ -492,7 +492,6 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
               </a>
             </div>
           </div>
-          </div>
           <div className="nest-split-media nest-rise nest-rise--late"><img src={heroImage} alt={`${name}, NY`} loading="eager" /></div></div>
         </section>
 

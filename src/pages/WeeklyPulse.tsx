@@ -600,7 +600,6 @@ const WeeklyPulse = () => {
               </Link>
             </div>
           </div>
-          </div>
           <div className="nest-split-media nest-rise nest-rise--late"><img src={heroBg} alt="A crowd at a live outdoor event" loading="eager" /></div></div>
         </section>
 
