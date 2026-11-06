@@ -4,6 +4,11 @@ import { ArrowRight, ArrowUpRight, LucideIcon } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import hubDefaultImg from "@/assets/category-services.jpg";
+import hubContractorsImg from "@/assets/category-contractors.jpg";
+import hubFinanceImg from "@/assets/hero-owners-wide.jpg";
+import hubRestaurantsImg from "@/assets/roosevelt-dining.jpg";
+import hubWellnessImg from "@/assets/wellness-beauty.jpg";
 
 /* =============================================================
    HubRoom — shared Apple-style "room" page template.
@@ -53,6 +58,13 @@ const track = (name: string, payload: Record<string, any>) => {
   if (typeof window === "undefined") return;
   const gtag = (window as unknown as { gtag?: GTag }).gtag;
   if (typeof gtag === "function") gtag("event", name, payload);
+};
+
+const HUB_IMAGES: Record<string, string> = {
+  "/home-services": hubContractorsImg,
+  "/professional-services": hubFinanceImg,
+  "/restaurants": hubRestaurantsImg,
+  "/wellness": hubWellnessImg,
 };
 
 const HubRoom = (p: HubRoomProps) => {
@@ -140,7 +152,7 @@ const HubRoom = (p: HubRoomProps) => {
         <CleanHeader />
 
         {/* HERO */}
-        <section className="relative overflow-hidden">
+        <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -148,21 +160,20 @@ const HubRoom = (p: HubRoomProps) => {
                 "radial-gradient(60% 50% at 70% 20%, rgba(94,234,212,0.10) 0%, rgba(11,15,25,0) 60%), radial-gradient(50% 60% at 20% 80%, rgba(13,110,102,0.18) 0%, rgba(11,15,25,0) 60%)",
             }}
           />
-          <div className="relative max-w-7xl mx-auto px-6 md:px-10 pt-28 md:pt-36 pb-20 md:pb-28">
+          <div className="relative   px-6 md:px-10    ">
             <p className="eyebrow-apple text-primary mb-6">{p.eyebrow}</p>
-            <h1 className="h-hero max-w-4xl">{p.headline}</h1>
-            <p className="mt-8 max-w-2xl nest-lead text-muted-foreground">{p.subhead}</p>
+            <h1 className="nest-display-page"mt-8  nest-lead text-muted-foreground">{p.subhead}</p>
             <div className="mt-10 flex flex-wrap gap-3">
               {renderCta(p.primaryCta, "nest-btn", "hero_primary")}
               {p.secondaryCta &&
                 renderCta(
                   p.secondaryCta,
-                  "inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border hover:border-primary hover:text-primary text-foreground text-sm font-medium tracking-tight transition",
+                  "inline-flex items-center gap-2 px-6  rounded-full border border-border hover:border-primary hover:text-primary text-foreground text-sm font-medium tracking-tight transition",
                   "hero_secondary",
                 )}
             </div>
           </div>
-        </section>
+        </div><div className="nest-split-media nest-rise nest-rise--late"><img src={HUB_IMAGES[p.route] ?? hubDefaultImg} alt="" loading="eager" /></div></div></section>
 
         {/* PANELS */}
         <section className="bg-background">
