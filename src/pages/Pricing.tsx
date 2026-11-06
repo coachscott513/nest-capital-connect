@@ -129,14 +129,6 @@ const Pricing = () => {
 
       {/* HERO */}
       <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.35] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(60% 45% at 50% 0%, rgba(94,234,212,0.16) 0%, rgba(11,15,25,0) 70%)",
-          }}
-        />
         <div className="relative   ">
           <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-5" style={{ color: TEAL }}>
             Local Business Solutions

@@ -246,14 +246,6 @@ const BusinessLanding = () => {
 
       {/* HERO */}
       <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(55% 55% at 50% 30%, rgba(94,234,212,0.12), transparent 65%), radial-gradient(45% 60% at 15% 85%, rgba(13,110,102,0.18), transparent 70%)",
-          }}
-        />
         <div className="relative   px-5 sm:px-6 md:px-10     ">
           <Eyebrow>Local Search · AI Tools · Business Automation</Eyebrow>
           <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/[0.06] px-4 py-1.5 text-xs md:text-sm font-medium tracking-tight text-primary">

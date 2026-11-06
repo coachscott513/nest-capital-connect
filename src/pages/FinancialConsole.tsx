@@ -482,7 +482,7 @@ const FinancialConsole = () => {
         {/* HERO */}
         <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
           <div className=" ">
-            <div className="inline-flex items-center gap-2 px-3  rounded-full border border-primary/30 bg-primary/10 text-primary text-xs uppercase tracking-[0.18em] mb-5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs uppercase tracking-[0.18em] mb-5">
               <Sparkles className="w-3.5 h-3.5" />
               Capital District Financial Console
             </div>
@@ -498,14 +498,14 @@ const FinancialConsole = () => {
               <a
                 href="#calculator"
                 onClick={scrollTo("calculator")}
-                className="inline-flex items-center gap-2 px-6  rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition"
               >
                 Analyze a Financial Scenario <ArrowRight className="w-4 h-4" />
               </a>
               <a
                 href="#financial-intro"
                 onClick={scrollTo("financial-intro")}
-                className="inline-flex items-center gap-2 px-6  rounded-full border border-border text-foreground hover:border-primary hover:text-primary transition"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border text-foreground hover:border-primary hover:text-primary transition"
               >
                 Request Financial Introduction
               </a>

@@ -341,13 +341,13 @@ const ClaimBusiness = () => {
             <div className="mt-10 flex flex-col sm:flex-row gap-3 ">
               <Link
                 to="/local"
-                className="inline-flex items-center  gap-2 px-6  rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
+                className="inline-flex items-center  gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
               >
                 Browse the directory <ArrowUpRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/"
-                className="inline-flex items-center  gap-2 px-6  rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary hover:border-primary/40 transition"
+                className="inline-flex items-center  gap-2 px-6 py-3 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary hover:border-primary/40 transition"
               >
                 <ArrowLeft className="w-4 h-4" /> Back home
               </Link>
