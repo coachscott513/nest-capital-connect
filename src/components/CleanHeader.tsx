@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, X, Menu, ChevronRight, ArrowLeft, Phone } from "lucide-react";
 import GlobalSearchCommand from "@/components/GlobalSearchCommand";
 import cdnLogo from "@/assets/cdn-logo.jpeg";
+import { Button } from "@/components/ui/button";
 
 /* =============================================================
    CLEAN HEADER — V2 (Apple-style mega menu + iOS drill-down)
@@ -35,6 +36,7 @@ const SECTION_DEFS: MegaSection[] = [
   {
     key: "discover",
     label: "Discover",
+    href: "/local",
     columns: [
       {
         title: "Food & Drink",
@@ -379,20 +381,20 @@ const SECTION_DEFS: MegaSection[] = [
 ];
 
 /**
- * Property-first navigation order. Existing sections are preserved (no indexed
+ * Directory-first navigation order. Existing sections are preserved (no indexed
  * route is removed) — only the hierarchy changes.
  */
 const NAV_ORDER = [
+  "discover",
+  "businesses",
+  "forbusiness",
   "homes",
   "analyze",
   "closingteam",
   "homeservices",
   "communities",
-  "discover",
-  "businesses",
   "stories",
   "happening",
-  "forbusiness",
 ];
 
 const SECTIONS: MegaSection[] = NAV_ORDER.map((k) =>
@@ -405,12 +407,11 @@ const SECTIONS: MegaSection[] = NAV_ORDER.map((k) =>
  * is removed.
  */
 const DESKTOP_KEYS = [
-  "homes",
-  "analyze",
-  "closingteam",
-  "homeservices",
-  "communities",
+  "discover",
   "businesses",
+  "forbusiness",
+  "homes",
+  "communities",
 ];
 const DESKTOP_SECTIONS: MegaSection[] = DESKTOP_KEYS.map((k) =>
   SECTIONS.find((s) => s.key === k),
@@ -487,7 +488,7 @@ const CleanHeader = () => {
             </Link>
 
             {/* Desktop nav — mega-menu triggers */}
-            <div className="hidden lg:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2 whitespace-nowrap">
+            <div className="hidden xl:flex items-center gap-0.5 whitespace-nowrap">
               {DESKTOP_SECTIONS.map((s) => {
                 const isActive = hoverKey === s.key;
                 const routeActive = s.href
@@ -523,24 +524,19 @@ const CleanHeader = () => {
             </div>
 
             {/* Right cluster */}
-            <div className="hidden lg:flex items-center gap-2 shrink-0" onMouseEnter={closeMegaSoon}>
-              <button
+            <div className="hidden xl:flex items-center gap-2 shrink-0" onMouseEnter={closeMegaSoon}>
+              <Button variant="ghost" size="icon"
                 onClick={() => setSearchOpen(true)}
                 aria-label="Search"
-                className="flex items-center justify-center w-9 h-9 rounded-full text-foreground/70 hover:text-foreground hover:bg-white/[0.06] transition"
+                className="h-11 w-11 rounded-full text-foreground/70"
               >
                 <Search className="h-4 w-4" />
-              </button>
-              <Link
-                to="/for-businesses/apply"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold text-[#0B0F19] bg-[#5eead4] hover:bg-white transition-colors"
-              >
-                Get Featured
-              </Link>
+              </Button>
+              <Button asChild className="rounded-full bg-accent text-accent-foreground hover:bg-accent/90 min-h-11"><Link to="/claim-business">Claim your listing</Link></Button>
             </div>
 
             {/* Mobile cluster */}
-            <div className="flex items-center gap-2 lg:hidden">
+            <div className="flex items-center gap-2 xl:hidden">
               <button
                 onClick={() => setSearchOpen(true)}
                 aria-label="Search"
@@ -568,7 +564,7 @@ const CleanHeader = () => {
 
         {/* Desktop mega-menu panel */}
         <div
-          className={`hidden lg:block absolute inset-x-0 top-full transition-all duration-300 ease-out ${
+          className={`hidden xl:block absolute inset-x-0 top-full transition-all duration-300 ease-out ${
             active ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"
           }`}
           onMouseEnter={() => active && openMega(active.key)}
@@ -640,7 +636,7 @@ const CleanHeader = () => {
 
       {/* Mobile — full-screen iOS-style sheet with drill-down */}
       <div
-        className={`fixed inset-0 z-[1999] lg:hidden transition-transform duration-300 ease-out ${
+        className={`fixed inset-0 z-[1999] xl:hidden transition-transform duration-300 ease-out ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
         style={{
