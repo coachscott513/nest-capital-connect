@@ -27,7 +27,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SmsConsent from "@/components/SmsConsent";
 import { trackGAEvent } from "@/components/GARouteTracker";
-import claimHeroImg from "@/assets/hero-owners-wide.jpg";
+import claimHeroImg from "@/assets/hero-business-wide.jpg";
+import claimMainHeroImg from "@/assets/hero-owners-wide.jpg";
 
 const TEAL = "var(--nest-brand-blue)";
 
@@ -353,7 +354,7 @@ const ClaimBusiness = () => {
               </Link>
             </div>
           </div>
-        </div><div className="nest-split-media nest-rise nest-rise--late"><img src={claimHeroImg} alt="A local business owner at their shop" loading="eager" /></div></div></section>
+        </div><div className="nest-split-media nest-rise nest-rise--late"><img src={claimHeroImg} alt="A Capital District storefront" loading="eager" /></div></div></section>
         <Footer />
       </div>
     );
@@ -376,30 +377,23 @@ const ClaimBusiness = () => {
       <MainHeader />
 
       {/* HERO */}
-      <section className="pt-28 md:pt-36 pb-14 px-6 md:px-10 relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-[0.35] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(60% 50% at 50% 0%, rgba(94,234,212,0.18) 0%, rgba(11,15,25,0) 70%)",
-          }}
-        />
-        <div className="max-w-3xl mx-auto text-center relative">
+      <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+        <div className="   relative">
           <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-5" style={{ color: TEAL }}>
             For Local Business Owners
           </p>
-          <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
+          <h1 className="nest-display-page">
             Claim Your Business on Capital District Nest
           </h1>
-          <p className="mt-6 text-lg text-muted-foreground font-light max-w-2xl mx-auto">
+          <p className="mt-6 text-lg text-muted-foreground font-light  ">
             Review your listing, update your profile, add photos, submit events, and request
             featured placement across the Capital District's local discovery platform.
           </p>
-          <p className="mt-3 text-base text-muted-foreground font-light max-w-2xl mx-auto">
+          <p className="mt-3 text-base text-muted-foreground font-light  ">
             Your business may already be listed. Review it for free, upgrade your profile, or
             request featured placement.
           </p>
-          <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="mt-9 flex flex-col sm:flex-row items-center  gap-3">
             <a
               href="#claim-form"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
@@ -413,7 +407,7 @@ const ClaimBusiness = () => {
               Compare Options
             </a>
           </div>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3 text-xs text-muted-foreground">
+          <div className="mt-9 flex flex-wrap items-center  gap-3 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-secondary">
               <Handshake className="w-3.5 h-3.5" style={{ color: TEAL }} /> Concierge onboarding
             </span>
@@ -425,7 +419,7 @@ const ClaimBusiness = () => {
             </span>
           </div>
         </div>
-      </section>
+      </div><div className="nest-split-media nest-rise nest-rise--late"><img src={claimMainHeroImg} alt="A local business owner at their shop" loading="eager" /></div></div></section>
 
       {/* PRICING TIERS — unified ladder */}
       <section id="tiers" className="pb-16 px-6 md:px-10">
