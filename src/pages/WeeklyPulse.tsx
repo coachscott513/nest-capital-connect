@@ -565,40 +565,15 @@ const WeeklyPulse = () => {
 
       <main>
         {/* ===== CINEMATIC HERO ===== */}
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0">
-            <img
-              src={heroBg}
-              alt=""
-              className="w-full h-full object-cover"
-              aria-hidden
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(11,15,25,0.45) 0%, rgba(11,15,25,0.7) 55%, #0B0F19 100%)",
-              }}
-              aria-hidden
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(60% 70% at 50% 40%, rgba(94,234,212,0.10), transparent 70%)",
-              }}
-              aria-hidden
-            />
-          </div>
-
-          <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 pt-32 md:pt-44 pb-24 md:pb-36">
-            <p className="text-[11px] font-semibold tracking-[0.32em] uppercase text-primary mb-5">
+        <section className="nest-split nest-split--compact">
+          <div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+            <p className="nest-eyebrow">
               This Week
             </p>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] text-foreground leading-[1.02] max-w-4xl">
+            <h1 className="nest-display-page">
               Events Across the Capital&nbsp;District
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-muted-foreground font-light max-w-2xl leading-relaxed">
+            <p className="nest-lead">
               Live music, festivals, markets, dining events, sports, family
               activities, nightlife, and local happenings across the region.
             </p>
@@ -625,6 +600,8 @@ const WeeklyPulse = () => {
               </Link>
             </div>
           </div>
+          </div>
+          <div className="nest-split-media nest-rise nest-rise--late"><img src={heroBg} alt="A crowd at a live outdoor event" loading="eager" /></div></div>
         </section>
 
         {/* ===== TOP FEATURED EVENT ===== */}
@@ -701,7 +678,7 @@ const WeeklyPulse = () => {
           );
           const wrapperCls = "group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-border transition text-left w-full";
           return (
-            <section className="relative -mt-12 md:-mt-20 z-10">
+            <section className="relative py-8 z-10">
               <div className="max-w-[1600px] mx-auto px-6 md:px-10">
                 {f.link.pending ? (
                   <button type="button" onClick={() => { trackFeatured(); openPending(f, "featured_hero"); }} className={wrapperCls}>{inner}</button>

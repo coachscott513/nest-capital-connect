@@ -435,41 +435,15 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
 
       <main>
         {/* ═══════════ 1. CINEMATIC HERO ═══════════ */}
-        <section className="relative isolate overflow-hidden">
-          <img
-            src={heroImage}
-            alt={`${name}, NY`}
-            className="absolute inset-0 w-full h-full object-cover opacity-55"
-            loading="eager"
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(11,15,25,0.55) 0%, rgba(11,15,25,0.75) 55%, #0B0F19 100%)",
-            }}
-            aria-hidden
-          />
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(60% 70% at 50% 30%, rgba(94,234,212,0.12), transparent 70%)",
-            }}
-            aria-hidden
-          />
-
-          <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 pt-32 md:pt-44 pb-24 md:pb-36">
-            <p
-              className="text-[11px] font-semibold tracking-[0.32em] uppercase mb-6"
-              style={{ color: TEAL_DARK }}
-            >
+        <section className="nest-split nest-split--compact">
+          <div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+            <p className="nest-eyebrow">
               {name.toUpperCase()}, NY
             </p>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] text-foreground leading-[1.02] max-w-4xl">
+            <h1 className="nest-display-page">
               Discover {name}.
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-muted-foreground font-light max-w-2xl leading-relaxed">
+            <p className="nest-lead">
               Restaurants, local businesses, events, services, homes, and community life in one
               Capital District discovery layer.
             </p>
@@ -518,6 +492,8 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
               </a>
             </div>
           </div>
+          </div>
+          <div className="nest-split-media nest-rise nest-rise--late"><img src={heroImage} alt={`${name}, NY`} loading="eager" /></div></div>
         </section>
 
         {afterHero}
