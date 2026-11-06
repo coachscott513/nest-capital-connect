@@ -2,6 +2,8 @@ import { Helmet } from "react-helmet-async";
 import { Mail, Phone, ArrowRight } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import SplitHero from "@/components/brand/SplitHero";
+import contactHero from "@/assets/town-schenectady.jpg";
 import {
   GENERAL_EMAIL,
   MEDIA_EMAIL,
@@ -33,40 +35,21 @@ const ContactPage = () => (
 
     <CleanHeader />
 
-    {/* HERO (DARK) */}
-    <section className="bg-secondary text-foreground py-28 md:py-36 px-6 md:px-10">
-      <div className="max-w-3xl mx-auto text-center">
-        <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-5 text-primary">
-          Contact the Team
-        </p>
-        <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
-          Capital District Nest
-        </h1>
-        <p className="mt-6 text-lg md:text-xl font-light text-muted-foreground">
-          {PLATFORM_TAGLINE}. An independent regional media and local
-          discovery platform — answered by a real editorial team.
-        </p>
-
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a
-            href={PHONE_TEL}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold bg-primary text-primary-foreground hover:opacity-90 transition"
-          >
-            <Phone className="w-4 h-4" /> {PHONE_DISPLAY}
-          </a>
-          <a
-            href={`mailto:${MEDIA_EMAIL}`}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-border text-foreground hover:bg-secondary transition"
-          >
-            <Mail className="w-4 h-4" /> {MEDIA_EMAIL}
-          </a>
-        </div>
-
-        <p className="mt-6 text-xs text-muted-foreground tracking-wide">
-          Mon–Sat · We typically reply within a few hours.
-        </p>
+    <SplitHero
+      id="contact"
+      titleAs="h1"
+      compact
+      eyebrow="Contact the Team"
+      title="Capital District Nest"
+      lead={<>{PLATFORM_TAGLINE}. An independent regional media and local discovery platform — answered by a real editorial team.</>}
+      image={{ src: contactHero, alt: "Albany in New York's Capital District" }}
+    >
+      <div className="mt-8 flex flex-wrap items-center gap-4">
+        <a href={PHONE_TEL} className="nest-btn"><Phone className="h-4 w-4" /> {PHONE_DISPLAY}</a>
+        <a href={`mailto:${MEDIA_EMAIL}`} className="nest-quiet-link break-all"><Mail className="h-4 w-4 shrink-0" /> {MEDIA_EMAIL}</a>
       </div>
-    </section>
+      <p className="mt-6 text-xs text-muted-foreground tracking-wide">Mon–Sat · We typically reply within a few hours.</p>
+    </SplitHero>
 
     {/* CHANNELS (LIGHT) */}
     <section className="bg-white py-24 md:py-32 px-6 md:px-10">
@@ -106,7 +89,7 @@ const ContactPage = () => (
     </section>
 
     {/* REAL ESTATE DISCLOSURE (LIGHT, lower) */}
-    <section className="bg-[#f7f7f5] py-20 md:py-24 px-6 md:px-10 border-t border-[#1d1d1f]/[0.06]">
+    <section className="bg-secondary py-20 md:py-24 px-6 md:px-10 border-t border-[#1d1d1f]/[0.06]">
       <div className="max-w-3xl mx-auto text-center">
         <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-3 text-primary">
           Real Estate Inquiries
