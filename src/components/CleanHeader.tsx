@@ -571,7 +571,7 @@ const CleanHeader = () => {
           onMouseLeave={closeMegaSoon}
         >
           <div
-            className="border-t border-white/[0.06]"
+            className="nest-mega-panel border-t border-white/[0.06]"
             style={{
               background: "rgba(11, 15, 25, 0.94)",
               backdropFilter: "blur(28px) saturate(140%)",
@@ -636,7 +636,7 @@ const CleanHeader = () => {
 
       {/* Mobile — full-screen iOS-style sheet with drill-down */}
       <div
-        className={`fixed inset-0 z-[1999] xl:hidden transition-transform duration-300 ease-out ${
+        className={`nest-mobile-menu fixed inset-0 z-[1999] xl:hidden transition-transform duration-300 ease-out ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
         style={{

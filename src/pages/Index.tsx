@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
@@ -9,8 +10,13 @@ import {
 } from "@/utils/seoSchemas";
 
 const Index = () => {
+  useEffect(() => {
+    document.body.classList.add("has-nest-brand");
+    return () => document.body.classList.remove("has-nest-brand");
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="nest-brand min-h-screen bg-background">
       <SEOHead
         title="Capital District Nest | The Digital Front Door of the Capital District"
         description="Discover neighborhoods, local businesses, homes, and events across New York's Capital District — Albany, Saratoga Springs, Troy, Schenectady, and Delmar — through one trusted local platform."

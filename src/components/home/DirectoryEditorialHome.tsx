@@ -119,7 +119,7 @@ export default function DirectoryEditorialHome() {
         </section>
       ))}
 
-      <div className="bg-surface-deep">
+      <div className="nest-home-resources bg-surface-deep">
         <div className="nest-editorial-inner py-12">
           <details className="nest-live-search">
             <summary className="flex min-h-12 cursor-pointer items-center justify-between gap-4 text-lg font-medium"><span>Looking for a home? Search live with RealScout.</span><ChevronDown className="h-5 w-5 shrink-0" /></summary>
