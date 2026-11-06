@@ -34,15 +34,15 @@ const ContactPage = () => (
     <CleanHeader />
 
     {/* HERO (DARK) */}
-    <section className="bg-[#0e0f12] text-white py-28 md:py-36 px-6 md:px-10">
+    <section className="bg-secondary text-foreground py-28 md:py-36 px-6 md:px-10">
       <div className="max-w-3xl mx-auto text-center">
-        <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-5 text-[#5eead4]">
+        <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-5 text-primary">
           Contact the Team
         </p>
         <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
           Capital District Nest
         </h1>
-        <p className="mt-6 text-lg md:text-xl font-light text-white/70">
+        <p className="mt-6 text-lg md:text-xl font-light text-muted-foreground">
           {PLATFORM_TAGLINE}. An independent regional media and local
           discovery platform — answered by a real editorial team.
         </p>
@@ -50,19 +50,19 @@ const ContactPage = () => (
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
             href={PHONE_TEL}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold bg-[#0d6e66] text-white hover:opacity-90 transition"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold bg-primary text-foreground hover:opacity-90 transition"
           >
             <Phone className="w-4 h-4" /> {PHONE_DISPLAY}
           </a>
           <a
             href={`mailto:${MEDIA_EMAIL}`}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-white/20 text-white hover:bg-white/[0.06] transition"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-border text-foreground hover:bg-secondary transition"
           >
             <Mail className="w-4 h-4" /> {MEDIA_EMAIL}
           </a>
         </div>
 
-        <p className="mt-6 text-xs text-white/45 tracking-wide">
+        <p className="mt-6 text-xs text-muted-foreground tracking-wide">
           Mon–Sat · We typically reply within a few hours.
         </p>
       </div>
@@ -72,7 +72,7 @@ const ContactPage = () => (
     <section className="bg-white py-24 md:py-32 px-6 md:px-10">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-14">
-          <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-3 text-[#0d6e66]">
+          <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-3 text-primary">
             {EDITORIAL_TEAM}
           </p>
           <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-[#1d1d1f]">
@@ -84,13 +84,13 @@ const ContactPage = () => (
             <a
               key={c.label}
               href={`mailto:${c.email}`}
-              className="rounded-2xl bg-white p-7 border border-[#1d1d1f]/[0.08] hover:border-[#0d6e66]/40 transition group"
+              className="rounded-2xl bg-white p-7 border border-[#1d1d1f]/[0.08] hover:border-primary/40 transition group"
             >
-              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#0d6e66] mb-2">
+              <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-primary mb-2">
                 {c.label}
               </p>
               <p className="text-[15px] text-[#1d1d1f]/70 font-light leading-relaxed mb-4">{c.body}</p>
-              <p className="text-sm font-medium text-[#1d1d1f] inline-flex items-center gap-1 group-hover:text-[#0d6e66] transition">
+              <p className="text-sm font-medium text-[#1d1d1f] inline-flex items-center gap-1 group-hover:text-primary transition">
                 {c.email} <ArrowRight className="w-3.5 h-3.5" />
               </p>
             </a>
@@ -98,7 +98,7 @@ const ContactPage = () => (
         </div>
 
         <div className="mt-14 text-center">
-          <a href="/about-editorial" className="text-sm text-[#0d6e66] font-semibold hover:opacity-80">
+          <a href="/about-editorial" className="text-sm text-primary font-semibold hover:opacity-80">
             About Our Editorial Team →
           </a>
         </div>
@@ -108,7 +108,7 @@ const ContactPage = () => (
     {/* REAL ESTATE DISCLOSURE (LIGHT, lower) */}
     <section className="bg-[#f7f7f5] py-20 md:py-24 px-6 md:px-10 border-t border-[#1d1d1f]/[0.06]">
       <div className="max-w-3xl mx-auto text-center">
-        <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-3 text-[#0d6e66]">
+        <p className="text-[11px] font-semibold tracking-[0.22em] uppercase mb-3 text-primary">
           Real Estate Inquiries
         </p>
         <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-[#1d1d1f]">

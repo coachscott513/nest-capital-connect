@@ -6,7 +6,7 @@ import MainHeader from "@/components/MainHeader";
 import Footer from "@/components/Footer";
 import { findNeighborhood, getNeighborhoodsForTown } from "@/data/neighborhoods";
 
-const TEAL_DARK = "#5eead4";
+const TEAL_DARK = "var(--nest-brand-blue)";
 
 function track(event: string, payload: Record<string, unknown>) {
   try {
@@ -81,12 +81,12 @@ const MicroNeighborhood = () => {
             aria-hidden
           />
           <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 pt-32 md:pt-44 pb-20 md:pb-28">
-            <nav className="mb-6 text-xs text-white/60 flex flex-wrap items-center gap-1.5">
-              <Link to={`/living-in/${n.townSlug}`} className="hover:text-white transition">
+            <nav className="mb-6 text-xs text-muted-foreground flex flex-wrap items-center gap-1.5">
+              <Link to={`/living-in/${n.townSlug}`} className="hover:text-foreground transition">
                 {n.townName}
               </Link>
               <ChevronRight className="w-3 h-3" />
-              <span className="text-white/80">{n.name}</span>
+              <span className="text-muted-foreground">{n.name}</span>
             </nav>
             <p
               className="text-[11px] font-semibold tracking-[0.32em] uppercase mb-6"
@@ -94,10 +94,10 @@ const MicroNeighborhood = () => {
             >
               {n.townName.toUpperCase()} MICRO-DISTRICT
             </p>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] text-white leading-[1.02] max-w-4xl">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] text-foreground leading-[1.02] max-w-4xl">
               Explore {n.name}.
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-white/75 font-light max-w-3xl leading-relaxed">
+            <p className="mt-6 text-lg md:text-xl text-muted-foreground font-light max-w-3xl leading-relaxed">
               {n.description}
             </p>
 
@@ -114,7 +114,7 @@ const MicroNeighborhood = () => {
                     destination_url: exploreBiz,
                   })
                 }
-                className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
+                className="inline-flex items-center gap-2 rounded-full bg-white text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
               >
                 Explore Businesses <ArrowRight className="w-4 h-4" />
               </Link>
@@ -130,7 +130,7 @@ const MicroNeighborhood = () => {
                     destination_url: exploreEvents,
                   })
                 }
-                className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
+                className="inline-flex items-center gap-2 rounded-full border border-border text-foreground px-6 py-3 text-sm font-semibold hover:bg-secondary transition"
               >
                 View Events
               </Link>
@@ -146,7 +146,7 @@ const MicroNeighborhood = () => {
                     destination_url: claim,
                   })
                 }
-                className="inline-flex items-center gap-1 text-sm font-medium text-white/75 hover:text-white px-2 py-2 transition"
+                className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground px-2 py-2 transition"
               >
                 <Plus className="w-4 h-4" /> Claim Your Spot
               </Link>
@@ -156,7 +156,7 @@ const MicroNeighborhood = () => {
               {n.tags.map((t) => (
                 <span
                   key={t}
-                  className="text-[10px] tracking-wide uppercase px-3 py-1.5 rounded-full border border-white/15 text-white/70"
+                  className="text-[10px] tracking-wide uppercase px-3 py-1.5 rounded-full border border-border text-muted-foreground"
                 >
                   {t}
                 </span>
@@ -175,10 +175,10 @@ const MicroNeighborhood = () => {
               >
                 About {n.name}
               </p>
-              <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] leading-[1.1] text-white">
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] leading-[1.1] text-foreground">
                 What makes {n.name} a destination in {n.townName}.
               </h2>
-              <p className="mt-5 text-base md:text-lg text-white/65 font-light leading-relaxed">
+              <p className="mt-5 text-base md:text-lg text-muted-foreground font-light leading-relaxed">
                 {n.description} This guide is hand-curated by Capital District Nest as part of our
                 regional discovery layer. As more local businesses claim their profiles and submit
                 events, this corridor will get richer over time.
@@ -186,13 +186,13 @@ const MicroNeighborhood = () => {
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   to={exploreBiz}
-                  className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
+                  className="inline-flex items-center gap-2 rounded-full bg-white text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
                 >
                   Explore Businesses <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   to={claim}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
+                  className="inline-flex items-center gap-2 rounded-full border border-border text-foreground px-6 py-3 text-sm font-semibold hover:bg-secondary transition"
                 >
                   <Sparkles className="w-4 h-4" /> Request Featured Placement
                 </Link>
@@ -200,7 +200,7 @@ const MicroNeighborhood = () => {
             </div>
 
             {others.length > 0 && (
-              <aside className="rounded-3xl border border-white/[0.08] bg-white/[0.03] p-6 md:p-7">
+              <aside className="rounded-3xl border border-white/[0.08] bg-secondary p-6 md:p-7">
                 <p
                   className="text-[10px] font-semibold tracking-[0.28em] uppercase mb-4"
                   style={{ color: TEAL_DARK }}
@@ -214,11 +214,11 @@ const MicroNeighborhood = () => {
                         to={`/living-in/${o.townSlug}/${o.slug}`}
                         className="flex items-center justify-between gap-3 py-3 group"
                       >
-                        <span className="flex items-center gap-3 text-white/85 group-hover:text-white transition">
+                        <span className="flex items-center gap-3 text-muted-foreground group-hover:text-foreground transition">
                           <Compass className="w-4 h-4" style={{ color: TEAL_DARK }} />
                           {o.name}
                         </span>
-                        <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-white group-hover:translate-x-1 transition" />
+                        <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground group-hover:translate-x-1 transition" />
                       </Link>
                     </li>
                   ))}

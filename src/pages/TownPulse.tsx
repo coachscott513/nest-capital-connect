@@ -23,8 +23,8 @@ import { findTownInDirectory } from "@/data/capitalDistrictCounties";
 import { canonicalCategory } from "@/lib/canonicalCategory";
 import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 
-const TEAL = "#0d6e66";
-const TEAL_LIGHT = "#5eead4";
+const TEAL = "var(--nest-brand-blue)";
+const TEAL_LIGHT = "var(--nest-brand-blue)";
 const contactStatusOf = (b: any) => b.contact_status ?? b.contactStatus ?? null;
 
 // ── helpers ────────────────────────────────────────────────────────────────
@@ -139,11 +139,11 @@ const SectionHeader = ({
 }) => (
   <div className="max-w-2xl mb-10 md:mb-14">
     <Eyebrow>{eyebrow}</Eyebrow>
-    <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-white">
+    <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05] text-foreground">
       {title}
     </h2>
     {sub && (
-      <p className="mt-4 text-base md:text-lg font-light text-white/65 leading-relaxed">
+      <p className="mt-4 text-base md:text-lg font-light text-muted-foreground leading-relaxed">
         {sub}
       </p>
     )}
@@ -159,12 +159,12 @@ const EmptyState = ({
   sub: string;
   townName: string;
 }) => (
-  <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-10 md:p-14 text-center">
-    <p className="text-lg md:text-xl font-medium text-white mb-2">{title}</p>
-    <p className="text-sm text-white/55 mb-6">{sub}</p>
+  <div className="rounded-3xl border border-border bg-secondary backdrop-blur-xl p-10 md:p-14 text-center">
+    <p className="text-lg md:text-xl font-medium text-foreground mb-2">{title}</p>
+    <p className="text-sm text-muted-foreground mb-6">{sub}</p>
     <Link
       to="/claim-business"
-      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-white text-sm font-semibold transition hover:opacity-90"
+      className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-foreground text-sm font-semibold transition hover:opacity-90"
       style={{ backgroundColor: TEAL }}
     >
       Claim This Profile <ArrowRight className="w-4 h-4" />
@@ -173,17 +173,17 @@ const EmptyState = ({
 );
 
 const LoadingIndexBlock = ({ label }: { label: string }) => (
-  <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-10">
-    <p className="text-sm font-medium text-white/80">
+  <div className="rounded-3xl border border-border bg-secondary backdrop-blur-xl p-8 md:p-10">
+    <p className="text-sm font-medium text-muted-foreground">
       Accessing verified Capital District directory record index for {label}...
     </p>
-    <p className="mt-2 text-sm text-white/55 leading-relaxed">
+    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
       Capital District Nest is preparing the town business, events, specials, and local discovery index.
     </p>
     <div className="mt-6 space-y-3" aria-hidden="true">
-      <div className="h-3 w-2/3 rounded-full bg-white/10" />
-      <div className="h-3 w-1/2 rounded-full bg-white/10" />
-      <div className="h-3 w-5/6 rounded-full bg-white/10" />
+      <div className="h-3 w-2/3 rounded-full bg-secondary" />
+      <div className="h-3 w-1/2 rounded-full bg-secondary" />
+      <div className="h-3 w-5/6 rounded-full bg-secondary" />
     </div>
   </div>
 );
@@ -202,7 +202,7 @@ const SocialChip = ({
     target="_blank"
     rel="noopener noreferrer"
     aria-label={label}
-    className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-white/15 bg-white/[0.04] text-white/70 hover:text-white hover:border-[#5eead4]/40 hover:bg-white/[0.08] transition"
+    className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-border bg-secondary text-muted-foreground hover:text-foreground hover:border-primary/40 hover:bg-secondary transition"
   >
     <Icon className="w-4 h-4" />
   </a>
@@ -356,28 +356,28 @@ const TownPulse = () => {
         />
         <div className="relative max-w-6xl mx-auto px-6 md:px-10 pt-28 md:pt-36 pb-16 md:pb-24">
           <Eyebrow>Local Pulse</Eyebrow>
-          <h1 className="text-5xl md:text-7xl font-semibold tracking-[-0.035em] leading-[1.02] text-white uppercase">
+          <h1 className="text-5xl md:text-7xl font-semibold tracking-[-0.035em] leading-[1.02] text-foreground uppercase">
             {townName}, New York
           </h1>
-          <p className="mt-6 text-lg md:text-xl font-light text-white/70 max-w-2xl leading-relaxed">
+          <p className="mt-6 text-lg md:text-xl font-light text-muted-foreground max-w-2xl leading-relaxed">
             Search businesses, restaurants, events, services, and local updates in {townName}.
           </p>
 
           <form
             onSubmit={handleSearch}
-            className="mt-10 flex items-center gap-2 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-xl px-2 py-2 max-w-2xl shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] focus-within:border-white/25 transition"
+            className="mt-10 flex items-center gap-2 rounded-full bg-secondary border border-border backdrop-blur-xl px-2 py-2 max-w-2xl shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] focus-within:border-border transition"
           >
-            <Search className="w-4 h-4 ml-3 text-white/40 shrink-0" />
+            <Search className="w-4 h-4 ml-3 text-muted-foreground shrink-0" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value.slice(0, 120))}
               placeholder={`Search restaurants, roofing, salons, events, or local services in ${townName}…`}
-              className="flex-1 bg-transparent text-[15px] text-white placeholder:text-white/40 px-2 py-2.5 focus:outline-none"
+              className="flex-1 bg-transparent text-[15px] text-foreground placeholder:text-muted-foreground px-2 py-2.5 focus:outline-none"
             />
             <button
               type="submit"
-              className="inline-flex items-center px-5 py-2.5 rounded-full text-white text-sm font-semibold hover:opacity-90 transition shrink-0"
+              className="inline-flex items-center px-5 py-2.5 rounded-full text-foreground text-sm font-semibold hover:opacity-90 transition shrink-0"
               style={{ backgroundColor: TEAL }}
             >
               Search
@@ -389,7 +389,7 @@ const TownPulse = () => {
               <a
                 key={label}
                 href={["#specials", "#events", "#businesses", "#social"][i]}
-                className="inline-flex items-center px-4 py-2 rounded-full text-[13px] font-medium text-white/75 bg-white/[0.04] border border-white/10 backdrop-blur-xl hover:text-white hover:border-[#5eead4]/40 transition"
+                className="inline-flex items-center px-4 py-2 rounded-full text-[13px] font-medium text-muted-foreground bg-secondary border border-border backdrop-blur-xl hover:text-foreground hover:border-primary/40 transition"
               >
                 {label}
               </a>
@@ -424,7 +424,7 @@ const TownPulse = () => {
                 return (
                   <article
                     key={s.id}
-                    className="group relative rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-7 hover:border-[#5eead4]/40 hover:shadow-[0_0_36px_-8px_rgba(94,234,212,0.35)] transition"
+                    className="group relative rounded-3xl border border-border bg-secondary backdrop-blur-xl p-7 hover:border-primary/40 hover:shadow-[0_0_36px_-8px_rgba(94,234,212,0.35)] transition"
                   >
                     <div className="flex items-center gap-2 mb-4">
                       <span
@@ -438,26 +438,26 @@ const TownPulse = () => {
                         <Tag className="w-3 h-3" /> Special
                       </span>
                       {s.category && (
-                        <span className="text-[11px] text-white/50 uppercase tracking-[0.14em]">
+                        <span className="text-[11px] text-muted-foreground uppercase tracking-[0.14em]">
                           {s.category}
                         </span>
                       )}
                     </div>
                     {s.business_name && (
-                      <p className="text-sm font-medium text-white/55 mb-1">
+                      <p className="text-sm font-medium text-muted-foreground mb-1">
                         {s.business_name}
                       </p>
                     )}
-                    <h3 className="text-2xl font-semibold text-white tracking-[-0.01em] leading-snug">
+                    <h3 className="text-2xl font-semibold text-foreground tracking-[-0.01em] leading-snug">
                       {s.headline}
                     </h3>
                     {s.description && (
-                      <p className="mt-3 text-sm text-white/65 leading-relaxed">
+                      <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
                         {s.description}
                       </p>
                     )}
                     <div className="mt-6 flex items-center justify-between">
-                      <span className="text-xs text-white/45">
+                      <span className="text-xs text-muted-foreground">
                         {expiry ? `Ends ${expiry}` : "Ongoing"}
                       </span>
                       {s.cta_url && (
@@ -465,7 +465,7 @@ const TownPulse = () => {
                           href={s.cta_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-white text-sm font-semibold transition hover:opacity-90"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-foreground text-sm font-semibold transition hover:opacity-90"
                           style={{ backgroundColor: TEAL }}
                         >
                           {s.cta_label || "View Special"} <ArrowRight className="w-3.5 h-3.5" />
@@ -504,19 +504,19 @@ const TownPulse = () => {
               {events.map((e) => (
                 <article
                   key={e.id}
-                  className="group rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 hover:border-[#5eead4]/40 transition"
+                  className="group rounded-3xl border border-border bg-secondary backdrop-blur-xl p-6 hover:border-primary/40 transition"
                 >
-                  <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-white/55 mb-4">
+                  <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-4">
                     <Calendar className="w-3.5 h-3.5" style={{ color: TEAL_LIGHT }} />
                     {formatDate(e.starts_at)}
                     <Clock className="w-3.5 h-3.5 ml-2" style={{ color: TEAL_LIGHT }} />
                     {formatTime(e.starts_at)}
                   </div>
-                  <h3 className="text-xl font-semibold text-white leading-snug tracking-[-0.01em]">
+                  <h3 className="text-xl font-semibold text-foreground leading-snug tracking-[-0.01em]">
                     {e.title}
                   </h3>
                   {(e.venue_name || e.address) && (
-                    <p className="mt-2 text-sm text-white/60 flex items-start gap-1.5">
+                    <p className="mt-2 text-sm text-muted-foreground flex items-start gap-1.5">
                       <MapPin className="w-3.5 h-3.5 mt-0.5 shrink-0" />
                       <span>
                         {e.venue_name}
@@ -526,7 +526,7 @@ const TownPulse = () => {
                     </p>
                   )}
                   {e.description && (
-                    <p className="mt-3 text-sm text-white/60 leading-relaxed line-clamp-3">
+                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-3">
                       {e.description}
                     </p>
                   )}
@@ -536,7 +536,7 @@ const TownPulse = () => {
                         href={e.cta_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-white text-sm font-semibold transition hover:opacity-90"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-foreground text-sm font-semibold transition hover:opacity-90"
                         style={{ backgroundColor: TEAL }}
                       >
                         {e.cta_label || "View Event"}
@@ -549,7 +549,7 @@ const TownPulse = () => {
                             .getElementById(`biz-${e.business_id}`)
                             ?.scrollIntoView({ behavior: "smooth", block: "center" })
                         }
-                        className="inline-flex items-center px-4 py-2 rounded-full border border-white/15 bg-white/[0.04] text-white/80 text-sm font-medium hover:text-white hover:border-white/30 transition"
+                        className="inline-flex items-center px-4 py-2 rounded-full border border-border bg-secondary text-muted-foreground text-sm font-medium hover:text-foreground hover:border-border transition"
                       >
                         View Host
                       </button>
@@ -576,20 +576,20 @@ const TownPulse = () => {
           {loading ? (
             <LoadingIndexBlock label={`${townName} featured local partners`} />
           ) : featuredPartners.length === 0 ? (
-            <div className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-10 md:p-14 text-center">
+            <div className="rounded-3xl border border-border bg-secondary backdrop-blur-xl p-10 md:p-14 text-center">
               <p className="text-[10px] font-semibold tracking-[0.24em] uppercase mb-3" style={{ color: TEAL_LIGHT }}>
                 Available Spotlight Placements
               </p>
-              <p className="text-2xl md:text-3xl font-semibold tracking-[-0.015em] text-white mb-3">
+              <p className="text-2xl md:text-3xl font-semibold tracking-[-0.015em] text-foreground mb-3">
                 Featured partner placements are opening in {townName}.
               </p>
-              <p className="text-sm md:text-base text-white/60 mb-7 max-w-lg mx-auto font-light leading-relaxed">
+              <p className="text-sm md:text-base text-muted-foreground mb-7 max-w-lg mx-auto font-light leading-relaxed">
                 Claim your profile and request one of the first local spotlight positions
                 during our pilot.
               </p>
               <Link
                 to="/claim-business"
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-white text-sm font-semibold transition hover:opacity-90"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-foreground text-sm font-semibold transition hover:opacity-90"
                 style={{ backgroundColor: TEAL }}
               >
                 Request a Featured Placement <ArrowRight className="w-4 h-4" />
@@ -605,7 +605,7 @@ const TownPulse = () => {
                 return (
                   <article
                     key={b.id}
-                    className="group relative rounded-3xl overflow-hidden border bg-white/[0.03] backdrop-blur-xl transition hover:-translate-y-0.5"
+                    className="group relative rounded-3xl overflow-hidden border bg-secondary backdrop-blur-xl transition hover:-translate-y-0.5"
                     style={{
                       borderColor: "rgba(201,164,73,0.35)",
                       boxShadow: "0 20px 60px -30px rgba(201,164,73,0.35)",
@@ -614,40 +614,40 @@ const TownPulse = () => {
                     {heroImg && (
                       <div className="relative w-full h-40 overflow-hidden">
                         <img src={heroImg} alt={b.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
                       </div>
                     )}
                     <div className="p-6">
                       <span
                         className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-[0.16em] uppercase mb-3"
-                        style={{ color: "#c9a449", background: "rgba(201,164,73,0.10)", border: "1px solid rgba(201,164,73,0.35)" }}
+                        style={{ color: "var(--nest-brand-blue)", background: "rgba(201,164,73,0.10)", border: "1px solid rgba(201,164,73,0.35)" }}
                       >
                         <Sparkles className="w-3 h-3" /> Featured Partner
                       </span>
-                      <h3 className="text-lg font-semibold text-white tracking-[-0.01em]">{b.name}</h3>
-                      <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-white/45">
+                      <h3 className="text-lg font-semibold text-foreground tracking-[-0.01em]">{b.name}</h3>
+                      <p className="mt-1 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
                         {canonicalCategory(b.name, b.category, b.subcategory, b.tags ?? [])}
                       </p>
                       {b.description && (
-                        <p className="mt-3 text-sm text-white/65 leading-relaxed line-clamp-2">{b.description}</p>
+                        <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-2">{b.description}</p>
                       )}
                       <div className="mt-5 flex flex-wrap gap-2">
                         {b.website && (
-                          <a href={b.website.startsWith("http") ? b.website : `https://${b.website}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-white text-xs font-semibold transition hover:opacity-90" style={{ backgroundColor: TEAL }}>
+                          <a href={b.website.startsWith("http") ? b.website : `https://${b.website}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-foreground text-xs font-semibold transition hover:opacity-90" style={{ backgroundColor: TEAL }}>
                             <Globe className="w-3.5 h-3.5" /> Website
                           </a>
                         )}
                         {isValidBusinessPhone(b.phone, contactStatusOf(b)) ? (
-                          <a href={businessTelHref(b.phone, contactStatusOf(b)) ?? undefined} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-xs font-semibold hover:border-white/30 transition">
+                          <a href={businessTelHref(b.phone, contactStatusOf(b)) ?? undefined} className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border bg-secondary text-foreground text-xs font-semibold hover:border-border transition">
                             <Phone className="w-3.5 h-3.5" /> Call Business
                           </a>
                         ) : (
-                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-white/45 text-xs font-semibold">
+                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border bg-secondary text-muted-foreground text-xs font-semibold">
                             <Phone className="w-3.5 h-3.5" /> Phone unavailable
                           </span>
                         )}
                         {dirUrl && (
-                          <a href={dirUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-xs font-semibold hover:border-white/30 transition">
+                          <a href={dirUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border bg-secondary text-foreground text-xs font-semibold hover:border-border transition">
                             <NavIcon className="w-3.5 h-3.5" /> Directions
                           </a>
                         )}
@@ -704,10 +704,10 @@ const TownPulse = () => {
                   <article
                     id={`biz-${b.id}`}
                     key={b.id}
-                    className="group flex flex-col rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl overflow-hidden hover:border-[#5eead4]/40 transition"
+                    className="group flex flex-col rounded-3xl border border-border bg-secondary backdrop-blur-xl overflow-hidden hover:border-primary/40 transition"
                   >
                     {img && (
-                      <div className="aspect-[16/10] overflow-hidden bg-white/5">
+                      <div className="aspect-[16/10] overflow-hidden bg-secondary">
                         <img
                           src={img}
                           alt={b.name}
@@ -719,20 +719,20 @@ const TownPulse = () => {
                     <div className="p-6 flex flex-col flex-1">
                       <div className="flex items-center gap-2 mb-2">
                         <Store className="w-3.5 h-3.5" style={{ color: TEAL_LIGHT }} />
-                        <span className="text-[11px] uppercase tracking-[0.18em] text-white/55">
+                        <span className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                           {canonicalCategory(b.name, b.category, b.subcategory, b.tags ?? [])}
                         </span>
                       </div>
-                      <h3 className="text-lg font-semibold text-white tracking-[-0.01em]">
+                      <h3 className="text-lg font-semibold text-foreground tracking-[-0.01em]">
                         {b.name}
                       </h3>
                       {(b.address || b.city) && (
-                        <p className="mt-1 text-xs text-white/50">
+                        <p className="mt-1 text-xs text-muted-foreground">
                           {b.address || b.city}
                         </p>
                       )}
                       {b.description && (
-                        <p className="mt-3 text-sm text-white/65 leading-relaxed line-clamp-2">
+                        <p className="mt-3 text-sm text-muted-foreground leading-relaxed line-clamp-2">
                           {b.description}
                         </p>
                       )}
@@ -743,7 +743,7 @@ const TownPulse = () => {
                             href={b.website.startsWith("http") ? b.website : `https://${b.website}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-white text-xs font-semibold transition hover:opacity-90"
+                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-foreground text-xs font-semibold transition hover:opacity-90"
                             style={{ backgroundColor: TEAL }}
                           >
                             <Globe className="w-3.5 h-3.5" /> Website
@@ -752,12 +752,12 @@ const TownPulse = () => {
                         {isValidBusinessPhone(b.phone, contactStatusOf(b)) ? (
                           <a
                             href={businessTelHref(b.phone, contactStatusOf(b)) ?? undefined}
-                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-xs font-semibold hover:border-white/30 hover:bg-white/[0.08] transition"
+                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border bg-secondary text-foreground text-xs font-semibold hover:border-border hover:bg-secondary transition"
                           >
                             <Phone className="w-3.5 h-3.5" /> Call Business
                           </a>
                         ) : (
-                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-white/45 text-xs font-semibold">
+                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border bg-secondary text-muted-foreground text-xs font-semibold">
                             <Phone className="w-3.5 h-3.5" /> Phone unavailable
                           </span>
                         )}
@@ -766,7 +766,7 @@ const TownPulse = () => {
                             href={dirUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-xs font-semibold hover:border-white/30 hover:bg-white/[0.08] transition"
+                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border bg-secondary text-foreground text-xs font-semibold hover:border-border hover:bg-secondary transition"
                           >
                             <NavIcon className="w-3.5 h-3.5" /> Directions
                           </a>
@@ -774,7 +774,7 @@ const TownPulse = () => {
                       </div>
 
                       {(b.instagram || b.facebook || b.linkedin || b.tiktok || b.x_url) && (
-                        <div className="mt-4 flex items-center gap-2 pt-4 border-t border-white/10">
+                        <div className="mt-4 flex items-center gap-2 pt-4 border-t border-border">
                           {b.instagram && (
                             <SocialChip href={b.instagram} Icon={Instagram} label="Instagram" />
                           )}
@@ -825,11 +825,11 @@ const TownPulse = () => {
               {socialBusinesses.slice(0, 12).map((b) => (
                 <div
                   key={b.id}
-                  className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-4 hover:border-[#5eead4]/40 transition"
+                  className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-secondary backdrop-blur-xl p-4 hover:border-primary/40 transition"
                 >
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-white truncate">{b.name}</p>
-                    <p className="text-[11px] uppercase tracking-[0.14em] text-white/45 truncate">
+                    <p className="text-sm font-semibold text-foreground truncate">{b.name}</p>
+                    <p className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground truncate">
                       {canonicalCategory(b.name, b.category, b.subcategory, b.tags ?? [])}
                     </p>
                   </div>
@@ -862,16 +862,16 @@ const TownPulse = () => {
       <section className="relative bg-background border-t border-white/[0.06] py-24 md:py-32 px-6 md:px-10">
         <div className="max-w-4xl mx-auto text-center">
           <Sparkles className="w-8 h-8 mx-auto mb-6" style={{ color: TEAL_LIGHT }} />
-          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] text-white">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] text-foreground">
             Own a business in {townName}?
           </h2>
-          <p className="mt-5 text-base md:text-lg text-white/65 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Claim your free profile, update your business information, and request
             placement in local specials, events, and featured town sections.
           </p>
           <Link
             to="/claim-business"
-            className="mt-10 inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-white text-base font-semibold transition hover:opacity-90"
+            className="mt-10 inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-foreground text-base font-semibold transition hover:opacity-90"
             style={{ backgroundColor: TEAL }}
           >
             For Local Businesses <ArrowRight className="w-4 h-4" />

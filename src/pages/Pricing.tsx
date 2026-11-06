@@ -3,8 +3,8 @@ import { Check, ArrowRight, Sparkles, Star, Crown, Video, Camera, Share2, QrCode
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
 
-const TEAL = "#5eead4";
-const GOLD = "#c9a449";
+const TEAL = "var(--nest-brand-blue)";
+const GOLD = "var(--nest-brand-blue)";
 const PLATINUM = "#e5e4e2";
 
 type Tier = {
@@ -140,10 +140,10 @@ const Pricing = () => {
           <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-5" style={{ color: TEAL }}>
             Local Business Solutions
           </p>
-          <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] text-white">
+          <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] text-foreground">
             Free to be listed. $15 to stand out. $25 for a full business page.
           </h1>
-          <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
+          <p className="mt-6 text-lg text-muted-foreground font-light max-w-2xl mx-auto">
             Every Capital District business is already searchable on Nest, for free. Upgrade to a
             Featured Listing for better visibility, or to a Premier Business Page that works like a
             mini website inside Nest.
@@ -158,15 +158,15 @@ const Pricing = () => {
           {tiers.map((t) => (
             <article
               key={t.id}
-              className={`relative rounded-3xl border bg-white/[0.03] backdrop-blur-xl p-7 md:p-8 flex flex-col transition-all duration-300 hover:-translate-y-1 ${
+              className={`relative rounded-3xl border bg-secondary backdrop-blur-xl p-7 md:p-8 flex flex-col transition-all duration-300 hover:-translate-y-1 ${
                 t.highlighted
-                  ? "border-[#5eead4]/45 shadow-[0_30px_70px_-25px_rgba(94,234,212,0.35)]"
-                  : "border-white/10 hover:border-white/20"
+                  ? "border-primary/45 shadow-[0_30px_70px_-25px_rgba(94,234,212,0.35)]"
+                  : "border-border hover:border-border"
               }`}
             >
               {t.badge && (
                 <span
-                  className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] text-[#0B0F19] whitespace-nowrap"
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] text-primary-foreground whitespace-nowrap"
                   style={{ background: t.accent }}
                 >
                   <Star className="w-3 h-3 fill-current" /> {t.badge}
@@ -181,24 +181,24 @@ const Pricing = () => {
                   {t.name}
                 </p>
                 <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-white">
+                  <span className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-foreground">
                     {t.price}
                   </span>
-                  <span className="text-sm text-white/55">/ {t.cadence}</span>
+                  <span className="text-sm text-muted-foreground">/ {t.cadence}</span>
                 </div>
                 {t.setup && (
                   <p className="mt-1 text-[12px] font-semibold uppercase tracking-[0.18em]" style={{ color: t.accent }}>
                     {t.setup}
                   </p>
                 )}
-                <p className="mt-3 text-[14px] text-white/70 font-light leading-relaxed min-h-[42px]">
+                <p className="mt-3 text-[14px] text-muted-foreground font-light leading-relaxed min-h-[42px]">
                   {t.tagline}
                 </p>
               </header>
 
               <ul className="mt-7 space-y-3 flex-1">
                 {t.features.map((f) => (
-                  <li key={f} className="flex items-start gap-3 text-[13.5px] text-white/80">
+                  <li key={f} className="flex items-start gap-3 text-[13.5px] text-muted-foreground">
                     <Check
                       className="w-4 h-4 mt-0.5 shrink-0"
                       style={{ color: t.accent }}
@@ -213,10 +213,10 @@ const Pricing = () => {
                 href={t.ctaHref}
                 className={`mt-8 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-[13px] font-semibold transition ${
                   t.highlighted
-                    ? "bg-white text-[#0B0F19] hover:opacity-90"
+                    ? "bg-white text-primary-foreground hover:opacity-90"
                     : t.id === "spotlight"
-                    ? "text-[#0B0F19] hover:opacity-90"
-                    : "border border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08]"
+                    ? "text-primary-foreground hover:opacity-90"
+                    : "border border-border bg-secondary text-foreground hover:bg-secondary"
                 }`}
                 style={t.id === "spotlight" ? { background: GOLD } : undefined}
               >
@@ -231,22 +231,22 @@ const Pricing = () => {
         {/* ANCHOR — application strip */}
         <div className="max-w-7xl mx-auto mt-6">
           <article
-            className="relative rounded-3xl border border-white/15 bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-white/[0.02] backdrop-blur-xl p-7 md:p-9 flex flex-col md:flex-row md:items-center gap-7"
+            className="relative rounded-3xl border border-border bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-white/[0.02] backdrop-blur-xl p-7 md:p-9 flex flex-col md:flex-row md:items-center gap-7"
           >
             <span
               className="absolute -top-3 left-7 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
-              style={{ background: PLATINUM, color: "#0B0F19" }}
+              style={{ background: PLATINUM, color: "var(--nest-brand-white)" }}
             >
               <Crown className="w-3 h-3" /> Enterprise · Anchor Partner
             </span>
             <div className="flex-1">
               <div className="flex items-baseline gap-2 flex-wrap">
-                <span className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-white">
+                <span className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-foreground">
                   $100–$150
                 </span>
-                <span className="text-sm text-white/55">/ month · application-based</span>
+                <span className="text-sm text-muted-foreground">/ month · application-based</span>
               </div>
-              <p className="mt-3 text-[15px] text-white/75 font-light leading-relaxed max-w-2xl">
+              <p className="mt-3 text-[15px] text-muted-foreground font-light leading-relaxed max-w-2xl">
                 Own your category or become a major local sponsor. Everything in Spotlight, plus
                 homepage hero rotation, category sponsorship, town sponsorship, competitor lockout
                 where available, custom campaigns, and concierge setup.
@@ -255,7 +255,7 @@ const Pricing = () => {
             <a
               href="/claim-business?tier=anchor"
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-[13px] font-semibold whitespace-nowrap hover:opacity-90 transition"
-              style={{ background: PLATINUM, color: "#0B0F19" }}
+              style={{ background: PLATINUM, color: "var(--nest-brand-white)" }}
             >
               <Crown className="w-4 h-4" /> Apply as Anchor Partner
               <ArrowRight className="w-4 h-4" />
@@ -263,7 +263,7 @@ const Pricing = () => {
           </article>
         </div>
 
-        <p className="mt-12 text-center text-xs text-white/45 max-w-2xl mx-auto">
+        <p className="mt-12 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
           Cancel anytime. The one-time $25 setup on Premier Business Page covers the manual profile build. Monthly pricing locks in for life on your start date — even if rates change later.
         </p>
 
@@ -277,10 +277,10 @@ const Pricing = () => {
             <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-4" style={{ color: GOLD }}>
               One-Time Business Accelerators
             </p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-white">
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground">
               Bolt-on production services.
             </h2>
-            <p className="mt-4 text-white/60 font-light">
+            <p className="mt-4 text-muted-foreground font-light">
               Studio-grade assets, delivered by our team. Add to any tier.
             </p>
           </div>
@@ -291,7 +291,7 @@ const Pricing = () => {
               return (
                 <article
                   key={a.name}
-                  className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 hover:border-white/20 hover:-translate-y-0.5 transition-all"
+                  className="rounded-2xl border border-border bg-secondary backdrop-blur-xl p-6 hover:border-border hover:-translate-y-0.5 transition-all"
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center mb-5"
@@ -299,10 +299,10 @@ const Pricing = () => {
                   >
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-[15px] font-semibold text-white leading-tight">{a.name}</h3>
-                  <p className="mt-2 text-[13px] text-white/55 font-light leading-relaxed">{a.desc}</p>
+                  <h3 className="text-[15px] font-semibold text-foreground leading-tight">{a.name}</h3>
+                  <p className="mt-2 text-[13px] text-muted-foreground font-light leading-relaxed">{a.desc}</p>
                   <div className="mt-5 flex items-baseline justify-between">
-                    <span className="text-2xl font-semibold tracking-[-0.02em] text-white">{a.price}</span>
+                    <span className="text-2xl font-semibold tracking-[-0.02em] text-foreground">{a.price}</span>
                     <a
                       href={`/claim-business?addon=${encodeURIComponent(a.name)}`}
                       className="text-[11px] font-semibold uppercase tracking-[0.2em] hover:opacity-70 transition"
@@ -324,7 +324,7 @@ const Pricing = () => {
           <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-4 text-center" style={{ color: TEAL }}>
             Common Questions
           </p>
-          <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-white text-center">
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] text-foreground text-center">
             Straight answers, no fine print.
           </h2>
 
@@ -354,18 +354,18 @@ const Pricing = () => {
 
               <details
                 key={item.q}
-                className="group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 open:border-white/20 transition"
+                className="group rounded-2xl border border-border bg-secondary backdrop-blur-xl p-6 open:border-border transition"
               >
                 <summary className="flex items-center justify-between cursor-pointer list-none">
-                  <span className="text-base md:text-lg font-medium text-white">{item.q}</span>
+                  <span className="text-base md:text-lg font-medium text-foreground">{item.q}</span>
                   <span
-                    className="ml-4 w-7 h-7 rounded-full border border-white/15 flex items-center justify-center text-white/70 group-open:rotate-45 transition-transform"
+                    className="ml-4 w-7 h-7 rounded-full border border-border flex items-center justify-center text-muted-foreground group-open:rotate-45 transition-transform"
                     aria-hidden
                   >
                     +
                   </span>
                 </summary>
-                <p className="mt-4 text-sm md:text-[15px] text-white/65 font-light leading-relaxed">
+                <p className="mt-4 text-sm md:text-[15px] text-muted-foreground font-light leading-relaxed">
                   {item.a}
                 </p>
               </details>
@@ -378,22 +378,22 @@ const Pricing = () => {
       <section className="border-t border-white/[0.06] px-6 md:px-10 py-24 md:py-32 text-center">
         <div className="max-w-2xl mx-auto">
           <Sparkles className="w-8 h-8 mx-auto mb-6" style={{ color: TEAL }} />
-          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] text-white">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.025em] text-foreground">
             Ready to upgrade?
           </h2>
-          <p className="mt-5 text-base md:text-lg text-white/65 leading-relaxed">
+          <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">
             Choose the option that fits your business, or contact the Capital District Nest team for help.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="/for-businesses/apply"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
             >
               Get Started <ArrowRight className="w-4 h-4" />
             </a>
             <a
               href="mailto:team@capitaldistrictnest.com?subject=Local%20Business%20Solutions%20%E2%80%93%20Capital%20District%20Nest"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary transition"
             >
               Email the Team
             </a>

@@ -30,8 +30,8 @@ import { toast } from "sonner";
 import { businessSmsHref, businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
 import SmsConsent from "@/components/SmsConsent";
 
-const TEAL = "#5eead4";
-const GOLD = "#c9a449";
+const TEAL = "var(--nest-brand-blue)";
+const GOLD = "var(--nest-brand-blue)";
 const PLATINUM = "#e5e4e2";
 
 type Business = {
@@ -124,7 +124,7 @@ const TierBadge = ({ tier }: { tier: string }) => {
   if (tier === "anchor") {
     return (
       <span
-        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-[#0B0F19]"
+        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground"
         style={{ background: PLATINUM }}
       >
         <Crown className="w-3 h-3" /> Anchor Partner
@@ -134,7 +134,7 @@ const TierBadge = ({ tier }: { tier: string }) => {
   if (tier === "spotlight") {
     return (
       <span
-        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-[#0B0F19]"
+        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground"
         style={{ background: GOLD }}
       >
         <Sparkles className="w-3 h-3" /> Spotlight Member
@@ -144,7 +144,7 @@ const TierBadge = ({ tier }: { tier: string }) => {
   if (tier === "featured") {
     return (
       <span
-        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-[#0B0F19]"
+        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground"
         style={{ background: TEAL }}
       >
         <Star className="w-3 h-3 fill-current" /> Featured
@@ -152,7 +152,7 @@ const TierBadge = ({ tier }: { tier: string }) => {
     );
   }
   return (
-    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70 border border-white/15 bg-white/[0.04]">
+    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground border border-border bg-secondary">
       <Building2 className="w-3 h-3" /> Listed
     </span>
   );
@@ -192,49 +192,49 @@ const ActionChips = ({
   return (
     <div className="mt-7 flex flex-wrap gap-2.5">
       {telHref && (
-        <a href={telHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition">
+        <a href={telHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition">
           <Phone className="w-4 h-4" /> Call Business
         </a>
       )}
       {!telHref && (
-        <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white/55 text-sm font-semibold">
+        <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-secondary text-muted-foreground text-sm font-semibold">
           <Phone className="w-4 h-4" /> Phone unavailable
         </span>
       )}
       {smsHref && (
-        <a href={smsHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+        <a href={smsHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary transition">
           <MessageSquare className="w-4 h-4" /> Text
         </a>
       )}
       {biz.email && (
-        <a href={`mailto:${biz.email}`} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+        <a href={`mailto:${biz.email}`} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary transition">
           <Mail className="w-4 h-4" /> Email
         </a>
       )}
       <a
         href={quoteHref}
         onClick={trackQuote}
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
         style={{ backgroundColor: TEAL }}
       >
         <ArrowRight className="w-4 h-4" /> Request a Quote
       </a>
       {directionsHref && (
-        <a href={directionsHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+        <a href={directionsHref} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary transition">
           <MapPin className="w-4 h-4" /> Directions
         </a>
       )}
       {biz.website && (
-        <a href={biz.website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+        <a href={biz.website} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary transition">
           <Globe className="w-4 h-4" /> Website
         </a>
       )}
       {biz.menu_url && (
-        <a href={biz.menu_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+        <a href={biz.menu_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary transition">
           <ArrowRight className="w-4 h-4" /> Menu
         </a>
       )}
-      <button type="button" onClick={onShare} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition">
+      <button type="button" onClick={onShare} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary transition">
         <Share2 className="w-4 h-4" /> Share
       </button>
     </div>
@@ -262,15 +262,15 @@ const DigitalChannels = ({ biz }: { biz: Business }) => {
         <div className="flex flex-wrap items-center gap-2">
           {channels.map(({ url, Icon, label }) => (
             <a key={label} href={url as string} target="_blank" rel="noreferrer" aria-label={label}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.04] text-white/80 hover:text-white hover:border-white/25 transition text-sm">
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-secondary text-muted-foreground hover:text-foreground hover:border-border transition text-sm">
               <Icon className="w-4 h-4" /> {label}
             </a>
           ))}
         </div>
       ) : (
-        <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-5 text-sm text-white/65 font-light leading-relaxed">
+        <div className="rounded-2xl border border-border bg-secondary backdrop-blur-xl p-5 text-sm text-muted-foreground font-light leading-relaxed">
           Social links pending.{" "}
-          <Link to={`/claim-business?slug=${biz.slug}`} className="text-white font-semibold hover:opacity-70 underline underline-offset-4">
+          <Link to={`/claim-business?slug=${biz.slug}`} className="text-foreground font-semibold hover:opacity-70 underline underline-offset-4">
             Claim this profile
           </Link>{" "}
           to add active channels.
@@ -282,15 +282,15 @@ const DigitalChannels = ({ biz }: { biz: Business }) => {
 
 
 const HoursBlock = ({ hours }: { hours: Record<string, string> }) => (
-  <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
+  <div className="rounded-2xl border border-border bg-secondary backdrop-blur-xl p-6">
     <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-4 inline-flex items-center gap-1.5" style={{ color: TEAL }}>
       <Clock className="w-3.5 h-3.5" /> Hours
     </p>
     <ul className="space-y-1.5 text-sm">
       {Object.entries(hours).map(([day, h]) => (
-        <li key={day} className="flex items-center justify-between text-white/70">
+        <li key={day} className="flex items-center justify-between text-muted-foreground">
           <span className="capitalize">{day}</span>
-          <span className="text-white/55">{h as string}</span>
+          <span className="text-muted-foreground">{h as string}</span>
         </li>
       ))}
     </ul>
@@ -305,27 +305,27 @@ const ClaimCard = ({ biz }: { biz: Business }) => (
     <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>
       Own or manage this business?
     </p>
-    <h3 className="text-lg font-semibold text-white tracking-[-0.01em]">
+    <h3 className="text-lg font-semibold text-foreground tracking-[-0.01em]">
       Claim this profile
     </h3>
-    <p className="mt-2 text-sm text-white/65 font-light leading-relaxed">
+    <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">
       Claim this profile to update your phone number, website, hours, photos, social links, and contact details.
     </p>
     <Link
       to={`/claim-business?slug=${biz.slug}&tier=featured`}
-      className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition w-full"
+      className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition w-full"
     >
       Claim Business <ArrowRight className="w-4 h-4" />
     </Link>
     <Link
       to={`/partner-auth?slug=${biz.slug}`}
-      className="mt-2.5 inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition w-full"
+      className="mt-2.5 inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary transition w-full"
     >
       <LogIn className="w-4 h-4" /> Owner Login
     </Link>
     <Link
       to="/pricing"
-      className="mt-2.5 inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55 hover:text-white transition w-full"
+      className="mt-2.5 inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition w-full"
     >
       See plans →
     </Link>
@@ -358,25 +358,25 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
           <div className="flex items-center gap-3 mb-5">
             <TierBadge tier={biz.plan_tier} />
             {!biz.is_claimed && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70 border border-white/15 bg-white/[0.04]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground border border-border bg-secondary">
                 Unclaimed
               </span>
             )}
             {biz.category && (
-              <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/55">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                 {biz.category}
               </span>
             )}
           </div>
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
+          <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-foreground leading-[1.05]">
             {biz.name}
           </h1>
-          <div className="mt-4 flex flex-wrap items-center gap-5 text-sm text-white/65">
+          <div className="mt-4 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
             {biz.rating && (
               <span className="inline-flex items-center gap-1.5">
                 <Star className="w-4 h-4 fill-current" style={{ color: GOLD }} />
-                <span className="text-white font-semibold">{biz.rating.toFixed(1)}</span>
-                {biz.review_count ? <span className="text-white/45">({biz.review_count})</span> : null}
+                <span className="text-foreground font-semibold">{biz.rating.toFixed(1)}</span>
+                {biz.review_count ? <span className="text-muted-foreground">({biz.review_count})</span> : null}
               </span>
             )}
             {biz.town_name && <span>{biz.town_name}, NY</span>}
@@ -388,58 +388,58 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
       <section className="px-6 md:px-10 pb-20">
         <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
           <div className="space-y-6">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 space-y-4">
+            <div className="rounded-2xl border border-border bg-secondary backdrop-blur-xl p-6 space-y-4">
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1">Business contact information</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground mb-1">Business contact information</p>
                 {!biz.is_claimed && (
-                  <p className="text-sm text-white/60">This profile has not been claimed by the business owner.</p>
+                  <p className="text-sm text-muted-foreground">This profile has not been claimed by the business owner.</p>
                 )}
               </div>
               {fullAddress && (
                 <div className="flex items-start gap-3 text-sm">
-                  <MapPin className="w-4 h-4 mt-0.5 text-white/45 shrink-0" />
+                  <MapPin className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" />
                   <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1">Address</p>
-                    <p className="text-white/85">{fullAddress}</p>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground mb-1">Address</p>
+                    <p className="text-muted-foreground">{fullAddress}</p>
                   </div>
                 </div>
               )}
               <div className="flex items-start gap-3 text-sm">
-                <Phone className="w-4 h-4 mt-0.5 text-white/45 shrink-0" />
+                <Phone className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" />
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1">Phone</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground mb-1">Phone</p>
                   {telHref ? (
-                    <a href={telHref} className="text-white/85 hover:text-white">{biz.phone}</a>
+                    <a href={telHref} className="text-muted-foreground hover:text-foreground">{biz.phone}</a>
                   ) : (
-                    <p className="text-white/55">Not available yet</p>
+                    <p className="text-muted-foreground">Not available yet</p>
                   )}
                 </div>
               </div>
               {biz.website && (
                 <div className="flex items-start gap-3 text-sm">
-                  <Globe className="w-4 h-4 mt-0.5 text-white/45 shrink-0" />
+                  <Globe className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" />
                   <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/45 mb-1">Website</p>
-                    <a href={biz.website} target="_blank" rel="noreferrer" className="text-white/85 hover:text-white break-all">{biz.website.replace(/^https?:\/\//, "")}</a>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground mb-1">Website</p>
+                    <a href={biz.website} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground break-all">{biz.website.replace(/^https?:\/\//, "")}</a>
                   </div>
                 </div>
               )}
             </div>
             {!biz.is_claimed && (
-              <p className="text-xs text-white/45 leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 This profile is part of the Capital District Nest local directory and may be incomplete or pending verification. Capital District Nest is not the listed business.
               </p>
             )}
 
             {biz.description ? (
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
+              <div className="rounded-2xl border border-border bg-secondary backdrop-blur-xl p-6">
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>About</p>
-                <p className="text-[15px] text-white/75 font-light leading-relaxed">{biz.description}</p>
+                <p className="text-[15px] text-muted-foreground font-light leading-relaxed">{biz.description}</p>
               </div>
             ) : (
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6">
+              <div className="rounded-2xl border border-border bg-secondary backdrop-blur-xl p-6">
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>About</p>
-                <p className="text-[15px] text-white/75 font-light leading-relaxed">
+                <p className="text-[15px] text-muted-foreground font-light leading-relaxed">
                   {biz.name} is listed in the Capital District Nest local business index for {biz.town_name || biz.city || "the Capital District"}, NY. This profile includes available contact details, business category information, and local discovery tools. Business owners can claim this profile to add photos, social links, hours, specials, and updates.
                 </p>
               </div>
@@ -479,7 +479,7 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
         <section className="relative w-full">
           <div className="relative w-full aspect-[21/9] md:aspect-[21/8] overflow-hidden bg-black">
             <img src={gallery[0]} alt={biz.name} className="absolute inset-0 w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
           </div>
         </section>
       )}
@@ -489,22 +489,22 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
           <div className="flex items-center gap-3 mb-5">
             <TierBadge tier={biz.plan_tier} />
             {!biz.is_claimed && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70 border border-white/15 bg-white/[0.04]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground border border-border bg-secondary">
                 Unclaimed
               </span>
             )}
             {biz.category && (
-              <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/55">{biz.category}</span>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">{biz.category}</span>
             )}
           </div>
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.04]">{biz.name}</h1>
-          {biz.tagline && <p className="mt-3 text-lg text-white/65 font-light">{biz.tagline}</p>}
-          <div className="mt-4 flex flex-wrap items-center gap-5 text-sm text-white/65">
+          <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-foreground leading-[1.04]">{biz.name}</h1>
+          {biz.tagline && <p className="mt-3 text-lg text-muted-foreground font-light">{biz.tagline}</p>}
+          <div className="mt-4 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
             {biz.rating && (
               <span className="inline-flex items-center gap-1.5">
                 <Star className="w-4 h-4 fill-current" style={{ color: GOLD }} />
-                <span className="text-white font-semibold">{biz.rating.toFixed(1)}</span>
-                {biz.review_count ? <span className="text-white/45">({biz.review_count})</span> : null}
+                <span className="text-foreground font-semibold">{biz.rating.toFixed(1)}</span>
+                {biz.review_count ? <span className="text-muted-foreground">({biz.review_count})</span> : null}
               </span>
             )}
             {fullAddress && <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {fullAddress}</span>}
@@ -519,7 +519,7 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
             {(biz.long_description || biz.description) && (
               <article>
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-4" style={{ color: TEAL }}>About</p>
-                <div className="text-[15px] text-white/75 font-light leading-[1.75] whitespace-pre-wrap">
+                <div className="text-[15px] text-muted-foreground font-light leading-[1.75] whitespace-pre-wrap">
                   {biz.long_description || biz.description}
                 </div>
               </article>
@@ -530,7 +530,7 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-5" style={{ color: TEAL }}>Gallery</p>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {gallery.slice(1).map((src, i) => (
-                    <div key={i} className="aspect-square overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+                    <div key={i} className="aspect-square overflow-hidden rounded-2xl border border-white/[0.06] bg-secondary">
                       <img src={src} alt={`${biz.name} ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
                     </div>
                   ))}
@@ -542,21 +542,21 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
           </div>
 
           <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 space-y-3">
+            <div className="rounded-2xl border border-border bg-secondary backdrop-blur-xl p-6 space-y-3">
               <p className="text-[10px] font-semibold tracking-[0.26em] uppercase" style={{ color: TEAL }}>Business contact information</p>
-              {!biz.is_claimed && <p className="text-sm text-white/60">This profile has not been claimed by the business owner.</p>}
-              <p className="text-sm text-white/75"><span className="text-white/45">Phone:</span> {isValidBusinessPhone(biz.phone, contactStatusOf(biz)) ? biz.phone : "Not available yet"}</p>
-              {biz.website && <p className="text-sm text-white/75 break-all"><span className="text-white/45">Website:</span> {biz.website.replace(/^https?:\/\//, "")}</p>}
-              {!biz.is_claimed && <p className="text-xs text-white/45 leading-relaxed">This profile is part of the Capital District Nest local directory and may be incomplete or pending verification. Capital District Nest is not the listed business.</p>}
+              {!biz.is_claimed && <p className="text-sm text-muted-foreground">This profile has not been claimed by the business owner.</p>}
+              <p className="text-sm text-muted-foreground"><span className="text-muted-foreground">Phone:</span> {isValidBusinessPhone(biz.phone, contactStatusOf(biz)) ? biz.phone : "Not available yet"}</p>
+              {biz.website && <p className="text-sm text-muted-foreground break-all"><span className="text-muted-foreground">Website:</span> {biz.website.replace(/^https?:\/\//, "")}</p>}
+              {!biz.is_claimed && <p className="text-xs text-muted-foreground leading-relaxed">This profile is part of the Capital District Nest local directory and may be incomplete or pending verification. Capital District Nest is not the listed business.</p>}
             </div>
             {biz.hours && Object.keys(biz.hours).length > 0 && <HoursBlock hours={biz.hours} />}
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6">
+            <div className="rounded-2xl border border-border bg-secondary backdrop-blur-xl p-6">
               <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>Want more?</p>
-              <p className="text-sm text-white/65 font-light leading-relaxed">
-                Upgrade to <span className="text-white font-semibold">Spotlight</span> to unlock a cinematic microsite, video showcase, unlimited gallery, and embedded lead form.
+              <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                Upgrade to <span className="text-foreground font-semibold">Spotlight</span> to unlock a cinematic microsite, video showcase, unlimited gallery, and embedded lead form.
               </p>
               <Link to="/pricing"
-                className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition w-full">
+                className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition w-full">
                 Explore Spotlight <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -623,9 +623,9 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
           ) : heroImage ? (
             <img src={heroImage} alt={biz.name} className="absolute inset-0 w-full h-full object-cover" loading="eager" />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-[#101422] to-[#0B0F19]" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#101422] to-background" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
         </div>
       </section>
 
@@ -633,15 +633,15 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-5">
             <TierBadge tier={biz.plan_tier} />
-            {biz.category && <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/55">{biz.category}</span>}
+            {biz.category && <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">{biz.category}</span>}
           </div>
-          <h1 className="text-4xl md:text-6xl font-semibold tracking-[-0.03em] text-white leading-[1.02]">{biz.name}</h1>
-          <div className="mt-5 flex flex-wrap items-center gap-5 text-sm text-white/65">
+          <h1 className="text-4xl md:text-6xl font-semibold tracking-[-0.03em] text-foreground leading-[1.02]">{biz.name}</h1>
+          <div className="mt-5 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
             {biz.rating && (
               <span className="inline-flex items-center gap-1.5">
                 <Star className="w-4 h-4 fill-current" style={{ color: GOLD }} />
-                <span className="text-white font-semibold">{biz.rating.toFixed(1)}</span>
-                {biz.review_count ? <span className="text-white/45">({biz.review_count})</span> : null}
+                <span className="text-foreground font-semibold">{biz.rating.toFixed(1)}</span>
+                {biz.review_count ? <span className="text-muted-foreground">({biz.review_count})</span> : null}
               </span>
             )}
             {fullAddress && <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {fullAddress}</span>}
@@ -656,7 +656,7 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
             {(biz.long_description || biz.description) && (
               <article>
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-4" style={{ color: TEAL }}>Our Story</p>
-                <div className="text-[15px] md:text-base text-white/75 font-light leading-[1.75] whitespace-pre-wrap">{biz.long_description || biz.description}</div>
+                <div className="text-[15px] md:text-base text-muted-foreground font-light leading-[1.75] whitespace-pre-wrap">{biz.long_description || biz.description}</div>
               </article>
             )}
 
@@ -665,7 +665,7 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-5" style={{ color: TEAL }}>Gallery</p>
                 <div className="columns-2 md:columns-3 gap-3 [column-fill:_balance]">
                   {gallery.map((src, i) => (
-                    <div key={i} className="mb-3 break-inside-avoid overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02]">
+                    <div key={i} className="mb-3 break-inside-avoid overflow-hidden rounded-2xl border border-white/[0.06] bg-secondary">
                       <img src={src} alt={`${biz.name} ${i + 1}`} className="w-full h-auto object-cover" loading="lazy" />
                     </div>
                   ))}
@@ -678,15 +678,15 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-5" style={{ color: GOLD }}>Current Specials</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {specials.map((s) => (
-                    <div key={s.id} className="rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-xl hover:border-white/20 transition">
+                    <div key={s.id} className="rounded-2xl overflow-hidden border border-border bg-secondary backdrop-blur-xl hover:border-border transition">
                       {s.image_url && (
                         <div className="aspect-[16/10] overflow-hidden bg-black">
                           <img src={s.image_url} alt={s.headline} className="w-full h-full object-cover" loading="lazy" />
                         </div>
                       )}
                       <div className="p-5">
-                        <h3 className="text-base font-semibold text-white">{s.headline}</h3>
-                        {s.description && <p className="mt-2 text-sm text-white/65 font-light leading-relaxed">{s.description}</p>}
+                        <h3 className="text-base font-semibold text-foreground">{s.headline}</h3>
+                        {s.description && <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed">{s.description}</p>}
                         {s.cta_url && (
                           <a href={s.cta_url} target="_blank" rel="noreferrer"
                             className="mt-4 inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.18em] hover:opacity-70 transition" style={{ color: GOLD }}>
@@ -704,14 +704,14 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
               <article>
                 <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-5" style={{ color: TEAL }}>Services & Menu</p>
                 {biz.services && biz.services.length > 0 && (
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl divide-y divide-white/[0.06]">
+                  <div className="rounded-2xl border border-border bg-secondary backdrop-blur-xl divide-y divide-white/[0.06]">
                     {biz.services.map((srv, i) => (
                       <div key={i} className="flex items-start justify-between gap-6 p-5">
                         <div>
-                          <h4 className="text-[15px] font-semibold text-white">{srv.name}</h4>
-                          {srv.description && <p className="mt-1 text-sm text-white/55 font-light">{srv.description}</p>}
+                          <h4 className="text-[15px] font-semibold text-foreground">{srv.name}</h4>
+                          {srv.description && <p className="mt-1 text-sm text-muted-foreground font-light">{srv.description}</p>}
                         </div>
-                        {srv.price && <span className="text-base font-semibold text-white whitespace-nowrap">{srv.price}</span>}
+                        {srv.price && <span className="text-base font-semibold text-foreground whitespace-nowrap">{srv.price}</span>}
                       </div>
                     ))}
                   </div>
@@ -727,34 +727,34 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
           </div>
 
           <aside className="lg:sticky lg:top-24 lg:self-start space-y-5">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6 space-y-3">
+            <div className="rounded-2xl border border-border bg-secondary backdrop-blur-xl p-6 space-y-3">
               <p className="text-[10px] font-semibold tracking-[0.26em] uppercase" style={{ color: TEAL }}>Business contact information</p>
-              {!biz.is_claimed && <p className="text-sm text-white/60">This profile has not been claimed by the business owner.</p>}
-              <p className="text-sm text-white/75"><span className="text-white/45">Phone:</span> {isValidBusinessPhone(biz.phone, contactStatusOf(biz)) ? biz.phone : "Not available yet"}</p>
-              {biz.website && <p className="text-sm text-white/75 break-all"><span className="text-white/45">Website:</span> {biz.website.replace(/^https?:\/\//, "")}</p>}
-              {!biz.is_claimed && <p className="text-xs text-white/45 leading-relaxed">This profile is part of the Capital District Nest local directory and may be incomplete or pending verification. Capital District Nest is not the listed business.</p>}
+              {!biz.is_claimed && <p className="text-sm text-muted-foreground">This profile has not been claimed by the business owner.</p>}
+              <p className="text-sm text-muted-foreground"><span className="text-muted-foreground">Phone:</span> {isValidBusinessPhone(biz.phone, contactStatusOf(biz)) ? biz.phone : "Not available yet"}</p>
+              {biz.website && <p className="text-sm text-muted-foreground break-all"><span className="text-muted-foreground">Website:</span> {biz.website.replace(/^https?:\/\//, "")}</p>}
+              {!biz.is_claimed && <p className="text-xs text-muted-foreground leading-relaxed">This profile is part of the Capital District Nest local directory and may be incomplete or pending verification. Capital District Nest is not the listed business.</p>}
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl p-6">
+            <div className="rounded-2xl border border-border bg-secondary backdrop-blur-xl p-6">
               <p className="text-[10px] font-semibold tracking-[0.26em] uppercase mb-3" style={{ color: TEAL }}>Contact & Inquire</p>
-              <h3 className="text-xl font-semibold text-white tracking-[-0.01em]">Get in touch with {biz.name.split(" ")[0]}</h3>
+              <h3 className="text-xl font-semibold text-foreground tracking-[-0.01em]">Get in touch with {biz.name.split(" ")[0]}</h3>
               {submitted ? (
-                <div className="mt-6 flex items-start gap-3 text-sm text-white/75">
+                <div className="mt-6 flex items-start gap-3 text-sm text-muted-foreground">
                   <CheckCircle2 className="w-5 h-5 mt-0.5 shrink-0" style={{ color: TEAL }} />
                   <p>Message sent. They'll be in touch shortly.</p>
                 </div>
               ) : (
                 <form className="mt-5 space-y-3" onSubmit={handleSubmit}>
                   <input type="text" required placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white placeholder:text-white/35 focus:outline-none focus:border-white/30 transition" />
+                    className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-border transition" />
                   <input type="tel" required placeholder="Phone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white placeholder:text-white/35 focus:outline-none focus:border-white/30 transition" />
+                    className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-border transition" />
                   <input type="email" required placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white placeholder:text-white/35 focus:outline-none focus:border-white/30 transition" />
+                    className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-border transition" />
                   <textarea required rows={4} placeholder="How can we help?" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm text-white placeholder:text-white/35 focus:outline-none focus:border-white/30 transition resize-none" />
+                    className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-border transition resize-none" />
                   <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="bizpage-inquiry" />
                   <button type="submit" disabled={submitting}
-                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition disabled:opacity-50">
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition disabled:opacity-50">
                     {submitting ? "Sending…" : "Send Inquiry"} <ArrowRight className="w-4 h-4" />
                   </button>
                 </form>
@@ -764,7 +764,7 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
             {biz.hours && Object.keys(biz.hours).length > 0 && <HoursBlock hours={biz.hours} />}
 
             {biz.latitude && biz.longitude && (
-              <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03]">
+              <div className="rounded-2xl overflow-hidden border border-border bg-secondary">
                 <iframe title={`${biz.name} map`}
                   src={`https://www.openstreetmap.org/export/embed.html?bbox=${biz.longitude - 0.01}%2C${biz.latitude - 0.005}%2C${biz.longitude + 0.01}%2C${biz.latitude + 0.005}&layer=mapnik&marker=${biz.latitude}%2C${biz.longitude}`}
                   className="w-full h-48" loading="lazy" />
@@ -830,27 +830,27 @@ const ProfileNotFound = () => {
       </Helmet>
       <CleanHeader />
       <section className="px-6 md:px-10 pt-28 md:pt-32 pb-20 max-w-3xl mx-auto">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-white/70 border border-white/15 bg-white/[0.04]">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground border border-border bg-secondary">
           <Building2 className="w-3 h-3" /> Not Found
         </span>
-        <h1 className="mt-5 text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
+        <h1 className="mt-5 text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-foreground leading-[1.05]">
           Business profile not found
         </h1>
-        <p className="mt-5 text-[15px] text-white/70 font-light leading-relaxed">
+        <p className="mt-5 text-[15px] text-muted-foreground font-light leading-relaxed">
           We could not find a current profile for this business. Search local
           businesses or suggest a correction.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link
             to="/local"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
             style={{ backgroundColor: TEAL }}
           >
             Search Local Businesses <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             to="/claim-business"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary transition"
           >
             Suggest a Correction
           </Link>
@@ -938,13 +938,13 @@ const BizPage = () => {
         </Helmet>
         <CleanHeader />
         <section className="px-6 md:px-10 pt-28 md:pt-32 pb-20 max-w-3xl mx-auto animate-pulse">
-          <div className="h-4 w-28 rounded-full bg-white/10" />
-          <div className="mt-6 h-10 w-2/3 rounded-lg bg-white/10" />
-          <div className="mt-4 h-4 w-1/3 rounded bg-white/10" />
+          <div className="h-4 w-28 rounded-full bg-secondary" />
+          <div className="mt-6 h-10 w-2/3 rounded-lg bg-secondary" />
+          <div className="mt-4 h-4 w-1/3 rounded bg-secondary" />
           <div className="mt-10 space-y-3">
-            <div className="h-3 w-full rounded bg-white/[0.07]" />
-            <div className="h-3 w-11/12 rounded bg-white/[0.07]" />
-            <div className="h-3 w-9/12 rounded bg-white/[0.07]" />
+            <div className="h-3 w-full rounded bg-secondary" />
+            <div className="h-3 w-11/12 rounded bg-secondary" />
+            <div className="h-3 w-9/12 rounded bg-secondary" />
           </div>
           <span className="sr-only">Loading business profile…</span>
         </section>
@@ -1085,14 +1085,14 @@ const BizPage = () => {
 
       {loading && (
         <section className="px-6 md:px-10 pt-24 pb-0">
-          <div className="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 text-sm text-white/65">
-            <p className="font-medium text-white/80">
+          <div className="max-w-4xl mx-auto rounded-2xl border border-border bg-secondary backdrop-blur-xl p-6 text-sm text-muted-foreground">
+            <p className="font-medium text-muted-foreground">
               Accessing verified Capital District directory record index for {activeBiz.name}...
             </p>
             <div className="mt-5 space-y-3" aria-hidden="true">
-              <div className="h-3 w-2/3 rounded-full bg-white/10" />
-              <div className="h-3 w-1/2 rounded-full bg-white/10" />
-              <div className="h-3 w-5/6 rounded-full bg-white/10" />
+              <div className="h-3 w-2/3 rounded-full bg-secondary" />
+              <div className="h-3 w-1/2 rounded-full bg-secondary" />
+              <div className="h-3 w-5/6 rounded-full bg-secondary" />
             </div>
           </div>
         </section>
@@ -1107,17 +1107,17 @@ const BizPage = () => {
       )}
 
       <section className="border-t border-white/[0.06] px-6 md:px-10 py-16 text-center">
-        <p className="text-xs text-white/45">
+        <p className="text-xs text-muted-foreground">
           Own this business?{" "}
-          <Link to={`/claim-business?slug=${activeBiz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
+          <Link to={`/claim-business?slug=${activeBiz.slug}`} className="text-foreground hover:opacity-70 transition underline underline-offset-4">
             Claim this profile
           </Link>
           {" · "}
-          <Link to={`/partner-auth?slug=${activeBiz.slug}`} className="text-white hover:opacity-70 transition underline underline-offset-4">
+          <Link to={`/partner-auth?slug=${activeBiz.slug}`} className="text-foreground hover:opacity-70 transition underline underline-offset-4">
             Owner login
           </Link>
           {" · "}
-          <Link to="/pricing" className="text-white hover:opacity-70 transition underline underline-offset-4">
+          <Link to="/pricing" className="text-foreground hover:opacity-70 transition underline underline-offset-4">
             See plans
           </Link>
         </p>

@@ -349,16 +349,16 @@ const BlogPost = () => {
       <MainLayout>
         
         {/* Hero Section */}
-        <section className="relative py-16 bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white">
+        <section className="relative py-16 bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-foreground">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <Link to="/blog" className="inline-flex items-center text-white/80 hover:text-white mb-6 transition-colors">
+              <Link to="/blog" className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Blog
               </Link>
               
               <div className="mb-6">
-                <Badge className="mb-4 bg-background/20 text-white border-white/30">{post.category}</Badge>
+                <Badge className="mb-4 bg-background/20 text-foreground border-border">{post.category}</Badge>
                 <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-4">
                   {post.title}
                 </h1>
@@ -379,7 +379,7 @@ const BlogPost = () => {
                     <Clock className="w-4 h-4" />
                     <span>{post.readTime}</span>
                   </div>
-                  <Button variant="outline" size="sm" className="text-white border-white/30 hover:bg-background hover:text-primary">
+                  <Button variant="outline" size="sm" className="text-foreground border-border hover:bg-background hover:text-primary">
                     <Share2 className="w-4 h-4 mr-2" />
                     Share
                   </Button>
@@ -435,7 +435,7 @@ const BlogPost = () => {
               <Card className="mt-12">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white text-sm font-bold">
+                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-foreground text-sm font-bold">
                       CDN
                     </div>
                     <div className="flex-1">
@@ -457,7 +457,7 @@ const BlogPost = () => {
               </Card>
               
               {/* Call to Action */}
-              <Card className="mt-12 bg-primary text-white">
+              <Card className="mt-12 bg-primary text-foreground">
                 <CardContent className="p-8 text-center">
                   <h3 className="text-2xl font-bold mb-4">Ready to Start Investing?</h3>
                   <p className="text-lg opacity-90 mb-6">
@@ -467,7 +467,7 @@ const BlogPost = () => {
                     <Button size="lg" className="bg-background text-primary hover:bg-background/90" asChild>
                       <a href="tel:+15185227265">Schedule Consultation</a>
                     </Button>
-                    <Button size="lg" variant="outline" className="border-white text-white hover:bg-background hover:text-primary">
+                    <Button size="lg" variant="outline" className="border-white text-foreground hover:bg-background hover:text-primary">
                       View Current Deals
                     </Button>
                   </div>
