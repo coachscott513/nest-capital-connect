@@ -598,7 +598,7 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.16) 0%, transparent 55%), linear-gradient(180deg, #10141F 0%, #0B0F19 100%)",
+              "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.16) 0%, transparent 55%), linear-gradient(180deg, var(--nest-brand-ice) 0%, var(--nest-brand-ice-deep) 100%)",
           }}
         >
           <div className="h-full w-full flex items-end p-5">
@@ -1037,7 +1037,7 @@ export const BusinessDetailModal = ({
             className="relative px-7 md:px-10 pt-10 md:pt-14 pb-8 md:pb-10 overflow-hidden"
             style={{
               background:
-                "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.10) 0%, transparent 55%), linear-gradient(180deg, #0B0F19 0%, #0B0F19 100%)",
+                "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.10) 0%, transparent 55%), linear-gradient(180deg, var(--nest-brand-white) 0%, var(--nest-brand-white) 100%)",
             }}
           >
             <div
