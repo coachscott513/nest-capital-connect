@@ -26,7 +26,7 @@ const PLACEMENT = "homepage-hero";
  * mounted only once the hero is in view, behind a fixed-height premium
  * skeleton, so it cannot shift layout or block LCP.
  */
-const PropertyHero = () => {
+const PropertyHero = ({ embedded = false }: { embedded?: boolean }) => {
   const reduce = useReducedMotion();
   const slotRef = useRef<HTMLDivElement | null>(null);
   const [mountWidget, setMountWidget] = useState(false);
@@ -101,7 +101,7 @@ const PropertyHero = () => {
         className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-16 pb-12 md:pt-20 md:pb-16"
         style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
       >
-        <motion.div {...fade} className="text-center">
+        {!embedded && <motion.div {...fade} className="text-center">
           <p className="text-[10px] md:text-[11px] font-medium tracking-[0.45em] uppercase text-[#64748B]">
             Capital District Property Intelligence
           </p>
@@ -142,7 +142,7 @@ const PropertyHero = () => {
             </Link>
             <TalkToScottButton context={{ placement: PLACEMENT }} />
           </div>
-        </motion.div>
+        </motion.div>}
 
         {/* Live property search — the hero product */}
         <div
