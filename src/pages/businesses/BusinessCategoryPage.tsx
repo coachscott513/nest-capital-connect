@@ -370,7 +370,7 @@ const BusinessCategoryPage = () => {
             </Link>
             <Link
               to="/business-spotlight-intake"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-primary hover:bg-primary/90 text-foreground text-sm font-semibold transition"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold transition"
             >
               Request a Spotlight <ArrowRight className="w-4 h-4" />
             </Link>

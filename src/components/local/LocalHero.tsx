@@ -151,7 +151,7 @@ const LocalHero = () => {
           <Link
             to="/claim-business"
             onClick={() => track("local_hero_cta_click", { cta: "claim_business" })}
-            className="inline-flex items-center gap-2 min-h-[44px] px-7 rounded-full bg-primary text-foreground text-sm font-semibold hover:opacity-90 transition"
+            className="inline-flex items-center gap-2 min-h-[44px] px-7 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
           >
             <Building2 className="w-4 h-4" /> Claim Your Business
           </Link>

@@ -573,7 +573,7 @@ const CleanHeader = () => {
           <div
             className="nest-mega-panel border-t border-white/[0.06]"
             style={{
-              background: "rgba(11, 15, 25, 0.94)",
+              background: "hsl(var(--background) / 0.98)",
               backdropFilter: "blur(28px) saturate(140%)",
               WebkitBackdropFilter: "blur(28px) saturate(140%)",
             }}
@@ -640,7 +640,7 @@ const CleanHeader = () => {
           mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
         style={{
-          background: "rgba(11, 15, 25, 0.98)",
+          background: "hsl(var(--background) / 0.99)",
           backdropFilter: "blur(28px) saturate(140%)",
           WebkitBackdropFilter: "blur(28px) saturate(140%)",
         }}

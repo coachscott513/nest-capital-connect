@@ -406,7 +406,7 @@ const BusinessLanding = () => {
                   {p.cta.to ? (
                     <Link
                       to={p.cta.to}
-                      className="inline-flex w-full justify-center items-center gap-2 px-5 py-3 rounded-full bg-primary text-foreground text-sm font-semibold hover:opacity-90 transition"
+                      className="inline-flex w-full justify-center items-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
                     >
                       {p.cta.label} <ArrowRight className="w-4 h-4" />
                     </Link>
@@ -524,7 +524,7 @@ const BusinessLanding = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-semibold text-foreground bg-primary hover:opacity-90 disabled:opacity-60 transition"
+                className="w-full inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-semibold text-primary-foreground bg-primary hover:opacity-90 disabled:opacity-60 transition"
               >
                 {submitting ? (<><Loader2 className="w-4 h-4 animate-spin" /> Sending…</>) : (<>Request Business Help <ArrowRight className="w-4 h-4" /></>)}
               </button>

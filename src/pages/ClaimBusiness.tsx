@@ -950,7 +950,7 @@ const Check = ({
     onClick={() => onChange(!checked)}
     className={`text-left px-4 py-3.5 rounded-xl border text-sm transition flex items-start gap-3 ${
       checked
-        ? "border-primary/50 bg-primary/[0.08] text-foreground"
+        ? "border-primary/50 bg-primary/[0.08] text-primary-foreground"
         : "border-border bg-secondary text-muted-foreground hover:border-border hover:text-foreground"
     }`}
   >

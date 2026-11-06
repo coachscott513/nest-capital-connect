@@ -50,7 +50,7 @@ const ContactPage = () => (
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
             href={PHONE_TEL}
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold bg-primary text-foreground hover:opacity-90 transition"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold bg-primary text-primary-foreground hover:opacity-90 transition"
           >
             <Phone className="w-4 h-4" /> {PHONE_DISPLAY}
           </a>

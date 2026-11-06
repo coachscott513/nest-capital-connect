@@ -221,7 +221,7 @@ const RehabPropertiesSection = () => {
 
                 {/* Flip Scenario Table */}
                 <div className="mb-8">
-                  <h5 className="text-lg font-semibold text-foreground mb-4 bg-primary/10 p-3 rounded">🔄 Flip Scenario (Sell)</h5>
+                  <h5 className="text-lg font-semibold text-primary-foreground mb-4 bg-primary/10 p-3 rounded">🔄 Flip Scenario (Sell)</h5>
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse border border-border">
                       <thead>
@@ -259,7 +259,7 @@ const RehabPropertiesSection = () => {
 
                 {/* Rental Scenario Table */}
                 <div className="mb-6">
-                  <h5 className="text-lg font-semibold text-foreground mb-4 bg-primary/10 p-3 rounded">🏠 BRRRR Scenario (Hold as Rental)</h5>
+                  <h5 className="text-lg font-semibold text-primary-foreground mb-4 bg-primary/10 p-3 rounded">🏠 BRRRR Scenario (Hold as Rental)</h5>
                   <div className="overflow-x-auto">
                     <table className="w-full border-collapse border border-border">
                       <thead>

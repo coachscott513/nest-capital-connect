@@ -435,7 +435,7 @@ const BlogPost = () => {
               <Card className="mt-12">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-foreground text-sm font-bold">
+                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-sm font-bold">
                       CDN
                     </div>
                     <div className="flex-1">
@@ -457,7 +457,7 @@ const BlogPost = () => {
               </Card>
               
               {/* Call to Action */}
-              <Card className="mt-12 bg-primary text-foreground">
+              <Card className="mt-12 bg-primary text-primary-foreground">
                 <CardContent className="p-8 text-center">
                   <h3 className="text-2xl font-bold mb-4">Ready to Start Investing?</h3>
                   <p className="text-lg opacity-90 mb-6">

@@ -269,7 +269,7 @@ const Apply = () => {
               </Link>
               <Link
                 to="/business/the-roosevelt-room"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-foreground text-sm font-semibold"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold"
               >
                 See a Featured profile <ArrowRight className="w-4 h-4" />
               </Link>
@@ -352,7 +352,7 @@ const Apply = () => {
             {step < STEPS.length - 1 ? (
               <button
                 onClick={next}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary hover:bg-primary/90 text-foreground text-sm font-semibold"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold"
               >
                 Continue <ArrowRight className="w-4 h-4" />
               </button>
@@ -360,7 +360,7 @@ const Apply = () => {
               <button
                 onClick={submit}
                 disabled={submitting}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary hover:bg-primary/90 disabled:opacity-60 text-foreground text-sm font-semibold"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary hover:bg-primary/90 disabled:opacity-60 text-primary-foreground text-sm font-semibold"
               >
                 {submitting ? "Submitting…" : "Submit application"}
                 <ArrowRight className="w-4 h-4" />
@@ -520,7 +520,7 @@ const StepMedia = ({ form, set, addPhoto, removePhoto, toggleBadge }: any) => (
           <button
             type="button"
             onClick={addPhoto}
-            className="px-4 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-foreground text-sm font-semibold"
+            className="px-4 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold"
           >
             Add
           </button>
@@ -678,7 +678,7 @@ const StepPlan = ({ form, set, plans }: any) => {
               key={b}
               onClick={() => set("billing", b)}
               className={`px-4 py-1.5 rounded-full text-xs font-semibold capitalize ${
-                form.billing === b ? "bg-primary text-foreground" : "text-muted-foreground"
+                form.billing === b ? "bg-primary text-primary-foreground" : "text-muted-foreground"
               }`}
             >
               {b}

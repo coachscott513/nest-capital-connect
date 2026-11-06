@@ -455,7 +455,7 @@ const VipBuyerAccess = () => {
                           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                             formData.preferredCities.includes(city)
                               ? 'bg-primary text-primary-foreground'
-                              : 'bg-background border border-border text-foreground hover:border-primary'
+                              : 'bg-background border border-border text-primary-foreground hover:border-primary'
                           }`}
                         >
                           {city}

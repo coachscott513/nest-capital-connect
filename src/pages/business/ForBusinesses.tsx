@@ -432,7 +432,7 @@ const ForBusinesses = () => {
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to={APPLY_URL}
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary hover:bg-primary/90 text-foreground text-sm font-semibold transition"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold transition"
             >
               Tell Your Story <ArrowRight className="w-4 h-4" />
             </Link>

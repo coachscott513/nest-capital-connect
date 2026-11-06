@@ -179,7 +179,7 @@ const GuidedDeck = () => {
                   className={`p-3 rounded-lg border text-sm font-medium transition-all ${
                     selectedTown === town.name
                       ? "border-primary bg-primary/10 text-primary"
-                      : "border-border hover:border-primary hover:bg-muted/50 text-foreground"
+                      : "border-border hover:border-primary hover:bg-muted/50 text-primary-foreground"
                   }`}
                   onClick={() => {
                     setSelectedTown(town.name);
