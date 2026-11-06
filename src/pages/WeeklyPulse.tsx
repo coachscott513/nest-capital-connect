@@ -612,7 +612,7 @@ const WeeklyPulse = () => {
                   const el = document.getElementById("seven-day-schedule");
                   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
-                className="inline-flex items-center gap-2 rounded-full bg-white text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
               >
                 View This Week <ArrowRight className="w-4 h-4" />
               </a>
@@ -750,7 +750,7 @@ const WeeklyPulse = () => {
                     }}
                     className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition border ${
                       active
-                        ? "bg-white text-primary-foreground border-white"
+                        ? "bg-primary text-primary-foreground border-white"
                         : "bg-secondary text-muted-foreground border-border hover:border-border hover:text-foreground"
                     }`}
                   >
@@ -826,7 +826,7 @@ const WeeklyPulse = () => {
                     }}
                     className={`shrink-0 w-[96px] md:w-[112px] rounded-2xl px-4 py-4 text-left border transition ${
                       active
-                        ? "bg-white text-primary-foreground border-white shadow-[0_8px_30px_rgba(94,234,212,0.18)]"
+                        ? "bg-primary text-primary-foreground border-white shadow-[0_8px_30px_rgba(94,234,212,0.18)]"
                         : "bg-secondary text-foreground border-border hover:border-border"
                     }`}
                   >
@@ -1011,7 +1011,7 @@ const WeeklyPulse = () => {
             <Link
               to="/submit-event"
               onClick={() => gtag("add_event_click", { source_location: "events_room_midband" })}
-              className="inline-flex items-center gap-2 rounded-full bg-white text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition shrink-0"
+              className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition shrink-0"
             >
               <Plus className="w-4 h-4" /> Add Your Event
             </Link>

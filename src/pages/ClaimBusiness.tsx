@@ -401,7 +401,7 @@ const ClaimBusiness = () => {
           <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="#claim-form"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
             >
               Find My Business <ArrowUpRight className="w-4 h-4" />
             </a>
@@ -586,7 +586,7 @@ const ClaimBusiness = () => {
                       onClick={() => selectTierAndScroll(c.id)}
                       className={`mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-[13px] font-semibold transition ${
                         c.style === "teal"
-                          ? "bg-white text-primary-foreground hover:opacity-90"
+                          ? "bg-primary text-primary-foreground hover:opacity-90"
                           : c.style === "gold"
                           ? "text-primary-foreground hover:opacity-90"
                           : "border border-border bg-secondary text-foreground hover:bg-secondary"

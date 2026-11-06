@@ -213,7 +213,7 @@ const Pricing = () => {
                 href={t.ctaHref}
                 className={`mt-8 inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-[13px] font-semibold transition ${
                   t.highlighted
-                    ? "bg-white text-primary-foreground hover:opacity-90"
+                    ? "bg-primary text-primary-foreground hover:opacity-90"
                     : t.id === "spotlight"
                     ? "text-primary-foreground hover:opacity-90"
                     : "border border-border bg-secondary text-foreground hover:bg-secondary"
@@ -387,7 +387,7 @@ const Pricing = () => {
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="/for-businesses/apply"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
             >
               Get Started <ArrowRight className="w-4 h-4" />
             </a>

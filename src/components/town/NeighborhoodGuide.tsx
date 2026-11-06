@@ -97,7 +97,7 @@ const NeighborhoodGuide = ({ townSlug, townName }: Props) => {
                     destination_url: `/claim-business?town=${townSlug}`,
                   })
                 }
-                className="inline-flex items-center gap-2 rounded-full bg-white text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
               >
                 <Plus className="w-4 h-4" /> Claim Your Business
               </Link>
@@ -208,7 +208,7 @@ const EmptyState = ({ townSlug, townName }: { townSlug: string; townName: string
     <div className="mt-7 flex flex-wrap justify-center gap-3">
       <Link
         to={`/submit-event?intent=neighborhood-suggestion&town=${townSlug}`}
-        className="inline-flex items-center gap-2 rounded-full bg-white text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+        className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
       >
         Suggest a Neighborhood
       </Link>

@@ -114,7 +114,7 @@ const MicroNeighborhood = () => {
                     destination_url: exploreBiz,
                   })
                 }
-                className="inline-flex items-center gap-2 rounded-full bg-white text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
               >
                 Explore Businesses <ArrowRight className="w-4 h-4" />
               </Link>
@@ -186,7 +186,7 @@ const MicroNeighborhood = () => {
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
                   to={exploreBiz}
-                  className="inline-flex items-center gap-2 rounded-full bg-white text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
                 >
                   Explore Businesses <ArrowRight className="w-4 h-4" />
                 </Link>

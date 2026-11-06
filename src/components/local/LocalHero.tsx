@@ -100,51 +100,27 @@ const LocalHero = () => {
 
   /* ── Unfiltered /local: the full editorial entry point ── */
   return (
-    <section className="relative w-full overflow-hidden border-b border-white/[0.06]">
-      {/* Cinematic background */}
-      <div className="absolute inset-0">
-        <img
-          src={heroImg}
-          alt=""
-          className="w-full h-full object-cover opacity-[0.55]"
-          width={1920}
-          height={1080}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(11,15,25,0.55) 0%, rgba(11,15,25,0.75) 55%, #0B0F19 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(60% 50% at 50% 20%, rgba(94,234,212,0.10), transparent 65%)",
-          }}
-        />
-      </div>
-
-      <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-32 md:pt-40 pb-14 md:pb-20 text-center">
-        <p className="text-[10px] font-medium tracking-[0.42em] uppercase text-primary">
+    <section className="relative w-full overflow-hidden border-b border-border">
+      <div className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid">
+        <div className="nest-split-copy nest-rise">
+        <p className="nest-eyebrow">
           Local directory
         </p>
-        <h1 className="mt-5 text-4xl sm:text-5xl md:text-[4rem] font-extralight tracking-[-0.04em] leading-[1.04] text-foreground">
+        <h1 className="nest-display-page">
           Discover local businesses.
         </h1>
-        <p className="mt-6 text-base md:text-lg text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
+        <p className="nest-lead">
           Restaurants, contractors, healthcare, finance, real estate services,
           and local experts across the Capital District.
         </p>
 
-        <div className="mt-9 flex flex-wrap gap-3 justify-center">
+        <div className="mt-8 flex flex-wrap gap-3">
           <button
             onClick={() => {
               track("local_hero_cta_click", { cta: "search_businesses" });
               scrollToDirectory();
             }}
-            className="inline-flex items-center gap-2 min-h-[44px] px-7 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
+            className="inline-flex items-center gap-2 min-h-[44px] px-7 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
           >
             <Search className="w-4 h-4" /> Search Businesses
           </button>
@@ -158,7 +134,7 @@ const LocalHero = () => {
         </div>
 
         {/* Category chips */}
-        <div className="mt-10 flex flex-wrap gap-2 justify-center max-w-3xl mx-auto">
+        <div className="mt-8 flex flex-wrap gap-2">
           {CHIPS.map((c) => (
             <Link
               key={c.label}
@@ -170,7 +146,11 @@ const LocalHero = () => {
             </Link>
           ))}
         </div>
-      </div>
+        </div>
+        <div className="nest-split-media nest-rise nest-rise--late">
+          <img src={heroImg} alt="A Capital District main street lined with local shops" width={1920} height={1080} />
+        </div>
+      </div></div>
 
       {/* Owner CTA strip */}
       <div className="relative border-t border-white/[0.06] bg-secondary backdrop-blur-xl">

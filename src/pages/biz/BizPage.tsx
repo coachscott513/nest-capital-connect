@@ -192,7 +192,7 @@ const ActionChips = ({
   return (
     <div className="mt-7 flex flex-wrap gap-2.5">
       {telHref && (
-        <a href={telHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition">
+        <a href={telHref} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition">
           <Phone className="w-4 h-4" /> Call Business
         </a>
       )}
@@ -313,7 +313,7 @@ const ClaimCard = ({ biz }: { biz: Business }) => (
     </p>
     <Link
       to={`/claim-business?slug=${biz.slug}&tier=featured`}
-      className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition w-full"
+      className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition w-full"
     >
       Claim Business <ArrowRight className="w-4 h-4" />
     </Link>
@@ -556,7 +556,7 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
                 Upgrade to <span className="text-foreground font-semibold">Spotlight</span> to unlock a cinematic microsite, video showcase, unlimited gallery, and embedded lead form.
               </p>
               <Link to="/pricing"
-                className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition w-full">
+                className="mt-5 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition w-full">
                 Explore Spotlight <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -754,7 +754,7 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
                     className="w-full px-4 py-3 rounded-xl bg-secondary border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-border transition resize-none" />
                   <SmsConsent checked={smsConsent} onCheckedChange={setSmsConsent} id="bizpage-inquiry" />
                   <button type="submit" disabled={submitting}
-                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-white text-primary-foreground text-sm font-semibold hover:opacity-90 transition disabled:opacity-50">
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition disabled:opacity-50">
                     {submitting ? "Sending…" : "Send Inquiry"} <ArrowRight className="w-4 h-4" />
                   </button>
                 </form>

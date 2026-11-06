@@ -861,7 +861,7 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
           </span>
         ) : (
           <div className="mt-auto pt-5 flex items-center gap-2">
-            <span className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white text-primary-foreground text-[13px] font-semibold transition group-hover:bg-primary">
+            <span className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-primary text-primary-foreground text-[13px] font-semibold transition group-hover:bg-primary">
               View Profile <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
             <a

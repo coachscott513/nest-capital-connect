@@ -191,7 +191,7 @@ const Communities = () => {
                       block: "start",
                     });
                   }}
-                  className="inline-flex items-center gap-2 rounded-full bg-white text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
                 >
                   <Search className="w-4 h-4" /> Search Towns
                 </a>
@@ -444,7 +444,7 @@ const Communities = () => {
                       source_location: "footer_cta",
                     })
                   }
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
                 >
                   <Plus className="w-4 h-4" /> Add Your Business
                 </Link>
