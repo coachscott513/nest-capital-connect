@@ -6,7 +6,10 @@ describe("homepage directory search", () => {
     expect(homeDirectorySearch("  Ambition Coffee  ")).toBe("/local?search=Ambition+Coffee");
   });
   it("preserves the selected town and category", () => {
-    expect(homeDirectorySearch("coffee", "schenectady", "Coffee")).toBe("/local?search=coffee&town=schenectady&category=Coffee");
+    expect(homeDirectorySearch("cafe", "schenectady", "Restaurant")).toBe("/local?search=cafe&town=schenectady&category=Restaurant");
+  });
+  it("finds imported coffee records through existing keyword search", () => {
+    expect(homeDirectorySearch("", "schenectady", "Coffee")).toBe("/local?town=schenectady&search=coffee");
   });
   it("allows browsing the existing directory without a query", () => {
     expect(homeDirectorySearch(" ")).toBe("/local");

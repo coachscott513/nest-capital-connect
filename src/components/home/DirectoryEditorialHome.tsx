@@ -43,7 +43,7 @@ const features = [
     title: "Good businesses\ndon’t grow alone.",
     copy: "Websites, branding, marketing, accounting, and legal support. Find the right people for what comes next.",
     cta: "Find local professionals", to: "/professional-services", image: servicesPhoto,
-    links: [{ label: "Marketing services", to: "/local?category=Marketing" }, { label: "Business advisors", to: "/local?search=business+consultant" }],
+    links: [{ label: "Marketing services", to: "/local?search=marketing" }, { label: "Business advisors", to: "/local?search=business+consultant" }],
   },
 ];
 
