@@ -153,16 +153,10 @@ const HubRoom = (p: HubRoomProps) => {
 
         {/* HERO */}
         <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(60% 50% at 70% 20%, rgba(94,234,212,0.10) 0%, rgba(11,15,25,0) 60%), radial-gradient(50% 60% at 20% 80%, rgba(13,110,102,0.18) 0%, rgba(11,15,25,0) 60%)",
-            }}
-          />
-          <div className="relative   px-6 md:px-10    ">
-            <p className="eyebrow-apple text-primary mb-6">{p.eyebrow}</p>
-            <h1 className="nest-display-page"mt-8  nest-lead text-muted-foreground">{p.subhead}</p>
+          <div>
+            <p className="nest-eyebrow">{p.eyebrow}</p>
+            <h1 className="nest-display-page">{p.headline}</h1>
+            <p className="nest-lead">{p.subhead}</p>
             <div className="mt-10 flex flex-wrap gap-3">
               {renderCta(p.primaryCta, "nest-btn", "hero_primary")}
               {p.secondaryCta &&
