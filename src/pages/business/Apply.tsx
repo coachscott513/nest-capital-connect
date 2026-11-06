@@ -89,7 +89,7 @@ const emptyForm = {
 type Form = typeof emptyForm;
 
 const inputCls =
-  "w-full bg-white/[0.04] border border-white/[0.1] rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/40 focus:outline-none focus:border-[#0d6e66] transition";
+  "w-full bg-secondary border border-white/[0.1] rounded-lg px-3 py-2.5 text-sm text-foreground placeholder-white/40 focus:outline-none focus:border-primary transition";
 
 const fmt = (cents: number) =>
   cents === 0 ? "$0" : `$${(cents / 100).toFixed(cents % 100 === 0 ? 0 : 2)}`;
@@ -243,7 +243,7 @@ const Apply = () => {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] text-white">
+      <div className="min-h-screen bg-background text-foreground">
         <Helmet>
           <title>Application Received | Capital District Nest</title>
           <meta name="robots" content="noindex, follow" />
@@ -251,11 +251,11 @@ const Apply = () => {
         <CleanHeader />
         <section className="px-6 md:px-10 pt-32 pb-32">
           <div className="max-w-2xl mx-auto text-center">
-            <CheckCircle className="w-14 h-14 text-[#5eead4] mx-auto mb-8" />
+            <CheckCircle className="w-14 h-14 text-primary mx-auto mb-8" />
             <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.02em]">
               Your story starts here.
             </h1>
-            <p className="mt-6 text-white/70 leading-relaxed text-lg font-light">
+            <p className="mt-6 text-muted-foreground leading-relaxed text-lg font-light">
               Your profile has been received. Every Capital District Nest feature
               is reviewed by our editorial team before publication to ensure
               quality and accuracy. We'll notify you when your profile is ready.
@@ -263,13 +263,13 @@ const Apply = () => {
             <div className="mt-10 flex justify-center gap-3">
               <Link
                 to="/businesses"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 hover:border-white/40 bg-white/[0.04] text-sm font-semibold"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border hover:border-border bg-secondary text-sm font-semibold"
               >
                 Browse businesses
               </Link>
               <Link
                 to="/business/the-roosevelt-room"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0d6e66] text-white text-sm font-semibold"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold"
               >
                 See a Featured profile <ArrowRight className="w-4 h-4" />
               </Link>
@@ -282,7 +282,7 @@ const Apply = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Helmet>
         <title>Get Started | Capital District Nest for Business</title>
         <meta name="robots" content="noindex, follow" />
@@ -293,14 +293,14 @@ const Apply = () => {
       <section className="px-6 md:px-10 pt-28 pb-8">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#5eead4]" />
-            <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
+            <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-primary">
               Step {step + 1} of {STEPS.length} · {STEPS[step]}
             </span>
           </div>
-          <div className="h-1 w-full bg-white/[0.08] rounded-full overflow-hidden">
+          <div className="h-1 w-full bg-secondary rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#0d6e66] transition-all"
+              className="h-full bg-primary transition-all"
               style={{ width: `${((step + 1) / STEPS.length) * 100}%` }}
             />
           </div>
@@ -308,7 +308,7 @@ const Apply = () => {
       </section>
 
       <section className="px-6 md:px-10 pb-24">
-        <div className="max-w-3xl mx-auto rounded-3xl border border-white/[0.08] bg-white/[0.03] p-6 md:p-10 backdrop-blur">
+        <div className="max-w-3xl mx-auto rounded-3xl border border-white/[0.08] bg-secondary p-6 md:p-10 backdrop-blur">
           {step === 0 && <StepBusiness form={form} set={set} />}
           {step === 1 && <StepStory form={form} set={set} />}
           {step === 2 && (
@@ -336,14 +336,14 @@ const Apply = () => {
             {step > 0 ? (
               <button
                 onClick={back}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-white/15 hover:border-white/30 bg-white/[0.04] text-sm font-semibold"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-border hover:border-border bg-secondary text-sm font-semibold"
               >
                 <ArrowLeft className="w-4 h-4" /> Back
               </button>
             ) : (
               <button
                 onClick={() => nav("/for-businesses")}
-                className="text-sm text-white/50 hover:text-white/80"
+                className="text-sm text-muted-foreground hover:text-muted-foreground"
               >
                 Cancel
               </button>
@@ -352,7 +352,7 @@ const Apply = () => {
             {step < STEPS.length - 1 ? (
               <button
                 onClick={next}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0d6e66] hover:bg-[#0d6e66]/90 text-white text-sm font-semibold"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold"
               >
                 Continue <ArrowRight className="w-4 h-4" />
               </button>
@@ -360,7 +360,7 @@ const Apply = () => {
               <button
                 onClick={submit}
                 disabled={submitting}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0d6e66] hover:bg-[#0d6e66]/90 disabled:opacity-60 text-white text-sm font-semibold"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary hover:bg-primary/90 disabled:opacity-60 text-primary-foreground text-sm font-semibold"
               >
                 {submitting ? "Submitting…" : "Submit application"}
                 <ArrowRight className="w-4 h-4" />
@@ -380,14 +380,14 @@ const Apply = () => {
 const StepHeader = ({ title, sub }: { title: string; sub?: string }) => (
   <div className="mb-8">
     <h1 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em]">{title}</h1>
-    {sub && <p className="mt-3 text-white/60 leading-relaxed">{sub}</p>}
+    {sub && <p className="mt-3 text-muted-foreground leading-relaxed">{sub}</p>}
   </div>
 );
 
 const Field = ({ label, children, required }: { label: string; children: React.ReactNode; required?: boolean }) => (
   <label className="block">
-    <span className="block text-xs font-medium text-white/70 mb-1.5">
-      {label} {required && <span className="text-[#5eead4]">*</span>}
+    <span className="block text-xs font-medium text-muted-foreground mb-1.5">
+      {label} {required && <span className="text-primary">*</span>}
     </span>
     {children}
   </label>
@@ -477,10 +477,10 @@ const StepTeam = ({ form, addTeam, updateTeam, removeTeam }: any) => (
     />
     <div className="space-y-4">
       {form.team.map((m: TeamMember, i: number) => (
-        <div key={i} className="rounded-xl border border-white/[0.1] bg-white/[0.03] p-4 space-y-3">
+        <div key={i} className="rounded-xl border border-white/[0.1] bg-secondary p-4 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold tracking-[0.18em] uppercase text-[#5eead4]">Team member {i + 1}</span>
-            <button onClick={() => removeTeam(i)} className="text-white/40 hover:text-white/80">
+            <span className="text-xs font-semibold tracking-[0.18em] uppercase text-primary">Team member {i + 1}</span>
+            <button onClick={() => removeTeam(i)} className="text-muted-foreground hover:text-muted-foreground">
               <Trash2 className="w-4 h-4" />
             </button>
           </div>
@@ -495,7 +495,7 @@ const StepTeam = ({ form, addTeam, updateTeam, removeTeam }: any) => (
       ))}
       <button
         onClick={addTeam}
-        className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-dashed border-white/15 hover:border-white/30 text-sm text-white/70"
+        className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-dashed border-border hover:border-border text-sm text-muted-foreground"
       >
         <Plus className="w-4 h-4" /> Add team member
       </button>
@@ -508,7 +508,7 @@ const StepMedia = ({ form, set, addPhoto, removePhoto, toggleBadge }: any) => (
     <StepHeader title="Media" sub="Share up to 15 photo URLs, plus optional video and logo. We'll follow up for direct uploads if needed." />
     <div className="space-y-6">
       <div>
-        <span className="block text-xs font-medium text-white/70 mb-2">Photos ({form.photoUrls.length}/15)</span>
+        <span className="block text-xs font-medium text-muted-foreground mb-2">Photos ({form.photoUrls.length}/15)</span>
         <div className="flex gap-2">
           <input
             value={form.photoDraft}
@@ -520,7 +520,7 @@ const StepMedia = ({ form, set, addPhoto, removePhoto, toggleBadge }: any) => (
           <button
             type="button"
             onClick={addPhoto}
-            className="px-4 py-2.5 rounded-lg bg-[#0d6e66] hover:bg-[#0d6e66]/90 text-white text-sm font-semibold"
+            className="px-4 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold"
           >
             Add
           </button>
@@ -528,7 +528,7 @@ const StepMedia = ({ form, set, addPhoto, removePhoto, toggleBadge }: any) => (
         {form.photoUrls.length > 0 && (
           <div className="mt-3 grid grid-cols-3 md:grid-cols-5 gap-2">
             {form.photoUrls.map((url: string, i: number) => (
-              <div key={i} className="relative aspect-square rounded-lg overflow-hidden border border-white/[0.1] bg-white/[0.02]">
+              <div key={i} className="relative aspect-square rounded-lg overflow-hidden border border-white/[0.1] bg-secondary">
                 <img src={url} alt="" className="w-full h-full object-cover" onError={(e) => ((e.target as HTMLImageElement).style.opacity = "0.2")} />
                 <button
                   onClick={() => removePhoto(i)}
@@ -549,7 +549,7 @@ const StepMedia = ({ form, set, addPhoto, removePhoto, toggleBadge }: any) => (
       </Grid>
 
       <div>
-        <span className="block text-xs font-medium text-white/70 mb-2">Editorial badges (only select what's true)</span>
+        <span className="block text-xs font-medium text-muted-foreground mb-2">Editorial badges (only select what's true)</span>
         <div className="flex flex-wrap gap-2">
           {AVAILABLE_BADGES.map((b) => {
             const on = form.badges.includes(b);
@@ -560,8 +560,8 @@ const StepMedia = ({ form, set, addPhoto, removePhoto, toggleBadge }: any) => (
                 onClick={() => toggleBadge(b)}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium border transition ${
                   on
-                    ? "bg-[#0d6e66]/20 border-[#0d6e66]/50 text-[#5eead4]"
-                    : "bg-white/[0.03] border-white/[0.1] text-white/70 hover:border-white/25"
+                    ? "bg-primary/20 border-primary/50 text-primary"
+                    : "bg-secondary border-white/[0.1] text-muted-foreground hover:border-border"
                 }`}
               >
                 {on && <Check className="w-3 h-3 inline mr-1" />}
@@ -580,14 +580,14 @@ const StepPreview = ({ form }: { form: Form }) => {
   return (
     <>
       <StepHeader title="Preview your profile" sub="A live preview of your future Capital District Nest page." />
-      <div className="rounded-2xl overflow-hidden border border-white/[0.1] bg-[#0e0f12]">
+      <div className="rounded-2xl overflow-hidden border border-white/[0.1] bg-secondary">
         {/* Hero */}
-        <div className="relative h-64 md:h-80 bg-gradient-to-br from-[#0d6e66]/40 to-[#0e0f12]">
+        <div className="relative h-64 md:h-80 bg-gradient-to-br from-primary/40 to-[#0e0f12]">
           {hero && <img src={hero} alt="" className="absolute inset-0 w-full h-full object-cover opacity-80" />}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0e0f12] via-transparent to-transparent" />
           <div className="absolute bottom-6 left-6 right-6">
             {form.category && (
-              <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">
+              <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-primary">
                 {form.category}{form.town && ` · ${form.town}`}
               </span>
             )}
@@ -600,7 +600,7 @@ const StepPreview = ({ form }: { form: Form }) => {
           {form.badges.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {form.badges.map((b) => (
-                <span key={b} className="px-2.5 py-1 rounded-full bg-[#0d6e66]/15 border border-[#0d6e66]/40 text-[10px] font-semibold tracking-wider uppercase text-[#5eead4]">
+                <span key={b} className="px-2.5 py-1 rounded-full bg-primary/15 border border-primary/40 text-[10px] font-semibold tracking-wider uppercase text-primary">
                   {b}
                 </span>
               ))}
@@ -608,26 +608,26 @@ const StepPreview = ({ form }: { form: Form }) => {
           )}
           {(form.ownWords || form.storyOrigin) && (
             <div>
-              <h3 className="text-xs font-semibold tracking-[0.18em] uppercase text-[#5eead4] mb-2">The Story</h3>
-              <p className="text-white/75 leading-relaxed">{form.ownWords || form.storyOrigin}</p>
+              <h3 className="text-xs font-semibold tracking-[0.18em] uppercase text-primary mb-2">The Story</h3>
+              <p className="text-muted-foreground leading-relaxed">{form.ownWords || form.storyOrigin}</p>
             </div>
           )}
           {form.knownFor && (
             <div>
-              <h3 className="text-xs font-semibold tracking-[0.18em] uppercase text-[#5eead4] mb-2">Known For</h3>
-              <p className="text-white/75 leading-relaxed">{form.knownFor}</p>
+              <h3 className="text-xs font-semibold tracking-[0.18em] uppercase text-primary mb-2">Known For</h3>
+              <p className="text-muted-foreground leading-relaxed">{form.knownFor}</p>
             </div>
           )}
           {form.firstTimer && (
             <div>
-              <h3 className="text-xs font-semibold tracking-[0.18em] uppercase text-[#5eead4] mb-2">If it's your first time</h3>
-              <p className="text-white/75 leading-relaxed">{form.firstTimer}</p>
+              <h3 className="text-xs font-semibold tracking-[0.18em] uppercase text-primary mb-2">If it's your first time</h3>
+              <p className="text-muted-foreground leading-relaxed">{form.firstTimer}</p>
             </div>
           )}
           {form.photoUrls.length > 1 && (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {form.photoUrls.slice(1, 7).map((u, i) => (
-                <div key={i} className="aspect-[4/3] rounded-lg overflow-hidden bg-white/[0.03]">
+                <div key={i} className="aspect-[4/3] rounded-lg overflow-hidden bg-secondary">
                   <img src={u} alt="" className="w-full h-full object-cover" />
                 </div>
               ))}
@@ -635,26 +635,26 @@ const StepPreview = ({ form }: { form: Form }) => {
           )}
           {form.team.length > 0 && (
             <div>
-              <h3 className="text-xs font-semibold tracking-[0.18em] uppercase text-[#5eead4] mb-3">The Team</h3>
+              <h3 className="text-xs font-semibold tracking-[0.18em] uppercase text-primary mb-3">The Team</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {form.team.map((m, i) => (
-                  <div key={i} className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
+                  <div key={i} className="rounded-xl border border-white/[0.08] bg-secondary p-4">
                     <div className="font-semibold">{m.name || "Team member"}</div>
-                    {m.title && <div className="text-xs text-[#5eead4] mt-0.5">{m.title}</div>}
-                    {m.bio && <p className="text-sm text-white/65 mt-2 leading-relaxed">{m.bio}</p>}
+                    {m.title && <div className="text-xs text-primary mt-0.5">{m.title}</div>}
+                    {m.bio && <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{m.bio}</p>}
                   </div>
                 ))}
               </div>
             </div>
           )}
-          <div className="pt-4 flex flex-wrap gap-2 text-xs text-white/50">
+          <div className="pt-4 flex flex-wrap gap-2 text-xs text-muted-foreground">
             {form.phone && <span>📞 {form.phone}</span>}
             {form.website && <span>🌐 {form.website}</span>}
             {form.address && <span>📍 {form.address}</span>}
           </div>
         </div>
       </div>
-      <p className="mt-4 text-xs text-white/50 text-center">
+      <p className="mt-4 text-xs text-muted-foreground text-center">
         Preview only. Our editorial team will polish photography, story, and layout before publication.
       </p>
     </>
@@ -672,13 +672,13 @@ const StepPlan = ({ form, set, plans }: any) => {
     <>
       <StepHeader title="Choose your plan" sub="You can upgrade any time." />
       {source.some((p) => p.annual_price_cents > 0) && (
-        <div className="inline-flex p-1 rounded-full border border-white/[0.1] bg-white/[0.03] mb-6">
+        <div className="inline-flex p-1 rounded-full border border-white/[0.1] bg-secondary mb-6">
           {(["monthly", "annual"] as const).map((b) => (
             <button
               key={b}
               onClick={() => set("billing", b)}
               className={`px-4 py-1.5 rounded-full text-xs font-semibold capitalize ${
-                form.billing === b ? "bg-[#0d6e66] text-white" : "text-white/60"
+                form.billing === b ? "bg-primary text-primary-foreground" : "text-muted-foreground"
               }`}
             >
               {b}
@@ -696,24 +696,24 @@ const StepPlan = ({ form, set, plans }: any) => {
               onClick={() => set("selectedPlan", p.plan_key)}
               className={`text-left rounded-2xl p-6 border transition ${
                 active
-                  ? "bg-[#0d6e66]/15 border-[#0d6e66]/60"
-                  : "bg-white/[0.03] border-white/[0.08] hover:border-white/20"
+                  ? "bg-primary/15 border-primary/60"
+                  : "bg-secondary border-white/[0.08] hover:border-border"
               }`}
             >
               <div className="flex items-start justify-between">
                 <h3 className="text-lg font-semibold">{p.plan_name}</h3>
-                {active && <div className="w-5 h-5 rounded-full bg-[#0d6e66] flex items-center justify-center"><Check className="w-3 h-3" /></div>}
+                {active && <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center"><Check className="w-3 h-3" /></div>}
               </div>
               <div className="mt-2 text-3xl font-semibold tracking-[-0.02em]">
                 {fmt(cents)}
-                {cents > 0 && <span className="text-sm text-white/50 font-normal"> /{form.billing === "annual" ? "yr" : "mo"}</span>}
+                {cents > 0 && <span className="text-sm text-muted-foreground font-normal"> /{form.billing === "annual" ? "yr" : "mo"}</span>}
               </div>
-              {p.description && <p className="mt-2 text-sm text-white/60">{p.description}</p>}
+              {p.description && <p className="mt-2 text-sm text-muted-foreground">{p.description}</p>}
               {p.features.length > 0 && (
                 <ul className="mt-4 space-y-1.5">
                   {p.features.slice(0, 5).map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-xs text-white/70">
-                      <Check className="w-3.5 h-3.5 text-[#5eead4] mt-0.5 flex-shrink-0" /> {f}
+                    <li key={f} className="flex items-start gap-2 text-xs text-muted-foreground">
+                      <Check className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" /> {f}
                     </li>
                   ))}
                 </ul>
@@ -732,23 +732,23 @@ const StepSubmit = ({ form, set }: any) => (
       title="Ready to submit"
       sub="Our editorial team reviews every application before publication."
     />
-    <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-5 space-y-3 text-sm text-white/75">
-      <div><span className="text-white/50">Business:</span> {form.businessName || "—"}</div>
-      <div><span className="text-white/50">Category:</span> {form.category || "—"}</div>
-      <div><span className="text-white/50">Town:</span> {form.town || "—"}</div>
-      <div><span className="text-white/50">Plan:</span> {form.selectedPlan} ({form.billing})</div>
-      <div><span className="text-white/50">Photos:</span> {form.photoUrls.length}</div>
-      <div><span className="text-white/50">Team members:</span> {form.team.length}</div>
-      <div><span className="text-white/50">Badges:</span> {form.badges.length ? form.badges.join(", ") : "—"}</div>
+    <div className="rounded-xl border border-white/[0.08] bg-secondary p-5 space-y-3 text-sm text-muted-foreground">
+      <div><span className="text-muted-foreground">Business:</span> {form.businessName || "—"}</div>
+      <div><span className="text-muted-foreground">Category:</span> {form.category || "—"}</div>
+      <div><span className="text-muted-foreground">Town:</span> {form.town || "—"}</div>
+      <div><span className="text-muted-foreground">Plan:</span> {form.selectedPlan} ({form.billing})</div>
+      <div><span className="text-muted-foreground">Photos:</span> {form.photoUrls.length}</div>
+      <div><span className="text-muted-foreground">Team members:</span> {form.team.length}</div>
+      <div><span className="text-muted-foreground">Badges:</span> {form.badges.length ? form.badges.join(", ") : "—"}</div>
     </div>
-    <label className="mt-6 flex items-start gap-3 p-4 rounded-xl border border-white/[0.08] bg-white/[0.03]">
+    <label className="mt-6 flex items-start gap-3 p-4 rounded-xl border border-white/[0.08] bg-secondary">
       <input
         type="checkbox"
         checked={form.approved}
         onChange={(e) => set("approved", e.target.checked)}
         className="mt-1"
       />
-      <span className="text-sm text-white/80 leading-relaxed">
+      <span className="text-sm text-muted-foreground leading-relaxed">
         I confirm that I own or have permission to provide the submitted photos,
         videos, logos, and business information for use by Capital District Nest.
       </span>
@@ -757,7 +757,7 @@ const StepSubmit = ({ form, set }: any) => (
       <SmsConsent checked={form.smsConsent} onCheckedChange={(v) => set("smsConsent", v)} id="business-apply-sms-consent" />
     </div>
     {form.selectedPlan !== "essential" && (
-      <p className="mt-4 text-xs text-white/50">
+      <p className="mt-4 text-xs text-muted-foreground">
         Featured Partner billing is set up after our editorial team reviews your submission — we'll send a secure checkout link when your profile is ready to go live.
       </p>
     )}

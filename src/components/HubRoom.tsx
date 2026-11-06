@@ -136,7 +136,7 @@ const HubRoom = (p: HubRoomProps) => {
         structuredData={structuredData}
       />
 
-      <div className="min-h-screen bg-[#0B0F19] text-white">
+      <div className="min-h-screen bg-background text-foreground">
         <CleanHeader />
 
         {/* HERO */}
@@ -149,15 +149,15 @@ const HubRoom = (p: HubRoomProps) => {
             }}
           />
           <div className="relative max-w-7xl mx-auto px-6 md:px-10 pt-28 md:pt-36 pb-20 md:pb-28">
-            <p className="eyebrow-apple text-[#5eead4] mb-6">{p.eyebrow}</p>
+            <p className="eyebrow-apple text-primary mb-6">{p.eyebrow}</p>
             <h1 className="h-hero max-w-4xl">{p.headline}</h1>
-            <p className="mt-8 max-w-2xl body-apple-dark text-white/70">{p.subhead}</p>
+            <p className="mt-8 max-w-2xl nest-lead text-muted-foreground">{p.subhead}</p>
             <div className="mt-10 flex flex-wrap gap-3">
-              {renderCta(p.primaryCta, "btn-dark-cta cta-arrow", "hero_primary")}
+              {renderCta(p.primaryCta, "nest-btn", "hero_primary")}
               {p.secondaryCta &&
                 renderCta(
                   p.secondaryCta,
-                  "inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 hover:border-[#5eead4] hover:text-[#5eead4] text-white text-sm font-medium tracking-tight transition",
+                  "inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border hover:border-primary hover:text-primary text-foreground text-sm font-medium tracking-tight transition",
                   "hero_secondary",
                 )}
             </div>
@@ -165,10 +165,10 @@ const HubRoom = (p: HubRoomProps) => {
         </section>
 
         {/* PANELS */}
-        <section className="bg-[#0B0F19]">
+        <section className="bg-background">
           <div className="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-24">
             <div className="max-w-3xl mb-12 md:mb-16">
-              <p className="eyebrow-apple text-[#5eead4] mb-4">{p.panelsEyebrow}</p>
+              <p className="eyebrow-apple text-primary mb-4">{p.panelsEyebrow}</p>
               <h2 className="text-3xl md:text-5xl font-semibold tracking-tight">
                 {p.panelsTitle}
               </h2>
@@ -179,22 +179,22 @@ const HubRoom = (p: HubRoomProps) => {
                 const Icon = panel.icon;
                 const isExternal = panel.external || /^https?:\/\//.test(panel.href);
                 const className =
-                  "group block rounded-2xl bg-[#1E2230] border border-[#2D3748] hover:border-[#5eead4]/40 p-7 md:p-8 transition-all hover:translate-y-[-2px] hover:shadow-[0_20px_60px_-20px_rgba(94,234,212,0.25)]";
+                  "group block rounded-2xl bg-card border border-border hover:border-primary/40 p-7 md:p-8 transition-all hover:translate-y-[-2px] hover:shadow-[0_20px_60px_-20px_rgba(94,234,212,0.25)]";
                 const inner = (
                   <>
                     <div className="flex items-start justify-between mb-6">
-                      <div className="w-11 h-11 rounded-xl bg-[#0d6e66]/15 border border-[#5eead4]/20 flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-[#5eead4]" />
+                      <div className="w-11 h-11 rounded-xl bg-primary/15 border border-primary/20 flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-primary" />
                       </div>
-                      <ArrowUpRight className="w-4 h-4 text-white/30 group-hover:text-[#5eead4] transition" />
+                      <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition" />
                     </div>
                     <h3 className="text-xl md:text-2xl font-semibold tracking-tight mb-3">
                       {panel.headline}
                     </h3>
-                    <p className="text-sm md:text-base text-white/65 leading-relaxed mb-8 min-h-[3.5rem]">
+                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-8 min-h-[3.5rem]">
                       {panel.text}
                     </p>
-                    <span className="inline-flex items-center gap-2 text-sm font-medium text-[#5eead4]">
+                    <span className="inline-flex items-center gap-2 text-sm font-medium text-primary">
                       {panel.cta} <ArrowRight className="w-4 h-4" />
                     </span>
                   </>
@@ -226,23 +226,23 @@ const HubRoom = (p: HubRoomProps) => {
         </section>
 
         {/* OWNER CTA */}
-        <section className="border-t border-[#2D3748]">
+        <section className="border-t border-border">
           <div className="max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28">
-            <div className="rounded-3xl bg-gradient-to-br from-[#1E2230] to-[#0d6e66]/15 border border-[#5eead4]/20 p-10 md:p-16">
+            <div className="rounded-3xl bg-gradient-to-br from-[#1E2230] to-primary/15 border border-primary/20 p-10 md:p-16">
               {p.ownerEyebrow && (
-                <p className="eyebrow-apple text-[#5eead4] mb-5">{p.ownerEyebrow}</p>
+                <p className="eyebrow-apple text-primary mb-5">{p.ownerEyebrow}</p>
               )}
               <h2 className="text-3xl md:text-5xl font-semibold tracking-tight max-w-3xl">
                 {p.ownerHeadline}
               </h2>
-              <p className="mt-6 body-apple-dark text-white/75 max-w-2xl">{p.ownerText}</p>
+              <p className="mt-6 nest-lead text-muted-foreground max-w-2xl">{p.ownerText}</p>
               <div className="mt-10 flex flex-wrap gap-3">
                 <Link
                   to={`/claim-business?category=${p.claimCategory}`}
                   onClick={() =>
                     handleClaimClick(`/claim-business?category=${p.claimCategory}`, "claim")
                   }
-                  className="btn-dark-cta cta-arrow"
+                  className="nest-btn"
                 >
                   Claim Your Business <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -254,7 +254,7 @@ const HubRoom = (p: HubRoomProps) => {
                       "premier",
                     )
                   }
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 hover:border-[#5eead4] hover:text-[#5eead4] text-white text-sm font-medium tracking-tight transition"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border hover:border-primary hover:text-primary text-foreground text-sm font-medium tracking-tight transition"
                 >
                   Request Premier Profile
                 </Link>

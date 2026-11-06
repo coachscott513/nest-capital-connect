@@ -28,7 +28,7 @@ import { toast } from "sonner";
 import SmsConsent from "@/components/SmsConsent";
 import { trackGAEvent } from "@/components/GARouteTracker";
 
-const TEAL = "#5eead4";
+const TEAL = "var(--nest-brand-blue)";
 
 const initialState = {
   // Basic
@@ -313,7 +313,7 @@ const ClaimBusiness = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-[#0B0F19] text-white">
+      <div className="min-h-screen bg-background text-foreground">
         <Helmet>
           <title>Thanks — Capital District Nest</title>
         </Helmet>
@@ -322,7 +322,7 @@ const ClaimBusiness = () => {
           <div className="max-w-xl mx-auto text-center">
             <div
               className="w-20 h-20 mx-auto mb-7 rounded-2xl border flex items-center justify-center"
-              style={{ borderColor: `${TEAL}66`, background: `${TEAL}1a` }}
+              style={{ borderColor: `color-mix(in oklch, ${TEAL} 40%, transparent)`, background: `color-mix(in oklch, ${TEAL} 10%, transparent)` }}
             >
               <Sparkles className="w-9 h-9" style={{ color: TEAL }} />
             </div>
@@ -332,7 +332,7 @@ const ClaimBusiness = () => {
             <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05]">
               Thank you.
             </h1>
-            <p className="mt-6 text-lg text-white/70 font-light leading-relaxed">
+            <p className="mt-6 text-lg text-muted-foreground font-light leading-relaxed">
               Our team will personally review your profile and reach out to help build your
               Capital District Nest presence. No automated funnels — a real person from our
               team will be in touch shortly.
@@ -346,7 +346,7 @@ const ClaimBusiness = () => {
               </Link>
               <Link
                 to="/"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-[#5eead4]/40 transition"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary hover:border-primary/40 transition"
               >
                 <ArrowLeft className="w-4 h-4" /> Back home
               </Link>
@@ -359,7 +359,7 @@ const ClaimBusiness = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Helmet>
         <title>Join Capital District Nest | Curated Local Business Concierge</title>
         <meta
@@ -390,36 +390,36 @@ const ClaimBusiness = () => {
           <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
             Claim Your Business on Capital District Nest
           </h1>
-          <p className="mt-6 text-lg text-white/65 font-light max-w-2xl mx-auto">
+          <p className="mt-6 text-lg text-muted-foreground font-light max-w-2xl mx-auto">
             Review your listing, update your profile, add photos, submit events, and request
             featured placement across the Capital District's local discovery platform.
           </p>
-          <p className="mt-3 text-base text-white/55 font-light max-w-2xl mx-auto">
+          <p className="mt-3 text-base text-muted-foreground font-light max-w-2xl mx-auto">
             Your business may already be listed. Review it for free, upgrade your profile, or
             request featured placement.
           </p>
           <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="#claim-form"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0B0F19] text-sm font-semibold hover:opacity-90 transition"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
             >
               Find My Business <ArrowUpRight className="w-4 h-4" />
             </a>
             <a
               href="#tiers"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/15 bg-white/[0.04] text-white text-sm font-semibold hover:bg-white/[0.08] transition"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary transition"
             >
               Compare Options
             </a>
           </div>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3 text-xs text-white/55">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04]">
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3 text-xs text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-secondary">
               <Handshake className="w-3.5 h-3.5" style={{ color: TEAL }} /> Concierge onboarding
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04]">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-secondary">
               <Star className="w-3.5 h-3.5" style={{ color: TEAL }} /> Editorial profile
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.04]">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-secondary">
               <Megaphone className="w-3.5 h-3.5" style={{ color: TEAL }} /> Weekly pulse reach
             </span>
           </div>
@@ -436,7 +436,7 @@ const ClaimBusiness = () => {
             <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em]">
               Free to be listed. $15 to stand out. $25 for a full business page.
             </h2>
-            <p className="mt-4 text-sm text-white/60 max-w-2xl mx-auto font-light">
+            <p className="mt-4 text-sm text-muted-foreground max-w-2xl mx-auto font-light">
               One clean ladder across the entire site. Pick the tier that fits — our concierge
               team takes it from there.
             </p>
@@ -511,7 +511,7 @@ const ClaimBusiness = () => {
                 cadence: "/mo",
                 setup: null,
                 tag: "Premium visibility for businesses that want more local attention.",
-                accent: "#c9a449",
+                accent: "var(--nest-brand-blue)",
                 items: [
                   "Everything in Premier",
                   "Higher category & town placement",
@@ -534,19 +534,19 @@ const ClaimBusiness = () => {
                     key={c.id}
                     className={`relative rounded-3xl p-7 backdrop-blur-xl border flex flex-col transition ${
                       c.style === "teal"
-                        ? "bg-gradient-to-br from-[#5eead4]/15 via-[#1E2230] to-[#1E2230] border-[#5eead4]/45 shadow-[0_30px_70px_-30px_rgba(94,234,212,0.45)]"
+                        ? "bg-gradient-to-br from-primary/15 via-[#1E2230] to-[#1E2230] border-primary/45 shadow-[0_30px_70px_-30px_rgba(94,234,212,0.45)]"
                         : c.style === "gold"
-                        ? "bg-gradient-to-br from-[#c9a449]/15 via-[#1E2230] to-[#1E2230] border-[#c9a449]/40"
-                        : "bg-white/[0.04] border-white/10 hover:border-white/25"
-                    } ${isSelected ? "ring-2 ring-[#5eead4]/70" : ""}`}
+                        ? "bg-gradient-to-br from-primary/15 via-[#1E2230] to-[#1E2230] border-primary/40"
+                        : "bg-secondary border-border hover:border-border"
+                    } ${isSelected ? "ring-2 ring-primary/70" : ""}`}
                   >
                     {c.badge && (
                       <span
                         className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
                         style={
                           c.style === "teal"
-                            ? { background: TEAL, color: "#0B0F19" }
-                            : { background: "rgba(255,255,255,0.92)", color: "#0B0F19" }
+                            ? { background: TEAL, color: "var(--nest-brand-white)" }
+                            : { background: "rgba(255,255,255,0.92)", color: "var(--nest-brand-white)" }
                         }
                       >
                         <Star className="w-3 h-3 fill-current" /> {c.badge}
@@ -560,17 +560,17 @@ const ClaimBusiness = () => {
                     </p>
                     <p className="mt-3 text-4xl font-semibold tracking-tight">
                       {c.price}
-                      <span className="text-base text-white/55 font-light">{c.cadence === "always" ? " / always" : c.cadence}</span>
+                      <span className="text-base text-muted-foreground font-light">{c.cadence === "always" ? " / always" : c.cadence}</span>
                     </p>
                     {c.setup && (
                       <p className="mt-1 text-[11.5px] font-semibold uppercase tracking-[0.18em]" style={{ color: c.accent }}>
                         {c.setup}
                       </p>
                     )}
-                    <p className="mt-2 text-[13px] text-white/65 font-light leading-relaxed min-h-[40px]">
+                    <p className="mt-2 text-[13px] text-muted-foreground font-light leading-relaxed min-h-[40px]">
                       {c.tag}
                     </p>
-                    <ul className="mt-4 space-y-2.5 text-sm text-white/75 font-light flex-1">
+                    <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground font-light flex-1">
                       {c.items.map((it) => (
                         <li key={it} className="flex gap-2">
                           <CheckCircle
@@ -586,12 +586,12 @@ const ClaimBusiness = () => {
                       onClick={() => selectTierAndScroll(c.id)}
                       className={`mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-[13px] font-semibold transition ${
                         c.style === "teal"
-                          ? "bg-white text-[#0B0F19] hover:opacity-90"
+                          ? "bg-primary text-primary-foreground hover:opacity-90"
                           : c.style === "gold"
-                          ? "text-[#0B0F19] hover:opacity-90"
-                          : "border border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08]"
+                          ? "text-primary-foreground hover:opacity-90"
+                          : "border border-border bg-secondary text-foreground hover:bg-secondary"
                       }`}
-                      style={c.style === "gold" ? { background: "#c9a449" } : undefined}
+                      style={c.style === "gold" ? { background: "var(--nest-brand-blue)" } : undefined}
                     >
                       {isSelected ? "Selected — Continue Below" : c.cta} <ArrowUpRight className="w-4 h-4" />
                     </button>
@@ -604,20 +604,20 @@ const ClaimBusiness = () => {
 
           {/* Anchor application strip */}
           <div className={`mt-6 rounded-3xl border bg-gradient-to-br from-white/[0.06] via-white/[0.03] to-white/[0.02] backdrop-blur-xl p-7 md:p-9 flex flex-col md:flex-row md:items-center gap-6 relative ${
-            requestedTier === "anchor" ? "ring-2 ring-[#5eead4]/70 border-white/25" : "border-white/15"
+            requestedTier === "anchor" ? "ring-2 ring-primary/70 border-border" : "border-border"
           }`}>
             <span
               className="absolute -top-3 left-7 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
-              style={{ background: "#e5e4e2", color: "#0B0F19" }}
+              style={{ background: "#e5e4e2", color: "var(--nest-brand-white)" }}
             >
               <Star className="w-3 h-3 fill-current" /> Anchor Partner
             </span>
             <div className="flex-1">
               <div className="flex items-baseline gap-2 flex-wrap">
                 <span className="text-3xl md:text-4xl font-semibold tracking-tight">$100–$150</span>
-                <span className="text-sm text-white/55">/ mo · application-based</span>
+                <span className="text-sm text-muted-foreground">/ mo · application-based</span>
               </div>
-              <p className="mt-3 text-[14.5px] text-white/75 font-light leading-relaxed max-w-2xl">
+              <p className="mt-3 text-[14.5px] text-muted-foreground font-light leading-relaxed max-w-2xl">
                 Everything in Spotlight, plus homepage rotation, category sponsorship, town
                 sponsorship opportunities, competitor lockout where available, custom campaigns,
                 and concierge setup.
@@ -627,13 +627,13 @@ const ClaimBusiness = () => {
               type="button"
               onClick={() => selectTierAndScroll("anchor")}
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-[13px] font-semibold whitespace-nowrap hover:opacity-90 transition"
-              style={{ background: "#e5e4e2", color: "#0B0F19" }}
+              style={{ background: "#e5e4e2", color: "var(--nest-brand-white)" }}
             >
               {requestedTier === "anchor" ? "Selected — Continue Below" : "Apply as Anchor"} <ArrowUpRight className="w-4 h-4" />
             </button>
           </div>
 
-          <p className="mt-6 text-center text-xs text-white/45">
+          <p className="mt-6 text-center text-xs text-muted-foreground">
             Pick a tier or skip ahead — our concierge team will help you land on the right one.
           </p>
         </div>
@@ -648,17 +648,17 @@ const ClaimBusiness = () => {
             <div
               className="mb-5 rounded-2xl border px-5 py-4 text-sm flex items-start gap-3"
               style={{
-                borderColor: resolvedBiz ? `${TEAL}55` : "rgba(255,255,255,0.12)",
-                background: resolvedBiz ? `${TEAL}14` : "rgba(255,255,255,0.04)",
+                borderColor: resolvedBiz ? `color-mix(in oklch, ${TEAL} 33%, transparent)` : "rgba(255,255,255,0.12)",
+                background: resolvedBiz ? `color-mix(in oklch, ${TEAL} 8%, transparent)` : "rgba(255,255,255,0.04)",
               }}
             >
               <Building2 className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} />
-              <div className="text-white/80 leading-relaxed">
+              <div className="text-muted-foreground leading-relaxed">
                 {resolvedBiz ? (
                   <>
                     Claiming or updating{" "}
-                    <span className="font-semibold text-white">{resolvedBiz.name}</span>
-                    {resolvedBiz.town ? <> in <span className="text-white">{resolvedBiz.town}</span></> : null}.
+                    <span className="font-semibold text-foreground">{resolvedBiz.name}</span>
+                    {resolvedBiz.town ? <> in <span className="text-foreground">{resolvedBiz.town}</span></> : null}.
                     Confirm the details below and add anything we should know.
                   </>
                 ) : slugLookupTried ? (
@@ -670,7 +670,7 @@ const ClaimBusiness = () => {
                   <>Looking up this business…</>
                 )}
                 {(requestedTier || tierParam) && (
-                  <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.18em] border border-white/15 text-white/70">
+                  <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.18em] border border-border text-muted-foreground">
                     Tier: {requestedTier || tierParam}
                   </span>
                 )}
@@ -680,7 +680,7 @@ const ClaimBusiness = () => {
           )}
         <form
           onSubmit={handleSubmit}
-          className="rounded-3xl bg-[#1E2230] border border-white/[0.08] p-7 md:p-10 space-y-10"
+          className="rounded-3xl bg-card border border-white/[0.08] p-7 md:p-10 space-y-10"
         >
           {/* SECTION: Basic */}
           <SectionBlock
@@ -818,7 +818,7 @@ const ClaimBusiness = () => {
                 className={inputCls + " resize-none"}
               />
             </Field>
-            <p className="text-xs text-white/45 leading-relaxed">
+            <p className="text-xs text-muted-foreground leading-relaxed">
               Logo and photo uploads aren't required here — our team will collect them
               directly with you during onboarding, so you get the visual treatment right.
             </p>
@@ -881,7 +881,7 @@ const ClaimBusiness = () => {
 
           {/* Submit */}
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/[0.06] pt-7">
-            <p className="text-xs text-white/55 max-w-md leading-relaxed">
+            <p className="text-xs text-muted-foreground max-w-md leading-relaxed">
               A real person from our team will review your submission and reach out personally.
               No automated drip sequences.
             </p>
@@ -906,7 +906,7 @@ const ClaimBusiness = () => {
 /* ─── primitives ─── */
 
 const inputCls =
-  "w-full bg-[#0B0F19] text-white placeholder:text-white/40 text-[15px] rounded-xl border border-white/10 px-4 py-3 focus:outline-none focus:border-[#5eead4]/50 transition";
+  "w-full bg-background text-foreground placeholder:text-muted-foreground text-[15px] rounded-xl border border-border px-4 py-3 focus:outline-none focus:border-primary/50 transition";
 
 const SectionBlock = ({
   eyebrow, title, desc, children,
@@ -917,7 +917,7 @@ const SectionBlock = ({
         {eyebrow}
       </p>
       <h2 className="mt-1.5 text-2xl md:text-3xl font-semibold tracking-[-0.02em]">{title}</h2>
-      <p className="mt-2 text-sm text-white/55 font-light max-w-xl">{desc}</p>
+      <p className="mt-2 text-sm text-muted-foreground font-light max-w-xl">{desc}</p>
     </div>
     <div className="space-y-4">{children}</div>
   </div>
@@ -927,13 +927,13 @@ const Field = ({
   label, required, icon, children,
 }: { label: string; required?: boolean; icon?: React.ReactNode; children: React.ReactNode }) => (
   <label className="block space-y-1.5">
-    <span className="text-xs font-semibold text-white/70 inline-flex items-center gap-1.5">
+    <span className="text-xs font-semibold text-muted-foreground inline-flex items-center gap-1.5">
       {label}
       {required && <span style={{ color: TEAL }}>*</span>}
     </span>
     <div className="relative">
       {icon && (
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none">
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none">
           {icon}
         </span>
       )}
@@ -950,16 +950,16 @@ const Check = ({
     onClick={() => onChange(!checked)}
     className={`text-left px-4 py-3.5 rounded-xl border text-sm transition flex items-start gap-3 ${
       checked
-        ? "border-[#5eead4]/50 bg-[#5eead4]/[0.08] text-white"
-        : "border-white/10 bg-white/[0.03] text-white/70 hover:border-white/20 hover:text-white"
+        ? "border-primary/50 bg-primary/[0.08] text-primary-foreground"
+        : "border-border bg-secondary text-muted-foreground hover:border-border hover:text-foreground"
     }`}
   >
     <span
       className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center shrink-0 transition ${
-        checked ? "bg-[#5eead4] border-[#5eead4]" : "border-white/30"
+        checked ? "bg-primary border-primary" : "border-border"
       }`}
     >
-      {checked && <CheckCircle className="w-3.5 h-3.5 text-[#0B0F19]" strokeWidth={3} />}
+      {checked && <CheckCircle className="w-3.5 h-3.5 text-primary-foreground" strokeWidth={3} />}
     </span>
     <span className="leading-snug">{label}</span>
   </button>

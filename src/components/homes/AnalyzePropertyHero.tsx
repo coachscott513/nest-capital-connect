@@ -32,10 +32,10 @@ const AnalyzePropertyHero = ({
   ];
 
   return (
-    <section className="px-[5%] py-14 bg-background border-t border-white/10">
+    <section className="px-[5%] py-14 bg-background border-t border-border">
       <div className="max-w-6xl mx-auto">
         <div
-          className="relative overflow-hidden rounded-3xl border border-white/10 p-8 md:p-12"
+          className="relative overflow-hidden rounded-3xl border border-border p-8 md:p-12"
           style={{
             background:
               "linear-gradient(135deg, #0B0F19 0%, #11192B 55%, #0e0f12 100%)",
@@ -55,14 +55,14 @@ const AnalyzePropertyHero = ({
 
           <div className="relative grid md:grid-cols-[1.4fr_1fr] gap-8 items-center">
             <div>
-              <div className="eyebrow-apple text-[#5eead4] mb-3">
+              <div className="eyebrow-apple text-primary mb-3">
                 INVESTMENT TOOL
               </div>
-              <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
+              <h2 className="text-3xl md:text-4xl font-semibold text-foreground tracking-tight mb-3">
                 {headline}
               </h2>
-              <p className="body-apple-dark mb-3 max-w-xl">{subheadline}</p>
-              <p className="text-sm text-white/55 mb-6 max-w-xl">
+              <p className="nest-lead mb-3 max-w-xl">{subheadline}</p>
+              <p className="text-sm text-muted-foreground mb-6 max-w-xl">
                 Estimate cash flow, rent, expenses, financing, and potential
                 returns before you move forward.
               </p>
@@ -76,13 +76,13 @@ const AnalyzePropertyHero = ({
                 </Link>
                 <Link
                   to={browseHref}
-                  className="btn-secondary-apple-dark inline-flex items-center gap-2"
+                  className="nest-quiet-link inline-flex items-center gap-2"
                 >
                   Browse Investment Listings
                 </Link>
               </div>
 
-              <div className="text-xs text-white/45 mt-4">
+              <div className="text-xs text-muted-foreground mt-4">
                 Built for local buyers, investors, landlords, and real estate
                 professionals.
               </div>
@@ -93,11 +93,11 @@ const AnalyzePropertyHero = ({
               {chips.map(({ icon: Icon, label }) => (
                 <div
                   key={label}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-sm"
+                  className="rounded-2xl border border-border bg-secondary p-4 backdrop-blur-sm"
                 >
-                  <Icon className="w-5 h-5 text-[#5eead4] mb-2" />
-                  <div className="text-sm font-semibold text-white">{label}</div>
-                  <div className="text-[11px] text-white/55 mt-0.5">
+                  <Icon className="w-5 h-5 text-primary mb-2" />
+                  <div className="text-sm font-semibold text-foreground">{label}</div>
+                  <div className="text-[11px] text-muted-foreground mt-0.5">
                     Instant estimate
                   </div>
                 </div>

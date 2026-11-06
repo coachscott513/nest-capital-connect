@@ -27,9 +27,9 @@ const PRICING_URL = "/pricing";
 
 // Warm editorial white — Apple-style, never pure #fff.
 const PAPER = "#F6F5F2";
-const INK = "#0e0f12";
-const TEAL = "#0d6e66";
-const TEAL_ACCENT = "#0d6e66";
+const INK = "var(--nest-brand-white)";
+const TEAL = "var(--nest-brand-blue)";
+const TEAL_ACCENT = "var(--nest-brand-blue)";
 
 const trustBadges = [
   "Free profile available",
@@ -139,22 +139,22 @@ const BrowserMockup = () => (
         </div>
       </div>
       {/* Content preview — the actual Roosevelt Room hero */}
-      <div className="relative aspect-[4/3] bg-[#0B0F19] overflow-hidden">
+      <div className="relative aspect-[4/3] bg-background overflow-hidden">
         <img
           src={rooseveltHero.url}
           alt="Capital District Nest spotlight page for The Roosevelt Room"
           className="absolute inset-0 w-full h-full object-cover"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19]/40 via-transparent to-[#0B0F19]/70" />
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
-          <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-[#5eead4]">
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/70" />
+        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-foreground">
+          <p className="text-[10px] font-semibold tracking-[0.28em] uppercase text-primary">
             Capital District Nest · Spotlight
           </p>
           <h3 className="mt-2 text-2xl md:text-3xl font-semibold tracking-[-0.03em]">
             The Roosevelt Room
           </h3>
-          <p className="mt-1 text-xs md:text-sm text-white/75">North Greenbush, NY</p>
+          <p className="mt-1 text-xs md:text-sm text-muted-foreground">North Greenbush, NY</p>
         </div>
       </div>
     </div>
@@ -167,8 +167,8 @@ const BrowserMockup = () => (
       <div className="aspect-[4/3] relative">
         <img src={cassoneHero.url} alt="Cassone spotlight preview" className="w-full h-full object-cover" loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0e0f12]/70 to-transparent" />
-        <div className="absolute bottom-2 left-3 right-3 text-white">
-          <p className="text-[9px] font-semibold tracking-[0.24em] uppercase text-[#5eead4]">Spotlight</p>
+        <div className="absolute bottom-2 left-3 right-3 text-foreground">
+          <p className="text-[9px] font-semibold tracking-[0.24em] uppercase text-primary">Spotlight</p>
           <p className="text-sm font-semibold tracking-tight">Cassone</p>
         </div>
       </div>
@@ -187,7 +187,7 @@ const ForBusinesses = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <Helmet>
         <title>For Local Businesses | Capital District Nest</title>
         <meta
@@ -239,7 +239,7 @@ const ForBusinesses = () => {
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
               <Link
                 to={APPLY_URL}
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-foreground transition-transform hover:-translate-y-0.5"
                 style={{ background: TEAL, boxShadow: "0 12px 30px -12px rgba(13,110,102,0.55)" }}
               >
                 Tell Your Story <ArrowRight className="w-4 h-4" />
@@ -293,7 +293,7 @@ const ForBusinesses = () => {
       <section className="relative py-24 md:py-32 border-t border-white/[0.06]">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10 mb-10 md:mb-14 flex items-end justify-between gap-6">
           <div>
-            <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-[#5eead4]">
+            <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-primary">
               The Showcase
             </p>
             <h2 className="mt-3 text-4xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
@@ -304,14 +304,14 @@ const ForBusinesses = () => {
             <button
               aria-label="Previous"
               onClick={() => scrollBy(-1)}
-              className="w-11 h-11 rounded-full border border-white/15 hover:border-white/40 flex items-center justify-center transition"
+              className="w-11 h-11 rounded-full border border-border hover:border-border flex items-center justify-center transition"
             >
               <ArrowRight className="w-4 h-4 rotate-180" />
             </button>
             <button
               aria-label="Next"
               onClick={() => scrollBy(1)}
-              className="w-11 h-11 rounded-full border border-white/15 hover:border-white/40 flex items-center justify-center transition"
+              className="w-11 h-11 rounded-full border border-border hover:border-border flex items-center justify-center transition"
             >
               <ArrowRight className="w-4 h-4" />
             </button>
@@ -326,7 +326,7 @@ const ForBusinesses = () => {
             <Link
               key={item.title}
               to={item.href}
-              className="snap-start group relative shrink-0 w-[86vw] md:w-[62vw] lg:w-[720px] aspect-[4/5] md:aspect-[16/11] rounded-[28px] overflow-hidden border border-white/[0.08] hover:border-white/25 transition"
+              className="snap-start group relative shrink-0 w-[86vw] md:w-[62vw] lg:w-[720px] aspect-[4/5] md:aspect-[16/11] rounded-[28px] overflow-hidden border border-white/[0.08] hover:border-border transition"
             >
               <img
                 src={item.image}
@@ -334,18 +334,18 @@ const ForBusinesses = () => {
                 className="absolute inset-0 w-full h-full object-cover transition duration-[900ms] group-hover:scale-[1.03]"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-[#0B0F19]/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
               <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
-                <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4]">
+                <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.3em] uppercase text-primary">
                   {item.eyebrow}
                 </p>
                 <h3 className="mt-3 text-2xl md:text-4xl font-semibold tracking-[-0.03em] leading-[1.05] max-w-xl">
                   {item.title}
                 </h3>
-                <p className="mt-4 text-white/70 text-[15px] md:text-base font-light leading-relaxed max-w-lg">
+                <p className="mt-4 text-muted-foreground text-[15px] md:text-base font-light leading-relaxed max-w-lg">
                   {item.body}
                 </p>
-                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/95 group-hover:gap-3 transition-all">
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground group-hover:gap-3 transition-all">
                   {item.cta} <ArrowUpRight className="w-4 h-4" />
                 </span>
               </div>
@@ -356,12 +356,12 @@ const ForBusinesses = () => {
 
       {/* TRUST STRIP */}
       <section className="px-6 md:px-10 pb-24">
-        <div className="max-w-6xl mx-auto rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl px-6 py-6 md:px-10 md:py-7">
+        <div className="max-w-6xl mx-auto rounded-2xl border border-white/[0.08] bg-secondary backdrop-blur-xl px-6 py-6 md:px-10 md:py-7">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-3">
             {trustBadges.map((b) => (
               <div key={b} className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#5eead4] flex-shrink-0" />
-                <span className="text-[12px] md:text-[13px] font-medium text-white/85">{b}</span>
+                <CheckCircle2 className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                <span className="text-[12px] md:text-[13px] font-medium text-muted-foreground">{b}</span>
               </div>
             ))}
           </div>
@@ -369,20 +369,20 @@ const ForBusinesses = () => {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="px-6 md:px-10 py-24 border-y border-white/[0.06] bg-white/[0.015]">
+      <section className="px-6 md:px-10 py-24 border-y border-white/[0.06] bg-secondary">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4]">How It Works</span>
+            <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-primary">How It Works</span>
             <h2 className="mt-3 text-4xl md:text-5xl font-semibold tracking-[-0.02em]">Three simple steps.</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {howItWorks.map((s, i) => (
-              <div key={s.title} className="rounded-3xl border border-white/[0.08] bg-white/[0.03] p-8">
-                <div className="w-10 h-10 rounded-full bg-[#0d6e66]/20 border border-[#0d6e66]/40 flex items-center justify-center text-[#5eead4] font-semibold text-sm mb-5">
+              <div key={s.title} className="rounded-3xl border border-white/[0.08] bg-secondary p-8">
+                <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center text-primary font-semibold text-sm mb-5">
                   {i + 1}
                 </div>
                 <h3 className="text-xl font-semibold tracking-tight">{s.title}</h3>
-                <p className="mt-3 text-white/65 leading-relaxed text-[15px]">{s.body}</p>
+                <p className="mt-3 text-muted-foreground leading-relaxed text-[15px]">{s.body}</p>
               </div>
             ))}
           </div>
@@ -393,23 +393,23 @@ const ForBusinesses = () => {
       <section className="px-6 md:px-10 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4] px-3 py-1 rounded-full bg-[#5eead4]/10 border border-[#5eead4]/20">
+            <span className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.22em] uppercase text-primary px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
               Coming Soon
             </span>
             <h2 className="mt-4 text-4xl md:text-5xl font-semibold tracking-[-0.02em]">
               What we're building next.
             </h2>
-            <p className="mt-4 text-white/60 max-w-2xl mx-auto">
+            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
               Features we're actively developing. Available to profiles as they roll out.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {upcomingFeatures.map(({ icon: Icon, label }) => (
-              <div key={label} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur p-6">
-                <div className="w-9 h-9 rounded-full bg-[#0d6e66]/20 border border-[#0d6e66]/40 flex items-center justify-center mb-4">
-                  <Icon className="w-4 h-4 text-[#5eead4]" />
+              <div key={label} className="rounded-2xl border border-white/[0.08] bg-secondary backdrop-blur p-6">
+                <div className="w-9 h-9 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center mb-4">
+                  <Icon className="w-4 h-4 text-primary" />
                 </div>
-                <p className="text-sm font-medium text-white/90">{label}</p>
+                <p className="text-sm font-medium text-muted-foreground">{label}</p>
               </div>
             ))}
           </div>
@@ -426,19 +426,19 @@ const ForBusinesses = () => {
           <h2 className="text-5xl md:text-7xl font-semibold tracking-[-0.03em] leading-[1.03]">
             Your business deserves more than a listing.
           </h2>
-          <p className="mt-8 text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-8 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Join the Capital District's growing collection of independently owned businesses, local stories, and trusted recommendations.
           </p>
           <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to={APPLY_URL}
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#0d6e66] hover:bg-[#0d6e66]/90 text-white text-sm font-semibold transition"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold transition"
             >
               Tell Your Story <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to={PRICING_URL}
-              className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition underline underline-offset-4 decoration-white/20"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition underline underline-offset-4 decoration-white/20"
             >
               View Pricing
             </Link>

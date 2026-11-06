@@ -101,7 +101,7 @@ const SearchCommandCenter = () => {
                 transition-all duration-300 shrink-0
                 ${selectedType === pill.id 
                   ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30" 
-                  : "glass hover:bg-primary/20 text-foreground"
+                  : "glass hover:bg-primary/20 text-primary-foreground"
                 }
               `}
               style={{
