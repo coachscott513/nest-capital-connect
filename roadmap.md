@@ -1,6 +1,6 @@
 # Phase One redesign
-- [ ] Correct homepage and visible chrome to exact Coach One Media font/palette without changing layout/content/search.
-- [ ] Verify loaded Geist, desktop/mobile appearance, CTA routes and directory filters; report preview and revision, no publishing.
+- [x] Correct homepage and visible chrome to exact Coach One Media font/palette without changing layout/content/search.
+- [x] Verify loaded Geist 300/400/500, desktop/mobile screenshots at 1440/390/320, unchanged four CTA routes, real Ambition/Schenectady results and Restaurant town/category URL; 13 search tests passed, preview build OK. No publishing.
 - [x] Inspect existing search, routes, records, and reference designs: 5,082 active business records verified read-only.
 - [x] Redesign homepage with directory-first search and four editorial sections; preserve existing pages and records.
 - [x] Verify desktop/mobile search, CTA destinations, and existing listing/claim access.
