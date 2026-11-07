@@ -820,7 +820,21 @@ body.has-nest-brand { background: var(--nest-brand-white) !important; }
   .nest-editorial-home [data-entered] .nest-entry:focus-within { animation: none; }
   .nest-service-map[data-entered] path[data-path="trunk"] { --nest-path-index: 0; }
   .nest-service-map[data-entered] path { animation: nest-path-entry 1.4s ease both; animation-delay: calc(var(--nest-path-index) * 180ms); }
-  .nest-service-map[data-entered] .nest-map-node { min-height: 56px; display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: 1px solid color-mix(in oklch,var(--nest-brand-blue-soft) 50%,transparent); background: color-mix(in oklch,var(--nest-brand-ink) 55%,transparent); backdrop-filter: blur(14px); font-size: 16px; line-height: 1.3; transition: background .2s, border-color .2s; }
+  .nest-service-map[data-entered] .nest-map-node { animation: nest-text-entry .55s ease backwards; animation-delay: calc(180ms + var(--nest-path-index) * 180ms); }
+  .nest-service-map[data-entered] .nest-map-node:focus { animation: none; }
+}
+.nest-services-composition { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 64px; align-items: center; }
+.nest-services-composition .nest-feature-copy { grid-column: 2; grid-row: 1; }
+.nest-service-map { grid-column: 1; grid-row: 1; max-width: 440px; width: 100%; color: var(--nest-brand-white); padding: 28px; border-radius: 24px; background: color-mix(in oklch,var(--nest-brand-ink) 54%,transparent); border: 1px solid color-mix(in oklch,var(--nest-brand-white) 18%,transparent); backdrop-filter: blur(10px); }
+.nest-map-heading { font-size: 18px; font-weight: 400; margin-bottom: 20px; }
+.nest-map-diagram { position: relative; }
+.nest-service-map path { fill: none; stroke: var(--nest-brand-blue-bright); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 0; opacity: .7; transition: opacity .2s, stroke-width .2s; }
+.nest-service-map path[data-active="true"] { opacity: 1; stroke-width: 3; }
+.nest-map-hub { position: relative; width: max-content; max-width: 100%; min-height: 48px; display: flex; align-items: center; padding: 12px 20px; border-radius: 24px; background: color-mix(in oklch,var(--nest-brand-white) 94%,transparent); color: var(--nest-brand-foreground); font-weight: 500; font-size: 16px; }
+.nest-map-nodes { position: relative; padding-left: 52px; padding-top: 22px; display: flex; flex-direction: column; gap: 16px; }
+.nest-map-trunk { position: absolute; left: 24px; top: 0; height: calc(100% - 28px); width: 2px; overflow: visible; }
+.nest-map-branch { position: absolute; left: -29px; bottom: 50%; width: 29px; height: calc(50% + 16px); overflow: visible; pointer-events: none; }
+.nest-map-node { position: relative; min-height: 56px; display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: 1px solid color-mix(in oklch,var(--nest-brand-blue-soft) 50%,transparent); background: color-mix(in oklch,var(--nest-brand-ink) 55%,transparent); backdrop-filter: blur(14px); font-size: 16px; line-height: 1.3; transition: background .2s, border-color .2s; }
 .nest-map-node > svg:not(.nest-map-branch) { width: 18px; height: 18px; flex-shrink: 0; color: var(--nest-brand-blue-bright); }
 .nest-map-node > svg:last-of-type { margin-left: auto; }
 .nest-map-node small { display: block; font-size: 12px; color: var(--nest-brand-blue-soft); margin-top: 3px; }
