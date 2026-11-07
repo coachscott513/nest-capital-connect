@@ -1083,3 +1083,9 @@ body.nest-brand [role="dialog"], body.nest-brand [data-radix-popper-content-wrap
 /* Explicit text-on-photo islands inside light templates (cards with a dark scrim). */
 .nest-on-photo, .nest-on-photo :is(h2,h3,h4,p,span,a,li) { color: var(--nest-brand-white) !important; }
 .nest-on-photo [class*="muted"] { color: color-mix(in oklch, var(--nest-brand-white) 80%, transparent) !important; }
+/* Directory search module in the light public system */
+body.nest-brand .search-module { background: var(--nest-brand-white) !important; border: 1px solid var(--nest-brand-border) !important; box-shadow: 0 20px 50px -30px color-mix(in oklch, var(--nest-brand-ink) 35%, transparent) !important; }
+body.nest-brand .search-input-surface { background: var(--nest-brand-ice) !important; border: 1px solid var(--nest-brand-input) !important; color: var(--nest-brand-foreground) !important; }
+body.nest-brand .search-input-surface :is(input,select,option,span,p) { color: var(--nest-brand-foreground) !important; }
+body.nest-brand .search-input-surface :is(input)::placeholder { color: var(--nest-brand-muted) !important; }
+body.nest-brand .search-input-surface:focus-within { border-color: var(--nest-brand-blue-bright) !important; box-shadow: 0 0 0 3px color-mix(in oklch, var(--nest-brand-blue-bright) 25%, transparent) !important; }
