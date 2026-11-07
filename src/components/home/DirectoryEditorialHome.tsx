@@ -1,8 +1,8 @@
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, ArrowUpRight, MapPin, Search, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Reveal from "@/components/Reveal";
+
 import PropertyHero from "@/components/home/PropertyHero";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import { homeDirectorySearch } from "@/lib/homeDirectorySearch";
@@ -52,6 +52,18 @@ export default function DirectoryEditorialHome() {
   const [query, setQuery] = useState("");
   const [town, setTown] = useState("");
   const [category, setCategory] = useState("");
+  const [activeFeature, setActiveFeature] = useState(0);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const active = features[activeFeature];
+  const selectWithKeys = (event: KeyboardEvent, index: number) => {
+    const next = event.key === "ArrowRight" ? (index + 1) % features.length
+      : event.key === "ArrowLeft" ? (index + features.length - 1) % features.length
+      : event.key === "Home" ? 0 : event.key === "End" ? features.length - 1 : undefined;
+    if (next === undefined) return;
+    event.preventDefault();
+    setActiveFeature(next);
+    tabRefs.current[next]?.focus();
+  };
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
@@ -101,23 +113,61 @@ export default function DirectoryEditorialHome() {
         <a href="#discover-businesses" className="nest-hero-next flex items-center gap-3 text-sm text-foreground/80">There’s more here <ChevronDown className="h-4 w-4" /></a>
       </section>
 
-      {features.map((feature, index) => (
-        <section id={feature.id} key={feature.id} className={`nest-editorial-feature relative isolate overflow-hidden ${index % 2 ? "nest-feature-right" : ""}`} aria-labelledby={`${feature.id}-title`}>
-          <img src={feature.image} alt="" loading="lazy" className="nest-photo-lift absolute inset-0 -z-20 h-full w-full object-cover" />
-          <div className="nest-feature-shade absolute inset-0 -z-10" />
-          <div className="nest-editorial-inner">
-            <Reveal className="nest-feature-copy">
-              <div className="flex items-center gap-4"><span className="text-sm text-accent">{feature.number}</span><p className="eyebrow-apple text-foreground/80">{feature.eyebrow}</p></div>
-              <h2 id={`${feature.id}-title`} className="h-section nest-display mt-6 whitespace-pre-line">{feature.title}</h2>
-              <p className="nest-intro mt-6 max-w-lg text-foreground/80">{feature.copy}</p>
-              <div className="cta-anchor"><Button asChild className="btn-dark-cta cta-arrow"><Link to={feature.to}>{feature.cta}<ArrowRight /></Link></Button></div>
-              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">{feature.links.map((link) => <Link key={link.to} to={link.to} className="nest-inline-link inline-flex min-h-11 items-center gap-2 text-sm">{link.label}<ArrowUpRight className="h-3.5 w-3.5 shrink-0" /></Link>)}</div>
-              {index === 2 && <Link to="/homes" className="nest-inline-link mt-2 inline-flex min-h-11 items-center gap-2 text-sm">Search live homes<ArrowRight className="h-4 w-4" /></Link>}
-              {index === 3 && <a href="https://coachonemedia.com" target="_blank" rel="noopener noreferrer" className="nest-inline-link mt-4 inline-flex min-h-11 items-center gap-2 text-sm text-foreground/70">Digital services by Coach One Media<ArrowUpRight className="h-3.5 w-3.5" /><span className="sr-only"> (opens in a new tab)</span></a>}
-            </Reveal>
+      <section className="nest-starting-points" aria-labelledby="starting-points-title">
+        <div className="nest-editorial-inner">
+          <div className="nest-section-heading">
+            <p className="eyebrow-apple">Make it local</p>
+            <h2 id="starting-points-title" className="h-section nest-display">Three ways to begin.</h2>
+            <p className="nest-intro">Find your people. Build your presence. Make your next move.</p>
           </div>
-        </section>
-      ))}
+          <div className="nest-journey-grid">
+            {features.slice(0, 3).map((feature) => (
+              <article id={feature.id} key={feature.id} className="nest-journey-card" aria-labelledby={`${feature.id}-title`}>
+                <img src={feature.image} alt="" loading="lazy" />
+                <div className="nest-journey-body">
+                  <p className="eyebrow-apple">{feature.eyebrow}</p>
+                  <h3 id={`${feature.id}-title`}>{feature.title.replace("\n", " ")}</h3>
+                  <p>{feature.copy}</p>
+                  <Button asChild className="btn-primary-apple cta-arrow"><Link to={feature.to}>{feature.cta}<ArrowRight /></Link></Button>
+                  <div className="nest-card-links">{feature.links.map((link) => <Link key={link.to} to={link.to} className="nest-inline-link">{link.label}<ArrowUpRight className="h-3.5 w-3.5 shrink-0" /></Link>)}</div>
+                  {feature.id === "buy-sell-invest" && <Link to="/homes" className="nest-inline-link">Search live homes<ArrowRight className="h-4 w-4" /></Link>}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="business-services" className="nest-showcase" aria-labelledby="business-services-title">
+        <div className="nest-editorial-inner nest-showcase-heading">
+          <p className="eyebrow-apple">Capital District possibilities</p>
+          <h2 id="business-services-title" className="h-section nest-display">Local connections.<br />Bigger possibilities.</h2>
+          <div role="tablist" aria-label="Explore Capital District possibilities" className="nest-feature-tabs">
+            {features.map((feature, index) => (
+              <Button variant="ghost" key={feature.id} role="tab" id={`nest-tab-${index}`} aria-controls="nest-feature-panel" aria-selected={activeFeature === index} tabIndex={activeFeature === index ? 0 : -1}
+                ref={(element) => { tabRefs.current[index] = element; }} onClick={() => setActiveFeature(index)} onKeyDown={(event) => selectWithKeys(event, index)} className="nest-feature-tab">
+                {["Discover local", "Grow a business", "Commercial & multifamily", "Business services"][index]}
+              </Button>
+            ))}
+          </div>
+        </div>
+        <div id="nest-feature-panel" role="tabpanel" aria-labelledby={`nest-tab-${activeFeature}`} tabIndex={0} className="nest-feature-stage">
+          <div className="nest-stage-photos" aria-hidden="true">{features.map((feature, index) => <img key={feature.id} src={feature.image} alt="" loading="lazy" className={activeFeature === index ? "is-active" : ""} />)}</div>
+          <div className="nest-stage-shade" />
+          <div className="nest-editorial-inner nest-stage-content">
+            <div className="nest-stage-copy" key={active.id}>
+              <p className="nest-feature-statement">{active.title.replace("\n", " ")}</p>
+              <p className="nest-intro">{active.copy}</p>
+              <Button asChild className="btn-primary-apple cta-arrow mt-7"><Link to={active.to}>{active.cta}<ArrowRight /></Link></Button>
+              <div className="nest-stage-links">{active.links.map((link) => <Link key={link.to} to={link.to} className="nest-inline-link">{link.label}<ArrowUpRight className="h-3.5 w-3.5" /></Link>)}</div>
+            </div>
+          </div>
+        </div>
+        <div className="nest-editorial-inner nest-coach-connection">
+          <p>Websites. Branding. Marketing. The right support for what’s next.</p>
+          <a href="https://coachonemedia.com" target="_blank" rel="noopener noreferrer" className="nest-inline-link">Digital services by Coach One Media<ArrowUpRight className="h-4 w-4" /><span className="sr-only"> (opens in a new tab)</span></a>
+        </div>
+      </section>
 
       <div className="nest-home-resources bg-surface-deep">
         <div className="nest-editorial-inner py-12">
