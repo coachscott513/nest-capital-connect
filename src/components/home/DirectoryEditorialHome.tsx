@@ -110,7 +110,7 @@ export default function DirectoryEditorialHome() {
           <div className={`nest-editorial-inner ${index === 3 ? "nest-services-composition" : ""}`}>
             <div className="nest-feature-copy">
               <div className="nest-entry nest-step-0 flex items-center gap-4"><span className="text-sm text-accent">{feature.number}</span><p className="eyebrow-apple text-foreground/80">{feature.eyebrow}</p></div>
-              <h2 id={`${feature.id}-title`} className="h-section nest-display mt-6 whitespace-pre-line"><span className="nest-entry nest-step-1">{feature.title.split("\n")[0]}</span>{"\n"}<span className="nest-entry nest-step-2 nest-pillar-emphasis">{feature.title.split("\n")[1]}</span></h2>
+              <h2 id={`${feature.id}-title`} className="h-section nest-display mt-6 whitespace-pre-line"><span className="nest-entry nest-step-1">{feature.title.split("\n")[0]}</span><span className="nest-entry nest-step-2 nest-pillar-emphasis">{feature.title.split("\n")[1]}</span></h2>
               <p className="nest-intro nest-entry nest-step-3 mt-6 max-w-lg text-foreground/80">{feature.copy}</p>
               <div className="cta-anchor nest-entry nest-step-4"><Button asChild className="btn-dark-cta cta-arrow"><Link to={feature.to}>{feature.cta}<ArrowRight /></Link></Button></div>
               <div className="nest-entry nest-step-5 mt-6 flex flex-wrap gap-x-6 gap-y-2">{feature.links.map((link) => <Link key={link.to} to={link.to} className="nest-inline-link inline-flex min-h-11 items-center gap-2 text-sm">{link.label}<ArrowUpRight className="h-3.5 w-3.5 shrink-0" /></Link>)}</div>
