@@ -1,6 +1,6 @@
 # Phase One redesign
-- [ ] Add homepage-only staged text entry and a linked animated service map inside Business Services; retain four pillars/search.
-- [ ] Verify timings/fallbacks, all heroes/map at 1440/390/320, real search, unit tests and compilation; save screenshots and QA note, no publish.
+- [x] Add homepage-only staged text entry and a linked animated service map inside Business Services; retain four pillars/search.
+- [x] Verify timings/fallbacks, all heroes/map at 1440/390/320, real search, unit tests and compilation; save and inspect screenshots and QA note, no publish.
 - [x] Restore one search hero plus four independent full-width pillars; remove rejected three-card/combined-tab replacement, preserve all messages and contracts.
 - [x] Verify all four at 1440/390, 320 overflow, reduced motion, real filtered search and RealScout disclosure; save and visually inspect four-section contact sheets and actual mobile page capture. 13 search tests passed, preview compilation OK, no publish.
 - [x] Correct homepage and visible chrome to exact Coach One Media font/palette without changing layout/content/search.
