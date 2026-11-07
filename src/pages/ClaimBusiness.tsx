@@ -622,7 +622,7 @@ const ClaimBusiness = () => {
               type="button"
               onClick={() => selectTierAndScroll("anchor")}
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-[13px] font-semibold whitespace-nowrap hover:opacity-90 transition"
-              style={{ background: "#e5e4e2", color: "var(--nest-brand-white)" }}
+              style={{ background: "var(--nest-brand-ice-deep)", color: "var(--nest-brand-ink)" }}
             >
               {requestedTier === "anchor" ? "Selected — Continue Below" : "Apply as Anchor"} <ArrowUpRight className="w-4 h-4" />
             </button>

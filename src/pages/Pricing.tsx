@@ -228,7 +228,7 @@ const Pricing = () => {
           >
             <span
               className="absolute -top-3 left-7 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
-              style={{ background: PLATINUM, color: "var(--nest-brand-white)" }}
+              style={{ background: "var(--nest-brand-ice-deep)", color: "var(--nest-brand-ink)" }}
             >
               <Crown className="w-3 h-3" /> Enterprise · Anchor Partner
             </span>
@@ -248,7 +248,7 @@ const Pricing = () => {
             <a
               href="/claim-business?tier=anchor"
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-[13px] font-semibold whitespace-nowrap hover:opacity-90 transition"
-              style={{ background: PLATINUM, color: "var(--nest-brand-white)" }}
+              style={{ background: "var(--nest-brand-ice-deep)", color: "var(--nest-brand-ink)" }}
             >
               <Crown className="w-4 h-4" /> Apply as Anchor Partner
               <ArrowRight className="w-4 h-4" />
