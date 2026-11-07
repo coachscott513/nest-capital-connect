@@ -18,6 +18,7 @@ import HomesServicesGrid from "@/components/homes/HomesServicesGrid";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 import AnalyzePropertyHero from "@/components/homes/AnalyzePropertyHero";
 import { HOMES_TOWNS } from "@/data/homesTowns";
+import homesHeroImg from "@/assets/22-lavery-drive-front.jpg";
 
 const MULTI_UNIT = [
   { label: "Multi-Unit Income Properties", icon: Building2, href: "/homes/listings?type=multi_unit" },
@@ -47,23 +48,15 @@ const HomesHub = () => {
       <CleanHeader />
 
       {/* HERO */}
-      <section className="relative px-[5%] pt-28 pb-20 overflow-hidden border-b border-border">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              "radial-gradient(55% 55% at 50% 30%, rgba(94,234,212,0.12), transparent 65%), radial-gradient(45% 60% at 80% 80%, rgba(13,110,102,0.18), transparent 70%)",
-          }}
-        />
-        <div className="max-w-5xl mx-auto text-center">
+      <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+        <div className="  ">
           <div className="eyebrow-apple text-primary mb-4">
             CAPITAL DISTRICT NEST HOMES
           </div>
-          <h1 className="h-hero text-foreground mb-5">
+          <h1 className="nest-display-page">
             New town listings across the Capital District.
           </h1>
-          <p className="nest-lead max-w-3xl mx-auto mb-3">
+          <p className="nest-lead   mb-3">
             Capital District Nest organizes local property links, listing
             agents, brokerages, rentals, open houses, and real estate services
             by town.
@@ -71,7 +64,7 @@ const HomesHub = () => {
           <p className="text-sm text-muted-foreground mb-10">
             We organize the local market. The inquiry goes to the listing source.
           </p>
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap  gap-3">
             <a href="#town-listings" className="btn-primary-apple">
               Browse Town Listings <ArrowRight className="w-4 h-4" />
             </a>
@@ -80,7 +73,7 @@ const HomesHub = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </div><div className="nest-split-media nest-rise nest-rise--late"><img src={homesHeroImg} alt="Capital District" loading="eager" /></div></div></section>
 
       {/* INVESTMENT ANALYZER HERO */}
       <AnalyzePropertyHero browseHref="/homes/listings?type=investment" />
