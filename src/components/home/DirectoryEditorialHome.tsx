@@ -2,6 +2,8 @@ import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, ArrowUpRight, MapPin, Search, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import NestServiceMap from "@/components/home/NestServiceMap";
+import { useHomepageEntry } from "@/components/home/useHomepageEntry";
 import PropertyHero from "@/components/home/PropertyHero";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import { homeDirectorySearch } from "@/lib/homeDirectorySearch";
@@ -48,6 +50,7 @@ const features = [
 
 export default function DirectoryEditorialHome() {
   const navigate = useNavigate();
+  const entryRoot = useHomepageEntry();
   const [query, setQuery] = useState("");
   const [town, setTown] = useState("");
   const [category, setCategory] = useState("");
@@ -59,14 +62,14 @@ export default function DirectoryEditorialHome() {
   };
 
   return (
-    <main id="main-content" className="nest-editorial-home">
-      <section className="nest-discovery-hero relative isolate overflow-hidden" aria-labelledby="discovery-title">
+    <main ref={entryRoot} id="main-content" className="nest-editorial-home">
+      <section className="nest-discovery-hero relative isolate overflow-hidden" aria-labelledby="discovery-title" data-entry-group>
         <img src={regionalPhoto} alt="Historic brick buildings along the waterfront in Troy, New York" className="nest-photo-lift absolute inset-0 -z-20 h-full w-full object-cover" fetchPriority="high" />
         <div className="nest-hero-shade absolute inset-0 -z-10" />
         <div className="nest-editorial-inner relative">
-          <p className="eyebrow-apple text-accent">Capital District Nest</p>
-          <h1 id="discovery-title" className="h-hero nest-display mt-6 max-w-4xl">Discover more of<br className="hidden sm:block" /> the Capital District.</h1>
-          <p className="nest-intro mt-6 max-w-xl text-foreground/80">Local businesses. New possibilities.<br />One place to begin.</p>
+          <p className="eyebrow-apple text-accent nest-entry nest-step-0">Capital District Nest</p>
+          <h1 id="discovery-title" className="h-hero nest-display mt-6 max-w-4xl"><span className="nest-entry nest-step-1">Discover more of</span>{" "}<span className="nest-entry nest-step-2 nest-pillar-emphasis">the Capital District.</span></h1>
+          <p className="nest-intro nest-entry nest-step-3 mt-6 max-w-xl text-foreground/80">Local businesses. New possibilities.<br />One place to begin.</p>
 
           <form onSubmit={submit} role="search" aria-label="Search the local business directory" className="mt-9 max-w-4xl">
             <div className="nest-directory-search flex items-center gap-3 rounded-full p-2 pl-5 sm:pl-7">
@@ -101,19 +104,20 @@ export default function DirectoryEditorialHome() {
       </section>
 
       {features.map((feature, index) => (
-        <section id={feature.id} key={feature.id} className={`nest-editorial-feature relative isolate overflow-hidden ${index % 2 ? "nest-feature-right" : ""}`} aria-labelledby={`${feature.id}-title`}>
+        <section id={feature.id} key={feature.id} className={`nest-editorial-feature relative isolate overflow-hidden ${index % 2 ? "nest-feature-right" : ""}`} aria-labelledby={`${feature.id}-title`} data-entry-group>
           <img src={feature.image} alt="" loading="lazy" className="nest-photo-lift absolute inset-0 -z-20 h-full w-full object-cover" />
           <div className="nest-feature-shade absolute inset-0 -z-10" />
-          <div className="nest-editorial-inner">
+          <div className={`nest-editorial-inner ${index === 3 ? "nest-services-composition" : ""}`}>
             <div className="nest-feature-copy">
-              <div className="flex items-center gap-4"><span className="text-sm text-accent">{feature.number}</span><p className="eyebrow-apple text-foreground/80">{feature.eyebrow}</p></div>
-              <h2 id={`${feature.id}-title`} className="h-section nest-display mt-6 whitespace-pre-line">{feature.title.split("\n")[0]}{"\n"}<span className="nest-pillar-emphasis">{feature.title.split("\n")[1]}</span></h2>
-              <p className="nest-intro mt-6 max-w-lg text-foreground/80">{feature.copy}</p>
-              <div className="cta-anchor"><Button asChild className="btn-dark-cta cta-arrow"><Link to={feature.to}>{feature.cta}<ArrowRight /></Link></Button></div>
-              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">{feature.links.map((link) => <Link key={link.to} to={link.to} className="nest-inline-link inline-flex min-h-11 items-center gap-2 text-sm">{link.label}<ArrowUpRight className="h-3.5 w-3.5 shrink-0" /></Link>)}</div>
+              <div className="nest-entry nest-step-0 flex items-center gap-4"><span className="text-sm text-accent">{feature.number}</span><p className="eyebrow-apple text-foreground/80">{feature.eyebrow}</p></div>
+              <h2 id={`${feature.id}-title`} className="h-section nest-display mt-6 whitespace-pre-line"><span className="nest-entry nest-step-1">{feature.title.split("\n")[0]}</span><span className="nest-entry nest-step-2 nest-pillar-emphasis">{feature.title.split("\n")[1]}</span></h2>
+              <p className="nest-intro nest-entry nest-step-3 mt-6 max-w-lg text-foreground/80">{feature.copy}</p>
+              <div className="cta-anchor nest-entry nest-step-4"><Button asChild className="btn-dark-cta cta-arrow"><Link to={feature.to}>{feature.cta}<ArrowRight /></Link></Button></div>
+              <div className="nest-entry nest-step-5 mt-6 flex flex-wrap gap-x-6 gap-y-2">{feature.links.map((link) => <Link key={link.to} to={link.to} className="nest-inline-link inline-flex min-h-11 items-center gap-2 text-sm">{link.label}<ArrowUpRight className="h-3.5 w-3.5 shrink-0" /></Link>)}</div>
               {index === 2 && <Link to="/homes" className="nest-inline-link mt-2 inline-flex min-h-11 items-center gap-2 text-sm">Search live homes<ArrowRight className="h-4 w-4" /></Link>}
               {index === 3 && <a href="https://coachonemedia.com" target="_blank" rel="noopener noreferrer" className="nest-inline-link mt-4 inline-flex min-h-11 items-center gap-2 text-sm text-foreground/70">Digital services by Coach One Media<ArrowUpRight className="h-3.5 w-3.5" /><span className="sr-only"> (opens in a new tab)</span></a>}
             </div>
+            {index === 3 && <NestServiceMap />}
           </div>
         </section>
       ))}

@@ -803,13 +803,68 @@ body.has-nest-brand { background: var(--nest-brand-white) !important; }
 /* Four independent photographic pillars; motion never hides content. */
 .nest-pillar-emphasis { color: var(--nest-brand-blue-bright); }
 .nest-editorial-feature > img { object-position: center; }
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .nest-feature-copy { animation: nest-pillar-entry linear both; animation-timeline: view(); animation-range: entry 0% entry 75%; }
-  }
+.nest-editorial-home .nest-entry { opacity: 1; transform: none; }
+.nest-editorial-home h1 .nest-entry, .nest-editorial-home h2 .nest-entry { display: block; }
+.nest-step-0 { --nest-entry-delay: 0ms; }
+.nest-step-1 { --nest-entry-delay: 90ms; }
+.nest-step-2 { --nest-entry-delay: 180ms; }
+.nest-step-3 { --nest-entry-delay: 270ms; }
+.nest-step-4 { --nest-entry-delay: 360ms; }
+.nest-step-5 { --nest-entry-delay: 450ms; }
+@keyframes nest-text-entry { from { opacity: .3; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes nest-photo-entry { from { transform: scale(1.025); } to { transform: scale(1); } }
+@keyframes nest-path-entry { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: no-preference) {
+  .nest-editorial-home [data-entered] .nest-entry { animation: nest-text-entry .55s cubic-bezier(.22,1,.36,1) var(--nest-entry-delay,0ms) backwards; }
+  .nest-editorial-home [data-entered] > .nest-photo-lift { animation: nest-photo-entry .9s ease-out; }
+  .nest-editorial-home [data-entered] .nest-entry:focus-within { animation: none; }
+  .nest-service-map[data-entered] path[data-path="trunk"] { --nest-path-index: 0; }
+  .nest-service-map[data-entered] path { animation: nest-path-entry 1.4s ease both; animation-delay: calc(var(--nest-path-index) * 180ms); }
+  .nest-service-map[data-entered] .nest-map-node { animation: nest-text-entry .55s ease backwards; animation-delay: calc(180ms + var(--nest-path-index) * 180ms); }
+  .nest-service-map[data-entered] .nest-map-node:focus { animation: none; }
 }
-@keyframes nest-pillar-entry { from { opacity: .88; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .nest-feature-copy { animation: none; transform: none; } }
+.nest-services-composition { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 64px; align-items: center; }
+.nest-services-composition .nest-feature-copy { grid-column: 2; grid-row: 1; }
+.nest-service-map { grid-column: 1; grid-row: 1; max-width: 440px; width: 100%; color: var(--nest-brand-white); padding: 28px; border-radius: 24px; background: color-mix(in oklch,var(--nest-brand-ink) 54%,transparent); border: 1px solid color-mix(in oklch,var(--nest-brand-white) 18%,transparent); backdrop-filter: blur(10px); }
+.nest-map-heading { font-size: 18px; font-weight: 400; margin-bottom: 20px; }
+.nest-map-diagram { position: relative; }
+.nest-service-map path { fill: none; stroke: var(--nest-brand-blue-bright); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 0; opacity: .7; transition: opacity .2s, stroke-width .2s; }
+.nest-service-map path[data-active="true"] { opacity: 1; stroke-width: 3; }
+.nest-map-hub { position: relative; width: max-content; max-width: 100%; min-height: 48px; display: flex; align-items: center; padding: 12px 20px; border-radius: 24px; background: color-mix(in oklch,var(--nest-brand-white) 94%,transparent); color: var(--nest-brand-foreground); font-weight: 500; font-size: 16px; }
+.nest-map-nodes { position: relative; padding-left: 52px; padding-top: 22px; display: flex; flex-direction: column; gap: 16px; }
+.nest-map-trunk { position: absolute; left: 24px; top: 0; height: calc(100% - 28px); width: 2px; overflow: visible; }
+.nest-map-branch { position: absolute; left: -29px; bottom: 50%; width: 29px; height: calc(50% + 16px); overflow: visible; pointer-events: none; }
+.nest-map-node { position: relative; min-height: 56px; display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: 1px solid color-mix(in oklch,var(--nest-brand-blue-soft) 50%,transparent); background: color-mix(in oklch,var(--nest-brand-ink) 55%,transparent); backdrop-filter: blur(14px); font-size: 16px; line-height: 1.3; transition: background .2s, border-color .2s; }
+.nest-map-node > svg:not(.nest-map-branch) { width: 18px; height: 18px; flex-shrink: 0; color: var(--nest-brand-blue-bright); }
+.nest-map-node > svg:last-of-type { margin-left: auto; }
+.nest-map-node small { display: block; font-size: 12px; color: var(--nest-brand-blue-soft); margin-top: 3px; }
+.nest-map-node:hover, .nest-map-node:focus-visible { background: color-mix(in oklch,var(--nest-brand-blue) 28%,var(--nest-brand-ink)); border-color: var(--nest-brand-blue-bright); }
+.nest-service-map [data-node="0"], .nest-service-map [data-path="0"] { --nest-path-index: 0; }
+.nest-service-map [data-node="1"], .nest-service-map [data-path="1"] { --nest-path-index: 1; }
+.nest-service-map [data-node="2"], .nest-service-map [data-path="2"] { --nest-path-index: 2; }
+.nest-service-map [data-node="3"], .nest-service-map [data-path="3"] { --nest-path-index: 3; }
+.nest-editorial-home #buy-sell-invest .nest-inline-link { text-decoration: underline; text-decoration-color: transparent; transition: color .2s, text-decoration-color .2s; }
+.nest-editorial-home #buy-sell-invest .nest-inline-link:is(:hover,:focus-visible,:active) { color: var(--nest-brand-blue-soft); text-decoration-color: var(--nest-brand-blue-bright); }
+.nest-editorial-home #buy-sell-invest .nest-inline-link svg { transition: transform .2s; }
+.nest-editorial-home #buy-sell-invest .nest-inline-link:is(:hover,:focus-visible,:active) svg { transform: translate(2px,-2px); }
+@media (max-width: 1023px) {
+  .nest-services-composition { display: flex; flex-direction: column; align-items: stretch; gap: 52px; }
+  .nest-services-composition .nest-feature-copy { margin-left: 0; }
+  .nest-service-map { margin-inline: auto; }
+}
+@media (max-width: 639px) {
+  .nest-services-composition { gap: 40px; }
+  .nest-map-node { font-size: 15px; gap: 8px; padding-inline: 10px; }
+  .nest-map-hub { font-size: 15px; padding-inline: 16px; }
+  .nest-service-map { padding: 20px 16px; }
+  .nest-map-nodes { padding-left: 40px; }
+  .nest-map-trunk { left: 18px; }
+  .nest-map-branch { left: -23px; width: 23px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nest-editorial-home .nest-entry, .nest-editorial-home .nest-photo-lift, .nest-map-node, .nest-service-map path { animation: none !important; opacity: 1; transform: none; stroke-dashoffset: 0; }
+  .nest-editorial-home #buy-sell-invest .nest-inline-link svg { transition: none; }
+}
 .nest-home-resources { background: var(--nest-brand-ice); color: var(--nest-brand-foreground); }
 .nest-home-resources .nest-inline-link:hover { color: var(--nest-brand-blue); }
 .nest-live-search[open] summary svg { transform: rotate(180deg); }
