@@ -1,5 +1,7 @@
 # Homepage QA — Nov 7, 2026
 
+**Historical / rejected presentation:** This report describes the three-card/combined-tab homepage rejected by Scott. Its screenshots are not the current design acceptance. See the four-pillar QA report for the restored architecture.
+
 Scope: homepage component and scoped stylesheet only, plus design/architecture notes and genuine QA captures. No inner-route, record, contact, form, SEO, analytics, RealScout configuration or integration changes. The rejected global white/split redesign was not restored.
 
 ## Confirmed
