@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import SEOHead from "@/components/SEOHead";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
@@ -9,6 +10,11 @@ import {
 } from "@/utils/seoSchemas";
 
 const Index = () => {
+  useEffect(() => {
+    document.body.classList.add("has-nest-brand");
+    return () => document.body.classList.remove("has-nest-brand");
+  }, []);
+
   return (
     <div className="nest-brand min-h-screen bg-background">
       <SEOHead

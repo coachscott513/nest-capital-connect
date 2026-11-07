@@ -3,8 +3,6 @@ import SEOHead from "@/components/SEOHead";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/MainLayout";
 import GuideLeadModal from "@/components/GuideLeadModal";
-import SplitHero from "@/components/brand/SplitHero";
-import investmentHero from "@/assets/deal-of-month-triplex.jpg";
 import { TrendingUp, DollarSign, BarChart3, MapPin, Calculator, ArrowRight } from "lucide-react";
 
 const InvestmentProperties = () => {
@@ -25,15 +23,17 @@ const InvestmentProperties = () => {
         guideType="investor-guide"
       />
 
-      <SplitHero
-        id="investment-properties"
-        titleAs="h1"
-        compact
-        eyebrow="Buy, Sell or Invest"
-        title="Capital District Investment Properties & Cash Flow Analysis"
-        lead="Building wealth through real estate starts with understanding the numbers. This guide covers everything you need to evaluate investment properties in the Capital District."
-        image={{ src: investmentHero, alt: "A Capital District triplex investment property" }}
-      />
+      {/* Hero Section */}
+      <section className="bg-card border-b border-border px-[5%] py-16">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+            Capital District Investment Properties & Cash Flow Analysis
+          </h1>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            Building wealth through real estate starts with understanding the numbers. This guide covers everything you need to evaluate investment properties in the Capital District.
+          </p>
+        </div>
+      </section>
 
       {/* Guide Coming Soon Banner */}
       <div className="bg-primary/5 border-b border-primary/20 px-[5%] py-4">

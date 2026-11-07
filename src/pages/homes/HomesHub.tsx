@@ -18,7 +18,6 @@ import HomesServicesGrid from "@/components/homes/HomesServicesGrid";
 import HomesDisclaimer from "@/components/homes/HomesDisclaimer";
 import AnalyzePropertyHero from "@/components/homes/AnalyzePropertyHero";
 import { HOMES_TOWNS } from "@/data/homesTowns";
-import homesHeroImg from "@/assets/22-lavery-drive-front.jpg";
 
 const MULTI_UNIT = [
   { label: "Multi-Unit Income Properties", icon: Building2, href: "/homes/listings?type=multi_unit" },
@@ -48,32 +47,40 @@ const HomesHub = () => {
       <CleanHeader />
 
       {/* HERO */}
-      <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
-        <div className="  ">
-          <div className="eyebrow-apple text-primary mb-4">
+      <section className="relative px-[5%] pt-28 pb-20 overflow-hidden border-b border-white/10">
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(55% 55% at 50% 30%, rgba(94,234,212,0.12), transparent 65%), radial-gradient(45% 60% at 80% 80%, rgba(13,110,102,0.18), transparent 70%)",
+          }}
+        />
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="eyebrow-apple text-[#5eead4] mb-4">
             CAPITAL DISTRICT NEST HOMES
           </div>
-          <h1 className="nest-display-page">
+          <h1 className="h-hero text-white mb-5">
             New town listings across the Capital District.
           </h1>
-          <p className="nest-lead   mb-3">
+          <p className="body-apple-dark max-w-3xl mx-auto mb-3">
             Capital District Nest organizes local property links, listing
             agents, brokerages, rentals, open houses, and real estate services
             by town.
           </p>
-          <p className="text-sm text-muted-foreground mb-10">
+          <p className="text-sm text-white/55 mb-10">
             We organize the local market. The inquiry goes to the listing source.
           </p>
-          <div className="flex flex-wrap  gap-3">
+          <div className="flex flex-wrap justify-center gap-3">
             <a href="#town-listings" className="btn-primary-apple">
               Browse Town Listings <ArrowRight className="w-4 h-4" />
             </a>
-            <Link to="/homes/add-listing" className="nest-quiet-link inline-flex items-center gap-2">
+            <Link to="/homes/add-listing" className="btn-secondary-apple-dark inline-flex items-center gap-2">
               <Plus className="w-4 h-4" /> Submit Listing Link
             </Link>
           </div>
         </div>
-      </div><div className="nest-split-media nest-rise nest-rise--late"><img src={homesHeroImg} alt="Capital District" loading="eager" /></div></div></section>
+      </section>
 
       {/* INVESTMENT ANALYZER HERO */}
       <AnalyzePropertyHero browseHref="/homes/listings?type=investment" />
@@ -83,14 +90,14 @@ const HomesHub = () => {
 
 
       {/* NEW LISTINGS BY TOWN — preview rail */}
-      <section className="px-[5%] py-20 bg-background border-t border-border">
+      <section className="px-[5%] py-20 bg-background border-t border-white/10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
-            <div className="eyebrow-apple text-primary mb-3">NEW LISTINGS BY TOWN</div>
-            <h2 className="text-3xl md:text-4xl font-semibold text-foreground tracking-tight mb-3">
+            <div className="eyebrow-apple text-[#5eead4] mb-3">NEW LISTINGS BY TOWN</div>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
               Fresh local property links grouped by town.
             </h2>
-            <p className="nest-lead max-w-2xl mx-auto">
+            <p className="body-apple-dark max-w-2xl mx-auto">
               Property submissions are opening to listing agents across the
               region. Open a town to see direct links to the listing source.
             </p>
@@ -100,7 +107,7 @@ const HomesHub = () => {
               <Link
                 key={t.slug}
                 to={`/homes/listings/${t.slug}`}
-                className="px-4 py-2 rounded-full border border-border bg-secondary text-sm text-foreground hover:border-primary/50 hover:text-primary transition"
+                className="px-4 py-2 rounded-full border border-white/15 bg-white/[0.04] text-sm text-white hover:border-[#5eead4]/50 hover:text-[#5eead4] transition"
               >
                 {t.name}
               </Link>
@@ -113,8 +120,8 @@ const HomesHub = () => {
       <section className="px-[5%] py-20 bg-[#F5F3EE] border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <div className="eyebrow-apple text-primary mb-3">RENTALS</div>
-            <h2 className="text-3xl md:text-4xl font-semibold text-primary-foreground tracking-tight mb-3">
+            <div className="eyebrow-apple text-[#0d6e66] mb-3">RENTALS</div>
+            <h2 className="text-3xl md:text-4xl font-semibold text-[#0B0F19] tracking-tight mb-3">
               Rentals across the Capital District.
             </h2>
             <p className="body-apple mb-6">
@@ -130,10 +137,10 @@ const HomesHub = () => {
             </div>
           </div>
           <div className="rounded-2xl border border-black/[0.06] bg-white p-6 shadow-[0_10px_30px_-20px_rgba(0,0,0,0.15)]">
-            <div className="text-xs text-primary font-semibold mb-2">
+            <div className="text-xs text-[#0d6e66] font-semibold mb-2">
               RENTAL LINKS BY TOWN
             </div>
-            <div className="text-xl font-semibold text-primary-foreground mb-2">
+            <div className="text-xl font-semibold text-[#0B0F19] mb-2">
               Albany & Capital District Rentals
             </div>
             <p className="text-sm text-neutral-600 mb-4">
@@ -153,9 +160,9 @@ const HomesHub = () => {
       {/* OPEN HOUSES — light */}
       <section className="px-[5%] py-20 bg-[#F5F3EE] border-t border-black/[0.06]">
         <div className="max-w-4xl mx-auto text-center">
-          <CalendarClock className="w-10 h-10 text-primary mx-auto mb-4" />
-          <div className="eyebrow-apple text-primary mb-3">OPEN HOUSES</div>
-          <h2 className="text-3xl md:text-4xl font-semibold text-primary-foreground tracking-tight mb-3">
+          <CalendarClock className="w-10 h-10 text-[#0d6e66] mx-auto mb-4" />
+          <div className="eyebrow-apple text-[#0d6e66] mb-3">OPEN HOUSES</div>
+          <h2 className="text-3xl md:text-4xl font-semibold text-[#0B0F19] tracking-tight mb-3">
             Open houses this week.
           </h2>
           <p className="body-apple mb-6">
@@ -175,8 +182,8 @@ const HomesHub = () => {
       <section className="px-[5%] py-20 bg-[#F5F3EE] border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
-            <div className="eyebrow-apple text-primary mb-3">INVESTMENT</div>
-            <h2 className="text-3xl md:text-4xl font-semibold text-primary-foreground tracking-tight mb-3">
+            <div className="eyebrow-apple text-[#0d6e66] mb-3">INVESTMENT</div>
+            <h2 className="text-3xl md:text-4xl font-semibold text-[#0B0F19] tracking-tight mb-3">
               Multi-units and investment properties.
             </h2>
             <p className="body-apple max-w-2xl mx-auto">
@@ -189,10 +196,10 @@ const HomesHub = () => {
               <Link
                 key={label}
                 to={href}
-                className="rounded-2xl border border-black/[0.06] bg-white p-5 hover:border-primary/40 hover:-translate-y-0.5 transition shadow-[0_10px_30px_-20px_rgba(0,0,0,0.15)]"
+                className="rounded-2xl border border-black/[0.06] bg-white p-5 hover:border-[#0d6e66]/40 hover:-translate-y-0.5 transition shadow-[0_10px_30px_-20px_rgba(0,0,0,0.15)]"
               >
-                <Icon className="w-6 h-6 text-primary mb-3" />
-                <div className="text-sm font-semibold text-primary-foreground">{label}</div>
+                <Icon className="w-6 h-6 text-[#0d6e66] mb-3" />
+                <div className="text-sm font-semibold text-[#0B0F19]">{label}</div>
               </Link>
             ))}
           </div>
@@ -203,14 +210,14 @@ const HomesHub = () => {
       <HomesServicesGrid />
 
       {/* SUBMIT LINK CTA — replaces the legacy IDX outbound */}
-      <section className="px-[5%] py-20 bg-background border-t border-border">
+      <section className="px-[5%] py-20 bg-background border-t border-white/10">
         <div className="max-w-3xl mx-auto text-center">
-          <Home className="w-10 h-10 text-primary mx-auto mb-4" />
-          <div className="eyebrow-apple text-primary mb-3">PROPERTY LINKS</div>
-          <h2 className="text-3xl md:text-4xl font-semibold text-foreground tracking-tight mb-3">
+          <Home className="w-10 h-10 text-[#5eead4] mx-auto mb-4" />
+          <div className="eyebrow-apple text-[#5eead4] mb-3">PROPERTY LINKS</div>
+          <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-tight mb-3">
             A neutral, town-by-town board of property links.
           </h2>
-          <p className="nest-lead mb-6">
+          <p className="body-apple-dark mb-6">
             Capital District Nest does not represent buyers or sellers. Listing
             agents, brokerages, landlords, and property managers may submit
             their preferred public listing link.
@@ -225,12 +232,12 @@ const HomesHub = () => {
       </section>
 
       {/* POST LISTING CTA */}
-      <section className="px-[5%] py-20 bg-background border-t border-border">
-        <div className="max-w-3xl mx-auto text-center rounded-2xl border border-primary/30 bg-primary/5 p-8 md:p-12">
-          <h2 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight mb-3">
+      <section className="px-[5%] py-20 bg-background border-t border-white/10">
+        <div className="max-w-3xl mx-auto text-center rounded-2xl border border-[#5eead4]/30 bg-[#5eead4]/5 p-8 md:p-12">
+          <h2 className="text-2xl md:text-3xl font-semibold text-white tracking-tight mb-3">
             Are you a listing agent, landlord, or property manager?
           </h2>
-          <p className="nest-lead mb-6">
+          <p className="body-apple-dark mb-6">
             Submit a direct link to your listing page. Visitors click through to
             your own page — not a competing lead form.
           </p>
@@ -240,12 +247,12 @@ const HomesHub = () => {
             </Link>
             <Link
               to="/homes/partners"
-              className="nest-quiet-link"
+              className="btn-secondary-apple-dark"
             >
               View Partner Packages
             </Link>
           </div>
-          <div className="text-xs text-muted-foreground mt-4">
+          <div className="text-xs text-white/55 mt-4">
             Free during launch. Featured agent cards and priority placement available.
           </div>
         </div>

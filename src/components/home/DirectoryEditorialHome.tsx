@@ -1,85 +1,57 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, ArrowUpRight, MapPin, Search, ChevronDown, Pause, Play } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, Search, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Reveal from "@/components/Reveal";
 import PropertyHero from "@/components/home/PropertyHero";
-import SplitHero from "@/components/brand/SplitHero";
 import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import { homeDirectorySearch } from "@/lib/homeDirectorySearch";
 import { regionalSearchSubmit } from "@/lib/homeAnalytics";
 import regionalPhoto from "@/assets/town-troy.jpg";
-import restaurantsPhoto from "@/assets/category-restaurants.jpg";
-import retailPhoto from "@/assets/category-retail.jpg";
-import contractorsPhoto from "@/assets/category-contractors.jpg";
-import carePhoto from "@/assets/wellness-care.jpg";
+import localPhoto from "@/assets/local-hero-mainstreet.jpg";
 import ownersPhoto from "@/assets/category-services.jpg";
 import propertyPhoto from "@/assets/town-albany.jpg";
 import servicesPhoto from "@/assets/hero-finance-wide.jpg";
 
 const towns = CAPITAL_DISTRICT_COUNTIES.flatMap((county) => county.towns);
 const categories = ["Restaurant", "Coffee", "Retail", "Contractor", "Healthcare", "Dental", "Attorney", "Accountant", "Marketing"];
-const phrases = ["a great dinner", "a trusted contractor", "a new favorite shop", "a local dentist", "the right advisor"];
 
-const explorer = [
-  { key: "eat", label: "Eat & drink", headline: "Find your next favorite table.", copy: "Restaurants, cafés and bars across the region.", to: homeDirectorySearch("restaurant"), cta: "Browse restaurants", image: restaurantsPhoto, alt: "A table set at a local restaurant" },
-  { key: "shop", label: "Shop local", headline: "Independent shops, close to home.", copy: "Boutiques, makers and neighborhood stores.", to: homeDirectorySearch("retail"), cta: "Browse shops", image: retailPhoto, alt: "Goods displayed in a local shop" },
-  { key: "home", label: "Home services", headline: "Help for every project at home.", copy: "Contractors, trades and home pros in the Capital District.", to: "/home-services", cta: "Find home services", image: contractorsPhoto, alt: "A contractor at work" },
-  { key: "care", label: "Health & care", headline: "Care that’s close by.", copy: "Healthcare, dental and wellness providers near you.", to: homeDirectorySearch("healthcare"), cta: "Browse care providers", image: carePhoto, alt: "A calm wellness care setting" },
+const features = [
+  {
+    id: "discover-businesses", number: "01", eyebrow: "Discover Local Businesses",
+    title: "Your next favorite.\nCloser than you think.",
+    copy: "Neighborhood restaurants. Independent shops. The people who make this place feel like home.",
+    cta: "Explore the directory", to: "/local", image: localPhoto,
+    links: [{ label: "Business spotlights", to: "/businesses" }, { label: "Explore towns", to: "/communities" }],
+  },
+  {
+    id: "grow-business", number: "02", eyebrow: "Start or Grow a Business",
+    title: "A local idea.\nA bigger possibility.",
+    copy: "Build your presence, find professional support, and connect your business with the region around it.",
+    cta: "Find business support", to: "/business", image: ownersPhoto,
+    links: [{ label: "For business owners", to: "/for-businesses" }, { label: "Claim or update a listing", to: "/claim-business" }],
+  },
+  {
+    id: "buy-sell-invest", number: "03", eyebrow: "Buy, Sell or Invest",
+    title: "Make your next move\na considered one.",
+    copy: "Explore real estate, run the numbers on commercial and multifamily properties, and find local business advisors.",
+    cta: "Explore property investing", to: "/investment-properties", image: propertyPhoto,
+    links: [{ label: "Commercial analysis", to: "/analyze/commercial" }, { label: "Multifamily analysis", to: "/analyze/multifamily" }, { label: "Selling a property", to: "/sell-investment-property" }],
+  },
+  {
+    id: "business-services", number: "04", eyebrow: "Business Services",
+    title: "Good businesses\ndon’t grow alone.",
+    copy: "Websites, branding, marketing, accounting, and legal support. Find the right people for what comes next.",
+    cta: "Find local professionals", to: "/professional-services", image: servicesPhoto,
+    links: [{ label: "Marketing services", to: "/local?search=marketing" }, { label: "Business advisors", to: "/local?search=business+consultant" }],
+  },
 ];
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(() => typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches);
-  useEffect(() => {
-    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-    if (!mq) return;
-    const fn = () => setReduced(mq.matches);
-    mq.addEventListener?.("change", fn);
-    return () => mq.removeEventListener?.("change", fn);
-  }, []);
-  return reduced;
-}
-
-function FeatureExplorer() {
-  const [active, setActive] = useState(0);
-  const item = explorer[active];
-  return (
-    <div className="nest-explorer">
-      <div className="nest-explorer-tabs" role="tablist" aria-label="Explore by category">
-        {explorer.map((e, i) => (
-          <button key={e.key} type="button" role="tab" id={`explore-tab-${e.key}`} aria-selected={i === active} aria-controls="explore-panel" onClick={() => setActive(i)} className="nest-explorer-tab">
-            {e.label}
-          </button>
-        ))}
-      </div>
-      <div id="explore-panel" role="tabpanel" aria-labelledby={`explore-tab-${item.key}`} className="nest-explorer-panel">
-        <div key={item.key} className="nest-swap">
-          <img src={item.image} alt={item.alt} loading="lazy" />
-          <div className="nest-explorer-caption">
-            <p className="nest-explorer-headline">{item.headline}</p>
-            <p className="nest-explorer-copy">{item.copy}</p>
-            <Link to={item.to} className="nest-explorer-cta">{item.cta}<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function DirectoryEditorialHome() {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [town, setTown] = useState("");
   const [category, setCategory] = useState("");
-  const [phrase, setPhrase] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [searchActive, setSearchActive] = useState(false);
-  const reduced = usePrefersReducedMotion();
-  const formRef = useRef<HTMLFormElement>(null);
-
-  useEffect(() => {
-    if (reduced || paused || searchActive) return;
-    const t = window.setInterval(() => setPhrase((p) => (p + 1) % phrases.length), 2800);
-    return () => window.clearInterval(t);
-  }, [reduced, paused, searchActive]);
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
@@ -90,33 +62,23 @@ export default function DirectoryEditorialHome() {
   return (
     <main id="main-content" className="nest-editorial-home">
       <section className="nest-discovery-hero relative isolate overflow-hidden" aria-labelledby="discovery-title">
-        <img src={regionalPhoto} alt="Historic brick buildings along the waterfront in Troy, New York" className="nest-hero-photo absolute inset-0 -z-20 h-full w-full object-cover" fetchPriority="high" />
+        <img src={regionalPhoto} alt="Historic brick buildings along the waterfront in Troy, New York" className="absolute inset-0 -z-20 h-full w-full object-cover" fetchPriority="high" />
         <div className="nest-hero-shade absolute inset-0 -z-10" />
-        <div className="nest-shell relative">
-          <p className="nest-eyebrow nest-eyebrow--on-photo nest-rise">Capital District Nest</p>
-          <h1 id="discovery-title" className="nest-display-hero mt-5 max-w-4xl nest-rise">Discover more of<br className="hidden sm:block" /> the Capital District.</h1>
-          <p className="nest-hero-rotator mt-5 nest-rise">
-            <span className="sr-only">Find restaurants, contractors, shops, dentists and advisors near you.</span>
-            <span aria-hidden="true">Find{" "}
-              <span className="nest-rotator-slot"><span key={phrase} className={reduced ? "" : "nest-rotator-word"}>{phrases[phrase]}.</span></span>
-            </span>
-            {!reduced && (
-              <button type="button" onClick={() => setPaused((p) => !p)} className="nest-rotator-toggle" aria-label={paused ? "Play changing examples" : "Pause changing examples"}>
-                {paused ? <Play className="h-3.5 w-3.5" /> : <Pause className="h-3.5 w-3.5" />}
-              </button>
-            )}
-          </p>
+        <div className="nest-editorial-inner relative">
+          <p className="eyebrow-apple text-accent">Capital District Nest</p>
+          <h1 id="discovery-title" className="h-hero nest-display mt-6 max-w-4xl">Discover more of<br className="hidden sm:block" /> the Capital District.</h1>
+          <p className="nest-intro mt-6 max-w-xl text-foreground/80">Local businesses. New possibilities.<br />One place to begin.</p>
 
-          <form ref={formRef} onSubmit={submit} onFocus={() => setSearchActive(true)} onBlur={(e) => { if (!formRef.current?.contains(e.relatedTarget as Node)) setSearchActive(false); }} role="search" aria-label="Search the local business directory" className="nest-search-card mt-9 max-w-4xl nest-rise nest-rise--late">
+          <form onSubmit={submit} role="search" aria-label="Search the local business directory" className="mt-9 max-w-4xl">
             <div className="nest-directory-search flex items-center gap-3 rounded-full p-2 pl-5 sm:pl-7">
               <Search className="hidden h-6 w-6 shrink-0 sm:block" aria-hidden="true" />
               <label htmlFor="homepage-directory-query" className="sr-only">Business name, service, or keyword</label>
               <input id="homepage-directory-query" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Find a business, service, or place" className="min-w-0 flex-1 bg-transparent py-3 text-base sm:text-lg focus:outline-none" />
-              <button type="submit" className="nest-btn nest-search-submit"><Search className="h-4 w-4" aria-hidden="true" /><span>Search</span></button>
+              <Button type="submit" className="btn-primary-apple nest-search-submit"><Search aria-hidden="true" /><span>Search</span></Button>
             </div>
-            <div className="mt-3 flex flex-wrap gap-3">
+            <div className="mt-4 flex flex-wrap gap-3">
               <div className="nest-filter-field flex items-center gap-2 rounded-full px-4">
-                <MapPin className="h-4 w-4 shrink-0 nest-blue" aria-hidden="true" />
+                <MapPin className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
                 <label htmlFor="homepage-town" className="sr-only">Location</label>
                 <select id="homepage-town" value={town} onChange={(event) => setTown(event.target.value)} className="min-h-12 min-w-0 bg-transparent text-sm focus:outline-none">
                   <option value="">All locations</option>
@@ -130,65 +92,41 @@ export default function DirectoryEditorialHome() {
                   {categories.map((item) => <option key={item} value={item}>{item}</option>)}
                 </select>
               </div>
-              <div className="flex flex-wrap items-center gap-x-5 text-sm">
-                {["Restaurants", "Coffee", "Home services"].map((label, index) => <Link key={label} to={index === 2 ? "/home-services" : homeDirectorySearch(index === 0 ? "restaurant" : "coffee")} className="nest-chip-link">{label}<ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" /></Link>)}
-              </div>
             </div>
           </form>
+          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-1 text-sm">
+            {["Restaurants", "Coffee", "Home services"].map((label, index) => <Link key={label} to={index === 2 ? "/home-services" : homeDirectorySearch(index === 0 ? "restaurant" : "coffee")} className="nest-inline-link inline-flex min-h-11 items-center gap-2">{label}<ArrowUpRight className="h-3.5 w-3.5" /></Link>)}
+          </div>
         </div>
-        <a href="#discover-businesses" className="nest-hero-next">There’s more here <ChevronDown className="h-4 w-4" /></a>
+        <a href="#discover-businesses" className="nest-hero-next flex items-center gap-3 text-sm text-foreground/80">There’s more here <ChevronDown className="h-4 w-4" /></a>
       </section>
 
-      <SplitHero
-        id="discover-businesses"
-        tone="ice"
-        eyebrow="Discover Local Businesses"
-        title="Find your next favorite."
-        lead="Search thousands of Capital District businesses — restaurants, shops, services and more."
-        cta={{ label: "Explore the directory", to: "/local" }}
-        links={[{ label: "Business spotlights", to: "/businesses" }, { label: "Explore towns", to: "/communities" }]}
-        media={<FeatureExplorer />}
-      />
+      {features.map((feature, index) => (
+        <section id={feature.id} key={feature.id} className={`nest-editorial-feature relative isolate overflow-hidden ${index % 2 ? "nest-feature-right" : ""}`} aria-labelledby={`${feature.id}-title`}>
+          <img src={feature.image} alt="" loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover" />
+          <div className="nest-feature-shade absolute inset-0 -z-10" />
+          <div className="nest-editorial-inner">
+            <Reveal className="nest-feature-copy">
+              <div className="flex items-center gap-4"><span className="text-sm text-accent">{feature.number}</span><p className="eyebrow-apple text-foreground/80">{feature.eyebrow}</p></div>
+              <h2 id={`${feature.id}-title`} className="h-section nest-display mt-6 whitespace-pre-line">{feature.title}</h2>
+              <p className="nest-intro mt-6 max-w-lg text-foreground/80">{feature.copy}</p>
+              <div className="cta-anchor"><Button asChild className="btn-dark-cta cta-arrow"><Link to={feature.to}>{feature.cta}<ArrowRight /></Link></Button></div>
+              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">{feature.links.map((link) => <Link key={link.to} to={link.to} className="nest-inline-link inline-flex min-h-11 items-center gap-2 text-sm">{link.label}<ArrowUpRight className="h-3.5 w-3.5 shrink-0" /></Link>)}</div>
+              {index === 2 && <Link to="/homes" className="nest-inline-link mt-2 inline-flex min-h-11 items-center gap-2 text-sm">Search live homes<ArrowRight className="h-4 w-4" /></Link>}
+              {index === 3 && <a href="https://coachonemedia.com" target="_blank" rel="noopener noreferrer" className="nest-inline-link mt-4 inline-flex min-h-11 items-center gap-2 text-sm text-foreground/70">Digital services by Coach One Media<ArrowUpRight className="h-3.5 w-3.5" /><span className="sr-only"> (opens in a new tab)</span></a>}
+            </Reveal>
+          </div>
+        </section>
+      ))}
 
-      <SplitHero
-        id="grow-business"
-        eyebrow="Start or Grow a Business"
-        title="Give your business a next chapter."
-        lead="Claim your free listing, get found locally and connect with support to grow."
-        cta={{ label: "Find business support", to: "/business" }}
-        links={[{ label: "For business owners", to: "/for-businesses" }, { label: "Claim or update a listing", to: "/claim-business" }]}
-        image={{ src: ownersPhoto, alt: "A local business owner at work" }}
-      />
-
-      <SplitHero
-        id="buy-sell-invest"
-        tone="ice"
-        eyebrow="Buy, Sell or Invest in Real Estate"
-        title="Make your next move."
-        lead="Explore homes and investment property, and run the numbers on multifamily and commercial deals."
-        cta={{ label: "Explore property investing", to: "/investment-properties" }}
-        links={[{ label: "Search live homes", to: "/homes" }, { label: "Multifamily analysis", to: "/analyze/multifamily" }, { label: "Selling a property", to: "/sell-investment-property" }]}
-        image={{ src: propertyPhoto, alt: "Downtown Albany, New York" }}
-      />
-
-      <SplitHero
-        id="business-services"
-        eyebrow="Business Services"
-        title="The right help. Right here."
-        lead="Find local pros for websites, branding, marketing, accounting and legal support."
-        cta={{ label: "Find local professionals", to: "/professional-services" }}
-        links={[{ label: "Marketing services", to: "/local?search=marketing" }, { label: "Business advisors", to: "/local?search=business+consultant" }, { label: "Digital services by Coach One Media", to: "https://coachonemedia.com", external: true }]}
-        image={{ src: servicesPhoto, alt: "Professionals reviewing plans together" }}
-      />
-
-      <div className="nest-home-resources">
-        <div className="nest-shell py-12">
+      <div className="nest-home-resources bg-surface-deep">
+        <div className="nest-editorial-inner py-12">
           <details className="nest-live-search">
-            <summary className="flex min-h-12 cursor-pointer items-center justify-between gap-4 text-lg font-normal"><span>Looking for a home? Search live with RealScout.</span><ChevronDown className="h-5 w-5 shrink-0" /></summary>
+            <summary className="flex min-h-12 cursor-pointer items-center justify-between gap-4 text-lg font-medium"><span>Looking for a home? Search live with RealScout.</span><ChevronDown className="h-5 w-5 shrink-0" /></summary>
             <PropertyHero embedded />
           </details>
-          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 border-t pt-6 text-sm nest-hairline">
-            {[{ label: "Events & stories", to: "/weekly" }, { label: "Property intelligence", to: "/analyze-any-property" }, { label: "Closing team", to: "/closing-team" }, { label: "Contact", to: "/contact" }].map((link) => <Link key={link.to} to={link.to} className="nest-quiet-link">{link.label}<ArrowUpRight className="h-3.5 w-3.5" /></Link>)}
+          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 border-t border-border pt-6 text-sm">
+            {[{ label: "Events & stories", to: "/weekly" }, { label: "Property intelligence", to: "/analyze-any-property" }, { label: "Closing team", to: "/closing-team" }, { label: "Contact", to: "/contact" }].map((link) => <Link key={link.to} to={link.to} className="nest-inline-link inline-flex min-h-11 items-center gap-2">{link.label}<ArrowUpRight className="h-3.5 w-3.5" /></Link>)}
           </div>
         </div>
       </div>

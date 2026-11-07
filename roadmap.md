@@ -7,9 +7,3 @@
 - [x] Report verified listing count, changed pages, and limitations; preview only, no publishing.
 
 Limitations: existing directory aliases differ from imported coffee/legal/accounting categories; new homepage uses keyword search for affected verticals. No verified businesses-for-sale inventory or commercial inventory integration exists; CTAs use existing support and analysis pages, never fake inventory. Existing contact details are untouched and remain unverified. Full sitemap rebuild and live publication are intentionally outside this preview-only change.
-# Light public site (Nov 2026) — preview only
-- [x] Light `.nest-brand` body mode on public routes; legacy admin/report/investor kept
-- [x] Homepage: brighter photo search hero, pausable rotating phrase, 4 text-left/photo-right sections, category explorer
-- [x] Split heroes on main public templates (see docs/public-route-coverage.md)
-- [ ] Long-tail pages (/analyze/*, /closing-team, /neighborhoods*, micro-neighborhoods) — light tokens only, not re-heroed
-- [ ] Publish — waiting on founder approval

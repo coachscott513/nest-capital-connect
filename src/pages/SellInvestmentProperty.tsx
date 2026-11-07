@@ -1,8 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import MainLayout from "@/components/MainLayout";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
-import SplitHero from "@/components/brand/SplitHero";
-import sellHero from "@/assets/troy-quadruplex-45-south-lake.jpg";
 
 const SellInvestmentProperty = () => {
   return (
@@ -15,17 +13,15 @@ const SellInvestmentProperty = () => {
       </Helmet>
 
       <main className="flex-grow">
-        <SplitHero
-          id="sell-investment-property"
-          titleAs="h1"
-          compact
-          eyebrow="Selling a property"
-          title="Sell Your Investment Property in Albany — Quiet & Fast Options"
-          lead="Whether you're exiting a flip, trading up via 1031, or offloading a tenant-occupied rental, we'll position your asset to the right buyers and minimize vacancy and disruption."
-          image={{ src: sellHero, alt: "A multifamily investment property in Troy" }}
-        />
         <section className="py-12 px-4 bg-background">
           <div className="max-w-[1000px] mx-auto">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">
+              Sell Your Investment Property in Albany — Quiet & Fast Options
+            </h1>
+            <p className="text-lg text-muted-foreground mb-6">
+              Whether you're exiting a flip, trading up via 1031, or offloading a tenant-occupied rental, we'll position your asset to the right buyers and minimize vacancy and disruption.
+            </p>
+
             <h2 className="text-2xl font-semibold mb-3 mt-8">Your Selling Options</h2>
             <ul className="list-disc ml-5 space-y-2 text-muted-foreground mb-6">
               <li>Quiet sale to our investor network</li>

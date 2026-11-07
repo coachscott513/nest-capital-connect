@@ -28,7 +28,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import SmsConsent from "@/components/SmsConsent";
-import financeHeroImg from "@/assets/category-finance.jpg";
 
 type Product = {
   icon: typeof Calculator;
@@ -276,7 +275,7 @@ const NumField = ({
   <label className="block">
     <span className="text-xs uppercase tracking-[0.14em] text-primary/90 font-medium">{label}</span>
     <div className="mt-1.5 flex items-center rounded-xl border border-border bg-background/60 focus-within:border-primary transition-colors">
-      {prefix && <span className="pl-3 text-muted-foreground">{prefix}</span>}
+      {prefix && <span className="pl-3 text-white/50">{prefix}</span>}
       <input
         type="number"
         step={step}
@@ -284,7 +283,7 @@ const NumField = ({
         onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
         className="w-full bg-transparent px-3 py-3 text-lg text-foreground outline-none"
       />
-      {suffix && <span className="pr-3 text-muted-foreground">{suffix}</span>}
+      {suffix && <span className="pr-3 text-white/50">{suffix}</span>}
     </div>
   </label>
 );
@@ -300,11 +299,11 @@ const CalcShell = ({
           key={r.label}
           className={`rounded-xl border ${r.highlight ? "border-primary/50 bg-primary/10" : "border-border bg-background/40"} px-4 py-3 flex items-center justify-between gap-4`}
         >
-          <span className="text-sm text-muted-foreground">{r.label}</span>
+          <span className="text-sm text-white/70">{r.label}</span>
           <span className={`text-base md:text-lg font-semibold ${r.highlight ? "text-primary" : "text-foreground"}`}>{r.value}</span>
         </div>
       ))}
-      <p className="text-xs text-muted-foreground pt-1">
+      <p className="text-xs text-white/45 pt-1">
         Estimates only. Not a loan commitment. Verify with your lender, CPA, or financial advisor.
       </p>
     </div>
@@ -370,7 +369,7 @@ const FinancialScenarioForm = ({ defaultObjective }: { defaultObjective?: string
       <div className="rounded-2xl border border-primary/40 bg-primary/10 p-8 text-center">
         <CheckCircle2 className="w-10 h-10 text-primary mx-auto mb-3" />
         <h3 className="text-xl font-semibold mb-1">Your scenario is in.</h3>
-        <p className="text-muted-foreground">The Capital District Financial Console will reach out within one business day.</p>
+        <p className="text-white/70">The Capital District Financial Console will reach out within one business day.</p>
       </div>
     );
   }
@@ -416,7 +415,7 @@ const FinancialScenarioForm = ({ defaultObjective }: { defaultObjective?: string
       >
         {submitting ? "Submitting…" : "Request Financial Introduction"}
       </button>
-      <p className="text-xs text-muted-foreground text-center">
+      <p className="text-xs text-white/45 text-center">
         Routed to Scott Alvarez, Licensed Real Estate Salesperson · (518) 522-7265 · team@capitaldistrictnest.com
       </p>
     </form>
@@ -480,17 +479,17 @@ const FinancialConsole = () => {
         <CleanHeader />
 
         {/* HERO */}
-        <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
-          <div className=" ">
+        <section className="px-[5%] pt-16 pb-12 md:pt-24 md:pb-20 border-b border-border/60">
+          <div className="max-w-6xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs uppercase tracking-[0.18em] mb-5">
               <Sparkles className="w-3.5 h-3.5" />
               Capital District Financial Console
             </div>
-            <h1 className="nest-display-page">
+            <h1 className="text-4xl md:text-6xl font-semibold tracking-tight max-w-3xl leading-[1.05]">
               Capital District
               <span className="text-primary"> Financial Console.</span>
             </h1>
-            <p className="mt-5  text-muted-foreground text-lg md:text-xl">
+            <p className="mt-5 max-w-2xl text-white/70 text-lg md:text-xl">
               Mortgages, banking, advisors, accountants, insurance, investment property analysis,
               commercial lending, and business capital — all connected through one local financial network.
             </p>
@@ -505,13 +504,13 @@ const FinancialConsole = () => {
               <a
                 href="#financial-intro"
                 onClick={scrollTo("financial-intro")}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border text-foreground hover:border-primary hover:text-primary transition"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white hover:border-primary hover:text-primary transition"
               >
                 Request Financial Introduction
               </a>
             </div>
           </div>
-        </div><div className="nest-split-media nest-rise nest-rise--late"><img src={financeHeroImg} alt="Reviewing local financial planning" loading="eager" /></div></div></section>
+        </section>
 
         {/* FINANCIAL PULSE */}
         <section className="px-[5%] py-16 md:py-20 border-b border-border/60 bg-card/30">
@@ -521,7 +520,7 @@ const FinancialConsole = () => {
               <h2 className="text-3xl md:text-5xl font-semibold tracking-tight leading-[1.08] mb-5">
                 Where local growth meets <span className="text-primary">financial opportunity.</span>
               </h2>
-              <p className="text-muted-foreground text-lg max-w-xl">
+              <p className="text-white/70 text-lg max-w-xl">
                 Track mortgages, banking, business capital, investment property trends, commercial
                 lending, insurance, accounting, and financial planning across the Capital District.
               </p>
@@ -533,7 +532,7 @@ const FinancialConsole = () => {
                     <c.icon className="w-5 h-5 text-primary" />
                   </div>
                   <h3 className="font-semibold text-foreground mb-2 text-[15px]">{c.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{c.blurb}</p>
+                  <p className="text-sm text-white/65 leading-relaxed">{c.blurb}</p>
                 </div>
               ))}
             </div>
@@ -561,7 +560,7 @@ const FinancialConsole = () => {
                     <p.icon className="w-5 h-5 text-primary" />
                   </div>
                   <h3 className="font-semibold text-foreground mb-2 text-[15px]">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-5 flex-1">{p.blurb}</p>
+                  <p className="text-sm text-white/65 leading-relaxed mb-5 flex-1">{p.blurb}</p>
                   <span className="inline-flex items-center gap-1.5 text-sm text-primary font-medium">
                     {p.cta} <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
                   </span>
@@ -577,7 +576,7 @@ const FinancialConsole = () => {
             <div className="mb-8 max-w-2xl">
               <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Financial Scenario Calculator</p>
               <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Review your numbers before you commit.</h2>
-              <p className="text-muted-foreground">Mortgage, investment property, DSCR, refinance, and business capital models — built on the same math local lenders use.</p>
+              <p className="text-white/65">Mortgage, investment property, DSCR, refinance, and business capital models — built on the same math local lenders use.</p>
             </div>
 
             <Tabs defaultValue="mortgage" className="w-full">
@@ -603,7 +602,7 @@ const FinancialConsole = () => {
             <div className="mb-10 max-w-2xl">
               <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Capital District Financial Partner Network</p>
               <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Local lenders, advisors, accountants, and insurance pros.</h2>
-              <p className="text-muted-foreground">
+              <p className="text-white/65">
                 Connect with vetted Capital District mortgage lenders, banks, financial advisors,
                 accountants, insurance professionals, and commercial lending partners.
               </p>
@@ -616,7 +615,7 @@ const FinancialConsole = () => {
                     <p.icon className="w-5 h-5 text-primary" />
                   </div>
                   <h3 className="font-semibold text-foreground mb-2">{p.label}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-5">{p.blurb}</p>
+                  <p className="text-sm text-white/65 leading-relaxed mb-5">{p.blurb}</p>
                   <a
                     href="#financial-intro"
                     onClick={scrollTo("financial-intro")}
@@ -631,7 +630,7 @@ const FinancialConsole = () => {
             <div className="mt-10 rounded-2xl p-6 md:p-8 border border-primary/30 bg-primary/5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
                 <h3 className="text-xl font-semibold mb-1">Are you a local financial partner?</h3>
-                <p className="text-muted-foreground text-sm max-w-xl">
+                <p className="text-white/70 text-sm max-w-xl">
                   Mortgage lenders, CPAs, advisors, banks, and insurance pros — join the Capital
                   District Financial Console.
                 </p>
@@ -652,7 +651,7 @@ const FinancialConsole = () => {
             <div className="text-center mb-8">
               <p className="text-primary text-xs uppercase tracking-[0.18em] mb-2">Capital District Financial Console</p>
               <h2 className="text-3xl md:text-4xl font-semibold tracking-tight mb-3">Submit your financial scenario.</h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">
+              <p className="text-white/65 max-w-xl mx-auto">
                 Tell us what you're working on, and we'll help route you to the right local
                 mortgage, banking, accounting, insurance, financial planning, or lending partner.
               </p>

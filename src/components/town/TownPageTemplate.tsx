@@ -43,8 +43,8 @@ import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
    Locked brand: dark onyx canvas, teal accents, no blue.
    ============================================================= */
 
-const TEAL = "var(--nest-brand-blue)";
-const TEAL_DARK = "var(--nest-brand-blue)";
+const TEAL = "#0d6e66";
+const TEAL_DARK = "#5eead4";
 const REMAX_BASE = "/homes/search";
 const contactStatusOf = (biz: Business) => (biz as any).contactStatus ?? (biz as any).contact_status ?? null;
 
@@ -192,7 +192,7 @@ const BizCard = ({
       source_location: sourceLocation,
     });
   return (
-    <div className="group rounded-2xl border border-white/[0.08] bg-secondary hover:bg-secondary hover:border-border backdrop-blur-sm p-5 transition flex flex-col h-full">
+    <div className="group rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/15 backdrop-blur-sm p-5 transition flex flex-col h-full">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p
@@ -204,18 +204,18 @@ const BizCard = ({
           <Link
             to={`/biz/${biz.slug}`}
             onClick={onClick}
-            className="text-base font-semibold text-foreground tracking-[-0.005em] line-clamp-2 hover:text-primary transition"
+            className="text-base font-semibold text-white tracking-[-0.005em] line-clamp-2 hover:text-[#5eead4] transition"
           >
             {biz.name}
           </Link>
           {biz.tagline && (
-            <p className="mt-1.5 text-[13px] text-muted-foreground font-light leading-relaxed line-clamp-2">
+            <p className="mt-1.5 text-[13px] text-white/60 font-light leading-relaxed line-clamp-2">
               {biz.tagline}
             </p>
           )}
         </div>
         {biz.featured && (
-          <span className="shrink-0 inline-flex items-center gap-1 px-2 py-[3px] rounded-full border border-primary/40 bg-primary/10 text-[10px] font-medium tracking-[0.14em] uppercase text-primary">
+          <span className="shrink-0 inline-flex items-center gap-1 px-2 py-[3px] rounded-full border border-[#5eead4]/40 bg-[#5eead4]/10 text-[10px] font-medium tracking-[0.14em] uppercase text-[#5eead4]">
             <Sparkles className="w-2.5 h-2.5" /> Featured
           </span>
         )}
@@ -226,12 +226,12 @@ const BizCard = ({
           <a
             href={businessTelHref(biz.phone, contactStatusOf(biz)) ?? undefined}
             onClick={onClick}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary border border-border text-[12px] font-medium text-foreground hover:bg-white/[0.1] transition"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-[12px] font-medium text-white hover:bg-white/[0.1] transition"
           >
-            <Phone className="w-3 h-3 text-primary" /> Call Business
+            <Phone className="w-3 h-3 text-[#5eead4]" /> Call Business
           </a>
         ) : (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary border border-border text-[12px] font-medium text-muted-foreground">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10 text-[12px] font-medium text-white/45">
             <Phone className="w-3 h-3" /> Phone unavailable
           </span>
         )}
@@ -241,9 +241,9 @@ const BizCard = ({
             target="_blank"
             rel="noopener noreferrer"
             onClick={onClick}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary border border-border text-[12px] font-medium text-foreground hover:bg-white/[0.1] transition"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-[12px] font-medium text-white hover:bg-white/[0.1] transition"
           >
-            <Globe className="w-3 h-3 text-primary" /> Website
+            <Globe className="w-3 h-3 text-[#5eead4]" /> Website
           </a>
         )}
         {biz.address && (
@@ -252,9 +252,9 @@ const BizCard = ({
             target="_blank"
             rel="noopener noreferrer"
             onClick={onClick}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary border border-border text-[12px] font-medium text-foreground hover:bg-white/[0.1] transition"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/10 text-[12px] font-medium text-white hover:bg-white/[0.1] transition"
           >
-            <MapPin className="w-3 h-3 text-primary" /> Directions
+            <MapPin className="w-3 h-3 text-[#5eead4]" /> Directions
           </a>
         )}
       </div>
@@ -263,7 +263,7 @@ const BizCard = ({
         <Link
           to={`/biz/${biz.slug}`}
           onClick={onClick}
-          className="inline-flex items-center gap-1 text-[12px] font-semibold text-muted-foreground hover:text-foreground transition"
+          className="inline-flex items-center gap-1 text-[12px] font-semibold text-white/80 hover:text-white transition"
         >
           View profile <ChevronRight className="w-3.5 h-3.5" />
         </Link>
@@ -279,7 +279,7 @@ const BizCard = ({
                 source_location: `${sourceLocation}_card_claim`,
               })
             }
-            className="text-[11px] font-medium text-muted-foreground hover:text-primary transition"
+            className="text-[11px] font-medium text-white/45 hover:text-[#5eead4] transition"
           >
             Claim or update
           </Link>
@@ -301,16 +301,16 @@ const EmptyCTA = ({
   primary: { label: string; href: string; onClick?: () => void };
   secondary?: { label: string; href: string; onClick?: () => void };
 }) => (
-  <div className="rounded-3xl border border-white/[0.08] bg-secondary backdrop-blur-sm px-7 md:px-10 py-10 md:py-12 text-center">
-    <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-foreground">
+  <div className="rounded-3xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-sm px-7 md:px-10 py-10 md:py-12 text-center">
+    <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white">
       {headline}
     </h3>
-    <p className="mt-3 text-muted-foreground font-light max-w-xl mx-auto leading-relaxed">{body}</p>
+    <p className="mt-3 text-white/65 font-light max-w-xl mx-auto leading-relaxed">{body}</p>
     <div className="mt-7 flex flex-wrap justify-center gap-2.5">
       <Link
         to={primary.href}
         onClick={primary.onClick}
-        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-foreground transition hover:opacity-90"
+        className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white transition hover:opacity-90"
         style={{ backgroundColor: TEAL }}
       >
         {primary.label} <ArrowRight className="w-4 h-4" />
@@ -319,7 +319,7 @@ const EmptyCTA = ({
         <Link
           to={secondary.href}
           onClick={secondary.onClick}
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary text-foreground px-5 py-2.5 text-sm font-semibold hover:bg-secondary transition"
+          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] text-white px-5 py-2.5 text-sm font-semibold hover:bg-white/[0.08] transition"
         >
           {secondary.label}
         </Link>
@@ -435,15 +435,41 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
 
       <main>
         {/* ═══════════ 1. CINEMATIC HERO ═══════════ */}
-        <section className="nest-split nest-split--compact">
-          <div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
-            <p className="nest-eyebrow">
+        <section className="relative isolate overflow-hidden">
+          <img
+            src={heroImage}
+            alt={`${name}, NY`}
+            className="absolute inset-0 w-full h-full object-cover opacity-55"
+            loading="eager"
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(11,15,25,0.55) 0%, rgba(11,15,25,0.75) 55%, #0B0F19 100%)",
+            }}
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(60% 70% at 50% 30%, rgba(94,234,212,0.12), transparent 70%)",
+            }}
+            aria-hidden
+          />
+
+          <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 pt-32 md:pt-44 pb-24 md:pb-36">
+            <p
+              className="text-[11px] font-semibold tracking-[0.32em] uppercase mb-6"
+              style={{ color: TEAL_DARK }}
+            >
               {name.toUpperCase()}, NY
             </p>
-            <h1 className="nest-display-page">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] text-white leading-[1.02] max-w-4xl">
               Discover {name}.
             </h1>
-            <p className="nest-lead">
+            <p className="mt-6 text-lg md:text-xl text-white/75 font-light max-w-2xl leading-relaxed">
               Restaurants, local businesses, events, services, homes, and community life in one
               Capital District discovery layer.
             </p>
@@ -460,7 +486,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                   trackGAEvent.continueSearchClick("town_search", name);
                 }}
 
-                className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
               >
                 Search {name} <ArrowRight className="w-4 h-4" />
               </Link>
@@ -473,7 +499,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                     source_location: "town_hero",
                   })
                 }
-                className="inline-flex items-center gap-2 rounded-full border border-border text-foreground px-6 py-3 text-sm font-semibold hover:bg-secondary transition"
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
               >
                 <Plus className="w-4 h-4" /> Add Your Business
               </Link>
@@ -486,13 +512,12 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                     source_location: "town_hero_link",
                   })
                 }
-                className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground px-2 py-2 transition"
+                className="inline-flex items-center gap-1 text-sm font-medium text-white/75 hover:text-white px-2 py-2 transition"
               >
                 View Homes in {name} <ChevronRight className="w-4 h-4" />
               </a>
             </div>
           </div>
-          <div className="nest-split-media nest-rise nest-rise--late"><img src={heroImage} alt={`${name}, NY`} loading="eager" /></div></div>
         </section>
 
         {afterHero}
@@ -511,10 +536,10 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
               >
                 Explore {name}
               </p>
-              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
                 Everything happening in {name}.
               </h2>
-              <p className="mt-5 text-base md:text-lg text-muted-foreground font-light">
+              <p className="mt-5 text-base md:text-lg text-white/65 font-light">
                 Six ways to discover the people, places, and rhythm of {name} — all in one place.
               </p>
             </div>
@@ -556,30 +581,30 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                       }}
                       aria-hidden
                     />
-                    <div className="nest-on-photo relative h-full p-8 md:p-10 flex flex-col justify-end">
+                    <div className="relative h-full p-8 md:p-10 flex flex-col justify-end">
                       <div className="flex items-center gap-2 mb-3">
                         <p
-                          className="inline-flex items-center px-2 py-[3px] rounded-full bg-secondary border border-border text-[10px] font-semibold tracking-[0.18em] uppercase"
+                          className="inline-flex items-center px-2 py-[3px] rounded-full bg-white/[0.06] border border-white/15 text-[10px] font-semibold tracking-[0.18em] uppercase"
                           style={{ color: TEAL_DARK }}
                         >
                           {p.eyebrow}
                         </p>
-                        <p.Icon className="w-4 h-4 text-muted-foreground" />
+                        <p.Icon className="w-4 h-4 text-white/45" />
                       </div>
-                      <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-foreground">
+                      <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white">
                         {p.title} in {name}.
                       </h3>
-                      <p className="mt-2 text-sm md:text-[15px] text-muted-foreground font-light max-w-md leading-relaxed">
+                      <p className="mt-2 text-sm md:text-[15px] text-white/65 font-light max-w-md leading-relaxed">
                         {p.body}
                       </p>
-                      <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:text-foreground transition">
+                      <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] group-hover:text-white transition">
                         {p.cta} <ArrowRight className="w-4 h-4" />
                       </span>
                     </div>
                   </>
                 );
                 const cls =
-                  "group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-card hover:border-border transition aspect-[16/10] md:aspect-[16/9]";
+                  "group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-white/20 transition aspect-[16/10] md:aspect-[16/9]";
                 return isAnchor ? (
                   <a key={p.key} href={href} onClick={onClick} className={cls}>
                     {inner}
@@ -604,10 +629,10 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
               >
                 Featured in {name}
               </p>
-              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
                 Local businesses, brought to life.
               </h2>
-              <p className="mt-5 text-base md:text-lg text-muted-foreground font-light">
+              <p className="mt-5 text-base md:text-lg text-white/65 font-light">
                 Featured profiles with photos, services, events, contact buttons, and shareable
                 business pages.
               </p>
@@ -664,10 +689,10 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
               >
                 This Week
               </p>
-              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
                 This week in {name}.
               </h2>
-              <p className="mt-5 text-base md:text-lg text-muted-foreground font-light">
+              <p className="mt-5 text-base md:text-lg text-white/65 font-light">
                 Local events, dining specials, community happenings, family activities, and things
                 to do nearby.
               </p>
@@ -690,34 +715,34 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                         source_location: "town_events_grid",
                       })
                     }
-                    className="group rounded-2xl border border-white/[0.08] bg-secondary hover:bg-secondary hover:border-border p-6 transition flex flex-col"
+                    className="group rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/15 p-6 transition flex flex-col"
                   >
                     <div className="flex items-center gap-2 mb-3">
                       <span
-                        className="inline-flex items-center px-2 py-[3px] rounded-full bg-primary/10 border border-primary/35 text-[10px] font-semibold tracking-[0.16em] uppercase"
+                        className="inline-flex items-center px-2 py-[3px] rounded-full bg-[#5eead4]/10 border border-[#5eead4]/35 text-[10px] font-semibold tracking-[0.16em] uppercase"
                         style={{ color: TEAL_DARK }}
                       >
                         {ev.date}
                       </span>
                       {ev.time && (
-                        <span className="text-[11px] text-muted-foreground font-medium tracking-wide">
+                        <span className="text-[11px] text-white/55 font-medium tracking-wide">
                           {ev.time}
                         </span>
                       )}
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground tracking-[-0.01em] line-clamp-2">
+                    <h3 className="text-lg font-semibold text-white tracking-[-0.01em] line-clamp-2">
                       {ev.title}
                     </h3>
-                    <p className="mt-2 text-sm text-muted-foreground font-light leading-relaxed line-clamp-3">
+                    <p className="mt-2 text-sm text-white/60 font-light leading-relaxed line-clamp-3">
                       {ev.description}
                     </p>
                     {(ev.venue || ev.town) && (
-                      <p className="mt-3 text-[12px] text-muted-foreground inline-flex items-center gap-1.5">
-                        <MapPin className="w-3 h-3 text-primary" />
+                      <p className="mt-3 text-[12px] text-white/50 inline-flex items-center gap-1.5">
+                        <MapPin className="w-3 h-3 text-[#5eead4]" />
                         {[ev.venue, ev.town].filter(Boolean).join(" · ")}
                       </p>
                     )}
-                    <span className="mt-5 inline-flex items-center gap-1.5 text-[12px] font-semibold text-primary group-hover:text-foreground transition">
+                    <span className="mt-5 inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#5eead4] group-hover:text-white transition">
                       View Event <ArrowUpRight className="w-3.5 h-3.5" />
                     </span>
                   </a>
@@ -753,7 +778,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                 >
                   Eat & Drink
                 </p>
-                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
                   Restaurants & taverns in {name}.
                 </h2>
               </div>
@@ -768,7 +793,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                     source_page: `/living-in/${slug}`,
                   })
                 }
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-foreground transition"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] hover:text-white transition"
               >
                 View all dining <ArrowRight className="w-4 h-4" />
               </Link>
@@ -808,7 +833,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                 >
                   Home Services
                 </p>
-                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
                   Contractors & home services near {name}.
                 </h2>
               </div>
@@ -823,7 +848,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                     source_page: `/living-in/${slug}`,
                   })
                 }
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-foreground transition"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#5eead4] hover:text-white transition"
               >
                 View all services <ArrowRight className="w-4 h-4" />
               </Link>
@@ -869,10 +894,10 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                 >
                   Homes
                 </p>
-                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
                   Homes and neighborhoods in {name}.
                 </h2>
-                <p className="mt-5 text-base md:text-lg text-muted-foreground font-light leading-relaxed">
+                <p className="mt-5 text-base md:text-lg text-white/65 font-light leading-relaxed">
                   Search homes, explore local housing resources, and request matching listings.
                   Real estate is one part of {name} — not the whole story.
                 </p>
@@ -887,7 +912,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                         source_location: "town_homes_section",
                       })
                     }
-                    className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                    className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
                   >
                     Search {name} Homes <ArrowUpRight className="w-4 h-4" />
                   </Link>
@@ -901,12 +926,12 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                         source_location: "town_homes_section",
                       })
                     }
-                    className="inline-flex items-center gap-2 rounded-full border border-border text-foreground px-6 py-3 text-sm font-semibold hover:bg-secondary transition"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
                   >
                     Send Me Matching Homes
                   </Link>
                 </div>
-                <p className="mt-4 text-[12px] text-muted-foreground font-light">
+                <p className="mt-4 text-[12px] text-white/45 font-light">
                   Opens the Capital District Nest smart home search powered by RealScout.
                 </p>
 
@@ -942,7 +967,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
               >
                 Updates
               </p>
-              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
                 Local updates near {name}.
               </h2>
             </div>
@@ -955,7 +980,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                     href={u.external_article_url || u.original_url || "/weekly"}
                     target={u.external_article_url || u.original_url ? "_blank" : undefined}
                     rel={u.external_article_url || u.original_url ? "noopener noreferrer" : undefined}
-                    className="group rounded-2xl border border-white/[0.08] bg-secondary hover:bg-secondary hover:border-border p-5 transition flex flex-col"
+                    className="group rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/15 p-5 transition flex flex-col"
                   >
                     <p
                       className="text-[10px] font-semibold tracking-[0.18em] uppercase mb-2"
@@ -963,22 +988,22 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                     >
                       {u.categoryBadgeOverride || u.type}
                     </p>
-                    <h3 className="text-base font-semibold text-foreground tracking-[-0.005em] line-clamp-3">
+                    <h3 className="text-base font-semibold text-white tracking-[-0.005em] line-clamp-3">
                       {u.title}
                     </h3>
                     {u.summary && (
-                      <p className="mt-2 text-[13px] text-muted-foreground font-light leading-relaxed line-clamp-3">
+                      <p className="mt-2 text-[13px] text-white/60 font-light leading-relaxed line-clamp-3">
                         {u.summary}
                       </p>
                     )}
-                    <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-medium text-muted-foreground group-hover:text-foreground transition">
+                    <span className="mt-4 inline-flex items-center gap-1 text-[12px] font-medium text-white/65 group-hover:text-white transition">
                       {u.source_name || "Read more"} <ArrowUpRight className="w-3 h-3" />
                     </span>
                   </a>
                 ))}
               </div>
             ) : (
-              <div className="rounded-2xl border border-white/[0.08] bg-secondary px-6 py-10 text-center text-muted-foreground text-sm font-light">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] px-6 py-10 text-center text-white/55 text-sm font-light">
                 Local updates are being added.
               </div>
             )}
@@ -998,10 +1023,10 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
             >
               For Business Owners
             </p>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.035em] leading-[1.05] text-foreground">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-[-0.035em] leading-[1.05] text-white">
               Own a business in {name}?
             </h2>
-            <p className="mt-6 text-base md:text-lg text-muted-foreground font-light leading-relaxed">
+            <p className="mt-6 text-base md:text-lg text-white/70 font-light leading-relaxed">
               Your business may already be listed on Capital District Nest. Claim your profile,
               update your information, add photos, submit events, or request featured placement.
             </p>
@@ -1015,7 +1040,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                     source_location: "town_owner_cta_find",
                   })
                 }
-                className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
               >
                 Find My Business
               </Link>
@@ -1028,7 +1053,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                     source_location: "town_owner_cta_claim",
                   })
                 }
-                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-foreground transition"
+                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition"
                 style={{ backgroundColor: TEAL }}
               >
                 Claim or Add Business <ArrowRight className="w-4 h-4" />
@@ -1042,9 +1067,9 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                     source_location: "town_owner_cta_premier",
                   })
                 }
-                className="inline-flex items-center gap-2 rounded-full border border-border text-foreground px-6 py-3 text-sm font-semibold hover:bg-secondary transition"
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
               >
-                <Sparkles className="w-4 h-4 text-primary" /> Request Premier Profile
+                <Sparkles className="w-4 h-4 text-[#5eead4]" /> Request Premier Profile
               </Link>
             </div>
           </div>
@@ -1062,17 +1087,17 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
             >
               About {name}
             </p>
-            <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.025em] leading-[1.1] text-foreground">
+            <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.025em] leading-[1.1] text-white">
               Living in {name}, NY
             </h2>
-            <p className="mt-5 text-base md:text-lg text-muted-foreground font-light leading-relaxed">
+            <p className="mt-5 text-base md:text-lg text-white/70 font-light leading-relaxed">
               {town.seoIntro ||
                 `${name} is one of the Capital District's most recognized communities, known for local businesses, neighborhood dining, parks, schools, services, housing options, and easy access to the broader Albany region. Capital District Nest helps residents and visitors explore ${name} businesses, events, restaurants, services, homes, and local resources in one place.`}
             </p>
             {town.nearbyTowns && town.nearbyTowns.length > 0 && (
               <div className="mt-10">
                 <p
-                  className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-3 text-muted-foreground"
+                  className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-3 text-white/45"
                 >
                   Nearby
                 </p>
@@ -1081,7 +1106,7 @@ const TownPageTemplate = ({ town, beforeFooter, afterHero }: Props) => {
                     <Link
                       key={n.slug}
                       to={`/living-in/${n.slug}`}
-                      className="inline-flex items-center px-3 py-1.5 rounded-full bg-secondary border border-border text-[12px] font-medium text-muted-foreground hover:text-foreground hover:bg-secondary hover:border-border transition"
+                      className="inline-flex items-center px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-[12px] font-medium text-white/75 hover:text-white hover:bg-white/[0.08] hover:border-white/20 transition"
                     >
                       {n.name}
                     </Link>

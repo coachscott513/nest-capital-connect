@@ -197,11 +197,11 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
       <div className="max-w-[1600px] mx-auto px-6 md:px-10">
         <div className="flex items-end justify-between gap-6 mb-5 md:mb-6">
           <div>
-            <h2 className="text-2xl md:text-[28px] font-semibold tracking-[-0.02em] text-foreground">
+            <h2 className="text-2xl md:text-[28px] font-semibold tracking-[-0.02em] text-white">
               {title}
             </h2>
             {subtitle && (
-              <p className="mt-1 text-sm md:text-[15px] text-muted-foreground font-light">
+              <p className="mt-1 text-sm md:text-[15px] text-white/55 font-light">
                 {subtitle}
               </p>
             )}
@@ -211,7 +211,7 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
               type="button"
               onClick={() => scrollBy(-1)}
               aria-label={`Scroll ${title} left`}
-              className="w-10 h-10 rounded-full border border-border bg-secondary text-muted-foreground hover:bg-white/[0.1] hover:text-foreground transition flex items-center justify-center"
+              className="w-10 h-10 rounded-full border border-white/15 bg-white/[0.04] text-white/80 hover:bg-white/[0.1] hover:text-white transition flex items-center justify-center"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -219,7 +219,7 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
               type="button"
               onClick={() => scrollBy(1)}
               aria-label={`Scroll ${title} right`}
-              className="w-10 h-10 rounded-full border border-border bg-secondary text-muted-foreground hover:bg-white/[0.1] hover:text-foreground transition flex items-center justify-center"
+              className="w-10 h-10 rounded-full border border-white/15 bg-white/[0.04] text-white/80 hover:bg-white/[0.1] hover:text-white transition flex items-center justify-center"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -256,7 +256,7 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
             };
 
             const cardInner = (
-              <div className={`relative ${aspect} overflow-hidden rounded-xl bg-card border border-white/[0.06] group-hover:border-border transition`}>
+              <div className={`relative ${aspect} overflow-hidden rounded-xl bg-[#0F1424] border border-white/[0.06] group-hover:border-white/20 transition`}>
                 <img
                   src={ev.image}
                   alt={ev.title}
@@ -273,46 +273,46 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
                 />
 
                 {/* Date badge */}
-                <div className="absolute top-3 left-3 flex flex-col items-center justify-center w-[58px] rounded-lg bg-background backdrop-blur border border-border py-1.5 shadow-lg">
-                  <span className="text-[10px] font-semibold tracking-[0.18em] text-primary">
+                <div className="absolute top-3 left-3 flex flex-col items-center justify-center w-[58px] rounded-lg bg-[#0B0F19]/85 backdrop-blur border border-white/15 py-1.5 shadow-lg">
+                  <span className="text-[10px] font-semibold tracking-[0.18em] text-[#5eead4]">
                     {ev.dateBadge.top}
                   </span>
-                  <span className="text-xl font-semibold text-foreground leading-none mt-0.5">
+                  <span className="text-xl font-semibold text-white leading-none mt-0.5">
                     {ev.dateBadge.bottom || "—"}
                   </span>
                 </div>
 
                 {/* Category */}
-                <span className="absolute top-3 right-3 inline-flex items-center px-2.5 py-1 rounded-full bg-black/45 backdrop-blur border border-border text-[10px] font-medium tracking-wider uppercase text-foreground">
+                <span className="absolute top-3 right-3 inline-flex items-center px-2.5 py-1 rounded-full bg-black/45 backdrop-blur border border-white/15 text-[10px] font-medium tracking-wider uppercase text-white">
                   {ev.category}
                 </span>
 
                 {/* Bottom title block */}
-                <div className="nest-on-photo absolute inset-x-0 bottom-0 p-4 md:p-5">
+                <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
                   {ev.needsVerification && (
-                    <span className="inline-flex items-center gap-1 mb-2 px-2 py-[3px] rounded-full bg-primary/12 border border-primary/35 text-[10px] font-medium tracking-[0.14em] uppercase text-primary">
+                    <span className="inline-flex items-center gap-1 mb-2 px-2 py-[3px] rounded-full bg-[#5eead4]/12 border border-[#5eead4]/35 text-[10px] font-medium tracking-[0.14em] uppercase text-[#5eead4]">
                       <AlertCircle className="w-3 h-3" /> Details being confirmed
                     </span>
                   )}
-                  <h3 className="text-base md:text-lg font-semibold tracking-[-0.01em] text-foreground leading-snug line-clamp-2">
+                  <h3 className="text-base md:text-lg font-semibold tracking-[-0.01em] text-white leading-snug line-clamp-2">
                     {ev.title}
                   </h3>
-                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-muted-foreground">
+                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-white/75">
                     {(ev.venue || ev.town) && (
                       <span className="inline-flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-primary" />
+                        <MapPin className="w-3 h-3 text-[#5eead4]" />
                         {[ev.venue, ev.town].filter(Boolean).join(" · ")}
                       </span>
                     )}
                     {ev.time && (
                       <span className="inline-flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-primary" />
+                        <Clock className="w-3 h-3 text-[#5eead4]" />
                         {ev.time}
                       </span>
                     )}
                   </div>
                   <div className="mt-3">
-                    <span className={`inline-flex items-center gap-1.5 text-[12px] font-semibold ${ev.link.pending ? "text-muted-foreground" : "text-primary"}`}>
+                    <span className={`inline-flex items-center gap-1.5 text-[12px] font-semibold ${ev.link.pending ? "text-white/70" : "text-[#5eead4]"}`}>
                       {ev.link.label} <ArrowRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
@@ -555,7 +555,7 @@ const WeeklyPulse = () => {
     filter === "all" ? rails : rails.filter((r) => r.key === filter);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#0B0F19]">
       <SEOHead
         title="Capital District Events This Week | Capital District Nest"
         description="Browse live music, dining events, markets, family activities, community events, and things to do across the Capital District."
@@ -565,15 +565,40 @@ const WeeklyPulse = () => {
 
       <main>
         {/* ===== CINEMATIC HERO ===== */}
-        <section className="nest-split nest-split--compact">
-          <div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
-            <p className="nest-eyebrow">
+        <section className="relative overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src={heroBg}
+              alt=""
+              className="w-full h-full object-cover"
+              aria-hidden
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(11,15,25,0.45) 0%, rgba(11,15,25,0.7) 55%, #0B0F19 100%)",
+              }}
+              aria-hidden
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(60% 70% at 50% 40%, rgba(94,234,212,0.10), transparent 70%)",
+              }}
+              aria-hidden
+            />
+          </div>
+
+          <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 pt-32 md:pt-44 pb-24 md:pb-36">
+            <p className="text-[11px] font-semibold tracking-[0.32em] uppercase text-[#5eead4] mb-5">
               This Week
             </p>
-            <h1 className="nest-display-page">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] text-white leading-[1.02] max-w-4xl">
               Events Across the Capital&nbsp;District
             </h1>
-            <p className="nest-lead">
+            <p className="mt-6 text-lg md:text-xl text-white/75 font-light max-w-2xl leading-relaxed">
               Live music, festivals, markets, dining events, sports, family
               activities, nightlife, and local happenings across the region.
             </p>
@@ -587,20 +612,19 @@ const WeeklyPulse = () => {
                   const el = document.getElementById("seven-day-schedule");
                   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
-                className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
               >
                 View This Week <ArrowRight className="w-4 h-4" />
               </a>
               <Link
                 to="/submit-event"
                 onClick={() => gtag("add_event_click", { source_location: "events_room_hero" })}
-                className="inline-flex items-center gap-2 rounded-full border border-border text-foreground px-6 py-3 text-sm font-semibold hover:bg-secondary transition"
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
               >
                 <Plus className="w-4 h-4" /> Add Your Event
               </Link>
             </div>
           </div>
-          <div className="nest-split-media nest-rise nest-rise--late"><img src={heroBg} alt="A crowd at a live outdoor event" loading="eager" /></div></div>
         </section>
 
         {/* ===== TOP FEATURED EVENT ===== */}
@@ -641,43 +665,43 @@ const WeeklyPulse = () => {
                 />
               </div>
               <div className="p-8 md:p-12 flex flex-col justify-center">
-                <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-primary mb-4">
+                <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-4">
                   Featured · {f.category}
                 </p>
                 {f.needsVerification && (
-                  <span className="inline-flex items-center gap-1 mb-3 px-2.5 py-1 rounded-full bg-primary/12 border border-primary/35 text-[10px] font-medium tracking-[0.14em] uppercase text-primary self-start">
+                  <span className="inline-flex items-center gap-1 mb-3 px-2.5 py-1 rounded-full bg-[#5eead4]/12 border border-[#5eead4]/35 text-[10px] font-medium tracking-[0.14em] uppercase text-[#5eead4] self-start">
                     <AlertCircle className="w-3 h-3" /> Details being confirmed
                   </span>
                 )}
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] text-foreground leading-[1.05]">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] text-white leading-[1.05]">
                   {f.title}
                 </h2>
-                <p className="mt-5 text-base md:text-lg text-muted-foreground font-light leading-relaxed">
+                <p className="mt-5 text-base md:text-lg text-white/70 font-light leading-relaxed">
                   {f.description}
                 </p>
-                <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+                <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-white/75">
                   <span className="inline-flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 text-primary" />
+                    <Clock className="w-3.5 h-3.5 text-[#5eead4]" />
                     {f.dateLabel}{f.time ? ` · ${f.time}` : ""}
                   </span>
                   {(f.venue || f.town) && (
                     <span className="inline-flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-primary" />
+                      <MapPin className="w-3.5 h-3.5 text-[#5eead4]" />
                       {[f.venue, f.town].filter(Boolean).join(" · ")}
                     </span>
                   )}
                 </div>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-semibold group-hover:bg-white transition">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-5 py-2.5 text-sm font-semibold group-hover:bg-white transition">
                     {f.link.label} <ArrowRight className="w-4 h-4" />
                   </span>
                 </div>
               </div>
             </div>
           );
-          const wrapperCls = "group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-card hover:border-border transition text-left w-full";
+          const wrapperCls = "group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-white/20 transition text-left w-full";
           return (
-            <section className="relative py-8 z-10">
+            <section className="relative -mt-12 md:-mt-20 z-10">
               <div className="max-w-[1600px] mx-auto px-6 md:px-10">
                 {f.link.pending ? (
                   <button type="button" onClick={() => { trackFeatured(); openPending(f, "featured_hero"); }} className={wrapperCls}>{inner}</button>
@@ -697,17 +721,17 @@ const WeeklyPulse = () => {
           <div className="max-w-[1600px] mx-auto px-6 md:px-10">
             <div className="flex items-end justify-between gap-6 mb-5">
               <div>
-                <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-primary mb-3">
+                <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-3">
                   Browse the Room
                 </p>
-                <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.025em] text-foreground">
+                <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.025em] text-white">
                   Pick a vibe
                 </h2>
               </div>
               <Link
                 to="/submit-event"
                 onClick={() => gtag("add_event_click", { source_location: "events_room_filters" })}
-                className="hidden md:inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-foreground transition"
+                className="hidden md:inline-flex items-center gap-1.5 text-sm font-medium text-[#5eead4] hover:text-white transition"
               >
                 <Plus className="w-4 h-4" /> Add Your Event
               </Link>
@@ -726,8 +750,8 @@ const WeeklyPulse = () => {
                     }}
                     className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition border ${
                       active
-                        ? "bg-primary text-primary-foreground border-white"
-                        : "bg-secondary text-muted-foreground border-border hover:border-border hover:text-foreground"
+                        ? "bg-white text-[#0B0F19] border-white"
+                        : "bg-white/[0.04] text-white/80 border-white/10 hover:border-white/30 hover:text-white"
                     }`}
                   >
                     {f.label}
@@ -751,8 +775,8 @@ const WeeklyPulse = () => {
                     }}
                     className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition border ${
                       active
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-secondary text-muted-foreground border-border hover:border-border hover:text-foreground"
+                        ? "bg-[#5eead4] text-[#0B0F19] border-[#5eead4]"
+                        : "bg-white/[0.04] text-white/80 border-white/10 hover:border-white/30 hover:text-white"
                     }`}
                   >
                     {t}
@@ -768,13 +792,13 @@ const WeeklyPulse = () => {
         <section id="seven-day-schedule" className="relative pt-16 md:pt-24 scroll-mt-24">
           <div className="max-w-[1600px] mx-auto px-6 md:px-10">
             <div className="max-w-3xl">
-              <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-primary mb-4">
+              <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-4">
                 This Week
               </p>
-              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-foreground leading-[1.05]">
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-white leading-[1.05]">
                 Your next seven days in the Capital District.
               </h2>
-              <p className="mt-5 text-base md:text-lg text-muted-foreground font-light leading-relaxed">
+              <p className="mt-5 text-base md:text-lg text-white/65 font-light leading-relaxed">
                 Browse concerts, markets, dining events, community gatherings, sports,
                 nightlife, and things to do by day.
               </p>
@@ -802,17 +826,17 @@ const WeeklyPulse = () => {
                     }}
                     className={`shrink-0 w-[96px] md:w-[112px] rounded-2xl px-4 py-4 text-left border transition ${
                       active
-                        ? "bg-primary text-primary-foreground border-white shadow-[0_8px_30px_rgba(94,234,212,0.18)]"
-                        : "bg-secondary text-foreground border-border hover:border-border"
+                        ? "bg-white text-[#0B0F19] border-white shadow-[0_8px_30px_rgba(94,234,212,0.18)]"
+                        : "bg-white/[0.04] text-white border-white/10 hover:border-white/30"
                     }`}
                   >
-                    <div className={`text-[10px] font-semibold tracking-[0.22em] uppercase ${active ? "text-primary-foreground/70" : "text-primary"}`}>
+                    <div className={`text-[10px] font-semibold tracking-[0.22em] uppercase ${active ? "text-[#0B0F19]/70" : "text-[#5eead4]"}`}>
                       {d.label}
                     </div>
-                    <div className={`mt-1 text-2xl md:text-[28px] font-semibold tracking-tight ${active ? "text-primary-foreground" : "text-foreground"}`}>
+                    <div className={`mt-1 text-2xl md:text-[28px] font-semibold tracking-tight ${active ? "text-[#0B0F19]" : "text-white"}`}>
                       {d.monthLabel} {d.dayNum}
                     </div>
-                    <div className={`mt-1 text-[11px] font-medium ${active ? "text-primary-foreground/60" : "text-muted-foreground"}`}>
+                    <div className={`mt-1 text-[11px] font-medium ${active ? "text-[#0B0F19]/60" : "text-white/55"}`}>
                       {count > 0 ? `${count} event${count === 1 ? "" : "s"}` : "—"}
                     </div>
                   </button>
@@ -823,25 +847,25 @@ const WeeklyPulse = () => {
             {/* Day events */}
             <div className="mt-8 md:mt-10">
               <div className="mb-5 md:mb-6 flex items-baseline justify-between gap-4">
-                <h3 className="text-lg md:text-xl font-semibold tracking-[-0.015em] text-foreground">
+                <h3 className="text-lg md:text-xl font-semibold tracking-[-0.015em] text-white">
                   {selectedDayLongLabel}
                 </h3>
-                <span className="text-[12px] md:text-sm font-medium text-muted-foreground">
+                <span className="text-[12px] md:text-sm font-medium text-white/55">
                   {selectedDayEvents.length} {selectedDayEvents.length === 1 ? "event" : "events"}
                 </span>
               </div>
               {selectedDayEvents.length === 0 ? (
-                <div className="rounded-2xl border border-white/[0.08] bg-card p-8 md:p-12 text-center">
-                  <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.02em] text-foreground">
+                <div className="rounded-2xl border border-white/[0.08] bg-[#0F1424] p-8 md:p-12 text-center">
+                  <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.02em] text-white">
                     No featured events listed yet for this day.
                   </h3>
-                  <p className="mt-3 text-muted-foreground font-light">
+                  <p className="mt-3 text-white/65 font-light">
                     Know about something happening locally? Submit it to Capital District Nest.
                   </p>
                   <Link
                     to="/submit-event"
                     onClick={() => gtag("add_event_click", { source_location: "seven_day_empty" })}
-                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-2.5 text-sm font-semibold hover:bg-white transition"
+                    className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-5 py-2.5 text-sm font-semibold hover:bg-white transition"
                   >
                     <Plus className="w-4 h-4" /> Add Your Event
                   </Link>
@@ -862,51 +886,51 @@ const WeeklyPulse = () => {
                     };
                     const ctaLabel = ev.link.pending ? "Details Being Confirmed" : ev.link.label;
                     const inner = (
-                      <div className="flex gap-4 p-4 md:p-5 rounded-2xl border border-white/[0.08] bg-card hover:border-border transition h-full">
+                      <div className="flex gap-4 p-4 md:p-5 rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-white/25 transition h-full">
                         <div className="relative w-[100px] md:w-[140px] shrink-0 aspect-[4/5] md:aspect-[4/5] rounded-xl overflow-hidden">
                           <img src={ev.image} alt={ev.title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
-                          <div className="absolute top-2 left-2 flex flex-col items-center justify-center w-[44px] rounded-md bg-background backdrop-blur border border-border py-1">
-                            <span className="text-[9px] font-semibold tracking-[0.18em] text-primary">{ev.dateBadge.top}</span>
-                            <span className="text-base font-semibold text-foreground leading-none mt-0.5">{ev.dateBadge.bottom || "—"}</span>
+                          <div className="absolute top-2 left-2 flex flex-col items-center justify-center w-[44px] rounded-md bg-[#0B0F19]/85 backdrop-blur border border-white/15 py-1">
+                            <span className="text-[9px] font-semibold tracking-[0.18em] text-[#5eead4]">{ev.dateBadge.top}</span>
+                            <span className="text-base font-semibold text-white leading-none mt-0.5">{ev.dateBadge.bottom || "—"}</span>
                           </div>
                         </div>
                         <div className="flex-1 min-w-0 flex flex-col">
-                          <span className="inline-flex self-start items-center px-2 py-[3px] rounded-full bg-secondary border border-border text-[10px] font-medium tracking-wider uppercase text-muted-foreground">
+                          <span className="inline-flex self-start items-center px-2 py-[3px] rounded-full bg-white/[0.06] border border-white/10 text-[10px] font-medium tracking-wider uppercase text-white/80">
                             {ev.category}
                           </span>
-                          <h3 className="mt-2 text-base md:text-lg font-semibold tracking-[-0.01em] text-foreground leading-snug line-clamp-2">
+                          <h3 className="mt-2 text-base md:text-lg font-semibold tracking-[-0.01em] text-white leading-snug line-clamp-2">
                             {ev.title}
                           </h3>
-                          <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-muted-foreground">
+                          <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-white/65">
                             {ev.time && (
                               <span className="inline-flex items-center gap-1">
-                                <Clock className="w-3 h-3 text-primary" /> {ev.time}
+                                <Clock className="w-3 h-3 text-[#5eead4]" /> {ev.time}
                               </span>
                             )}
                             {(ev.venue || ev.town) && (
                               <span className="inline-flex items-center gap-1">
-                                <MapPin className="w-3 h-3 text-primary" />
+                                <MapPin className="w-3 h-3 text-[#5eead4]" />
                                 {[ev.venue, ev.town].filter(Boolean).join(" · ")}
                               </span>
                             )}
                             {ev.endISO && ev.startISO && ev.endISO !== ev.startISO && ev.endISO !== selectedDay.iso && (
-                              <span className="inline-flex items-center gap-1 text-primary/90">
+                              <span className="inline-flex items-center gap-1 text-[#5eead4]/90">
                                 Runs through {formatRunsThrough(ev.endISO)}
                               </span>
                             )}
                             {ev.startISO === selectedDay.iso && ev.endISO === ev.startISO && (
-                              <span className="inline-flex items-center gap-1 text-primary/90">
+                              <span className="inline-flex items-center gap-1 text-[#5eead4]/90">
                                 Today only
                               </span>
                             )}
                           </div>
                           {ev.description && (
-                            <p className="mt-2 text-[13px] text-muted-foreground font-light line-clamp-2">
+                            <p className="mt-2 text-[13px] text-white/55 font-light line-clamp-2">
                               {ev.description}
                             </p>
                           )}
                           <div className="mt-auto pt-3">
-                            <span className={`inline-flex items-center gap-1.5 text-[13px] font-semibold ${ev.link.pending ? "text-muted-foreground" : "text-primary"}`}>
+                            <span className={`inline-flex items-center gap-1.5 text-[13px] font-semibold ${ev.link.pending ? "text-white/70" : "text-[#5eead4]"}`}>
                               {ctaLabel} <ArrowRight className="w-3.5 h-3.5" />
                             </span>
                           </div>
@@ -941,7 +965,7 @@ const WeeklyPulse = () => {
               <button
                 type="button"
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition"
+                className="text-sm font-medium text-white/55 hover:text-white transition"
               >
                 ↑ Back to top
               </button>
@@ -964,30 +988,30 @@ const WeeklyPulse = () => {
           ))}
 
           {visibleRails.every((r) => r.events.length === 0) && (
-            <div className="max-w-3xl mx-auto px-6 md:px-10 py-20 text-center text-muted-foreground">
+            <div className="max-w-3xl mx-auto px-6 md:px-10 py-20 text-center text-white/60">
               Nothing in this category right now. Try another filter or check back soon.
             </div>
           )}
         </div>
 
         {/* ===== MID ADD-EVENT BAND ===== */}
-        <section className="relative border-y border-white/[0.06] bg-card">
+        <section className="relative border-y border-white/[0.06] bg-[#0F1424]">
           <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-12 md:py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
-              <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-primary mb-2">
+              <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-2">
                 Contribute
               </p>
-              <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.02em] text-foreground">
+              <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.02em] text-white">
                 Hosting a concert, market, fundraiser, or restaurant night?
               </h3>
-              <p className="mt-2 text-muted-foreground text-sm md:text-base font-light max-w-xl">
+              <p className="mt-2 text-white/65 text-sm md:text-base font-light max-w-xl">
                 Submit your event to be considered for the Capital District Events Room.
               </p>
             </div>
             <Link
               to="/submit-event"
               onClick={() => gtag("add_event_click", { source_location: "events_room_midband" })}
-              className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition shrink-0"
+              className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition shrink-0"
             >
               <Plus className="w-4 h-4" /> Add Your Event
             </Link>
@@ -997,10 +1021,10 @@ const WeeklyPulse = () => {
         {/* ===== SEO COPY — light editorial breathing block ===== */}
         <section className="relative bg-[#F5F3EE] border-y border-black/[0.06]">
           <div className="max-w-4xl mx-auto px-6 md:px-10 py-20 md:py-28">
-            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-primary mb-4">
+            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#0d6e66] mb-4">
               Discover the Capital District
             </p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-primary-foreground leading-[1.1]">
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.03em] text-[#0B0F19] leading-[1.1]">
               Things to do in the Capital District
             </h2>
             <div className="mt-6 space-y-4 text-base md:text-[17px] text-neutral-600 font-light leading-relaxed">
@@ -1028,13 +1052,13 @@ const WeeklyPulse = () => {
 
         <section className="relative">
           <div className="max-w-4xl mx-auto px-6 md:px-10 py-20 md:py-28 text-center">
-            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-primary mb-5">
+            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-[#5eead4] mb-5">
               The Events Room
             </p>
-            <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-foreground leading-[1.05]">
+            <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-white leading-[1.05]">
               Built by neighbors, for neighbors.
             </h2>
-            <p className="mt-6 text-base md:text-lg text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-6 text-base md:text-lg text-white/70 font-light max-w-2xl mx-auto leading-relaxed">
               Restaurants, venues, businesses, schools, nonprofits, and community
               organizations can submit events to Capital District Nest.
             </p>
@@ -1042,13 +1066,13 @@ const WeeklyPulse = () => {
               <Link
                 to="/submit-event"
                 onClick={() => gtag("add_event_click", { source_location: "events_room_bottom" })}
-                className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-7 py-3.5 text-sm font-semibold hover:bg-white transition"
+                className="inline-flex items-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-7 py-3.5 text-sm font-semibold hover:bg-white transition"
               >
                 <Plus className="w-4 h-4" /> Add Your Event
               </Link>
               <Link
                 to="/local"
-                className="inline-flex items-center gap-2 rounded-full border border-border text-foreground px-7 py-3.5 text-sm font-semibold hover:bg-secondary transition"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 text-white px-7 py-3.5 text-sm font-semibold hover:bg-white/10 transition"
               >
                 Explore Local Businesses <ArrowRight className="w-4 h-4" />
               </Link>
@@ -1060,34 +1084,34 @@ const WeeklyPulse = () => {
       {/* ===== PENDING EVENT MODAL ===== */}
       {pendingEvent && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#0B0F19]/80 backdrop-blur-sm"
           onClick={() => setPendingEvent(null)}
           role="dialog"
           aria-modal="true"
           aria-labelledby="pending-event-title"
         >
           <div
-            className="relative w-full max-w-lg rounded-2xl border border-white/[0.08] bg-card p-7 md:p-9 shadow-2xl"
+            className="relative w-full max-w-lg rounded-2xl border border-white/[0.08] bg-[#0F1424] p-7 md:p-9 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               type="button"
               onClick={() => setPendingEvent(null)}
               aria-label="Close"
-              className="absolute top-4 right-4 w-9 h-9 rounded-full border border-border bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary transition flex items-center justify-center"
+              className="absolute top-4 right-4 w-9 h-9 rounded-full border border-white/15 bg-white/[0.04] text-white/70 hover:text-white hover:bg-white/[0.08] transition flex items-center justify-center"
             >
               <X className="w-4 h-4" />
             </button>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/12 border border-primary/35 text-[10px] font-medium tracking-[0.16em] uppercase text-primary">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#5eead4]/12 border border-[#5eead4]/35 text-[10px] font-medium tracking-[0.16em] uppercase text-[#5eead4]">
               <AlertCircle className="w-3 h-3" /> Pending Verification
             </span>
-            <h3 id="pending-event-title" className="mt-4 text-2xl md:text-[28px] font-semibold tracking-[-0.025em] text-foreground leading-tight">
+            <h3 id="pending-event-title" className="mt-4 text-2xl md:text-[28px] font-semibold tracking-[-0.025em] text-white leading-tight">
               Event details being confirmed.
             </h3>
-            <p className="mt-1.5 text-sm md:text-base text-muted-foreground font-light">
+            <p className="mt-1.5 text-sm md:text-base text-white/65 font-light">
               {pendingEvent.title}
             </p>
-            <p className="mt-5 text-sm md:text-[15px] text-muted-foreground font-light leading-relaxed">
+            <p className="mt-5 text-sm md:text-[15px] text-white/70 font-light leading-relaxed">
               We&rsquo;re currently confirming details for this event. If you are the organizer,
               venue, or business connected to this event, you can submit the official link,
               flyer, ticket page, or event details.
@@ -1106,21 +1130,21 @@ const WeeklyPulse = () => {
                   });
                   setPendingEvent(null);
                 }}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-3 text-sm font-semibold hover:bg-white transition"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#5eead4] text-[#0B0F19] px-5 py-3 text-sm font-semibold hover:bg-white transition"
               >
                 Submit Event Details <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/submit-event?intent=update"
                 onClick={() => setPendingEvent(null)}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-border text-foreground px-5 py-3 text-sm font-semibold hover:bg-secondary transition"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 text-white px-5 py-3 text-sm font-semibold hover:bg-white/10 transition"
               >
                 Suggest an Update
               </Link>
               <Link
                 to="/weekly"
                 onClick={() => setPendingEvent(null)}
-                className="inline-flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground px-5 py-2 transition"
+                className="inline-flex items-center justify-center gap-2 text-sm font-medium text-white/65 hover:text-white px-5 py-2 transition"
               >
                 View All Events
               </Link>
