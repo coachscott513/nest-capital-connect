@@ -146,7 +146,7 @@ const Communities = () => {
         <div className="min-h-screen bg-background text-foreground">
           {/* ═══════════ 1. CINEMATIC HERO ═══════════ */}
           <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
-            <div className="relative   px-6 md:px-10    ">
+            <div>
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -159,7 +159,7 @@ const Communities = () => {
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.05 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] leading-[1.02] "
+                className="nest-display-page"
               >
                 Explore the Capital District by town.
               </motion.h1>
