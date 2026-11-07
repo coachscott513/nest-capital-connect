@@ -603,7 +603,7 @@ const ClaimBusiness = () => {
           }`}>
             <span
               className="absolute -top-3 left-7 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
-              style={{ background: "#e5e4e2", color: "var(--nest-brand-white)" }}
+              style={{ background: "var(--nest-brand-blue)", color: "var(--nest-brand-white)" }}
             >
               <Star className="w-3 h-3 fill-current" /> Anchor Partner
             </span>
