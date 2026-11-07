@@ -598,7 +598,7 @@ const FeaturedTile = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.16) 0%, transparent 55%), linear-gradient(180deg, #10141F 0%, #0B0F19 100%)",
+              "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.16) 0%, transparent 55%), linear-gradient(180deg, var(--nest-brand-ice) 0%, var(--nest-brand-ice-deep) 100%)",
           }}
         >
           <div className="h-full w-full flex items-end p-5">
@@ -762,7 +762,7 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
               }}
             />
           ))}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1E2230] via-[#1E2230]/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
 
           <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/45 backdrop-blur-md border border-border text-[10px] font-semibold text-foreground">
             <span className="relative flex w-1.5 h-1.5">
@@ -883,7 +883,7 @@ const ClaimCtaCard = () => (
   <a
     href="/pricing"
     onClick={() => trackGAEvent.pricingClick({ source_location: "directory_inline_claim_card" })}
-    className="group relative rounded-[22px] overflow-hidden p-7 flex flex-col justify-between border border-primary/25 bg-gradient-to-br from-primary/15 via-[#1E2230] to-[#1E2230] hover:border-primary/60 hover:shadow-[0_30px_70px_-20px_rgba(94,234,212,0.35)] transition-all duration-300 hover:-translate-y-1 min-h-[280px]"
+    className="group relative rounded-[22px] overflow-hidden p-7 flex flex-col justify-between border border-primary/25 bg-gradient-to-br from-primary/15 via-card to-card hover:border-primary/60 hover:shadow-[0_30px_70px_-20px_rgba(94,234,212,0.35)] transition-all duration-300 hover:-translate-y-1 min-h-[280px]"
   >
     <div
       className="absolute -top-20 -right-20 w-60 h-60 rounded-full opacity-50 blur-3xl transition-opacity duration-500 group-hover:opacity-80"
@@ -1037,7 +1037,7 @@ export const BusinessDetailModal = ({
             className="relative px-7 md:px-10 pt-10 md:pt-14 pb-8 md:pb-10 overflow-hidden"
             style={{
               background:
-                "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.10) 0%, transparent 55%), linear-gradient(180deg, #0B0F19 0%, #0B0F19 100%)",
+                "radial-gradient(120% 80% at 0% 0%, rgba(94,234,212,0.10) 0%, transparent 55%), linear-gradient(180deg, var(--nest-brand-white) 0%, var(--nest-brand-white) 100%)",
             }}
           >
             <div

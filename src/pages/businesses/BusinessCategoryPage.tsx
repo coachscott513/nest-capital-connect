@@ -22,6 +22,7 @@ import { findGroupForCategory } from "@/data/businessCategoryGroups";
 import { spotlightsForCategory } from "@/data/businessSpotlights";
 import { useDbBusinesses, townMatches } from "@/hooks/useDbBusinesses";
 import { matchesOfficialCategory } from "@/data/officialCategories";
+import categoryHeroImg from "@/assets/hero-discovery-wide.jpg";
 
 const TOWNS: { label: string; slug: string }[] = [
   { label: "Albany", slug: "albany" },
@@ -92,8 +93,8 @@ const BusinessCategoryPage = () => {
       <CleanHeader />
 
       {/* Hero */}
-      <section className="px-6 md:px-10 pt-24 pb-14 md:pt-32 md:pb-20">
-        <div className="max-w-5xl mx-auto">
+      <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+        <div className=" ">
           <Link
             to="/businesses"
             className="text-xs font-semibold tracking-[0.22em] uppercase text-primary hover:text-foreground transition"
@@ -103,16 +104,16 @@ const BusinessCategoryPage = () => {
           <p className="mt-6 text-[11px] font-semibold tracking-[0.24em] uppercase text-primary">
             Capital District {category}
           </p>
-          <h1 className="mt-3 text-4xl md:text-6xl font-semibold tracking-[-0.02em] leading-[1.05]">
+          <h1 className="nest-display-page">
             {category} to explore across the Capital District.
           </h1>
-          <p className="mt-5 text-lg text-muted-foreground max-w-2xl font-light">
+          <p className="mt-5 text-lg text-muted-foreground  font-light">
             Discover local {category.toLowerCase()} businesses, owner stories,
             and places worth knowing across Albany, Troy, Saratoga, Schenectady,
             Delmar, and surrounding communities.
           </p>
         </div>
-      </section>
+      </div><div className="nest-split-media nest-rise nest-rise--late"><img src={categoryHeroImg} alt="Capital District" loading="eager" /></div></div></section>
 
       {/* Spotlights */}
       {spotlights.length > 0 && (

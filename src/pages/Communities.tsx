@@ -13,6 +13,7 @@ import {
 import MainLayout from "@/components/MainLayout";
 import SEOHead from "@/components/SEOHead";
 import EditorialBreather from "@/components/EditorialBreather";
+import communitiesHeroImg from "@/assets/hero-towns-wide.jpg";
 import {
   CAPITAL_DISTRICT_COUNTIES,
   type CDCounty as County,
@@ -144,16 +145,8 @@ const Communities = () => {
       <MainLayout>
         <div className="min-h-screen bg-background text-foreground">
           {/* ═══════════ 1. CINEMATIC HERO ═══════════ */}
-          <section className="relative isolate overflow-hidden">
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(60% 70% at 50% 25%, rgba(94,234,212,0.12), transparent 70%)",
-              }}
-              aria-hidden
-            />
-            <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 pt-32 md:pt-44 pb-20 md:pb-28">
+          <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+            <div>
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -166,7 +159,7 @@ const Communities = () => {
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.05 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] leading-[1.02] max-w-4xl"
+                className="nest-display-page"
               >
                 Explore the Capital District by town.
               </motion.h1>
@@ -174,7 +167,7 @@ const Communities = () => {
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="mt-6 max-w-2xl text-lg md:text-xl text-muted-foreground font-light leading-relaxed"
+                className="mt-6  text-lg md:text-xl text-muted-foreground font-light leading-relaxed"
               >
                 Discover restaurants, businesses, events, services, homes, and local resources
                 across the region's {totalTowns} towns and neighborhoods.
@@ -191,7 +184,7 @@ const Communities = () => {
                       block: "start",
                     });
                   }}
-                  className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6  text-sm font-semibold hover:bg-primary transition"
                 >
                   <Search className="w-4 h-4" /> Search Towns
                 </a>
@@ -205,13 +198,13 @@ const Communities = () => {
                       block: "start",
                     });
                   }}
-                  className="inline-flex items-center gap-2 rounded-full border border-border text-foreground px-6 py-3 text-sm font-semibold hover:bg-secondary transition"
+                  className="inline-flex items-center gap-2 rounded-full border border-border text-foreground px-6  text-sm font-semibold hover:bg-secondary transition"
                 >
                   View All Towns <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
             </div>
-          </section>
+          </div><div className="nest-split-media nest-rise nest-rise--late"><img src={communitiesHeroImg} alt="Capital District" loading="eager" /></div></div></section>
 
           {/* ═══════════ 2. FEATURED TOWN TILES ═══════════ */}
           <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-24">
@@ -244,7 +237,7 @@ const Communities = () => {
                         source_location: "featured_tiles",
                       })
                     }
-                    className="group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-border transition aspect-[4/5]"
+                    className="group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-card hover:border-border transition aspect-[4/5]"
                   >
                     <img
                       src={t.image}
@@ -260,7 +253,7 @@ const Communities = () => {
                       }}
                       aria-hidden
                     />
-                    <div className="relative h-full p-6 md:p-7 flex flex-col justify-end">
+                    <div className="nest-on-photo relative h-full p-6 md:p-7 flex flex-col justify-end">
                       <p
                         className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-2"
                         style={{ color: TEAL }}

@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Check, ArrowRight, Sparkles, Star, Crown, Video, Camera, Share2, QrCode } from "lucide-react";
 import CleanHeader from "@/components/CleanHeader";
 import Footer from "@/components/Footer";
+import pricingHeroImg from "@/assets/category-retail.jpg";
 
 const TEAL = "var(--nest-brand-blue)";
 const GOLD = "var(--nest-brand-blue)";
@@ -127,30 +128,22 @@ const Pricing = () => {
       <CleanHeader />
 
       {/* HERO */}
-      <section className="relative px-6 md:px-10 pt-24 md:pt-32 pb-16 md:pb-20">
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.35] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(60% 45% at 50% 0%, rgba(94,234,212,0.16) 0%, rgba(11,15,25,0) 70%)",
-          }}
-        />
-        <div className="relative max-w-3xl mx-auto text-center">
+      <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+        <div className="relative   ">
           <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-5" style={{ color: TEAL }}>
             Local Business Solutions
           </p>
-          <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02] text-foreground">
+          <h1 className="nest-display-page">
             Free to be listed. $15 to stand out. $25 for a full business page.
           </h1>
-          <p className="mt-6 text-lg text-muted-foreground font-light max-w-2xl mx-auto">
+          <p className="mt-6 text-lg text-muted-foreground font-light  ">
             Every Capital District business is already searchable on Nest, for free. Upgrade to a
             Featured Listing for better visibility, or to a Premier Business Page that works like a
             mini website inside Nest.
           </p>
         </div>
 
-      </section>
+      </div><div className="nest-split-media nest-rise nest-rise--late"><img src={pricingHeroImg} alt="A neighborhood shop in the Capital District" loading="eager" /></div></div></section>
 
       {/* TIERS */}
       <section className="px-6 md:px-10 pb-16 md:pb-20">
@@ -235,7 +228,7 @@ const Pricing = () => {
           >
             <span
               className="absolute -top-3 left-7 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
-              style={{ background: PLATINUM, color: "var(--nest-brand-white)" }}
+              style={{ background: "var(--nest-brand-ice-deep)", color: "var(--nest-brand-ink)" }}
             >
               <Crown className="w-3 h-3" /> Enterprise · Anchor Partner
             </span>
@@ -255,7 +248,7 @@ const Pricing = () => {
             <a
               href="/claim-business?tier=anchor"
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-[13px] font-semibold whitespace-nowrap hover:opacity-90 transition"
-              style={{ background: PLATINUM, color: "var(--nest-brand-white)" }}
+              style={{ background: "var(--nest-brand-ice-deep)", color: "var(--nest-brand-ink)" }}
             >
               <Crown className="w-4 h-4" /> Apply as Anchor Partner
               <ArrowRight className="w-4 h-4" />

@@ -103,6 +103,20 @@ const leadSchema = z.object({
   message: z.string().trim().min(1, "Message required").max(1000),
 });
 
+
+/** Right-side hero media: the business's own photo/video when present, otherwise an honest monogram summary. */
+function BizHeroMedia({ biz, image, video }: { biz: { name: string; category?: string | null; town_name?: string | null; city?: string | null }; image?: string | null; video?: string | null }) {
+  if (video) return <div className="nest-split-media"><iframe src={video} className="w-full aspect-[4/3]" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen title={`${biz.name} video`} /></div>;
+  if (image) return <div className="nest-split-media"><img src={image} alt={biz.name} loading="eager" /></div>;
+  const initials = biz.name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+  return (
+    <div className="nest-split-media flex aspect-[4/3] flex-col items-center justify-center gap-4 p-8 text-center" style={{ background: "var(--nest-brand-ice)" }} aria-hidden="true">
+      <span className="flex h-24 w-24 items-center justify-center rounded-full bg-card text-3xl font-light text-primary border border-border">{initials}</span>
+      <span className="text-sm text-muted-foreground">{[biz.category, biz.town_name || biz.city].filter(Boolean).join(" · ")}</span>
+    </div>
+  );
+}
+
 function getEmbedUrl(url?: string | null): string | null {
   if (!url) return null;
   try {
@@ -353,8 +367,8 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
 
   return (
     <>
-      <section className="px-6 md:px-10 pt-28 md:pt-32 pb-12">
-        <div className="max-w-4xl mx-auto">
+      <section className="nest-split nest-split--compact">
+        <div className="nest-shell nest-split-grid"><div className="nest-split-copy">
           <div className="flex items-center gap-3 mb-5">
             <TierBadge tier={biz.plan_tier} />
             {!biz.is_claimed && (
@@ -368,7 +382,7 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
               </span>
             )}
           </div>
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-foreground leading-[1.05]">
+          <h1 className="nest-display-page">
             {biz.name}
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
@@ -382,6 +396,8 @@ const FreeProfile = ({ biz }: { biz: Business }) => {
             {biz.town_name && <span>{biz.town_name}, NY</span>}
           </div>
           <ActionChips biz={biz} directionsHref={directionsHref} onShare={handleShare} />
+        </div>
+        <BizHeroMedia biz={biz} image={biz.hero_image_url || biz.photos?.[0]} />
         </div>
       </section>
 
@@ -475,17 +491,8 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
 
   return (
     <>
-      {gallery[0] && (
-        <section className="relative w-full">
-          <div className="relative w-full aspect-[21/9] md:aspect-[21/8] overflow-hidden bg-black">
-            <img src={gallery[0]} alt={biz.name} className="absolute inset-0 w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-          </div>
-        </section>
-      )}
-
-      <section className={`px-6 md:px-10 ${gallery[0] ? "-mt-24 md:-mt-28 relative z-10" : "pt-28"}`}>
-        <div className="max-w-5xl mx-auto">
+      <section className="nest-split nest-split--compact">
+        <div className="nest-shell nest-split-grid"><div className="nest-split-copy">
           <div className="flex items-center gap-3 mb-5">
             <TierBadge tier={biz.plan_tier} />
             {!biz.is_claimed && (
@@ -497,7 +504,7 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
               <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">{biz.category}</span>
             )}
           </div>
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] text-foreground leading-[1.04]">{biz.name}</h1>
+          <h1 className="nest-display-page">{biz.name}</h1>
           {biz.tagline && <p className="mt-3 text-lg text-muted-foreground font-light">{biz.tagline}</p>}
           <div className="mt-4 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
             {biz.rating && (
@@ -510,6 +517,8 @@ const FeaturedProfile = ({ biz }: { biz: Business }) => {
             {fullAddress && <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {fullAddress}</span>}
           </div>
           <ActionChips biz={biz} directionsHref={directionsHref} onShare={handleShare} />
+        </div>
+        <BizHeroMedia biz={biz} image={gallery[0]} />
         </div>
       </section>
 
@@ -616,26 +625,13 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
 
   return (
     <>
-      <section className="relative w-full">
-        <div className="relative w-full aspect-[21/9] md:aspect-[21/8] overflow-hidden bg-black">
-          {heroMedia ? (
-            <iframe src={heroMedia} className="absolute inset-0 w-full h-full" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen title={`${biz.name} video`} />
-          ) : heroImage ? (
-            <img src={heroImage} alt={biz.name} className="absolute inset-0 w-full h-full object-cover" loading="eager" />
-          ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-[#101422] to-background" />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-        </div>
-      </section>
-
-      <section className="px-6 md:px-10 -mt-24 md:-mt-28 relative z-10">
-        <div className="max-w-6xl mx-auto">
+      <section className="nest-split nest-split--compact">
+        <div className="nest-shell nest-split-grid"><div className="nest-split-copy">
           <div className="flex items-center gap-3 mb-5">
             <TierBadge tier={biz.plan_tier} />
             {biz.category && <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">{biz.category}</span>}
           </div>
-          <h1 className="text-4xl md:text-6xl font-semibold tracking-[-0.03em] text-foreground leading-[1.02]">{biz.name}</h1>
+          <h1 className="nest-display-page">{biz.name}</h1>
           <div className="mt-5 flex flex-wrap items-center gap-5 text-sm text-muted-foreground">
             {biz.rating && (
               <span className="inline-flex items-center gap-1.5">
@@ -647,6 +643,8 @@ const PremiumMicrosite = ({ biz, specials }: { biz: Business; specials: Special[
             {fullAddress && <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {fullAddress}</span>}
           </div>
           <ActionChips biz={biz} directionsHref={directionsHref} onShare={handleShare} />
+        </div>
+        <BizHeroMedia biz={biz} image={heroImage} video={heroMedia} />
         </div>
       </section>
 

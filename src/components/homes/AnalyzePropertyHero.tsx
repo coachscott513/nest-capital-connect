@@ -38,7 +38,7 @@ const AnalyzePropertyHero = ({
           className="relative overflow-hidden rounded-3xl border border-border p-8 md:p-12"
           style={{
             background:
-              "linear-gradient(135deg, #0B0F19 0%, #11192B 55%, #0e0f12 100%)",
+              "var(--nest-brand-ice)",
           }}
         >
           {/* Ambient accent */}

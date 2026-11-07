@@ -27,6 +27,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SmsConsent from "@/components/SmsConsent";
 import { trackGAEvent } from "@/components/GARouteTracker";
+import claimHeroImg from "@/assets/hero-business-wide.jpg";
+import claimMainHeroImg from "@/assets/hero-owners-wide.jpg";
 
 const TEAL = "var(--nest-brand-blue)";
 
@@ -318,10 +320,10 @@ const ClaimBusiness = () => {
           <title>Thanks — Capital District Nest</title>
         </Helmet>
         <MainHeader />
-        <section className="pt-32 md:pt-40 pb-28 px-6">
-          <div className="max-w-xl mx-auto text-center">
+        <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+          <div className="  ">
             <div
-              className="w-20 h-20 mx-auto mb-7 rounded-2xl border flex items-center justify-center"
+              className="w-20 h-20  mb-7 rounded-2xl border flex items-center "
               style={{ borderColor: `color-mix(in oklch, ${TEAL} 40%, transparent)`, background: `color-mix(in oklch, ${TEAL} 10%, transparent)` }}
             >
               <Sparkles className="w-9 h-9" style={{ color: TEAL }} />
@@ -329,7 +331,7 @@ const ClaimBusiness = () => {
             <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-4" style={{ color: TEAL }}>
               Received
             </p>
-            <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.025em] leading-[1.05]">
+            <h1 className="nest-display-page">
               Thank you.
             </h1>
             <p className="mt-6 text-lg text-muted-foreground font-light leading-relaxed">
@@ -337,22 +339,22 @@ const ClaimBusiness = () => {
               Capital District Nest presence. No automated funnels — a real person from our
               team will be in touch shortly.
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="mt-10 flex flex-col sm:flex-row gap-3 ">
               <Link
                 to="/local"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/90 transition"
+                className="inline-flex items-center  gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
               >
                 Browse the directory <ArrowUpRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary hover:border-primary/40 transition"
+                className="inline-flex items-center  gap-2 px-6 py-3 rounded-full border border-border bg-secondary text-foreground text-sm font-semibold hover:bg-secondary hover:border-primary/40 transition"
               >
                 <ArrowLeft className="w-4 h-4" /> Back home
               </Link>
             </div>
           </div>
-        </section>
+        </div><div className="nest-split-media nest-rise nest-rise--late"><img src={claimHeroImg} alt="A Capital District storefront" loading="eager" /></div></div></section>
         <Footer />
       </div>
     );
@@ -375,30 +377,23 @@ const ClaimBusiness = () => {
       <MainHeader />
 
       {/* HERO */}
-      <section className="pt-28 md:pt-36 pb-14 px-6 md:px-10 relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-[0.35] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(60% 50% at 50% 0%, rgba(94,234,212,0.18) 0%, rgba(11,15,25,0) 70%)",
-          }}
-        />
-        <div className="max-w-3xl mx-auto text-center relative">
+      <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+        <div className="   relative">
           <p className="text-[11px] font-semibold tracking-[0.28em] uppercase mb-5" style={{ color: TEAL }}>
             For Local Business Owners
           </p>
-          <h1 className="text-5xl md:text-6xl font-semibold tracking-[-0.03em] leading-[1.02]">
+          <h1 className="nest-display-page">
             Claim Your Business on Capital District Nest
           </h1>
-          <p className="mt-6 text-lg text-muted-foreground font-light max-w-2xl mx-auto">
+          <p className="mt-6 text-lg text-muted-foreground font-light  ">
             Review your listing, update your profile, add photos, submit events, and request
             featured placement across the Capital District's local discovery platform.
           </p>
-          <p className="mt-3 text-base text-muted-foreground font-light max-w-2xl mx-auto">
+          <p className="mt-3 text-base text-muted-foreground font-light  ">
             Your business may already be listed. Review it for free, upgrade your profile, or
             request featured placement.
           </p>
-          <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="mt-9 flex flex-col sm:flex-row items-center  gap-3">
             <a
               href="#claim-form"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
@@ -412,7 +407,7 @@ const ClaimBusiness = () => {
               Compare Options
             </a>
           </div>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3 text-xs text-muted-foreground">
+          <div className="mt-9 flex flex-wrap items-center  gap-3 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-secondary">
               <Handshake className="w-3.5 h-3.5" style={{ color: TEAL }} /> Concierge onboarding
             </span>
@@ -424,7 +419,7 @@ const ClaimBusiness = () => {
             </span>
           </div>
         </div>
-      </section>
+      </div><div className="nest-split-media nest-rise nest-rise--late"><img src={claimMainHeroImg} alt="A local business owner at their shop" loading="eager" /></div></div></section>
 
       {/* PRICING TIERS — unified ladder */}
       <section id="tiers" className="pb-16 px-6 md:px-10">
@@ -451,7 +446,7 @@ const ClaimBusiness = () => {
                 cadence: "always",
                 setup: null as string | null,
                 tag: "Basic directory presence — already live for every Capital District business.",
-                accent: "rgba(255,255,255,0.55)",
+                accent: "var(--nest-brand-muted)",
                 items: [
                   "Capital District directory",
                   "Name, address & category",
@@ -534,9 +529,9 @@ const ClaimBusiness = () => {
                     key={c.id}
                     className={`relative rounded-3xl p-7 backdrop-blur-xl border flex flex-col transition ${
                       c.style === "teal"
-                        ? "bg-gradient-to-br from-primary/15 via-[#1E2230] to-[#1E2230] border-primary/45 shadow-[0_30px_70px_-30px_rgba(94,234,212,0.45)]"
+                        ? "bg-gradient-to-br from-primary/15 via-card to-card border-primary/45 shadow-[0_30px_70px_-30px_rgba(94,234,212,0.45)]"
                         : c.style === "gold"
-                        ? "bg-gradient-to-br from-primary/15 via-[#1E2230] to-[#1E2230] border-primary/40"
+                        ? "bg-gradient-to-br from-primary/15 via-card to-card border-primary/40"
                         : "bg-secondary border-border hover:border-border"
                     } ${isSelected ? "ring-2 ring-primary/70" : ""}`}
                   >
@@ -546,7 +541,7 @@ const ClaimBusiness = () => {
                         style={
                           c.style === "teal"
                             ? { background: TEAL, color: "var(--nest-brand-white)" }
-                            : { background: "rgba(255,255,255,0.92)", color: "var(--nest-brand-white)" }
+                            : { background: "var(--nest-brand-blue)", color: "var(--nest-brand-white)" }
                         }
                       >
                         <Star className="w-3 h-3 fill-current" /> {c.badge}
@@ -608,7 +603,7 @@ const ClaimBusiness = () => {
           }`}>
             <span
               className="absolute -top-3 left-7 inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap"
-              style={{ background: "#e5e4e2", color: "var(--nest-brand-white)" }}
+              style={{ background: "var(--nest-brand-blue)", color: "var(--nest-brand-white)" }}
             >
               <Star className="w-3 h-3 fill-current" /> Anchor Partner
             </span>
@@ -627,7 +622,7 @@ const ClaimBusiness = () => {
               type="button"
               onClick={() => selectTierAndScroll("anchor")}
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-[13px] font-semibold whitespace-nowrap hover:opacity-90 transition"
-              style={{ background: "#e5e4e2", color: "var(--nest-brand-white)" }}
+              style={{ background: "var(--nest-brand-ice-deep)", color: "var(--nest-brand-ink)" }}
             >
               {requestedTier === "anchor" ? "Selected — Continue Below" : "Apply as Anchor"} <ArrowUpRight className="w-4 h-4" />
             </button>
@@ -648,8 +643,8 @@ const ClaimBusiness = () => {
             <div
               className="mb-5 rounded-2xl border px-5 py-4 text-sm flex items-start gap-3"
               style={{
-                borderColor: resolvedBiz ? `color-mix(in oklch, ${TEAL} 33%, transparent)` : "rgba(255,255,255,0.12)",
-                background: resolvedBiz ? `color-mix(in oklch, ${TEAL} 8%, transparent)` : "rgba(255,255,255,0.04)",
+                borderColor: resolvedBiz ? `color-mix(in oklch, ${TEAL} 33%, transparent)` : "var(--nest-brand-border)",
+                background: resolvedBiz ? `color-mix(in oklch, ${TEAL} 8%, transparent)` : "var(--nest-brand-ice)",
               }}
             >
               <Building2 className="w-4 h-4 mt-0.5 shrink-0" style={{ color: TEAL }} />

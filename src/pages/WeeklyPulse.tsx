@@ -256,7 +256,7 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
             };
 
             const cardInner = (
-              <div className={`relative ${aspect} overflow-hidden rounded-xl bg-[#0F1424] border border-white/[0.06] group-hover:border-border transition`}>
+              <div className={`relative ${aspect} overflow-hidden rounded-xl bg-card border border-white/[0.06] group-hover:border-border transition`}>
                 <img
                   src={ev.image}
                   alt={ev.title}
@@ -288,7 +288,7 @@ const Rail = ({ id, title, subtitle, events, size = "lg", onPending }: RailProps
                 </span>
 
                 {/* Bottom title block */}
-                <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                <div className="nest-on-photo absolute inset-x-0 bottom-0 p-4 md:p-5">
                   {ev.needsVerification && (
                     <span className="inline-flex items-center gap-1 mb-2 px-2 py-[3px] rounded-full bg-primary/12 border border-primary/35 text-[10px] font-medium tracking-[0.14em] uppercase text-primary">
                       <AlertCircle className="w-3 h-3" /> Details being confirmed
@@ -565,40 +565,15 @@ const WeeklyPulse = () => {
 
       <main>
         {/* ===== CINEMATIC HERO ===== */}
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0">
-            <img
-              src={heroBg}
-              alt=""
-              className="w-full h-full object-cover"
-              aria-hidden
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(11,15,25,0.45) 0%, rgba(11,15,25,0.7) 55%, #0B0F19 100%)",
-              }}
-              aria-hidden
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(60% 70% at 50% 40%, rgba(94,234,212,0.10), transparent 70%)",
-              }}
-              aria-hidden
-            />
-          </div>
-
-          <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 pt-32 md:pt-44 pb-24 md:pb-36">
-            <p className="text-[11px] font-semibold tracking-[0.32em] uppercase text-primary mb-5">
+        <section className="nest-split nest-split--compact">
+          <div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+            <p className="nest-eyebrow">
               This Week
             </p>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] text-foreground leading-[1.02] max-w-4xl">
+            <h1 className="nest-display-page">
               Events Across the Capital&nbsp;District
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-muted-foreground font-light max-w-2xl leading-relaxed">
+            <p className="nest-lead">
               Live music, festivals, markets, dining events, sports, family
               activities, nightlife, and local happenings across the region.
             </p>
@@ -625,6 +600,7 @@ const WeeklyPulse = () => {
               </Link>
             </div>
           </div>
+          <div className="nest-split-media nest-rise nest-rise--late"><img src={heroBg} alt="A crowd at a live outdoor event" loading="eager" /></div></div>
         </section>
 
         {/* ===== TOP FEATURED EVENT ===== */}
@@ -699,9 +675,9 @@ const WeeklyPulse = () => {
               </div>
             </div>
           );
-          const wrapperCls = "group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-border transition text-left w-full";
+          const wrapperCls = "group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-card hover:border-border transition text-left w-full";
           return (
-            <section className="relative -mt-12 md:-mt-20 z-10">
+            <section className="relative py-8 z-10">
               <div className="max-w-[1600px] mx-auto px-6 md:px-10">
                 {f.link.pending ? (
                   <button type="button" onClick={() => { trackFeatured(); openPending(f, "featured_hero"); }} className={wrapperCls}>{inner}</button>
@@ -855,7 +831,7 @@ const WeeklyPulse = () => {
                 </span>
               </div>
               {selectedDayEvents.length === 0 ? (
-                <div className="rounded-2xl border border-white/[0.08] bg-[#0F1424] p-8 md:p-12 text-center">
+                <div className="rounded-2xl border border-white/[0.08] bg-card p-8 md:p-12 text-center">
                   <h3 className="text-xl md:text-2xl font-semibold tracking-[-0.02em] text-foreground">
                     No featured events listed yet for this day.
                   </h3>
@@ -886,7 +862,7 @@ const WeeklyPulse = () => {
                     };
                     const ctaLabel = ev.link.pending ? "Details Being Confirmed" : ev.link.label;
                     const inner = (
-                      <div className="flex gap-4 p-4 md:p-5 rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-border transition h-full">
+                      <div className="flex gap-4 p-4 md:p-5 rounded-2xl border border-white/[0.08] bg-card hover:border-border transition h-full">
                         <div className="relative w-[100px] md:w-[140px] shrink-0 aspect-[4/5] md:aspect-[4/5] rounded-xl overflow-hidden">
                           <img src={ev.image} alt={ev.title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                           <div className="absolute top-2 left-2 flex flex-col items-center justify-center w-[44px] rounded-md bg-background backdrop-blur border border-border py-1">
@@ -995,7 +971,7 @@ const WeeklyPulse = () => {
         </div>
 
         {/* ===== MID ADD-EVENT BAND ===== */}
-        <section className="relative border-y border-white/[0.06] bg-[#0F1424]">
+        <section className="relative border-y border-white/[0.06] bg-card">
           <div className="max-w-[1600px] mx-auto px-6 md:px-10 py-12 md:py-14 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
               <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-primary mb-2">
@@ -1091,7 +1067,7 @@ const WeeklyPulse = () => {
           aria-labelledby="pending-event-title"
         >
           <div
-            className="relative w-full max-w-lg rounded-2xl border border-white/[0.08] bg-[#0F1424] p-7 md:p-9 shadow-2xl"
+            className="relative w-full max-w-lg rounded-2xl border border-white/[0.08] bg-card p-7 md:p-9 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button

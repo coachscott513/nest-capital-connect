@@ -20,6 +20,7 @@ import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SmsConsent from "@/components/SmsConsent";
+import businessHeroImg from "@/assets/hero-business-wide.jpg";
 
 /* =============================================================
    /business — Nest for Business
@@ -244,37 +245,29 @@ const BusinessLanding = () => {
       <CleanHeader />
 
       {/* HERO */}
-      <section className="relative w-full overflow-hidden bg-background border-t border-white/[0.06]">
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(55% 55% at 50% 30%, rgba(94,234,212,0.12), transparent 65%), radial-gradient(45% 60% at 15% 85%, rgba(13,110,102,0.18), transparent 70%)",
-          }}
-        />
-        <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-28 md:pt-36 pb-20 md:pb-28 text-center">
+      <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
+        <div className="relative   px-5 sm:px-6 md:px-10     ">
           <Eyebrow>Local Search · AI Tools · Business Automation</Eyebrow>
           <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/[0.06] px-4 py-1.5 text-xs md:text-sm font-medium tracking-tight text-primary">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
             Your local AI growth partner.
           </div>
-          <h1 className="mt-6 text-4xl sm:text-5xl md:text-[5rem] font-semibold tracking-[-0.045em] leading-[1.02] text-foreground">
+          <h1 className="nest-display-page">
             Get found locally.<br className="hidden sm:block" /> Respond faster.{" "}
             <span className="text-primary">Run smoother.</span>
           </h1>
-          <p className="mt-7 text-base md:text-xl text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
+          <p className="mt-7 text-base md:text-xl text-muted-foreground font-light leading-relaxed  ">
             Capital District Nest helps local businesses improve visibility, claim and upgrade their profile, automate simple customer tasks, and use practical AI tools to save time.
           </p>
-          <p className="mt-5 text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
+          <p className="mt-5 text-sm md:text-base text-muted-foreground  ">
             We're a local startup building better local search for the Capital District — helping residents discover businesses, services, events, homes, and community resources by town.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <div className="mt-10 flex flex-wrap  gap-3">
             <PrimaryBtn to="/claim-business">Claim Your Business</PrimaryBtn>
             <SecondaryBtn href="#business-help">Get Business Help</SecondaryBtn>
           </div>
         </div>
-      </section>
+      </div><div className="nest-split-media nest-rise nest-rise--late"><img src={businessHeroImg} alt="Local business owners in the Capital District" loading="eager" /></div></div></section>
 
       {/* MODERN TOOLS */}
       <section className="bg-secondary py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
