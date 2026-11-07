@@ -22,12 +22,25 @@ import { supabase } from "@/integrations/supabase/client";
 import { findTownInDirectory } from "@/data/capitalDistrictCounties";
 import { canonicalCategory } from "@/lib/canonicalCategory";
 import { businessTelHref, isValidBusinessPhone } from "@/lib/businessContact";
+import townAlbanyImg from "@/assets/town-albany.jpg";
+import townTroyImg from "@/assets/town-troy.jpg";
+import townDelmarImg from "@/assets/town-delmar.jpg";
+import townCliftonParkImg from "@/assets/town-clifton-park.jpg";
+import townSaratogaImg from "@/assets/town-saratoga.jpg";
+import townSchenectadyImg from "@/assets/town-schenectady.jpg";
 
 const TEAL = "var(--nest-brand-blue)";
 const TEAL_LIGHT = "var(--nest-brand-blue)";
 const contactStatusOf = (b: any) => b.contact_status ?? b.contactStatus ?? null;
 
 // ── helpers ────────────────────────────────────────────────────────────────
+
+/** Exact-town photos only — never borrow another town's image. */
+const TOWN_PHOTOS: Record<string, string> = {
+  albany: townAlbanyImg, troy: townTroyImg, delmar: townDelmarImg,
+  "clifton-park": townCliftonParkImg, "saratoga-springs": townSaratogaImg, schenectady: townSchenectadyImg,
+};
+
 const titleizeSlug = (slug: string) =>
   decodeURIComponent(slug || "")
     .split("-")
@@ -345,18 +358,10 @@ const TownPulse = () => {
       </Helmet>
 
       {/* ── 1. HERO ───────────────────────────────────────────── */}
-      <section className="relative isolate overflow-hidden">
-        <div
-          className="absolute -top-40 left-1/4 w-[640px] h-[640px] rounded-full blur-[160px] pointer-events-none"
-          style={{ background: "rgba(94,234,212,0.18)" }}
-        />
-        <div
-          className="absolute bottom-0 right-0 w-[480px] h-[480px] rounded-full blur-[140px] pointer-events-none"
-          style={{ background: "rgba(13,110,102,0.16)" }}
-        />
-        <div className="relative max-w-6xl mx-auto px-6 md:px-10 pt-28 md:pt-36 pb-16 md:pb-24">
+      <section className="nest-split nest-split--compact">
+        <div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
           <Eyebrow>Local Pulse</Eyebrow>
-          <h1 className="text-5xl md:text-7xl font-semibold tracking-[-0.035em] leading-[1.02] text-foreground uppercase">
+          <h1 className="nest-display-page">
             {townName}, New York
           </h1>
           <p className="mt-6 text-lg md:text-xl font-light text-muted-foreground max-w-2xl leading-relaxed">
@@ -373,11 +378,11 @@ const TownPulse = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value.slice(0, 120))}
               placeholder={`Search restaurants, roofing, salons, events, or local services in ${townName}…`}
-              className="flex-1 bg-transparent text-[15px] text-foreground placeholder:text-muted-foreground px-2 py-2.5 focus:outline-none"
+              className="min-w-0 flex-1 bg-transparent text-[15px] text-foreground placeholder:text-muted-foreground px-2 py-2.5 focus:outline-none"
             />
             <button
               type="submit"
-              className="inline-flex items-center px-5 py-2.5 rounded-full text-foreground text-sm font-semibold hover:opacity-90 transition shrink-0"
+              className="inline-flex items-center px-5 py-2.5 rounded-full text-primary-foreground text-sm font-semibold hover:opacity-90 transition shrink-0"
               style={{ backgroundColor: TEAL }}
             >
               Search
@@ -395,6 +400,16 @@ const TownPulse = () => {
               </a>
             ))}
           </div>
+        </div>
+        {TOWN_PHOTOS[slug.toLowerCase()] ? (
+          <div className="nest-split-media nest-rise nest-rise--late"><img src={TOWN_PHOTOS[slug.toLowerCase()]} alt={`${townName}, New York`} loading="eager" /></div>
+        ) : (
+          <div className="nest-split-media flex aspect-[4/3] flex-col items-center justify-center p-8 text-center" style={{ background: "var(--nest-brand-ice)" }} aria-hidden="true">
+            <p className="nest-eyebrow">Local Pulse</p>
+            <p className="mt-3 text-3xl font-light text-foreground">{townName}</p>
+            <p className="mt-2 text-sm text-muted-foreground">Specials · Events · Businesses</p>
+          </div>
+        )}
         </div>
       </section>
 
