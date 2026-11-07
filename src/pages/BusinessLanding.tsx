@@ -20,7 +20,6 @@ import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SmsConsent from "@/components/SmsConsent";
-import businessHeroImg from "@/assets/hero-business-wide.jpg";
 
 /* =============================================================
    /business — Nest for Business
@@ -29,7 +28,7 @@ import businessHeroImg from "@/assets/hero-business-wide.jpg";
    ============================================================= */
 
 const Eyebrow = ({ children }: { children: React.ReactNode }) => (
-  <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-primary">
+  <p className="text-[11px] font-semibold tracking-[0.28em] uppercase text-[#5eead4]">
     {children}
   </p>
 );
@@ -47,11 +46,11 @@ const SectionHeader = ({
 }) => (
   <div className={align === "center" ? "text-center max-w-3xl mx-auto" : "max-w-3xl"}>
     {eyebrow && <div className="mb-5"><Eyebrow>{eyebrow}</Eyebrow></div>}
-    <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+    <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
       {headline}
     </h2>
     {sub && (
-      <p className="mt-6 text-base md:text-lg text-muted-foreground font-light leading-relaxed">
+      <p className="mt-6 text-base md:text-lg text-white/70 font-light leading-relaxed">
         {sub}
       </p>
     )}
@@ -67,10 +66,10 @@ const Card = ({
   title: string;
   body: string;
 }) => (
-  <div className="rounded-2xl border border-border bg-card p-6 md:p-7 hover:border-primary/40 transition">
-    {Icon && <Icon className="w-5 h-5 text-primary mb-4" />}
-    <h3 className="text-lg font-semibold text-foreground tracking-tight">{title}</h3>
-    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{body}</p>
+  <div className="rounded-2xl border border-white/10 bg-[#1E2230] p-6 md:p-7 hover:border-[#5eead4]/40 transition">
+    {Icon && <Icon className="w-5 h-5 text-[#5eead4] mb-4" />}
+    <h3 className="text-lg font-semibold text-white tracking-tight">{title}</h3>
+    <p className="mt-2 text-sm text-white/65 leading-relaxed">{body}</p>
   </div>
 );
 
@@ -86,7 +85,7 @@ const PrimaryBtn = ({
   children: React.ReactNode;
 }) => {
   const cn =
-    "inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-foreground text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]";
+    "inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 hover:-translate-y-0.5 transition shadow-[0_12px_32px_-12px_rgba(13,110,102,0.6)]";
   if (to) return <Link to={to} className={cn} onClick={onClick}>{children} <ArrowRight className="w-4 h-4" /></Link>;
   if (href) return <a href={href} className={cn} onClick={onClick}>{children} <ArrowRight className="w-4 h-4" /></a>;
   return <button onClick={onClick} className={cn}>{children} <ArrowRight className="w-4 h-4" /></button>;
@@ -104,7 +103,7 @@ const SecondaryBtn = ({
   children: React.ReactNode;
 }) => {
   const cn =
-    "inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-secondary backdrop-blur text-foreground border border-border text-sm font-semibold hover:bg-white/[0.14] transition";
+    "inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white/[0.06] backdrop-blur text-white border border-white/20 text-sm font-semibold hover:bg-white/[0.14] transition";
   if (to) return <Link to={to} className={cn} onClick={onClick}>{children}</Link>;
   if (href) return <a href={href} className={cn} onClick={onClick}>{children}</a>;
   return <button onClick={onClick} className={cn}>{children}</button>;
@@ -223,8 +222,8 @@ const BusinessLanding = () => {
   };
 
   const inputCn =
-    "w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none transition";
-  const labelCn = "block text-xs font-semibold tracking-wide uppercase text-muted-foreground mb-2";
+    "w-full px-4 py-3 rounded-lg bg-[#0B0F19] border border-white/10 text-white placeholder:text-white/30 focus:border-[#5eead4] focus:outline-none transition";
+  const labelCn = "block text-xs font-semibold tracking-wide uppercase text-white/60 mb-2";
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -245,36 +244,44 @@ const BusinessLanding = () => {
       <CleanHeader />
 
       {/* HERO */}
-      <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
-        <div className="relative   px-5 sm:px-6 md:px-10     ">
+      <section className="relative w-full overflow-hidden bg-[#0B0F19] border-t border-white/[0.06]">
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(55% 55% at 50% 30%, rgba(94,234,212,0.12), transparent 65%), radial-gradient(45% 60% at 15% 85%, rgba(13,110,102,0.18), transparent 70%)",
+          }}
+        />
+        <div className="relative max-w-6xl mx-auto px-5 sm:px-6 md:px-10 pt-28 md:pt-36 pb-20 md:pb-28 text-center">
           <Eyebrow>Local Search · AI Tools · Business Automation</Eyebrow>
-          <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/[0.06] px-4 py-1.5 text-xs md:text-sm font-medium tracking-tight text-primary">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+          <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#5eead4]/30 bg-[#5eead4]/[0.06] px-4 py-1.5 text-xs md:text-sm font-medium tracking-tight text-[#5eead4]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#5eead4]" />
             Your local AI growth partner.
           </div>
-          <h1 className="nest-display-page">
+          <h1 className="mt-6 text-4xl sm:text-5xl md:text-[5rem] font-semibold tracking-[-0.045em] leading-[1.02] text-white">
             Get found locally.<br className="hidden sm:block" /> Respond faster.{" "}
-            <span className="text-primary">Run smoother.</span>
+            <span className="text-[#5eead4]">Run smoother.</span>
           </h1>
-          <p className="mt-7 text-base md:text-xl text-muted-foreground font-light leading-relaxed  ">
+          <p className="mt-7 text-base md:text-xl text-white/75 font-light leading-relaxed max-w-3xl mx-auto">
             Capital District Nest helps local businesses improve visibility, claim and upgrade their profile, automate simple customer tasks, and use practical AI tools to save time.
           </p>
-          <p className="mt-5 text-sm md:text-base text-muted-foreground  ">
+          <p className="mt-5 text-sm md:text-base text-white/55 max-w-2xl mx-auto">
             We're a local startup building better local search for the Capital District — helping residents discover businesses, services, events, homes, and community resources by town.
           </p>
-          <div className="mt-10 flex flex-wrap  gap-3">
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
             <PrimaryBtn to="/claim-business">Claim Your Business</PrimaryBtn>
             <SecondaryBtn href="#business-help">Get Business Help</SecondaryBtn>
           </div>
         </div>
-      </div><div className="nest-split-media nest-rise nest-rise--late"><img src={businessHeroImg} alt="Local business owners in the Capital District" loading="eager" /></div></div></section>
+      </section>
 
       {/* MODERN TOOLS */}
-      <section className="bg-secondary py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
+      <section className="bg-[#0e0f12] py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="What we do"
-            headline={<>Modern tools for <span className="text-primary">local businesses.</span></>}
+            headline={<>Modern tools for <span className="text-[#5eead4]">local businesses.</span></>}
             sub="Most local businesses do not need more complicated software. They need better visibility, cleaner contact paths, and simple systems that save time."
           />
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -287,11 +294,11 @@ const BusinessLanding = () => {
       </section>
 
       {/* HOW SEARCH IS CHANGING */}
-      <section className="bg-background py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
+      <section className="bg-[#0B0F19] py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="Why now"
-            headline={<>Local customers search <span className="text-primary">differently now.</span></>}
+            headline={<>Local customers search <span className="text-[#5eead4]">differently now.</span></>}
             sub={<>People are no longer only searching for a business name. They are asking for local services, nearby recommendations, town-specific options, and fast answers.<br />Capital District Nest is being built to help local businesses appear where these community searches begin.</>}
           />
           <div className="mt-14 grid md:grid-cols-3 gap-5">
@@ -303,18 +310,18 @@ const BusinessLanding = () => {
       </section>
 
       {/* BASIC vs ENHANCED */}
-      <section className="bg-secondary py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
+      <section className="bg-[#0e0f12] py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="Upgrade your profile"
-            headline={<>Turn a basic listing into a <span className="text-primary">real business profile.</span></>}
+            headline={<>Turn a basic listing into a <span className="text-[#5eead4]">real business profile.</span></>}
             sub="Your free profile gives you presence. Upgrades help customers understand, trust, and contact your business faster."
           />
 
           <div className="mt-14 grid md:grid-cols-2 gap-6">
-            <div className="rounded-2xl border border-border bg-card p-8">
-              <div className="text-[11px] font-semibold tracking-[0.22em] uppercase text-muted-foreground mb-4">Basic profile</div>
-              <ul className="space-y-3 text-sm text-muted-foreground">
+            <div className="rounded-2xl border border-white/10 bg-[#1E2230] p-8">
+              <div className="text-[11px] font-semibold tracking-[0.22em] uppercase text-white/50 mb-4">Basic profile</div>
+              <ul className="space-y-3 text-sm text-white/70">
                 {["Business name","Category","Town","Basic contact if available","Unclaimed badge"].map((f) => (
                   <li key={f} className="flex items-start gap-2">
                     <span className="mt-2 w-1.5 h-1.5 rounded-full bg-white/30 shrink-0" />
@@ -323,12 +330,12 @@ const BusinessLanding = () => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl border border-primary/30 bg-gradient-to-br from-[#1E2230] to-background p-8">
-              <div className="text-[11px] font-semibold tracking-[0.22em] uppercase text-primary mb-4">Enhanced profile</div>
-              <ul className="grid grid-cols-1 gap-3 text-sm text-muted-foreground">
+            <div className="rounded-2xl border border-[#5eead4]/30 bg-gradient-to-br from-[#1E2230] to-[#0B0F19] p-8">
+              <div className="text-[11px] font-semibold tracking-[0.22em] uppercase text-[#5eead4] mb-4">Enhanced profile</div>
+              <ul className="grid grid-cols-1 gap-3 text-sm text-white/85">
                 {["Logo or photo","Verified contact information","Service menu","Website and social links","Business hours","Quote request form","Booking link","Photo gallery","Featured placement","AI-friendly description","Customer CTA buttons"].map((f) => (
                   <li key={f} className="flex items-start gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" strokeWidth={2} />
+                    <CheckCircle2 className="w-4 h-4 text-[#5eead4] mt-0.5 shrink-0" strokeWidth={2} />
                     {f}
                   </li>
                 ))}
@@ -343,11 +350,11 @@ const BusinessLanding = () => {
       </section>
 
       {/* BUSINESS HELP */}
-      <section id="business-help" className="bg-background py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04] scroll-mt-24">
+      <section id="business-help" className="bg-[#0B0F19] py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04] scroll-mt-24">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="Business help"
-            headline={<>Need help making your business <span className="text-primary">easier to run?</span></>}
+            headline={<>Need help making your business <span className="text-[#5eead4]">easier to run?</span></>}
             sub="Capital District Nest can help local businesses organize customer inquiries, improve profile content, create simple forms, and use AI tools for everyday tasks."
           />
 
@@ -363,11 +370,11 @@ const BusinessLanding = () => {
       </section>
 
       {/* PRICING */}
-      <section className="bg-secondary py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
+      <section className="bg-[#0e0f12] py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
           <SectionHeader
             eyebrow="Packages"
-            headline={<>Simple local business <span className="text-primary">packages.</span></>}
+            headline={<>Simple local business <span className="text-[#5eead4]">packages.</span></>}
             sub="Start free. Upgrade when you want more visibility, better contact tools, or hands-on help."
           />
 
@@ -377,20 +384,20 @@ const BusinessLanding = () => {
                 key={p.name}
                 className={`rounded-2xl border p-7 flex flex-col ${
                   p.highlight
-                    ? "border-primary/40 bg-gradient-to-br from-[#1E2230] to-background"
-                    : "border-border bg-card"
+                    ? "border-[#5eead4]/40 bg-gradient-to-br from-[#1E2230] to-[#0B0F19]"
+                    : "border-white/10 bg-[#1E2230]"
                 }`}
               >
-                <div className="text-sm font-semibold text-foreground tracking-tight">{p.name}</div>
+                <div className="text-sm font-semibold text-white tracking-tight">{p.name}</div>
                 <div className="mt-3 flex items-baseline gap-1">
-                  <span className="text-3xl font-semibold text-foreground tracking-tight">{p.price}</span>
-                  {p.per && <span className="text-sm text-muted-foreground">{p.per}</span>}
+                  <span className="text-3xl font-semibold text-white tracking-tight">{p.price}</span>
+                  {p.per && <span className="text-sm text-white/50">{p.per}</span>}
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{p.tag}</p>
-                <ul className="mt-5 space-y-2 text-sm text-muted-foreground flex-1">
+                <p className="mt-3 text-sm text-white/65 leading-relaxed">{p.tag}</p>
+                <ul className="mt-5 space-y-2 text-sm text-white/75 flex-1">
                   {p.features.map((f) => (
                     <li key={f} className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" strokeWidth={2} />
+                      <CheckCircle2 className="w-4 h-4 text-[#5eead4] mt-0.5 shrink-0" strokeWidth={2} />
                       {f}
                     </li>
                   ))}
@@ -399,14 +406,14 @@ const BusinessLanding = () => {
                   {p.cta.to ? (
                     <Link
                       to={p.cta.to}
-                      className="inline-flex w-full justify-center items-center gap-2 px-5 py-3 rounded-full bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition"
+                      className="inline-flex w-full justify-center items-center gap-2 px-5 py-3 rounded-full bg-[#0d6e66] text-white text-sm font-semibold hover:opacity-90 transition"
                     >
                       {p.cta.label} <ArrowRight className="w-4 h-4" />
                     </Link>
                   ) : (
                     <a
                       href={p.cta.anchor}
-                      className="inline-flex w-full justify-center items-center gap-2 px-5 py-3 rounded-full bg-secondary border border-border text-foreground text-sm font-semibold hover:bg-white/[0.16] transition"
+                      className="inline-flex w-full justify-center items-center gap-2 px-5 py-3 rounded-full bg-white/[0.08] border border-white/20 text-white text-sm font-semibold hover:bg-white/[0.16] transition"
                     >
                       {p.cta.label}
                     </a>
@@ -415,16 +422,16 @@ const BusinessLanding = () => {
               </div>
             ))}
           </div>
-          <p className="mt-8 text-center text-xs text-muted-foreground">
+          <p className="mt-8 text-center text-xs text-white/45">
             Pricing is editable and may be adjusted as packages evolve.
           </p>
         </div>
       </section>
 
       {/* BUILT FOR REAL BUSINESSES */}
-      <section className="bg-background py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
+      <section className="bg-[#0B0F19] py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
-          <SectionHeader eyebrow="Who it's for" headline={<>Built for <span className="text-primary">real local businesses.</span></>} />
+          <SectionHeader eyebrow="Who it's for" headline={<>Built for <span className="text-[#5eead4]">real local businesses.</span></>} />
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             <Card title="Contractor" body="Add services, quote request form, service areas, photos, and follow-up messages." />
             <Card title="Restaurant" body="Add menu links, hours, order/reservation buttons, social links, and event updates." />
@@ -437,30 +444,30 @@ const BusinessLanding = () => {
       </section>
 
       {/* REQUEST BUSINESS HELP FORM */}
-      <section id="business-contact" className="bg-secondary py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
+      <section id="business-contact" className="bg-[#0e0f12] py-24 md:py-32 px-6 md:px-10 border-t border-white/[0.04]">
         <div className="max-w-3xl mx-auto text-center">
           <Eyebrow>Request help</Eyebrow>
-          <h2 className="mt-5 text-4xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+          <h2 className="mt-5 text-4xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
             Request business help.
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground font-light">
+          <p className="mt-6 text-lg text-white/70 font-light">
             Tell us what you want to improve. We'll review your business profile and follow up with next steps.
           </p>
         </div>
 
         <div className="max-w-2xl mx-auto mt-12">
           {submitted ? (
-            <div className="rounded-2xl border border-primary/40 bg-card p-10 text-center">
-              <CheckCircle2 className="w-10 h-10 text-primary mx-auto mb-4" strokeWidth={1.5} />
-              <h3 className="text-2xl font-semibold text-foreground">Thanks — we've got your request.</h3>
-              <p className="mt-3 text-muted-foreground">
+            <div className="rounded-2xl border border-[#5eead4]/40 bg-[#1E2230] p-10 text-center">
+              <CheckCircle2 className="w-10 h-10 text-[#5eead4] mx-auto mb-4" strokeWidth={1.5} />
+              <h3 className="text-2xl font-semibold text-white">Thanks — we've got your request.</h3>
+              <p className="mt-3 text-white/70">
                 Capital District Nest received your request. We'll review your business profile and follow up with next steps.
                 {" "}Prefer to talk now? Call or text{" "}
-                <a href="tel:+15189812248" className="text-primary underline">(518) 981-2248</a>.
+                <a href="tel:+15189812248" className="text-[#5eead4] underline">(518) 981-2248</a>.
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="rounded-2xl border border-border bg-card p-6 md:p-8 space-y-5">
+            <form onSubmit={handleSubmit} className="rounded-2xl border border-white/10 bg-[#1E2230] p-6 md:p-8 space-y-5">
               <div className="grid md:grid-cols-2 gap-5">
                 <div>
                   <label className={labelCn}>Name *</label>
@@ -517,19 +524,19 @@ const BusinessLanding = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-semibold text-primary-foreground bg-primary hover:opacity-90 disabled:opacity-60 transition"
+                className="w-full inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-semibold text-white bg-[#0d6e66] hover:opacity-90 disabled:opacity-60 transition"
               >
                 {submitting ? (<><Loader2 className="w-4 h-4 animate-spin" /> Sending…</>) : (<>Request Business Help <ArrowRight className="w-4 h-4" /></>)}
               </button>
-              <p className="text-xs text-muted-foreground text-center">
+              <p className="text-xs text-white/45 text-center">
                 Or call/text directly:{" "}
-                <a href="tel:+15189812248" className="text-primary">(518) 981-2248</a>
+                <a href="tel:+15189812248" className="text-[#5eead4]">(518) 981-2248</a>
               </p>
             </form>
           )}
         </div>
 
-        <p className="max-w-3xl mx-auto mt-14 text-xs text-muted-foreground text-center leading-relaxed">
+        <p className="max-w-3xl mx-auto mt-14 text-xs text-white/45 text-center leading-relaxed">
           Capital District Nest is a local media, directory, advertising, and community search platform. Business profile upgrades, featured placements, and automation assistance are marketing and business-support services. Capital District Nest does not guarantee search rankings, leads, sales, or customer outcomes.
         </p>
       </section>

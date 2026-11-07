@@ -252,7 +252,7 @@ const NycToAlbanyPlaybook = () => {
                   <p className="text-muted-foreground mb-4">Driven by:</p>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {['Government workers', 'Hospitals', 'Colleges', 'Tech growth (GlobalFoundries, Regeneron, Amazon)', 'State agencies'].map((item) => (
-                      <span key={item} className="px-3 py-2 bg-primary/10 text-primary-foreground rounded-lg text-sm">{item}</span>
+                      <span key={item} className="px-3 py-2 bg-primary/10 text-foreground rounded-lg text-sm">{item}</span>
                     ))}
                   </div>
                 </CardContent>

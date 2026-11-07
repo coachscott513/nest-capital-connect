@@ -132,7 +132,7 @@ const articles: Record<string, {
           <p className="font-playfair text-xl font-semibold text-foreground mb-4">
             Want to see the full Rent Roll & Lease Dates?
           </p>
-          <Link to="/" className="inline-block bg-accent hover:bg-accent/90 text-foreground font-semibold px-8 py-3 rounded transition-colors">
+          <Link to="/" className="inline-block bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-3 rounded transition-colors">
             Request the Intelligence Report on our Homepage
           </Link>
         </div>

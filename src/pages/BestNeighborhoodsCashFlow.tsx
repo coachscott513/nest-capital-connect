@@ -299,7 +299,7 @@ const BestNeighborhoodsCashFlow = () => {
             
             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               {['Budget', 'Risk tolerance', 'Financing type', 'Timeline'].map((item) => (
-                <div key={item} className="px-4 py-3 bg-primary/10 rounded-lg text-center text-primary-foreground font-medium">
+                <div key={item} className="px-4 py-3 bg-primary/10 rounded-lg text-center text-foreground font-medium">
                   {item}
                 </div>
               ))}

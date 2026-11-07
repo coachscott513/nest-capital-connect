@@ -13,7 +13,6 @@ import {
 import MainLayout from "@/components/MainLayout";
 import SEOHead from "@/components/SEOHead";
 import EditorialBreather from "@/components/EditorialBreather";
-import communitiesHeroImg from "@/assets/hero-towns-wide.jpg";
 import {
   CAPITAL_DISTRICT_COUNTIES,
   type CDCounty as County,
@@ -27,7 +26,7 @@ import {
    ============================================================= */
 
 const COUNTIES = CAPITAL_DISTRICT_COUNTIES;
-const TEAL = "var(--nest-brand-blue)";
+const TEAL = "#5eead4";
 
 interface FeaturedTownTile {
   slug: string;
@@ -145,8 +144,16 @@ const Communities = () => {
       <MainLayout>
         <div className="min-h-screen bg-background text-foreground">
           {/* ═══════════ 1. CINEMATIC HERO ═══════════ */}
-          <section className="nest-split nest-split--compact"><div className="nest-shell nest-split-grid"><div className="nest-split-copy nest-rise">
-            <div>
+          <section className="relative isolate overflow-hidden">
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(60% 70% at 50% 25%, rgba(94,234,212,0.12), transparent 70%)",
+              }}
+              aria-hidden
+            />
+            <div className="relative max-w-[1600px] mx-auto px-6 md:px-10 pt-32 md:pt-44 pb-20 md:pb-28">
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -159,7 +166,7 @@ const Communities = () => {
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.05 }}
-                className="nest-display-page"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px] font-semibold tracking-[-0.04em] leading-[1.02] max-w-4xl"
               >
                 Explore the Capital District by town.
               </motion.h1>
@@ -167,7 +174,7 @@ const Communities = () => {
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="mt-6  text-lg md:text-xl text-muted-foreground font-light leading-relaxed"
+                className="mt-6 max-w-2xl text-lg md:text-xl text-white/75 font-light leading-relaxed"
               >
                 Discover restaurants, businesses, events, services, homes, and local resources
                 across the region's {totalTowns} towns and neighborhoods.
@@ -184,7 +191,7 @@ const Communities = () => {
                       block: "start",
                     });
                   }}
-                  className="inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6  text-sm font-semibold hover:bg-primary transition"
+                  className="inline-flex items-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
                 >
                   <Search className="w-4 h-4" /> Search Towns
                 </a>
@@ -198,13 +205,13 @@ const Communities = () => {
                       block: "start",
                     });
                   }}
-                  className="inline-flex items-center gap-2 rounded-full border border-border text-foreground px-6  text-sm font-semibold hover:bg-secondary transition"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/25 text-white px-6 py-3 text-sm font-semibold hover:bg-white/10 transition"
                 >
                   View All Towns <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
             </div>
-          </div><div className="nest-split-media nest-rise nest-rise--late"><img src={communitiesHeroImg} alt="Capital District" loading="eager" /></div></div></section>
+          </section>
 
           {/* ═══════════ 2. FEATURED TOWN TILES ═══════════ */}
           <section className="relative bg-background border-t border-white/[0.06] py-20 md:py-24">
@@ -216,10 +223,10 @@ const Communities = () => {
                 >
                   Featured Towns
                 </p>
-                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
                   Eight towns to start with.
                 </h2>
-                <p className="mt-5 text-base md:text-lg text-muted-foreground font-light">
+                <p className="mt-5 text-base md:text-lg text-white/65 font-light">
                   The Capital District's most-searched towns — each with its own restaurants,
                   businesses, events, and homes.
                 </p>
@@ -237,7 +244,7 @@ const Communities = () => {
                         source_location: "featured_tiles",
                       })
                     }
-                    className="group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-card hover:border-border transition aspect-[4/5]"
+                    className="group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1424] hover:border-white/20 transition aspect-[4/5]"
                   >
                     <img
                       src={t.image}
@@ -253,20 +260,20 @@ const Communities = () => {
                       }}
                       aria-hidden
                     />
-                    <div className="nest-on-photo relative h-full p-6 md:p-7 flex flex-col justify-end">
+                    <div className="relative h-full p-6 md:p-7 flex flex-col justify-end">
                       <p
                         className="text-[10px] font-semibold tracking-[0.22em] uppercase mb-2"
                         style={{ color: TEAL }}
                       >
                         {t.county}
                       </p>
-                      <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-foreground">
+                      <h3 className="text-2xl md:text-3xl font-semibold tracking-[-0.02em] text-white">
                         {t.name}
                       </h3>
-                      <p className="mt-2 text-[13px] text-muted-foreground font-light leading-relaxed line-clamp-3">
+                      <p className="mt-2 text-[13px] text-white/65 font-light leading-relaxed line-clamp-3">
                         {t.hook}
                       </p>
-                      <span className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary group-hover:text-foreground transition">
+                      <span className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#5eead4] group-hover:text-white transition">
                         Explore {t.name} <ArrowRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
@@ -288,30 +295,30 @@ const Communities = () => {
               >
                 Find Your Town
               </p>
-              <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em] leading-[1.1] text-foreground mb-7">
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em] leading-[1.1] text-white mb-7">
                 Search by town, county, or neighborhood.
               </h2>
-              <label className="flex items-center gap-3 px-5 py-4 rounded-2xl border border-border bg-secondary focus-within:border-primary/50 transition">
-                <Search className="w-5 h-5 text-primary shrink-0" />
+              <label className="flex items-center gap-3 px-5 py-4 rounded-2xl border border-white/15 bg-white/[0.04] focus-within:border-[#5eead4]/50 transition">
+                <Search className="w-5 h-5 text-[#5eead4] shrink-0" />
                 <input
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value.slice(0, 80))}
                   placeholder="Try Delmar, Saratoga, Rensselaer County…"
-                  className="w-full bg-transparent text-base text-foreground placeholder:text-muted-foreground focus:outline-none"
+                  className="w-full bg-transparent text-base text-white placeholder:text-white/40 focus:outline-none"
                 />
                 {query && (
                   <button
                     type="button"
                     onClick={() => setQuery("")}
-                    className="text-xs text-muted-foreground hover:text-foreground"
+                    className="text-xs text-white/55 hover:text-white"
                   >
                     Clear
                   </button>
                 )}
               </label>
               {query.trim() && (
-                <p className="mt-3 text-sm text-muted-foreground">
+                <p className="mt-3 text-sm text-white/55">
                   {filteredCounties.reduce((a, c) => a + c.towns.length, 0)} matches
                 </p>
               )}
@@ -331,14 +338,14 @@ const Communities = () => {
                 >
                   Every Town. One Front Door.
                 </p>
-                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+                <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
                   All {totalTowns} communities, by county.
                 </h2>
               </div>
 
               {filteredCounties.length === 0 ? (
-                <div className="rounded-2xl border border-dashed border-border bg-secondary p-10 text-center">
-                  <p className="text-muted-foreground">No towns match "{query}".</p>
+                <div className="rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-10 text-center">
+                  <p className="text-white/70">No towns match "{query}".</p>
                 </div>
               ) : (
                 <>
@@ -353,7 +360,7 @@ const Communities = () => {
                         transition={{ delay: idx * 0.04 }}
                       >
                         <CountyHeader county={c} />
-                        <ul className="divide-y divide-border border-t border-b border-border">
+                        <ul className="divide-y divide-white/10 border-t border-b border-white/10">
                           {c.towns.map((t) => (
                             <TownRow key={t.slug} town={t} county={c.name} />
                           ))}
@@ -369,8 +376,8 @@ const Communities = () => {
                       return (
                         <div
                           key={c.name}
-                          className="rounded-2xl border border-border overflow-hidden"
-                          style={{ background: "var(--nest-brand-ice)" }}
+                          className="rounded-2xl border border-white/10 overflow-hidden"
+                          style={{ background: "#1E2230" }}
                         >
                           <button
                             onClick={() =>
@@ -379,21 +386,21 @@ const Communities = () => {
                             className="w-full flex items-center justify-between px-5 py-4 text-left"
                           >
                             <div>
-                              <div className="text-base font-semibold text-foreground">
+                              <div className="text-base font-semibold text-white">
                                 {c.name}
                               </div>
-                              <div className="text-[11px] text-muted-foreground mt-0.5">
+                              <div className="text-[11px] text-white/55 mt-0.5">
                                 {c.landmark}
                               </div>
                             </div>
                             <ChevronDown
-                              className={`w-5 h-5 text-muted-foreground transition-transform ${
+                              className={`w-5 h-5 text-white/60 transition-transform ${
                                 isOpen ? "rotate-180" : ""
                               }`}
                             />
                           </button>
                           {isOpen && (
-                            <ul className="divide-y divide-border border-t border-border">
+                            <ul className="divide-y divide-white/10 border-t border-white/10">
                               {c.towns.map((t) => (
                                 <TownRow key={t.slug} town={t} county={c.name} />
                               ))}
@@ -422,10 +429,10 @@ const Communities = () => {
               >
                 For Local Businesses
               </p>
-              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-foreground">
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em] leading-[1.05] text-white">
                 Own a business in one of these towns?
               </h2>
-              <p className="mt-5 text-base md:text-lg text-muted-foreground font-light leading-relaxed">
+              <p className="mt-5 text-base md:text-lg text-white/70 font-light leading-relaxed">
                 Claim your profile, add your business, or submit local events to Capital District
                 Nest. Concierge onboarding — a real person from our team will help.
               </p>
@@ -437,7 +444,7 @@ const Communities = () => {
                       source_location: "footer_cta",
                     })
                   }
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-semibold hover:bg-primary transition"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#0B0F19] px-6 py-3 text-sm font-semibold hover:bg-[#5eead4] transition"
                 >
                   <Plus className="w-4 h-4" /> Add Your Business
                 </Link>
@@ -448,7 +455,7 @@ const Communities = () => {
                       source_location: "footer_cta",
                     })
                   }
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-secondary text-foreground px-6 py-3 text-sm font-semibold hover:bg-secondary transition"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] text-white px-6 py-3 text-sm font-semibold hover:bg-white/[0.08] transition"
                 >
                   <CalendarPlus className="w-4 h-4" /> Submit Event
                 </Link>
@@ -470,13 +477,13 @@ const CountyHeader = ({ county }: { county: County }) => (
       >
         County
       </p>
-      <h3 className="text-2xl font-semibold tracking-tight text-foreground">{county.name}</h3>
-      <p className="text-sm text-muted-foreground mt-1 flex items-center gap-1.5">
+      <h3 className="text-2xl font-semibold tracking-tight text-white">{county.name}</h3>
+      <p className="text-sm text-white/55 mt-1 flex items-center gap-1.5">
         <MapPin className="w-3.5 h-3.5" />
         {county.landmark}
       </p>
     </div>
-    <span className="text-xs text-muted-foreground mt-2">{county.towns.length} towns</span>
+    <span className="text-xs text-white/45 mt-2">{county.towns.length} towns</span>
   </div>
 );
 
@@ -492,11 +499,11 @@ const TownRow = ({ town, county }: { town: Town; county: string }) => (
           source_location: "all_towns_list",
         })
       }
-      className="group flex items-center justify-between px-4 md:px-2 py-4 hover:bg-secondary transition-colors"
+      className="group flex items-center justify-between px-4 md:px-2 py-4 hover:bg-white/[0.04] transition-colors"
     >
-      <span className="text-[15px] md:text-base font-semibold text-foreground">{town.name}</span>
+      <span className="text-[15px] md:text-base font-semibold text-white">{town.name}</span>
       <div className="flex items-center gap-4">
-        <span className="text-xs md:text-sm text-muted-foreground tabular-nums">
+        <span className="text-xs md:text-sm text-white/55 tabular-nums">
           Median {town.median}
         </span>
         <ChevronRight

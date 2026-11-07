@@ -24,7 +24,7 @@ const LocalPage = () => {
     "Search local businesses, services, restaurants, professionals, contractors, and community resources across the Capital District.";
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[#0B0F19] text-white">
       <Helmet>
         <title>{title}</title>
         <meta name="description" content={description} />
