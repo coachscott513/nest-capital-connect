@@ -74,7 +74,7 @@ const MobileCtaBar = () => {
           aria-haspopup="dialog"
           aria-expanded={open}
           aria-label={buyerMode ? 'Open Buyer tools menu' : 'Open Ask Local menu'}
-          className="inline-flex items-center gap-2 pl-3 pr-4 py-2.5 min-h-[44px] rounded-full text-white text-sm font-semibold border shadow-[0_18px_40px_-12px_rgba(0,0,0,0.6)] active:scale-[0.98] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5eead4]"
+          className="inline-flex items-center gap-2 pl-3 pr-4 py-2.5 min-h-[44px] rounded-full text-foreground text-sm font-semibold border shadow-[0_18px_40px_-12px_rgba(0,0,0,0.6)] active:scale-[0.98] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           style={{
             backgroundColor: 'rgba(10, 10, 10, 0.85)',
             backdropFilter: 'blur(16px) saturate(140%)',
@@ -129,7 +129,7 @@ const MobileCtaBar = () => {
                     : 'Local directory, business features, agent contact, and town events.'}
                 </p>
 
-                <h3 id="mobile-cta-title" className="mt-1 text-base font-semibold text-white">
+                <h3 id="mobile-cta-title" className="mt-1 text-base font-semibold text-foreground">
                   {buyerMode ? 'Test the decision' : 'How can we help?'}
                 </h3>
 
@@ -141,7 +141,7 @@ const MobileCtaBar = () => {
                   triggerRef.current?.focus();
                 }}
                 aria-label="Close"
-                className="w-11 h-11 rounded-full border border-white/15 text-white/80 inline-flex items-center justify-center hover:bg-white/10 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5eead4]"
+                className="w-11 h-11 rounded-full border border-border text-muted-foreground inline-flex items-center justify-center hover:bg-secondary transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -160,16 +160,16 @@ const MobileCtaBar = () => {
               {items.map((it) => {
                 const Icon = it.icon;
                 const inner = (
-                  <span className="flex items-center gap-3 w-full px-3.5 py-3 min-h-[44px] rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] active:bg-white/[0.10] transition">
+                  <span className="flex items-center gap-3 w-full px-3.5 py-3 min-h-[44px] rounded-2xl border border-border bg-secondary hover:bg-secondary active:bg-white/[0.10] transition">
                     <span
-                      className="w-9 h-9 rounded-full inline-flex items-center justify-center shrink-0 border border-white/10"
+                      className="w-9 h-9 rounded-full inline-flex items-center justify-center shrink-0 border border-border"
                       style={{ backgroundColor: 'rgba(13,110,102,0.18)' }}
                     >
                       <Icon className="w-4 h-4" style={{ color: it.iconColor ?? '#5eead4' }} />
                     </span>
                     <span className="flex-1 min-w-0 text-left">
-                      <span className="block text-[14px] font-semibold text-white truncate">{it.label}</span>
-                      <span className="block text-[11.5px] text-white/55 truncate">{it.sub}</span>
+                      <span className="block text-[14px] font-semibold text-foreground truncate">{it.label}</span>
+                      <span className="block text-[11.5px] text-muted-foreground truncate">{it.sub}</span>
                     </span>
                   </span>
                 );
