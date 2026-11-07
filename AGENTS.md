@@ -4,3 +4,4 @@
 - Retain the original RealScout widget in an embedded homepage disclosure with its existing configuration and anchor; embedding suppresses the old headline to maintain one homepage H1.
 - Scope homepage visual tokens to `.nest-brand` and its mounted body mode; use full-value brand colors directly and compatible HSL aliases for Tailwind v3, so legacy pages and reports keep their original themes.
 - Keep one search hero followed by four independent full-width pillar heroes in `DirectoryEditorialHome`; the rejected three-card/combined-tab replacement obscured the messaging architecture. Entry motion must never hide content or affect search state.
+- Use homepage-only one-time observer entry enhancement with visible default markup; the service navigation map stays inside Business Services with existing real links, isolating motion and navigation from shared pages and search state.
