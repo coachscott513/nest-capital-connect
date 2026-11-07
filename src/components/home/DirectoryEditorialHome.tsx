@@ -8,9 +8,9 @@ import { CAPITAL_DISTRICT_COUNTIES } from "@/data/capitalDistrictCounties";
 import { homeDirectorySearch } from "@/lib/homeDirectorySearch";
 import { regionalSearchSubmit } from "@/lib/homeAnalytics";
 import regionalPhoto from "@/assets/town-troy.jpg";
-import localPhoto from "@/assets/local-hero-mainstreet.jpg";
+import localPhoto from "@/assets/hero-business-wide.jpg";
 import ownersPhoto from "@/assets/category-services.jpg";
-import propertyPhoto from "@/assets/town-albany.jpg";
+import propertyPhoto from "@/assets/deal-of-month-triplex.jpg";
 import servicesPhoto from "@/assets/hero-finance-wide.jpg";
 
 const towns = CAPITAL_DISTRICT_COUNTIES.flatMap((county) => county.towns);
@@ -62,7 +62,7 @@ export default function DirectoryEditorialHome() {
   return (
     <main id="main-content" className="nest-editorial-home">
       <section className="nest-discovery-hero relative isolate overflow-hidden" aria-labelledby="discovery-title">
-        <img src={regionalPhoto} alt="Historic brick buildings along the waterfront in Troy, New York" className="absolute inset-0 -z-20 h-full w-full object-cover" fetchPriority="high" />
+        <img src={regionalPhoto} alt="Historic brick buildings along the waterfront in Troy, New York" className="nest-photo-lift absolute inset-0 -z-20 h-full w-full object-cover" fetchPriority="high" />
         <div className="nest-hero-shade absolute inset-0 -z-10" />
         <div className="nest-editorial-inner relative">
           <p className="eyebrow-apple text-accent">Capital District Nest</p>
@@ -103,7 +103,7 @@ export default function DirectoryEditorialHome() {
 
       {features.map((feature, index) => (
         <section id={feature.id} key={feature.id} className={`nest-editorial-feature relative isolate overflow-hidden ${index % 2 ? "nest-feature-right" : ""}`} aria-labelledby={`${feature.id}-title`}>
-          <img src={feature.image} alt="" loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover" />
+          <img src={feature.image} alt="" loading="lazy" className="nest-photo-lift absolute inset-0 -z-20 h-full w-full object-cover" />
           <div className="nest-feature-shade absolute inset-0 -z-10" />
           <div className="nest-editorial-inner">
             <Reveal className="nest-feature-copy">

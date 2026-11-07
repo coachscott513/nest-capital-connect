@@ -782,7 +782,7 @@ body.has-nest-brand { background: var(--nest-brand-white) !important; }
 .nest-brand .btn-dark-cta:hover,
 .nest-brand .btn-primary-apple:hover { background: var(--nest-brand-blue); filter: brightness(.94); box-shadow: none; }
 .nest-discovery-hero { min-height: 760px; padding-top: 96px; padding-bottom: 110px; }
-.nest-hero-shade { background: linear-gradient(90deg, color-mix(in oklch, var(--nest-brand-ink) 96%, transparent) 0%, color-mix(in oklch, var(--nest-brand-ink) 80%, transparent) 40%, color-mix(in oklch, var(--nest-brand-ink) 25%, transparent) 100%), linear-gradient(0deg, var(--nest-brand-ink), transparent 45%); }
+.nest-hero-shade { background: linear-gradient(90deg, color-mix(in oklch, var(--nest-brand-ink) 96%, transparent) 0%, color-mix(in oklch, var(--nest-brand-ink) 72%, transparent) 40%, color-mix(in oklch, var(--nest-brand-ink) 10%, transparent) 100%), linear-gradient(0deg, color-mix(in oklch, var(--nest-brand-ink) 85%, transparent), transparent 40%); }
 .nest-directory-search { background: var(--nest-brand-white); color: var(--nest-brand-foreground); box-shadow: var(--nest-brand-shadow); }
 .nest-directory-search input::placeholder { color: var(--nest-brand-muted); opacity: 1; }
 .nest-directory-search:focus-within { outline: 3px solid var(--nest-brand-blue-bright); outline-offset: 4px; }
@@ -796,9 +796,10 @@ body.has-nest-brand { background: var(--nest-brand-white) !important; }
 .nest-hero-next { position: absolute; bottom: 34px; left: max(40px, calc((100% - 1240px) / 2 + 40px)); }
 .nest-editorial-feature { min-height: 680px; display: flex; align-items: center; padding-block: 100px; scroll-margin-top: 68px; }
 .nest-feature-copy { max-width: 620px; }
-.nest-feature-shade { background: linear-gradient(90deg, color-mix(in oklch, var(--nest-brand-ink) 95%, transparent), color-mix(in oklch, var(--nest-brand-ink) 83%, transparent) 37%, color-mix(in oklch, var(--nest-brand-ink) 20%, transparent)), linear-gradient(0deg, color-mix(in oklch, var(--nest-brand-ink) 45%, transparent), transparent 70%); }
+.nest-feature-shade { background: linear-gradient(90deg, color-mix(in oklch, var(--nest-brand-ink) 95%, transparent), color-mix(in oklch, var(--nest-brand-ink) 76%, transparent) 37%, color-mix(in oklch, var(--nest-brand-ink) 6%, transparent)), linear-gradient(0deg, color-mix(in oklch, var(--nest-brand-ink) 30%, transparent), transparent 60%); }
+.nest-photo-lift { filter: brightness(1.12) saturate(1.05); }
 .nest-feature-right .nest-feature-copy { margin-left: auto; }
-.nest-feature-right .nest-feature-shade { background: linear-gradient(270deg, color-mix(in oklch, var(--nest-brand-ink) 96%, transparent), color-mix(in oklch, var(--nest-brand-ink) 84%, transparent) 40%, color-mix(in oklch, var(--nest-brand-ink) 18%, transparent)); }
+.nest-feature-right .nest-feature-shade { background: linear-gradient(270deg, color-mix(in oklch, var(--nest-brand-ink) 96%, transparent), color-mix(in oklch, var(--nest-brand-ink) 76%, transparent) 40%, color-mix(in oklch, var(--nest-brand-ink) 6%, transparent)); }
 .nest-home-resources { background: var(--nest-brand-ice); color: var(--nest-brand-foreground); }
 .nest-home-resources .nest-inline-link:hover { color: var(--nest-brand-blue); }
 .nest-live-search[open] summary svg { transform: rotate(180deg); }
@@ -858,7 +859,7 @@ body.has-nest-brand nav[aria-label="Property tools"] :focus-visible { outline: 2
   .nest-filter-field select { width: 100%; }
   .nest-hero-next { left: 24px; bottom: 28px; }
   .nest-editorial-feature { min-height: 650px; padding-block: 72px; align-items: flex-end; }
-  .nest-feature-shade, .nest-feature-right .nest-feature-shade { background: linear-gradient(0deg, color-mix(in oklch, var(--nest-brand-ink) 97%, transparent), color-mix(in oklch, var(--nest-brand-ink) 85%, transparent) 65%, color-mix(in oklch, var(--nest-brand-ink) 25%, transparent)); }
+  .nest-feature-shade, .nest-feature-right .nest-feature-shade { background: linear-gradient(0deg, color-mix(in oklch, var(--nest-brand-ink) 97%, transparent), color-mix(in oklch, var(--nest-brand-ink) 82%, transparent) 60%, color-mix(in oklch, var(--nest-brand-ink) 10%, transparent)); }
 }
 @media (max-width: 359px) {
   .nest-editorial-inner { padding-inline: 20px; }
