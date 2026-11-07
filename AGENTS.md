@@ -3,4 +3,4 @@
 - Build the directory-first homepage in `DirectoryEditorialHome` with additive editorial styles; preserve legacy page components, shared theme tokens, routes, and SEO contracts.
 - Retain the original RealScout widget in an embedded homepage disclosure with its existing configuration and anchor; embedding suppresses the old headline to maintain one homepage H1.
 - Scope homepage visual tokens to `.nest-brand` and its mounted body mode; use full-value brand colors directly and compatible HSL aliases for Tailwind v3, so legacy pages and reports keep their original themes.
-- Keep homepage feature selection local to `DirectoryEditorialHome` with manual accessible tabs and pre-mounted photos; this isolates motion from directory form state and avoids image-loading layout jumps.
+- Keep one search hero followed by four independent full-width pillar heroes in `DirectoryEditorialHome`; the rejected three-card/combined-tab replacement obscured the messaging architecture. Entry motion must never hide content or affect search state.
