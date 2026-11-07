@@ -894,8 +894,8 @@ body.has-nest-brand nav[aria-label="Property tools"] :focus-visible { outline: 2
 .nest-showcase-heading h2 { margin-block: 20px 36px; }
 .nest-feature-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
 .nest-feature-tab { border-radius: 0; background: transparent; color: var(--nest-brand-muted); border-bottom: 2px solid transparent; min-height: 60px; height: auto; padding: 12px 0; white-space: normal; text-align: left; justify-content: flex-start; font-size: 17px; line-height: 1.4; }
-.nest-feature-tab:hover { background: var(--nest-brand-ice); color: var(--nest-brand-blue); }
-.nest-feature-tab[aria-selected="true"] { border-bottom-color: var(--nest-brand-blue); color: var(--nest-brand-blue); }
+.nest-editorial-home .nest-feature-tab:hover { background: var(--nest-brand-ice); color: var(--nest-brand-blue); }
+.nest-editorial-home .nest-feature-tab[aria-selected="true"] { background: transparent; border-bottom-color: var(--nest-brand-blue); color: var(--nest-brand-blue); }
 .nest-feature-stage { position: relative; isolation: isolate; min-height: 610px; display: flex; align-items: end; background: var(--nest-brand-ink); color: var(--nest-brand-white); }
 .nest-stage-photos, .nest-stage-shade { position: absolute; inset: 0; z-index: -1; }
 .nest-stage-photos img { position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .45s ease; }
