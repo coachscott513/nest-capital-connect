@@ -1,6 +1,7 @@
 # Project Memory
 
 ## Core
+- REJECTED (Nov 2026, "looks cheap"): site-wide white/ice theme, text-left/photo-right split heroes, rotating hero text, category explorer. Keep dark immersive full-photo homepage sections; only lighten photo scrims modestly. Never re-propose.
 - Public identity (LOCKED): Capital District Nest is an independent regional media platform. Scott Alvarez appears ONLY on real-estate surfaces (Homes, property pages, RealEstateDisclosure). Editorial bylines/business/marketing = "Capital District Nest Editorial Team". See `mem://preferences/platform-vs-founder-identity`.
 - Global contacts (LOCKED): ALL public phone/email from `src/config/contact.ts`. Business phone = (518) 981-2248 (Follow Up Boss). Emails: hello@ (general), media@ (editorial), business@ (partnerships), support@. NEVER hardcode a phone or email. Scott's line (518) 522-7265 = real estate only, via `SCOTT_*` constants.
 - Brokerage identity (LOCKED): NEVER globally. Rendered only via `<RealEstateDisclosure />` on real-estate routes. Config in `src/config/realEstateDisclosure.ts`, `disclosure_active: false` until broker approves wording. NO RE/MAX or Coldwell Banker in footer/homepage/businesses/stories.
