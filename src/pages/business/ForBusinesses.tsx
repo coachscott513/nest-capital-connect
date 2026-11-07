@@ -27,7 +27,7 @@ const PRICING_URL = "/pricing";
 
 // Warm editorial white — Apple-style, never pure #fff.
 const PAPER = "#F6F5F2";
-const INK = "var(--nest-brand-white)";
+const INK = "var(--nest-brand-ink)";
 const TEAL = "var(--nest-brand-blue)";
 const TEAL_ACCENT = "var(--nest-brand-blue)";
 
@@ -239,7 +239,7 @@ const ForBusinesses = () => {
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
               <Link
                 to={APPLY_URL}
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-foreground transition-transform hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
                 style={{ background: TEAL, boxShadow: "0 12px 30px -12px rgba(13,110,102,0.55)" }}
               >
                 Tell Your Story <ArrowRight className="w-4 h-4" />
