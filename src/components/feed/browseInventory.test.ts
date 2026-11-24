@@ -17,7 +17,7 @@ describe('published inventory queries',()=>{
     await state.options.queryFn?.();
     expect(state.calls).toContainEqual(['eq',['status','A']]);
     expect(state.calls).toContainEqual(['eq',['public_listing_url_approved',true]]);
-    expect(state.calls).toContainEqual(['range',[100,119]]);
+    expect(state.calls).toContainEqual(['range',[40,47]]);
     expect(state.calls).toContainEqual(['in',['town_slug',['delmar','bethlehem','delmar-bethlehem']]]);
     expect(state.calls.find(([name])=>name==='select')?.[1][1]).toEqual({count:'exact'});
     expect(state.calls.some(([method,args])=>method==='or' && String(args[0]).includes('full_address.ilike.%Marion%'))).toBe(true);
@@ -35,7 +35,7 @@ describe('published inventory queries',()=>{
     useBrowseInventory(edition,'rentals','albany','','browse',1,true,'test');await state.options.queryFn?.();
     expect(state.calls).toContainEqual(['from',['rentals']]);
     expect(state.calls).toContainEqual(['eq',['is_active',true]]);
-    expect(state.calls).toContainEqual(['range',[20,39]]);
+    expect(state.calls).toContainEqual(['range',[8,15]]);
     expect(state.calls.some(([m,a])=>m==='select' && String(a[0]).includes('created_at'))).toBe(false);
   });
   it('retains supplied rental availability, masks street number and never creates a listing badge/publication date',()=>{

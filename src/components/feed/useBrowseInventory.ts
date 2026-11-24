@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { easternDay, equivalentFeedTowns, eventRow, listingRow, storyRow, type FeedEdition, type FeedRow } from './feedModel';
+import { chronologicalRows, easternDay, equivalentFeedTowns, eventRow, listingRow, storyRow, type FeedCategory, type FeedEdition, type FeedRow } from './feedModel';
 import { escapeIlike } from '@/hooks/usePaginatedBusinesses';
 import type { BrowseView } from './browseState';
 import { rentalDetailHref } from './rentalLinks';
 
 export type InventorySource = 'homes' | 'news' | 'events' | 'rentals';
-export const INVENTORY_PAGE_SIZE=20;
+export const INVENTORY_PAGE_SIZE=8;
+/** Homepage Latest shows one bounded mixed batch, never one batch per source. */
+export const LATEST_PAGE_SIZE=6;
 export interface RentalRecord {
   id:string;town_slug:string;address:string;rent_price:number;available_date:string|null;
   bedrooms:number|null;bathrooms:number|null;sqft:number|null;listing_agent:string|null;
@@ -21,11 +23,8 @@ export function rentalBrowseRow(r:RentalRecord):FeedRow {
     href:rentalDetailHref(r.id,r.town_slug),price:r.rent_price,priceUnit:'month',facts:facts || undefined};
 }
 
-export function useBrowseInventory(edition:FeedEdition,source:InventorySource,town:string,search:string,view:BrowseView,page:number,enabled:boolean,version:string,newsCategory='all') {
-  return useQuery({queryKey:['feed-inventory',edition.slug,source,town,search,view,page,version,newsCategory],
-    enabled:enabled && edition.live && edition.slug==='capital-district',staleTime:60000,refetchOnWindowFocus:false,
-    queryFn:async()=>{
-      const now=new Date(); const safe=escapeIlike(search); const from=page*INVENTORY_PAGE_SIZE;
+export async function fetchInventory(source:InventorySource,town:string,search:string,view:BrowseView,from:number,size:number,newsCategory='all'):Promise<{rows:FeedRow[];count:number}> {
+      const now=new Date(); const safe=escapeIlike(search); const INVENTORY_PAGE_SIZE=size;
       if(source==='homes') {
         let q=supabase.from('listings').select('id,full_address,city,town_slug,list_date,list_price,public_listing_url,public_listing_url_approved,status,listing_agent,agency,bedrooms,bathrooms,sqft',{count:'exact'})
           .eq('status','A').eq('public_listing_url_approved',true).lte('list_date',easternDay(now))
@@ -67,5 +66,35 @@ export function useBrowseInventory(edition:FeedEdition,source:InventorySource,to
       const {data,error,count}=await q.order('available_date',{nullsFirst:false}).order('address').order('id').range(from,from+INVENTORY_PAGE_SIZE-1);
       if(error) throw error;
       return {rows:(data || []).map(rentalBrowseRow),count:count || 0};
-    }});
+}
+
+export function useBrowseInventory(edition:FeedEdition,source:InventorySource,town:string,search:string,view:BrowseView,page:number,enabled:boolean,version:string,newsCategory='all') {
+  return useQuery({queryKey:['feed-inventory',edition.slug,source,town,search,view,page,version,newsCategory],
+    enabled:enabled && edition.live && edition.slug==='capital-district',staleTime:60000,refetchOnWindowFocus:false,
+    queryFn:()=>fetchInventory(source,town,search,view,page*INVENTORY_PAGE_SIZE,INVENTORY_PAGE_SIZE,newsCategory)});
+}
+
+/** Sources that contribute dated rows to Latest updates for a category. */
+export function latestSources(category:FeedCategory):{source:InventorySource;newsCategory:string}[] {
+  if(category==='all') return [{source:'homes',newsCategory:'all'},{source:'news',newsCategory:'all'},{source:'events',newsCategory:'all'}];
+  if(category==='property') return [{source:'homes',newsCategory:'all'},{source:'news',newsCategory:'property'}];
+  if(category==='events') return [{source:'events',newsCategory:'all'}];
+  if(['local_news','finance','business'].includes(category)) return [{source:'news',newsCategory:category}];
+  return [];
+}
+/** Every source is fetched from row 0 through the requested window plus a buffer, so merging never skips rows between pages. */
+export const latestFetchSize=(page:number)=>(page+2)*LATEST_PAGE_SIZE;
+export function latestWindow(results:{rows:FeedRow[];count:number}[],page:number) {
+  const merged=chronologicalRows(results.flatMap(r=>r.rows));
+  const complete=results.every(r=>r.rows.length>=r.count);
+  const start=page*LATEST_PAGE_SIZE;
+  return {rows:merged.slice(start,start+LATEST_PAGE_SIZE),start,
+    hasNext:merged.length>start+LATEST_PAGE_SIZE || !complete,
+    total:complete ? merged.length : null};
+}
+export function useLatestFeed(edition:FeedEdition,category:FeedCategory,town:string,search:string,page:number,enabled:boolean,version:string) {
+  const sources=latestSources(category);
+  return useQuery({queryKey:['feed-latest',edition.slug,category,town,search,page,version],
+    enabled:enabled && sources.length>0 && edition.live && edition.slug==='capital-district',staleTime:60000,refetchOnWindowFocus:false,
+    queryFn:async()=>latestWindow(await Promise.all(sources.map(s=>fetchInventory(s.source,town,search,'latest',0,latestFetchSize(page),s.newsCategory))),page)});
 }
