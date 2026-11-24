@@ -20,12 +20,9 @@ export default function TownNavigation({town,towns,onSelect,dark,large}:{town:st
   const townLink=(slug:string,label:string)=><Link key={slug || 'all'} to={href(slug)} aria-current={town===slug ? 'location' : undefined} onClick={e=>{if(!plain(e)) return;e.preventDefault();select(slug);}}>{label}</Link>;
   const matches=towns.filter(t=>t.name.toLowerCase().includes(find.trim().toLowerCase()));
   return <section className="feed-towns" aria-labelledby="feed-towns-title">
-    <div className="feed-block-title"><h2 id="feed-towns-title">Town</h2><span aria-live="polite">Showing <strong>{town ? name(town) : 'All towns'}</strong></span></div>
-    <nav aria-label="Local towns" className="feed-town-quick">
-      {townLink('','All towns')}
-      {quick.map(slug=>townLink(slug,name(slug)))}
+    <div className="feed-block-title"><h2 id="feed-towns-title">Towns</h2>
     <Dialog.Root open={open} onOpenChange={o=>{setOpen(o);if(!o)setFind('');}}>
-      <Dialog.Trigger asChild><Button className="feed-towns-trigger" variant="outline"><MapPin aria-hidden/>All {towns.length} towns A–Z</Button></Dialog.Trigger>
+      <Dialog.Trigger asChild><Button className="feed-towns-trigger" variant="outline" aria-label={`All ${towns.length} towns A to Z`}><MapPin aria-hidden/>A–Z · {towns.length}</Button></Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="feed-town-overlay"/>
         <Dialog.Content className={`nest-feed feed-town-drawer${dark ? ' feed-dark' : ''}${large ? ' feed-large' : ''}`}>
@@ -40,6 +37,10 @@ export default function TownNavigation({town,towns,onSelect,dark,large}:{town:st
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
+    </div>
+    <nav aria-label="Local towns" className="feed-town-quick">
+      {townLink('','All towns')}
+      {quick.map(slug=>townLink(slug,name(slug)))}
     </nav>
   </section>;
 }

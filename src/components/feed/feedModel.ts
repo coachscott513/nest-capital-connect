@@ -71,17 +71,19 @@ export function canonicalSourceUrl(value: string): string {
 function sourceDay(row: FeedRow): string {
   return row.dateOnly ? row.date : easternDay(new Date(row.date));
 }
+/** Feed order: dated news/listings newest first, then scheduled events soonest first. */
+export function compareFeedRows(a: FeedRow, b: FeedRow): number {
+  // Scheduled events are a separate chronological agenda, not future news.
+  if ((a.category === 'events') !== (b.category === 'events')) return a.category === 'events' ? 1 : -1;
+  const direction = a.category === 'events' ? 1 : -1;
+  const timestamp = (row: FeedRow) => Date.parse(row.dateOnly ? `${row.date}T12:00:00Z` : row.date);
+  return direction * (timestamp(a)-timestamp(b)) || a.id.localeCompare(b.id);
+}
 export function chronologicalRows(rows: FeedRow[]): FeedRow[] {
   const dated = rows.filter(row => validDate(row.date));
   // Match the full listing URL and original Eastern calendar day, not a publisher domain.
   const listings = new Set(dated.filter(row => row.kind === 'listing').map(row => `${canonicalSourceUrl(row.href)}|${sourceDay(row)}`));
-  const sorted = dated.filter(row => !(row.kind !== 'listing' && row.id.startsWith('story:') && row.category === 'property' && listings.has(`${canonicalSourceUrl(row.href)}|${sourceDay(row)}`))).sort((a,b) => {
-    // Scheduled events are a separate chronological agenda, not future news.
-    if ((a.category === 'events') !== (b.category === 'events')) return a.category === 'events' ? 1 : -1;
-    const direction = a.category === 'events' ? 1 : -1;
-    const timestamp = (row: FeedRow) => Date.parse(row.dateOnly ? `${row.date}T12:00:00Z` : row.date);
-    return direction * (timestamp(a)-timestamp(b)) || a.id.localeCompare(b.id);
-  });
+  const sorted = dated.filter(row => !(row.kind !== 'listing' && row.id.startsWith('story:') && row.category === 'property' && listings.has(`${canonicalSourceUrl(row.href)}|${sourceDay(row)}`))).sort(compareFeedRows);
   const seen = new Set<string>();
   return sorted.filter(row => { const key = `${row.category}|${canonicalSourceUrl(row.href)}|${row.date}`; if (seen.has(key)) return false; seen.add(key); return true; });
 }

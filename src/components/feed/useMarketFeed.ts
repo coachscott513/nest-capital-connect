@@ -62,9 +62,9 @@ export function useFeedTowns(edition: FeedEdition) {
     return feedTownOptions(Array.from(towns,([slug,name])=>({slug,name})),[]);
   }});
 }
-export function useDirectoryRows(edition: FeedEdition,town: string,page: number,search = '',enabled = true,size = 8) {
-  return useQuery({queryKey:['feed-directory',edition.slug,town,page,search,size],enabled:enabled && edition.live && edition.slug === 'capital-district',staleTime:60000,queryFn:async()=>{
-    const query = businessDirectoryQuery({townSlug:town,search},'id,name,slug,town_name,town_slug,category,subcategory,website,phone,contact_status,source_url,source',true,edition.slug,true);
+export function useDirectoryRows(edition: FeedEdition,town: string,page: number,search = '',enabled = true,size = 8,directoryCategory = '') {
+  return useQuery({queryKey:['feed-directory',edition.slug,town,page,search,size,directoryCategory],enabled:enabled && edition.live && edition.slug === 'capital-district',staleTime:60000,queryFn:async()=>{
+    const query = businessDirectoryQuery({townSlug:town,search,directoryCategory},'id,name,slug,town_name,town_slug,category,subcategory,website,phone,contact_status,source_url,source',true,edition.slug,true);
     const {data,error,count} = await query.range(page*size,page*size+size-1).returns<Pick<Database['public']['Tables']['businesses']['Row'],'id'|'name'|'slug'|'town_name'|'town_slug'|'category'|'subcategory'|'website'|'phone'|'contact_status'|'source_url'|'source'>[]>();
     if(error) throw error;
     return {rows:data || [],count:count || 0};

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { directoryCategoryClause } from "@/lib/directoryCategories";
 import { supabase } from "@/integrations/supabase/client";
 import type { Business, BusinessCategory } from "@/data/businesses";
 import { equivalentFeedTowns } from '@/components/feed/feedModel';
@@ -137,6 +138,8 @@ export interface PaginatedBusinessOptions {
   townSlug?: string;
   search?: string;
   category?: string; // raw substring keyword applied to category column
+  /** Structured homepage category key (see lib/directoryCategories); free-text search is unaffected. */
+  directoryCategory?: string;
   tier?: TierFilter;
   hasPhone?: boolean;
   hasWebsite?: boolean;
@@ -229,7 +232,7 @@ const expandSearchSynonyms = (raw: string): string[] => {
 
 /** Shared server query: homepage and /local keep identical keyword/alias semantics. */
 export function businessDirectoryQuery(opts: PaginatedBusinessOptions, columns = CARD_COLUMNS, countMode = true, region?: string, alphabetical = false) {
-  const {townSlug,search,category,tier='all',hasPhone,hasWebsite}=opts;
+  const {townSlug,search,category,directoryCategory,tier='all',hasPhone,hasWebsite}=opts;
     let q = supabase
       .from("businesses")
       .select(columns, countMode ? { count: "exact" } : undefined)
@@ -242,6 +245,11 @@ export function businessDirectoryQuery(opts: PaginatedBusinessOptions, columns =
       const safe = escapeIlike(category);
       // Match category column or tags array contains.
       q = q.or(`category.ilike.%${safe}%,subcategory.ilike.%${safe}%`);
+    }
+
+    if (directoryCategory) {
+      const clause = directoryCategoryClause(directoryCategory);
+      if (clause) q = q.or(clause);
     }
 
     if (search) {

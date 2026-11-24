@@ -1,4 +1,5 @@
 import { canonicalFeedTown, type FeedCategory } from './feedModel';
+import { directoryCategory } from '@/lib/directoryCategories';
 
 export type BrowseView = 'latest' | 'browse';
 export const browseCategories: {value:FeedCategory;label:string}[] = [
@@ -14,7 +15,9 @@ export function readBrowseState(params: URLSearchParams) {
   const category=[...browseCategories,...moreCategories].find(c=>c.value===raw)?.value || 'all';
   return {town:canonicalFeedTown(params.get('town') || ''),category,
     view:(params.get('view')==='browse' ? 'browse' : 'latest') as BrowseView,
-    search:params.get('search') || ''};
+    search:params.get('search') || '',
+    // Structured business classification; only meaningful while browsing businesses.
+    cat:category==='business' && directoryCategory(params.get('cat')) ? params.get('cat') as string : ''};
 }
 export function updateBrowseState(params:URLSearchParams, changes:Record<string,string>) {
   const next=new URLSearchParams(params);
@@ -22,8 +25,9 @@ export function updateBrowseState(params:URLSearchParams, changes:Record<string,
     if (value && !(key==='type' && value==='all') && !(key==='view' && value==='latest')) next.set(key,value);
     else next.delete(key);
   }
+  if ('type' in changes && changes.type!=='business' && !('cat' in changes)) next.delete('cat');
   // Reset only pagination when context changes; town and search survive category/view changes.
-  if (['town','view','type','search'].some(key=>key in changes))
+  if (['town','view','type','search','cat'].some(key=>key in changes))
     for (const key of Array.from(next.keys())) if(key.startsWith('page_')) next.delete(key);
   return next;
 }

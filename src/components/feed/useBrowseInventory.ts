@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { chronologicalRows, easternDay, equivalentFeedTowns, eventRow, listingRow, storyRow, type FeedCategory, type FeedEdition, type FeedRow } from './feedModel';
+import { chronologicalRows, compareFeedRows, easternDay, equivalentFeedTowns, eventRow, listingRow, storyRow, type FeedCategory, type FeedEdition, type FeedRow } from './feedModel';
 import { escapeIlike } from '@/hooks/usePaginatedBusinesses';
 import type { BrowseView } from './browseState';
 import { rentalDetailHref } from './rentalLinks';
@@ -23,7 +23,9 @@ export function rentalBrowseRow(r:RentalRecord):FeedRow {
     href:rentalDetailHref(r.id,r.town_slug),price:r.rent_price,priceUnit:'month',facts:facts || undefined};
 }
 
-export async function fetchInventory(source:InventorySource,town:string,search:string,view:BrowseView,from:number,size:number,newsCategory='all'):Promise<{rows:FeedRow[];count:number}> {
+/** `fetched` is the raw row count returned before adapters reject invalid records. */
+export interface InventoryChunk {rows:FeedRow[];count:number;fetched:number}
+export async function fetchInventory(source:InventorySource,town:string,search:string,view:BrowseView,from:number,size:number,newsCategory='all'):Promise<InventoryChunk> {
       const now=new Date(); const safe=escapeIlike(search); const INVENTORY_PAGE_SIZE=size;
       if(source==='homes') {
         let q=supabase.from('listings').select('id,full_address,city,town_slug,list_date,list_price,public_listing_url,public_listing_url_approved,status,listing_agent,agency,bedrooms,bathrooms,sqft',{count:'exact'})
@@ -33,7 +35,7 @@ export async function fetchInventory(source:InventorySource,town:string,search:s
         if(safe) q=q.or(`full_address.ilike.%${safe}%,city.ilike.%${safe}%,listing_agent.ilike.%${safe}%,agency.ilike.%${safe}%`);
         const {data,error,count}=await q.order('list_date',{ascending:false}).order('id').range(from,from+INVENTORY_PAGE_SIZE-1);
         if(error) throw error;
-        return {rows:(data || []).map(l=>listingRow(l,now)).filter((r):r is FeedRow=>r!==null),count:count || 0};
+        return {rows:(data || []).map(l=>listingRow(l,now)).filter((r):r is FeedRow=>r!==null),count:count || 0,fetched:data?.length || 0};
       }
       if(source==='news') {
         let q=supabase.from('media_stories').select('id,headline,town,source_name,source_article_url,published_at,approved,category,summary',{count:'exact'})
@@ -48,7 +50,7 @@ export async function fetchInventory(source:InventorySource,town:string,search:s
         if(safe) q=q.or(`headline.ilike.%${safe}%,town.ilike.%${safe}%,source_name.ilike.%${safe}%`);
         const {data,error,count}=await q.order('published_at',{ascending:false}).order('id').range(from,from+INVENTORY_PAGE_SIZE-1);
         if(error) throw error;
-        return {rows:(data || []).map(storyRow).filter((r):r is FeedRow=>r!==null),count:count || 0};
+        return {rows:(data || []).map(storyRow).filter((r):r is FeedRow=>r!==null),count:count || 0,fetched:data?.length || 0};
       }
       if(source==='events') {
         let q=supabase.from('town_events').select('id,title,town_name,town_slug,starts_at,cta_url,venue_name,is_active',{count:'exact'})
@@ -58,14 +60,14 @@ export async function fetchInventory(source:InventorySource,town:string,search:s
         if(safe) q=q.or(`title.ilike.%${safe}%,town_name.ilike.%${safe}%,venue_name.ilike.%${safe}%`);
         const {data,error,count}=await q.order('starts_at').order('id').range(from,from+INVENTORY_PAGE_SIZE-1);
         if(error) throw error;
-        return {rows:(data || []).map(eventRow).filter((r):r is FeedRow=>r!==null),count:count || 0};
+        return {rows:(data || []).map(eventRow).filter((r):r is FeedRow=>r!==null),count:count || 0,fetched:data?.length || 0};
       }
       let q=supabase.from('rentals').select('id,town_slug,address,rent_price,available_date,bedrooms,bathrooms,sqft,listing_agent',{count:'exact'}).eq('is_active',true);
       if(town) q=q.in('town_slug',equivalentFeedTowns(town));
       if(safe) q=q.or(`address.ilike.%${safe}%,town_slug.ilike.%${safe}%,listing_agent.ilike.%${safe}%`);
       const {data,error,count}=await q.order('available_date',{nullsFirst:false}).order('address').order('id').range(from,from+INVENTORY_PAGE_SIZE-1);
       if(error) throw error;
-      return {rows:(data || []).map(rentalBrowseRow),count:count || 0};
+      return {rows:(data || []).map(rentalBrowseRow),count:count || 0,fetched:data?.length || 0};
 }
 
 export function useBrowseInventory(edition:FeedEdition,source:InventorySource,town:string,search:string,view:BrowseView,page:number,enabled:boolean,version:string,newsCategory='all') {
@@ -82,19 +84,49 @@ export function latestSources(category:FeedCategory):{source:InventorySource;new
   if(['local_news','finance','business'].includes(category)) return [{source:'news',newsCategory:category}];
   return [];
 }
-/** Every source is fetched from row 0 through the requested window plus a buffer, so merging never skips rows between pages. */
-export const latestFetchSize=(page:number)=>(page+2)*LATEST_PAGE_SIZE;
-export function latestWindow(results:{rows:FeedRow[];count:number}[],page:number) {
-  const merged=chronologicalRows(results.flatMap(r=>r.rows));
-  const complete=results.every(r=>r.rows.length>=r.count);
-  const start=page*LATEST_PAGE_SIZE;
-  return {rows:merged.slice(start,start+LATEST_PAGE_SIZE),start,
-    hasNext:merged.length>start+LATEST_PAGE_SIZE || !complete,
-    total:complete ? merged.length : null};
+export type LatestFetcher=(from:number,size:number)=>Promise<InventoryChunk>;
+export const LATEST_FIRST_CHUNK=12, LATEST_MAX_CHUNK=200, LATEST_MAX_REQUESTS=40;
+/**
+ * Fill one six-row window from valid, de-duplicated rows merged across sources.
+ * Each source is read in bounded chunks in its own server order; a merged row is
+ * final only once every unfinished source has already returned a row ordered at
+ * or after it, so adapter rejections and duplicates never skip, repeat or short a page.
+ */
+export async function collectLatestWindow(fetchers:LatestFetcher[],page:number) {
+  const start=page*LATEST_PAGE_SIZE, need=start+LATEST_PAGE_SIZE+1;
+  const state=fetchers.map(()=>({rows:[] as FeedRow[],offset:0,done:false,chunk:LATEST_FIRST_CHUNK,last:undefined as FeedRow|undefined}));
+  let requests=0;
+  const settled=()=>{
+    const merged=chronologicalRows(state.flatMap(s=>s.rows));
+    let safe=0;
+    while(safe<merged.length && state.every(s=>s.done || (s.last!==undefined && compareFeedRows(merged[safe],s.last)<=0))) safe++;
+    return {merged,safe};
+  };
+  let view=settled();
+  while(view.safe<need && state.some(s=>!s.done) && requests<LATEST_MAX_REQUESTS) {
+    const next=view.merged[view.safe];
+    // Advance only sources that still block the next row from being final.
+    const blocking=state.filter(s=>!s.done && (s.last===undefined || !next || compareFeedRows(next,s.last)>0));
+    await Promise.all(blocking.map(async s=>{
+      const i=state.indexOf(s); requests++;
+      const result=await fetchers[i](s.offset,s.chunk);
+      s.offset+=result.fetched; s.rows.push(...result.rows);
+      const valid=result.rows.filter(r=>!!Date.parse(r.dateOnly ? `${r.date}T12:00:00Z` : r.date));
+      if(valid.length) s.last=valid.reduce((a,b)=>compareFeedRows(a,b)>=0 ? a : b,s.last ?? valid[0]);
+      if(result.fetched<s.chunk || s.offset>=result.count) s.done=true;
+      s.chunk=Math.min(s.chunk*2,LATEST_MAX_CHUNK);
+    }));
+    view=settled();
+  }
+  const complete=state.every(s=>s.done);
+  const final=complete ? view.merged : view.merged.slice(0,view.safe);
+  return {rows:final.slice(start,start+LATEST_PAGE_SIZE),start,
+    hasNext:final.length>start+LATEST_PAGE_SIZE || (!complete && view.safe>=start+LATEST_PAGE_SIZE),
+    total:complete ? view.merged.length : null};
 }
 export function useLatestFeed(edition:FeedEdition,category:FeedCategory,town:string,search:string,page:number,enabled:boolean,version:string) {
   const sources=latestSources(category);
   return useQuery({queryKey:['feed-latest',edition.slug,category,town,search,page,version],
     enabled:enabled && sources.length>0 && edition.live && edition.slug==='capital-district',staleTime:60000,refetchOnWindowFocus:false,
-    queryFn:async()=>latestWindow(await Promise.all(sources.map(s=>fetchInventory(s.source,town,search,'latest',0,latestFetchSize(page),s.newsCategory))),page)});
+    queryFn:()=>collectLatestWindow(sources.map(s=>(from,size)=>fetchInventory(s.source,town,search,'latest',from,size,s.newsCategory)),page)});
 }
