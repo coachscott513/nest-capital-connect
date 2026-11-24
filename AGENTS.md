@@ -9,3 +9,5 @@
 - Administrator roles require privileged provisioning, never first-user self-claim, to prevent account privilege escalation.
 - Protect business billing and placement fields with a database trigger that permits only administrators or the service role; owners retain ordinary profile updates without granting themselves paid benefits.
 - Public investment assets must satisfy `is_active = true` in database policies, matching the existing published-deal contract.
+- Report/guide email handlers verify the current account with hosted auth and use only its confirmed email; resource subjects and destinations are server-owned so callers cannot repurpose these sends.
+- Resource email forms share a verified-email gate and mount the retained Auth page at `/auth` with validated same-origin return paths; partner sign-in and browsing permissions remain unchanged.

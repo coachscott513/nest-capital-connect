@@ -15,6 +15,7 @@ import RouteFade from "@/components/RouteFade";
 import GARouteTracker from "@/components/GARouteTracker";
 import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext";
 import Index from "./pages/Index";
+import Auth from "./pages/Auth";
 import AdminMediaStories from "./pages/AdminMediaStories";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminTowns from "./pages/admin/AdminTowns";
@@ -419,6 +420,7 @@ const App = () => {
             <RouteFade>
             <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/auth" element={<Auth />} />
           <Route path="/go/:slug" element={<GoRedirect />} />
           <Route path="/admin/outreach" element={<AdminOutreach />} />
           <Route path="/admin" element={<AdminDashboard />} />

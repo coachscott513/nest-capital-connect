@@ -1,18 +1,21 @@
 
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import AuthForm from '@/components/AuthForm';
+import { authReturnPath } from '@/lib/authReturnPath';
 
 const Auth = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const returnTo = authReturnPath(searchParams.get('redirect'));
 
   useEffect(() => {
     if (user && !loading) {
-      navigate('/', { replace: true });
+      navigate(returnTo, { replace: true });
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, returnTo]);
 
   if (loading) {
     return (

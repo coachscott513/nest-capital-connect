@@ -8,12 +8,12 @@ import { FileText, Mail, Phone, CheckCircle2, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SmsConsent from "@/components/SmsConsent";
-
-const REPORT_URL = "https://www.narrpr.com/reports-v2/6817b29a-44d8-4221-a604-05c717acee81/pdf";
+import { useAuth } from "@/contexts/AuthContext";
+import VerifiedEmailGate from "@/components/VerifiedEmailGate";
 
 const DelmarMarketReport = () => {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [smsConsent, setSmsConsent] = useState(false);
@@ -21,7 +21,8 @@ const DelmarMarketReport = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!name.trim() || !email.trim()) {
+    if (!user?.email || !user.email_confirmed_at) return;
+    if (!name.trim()) {
       toast.error("Please enter your name and email");
       return;
     }
@@ -32,9 +33,7 @@ const DelmarMarketReport = () => {
       const { error } = await supabase.functions.invoke('send-market-report', {
         body: {
           name: name.trim(),
-          email: email.trim(),
           market: "Delmar",
-          reportUrl: REPORT_URL,
           sms_consent: smsConsent
         }
       });
@@ -67,6 +66,7 @@ const DelmarMarketReport = () => {
         {/* Form or Thank You */}
         <Card className="max-w-lg mx-auto p-8 border-2 border-primary/20 bg-background">
           {!isSubmitted ? (
+            <VerifiedEmailGate>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="text-center mb-6">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary/10 flex items-center justify-center">
@@ -103,8 +103,9 @@ const DelmarMarketReport = () => {
                     id="email"
                     type="email"
                     placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    aria-label="Confirmed account email"
+                    value={user?.email || ""}
+                    readOnly
                     className="mt-1.5 h-12"
                     required
                   />
@@ -136,6 +137,7 @@ const DelmarMarketReport = () => {
                 )}
               </Button>
             </form>
+            </VerifiedEmailGate>
           ) : (
             <div className="text-center py-6">
               <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-emerald/15 flex items-center justify-center">

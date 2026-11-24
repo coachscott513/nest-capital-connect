@@ -1,4 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { EmailAccessError, verifiedEmail, requestName, journeyResource } from "../_shared/verified-email.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
@@ -32,14 +34,6 @@ const esc = (s: unknown) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-interface JourneyEmailRequest {
-  firstName: string;
-  email: string;
-  journeyType: "investor" | "first-time" | "land" | "financing";
-  subject: string;
-  leadMagnet: string;
-}
-
 const journeyContent: Record<string, { heading: string; body: string; cta: string; ctaUrl: string }> = {
   investor: {
     heading: "Your Investor Toolkit is Ready",
@@ -72,7 +66,12 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (req.method !== "POST") return new Response(null, { status: 405, headers: corsHeaders });
+
+  try {
+    const authClient = createClient(Deno.env.get("SUPABASE_URL") || "", Deno.env.get("SUPABASE_ANON_KEY") || "");
+    const email = await verifiedEmail(req, authClient);
+    const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (!checkRateLimit(clientIp)) {
     return new Response(JSON.stringify({ error: "Too many requests. Please try again later." }), {
       status: 429,
@@ -80,9 +79,10 @@ const handler = async (req: Request): Promise<Response> => {
     });
   }
 
-  try {
-    const { firstName, email, journeyType, subject, leadMagnet }: JourneyEmailRequest = await req.json();
-    const content = journeyContent[journeyType] || journeyContent.investor;
+    const body = await req.json();
+    const firstName = requestName(body.firstName);
+    const { journeyType, subject, leadMagnet } = journeyResource(body.journeyType);
+    const content = journeyContent[journeyType];
 
     // Send user email
     const userEmailResponse = await fetch("https://api.resend.com/emails", {
@@ -112,6 +112,11 @@ const handler = async (req: Request): Promise<Response> => {
       }),
     });
 
+    if (!userEmailResponse.ok) {
+      console.error('Guide email provider rejected delivery', userEmailResponse.status);
+      throw new Error('Email delivery failed');
+    }
+
     // Send internal notification
     await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -140,10 +145,10 @@ const handler = async (req: Request): Promise<Response> => {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
-  } catch (error: any) {
-    console.error("Error in send-journey-email:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
+  } catch (error: unknown) {
+    const status = error instanceof EmailAccessError ? error.status : error instanceof SyntaxError ? 400 : 500;
+    return new Response(JSON.stringify({ error: error instanceof EmailAccessError ? error.message : 'Unable to send this guide. Please try again.' }), {
+      status,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   }

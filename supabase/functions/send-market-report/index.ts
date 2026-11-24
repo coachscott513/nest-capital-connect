@@ -1,4 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { EmailAccessError, verifiedEmail, requestName, marketResource } from "../_shared/verified-email.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
@@ -32,19 +34,17 @@ const esc = (s: unknown) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-interface MarketReportRequest {
-  name: string;
-  email: string;
-  market: string;
-  reportUrl: string;
-}
-
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
-  const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (req.method !== "POST") return new Response(null, { status: 405, headers: corsHeaders });
+
+  try {
+    const authClient = createClient(Deno.env.get("SUPABASE_URL") || "", Deno.env.get("SUPABASE_ANON_KEY") || "");
+    const email = await verifiedEmail(req, authClient);
+    const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (!checkRateLimit(clientIp)) {
     return new Response(JSON.stringify({ error: "Too many requests. Please try again later." }), {
       status: 429,
@@ -52,10 +52,9 @@ const handler = async (req: Request): Promise<Response> => {
     });
   }
 
-  try {
-    const { name, email, market, reportUrl }: MarketReportRequest = await req.json();
-
-    console.log(`Sending ${esc(market)} market report to ${esc(email)}`);
+    const body = await req.json();
+    const name = requestName(body.name);
+    const { market, reportUrl } = marketResource(body.market);
 
     // Send user email with the report link
     const userEmailResponse = await fetch("https://api.resend.com/emails", {
@@ -98,9 +97,8 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     if (!userEmailResponse.ok) {
-      const errorText = await userEmailResponse.text();
-      console.error("Resend API error:", errorText);
-      throw new Error(`Failed to send email: ${errorText}`);
+      console.error('Report email provider rejected delivery', userEmailResponse.status);
+      throw new Error('Email delivery failed');
     }
 
     // Send internal notification
@@ -126,16 +124,14 @@ const handler = async (req: Request): Promise<Response> => {
       }),
     });
 
-    console.log(`Successfully sent ${esc(market)} market report to ${esc(email)}`);
-
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
-  } catch (error: any) {
-    console.error("Error in send-market-report:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
+  } catch (error: unknown) {
+    const status = error instanceof EmailAccessError ? error.status : error instanceof SyntaxError ? 400 : 500;
+    return new Response(JSON.stringify({ error: error instanceof EmailAccessError ? error.message : 'Unable to send this report. Please try again.' }), {
+      status,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   }

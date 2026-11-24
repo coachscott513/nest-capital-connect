@@ -6,6 +6,8 @@ import { useToast } from "@/hooks/use-toast";
 import { CheckCircle, Download, Shield, Phone, MessageSquare } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import SmsConsent from "@/components/SmsConsent";
+import { useAuth } from "@/contexts/AuthContext";
+import VerifiedEmailGate from "@/components/VerifiedEmailGate";
 
 interface JourneyLeadMagnetProps {
   journeyType: "investor" | "first-time" | "land" | "financing";
@@ -15,25 +17,6 @@ interface JourneyLeadMagnetProps {
   downloadName: string;
 }
 
-const journeyEmails: Record<string, { subject: string; leadMagnet: string }> = {
-  investor: {
-    subject: "Your Investor Toolkit is Ready",
-    leadMagnet: "Cash Flow Analysis Spreadsheet + Capital District Investment Guide",
-  },
-  "first-time": {
-    subject: "Your First-Time Buyer Checklist is Ready",
-    leadMagnet: "Albany Area Grant Programs Guide + Pre-Approval Checklist",
-  },
-  land: {
-    subject: "Your Land Buyer Due Diligence Guide is Ready",
-    leadMagnet: "Land Evaluation Checklist + Zoning Quick Reference",
-  },
-  financing: {
-    subject: "Your Mortgage Options Guide is Ready",
-    leadMagnet: "Mortgage Comparison Chart + Down Payment Assistance Programs",
-  },
-};
-
 const JourneyLeadMagnet = ({ 
   journeyType, 
   title, 
@@ -41,7 +24,8 @@ const JourneyLeadMagnet = ({
   benefits,
   downloadName 
 }: JourneyLeadMagnetProps) => {
-  const [formData, setFormData] = useState({ firstName: "", email: "", phone: "" });
+  const [formData, setFormData] = useState({ firstName: "", phone: "" });
+  const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [smsConsent, setSmsConsent] = useState(false);
@@ -49,13 +33,14 @@ const JourneyLeadMagnet = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user?.email || !user.email_confirmed_at) return;
     setIsSubmitting(true);
 
     try {
       // Save to leads table
       const { error: dbError } = await supabase.from("leads").insert({
         full_name: formData.firstName,
-        email: formData.email,
+        email: user.email,
         phone: formData.phone || null,
         message: `Lead magnet request: ${downloadName}`,
         type: journeyType,
@@ -66,23 +51,16 @@ const JourneyLeadMagnet = ({
       if (dbError) throw dbError;
 
       // Send segmented email
-      const emailConfig = journeyEmails[journeyType];
       const { error: emailError } = await supabase.functions.invoke("send-journey-email", {
         body: {
           firstName: formData.firstName,
-          email: formData.email,
           phone: formData.phone || null,
           journeyType,
-          subject: emailConfig.subject,
-          leadMagnet: emailConfig.leadMagnet,
           sms_consent: smsConsent,
         },
       });
 
-      if (emailError) {
-        console.error("Email error:", emailError);
-        // Continue even if email fails - lead is saved
-      }
+      if (emailError) throw emailError;
 
       setIsSubmitted(true);
       toast({
@@ -136,6 +114,7 @@ const JourneyLeadMagnet = ({
           ))}
         </ul>
 
+        <VerifiedEmailGate>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Input
@@ -150,8 +129,9 @@ const JourneyLeadMagnet = ({
             <Input
               type="email"
               placeholder="Email address"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              aria-label="Confirmed account email"
+              value={user?.email || ""}
+              readOnly
               required
               className="h-12"
             />
@@ -170,6 +150,7 @@ const JourneyLeadMagnet = ({
             {isSubmitting ? "Sending..." : "Get the Free Guide"}
           </Button>
         </form>
+        </VerifiedEmailGate>
 
         <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
           <Shield className="w-3 h-3" />
