@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SmsConsent from "@/components/SmsConsent";
@@ -77,7 +77,8 @@ const RentalDetailModal = ({ rental, open, onClose }: RentalDetailModalProps) =>
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-lg p-0 overflow-hidden rounded-2xl border-border bg-background">
+      <DialogContent className="max-w-lg max-h-[90dvh] p-0 overflow-y-auto rounded-2xl border-border bg-background">
+        <DialogDescription className="sr-only">Active rental details and the existing showing request form.</DialogDescription>
         {/* Photo */}
         {rental.photos?.[0] && (
           <div className="h-52 w-full overflow-hidden bg-muted">
@@ -95,9 +96,9 @@ const RentalDetailModal = ({ rental, open, onClose }: RentalDetailModalProps) =>
             <p className="text-[10px] font-medium tracking-[0.15em] uppercase text-muted-foreground mb-1">
               {rental.property_sub_type || "Apartment"}
             </p>
-            <h3 className="text-xl font-bold text-foreground tracking-tight">
+            <DialogTitle className="text-xl font-bold text-foreground tracking-tight">
               {maskAddress(rental.address)}
-            </h3>
+            </DialogTitle>
             <p className="text-sm text-muted-foreground capitalize">
               {rental.town_slug.replace(/-/g, " ")}
             </p>

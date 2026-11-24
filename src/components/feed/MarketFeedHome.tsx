@@ -13,6 +13,8 @@ import { useFeedTowns, useMarketFeed } from './useMarketFeed';
 import { rowDate } from './FeedLine';
 import FeedBrowse from './FeedBrowse';
 import PublicNavigation from '@/components/PublicNavigation';
+import RentalDetailsRoute from './RentalDetailsRoute';
+import { hydrateSavedRows } from './rentalLinks';
 import './marketFeed.css';
 
 function stored<T>(key:string,fallback:T):T { try { const value=localStorage.getItem(key); return value ? JSON.parse(value) : fallback; } catch { return fallback; } }
@@ -22,7 +24,7 @@ function interaction(action:string,category?:string,town?:string) {
 }
 function MarketFeed({edition,onEditionChange}:{edition:FeedEdition;onEditionChange:(slug:string)=>void}) {
   const navigate=useNavigate();
-  const [savedOnly,setSavedOnly]=useState(false); const [saved,setSaved]=useState<FeedRow[]>(()=>{const value=stored<FeedRow[]>('nest-feed-saved',[]); return Array.isArray(value) ? value.filter(r=>r && typeof r.id==='string' && (publicUrl(r.href) || /^\/biz\/[a-z0-9_-]+$/i.test(r.href))) : [];});
+  const [savedOnly,setSavedOnly]=useState(false); const [saved,setSaved]=useState<FeedRow[]>(()=>hydrateSavedRows(stored<unknown>('nest-feed-saved',[])));
   const [dark,setDark]=useState(()=>stored<boolean>('nest-feed-dark',false) === true); const [large,setLarge]=useState(()=>stored<boolean>('nest-feed-large',false) === true);
   const [paused,setPaused]=useState(()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [directoryQuery,setDirectoryQuery]=useState(''); const [directoryTown,setDirectoryTown]=useState(''); const [directoryCategory,setDirectoryCategory]=useState('');
@@ -37,6 +39,7 @@ function MarketFeed({edition,onEditionChange}:{edition:FeedEdition;onEditionChan
   const finance=latestFinanceRow(feed.rows);
   const submit=(event:FormEvent)=>{event.preventDefault();logEngagement('regional_search_submit',{}, {source_location:'homepage_feed',intent_type:'contractor_directory_search',query_length_bucket:queryLengthBucket(directoryQuery),category_slug:directoryCategory}, {town_slug:directoryTown || null});navigate(homeDirectorySearch(directoryQuery,directoryTown,directoryCategory));};
   return <div className={`nest-feed${dark ? ' feed-dark' : ''}${large ? ' feed-large' : ''}`}>
+    <RentalDetailsRoute/>
     <a className="feed-skip" href="#feed-main">Skip to feed</a>
     <PublicNavigation settings={
       <div className="feed-settings"><Button variant="ghost" size="icon" title="Dark mode" aria-label="Dark mode" aria-pressed={dark} onClick={()=>{setDark(!dark);persist('nest-feed-dark',!dark);}}>{dark ? <Sun/> : <Moon/>}</Button><Button variant="ghost" size="icon" title="Larger text" aria-label="Larger text" aria-pressed={large} onClick={()=>{setLarge(!large);persist('nest-feed-large',!large);}}><Type/></Button></div>

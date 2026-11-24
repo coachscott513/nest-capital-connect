@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import RentalDetailModal from "@/components/RentalDetailModal";
+import RentalDetailsRoute from '@/components/feed/RentalDetailsRoute';
 
 const RentalMap = lazy(() => import("@/components/RentalMap"));
 
@@ -116,6 +117,7 @@ const RentalsHub = () => {
 
   return (
     <MainLayout>
+      <RentalDetailsRoute/>
       <Helmet>
         <title>Capital District Rentals — Apartments & Homes for Rent | Capital District Nest</title>
         <meta name="description" content="Curated rental opportunities across Albany, Troy, Schenectady, Saratoga Springs and beyond. Updated weekly with local market insight and ownership options." />

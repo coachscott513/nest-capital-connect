@@ -10,6 +10,7 @@ import { useDirectoryRows } from './useMarketFeed';
 import { INVENTORY_PAGE_SIZE, useBrowseInventory, type InventorySource } from './useBrowseInventory';
 import { FeedLine } from './FeedLine';
 import TownNavigation from './TownNavigation';
+import { rentalInPlaceHref, validRentalId } from './rentalLinks';
 
 export default function FeedBrowse({edition,towns,saved,savedOnly,onSavedOnly,onSave,dark,large,version}:{edition:FeedEdition;towns:{slug:string;name:string}[];saved:FeedRow[];savedOnly:boolean;onSavedOnly:()=>void;onSave:(row:FeedRow)=>void;dark:boolean;large:boolean;version:FeedRow[]}) {
   const [params,setParams]=useSearchParams();const {town,category,view,search}=readBrowseState(params);
@@ -32,7 +33,11 @@ export default function FeedBrowse({edition,towns,saved,savedOnly,onSavedOnly,on
   const rows=savedOnly ? filterRows(saved,town,category,search) : [...dated,...(sources.some(s=>s.source==='rentals') ? rentals.data?.rows || [] : [])];
   const busy=!savedOnly && sources.some(s=>s.result.isLoading);
   const errors=!savedOnly && sources.filter(s=>s.result.isError);
-  const render=(row:FeedRow)=><FeedLine key={row.id} row={row} saved={saved.some(r=>r.id===row.id)} onSave={onSave}/>;
+  const render=(row:FeedRow)=>{
+    const id=row.category==='rentals' ? row.id.replace(/^rental:/,'') : '';
+    const display=validRentalId(id) ? {...row,href:rentalInPlaceHref(params.toString(),id)} : row;
+    return <FeedLine key={row.id} row={display} saved={saved.some(r=>r.id===row.id)} onSave={()=>onSave(row)}/>;
+  };
   const pagination=(source:string,label:string,count:number,size:number)=>{
     const page=browsePage(params,source);
     return <div className="feed-pagination" key={source}><span>{label} · {count ? `${page*size+1}–${Math.min((page+1)*size,count)} of ${count.toLocaleString()}` : '0 records'}</span>
@@ -64,7 +69,7 @@ export default function FeedBrowse({edition,towns,saved,savedOnly,onSavedOnly,on
         {directory.data?.count===0 && <p className="feed-empty" role="status">No published businesses match this town and search.</p>}
         {pagination('businesses','Businesses',directory.data?.count || 0,15)}
       </section>}
-      {category==='rentals' && view==='browse' && <p className="feed-notice">Active rental records · availability is not a listing announcement. Details link to the existing rental directory; individual public source links are not supplied.</p>}
+      {category==='rentals' && view==='browse' && <p className="feed-notice">Active rental records · availability is not a listing announcement. Details open the selected rental; individual public source links are not supplied.</p>}
     </div>
   </div>;
 }

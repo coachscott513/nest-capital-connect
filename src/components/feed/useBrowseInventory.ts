@@ -3,6 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { easternDay, equivalentFeedTowns, eventRow, listingRow, storyRow, type FeedEdition, type FeedRow } from './feedModel';
 import { escapeIlike } from '@/hooks/usePaginatedBusinesses';
 import type { BrowseView } from './browseState';
+import { rentalDetailHref } from './rentalLinks';
 
 export type InventorySource = 'homes' | 'news' | 'events' | 'rentals';
 export const INVENTORY_PAGE_SIZE=20;
@@ -17,7 +18,7 @@ export function rentalBrowseRow(r:RentalRecord):FeedRow {
   return {id:`rental:${r.id}`,category:'rentals',identity:'Rental',title:r.address.replace(/^\d+\s*/,''),
     town:r.town_slug.replace(/\b\w/g,c=>c.toUpperCase()).replace(/-/g,' '),townSlug:r.town_slug,
     date:r.available_date || '',dateOnly:true,dateLabel:'Available',source:r.listing_agent || 'Published rental directory',
-    href:'/rentals',price:r.rent_price,priceUnit:'month',facts:facts || undefined};
+    href:rentalDetailHref(r.id,r.town_slug),price:r.rent_price,priceUnit:'month',facts:facts || undefined};
 }
 
 export function useBrowseInventory(edition:FeedEdition,source:InventorySource,town:string,search:string,view:BrowseView,page:number,enabled:boolean,version:string,newsCategory='all') {

@@ -1,4 +1,5 @@
 # Homepage town navigation — Nov 24
+- [x] Fix specific active rental details/saved reload and context-preserving town hrefs; real Albany page-two save/reload/reopen/unsave, standalone share link, modified-click town context, 12 responsive/theme combinations and 57 tests verified; no deployment.
 - [x] Add shared Apple-inspired public top navigation while retaining the completed town/browse experience; desktop/mobile click/keyboard menus, dark/light, town persistence and shared public town header verified, 46 tests and preview compilation passed. No deploying.
 - [x] Add desktop towns / mobile drawer, shareable views/categories/search, real paginated published inventory and shared directory search.
 - [x] Verify real records, pagination beyond 100, aliases, history, keyboard/touch accessibility and all desktop/mobile themes; 43 tests and preview compilation passed, QA saved. No publishing.

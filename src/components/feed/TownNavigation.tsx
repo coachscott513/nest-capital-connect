@@ -1,17 +1,20 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { updateBrowseState } from './browseState';
 import * as Dialog from '@radix-ui/react-dialog';
 import { MapPin, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function TownNavigation({town,towns,onSelect,dark,large}:{town:string;towns:{slug:string;name:string}[];onSelect:(slug:string)=>void;dark:boolean;large:boolean}) {
   const [open,setOpen]=useState(false);const [find,setFind]=useState('');
+  const [params]=useSearchParams();
+  const href=(slug:string)=>`?${updateBrowseState(params,{town:slug})}`;
   const select=(slug:string)=>{onSelect(slug);setOpen(false);};
   const list=(mobile:boolean)=><>
     <label>Find a town<input type="search" aria-label={mobile ? 'Find a town in drawer' : 'Find a town'} value={find} onChange={e=>setFind(e.target.value)} placeholder="Town name"/></label>
     <nav aria-label={mobile ? 'Choose a town' : 'Feed towns'} className="feed-town-list">
-      <Link to="?" aria-current={!town ? 'location' : undefined} onClick={e=>{e.preventDefault();select('');}}>All towns</Link>
-      {towns.filter(t=>t.name.toLowerCase().includes(find.toLowerCase())).map(t=><Link key={t.slug} to={`?town=${t.slug}`} aria-current={town===t.slug ? 'location' : undefined} onClick={e=>{e.preventDefault();select(t.slug);}}>{t.name}</Link>)}
+      <Link to={href('')} aria-current={!town ? 'location' : undefined} onClick={e=>{if(e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button!==0) return;e.preventDefault();select('');}}>All towns</Link>
+      {towns.filter(t=>t.name.toLowerCase().includes(find.toLowerCase())).map(t=><Link key={t.slug} to={href(t.slug)} aria-current={town===t.slug ? 'location' : undefined} onClick={e=>{if(e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button!==0) return;e.preventDefault();select(t.slug);}}>{t.name}</Link>)}
       {!towns.some(t=>t.name.toLowerCase().includes(find.toLowerCase())) && <p role="status">No matching towns.</p>}
     </nav>
   </>;

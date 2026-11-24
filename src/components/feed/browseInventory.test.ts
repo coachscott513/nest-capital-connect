@@ -40,7 +40,7 @@ describe('published inventory queries',()=>{
   });
   it('retains supplied rental availability, masks street number and never creates a listing badge/publication date',()=>{
     const rental=rentalBrowseRow({id:'r',town_slug:'albany',address:'123 Main Street',rent_price:1500,available_date:'2026-12-01',bedrooms:2,bathrooms:1,sqft:null,listing_agent:null});
-    expect(rental).toMatchObject({title:'Main Street',category:'rentals',date:'2026-12-01',dateLabel:'Available',price:1500,priceUnit:'month',href:'/rentals'});
+    expect(rental).toMatchObject({title:'Main Street',category:'rentals',date:'2026-12-01',dateLabel:'Available',price:1500,priceUnit:'month',href:'/rentals?rental=r&town=albany'});
     expect(rental.kind).toBeUndefined();
   });
   it('latest event queries use scheduled upcoming dates, while browse is independent of recency',async()=>{
