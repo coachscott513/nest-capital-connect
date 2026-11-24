@@ -5,13 +5,15 @@
     <link rel="icon" href="/favicon.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Accurate application fallback; route metadata is owned by SEOHead. -->
-    <title>Capital District Nest | Local Feed, Businesses & Market Resources</title>
-    <meta data-rh="true" name="description" content="Explore Capital District, NY local updates with credited sources, town filters, business profiles, real estate search and financing resources." />
-    <meta data-rh="true" property="og:title" content="Capital District Nest | Local Feed, Businesses & Market Resources" />
-    <meta data-rh="true" property="og:description" content="Explore Capital District, NY local updates with credited sources, town filters, business profiles, real estate search and financing resources." />
-    <meta data-rh="true" property="og:type" content="website" />
-    <meta data-rh="true" name="twitter:card" content="summary_large_image" />
+    <!--
+      NEUTRAL APPLICATION SHELL.
+      This document is the universal HTML shell for every route. It must NOT
+      carry homepage-specific identity: no homepage title/description, no
+      canonical, no og/twitter URL or content, no Organization/WebSite schema,
+      and no homepage H1 or body copy. The homepage route owns homepage
+      metadata via <Index /> + SEOHead; every other route owns its own.
+    -->
+    <title>Capital District Nest</title>
     <meta http-equiv="content-language" content="en-US" />
 
     <!-- Google Tag Manager -->

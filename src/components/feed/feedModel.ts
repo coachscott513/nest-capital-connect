@@ -8,7 +8,7 @@ export const FEED_EDITIONS: FeedEdition[] = [
 export interface FeedRow {
   id: string; category: FeedCategory; title: string; town: string; townSlug: string;
   date: string; dateLabel: string; source: string; href: string; connect?: string;
-  price?: number; dateOnly?: boolean;
+  price?: number; dateOnly?: boolean; summary?: string;
 }
 export const slugifyTown = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 export function publicUrl(value?: string | null): string | undefined {
@@ -30,11 +30,14 @@ export function filterRows(rows: FeedRow[], town: string, category: FeedCategory
   const q = query.trim().toLowerCase();
   return rows.filter(row => (!town || row.townSlug === town) && (category === 'all' || row.category === category) && (!q || `${row.title} ${row.town} ${row.source}`.toLowerCase().includes(q)));
 }
-export interface StoryRecord { id: string; headline: string; town: string | null; source_name: string; source_article_url: string | null; published_at: string; approved: boolean; category: string; }
+export interface StoryRecord { id: string; headline: string; town: string | null; source_name: string; source_article_url: string | null; published_at: string; approved: boolean; category: string; summary?: string | null; }
 export function storyRow(s: StoryRecord): FeedRow | null {
   const href = publicUrl(s.source_article_url);
   if (!s.approved || !validDate(s.published_at) || !href || !s.source_name || Date.parse(s.published_at) > Date.now()) return null;
-  return { id: `story:${s.id}`, category: /financ/i.test(s.category) ? 'finance' : /business/i.test(s.category) ? 'business' : 'local_news', title: s.headline, town: s.town || 'Regional', townSlug: slugifyTown(s.town || ''), date: s.published_at, dateLabel: 'Published', source: s.source_name, href };
+  return { id: `story:${s.id}`, category: /financ/i.test(s.category) ? 'finance' : /real\s*estate/i.test(s.category) ? 'property' : /business/i.test(s.category) ? 'business' : 'local_news', title: s.headline, town: s.town || 'Regional', townSlug: slugifyTown(s.town || ''), date: s.published_at, dateLabel: 'Published', source: s.source_name, href, summary: s.summary || undefined };
+}
+export function latestFinanceRow(rows: FeedRow[]): FeedRow | undefined {
+  return chronologicalRows(rows.filter(row => row.category === 'finance'))[0];
 }
 export interface EventRecord { id: string; title: string; town_name: string | null; town_slug: string; starts_at: string; cta_url: string | null; venue_name: string | null; is_active: boolean; }
 export function eventRow(e: EventRecord): FeedRow | null {

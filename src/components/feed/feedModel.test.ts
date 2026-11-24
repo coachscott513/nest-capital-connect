@@ -1,7 +1,23 @@
 import { describe,it,expect } from 'vitest';
-import { FEED_EDITIONS, chronologicalRows, eventRow, filterRows, listingRow, newRowCount, publicUrl, storyRow, type FeedRow } from './feedModel';
+import { FEED_EDITIONS, chronologicalRows, eventRow, filterRows, latestFinanceRow, listingRow, newRowCount, publicUrl, storyRow, type FeedRow } from './feedModel';
 const row:FeedRow={id:'story:1',category:'local_news',title:'Town meeting',town:'Troy',townSlug:'troy',date:'2026-11-20T12:00:00Z',dateLabel:'Published',source:'Publisher',href:'https://example.org/story'};
 describe('neutral feed source rules',()=>{
+ it('maps verified Real Estate stories to Property and preserves Voorheesville, original date, summary and publisher link',()=>{
+  const summary='Credits Lindsay Carr and Natalie Pinkham.';
+  const property=storyRow({id:'db9c287f-8573-45b9-8e2d-b4ea3d7a296e',headline:'205 Deerfield Court listed at $250,000',town:'Voorheesville',category:'Real Estate',published_at:'2026-11-20T05:00:00Z',source_name:'BHHS Blake',source_article_url:'https://www.bhhsblakerealtors.com/ny/205-deerfield-court-voorheesville-12186/pid-442327547',approved:true,summary});
+  expect(property).toMatchObject({category:'property',townSlug:'voorheesville',date:'2026-11-20T05:00:00Z',source:'BHHS Blake',summary,href:'https://www.bhhsblakerealtors.com/ny/205-deerfield-court-voorheesville-12186/pid-442327547'});
+  expect(filterRows(property ? [property] : [],'voorheesville','property','Deerfield')).toHaveLength(1);
+ });
+ it('retains Finance survey date, source and individual-offer qualifications',()=>{
+  const finance=storyRow({id:'6da78a76-2666-404c-be78-7d48e938f661',headline:'Freddie Mac weekly averages: 30-year 7.28%; 15-year 6.66%',town:null,category:'Finance',published_at:'2026-11-19T17:00:00Z',source_name:'Freddie Mac',source_article_url:'https://www.freddiemac.com/pmms',approved:true,summary:'National survey averages, not individual lender offers.'});
+  expect(finance).toMatchObject({category:'finance',date:'2026-11-19T17:00:00Z',town:'Regional',href:'https://www.freddiemac.com/pmms',summary:'National survey averages, not individual lender offers.'});
+ });
+ it('selects the latest dated Finance row independently of input order, with an empty fallback',()=>{
+  const older={...row,id:'finance:old',category:'finance' as const,date:'2026-11-12T17:00:00Z'};
+  const latest={...older,id:'finance:new',date:'2026-11-19T17:00:00Z',href:'https://www.freddiemac.com/pmms'};
+  expect(latestFinanceRow([older,row,latest])).toEqual(latest);
+  expect(latestFinanceRow([row])).toBeUndefined();
+ });
  it('includes only approved stories with dated publisher links',()=>{
   const s={id:'1',headline:'Town meeting',town:'Troy',source_name:'Publisher',source_article_url:row.href,published_at:row.date,approved:true,category:'news'};
   expect(storyRow(s)?.date).toBe('2026-11-20T12:00:00Z');

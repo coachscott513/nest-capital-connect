@@ -5,4 +5,4 @@
 - Scope the new feed theme to `.nest-feed` and its mounted body mode with compatible HSL tokens, so legacy pages/reports retain their themes.
 - The Nov 24 authorized compact feed replaces the old search-hero/four-pillar homepage mandate; preserve the north-star/design notes and legacy designs rather than deleting them.
 - Feed adapters accept edition configuration, exclude unpublished/import-preview inventory, use semantic source dates and queue polling arrivals; directory metadata never becomes a duplicate business search index.
-- Static fallback head metadata is Helmet-managed (`data-rh`) without canonical or schema; route metadata replaces it rather than duplicating identity across pages.
+- Preserve the intentional neutral `index.html` application shell; homepage-specific metadata belongs only to Index/SEOHead so legacy routes retain their fallback SEO behavior.

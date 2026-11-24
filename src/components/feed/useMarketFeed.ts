@@ -10,7 +10,7 @@ export function useMarketFeed(edition: FeedEdition) {
     queryFn: async () => {
       // These sources lack a region column. Never use them in another edition.
       const [stories,events,listings] = await Promise.all([
-        supabase.from('media_stories').select('id,headline,town,source_name,source_article_url,published_at,approved,category').eq('approved',true).order('published_at',{ascending:false}).limit(100),
+        supabase.from('media_stories').select('id,headline,town,source_name,source_article_url,published_at,approved,category,summary').eq('approved',true).order('published_at',{ascending:false}).limit(100),
         supabase.from('town_events').select('id,title,town_name,town_slug,starts_at,cta_url,venue_name,is_active').eq('is_active',true).order('starts_at',{ascending:true}).limit(100),
         supabase.from('listings').select('id,full_address,city,town_slug,list_date,list_price,public_listing_url,public_listing_url_approved,status,listing_agent,agency').eq('status','A').eq('public_listing_url_approved',true).order('list_date',{ascending:false}).limit(100),
       ]);
