@@ -212,3 +212,27 @@
 @media (max-width:359px) {
  .nest-feed.feed-large .feed-directory-search form {grid-template-columns:minmax(0,1fr);}
 }
+
+/* Structured listing events only; publisher Property stories keep their original layout. */
+.nest-feed .feed-listing-labels {display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px;}
+.nest-feed .feed-listing-badge {display:inline-block;padding:2px 5px;border-radius:3px;background:hsl(var(--muted));color:hsl(var(--muted-foreground));font-size:10px;font-weight:600;line-height:1.4;white-space:nowrap;}
+.nest-feed .feed-listing-badge.is-new {background:hsl(var(--feed-blue));color:hsl(var(--feed-on-blue));}
+.nest-feed .feed-town-pill {display:inline-block;padding:2px 6px;border-radius:4px;background:hsl(var(--feed-ice));color:hsl(var(--primary));font-weight:500;overflow-wrap:anywhere;}
+.nest-feed .feed-listing-town-mobile {display:none;}
+.nest-feed .feed-listing-row .feed-date time {display:block;}
+.nest-feed.feed-large .feed-listing-badge {font-size:12px;}
+@media (max-width:950px) {
+ .nest-feed .feed-listing-row .feed-date {grid-row:1;grid-column:1 / -1;max-width:none;padding:0;font-size:12px;}
+ .nest-feed .feed-listing-town-mobile {display:inline;font-size:12px;min-width:0;}
+ .nest-feed .feed-listing-row .feed-town {display:none;}
+ .nest-feed .feed-listing-row .feed-headline {grid-row:2;}
+ .nest-feed .feed-listing-row .feed-price {grid-row:3;grid-column:1;text-align:left;align-self:center;}
+ .nest-feed .feed-listing-row .feed-actions {grid-row:3;grid-column:2;}
+ .nest-feed.feed-large .feed-listing-row :is(.feed-date,.feed-listing-town-mobile) {font-size:15px;}
+}
+@media (max-width:600px) {
+ .nest-feed .feed-listing-row {grid-template-columns:minmax(0,1fr) auto;}
+ .nest-feed .feed-listing-row .feed-headline {grid-column:1 / -1;}
+ .nest-feed .feed-listing-row .feed-price {pointer-events:auto;}
+ .nest-feed.feed-large .feed-listing-row .feed-actions {align-self:center;}
+}

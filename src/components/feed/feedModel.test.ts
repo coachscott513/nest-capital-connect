@@ -1,5 +1,5 @@
 import { describe,it,expect } from 'vitest';
-import { FEED_EDITIONS, chronologicalRows, eventRow, filterRows, latestFinanceRow, listingRow, newRowCount, publicUrl, storyRow, type FeedRow } from './feedModel';
+import { FEED_EDITIONS, chronologicalRows, eventRow, feedTownOptions, filterRows, isNewListing, latestFinanceRow, listingRow, newRowCount, publicUrl, storyRow, type FeedRow, type ListingRecord } from './feedModel';
 const row:FeedRow={id:'story:1',category:'local_news',title:'Town meeting',town:'Troy',townSlug:'troy',date:'2026-11-20T12:00:00Z',dateLabel:'Published',source:'Publisher',href:'https://example.org/story'};
 describe('neutral feed source rules',()=>{
  it('maps verified Real Estate stories to Property and preserves Voorheesville, original date, summary and publisher link',()=>{
@@ -61,4 +61,74 @@ describe('neutral feed source rules',()=>{
   expect(FEED_EDITIONS.find(e=>e.slug==='capital-district')?.live).toBe(true);
  });
  it('rejects executable source URLs',()=>{expect(publicUrl('javascript:alert(1)')).toBeUndefined();});
+});
+
+const listing:ListingRecord={id:'structured',full_address:'98 Kent Street',city:'Albany',town_slug:'albany',list_date:'2026-11-23',list_price:340000,public_listing_url:'https://example.org/listing/98-kent',public_listing_url_approved:true,status:'A',listing_agent:'Sourced agent',agency:'Sourced brokerage'};
+const checkTime=new Date('2026-11-24T15:02:00Z');
+function actualListing(date: string) {
+ const result=listingRow({...listing,list_date:date},checkTime);
+ if (!result) throw new Error(`Expected a published listing on ${date}`);
+ return result;
+}
+describe('structured listing event rules',()=>{
+ it('marks today and the previous six Eastern calendar days new, but day seven listed',()=>{
+  expect(isNewListing(actualListing('2026-11-24'),checkTime)).toBe(true);
+  expect(isNewListing(actualListing('2026-11-18'),checkTime)).toBe(true);
+  expect(isNewListing(actualListing('2026-11-17'),checkTime)).toBe(false);
+ });
+ it('uses Eastern midnight rather than UTC or elapsed 24-hour windows',()=>{
+  const boundary=actualListing('2026-11-17');
+  expect(isNewListing(boundary,new Date('2026-11-24T04:59:59Z'))).toBe(true);
+  expect(isNewListing(boundary,new Date('2026-11-24T05:00:00Z'))).toBe(false);
+ });
+ it('counts calendar days across daylight saving changes',()=>{
+  const candidate={...actualListing('2026-11-01'),date:'2026-10-27'};
+  expect(isNewListing(candidate,new Date('2026-11-02T17:00:00Z'))).toBe(true);
+  expect(isNewListing({...candidate,date:'2026-10-26'},new Date('2026-11-02T17:00:00Z'))).toBe(false);
+ });
+ it('excludes future and invalid listing dates from publication and new badges',()=>{
+  expect(listingRow({...listing,list_date:'2026-11-25'},checkTime)).toBeNull();
+  expect(listingRow({...listing,list_date:'2026-02-30'},checkTime)).toBeNull();
+  expect(isNewListing({...actualListing('2026-11-23'),date:'2026-11-25'},checkTime)).toBe(false);
+ });
+ it('does not turn generic Real Estate headlines into actual listing events',()=>{
+  const story=storyRow({id:'news',headline:'98 Kent Street: NEW LISTING',category:'Real Estate',town:'Albany',source_name:'Publisher',source_article_url:listing.public_listing_url,published_at:'2026-11-23T05:00:00Z',approved:true});
+  expect(story?.category).toBe('property');
+  expect(story?.kind).toBeUndefined();
+  expect(story && isNewListing(story,checkTime)).toBe(false);
+ });
+ it('prefers a structured listing over its same full canonical URL/day story without changing the input snapshot',()=>{
+  const actual=actualListing('2026-11-23');
+  const story={...row,id:'story:matching',category:'property' as const,href:`${actual.href}/#photos`,date:'2026-11-23T05:00:00Z'};
+  const snapshot=[story,actual];
+  expect(chronologicalRows(snapshot).map(r=>r.id)).toEqual([actual.id]);
+  expect(snapshot).toEqual([story,actual]);
+ });
+ it('retains distinct property events on another day and other listings on the same publisher domain',()=>{
+  const actual=actualListing('2026-11-23');
+  const laterNews={...row,id:'story:later',category:'property' as const,href:actual.href,date:'2026-11-24T05:00:00Z'};
+  const otherListing={...actual,id:'listing:another',href:'https://example.org/listing/806-madison'};
+  const distinctQuery={...laterNews,id:'story:query',date:'2026-11-23T05:00:00Z',href:`${actual.href}?event=price-change`};
+  expect(chronologicalRows([actual,laterNews,otherListing,distinctQuery])).toHaveLength(4);
+ });
+ it('compares story publication days in Eastern time for duplicate handling',()=>{
+  const actual=actualListing('2026-11-23');
+  const late={...row,id:'story:late',category:'property' as const,href:actual.href,date:'2026-11-24T04:59:59Z'};
+  expect(chronologicalRows([actual,late])).toEqual([actual]);
+ });
+ it('retains actual price, agent/brokerage and native facts without crediting the URL host as agent',()=>{
+  expect(listingRow({...listing,bedrooms:4,bathrooms:2.5,sqft:2100},checkTime)).toMatchObject({kind:'listing',date:'2026-11-23',dateLabel:'Listed',price:340000,source:'Sourced agent · Sourced brokerage',facts:'4 beds · 2.5 baths · 2,100 sq ft',href:listing.public_listing_url});
+  expect(listingRow({...listing,listing_agent:null,agency:null},checkTime)?.source).toBe('Approved listing source');
+ });
+ it.each([['Delmar / Bethlehem','delmar'],['Scotia / Glenville','scotia-glenville'],['Burnt Hills / Ballston Lake','burnt-hills-ballston-lake']])('filters the combined canonical community %s using %s',(city,slug)=>{
+  const actual=listingRow({...listing,city,town_slug:null},checkTime);
+  expect(actual?.townSlug).toBe(slug);
+  expect(filterRows(actual ? [actual] : [],slug,'property','')).toHaveLength(1);
+ });
+ it('includes actual approved feed towns even when directory metadata lacks them, retaining directory labels',()=>{
+  const actual=actualListing('2026-11-23');
+  const options=feedTownOptions([{slug:'delmar',name:'Delmar / Bethlehem'}],[actual,{...actual,town:'Delmar',townSlug:'delmar'}]);
+  expect(options).toEqual([{slug:'albany',name:'Albany'},{slug:'delmar',name:'Delmar / Bethlehem'}]);
+  expect(options.some(t=>t.slug==='empty-town')).toBe(false);
+ });
 });

@@ -9,7 +9,7 @@ import { queryLengthBucket } from '@/lib/homeAnalytics';
 import { logEngagement } from '@/lib/engagement';
 import { businessTelHref, normalizePhoneDigits } from '@/lib/businessContact';
 import { PLATFORM_NAME, PHONE_RAW, PHONE_TEL, PHONE_DISPLAY, GENERAL_EMAIL_HREF } from '@/config/contact';
-import { FEED_EDITIONS, filterRows, latestFinanceRow, publicUrl, type FeedCategory, type FeedEdition, type FeedRow } from './feedModel';
+import { FEED_EDITIONS, feedTownOptions, filterRows, isNewListing, latestFinanceRow, publicUrl, type FeedCategory, type FeedEdition, type FeedRow } from './feedModel';
 import { useDirectoryRows, useFeedTowns, useMarketFeed } from './useMarketFeed';
 import './marketFeed.css';
 
@@ -30,11 +30,13 @@ function rowDate(row:FeedRow) {
 }
 const price = (value:number) => value.toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
 function FeedLine({row,saved,onSave}:{row:FeedRow;saved:boolean;onSave:(row:FeedRow)=>void}) {
-  return <div className="feed-row" role="row">
-    <div className="feed-date" role="cell">{rowDate(row)}<small>{row.date ? row.dateLabel : 'Not a news update'}{row.category === 'events' && row.date && ` · ${new Date(row.date).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})} ET`}</small></div>
-    <div className="feed-town" role="cell">{row.townSlug ? <Link to={`/towns/${row.townSlug}`}>{row.town}</Link> : row.town}</div>
+  const listing = row.kind === 'listing';
+  const townLink = row.townSlug ? <Link className={listing ? 'feed-town-pill' : undefined} to={`/towns/${row.townSlug}`}>{row.town}</Link> : row.town;
+  return <div className={`feed-row${listing ? ' feed-listing-row' : ''}`} role="row">
+    <div className="feed-date" role="cell">{listing ? <><div className="feed-listing-labels"><span className={`feed-listing-badge${isNewListing(row) ? ' is-new' : ''}`}>{isNewListing(row) ? 'NEW LISTING' : 'LISTED'}</span><span className="feed-listing-town-mobile">{townLink}</span></div><time dateTime={row.date}>Listed {rowDate(row)}</time></> : <>{rowDate(row)}<small>{row.date ? row.dateLabel : 'Not a news update'}{row.category === 'events' && row.date && ` · ${new Date(row.date).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})} ET`}</small></>}</div>
+    <div className="feed-town" role="cell">{townLink}</div>
     <div className="feed-type" role="cell">{row.date ? categories.find(c=>c.value===row.category)?.label : 'Business'}</div>
-    <div className="feed-headline" role="cell"><a href={row.href} onClick={()=>interaction('details_click',row.category)}>{row.title}</a><small>{row.source}</small>{row.summary && <details className="feed-row-summary"><summary aria-label={`Summary: ${row.title}`}>Summary</summary><p>{row.summary}</p></details>}</div>
+    <div className="feed-headline" role="cell"><a href={row.href} onClick={()=>interaction('details_click',row.category)}>{row.title}</a><small>{row.source}{row.facts && <> · {row.facts}</>}</small>{row.summary && <details className="feed-row-summary"><summary aria-label={`Summary: ${row.title}`}>Summary</summary><p>{row.summary}</p></details>}</div>
     <div className="feed-price" role="cell">{row.price !== undefined ? price(row.price) : '—'}</div>
     <div className="feed-actions" role="cell"><a href={row.href} onClick={()=>interaction('source_click',row.category)}>{row.date && row.category !== 'events' ? 'Source' : 'Details'}</a>{row.connect && <a href={row.connect} onClick={()=>interaction('connect_click',row.category)}>Connect</a>}<Button variant="ghost" size="icon" aria-label={`${saved ? 'Unsave' : 'Save'} ${row.title}`} aria-pressed={saved} onClick={()=>onSave(row)} title={saved ? 'Remove saved row' : 'Save on this device'}><Bookmark aria-hidden fill={saved ? 'currentColor' : 'none'}/></Button></div>
   </div>;
@@ -47,6 +49,7 @@ function MarketFeed({edition,onEditionChange}:{edition:FeedEdition;onEditionChan
   const [paused,setPaused]=useState(()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [page,setPage]=useState(0); const [directoryQuery,setDirectoryQuery]=useState(''); const [directoryTown,setDirectoryTown]=useState(''); const [directoryCategory,setDirectoryCategory]=useState('');
   const feed=useMarketFeed(edition); const towns=useFeedTowns(edition); const directory=useDirectoryRows(edition,town,page);
+  const townOptions=feedTownOptions(towns.data || [],savedOnly ? saved : feed.rows);
   useEffect(()=>{setTown('');setDirectoryTown('');setCategory('all');setQuery('');setPage(0);setSavedOnly(false);},[edition.slug]);
   useEffect(()=>{const media=window.matchMedia('(prefers-reduced-motion: reduce)'); const change=()=>{if(media.matches)setPaused(true);};media.addEventListener('change',change);return()=>media.removeEventListener('change',change);},[]);
   useEffect(()=>{document.body.classList.add('has-nest-feed');return()=>document.body.classList.remove('has-nest-feed');},[]);
@@ -70,7 +73,7 @@ function MarketFeed({edition,onEditionChange}:{edition:FeedEdition;onEditionChan
       <main id="feed-main">
         <div className="feed-title-row"><div><h1>{edition.live ? 'The local feed' : edition.label.replace(' — coming soon','')}</h1><p>{edition.live ? 'Market updates, local sources, and the business directory.' : 'Coming soon. Local sources are not connected for this edition.'}</p></div>{edition.live && <div className="feed-check"><span>{feed.checkedAt ? `Last checked ${new Date(feed.checkedAt).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})} ET` : 'Checking sources…'}</span><Button variant="ghost" size="icon" aria-label="Check for updates" disabled={feed.fetching} onClick={()=>void feed.refresh()}><RefreshCw/></Button></div>}</div>
         {!edition.live ? <div className="feed-empty"><p>No live feed, properties or directory rows are published for this edition.</p><Button onClick={()=>onEditionChange('capital-district')}>Return to Capital District, NY</Button></div> : <>
-        <div className="feed-filters"><label>Town<select aria-label="Feed town" value={town} onChange={e=>{setTown(e.target.value);setPage(0);interaction('town_select',undefined,e.target.value);}}><option value="">All towns</option>{(towns.data || []).map(t=><option key={t.slug} value={t.slug}>{t.name}</option>)}</select></label><label>Type<select aria-label="Feed category" value={category} onChange={e=>{setCategory(e.target.value as FeedCategory);interaction('category_select',e.target.value);}}>{categories.map(c=><option key={c.value} value={c.value}>{c.label}</option>)}</select></label><label className="feed-search">Search updates<span><Search aria-hidden/><input type="search" aria-label="Search updates" placeholder="Headline, town, or source" value={query} onChange={e=>setQuery(e.target.value)}/></span></label><Button variant="outline" aria-pressed={savedOnly} onClick={()=>setSavedOnly(!savedOnly)}><Bookmark/>Saved ({saved.length})</Button></div>
+        <div className="feed-filters"><label>Town<select aria-label="Feed town" value={town} onChange={e=>{setTown(e.target.value);setPage(0);interaction('town_select',undefined,e.target.value);}}><option value="">All towns</option>{townOptions.map(t=><option key={t.slug} value={t.slug}>{t.name}</option>)}</select></label><label>Type<select aria-label="Feed category" value={category} onChange={e=>{setCategory(e.target.value as FeedCategory);interaction('category_select',e.target.value);}}>{categories.map(c=><option key={c.value} value={c.value}>{c.label}</option>)}</select></label><label className="feed-search">Search updates<span><Search aria-hidden/><input type="search" aria-label="Search updates" placeholder="Headline, town, or source" value={query} onChange={e=>setQuery(e.target.value)}/></span></label><Button variant="outline" aria-pressed={savedOnly} onClick={()=>setSavedOnly(!savedOnly)}><Bookmark/>Saved ({saved.length})</Button></div>
         {towns.isError && <p role="status" className="feed-notice">Town options could not load. <Link to="/local">Open the directory</Link>.</p>}
         {savedOnly && <p className="feed-notice">Saved on this device only; not synced to an account. Saved details may have changed at the source.</p>}
         {feed.errors.length>0 && <p role="status" className="feed-notice">Could not check: {feed.errors.join(', ')}. Previously loaded updates remain visible.</p>}
