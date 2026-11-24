@@ -2,11 +2,13 @@
 - Keep the homepage directory search routed through the existing `/local` query contract; its server-filtered pagination owns business results, avoiding a duplicate or incomplete search index.
 - Build the neutral homepage in `MarketFeedHome` with scoped feed styles; retain `DirectoryEditorialHome` and its components for rollback, preserving legacy routes and SEO contracts.
 - Retain the original RealScout widget in an embedded homepage disclosure with its existing configuration and anchor; embedding suppresses the old headline to maintain one homepage H1.
-- Scope the new feed theme to `.nest-feed` and its mounted body mode with compatible HSL tokens, so legacy pages/reports retain their themes.
+- Keep dense-feed geometry scoped to `.nest-feed`; latest Nov 24 authorization extends shared palette only across public routes through route-scoped semantic tokens/legacy color compatibility, excluding private reports and management/auth surfaces. Retain earlier scoped-theme implementation/history without restoring its superseded public-color restriction.
 - The Nov 24 authorized compact feed replaces the old search-hero/four-pillar homepage mandate; preserve the north-star/design notes and legacy designs rather than deleting them.
 - Feed adapters accept edition configuration, exclude unpublished/import-preview inventory, use semantic source dates and queue polling arrivals; directory metadata never becomes a duplicate business search index.
 - Only the listings adapter assigns listing-event kind; use Eastern calendar days for publication/newness and full canonical source URL plus original event day for listing/story preference, so generic Property news never gains listing badges or loses distinct events.
 - Merge approved feed-town metadata into canonical directory town options without replacing source municipality labels, so structured listings remain filterable without a second directory index.
+- Separate equivalent town filter groups from canonical destinations resolved against the county directory; both feed and `/local` query original business slugs with IN, so Bethlehem/Delmar and Glenville/Scotia records remain intact and reachable through unchanged URL contracts.
+- Feed business identity uses supplied subcategory before category, never headlines; saved snapshots fall back to their existing metadata, preserving honest directory identity without invented dates.
 - Preserve the intentional neutral `index.html` application shell; homepage-specific metadata belongs only to Index/SEOHead so legacy routes retain their fallback SEO behavior.
 - Administrator roles require privileged provisioning, never first-user self-claim, to prevent account privilege escalation.
 - Protect business billing and placement fields with a database trigger that permits only administrators or the service role; owners retain ordinary profile updates without granting themselves paid benefits.

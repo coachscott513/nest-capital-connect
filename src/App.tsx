@@ -12,6 +12,7 @@ import FloatingLiveAgent from "@/components/FloatingLiveAgent";
 import PropertyToolsDock from "@/components/property/PropertyToolsDock";
 
 import RouteFade from "@/components/RouteFade";
+import PublicPalette from "@/components/PublicPalette";
 import GARouteTracker from "@/components/GARouteTracker";
 import { DelmarConfirmationProvider } from "@/contexts/DelmarConfirmationContext";
 import Index from "./pages/Index";
@@ -414,6 +415,7 @@ const App = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <PublicPalette />
               <ScrollToTop />
               <GARouteTracker />
               <PrerenderReadySignal />

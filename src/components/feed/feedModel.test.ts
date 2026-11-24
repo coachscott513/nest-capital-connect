@@ -1,5 +1,5 @@
 import { describe,it,expect } from 'vitest';
-import { FEED_EDITIONS, chronologicalRows, eventRow, feedTownOptions, filterRows, isNewListing, latestFinanceRow, listingRow, newRowCount, publicUrl, storyRow, type FeedRow, type ListingRecord } from './feedModel';
+import { FEED_EDITIONS, businessIdentity, equivalentFeedTowns, feedTownHref, rowIdentity, chronologicalRows, eventRow, feedTownOptions, filterRows, isNewListing, latestFinanceRow, listingRow, newRowCount, publicUrl, storyRow, type FeedRow, type ListingRecord } from './feedModel';
 const row:FeedRow={id:'story:1',category:'local_news',title:'Town meeting',town:'Troy',townSlug:'troy',date:'2026-11-20T12:00:00Z',dateLabel:'Published',source:'Publisher',href:'https://example.org/story'};
 describe('neutral feed source rules',()=>{
  it('maps verified Real Estate stories to Property and preserves Voorheesville, original date, summary and publisher link',()=>{
@@ -132,3 +132,30 @@ describe('structured listing event rules',()=>{
   expect(options.some(t=>t.slug==='empty-town')).toBe(false);
  });
 });
+
+ describe('precise identities and equivalent town groups',()=>{
+  it('uses factual subcategory before imported category without inventing announcements',()=>{
+   expect(businessIdentity('Home Service','Event venue')).toBe('Event venue');
+   expect(businessIdentity('Healthcare','Urgent care center')).toBe('Urgent care center');
+   expect(businessIdentity('Accountant',null)).toBe('Accountant');
+   expect(businessIdentity(null,null)).toBe('Local business');
+  });
+  it('keeps saved directory snapshots usable without an identity field',()=>{
+   expect(rowIdentity({...row,date:'',category:'business',source:'Florist'})).toBe('Florist');
+   expect(rowIdentity({...row,category:'property'})).toBe('Property update');
+   expect(rowIdentity({...row,category:'finance'})).toBe('Finance update');
+   expect(rowIdentity({...row,category:'events'})).toBe('Event');
+  });
+  it('queries original Bethlehem and Glenville slugs while matching structured listing groups',()=>{
+   expect(equivalentFeedTowns('delmar')).toEqual(['delmar','bethlehem','delmar-bethlehem']);
+   expect(equivalentFeedTowns('glenville')).toEqual(['glenville','scotia','scotia-glenville']);
+   expect(filterRows([{...row,townSlug:'bethlehem'}],'delmar','all','')).toHaveLength(1);
+   expect(filterRows([{...row,townSlug:'scotia-glenville'}],'glenville','all','')).toHaveLength(1);
+  });
+  it('uses real town routes without changing municipality labels or duplicating equivalent dropdowns',()=>{
+   expect(feedTownHref('glenville')).toBe('/towns/glenville');
+   expect(feedTownHref('scotia-glenville')).toBe('/towns/glenville');
+   expect(feedTownHref('bethlehem')).toBe('/towns/bethlehem');
+   expect(feedTownOptions([{slug:'delmar',name:'Delmar'},{slug:'bethlehem',name:'Bethlehem'},{slug:'glenville',name:'Glenville'},{slug:'scotia-glenville',name:'Scotia / Glenville'}],[])).toEqual([{slug:'delmar',name:'Delmar / Bethlehem'},{slug:'scotia-glenville',name:'Scotia / Glenville'}]);
+  });
+ });

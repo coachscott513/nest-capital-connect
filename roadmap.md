@@ -3,6 +3,7 @@
 - [x] Removed administrator self-promotion, protected business paid-placement/billing fields, restricted public investment assets to active records; disposable database role tests and real signed-in denial passed, 26 existing tests passed, build OK, selected statuses updated. Existing administrator retained; no other findings changed.
 
 # Neutral homepage feed — Nov 24
+- [x] Extend blue/light palette to public pages without layout changes; all-row linked towns, precise identities and equivalent-town filters verified against 17 real listings and original businesses; 34 tests and desktop/mobile light/dark/larger-text checks passed. No database mutations or publishing.
 - [x] Add structured listing-event badges/dates, native prices/credits/facts, canonical town options and same-event listing/story preference; 30 targeted tests pass and all desktop/mobile theme combinations checked with browser-only samples. Real three-story filters preserved; currently zero approved structured listing rows. No database changes or publishing.
 - [x] Apply focused blue/light visual polish; inspect desktop/390/320 light/dark/larger-text layouts and verify feed filters, saved rows, ticker pause/reduced motion and directory navigation. Preserve all security fixes; no publishing.
 - [x] Final review: exact original neutral shell restored; two real approved stories filter correctly with summaries and dated finance strip; truthful coverage and resource fallback verified; public QA prose removed; 26 tests and desktop/mobile real-data checks passed. No publishing.

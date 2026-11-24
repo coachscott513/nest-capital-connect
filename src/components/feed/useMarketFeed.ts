@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { chronologicalRows, eventRow, listingRow, storyRow, snapshotKey, newRowCount, type FeedEdition, type FeedRow } from './feedModel';
+import { chronologicalRows, equivalentFeedTowns, feedTownOptions, eventRow, listingRow, storyRow, snapshotKey, newRowCount, type FeedEdition, type FeedRow } from './feedModel';
 
 export function useMarketFeed(edition: FeedEdition) {
   const query = useQuery({
@@ -43,13 +43,13 @@ export function useFeedTowns(edition: FeedEdition) {
       for (const t of result.data || []) if (t.town_slug && t.town_slug !== 'unknown' && t.town_name) towns.set(t.town_slug,t.town_name);
       if ((result.data?.length || 0)<1000) break;
     }
-    return Array.from(towns,([slug,name])=>({slug,name})).sort((a,b)=>a.name.localeCompare(b.name));
+    return feedTownOptions(Array.from(towns,([slug,name])=>({slug,name})),[]);
   }});
 }
 export function useDirectoryRows(edition: FeedEdition,town: string,page: number) {
   return useQuery({queryKey:['feed-directory',edition.slug,town,page],enabled:edition.live && edition.slug === 'capital-district',staleTime:60000,queryFn:async()=>{
-    let query = supabase.from('businesses').select('id,name,slug,town_name,town_slug,category,website,phone,contact_status,source_url,source',{count:'exact'}).eq('region',edition.slug).eq('is_active',true);
-    if(town) query=query.eq('town_slug',town);
+    let query = supabase.from('businesses').select('id,name,slug,town_name,town_slug,category,subcategory,website,phone,contact_status,source_url,source',{count:'exact'}).eq('region',edition.slug).eq('is_active',true);
+    if(town) query=query.in('town_slug',equivalentFeedTowns(town));
     const {data,error,count} = await query.order('name').order('id').range(page*15,page*15+14);
     if(error) throw error;
     return {rows:data || [],count:count || 0};

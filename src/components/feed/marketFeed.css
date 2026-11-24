@@ -219,9 +219,16 @@
 .nest-feed .feed-listing-badge.is-new {background:hsl(var(--feed-blue));color:hsl(var(--feed-on-blue));}
 .nest-feed .feed-town-pill {display:inline-block;padding:2px 6px;border-radius:4px;background:hsl(var(--feed-ice));color:hsl(var(--primary));font-weight:500;overflow-wrap:anywhere;}
 .nest-feed .feed-listing-town-mobile {display:none;}
+.nest-feed .feed-mobile-identity {display:none;}
 .nest-feed .feed-listing-row .feed-date time {display:block;}
 .nest-feed.feed-large .feed-listing-badge {font-size:12px;}
 @media (max-width:950px) {
+ .nest-feed .feed-row:not(.feed-listing-row) .feed-town {grid-row:1;grid-column:1 / -1;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+ .nest-feed .feed-row:not(.feed-listing-row) .feed-headline {grid-row:2;grid-column:1 / -1;}
+ .nest-feed .feed-row:not(.feed-listing-row) .feed-price {display:none;}
+ .nest-feed .feed-mobile-identity {display:inline;color:hsl(var(--muted-foreground));font-size:11px;}
+ .nest-feed.feed-large .feed-mobile-identity {font-size:15px;}
+ .nest-feed .feed-row:not(.feed-listing-row) .feed-date small {display:none;}
  .nest-feed .feed-listing-row .feed-date {grid-row:1;grid-column:1 / -1;max-width:none;padding:0;font-size:12px;}
  .nest-feed .feed-listing-town-mobile {display:inline;font-size:12px;min-width:0;}
  .nest-feed .feed-listing-row .feed-town {display:none;}

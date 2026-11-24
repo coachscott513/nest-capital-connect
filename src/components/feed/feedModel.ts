@@ -1,3 +1,4 @@
+import { findTownInDirectory } from '@/data/capitalDistrictCounties';
 export type FeedCategory = 'all' | 'property' | 'sales' | 'price_changes' | 'business' | 'local_news' | 'finance' | 'events';
 export interface FeedEdition { slug: string; label: string; live: boolean; }
 export const FEED_EDITIONS: FeedEdition[] = [
@@ -9,13 +10,32 @@ export interface FeedRow {
   id: string; category: FeedCategory; title: string; town: string; townSlug: string;
   date: string; dateLabel: string; source: string; href: string; connect?: string;
   price?: number; dateOnly?: boolean; summary?: string; kind?: 'listing';
-  facts?: string;
+  facts?: string; identity?: string;
 }
 export const slugifyTown = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 // Directory contracts use these combined community names, not their literal slugs.
 export function canonicalFeedTown(value: string): string {
   const slug = slugifyTown(value);
-  return ({ 'delmar-bethlehem': 'delmar', 'scotia-glenville': 'scotia-glenville', 'burnt-hills-ballston-lake': 'burnt-hills-ballston-lake' } as Record<string,string>)[slug] || slug;
+  return ({ 'delmar-bethlehem': 'delmar', bethlehem:'delmar', glenville:'scotia-glenville', scotia:'scotia-glenville' } as Record<string,string>)[slug] || slug;
+}
+export function equivalentFeedTowns(value: string): string[] {
+  const slug=canonicalFeedTown(value);
+  if (slug==='delmar') return ['delmar','bethlehem','delmar-bethlehem'];
+  if (slug==='scotia-glenville') return ['glenville','scotia','scotia-glenville'];
+  return [slug];
+}
+export function feedTownHref(value: string): string {
+  const slug=slugifyTown(value);
+  const routeSlug=slug==='scotia-glenville' ? 'glenville' : slug==='delmar-bethlehem' ? 'delmar' : slug;
+  return `/towns/${findTownInDirectory(routeSlug)?.slug || routeSlug}`;
+}
+export function businessIdentity(category?: string | null, subcategory?: string | null): string {
+  return subcategory?.trim() || category?.trim() || 'Local business';
+}
+export function rowIdentity(row: FeedRow): string {
+  if (row.identity) return row.identity;
+  if (!row.date) return row.source || 'Local business';
+  return ({property:'Property update',finance:'Finance update',events:'Event',business:'Business update',local_news:'Local update',sales:'Sale update',price_changes:'Price change',all:'Local update'})[row.category];
 }
 export function feedTownOptions(towns: {slug:string;name:string}[], rows: FeedRow[]) {
   const options = new Map(towns.map(t => [canonicalFeedTown(t.slug), t.name]));
@@ -23,6 +43,8 @@ export function feedTownOptions(towns: {slug:string;name:string}[], rows: FeedRo
     const slug = canonicalFeedTown(row.townSlug);
     if (slug && !options.has(slug)) options.set(slug, row.town);
   }
+  if (options.has('delmar')) options.set('delmar','Delmar / Bethlehem');
+  if (options.has('scotia-glenville')) options.set('scotia-glenville','Scotia / Glenville');
   return Array.from(options, ([slug,name]) => ({slug,name})).sort((a,b) => a.name.localeCompare(b.name));
 }
 export function easternDay(now: Date): string {
@@ -71,7 +93,7 @@ export interface StoryRecord { id: string; headline: string; town: string | null
 export function storyRow(s: StoryRecord): FeedRow | null {
   const href = publicUrl(s.source_article_url);
   if (!s.approved || !validDate(s.published_at) || !href || !s.source_name || Date.parse(s.published_at) > Date.now()) return null;
-  return { id: `story:${s.id}`, category: /financ/i.test(s.category) ? 'finance' : /real\s*estate/i.test(s.category) ? 'property' : /business/i.test(s.category) ? 'business' : 'local_news', title: s.headline, town: s.town || 'Regional', townSlug: canonicalFeedTown(s.town || ''), date: s.published_at, dateLabel: 'Published', source: s.source_name, href, summary: s.summary || undefined };
+  return { id: `story:${s.id}`, identity:/financ/i.test(s.category) ? 'Finance update' : /real\s*estate/i.test(s.category) ? 'Property update' : /business/i.test(s.category) ? 'Business update' : 'Local update', category: /financ/i.test(s.category) ? 'finance' : /real\s*estate/i.test(s.category) ? 'property' : /business/i.test(s.category) ? 'business' : 'local_news', title: s.headline, town: s.town || 'Regional', townSlug: canonicalFeedTown(s.town || ''), date: s.published_at, dateLabel: 'Published', source: s.source_name, href, summary: s.summary || undefined };
 }
 export function latestFinanceRow(rows: FeedRow[]): FeedRow | undefined {
   return chronologicalRows(rows.filter(row => row.category === 'finance'))[0];
@@ -80,14 +102,14 @@ export interface EventRecord { id: string; title: string; town_name: string | nu
 export function eventRow(e: EventRecord): FeedRow | null {
   const href = publicUrl(e.cta_url);
   if (!e.is_active || !validDate(e.starts_at) || !href) return null;
-  return { id: `event:${e.id}`, category: 'events', title: e.title, town: e.town_name || e.town_slug, townSlug: e.town_slug, date: e.starts_at, dateLabel: 'Event starts', source: e.venue_name || 'Event organizer', href };
+  return { id: `event:${e.id}`, identity:'Event', category: 'events', title: e.title, town: e.town_name || e.town_slug, townSlug: e.town_slug, date: e.starts_at, dateLabel: 'Event starts', source: e.venue_name || 'Event organizer', href };
 }
 export interface ListingRecord { id: string; full_address: string | null; city: string; town_slug: string | null; list_date: string | null; list_price: number | null; public_listing_url: string | null; public_listing_url_approved: boolean; status: string; listing_agent: string | null; agency: string | null; bedrooms?: number | null; bathrooms?: number | null; sqft?: number | null; }
 export function listingRow(l: ListingRecord, now = new Date()): FeedRow | null {
   const href = publicUrl(l.public_listing_url);
   if (l.status !== 'A' || !l.public_listing_url_approved || !href || !l.list_date || !calendarDay(l.list_date) || l.list_date > easternDay(now)) return null;
   const facts = [[l.bedrooms,'beds'],[l.bathrooms,'baths'],[l.sqft,'sq ft']].filter(([value]) => typeof value === 'number' && Number.isFinite(value) && value > 0).map(([value,label]) => `${Number(value).toLocaleString('en-US')} ${label}`).join(' · ');
-  return { id: `listing:${l.id}`, kind:'listing', category: 'property', title: l.full_address || 'Property listing', town: l.city, townSlug: canonicalFeedTown(l.town_slug || l.city), date: l.list_date, dateOnly: true, dateLabel: 'Listed', source: [l.listing_agent,l.agency].filter(Boolean).join(' · ') || 'Approved listing source', href, price: l.list_price ?? undefined, facts: facts || undefined };
+  return { id: `listing:${l.id}`, identity:'Property listing', kind:'listing', category: 'property', title: l.full_address || 'Property listing', town: l.city, townSlug: canonicalFeedTown(l.town_slug || l.city), date: l.list_date, dateOnly: true, dateLabel: 'Listed', source: [l.listing_agent,l.agency].filter(Boolean).join(' · ') || 'Approved listing source', href, price: l.list_price ?? undefined, facts: facts || undefined };
 }
 export const snapshotKey = (rows: FeedRow[]) => JSON.stringify(rows);
 export function newRowCount(current: FeedRow[], next: FeedRow[]): number { const ids = new Set(current.map(r => r.id)); return next.filter(r => !ids.has(r.id)).length; }

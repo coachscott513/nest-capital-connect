@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Business, BusinessCategory } from "@/data/businesses";
+import { equivalentFeedTowns } from '@/components/feed/feedModel';
 
 /* ─────────────────────────────────────────────────────────────
    Paginated, server-filtered business directory.
@@ -251,7 +252,7 @@ export const usePaginatedBusinesses = (opts: PaginatedBusinessOptions) => {
       .select(CARD_COLUMNS, countMode ? { count: "exact" } : undefined)
       .eq("is_active", true);
 
-    if (townSlug && townSlug !== "capital-district") q = q.eq("town_slug", townSlug);
+    if (townSlug && townSlug !== "capital-district") q = q.in("town_slug", equivalentFeedTowns(townSlug));
 
     if (category) {
       const safe = escapeIlike(category);

@@ -1,0 +1,95 @@
+/* Nov 24 public palette authorization. Color-only compatibility for retained layouts.
+   Management/auth and private report routes do not mount this mode. Media is untouched. */
+html.nest-public-palette {
+ --background:0 0% 100%; --foreground:222 27% 12%;
+ --card:0 0% 100%; --card-foreground:222 27% 12%;
+ --popover:0 0% 100%; --popover-foreground:222 27% 12%;
+ --primary:214 91% 44%; --primary-foreground:0 0% 100%;
+ --secondary:214 100% 96%; --secondary-foreground:222 27% 12%;
+ --muted:220 43% 97%; --muted-foreground:220 12% 39%;
+ --accent:214 100% 96%; --accent-foreground:216 85% 34%;
+ --border:220 16% 87%; --input:220 16% 78%; --ring:214 91% 44%;
+ --surface:220 43% 97%; --text-muted:220 12% 39%;
+ --surface-canvas:0 0% 100%; --surface-raised:214 100% 96%; --surface-deep:220 43% 97%;
+ --surface-card:0 0% 100%; --surface-card-2:220 43% 97%;
+ --text-soft:220 12% 39%; --text-quiet:220 12% 39%; --text-bright:222 27% 12%;
+ --glass-bg:0 0% 100% / .92; --glass-border:220 16% 87%; --glass-shadow:222 27% 12% / .08;
+ --teal-glow:214 91% 44%; --teal-glow-muted:214 100% 96%;
+ --nest-paper:0 0% 100%; --nest-neutral:220 43% 97%; --nest-surface:0 0% 100%;
+ --nest-ink:222 27% 12%; --nest-slate:220 12% 39%; --nest-teal:214 91% 44%;
+ --nest-teal-tint:214 100% 96%; --nest-graphite:214 100% 96%; --nest-border:220 16% 87%;
+ --public-blue:214 91% 44%; --public-on-blue:0 0% 100%; --public-ice:214 100% 96%;
+ --public-ink:222 27% 12%; --public-shadow:222 27% 12%;
+ color-scheme:light;
+}
+html.nest-public-palette.nest-public-dark {
+ --background:222 24% 9%; --foreground:220 20% 94%;
+ --card:222 21% 13%; --card-foreground:220 20% 94%;
+ --popover:222 21% 13%; --popover-foreground:220 20% 94%;
+ --primary:211 100% 74%; --primary-foreground:222 24% 9%;
+ --secondary:217 36% 16%; --secondary-foreground:220 20% 94%;
+ --muted:222 21% 13%; --muted-foreground:220 12% 72%;
+ --accent:216 32% 20%; --accent-foreground:211 100% 82%;
+ --border:220 16% 25%; --input:220 16% 37%; --ring:211 100% 74%;
+ --surface:222 21% 13%; --text-muted:220 12% 72%;
+ --surface-canvas:222 24% 9%; --surface-raised:217 36% 16%; --surface-deep:222 21% 13%;
+ --surface-card:222 21% 13%; --surface-card-2:217 36% 16%;
+ --text-soft:220 12% 72%; --text-quiet:220 12% 72%; --text-bright:220 20% 94%;
+ --nest-paper:222 24% 9%; --nest-neutral:222 21% 13%; --nest-surface:222 21% 13%;
+ --nest-ink:220 20% 94%; --nest-slate:220 12% 72%; --nest-teal:211 100% 74%;
+ --nest-teal-tint:217 36% 16%; --nest-graphite:217 36% 16%; --nest-border:220 16% 25%;
+ --public-blue:215 78% 30%; --public-ice:217 36% 16%; --public-ink:220 20% 94%;
+ color-scheme:dark;
+}
+.nest-public-palette :is(.nav-frost,.nav-transparent,.dropdown-panel,.glass-nav) {
+ background:hsl(var(--background)/.94) !important; color:hsl(var(--foreground)) !important;
+ border-color:hsl(var(--border)) !important; box-shadow:0 2px 12px hsl(var(--public-shadow)/.06);
+}
+.nest-public-palette :is(.btn-primary-apple,.btn-dark-cta) {
+ background:hsl(var(--public-blue)) !important; color:hsl(var(--public-on-blue)) !important;
+ border-color:hsl(var(--public-blue)) !important; box-shadow:0 4px 12px hsl(var(--public-shadow)/.08);
+}
+.nest-public-palette :is(.btn-secondary-apple,.btn-secondary-apple-dark,.btn-dark-teal-outline) {
+ color:hsl(var(--primary)) !important; background:hsl(var(--background)) !important; border-color:hsl(var(--border)) !important;
+}
+.nest-public-palette :is(.body-apple,.body-apple-dark) {color:hsl(var(--muted-foreground));}
+.nest-public-palette :is(input,select,textarea):not(.nest-feed *) {
+ background-color:hsl(var(--card)) !important; color:hsl(var(--foreground)) !important; border-color:hsl(var(--input)) !important;
+}
+.nest-public-palette :is(input,textarea)::placeholder {color:hsl(var(--muted-foreground)) !important;}
+.nest-public-palette :is(input,select,textarea):focus-visible {outline-color:hsl(var(--ring)) !important;}
+.nest-public-palette nav[aria-label="Property tools"]>div {
+ background:hsl(var(--background)/.96) !important; border-color:hsl(var(--border)) !important;
+ box-shadow:0 4px 20px hsl(var(--public-shadow)/.12) !important;
+}
+.nest-public-palette nav[aria-label="Property tools"] :is(a,button) {color:hsl(var(--foreground)) !important;}
+.nest-public-palette nav[aria-label="Property tools"] svg {color:hsl(var(--primary)) !important;}
+.nest-public-palette nav[aria-label="Property tools"] [aria-current="page"] {background:hsl(var(--public-ice)) !important;}
+/* Color compatibility for retained legacy utilities; never changes geometry. */
+.nest-public-palette :is([class*="bg-[#0"],[class*="bg-[#1"],[class*="bg-slate-9"],[class*="bg-gray-9"],[class*="bg-charcoal"],[class*="bg-navy"]):not(.nest-feed *):not([class*="absolute"]) {background-color:hsl(var(--public-ice)) !important;}
+.nest-public-palette :is([class*="bg-white"],[class*="bg-[#F"],[class*="bg-[#f"],[class*="bg-cream"]):not(.nest-feed *):not([class*="absolute"]) {background-color:hsl(var(--card)) !important;}
+.nest-public-palette :is([class*="text-white"],[class*="text-[#1d1d1f]"],[class*="text-[#0"],[class*="text-black"],[class*="text-slate-9"]):not(.nest-feed *) {color:hsl(var(--foreground)) !important;}
+.nest-public-palette :is([class*="text-white/"],[class*="text-[#1d1d1f]/"],[style*="color: rgba(14, 15, 18"],[style*="color: rgba(255, 255, 255"]):not(.nest-feed *) {color:hsl(var(--muted-foreground)) !important;}
+.nest-public-palette :is([class*="text-[#5eead4"],[class*="text-[#5EEAD4"],[class*="text-[#0d6e66"],[class*="text-[#0D6E66"],[class*="text-teal"],[class*="text-emerald"],[style*="color: rgb(13, 110, 102)"],[style*="color: rgb(94, 234, 212)"]):not(.nest-feed *) {color:hsl(var(--primary)) !important;}
+.nest-public-palette :is([class*="border-white"],[class*="border-black"],[class*="border-[#2D3748]"]):not(.nest-feed *) {border-color:hsl(var(--border)) !important;}
+.nest-public-palette :is([style*="background: rgb(246, 245, 242)"],[style*="background: rgb(245, 239, 228)"],[style*="background-color: rgb(11, 15, 25)"]):not(.nest-feed *) {background:hsl(var(--public-ice)) !important;}
+.nest-public-palette :is([class*="bg-[#0d6e66"],[class*="bg-[#0D6E66"],[class*="bg-[#5eead4"],[class*="bg-[#5EEAD4"],[class*="bg-teal"],[style*="background-color: rgb(13, 110, 102)"],[style*="background: rgb(13, 110, 102)"]):not(.nest-feed *) {background:hsl(var(--public-blue)) !important;color:hsl(var(--public-on-blue)) !important;}
+.nest-public-palette :is(a,button)[class*="bg-primary"],.nest-public-palette :is(a,button)[style*="background-color: rgb(13, 110, 102)"] {color:hsl(var(--public-on-blue)) !important;}
+.nest-public-palette [style*="background: rgba(94, 234, 212"],.nest-public-palette [style*="background: rgba(13, 110, 102"] {background:hsl(var(--public-ice)) !important;}
+.nest-public-palette section.bg-background:nth-of-type(even):not(.nest-feed *) {background-color:hsl(var(--muted)) !important;}
+/* Keep original image captions readable on unchanged media and scrims. */
+.nest-public-palette :is(.relative:has(>img),.relative:has(>picture),.relative:has(>video)) :is([class*="text-white"],[class*="text-white/"]) {color:hsl(var(--public-on-blue)) !important;}
+.nest-public-palette :is([style*="color: rgb(14, 15, 18)"],[style*="color: rgb(20, 24, 31)"],[style*="color: rgb(29, 29, 31)"]):not(.nest-feed *) {color:hsl(var(--foreground)) !important;}
+.nest-public-palette :is([style*="background-color: rgb(14, 15, 18)"],[style*="background-color: rgba(10, 10, 10"],[style*="background: rgb(246, 245, 242)"]):not(.nest-feed *) {background:hsl(var(--background)/.96) !important; border-color:hsl(var(--border)) !important;}
+.nest-public-palette .search-module {background:hsl(var(--public-blue));border-color:hsl(var(--public-blue));box-shadow:0 4px 14px hsl(var(--public-shadow)/.08);}
+.nest-public-palette .search-input-surface {background:hsl(var(--card));border-color:hsl(var(--input));box-shadow:none;}
+.nest-public-palette :is(.surface-elevated,.surface-elevated-hover) {background:hsl(var(--card));border-color:hsl(var(--border));box-shadow:0 2px 8px hsl(var(--public-shadow)/.06);}
+.nest-public-palette :is(a,button)[style*="background: rgb(13, 110, 102)"] {box-shadow:0 4px 12px hsl(var(--public-shadow)/.08) !important;}
+.nest-public-palette .public-town-pill {color:hsl(var(--primary)) !important;background:hsl(var(--public-ice));border-radius:4px;display:inline-block;}
+.nest-public-palette .public-town-pill:focus-visible {outline:2px solid hsl(var(--ring));outline-offset:2px;}
+.nest-public-palette [style*="background: rgb(30, 34, 48)"] {background:hsl(var(--card)) !important;}
+.nest-public-palette [style*="background: radial-gradient"]:not(section:has(img) *):not(.nest-feed *) {background:linear-gradient(180deg,hsl(var(--public-ice)/.8),hsl(var(--background))) !important;}
+.nest-public-palette :is(a,button)[class*="bg-[#0"],.nest-public-palette :is(a,button)[class*="bg-[#5eead4"] {background:hsl(var(--public-blue)) !important;color:hsl(var(--public-on-blue)) !important;}
+.nest-public-palette :is(a,button)[class*="bg-[#0d6e66"]:not(.nest-feed *):not([class*="absolute"]) {background:hsl(var(--public-blue)) !important;color:hsl(var(--public-on-blue)) !important;}
+.nest-public-palette [class*="bg-[#c9a449"]:not(.nest-feed *) {background:hsl(var(--public-blue)) !important;color:hsl(var(--public-on-blue)) !important;}
+.nest-public-palette section:has(>div.absolute>img)>div.relative :is(h1,h2,p)[class*="text-white"] {color:hsl(var(--public-on-blue)) !important;}

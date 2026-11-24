@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { feedTownHref } from '@/components/feed/feedModel';
 import { normalizeLocalSearch } from "@/lib/redundantGeoSearch";
 import {
   Search,
@@ -558,7 +559,7 @@ const ContactPreview = ({ b, claimed }: { b: Business; claimed: boolean }) => (
       {(b.townLabel || b.address) && (
         <span className="inline-flex items-center gap-2 text-[11px] text-white/55">
           <MapPin className="w-3 h-3 text-[#5eead4]/80 shrink-0" />
-          {b.townLabel ?? "Capital District"}
+          {b.town ? <Link onClick={e=>e.stopPropagation()} className="public-town-pill" to={feedTownHref(b.townLabel || b.town)}>{b.townLabel || b.town}</Link> : 'Capital District'}
         </span>
       )}
     </div>
@@ -827,7 +828,7 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
         {showImageHeader && (
           <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#5eead4]">
             {b.category}
-            {b.townLabel && <span className="text-white/35"> · {b.townLabel}</span>}
+            {b.townLabel && <span className="text-white/35"> · <Link onClick={e=>e.stopPropagation()} className="public-town-pill" to={feedTownHref(b.townLabel)}>{b.townLabel}</Link></span>}
           </p>
         )}
         <h3 className={`${showImageHeader ? "mt-1.5" : "mt-2"} text-lg font-semibold tracking-tight text-white leading-snug`}>
@@ -835,7 +836,7 @@ const BusinessCard = ({ b, onOpen }: { b: Business; onOpen: () => void }) => {
         </h3>
         {!showImageHeader && b.townLabel && (
           <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-white/45 font-medium">
-            {b.townLabel}
+            <Link onClick={e=>e.stopPropagation()} className="public-town-pill" to={feedTownHref(b.townLabel)}>{b.townLabel}</Link>
           </p>
         )}
         {b.tagline && (
