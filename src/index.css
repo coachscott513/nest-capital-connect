@@ -1056,3 +1056,25 @@ realscout-advanced-search {
     body.has-property-dock { padding-bottom: 96px; }
   }
 }
+
+/* Nov 24 neutral feed: homepage-scoped semantic tokens, no global retheme. */
+.nest-feed {
+  --background: 0 0% 100%; --foreground: 222 27% 12%;
+  --primary: 216 85% 40%; --primary-foreground: 0 0% 100%;
+  --muted: 220 20% 97%; --muted-foreground: 220 12% 39%;
+  --accent: 215 70% 96%; --accent-foreground: 216 85% 34%;
+  --border: 220 16% 87%; --input: 220 16% 78%; --ring: 216 85% 40%;
+  --feed-header: 0 0% 100%;
+}
+.nest-feed.feed-dark {
+  --background: 222 24% 9%; --foreground: 220 20% 94%;
+  --muted: 222 21% 13%; --muted-foreground: 220 12% 72%;
+  --border: 220 16% 25%; --input: 220 16% 37%;
+  --primary: 211 100% 74%; --primary-foreground: 222 24% 9%;
+  --accent: 216 32% 20%; --accent-foreground: 211 100% 82%;
+  --ring: 211 100% 74%; --feed-header: 222 24% 9%;
+}
+body.has-nest-feed {
+  --feed-page-ground: 0 0% 100%;
+  background: hsl(var(--feed-page-ground)); padding-bottom: 0;
+}

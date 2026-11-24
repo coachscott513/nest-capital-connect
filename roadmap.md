@@ -1,4 +1,8 @@
-# Phase One redesign
+# Neutral homepage feed — Nov 24
+- [x] Implement edition-aware factual feed, neutral navigation, accessible settings, saved rows, source links and server-filtered contractor search.
+- [x] Verify real data/empty states, polling queue logic, desktop/mobile, routes, metadata/tracking preservation; preview only. Source coverage limits recorded in docs/nest-market-feed-qa.md.
+
+## Prior work (retained)
 - [x] Add homepage-only staged text entry and a linked animated service map inside Business Services; retain four pillars/search.
 - [x] Verify timings/fallbacks, all heroes/map at 1440/390/320, real search, unit tests and compilation; save and inspect screenshots and QA note, no publish.
 - [x] Restore one search hero plus four independent full-width pillars; remove rejected three-card/combined-tab replacement, preserve all messages and contracts.

@@ -1,4 +1,11 @@
-# Homepage style reference
+# Homepage north-star / style reference
+
+## Current authorization — Nov 24, 2026
+The owner approved a neutral, compact live-market/news homepage, replacing the search hero + four large pillar heroes. The previous homepage-specific mandates below are historical, not requirements for the current feed. Keep this north-star file and all previous hero components available for rollback; do not restore either rejected broad redesign.
+
+Current presentation: Capital District Nest umbrella, separate edition (Capital District, NY), white/soft-gray/blue/near-black, restrained Geist typography, small sticky navigation and dense sourced rows. Optional dark and larger-text settings are scoped to the homepage. No giant hero, promotional card grid, fabricated live feed or personal-agent ownership CTA. Directory search continues through `/local`; existing SEO/Google integrations, profiles, town routes and RealScout are preserved. Future unsourced editions are coming soon, never copies of Capital District data. New rows wait for an explicit update action; business rows are evergreen directory profiles, not news. Preview only.
+
+## Historical photographic homepage reference (retained, superseded)
 
 Authoritative source: Coach One Media project `4fe12107-8e60-4c25-b7ce-97a5bf2ff25b`, commit `7f72f70f03a918243bc811754c38d21e13c60a6d`, `docs/brand.md`, `src/styles.css`, `src/routes/__root.tsx` (reference supplied by founder).
 

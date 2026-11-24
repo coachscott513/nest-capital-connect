@@ -387,6 +387,14 @@ const NotFoundOrLegacyTown = () => {
   return <NotFound />;
 };
 
+// The neutral feed has no brokerage-owned floating CTA. Other routes retain
+// the existing single route-aware contact system and its analytics contracts.
+const RouteContactTools = () => {
+  const { pathname } = useLocation();
+  if (pathname === "/") return null;
+  return <><MobileCtaBar /><PropertyToolsDock /><FloatingLiveAgent /></>;
+};
+
 const App = () => {
 
   return (
@@ -720,12 +728,7 @@ const App = () => {
             <Route path="*" element={<NotFoundOrLegacyTown />} />
           </Routes>
           </RouteFade>
-          {/* Global Mobile CTA Bar - shows on mobile only (route-aware: Buyer tools / Ask Local) */}
-          <MobileCtaBar />
-          {/* Persistent Property Tools dock — buyer/property routes only */}
-          <PropertyToolsDock />
-          {/* Global Floating Live Agent — local/business routes (desktop). SINGLE source of truth. */}
-          <FloatingLiveAgent />
+          <RouteContactTools />
 
         </BrowserRouter>
         </QueryClientProvider>
