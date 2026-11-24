@@ -6,3 +6,6 @@
 - The Nov 24 authorized compact feed replaces the old search-hero/four-pillar homepage mandate; preserve the north-star/design notes and legacy designs rather than deleting them.
 - Feed adapters accept edition configuration, exclude unpublished/import-preview inventory, use semantic source dates and queue polling arrivals; directory metadata never becomes a duplicate business search index.
 - Preserve the intentional neutral `index.html` application shell; homepage-specific metadata belongs only to Index/SEOHead so legacy routes retain their fallback SEO behavior.
+- Administrator roles require privileged provisioning, never first-user self-claim, to prevent account privilege escalation.
+- Protect business billing and placement fields with a database trigger that permits only administrators or the service role; owners retain ordinary profile updates without granting themselves paid benefits.
+- Public investment assets must satisfy `is_active = true` in database policies, matching the existing published-deal contract.

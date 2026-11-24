@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1795528810829,
+      "tag": "0000_secure_selected_roles_business_billing_and_active_assets",
+      "breakpoints": true
+    }
+  ]
+}

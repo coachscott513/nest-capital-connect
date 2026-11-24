@@ -1,3 +1,7 @@
+# Selected security fixes — Nov 24
+- [ ] Protect guide/report emails; waiting for approval to require verified sign-in on the existing public forms.
+- [ ] Remove administrator self-promotion, protect business paid-placement fields, and restrict public investment assets to active records; validate selected findings only.
+
 # Neutral homepage feed — Nov 24
 - [x] Final review: exact original neutral shell restored; two real approved stories filter correctly with summaries and dated finance strip; truthful coverage and resource fallback verified; public QA prose removed; 26 tests and desktop/mobile real-data checks passed. No publishing.
 - [x] Implement edition-aware factual feed, neutral navigation, accessible settings, saved rows, source links and server-filtered contractor search.
