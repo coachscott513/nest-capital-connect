@@ -12,6 +12,7 @@ import { FEED_EDITIONS, feedTownOptions, latestFinanceRow, publicUrl, type FeedE
 import { useFeedTowns, useMarketFeed } from './useMarketFeed';
 import { rowDate } from './FeedLine';
 import FeedBrowse from './FeedBrowse';
+import PublicNavigation from '@/components/PublicNavigation';
 import './marketFeed.css';
 
 function stored<T>(key:string,fallback:T):T { try { const value=localStorage.getItem(key); return value ? JSON.parse(value) : fallback; } catch { return fallback; } }
@@ -37,11 +38,9 @@ function MarketFeed({edition,onEditionChange}:{edition:FeedEdition;onEditionChan
   const submit=(event:FormEvent)=>{event.preventDefault();logEngagement('regional_search_submit',{}, {source_location:'homepage_feed',intent_type:'contractor_directory_search',query_length_bucket:queryLengthBucket(directoryQuery),category_slug:directoryCategory}, {town_slug:directoryTown || null});navigate(homeDirectorySearch(directoryQuery,directoryTown,directoryCategory));};
   return <div className={`nest-feed${dark ? ' feed-dark' : ''}${large ? ' feed-large' : ''}`}>
     <a className="feed-skip" href="#feed-main">Skip to feed</a>
-    <header className="feed-header"><div className="feed-header-inner">
-      <Link to="/" className="feed-brand"><span className="feed-brand-mark" aria-hidden>N</span><span>Capital District Nest</span></Link>
-      <nav aria-label="Main navigation"><a href="#feed-main">Live feed</a><Link to="/communities">Towns</Link><Link to="/homes">Real estate</Link><Link to="/local">Business directory</Link><Link to="/finances">Finance</Link><Link to="/home-services">Contractors</Link></nav>
+    <PublicNavigation settings={
       <div className="feed-settings"><Button variant="ghost" size="icon" title="Dark mode" aria-label="Dark mode" aria-pressed={dark} onClick={()=>{setDark(!dark);persist('nest-feed-dark',!dark);}}>{dark ? <Sun/> : <Moon/>}</Button><Button variant="ghost" size="icon" title="Larger text" aria-label="Larger text" aria-pressed={large} onClick={()=>{setLarge(!large);persist('nest-feed-large',!large);}}><Type/></Button></div>
-    </div></header>
+    }/>
     <div className="feed-shell">
       <div className="feed-edition"><label>Edition <select aria-label="Market edition" value={edition.slug} onChange={e=>onEditionChange(e.target.value)}>{FEED_EDITIONS.map(e=><option key={e.slug} value={e.slug}>{e.label}</option>)}</select></label><span>{new Date().toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric',year:'numeric',timeZone:'America/New_York'})}</span></div>
       {edition.live && <><div className={`feed-ticker${paused ? ' is-paused' : ''}`}><span className="feed-ticker-label">{ticker.length ? 'Headlines' : 'Regional desk'}</span><div className="feed-ticker-window"><div className="feed-ticker-track">{[0,1].map(copy=><span key={copy} aria-hidden={copy===1 ? true : undefined}>{ticker.length ? ticker.map(r=><a key={r.id} href={r.href} tabIndex={copy===1 ? -1 : undefined} onClick={()=>interaction('source_click',r.category)}>{r.title}<i aria-hidden> / </i></a>) : <><Link tabIndex={copy===1 ? -1 : undefined} to="/local">Local business directory</Link><i aria-hidden> / </i><Link tabIndex={copy===1 ? -1 : undefined} to="/weekly">Events & stories</Link><i aria-hidden> / </i><Link tabIndex={copy===1 ? -1 : undefined} to="/homes">Real estate resources</Link><i aria-hidden> / </i></>}</span>)}</div></div><Button variant="ghost" size="icon" aria-label={paused ? 'Play ticker' : 'Pause ticker'} onClick={()=>setPaused(!paused)}>{paused ? <Play/> : <Pause/>}</Button></div>
