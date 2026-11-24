@@ -3,6 +3,7 @@
 - [x] Removed administrator self-promotion, protected business paid-placement/billing fields, restricted public investment assets to active records; disposable database role tests and real signed-in denial passed, 26 existing tests passed, build OK, selected statuses updated. Existing administrator retained; no other findings changed.
 
 # Neutral homepage feed — Nov 24
+- [x] Apply focused blue/light visual polish; inspect desktop/390/320 light/dark/larger-text layouts and verify feed filters, saved rows, ticker pause/reduced motion and directory navigation. Preserve all security fixes; no publishing.
 - [x] Final review: exact original neutral shell restored; two real approved stories filter correctly with summaries and dated finance strip; truthful coverage and resource fallback verified; public QA prose removed; 26 tests and desktop/mobile real-data checks passed. No publishing.
 - [x] Implement edition-aware factual feed, neutral navigation, accessible settings, saved rows, source links and server-filtered contractor search.
 - [x] Verify real data/empty states, polling queue logic, desktop/mobile, routes, metadata/tracking preservation; preview only. Source coverage limits recorded in docs/nest-market-feed-qa.md.
