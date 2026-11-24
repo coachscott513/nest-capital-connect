@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { businessDirectoryQuery } from '@/hooks/usePaginatedBusinesses';
+import type { Database } from '@/integrations/supabase/types';
 import { supabase } from '@/integrations/supabase/client';
-import { chronologicalRows, equivalentFeedTowns, feedTownOptions, eventRow, listingRow, storyRow, snapshotKey, newRowCount, type FeedEdition, type FeedRow } from './feedModel';
+import { chronologicalRows, easternDay, feedTownOptions, eventRow, listingRow, storyRow, snapshotKey, newRowCount, type FeedEdition, type FeedRow } from './feedModel';
 
 export function useMarketFeed(edition: FeedEdition) {
   const query = useQuery({
@@ -43,14 +45,27 @@ export function useFeedTowns(edition: FeedEdition) {
       for (const t of result.data || []) if (t.town_slug && t.town_slug !== 'unknown' && t.town_name) towns.set(t.town_slug,t.town_name);
       if ((result.data?.length || 0)<1000) break;
     }
+    for (let offset=0;;offset+=1000) {
+      const result=await supabase.from('listings').select('town_slug,city').eq('status','A').eq('public_listing_url_approved',true)
+        .lte('list_date',easternDay(new Date()))
+        .or('public_listing_url.like.https://%,public_listing_url.like.http://%').order('id').range(offset,offset+999);
+      if(result.error) throw result.error;
+      for(const t of result.data || []) if(t.town_slug && t.city && !towns.has(t.town_slug)) towns.set(t.town_slug,t.city);
+      if((result.data?.length || 0)<1000) break;
+    }
+    for (let offset=0;;offset+=1000) {
+      const result=await supabase.from('rentals').select('town_slug').eq('is_active',true).order('id').range(offset,offset+999);
+      if(result.error) throw result.error;
+      for(const t of result.data || []) if(t.town_slug && t.town_slug!=='unknown' && !towns.has(t.town_slug)) towns.set(t.town_slug,t.town_slug.replace(/\b\w/g,c=>c.toUpperCase()).replace(/-/g,' '));
+      if((result.data?.length || 0)<1000) break;
+    }
     return feedTownOptions(Array.from(towns,([slug,name])=>({slug,name})),[]);
   }});
 }
-export function useDirectoryRows(edition: FeedEdition,town: string,page: number) {
-  return useQuery({queryKey:['feed-directory',edition.slug,town,page],enabled:edition.live && edition.slug === 'capital-district',staleTime:60000,queryFn:async()=>{
-    let query = supabase.from('businesses').select('id,name,slug,town_name,town_slug,category,subcategory,website,phone,contact_status,source_url,source',{count:'exact'}).eq('region',edition.slug).eq('is_active',true);
-    if(town) query=query.in('town_slug',equivalentFeedTowns(town));
-    const {data,error,count} = await query.order('name').order('id').range(page*15,page*15+14);
+export function useDirectoryRows(edition: FeedEdition,town: string,page: number,search = '',enabled = true) {
+  return useQuery({queryKey:['feed-directory',edition.slug,town,page,search],enabled:enabled && edition.live && edition.slug === 'capital-district',staleTime:60000,queryFn:async()=>{
+    const query = businessDirectoryQuery({townSlug:town,search},'id,name,slug,town_name,town_slug,category,subcategory,website,phone,contact_status,source_url,source',true,edition.slug,true);
+    const {data,error,count} = await query.range(page*15,page*15+14).returns<Pick<Database['public']['Tables']['businesses']['Row'],'id'|'name'|'slug'|'town_name'|'town_slug'|'category'|'subcategory'|'website'|'phone'|'contact_status'|'source_url'|'source'>[]>();
     if(error) throw error;
     return {rows:data || [],count:count || 0};
   }});

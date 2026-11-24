@@ -1,5 +1,5 @@
 # Architecture rules
-- Keep the homepage directory search routed through the existing `/local` query contract; its server-filtered pagination owns business results, avoiding a duplicate or incomplete search index.
+- Homepage browsing reuses the directory's shared server query builder for keyword synonyms and equivalent towns, with exact counts and alphabetical range pagination; preserve `/local` query contracts and never create a duplicate search index.
 - Build the neutral homepage in `MarketFeedHome` with scoped feed styles; retain `DirectoryEditorialHome` and its components for rollback, preserving legacy routes and SEO contracts.
 - Retain the original RealScout widget in an embedded homepage disclosure with its existing configuration and anchor; embedding suppresses the old headline to maintain one homepage H1.
 - Keep dense-feed geometry scoped to `.nest-feed`; latest Nov 24 authorization extends shared palette only across public routes through route-scoped semantic tokens/legacy color compatibility, excluding private reports and management/auth surfaces. Retain earlier scoped-theme implementation/history without restoring its superseded public-color restriction.
@@ -9,6 +9,8 @@
 - Merge approved feed-town metadata into canonical directory town options without replacing source municipality labels, so structured listings remain filterable without a second directory index.
 - Separate equivalent town filter groups from canonical destinations resolved against the county directory; both feed and `/local` query original business slugs with IN, so Bethlehem/Delmar and Glenville/Scotia records remain intact and reachable through unchanged URL contracts.
 - Feed business identity uses supplied subcategory before category, never headlines; saved snapshots fall back to their existing metadata, preserving honest directory identity without invented dates.
+- The authorized homepage town sidebar/mobile dialog and URL-backed view/type/search controls belong only to the compact browse area; context changes reset pages, not town/search, so navigation remains shareable and reversible.
+- Keep dated Latest updates separate from published Browse all inventory; source-specific server pages expose exact counts, active approved-link homes never use import-preview tables, and active rentals use supplied availability only, never import/publication timestamps.
 - Preserve the intentional neutral `index.html` application shell; homepage-specific metadata belongs only to Index/SEOHead so legacy routes retain their fallback SEO behavior.
 - Administrator roles require privileged provisioning, never first-user self-claim, to prevent account privilege escalation.
 - Protect business billing and placement fields with a database trigger that permits only administrators or the service role; owners retain ordinary profile updates without granting themselves paid benefits.

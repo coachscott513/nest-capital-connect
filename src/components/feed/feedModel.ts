@@ -1,5 +1,5 @@
 import { findTownInDirectory } from '@/data/capitalDistrictCounties';
-export type FeedCategory = 'all' | 'property' | 'sales' | 'price_changes' | 'business' | 'local_news' | 'finance' | 'events';
+export type FeedCategory = 'all' | 'property' | 'rentals' | 'sales' | 'price_changes' | 'business' | 'local_news' | 'finance' | 'events';
 export interface FeedEdition { slug: string; label: string; live: boolean; }
 export const FEED_EDITIONS: FeedEdition[] = [
   { slug: 'capital-district', label: 'Capital District, NY', live: true },
@@ -10,7 +10,7 @@ export interface FeedRow {
   id: string; category: FeedCategory; title: string; town: string; townSlug: string;
   date: string; dateLabel: string; source: string; href: string; connect?: string;
   price?: number; dateOnly?: boolean; summary?: string; kind?: 'listing';
-  facts?: string; identity?: string;
+  facts?: string; identity?: string; priceUnit?: 'month';
 }
 export const slugifyTown = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 // Directory contracts use these combined community names, not their literal slugs.
@@ -35,7 +35,7 @@ export function businessIdentity(category?: string | null, subcategory?: string 
 export function rowIdentity(row: FeedRow): string {
   if (row.identity) return row.identity;
   if (!row.date) return row.source || 'Local business';
-  return ({property:'Property update',finance:'Finance update',events:'Event',business:'Business update',local_news:'Local update',sales:'Sale update',price_changes:'Price change',all:'Local update'})[row.category];
+  return ({property:'Property update',rentals:'Rental',finance:'Finance update',events:'Event',business:'Business update',local_news:'Local update',sales:'Sale update',price_changes:'Price change',all:'Local update'})[row.category];
 }
 export function feedTownOptions(towns: {slug:string;name:string}[], rows: FeedRow[]) {
   const options = new Map(towns.map(t => [canonicalFeedTown(t.slug), t.name]));

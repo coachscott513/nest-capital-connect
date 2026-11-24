@@ -143,7 +143,7 @@ export interface PaginatedBusinessOptions {
   pageSize?: number;
 }
 
-const escapeIlike = (v: string) => v.replace(/[%,()]/g, " ").trim();
+export const escapeIlike = (v: string) => v.replace(/[%,()]/g, " ").trim();
 
 /* Search synonym map — keys are normalized user inputs, values are
    additional ilike fragments that should also match. Keeps the directory
@@ -227,31 +227,15 @@ const expandSearchSynonyms = (raw: string): string[] => {
   return out.slice(0, 12);
 };
 
-export const usePaginatedBusinesses = (opts: PaginatedBusinessOptions) => {
-  const {
-    townSlug, search, category, tier = "all",
-    hasPhone, hasWebsite, pageSize = 24,
-  } = opts;
-
-  const [rows, setRows] = useState<Business[]>([]);
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [total, setTotal] = useState<number | null>(null);
-  const reqId = useRef(0);
-
-  const filterKey = useMemo(
-    () => JSON.stringify({ townSlug, search, category, tier, hasPhone, hasWebsite, pageSize }),
-    [townSlug, search, category, tier, hasPhone, hasWebsite, pageSize],
-  );
-
-  const buildQuery = useCallback((countMode: boolean) => {
+/** Shared server query: homepage and /local keep identical keyword/alias semantics. */
+export function businessDirectoryQuery(opts: PaginatedBusinessOptions, columns = CARD_COLUMNS, countMode = true, region?: string, alphabetical = false) {
+  const {townSlug,search,category,tier='all',hasPhone,hasWebsite}=opts;
     let q = supabase
       .from("businesses")
-      .select(CARD_COLUMNS, countMode ? { count: "exact" } : undefined)
+      .select(columns, countMode ? { count: "exact" } : undefined)
       .eq("is_active", true);
 
+    if (region) q=q.eq("region",region);
     if (townSlug && townSlug !== "capital-district") q = q.in("town_slug", equivalentFeedTowns(townSlug));
 
     if (category) {
@@ -288,10 +272,34 @@ export const usePaginatedBusinesses = (opts: PaginatedBusinessOptions) => {
     if (hasPhone) q = q.not("phone", "is", null).neq("phone", "");
     if (hasWebsite) q = q.not("website", "is", null).neq("website", "");
 
+    if (alphabetical) return q.order("name").order("id");
     return q
       .order("is_featured", { ascending: false })
       .order("is_claimed", { ascending: false })
       .order("name", { ascending: true });
+}
+
+export const usePaginatedBusinesses = (opts: PaginatedBusinessOptions) => {
+  const {
+    townSlug, search, category, tier = "all",
+    hasPhone, hasWebsite, pageSize = 24,
+  } = opts;
+
+  const [rows, setRows] = useState<Business[]>([]);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [total, setTotal] = useState<number | null>(null);
+  const reqId = useRef(0);
+
+  const filterKey = useMemo(
+    () => JSON.stringify({ townSlug, search, category, tier, hasPhone, hasWebsite, pageSize }),
+    [townSlug, search, category, tier, hasPhone, hasWebsite, pageSize],
+  );
+
+  const buildQuery = useCallback((countMode: boolean) => {
+    return businessDirectoryQuery({townSlug,search,category,tier,hasPhone,hasWebsite},CARD_COLUMNS,countMode);
   }, [townSlug, search, category, tier, hasPhone, hasWebsite]);
 
   // Reset & fetch page 0 whenever filters change.

@@ -1,3 +1,7 @@
+# Homepage town navigation — Nov 24
+- [x] Add desktop towns / mobile drawer, shareable views/categories/search, real paginated published inventory and shared directory search.
+- [x] Verify real records, pagination beyond 100, aliases, history, keyboard/touch accessibility and all desktop/mobile themes; 43 tests and preview compilation passed, QA saved. No publishing.
+
 # Selected security fixes — Nov 24
 - [x] Protected guide/report emails with verified sign-in, hosted-auth confirmed recipients, fixed resources, shared form gate, and `/auth` return flow; 42 tests passed, desktop/mobile and four guide pages checked, both deployed handlers reject anonymous/invalid sessions. Provider rejected live verified test deliveries with status 422; no delivery success claimed, sender settings unchanged. Selected findings updated; no app publishing.
 - [x] Removed administrator self-promotion, protected business paid-placement/billing fields, restricted public investment assets to active records; disposable database role tests and real signed-in denial passed, 26 existing tests passed, build OK, selected statuses updated. Existing administrator retained; no other findings changed.
