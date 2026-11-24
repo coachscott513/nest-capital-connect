@@ -20,3 +20,4 @@
 - [x] Report verified listing count, changed pages, and limitations; preview only, no publishing.
 
 Limitations: existing directory aliases differ from imported coffee/legal/accounting categories; new homepage uses keyword search for affected verticals. No verified businesses-for-sale inventory or commercial inventory integration exists; CTAs use existing support and analysis pages, never fake inventory. Existing contact details are untouched and remain unverified. Full sitemap rebuild and live publication are intentionally outside this preview-only change.
+- [ ] Owner to set the private Ridge Road report password (REPORT_ACCESS_PASSWORD); report stays locked until then.

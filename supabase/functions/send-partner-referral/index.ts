@@ -32,26 +32,42 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  if (req.method !== "POST") {
+    return new Response(JSON.stringify({ error: "Method not allowed" }), {
+      status: 405, headers: { "Content-Type": "application/json", ...corsHeaders },
+    });
+  }
+  const json = (body: unknown, status: number) =>
+    new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", ...corsHeaders } });
+
   try {
-    const { clientName, clientPhone, projectType, partnerId }: ReferralRequest = await req.json();
+    const token = (req.headers.get("Authorization") ?? "").replace(/^Bearer\s+/i, "");
+    if (!token) return json({ error: "Sign in required" }, 401);
 
-    // Validate inputs
-    if (!clientName || !clientPhone || !projectType || !partnerId) {
-      return new Response(
-        JSON.stringify({ error: "Missing required fields" }),
-        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
-      );
-    }
-
-    // Get partner details from database
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+    const { data: userData, error: userError } = await supabase.auth.getUser(token);
+    if (userError || !userData?.user) return json({ error: "Sign in required" }, 401);
+
+    const { clientName, clientPhone, projectType, partnerId }: ReferralRequest = await req.json();
+
+    if (
+      typeof clientName !== "string" || clientName.trim().length < 1 || clientName.length > 200 ||
+      typeof clientPhone !== "string" || !/^[0-9+\-\s().]{7,40}$/.test(clientPhone) ||
+      (projectType !== "commercial" && projectType !== "residential") ||
+      typeof partnerId !== "string" || partnerId.length > 64
+    ) {
+      return json({ error: "Invalid referral details" }, 400);
+    }
+
+    // Only the partner account that owns this partner record may send referrals for it.
     const { data: partner } = await supabase
       .from("business_partners")
       .select(`
         id,
+        user_id,
         local_voices (
           business_name,
           owner_name,
@@ -59,9 +75,13 @@ const handler = async (req: Request): Promise<Response> => {
         )
       `)
       .eq("id", partnerId)
-      .single();
+      .eq("user_id", userData.user.id)
+      .maybeSingle();
 
-    const localVoice = partner?.local_voices?.[0];
+    if (!partner) return json({ error: "Not allowed for this partner" }, 403);
+
+    const lv: any = (partner as any).local_voices;
+    const localVoice = Array.isArray(lv) ? lv[0] : lv;
     const businessName = localVoice?.business_name || "Unknown Business";
     const ownerName = localVoice?.owner_name || "Unknown Owner";
     const townSlug = localVoice?.town_slug || "unknown";
@@ -81,7 +101,10 @@ const handler = async (req: Request): Promise<Response> => {
       }),
     });
 
-    console.log("Referral email sent:", emailResponse);
+    if (!emailResponse.ok) {
+      console.error("Referral email failed:", emailResponse.status);
+      return json({ error: "Notification could not be sent" }, 502);
+    }
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
@@ -90,7 +113,7 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error("Error in send-partner-referral:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: "Internal error" }),
       { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }

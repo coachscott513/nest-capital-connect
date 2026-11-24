@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.submit-ask-nest]
 verify_jwt = false
+
+[functions.unlock-private-report]
+verify_jwt = false

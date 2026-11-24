@@ -11,7 +11,7 @@ interface ReportPasswordGateProps {
 }
 
 const EXPIRY_DAYS = 7;
-const REPORT_PASSWORD = import.meta.env.VITE_REPORT_PASSWORD || "RIDGE1999";
+const REPORT_PASSWORD: string | undefined = import.meta.env.VITE_REPORT_PASSWORD || undefined;
 
 const ReportPasswordGate = ({ reportSlug, validToken, children }: ReportPasswordGateProps) => {
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -61,7 +61,7 @@ const ReportPasswordGate = ({ reportSlug, validToken, children }: ReportPassword
     e.preventDefault();
     setError("");
 
-    if (password === REPORT_PASSWORD) {
+    if (REPORT_PASSWORD && password === REPORT_PASSWORD) {
       const expiryDate = new Date();
       expiryDate.setDate(expiryDate.getDate() + EXPIRY_DAYS);
       localStorage.setItem(storageKey, JSON.stringify({ 

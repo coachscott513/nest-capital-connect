@@ -4788,6 +4788,11 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_valid_public_email: { Args: { _e: string }; Returns: boolean }
+      is_valid_public_text: {
+        Args: { _max: number; _min: number; _t: string }
+        Returns: boolean
+      }
       purge_ask_nest_pii: { Args: { retention_days?: number }; Returns: number }
     }
     Enums: {

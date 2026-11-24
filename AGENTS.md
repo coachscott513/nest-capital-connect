@@ -10,4 +10,6 @@
 - Protect business billing and placement fields with a database trigger that permits only administrators or the service role; owners retain ordinary profile updates without granting themselves paid benefits.
 - Public investment assets must satisfy `is_active = true` in database policies, matching the existing published-deal contract.
 - Report/guide email handlers verify the current account with hosted auth and use only its confirmed email; resource subjects and destinations are server-owned so callers cannot repurpose these sends.
-- Resource email forms share a verified-email gate and mount the retained Auth page at `/auth` with validated same-origin return paths; partner sign-in and browsing permissions remain unchanged.
+- Resource email forms share a verified-email gate and mount the retained Auth page at `/auth` with validated same-origin return paths; partner sign-in and browsing permissions remain unchanged.- Public form INSERT policies validate contact fields, lengths, initial statuses and staff-only fields through shared SQL helpers instead of `WITH CHECK (true)`, so anonymous submissions stay possible without arbitrary rows.
+- Email handlers HTML-escape every visitor-supplied value, and partner referral emails require the signed-in owner of the partner record, so public endpoints cannot inject markup or impersonate partners.
+- Private report contents live in a server function released only after a server-held access password check; never ship private report data, passwords or share tokens in the app bundle.

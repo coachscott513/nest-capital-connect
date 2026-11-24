@@ -96,17 +96,26 @@ const validateContactFormData = (data: any): { valid: boolean; errors: string[] 
   return { valid: errors.length === 0, errors };
 };
 
-// Generate HTML email content
+const esc = (v: unknown): string =>
+  String(v ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+const plain = (v: unknown): string => String(v ?? '').replace(/[\r\n<>]/g, ' ').slice(0, 120);
+
+// Generate HTML email content (every user-supplied value is escaped)
 const generateEmailHtml = (formData: ContactFormData): string => {
   const rows = [
-    { label: 'Name', value: formData.name },
-    { label: 'Email', value: `<a href="mailto:${formData.email}">${formData.email}</a>` },
-    formData.phone ? { label: 'Phone', value: `<a href="tel:${formData.phone}">${formData.phone}</a>` } : null,
-    { label: 'Lead Type', value: formData.type },
-    formData.location ? { label: 'Location', value: formData.location } : null,
-    formData.bedrooms ? { label: 'Bedrooms', value: formData.bedrooms } : null,
-    formData.price_range ? { label: 'Price Range', value: formData.price_range } : null,
-    formData.message ? { label: 'Message', value: formData.message } : null,
+    { label: 'Name', value: esc(formData.name) },
+    { label: 'Email', value: `<a href="mailto:${esc(encodeURIComponent(formData.email))}">${esc(formData.email)}</a>` },
+    formData.phone ? { label: 'Phone', value: `<a href="tel:${esc(encodeURIComponent(formData.phone))}">${esc(formData.phone)}</a>` } : null,
+    { label: 'Lead Type', value: esc(formData.type) },
+    formData.location ? { label: 'Location', value: esc(formData.location) } : null,
+    formData.bedrooms ? { label: 'Bedrooms', value: esc(formData.bedrooms) } : null,
+    formData.price_range ? { label: 'Price Range', value: esc(formData.price_range) } : null,
+    formData.message ? { label: 'Message', value: esc(formData.message).replace(/\n/g, '<br>') } : null,
   ].filter(Boolean);
 
   const rowsHtml = rows.map(row => `
@@ -127,7 +136,7 @@ const generateEmailHtml = (formData: ContactFormData): string => {
         <h1 style="color: #333; font-size: 24px; font-weight: bold; text-align: center; margin: 40px 0;">🎉 New Lead Received!</h1>
         
         <p style="color: #333; font-size: 16px; line-height: 26px; margin: 16px 8px;">
-          You have a new <strong>${formData.type}</strong> lead from your website:
+          You have a new <strong>${esc(formData.type)}</strong> lead from your website:
         </p>
 
         <table style="width: 100%; border: solid 1px #dedede; border-radius: 5px; margin: 20px 0; border-collapse: collapse;">
@@ -135,7 +144,7 @@ const generateEmailHtml = (formData: ContactFormData): string => {
         </table>
 
         <div style="text-align: center; margin: 32px 0;">
-          <a href="mailto:${formData.email}?subject=Re: Your ${formData.type} inquiry" 
+          <a href="mailto:${esc(encodeURIComponent(formData.email))}?subject=${esc(encodeURIComponent(`Re: Your ${formData.type} inquiry`))}" 
              style="background-color: #2754C5; border-radius: 5px; color: #fff; font-size: 16px; font-weight: bold; text-decoration: none; display: inline-block; padding: 14px 28px;">
             Reply to Lead
           </a>
@@ -265,7 +274,7 @@ const handler = async (req: Request): Promise<Response> => {
             from: 'Capital District Nest <onboarding@resend.dev>',
             reply_to: 'team@capitaldistrictnest.com',
             to: ['team@capitaldistrictnest.com'],
-            subject: `🎉 New ${formData.type} lead from ${formData.name}`,
+            subject: `🎉 New ${plain(formData.type)} lead from ${plain(formData.name)}`,
             html: emailHtml,
           }),
         });
@@ -293,7 +302,7 @@ const handler = async (req: Request): Promise<Response> => {
               html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
                   <h1 style="color: #1a1a1a;">You're In! 🏡</h1>
-                  <p>Hi ${formData.name},</p>
+                  <p>Hi ${esc(formData.name)},</p>
                   <p>Thanks for subscribing to our market updates. You'll receive:</p>
                   <ul style="color: #444; line-height: 1.8;">
                     <li>New listings before they hit the major sites</li>

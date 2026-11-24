@@ -8,6 +8,13 @@
       "when": 1795528810829,
       "tag": "0000_secure_selected_roles_business_billing_and_active_assets",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1795530317475,
+      "tag": "0001_validate_public_form_submissions",
+      "breakpoints": true
     }
   ]
 }
