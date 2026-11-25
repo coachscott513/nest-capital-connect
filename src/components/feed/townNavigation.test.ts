@@ -7,7 +7,7 @@ describe('quickTowns',()=>{
   });
   it('keeps a selected uncommon town visible without duplicates',()=>{
     const q=quickTowns('argyle',all); expect(q.primary).toEqual([...FEATURED_TOWNS,'argyle']);
-    const c=quickTowns('colonie',all); expect(c.primary.at(-1)).toBe('colonie'); expect(c.extras).not.toContain('colonie');
+    const c=quickTowns('colonie',all); expect(c.primary[c.primary.length-1]).toBe('colonie'); expect(c.extras).not.toContain('colonie');
   });
   it('never invents towns missing from loaded records',()=>{
     expect(quickTowns('',['albany','troy']).extras).toEqual([]);
