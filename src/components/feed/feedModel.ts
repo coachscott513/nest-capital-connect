@@ -10,7 +10,7 @@ export interface FeedRow {
   id: string; category: FeedCategory; title: string; town: string; townSlug: string;
   date: string; dateLabel: string; source: string; href: string; connect?: string;
   price?: number; dateOnly?: boolean; summary?: string; kind?: 'listing';
-  facts?: string; identity?: string; priceUnit?: 'month';
+  facts?: string; identity?: string; priceUnit?: 'month'; featured?: boolean;
 }
 export const slugifyTown = (value: string) => value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 // Directory contracts use these combined community names, not their literal slugs.
@@ -60,6 +60,9 @@ export function isNewListing(row: FeedRow, now = new Date()): boolean {
   const days = (Date.parse(easternDay(now)) - Date.parse(row.date)) / 86400000;
   return days >= 0 && days <= 6;
 }
+export function isFeaturedListing(row: FeedRow): boolean {
+  return row.kind === 'listing' && row.featured === true;
+}
 export function publicUrl(value?: string | null): string | undefined {
   if (!value) return undefined;
   try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol) ? url.href : undefined; } catch { return undefined; }
@@ -106,12 +109,12 @@ export function eventRow(e: EventRecord): FeedRow | null {
   if (!e.is_active || !validDate(e.starts_at) || !href) return null;
   return { id: `event:${e.id}`, identity:'Event', category: 'events', title: e.title, town: e.town_name || e.town_slug, townSlug: e.town_slug, date: e.starts_at, dateLabel: 'Event starts', source: e.venue_name || 'Event organizer', href };
 }
-export interface ListingRecord { id: string; full_address: string | null; city: string; town_slug: string | null; list_date: string | null; list_price: number | null; public_listing_url: string | null; public_listing_url_approved: boolean; status: string; listing_agent: string | null; agency: string | null; bedrooms?: number | null; bathrooms?: number | null; sqft?: number | null; }
+export interface ListingRecord { id: string; full_address: string | null; city: string; town_slug: string | null; list_date: string | null; list_price: number | null; public_listing_url: string | null; public_listing_url_approved: boolean; status: string; listing_agent: string | null; agency: string | null; bedrooms?: number | null; bathrooms?: number | null; sqft?: number | null; is_featured?: boolean | null; }
 export function listingRow(l: ListingRecord, now = new Date()): FeedRow | null {
   const href = publicUrl(l.public_listing_url);
   if (l.status !== 'A' || !l.public_listing_url_approved || !href || !l.list_date || !calendarDay(l.list_date) || l.list_date > easternDay(now)) return null;
   const facts = [[l.bedrooms,'beds'],[l.bathrooms,'baths'],[l.sqft,'sq ft']].filter(([value]) => typeof value === 'number' && Number.isFinite(value) && value > 0).map(([value,label]) => `${Number(value).toLocaleString('en-US')} ${label}`).join(' · ');
-  return { id: `listing:${l.id}`, identity:'Property listing', kind:'listing', category: 'property', title: l.full_address || 'Property listing', town: l.city, townSlug: canonicalFeedTown(l.town_slug || l.city), date: l.list_date, dateOnly: true, dateLabel: 'Listed', source: [l.listing_agent,l.agency].filter(Boolean).join(' · ') || 'Approved listing source', href, price: l.list_price ?? undefined, facts: facts || undefined };
+  return { id: `listing:${l.id}`, identity:'Property listing', kind:'listing', featured:l.is_featured === true, category: 'property', title: l.full_address || 'Property listing', town: l.city, townSlug: canonicalFeedTown(l.town_slug || l.city), date: l.list_date, dateOnly: true, dateLabel: 'Listed', source: [l.listing_agent,l.agency].filter(Boolean).join(' · ') || 'Approved listing source', href, price: l.list_price ?? undefined, facts: facts || undefined };
 }
 export const snapshotKey = (rows: FeedRow[]) => JSON.stringify(rows);
 export function newRowCount(current: FeedRow[], next: FeedRow[]): number { const ids = new Set(current.map(r => r.id)); return next.filter(r => !ids.has(r.id)).length; }

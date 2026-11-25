@@ -16,6 +16,12 @@ describe('safe rental and town links',()=>{
   expect(isSafeSavedHref('/biz/a-business')).toBe(true);
   expect(isSafeSavedHref('https://example.org/source')).toBe(true);
  });
+ it('retains featured listing snapshots and legacy snapshots without inventing a flag',()=>{
+  const listing={id:'listing:example',kind:'listing',href:'https://example.org/property',featured:true};
+  expect(hydrateSavedRows(JSON.parse(JSON.stringify([listing])))).toEqual([listing]);
+  const legacy={id:'listing:legacy',kind:'listing',href:'https://example.org/legacy'};
+  expect(hydrateSavedRows([legacy])[0]?.featured).toBeUndefined();
+ });
  it('upgrades already-saved generic rental links from valid row IDs without accepting unsafe snapshots',()=>{
   const row={id:`rental:${id}`,category:'rentals',townSlug:'albany',href:'/rentals'};
   expect(hydrateSavedRows([row])[0]?.href).toBe(rentalDetailHref(id,'albany'));

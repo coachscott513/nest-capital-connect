@@ -1,5 +1,5 @@
 import { describe,it,expect } from 'vitest';
-import { FEED_EDITIONS, businessIdentity, equivalentFeedTowns, feedTownHref, rowIdentity, chronologicalRows, eventRow, feedTownOptions, filterRows, isNewListing, latestFinanceRow, listingRow, newRowCount, publicUrl, storyRow, type FeedRow, type ListingRecord } from './feedModel';
+import { FEED_EDITIONS, businessIdentity, equivalentFeedTowns, feedTownHref, rowIdentity, chronologicalRows, eventRow, feedTownOptions, filterRows, isFeaturedListing, isNewListing, latestFinanceRow, listingRow, newRowCount, publicUrl, storyRow, type FeedRow, type ListingRecord } from './feedModel';
 const row:FeedRow={id:'story:1',category:'local_news',title:'Town meeting',town:'Troy',townSlug:'troy',date:'2026-11-20T12:00:00Z',dateLabel:'Published',source:'Publisher',href:'https://example.org/story'};
 describe('neutral feed source rules',()=>{
  it('maps verified Real Estate stories to Property and preserves Voorheesville, original date, summary and publisher link',()=>{
@@ -71,6 +71,24 @@ function actualListing(date: string) {
  return result;
 }
 describe('structured listing event rules',()=>{
+ it('carries only the supplied true featured flag without changing listing provenance or order',()=>{
+  const ordinary=listingRow(listing,checkTime);
+  const featured=listingRow({...listing,is_featured:true},checkTime);
+  expect(featured).toEqual({...ordinary,featured:true});
+  expect(featured && isFeaturedListing(featured)).toBe(true);
+  expect(chronologicalRows([featured as FeedRow,{...actualListing('2026-11-24'),href:'https://example.org/newer'}]).map(r=>r.date)).toEqual(['2026-11-24','2026-11-23']);
+  expect(listingRow({...listing,is_featured:true,status:'S'},checkTime)).toBeNull();
+  expect(listingRow({...listing,is_featured:true,public_listing_url_approved:false},checkTime)).toBeNull();
+ });
+ it.each([undefined,null,false])('keeps absent or false featured flag %s ordinary',flag=>{
+  const result=listingRow({...listing,is_featured:flag},checkTime);
+  expect(result?.featured).toBe(false);
+  expect(result && isFeaturedListing(result)).toBe(false);
+ });
+ it('never features a generic property story or a legacy unflagged snapshot',()=>{
+  expect(isFeaturedListing({...row,category:'property',featured:true})).toBe(false);
+  expect(isFeaturedListing(actualListing('2026-11-23'))).toBe(false);
+ });
  it('marks today and the previous six Eastern calendar days new, but day seven listed',()=>{
   expect(isNewListing(actualListing('2026-11-24'),checkTime)).toBe(true);
   expect(isNewListing(actualListing('2026-11-18'),checkTime)).toBe(true);

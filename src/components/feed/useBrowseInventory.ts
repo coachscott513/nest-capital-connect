@@ -28,7 +28,7 @@ export interface InventoryChunk {rows:FeedRow[];count:number;fetched:number}
 export async function fetchInventory(source:InventorySource,town:string,search:string,view:BrowseView,from:number,size:number,newsCategory='all'):Promise<InventoryChunk> {
       const now=new Date(); const safe=escapeIlike(search); const INVENTORY_PAGE_SIZE=size;
       if(source==='homes') {
-        let q=supabase.from('listings').select('id,full_address,city,town_slug,list_date,list_price,public_listing_url,public_listing_url_approved,status,listing_agent,agency,bedrooms,bathrooms,sqft',{count:'exact'})
+        let q=supabase.from('listings').select('id,full_address,city,town_slug,list_date,list_price,public_listing_url,public_listing_url_approved,status,is_featured,listing_agent,agency,bedrooms,bathrooms,sqft',{count:'exact'})
           .eq('status','A').eq('public_listing_url_approved',true).lte('list_date',easternDay(now))
           .or('public_listing_url.like.https://%,public_listing_url.like.http://%');
         if(town) q=q.in('town_slug',equivalentFeedTowns(town));

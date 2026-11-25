@@ -20,6 +20,7 @@ describe('published inventory queries',()=>{
     expect(state.calls).toContainEqual(['range',[40,47]]);
     expect(state.calls).toContainEqual(['in',['town_slug',['delmar','bethlehem','delmar-bethlehem']]]);
     expect(state.calls.find(([name])=>name==='select')?.[1][1]).toEqual({count:'exact'});
+    expect(String(state.calls.find(([name])=>name==='select')?.[1][0]).split(',')).toContain('is_featured');
     expect(state.calls.some(([method,args])=>method==='or' && String(args[0]).includes('full_address.ilike.%Marion%'))).toBe(true);
     expect(state.calls.some(([method])=>method==='lte')).toBe(true);
   });

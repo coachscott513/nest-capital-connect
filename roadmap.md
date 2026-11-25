@@ -32,3 +32,7 @@ Limitations: existing directory aliases differ from imported coffee/legal/accoun
 - [ ] Owner to set the private Ridge Road report password (REPORT_ACCESS_PASSWORD); report stays locked until then.
 - [x] Mobile-first homepage: town links, category directory, six-row Latest feed, compact finance (preview only).
 - [x] Compact follow-up: shorter first screen, structured category links, honest search scope, gap-free six-row paging (preview only).
+
+# Featured listing editorial update — Nov 25
+- [x] Carry the existing flag through approved listing selects/adapters and saved snapshots; style the existing row/badge only.
+- [x] Run focused regressions and compare real listing preview heights, links, themes and text sizes using browser-local flag overrides only; document results and commit without publishing.

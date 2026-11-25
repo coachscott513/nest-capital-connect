@@ -6,6 +6,7 @@
 - The Nov 24 authorized compact feed replaces the old search-hero/four-pillar homepage mandate; preserve the north-star/design notes and legacy designs rather than deleting them.
 - Feed adapters accept edition configuration, exclude unpublished/import-preview inventory, use semantic source dates and queue polling arrivals; directory metadata never becomes a duplicate business search index.
 - Only the listings adapter assigns listing-event kind; use Eastern calendar days for publication/newness and full canonical source URL plus original event day for listing/story preference, so generic Property news never gains listing badges or loses distinct events.
+- Feed listing editorial highlighting reads the existing `is_featured` flag into optional saved snapshot metadata and changes only the row surface and existing badge footprint, never ordering or eligibility.
 - Merge approved feed-town metadata into canonical directory town options without replacing source municipality labels, so structured listings remain filterable without a second directory index.
 - Separate equivalent town filter groups from canonical destinations resolved against the county directory; both feed and `/local` query original business slugs with IN, so Bethlehem/Delmar and Glenville/Scotia records remain intact and reachable through unchanged URL contracts.
 - Feed business identity uses supplied subcategory before category, never headlines; saved snapshots fall back to their existing metadata, preserving honest directory identity without invented dates.

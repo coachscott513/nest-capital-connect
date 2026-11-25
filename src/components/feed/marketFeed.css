@@ -391,3 +391,12 @@
 @media (max-width:950px) and (min-width:601px) { .nest-feed .feed-town-quick>a {flex:0 1 auto;} }
 .nest-feed .feed-block-title .feed-towns-trigger {width:auto;min-height:44px;padding:4px 10px;border-color:hsl(var(--primary)/.5);}
 @media (max-width:950px) { .nest-feed .feed-block-title .feed-towns-trigger {flex:0 0 auto;} }
+
+/* Editorial identity only: inset accent adds no border, padding, or row height. */
+.nest-feed .feed-row.feed-featured-row {background:hsl(var(--feed-featured-surface));box-shadow:inset 3px 0 0 hsl(var(--feed-featured-accent));}
+.nest-feed .feed-featured-row .feed-listing-badge.is-featured {background:transparent;color:hsl(var(--feed-featured-identity));}
+@media (max-width:950px) {
+ /* The existing mobile town cell has inset space; unpadded date/headline cells do not. */
+ .nest-feed .feed-row.feed-featured-row {box-shadow:none;position:relative;}
+ .nest-feed .feed-row.feed-featured-row::before {content:'';position:absolute;left:0;top:10px;width:3px;height:44px;background:hsl(var(--feed-featured-accent));pointer-events:none;}
+}
