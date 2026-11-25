@@ -14,6 +14,7 @@ import TownNavigation from './TownNavigation';
 import { rentalInPlaceHref, validRentalId } from './rentalLinks';
 import { allDirectoryLinks, categoryParams, isActiveCategory, moreDirectoryCategories, primaryCategories, type DirectoryLink } from './categoryDirectory';
 import { directoryCategory } from '@/lib/directoryCategories';
+import FeaturedPhotoListings from './FeaturedPhotoListings';
 
 const plain=(e:React.MouseEvent)=>!(e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button!==0);
 
@@ -65,10 +66,7 @@ export default function FeedBrowse({edition,towns,saved,savedOnly,onSavedOnly,on
   const businessSearchLink=view==='latest' && search.trim() && !savedOnly ? <p className="feed-notice feed-search-businesses">Latest updates do not include directory profiles. <Link to={bizSearch} onClick={e=>{if(!plain(e)) return;e.preventDefault();setParams(updateBrowseState(params,{type:'business',view:'browse',search}),{preventScrollReset:true});}}>Search businesses for “{search.trim()}”{town ? ` in ${townName}` : ''}</Link></p> : null;
   const filtered=!!(town || category!=='all' || search);
   return <div className="feed-browse-results">
-    {featuredRows.length>0 && <section className="feed-featured-section" aria-labelledby="feed-featured-title">
-      <div className="feed-block-title"><h2 id="feed-featured-title">Featured listings</h2></div>
-      {table(featuredRows,'Featured listings')}
-    </section>}
+    {featuredRows.length>0 && <FeaturedPhotoListings rows={featuredRows} saved={saved} onSave={onSave}/>}
     <TownNavigation town={town} towns={towns} onSelect={slug=>change({town:slug})} dark={dark} large={large}/>
     <div className="feed-browse-main">
     <section className="feed-categories" aria-labelledby="feed-categories-title">

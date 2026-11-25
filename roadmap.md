@@ -1,4 +1,9 @@
 # Homepage town navigation — Nov 24
+## Approved glass homepage — Nov 25
+- [x] Make glass the homepage default without changing ordinary feed geometry or intentional theme settings.
+- [x] Add live featured photo tiles and accessible in-page details using approved exact-identity imagery fallbacks.
+- [x] Verify real desktop/mobile dialogs, links, saves, filtering/deduplication, accessibility and existing tests; commit without publishing.
+
 - [x] Fix specific active rental details/saved reload and context-preserving town hrefs; real Albany page-two save/reload/reopen/unsave, standalone share link, modified-click town context, 12 responsive/theme combinations and 57 tests verified; no deployment.
 - [x] Add shared Apple-inspired public top navigation while retaining the completed town/browse experience; desktop/mobile click/keyboard menus, dark/light, town persistence and shared public town header verified, 46 tests and preview compilation passed. No deploying.
 - [x] Add desktop towns / mobile drawer, shareable views/categories/search, real paginated published inventory and shared directory search.

@@ -59,6 +59,7 @@ describe('featured listings section',()=>{
     expect(state.calls).toContainEqual(['eq',['public_listing_url_approved',true]]);
     expect(state.calls.some(([m,a])=>m==='lte' && a[0]==='list_date')).toBe(true);
     expect(state.calls).toContainEqual(['range',[0,FEATURED_LISTING_LIMIT-1]]);
+    expect(String(state.calls.find(([name])=>name==='select')?.[1][0]).split(',')).toContain('photo_url');
     expect(state.calls.filter(([m])=>m==='order')).toEqual([['order',['list_date',{ascending:false}]],['order',['id']]]);
   });
   it('excludes shown featured listings from regular homes server-side',async()=>{

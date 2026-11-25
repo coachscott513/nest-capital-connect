@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Check, Moon, Pause, Play, RefreshCw, Search, Sun, Type } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import PropertyHero from '@/components/home/PropertyHero';
@@ -25,8 +25,6 @@ function interaction(action:string,category?:string,town?:string) {
 }
 function MarketFeed({edition,onEditionChange}:{edition:FeedEdition;onEditionChange:(slug:string)=>void}) {
   const navigate=useNavigate();
-  // Opt-in visual preview: CSS-only, never persisted.
-  const [urlParams]=useSearchParams(); const glass=urlParams.get('look')==='glass';
   const [savedOnly,setSavedOnly]=useState(false); const [saved,setSaved]=useState<FeedRow[]>(()=>hydrateSavedRows(stored<unknown>('nest-feed-saved',[])));
   const [dark,setDark]=useState(()=>stored<boolean>('nest-feed-dark',false) === true); const [large,setLarge]=useState(()=>stored<boolean>('nest-feed-large',false) === true);
   const [paused,setPaused]=useState(()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -41,7 +39,7 @@ function MarketFeed({edition,onEditionChange}:{edition:FeedEdition;onEditionChan
   const ticker=feed.rows.filter(r=>r.category!=='events').slice(0,5);
   const finance=latestFinanceRow(feed.rows);
   const submit=(event:FormEvent)=>{event.preventDefault();logEngagement('regional_search_submit',{}, {source_location:'homepage_feed',intent_type:'contractor_directory_search',query_length_bucket:queryLengthBucket(directoryQuery),category_slug:directoryCategory}, {town_slug:directoryTown || null});navigate(homeDirectorySearch(directoryQuery,directoryTown,directoryCategory));};
-  return <div className={`nest-feed${glass ? ' feed-glass' : ''}${dark ? ' feed-dark' : ''}${large ? ' feed-large' : ''}`}>
+  return <div className={`nest-feed feed-glass${dark ? ' feed-dark' : ''}${large ? ' feed-large' : ''}`}>
     <RentalDetailsRoute/>
     <a className="feed-skip" href="#feed-main">Skip to feed</a>
     <PublicNavigation settings={

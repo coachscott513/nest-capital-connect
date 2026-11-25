@@ -1084,3 +1084,43 @@ body.has-nest-feed {
   --feed-page-ground: 0 0% 100%;
   background: hsl(var(--feed-page-ground)); padding-bottom: 0;
 }
+
+/* Approved glass palette: homepage-only semantic paint tokens. Dialog remains inside this scope. */
+.nest-feed.feed-glass {
+  --foreground: 221 51% 14%; --muted-foreground: 219 28% 35%;
+  --primary: 216 92% 37%; --ring: 216 92% 40%; --border: 215 34% 77%;
+  --glass-white: 0 0% 100%; --glass-ink: hsl(var(--foreground)); --glass-blue: hsl(var(--primary));
+  --glass-edge: hsl(var(--glass-white) / .86);
+  --glass-surface: linear-gradient(168deg,hsl(var(--glass-white)/.51),hsl(var(--glass-white)/.2) 50%,hsl(218 100% 98%/.32));
+  --glass-shadow: 0 9px 24px -13px hsl(220 56% 37%/.38),0 2px 5px hsl(217 58% 36%/.07);
+  --glass-rim: inset 0 0 0 1px var(--glass-edge),inset 0 2px 2px hsl(var(--glass-white)/.5),inset 0 -1px 0 hsl(219 46% 55%/.15);
+  --glass-canvas: linear-gradient(144deg,hsl(210 100% 98%),hsl(219 100% 92%) 39%,hsl(218 100% 96%) 74%,hsl(224 100% 98%));
+  --glass-lights: radial-gradient(ellipse at 80% -18%,hsl(var(--glass-white)) 7%,transparent 44%),radial-gradient(ellipse at 4% 13%,hsl(208 100% 89%) 2%,transparent 56%),radial-gradient(ellipse at 97% 62%,hsl(190 67% 77%),transparent 56%),radial-gradient(ellipse at 43% 70%,hsl(250 100% 86%),transparent 58%);
+  --glass-solid: hsl(214 100% 98%); --glass-ground: hsl(218 100% 96%);
+  --glass-control: linear-gradient(166deg,hsl(var(--glass-white)/.78),hsl(220 100% 97%/.38));
+  --glass-selected: linear-gradient(160deg,hsl(217 69% 50%),hsl(219 78% 38%));
+  --glass-on-selected: hsl(var(--glass-white));
+  --glass-ticker: radial-gradient(ellipse at 74% -80%,hsl(202 100% 74%/.88),transparent 62%),linear-gradient(129deg,hsl(220 88% 37%),hsl(216 74% 35%/.93) 45%,hsl(239 51% 47%/.93));
+  --glass-featured: linear-gradient(172deg,hsl(var(--glass-white)/.92),hsl(var(--glass-white)/.07) 54%,hsl(var(--glass-white)/.22)),linear-gradient(103deg,hsl(216 100% 95%/.58),hsl(223 100% 85%/.5) 44%,hsl(256 100% 86%/.5) 73%,hsl(190 88% 84%/.6));
+  --glass-row: hsl(var(--glass-white)/.16); --glass-row-even: hsl(var(--glass-white)/.29); --glass-row-hover: hsl(var(--glass-white)/.63);
+  --glass-tile: linear-gradient(148deg,hsl(var(--glass-white)/.86),hsl(209 100% 96%/.59));
+  --glass-photo-ground: hsl(219 48% 86%); --glass-photo-overlay: hsl(218 56% 18%/.8);
+  --glass-dialog: linear-gradient(140deg,hsl(214 100% 99%/.96),hsl(220 100% 95%/.95) 55%,hsl(197 71% 93%/.96));
+  --glass-backdrop: hsl(220 64% 13%/.65); --glass-dialog-shadow: 0 28px 100px hsl(220 80% 8%/.44);
+}
+.nest-feed.feed-glass.feed-dark {
+  --foreground: 220 20% 94%; --muted-foreground: 218 24% 78%; --primary: 211 100% 78%; --ring: 211 100% 78%;
+  --glass-edge: hsl(210 60% 90%/.16);
+  --glass-surface: linear-gradient(168deg,hsl(222 35% 16%/.9),hsl(222 35% 12%/.75));
+  --glass-shadow: 0 9px 24px -13px hsl(0 0% 0%/.65);
+  --glass-rim: inset 0 0 0 1px var(--glass-edge),inset 0 2px 2px hsl(210 60% 90%/.04);
+  --glass-canvas: linear-gradient(144deg,hsl(224 30% 8%),hsl(226 28% 10%));
+  --glass-lights: radial-gradient(ellipse at 4% 13%,hsl(218 70% 22%/.5),transparent 56%),radial-gradient(ellipse at 97% 62%,hsl(190 60% 16%/.5),transparent 56%),radial-gradient(ellipse at 43% 70%,hsl(260 50% 20%/.5),transparent 58%);
+  --glass-solid: hsl(222 35% 14%); --glass-ground: hsl(224 30% 8%);
+  --glass-control: linear-gradient(166deg,hsl(218 32% 22%/.95),hsl(222 32% 15%/.9));
+  --glass-featured: linear-gradient(103deg,hsl(218 45% 21%/.95),hsl(249 32% 22%/.9),hsl(195 42% 18%/.95));
+  --glass-row: hsl(222 35% 12%/.4); --glass-row-even: hsl(222 35% 18%/.5); --glass-row-hover: hsl(218 40% 25%/.85);
+  --glass-tile: linear-gradient(148deg,hsl(221 35% 17%/.95),hsl(217 38% 21%/.9));
+  --glass-photo-ground: hsl(219 35% 18%);
+  --glass-dialog: linear-gradient(140deg,hsl(222 35% 14%/.98),hsl(222 35% 19%/.98),hsl(202 40% 16%/.98));
+}

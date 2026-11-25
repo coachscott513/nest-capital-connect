@@ -23,7 +23,7 @@ export function rentalBrowseRow(r:RentalRecord):FeedRow {
     href:rentalDetailHref(r.id,r.town_slug),price:r.rent_price,priceUnit:'month',facts:facts || undefined};
 }
 
-const LISTING_FIELDS='id,full_address,city,town_slug,list_date,list_price,public_listing_url,public_listing_url_approved,status,is_featured,listing_agent,agency,bedrooms,bathrooms,sqft';
+const LISTING_FIELDS='id,full_address,city,town_slug,list_date,list_price,public_listing_url,public_listing_url_approved,status,is_featured,listing_agent,agency,bedrooms,bathrooms,sqft,photo_url';
 /** Shared active, approved, non-future, public-URL listing query used by Featured and regular home sources. */
 function homesQuery(town:string,search:string,now:Date) {
   const safe=escapeIlike(search);
