@@ -84,7 +84,7 @@
   .featured-dialog-links,.nest-feed .featured-dialog-cta {width:100%;}
   .featured-dialog-content {padding-inline:12px;}.nest-feed .featured-dialog h2 {font-size:26px;}
 }
-@media (prefers-reduced-motion:reduce) {.featured-dialog[open] {animation:none;}.nest-feed.feed-glass .nest-public-nav {transition:none;}}
+@media (prefers-reduced-motion:reduce) {.featured-dialog[open] {animation:none;}.nest-feed.feed-glass .nest-public-nav,.nest-feed.feed-glass .nest-public-nav * {transition:none;}}
 @media (prefers-reduced-transparency:reduce) {
   .nest-feed.feed-glass {background:var(--glass-ground);}
   .nest-feed.feed-glass :is(.nest-public-nav,.feed-finance,.feed-towns,.feed-categories,.feed-table,.feed-directory-search,.featured-photo-tile,.featured-dialog) {background:var(--glass-solid);backdrop-filter:none;}
