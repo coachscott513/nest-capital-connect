@@ -400,3 +400,6 @@
  .nest-feed .feed-row.feed-featured-row {box-shadow:none;position:relative;}
  .nest-feed .feed-row.feed-featured-row::before {content:'';position:absolute;left:0;top:10px;width:3px;height:44px;background:hsl(var(--feed-featured-accent));pointer-events:none;}
 }
+/* Featured listings sit above Towns/Categories and span the full browse grid. */
+.nest-feed .feed-featured-section {grid-column:1/-1;margin:0 0 14px;}
+.nest-feed .feed-featured-section .feed-table-heading {display:none;}

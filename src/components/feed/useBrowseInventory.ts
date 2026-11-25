@@ -23,16 +23,42 @@ export function rentalBrowseRow(r:RentalRecord):FeedRow {
     href:rentalDetailHref(r.id,r.town_slug),price:r.rent_price,priceUnit:'month',facts:facts || undefined};
 }
 
+const LISTING_FIELDS='id,full_address,city,town_slug,list_date,list_price,public_listing_url,public_listing_url_approved,status,is_featured,listing_agent,agency,bedrooms,bathrooms,sqft';
+/** Shared active, approved, non-future, public-URL listing query used by Featured and regular home sources. */
+function homesQuery(town:string,search:string,now:Date) {
+  const safe=escapeIlike(search);
+  let q=supabase.from('listings').select(LISTING_FIELDS,{count:'exact'})
+    .eq('status','A').eq('public_listing_url_approved',true).lte('list_date',easternDay(now))
+    .or('public_listing_url.like.https://%,public_listing_url.like.http://%');
+  if(town) q=q.in('town_slug',equivalentFeedTowns(town));
+  if(safe) q=q.or(`full_address.ilike.%${safe}%,city.ilike.%${safe}%,listing_agent.ilike.%${safe}%,agency.ilike.%${safe}%`);
+  return q;
+}
+export const FEATURED_LISTING_LIMIT=4;
+/** Editorially flagged listings (is_featured strictly true), newest first, bounded and deterministic. */
+export async function fetchFeaturedListings(town:string,search:string):Promise<FeedRow[]> {
+  const now=new Date();
+  const {data,error}=await homesQuery(town,search,now).eq('is_featured',true).order('list_date',{ascending:false}).order('id').range(0,FEATURED_LISTING_LIMIT-1);
+  if(error) throw error;
+  return (data || []).filter(l=>l.is_featured===true).map(l=>listingRow(l,now)).filter((r):r is FeedRow=>r!==null);
+}
+/** Featured appears only for Homes/All contexts outside Saved. */
+export function featuredApplies(category:FeedCategory,savedOnly:boolean) { return !savedOnly && (category==='all' || category==='property'); }
+export function useFeaturedListings(edition:FeedEdition,town:string,search:string,enabled:boolean,version:string) {
+  return useQuery({queryKey:['feed-featured',edition.slug,town,search,version],
+    enabled:enabled && edition.live && edition.slug==='capital-district',staleTime:60000,refetchOnWindowFocus:false,
+    queryFn:()=>fetchFeaturedListings(town,search)});
+}
+
 /** `fetched` is the raw row count returned before adapters reject invalid records. */
 export interface InventoryChunk {rows:FeedRow[];count:number;fetched:number}
-export async function fetchInventory(source:InventorySource,town:string,search:string,view:BrowseView,from:number,size:number,newsCategory='all'):Promise<InventoryChunk> {
+export async function fetchInventory(source:InventorySource,town:string,search:string,view:BrowseView,from:number,size:number,newsCategory='all',excludeListingIds:string[]=[]):Promise<InventoryChunk> {
       const now=new Date(); const safe=escapeIlike(search); const INVENTORY_PAGE_SIZE=size;
       if(source==='homes') {
-        let q=supabase.from('listings').select('id,full_address,city,town_slug,list_date,list_price,public_listing_url,public_listing_url_approved,status,is_featured,listing_agent,agency,bedrooms,bathrooms,sqft',{count:'exact'})
-          .eq('status','A').eq('public_listing_url_approved',true).lte('list_date',easternDay(now))
-          .or('public_listing_url.like.https://%,public_listing_url.like.http://%');
-        if(town) q=q.in('town_slug',equivalentFeedTowns(town));
-        if(safe) q=q.or(`full_address.ilike.%${safe}%,city.ilike.%${safe}%,listing_agent.ilike.%${safe}%,agency.ilike.%${safe}%`);
+        let q=homesQuery(town,search,now);
+        // Listings already shown in the Featured section are excluded server-side so counts and pages stay exact.
+        const ids=excludeListingIds.filter(id=>/^[0-9a-f-]{36}$/i.test(id));
+        if(ids.length) q=q.not('id','in',`(${ids.join(',')})`);
         const {data,error,count}=await q.order('list_date',{ascending:false}).order('id').range(from,from+INVENTORY_PAGE_SIZE-1);
         if(error) throw error;
         return {rows:(data || []).map(l=>listingRow(l,now)).filter((r):r is FeedRow=>r!==null),count:count || 0,fetched:data?.length || 0};
@@ -70,10 +96,10 @@ export async function fetchInventory(source:InventorySource,town:string,search:s
       return {rows:(data || []).map(rentalBrowseRow),count:count || 0,fetched:data?.length || 0};
 }
 
-export function useBrowseInventory(edition:FeedEdition,source:InventorySource,town:string,search:string,view:BrowseView,page:number,enabled:boolean,version:string,newsCategory='all') {
-  return useQuery({queryKey:['feed-inventory',edition.slug,source,town,search,view,page,version,newsCategory],
+export function useBrowseInventory(edition:FeedEdition,source:InventorySource,town:string,search:string,view:BrowseView,page:number,enabled:boolean,version:string,newsCategory='all',excludeListingIds:string[]=[]) {
+  return useQuery({queryKey:['feed-inventory',edition.slug,source,town,search,view,page,version,newsCategory,excludeListingIds],
     enabled:enabled && edition.live && edition.slug==='capital-district',staleTime:60000,refetchOnWindowFocus:false,
-    queryFn:()=>fetchInventory(source,town,search,view,page*INVENTORY_PAGE_SIZE,INVENTORY_PAGE_SIZE,newsCategory)});
+    queryFn:()=>fetchInventory(source,town,search,view,page*INVENTORY_PAGE_SIZE,INVENTORY_PAGE_SIZE,newsCategory,excludeListingIds)});
 }
 
 /** Sources that contribute dated rows to Latest updates for a category. */
@@ -124,9 +150,9 @@ export async function collectLatestWindow(fetchers:LatestFetcher[],page:number) 
     hasNext:final.length>start+LATEST_PAGE_SIZE || (!complete && view.safe>=start+LATEST_PAGE_SIZE),
     total:complete ? view.merged.length : null};
 }
-export function useLatestFeed(edition:FeedEdition,category:FeedCategory,town:string,search:string,page:number,enabled:boolean,version:string) {
+export function useLatestFeed(edition:FeedEdition,category:FeedCategory,town:string,search:string,page:number,enabled:boolean,version:string,excludeListingIds:string[]=[]) {
   const sources=latestSources(category);
-  return useQuery({queryKey:['feed-latest',edition.slug,category,town,search,page,version],
+  return useQuery({queryKey:['feed-latest',edition.slug,category,town,search,page,version,excludeListingIds],
     enabled:enabled && sources.length>0 && edition.live && edition.slug==='capital-district',staleTime:60000,refetchOnWindowFocus:false,
-    queryFn:()=>collectLatestWindow(sources.map(s=>(from,size)=>fetchInventory(s.source,town,search,'latest',from,size,s.newsCategory)),page)});
+    queryFn:()=>collectLatestWindow(sources.map(s=>(from,size)=>fetchInventory(s.source,town,search,'latest',from,size,s.newsCategory,excludeListingIds)),page)});
 }

@@ -8,7 +8,7 @@ import { homeDirectorySearch } from '@/lib/homeDirectorySearch';
 import { businessIdentity, filterRows, publicUrl, snapshotKey, type FeedEdition, type FeedRow } from './feedModel';
 import { readBrowseState, updateBrowseState, browsePage } from './browseState';
 import { useDirectoryRows } from './useMarketFeed';
-import { INVENTORY_PAGE_SIZE, LATEST_PAGE_SIZE, useBrowseInventory, useLatestFeed, type InventorySource } from './useBrowseInventory';
+import { INVENTORY_PAGE_SIZE, LATEST_PAGE_SIZE, featuredApplies, useBrowseInventory, useFeaturedListings, useLatestFeed, type InventorySource } from './useBrowseInventory';
 import { FeedLine } from './FeedLine';
 import TownNavigation from './TownNavigation';
 import { rentalInPlaceHref, validRentalId } from './rentalLinks';
@@ -23,8 +23,14 @@ export default function FeedBrowse({edition,towns,saved,savedOnly,onSavedOnly,on
   const active=!savedOnly; const key=snapshotKey(version);
   const browseSource:InventorySource|null=view!=='browse' ? null : category==='property' ? 'homes' : category==='rentals' ? 'rentals' : category==='events' ? 'events' : ['local_news','finance'].includes(category) ? 'news' : null;
   const latestPage=browsePage(params,'latest');
-  const latest=useLatestFeed(edition,category,town,search,latestPage,active && view==='latest',key);
-  const inventory=useBrowseInventory(edition,browseSource || 'homes',town,search,view,browsePage(params,browseSource || 'homes'),active && !!browseSource,key,category);
+  const showFeatured=featuredApplies(category,savedOnly);
+  const featured=useFeaturedListings(edition,town,search,showFeatured,key);
+  const featuredRows=showFeatured ? featured.data || [] : [];
+  // Regular home queries wait for Featured so the same listings never appear twice on one view.
+  const featuredReady=!showFeatured || !featured.isLoading;
+  const excludeIds=featuredRows.map(r=>r.id.replace(/^listing:/,''));
+  const latest=useLatestFeed(edition,category,town,search,latestPage,active && view==='latest' && featuredReady,key,excludeIds);
+  const inventory=useBrowseInventory(edition,browseSource || 'homes',town,search,view,browsePage(params,browseSource || 'homes'),active && !!browseSource && featuredReady,key,category,browseSource==='homes' ? excludeIds : []);
   const showBusinesses=active && view==='browse' && category==='business';
   const directory=useDirectoryRows(edition,town,browsePage(params,'businesses'),search,showBusinesses,INVENTORY_PAGE_SIZE,cat);
   const legacyCategory=directoryCategory(cat)?.legacy || '';
@@ -59,6 +65,10 @@ export default function FeedBrowse({edition,towns,saved,savedOnly,onSavedOnly,on
   const businessSearchLink=view==='latest' && search.trim() && !savedOnly ? <p className="feed-notice feed-search-businesses">Latest updates do not include directory profiles. <Link to={bizSearch} onClick={e=>{if(!plain(e)) return;e.preventDefault();setParams(updateBrowseState(params,{type:'business',view:'browse',search}),{preventScrollReset:true});}}>Search businesses for “{search.trim()}”{town ? ` in ${townName}` : ''}</Link></p> : null;
   const filtered=!!(town || category!=='all' || search);
   return <div className="feed-browse-results">
+    {featuredRows.length>0 && <section className="feed-featured-section" aria-labelledby="feed-featured-title">
+      <div className="feed-block-title"><h2 id="feed-featured-title">Featured listings</h2></div>
+      {table(featuredRows,'Featured listings')}
+    </section>}
     <TownNavigation town={town} towns={towns} onSelect={slug=>change({town:slug})} dark={dark} large={large}/>
     <div className="feed-browse-main">
     <section className="feed-categories" aria-labelledby="feed-categories-title">

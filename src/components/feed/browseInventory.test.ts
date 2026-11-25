@@ -50,4 +50,25 @@ describe('published inventory queries',()=>{
     state.calls=[];useBrowseInventory(edition,'events','','','browse',0,true,'test');await state.options.queryFn?.();
     expect(state.calls.some(([m])=>m==='gte')).toBe(false);
   });
+});import { featuredApplies, fetchFeaturedListings, FEATURED_LISTING_LIMIT, fetchInventory } from './useBrowseInventory';
+describe('featured listings section',()=>{
+  it('reads only active approved non-future listings with is_featured strictly true, bounded and ordered',async()=>{
+    await fetchFeaturedListings('','');
+    expect(state.calls).toContainEqual(['eq',['is_featured',true]]);
+    expect(state.calls).toContainEqual(['eq',['status','A']]);
+    expect(state.calls).toContainEqual(['eq',['public_listing_url_approved',true]]);
+    expect(state.calls.some(([m,a])=>m==='lte' && a[0]==='list_date')).toBe(true);
+    expect(state.calls).toContainEqual(['range',[0,FEATURED_LISTING_LIMIT-1]]);
+    expect(state.calls.filter(([m])=>m==='order')).toEqual([['order',['list_date',{ascending:false}]],['order',['id']]]);
+  });
+  it('excludes shown featured listings from regular homes server-side',async()=>{
+    const id='11111111-2222-3333-4444-555555555555';
+    await fetchInventory('homes','','','browse',0,8,'all',[id,'bad id']);
+    expect(state.calls).toContainEqual(['not',['id','in',`(${id})`]]);
+  });
+  it('shows only for All and Homes outside Saved',()=>{
+    expect(featuredApplies('all',false)).toBe(true);expect(featuredApplies('property',false)).toBe(true);
+    expect(featuredApplies('business',false)).toBe(false);expect(featuredApplies('events',false)).toBe(false);
+    expect(featuredApplies('all',true)).toBe(false);
+  });
 });
