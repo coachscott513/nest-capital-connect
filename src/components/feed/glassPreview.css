@@ -53,6 +53,11 @@
   box-shadow: inset 3px 0 0 hsl(var(--glass-cobalt));
 }
 .nest-feed.feed-glass .feed-featured-row .feed-listing-badge.is-featured { color: hsl(var(--glass-cobalt)); }
+/* Phones: the shared mobile row has no left padding, so a full-height inset bar would paint over the first characters.
+   Keep the short accent segment the base styles already draw there instead. */
+@media (max-width:950px) {
+  .nest-feed.feed-glass .feed-row.feed-featured-row { box-shadow: none; }
+}
 .nest-feed.feed-glass [aria-current="page"],
 .nest-feed.feed-glass [aria-pressed="true"] { box-shadow: inset 0 1px 0 hsl(0 0% 100% / .25), 0 4px 14px -6px hsl(var(--glass-cobalt) / .7); }
 .nest-feed.feed-glass :focus-visible { outline: 2px solid hsl(var(--glass-cobalt)); outline-offset: 2px; }
