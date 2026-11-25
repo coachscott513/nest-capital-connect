@@ -6,7 +6,7 @@ import { ChevronDown, Menu, Search, X } from 'lucide-react';
 import { Button } from './ui/button';
 import GlobalSearchCommand from './GlobalSearchCommand';
 import { SECTION_DEFS, type MegaSection } from './publicNavigationData';
-import { homepageNavigationHref } from './publicNavigationModel';
+import { homepageNavigationHref, homepageBrandHref } from './publicNavigationModel';
 import './publicNavigation.css';
 
 interface NavGroup {key:string;label:string;columns:MegaSection['columns'];}
@@ -28,7 +28,7 @@ export default function PublicNavigation({settings}:{settings?:ReactNode}) {
   return <>
     <header className="nest-public-nav nav-shell nav-frost">
       <div className="nest-nav-bar">
-        <Link to="/" className="nest-nav-brand"><span aria-hidden>N</span><span>Capital District Nest</span></Link>
+        <Link to={homepageBrandHref(pathname,search)} className="nest-nav-brand"><span aria-hidden>N</span><span>Capital District Nest</span></Link>
         <nav className="nest-nav-desktop" aria-label="Main navigation">
           <Link className="nest-nav-live" aria-current={pathname==='/' && new URLSearchParams(search).get('view')!=='browse' ? 'page' : undefined} to={home({view:'latest'})}>Live feed</Link>
           {groups.map(group=><Popover.Root key={group.key} open={open===group.key} onOpenChange={value=>setOpen(value ? group.key : null)}>

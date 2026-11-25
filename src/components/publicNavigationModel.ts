@@ -5,6 +5,11 @@ export function homepageNavigationHref(pathname:string,search:string,changes:Rec
   const params=pathname==='/' ? new URLSearchParams(search) : new URLSearchParams();
   const town=pathname.match(/^\/towns\/([^/]+)$/)?.[1];
   if(town) params.set('town',town);
+  if(params.has('look') && params.get('look')!=='glass') params.delete('look');
   const next=updateBrowseState(params,changes).toString();
   return `/${next ? `?${next}` : ''}#feed-main`;
+}
+/** Homepage brand link keeps only the exact opt-in glass preview; default stays '/'. */
+export function homepageBrandHref(pathname:string,search:string) {
+  return pathname==='/' && new URLSearchParams(search).get('look')==='glass' ? '/?look=glass' : '/';
 }
