@@ -1,0 +1,68 @@
+/* Opt-in /?look=glass preview. Paint only: no size, spacing, border-width, font or layout changes. */
+.nest-feed.feed-glass {
+  --glass-canvas: 214 40% 97%;
+  --glass-surface: 0 0% 100% / .58;
+  --glass-edge: 0 0% 100% / .9;
+  --glass-shadow: 220 40% 30% / .08;
+  --glass-cobalt: 220 85% 42%;
+  background:
+    radial-gradient(1200px 700px at 12% -10%, hsl(214 90% 88% / .55), transparent 60%),
+    radial-gradient(1000px 700px at 95% 10%, hsl(262 70% 90% / .45), transparent 60%),
+    linear-gradient(180deg, hsl(210 30% 98%), hsl(var(--glass-canvas)));
+  background-attachment: fixed;
+}
+.nest-feed.feed-glass.feed-dark {
+  --glass-surface: 222 35% 14% / .62;
+  --glass-edge: 210 60% 90% / .1;
+  --glass-shadow: 0 0% 0% / .45;
+  --glass-cobalt: 214 95% 66%;
+  background:
+    radial-gradient(1200px 700px at 12% -10%, hsl(218 70% 30% / .45), transparent 60%),
+    radial-gradient(1000px 700px at 95% 10%, hsl(265 50% 30% / .35), transparent 60%),
+    linear-gradient(180deg, hsl(224 30% 8%), hsl(226 28% 10%));
+  background-attachment: fixed;
+}
+.nest-feed.feed-glass header,
+.nest-feed.feed-glass .feed-ticker,
+.nest-feed.feed-glass .feed-finance,
+.nest-feed.feed-glass .feed-towns,
+.nest-feed.feed-glass .feed-categories,
+.nest-feed.feed-glass .feed-featured-section,
+.nest-feed.feed-glass .feed-table {
+  background-color: hsl(var(--glass-surface));
+  background-image: linear-gradient(180deg, hsl(0 0% 100% / .35), transparent 40%);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: inset 0 1px 0 hsl(var(--glass-edge)), 0 1px 2px hsl(var(--glass-shadow)), 0 10px 30px -14px hsl(var(--glass-shadow));
+}
+.nest-feed.feed-glass.feed-dark header,
+.nest-feed.feed-glass.feed-dark .feed-ticker,
+.nest-feed.feed-glass.feed-dark .feed-finance,
+.nest-feed.feed-glass.feed-dark .feed-towns,
+.nest-feed.feed-glass.feed-dark .feed-categories,
+.nest-feed.feed-glass.feed-dark .feed-featured-section,
+.nest-feed.feed-glass.feed-dark .feed-table {background-image: linear-gradient(180deg, hsl(210 60% 90% / .05), transparent 40%);}
+.nest-feed.feed-glass .feed-ticker { background-color: hsl(var(--glass-cobalt) / .92); background-image: linear-gradient(90deg, hsl(var(--glass-cobalt)), hsl(232 70% 46% / .92)); }
+.nest-feed.feed-glass .feed-ticker,
+.nest-feed.feed-glass .feed-finance,
+.nest-feed.feed-glass .feed-towns,
+.nest-feed.feed-glass .feed-categories,
+.nest-feed.feed-glass .feed-featured-section { border-radius: 14px; }
+.nest-feed.feed-glass .feed-featured-section { overflow: hidden; }
+.nest-feed.feed-glass .feed-row.feed-featured-row {
+  background: linear-gradient(90deg, hsl(var(--glass-cobalt) / .14), hsl(var(--glass-cobalt) / .05) 60%, transparent);
+  box-shadow: inset 3px 0 0 hsl(var(--glass-cobalt));
+}
+.nest-feed.feed-glass .feed-featured-row .feed-listing-badge.is-featured { color: hsl(var(--glass-cobalt)); }
+.nest-feed.feed-glass [aria-current="page"],
+.nest-feed.feed-glass [aria-pressed="true"] { box-shadow: inset 0 1px 0 hsl(0 0% 100% / .25), 0 4px 14px -6px hsl(var(--glass-cobalt) / .7); }
+.nest-feed.feed-glass :focus-visible { outline: 2px solid hsl(var(--glass-cobalt)); outline-offset: 2px; }
+@media (prefers-reduced-transparency: reduce) {
+  .nest-feed.feed-glass header,.nest-feed.feed-glass .feed-ticker,.nest-feed.feed-glass .feed-finance,.nest-feed.feed-glass .feed-towns,
+  .nest-feed.feed-glass .feed-categories,.nest-feed.feed-glass .feed-featured-section,.nest-feed.feed-glass .feed-table {
+    backdrop-filter: none; -webkit-backdrop-filter: none; background-color: hsl(var(--card)); }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nest-feed.feed-glass header,.nest-feed.feed-glass .feed-towns,.nest-feed.feed-glass .feed-categories,
+  .nest-feed.feed-glass .feed-featured-section,.nest-feed.feed-glass .feed-table { background-color: hsl(var(--card)); }
+}
