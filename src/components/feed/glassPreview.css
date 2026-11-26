@@ -140,3 +140,17 @@
 .nest-feed.feed-glass .feed-contractor-hero .feed-utility-links a {color:var(--glass-blue);}
 .nest-feed.feed-large .feed-contractor-hero .feed-utility-links {font-size:15px;}
 @media (prefers-reduced-transparency:reduce) { .nest-feed.feed-glass .feed-contractor-hero {background:var(--glass-solid);} .nest-feed.feed-glass .feed-contractor-hero form {background:var(--glass-solid);} }
+
+/* Compact quick town shortcuts: smaller, denser, high-contrast labels (All towns trigger unchanged). */
+.nest-feed .feed-town-quick {gap:3px;}
+.nest-feed.feed-glass .feed-town-quick>a {min-height:32px;padding:3px 10px;font-size:13.5px;font-weight:600;line-height:1.2;color:hsl(220 80% 30%);border-radius:10px;}
+.nest-feed.feed-glass.feed-dark .feed-town-quick>a {color:hsl(210 100% 78%);}
+.nest-feed.feed-glass .feed-town-quick>a[aria-current] {background:hsl(220 80% 32%);color:hsl(0 0% 100%);box-shadow:inset 0 0 0 1px hsl(220 80% 22%);}
+.nest-feed.feed-glass.feed-dark .feed-town-quick>a[aria-current] {background:hsl(210 100% 78%);color:hsl(222 45% 10%);}
+.nest-feed.feed-glass.feed-large .feed-town-quick>a {font-size:16px;min-height:38px;}
+@media (max-width:950px) {
+ .nest-feed.feed-glass .feed-town-quick>a {min-height:44px;padding:4px 8px;justify-content:center;text-align:center;}
+ .nest-feed.feed-glass.feed-large .feed-town-quick>a {font-size:16px;}
+}
+@media (max-width:950px) { .nest-feed .feed-town-quick {gap:4px;} }
+@media (max-width:950px) { .nest-feed.feed-glass.feed-large .feed-town-quick>a {min-height:44px;} }

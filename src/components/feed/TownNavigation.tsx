@@ -8,7 +8,9 @@ import { Button } from '@/components/ui/button';
 /** Compact, always-visible local towns; the full alphabetical list lives in a bounded dialog. */
 export const FEATURED_TOWNS=['albany','delmar','voorheesville','clifton-park','schenectady','troy'];
 /** Recognized desktop-sidebar extras; shown only when the town exists in loaded records. */
-export const EXTRA_TOWNS=['saratoga-springs','colonie','guilderland','latham','niskayuna','cohoes','east-greenbush','ballston-spa'];
+export const EXTRA_TOWNS=['saratoga-springs','colonie','guilderland','latham','niskayuna','cohoes','east-greenbush','ballston-spa','loudonville','glenmont','watervliet','halfmoon','mechanicville','malta'];
+/** How many extras also show on phones (the first entries above). */
+export const PHONE_EXTRA_COUNT=4;
 
 /** Quick shortcuts: the original six, then a selected uncommon town, then desktop-only extras, never duplicated. */
 export function quickTowns(town:string,available:string[]){
@@ -37,7 +39,7 @@ export default function TownNavigation({town,towns,onSelect,dark,large}:{town:st
     <nav aria-label="Local towns" className="feed-town-quick">
       <Dialog.Trigger asChild><Button className="feed-towns-trigger feed-all-towns" variant="outline" aria-haspopup="dialog" aria-label={`All towns, ${towns.length} A to Z${town ? `, showing ${name(town)}` : ''}`}><MapPin aria-hidden/><span>All towns</span><small>{towns.length}</small><ChevronDown aria-hidden className="feed-all-chevron"/></Button></Dialog.Trigger>
       {primary.map(slug=>townLink(slug,name(slug)))}
-      {extras.map(slug=>townLink(slug,name(slug),'feed-town-extra'))}
+      {extras.map((slug,i)=>townLink(slug,name(slug),i<PHONE_EXTRA_COUNT ? 'feed-town-shortcut-more' : 'feed-town-extra'))}
     </nav>
       <Dialog.Portal>
         <Dialog.Overlay className="feed-town-overlay"/>
