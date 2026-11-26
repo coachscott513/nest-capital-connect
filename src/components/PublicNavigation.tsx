@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import * as Popover from '@radix-ui/react-popover';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -7,42 +7,69 @@ import { Button } from './ui/button';
 import GlobalSearchCommand from './GlobalSearchCommand';
 import { SECTION_DEFS, type MegaSection } from './publicNavigationData';
 import { homepageNavigationHref, homepageBrandHref } from './publicNavigationModel';
+import PublicTownDirectory, { type PublicTown } from './PublicTownDirectory';
+import { FEED_EDITIONS } from './feed/feedModel';
+import { useFeedTowns } from './feed/useMarketFeed';
 import './publicNavigation.css';
 
 interface NavGroup {key:string;label:string;columns:MegaSection['columns'];}
-export default function PublicNavigation({settings}:{settings?:ReactNode}) {
-  const {pathname,search}=useLocation();const [open,setOpen]=useState<string|null>(null);const [mobile,setMobile]=useState(false);const [searchOpen,setSearchOpen]=useState(false);
+interface NavigationProps {settings?:ReactNode;towns?:PublicTown[];townsLoading?:boolean;townsError?:boolean;}
+
+function PublicNavigationView({settings,towns=[],townsLoading,townsError}:NavigationProps) {
+  const {pathname,search}=useLocation();
+  const [open,setOpen]=useState<string|null>(null);
+  const [mobile,setMobile]=useState(false);
+  const [searchOpen,setSearchOpen]=useState(false);
+  const hoverTimer=useRef<number|null>(null);
+  const openRef=useRef<string|null>(null);
+  const triggerRefs=useRef<Record<string,HTMLButtonElement|null>>({});
+  openRef.current=open;
   const home=(changes:Record<string,string>)=>homepageNavigationHref(pathname,search,changes);
   const legacy=(keys:string[])=>SECTION_DEFS.filter(s=>keys.includes(s.key)).flatMap(s=>[
     ...(s.href ? [{title:s.label,links:[{label:`${s.label} overview`,href:s.href}]}] : []),...s.columns,
   ]);
   const groups:NavGroup[]=[
     {key:'browse',label:'Browse',columns:[{title:'Published inventory',links:[{label:'Browse all',href:home({view:'browse',type:'all'})},{label:'Homes',href:home({view:'browse',type:'property'})},{label:'Rentals',href:home({view:'browse',type:'rentals'})},{label:'Businesses',href:home({view:'browse',type:'business'})},{label:'Events',href:home({type:'events'})}]}]},
-    {key:'towns',label:'Towns',columns:[{title:'Town guides',links:[{label:'All communities',href:'/communities'},...['Albany','Delmar','Clifton Park','Saratoga Springs','Schenectady','Troy','Voorheesville','Glenville'].map(label=>({label,href:`/towns/${label.toLowerCase().replace(/ /g,'-')}`}))]},...legacy(['communities'])]},
+    {key:'towns',label:'Towns',columns:[{title:'Town guides',links:[{label:'All communities',href:'/communities'},...['Albany','Delmar','Clifton Park','Saratoga Springs','Schenectady','Troy','Voorheesville','Glenville'].map(label=>({label,href:`/towns/${label.toLowerCase().replace(/ /g,'-')}`}))]},{title:'Community guides',links:SECTION_DEFS.find(section=>section.key==='communities')!.columns.flatMap(column=>column.links).filter(link=>link.href!=='/communities')}]},
     {key:'homes',label:'Homes',columns:[{title:'Real estate',links:[{label:'Homes overview',href:'/homes'},{label:'Published homes',href:home({view:'browse',type:'property'})},{label:'Rental directory',href:'/rentals'}]},...legacy(['homes','homeservices','closingteam'])]},
     {key:'businesses',label:'Businesses',columns:[{title:'Directory & owners',links:[{label:'Business directory',href:'/local'},{label:'Business hub',href:'/businesses'},{label:'For businesses',href:'/for-businesses'},{label:'Claim a business',href:'/claim-business'}]},...legacy(['discover','businesses','forbusiness'])]},
     {key:'resources',label:'Finance & more',columns:[{title:'Finance & resources',links:[{label:'Finance',href:'/finances'},{label:'Loan options',href:'/loan-types'},{label:'Grants & assistance',href:'/grants'},{label:'Insurance',href:'/homes/insurance'},{label:'Contact',href:'/contact'},{label:'Site index',href:'/site-index'}]},...legacy(['analyze','stories','happening'])]},
   ];
   const active=(key:string)=>open===key || (key==='homes' && /^\/(homes|rentals|home-services)/.test(pathname)) || (key==='businesses' && /^\/(biz|business|local|for-businesses|claim-business)/.test(pathname)) || (key==='towns' && /^\/(towns|communities|living-in)/.test(pathname)) || (key==='resources' && /^\/(finances|grants|loan-types)/.test(pathname)) || (key==='browse' && pathname==='/' && new URLSearchParams(search).get('view')==='browse');
-  const links=(group:NavGroup)=>group.columns.map((column,i)=><section key={`${column.title}-${i}`}><h3>{column.title}</h3>{column.links.map((link,j)=><Link key={`${link.label}-${j}`} to={link.href} onClick={()=>{setOpen(null);setMobile(false);}}>{link.label}</Link>)}</section>);
+  const closeAll=()=>{setOpen(null);setMobile(false);};
+  const cancelHover=()=>{if(hoverTimer.current!==null){window.clearTimeout(hoverTimer.current);hoverTimer.current=null;}};
+  const reveal=(key:string)=>{
+    if(!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+    cancelHover();hoverTimer.current=window.setTimeout(()=>setOpen(key),140);
+  };
+  useEffect(()=>{setOpen(null);setMobile(false);},[pathname]);
+  useEffect(()=>()=>cancelHover(),[]);
+  const links=(group:NavGroup)=>group.columns.map((column,index)=><section key={`${column.title}-${index}`} className={index===0 ? 'nest-nav-primary-group' : undefined}><h3>{column.title}</h3>{column.links.map((link,linkIndex)=><Link key={`${link.label}-${linkIndex}`} to={link.href} onClick={closeAll}>{link.label}</Link>)}</section>);
+  const townDirectory=(isMobile=false)=>{
+    const group=groups.find(item=>item.key==='towns')!;
+    return <PublicTownDirectory towns={towns} selectedTown={pathname==='/' ? new URLSearchParams(search).get('town') || '' : ''} guideColumns={group.columns} href={slug=>home({town:slug})} onNavigate={closeAll} loading={townsLoading} error={townsError} mobile={isMobile}/>;
+  };
   return <>
     <header className="nest-public-nav nav-shell nav-frost">
       <div className="nest-nav-bar">
         <Link to={homepageBrandHref(pathname,search)} className="nest-nav-brand"><span aria-hidden>N</span><span>Capital District Nest</span></Link>
         <nav className="nest-nav-desktop" aria-label="Main navigation">
           <Link className="nest-nav-live" aria-current={pathname==='/' && new URLSearchParams(search).get('view')!=='browse' ? 'page' : undefined} to={home({view:'latest'})}>Live feed</Link>
-          {groups.map(group=><Popover.Root key={group.key} open={open===group.key} onOpenChange={value=>setOpen(value ? group.key : null)}>
-            <Popover.Trigger asChild><Button variant="ghost" className="nest-nav-trigger" data-active={active(group.key)}>{group.label}<ChevronDown aria-hidden/></Button></Popover.Trigger>
-            <Popover.Portal><Popover.Content className={`nest-nav-panel dropdown-panel${group.columns.length===1 ? ' nest-nav-panel-small' : ''}`} align="center" sideOffset={9} collisionPadding={16} aria-label={`${group.label} navigation`}><div className="nest-nav-panel-grid">{links(group)}</div><Popover.Close asChild><Button variant="ghost" size="icon" className="nest-nav-panel-close" aria-label={`Close ${group.label} menu`}><X/></Button></Popover.Close></Popover.Content></Popover.Portal>
+          {groups.map(group=><Popover.Root key={group.key} open={open===group.key} onOpenChange={value=>{cancelHover();setOpen(current=>value ? group.key : current===group.key ? null : current);}}>
+            <Popover.Trigger asChild><Button ref={node=>{triggerRefs.current[group.key]=node;}} variant="ghost" className="nest-nav-trigger" data-active={active(group.key)} onMouseEnter={()=>reveal(group.key)}>{group.label}<ChevronDown aria-hidden/></Button></Popover.Trigger>
+            <Popover.Portal><Popover.Content className={`nest-nav-panel dropdown-panel${group.columns.length===1 ? ' nest-nav-panel-small' : ''}${group.key==='towns' ? ' nest-nav-towns-panel' : ''}`} sideOffset={0} collisionPadding={0} aria-label={`${group.label} navigation`} onMouseEnter={cancelHover} onPointerDownOutside={()=>setOpen(current=>current===group.key ? null : current)} onCloseAutoFocus={event=>{event.preventDefault();if(openRef.current===group.key || openRef.current===null) triggerRefs.current[group.key]?.focus();}}>
+              <div className="nest-nav-panel-inner">{group.key==='towns' ? townDirectory() : <div className="nest-nav-panel-grid">{links(group)}</div>}</div>
+              <Popover.Close asChild><Button variant="ghost" size="icon" className="nest-nav-panel-close" aria-label={`Close ${group.label} menu`}><X/></Button></Popover.Close>
+            </Popover.Content></Popover.Portal>
           </Popover.Root>)}
         </nav>
-        <div className="nest-nav-tools">{settings}<Button variant="ghost" size="icon" aria-label="Search site" onClick={()=>setSearchOpen(true)}><Search/></Button>
+        <div className="nest-nav-tools">{settings}<Button variant="ghost" size="icon" aria-label="Search site" onClick={()=>{setOpen(null);setSearchOpen(true);}}><Search/></Button>
           <Dialog.Root open={mobile} onOpenChange={setMobile}>
             <Dialog.Trigger asChild><Button variant="ghost" size="icon" className="nest-nav-mobile-trigger" aria-label="Open navigation menu"><Menu/></Button></Dialog.Trigger>
             <Dialog.Portal><Dialog.Overlay className="nest-nav-overlay"/><Dialog.Content className="nest-nav-mobile-panel" aria-describedby={undefined}>
               <Dialog.Title>Capital District Nest</Dialog.Title><Dialog.Close asChild><Button variant="ghost" size="icon" className="nest-nav-panel-close" aria-label="Close navigation menu"><X/></Button></Dialog.Close>
-              <nav aria-label="Mobile main navigation"><Link className="nest-nav-mobile-live" to={home({view:'latest'})} onClick={()=>setMobile(false)}>Live feed</Link>
-                {groups.map(group=><details key={group.key}><summary>{group.label}<ChevronDown aria-hidden/></summary><div className="nest-nav-mobile-links">{links(group)}</div></details>)}
+              <nav aria-label="Mobile main navigation"><Link className="nest-nav-mobile-live" to={home({view:'latest'})} onClick={closeAll}>Live feed</Link>
+                {groups.map(group=><details key={group.key}><summary>{group.label}<ChevronDown aria-hidden/></summary><div className="nest-nav-mobile-links">{group.key==='towns' ? townDirectory(true) : links(group)}</div></details>)}
               </nav>
             </Dialog.Content></Dialog.Portal>
           </Dialog.Root>
@@ -51,4 +78,15 @@ export default function PublicNavigation({settings}:{settings?:ReactNode}) {
     </header>
     <GlobalSearchCommand isOpen={searchOpen} onClose={()=>setSearchOpen(false)}/>
   </>;
+}
+
+function ConnectedPublicNavigation(props:NavigationProps) {
+  const edition=FEED_EDITIONS.find(item=>item.slug==='capital-district')!;
+  const query=useFeedTowns(edition);
+  return <PublicNavigationView {...props} towns={query.data || []} townsLoading={query.isLoading} townsError={query.isError}/>;
+}
+
+/** Homepage supplies its already-loaded towns; other public routes reuse the same market loader. */
+export default function PublicNavigation(props:NavigationProps) {
+  return props.towns !== undefined ? <PublicNavigationView {...props}/> : <ConnectedPublicNavigation {...props}/>;
 }

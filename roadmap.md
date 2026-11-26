@@ -1,4 +1,10 @@
 # Homepage town navigation — Nov 24
+## Sharp public navigation and unified Towns tab — Nov 26
+- [x] Replace small desktop popovers with one broad, aligned navigation tray; retain keyboard, touch, outside/Escape dismissal and original destinations.
+- [x] Move the complete searchable town index into the single Towns navigation tab on desktop/mobile; remove the duplicate homepage dialog while retaining popular shortcuts, clearing and URL filters.
+- [x] Restyle only the contractor hero as graphite with solid/outlined blue actions; preserve its form, routes and analytics.
+- [x] Verify 1440/390/320, keyboard/touch, dark/larger text, town counts/filtering, directory routing and featured dialogs; run regressions/build and commit without publishing.
+
 ## Approved glass homepage — Nov 25
 - [x] Make glass the homepage default without changing ordinary feed geometry or intentional theme settings.
 - [x] Add live featured photo tiles and accessible in-page details using approved exact-identity imagery fallbacks.

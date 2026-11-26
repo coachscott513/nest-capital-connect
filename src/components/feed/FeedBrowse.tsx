@@ -18,7 +18,7 @@ import FeaturedPhotoListings from './FeaturedPhotoListings';
 
 const plain=(e:React.MouseEvent)=>!(e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button!==0);
 
-export default function FeedBrowse({edition,towns,saved,savedOnly,onSavedOnly,onSave,dark,large,version}:{edition:FeedEdition;towns:{slug:string;name:string}[];saved:FeedRow[];savedOnly:boolean;onSavedOnly:()=>void;onSave:(row:FeedRow)=>void;dark:boolean;large:boolean;version:FeedRow[]}) {
+export default function FeedBrowse({edition,towns,saved,savedOnly,onSavedOnly,onSave,version}:{edition:FeedEdition;towns:{slug:string;name:string}[];saved:FeedRow[];savedOnly:boolean;onSavedOnly:()=>void;onSave:(row:FeedRow)=>void;version:FeedRow[]}) {
   const [params,setParams]=useSearchParams();const {town,category,view,search,cat}=readBrowseState(params);const [moreOpen,setMoreOpen]=useState(false);
   const change=(values:Record<string,string>,replace=false)=>setParams(updateBrowseState(params,values),{replace,preventScrollReset:true});
   const active=!savedOnly; const key=snapshotKey(version);
@@ -67,7 +67,7 @@ export default function FeedBrowse({edition,towns,saved,savedOnly,onSavedOnly,on
   const filtered=!!(town || category!=='all' || search);
   return <div className="feed-browse-results">
     {featuredRows.length>0 && <FeaturedPhotoListings rows={featuredRows} saved={saved} onSave={onSave}/>}
-    <TownNavigation town={town} towns={towns} onSelect={slug=>change({town:slug})} dark={dark} large={large}/>
+    <TownNavigation town={town} towns={towns} onSelect={slug=>change({town:slug})}/>
     <div className="feed-browse-main">
     <section className="feed-categories" aria-labelledby="feed-categories-title">
       <div className="feed-block-title"><h2 id="feed-categories-title">Categories</h2><Button variant="ghost" className="feed-more-toggle" aria-expanded={moreOpen} aria-controls="feed-more-categories" onClick={()=>setMoreOpen(!moreOpen)}>{moreOpen ? 'Fewer categories' : `All categories (${allDirectoryLinks.length})`}<ChevronDown aria-hidden/></Button></div>

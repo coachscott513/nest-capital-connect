@@ -13,3 +13,11 @@ export function homepageNavigationHref(pathname:string,search:string,changes:Rec
 export function homepageBrandHref(pathname:string,search:string) {
   return pathname==='/' && new URLSearchParams(search).get('look')==='glass' ? '/?look=glass' : '/';
 }
+
+/** One alphabetical, searchable source for the complete public town directory. */
+export function filterTownOptions<T extends {slug:string;name:string}>(towns:T[],query='') {
+  const normalized=query.trim().toLocaleLowerCase();
+  return [...towns]
+    .filter(town=>!normalized || town.name.toLocaleLowerCase().includes(normalized))
+    .sort((a,b)=>a.name.localeCompare(b.name));
+}

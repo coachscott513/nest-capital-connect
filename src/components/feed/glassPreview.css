@@ -67,6 +67,8 @@
 .featured-dialog-agent {font-size:13px;color:hsl(var(--muted-foreground));flex:1;}
 .featured-dialog-links {display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;}
 .featured-dialog-links>a {display:inline-flex;align-items:center;min-height:44px;font-size:13px;}
+.featured-dialog-links>a:not(.featured-dialog-cta) {padding:8px 14px;border:1px solid var(--glass-edge);border-radius:999px;color:var(--glass-ink);font-weight:650;}
+.featured-dialog-links>a:not(.featured-dialog-cta):hover {background:var(--glass-control);text-decoration:none;}
 .nest-feed .featured-dialog-cta {display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;height:auto;padding:10px 16px;border-radius:999px;background:var(--glass-selected);color:var(--glass-on-selected);box-shadow:var(--glass-shadow);font-size:14px;font-weight:650;text-align:center;white-space:normal;}
 .nest-feed .featured-dialog-close:focus-visible {outline-color:var(--glass-on-selected);}
 .feed-large .featured-photo-title {font-size:24px;}
@@ -97,49 +99,46 @@
   .nest-feed.feed-glass :is(.nest-public-nav,.feed-finance,.feed-towns,.feed-categories,.feed-table,.feed-directory-search,.featured-photo-tile,.featured-dialog) {background:var(--glass-solid);}
   .nest-feed.feed-glass .nest-public-nav {background:var(--glass-solid) !important;}
 }
-/* Towns: one prominent "All towns" trigger opens the A–Z dialog; extras fill the desktop sidebar only. */
+/* Popular towns stay compact; the complete A–Z directory is in the shared Towns tab. */
 .nest-feed .feed-towns {max-height:calc(100vh - 84px);overflow-y:auto;overscroll-behavior:contain;}
 @media (max-height:720px) { .nest-feed .feed-towns {position:static;max-height:none;overflow:visible;} }
-.nest-feed .feed-town-quick .feed-all-towns {display:flex;align-items:center;justify-content:flex-start;gap:8px;min-height:48px;width:100%;padding:6px 12px;font-size:16px;font-weight:600;border-radius:13px;}
-.nest-feed .feed-all-towns span {flex:1 1 auto;text-align:left;}
-.nest-feed .feed-all-towns small {font-size:13px;font-weight:600;padding:1px 7px;border-radius:999px;background:hsl(var(--primary)/.12);}
-.nest-feed .feed-all-chevron {transition:transform .2s;}
-.nest-feed .feed-all-towns[aria-expanded="true"] .feed-all-chevron {transform:rotate(180deg);}
-.nest-feed.feed-glass .feed-town-quick .feed-all-towns {background:var(--glass-selected);color:var(--glass-on-selected);border-color:var(--glass-edge);}
-.nest-feed.feed-glass .feed-all-towns small {background:hsl(0 0% 100%/.22);color:inherit;}
 .nest-feed .feed-town-clear {display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 6px;font-size:14px;font-weight:600;color:hsl(var(--primary));}
 .nest-feed .feed-town-clear svg {width:16px;height:16px;}
-.nest-feed .feed-town-drawer-status {font-size:14px;color:hsl(var(--muted-foreground));margin:-6px 50px 10px 0;}
-.nest-feed .feed-town-drawer-status strong {color:hsl(var(--foreground));}
-.nest-feed.feed-town-drawer .feed-town-all {display:flex;align-items:center;min-height:44px;margin-top:10px;padding:6px 12px;border-radius:13px;font-weight:600;color:hsl(var(--primary));border:1px solid hsl(var(--primary)/.45);}
-.nest-feed.feed-town-drawer .feed-town-all[aria-current] {background:var(--glass-selected,hsl(var(--primary)));color:var(--glass-on-selected,hsl(var(--primary-foreground)));}
-.nest-feed.feed-glass.feed-town-drawer {background:var(--glass-dialog,hsl(var(--background)));color:var(--glass-ink);}
 @media (max-width:950px) {
  .nest-feed .feed-towns {max-height:none;overflow:visible;}
  .nest-feed .feed-town-extra {display:none !important;}
  .nest-feed .feed-town-quick {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));}
  .nest-feed .feed-town-quick>a {white-space:normal;}
- .nest-feed .feed-town-quick .feed-all-towns {grid-column:1 / -1;}
 }
 @media (max-width:600px) { .nest-feed .feed-town-quick {grid-template-columns:repeat(2,minmax(0,1fr));} }
-@media (prefers-reduced-motion:reduce) { .nest-feed .feed-all-chevron {transition:none;} }
 
-/* Business & contractor search hero: atmospheric glass panel, form visible immediately. */
-.nest-feed .feed-contractor-hero {position:relative;overflow:hidden;margin-top:22px;padding:clamp(20px,4vw,40px);border-radius:24px;}
-.nest-feed.feed-glass .feed-contractor-hero {background:radial-gradient(120% 90% at 0% 0%,hsl(199 95% 80%/.45),transparent 60%),radial-gradient(90% 80% at 100% 100%,hsl(217 90% 70%/.35),transparent 65%),var(--glass-surface);color:var(--glass-ink);}
-.nest-feed.feed-glass.feed-dark .feed-contractor-hero {background:radial-gradient(120% 90% at 0% 0%,hsl(190 80% 35%/.35),transparent 60%),radial-gradient(90% 80% at 100% 100%,hsl(220 80% 40%/.35),transparent 65%),var(--glass-surface);}
-.nest-feed .feed-contractor-head {max-width:640px;}
-.nest-feed .feed-contractor-eyebrow {font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--glass-blue,hsl(var(--primary)));margin:0 0 6px;}
-.nest-feed .feed-contractor-head h2 {font-size:clamp(28px,4.4vw,44px);line-height:1.05;letter-spacing:-.025em;font-weight:700;margin:0;border:0;padding:0;color:inherit;}
-.nest-feed .feed-contractor-head p:last-child {font-size:16px;margin:10px 0 0;color:var(--glass-ink);opacity:.78;}
-.nest-feed .feed-contractor-hero form {margin-top:20px;padding:10px;border-radius:20px;background:var(--glass-control,hsl(var(--background)));box-shadow:var(--glass-rim,none),var(--glass-shadow,none);}
-.nest-feed.feed-glass .feed-contractor-hero label {color:var(--glass-ink);font-weight:600;}
-.nest-feed .feed-contractor-hero :is(input,select) {border-radius:12px;min-height:44px;}
-.nest-feed .feed-contractor-hero form button {border-radius:14px;min-height:44px;}
-.nest-feed .feed-contractor-hero .feed-utility-links {gap:8px 18px;margin-top:14px;font-size:13px;opacity:.85;}
-.nest-feed.feed-glass .feed-contractor-hero .feed-utility-links a {color:var(--glass-blue);}
+/* Business & contractor search: a crisp graphite section with solid/outlined blue actions. */
+.nest-feed .feed-contractor-hero {position:relative;overflow:hidden;margin-top:22px;padding:clamp(22px,4vw,42px);border-radius:24px;}
+.nest-feed.feed-glass .feed-contractor-hero,.nest-feed.feed-glass.feed-dark .feed-contractor-hero {background:linear-gradient(145deg,hsl(var(--contractor-surface)),hsl(var(--contractor-canvas)) 44%);color:hsl(var(--contractor-ink));border:1px solid hsl(var(--contractor-line));box-shadow:0 18px 42px -30px hsl(var(--contractor-canvas));backdrop-filter:none;}
+.nest-feed .feed-contractor-head {max-width:680px;}
+.nest-feed .feed-contractor-eyebrow {font-size:13px;font-weight:650;letter-spacing:.08em;text-transform:uppercase;color:hsl(var(--contractor-outline));margin:0 0 8px;}
+.nest-feed .feed-contractor-head h2 {font-size:clamp(30px,4.4vw,48px);line-height:1.02;letter-spacing:-.04em;font-weight:750;margin:0;border:0;padding:0;color:hsl(var(--contractor-ink));}
+.nest-feed .feed-contractor-head p:last-child {font-size:16px;margin:12px 0 0;color:hsl(var(--contractor-muted));opacity:1;}
+.nest-feed .feed-contractor-hero form {margin-top:24px;padding:12px;border:1px solid hsl(var(--contractor-line));border-radius:20px;background:hsl(var(--contractor-surface));box-shadow:none;}
+.nest-feed.feed-glass .feed-contractor-hero label {color:hsl(var(--contractor-muted));font-weight:600;}
+.nest-feed.feed-glass .feed-contractor-hero :is(input,select) {min-height:46px;border:1px solid hsl(var(--contractor-line));border-radius:12px;background:hsl(var(--contractor-field));color:hsl(var(--contractor-ink));}
+.nest-feed.feed-glass .feed-contractor-hero input::placeholder {color:hsl(var(--contractor-muted));opacity:1;}
+.nest-feed .feed-contractor-actions {display:flex;align-items:end;gap:9px;}
+.nest-feed.feed-glass .feed-contractor-hero .feed-contractor-actions :is(button,a) {min-height:46px;padding:10px 18px;border-radius:999px;font-weight:650;white-space:nowrap;}
+.nest-feed.feed-glass .feed-contractor-hero .feed-contractor-actions button[type="submit"] {border:1px solid hsl(var(--contractor-blue));background:hsl(var(--contractor-blue));color:hsl(var(--contractor-ink));}
+.nest-feed.feed-glass .feed-contractor-hero .feed-contractor-actions button[type="submit"]:hover {border-color:hsl(var(--contractor-blue-hover));background:hsl(var(--contractor-blue-hover));color:hsl(var(--contractor-ink));}
+.nest-feed.feed-glass .feed-contractor-hero .feed-contractor-home {border:1px solid hsl(var(--contractor-outline));background:transparent;color:hsl(var(--contractor-outline));}
+.nest-feed.feed-glass .feed-contractor-hero .feed-contractor-home:hover {background:hsl(var(--contractor-outline)/.1);color:hsl(var(--contractor-ink));}
+.nest-feed .feed-contractor-hero .feed-utility-links {gap:8px 20px;margin-top:18px;font-size:13px;opacity:1;}
+.nest-feed.feed-glass .feed-contractor-hero .feed-utility-links a {color:hsl(var(--contractor-muted));}
+.nest-feed.feed-glass .feed-contractor-hero .feed-utility-links a:hover {color:hsl(var(--contractor-ink));}
+.nest-feed.feed-glass .feed-contractor-hero :is(a,button,input,select):focus-visible {outline-color:hsl(var(--contractor-outline));}
 .nest-feed.feed-large .feed-contractor-hero .feed-utility-links {font-size:15px;}
-@media (prefers-reduced-transparency:reduce) { .nest-feed.feed-glass .feed-contractor-hero {background:var(--glass-solid);} .nest-feed.feed-glass .feed-contractor-hero form {background:var(--glass-solid);} }
+@media (max-width:600px) {
+ .nest-feed .feed-contractor-actions {flex-direction:column;align-items:stretch;}
+ .nest-feed.feed-glass .feed-contractor-hero .feed-contractor-actions :is(button,a) {width:100%;justify-content:center;}
+}
+@media (prefers-reduced-transparency:reduce) { .nest-feed.feed-glass .feed-contractor-hero,.nest-feed.feed-glass .feed-contractor-hero form {background:hsl(var(--contractor-canvas));backdrop-filter:none;} }
 
 /* Compact quick town shortcuts: smaller, denser, high-contrast labels (All towns trigger unchanged). */
 .nest-feed .feed-town-quick {gap:3px;}
